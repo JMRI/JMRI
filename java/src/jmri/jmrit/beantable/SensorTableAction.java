@@ -378,16 +378,20 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
     }
 
     protected void setDefaultDebounce(JFrame _who) {
-        JTextField activeField = new JTextField(String.valueOf(senManager.getDefaultSensorDebounceGoingActive()), 4);
-        JTextField inActiveField = new JTextField(String.valueOf(senManager.getDefaultSensorDebounceGoingInActive()), 4);
+        SpinnerNumberModel activeSpinnerModel = new SpinnerNumberModel((Long)senManager.getDefaultSensorDebounceGoingActive(), (Long)0L, Sensor.MAX_DEBOUNCE, (Long)1L); // MAX_DEBOUNCE is a Long; casts are to force needed signature
+        JSpinner activeSpinner = new JSpinner(activeSpinnerModel);
+        activeSpinner.setPreferredSize(new JTextField(Long.toString(Sensor.MAX_DEBOUNCE).length()+1).getPreferredSize());
+        SpinnerNumberModel inActiveSpinnerModel = new SpinnerNumberModel((Long)senManager.getDefaultSensorDebounceGoingInActive(), (Long)0L, Sensor.MAX_DEBOUNCE, (Long)1L); // MAX_DEBOUNCE is a Long; casts are to force needed signature
+        JSpinner inActiveSpinner = new JSpinner(inActiveSpinnerModel);
+        inActiveSpinner.setPreferredSize(new JTextField(Long.toString(Sensor.MAX_DEBOUNCE).length()+1).getPreferredSize());
 
         JPanel active = new JPanel();
         active.add(new JLabel(Bundle.getMessage("SensorActiveTimer")));
-        active.add(activeField);
+        active.add(activeSpinner);
 
         JPanel inActive = new JPanel();
         inActive.add(new JLabel(Bundle.getMessage("SensorInactiveTimer")));
-        inActive.add(inActiveField);
+        inActive.add(inActiveSpinner);
 
         int retval = JOptionPane.showOptionDialog(_who,
                 Bundle.getMessage("SensorGlobalDebounceMessageBox"), Bundle.getMessage("SensorGlobalDebounceMessageTitle"),
@@ -397,20 +401,9 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
             return;
         }
 
-        //We will allow the sensor manager to handle checking if the values have changed
-        try {
-            long goingActive = Long.parseLong(activeField.getText());
-            senManager.setDefaultSensorDebounceGoingActive(goingActive);
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(_who, Bundle.getMessage("SensorDebounceActError") + "\n\"" + activeField.getText() + "\"", "Input Error", JOptionPane.ERROR_MESSAGE);
-        }
-
-        try {
-            long goingInActive = Long.parseLong(inActiveField.getText());
-            senManager.setDefaultSensorDebounceGoingInActive(goingInActive);
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(_who, Bundle.getMessage("SensorDebounceActError") + "\n\"" + inActiveField.getText() + "\"", "Input Error", JOptionPane.ERROR_MESSAGE);
-        }
+        // We will allow the sensor manager to handle checking if the values have changed
+        senManager.setDefaultSensorDebounceGoingActive((Long) activeSpinner.getValue());
+        senManager.setDefaultSensorDebounceGoingInActive((Long) inActiveSpinner.getValue());
         m.fireTableDataChanged();
     }
 
@@ -448,7 +441,6 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
         }
 
         jmri.jmrix.internal.InternalSensorManager.setDefaultStateForNewSensors(defaultState);
-
     }
 
     /**

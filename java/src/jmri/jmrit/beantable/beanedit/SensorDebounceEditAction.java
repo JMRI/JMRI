@@ -12,7 +12,7 @@ import jmri.NamedBean;
 import jmri.Sensor;
 
 /**
- * Provides an edit panel for a sensor debounce object.
+ * Provide an edit panel for a sensor debounce object.
  * <p>
  * This is designed so that it can be re-used in other panels.
  * {@link jmri.jmrit.beantable.beanedit.BlockEditAction#sensor()}
