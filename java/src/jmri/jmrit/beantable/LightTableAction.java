@@ -1017,7 +1017,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
                         Bundle.getMessage("WarningTitle"),
                         JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
                         new Object[]{Bundle.getMessage("ButtonYes"), Bundle.getMessage("ButtonNo"),
-                            Bundle.getMessage("ButtonYesPlus")}, Bundle.getMessage("ButtonNo"));
+                            Bundle.getMessage("ButtonYesPlus")}, Bundle.getMessage("ButtonNo")); // default choice = No
                 if (selectedValue == 1) {
                     return;   // return without creating if "No" response
                 }

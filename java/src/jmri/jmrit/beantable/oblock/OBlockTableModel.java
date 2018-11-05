@@ -705,7 +705,7 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
                     new Object[]{Bundle.getMessage("ButtonYes"),
                         Bundle.getMessage("ButtonYesPlus"),
                         Bundle.getMessage("ButtonNo")},
-                    Bundle.getMessage("ButtonNo"));
+                    Bundle.getMessage("ButtonNo")); // default choice = No
             if (val == 2) {
                 return;  // return without deleting
             }

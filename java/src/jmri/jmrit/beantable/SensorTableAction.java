@@ -22,6 +22,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import jmri.InstanceManager;
@@ -385,23 +386,34 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
         JSpinner inActiveSpinner = new JSpinner(inActiveSpinnerModel);
         inActiveSpinner.setPreferredSize(new JTextField(Long.toString(Sensor.MAX_DEBOUNCE).length()+1).getPreferredSize());
 
+        JPanel input = new JPanel(); // panel to hold formatted input for dialog
+        input.setLayout(new BoxLayout(input, BoxLayout.Y_AXIS));
+
+        JTextArea message = new JTextArea(Bundle.getMessage("SensorGlobalDebounceMessageBox")); // multi line
+        message.setEditable(false);
+        message.setOpaque(false);
+        input.add(message);
+
         JPanel active = new JPanel();
         active.add(new JLabel(Bundle.getMessage("SensorActiveTimer")));
         active.add(activeSpinner);
+        input.add(active);
 
         JPanel inActive = new JPanel();
         inActive.add(new JLabel(Bundle.getMessage("SensorInactiveTimer")));
         inActive.add(inActiveSpinner);
+        input.add(inActive);
 
         int retval = JOptionPane.showOptionDialog(_who,
-                Bundle.getMessage("SensorGlobalDebounceMessageBox"), Bundle.getMessage("SensorGlobalDebounceMessageTitle"),
+                input, Bundle.getMessage("SensorGlobalDebounceMessageTitle"),
                 0, JOptionPane.INFORMATION_MESSAGE, null,
-                new Object[]{Bundle.getMessage("ButtonCancel"), Bundle.getMessage("ButtonOK"), active, inActive}, null);
-        if (retval != 1) {
+                new Object[]{Bundle.getMessage("ButtonOK"), Bundle.getMessage("ButtonCancel")}, null);
+        log.debug("dialog retval ={}", retval);
+        if (retval != 0) {
             return;
         }
 
-        // We will allow the sensor manager to handle checking if the values have changed
+        // Allow the sensor manager to handle checking if the values have changed
         senManager.setDefaultSensorDebounceGoingActive((Long) activeSpinner.getValue());
         senManager.setDefaultSensorDebounceGoingInActive((Long) inActiveSpinner.getValue());
         m.fireTableDataChanged();
