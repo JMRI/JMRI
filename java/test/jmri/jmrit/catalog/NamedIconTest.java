@@ -251,7 +251,7 @@ public class NamedIconTest {
         // Math.ceil(Math.abs(w*Math.cos(rad))) is slightly more than zero, so it
         // rounds up!
         Assert.assertEquals((int) Math.ceil(w * scale) + 1, ni.getIconHeight());
-        Assert.assertEquals((int) Math.ceil(h * scale) + 1, ni.getIconWidth());       
+        Assert.assertEquals((int) Math.ceil(h * scale), ni.getIconWidth());       
     }
 
     /**
