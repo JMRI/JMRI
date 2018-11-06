@@ -25,7 +25,6 @@ public class StopTest {
         Layout layout = new Layout();
         int layoutId = layout.getLayoutId();
         TrainType type = new TrainType(layoutId);
-        int typeId = type.getTypeId();
         Segment segment = new Segment(layoutId);
         int segmentId = segment.getSegmentId();
         Station station = new Station(segmentId);
@@ -42,8 +41,28 @@ public class StopTest {
         Assert.assertEquals(2, stop.getSeq());
         stop.setStationId(stationId);
         Assert.assertTrue(stop.getStationId() == stationId);
+        try {
+            stop.setDuration(-2);
+        } catch (IllegalArgumentException ex) {
+            Assert.assertEquals(ex.getMessage(), "StopDurationLt0");  // NOI18N
+        }
+        try {
+            stop.setDuration(240);
+        } catch (IllegalArgumentException ex) {
+            Assert.assertEquals(ex.getMessage(), "TimeOutOfRange");  // NOI18N
+        }
         stop.setDuration(15);
         Assert.assertEquals(15, stop.getDuration());
+        try {
+            stop.setNextSpeed(-2);
+        } catch (IllegalArgumentException ex) {
+            Assert.assertEquals(ex.getMessage(), "NextSpeedLt0");  // NOI18N
+        }
+        try {
+            stop.setNextSpeed(1);
+        } catch (IllegalArgumentException ex) {
+            Assert.assertEquals(ex.getMessage(), "TimeOutOfRange");  // NOI18N
+        }
         stop.setNextSpeed(30);
         Assert.assertEquals(30, stop.getNextSpeed());
         stop.setArriveTime(600);

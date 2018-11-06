@@ -40,6 +40,11 @@ public class TrainTest {
         } catch (IllegalArgumentException ex) {
             Assert.assertEquals(ex.getMessage(), "DefaultSpeedLt0");  // NOI18N
         }
+        try {
+            train.setDefaultSpeed(1);
+        } catch (IllegalArgumentException ex) {
+            Assert.assertEquals(ex.getMessage(), "TimeOutOfRange");  // NOI18N
+        }
         train.setDefaultSpeed(45);
         Assert.assertEquals(45, train.getDefaultSpeed());
         try {

@@ -10,7 +10,11 @@ public class TrainTypeTest {
 
     @Test
     public void testCreate() {
-        new TrainType(1, 1, "", "#000000");  // NOI18N
+        try {
+            new TrainType(0);
+        } catch (IllegalArgumentException ex) {
+            Assert.assertEquals(ex.getMessage(), "TypeAddFail");  // NOI18N
+        }
     }
 
     @Test

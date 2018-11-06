@@ -17,8 +17,7 @@ public class TimeTableImportTest {
         new TimeTableImport();
     }
 
-//     @Test
-    @Ignore("Fix pending")
+    @Test
     public void testImport() {
         TimeTableDataManager dm = new TimeTableDataManager(false);
         TimeTableImport imp = new TimeTableImport();

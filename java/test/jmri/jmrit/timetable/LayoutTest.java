@@ -25,8 +25,24 @@ public class LayoutTest {
         } catch (IllegalArgumentException ex) {
             Assert.assertEquals(ex.getMessage(), "FastClockLt1");  // NOI18N
         }
+        try {
+            layout.setFastClock(100);
+        } catch (IllegalArgumentException ex) {
+            Assert.assertEquals(ex.getMessage(), "TimeOutOfRange");  // NOI18N
+        }
         layout.setFastClock(6);
         Assert.assertEquals(6, layout.getFastClock());
+        Assert.assertTrue(layout.getRatio() > 0.0f);
+        try {
+            layout.setScale("XY");
+        } catch (IllegalArgumentException ex) {
+            Assert.assertEquals(ex.getMessage(), "ScaleNotFound~XY");  // NOI18N
+        }
+        try {
+            layout.setThrottles(-2);
+        } catch (IllegalArgumentException ex) {
+            Assert.assertEquals(ex.getMessage(), "ThrottlesLt0");  // NOI18N
+        }
         layout.setThrottles(3);
         Assert.assertEquals(3, layout.getThrottles());
         layout.setMetric(true);

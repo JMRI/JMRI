@@ -2,10 +2,9 @@
 
 import java
 import jmri
-from jmri.jmrit.timetable import *
 
 # Get the Timetable data manager
-tdm = TimeTableDataManager.getDataManager();
+tdm = jmri.jmrit.timetable.TimeTableDataManager.getDataManager();
 
 # Get the layouts sorted by name
 for layout in tdm.getLayouts(True):
