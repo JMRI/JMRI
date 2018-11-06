@@ -32,6 +32,7 @@ abstract public class AbstractStreamConnectionConfig extends AbstractConnectionC
      * @param p the adapter to create a connection configuration for
      */
     public AbstractStreamConnectionConfig(jmri.jmrix.AbstractStreamPortController p) {
+	super();
         adapter = p;
     }
 
