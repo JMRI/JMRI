@@ -102,22 +102,22 @@ public class NamedIcon extends ImageIcon {
             ImageReaderSpi spiProv = gifReader.getOriginatingProvider();
             if (spiProv != null && spiProv.canDecodeInput(iis)) {
 
-                gifState.mStreamMd = gifReader.getStreamMetadata();
                 int numFrames = gifReader.getNumImages(true);
-
-                gifState.mFrames = new IIOImage[numFrames];
-                gifState.mWidth = 0;
-                gifState.mHeight = 0;
-                for (int i = 0; i < numFrames; i++) {
-                    gifState.mFrames[i] = gifReader.readAll(i, null);
-                    RenderedImage image = gifState.mFrames[i].getRenderedImage();
-                    gifState.mHeight = Math.max(gifState.mHeight, image.getHeight());
-                    gifState.mWidth = Math.max(gifState.mWidth, image.getWidth());
-                }
 
                 // No need to keep the GIF info if it's not animated, the old code works
                 // in that case.
                 if (numFrames > 1) {
+                    gifState.mStreamMd = gifReader.getStreamMetadata();
+                    gifState.mFrames = new IIOImage[numFrames];
+                    gifState.mWidth = 0;
+                    gifState.mHeight = 0;
+                    for (int i = 0; i < numFrames; i++) {
+                        gifState.mFrames[i] = gifReader.readAll(i, null);
+                        RenderedImage image = gifState.mFrames[i].getRenderedImage();
+                        gifState.mHeight = Math.max(gifState.mHeight, image.getHeight());
+                        gifState.mWidth = Math.max(gifState.mWidth, image.getWidth());
+                    }
+
                     mGifInfo = gifState;
                 }
             }
@@ -556,11 +556,11 @@ public class NamedIcon extends ImageIcon {
             return;
         }
         double rad = Math.toRadians(_degrees);
-        double w = _scale * getIconWidth();
-        double h = _scale * getIconHeight();
+        double w = getIconWidth();
+        double h = getIconHeight();
 
-        int width = (int) Math.ceil(Math.abs(h * Math.sin(rad)) + Math.abs(w * Math.cos(rad)));
-        int heigth = (int) Math.ceil(Math.abs(h * Math.cos(rad)) + Math.abs(w * Math.sin(rad)));
+        int width = (int) Math.ceil(Math.abs(h * _scale * Math.sin(rad)) + Math.abs(w * _scale * Math.cos(rad)));
+        int heigth = (int) Math.ceil(Math.abs(h * _scale * Math.cos(rad)) + Math.abs(w * _scale * Math.sin(rad)));
         AffineTransform t;
         if (false) {
             // TODO: Test to see if the "else" case is necessary
