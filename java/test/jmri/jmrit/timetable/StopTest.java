@@ -24,7 +24,6 @@ public class StopTest {
     public void testSettersAndGetters() {
         Layout layout = new Layout();
         int layoutId = layout.getLayoutId();
-        TrainType type = new TrainType(layoutId);
         Segment segment = new Segment(layoutId);
         int segmentId = segment.getSegmentId();
         Station station = new Station(segmentId);
