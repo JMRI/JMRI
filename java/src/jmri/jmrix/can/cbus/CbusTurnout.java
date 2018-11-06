@@ -4,7 +4,9 @@ import jmri.Turnout;
 import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
+import jmri.jmrix.can.cbus.CbusConstants;
 import jmri.jmrix.can.cbus.CbusMessage;
+import jmri.jmrix.can.cbus.CbusOpCodes;
 import jmri.jmrix.can.TrafficController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -68,6 +70,23 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
         tc.addCanListener(this);
     }
 
+    /**
+     * Request an update on status by sending CBUS request message to thrown address.
+     */
+    @Override
+    public void requestUpdateFromLayout() {
+        CanMessage m;
+        m = addrThrown.makeMessage(tc.getCanid());
+        int opc = CbusMessage.getOpcode(m);
+        if (CbusOpCodes.isShortEvent(opc)) {
+            m.setOpCode(CbusConstants.CBUS_ASRQ);
+        }
+        else {
+            m.setOpCode(CbusConstants.CBUS_AREQ);
+        }
+        tc.sendCanMessage(m, this);
+    }
+    
     /**
      * Handle a request to change state by sending CBUS events.
      *

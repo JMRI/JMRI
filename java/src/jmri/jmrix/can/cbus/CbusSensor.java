@@ -6,7 +6,9 @@ import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.TrafficController;
+import jmri.jmrix.can.cbus.CbusConstants;
 import jmri.jmrix.can.cbus.CbusMessage;
+import jmri.jmrix.can.cbus.CbusOpCodes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -68,18 +70,28 @@ public class CbusSensor extends AbstractSensor implements CanListener {
     }
 
     /**
-     * Request an update on status by sending CBUS message.
-     * <p>
-     * There is no known way to do this, so the request is just ignored.
+     * Request an update on status by sending CBUS request message to active address.
      */
     @Override
     public void requestUpdateFromLayout() {
+        CanMessage m;
+        m = addrActive.makeMessage(tc.getCanid());
+        int opc = CbusMessage.getOpcode(m);
+        if (CbusOpCodes.isShortEvent(opc)) {
+            m.setOpCode(CbusConstants.CBUS_ASRQ);
+        }
+        else {
+            m.setOpCode(CbusConstants.CBUS_AREQ);
+        }
+        tc.sendCanMessage(m, this);
     }
 
     /**
      * User request to set the state, which means that we broadcast that to all
      * listeners by putting it out on CBUS. In turn, the code in this class
      * should use setOwnState to handle internal sets and bean notifies.
+     * Unknown state does not send a message to CBUS but updates 
+     * internal sensor state, enabling user test of Start of Day / Logix.
      *
      */
     @Override
@@ -93,6 +105,8 @@ public class CbusSensor extends AbstractSensor implements CanListener {
             m = addrInactive.makeMessage(tc.getCanid());
             tc.sendCanMessage(m, this);
             setOwnState(Sensor.INACTIVE);
+        } else if (s == Sensor.UNKNOWN){
+            setOwnState(Sensor.UNKNOWN);
         }
     }
 
