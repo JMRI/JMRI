@@ -936,6 +936,9 @@ abstract public class AbstractMRTrafficController {
      * @throws java.io.IOException if unable to read
      */
     protected byte readByteProtected(DataInputStream istream) throws IOException {
+	if(istream == null) {
+                throw new IOException("Input Stream NULL when reading");
+	}
         while (true) { // loop will repeat until character found
             int nchars;
             nchars = istream.read(rcvBuffer, 0, 1);
