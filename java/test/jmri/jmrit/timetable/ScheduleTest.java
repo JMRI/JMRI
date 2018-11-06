@@ -10,23 +10,40 @@ public class ScheduleTest {
 
     @Test
     public void testCreate() {
-        new Schedule(1, 1);
+        try {
+            new Schedule(0);
+        } catch (IllegalArgumentException ex) {
+            Assert.assertEquals(ex.getMessage(), "ScheduleAddFail");  // NOI18N
+        }
     }
 
     @Test
     public void testSettersAndGetters() {
-        Schedule s = new Schedule(1, 1);
-        Assert.assertEquals(1, s.getScheduleId());
-        Assert.assertEquals(1, s.getLayoutId());
-        s.setScheduleName("New Schedule");  // NOI18N
-        Assert.assertEquals("New Schedule", s.getScheduleName());  // NOI18N
-        s.setEffDate("today");  // NOI18N
-        Assert.assertEquals("today", s.getEffDate());  // NOI18N
-        s.setStartHour(12);
-        Assert.assertEquals(12, s.getStartHour());
-        s.setDuration(8);
-        Assert.assertEquals(8, s.getDuration());
-        Assert.assertEquals("New Schedule", s.toString());  // NOI18N
+        Layout layout = new Layout();
+        int layoutId = layout.getLayoutId();
+        Schedule schedule = new Schedule(layoutId);
+
+        Assert.assertTrue(schedule.getScheduleId() > 0);
+        Assert.assertTrue(schedule.getLayoutId() > 0);
+        schedule.setScheduleName("New Schedule");  // NOI18N
+        Assert.assertEquals("New Schedule", schedule.getScheduleName());  // NOI18N
+        schedule.setEffDate("today");  // NOI18N
+        Assert.assertEquals("today", schedule.getEffDate());  // NOI18N
+        try {
+            schedule.setStartHour(24);
+        } catch (IllegalArgumentException ex) {
+            Assert.assertEquals(ex.getMessage(), "StartHourRange");  // NOI18N
+        }
+        schedule.setStartHour(12);
+        Assert.assertEquals(12, schedule.getStartHour());
+        try {
+            schedule.setDuration(25);
+        } catch (IllegalArgumentException ex) {
+            Assert.assertEquals(ex.getMessage(), "DurationRange");  // NOI18N
+        }
+        schedule.setDuration(8);
+        Assert.assertEquals(8, schedule.getDuration());
+        Assert.assertEquals("New Schedule", schedule.toString());  // NOI18N
     }
 
     @Before

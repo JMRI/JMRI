@@ -7,9 +7,18 @@ package jmri.jmrit.timetable;
  */
 public class Schedule {
 
-    public Schedule(int scheduleId, int layoutId) {
-        _scheduleId = scheduleId;
+    /**
+     * Create a new schedule with default values.
+     * @param layoutId The parent layout id.
+     * @throws IllegalArgumentException SCHEDULE_ADD_FAIL
+     */
+    public Schedule(int layoutId) throws IllegalArgumentException {
+        if (_dm.getLayout(layoutId) == null) {
+            throw new IllegalArgumentException(_dm.SCHEDULE_ADD_FAIL);
+        }
+        _scheduleId = _dm.getNextId("Schedule");  // NOI18N
         _layoutId = layoutId;
+        _dm.addSchedule(_scheduleId, this);
     }
 
     public Schedule(int scheduleId, int layoutId, String scheduleName, String effDate, int startHour, int duration) {
@@ -21,10 +30,12 @@ public class Schedule {
         setDuration(duration);
     }
 
+    TimeTableDataManager _dm = TimeTableDataManager.getDataManager();
+
     private int _scheduleId = 0;
     private int _layoutId = 0;
-    private String _scheduleName = "";
-    private String _effDate = "";
+    private String _scheduleName = "New Schedule";  // NOI18N
+    private String _effDate = "Today";  // NOI18N
     private int _startHour = 0;
     private int _duration = 24;
 
@@ -62,16 +73,15 @@ public class Schedule {
      * @throws IllegalArgumentException (START_HOUR_RANGE).
      */
     public void setStartHour(int newStartHour) throws IllegalArgumentException {
-        TimeTableDataManager dm = TimeTableDataManager.getDataManager();
         if (newStartHour < 0 || newStartHour > 23) {
-            throw new IllegalArgumentException(dm.START_HOUR_RANGE);
+            throw new IllegalArgumentException(_dm.START_HOUR_RANGE);
         }
         int oldStartHour = _startHour;
         _startHour = newStartHour;
 
         try {
-            dm.calculateScheduleTrains(getScheduleId(), false);
-            dm.calculateScheduleTrains(getScheduleId(), true);
+            _dm.calculateScheduleTrains(getScheduleId(), false);
+            _dm.calculateScheduleTrains(getScheduleId(), true);
         } catch (IllegalArgumentException ex) {
             _startHour = oldStartHour;  // Roll back start hour change
             throw ex;
@@ -88,16 +98,15 @@ public class Schedule {
      * @throws IllegalArgumentException (DURATION_RANGE).
      */
     public void setDuration(int newDuration) throws IllegalArgumentException {
-        TimeTableDataManager dm = TimeTableDataManager.getDataManager();
         if (newDuration < 1 || newDuration > 24) {
-            throw new IllegalArgumentException(dm.DURATION_RANGE);
+            throw new IllegalArgumentException(_dm.DURATION_RANGE);
         }
         int oldDuration = _duration;
         _duration = newDuration;
 
         try {
-            dm.calculateScheduleTrains(getScheduleId(), false);
-            dm.calculateScheduleTrains(getScheduleId(), true);
+            _dm.calculateScheduleTrains(getScheduleId(), false);
+            _dm.calculateScheduleTrains(getScheduleId(), true);
         } catch (IllegalArgumentException ex) {
             _duration = oldDuration;  // Roll back duration change
             throw ex;

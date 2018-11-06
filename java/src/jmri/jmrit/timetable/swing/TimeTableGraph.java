@@ -471,7 +471,7 @@ public class TimeTableGraph extends JPanel {
         if (_firstStop) {
             // For the first stop, use the next stop to set the direction
             nextStation = _dataMgr.getStation(_stops.get(_stopIdx + 1).getStationId());
-            _direction = (nextStation.getDistance() > currDistance) ? "down" : "up";
+            _direction = (nextStation.getDistance() > currDistance) ? "down" : "up";  // NOI18N
             return;
         }
 
@@ -480,7 +480,7 @@ public class TimeTableGraph extends JPanel {
             // For the last stop, use the previous stop to set the direction
             // Last stop may also be only stop after segment change; if so wait for next "if"
             if (prevStation.getSegmentId() == _segmentId) {
-                _direction = (prevStation.getDistance() < currDistance) ? "down" : "up";
+                _direction = (prevStation.getDistance() < currDistance) ? "down" : "up";  // NOI18N
                 return;
             }
         }
@@ -492,7 +492,7 @@ public class TimeTableGraph extends JPanel {
             // Find the corresponding station in the current Segment
             for (Station segStation : _stations) {
                 if (segStation.getStationName().equals(prevName)) {
-                    _direction = (segStation.getDistance() < currDistance) ? "down" : "up";
+                    _direction = (segStation.getDistance() < currDistance) ? "down" : "up";  // NOI18N
                     return;
                 }
             }
@@ -502,7 +502,7 @@ public class TimeTableGraph extends JPanel {
         if (!_lastStop) {
             nextStation = _dataMgr.getStation(_stops.get(_stopIdx + 1).getStationId());
             if (nextStation.getSegmentId() == _segmentId) {
-                _direction = (nextStation.getDistance() > currDistance) ? "down" : "up";
+                _direction = (nextStation.getDistance() > currDistance) ? "down" : "up";  // NOI18N
                 return;
             }
         }
@@ -567,7 +567,7 @@ public class TimeTableGraph extends JPanel {
         if (stop.getDuration() > 0) {
             x = calculateX(stop.getDepartTime());
             _trainLine.lineTo(x, y);
-            drawTrainTime(stop.getDepartTime(), "depart", x, y);
+            drawTrainTime(stop.getDepartTime(), "depart", x, y);  // NOI18N
         }
     }
 

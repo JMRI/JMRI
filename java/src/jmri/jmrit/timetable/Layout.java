@@ -12,14 +12,12 @@ package jmri.jmrit.timetable;
  */
 public class Layout {
 
+    /**
+     * Create a new layout with default values.
+     */
     public Layout() {
-        _layoutId = _dm.getNextId("Layout");
+        _layoutId = _dm.getNextId("Layout");  // NOI18N
         _dm.addLayout(_layoutId, this);
-        setScaleMK();
-    }
-
-    public Layout(int layoutId) {
-        _layoutId = layoutId;
         setScaleMK();
     }
 
@@ -31,11 +29,12 @@ public class Layout {
         setThrottles(throttles);
         setMetric(metric);
     }
+
     TimeTableDataManager _dm = TimeTableDataManager.getDataManager();
 
-    private int _layoutId = 0;
-    private String _layoutName = "New Layout";
-    private String _scale = "HO";
+    private final int _layoutId;
+    private String _layoutName = "New Layout";  // NOI18N
+    private String _scale = "HO";  // NOI18N
     private int _fastClock = 4;
     private int _throttles = 0;
     private boolean _metric = false;
@@ -50,14 +49,13 @@ public class Layout {
      * @throws IllegalArgumentException The calculate can throw an exception which will get re-thrown.
      */
     public void setScaleMK() throws IllegalArgumentException {
-        TimeTableDataManager dm = TimeTableDataManager.getDataManager();
         float distance = (_metric) ? 1000 : 5280;
         _scaleMK = distance / _ratio / _fastClock;
-        log.info("scaleMK = {}, scale = {}", _scaleMK, _scale);  // NOI18N
+        log.debug("scaleMK = {}, scale = {}", _scaleMK, _scale);  // NOI18N
 
         try {
-            dm.calculateLayoutTrains(getLayoutId(), false);
-            dm.calculateLayoutTrains(getLayoutId(), true);
+            _dm.calculateLayoutTrains(getLayoutId(), false);
+            _dm.calculateLayoutTrains(getLayoutId(), true);
         } catch (IllegalArgumentException ex) {
             throw ex;
         }
@@ -88,16 +86,15 @@ public class Layout {
     }
 
     public void setScale(String newScale) {
-        log.info("setScale: '{}'", newScale);
         if (newScale.isEmpty()) {
-            newScale = "HO";
-            log.warn("No scale found, defaulting to HO");
+            newScale = "HO";  // NOI18N
+            log.warn("No scale found, defaulting to HO");  // NOI18N
         }
         Scale eScale;
         try {
             eScale = Scale.valueOf(newScale);
         } catch (IllegalArgumentException ex) {
-            throw new IllegalArgumentException(String.format("%s~%s", _dm.SCALE_NF, newScale));
+            throw new IllegalArgumentException(String.format("%s~%s", _dm.SCALE_NF, newScale));  // NOI18N
         }
 
         String oldScale = _scale;
@@ -127,9 +124,8 @@ public class Layout {
      * will also re-throw a recalc error.
      */
     public void setFastClock(int newClock) throws IllegalArgumentException {
-        TimeTableDataManager dm = TimeTableDataManager.getDataManager();
         if (newClock < 1) {
-            throw new IllegalArgumentException(dm.CLOCK_LT_1);
+            throw new IllegalArgumentException(_dm.CLOCK_LT_1);
         }
         int oldClock = _fastClock;
         _fastClock = newClock;
@@ -155,14 +151,13 @@ public class Layout {
      * new count is less than train references or a negative number was passed.
      */
     public void setThrottles(int newThrottles) throws IllegalArgumentException {
-        TimeTableDataManager dm = TimeTableDataManager.getDataManager();
         if (newThrottles < 0) {
-            throw new IllegalArgumentException(dm.THROTTLES_LT_0);
+            throw new IllegalArgumentException(_dm.THROTTLES_LT_0);
         }
-        for (Schedule schedule : dm.getSchedules(_layoutId, true)) {
-            for (Train train : dm.getTrains(schedule.getScheduleId(), 0, true)) {
+        for (Schedule schedule : _dm.getSchedules(_layoutId, true)) {
+            for (Train train : _dm.getTrains(schedule.getScheduleId(), 0, true)) {
                 if (train.getThrottle() > newThrottles) {
-                    throw new IllegalArgumentException(dm.THROTTLES_IN_USE);
+                    throw new IllegalArgumentException(_dm.THROTTLES_IN_USE);
                 }
             }
         }

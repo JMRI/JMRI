@@ -13,43 +13,53 @@ public class StopTest {
 
     @Test
     public void testCreate() {
-        new Stop(1, 1, 1);
+        try {
+            new Stop(0, 1);
+        } catch (IllegalArgumentException ex) {
+            Assert.assertEquals(ex.getMessage(), "StopAddFail");  // NOI18N
+        }
     }
 
     @Test
     public void testSettersAndGetters() {
-        Stop s = new Stop(1, 1, 1);
-        Assert.assertEquals(1, s.getStopId());  // NOI18N
-        Assert.assertEquals(1, s.getTrainId());
-        s.setSeq(2);
-        Assert.assertEquals(2, s.getSeq());
+        Layout layout = new Layout();
+        int layoutId = layout.getLayoutId();
+        TrainType type = new TrainType(layoutId);
+        int typeId = type.getTypeId();
+        Segment segment = new Segment(layoutId);
+        int segmentId = segment.getSegmentId();
+        Station station = new Station(segmentId);
+        int stationId = station.getStationId();
+        Schedule schedule = new Schedule(layoutId);
+        int scheduleId = schedule.getScheduleId();
+        Train train = new Train (scheduleId);
+        int trainId = train.getTrainId();
 
-//         s.setStationId(1);
-//         Assert.assertEquals(1, s.getStationId());
-//         s.setDuration(15);
-//         Assert.assertEquals(15, s.getDuration());
-//         s.setNextSpeed(30);
-//         Assert.assertEquals(30, s.getNextSpeed());
-//         s.setArriveTime(600);
-//         Assert.assertEquals(600, s.getArriveTime());
-//         s.setDepartTime(630);
-//         Assert.assertEquals(630, s.getDepartTime());
-//         s.setStagingTrack(2);
-//         Assert.assertEquals(2, s.getStagingTrack());
-//         s.setStopNotes("none");  // NOI18N
-//         Assert.assertEquals("none", s.getStopNotes());  // NOI18N
-    }
-
-    @Test
-    public void testToString() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        TimeTableDataManager dm = new TimeTableDataManager(false);
-        Station station = new Station(1, 1);
-        station.setStationName("test station");  // NOI18N
-        dm.addStation(1, station);
-        Stop stop = new Stop(1, 1, 1);
-//         stop.setStationId(1);
-//         Assert.assertEquals("1 :: test station", stop.toString());  // NOI18N
+        Stop stop = new Stop(trainId, 1);
+        Assert.assertTrue(stop.getStopId() > 0);
+        Assert.assertTrue(stop.getTrainId() == trainId);
+        stop.setSeq(2);
+        Assert.assertEquals(2, stop.getSeq());
+        stop.setStationId(stationId);
+        Assert.assertTrue(stop.getStationId() == stationId);
+        stop.setDuration(15);
+        Assert.assertEquals(15, stop.getDuration());
+        stop.setNextSpeed(30);
+        Assert.assertEquals(30, stop.getNextSpeed());
+        stop.setArriveTime(600);
+        Assert.assertEquals(600, stop.getArriveTime());
+        stop.setDepartTime(630);
+        Assert.assertEquals(630, stop.getDepartTime());
+        try {
+            stop.setStagingTrack(2);
+        } catch (IllegalArgumentException ex) {
+            Assert.assertEquals(ex.getMessage(), "StagingRange");  // NOI18N
+        }
+        stop.setStagingTrack(0);
+        Assert.assertEquals(0, stop.getStagingTrack());
+        stop.setStopNotes("none");  // NOI18N
+        Assert.assertEquals("none", stop.getStopNotes());  // NOI18N
+        Assert.assertEquals("2 :: New Station", stop.toString());  // NOI18N
     }
 
     @Before

@@ -825,9 +825,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
      * Add the layout node and the TrainTypes, Segments and Schedules collection nodes.
      */
     void addLayout() {
-        int newId = _dataMgr.getNextId("Layout");  // NOI18N
-        Layout newLayout = new Layout(newId);
-        _dataMgr.addLayout(newId, newLayout);
+        Layout newLayout = new Layout();
         setShowReminder(true);
 
         // Build tree components
@@ -852,9 +850,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
     void addTrainType() {
         TimeTableTreeNode layoutNode = (TimeTableTreeNode) _curNode.getParent();
         int layoutId = layoutNode.getId();
-        int newId = _dataMgr.getNextId("TrainType");  // NOI18N
-        TrainType newType = new TrainType(newId, layoutId, "", "#000000");  // NOI18N
-        _dataMgr.addTrainType(newId, newType);
+        TrainType newType = new TrainType(layoutId);
         setShowReminder(true);
 
         // Build tree components
@@ -872,9 +868,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
     void addSegment() {
         TimeTableTreeNode layoutNode = (TimeTableTreeNode) _curNode.getParent();
         int layoutId = layoutNode.getId();
-        int newId = _dataMgr.getNextId("Segment");  // NOI18N
-        Segment newSegment = new Segment(newId, layoutId, "");
-        _dataMgr.addSegment(newId, newSegment);
+        Segment newSegment = new Segment(layoutId);
         setShowReminder(true);
 
         // Build tree components
@@ -890,9 +884,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
      * Create a new Station object with default values.
      */
     void addStation() {
-        int newId = _dataMgr.getNextId("Station");  // NOI18N
-        Station newStation = new Station(newId, _curNodeId);
-        _dataMgr.addStation(newId, newStation);
+        Station newStation = new Station(_curNodeId);
         setShowReminder(true);
 
         // Build tree components
@@ -910,9 +902,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
     void addSchedule() {
         TimeTableTreeNode layoutNode = (TimeTableTreeNode) _curNode.getParent();
         int layoutId = layoutNode.getId();
-        int newId = _dataMgr.getNextId("Schedule");  // NOI18N
-        Schedule newSchedule = new Schedule(newId, layoutId);
-        _dataMgr.addSchedule(newId, newSchedule);
+        Schedule newSchedule = new Schedule(layoutId);
         setShowReminder(true);
 
         // Build tree components
@@ -925,9 +915,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
     }
 
     void addTrain() {
-        int newId = _dataMgr.getNextId("Train");  // NOI18N
-        Train newTrain = new Train(newId, _curNodeId);
-        _dataMgr.addTrain(newId, newTrain);
+        Train newTrain = new Train(_curNodeId);
         setShowReminder(true);
 
         // Build tree components
@@ -940,10 +928,8 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
     }
 
     void addStop() {
-        int newId = _dataMgr.getNextId("Stop");
         int newSeq = _dataMgr.getStops(_curNodeId, 0, false).size();
-        Stop newStop = new Stop(newId, _curNodeId, newSeq + 1);
-        _dataMgr.addStop(newId, newStop);
+        Stop newStop = new Stop(_curNodeId, newSeq + 1);
         setShowReminder(true);
 
         // Build tree components
@@ -1628,9 +1614,6 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         int newStagingTrack = (int) _editStagingTrack.getValue();
         String newNotes = _editStopNotes.getText();
 
-//         log.info("Stop station = {} ({}), dur = {}, next = {}, stg = {}, notes = {}",  // NOI18N
-//                 stopSegmentStation, newStation, newDuration, newSpeed, newStagingTrack, newNotes);
-
         boolean update = false;
         List<String> exceptionList = new ArrayList<>();
 
@@ -1935,7 +1918,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         List<Train> trainList = new ArrayList<>(_dataMgr.getTrains(_curNodeId, 0, true));
         if (!trainList.isEmpty()) {
             // The schedule still has trains.
-            // Present the option to delete the trains and the schedule
+            // Present the option to delete the stops, trains and the schedule
             Object[] options = {Bundle.getMessage("ButtonNo"), Bundle.getMessage("ButtonYes")};  // NOI18N
             int selectedOption = JOptionPane.showOptionDialog(null,
                     Bundle.getMessage("ScheduleCascade"), // NOI18N
@@ -2008,9 +1991,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
      */
     void deleteStop() {
         // delete the stop
-//         int trainId = _dataMgr.getStop(_curNodeId).getTrainId();
         _dataMgr.deleteStop(_curNodeId);
-//         _dataMgr.calculateTrain(trainId, true);
         setShowReminder(true);
 
         // Update the tree
@@ -2240,191 +2221,6 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         InstanceManager.reset(TimeTableFrame.class);
         dispose();
     }
-
-    // ------------  Calculate Train Times ------------
-
-    /**
-     * Update the trains for all of the trains for this layout.
-     * Invoked by updates to fast clock speed, metric, scale and station distances.
-     * @param layoutId The id for the layout that has been updated.
-     * @return false if any train in any schedule has an error.
-     */
-//     boolean calculateLayoutTrains(int layoutId) {
-//         boolean result = true;
-//         for (Schedule schedule : _dataMgr.getSchedules(layoutId, false)) {
-//             if (!calculateScheduleTrains(schedule.getScheduleId())) {
-//                 result = false;
-//             }
-//         }
-//         return result;
-//     }
-
-    /**
-     * Update the train times for all of the trains that use this schedule.
-     * @param scheduleId The id for the schedule that has been updated.
-     * @return false if any train has an error.
-     */
-//     boolean calculateScheduleTrains(int scheduleId) {
-//         boolean result = true;
-//         for (Train train : _dataMgr.getTrains(scheduleId, 0, false)) {
-//             if (!calculateTrain(train.getTrainId())) {
-//                 result = false;
-//             }
-//         }
-//         return result;
-//     }
-
-    /**
-     * Calculate the arrival and departure times for all of the stops.
-     * @param trainId The id of the train to be updated.
-     * @return false if any errors occur
-     */
-//     boolean calculateTrain(int trainId) {
-//         // Get the data
-//         Train train = _dataMgr.getTrain(trainId);
-//         Schedule schedule = _dataMgr.getSchedule(train.getScheduleId());
-//         Layout layout = _dataMgr.getLayout(schedule.getLayoutId());
-//         ArrayList<Stop> stops = _dataMgr.getStops(trainId, 0, true);
-//
-//         float smile = layout.getScaleMK();
-//         int startHH = schedule.getStartHour();
-//         int duration = schedule.getDuration();
-//         int currentTime = train.getStartTime();
-//         int defaultSpeed = train.getDefaultSpeed();
-//
-//         checkStart = startHH;
-//         checkDuration = duration;
-//
-//         String currentStationName = "";
-//         double currentDistance = 0.0;
-//         int currentSegment = 0;
-//         int currentSpeed = 0;
-//         int newArrive = 0;
-//         int newDepart = 0;
-//         int elapseTime = 0;
-//         boolean firstStop = true;
-//
-//         for (Stop stop : stops) {
-//             Station station = _dataMgr.getStation(stop.getStationId());
-//             Segment segment = _dataMgr.getSegment(station.getSegmentId());
-//             if (firstStop) {
-//                 newArrive = currentTime;
-//                 currentTime += stop.getDuration();
-//                 newDepart = currentTime;
-//                 currentDistance = station.getDistance();
-//                 currentSpeed = (stop.getNextSpeed() > 0) ? stop.getNextSpeed() : defaultSpeed;
-//                 currentStationName = station.getStationName();
-//                 currentSegment = segment.getSegmentId();
-//
-//                 if (validateTime(newArrive) && validateTime(newDepart)) {
-//                     stop.setArriveTime(newArrive);
-//                     stop.setDepartTime(newDepart);
-//                 } else {
-//                     JOptionPane.showMessageDialog(null,
-//                             Bundle.getMessage("TimeOutOfRange", stop.getSeq(), train.getTrainName()),  // NOI18N
-//                             Bundle.getMessage("WarningTitle"),  // NOI18N
-//                             JOptionPane.WARNING_MESSAGE);
-//                     return false;
-//                 }
-//                 firstStop = false;
-//                 continue;
-//             }
-//
-//             // Calculate times for remaining stops
-//             double wrkDistance = Math.abs(currentDistance - station.getDistance());
-//
-//             // If the segment has changed, a new distance will need to be calculated.
-//             if (segment.getSegmentId() != currentSegment) {
-//                 // Find the station in the current segment that has the same name
-//                 // as the station in the previous segment.
-//                 Station wrkStation = null;
-//                 for (Station findStation : _dataMgr.getStations(segment.getSegmentId(), false)) {
-//                     if (findStation.getStationName().equals(currentStationName)) {
-//                         wrkStation = findStation;
-//                         break;
-//                     }
-//                 }
-//                 if (wrkStation == null) {
-//                     JOptionPane.showMessageDialog(null,
-//                             Bundle.getMessage("SegmentChangeError", currentStationName, segment.getSegmentName()),  // NOI18N
-//                             Bundle.getMessage("WarningTitle"),  // NOI18N
-//                             JOptionPane.WARNING_MESSAGE);
-//                     return false;
-//                 }
-//                 wrkDistance = Math.abs(station.getDistance() - wrkStation.getDistance());
-//             }
-//
-//             elapseTime = (int) Math.round(wrkDistance / smile / currentSpeed * 60);
-//             if (elapseTime < 1) {
-//                 elapseTime = 1;
-//             }
-//             currentTime += elapseTime;
-//             if (currentTime > 1439)
-//                 currentTime -= 1440;
-//             newArrive = currentTime;
-//             currentTime += stop.getDuration();
-//             if (currentTime > 1439)
-//                 currentTime -= 1440;
-//             newDepart = currentTime;
-//
-//             currentDistance = station.getDistance();
-//             currentSpeed = (stop.getNextSpeed() > 0) ? stop.getNextSpeed() : defaultSpeed;
-//             currentSegment = station.getSegmentId();
-//             currentStationName = station.getStationName();
-//
-//             if (validateTime(newArrive) && validateTime(newDepart)) {
-//                 stop.setArriveTime(newArrive);
-//                 stop.setDepartTime(newDepart);
-//             } else {
-//                 JOptionPane.showMessageDialog(null,
-//                         Bundle.getMessage("TimeOutOfRange", stop.getSeq(), train.getTrainName()),  // NOI18N
-//                         Bundle.getMessage("WarningTitle"),  // NOI18N
-//                         JOptionPane.WARNING_MESSAGE);
-//                 return false;
-//             }
-//         }
-//         return true;
-//     }
-//
-//     int checkStart;
-//     int checkDuration;
-    /**
-     * Check to see if the supplied time is within the time range for the supplied schedule.
-     * If the duration is 24 hours, then all times are valid.
-     * Otherwise, we need to calculate the valid range, which can span midnight.
-     * @param checkTime The time value to be check.
-     * @return true if the time is valid.
-     */
-//     boolean validateTime(int checkTime) {
-//         if (checkDuration == 24 && checkTime < 1440) {
-//             return true;
-//         }
-//
-//         boolean dayWrap;
-//         int lowLimit;
-//         int highLimit;
-//
-//         if (checkStart + checkDuration > 24) {
-//             dayWrap = true;
-//             lowLimit = checkStart * 60;
-//             highLimit = ((checkStart + checkDuration - 24) * 60) - 1;
-//         } else {
-//             dayWrap = false;
-//             lowLimit = checkStart * 60;
-//             highLimit = ((checkStart + checkDuration) * 60) - 1;
-//         }
-//
-//         if (dayWrap) {
-//             if (checkTime < 1440 && (checkTime >= lowLimit || checkTime <= highLimit)) {
-//                 return true;
-//             }
-//         } else {
-//             if (checkTime < 1440 && (checkTime >= lowLimit && checkTime <= highLimit)) {
-//                 return true;
-//             }
-//         }
-//         return false;
-//     }
 
     // ------------  Tree Content and Navigation ------------
 

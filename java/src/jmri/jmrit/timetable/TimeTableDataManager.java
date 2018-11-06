@@ -54,29 +54,39 @@ public class TimeTableDataManager {
         return new TimeTableDataManager(true);
     }
 
-    boolean _lockCalculate = false;
-
     // Exception key words
-    public static final String CLOCK_LT_1 = "FastClockLt1";    // NOI18N
-    public static final String DURATION_LT_0 = "DurationLt0";    // NOI18N
-    public static final String THROTTLES_LT_0 = "ThrottlesLt0";    // NOI18N
-    public static final String THROTTLES_IN_USE = "ThrottlesInUse";    // NOI18N
-    public static final String SCALE_NF = "ScaleNotFound";    // NOI18N
-    public static final String TIME_OUT_OF_RANGE = "TimeOutOfRange";    // NOI18N
-    public static final String SEGMENT_CHANGE_ERROR = "SegmentChangeError";    // NOI18N
-    public static final String DISTANCE_LT_0 = "DistanceLt0";    // NOI18N
-    public static final String SIDINGS_LT_0 = "SidingsLt0";    // NOI18N
-    public static final String STAGING_LT_0 = "StagingLt0";    // NOI18N
-    public static final String STAGING_IN_USE = "StagingInUse";    // NOI18N
-    public static final String START_HOUR_RANGE = "StartHourRange";    // NOI18N
-    public static final String DURATION_RANGE = "DurationRange";    // NOI18N
-    public static final String DEFAULT_SPEED_LT_0 = "DefaultSpeedLt0";    // NOI18N
-    public static final String START_TIME_FORMAT = "StartTimeFormat";    // NOI18N
-    public static final String START_TIME_RANGE = "StartTimeRange";    // NOI18N
-    public static final String THROTTLE_RANGE = "ThrottleRange";    // NOI18N
-    public static final String STAGING_RANGE = "StagingRange";    // NOI18N
-    public static final String STOP_DURATION_LT_0 = "StopDurationLt0";    // NOI18N
-    public static final String NEXT_SPEED_LT_0 = "NextSpeedLt0";    // NOI18N
+    public final String CLOCK_LT_1 = "FastClockLt1";    // NOI18N
+    public final String DURATION_LT_0 = "DurationLt0";    // NOI18N
+    public final String THROTTLES_LT_0 = "ThrottlesLt0";    // NOI18N
+    public final String THROTTLES_IN_USE = "ThrottlesInUse";    // NOI18N
+    public final String SCALE_NF = "ScaleNotFound";    // NOI18N
+    public final String TIME_OUT_OF_RANGE = "TimeOutOfRange";    // NOI18N
+    public final String SEGMENT_CHANGE_ERROR = "SegmentChangeError";    // NOI18N
+    public final String DISTANCE_LT_0 = "DistanceLt0";    // NOI18N
+    public final String SIDINGS_LT_0 = "SidingsLt0";    // NOI18N
+    public final String STAGING_LT_0 = "StagingLt0";    // NOI18N
+    public final String STAGING_IN_USE = "StagingInUse";    // NOI18N
+    public final String START_HOUR_RANGE = "StartHourRange";    // NOI18N
+    public final String DURATION_RANGE = "DurationRange";    // NOI18N
+    public final String DEFAULT_SPEED_LT_0 = "DefaultSpeedLt0";    // NOI18N
+    public final String START_TIME_FORMAT = "StartTimeFormat";    // NOI18N
+    public final String START_TIME_RANGE = "StartTimeRange";    // NOI18N
+    public final String THROTTLE_RANGE = "ThrottleRange";    // NOI18N
+    public final String STAGING_RANGE = "StagingRange";    // NOI18N
+    public final String STOP_DURATION_LT_0 = "StopDurationLt0";    // NOI18N
+    public final String NEXT_SPEED_LT_0 = "NextSpeedLt0";    // NOI18N
+    public final String LAYOUT_HAS_CHILDREN = "LayoutHasChildren";    // NOI18N
+    public final String TYPE_HAS_REFERENCE = "TypeHasReference";    // NOI18N
+    public final String SEGMENT_HAS_CHILDREN = "SegmentHaSChildren";    // NOI18N
+    public final String STATION_HAS_REFERENCE = "StationHasReference";    // NOI18N
+    public final String SCHEDULE_HAS_CHILDREN = "ScheduleHasChildren";    // NOI18N
+    public final String TRAIN_HAS_CHILDREN = "TrainHasChildren";    // NOI18N
+    public final String TYPE_ADD_FAIL = "TypeAddFail";    // NOI18N
+    public final String SEGMENT_ADD_FAIL = "SegmentAddFail";    // NOI18N
+    public final String STATION_ADD_FAIL = "StationAddFail";    // NOI18N
+    public final String SCHEDULE_ADD_FAIL = "ScheduleAddFail";    // NOI18N
+    public final String TRAIN_ADD_FAIL = "TrainAddFail";    // NOI18N
+    public final String STOP_ADD_FAIL = "StopAddFail";    // NOI18N
 
     private TreeMap<Integer, Layout> _layoutMap = new TreeMap<>();
     private TreeMap<Integer, TrainType> _trainTypeMap = new TreeMap<>();
@@ -87,6 +97,11 @@ public class TimeTableDataManager {
     private TreeMap<Integer, Stop> _stopMap = new TreeMap<>();
 
     private List<SegmentStation> _segmentStations = new ArrayList<>();
+
+    boolean _lockCalculate = false;
+    public void setLockCalculate(boolean lock) {
+        _lockCalculate = lock;
+    }
 
     // ------------ Map maintenance methods ------------ //
 
@@ -127,20 +142,54 @@ public class TimeTableDataManager {
         _stopMap.put(id, newStop);
     }
 
-    public void deleteLayout(int id) {
+    /**
+     * Delete the layout if there are no train types, segments or schedules.
+     * param id The layout id.
+     * @throws IllegalArgumentException LAYOUT_HAS_CHILDREN
+     */
+    public void deleteLayout(int id) throws IllegalArgumentException {
+        if (getTrainTypes(id, false).size() > 0
+                || getSegments(id, false).size() > 0
+                || getSchedules(id, false).size() > 0) {
+            throw new IllegalArgumentException(LAYOUT_HAS_CHILDREN);
+        }
         _layoutMap.remove(id);
     }
 
-    public void deleteTrainType(int id) {
+    /**
+     * Delete the train type if there are no train references.
+     * param id The train type id.
+     * @throws IllegalArgumentException TYPE_HAS_REFERENCE
+     */
+    public void deleteTrainType(int id) throws IllegalArgumentException {
+        if (getTrains(0, id, false).size() > 0) {
+            throw new IllegalArgumentException(TYPE_HAS_REFERENCE);
+        }
         _trainTypeMap.remove(id);
     }
 
-    public void deleteSegment(int id) {
+    /**
+     * Delete the segment if it has no stations.
+     * param id The segment id.
+     * @throws IllegalArgumentException SEGMENT_HAS_CHILDREN
+     */
+    public void deleteSegment(int id) throws IllegalArgumentException {
+        if (getStations(id, false).size() > 0) {
+            throw new IllegalArgumentException(SEGMENT_HAS_CHILDREN);
+        }
         _segmentMap.remove(id);
     }
 
-    public void deleteStation(int id) {
-        // Remove segment station row.
+    /**
+     * Delete the station if there are no stop references.
+     * param id The station id.
+     * @throws IllegalArgumentException STATION_HAS_REFERENCE
+     */
+    public void deleteStation(int id) throws IllegalArgumentException {
+        if (getStops(0, id, false).size() > 0) {
+            throw new IllegalArgumentException(STATION_HAS_REFERENCE);
+        }
+
         int segmentId = getStation(id).getSegmentId();
         List<SegmentStation> list = new ArrayList<>();
         for (SegmentStation segmentStation : _segmentStations) {
@@ -155,14 +204,34 @@ public class TimeTableDataManager {
         _stationMap.remove(id);
     }
 
-    public void deleteSchedule(int id) {
+    /**
+     * Delete the schedule if it has no trains.
+     * param id The schedule id.
+     * @throws IllegalArgumentException SCHEDULE_HAS_CHILDREN
+     */
+    public void deleteSchedule(int id) throws IllegalArgumentException {
+        if (getTrains(id, 0, false).size() > 0) {
+            throw new IllegalArgumentException(SCHEDULE_HAS_CHILDREN);
+        }
         _scheduleMap.remove(id);
     }
 
-    public void deleteTrain(int id) {
+    /**
+     * Delete the train if it has no stops.
+     * param id The train id.
+     * @throws IllegalArgumentException TRAIN_HAS_CHILDREN
+     */
+    public void deleteTrain(int id) throws IllegalArgumentException {
+        if (getStops(id, 0, false).size() > 0) {
+            throw new IllegalArgumentException(TRAIN_HAS_CHILDREN);
+        }
         _trainMap.remove(id);
     }
 
+    /**
+     * Delete the stop and update train schedule.
+     * param id The stop id.
+     */
     public void deleteStop(int id) {
         int trainId = getStop(id).getTrainId();
         _stopMap.remove(id);
@@ -466,11 +535,6 @@ public class TimeTableDataManager {
                     }
                 } else {
                     throw new IllegalArgumentException(TIME_OUT_OF_RANGE);
-//                     JOptionPane.showMessageDialog(null,
-//                             Bundle.getMessage("TimeOutOfRange", stop.getSeq(), train.getTrainName()),  // NOI18N
-//                             Bundle.getMessage("WarningTitle"),  // NOI18N
-//                             JOptionPane.WARNING_MESSAGE);
-//                     return false;
                 }
                 firstStop = false;
                 continue;
@@ -492,11 +556,6 @@ public class TimeTableDataManager {
                 }
                 if (wrkStation == null) {
                     throw new IllegalArgumentException(SEGMENT_CHANGE_ERROR);
-//                     JOptionPane.showMessageDialog(null,
-//                             Bundle.getMessage("SegmentChangeError", currentStationName, segment.getSegmentName()),  // NOI18N
-//                             Bundle.getMessage("WarningTitle"),  // NOI18N
-//                             JOptionPane.WARNING_MESSAGE);
-//                     return false;
                 }
                 wrkDistance = Math.abs(station.getDistance() - wrkStation.getDistance());
             }
@@ -525,12 +584,7 @@ public class TimeTableDataManager {
                     stop.setDepartTime(newDepart);
                 }
             } else {
-                throw new IllegalArgumentException(String.format("%s~%d~%s", TIME_OUT_OF_RANGE, stop.getSeq(), train.getTrainName()));
-//                 JOptionPane.showMessageDialog(null,
-//                         Bundle.getMessage("TimeOutOfRange", stop.getSeq(), train.getTrainName()),  // NOI18N
-//                         Bundle.getMessage("WarningTitle"),  // NOI18N
-//                         JOptionPane.WARNING_MESSAGE);
-//                 return false;
+                throw new IllegalArgumentException(String.format("%s~%d~%s", TIME_OUT_OF_RANGE, stop.getSeq(), train.getTrainName()));  // NOI18N
             }
         }
     }

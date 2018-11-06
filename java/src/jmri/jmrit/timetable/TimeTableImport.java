@@ -24,6 +24,7 @@ public class TimeTableImport {
 
     public void importSgn(TimeTableDataManager dm, File file) throws IOException {
         _dm = dm;
+        _dm.setLockCalculate(true);
         try {
             fileReader = new FileReader(file);
             bufferedReader = new BufferedReader(fileReader);
@@ -38,7 +39,7 @@ public class TimeTableImport {
 
             while ((line = bufferedReader.readLine()) != null) {
                 // Split line and remove double quotes
-                String[] lineStrings = line.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)");
+                String[] lineStrings = line.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)");  // NOI18N
                 for (int i = 0; i < lineStrings.length; i++) {
                     lineStrings[i] = lineStrings[i].replace("\"", "");
                 }
@@ -132,6 +133,7 @@ public class TimeTableImport {
                fileReader.close();
             }
         }
+        _dm.setLockCalculate(false);
     }
 
     void createLayout(String[] lineStrings) {

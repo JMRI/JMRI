@@ -10,25 +10,49 @@ public class StationTest {
 
     @Test
     public void testCreate() {
-        new Station(1, 1);
+        try {
+            new Station(0);
+        } catch (IllegalArgumentException ex) {
+            Assert.assertEquals(ex.getMessage(), "StationAddFail");  // NOI18N
+        }
     }
 
     @Test
     public void testSettersAndGetters() {
-        Station s = new Station(1, 1);
-        Assert.assertEquals(1, s.getStationId());
-        Assert.assertEquals(1, s.getSegmentId());
-        s.setStationName("New Station");  // NOI18N
-        Assert.assertEquals("New Station", s.getStationName());  // NOI18N
-        s.setDistance(123.0);
-        Assert.assertEquals(123.0, s.getDistance(), 1.0);
-        s.setDoubleTrack(true);
-        Assert.assertTrue(s.getDoubleTrack());
-        s.setSidings(2);
-        Assert.assertEquals(2, s.getSidings());
-        s.setStaging(4);
-        Assert.assertEquals(4, s.getStaging());
-        Assert.assertEquals("New Station", s.toString());  // NOI18N
+        Layout layout = new Layout();
+        int layoutId = layout.getLayoutId();
+        Segment segment = new Segment(layoutId);
+        int segmentId = segment.getSegmentId();
+        Station station = new Station(segmentId);
+        Assert.assertTrue(station.getStationId() > 0);
+        Assert.assertTrue(station.getSegmentId() > 0);
+        station.setStationName("New Station");  // NOI18N
+        Assert.assertEquals("New Station", station.getStationName());  // NOI18N
+        try {
+            station.setDistance(-10.0);
+        } catch (IllegalArgumentException ex) {
+            Assert.assertEquals(ex.getMessage(), "DistanceLt0");  // NOI18N
+        }
+        station.setDistance(123.0);
+        Assert.assertEquals(123.0, station.getDistance(), 1.0);
+        station.setDoubleTrack(true);
+        Assert.assertTrue(station.getDoubleTrack());
+        try {
+            station.setSidings(-1);
+        } catch (IllegalArgumentException ex) {
+            Assert.assertEquals(ex.getMessage(), "SidingsLt0");  // NOI18N
+        }
+        station.setSidings(2);
+        Assert.assertEquals(2, station.getSidings());
+        try {
+            station.setStaging(-1);
+        } catch (IllegalArgumentException ex) {
+            Assert.assertEquals(ex.getMessage(), "StagingLt0");  // NOI18N
+        }
+
+        station.setStaging(4);
+        Assert.assertEquals(4, station.getStaging());
+        Assert.assertEquals("New Station", station.toString());  // NOI18N
     }
 
     @Before

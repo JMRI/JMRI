@@ -9,10 +9,20 @@ import jmri.jmrit.timetable.swing.*;
  */
 public class Stop {
 
-    public Stop(int stopId, int trainId, int seq) {
-        _stopId = stopId;
+    /**
+     * Create a new stop with default values.
+     * @param trainId The parent train id.
+     * @param seq The next stop sequence number.
+     * @throws IllegalArgumentException STOP_ADD_FAIL
+     */
+    public Stop(int trainId, int seq) throws IllegalArgumentException {
+        if (_dm.getTrain(trainId) == null) {
+            throw new IllegalArgumentException(_dm.STOP_ADD_FAIL);
+        }
+        _stopId = _dm.getNextId("Stop");  // NOI18N
         _trainId = trainId;
         _seq = seq;
+        _dm.addStop(_stopId, this);
     }
 
     public Stop(int stopId, int trainId, int stationId, int seq, int duration,
@@ -29,8 +39,10 @@ public class Stop {
         setStopNotes(stopNotes);
     }
 
-    private int _stopId = 0;
-    private int _trainId = 0;
+    TimeTableDataManager _dm = TimeTableDataManager.getDataManager();
+
+    private final int _stopId;
+    private final int _trainId;
     private int _stationId = 0;
     private int _seq = 0;
     private int _duration = 0;
@@ -53,13 +65,12 @@ public class Stop {
     }
 
     public void setStationId(int newStationId) throws IllegalArgumentException {
-        TimeTableDataManager dm = TimeTableDataManager.getDataManager();
         int oldDStationId = _stationId;
         _stationId = newStationId;
 
         try {
-            dm.calculateTrain(_trainId, false);
-            dm.calculateTrain(_trainId, true);
+            _dm.calculateTrain(_trainId, false);
+            _dm.calculateTrain(_trainId, true);
         } catch (IllegalArgumentException ex) {
             _stationId = oldDStationId;  // Roll back station change
             throw ex;
@@ -83,16 +94,15 @@ public class Stop {
     }
 
     public void setDuration(int newDuration) throws IllegalArgumentException {
-        TimeTableDataManager dm = TimeTableDataManager.getDataManager();
         if (newDuration < 0) {
-            throw new IllegalArgumentException(dm.STOP_DURATION_LT_0);
+            throw new IllegalArgumentException(_dm.STOP_DURATION_LT_0);
         }
         int oldDuration = _duration;
         _duration = newDuration;
 
         try {
-            dm.calculateTrain(_trainId, false);
-            dm.calculateTrain(_trainId, true);
+            _dm.calculateTrain(_trainId, false);
+            _dm.calculateTrain(_trainId, true);
         } catch (IllegalArgumentException ex) {
             _duration = oldDuration;  // Roll back duration change
             throw ex;
@@ -104,16 +114,15 @@ public class Stop {
     }
 
     public void setNextSpeed(int newNextSpeed) throws IllegalArgumentException {
-        TimeTableDataManager dm = TimeTableDataManager.getDataManager();
         if (newNextSpeed < 0) {
-            throw new IllegalArgumentException(dm.NEXT_SPEED_LT_0);
+            throw new IllegalArgumentException(_dm.NEXT_SPEED_LT_0);
         }
         int oldNextSpeed = _nextSpeed;
         _nextSpeed = newNextSpeed;
 
         try {
-            dm.calculateTrain(_trainId, false);
-            dm.calculateTrain(_trainId, true);
+            _dm.calculateTrain(_trainId, false);
+            _dm.calculateTrain(_trainId, true);
         } catch (IllegalArgumentException ex) {
             _nextSpeed = oldNextSpeed;  // Roll back next speed change
             throw ex;
@@ -141,10 +150,9 @@ public class Stop {
     }
 
     public void setStagingTrack(int newStagingTrack) throws IllegalArgumentException {
-        TimeTableDataManager dm = TimeTableDataManager.getDataManager();
-        Station station = dm.getStation(_stationId);
+        Station station = _dm.getStation(_stationId);
         if (newStagingTrack < 0 || newStagingTrack > station.getStaging()) {
-            throw new IllegalArgumentException(dm.STAGING_RANGE);
+            throw new IllegalArgumentException(_dm.STAGING_RANGE);
         }
 
         _stagingTrack = newStagingTrack;
