@@ -92,7 +92,43 @@ public class SensorTableWindowTest extends jmri.util.SwingTestCase {
         Assert.assertNotNull(jmri.InstanceManager.sensorManagerInstance().getSensor("IS1"));
     }
 
-    // from here down is testing infrastructure
+    public void testMenus() throws Exception {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't Assume in TestCase
+        }
+
+        // ask for the Debounce menu to open
+        SensorTableAction a = new SensorTableAction();
+        a.actionPerformed(new java.awt.event.ActionEvent(a, 1, ""));
+
+        a.setDefaultDebounce(null);
+        // Find new table window by name
+        JmriJFrame db = JmriJFrame.getFrame(Bundle.getMessage("SensorGlobalDebounceMessageTitle"));
+        Assert.assertNotNull("found Global Debounce dialog", db);
+        // Find the cancel button
+        AbstractButtonFinder abfinder = new AbstractButtonFinder(Bundle.getMessage("ButtonCancel"));
+        JButton button = (JButton) abfinder.find(db, 0);
+        Assert.assertNotNull("found Cancel button", button);
+        // Click button to cancel dialog
+        getHelper().enterClickAndLeave(new MouseEventData(this, button));
+
+        // ask for the Default State menu to open
+        SensorTableAction a1 = new SensorTableAction();
+        a1.actionPerformed(new java.awt.event.ActionEvent(a, 1, ""));
+
+        a1.setDefaultState(null);
+        // Find new table window by name
+        JmriJFrame ds = JmriJFrame.getFrame(Bundle.getMessage("InitialSensorState"));
+        Assert.assertNotNull("found Default State dialog", ds);
+        // Find the cancel button
+        abfinder = new AbstractButtonFinder(Bundle.getMessage("ButtonCancel"));
+        button = (JButton) abfinder.find(ds, 0);
+        Assert.assertNotNull("found Cancel button", button);
+        // Click button to cancel dialog
+        getHelper().enterClickAndLeave(new MouseEventData(this, button));
+    }
+
+        // from here down is testing infrastructure
     public SensorTableWindowTest(String s) {
         super(s);
     }

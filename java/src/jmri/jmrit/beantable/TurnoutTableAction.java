@@ -1156,7 +1156,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
     }
 
     /**
-     * Add the content and make the appropriate selection to a combox box for a
+     * Add the content and make the appropriate selection to a combo box for a
      * turnout's automation choices.
      *
      * @param t  turnout

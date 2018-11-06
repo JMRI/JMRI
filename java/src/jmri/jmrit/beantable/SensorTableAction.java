@@ -435,11 +435,18 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
             default:
                 stateCombo.setSelectedItem(Bundle.getMessage("BeanStateUnknown"));
         }
+
+        JPanel input = new JPanel(); // panel to hold formatted input for dialog
+        input.add(new JLabel(Bundle.getMessage("SensorInitialStateMessageBox")));
+        JPanel stateBoxPane = new JPanel();
+        stateBoxPane.add(stateCombo);
+        input.add(stateBoxPane);
+
         int retval = JOptionPane.showOptionDialog(_who,
-                Bundle.getMessage("SensorInitialStateMessageBox"), Bundle.getMessage("InitialSensorState"),
+                input, Bundle.getMessage("InitialSensorState"),
                 0, JOptionPane.INFORMATION_MESSAGE, null,
-                new Object[]{Bundle.getMessage("ButtonCancel"), Bundle.getMessage("ButtonOK"), stateCombo}, null);
-        if (retval != 1) {
+                new Object[]{Bundle.getMessage("ButtonOK"), Bundle.getMessage("ButtonCancel")}, null);
+        if (retval != 0) {
             return;
         }
         int defaultState = jmri.Sensor.UNKNOWN;
