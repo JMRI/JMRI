@@ -10,6 +10,7 @@ import jmri.util.JmriJFrame;
 import junit.extensions.jfcunit.TestHelper;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
 import junit.extensions.jfcunit.finder.AbstractButtonFinder;
+import junit.extensions.jfcunit.finder.DialogFinder;
 import junit.extensions.jfcunit.finder.NamedComponentFinder;
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -97,38 +98,58 @@ public class SensorTableWindowTest extends jmri.util.SwingTestCase {
             return; // can't Assume in TestCase
         }
 
-        // ask for the Debounce menu to open
         SensorTableAction a = new SensorTableAction();
         a.actionPerformed(new java.awt.event.ActionEvent(a, 1, ""));
 
-        a.setDefaultDebounce(null);
-        // Find new table window by name
-        JmriJFrame db = JmriJFrame.getFrame(Bundle.getMessage("SensorGlobalDebounceMessageTitle"));
-        Assert.assertNotNull("found Global Debounce dialog", db);
-        // Find the cancel button
-        AbstractButtonFinder abfinder = new AbstractButtonFinder(Bundle.getMessage("ButtonCancel"));
-        JButton button = (JButton) abfinder.find(db, 0);
-        Assert.assertNotNull("found Cancel button", button);
-        // Click button to cancel dialog
-        getHelper().enterClickAndLeave(new MouseEventData(this, button));
+        // Find sensor table window by name
+        JmriJFrame ft = JmriJFrame.getFrame(Bundle.getMessage("TitleSensorTable"));
 
-        // ask for the Default State menu to open
-        SensorTableAction a1 = new SensorTableAction();
-        a1.actionPerformed(new java.awt.event.ActionEvent(a, 1, ""));
-
-        a1.setDefaultState(null);
-        // Find new table window by name
-        JmriJFrame ds = JmriJFrame.getFrame(Bundle.getMessage("InitialSensorState"));
-        Assert.assertNotNull("found Default State dialog", ds);
+        // ask for the Debounce menu to open
+        jmri.util.ThreadingUtil.runOnGUIEventually(() -> {
+            a.setDefaultDebounce(null);
+        });
+        flushAWT();
+        // Find new dialog window by name
+        java.awt.Container dialog = findContainer(Bundle.getMessage("SensorGlobalDebounceMessageTitle"));
+        Assert.assertNotNull("Not found Global Debounce dialog", dialog);
         // Find the cancel button
-        abfinder = new AbstractButtonFinder(Bundle.getMessage("ButtonCancel"));
-        button = (JButton) abfinder.find(ds, 0);
-        Assert.assertNotNull("found Cancel button", button);
-        // Click button to cancel dialog
-        getHelper().enterClickAndLeave(new MouseEventData(this, button));
+        pressButton(dialog, Bundle.getMessage("ButtonCancel"));
+
+        // ask for the Debounce menu to open
+        jmri.util.ThreadingUtil.runOnGUIEventually(() -> {
+            a.setDefaultState(null);
+        });
+        flushAWT();
+        // Find new dialog window by name
+        dialog = findContainer(Bundle.getMessage("InitialSensorState"));
+        Assert.assertNotNull("Not found Global Debounce dialog", dialog);
+        // Find the cancel button
+        pressButton(dialog, Bundle.getMessage("ButtonCancel"));
+
+        // Ask to close table window
+        TestHelper.disposeWindow(ft, this);
+
+        flushAWT();
     }
 
-        // from here down is testing infrastructure
+    private java.awt.Container findContainer(String title) {
+        DialogFinder finder = new DialogFinder(title);
+        JUnitUtil.waitFor(() -> {
+            return (java.awt.Container) finder.find() != null;
+        }, "Found dialog + \"title\"");
+        java.awt.Container pane = (java.awt.Container) finder.find();
+        return pane;
+    }
+
+    private javax.swing.AbstractButton pressButton(java.awt.Container frame, String text) {
+        AbstractButtonFinder buttonFinder = new AbstractButtonFinder(text);
+        javax.swing.AbstractButton button = (javax.swing.AbstractButton) buttonFinder.find(frame, 0);
+        Assert.assertNotNull(text + " Button not found", button);
+        getHelper().enterClickAndLeave(new MouseEventData(this, button));
+        return button;
+    }
+
+    // from here down is testing infrastructure
     public SensorTableWindowTest(String s) {
         super(s);
     }
@@ -161,4 +182,5 @@ public class SensorTableWindowTest extends jmri.util.SwingTestCase {
         JUnitUtil.tearDown();
         super.tearDown();
     }
+
 }

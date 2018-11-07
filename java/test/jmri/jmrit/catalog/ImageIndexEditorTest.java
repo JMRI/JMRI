@@ -105,7 +105,6 @@ public class ImageIndexEditorTest extends jmri.util.SwingTestCase {
         }, "Found dialog + \"title\"");
         java.awt.Container pane = (java.awt.Container) finder.find();
         return pane;
-
     }
 
     private javax.swing.AbstractButton pressButton(java.awt.Container frame, String text) {
