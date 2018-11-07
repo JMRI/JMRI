@@ -1,7 +1,0 @@
-ConfigurableSound:  Timer creation function could/should be made same as EngineSound version and moved up to VSDSound and shared.
-Engine transitions are still goofy.  Especially if you're moving the throttle around quickly...
-VSDecoderPrefs... the path and profile name boxes need to be fixed.  Maybe with a browser added on the path.
-
-VSDecoderPane:  Switching between Profiles crashes on a null pointer error in VSDecoder.setXmL (MomentarySoundEvent). I'm guessing it doesn't like the shared horn sound in the demo program.
-
-HornSound:  It doesn't *sound* like the new K5LA horn is playing the start portion of the horn sound.  No debug in place to tell for sure.
