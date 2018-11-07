@@ -115,7 +115,7 @@ public class SensorTableWindowTest extends jmri.util.SwingTestCase {
         // Find the cancel button
         JUnitUtil.pressButton(this, dialog, Bundle.getMessage("ButtonCancel"));
 
-        // ask for the Debounce menu to open
+        // ask for the Initial Sensor State menu to open
         jmri.util.ThreadingUtil.runOnGUIEventually(() -> {
             a.setDefaultState(null);
         });

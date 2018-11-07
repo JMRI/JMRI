@@ -1605,9 +1605,9 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
     }
 
     /**
-     * Insert a table specific Operations menu. Account for the Window and Help
+     * Insert table specific Automation and Speeds menus. Account for the Window and Help
      * menus, which are already added to the menu bar as part of the creation of
-     * the JFrame, by adding the Operations menu 2 places earlier unless the
+     * the JFrame, by adding the Automation menu 2 places earlier unless the
      * table is part of the ListedTableFrame, that adds the Help menu later on.
      *
      * @param f the JFrame of this table
