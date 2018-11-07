@@ -1106,6 +1106,25 @@ public class JUnitUtil {
         }
     }
 
+    /* GraphicsEnvironment utility methods */
+
+    public static java.awt.Container findContainer(String title) {
+        junit.extensions.jfcunit.finder.DialogFinder finder = new junit.extensions.jfcunit.finder.DialogFinder(title);
+        JUnitUtil.waitFor(() -> {
+            return (java.awt.Container) finder.find() != null;
+        }, "Found dialog + \"title\"");
+        java.awt.Container pane = (java.awt.Container) finder.find();
+        return pane;
+    }
+
+    public static javax.swing.AbstractButton pressButton(jmri.util.SwingTestCase clazz, java.awt.Container frame, String text) {
+        junit.extensions.jfcunit.finder.AbstractButtonFinder buttonFinder = new junit.extensions.jfcunit.finder.AbstractButtonFinder(text);
+        javax.swing.AbstractButton button = (javax.swing.AbstractButton) buttonFinder.find(frame, 0);
+        Assert.assertNotNull(text + " Button not found", button);
+        clazz.getHelper().enterClickAndLeave(new junit.extensions.jfcunit.eventdata.MouseEventData(clazz, button));
+        return button;
+    }
+
     private final static Logger log = LoggerFactory.getLogger(JUnitUtil.class);
 
 }

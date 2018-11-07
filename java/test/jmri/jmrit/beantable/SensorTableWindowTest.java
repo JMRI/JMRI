@@ -10,7 +10,6 @@ import jmri.util.JmriJFrame;
 import junit.extensions.jfcunit.TestHelper;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
 import junit.extensions.jfcunit.finder.AbstractButtonFinder;
-import junit.extensions.jfcunit.finder.DialogFinder;
 import junit.extensions.jfcunit.finder.NamedComponentFinder;
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -21,6 +20,7 @@ import org.junit.Assert;
  * support for enterClickAndLeave() etc.)
  *
  * @author	Bob Jacobsen Copyright 2009, 2010
+ * @author	Egbert Broerse Copyright 2018
  */
 public class SensorTableWindowTest extends jmri.util.SwingTestCase {
 
@@ -110,10 +110,10 @@ public class SensorTableWindowTest extends jmri.util.SwingTestCase {
         });
         flushAWT();
         // Find new dialog window by name
-        java.awt.Container dialog = findContainer(Bundle.getMessage("SensorGlobalDebounceMessageTitle"));
+        java.awt.Container dialog = JUnitUtil.findContainer(Bundle.getMessage("SensorGlobalDebounceMessageTitle"));
         Assert.assertNotNull("Not found Global Debounce dialog", dialog);
         // Find the cancel button
-        pressButton(dialog, Bundle.getMessage("ButtonCancel"));
+        JUnitUtil.pressButton(this, dialog, Bundle.getMessage("ButtonCancel"));
 
         // ask for the Debounce menu to open
         jmri.util.ThreadingUtil.runOnGUIEventually(() -> {
@@ -121,32 +121,15 @@ public class SensorTableWindowTest extends jmri.util.SwingTestCase {
         });
         flushAWT();
         // Find new dialog window by name
-        dialog = findContainer(Bundle.getMessage("InitialSensorState"));
+        dialog = JUnitUtil.findContainer(Bundle.getMessage("InitialSensorState"));
         Assert.assertNotNull("Not found Global Debounce dialog", dialog);
         // Find the cancel button
-        pressButton(dialog, Bundle.getMessage("ButtonCancel"));
+        JUnitUtil.pressButton(this, dialog, Bundle.getMessage("ButtonCancel"));
 
         // Ask to close table window
         TestHelper.disposeWindow(ft, this);
 
         flushAWT();
-    }
-
-    private java.awt.Container findContainer(String title) {
-        DialogFinder finder = new DialogFinder(title);
-        JUnitUtil.waitFor(() -> {
-            return (java.awt.Container) finder.find() != null;
-        }, "Found dialog + \"title\"");
-        java.awt.Container pane = (java.awt.Container) finder.find();
-        return pane;
-    }
-
-    private javax.swing.AbstractButton pressButton(java.awt.Container frame, String text) {
-        AbstractButtonFinder buttonFinder = new AbstractButtonFinder(text);
-        javax.swing.AbstractButton button = (javax.swing.AbstractButton) buttonFinder.find(frame, 0);
-        Assert.assertNotNull(text + " Button not found", button);
-        getHelper().enterClickAndLeave(new MouseEventData(this, button));
-        return button;
     }
 
     // from here down is testing infrastructure
