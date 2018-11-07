@@ -1021,7 +1021,7 @@ public class DefaultConditional extends AbstractNamedBean
                         if (w == null) {
                             errorList.add("invalid Warrant name in action - " + action.getDeviceName());  // NOI18N
                         } else {
-                            String msg = w.allocateRoute(null);
+                            String msg = w.allocateRoute(false, null);
                             if (msg != null) {
                                 log.info("Warrant " + action.getDeviceName() + " - " + msg);  // NOI18N
                             }
@@ -1042,7 +1042,7 @@ public class DefaultConditional extends AbstractNamedBean
                         if (w == null) {
                             errorList.add("invalid Warrant name in action - " + action.getDeviceName());  // NOI18N
                         } else {
-                            String msg = w.setRoute(0, null);
+                            String msg = w.setRoute(false, null);
                             if (msg != null) {
                                 log.info("Warrant " + action.getDeviceName() + " unable to Set Route - " + msg);  // NOI18N
                             }
@@ -1089,7 +1089,7 @@ public class DefaultConditional extends AbstractNamedBean
                         if (w == null) {
                             errorList.add("invalid Warrant name in action - " + action.getDeviceName());  // NOI18N
                         } else {
-                            String err = w.setRoute(0, null);
+                            String err = w.setRoute(false, null);
                             if (err == null) {
                                 err = w.setRunMode(Warrant.MODE_MANUAL, null, null, null, false);
                             }

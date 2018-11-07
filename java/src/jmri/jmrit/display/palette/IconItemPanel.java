@@ -91,7 +91,6 @@ public class IconItemPanel extends ItemPanel {
      */
     @Override
     public void init(ActionListener doneAction) {
-        if (!jmri.util.ThreadingUtil.isGUIThread()) log.error("Not on GUI thread", new Exception("traceback"));
         _update = true;
         _suppressDragging = true; // no dragging when updating
         add(new JLabel(Bundle.getMessage("ToUpdateIcon", Bundle.getMessage("updateButton"))));

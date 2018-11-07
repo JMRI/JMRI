@@ -639,8 +639,8 @@ public class SpeedUtil {
                 deltaThrottle *= NXFrame.INCRE_RATE;
                 numSteps++;
             }
-        } else {
-            // Start with largest throttle increment
+        } else {    // decreasing
+            // Get largest throttle increment to start
             float tempSpeed = toSpeed;
             while (tempSpeed + deltaThrottle <= fromSpeed) {
                 tempSpeed += deltaThrottle;

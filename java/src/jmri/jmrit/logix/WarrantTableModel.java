@@ -470,7 +470,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
             break;
         case ALLOCATE_COLUMN:
             if (w.getRunMode() == Warrant.MODE_NONE) {
-                msg = w.allocateRoute(null);
+                msg = w.allocateRoute(true, null);
                 if (msg == null) {
                     _frame.setStatusText(
                             Bundle.getMessage("completeAllocate",
@@ -493,7 +493,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
             break;
         case SET_COLUMN:
             if (w.getRunMode() == Warrant.MODE_NONE) {
-                msg = w.setRoute(1, null);
+                msg = w.setRoute(true, null);
                 if (msg == null) {
                     _frame.setStatusText(
                             Bundle.getMessage("pathsSet",

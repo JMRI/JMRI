@@ -53,10 +53,6 @@ public class TextItemPanel extends ItemPanel /*implements ActionListener */ {
     @Override
     public void init() {
         if (!_initialized) {
-            if (!jmri.util.ThreadingUtil.isGUIThread()) {
-                log.error("Not on GUI thread", new Exception("traceback"));
-            }
-            Thread.yield();
             JPanel blurb = new JPanel();
             blurb.setLayout(new BoxLayout(blurb, BoxLayout.Y_AXIS));
             blurb.add(new JLabel(Bundle.getMessage("addTextAndAttrs")));

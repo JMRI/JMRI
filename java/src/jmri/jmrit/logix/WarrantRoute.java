@@ -657,10 +657,10 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
                 return;
             }
             portalBox.removeAllItems();
-            String pathName = (String) pathBox.getSelectedItem();
             if (order == null) {
                 return;
             }
+            String pathName = (String) pathBox.getSelectedItem();
             order.setPathName(pathName);
             OPath path = order.getPath();
             if (path != null) {
@@ -679,12 +679,13 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
                     }
                 }
                 if (log.isTraceEnabled()) {
-                    log.trace("setPortalBox: Path {} set in block {}", path.getName(), order.getBlock().getDisplayName());
+                    log.debug("setPortalBox: Path {} set in block {}", path.getName(), order.getBlock().getDisplayName());
                 }
             } else {
-                if (log.isTraceEnabled()) {
-                    log.trace("setPortalBox: Path set to null in block {}", order.getBlock().getDisplayName());
+                if (log.isDebugEnabled()) {
+                    log.debug("setPortalBox: Path {} not found in block {}", pathName, order.getBlock().getDisplayName());
                 }
+                order.setPathName(null);
             }
         }
 
@@ -858,12 +859,8 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
             _tempWarrant = new Warrant("IW" + s + "TEMP", null);
             _tempWarrant.setBlockOrders(orders);
         }
-        String msg = _tempWarrant.setRoute(0, orders);
-        if (msg != null) {
-            JOptionPane.showMessageDialog(null, msg,
-                    Bundle.getMessage("WarningTitle"),
-                    JOptionPane.WARNING_MESSAGE);
-        }
+        _tempWarrant.setRoute(true, orders);
+        // Don't clutter with message - this is a temp display
     }
 
     /**

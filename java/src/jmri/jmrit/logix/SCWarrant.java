@@ -26,7 +26,7 @@ public class SCWarrant extends Warrant {
     private long timeToPlatform = 500;
     private float speedFactor = 0.8f;
     private boolean forward = true;
-    private boolean _allowShallowAllocation = false;
+    private final boolean _allowShallowAllocation = false;
     
     /**
      * Create an object with no route defined. The list of BlockOrders is the
@@ -102,7 +102,7 @@ public class SCWarrant extends Warrant {
      * This method has been overridden in order to avoid allocation of occupied blocks.
      */
     @Override
-     public String setRoute(int delay, List<BlockOrder> orders) {
+     public String setRoute(boolean delay, List<BlockOrder> orders) {
         return allocateStartBlock();
     }
 
