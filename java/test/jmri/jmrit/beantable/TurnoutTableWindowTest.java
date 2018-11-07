@@ -167,6 +167,8 @@ public class TurnoutTableWindowTest extends jmri.util.SwingTestCase {
         // Find Turnout table window by name
         JmriJFrame ft = JmriJFrame.getFrame(Bundle.getMessage("TitleTurnoutTable"));
 
+        // no need to test Automation menu, has its own tests in jmri.jmrit.turnoutoperation
+
         // ask for the Speeds menu to open
         jmri.util.ThreadingUtil.runOnGUIEventually(() -> {
             a.setDefaultSpeeds(ft);
