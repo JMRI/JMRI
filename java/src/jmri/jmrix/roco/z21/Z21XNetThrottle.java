@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender (C) 2015
  */
-public class Z21XNetThrottle extends jmri.jmrix.lenz.XNetThrottle {
+public class Z21XNetThrottle extends jmri.jmrix.roco.RocoXNetThrottle {
 
     /**
      * Constructor
@@ -180,35 +180,7 @@ public class Z21XNetThrottle extends jmri.jmrix.lenz.XNetThrottle {
         queueMessage(msg7, THROTTLEFUNCSENT);
     }
 
-    // The Z21 doesn't support setting the momentary/continuous status of
-    // functions, so override the sending of all momentary/continuous 
-    // from the parent class.
-    @Override
-    protected void sendMomentaryFunctionGroup1() {
-    }
-    @Override
-    protected void sendMomentaryFunctionGroup2() {
-    }
-    @Override
-    protected void sendMomentaryFunctionGroup3() {
-    }
-    @Override
-    protected void sendMomentaryFunctionGroup4() {
-    }
-    @Override
-    protected void sendMomentaryFunctionGroup5() {
-    }
-
-    // also prevent requesting the momentary status information
-    @Override
-    synchronized protected void sendFunctionStatusInformationRequest() {
-    }
-    @Override
-    synchronized protected void sendFunctionHighMomentaryStatusRequest() {
-    }
-
-
-    // The Z21 Doesn't support the XpressNet directed emergency stop
+    // The Roco Doesn't support the XpressNet directed emergency stop
     // instruction, so override sendEmergencyStop in the parent, and
     // just send speed step 0.
     @Override
@@ -219,8 +191,7 @@ public class Z21XNetThrottle extends jmri.jmrix.lenz.XNetThrottle {
     // Handle incoming messages for this throttle.
     @Override
     public void message(XNetReply l) {
-        if (log.isDebugEnabled()) 
-            log.debug("Throttle " + getDccAddress() + " - received message " + l.toString());
+        log.debug("Throttle {} - received message {}",getDccAddress(),l.toString());
         if((l.getElement(0)&0xE0)==0xE0 && ((l.getElement(0)&0x0f) >= 7 && (l.getElement(0)&0x0f) <=15 )){
             //This is a Roco specific throttle information message.
             //Data Byte 0 and 1 contain the locomotive address
@@ -246,13 +217,13 @@ public class Z21XNetThrottle extends jmri.jmrix.lenz.XNetThrottle {
                parseFunctionInformation(b4,b5);
                // byte 6 and 7 contain function information for F13-F28
                parseFunctionHighInformation(b6,b7);
-               
-                // Always end by setting the state to idle
-                // (z21 always responds with the same messge, regardless of
-                // request).
-                requestState = THROTTLEIDLE;
-                // and send any queued messages.
-                sendQueuedMessage();
+              
+               if(requestState != THROTTLEIDLE ) { 
+                  // set the request state to idle
+                  requestState = THROTTLEIDLE;
+                  // and send any queued messages.
+                  sendQueuedMessage();
+               }
            } 
         } else {
             // let the standard XpressNet Throttle have a chance to look

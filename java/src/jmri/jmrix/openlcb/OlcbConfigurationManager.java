@@ -251,7 +251,7 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
             return null;
         }
         if (throttleManager == null) {
-            throttleManager = new OlcbThrottleManager(adapterMemo, this);
+            throttleManager = new OlcbThrottleManager(adapterMemo);
         }
         return throttleManager;
     }

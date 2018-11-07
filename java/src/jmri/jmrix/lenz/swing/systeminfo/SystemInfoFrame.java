@@ -224,6 +224,8 @@ public class SystemInfoFrame extends jmri.util.JmriJFrame implements XNetListene
             CSType.setText(Bundle.getMessage("CSTypeMultiMaus"));
         } else if (cs_type == jmri.jmrix.lenz.XNetConstants.CS_TYPE_Z21) {
             CSType.setText(Bundle.getMessage("CSTypeZ21"));
+        } else if (cs_type == jmri.jmrix.lenz.XNetConstants.CS_TYPE_LOKMAUSII) {
+            CSType.setText(Bundle.getMessage("CSTypeLokMaus"));
         } else {
             CSType.setText(Bundle.getMessage("StateUnknown")); // use shared key
         }

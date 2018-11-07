@@ -248,11 +248,11 @@
 
       <li><a href="#Kernel">Kernel (Group of Cars)</a></li>
 
-      <li><a href="#EditCarAttributes">Edit Car Attributes (Road, Type, Length, Color,
+      <li><a href="#EditCarAttributes">Edit Car Attribute Names (Road, Type, Length, Color,
         Kernel, Owner)</a>
 
        <ul>
-        <li><a href="#DeleteUnusedAttributes"> Delete Unused Attributes</a></li>
+        <li><a href="#DeleteUnusedAttributes"> Delete Unused Attribute Names</a></li>
        </ul></li>
 
       <li><a href="#EditCarLoads">Edit Car Loads</a></li>
@@ -345,7 +345,7 @@
 
         <li><a href="#TrainsTableColors">Train Row Color</a></li>
 
-        <li><a href="#Timetable">Timetable</a></li>
+        <li><a href="#TrainSchedules">Train Schedules</a></li>
 
         <li><a href="#Automation">Automation</a></li>
 
@@ -1584,7 +1584,7 @@
 
    <h3>Message Format</h3>
    If you would like your Manifest and switch lists printed in a tabular (columns) format select the
-   "Tabular" checkbox. The program determines the maximum character length for each attribute (Road,
+   "Tabular" checkbox. The program determines the maximum character length for each of the attribute's names (Road,
    Number, Type, Length, Color, Load, etc.) when determining the width of each column. Location
    names and track names can be up to 25 characters, so you might want to consider reasonable length
    names when using the "Tabular" feature. FYI, the program reports the maximum track and location
@@ -1710,7 +1710,7 @@
     Manifests and switch lists.</p>
 
    <p>
-    Selecting the "Show Timetable" prints which Train <a href="#Timetable">Timetable</a> you are
+    Selecting the "Show Train Schedule" prints which Train <a href="#TrainSchedules">Train Schedule</a> you are
     using when building your trains.
    </p>
 
@@ -1909,7 +1909,7 @@
    deselect all types, or "Select All" to select all types, then select or deselect the rolling
    stock you wish the location to accept. After configuring the tracks for a location, you can use
    the "Auto Select" button to have the location reflect the rolling stock serviced by the various
-   tracks. See <a href="#EditCarAttributes">Edit Car Attributes</a> to add or delete car types that
+   tracks. See <a href="#EditCarAttributes">Edit Car Attributes</a> to add or delete car type names that
    a location can service. You can also access the "Edit Car Attributes" window from the edit
    location "Tools" menu by selecting <a href="#EditCarType">Edit Car Type</a>.
 
@@ -2003,7 +2003,7 @@
    <h4>Edit Car Type</h4>
    <p>
     This tool opens the car attribute window for car types. This allows you the add, delete, or
-    replace a car type. See <a href="#EditCarAttributes">Edit Car Attributes</a> for more info.
+    replace a car type name. See <a href="#EditCarAttributes">Edit Car Attribute Names</a> for more info.
    </p>
 
    <a name="ShowCars" id="ShowCars"></a>
@@ -2051,7 +2051,7 @@
     If the rolling stock that you wish doesn't appear for a yard, confirm that the location's
     rolling stock types are properly selected. If the rolling stock type you want doesn't exist for
     a location, you will have to create the type using the <a href="#EditCarAttributes">Edit Car
-     Attributes</a> window which is also available from the edit location "Tools" menu <a
+     Attribute Names</a> window which is also available from the edit location "Tools" menu <a
      href="#EditCarType">Edit Car Type</a>.
    </p>
 
@@ -2202,11 +2202,11 @@
     roughly 1 in 50 cars could be sent the to RIP track.</p>
 
    <p>
-    Select from the "Delivery" pull down menu the train timetable when you want the car delivered,
+    Select from the "Delivery" pull down menu the train schedule (day) when you want the car delivered,
     or leave it blank if a car can be delivered at any time. Select under "Pickup" when you want the
-    car pulled from the spur. When a train timetable is selected for either delivery or pickup, a
-    car will only be serviced when that train timetable is active. See Trains -&gt; Tools -&gt; <a
-     href="#Timetable">Timetable</a> to select the train Timetable for your session.
+    car pulled from the spur. When a train schedule (day) is selected for either delivery or pickup, a
+    car will only be serviced when that train schedule (day) is active. See Trains -&gt; Tools -&gt; <a
+     href="#TrainSchedules">Train Schedules</a> to select the train schedule (day) for your session.
    </p>
 
    <p>
@@ -2274,7 +2274,7 @@
 
    <p>
     If you want custom <a href="#CarLoad">loads</a> for your cars, you can create them using the <a
-     href="#EditCarLoads">Edit Car Attributes</a> for car "Load". Each new load is associated with
+     href="#EditCarLoads">Edit Car Loads</a>. Each new load name is associated with
     the car type. For example you can have "Freight" for a boxcar, and "Oil" for a tankcar. The
     program will deliver cars with a custom load to a spur that has a schedule that also requests
     that particular load. However, cars with a custom load can still be placed at yards, staging,
@@ -3229,38 +3229,38 @@
     created each time the "Save" button is pressed.</p>
 
    <a name="EditCarAttributes" id="EditCarAttributes"></a>
-   <h3>Edit Car Attributes</h3>
+   <h3>Edit Car Attribute Names</h3>
    To the right of each of the car attributes (Road, Type, Length, Color, Kernel, Load, Owner) in
    the <a href="#CarsEdit">Edit Car</a> or <a href="#CarsEdit">Add Car</a> window is an "Edit"
-   button. Use this to add, delete, or replace the various attributes for a car.
+   button. Use this to add, delete, or replace the various attribute names for a car.
 
    <p>
     <img src="images/EditCarAttribute.png">
    </p>
 
    <h4>Add Button</h4>
-   To add a new car attribute, enter the desired text in the text box and press the "Add" button.
-   When you first enter a new car attribute it will show up at the start of the list. Later when
+   To add a new car attribute name, enter the desired text in the text box and press the "Add" button.
+   When you first enter a new car attribute name, it will show up at the start of the list. Later when
    your restart the program it will be sorted in the correct order.
 
    <h4>Delete Button</h4>
-   To delete a car attribute, select the attribute you want to delete in the menu box and press the
+   To delete a car attribute name, select the name you want to delete in the menu box and press the
    "Delete" button.
 
    <h4>Replace Button</h4>
-    If you need to change a specific car attribute (road, type, color, etc) in your entire car
+    If you need to change a specific car attribute name (road, type, color, etc) in your entire car
     roster, you can use the "Replace" button found at the bottom right of the edit car attribute
-    window. For example, if you wish to change the car road (reporting mark) attribute "UP" to "UPS"
+    window. For example, if you wish to change the car road (reporting mark) attribute name "UP" to "UPS"
     for all of your cars. Press the "Edit" button for any of your cars in the Cars window, and then
     press the "Edit" button across from Road in the "Car Edit" window. Enter the new road "UPS" in
-    the text box, select "UP" in the menu box, and press "Replace". All cars with "UP" as their road
-    will now have "UPS" as their road.
+    the text box, select "UP" in the menu box, and press "Replace". All cars with "UP" as their road name
+    will now have "UPS" as their road name.
 
    <a name="DeleteUnusedAttributes" id="DeleteUnusedAttributes"></a>
-   <h4>Delete Unused Attributes</h4>
-   Under "Tools" in the "Edit Attribute Window" you will find two items, "Show the number of cars with this attribute" and "Delete unused attributes".
+   <h4>Delete Unused Attribute Names</h4>
+   Under "Tools" in the "Edit Attribute Window" you will find two items, "Show the number of cars with this attribute name" and "Delete unused attribute names".
    The first will show a count in front of the menu box. The count is the number of'cars that have this particular
-   attribute. The delete option will prompt you to delete any attribute that hasn't been assigned to a car. 
+   attribute name. The delete option will prompt you to delete any attribute name that hasn't been assigned to a car. 
    
    <a name="EditCarLoads" id="EditCarLoads"></a>
    <h3>Edit Car Loads</h3>
@@ -4411,9 +4411,9 @@
     </tr>
 
     <tr>
-     <td>X (Schedule Timetable)</td>
+     <td>X (Train Schedule)</td>
 
-     <td>The spur's <a href="#Schedules">schedule</a> timetable selection prevents the car from
+     <td>The spur's <a href="#Schedules">schedule</a> train schedule selection prevents the car from
       being serviced.
      </td>
     </tr>
@@ -4541,23 +4541,23 @@
     reset row colors for your various trains. You can find this feature under "Tools" in the
     "Trains" window.</p>
 
-   <a name="Timetable" id="Timetable"></a>
-   <h4>Timetable</h4>
-   The Timetable window allows you to define which trains will run on any given day, and can be
+   <a name="TrainSchedules" id="TrainSchedules"></a>
+   <h4>Train Schedules</h4>
+   The Train Schedules window allows you to define which trains will run on any given day, and can be
    found under the Trains-&gt;Tools. For each day of the week, select which trains you want to
    build. Then select which day you want by selecting the appropriate radio button. Then press the
    "Apply" button to update the <a href="#Trains">Trains</a> "Build" checkboxes. Use the "Save"
-   button to store any changes you made to the timetable.
+   button to store any changes you made to the train schedules.
 
    <p>
-    <a href="images/Timetable.png"><img src="images/Timetable.png"
-     alt="Operations Train Timetable"></a>
+    <a href="images/TrainSchedules.png"><img src="images/TrainSchedules.png"
+     alt="Operations Train Train Schedules"></a>
    </p>
 
    <p>To change which day of the week is active, select the appropriate radio button and then
     press the "Activate" button. The day selected is then used by your schedules (Delivery and
     Pickup) when building trains. You can also add or change the days of the week by using the "Edit
-    Timetable" window found under "Tools". You can change the order by dragging the column with your
+    Train Schedule" window found under "Tools". You can change the order by dragging the column with your
     mouse pointer. Press the "Save" button to complete your changes.</p>
 
    <p>When the "None" radio button is selected, cars with a scheduled pick up day will not be
@@ -4709,14 +4709,14 @@
    for more than one train to terminate by entering each train you want to wait for in consecutive
    rows.
 
-   <h5>Activate Timetable</h5>
+   <h5>Activate Train Schedule</h5>
    This action will activate the selected day in the "Automation / Other" column. Works the same as
-   the "Activate" button in the <a href="#Timetable">Timetable</a> window.
+   the "Activate" button in the <a href="#TrainSchedules">Train Schedules</a> window.
 
-   <h5>Apply Timetable</h5>
+   <h5>Apply Train Schedule</h5>
    This action will select trains using the checkboxes in the "Build" column from the <a
-    href="#Trains">Trains</a> window based on which day is active, see "Activate Timetable" above to
-   select which day is active. Works the same as the "Apply" button in the <a href="#Timetable">Timetable</a>
+    href="#Trains">Trains</a> window based on which day is active, see "Activate Train Schedules" above to
+   select which day is active. Works the same as the "Apply" button in the <a href="#TrainSchedules">Train Schedules</a>
    window. There must be an active day for this action to work.
 
    <h5>Select Train (Build)</h5>
@@ -5250,7 +5250,7 @@
     list if needed.</p>
 
    <p>
-    The <a href="#Timetable">Timetable</a> window has buttons along the bottom of the window that
+    The <a href="#TrainSchedules">Train Schedules</a> window has buttons along the bottom of the window that
     simplify the building of train Manifests and consolidating train switch lists.
    </p>
 

@@ -54,7 +54,7 @@ public class CarManager extends RollingStockManager<Car> implements InstanceMana
      * @param number car number
      * @return new car or existing Car
      */
-    public Car newCar(String road, String number) {
+    public Car newRS(String road, String number) {
         Car car = getByRoadAndNumber(road, number);
         if (car == null) {
             car = new Car(road, number);

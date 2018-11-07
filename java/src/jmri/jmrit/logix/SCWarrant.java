@@ -410,6 +410,7 @@ public class SCWarrant extends Warrant {
      * the main loop to find a new throttle setting.
      */
     @Override
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NN_NAKED_NOTIFY", justification="NotifyAll call triggers recomputation")
     protected void goingActive(OBlock block) {
         if (_runMode != MODE_RUN) {
             // if we are not running, we must not think that we are going to the next block - it must be another train
@@ -454,6 +455,7 @@ public class SCWarrant extends Warrant {
      * Check if current block has been left (i.e. we have left our route) and stop the train in that case.
      */
     @Override
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NN_NAKED_NOTIFY", justification="See comment above notify call")
     protected void goingInactive(OBlock block) {
         if (_runMode != MODE_RUN) {
             return;
@@ -529,7 +531,8 @@ public class SCWarrant extends Warrant {
      *     - it is _nextSignal
      * Do not worry about sensors and blocks. They are handled by goingActive and goingInactive.
      */
- @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "UW_UNCOND_WAIT", justification = "Unconditional wait is give the warrant that now has _stoppingBlock allocated a little time to deallocate it.  This occurs after this method sets _stoppingBlock to null.")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = {"UW_UNCOND_WAIT", "NN_NAKED_NOTIFY"}, 
+            justification = "Unconditional wait is give the warrant that now has _stoppingBlock allocated a little time to deallocate it.  This occurs after this method sets _stoppingBlock to null. NotifyAll passing event, not state.")
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent evt) {
         if (!(evt.getSource() instanceof NamedBean)) {
