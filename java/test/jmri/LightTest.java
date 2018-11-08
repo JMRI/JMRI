@@ -1,11 +1,5 @@
 package jmri;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyVetoException;
-import java.util.ArrayList;
-import java.util.Set;
-import jmri.implementation.LightControl;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
