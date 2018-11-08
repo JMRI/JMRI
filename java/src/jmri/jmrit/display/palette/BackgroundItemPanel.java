@@ -80,5 +80,5 @@ public class BackgroundItemPanel extends IconItemPanel {
         return null; // no button to set Preview Bg on BackgroundItemPanel
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BackgroundItemPanel.class);
+//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BackgroundItemPanel.class);
 }
