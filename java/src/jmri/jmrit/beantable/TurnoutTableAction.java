@@ -1882,15 +1882,15 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
             // Tab All or first time opening, use default tooltip
             connectionChoice = "TBD";
         }
-        if (turnManager.getClass().getName().contains("ProxyTurnoutManager")) {
-            jmri.managers.ProxyTurnoutManager proxy = (jmri.managers.ProxyTurnoutManager) turnManager;
+        if (InstanceManager.turnoutManagerInstance() instanceof jmri.managers.AbstractProxyManager) {
+            jmri.managers.ProxyTurnoutManager proxy = (jmri.managers.ProxyTurnoutManager) InstanceManager.turnoutManagerInstance();
             List<Manager<Turnout>> managerList = proxy.getDisplayOrderManagerList();
             String systemPrefix = ConnectionNameFromSystemName.getPrefixFromName(connectionChoice);
             for (Manager<Turnout> turnout : managerList) {
                 jmri.TurnoutManager mgr = (jmri.TurnoutManager) turnout;
                 if (mgr.getSystemPrefix().equals(systemPrefix)) {
                     rangeBox.setEnabled(mgr.allowMultipleAdditions(systemPrefix));
-                    log.debug("T Add box enabled1");
+                    if (log.isDebugEnabled()) { log.debug("T Add box enabled1"); }
                     // get tooltip from ProxyTurnoutManager
                     addEntryToolTip = mgr.getEntryToolTip();
                     break;
@@ -1902,6 +1902,9 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
             // get tooltip from turnout manager
             addEntryToolTip = turnManager.getEntryToolTip();
             log.debug("TurnoutManager tip");
+        }
+        else {
+            log.warn("Unable to set tooltip or Range Allowed Box");
         }
         // show sysName (HW address) field tooltip in the Add Turnout pane that matches system connection selected from combobox
         hardwareAddressTextField.setToolTipText("<html>"
