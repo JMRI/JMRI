@@ -5,6 +5,7 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+    AnalogIOTest.class,
     BeanSettingTest.class,
     BundleTest.class,
     NamedBeanHandleManagerTest.class,
