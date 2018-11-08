@@ -499,7 +499,7 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
                     rangeCheckBox.setEnabled(((ReporterManager) mgr).allowMultipleAdditions(systemPrefix));
                     // get tooltip from ProxyReporterManager
                     addEntryToolTip = mgr.getEntryToolTip();
-                    if (log.isDebugEnabled()) { log.debug("R add box set"); }
+                   log.debug("R add box set");
                     break;
                 }
             }
@@ -508,7 +508,6 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
             log.debug("R add box enabled2");
             // get tooltip from sensor manager
             addEntryToolTip = reportManager.getEntryToolTip();
-            log.debug("ReporterManager tip");
         }
         else {
             log.warn("Unable to set reporter tooltip or rangecheckbox");

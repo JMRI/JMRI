@@ -1890,7 +1890,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
                 jmri.TurnoutManager mgr = (jmri.TurnoutManager) turnout;
                 if (mgr.getSystemPrefix().equals(systemPrefix)) {
                     rangeBox.setEnabled(mgr.allowMultipleAdditions(systemPrefix));
-                    if (log.isDebugEnabled()) { log.debug("T Add box enabled1"); }
+                    log.debug("T Add box 1");
                     // get tooltip from ProxyTurnoutManager
                     addEntryToolTip = mgr.getEntryToolTip();
                     break;
@@ -1901,7 +1901,6 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
             log.debug("T Add box enabled2");
             // get tooltip from turnout manager
             addEntryToolTip = turnManager.getEntryToolTip();
-            log.debug("TurnoutManager tip");
         }
         else {
             log.warn("Unable to set tooltip or Range Allowed Box");
