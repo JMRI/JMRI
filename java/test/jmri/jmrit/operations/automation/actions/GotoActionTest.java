@@ -119,10 +119,12 @@ public class GotoActionTest extends OperationsTestCase {
 
         Thread run = JUnitUtil.getThreadByName("Run action item: " + automationItem1.getId());
    
-        try {
-            run.join();
-        } catch (InterruptedException e) {
-            // do nothing
+        if (run != null) {
+            try {
+                run.join();
+            } catch (InterruptedException e) {
+                // do nothing
+            }
         }
 
         Assert.assertTrue(automationItem1.isActionSuccessful());
@@ -131,10 +133,12 @@ public class GotoActionTest extends OperationsTestCase {
 
         Thread run2 = JUnitUtil.getThreadByName("Run action item: " + automationItem2.getId());
         
-        try {
-            run2.join();
-        } catch (InterruptedException e) {
-            // do nothing
+        if (run2 != null) {
+            try {
+                run2.join();
+            } catch (InterruptedException e) {
+                // do nothing
+            }
         }
 
         // the first halt
