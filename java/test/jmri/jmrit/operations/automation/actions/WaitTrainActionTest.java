@@ -157,6 +157,9 @@ public class WaitTrainActionTest extends OperationsTestCase {
         action.doAction();
         Assert.assertTrue(automationItem.isActionRunning());
         Assert.assertFalse(automationItem.isActionSuccessful());
+        
+        String message = action.getActionString();
+        Assert.assertTrue("message contains route name", message.contains(train1.getTrainTerminatesRouteLocation().getName()));
 
         // There are 3 locations in the route
         Assert.assertTrue(train1.build());
