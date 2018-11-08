@@ -1182,11 +1182,11 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                             } else {
                                 if (speed - _endSpeed < throttleIncrement + .00794) {
                                     // next decrease will end ramp down.
+                                    if (log.isDebugEnabled()) 
+                                        log.debug("Extending ramp to reach block {}. speed= {}",
+                                                _warrant.getBlockAt(_endBlockIdx).getDisplayName(), speed);
                                     while (_useIndex && _endBlockIdx - _warrant._idxCurrentOrder > 0) {
                                         // Until loco reaches end block, continue current speed
-                                        if (log.isDebugEnabled()) 
-                                            log.debug("Extending ramp to reach block {}. speed= {}",
-                                                    _warrant.getBlockAt(_endBlockIdx).getDisplayName(), speed);
                                         try {
                                             wait(timeIncrement);
                                         } catch (InterruptedException ie) {
