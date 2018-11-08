@@ -5,7 +5,6 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
 import java.util.ArrayList;
 import java.util.Set;
-import jmri.implementation.LightControl;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -16,67 +15,53 @@ import org.junit.Assert;
  *
  * @author	Bob Jacobsen Copyright (C) 2008, 2010
  */
-public class LightTest extends TestCase {
+public class SensorTest extends TestCase {
 
     @SuppressWarnings("all")
     public void testStateConstants() {
-        Assert.assertTrue("On and Off differ", (Light.ON & Light.OFF) == 0);
-        Assert.assertTrue("On and Unknown differ", (Light.ON & Light.UNKNOWN) == 0);
-        Assert.assertTrue("Off and Unknown differ", (Light.OFF & Light.UNKNOWN) == 0);
-        Assert.assertTrue("On and Inconsistent differ", (Light.ON & Light.INCONSISTENT) == 0);
-        Assert.assertTrue("Off and Inconsistent differ", (Light.OFF & Light.INCONSISTENT) == 0);
+        Assert.assertTrue("On and Off differ", (Sensor.ON & Sensor.OFF) == 0);
+        Assert.assertTrue("On and Unknown differ", (Sensor.ON & Sensor.UNKNOWN) == 0);
+        Assert.assertTrue("Off and Unknown differ", (Sensor.OFF & Sensor.UNKNOWN) == 0);
+        Assert.assertTrue("On and Inconsistent differ", (Sensor.ON & Sensor.INCONSISTENT) == 0);
+        Assert.assertTrue("Off and Inconsistent differ", (Sensor.OFF & Sensor.INCONSISTENT) == 0);
     }
 
-    @SuppressWarnings("all")
-    public void testTransitionConstants() {
-        Assert.assertTrue("On and INTERMEDIATE are bits", (Light.ON & Light.INTERMEDIATE) == 0);
-
-        Assert.assertTrue("TRANSITIONINGTOFULLON overlap", (Light.TRANSITIONINGTOFULLON & Light.TRANSITIONING) != 0);
-        Assert.assertTrue("TRANSITIONINGHIGHER overlap", (Light.TRANSITIONINGHIGHER & Light.TRANSITIONING) != 0);
-        Assert.assertTrue("TRANSITIONINGLOWER overlap", (Light.TRANSITIONINGLOWER & Light.TRANSITIONING) != 0);
-        Assert.assertTrue("TRANSITIONINGTOFULLOFF overlap", (Light.TRANSITIONINGTOFULLOFF & Light.TRANSITIONING) != 0);
-    }
-
-    public void testLight() {
-        Light light = new MyLight();
-        light.setState(Light.ON);
-        Assert.assertTrue("Light is ON", light.getState() == Light.ON);
-        light.setState(Light.OFF);
-        Assert.assertTrue("Light is ON", light.getState() == Light.OFF);
-        light.setCommandedState(Light.ON);
-        Assert.assertTrue("Light is ON", light.getState() == Light.ON);
-        light.setCommandedState(Light.OFF);
-        Assert.assertTrue("Light is ON", light.getState() == Light.OFF);
-        light.setState(Light.ON);
-        Assert.assertTrue("Light is ON", light.getCommandedState() == Light.ON);
-        light.setState(Light.OFF);
-        Assert.assertTrue("Light is ON", light.getCommandedState() == Light.OFF);
-        light.setState(Light.ON);
-        Assert.assertTrue("Light is ON", light.getKnownState() == Light.ON);
-        light.setState(Light.OFF);
-        Assert.assertTrue("Light is ON", light.getKnownState() == Light.OFF);
+    public void testSensor() throws JmriException {
+        Sensor sensor = new MySensor();
+        sensor.setState(Sensor.ON);
+        Assert.assertTrue("Sensor is ON", sensor.getState() == Sensor.ON);
+        sensor.setState(Sensor.OFF);
+        Assert.assertTrue("Sensor is ON", sensor.getState() == Sensor.OFF);
+        sensor.setCommandedState(Sensor.ON);
+        Assert.assertTrue("Sensor is ON", sensor.getState() == Sensor.ON);
+        sensor.setCommandedState(Sensor.OFF);
+        Assert.assertTrue("Sensor is ON", sensor.getState() == Sensor.OFF);
+        sensor.setState(Sensor.ON);
+        Assert.assertTrue("Sensor is ON", sensor.getCommandedState() == Sensor.ON);
+        sensor.setState(Sensor.OFF);
+        Assert.assertTrue("Sensor is ON", sensor.getCommandedState() == Sensor.OFF);
     }
 
     // from here down is testing infrastructure
-    public LightTest(String s) {
+    public SensorTest(String s) {
         super(s);
     }
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {LightTest.class.getName()};
+        String[] testCaseName = {SensorTest.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
     public static Test suite() {
-        TestSuite suite = new TestSuite(LightTest.class);
+        TestSuite suite = new TestSuite(SensorTest.class);
         return suite;
     }
 
     
     
-    private class MyLight implements Light {
+    private class MySensor implements Sensor {
         
         private int _state = NamedBean.UNKNOWN;
 
@@ -88,101 +73,6 @@ public class LightTest extends TestCase {
         @Override
         public int getState() {
             return _state;
-        }
-
-        @Override
-        public boolean isIntensityVariable() {
-            throw new UnsupportedOperationException("Not supported.");
-        }
-
-        @Override
-        public void setTargetIntensity(double intensity) {
-            throw new UnsupportedOperationException("Not supported.");
-        }
-
-        @Override
-        public double getCurrentIntensity() {
-            throw new UnsupportedOperationException("Not supported.");
-        }
-
-        @Override
-        public double getTargetIntensity() {
-            throw new UnsupportedOperationException("Not supported.");
-        }
-
-        @Override
-        public void setMaxIntensity(double intensity) {
-            throw new UnsupportedOperationException("Not supported.");
-        }
-
-        @Override
-        public double getMaxIntensity() {
-            throw new UnsupportedOperationException("Not supported.");
-        }
-
-        @Override
-        public void setMinIntensity(double intensity) {
-            throw new UnsupportedOperationException("Not supported.");
-        }
-
-        @Override
-        public double getMinIntensity() {
-            throw new UnsupportedOperationException("Not supported.");
-        }
-
-        @Override
-        public boolean isTransitionAvailable() {
-            throw new UnsupportedOperationException("Not supported.");
-        }
-
-        @Override
-        public void setTransitionTime(double minutes) {
-            throw new UnsupportedOperationException("Not supported.");
-        }
-
-        @Override
-        public double getTransitionTime() {
-            throw new UnsupportedOperationException("Not supported.");
-        }
-
-        @Override
-        public boolean isTransitioning() {
-            throw new UnsupportedOperationException("Not supported.");
-        }
-
-        @Override
-        public void clearLightControls() {
-            throw new UnsupportedOperationException("Not supported.");
-        }
-
-        @Override
-        public void addLightControl(LightControl c) {
-            throw new UnsupportedOperationException("Not supported.");
-        }
-
-        @Override
-        public ArrayList<LightControl> getLightControlList() {
-            throw new UnsupportedOperationException("Not supported.");
-        }
-
-        @Override
-        public void setEnabled(boolean state) {
-            throw new UnsupportedOperationException("Not supported.");
-        }
-
-        @Override
-        public boolean getEnabled() {
-            throw new UnsupportedOperationException("Not supported.");
-        }
-
-        @Override
-        public void activateLight() {
-            throw new UnsupportedOperationException("Not supported.");
-        }
-
-        @Override
-        public void deactivateLight() {
-            throw new UnsupportedOperationException("Not supported.");
         }
 
         @Override
@@ -302,6 +192,101 @@ public class LightTest extends TestCase {
 
         @Override
         public int compareSystemNameSuffix(String suffix1, String suffix2, NamedBean n2) {
+            throw new UnsupportedOperationException("Not supported.");
+        }
+
+        @Override
+        public void setKnownState(int newState) throws JmriException {
+            throw new UnsupportedOperationException("Not supported.");
+        }
+
+        @Override
+        public void setInverted(boolean inverted) {
+            throw new UnsupportedOperationException("Not supported.");
+        }
+
+        @Override
+        public boolean getInverted() {
+            throw new UnsupportedOperationException("Not supported.");
+        }
+
+        @Override
+        public boolean canInvert() {
+            throw new UnsupportedOperationException("Not supported.");
+        }
+
+        @Override
+        public int getRawState() {
+            throw new UnsupportedOperationException("Not supported.");
+        }
+
+        @Override
+        public void setSensorDebounceGoingActiveTimer(long timer) {
+            throw new UnsupportedOperationException("Not supported.");
+        }
+
+        @Override
+        public long getSensorDebounceGoingActiveTimer() {
+            throw new UnsupportedOperationException("Not supported.");
+        }
+
+        @Override
+        public void setSensorDebounceGoingInActiveTimer(long timer) {
+            throw new UnsupportedOperationException("Not supported.");
+        }
+
+        @Override
+        public long getSensorDebounceGoingInActiveTimer() {
+            throw new UnsupportedOperationException("Not supported.");
+        }
+
+        @Override
+        public void setUseDefaultTimerSettings(boolean flag) {
+            throw new UnsupportedOperationException("Not supported.");
+        }
+
+        @Override
+        public boolean getUseDefaultTimerSettings() {
+            throw new UnsupportedOperationException("Not supported.");
+        }
+
+        @Override
+        public void useDefaultTimerSettings(boolean flag) {
+            throw new UnsupportedOperationException("Not supported.");
+        }
+
+        @Override
+        public boolean useDefaultTimerSettings() {
+            throw new UnsupportedOperationException("Not supported.");
+        }
+
+        @Override
+        public void setReporter(Reporter re) {
+            throw new UnsupportedOperationException("Not supported.");
+        }
+
+        @Override
+        public Reporter getReporter() {
+            throw new UnsupportedOperationException("Not supported.");
+        }
+
+        @Override
+        public void setPullResistance(PullResistance r) {
+            throw new UnsupportedOperationException("Not supported.");
+        }
+
+        @Override
+        public PullResistance getPullResistance() {
+            throw new UnsupportedOperationException("Not supported.");
+        }
+
+        @Override
+        public int getKnownState() {
+            throw new UnsupportedOperationException("Not supported.");
+        }
+
+        @Override
+        public void requestUpdateFromLayout() {
             throw new UnsupportedOperationException("Not supported.");
         }
         
