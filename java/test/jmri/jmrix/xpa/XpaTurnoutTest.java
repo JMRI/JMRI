@@ -7,7 +7,7 @@ import org.junit.Test;
 
 /**
  * Description:	tests for the jmri.jmrix.xpa.XpaTurnout class
- * <P>
+ * <p>
  * @author	Paul Bender
  */
 public class XpaTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase  {

@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * JUnit tests for the NceProgrammer class
- * <P>
+ * <p>
  * before conversion to JUnit4, most tests had names starting with x, which 
  * disables them in JUnit3; a note why that was done would have been good!
  * These tests now have a JUnit4 Ignore attribute.

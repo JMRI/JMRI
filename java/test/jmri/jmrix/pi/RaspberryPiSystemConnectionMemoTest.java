@@ -9,7 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * <P>
+ * <p>
  * Tests for RaspberryPiSystemConnectionMemo
  * </P>
  *

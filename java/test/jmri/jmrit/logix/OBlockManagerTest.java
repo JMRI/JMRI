@@ -9,7 +9,7 @@ import org.junit.Test;
 
 /**
  * Tests for the OBlockManager class
- * <P>
+ * <p>
  * @author Bob Coleman Copyright 2012
  * @author Bob Jacobsen Copyright 2014
  */

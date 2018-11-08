@@ -7,7 +7,7 @@ import com.pi4j.io.gpio.PinState;
 import com.pi4j.io.gpio.WiringPiGpioProviderBase;
 
 /**
- * <P>
+ * <p>
  * Tests for RaspberryPiSensorManager
  * </P>
  * @author Paul Bender Copyright (C) 2016

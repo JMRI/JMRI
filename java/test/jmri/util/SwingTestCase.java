@@ -124,7 +124,6 @@ public class SwingTestCase extends JFCTestCase {
 
         // we've checked the corners first on purpose, to see they're all right
         assertPixel(name + " center", center, pixels[(rows / 2) * cols + cols / 2]);
-
     }
 
     /**

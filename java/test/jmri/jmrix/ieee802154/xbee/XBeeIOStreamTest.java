@@ -12,7 +12,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
- * <P>
+ * <p>
  * Tests for XBeeIOStream
  * </P>
  * @author Paul Bender Copyright (C) 2016

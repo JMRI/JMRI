@@ -111,7 +111,7 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
 
     /**
      * Tell appender that a JUnit test is starting.
-     * <P>
+     * <p>
      * This causes log messages to be held for examination.
      */
     public static void start() {
@@ -120,7 +120,7 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
 
     /**
      * Tell appender that the JUnit test is ended.
-     * <P>
+     * <p>
      * Any queued messages at this point will be passed through to the actual
      * log.
      */
@@ -214,7 +214,7 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
      * Check that the next queued message was of Error severity, and has a
      * specific message.
      * White space is ignored.
-     * <P>
+     * <p>
      * Invokes a JUnit Assert if the message doesn't match.
      *
      * @param msg the message to assert exists
@@ -250,7 +250,7 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
      * Check that the next queued message was of Error severity, and has a
      * specific message.
      * White space is ignored.
-     * <P>
+     * <p>
      * Invokes a JUnit Assert if the message doesn't match.
      *
      * @param msg the message to assert exists
@@ -395,7 +395,7 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
      * Check that the next queued message was of Warn severity, and has a
      * specific message.
      * White space is ignored.
-     * <P>
+     * <p>
      * Invokes a JUnit Assert if the message doesn't match.
      *
      * @param msg the message to assert exists
@@ -415,7 +415,7 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
     /**
      * Assert that a specific message, of any severity, has been logged.
      * White space is ignored.
-     * <P>
+     * <p>
      * Invokes a JUnit Assert if no matching message is found, but doesn't require it to 
      * be the next message. This allows use e.g. for debug-severity messages.
      *
