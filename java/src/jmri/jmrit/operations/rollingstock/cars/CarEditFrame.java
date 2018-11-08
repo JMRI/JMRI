@@ -107,7 +107,7 @@ public class CarEditFrame extends RollingStockEditFrame implements java.beans.Pr
         blockingTextField.setToolTipText(Bundle.getMessage("TipPassengerCarBlocking"));
         fillWeightButton.setToolTipText(Bundle.getMessage("TipCalculateCarWeight"));
         builtTextField.setToolTipText(Bundle.getMessage("TipBuildDate"));
-        valueTextField.setToolTipText(Bundle.getMessage("TipValue"));
+        valueTextArea.setToolTipText(Bundle.getMessage("TipValue"));
 
         editColorButton.setToolTipText(MessageFormat.format(Bundle.getMessage("TipAddDeleteReplace"),
                 new Object[]{Bundle.getMessage("Color").toLowerCase()}));
