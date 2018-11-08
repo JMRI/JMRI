@@ -557,6 +557,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                 if (cmdIdx >= _commands.size()) {
                     cmdIdx = _commands.size() - 1;
                 }
+                cmdIdx++;   // display is 1-based
                 OBlock block = getCurrentBlockOrder().getBlock();
                 if ((block.getState() & (OBlock.OCCUPIED | OBlock.UNDETECTED)) == 0) {
                     return Bundle.getMessage("LostTrain", _trainName, block.getDisplayName());
