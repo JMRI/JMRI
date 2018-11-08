@@ -84,7 +84,7 @@ public class Xml {
     static final String PRINT_LOC_COMMENTS = "printLocComments"; // NOI18N
     static final String PRINT_ROUTE_COMMENTS = "printRouteComments"; // NOI18N
     static final String PRINT_LOADS_EMPTIES = "printLoadsEmpties"; // NOI18N
-    static final String PRINT_TIMETABLE = "printTimetable"; // NOI18N
+    static final String PRINT_TRAIN_SCHEDULE = "printTimetable"; // NOI18N
     static final String USE12HR_FORMAT = "use12hrFormat"; // NOI18N
     static final String PRINT_VALID = "printValid"; // NOI18N
     static final String SORT_BY_TRACK = "sortByTrack"; // NOI18N

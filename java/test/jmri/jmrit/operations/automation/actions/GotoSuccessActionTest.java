@@ -72,11 +72,13 @@ public class GotoSuccessActionTest extends OperationsTestCase {
         automation.run();
 
         Thread run = JUnitUtil.getThreadByName("Run action item: " + automationItem1.getId());
-
+        
         if (run != null) {
-            jmri.util.JUnitUtil.waitFor(() -> {
-                return run.getState().equals(Thread.State.TERMINATED);
-            }, "wait for terminated");
+            try {
+                run.join();
+            } catch (InterruptedException e) {
+                // do nothing
+            }
         }
 
         Assert.assertTrue(automationItem1.isActionSuccessful());
@@ -87,9 +89,11 @@ public class GotoSuccessActionTest extends OperationsTestCase {
         Thread run2 = JUnitUtil.getThreadByName("Run action item: " + automationItem2.getId());
 
         if (run2 != null) {
-            jmri.util.JUnitUtil.waitFor(() -> {
-                return run2.getState().equals(Thread.State.TERMINATED);
-            }, "wait for terminated");
+            try {
+                run2.join();
+            } catch (InterruptedException e) {
+                // do nothing
+            }
         }
         
         // the first halt is executed

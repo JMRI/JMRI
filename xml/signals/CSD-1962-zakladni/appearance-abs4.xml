@@ -21,7 +21,7 @@
     <revision>
         <revnumber>1</revnumber>
         <date>2016-11-19</date>
-        <authorinitials>PS</authorinitials>
+        <authorinitials>PŠ</authorinitials>
         <revremark>Initial version</revremark>
     </revision>    
   </revhistory>
@@ -101,17 +101,17 @@
       <ourAspect>Opakovaná výstraha</ourAspect>
     </aspectMapping>
     <aspectMapping>
-      <advancedAspect>40 a výstraha</advancedAspect>
+      <advancedAspect>Rychlost 40 a výstraha</advancedAspect>
       <ourAspect>Očekávej 40</ourAspect>
       <ourAspect>Opakovaná očekávej 40</ourAspect>
     </aspectMapping>
     <aspectMapping>
-      <advancedAspect>60 a výstraha</advancedAspect>
+      <advancedAspect>Rychlost 60 a výstraha</advancedAspect>
       <ourAspect>Očekávej 60</ourAspect>
       <ourAspect>Opakovaná očekávej 60</ourAspect>
     </aspectMapping>
     <aspectMapping>
-      <advancedAspect>80 a výstraha</advancedAspect>
+      <advancedAspect>Rychlost 80 a výstraha</advancedAspect>
       <ourAspect>Očekávej 80</ourAspect>
       <ourAspect>Opakovaná očekávej 80</ourAspect>
     </aspectMapping>

@@ -26,20 +26,90 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
      <h1>JMRI : MERG CBUS Command Station Monitor</h1>
-     
-        <p>More info to follow.</p>
-        <p>Slot monitor for CBUS Command Stations</p>
+        <p>Main Table - Train session monitor.</p>
 
+        
+    <h2>Train List</h2>
+        <p> Every train heard on the network will be added to the table, 
+        there is one row per loco.</p>
+        <p>Train speed and direction are updated in real time 
+        according to the latest instruction by 
+        a JMRI throttle, MERG CANCAB throttle controller, 
+        or MERG CBUS connected Command Station.</p>
+        <p>Train columns : </p>
+        <ul>
+        <li>Session</li>
+        <li>Loco ID</li>
+        <li>Long Address Format?</li>
+        <li>Speed (Commanded)</li>
+        <li>Direction</li>
+        <li>Speed Steps</li>
+        <li>TD Alt - Alternative Block Value to track</li>
+        <li>Block - Current Block Username</li>
+        <li>Direction of current block</li>
+        <li>Next Block Username</li>
+        <li>Next Signal Mast Username</li>
+        <li>Next Aspect </li>
+        </ul>
+        
+        <p>The table will follow the block route of the train until 
+        it finds the next signal.</p>
+        <p>This system uses Signal Mast Logic, the legacy 
+        Simple Signal Logic within JMRI is not supported.</p>
+        
+    <h3>Block Tracking</h3>
+        <p>The table will attempt to identify which 
+        block the train is in via the 
+        block value ( train describer ).</p>
+        <p>By default, the table will update when the 
+        train number is the block value,
+        this can be changed to track a different block value 
+        by adding an alternative in the table.</p>
+        <p>A block initially has no direction set, 
+        forward values can only be calculated 
+        when JMRI knows what direction the block is set.</p>
+        <p>The direction is normally calculated by 
+        JMRI when a new block is occupied, 
+        then comparing neighbouring blocks.</p>
+        <p>Layout Editor blocks can be checked by 
+        taking the panel into edit mode, 
+        then clicking on Tools > Check.</p>
+        <p>You can view block routing by right clicking 
+        on an individual Layout Editor 
+        track segment and selecting View Block Routing.</p>
+        <p>As the tracking takes data from the block table, 
+        you will currently need to 
+        load the Command Station monitor after opening any panels.</p>
+        
     <h3><a name="opc" id="opc">Supported Operation Codes</a></h3>
+
+<p>Sent by the Command Station Monitor</p>
+
+QLOC
+RSTAT
+
+
+
+<p>Listeners for message sent by JMRI instance or external to JMRI</p>
+    
+    
+    PLOC
+RLOC
+DSPD
+KLOC
+DKEEP ( if session not on table sends a QLOC )
+STAT ( Used to determine if command station is capable of CBUS protocol 8a )
+GLOC
+ERR
+STMOD
     
 
     <h3>JMRI Help</h3>
       
-      <p>You can view this help page within JMRI by selecting Help > Window Help in the top bar of the MERG CBUS Command Station Monitor.</p>
+        <p>You can view this help page within JMRI by selecting Help > Window Help in the top bar of the 
+        MERG CBUS Command Station Monitor.</p>
       
-      <p><a href="../../../../../../../html/hardware/can/cbus/index.shtml">Main JMRI MERG CBUS Help page</a>.</p>
-        
-        
+        <p><a href="../../../../../../../html/hardware/can/cbus/index.shtml">Main JMRI MERG CBUS Help page</a>.</p>
         
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->

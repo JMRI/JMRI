@@ -317,6 +317,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
     public static final int SIGNALHEAD = 0x00;
     public static final int SIGNALMAST = 0x01;
     private int _SignalType = SIGNALHEAD;
+    private String _StoppingSpeedName = "RestrictedSlow";
     private boolean _UseConnectivity = false;
     private boolean _HasOccupancyDetection = false; // "true" if blocks have occupancy detection
     private boolean _TrainsFromRoster = true;
@@ -335,6 +336,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
     private boolean _SupportVSDecoder = false;
     private int _MinThrottleInterval = 100; //default time (in ms) between consecutive throttle commands
     private int _FullRampTime = 10000; //default time (in ms) for RAMP_FAST to go from 0% to 100%
+    private float maximumLineSpeed = 0.0f;
 
     // operational instance variables
     private final List<ActiveTrain> activeTrainsList = new ArrayList<>();  // list of ActiveTrain objects
@@ -1203,6 +1205,13 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                                 Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
                         log.error("AutoRun requested without occupancy detection.");
                         return null;
+                    }
+                }
+                // get Maximum line speed once. We need to use this when the current signal mast is null.
+                for (int iSM = 0; iSM <_LE.signalMastList.size();  iSM++ )  {
+                    float msl = _LE.signalMastList.get(iSM).getSignalMast().getSignalSystem().getMaximumLineSpeed();
+                    if ( msl > maximumLineSpeed ) {
+                        maximumLineSpeed = msl;
                     }
                 }
             }
@@ -2279,6 +2288,17 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         return _SignalType;
     }
 
+    protected void setStoppingSpeedName(String speedName) {
+        _StoppingSpeedName = speedName;
+    }
+
+    protected String getStoppingSpeedName() {
+        return _StoppingSpeedName;
+    }
+
+    protected float getMaximumLineSpeed() {
+        return maximumLineSpeed;
+    }
     protected boolean getTrainsFromRoster() {
         return _TrainsFromRoster;
     }

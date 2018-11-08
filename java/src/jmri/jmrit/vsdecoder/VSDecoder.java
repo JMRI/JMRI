@@ -887,7 +887,7 @@ public class VSDecoder implements PropertyChangeListener {
                 es.setXml(el, vf);
                 sound_list.put(el.getAttributeValue("name"), es);
                 topspeed = es.top_speed;
-                topspeed_rev = topspeed;
+                topspeed_rev = es.top_speed_reverse;
             } else {
                 // TODO: Some type other than configurable sound. Handle appropriately
             }

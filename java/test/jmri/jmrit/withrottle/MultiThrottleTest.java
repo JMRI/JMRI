@@ -3,10 +3,7 @@ package jmri.jmrit.withrottle;
 import jmri.InstanceManager;
 import jmri.NamedBeanHandleManager;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * Test simple functioning of MultiThrottle
