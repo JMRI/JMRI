@@ -175,6 +175,23 @@ public abstract class AbstractSensorTestBase {
         checkStatusRequestMsgSent();
     }
 
+    // Test the Sensor interface
+    @Test
+    public void testSensor() throws JmriException {
+        t.setState(Sensor.ON);
+        Assert.assertTrue("Sensor is ON", t.getState() == Sensor.ON);
+        t.setState(Sensor.OFF);
+        Assert.assertTrue("Sensor is ON", t.getState() == Sensor.OFF);
+        t.setCommandedState(Sensor.ON);
+        Assert.assertTrue("Sensor is ON", t.getState() == Sensor.ON);
+        t.setCommandedState(Sensor.OFF);
+        Assert.assertTrue("Sensor is ON", t.getState() == Sensor.OFF);
+        t.setState(Sensor.ON);
+        Assert.assertTrue("Sensor is ON", t.getCommandedState() == Sensor.ON);
+        t.setState(Sensor.OFF);
+        Assert.assertTrue("Sensor is ON", t.getCommandedState() == Sensor.OFF);
+    }
+
 
     //dispose of t.
     @After
