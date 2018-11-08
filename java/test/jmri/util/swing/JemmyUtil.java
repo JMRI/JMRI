@@ -15,7 +15,7 @@ import org.netbeans.jemmy.operators.WindowOperator;
 import org.netbeans.jemmy.util.NameComponentChooser;
 
 /**
- * Utility Methods for Jemmy Tests
+ * Utility Methods for Jemmy Tests.
  * 
  * @author Paul Bender Copyright (C) 2018
  */
@@ -78,4 +78,5 @@ public class JemmyUtil {
         JButtonOperator jbo = new JButtonOperator(jdo,buttonLabel);
         jbo.push();
     }
+
 }
