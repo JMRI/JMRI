@@ -351,7 +351,7 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
                     rangeBox.setEnabled(((SensorManager) mgr).allowMultipleAdditions(systemPrefix));
                     // get tooltip from ProxySensorManager
                     addEntryToolTip = mgr.getEntryToolTip();
-                    if (log.isDebugEnabled()) { log.debug("S add box enabled1"); }
+                    log.debug("S add box enabled1");
                     break;
                 }
             }

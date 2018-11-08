@@ -821,7 +821,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
             connectionChoice = "TBD";
         }
         // Update tooltip in the Add Light pane to match system connection selected from combobox.
-        if (log.isDebugEnabled()) { log.debug("Connection choice = [{}]", connectionChoice); }
+        log.debug("Connection choice = [{}]", connectionChoice);
         // get tooltip from ProxyLightManager
         if (jmri.InstanceManager.getDefault(LightManager.class) instanceof jmri.managers.AbstractProxyManager) {
             jmri.managers.ProxyLightManager proxy = (jmri.managers.ProxyLightManager) jmri.InstanceManager.getDefault(LightManager.class);
@@ -832,7 +832,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
                     // get tooltip from ProxyLightManager
                     addEntryToolTip = mgr.getEntryToolTip();
                     addRangeBox.setEnabled(((LightManager) mgr).allowMultipleAdditions(systemPrefix));
-                    if (log.isDebugEnabled()) { log.debug("L Add box set"); }
+                    log.debug("L Add box set");
                     break;
                 }
             }
@@ -846,7 +846,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
         else {
             log.warn("Unable to set light tooltip or range box");
         }
-        if (log.isDebugEnabled()) { log.debug("DefaultLightManager tip: {}", addEntryToolTip); }
+        log.debug("DefaultLightManager tip: {}", addEntryToolTip);
         // show Hardware address field tooltip in the Add Light pane to match system connection selected from combobox
         if (addEntryToolTip != null) {
             hardwareAddressTextField.setToolTipText("<html>"
