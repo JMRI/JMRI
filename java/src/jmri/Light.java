@@ -101,31 +101,31 @@ public interface Light extends DigitalIO {
      */
     public static final int TRANSITIONING = 0x010;
     
-    /** {@inheritDoc] */
+    /** {@inheritDoc} */
     @Override
     default public boolean isConsistentState() {
         return (getState() == DigitalIO.ON) || (getState() == DigitalIO.OFF);
     }
     
-    /** {@inheritDoc] */
+    /** {@inheritDoc} */
     @Override
     default public void setCommandedState(int s) {
         setState(s);
     }
     
-    /** {@inheritDoc] */
+    /** {@inheritDoc} */
     @Override
     default public int getCommandedState() {
         return getState();
     }
     
-    /** {@inheritDoc] */
+    /** {@inheritDoc} */
     @Override
     default public int getKnownState() {
         return getState();
     }
     
-    /** {@inheritDoc] */
+    /** {@inheritDoc} */
     @Override
     default public void requestUpdateFromLayout() {
         // Do nothing

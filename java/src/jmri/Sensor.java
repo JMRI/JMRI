@@ -32,13 +32,13 @@ public interface Sensor extends DigitalIO {
     public static final Long MAX_DEBOUNCE = 9999999L;
 
 
-    /** {@inheritDoc] */
+    /** {@inheritDoc} */
     @Override
     default public boolean isConsistentState() {
         return true;
     }
     
-    /** {@inheritDoc] */
+    /** {@inheritDoc} */
     @Override
     default public void setCommandedState(int s) {
         try {
@@ -48,7 +48,7 @@ public interface Sensor extends DigitalIO {
         }
     }
     
-    /** {@inheritDoc] */
+    /** {@inheritDoc} */
     @Override
     default public int getCommandedState() {
         return getState();
