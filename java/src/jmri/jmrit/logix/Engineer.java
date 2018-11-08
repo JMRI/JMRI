@@ -1076,7 +1076,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             // "idxSkipToSpeedCommand" may be used rather than "_idxCurrentCommand".
             // Note on ramp up endSpeed should match scripted speed modified by endSpeedType
             ready = false;
-            _endSpeed = _speedUtil.modifySpeed(_normalSpeed, _endSpeedType, _isForward);   // requested endspeed
+            _endSpeed = _speedUtil.modifySpeed(_normalSpeed, _endSpeedType, _isForward);   // requested end speed
             float speed = _throttle.getSpeedSetting();  // current speed
             if (speed < 0.0f) {
                 speed = 0.0f;
@@ -1109,22 +1109,21 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                                 break;
                             }
                         }
-                        _endSpeed = _speedUtil.modifySpeed(scriptSpeed, _endSpeedType, _isForward);   // requested endspeed
+                        _endSpeed = _speedUtil.modifySpeed(scriptSpeed, _endSpeedType, _isForward);
                         // However, the ramp up will take time and script may have other speed commands while
                         // ramping up. So 'scriptSpeed' may not be actual script speed when ramp up distance
                         // is traveled.
                         // Up rampDist is distance from current throttle speed to _endSpeed.
                         float rampDist = _speedUtil.rampLengthForSpeedChange(speed, _endSpeed, _isForward);
-                        int idxNextSpeedCmd = idxSpeedCmd + 1;
                         long scriptTime = 0;
                         float scriptDist = 0;   // distance traveled at speed 'scriptSpeed' to next speed command
                         boolean hasSpeed = (scriptSpeed > 0);
                         for (int idx = idxSpeedCmd+1; idx < _commands.size(); idx++) {
-                            ThrottleSetting ts = _commands.get(idxSpeedCmd);
+                            ThrottleSetting ts = _commands.get(idx);
+                            scriptTime += ts.getTime();
+                            String cmd = ts.getCommand().toUpperCase();
                             if (hasSpeed) {
-                                scriptTime += ts.getTime();
                                 scriptDist += _speedUtil.getDistanceTraveled(scriptSpeed, _endSpeedType, scriptTime, _isForward);
-                                String cmd = ts.getCommand().toUpperCase();
                                 if (scriptDist >= rampDist) {   // up ramp will be complete within this distance
                                     break;
                                 }
@@ -1136,12 +1135,13 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                                     advanceToCommandIndex(idx); // don't let script set speeds up to here
                                 }
                             }
+                            log.debug("cmd= {}, et= {}, _endSpeed= {}, scriptDist= {}, rampDist= {}", cmd, ts.getTime(), _endSpeed, scriptDist, rampDist);
                         }
                         _normalSpeed = scriptSpeed;
 
                         if (log.isDebugEnabled()) 
-                            log.debug("Ramp up for \"{}\". curSpeed= {}, endSpeed= {}, resumeIndex= {}, nextSpeedIdx= {}",
-                                    _endSpeedType, speed, _endSpeed, _idxSkipToSpeedCommand+1, _idxCurrentCommand+1);
+                            log.debug("Ramp up for \"{}\". curSpeed= {}, endSpeed= {}, resumeIndex= {}, nextSpeedIdx= {}, rampDist= {}",
+                                    _endSpeedType, speed, _endSpeed, _idxSkipToSpeedCommand+1, _idxCurrentCommand+1, rampDist);
                                 // Note: command indexes biased from 0 to 1 to match Warrant display of commands.
 
                         while (speed < _endSpeed) { // do ramp up

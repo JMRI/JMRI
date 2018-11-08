@@ -1419,11 +1419,11 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                     int idx = getIndexOfBlock(_stoppingBlock, _idxLastOrder);
                     if (idx >= 0) {
                         // Wait to allow departing rogue train to clear turnouts before re-allocation
-                        // of this warrant resets the path. (rogue may leave on a conflicting path
-                        // whose turnout control is shared with this path)
+                        // of this warrant resets the path. Rogue may leave on a conflicting path
+                        // whose turnout control is shared with this path
                         ThreadingUtil.runOnGUIDelayed(() -> {
                             clearStoppingBlock();
-                        }, 5000);   // 5 seconds
+                        }, 7000);   // 7 seconds
                         
                     }
                 }
@@ -2374,7 +2374,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                 fireRunStatus("SpeedChange", _idxCurrentOrder - 1, _idxCurrentOrder); // message reason for hold
                 return true;
             }
-            // Continue, look ahead for possible speed decrease.
+            // Continue, look ahead for possible speed modification decrease.
         }
 
         //look ahead for a speed change slower than the current speed
@@ -2391,12 +2391,13 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         availDist += getAvailableDistance(idxBlockOrder, position); // total distance to end including current and last 
 
         if (idxBlockOrder == _orders.size() - 1) {
-            // went through remaining BlockOrders, found no speed decreases, except for possibly the last
+            // went through remaining BlockOrders,
             if (!_speedUtil.secondGreaterThanFirst(speedType, _curSpeedType)) {
+                // found no speed decreases, except for possibly the last
                 float curSpeedRampLen = _speedUtil.rampLengthForRampDown(speedSetting, Normal, Stop, isForward);
                 if (log.isDebugEnabled()) {
                     if (_curSpeedType.equals(speedType)) {
-                        log.debug("No speed decreases for runState= {} from {} found after block \"{}\". RampLen = {} warrant {}",
+                        log.debug("No speed modifications for runState= {} from {} found after block \"{}\". RampLen = {} warrant {}",
                                 RUN_STATE[runState], _curSpeedType, curBlock.getDisplayName(), curSpeedRampLen, getDisplayName());
                     }
                 }
@@ -2406,8 +2407,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                     if (runState == STOP_PENDING || runState == RAMP_HALT) {
                         // ramp to stop in progress - no need for further stop calls
                          return true;
-                    } // Space exceeded when ramping down over several blocks is not catastrophic
-                }
+                    }
+                } // else {Space exceeded when ramping down over several blocks is not catastrophic - let it be}
                 _waitForBlock = false;
                 _waitForSignal = false;
                 return true;
@@ -2474,7 +2475,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             return true; // change speed later
         }
 
-        // Need to start ramp down in the block of _idxCurrentOrder
+        // Need to start a ramp down in the block of _idxCurrentOrder
         blkOrder = getBlockOrderAt(_idxCurrentOrder);
         if (log.isDebugEnabled()) {
             log.debug("Schedule speed change to {} in block \"{}\" availDist={}, warrant= {}",
@@ -2484,7 +2485,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         // find the time when ramp should start in this block, then use thread CommandDelay  
         // ramp length to change to modified speed from current speed.
 
-        runState = _engineer.getRunState(); // ramp up may have been called around line 2332
+        runState = _engineer.getRunState();
         if (runState == RAMPING_UP) {
             // Interrupt ramp up with ramp down in time to reach 0 speed.
             float endSpeed = _speedUtil.modifySpeed(_engineer.getScriptSpeed(), speedType, isForward);
