@@ -70,13 +70,37 @@ public class MultiThrottleController extends ThrottleController {
             }
         }
         if (eventName.matches("SpeedSteps")) {
-            sendSpeedStepMode(throttle);
+            StringBuilder message = new StringBuilder(buildPacketWithChar('A'));
+            message.append("s");
+            message.append(event.getNewValue().toString());
+            for (ControllerInterface listener : controllerListeners) {
+                listener.sendPacketToDevice(message.toString());
+            }
         }
         if (eventName.matches("IsForward")) {
-            sendCurrentDirection(throttle);
+            StringBuilder message = new StringBuilder(buildPacketWithChar('A'));
+            message.append("R");
+            message.append((Boolean) event.getNewValue() ? "1" : "0");
+            for (ControllerInterface listener : controllerListeners) {
+               listener.sendPacketToDevice(message.toString());
+            }
         }
         if (eventName.matches("SpeedSetting")) {
-            sendCurrentSpeed(throttle);
+            float currentSpeed = ((Float) event.getNewValue()).floatValue();
+            log.debug("Speed Setting: {} head of queue {}",currentSpeed, lastSentSpeed.peek());
+            if(lastSentSpeed.isEmpty()) { 
+               StringBuilder message = new StringBuilder(buildPacketWithChar('A'));
+               message.append("V");
+               message.append(Math.round(currentSpeed / speedMultiplier));
+               for (ControllerInterface listener : controllerListeners) {
+                   listener.sendPacketToDevice(message.toString());
+               }
+            } else {
+               if( Math.abs(lastSentSpeed.peek().floatValue()-currentSpeed)<0.0005 ) {
+                  Float f = lastSentSpeed.poll(); // remove the value from the list.
+                  log.debug("removed value {} from queue",f);
+               }
+            }
         }
     }
 
@@ -136,10 +160,11 @@ public class MultiThrottleController extends ThrottleController {
      * {@inheritDoc}
      */
     @Override
-    protected void sendCurrentSpeed(DccThrottle t) {
+    synchronized protected void sendCurrentSpeed(DccThrottle t) {
+        float currentSpeed = t.getSpeedSetting();
         StringBuilder message = new StringBuilder(buildPacketWithChar('A'));
         message.append("V");
-        message.append(Math.round(t.getSpeedSetting() / speedMultiplier));
+        message.append(Math.round(currentSpeed / speedMultiplier));
         for (ControllerInterface listener : controllerListeners) {
             listener.sendPacketToDevice(message.toString());
         }
