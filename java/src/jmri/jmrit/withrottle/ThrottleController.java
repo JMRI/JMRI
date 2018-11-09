@@ -35,6 +35,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.LinkedList;
+import java.util.Queue;
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
@@ -53,6 +55,8 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
     DccLocoAddress leadAddress;
     char whichThrottle;
     float speedMultiplier;
+    protected Queue<Float> lastSentSpeed;
+    protected float newSpeed;
     boolean isAddressSet;
     protected ArrayList<ThrottleControllerListener> listeners;
     protected ArrayList<ControllerInterface> controllerListeners;
@@ -64,6 +68,7 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
 
     public ThrottleController() {
         speedMultiplier = 1.0f / 126.0f;
+        lastSentSpeed = new LinkedList<Float>();
     }
 
     public ThrottleController(char whichThrottleChar, ThrottleControllerListener tcl, ControllerInterface cl) {
@@ -341,7 +346,7 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
         return ("RPF}|{" + whichThrottle);
     }
 
-    protected void sendCurrentSpeed(DccThrottle t) {
+    synchronized protected void sendCurrentSpeed(DccThrottle t) {
     }
 
     protected void sendCurrentDirection(DccThrottle t) {
@@ -565,11 +570,14 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
      *
      * @param rawSpeed Value sent from mobile device, range 0 - 126
      */
-    protected void setSpeed(int rawSpeed) {
+    synchronized protected void setSpeed(int rawSpeed) {
 
         float newSpeed = (rawSpeed * speedMultiplier);
 
         log.debug("raw: {}, NewSpd: {}", rawSpeed, newSpeed);
+        while(lastSentSpeed.offer(Float.valueOf(newSpeed))==false){
+              log.debug("failed attempting to add speed to queue");
+        }
         throttle.setSpeedSetting(newSpeed);
     }
 
@@ -748,7 +756,12 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
     protected void handleRequest(String inPackage) {
         switch (inPackage.charAt(0)) {
             case 'V': {
-                sendCurrentSpeed(throttle);
+                if(lastSentSpeed.isEmpty()){
+                   // send the current speed only
+                   // if we aren't waiting for the back end
+                   // to update the speed.
+                   sendCurrentSpeed(throttle);
+                }
                 break;
             }
             case 'R': {
