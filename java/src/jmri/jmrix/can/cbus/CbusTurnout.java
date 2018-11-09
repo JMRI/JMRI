@@ -96,36 +96,63 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
     protected void forwardCommandChangeToLayout(int s) {
         CanMessage m;
         if (s == Turnout.THROWN) {
-            m = addrThrown.makeMessage(tc.getCanid());
+            if (getInverted()){
+                m = addrClosed.makeMessage(tc.getCanid());
+            } else {
+                m = addrThrown.makeMessage(tc.getCanid());
+            }
             tc.sendCanMessage(m, this);
         } else if (s == Turnout.CLOSED) {
-            m = addrClosed.makeMessage(tc.getCanid());
+            if (getInverted()){
+                m = addrThrown.makeMessage(tc.getCanid());
+            }
+            else {
+                m = addrClosed.makeMessage(tc.getCanid());
+            }
             tc.sendCanMessage(m, this);
         }
     }
 
+    
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void message(CanMessage f) {
         if (addrThrown.match(f)) {
-            newCommandedState(THROWN);
+            newCommandedState(!getInverted() ? THROWN : CLOSED);
         } else if (addrClosed.match(f)) {
-            newCommandedState(CLOSED);
+            newCommandedState(!getInverted() ? CLOSED : THROWN);
         }
     }
-
+    
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void reply(CanReply f) {
         // convert response events to normal
         f = CbusMessage.opcRangeToStl(f);
         if (addrThrown.match(f)) {
-            newCommandedState(THROWN);
+            newCommandedState(!getInverted() ? THROWN : CLOSED);
         } else if (addrClosed.match(f)) {
-            newCommandedState(CLOSED);
+            newCommandedState(!getInverted() ? CLOSED : THROWN);
         }
     }
-
+    
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void turnoutPushbuttonLockout(boolean locked) {
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean canInvert() {
+        return true;
     }
 
     private final static Logger log = LoggerFactory.getLogger(CbusTurnout.class);

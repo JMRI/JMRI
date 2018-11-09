@@ -98,18 +98,36 @@ public class CbusSensor extends AbstractSensor implements CanListener {
     public void setKnownState(int s) throws jmri.JmriException {
         CanMessage m;
         if (s == Sensor.ACTIVE) {
-            m = addrActive.makeMessage(tc.getCanid());
+            if (getInverted()){
+                m = addrInactive.makeMessage(tc.getCanid());
+                setOwnState(Sensor.ACTIVE);
+            } else {
+                m = addrActive.makeMessage(tc.getCanid());
+                setOwnState(Sensor.ACTIVE);
+            }
             tc.sendCanMessage(m, this);
-            setOwnState(Sensor.ACTIVE);
         } else if (s == Sensor.INACTIVE) {
-            m = addrInactive.makeMessage(tc.getCanid());
+            if (getInverted()){
+                m = addrActive.makeMessage(tc.getCanid());
+                setOwnState(Sensor.INACTIVE);                
+            } else {
+                m = addrInactive.makeMessage(tc.getCanid());
+                setOwnState(Sensor.INACTIVE);
+            }
             tc.sendCanMessage(m, this);
-            setOwnState(Sensor.INACTIVE);
         } else if (s == Sensor.UNKNOWN){
             setOwnState(Sensor.UNKNOWN);
         }
     }
-
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean canInvert() {
+        return true;
+    }    
+    
     /**
      * Track layout status from messages being sent to CAN
      *
@@ -117,9 +135,9 @@ public class CbusSensor extends AbstractSensor implements CanListener {
     @Override
     public void message(CanMessage f) {
         if (addrActive.match(f)) {
-            setOwnState(Sensor.ACTIVE);
+            setOwnState(!getInverted() ? Sensor.ACTIVE : Sensor.INACTIVE);
         } else if (addrInactive.match(f)) {
-            setOwnState(Sensor.INACTIVE);
+            setOwnState(!getInverted() ? Sensor.INACTIVE : Sensor.ACTIVE);
         }
     }
 
@@ -132,12 +150,15 @@ public class CbusSensor extends AbstractSensor implements CanListener {
         // convert response events to normal
         f = CbusMessage.opcRangeToStl(f);
         if (addrActive.match(f)) {
-            setOwnState(Sensor.ACTIVE);
+            setOwnState(!getInverted() ? Sensor.ACTIVE : Sensor.INACTIVE);
         } else if (addrInactive.match(f)) {
-            setOwnState(Sensor.INACTIVE);
+            setOwnState(!getInverted() ? Sensor.INACTIVE : Sensor.ACTIVE);
         }
     }
-
+    
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void dispose() {
         tc.removeCanListener(this);
