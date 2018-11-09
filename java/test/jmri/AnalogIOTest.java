@@ -82,6 +82,11 @@ public class AnalogIOTest {
         public float getMax() {
             return Float.MAX_VALUE;
         }
+
+        @Override
+        public float getResolution() {
+            return (float) 0.1;
+        }
     
     }
     

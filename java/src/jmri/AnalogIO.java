@@ -55,6 +55,11 @@ public interface AnalogIO extends NamedBean {
      * Get the maximum value of this AnalogIO.
      */
     public float getMax();
+    
+    /**
+     * Get the resloution of this AnalogIO.
+     */
+    public float getResolution();
 
     /**
      * Request an update from the layout soft/hardware. May not even happen, and
