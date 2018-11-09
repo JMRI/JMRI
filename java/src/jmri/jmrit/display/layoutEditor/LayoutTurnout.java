@@ -416,6 +416,11 @@ public class LayoutTurnout extends LayoutTrack {
 
     @Nonnull
     public String getBlockName() {
+        if ((blockName == null) || (blockName.isEmpty())) {
+            if (getLayoutBlock() != null) {
+                blockName = getLayoutBlock().getId();
+            }
+        }
         return ((blockName == null) ? "" : blockName);
     }
 
