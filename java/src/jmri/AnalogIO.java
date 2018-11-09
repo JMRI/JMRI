@@ -71,5 +71,5 @@ public interface AnalogIO extends NamedBean {
      */
     default public void requestUpdateFromLayout() {
     }
-    
+
 }
