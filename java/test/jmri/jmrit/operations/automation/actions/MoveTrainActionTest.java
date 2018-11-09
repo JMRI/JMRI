@@ -38,12 +38,37 @@ public class MoveTrainActionTest extends OperationsTestCase {
     }
     
     @Test
+    public void testTrainNotBuilt() {
+        JUnitOperationsUtil.initOperationsData();
+        TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
+        Train train1 = tmanager.getTrainById("1");
+        Assert.assertNotNull(train1);
+        
+        MoveTrainAction action = new MoveTrainAction();
+        Assert.assertNotNull("exists",action);
+        AutomationItem automationItem = new AutomationItem("TestId");
+        automationItem.setAction(action);
+        Assert.assertEquals("confirm registered", automationItem, action.getAutomationItem());
+        
+        // does nothing, no train assignment
+        action.doAction();       
+        Assert.assertFalse(train1.isTrainEnRoute());
+        Assert.assertFalse(automationItem.isActionSuccessful());
+        
+        // does nothing, train not built
+        automationItem.setTrain(train1);
+        action.doAction();       
+        Assert.assertFalse(train1.isTrainEnRoute());
+        Assert.assertFalse(automationItem.isActionSuccessful());
+    }
+    
+    @Test
     public void testAction() {
         JUnitOperationsUtil.initOperationsData();
         TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
         Train train1 = tmanager.getTrainById("1");
         Assert.assertNotNull(train1);
-        train1.build();
+        Assert.assertTrue(train1.build());
         
         MoveTrainAction action = new MoveTrainAction();
         Assert.assertNotNull("exists",action);
@@ -63,6 +88,32 @@ public class MoveTrainActionTest extends OperationsTestCase {
         
         //try again
         action.doAction();
+        Assert.assertTrue(automationItem.isActionSuccessful());
+    }
+    
+    @Test
+    public void testActionRouteLocataion() {
+        JUnitOperationsUtil.initOperationsData();
+        TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
+        Train train1 = tmanager.getTrainById("1");
+        Assert.assertNotNull(train1);
+        Assert.assertTrue(train1.build());
+        
+        MoveTrainAction action = new MoveTrainAction();
+        Assert.assertNotNull("exists",action);
+        AutomationItem automationItem = new AutomationItem("TestId");
+        automationItem.setAction(action);
+        Assert.assertEquals("confirm registered", automationItem, action.getAutomationItem());
+        
+        // does nothing, no train assignment
+        action.doAction();       
+        Assert.assertFalse(train1.isTrainEnRoute());
+        Assert.assertFalse(automationItem.isActionSuccessful());
+        
+        automationItem.setTrain(train1);
+        automationItem.setRouteLocation(train1.getTrainTerminatesRouteLocation());
+        action.doAction();       
+        Assert.assertTrue(train1.isTrainEnRoute());
         Assert.assertTrue(automationItem.isActionSuccessful());
     }
 

@@ -85,7 +85,7 @@ public class BuildTrainActionTest extends OperationsTestCase {
         automationItem.setMessage("Show this message when successful");
         automationItem.setMessageFail("Show this message when fail");
         
-        // should dialog to appear
+        // should cause dialog to appear
         Thread doAction = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -99,7 +99,6 @@ public class BuildTrainActionTest extends OperationsTestCase {
             return doAction.getState().equals(Thread.State.WAITING);
         }, "wait for prompt");
         
-        // dialog window show appear
         String title = automationItem.getId() + "  " + action.getActionString();
         JemmyUtil.pressDialogButton(title, Bundle.getMessage("ButtonOK"));
         

@@ -53,6 +53,10 @@ public class ActivateTrainScheduleActionTest extends OperationsTestCase {
         
         // set "Monday" as the active 
         automationItem.setTrainSchedule(tsm.getScheduleByName("Monday"));
+        
+        String message = action.getActionString();
+        Assert.assertTrue("message contains train schedule name", message.contains("Monday"));
+        
         automationItem.doAction();
         // confirm change
         Assert.assertEquals("active schedule", tsm.getScheduleByName("Monday").getId(), tsm.getTrainScheduleActiveId());
