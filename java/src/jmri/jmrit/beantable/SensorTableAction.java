@@ -360,7 +360,6 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
             log.debug("S add box enabled2");
             // get tooltip from sensor manager
             addEntryToolTip = senManager.getEntryToolTip();
-            log.debug("SensorManager tip");
         }
         else {
             log.warn("Unable to set tooltip or Range Allowed Box");

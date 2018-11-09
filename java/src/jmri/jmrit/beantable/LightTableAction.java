@@ -841,7 +841,6 @@ public class LightTableAction extends AbstractTableAction<Light> {
             log.debug("L add box enabled2");
             // get tooltip from light manager
             addEntryToolTip = lightManager.getEntryToolTip();
-            log.debug("LightManager tip");
         }
         else {
             log.warn("Unable to set light tooltip or range box");
