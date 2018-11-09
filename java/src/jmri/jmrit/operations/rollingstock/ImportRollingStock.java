@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
  * @author Dan Boudreau Copyright (C) 2013
  * 
  */
-public class ImportRollingStock extends Thread {
+public abstract class ImportRollingStock extends Thread {
 
     static final String ESC = "\""; // escape character NOI18N
     static final String del = ","; // delimiter

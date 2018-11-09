@@ -276,11 +276,7 @@
       <xi:include href="http://jmri.org/xml/decoders/digitrax/cv62.63LightingOptions.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/kickStart.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/fwdTrim.xml"/>
-      <variable item="Speed Table" CV="67">
-        <speedTableVal/>
-        <label>Speed Table</label>
-        <label xml:lang="it">Tabella Velocità</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/revTrim.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
       <variable CV="105" item="User Id #1" default="252" include="6009">

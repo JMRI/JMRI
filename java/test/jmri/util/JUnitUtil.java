@@ -1,17 +1,39 @@
 package jmri.util;
 
+import apps.gui.GuiLafPreferencesManager;
 import java.awt.Frame;
 import java.awt.Window;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 import javax.annotation.Nonnull;
-
-import apps.gui.GuiLafPreferencesManager;
-
-import jmri.*;
+import jmri.ConditionalManager;
+import jmri.ConfigureManager;
+import jmri.GlobalProgrammerManager;
+import jmri.InstanceManager;
+import jmri.JmriException;
+import jmri.LightManager;
+import jmri.LogixManager;
+import jmri.MemoryManager;
+import jmri.NamedBean;
+import jmri.PowerManager;
+import jmri.PowerManagerScaffold;
+import jmri.ReporterManager;
+import jmri.RouteManager;
+import jmri.SensorManager;
+import jmri.ShutDownManager;
+import jmri.ShutDownTask;
+import jmri.SignalHeadManager;
+import jmri.SignalMastLogicManager;
+import jmri.SignalMastManager;
+import jmri.TurnoutManager;
+import jmri.TurnoutOperationManager;
+import jmri.UserPreferencesManager;
 import jmri.implementation.JmriConfigurationManager;
 import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
@@ -19,6 +41,8 @@ import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.WarrantManager;
 import jmri.jmrix.ConnectionConfigManager;
 import jmri.jmrix.debugthrottle.DebugThrottleManager;
+import jmri.jmrix.internal.InternalReporterManager;
+import jmri.jmrix.internal.InternalSensorManager;
 import jmri.managers.AbstractSignalHeadManager;
 import jmri.managers.DefaultConditionalManager;
 import jmri.managers.DefaultIdTagManager;
@@ -27,8 +51,6 @@ import jmri.managers.DefaultMemoryManager;
 import jmri.managers.DefaultRailComManager;
 import jmri.managers.DefaultSignalMastLogicManager;
 import jmri.managers.DefaultSignalMastManager;
-import jmri.jmrix.internal.InternalReporterManager;
-import jmri.jmrix.internal.InternalSensorManager;
 import jmri.managers.TestUserPreferencesManager;
 import jmri.profile.NullProfile;
 import jmri.profile.Profile;
@@ -46,14 +68,10 @@ import jmri.util.managers.WarrantManagerThrowExceptionScaffold;
 import jmri.util.prefs.JmriConfigurationProvider;
 import jmri.util.prefs.JmriPreferencesProvider;
 import jmri.util.prefs.JmriUserInterfaceConfigurationProvider;
-
 import org.apache.log4j.Level;
-
 import org.junit.Assert;
-
 import org.netbeans.jemmy.FrameWaiter;
 import org.netbeans.jemmy.TestOut;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -160,15 +178,17 @@ public class JUnitUtil {
             Log4JUtil.initLogging(filename);
         }
         
-        // do not set the UncaughtExceptionHandler while unit testing
-        // individual tests can explicitely set it after calling this method
-        Thread.setDefaultUncaughtExceptionHandler(null);
+        // need to do this each time
         try {
             JUnitAppender.start();
         } catch (Throwable e) {
             System.err.println("Could not start JUnitAppender, but test continues:\n" + e);
         }
 
+        // do not set the UncaughtExceptionHandler while unit testing
+        // individual tests can explicitly set it after calling this method
+        Thread.setDefaultUncaughtExceptionHandler(null);
+        
         // silence the Jemmy GUI unit testing framework
         JUnitUtil.silenceGUITestOutput();
 
@@ -1077,7 +1097,7 @@ public class JUnitUtil {
     /**
      * Leaves ShutDownManager, if any, in place,
      * but removes its contents.
-     * {@see #initShutDownManager()}
+     * @see #initShutDownManager()
      */
     public static void clearShutDownManager() {
         ShutDownManager sm = InstanceManager.getNullableDefault(jmri.ShutDownManager.class);
@@ -1092,7 +1112,7 @@ public class JUnitUtil {
     /**
      * Creates a new ShutDownManager.
      * Does not remove the contents (i.e. kill the future actions) of any existing ShutDownManager.
-     * {@see #clearShutDownManager()}
+     * @see #clearShutDownManager()
      */
     public static void initShutDownManager() {
         if (InstanceManager.getNullableDefault(ShutDownManager.class) == null) {
@@ -1237,6 +1257,7 @@ public class JUnitUtil {
     /**
      * Service method to find the test class name in the traceback. Heuristic:
      * First jmri or apps class that isn't this one.
+     * @return String class name
      */
     static String getTestClassName() {
         StackTraceElement[] trace = Thread.currentThread().getStackTrace();
@@ -1339,8 +1360,15 @@ public class JUnitUtil {
             window.dispose();
         });
     }
+    
+    public static Thread getThreadByName(String threadName) {
+        for (Thread t : Thread.getAllStackTraces().keySet()) {
+            if (t.getName().equals(threadName)) return t;
+        }
+        return null;
+    }
 
-    static List<String> threadNames = new ArrayList<String>(Arrays.asList(new String[]{
+    static List<String> threadNames = new ArrayList<>(Arrays.asList(new String[]{
         // names we know about from normal running
         "main",
         "Java2D Disposer",
@@ -1360,7 +1388,7 @@ public class JUnitUtil {
         "Aqua L&F",
         "AppKit Thread"
     }));
-    static List<Thread> threadsSeen = new ArrayList<Thread>();
+    static List<Thread> threadsSeen = new ArrayList<>();
 
     /**
      * Do a diagnostic check of threads, 

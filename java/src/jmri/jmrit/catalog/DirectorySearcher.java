@@ -217,12 +217,18 @@ public class DirectorySearcher implements InstanceManagerAutoDefault {
         }
 
         /**
-         * Find a Directory with image files
+         * Find a Directory with image files.
+         * <p>
+         * This waits on completion of the PrivateDialong (which is itself not modal)
+         * so must not be called on the Layout or GUI threads
          *
          * @param dir    directory
          * @param filter file filter for images
          */
+        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "WA_NOT_IN_LOOP", justification="Waiting for single possible event")
         private void getImageDirectory(File dir, String[] filter) {
+            if (jmri.util.ThreadingUtil.isGUIThread() || jmri.util.ThreadingUtil.isLayoutThread()) log.error("getImageDirectory called on wrong thread");
+            
             File[] files = dir.listFiles();
             if (files == null || quit) {
                 // no sub directories

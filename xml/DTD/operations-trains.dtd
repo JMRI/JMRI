@@ -13,9 +13,9 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 
-<!ELEMENT operations-config (trains | options | schedules | automations)*>
+<!ELEMENT operations-config (trains | options | schedules | trainScheduleOptions | automations)*>
 
-<!ELEMENT options (trainOptions | rowColorOptions | trainEditOptions | trainScheduleOptions | scripts | manifestCreator 
+<!ELEMENT options (trainOptions | rowColorOptions | trainEditOptions | scripts | manifestCreator 
 | switchlistCreator)*>
 <!ELEMENT trainOptions EMPTY>
 <!ELEMENT rowColorOptions EMPTY>

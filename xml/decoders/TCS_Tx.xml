@@ -278,11 +278,7 @@
         <label xml:lang="it">Smorzamento luci opposte</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
-      <variable item="Speed Table" CV="67">
-        <speedTableVal/>
-        <label>Speed Table</label>
-        <label xml:lang="it">Tabella velocità</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
       <variable item="FL(f) controls output 1" CV="33" mask="XXXXXXXV" minOut="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(f) controls output 1</label>

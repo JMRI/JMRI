@@ -2,10 +2,11 @@ package jmri.jmrit.operations.locations.schedules;
 
 import java.awt.GraphicsEnvironment;
 import jmri.InstanceManager;
-import jmri.jmrit.operations.OperationsSwingTestCase;
+import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
+import jmri.util.JUnitOperationsUtil;
 import jmri.util.swing.JemmyUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -17,7 +18,7 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017
  */
-public class ExportSchedulesTest extends OperationsSwingTestCase{
+public class ExportSchedulesTest extends OperationsTestCase{
 
     @Test
     public void testCTor() {
@@ -38,7 +39,7 @@ public class ExportSchedulesTest extends OperationsSwingTestCase{
         ExportSchedules exportLoc = new ExportSchedules();
         Assert.assertNotNull("exists", exportLoc);
         
-        loadLocations(); //only Test Loc E has a track
+        JUnitOperationsUtil.loadFiveLocations(); //only Test Loc E has a track
         
         LocationManager lManager = InstanceManager.getDefault(LocationManager.class);
         Location l1 = lManager.getLocationByName("Test Loc E");
@@ -65,7 +66,7 @@ public class ExportSchedulesTest extends OperationsSwingTestCase{
             return export.getState().equals(Thread.State.WAITING);
         }, "wait for prompt");
         
-        JemmyUtil.pressDialogButton(Bundle.getMessage("ExportComplete"), "OK");
+        JemmyUtil.pressDialogButton(Bundle.getMessage("ExportComplete"), Bundle.getMessage("ButtonOK"));
         
         java.io.File file = new java.io.File(ExportSchedules.defaultOperationsFilename());   
         Assert.assertTrue("Confirm file creation", file.exists());        

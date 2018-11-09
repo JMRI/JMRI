@@ -9,6 +9,14 @@ import java.io.UnsupportedEncodingException;
 import java.util.ResourceBundle; // for access operations keys directly.
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsXml;
+import jmri.jmrit.operations.automation.Automation;
+import jmri.jmrit.operations.automation.AutomationItem;
+import jmri.jmrit.operations.automation.AutomationManager;
+import jmri.jmrit.operations.automation.actions.ActivateTrainScheduleAction;
+import jmri.jmrit.operations.automation.actions.BuildTrainAction;
+import jmri.jmrit.operations.automation.actions.GotoAction;
+import jmri.jmrit.operations.automation.actions.MoveTrainAction;
+import jmri.jmrit.operations.automation.actions.RunAutomationAction;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.LocationManagerXml;
@@ -21,6 +29,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarLengths;
 import jmri.jmrit.operations.rollingstock.cars.CarLoads;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
+import jmri.jmrit.operations.rollingstock.cars.CarOwners;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.engines.Consist;
@@ -39,6 +48,8 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.TrainManagerXml;
+import jmri.jmrit.operations.trains.schedules.TrainSchedule;
+import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
 import org.junit.Assert;
 
 /**
@@ -88,6 +99,7 @@ public class JUnitOperationsUtil {
         // the following .dispose() calls are likely not needed
         // since new instances of these managers are recreated for each test
         InstanceManager.getDefault(TrainManager.class).dispose();
+        InstanceManager.getDefault(AutomationManager.class).dispose();
         InstanceManager.getDefault(LocationManager.class).dispose();
         InstanceManager.getDefault(RouteManager.class).dispose();
         InstanceManager.getDefault(ScheduleManager.class).dispose();
@@ -126,12 +138,16 @@ public class JUnitOperationsUtil {
         EngineManager emanager = InstanceManager.getDefault(EngineManager.class);
         CarTypes ct = InstanceManager.getDefault(CarTypes.class);
         EngineTypes et = InstanceManager.getDefault(EngineTypes.class);
+        CarOwners co = InstanceManager.getDefault(CarOwners.class);
 
         // register the car and engine types used
         ct.addName("Boxcar");
         ct.addName(rb.getString("Caboose"));
         ct.addName("Flat");
         et.addName("Diesel");
+        
+        co.addName("AT");
+        co.addName("DAB");
 
         // Set up four engines in two consists
         Consist con1 = emanager.newConsist("C16");
@@ -176,7 +192,7 @@ public class JUnitOperationsUtil {
         locationNorthIndustries.setSwitchListEnabled(true);
         lmanager.register(locationNorthIndustries);
 
-        Track l20yard1 = new Track("2s1", "NI Yard", Track.YARD, locationNorthIndustries);
+        Track l20yard1 = new Track("20s1", "NI Yard", Track.YARD, locationNorthIndustries);
         l20yard1.setLength(432);
         l20yard1.setCommentBoth("Test comment for NI Yard drops and pulls");
         l20yard1.setCommentSetout("Test comment for NI Yard drops only");
@@ -210,6 +226,13 @@ public class JUnitOperationsUtil {
         createAndPlaceCar("CP", "777", "Flat", "50", "AT", "1990", l20yard1, 6);
         createAndPlaceCar("CP", "888", "Boxcar", "60", "DAB", "1985", l20yard1, 0);
         createAndPlaceCar("CP", "99", "Flat", "90", "AT", "6-80", l20yard1, 0);
+        
+        c1.setColor("Red");
+        // make sure the ID tags exist before we
+        // try to add it to a car.
+        jmri.InstanceManager.getDefault(jmri.IdTagManager.class).provideIdTag("RFID 3");
+        c1.setRfid("RFID 3");
+        c1.setComment("Test Car CP C10099 Comment");
 
         // Define the route.
         Route route1 = new Route("1", "Southbound Main Route");
@@ -256,6 +279,7 @@ public class JUnitOperationsUtil {
         train1.setRoute(route1);
         train1.setDepartureTime("6", "5");
         train1.setComment("Test comment for train STF");
+        train1.setDescription("Train STF");
 
         // increase test coverage by providing a manifest logo for this train
         java.net.URL url = FileUtil.findURL("resources/logo.gif", FileUtil.Location.INSTALLED);
@@ -266,6 +290,7 @@ public class JUnitOperationsUtil {
         Train train2 = new Train("2", "SFF");
         train2.setRoute(route1);
         train2.setDepartureTime("22", "45");
+        train2.setDescription("Train SFF");
         tmanager.register(train2);
 
         // improve test coverage
@@ -480,8 +505,7 @@ public class JUnitOperationsUtil {
 
     public static Car createAndPlaceCar(String road, String number, String type, String length, Track track,
             int moves) {
-        return createAndPlaceCar(road, number, type, length, "",
-                "", track, moves);
+        return createAndPlaceCar(road, number, type, length, "", "", track, moves);
     }
 
     public static Car createAndPlaceCar(String road, String number, String type, String length, String owner,
@@ -489,18 +513,145 @@ public class JUnitOperationsUtil {
 
         CarManager cmanager = InstanceManager.getDefault(CarManager.class);
 
-        Car car = cmanager.newCar(road, number);
+        Car car = cmanager.newRS(road, number);
         car.setTypeName(type);
         car.setLength(length);
         car.setOwner(owner);
         car.setBuilt(built);
         car.setMoves(moves);
+        car.setColor("Black");
 
         if (track != null) {
             Assert.assertEquals("place car", Track.OKAY, car.setLocation(track.getLocation(), track));
         }
 
         return car;
+    }
+    
+    public static void loadTrain(Location l) {
+        Assert.assertNotNull("Test Loc", l);
+        TrainManager trainManager = InstanceManager.getDefault(TrainManager.class);
+        Train trainA = trainManager.newTrain("Test Train A");
+        // train needs to service location "l" or error message when saving track edit frame
+        RouteManager routeManager = InstanceManager.getDefault(RouteManager.class);
+        Route route = routeManager.newRoute("Route Train A");
+        route.addLocation(l);
+        trainA.setRoute(route);
+    }
+
+    public static void loadTrains() {
+        // Add some cars for the various tests in this suite
+        CarManager cm = InstanceManager.getDefault(CarManager.class);
+        ResourceBundle rb = ResourceBundle
+                .getBundle("jmri.jmrit.operations.JmritOperationsBundle");
+        String roadNames[] = rb.getString("carRoadNames").split(",");
+//        String roadNames[] = Bundle.getMessage("carRoadNames").split(",");
+        // add caboose to the roster
+        Car c = cm.newRS(roadNames[2], "687");
+        c.setCaboose(true);
+        c = cm.newRS("CP", "435");
+        c.setCaboose(true);
+
+        // load engines
+        EngineManager emanager = InstanceManager.getDefault(EngineManager.class);
+        Engine e1 = emanager.newRS("SP", "1");
+        e1.setModel("GP40");
+        Engine e2 = emanager.newRS("PU", "2");
+        e2.setModel("GP40");
+        Engine e3 = emanager.newRS("UP", "3");
+        e3.setModel("GP40");
+        Engine e4 = emanager.newRS("UP", "4");
+        e4.setModel("FT");
+
+        TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
+        // turn off build fail messages
+        tmanager.setBuildMessagesEnabled(true);
+        // turn off print preview
+        tmanager.setPrintPreviewEnabled(false);
+
+        // load 5 trains
+        for (int i = 0; i < 5; i++) {
+            tmanager.newTrain("Test_Train " + i);
+        }
+
+        // load 6 locations
+        for (int i = 0; i < 6; i++) {
+            InstanceManager.getDefault(LocationManager.class).newLocation("Test_Location " + i);
+        }
+
+        // load 5 routes
+        loadFiveRoutes();
+    }
+    
+    public static void loadFiveLocations() {
+        // create 5 locations
+        LocationManager lManager = InstanceManager.getDefault(LocationManager.class);
+        Location l1 = lManager.newLocation("Test Loc E");
+        l1.addTrack("Test Track", Track.SPUR);
+        l1.setLength(1001);
+        Location l2 = lManager.newLocation("Test Loc D");
+        l2.setLength(1002);
+        Location l3 = lManager.newLocation("Test Loc C");
+        l3.setLength(1003);
+        Location l4 = lManager.newLocation("Test Loc B");
+        l4.setLength(1004);
+        Location l5 = lManager.newLocation("Test Loc A");
+        l5.setLength(1005);
+    }
+    
+    public static void loadFiveRoutes() {
+        RouteManager rManager = InstanceManager.getDefault(RouteManager.class);
+        Route r1 = rManager.newRoute("Test Route E");
+        r1.setComment("Comment test route E");
+        Route r2 = rManager.newRoute("Test Route D");
+        r2.setComment("Comment test route D");
+        Route r3 = rManager.newRoute("Test Route C");
+        r3.setComment("Comment test route C");
+        Route r4 = rManager.newRoute("Test Route B");
+        r4.setComment("Comment test route B");
+        Route r5 = rManager.newRoute("Test Route A");
+        r5.setComment("Comment test route A");
+    }
+    
+    public static Automation createAutomation() {
+        AutomationManager manager = InstanceManager.getDefault(AutomationManager.class);
+        Assert.assertNotNull("test creation", manager);
+        Automation automation = manager.newAutomation("TestAutomation");
+        automation.setComment("test comment for automation");
+        Assert.assertEquals(1, manager.getSize());
+
+        AutomationItem item1 = automation.addItem();
+        item1.setAction(new BuildTrainAction());
+        item1.setTrain(new Train("trainId", "trainName1"));
+        item1.setMessage("item1 OK message");
+        item1.setMessageFail("item1 fail message");
+        item1.setHaltFailureEnabled(false);
+
+        AutomationItem item2 = automation.addItem();
+        item2.setAction(new GotoAction());
+        item2.setGotoAutomationItem(item1);
+
+        AutomationItem item3 = automation.addItem();
+        item3.setAction(new MoveTrainAction());
+        item3.setTrain(new Train("trainId", "trainName2"));
+        item3.setRouteLocation(new RouteLocation("id", new Location("id", "testLocationName")));
+
+        AutomationItem item4 = automation.addItem();
+        item4.setAction(new ActivateTrainScheduleAction());
+        TrainSchedule trainSchedule = InstanceManager.getDefault(TrainScheduleManager.class).newSchedule("train schedule name");
+        item4.setOther(trainSchedule);
+
+        AutomationItem item5 = automation.addItem();
+        item5.setAction(new RunAutomationAction());
+        
+        // 2nd automation created here
+        Automation automationToRun = manager.newAutomation("A TestAutomation2");
+        item5.setOther(automationToRun);
+        item5.setMessage("item5 OK message");
+        item5.setMessageFail("item5 fail message");
+        item5.setHaltFailureEnabled(false);
+        
+        return automation;
     }
 
     public static BufferedReader getBufferedReader(File file) {

@@ -1,7 +1,7 @@
 package jmri.jmrit.operations.rollingstock.engines.tools;
 
 import java.awt.GraphicsEnvironment;
-import jmri.jmrit.operations.OperationsSwingTestCase;
+import jmri.jmrit.operations.OperationsTestCase;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.swing.JemmyUtil;
 import org.junit.After;
@@ -14,7 +14,7 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class ExportEnginesTest extends OperationsSwingTestCase {
+public class ExportEnginesTest extends OperationsTestCase {
 
     @Test
     public void testCTor() {
@@ -44,7 +44,7 @@ public class ExportEnginesTest extends OperationsSwingTestCase {
             return export.getState().equals(Thread.State.WAITING);
         }, "wait for prompt");
 
-        JemmyUtil.pressDialogButton(Bundle.getMessage("ExportComplete"), "OK");
+        JemmyUtil.pressDialogButton(Bundle.getMessage("ExportComplete"), Bundle.getMessage("ButtonOK"));
 
         java.io.File file = new java.io.File(ExportEngines.defaultOperationsFilename());
         Assert.assertTrue("Confirm file creation", file.exists());

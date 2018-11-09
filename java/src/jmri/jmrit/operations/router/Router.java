@@ -42,8 +42,6 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
 
     protected static final String STATUS_NOT_THIS_TRAIN = Bundle.getMessage("RouterTrain");
     protected static final String STATUS_NOT_ABLE = Bundle.getMessage("RouterNotAble");
-    public static final String STATUS_CAR_AT_DESINATION = Bundle.getMessage("RouterCarAtDestination");
-    // protected static final String STATUS_NO_TRAINS = Bundle.getMessage("RouterNoTrains");
     protected static final String STATUS_ROUTER_DISABLED = Bundle.getMessage("RouterDisabled");
 
     private String _status = "";
@@ -128,15 +126,6 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
                         .getFinalDestinationTrackName());
         if (_train != null) {
             log.debug("Routing using train ({})", train.getName());
-        }
-        // Has the car arrived at the car's final destination?
-        if (car.getLocation().equals(car.getFinalDestination()) &&
-                (car.getTrack().equals(car.getFinalDestinationTrack()) || car.getFinalDestinationTrack() == null)) {
-            log.debug("Car ({}) has arrived at final destination", car);
-            _status = STATUS_CAR_AT_DESINATION;
-            car.setFinalDestination(null);
-            car.setFinalDestinationTrack(null);
-            return false;
         }
         // is car part of kernel?
         if (car.getKernel() != null && !car.getKernel().isLead(car)) {

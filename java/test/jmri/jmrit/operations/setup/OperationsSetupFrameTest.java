@@ -3,7 +3,7 @@ package jmri.jmrit.operations.setup;
 import java.awt.GraphicsEnvironment;
 import javax.swing.JComboBox;
 import jmri.jmrit.display.LocoIcon;
-import jmri.jmrit.operations.OperationsSwingTestCase;
+import jmri.jmrit.operations.OperationsTestCase;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
 import org.junit.After;
@@ -23,7 +23,7 @@ import org.netbeans.jemmy.operators.JRadioButtonOperator;
  * @author Dan Boudreau Copyright (C) 2009
  * @author Paul Bender Copyright (C) 2017
  */
-public class OperationsSetupFrameTest extends OperationsSwingTestCase {
+public class OperationsSetupFrameTest extends OperationsTestCase {
 
     @Test
     public void testCTor() {
@@ -107,7 +107,7 @@ public class OperationsSetupFrameTest extends OperationsSwingTestCase {
 
         // dialog window should appear regarding train lengths
         JemmyUtil.pressDialogButton(f,java.text.MessageFormat.format(
-                    Bundle.getMessage("MaxTrainLengthIncreased"), new Object[]{1234,"feet"}), "OK");
+                    Bundle.getMessage("MaxTrainLengthIncreased"), new Object[]{1234,"feet"}), Bundle.getMessage("ButtonOK"));
         // dialog window should appear regarding railroad name
         /*pressDialogButton(f,java.text.MessageFormat.format(Bundle
                     .getMessage("ChangeRailroadName"), new Object[]{"My Jmri Railroad", "Test Railroad Name"}) ,Bundle.getMessage("ButtonNo"));

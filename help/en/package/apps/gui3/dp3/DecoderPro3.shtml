@@ -160,8 +160,8 @@
         <li>Export Roster Entry...</li>
         <li>Import Roster Entry...</li>
         <li>------------------</li>
-        <li>Export Roster...</li>
-        <li>Import Roster...</li>
+        <li>Export Complete Roster...</li>
+        <li>Import Complete Roster...</li>
         <li>------------------</li>
         <li>Rebuild Roster</li>
         <li>Validate XML File</li>

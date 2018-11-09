@@ -3,7 +3,7 @@ package jmri.jmrit.operations.trains;
 import java.awt.GraphicsEnvironment;
 import java.text.MessageFormat;
 import jmri.InstanceManager;
-import jmri.jmrit.operations.OperationsSwingTestCase;
+import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteManager;
 import jmri.util.JUnitOperationsUtil;
@@ -21,7 +21,7 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017
  */
-public class TrainEditFrameTest extends OperationsSwingTestCase {
+public class TrainEditFrameTest extends OperationsTestCase {
 
     @Test
     public void testCTor() {
@@ -68,7 +68,7 @@ public class TrainEditFrameTest extends OperationsSwingTestCase {
         JemmyUtil.enterClickAndLeave(trainEditFrame.saveTrainButton);
 
         // clear no route dialogue box
-        JemmyUtil.pressDialogButton(trainEditFrame, Bundle.getMessage("TrainNoRoute"), "OK");
+        JemmyUtil.pressDialogButton(trainEditFrame, Bundle.getMessage("TrainNoRoute"), Bundle.getMessage("ButtonOK"));
 
         Assert.assertEquals("train depart time", "15:45", train.getDepartureTime());
 
@@ -240,7 +240,7 @@ public class TrainEditFrameTest extends OperationsSwingTestCase {
         // clear can not add train dialogue box
         JemmyUtil.pressDialogButton(trainEditFrame, MessageFormat.format(Bundle
                 .getMessage("CanNot"), new Object[] { Bundle
-                .getMessage("add")}), "OK");
+                .getMessage("add")}), Bundle.getMessage("ButtonOK"));
     }
     
     @Test
@@ -394,7 +394,7 @@ public class TrainEditFrameTest extends OperationsSwingTestCase {
         JemmyUtil.enterClickAndLeave(trainEditFrame.saveTrainButton);
 
         // clear no route dialogue box
-        JemmyUtil.pressDialogButton(trainEditFrame, Bundle.getMessage("TrainNoRoute"), "OK");
+        JemmyUtil.pressDialogButton(trainEditFrame, Bundle.getMessage("TrainNoRoute"), Bundle.getMessage("ButtonOK"));
 
         JUnitUtil.dispose(trainEditFrame);
     }
@@ -422,7 +422,7 @@ public class TrainEditFrameTest extends OperationsSwingTestCase {
         // clear can not save train
         JemmyUtil.pressDialogButton(trainEditFrame, MessageFormat.format(Bundle
                 .getMessage("CanNot"), new Object[] { Bundle
-                .getMessage("save")}), "OK");
+                .getMessage("save")}), Bundle.getMessage("ButtonOK"));
 
         JUnitUtil.dispose(trainEditFrame);
     }
@@ -487,7 +487,7 @@ public class TrainEditFrameTest extends OperationsSwingTestCase {
         JemmyUtil.enterClickAndLeave(trainEditFrame.resetButton);
         
         // clear the error dialogue
-        JemmyUtil.pressDialogButton(trainEditFrame, Bundle.getMessage("CanNotResetTrain"), "OK");
+        JemmyUtil.pressDialogButton(trainEditFrame, Bundle.getMessage("CanNotResetTrain"), Bundle.getMessage("ButtonOK"));
         
         Assert.assertTrue("Train status", train1.isBuilt());
  
@@ -499,7 +499,7 @@ public class TrainEditFrameTest extends OperationsSwingTestCase {
     @Before
     public void setUp() {
         super.setUp();
-        loadTrains();
+        JUnitOperationsUtil.loadTrains();
     }
 
     @Override

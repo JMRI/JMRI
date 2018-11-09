@@ -12,9 +12,9 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -933,7 +933,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
         }
         String suName = lightPrefix + curAddress;
         String uName = userName.getText().trim(); // N11N
-        if (uName.equals("")) {
+        if (uName.isEmpty()) {
             uName = null;   // a blank field means no user name
         }
         // Does System Name have a valid format
@@ -967,7 +967,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
         }
         // check if Light exists under an alternate name if an alternate name exists
         String altName = InstanceManager.getDefault(LightManager.class).convertSystemNameToAlternate(suName);
-        if (!altName.equals("")) {
+        if (!altName.isEmpty()) {
             g = InstanceManager.getDefault(LightManager.class).getBySystemName(altName);
             if (g != null) {
                 // Light already exists
@@ -980,7 +980,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
             }
         }
         // check if a Light with the same user name exists
-        if (uName != null && !uName.equals("")) {
+        if (uName != null && !uName.isEmpty()) {
             g = InstanceManager.getDefault(LightManager.class).getByUserName(uName);
             if (g != null) {
                 // Light with this user name already exists
@@ -1115,11 +1115,13 @@ public class LightTableAction extends AbstractTableAction<Light> {
             String uxName = "";
             if (uName == null) {
                 uxName = null;
+            } else {
+                uxName = uName;
             }
             for (int i = 1; i < numberOfLights; i++) {
                 sxName = lightPrefix + (startingAddress + i);
-                if (uName != null) {
-                    uxName = uName + ":" + i; // behaves like the TurnoutTable > Add multiple naming
+                if (uxName != null) {
+                    uxName = nextName(uxName);
                 }
                 try {
                     g = InstanceManager.getDefault(LightManager.class).newLight(sxName, uxName);
@@ -1147,7 +1149,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
         // check if a Light with this name already exists
         String suName = fixedSystemName.getText();
         String sName = InstanceManager.getDefault(LightManager.class).normalizeSystemName(suName);
-        if (sName.equals("")) {
+        if (sName.isEmpty()) {
             // Entered system name has invalid format
             status1.setText(Bundle.getMessage("LightError3"));
             status1.setForeground(Color.red);
@@ -1161,7 +1163,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
         if (g == null) {
             // check if Light exists under an alternate name if an alternate name exists
             String altName = InstanceManager.getDefault(LightManager.class).convertSystemNameToAlternate(sName);
-            if (!altName.equals("")) {
+            if (!altName.isEmpty()) {
                 g = InstanceManager.getDefault(LightManager.class).getBySystemName(altName);
                 if (g != null) {
                     sName = altName;
@@ -1234,7 +1236,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
         Light g = curLight;
         // Check if the User Name has been changed
         String uName = userName.getText().trim(); // N11N
-        if (uName.equals("")) {
+        if (uName.isEmpty()) {
             uName = null; // a blank field means no user name
         }
         String prevUName = g.getUserName();
@@ -1456,18 +1458,18 @@ public class LightTableAction extends AbstractTableAction<Light> {
 
             sensor1Box.setFirstItemBlank(true);
             sensor1Box.setToolTipText(Bundle.getMessage("LightSensorHint"));
-            
+
             sensor2Box.setFirstItemBlank(true);
             sensor2Box.setToolTipText(Bundle.getMessage("LightTwoSensorHint"));
-            
+
             fastHourSpinner1.setValue(0);  // reset needed
             fastHourSpinner1.setVisible(false);
             fastMinuteSpinner1.setValue(0); // reset needed
             fastMinuteSpinner1.setVisible(false);
-            
+
             sensorOnBox.setFirstItemBlank(true);
             sensorOnBox.setVisible(false);
-            
+
             clockSep1.setVisible(false);
 
             turnoutBox.setFirstItemBlank(true);
@@ -1487,17 +1489,17 @@ public class LightTableAction extends AbstractTableAction<Light> {
             fastMinuteSpinner2.setEditor(ne2a1);
             panel33.add(fastMinuteSpinner2); // minutes OFF
             panel33.add(timedOnSpinner);
-            
+
             fastHourSpinner2.setValue(0);  // reset needed
             fastHourSpinner2.setVisible(false);
             fastMinuteSpinner2.setValue(0); // reset needed
             fastMinuteSpinner2.setVisible(false);
-            
+
             timedOnSpinner.setValue(0);  // reset needed
             timedOnSpinner.setVisible(false);
-            
+
             clockSep2.setVisible(false);
-            
+
             panel3.add(panel31);
             panel3.add(panel32);
             panel3.add(panel33);

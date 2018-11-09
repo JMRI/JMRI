@@ -57,6 +57,14 @@ public class Log4JUtilTest {
 
         Assert.assertTrue(jmri.util.JUnitAppender.verifyNoBacklog());
     }
+    
+    @Test
+    public void testShortenStacktrace() {
+        IllegalArgumentException ex = new IllegalArgumentException("for test");
+        Assert.assertTrue("Needs long enough trace for test", ex.getStackTrace().length > 3);
+        
+        Assert.assertEquals(3, Log4JUtil.shortenStacktrace(ex, 3).getStackTrace().length);
+    }
 
     // The minimal setup for log4J
     @Before

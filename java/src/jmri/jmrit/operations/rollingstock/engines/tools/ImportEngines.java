@@ -180,7 +180,7 @@ public class ImportEngines extends ImportRollingStock {
                             .getMessage("EngineRoadNumberTooLong"),
                             new Object[]{(engineRoad + " " + engineNumber),
                                     engineNumber}),
-                            Bundle.getMessage("engineRoadNum"), JOptionPane.ERROR_MESSAGE);
+                            Bundle.getMessage("RoadNumMustBeLess"), JOptionPane.ERROR_MESSAGE);
                     break;
                 }
                 if (engineRoad.length() > Control.max_len_string_attibute) {
@@ -287,8 +287,8 @@ public class ImportEngines extends ImportRollingStock {
                                 engineLocation = engineLocation + " " + inputLine[base + ENG_LOCATION_TRACK_SEPARATOR + 1];
                             }
                         }
-                        // get track name if there's one
                     }
+                    // get track name if there's one
                     boolean foundDash = false;
                     for (int i = base + ENG_LOCATION_TRACK_SEPARATOR; i < inputLine.length; i++) {
                         if (inputLine[i].equals(LOCATION_TRACK_SEPARATOR)) {
@@ -296,7 +296,7 @@ public class ImportEngines extends ImportRollingStock {
                             if (inputLine.length > i + 1) {
                                 engineTrack = inputLine[++i];
                             }
-                        } else if (foundDash && !comma) {
+                        } else if (foundDash) {
                             engineTrack = engineTrack + " " + inputLine[i];
                         }
                     }
@@ -400,7 +400,7 @@ public class ImportEngines extends ImportRollingStock {
                 }
                 log.debug("Add engine ({} {}) owner ({}) built ({}) location ({}, {})", engineRoad, engineNumber,
                         engineOwner, engineBuilt, engineLocation, engineTrack);
-                Engine engine = engineManager.newEngine(engineRoad, engineNumber);
+                Engine engine = engineManager.newRS(engineRoad, engineNumber);
                 engine.setModel(engineModel);
                 engine.setLength(engineLength);
                 // does this model already have a type?

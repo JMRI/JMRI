@@ -31,8 +31,9 @@ public interface SignalMastManager extends Manager<SignalMast> {
     public void dispose();
 
     /**
-     * Locate via user name, then system name if needed. Does not create a new
-     * one if nothing found
+     * Get an existing SignalMast or return null if it doesn't exist. 
+     * 
+     * Locates via user name, then system name if needed.
      *
      * @param name User name or system name to match
      * @return null if no match found
@@ -40,8 +41,10 @@ public interface SignalMastManager extends Manager<SignalMast> {
     @CheckForNull public SignalMast getSignalMast(@Nonnull String name);
 
     /**
-     * Locate via user name, then system name if needed. Create new one from
-     * system name if needed
+     * Get the SignalMast with the user name, then system name if needed; if that fails, create a
+     * new SignalMast. 
+     * If the name is a valid system name, it will be used for the
+     * new SignalMast.
      *
      * @param name User name, system name, or address which can be promoted to
      *             system name

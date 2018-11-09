@@ -3,10 +3,11 @@ package jmri.jmrit.operations.trains;
 import java.awt.GraphicsEnvironment;
 import java.util.List;
 import jmri.InstanceManager;
-import jmri.jmrit.operations.OperationsSwingTestCase;
+import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.ThreadingUtil;
 import jmri.util.swing.JemmyUtil;
@@ -20,7 +21,7 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class TrainSwitchListEditFrameTest extends OperationsSwingTestCase {
+public class TrainSwitchListEditFrameTest extends OperationsTestCase {
 
     @Test
     public void testCTor() {
@@ -100,7 +101,7 @@ public class TrainSwitchListEditFrameTest extends OperationsSwingTestCase {
     @Before
     public void setUp() {
         super.setUp();
-        loadTrains();
+        JUnitOperationsUtil.loadTrains();
     }
 
     @Override

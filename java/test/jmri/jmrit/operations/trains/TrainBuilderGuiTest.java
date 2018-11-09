@@ -3,7 +3,7 @@ package jmri.jmrit.operations.trains;
 import java.awt.GraphicsEnvironment;
 import java.text.MessageFormat;
 import jmri.InstanceManager;
-import jmri.jmrit.operations.OperationsSwingTestCase;
+import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
@@ -28,7 +28,7 @@ import org.junit.Test;
  *
  * @author Dan Boudreau Copyright (C) 2009
  */
-public class TrainBuilderGuiTest extends OperationsSwingTestCase {
+public class TrainBuilderGuiTest extends OperationsTestCase {
 
     // allow 2 retries of intermittent tests
     @org.junit.Rule
@@ -68,7 +68,7 @@ public class TrainBuilderGuiTest extends OperationsSwingTestCase {
             return build.getState().equals(Thread.State.WAITING);
         }, "wait for prompt");
 
-        JemmyUtil.pressDialogButton(Bundle.getMessage("SelectDepartureTrack"), "OK");
+        JemmyUtil.pressDialogButton(Bundle.getMessage("SelectDepartureTrack"), Bundle.getMessage("ButtonOK"));
 
         jmri.util.JUnitUtil.waitFor(() -> {
             return build.getState().equals(Thread.State.TERMINATED);
@@ -128,7 +128,7 @@ public class TrainBuilderGuiTest extends OperationsSwingTestCase {
             return build.getState().equals(Thread.State.WAITING);
         }, "wait for prompt");
 
-        JemmyUtil.pressDialogButton(Bundle.getMessage("SelectArrivalTrack"), "OK");
+        JemmyUtil.pressDialogButton(Bundle.getMessage("SelectArrivalTrack"), Bundle.getMessage("ButtonOK"));
 
         jmri.util.JUnitUtil.waitFor(() -> {
             return build.getState().equals(Thread.State.TERMINATED);
@@ -188,7 +188,7 @@ public class TrainBuilderGuiTest extends OperationsSwingTestCase {
         }, "wait for prompt");
 
         JemmyUtil.pressDialogButton(MessageFormat.format(Bundle.getMessage("buildErrorMsg"),
-                new Object[]{train2.getName(), train2.getDescription()}), "OK");
+                new Object[]{train2.getName(), train2.getDescription()}), Bundle.getMessage("ButtonOK"));
         
         jmri.util.JUnitUtil.waitFor(() -> {
             return build.getState().equals(Thread.State.TERMINATED);

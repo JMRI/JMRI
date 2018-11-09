@@ -9,6 +9,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Class to allow use of CBUS concepts to access the underlying can message
  *
+ *  * https://github.com/MERG-DEV/CBUSlib
+ * 
  * @author Andrew Crosland Copyright (C) 2008
  * @author Steve Young (C) 2018
  * 

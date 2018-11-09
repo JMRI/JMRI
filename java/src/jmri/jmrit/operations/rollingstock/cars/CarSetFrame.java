@@ -82,6 +82,11 @@ public class CarSetFrame extends RollingStockSetFrame<Car> implements java.beans
         menuBar.add(toolMenu);
         setJMenuBar(menuBar);
         addHelpMenu("package.jmri.jmrit.operations.Operations_CarsSet", true); // NOI18N
+        
+        editLoadButton.setToolTipText(MessageFormat.format(Bundle.getMessage("TipAddDeleteReplace"),
+                new Object[]{Bundle.getMessage("load")})); // initial caps for some languages i.e. German
+        editKernelButton.setToolTipText(MessageFormat.format(Bundle.getMessage("TipAddDeleteReplace"),
+                new Object[]{Bundle.getMessage("Kernel").toLowerCase()}));
 
         // optional panel return when empty, load, and kernel
         paneOptional.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutOptional")));
@@ -160,6 +165,11 @@ public class CarSetFrame extends RollingStockSetFrame<Car> implements java.beans
         load(car);
         updateLoadComboBox();
         updateKernelComboBox();
+    }
+    
+    @Override
+    protected ResourceBundle getRb() {
+        return rb;
     }
 
     @Override
@@ -262,7 +272,6 @@ public class CarSetFrame extends RollingStockSetFrame<Car> implements java.beans
 
     protected boolean askKernelChange = true;
 
-    @Override
     @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "GUI ease of use")
     protected boolean change(Car car) {
         // save the auto button

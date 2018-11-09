@@ -89,6 +89,7 @@ public final class XNetConstants {
     public final static int CS_TYPE_LZ100 = 0x00;  // Lenz LZ100/LZV100
     public final static int CS_TYPE_LH200 = 0x01;  // Lenz LH200
     public final static int CS_TYPE_COMPACT = 0x02; // Lenz Compact/Atlas Commander
+    public final static int CS_TYPE_LOKMAUSII = 0x04; // Roco LokMaus II
     public final static int CS_TYPE_MULTIMAUS = 0x10; // Roco multiMAUS 
     public final static int CS_TYPE_Z21 = 0x12; // Roco z21 
 

@@ -141,6 +141,15 @@ public class LnPr2PowerManager extends LnPowerManager {
             }
         }
     }
+    
+    /**
+     * Returns false to indicate PR2 does not implement an "IDLE" power state.
+     * @return false
+     */
+    @Override
+    public boolean implementsIdle() {
+        return false;
+    }
 
     // timer support to send updates & keep power alive
     javax.swing.Timer timer = null;

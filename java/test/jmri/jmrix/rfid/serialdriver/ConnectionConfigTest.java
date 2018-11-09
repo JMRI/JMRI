@@ -12,22 +12,20 @@ import org.junit.Test;
  * @author Paul Bender Copyright (C) 2016
  **/
 
-public class ConnectionConfigTest {
+public class ConnectionConfigTest extends jmri.jmrix.AbstractSerialConnectionConfigTestBase  {
 
-   @Test
-   public void ConstructorTest(){
-      Assert.assertNotNull("ConnectionConfig constructor",new ConnectionConfig());
-   }
 
    @Before
    public void setUp() {
         JUnitUtil.setUp();
 
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.initDefaultUserMessagePreferences();
+        cc = new ConnectionConfig();
    }
 
    @After
    public void tearDown(){
+        cc=null;
         JUnitUtil.tearDown();
    }
 

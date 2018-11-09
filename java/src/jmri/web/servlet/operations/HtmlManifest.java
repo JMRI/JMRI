@@ -14,7 +14,7 @@ import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.JsonManifest;
 import jmri.jmrit.operations.trains.Train;
-import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
+import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
 import jmri.server.json.JSON;
 import jmri.server.json.operations.JsonOperations;
 import org.apache.commons.text.StringEscapeUtils;
@@ -525,7 +525,7 @@ public class HtmlManifest extends HtmlTrainCommon {
     @Override
     public String getValidity() {
         try {
-            if (Setup.isPrintTimetableNameEnabled()) {
+            if (Setup.isPrintTrainScheduleNameEnabled()) {
                 return String.format(locale, strings.getProperty(this.resourcePrefix + "ValidityWithSchedule"),
                         getDate((new ISO8601DateFormat()).parse(this.getJsonManifest().path(JsonOperations.DATE).textValue())),
                         InstanceManager.getDefault(TrainScheduleManager.class).getScheduleById(train.getId()));
