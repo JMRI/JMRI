@@ -2543,7 +2543,7 @@ public class LayoutTurnout extends LayoutTrack {
             int block_count = 0;
             if (getLayoutBlock() != null) {
                 jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameBlock")) + getLayoutBlock().getDisplayName());
-                block_count++;
+                block_count++;  // bump block count
             }
             jmi.setEnabled(false);
 
@@ -2554,17 +2554,17 @@ public class LayoutTurnout extends LayoutTrack {
                 if (getLayoutBlockB() != null) {
                     jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("Block_ID", "B")) + getLayoutBlockB().getDisplayName());
                     jmi.setEnabled(false);
-                    block_count++;
+                    block_count++;  // bump block count
                 }
                 if (getLayoutBlockC() != null) {
                     jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("Block_ID", "C")) + getLayoutBlockC().getDisplayName());
                     jmi.setEnabled(false);
-                    block_count++;
+                    block_count++;  // bump block count
                 }
                 if (getLayoutBlockD() != null) {
                     jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("Block_ID", "D")) + getLayoutBlockD().getDisplayName());
                     jmi.setEnabled(false);
-                    block_count++;
+                    block_count++;  // bump block count
                 }
             }
             if (block_count == 0) {
