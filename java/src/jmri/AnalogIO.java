@@ -8,25 +8,6 @@ package jmri;
 public interface AnalogIO extends NamedBean {
 
     /**
-     * The minimum value of an analog value.
-     */
-    public static final float MIN_VALUE = Float.MIN_VALUE;
-
-    /**
-     * The middle value of an analog value.
-     * 
-     * For example, if the analog value represents the speed of a moving
-     * turntable, a positive value may be 'forward', a negative value may be
-     * 'reverse' and middle value may be 'stop'.
-     */
-    public static final float MIDDLE_VALUE = (float) 0.0;
-
-    /**
-     * The maximum value of an analog value.
-     */
-    public static final float MAX_VALUE = Float.MAX_VALUE;
-
-    /**
      * Show whether the analog value is stable.
      * 
      * @return true if the analog value is stable
