@@ -72,6 +72,16 @@ public class AnalogIOTest {
         public float getCommandedAnalogValue() {
             return _value;
         }
+
+        @Override
+        public float getMin() {
+            return Float.MIN_VALUE;
+        }
+
+        @Override
+        public float getMax() {
+            return Float.MAX_VALUE;
+        }
     
     }
     

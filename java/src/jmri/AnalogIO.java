@@ -45,6 +45,16 @@ public interface AnalogIO extends NamedBean {
     default public float getKnownAnalogValue() {
         return getCommandedAnalogValue();
     }
+    
+    /**
+     * Get the minimum value of this AnalogIO.
+     */
+    public float getMin();
+    
+    /**
+     * Get the maximum value of this AnalogIO.
+     */
+    public float getMax();
 
     /**
      * Request an update from the layout soft/hardware. May not even happen, and
