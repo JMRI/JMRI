@@ -690,9 +690,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
             }
 
             public void comboBoxAction(ActionEvent e) {
-                if (log.isDebugEnabled()) {
-                    log.debug("Combobox change");
-                }
+                log.debug("Combobox change");
                 if (table != null && table.getCellEditor() != null) {
                     table.getCellEditor().stopCellEditing();
                 }
@@ -1170,9 +1168,10 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
         log.debug("opsCombo start {}", ops.length);
         for (int i = 0; i < ops.length; ++i) {
             if (log.isDebugEnabled()) {
-                log.debug("isDef " + ops[i].isDefinitive()
-                        + " mFMM " + ops[i].matchFeedbackMode(t.getFeedbackMode())
-                        + " isNonce " + ops[i].isNonce());
+                log.debug("isDef {} mFMM {} isNonce {}",
+                        ops[i].isDefinitive(),
+                        ops[i].matchFeedbackMode(t.getFeedbackMode()),
+                        ops[i].isNonce());
             }
             if (!ops[i].isDefinitive()
                     && ops[i].matchFeedbackMode(t.getFeedbackMode())
@@ -1629,7 +1628,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
         if (menuAbsent) { // create it
             int pos = menuBar.getMenuCount() - 1; // count the number of menus to insert the TableMenu before 'Window' and 'Help'
             int offset = 1;
-            log.debug("setMenuBar number of menu items = " + pos);
+            log.debug("setMenuBar number of menu items = {}", pos);
             for (int i = 0; i <= pos; i++) {
                 if (menuBar.getComponent(i) instanceof JMenu) {
                     if (((JMenu) menuBar.getComponent(i)).getText().equals(Bundle.getMessage("MenuHelp"))) {
@@ -1748,7 +1747,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
                     getBySystemName(testSN);
             if (testLight != null) {
                 // Address (number part) is already used as a Light
-                log.warn("Requested Turnout " + sName + " uses same address as Light " + testSN);
+                log.warn("Requested Turnout {} uses same address as Light {}", sName, testSN);
                 if (!noWarn) {
                     int selectedValue = JOptionPane.showOptionDialog(addFrame,
                             Bundle.getMessage("TurnoutWarn1", sName, testSN)

@@ -408,7 +408,7 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
                 input, Bundle.getMessage("SensorGlobalDebounceMessageTitle"),
                 0, JOptionPane.INFORMATION_MESSAGE, null,
                 new Object[]{Bundle.getMessage("ButtonOK"), Bundle.getMessage("ButtonCancel")}, null);
-        log.debug("dialog retval ={}", retval);
+        log.debug("dialog retval={}", retval);
         if (retval != 0) {
             return;
         }
