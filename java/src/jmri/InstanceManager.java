@@ -394,7 +394,7 @@ public final class InstanceManager {
      */
     @Nonnull
     static public <T> Optional<T> getOptionalDefault(@Nonnull Class< T> type) {
-        return Optional.ofNullable(getDefault().getDefaultIfExists(type));
+        return Optional.ofNullable(InstanceManager.getNullableDefault(type));
     }
 
     /**
