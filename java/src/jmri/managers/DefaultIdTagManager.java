@@ -311,9 +311,11 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
 
     @Override
     public void dispose() {
-        InstanceManager.getOptionalDefault(ShutDownManager.class).ifPresent((sdm) -> {
+        ShutDownManager sdm = InstanceManager.getDefault()
+                .getDefaultIfExists(ShutDownManager.class);
+        if (sdm != null) {
             sdm.deregister(this.shutDownTask);
-        });
+        }
         super.dispose();
     }
 

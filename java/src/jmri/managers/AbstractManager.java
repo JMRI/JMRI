@@ -81,9 +81,11 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     @Override
     @OverridingMethodsMustInvokeSuper
     public void dispose() {
-        InstanceManager.getOptionalDefault(ConfigureManager.class).ifPresent((cm) -> {
+        ConfigureManager cm = InstanceManager.getDefault()
+                .getDefaultIfExists(ConfigureManager.class);
+        if (cm != null) {
             cm.deregister(this);
-        });
+        }
         _beans.clear();
         _tsys.clear();
         _tuser.clear();
