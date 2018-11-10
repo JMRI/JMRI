@@ -232,6 +232,27 @@ public class NamedIconTest {
             }
         }
     }
+    
+    /**
+     * Test rotate and scale with blinking GIF. This will use the animated GIF codepath.
+     */
+    @Test
+    public void testAnimatedGif() {
+        NamedIcon ni = new NamedIcon("program:resources/icons/largeschematics/aspects/CSD-1962/003_o40_p.gif", "blink");
+        int h = ni.getIconHeight();
+        int w = ni.getIconWidth();
+        JLabel comp = new JLabel();
+        
+        double scale = 2.0;
+        
+        ni.scale(scale, comp);
+        ni.rotate(270, comp);
+        // The +1 in the below is a bit of a crock, but it's because the argument of
+        // Math.ceil(Math.abs(w*Math.cos(rad))) is slightly more than zero, so it
+        // rounds up!
+        Assert.assertEquals((int) Math.ceil(w * scale) + 1, ni.getIconHeight());
+        Assert.assertEquals((int) Math.ceil(h * scale), ni.getIconWidth());       
+    }
 
     /**
      * Helper routine to grab the pixels from an Image
