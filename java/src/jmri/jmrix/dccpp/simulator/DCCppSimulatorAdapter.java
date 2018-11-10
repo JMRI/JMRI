@@ -583,7 +583,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 
     /**
      * Read a single byte, protecting against various timeouts, etc.
-     * <P>
+     * <p>
      * When a port is set to have a receive timeout (via the
      * enableReceiveTimeout() method), some will return zero bytes or an
      * EOFException at the end of the timeout. In that case, the read should be

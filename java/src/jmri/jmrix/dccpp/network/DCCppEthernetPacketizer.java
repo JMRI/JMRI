@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 /**
  * This is an extension of the DCCppPacketizer to handle the device specific
  * requirements of the DCC++ Ethernet.
- * <P>
+ * <p>
  * In particular, DCCppEthernetPacketizer counts the number of commands
  * received.
  *
@@ -22,24 +22,19 @@ import org.slf4j.LoggerFactory;
  * 
  * @author Paul Bender, Copyright (C) 2011
  * @author      Mark Underwood, Copyright (C) 2015
- *
  */
 public class DCCppEthernetPacketizer extends jmri.jmrix.dccpp.serial.SerialDCCppPacketizer {
 
     public DCCppEthernetPacketizer(jmri.jmrix.dccpp.DCCppCommandStation pCommandStation) {
         super(pCommandStation);
-        if (log.isDebugEnabled()) {
-            log.debug("Loading DCC++ Ethernet Extension to DCCppPacketizer");
-        }
+        log.debug("Loading DCC++ Ethernet Extension to DCCppPacketizer");
     }
 
     /**
      * Actually transmits the next message to the port
      */
-    
     // NOTE: This is (for now) an EXACT copy of the content of AbstractMRTrafficController.forwardToPort()
     // except for adding the call to controller.recover() at the bottom in the "catch"
-    //
     @Override
     @SuppressFBWarnings(value = {"TLW_TWO_LOCK_WAIT"},justification = "Two locks needed for synchronization here, this is OK")
     synchronized protected void forwardToPort(AbstractMRMessage m, AbstractMRListener reply) {
@@ -114,6 +109,5 @@ public class DCCppEthernetPacketizer extends jmri.jmrix.dccpp.serial.SerialDCCpp
     }
 
     private final static Logger log = LoggerFactory.getLogger(DCCppEthernetPacketizer.class);
+
 }
-
-

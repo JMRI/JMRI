@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Represents a single response from the DCC++ system.
- * <P>
+ * <p>
  *
  * @author Paul Bender Copyright (C) 2004
  * @author Mark Underwood Copyright (C) 2015

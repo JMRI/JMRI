@@ -4,7 +4,7 @@ import jmri.util.SystemType;
 
 /**
  * Handle configuring a DCC++ layout connection via a Serial adaptor.
- * <P>
+ * <p>
  * This uses the {@link DCCppAdapter} class to do the actual connection.
  *
  * @author Mark Underwood Copyright (C) 2015

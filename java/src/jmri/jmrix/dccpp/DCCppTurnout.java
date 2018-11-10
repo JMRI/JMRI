@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Extends jmri.AbstractTurnout for DCCpp layouts
- * <P>
+ * <p>
  * Turnouts on DCC++ are controlled (as of V1.5 Firmware) are controlled
  * with unidirectional Stationary Decoder commands, or with bidirectional
  * (predefined) Turnout commands, or with bidirectional (predefined) Output
@@ -292,7 +292,7 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
     /*
      *  With Monitoring Mode feedback, if we see a feedback message, we 
      *  interpret that message and use it to display our feedback. 
-     *  <P> 
+     *  <p>
      *  After we send a request to operate a turnout, We ask the command 
      *  station to stop sending information to the stationary decoder
      *  when the either a feedback message or an "OK" message is received.

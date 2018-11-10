@@ -4,7 +4,7 @@ import javax.swing.JPanel;
 
 /**
  * Handle configuring a DCC++ layout connection via Ethernet.Port
- * <P>
+ * <p>
  * This uses the {@link DCCppEthernetAdapter} class to do the actual connection.
  *
  * @author Paul Bender Copyright (C) 2011
@@ -52,7 +52,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
     public void loadDetails(JPanel details) {
         super.loadDetails(details);
         hostNameField.setText(adapter.getHostName());
-        portFieldLabel.setText("Communication Port");
+        portFieldLabel.setText(Bundle.getMessage("CommunicationPortLabel"));
         portField.setText(String.valueOf(adapter.getPort()));
         portField.setEnabled(false); // we can't change this now.
         //opt1Box.setEnabled(false); // we can't change this now.

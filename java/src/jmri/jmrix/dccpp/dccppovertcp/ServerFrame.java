@@ -17,8 +17,8 @@ import jmri.implementation.AbstractInstanceInitializer;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
- * Frame displaying and programming a DCCpp clock monitor.
- * <P>
+ * Frame displaying and programming a DCCppovertcp server.
+ * <p>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
  * and used with permission as part of the JMRI project. That permission does
  * not extend to uses in other software products. If you wish to use this code,
@@ -127,11 +127,11 @@ public class ServerFrame extends jmri.util.JmriJFrame implements ServerListner, 
         startButton.setEnabled(!server.isEnabled());
         stopButton.setEnabled(server.isEnabled());
         saveButton.setEnabled(server.isSettingChanged());
-        serverStatus.setText("Server Status: " + (server.isEnabled() ? "Enabled" : "Disabled")); // TODO I18N, also below
+        serverStatus.setText("Server Status: " + (server.isEnabled() ? "Enabled" : "Disabled")); // TODO I18N, also below, combine status and count in 1 field, just like LnTcpServer
     }
 
     private void updateClientStatus() {
-        clientStatus.setText("   Client Count: " + Integer.toString(InstanceManager.getDefault(Server.class).getClientCount()));
+        clientStatus.setText("   Client Count: " + Integer.toString(InstanceManager.getDefault(Server.class).getClientCount())); // TODO I18N
     }
 
     @Override
@@ -150,15 +150,14 @@ public class ServerFrame extends jmri.util.JmriJFrame implements ServerListner, 
 
     JSpinner portNumber;
     SpinnerNumberModel portNumberModel;
-    JLabel portNumberLabel = new JLabel("  Port Number: ");
-    JLabel serverStatus = new JLabel("Server Status:         ");
+    JLabel portNumberLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("LabelPort")));
+    JLabel serverStatus = new JLabel("Server Status:         "); // TODO I18N, combine in 1 field (see loconetovertcp properties)
     JLabel clientStatus = new JLabel("   Client Count:  ");
 
-    JCheckBox autoStartCheckBox = new JCheckBox(
-            "Start Server at Application Startup");
-    JButton startButton = new JButton("Start Server");
-    JButton stopButton = new JButton("Stop Server");
-    JButton saveButton = new JButton("Save Settings");
+    JCheckBox autoStartCheckBox = new JCheckBox(Bundle.getMessage("LabelStartup"));
+    JButton startButton = new JButton(Bundle.getMessage("StartServer"));
+    JButton stopButton = new JButton(Bundle.getMessage("StopServer"));
+    JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
 
     @Override
     public void initialize() {
@@ -186,4 +185,5 @@ public class ServerFrame extends jmri.util.JmriJFrame implements ServerListner, 
             return set;
         }
     }
+
 }

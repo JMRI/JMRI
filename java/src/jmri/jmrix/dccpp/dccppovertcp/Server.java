@@ -23,7 +23,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implementation of the DCCppOverTcp Server Protocol
+ * Implementation of the DCCppOverTcp Server Protocol.
  *
  * @author Alex Shepherd Copyright (C) 2006
  * @author Mark Underwood Copyright (C) 2015
@@ -68,7 +68,7 @@ public class Server {
             String settingsFileName = FileUtil.getUserFilesPath() + SETTINGS_FILE_NAME;
 
             try {
-                log.debug("Server: opening settings file " + settingsFileName);
+                log.debug("Server: opening settings file {}", settingsFileName);
                 java.io.InputStream settingsStream = new FileInputStream(settingsFileName);
                 try {
                     settings.load(settingsStream);
@@ -93,7 +93,7 @@ public class Server {
         // we can't use the store capabilities of java.util.Properties, as
         // they are not present in Java 1.1.8
         String settingsFileName = FileUtil.getUserFilesPath() + SETTINGS_FILE_NAME;
-        log.debug("Server: saving settings file " + settingsFileName);
+        log.debug("Server: saving settings file {}", settingsFileName);
 
         try {
             OutputStream outStream = new FileOutputStream(settingsFileName);
@@ -152,7 +152,7 @@ public class Server {
             socketListener = new Thread(new ClientListener());
             socketListener.setDaemon(true);
             socketListener.setName("DCCppOverTcpServer");
-            log.info("Starting new DCCppOverTcpServer listener on port " + portNumber);
+            log.info("Starting new DCCppOverTcpServer listener on port {}", portNumber);
             socketListener.start();
             updateServerStateListener();
             // advertise over Zeroconf/Bonjour
@@ -231,7 +231,7 @@ public class Server {
                 while (!socketListener.isInterrupted()) {
                     newClientConnection = serverSocket.accept();
                     remoteAddress = newClientConnection.getRemoteSocketAddress().toString();
-                    log.info("Server: Connection from: " + remoteAddress);
+                    log.info("Server: Connection from: {}", remoteAddress);
                     addClient(new ClientRxHandler(remoteAddress, newClientConnection));
                 }
                 serverSocket.close();
@@ -263,7 +263,6 @@ public class Server {
             return clients.size();
         }
     }
-    private final static Logger log = LoggerFactory.getLogger(Server.class);
 
     @ServiceProvider(service = InstanceInitializer.class)
     public static class Initializer extends AbstractInstanceInitializer {
@@ -287,4 +286,7 @@ public class Server {
             return set;
         }
     }
+
+    private final static Logger log = LoggerFactory.getLogger(Server.class);
+
 }

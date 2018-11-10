@@ -3,7 +3,7 @@ package jmri.jmrix.dccpp.simulator;
 /**
  * Handle configuring a DCC++ layout connection via a DCCppSimulator
  * adapter.
- * <P>
+ * <p>
  * This uses the {@link DCCppSimulatorAdapter} class to do the actual connection.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003

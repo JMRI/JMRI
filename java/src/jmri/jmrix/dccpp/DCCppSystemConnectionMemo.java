@@ -56,13 +56,23 @@ public class DCCppSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     jmri.jmrix.swing.ComponentFactory cf = null;
 
     /**
-     * Provides access to the TrafficController for this particular connection.
+     * Provide access to the TrafficController for this particular connection.
      */
     public DCCppTrafficController getDCCppTrafficController() {
+        if (xt == null) {
+            setDCCppTrafficController(new DCCppPacketizer(new DCCppCommandStation(this))); // default to DCCppPacketizer TrafficController
+            log.debug("Auto create of DCCppTrafficController for initial configuration");
+        }
         return xt;
     }
+
     private DCCppTrafficController xt;
 
+    /**
+     * Set the traffic controller instance associated with this connection memo.
+     *
+     * @param xt the {@link jmri.jmrix.dccpp.DCCppTrafficController} object to use.
+     */
     public void setDCCppTrafficController(@Nonnull DCCppTrafficController xt) {
         this.xt = xt;
         // in addition to setting the traffic controller in this object,

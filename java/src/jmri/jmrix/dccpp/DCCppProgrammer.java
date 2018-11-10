@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Programmer support for DCC++.
- * <P>
+ * <p>
  * The read operation state sequence is:
  * <UL>
  * <LI>Send Register Mode / Paged mode /Direct Mode read request

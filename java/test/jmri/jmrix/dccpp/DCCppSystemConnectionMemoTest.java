@@ -7,14 +7,14 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * DCCppSystemConnectionMemoTest.java
- *
- * Description:	tests for the jmri.jmrix.dccpp.DCCppSystemConnectionMemo class
+ * Tests for the jmri.jmrix.dccpp.DCCppSystemConnectionMemo class.
  *
  * @author	Paul Bender
  * @author	Mark Underwood (C) 2015
  */
 public class DCCppSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
+
+    DCCppInterfaceScaffold tc;
 
     @Override
     @Test
@@ -30,13 +30,13 @@ public class DCCppSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMe
     @Test
     public void testDCCppTrafficControllerSetCtor() {
         // infrastructure objects
-        DCCppInterfaceScaffold tc = new DCCppInterfaceScaffold(new DCCppCommandStation());
+        tc = new DCCppInterfaceScaffold(new DCCppCommandStation());
 
         DCCppSystemConnectionMemo t = new DCCppSystemConnectionMemo();
         Assert.assertNotNull(t);
-        // the default constructor does not set the traffic controller
-        Assert.assertNull(t.getDCCppTrafficController());
-        // so we need to do this ourselves.
+        // the default constructor does not set the traffic controller - now it does
+        Assert.assertNotNull(t.getDCCppTrafficController());
+        // but we want to replace it with something special so we need to do this ourselves.
         t.setDCCppTrafficController(tc);
         Assert.assertNotNull(t.getDCCppTrafficController());
         // and while we're doing that, we should also set the SystemMemo 
@@ -50,7 +50,7 @@ public class DCCppSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMe
     public void setUp() {
         JUnitUtil.setUp();
         // infrastructure objects
-        DCCppInterfaceScaffold tc = new DCCppInterfaceScaffold(new DCCppCommandStation());
+        tc = new DCCppInterfaceScaffold(new DCCppCommandStation());
 
         DCCppSystemConnectionMemo memo = new DCCppSystemConnectionMemo(tc);
         memo.setTurnoutManager(new DCCppTurnoutManager(tc, memo.getSystemPrefix()));
@@ -62,6 +62,9 @@ public class DCCppSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMe
     @Override
     @After
     public void tearDown() {
+        tc.terminateThreads();
+        tc = null;
+        scm = null;
         JUnitUtil.tearDown();
     }
 

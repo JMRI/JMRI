@@ -14,11 +14,10 @@ import org.slf4j.LoggerFactory;
  * the LIUSBEthernet has an IP address of 192.168.0.200 and listens to port
  * 5550. The LIUSBEtherenet disconnects both ports if there is 60 seconds of
  * inactivity on the port.
- * 
  * Based on LIUSBEthernetAdapter
-o*
+ *
  * @author Paul Bender (C) 2011-2013
- * @author      Mark Underwood (C) 2015
+ * @author Mark Underwood (C) 2015
  */
 public class DCCppEthernetAdapter extends DCCppNetworkPortController {
 
@@ -36,9 +35,7 @@ public class DCCppEthernetAdapter extends DCCppNetworkPortController {
     
     public DCCppEthernetAdapter() {
         super();
-        if (log.isDebugEnabled()) {
-            log.debug("Constructor Called");
-        }
+        log.debug("Constructor Called");
         setHostName(DEFAULT_IP_ADDRESS);
         setPort(COMMUNICATION_TCP_PORT);
         this.manufacturerName = jmri.jmrix.dccpp.DCCppConnectionTypeList.DCCPP;
@@ -52,8 +49,9 @@ public class DCCppEthernetAdapter extends DCCppNetworkPortController {
     }
     
     /**
-     * Can the port accept additional characters? return true if the port is
-     * opened.
+     * Can the port accept additional characters?
+     *
+     * @return true if the port is opened
      */
     @Override
     public boolean okToSend() {
@@ -66,14 +64,12 @@ public class DCCppEthernetAdapter extends DCCppNetworkPortController {
     }
     
     /**
-     * set up all of the other objects to operate with a LIUSB Ethernet
-     * interface
+     * Set up all of the other objects to operate with a LIUSB Ethernet
+     * interface.
      */
     @Override
     public void configure() {
-        if (log.isDebugEnabled()) {
-            log.debug("configure called");
-        }
+        log.debug("configure called");
         // connect to a packetizing traffic controller
         DCCppTrafficController packets = (new DCCppEthernetPacketizer(new DCCppCommandStation()));
         packets.connectPort(this);
@@ -86,7 +82,7 @@ public class DCCppEthernetAdapter extends DCCppNetworkPortController {
     }
     
     /**
-     * Local method to do specific configuration
+     * Local method to do specific configuration.
      */
     @Deprecated
     static public DCCppEthernetAdapter instance() {
@@ -97,7 +93,7 @@ public class DCCppEthernetAdapter extends DCCppNetworkPortController {
     }
     volatile static DCCppEthernetAdapter mInstance = null;
     
-    /*
+    /**
      * Set up the keepAliveTimer, and start it.
      */
     private void keepAliveTimer() {
@@ -120,21 +116,22 @@ public class DCCppEthernetAdapter extends DCCppNetworkPortController {
     
     private boolean mDNSConfigure = false;
     
-    /*
+    /**
      * Set whether or not this adapter should be
      * configured automatically via MDNS.
+     *
      * @param autoconfig boolean value.
      */
     @Override
     public void setMdnsConfigure(boolean autoconfig) {
-        log.debug("Setting DCC++ Ethernet adapter autoconfiguration to: "
-                  + autoconfig);
+        log.debug("Setting DCC++ Ethernet adapter autoconfiguration to: {}", autoconfig);
         mDNSConfigure = autoconfig;
     }
     
-    /*
+    /**
      * Get whether or not this adapter is configured
-     * to use autoconfiguration via MDNS
+     * to use autoconfiguration via MDNS.
+     *
      * @return true if configured using MDNS.
      */
     @Override
@@ -142,8 +139,8 @@ public class DCCppEthernetAdapter extends DCCppNetworkPortController {
         return mDNSConfigure;
     }
     
-    /*
-     * set the server's host name and port
+    /**
+     * Set the server's host name and port
      * using mdns autoconfiguration.
      */
     @Override
@@ -153,7 +150,7 @@ public class DCCppEthernetAdapter extends DCCppNetworkPortController {
             setHostName(""); // reset the hostname to none.
         }
         String serviceType = rb.getString("defaultMDNSServiceType");
-        log.debug("Listening for service: " + serviceType);
+        log.debug("Listening for service: {}", serviceType);
         
         if (mdnsClient == null) {
             mdnsClient = new ZeroConfClient();
@@ -190,7 +187,7 @@ public class DCCppEthernetAdapter extends DCCppNetworkPortController {
     
     ZeroConfClient mdnsClient = null;
     
-    /*
+    /**
      * Get the ZeroConf/mDNS advertisement name.
      * this value is fixed on the LIUSB-Ethernet, so return the default
      * value.
@@ -200,7 +197,7 @@ public class DCCppEthernetAdapter extends DCCppNetworkPortController {
         return rb.getString("defaultMDNSServiceName");
     }
     
-    /*
+    /**
      * Get the ZeroConf/mDNS service type.
      * this value is fixed on the LIUSB-Ethernet, so return the default
      * value.
