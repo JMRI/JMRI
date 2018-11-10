@@ -222,10 +222,10 @@ public class JmriConfigurationManager implements ConfigureManager {
                         List<String> errorList = errors;
                         
                         if (isUnableToConnect.get()) {
-                            if (errors.size() > 1) {
-                                errorList.add(0, Bundle.getMessage("InitExMessageListHeader"));
-                            }
-                            errorList.add("");
+                            //if (errors.size() > 1) { // will be added in dialog
+                            //    errorList.add(0, Bundle.getMessage("InitExMessageListHeader"));
+                            //}
+                            errorList.add(" "); // blank line below errors
                             errorList.add(Bundle.getMessage("InitExMessageLogs")); // NOI18N
                             
                             ErrorDialog dialog = new ErrorDialog(errorList);
