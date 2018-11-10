@@ -199,7 +199,9 @@ public class QualifiedVarTest extends TestCase {
     @Override
     protected void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetInstanceManager();
         JUnitUtil.resetProfileManager();
+        JUnitUtil.initDebugProgrammerManager();
     }
 
     @Override

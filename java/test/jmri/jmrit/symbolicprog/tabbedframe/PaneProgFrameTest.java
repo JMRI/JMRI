@@ -176,7 +176,9 @@ public class PaneProgFrameTest extends TestCase {
     @Override
     protected void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initDebugProgrammerManager();
     }
 
     @Override
