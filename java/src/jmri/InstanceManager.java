@@ -252,7 +252,7 @@ public final class InstanceManager {
      */
     @CheckForNull
     public <T> T getInstance(@Nonnull Class<T> type) {
-        log.trace("getOptionalDefault of type {}", type.getName());
+        log.trace("getInstance of type {}", type.getName());
         List<T> l = getInstances(type);
         if (l.isEmpty()) {
             synchronized (type) {
@@ -344,6 +344,34 @@ public final class InstanceManager {
 
     /**
      * Retrieve the last object of type T that was registered with
+     * {@link #store(java.lang.Object, java.lang.Class) } if and only if that
+     * object exists. Else returns null.
+     * <p>
+     * Unless specifically set, the default is the last object stored, see the
+     * {@link #setDefault(java.lang.Class, java.lang.Object) } method.
+     * <p>
+     * In most cases, system configuration assures the existence of a default
+     * object, but this method also handles the case where one doesn't exist.
+     * Use {@link #getDefault(java.lang.Class)} when the object is guaranteed to
+     * exist.
+     *
+     * @param <T>  The type of the class
+     * @param type The class Object for the item's type.
+     * @return The default object for type.
+     * @see #getOptionalDefault(java.lang.Class)
+     */
+    @CheckForNull
+    public <T> T getDefaultIfExists(@Nonnull Class<T> type) {
+        log.trace("getDefaultIfExists of type {}", type.getName());
+        List<T> l = getInstances(type);
+        if (l.isEmpty()) {
+            return null;
+        }
+        return l.get(l.size() - 1);
+    }
+
+    /**
+     * Retrieve the last object of type T that was registered with
      * {@link #store(java.lang.Object, java.lang.Class)} wrapped in an
      * {@link java.util.Optional}.
      * <p>
@@ -366,7 +394,7 @@ public final class InstanceManager {
      */
     @Nonnull
     static public <T> Optional<T> getOptionalDefault(@Nonnull Class< T> type) {
-        return Optional.ofNullable(InstanceManager.getNullableDefault(type));
+        return Optional.ofNullable(getDefault().getDefaultIfExists(type));
     }
 
     /**
