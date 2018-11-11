@@ -7,7 +7,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI Hardware Support - DCC++</title>
-  <meta name="Author" content="Mark Underwood">
+  <meta name="author" content="Mark Underwood">
   <meta name="keywords" content=
   "DCC++ java model railroad JMRI install">
   <!-- Style -->
@@ -96,10 +96,11 @@
         accessory functions and sensors</li>
       </ul>
 
-      <p><strong><em>NOTE:</em>DCC++ support is broken in JMRI
+      <p><strong><em>NOTE:</em> DCC++ support is broken in JMRI
       4.1.6 and 4.2.x releases. Please use JMRI 4.3.1 or newer
-      releases with DCC++</strong></p><a name="hardware"></a>
+      releases with DCC++</strong></p>
 
+      <a name="hardware"></a>
       <h2>Supported Hardware</h2>
 
       <h3>Command Stations</h3>

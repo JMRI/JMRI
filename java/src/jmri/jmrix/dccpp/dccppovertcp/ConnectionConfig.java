@@ -29,7 +29,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
      */
     public ConnectionConfig(jmri.jmrix.NetworkPortAdapter p) {
         super(p);
-    log.debug("NetworkPortAdapter ConnectionConfig Ctor called");
+        log.info("NetworkPortAdapter opening. Is DCC++ Over TCP Server running on host?");
     }
 
     @Override

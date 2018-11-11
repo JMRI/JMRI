@@ -324,7 +324,7 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
                     // input - now send
                     try {
                         if (ostream != null) {
-                            //Commented out as the origianl LnPortnetworkController always returned true.
+                            //Commented out as the original LnPortnetworkController always returned true.
                             //if (!networkController.okToSend()) log.warn(DCCpp port not ready to receive"); // TCP, not RS232, so message is a real warning
                             log.debug("start write to network stream");
                             StringBuffer packet = new StringBuffer(msg.length() + SEND_PREFIX.length() + 2);
