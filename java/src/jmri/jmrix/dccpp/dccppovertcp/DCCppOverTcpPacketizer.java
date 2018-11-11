@@ -142,7 +142,7 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
         // update statistics
         //transmittedMsgCount++;
 
-        log.debug("queue DCCpp packet: " + m.toString());
+        log.debug("queue DCCpp packet: {}", m.toString());
         // in an atomic operation, queue the request and wake the xmit thread
         try {
             synchronized (xmtHandler) {
@@ -150,7 +150,7 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
                 xmtHandler.notify();
             }
         } catch (Exception e) {
-            log.warn("passing to xmit: unexpected exception: " + e);
+            log.warn("passing to xmit: unexpected exception: ", e);
         }
     }
 
@@ -267,9 +267,7 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
                         continue;
                     }
                     // message is complete, dispatch it !!
-                    if (log.isDebugEnabled()) {
-                        log.debug("queue reply for notification");
-                    }
+                    log.debug("queue reply for notification");
 
                     final DCCppReply thisMsg = msg;
                     //final DCCppPacketizer thisTc = trafficController;
@@ -286,7 +284,7 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
                     // done with this one
                     //} catch (DCCppMessageException e) {
                     // just let it ride for now
-                    //  log.warn("run: unexpected DCCppMessageException: ", );
+                    //  log.warn("run: unexpected DCCppMessageException: ", e);
                 } catch (java.io.EOFException e) {
                     // posted from idle port when enableReceiveTimeout used
                     log.debug("EOFException, is DCC++ serial I/O using timeouts?");
