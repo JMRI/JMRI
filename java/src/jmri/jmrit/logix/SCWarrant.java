@@ -245,11 +245,11 @@ public class SCWarrant extends Warrant {
                 wait(2500);
             } catch (InterruptedException ie) {
                 log.debug(_trainName+" waitForStartblockToGetOccupied InterruptedException "+ie);
-                LogStackTrace(ie);
+                logStackTrace(ie);
             }
             catch(Exception e){
                 log.debug(_trainName+" waitForStartblockToGetOccupied unexpected exception "+e);
-                LogStackTrace(e);
+                logStackTrace(e);
             }
         }
     }
@@ -579,7 +579,7 @@ public class SCWarrant extends Warrant {
                     } catch (InterruptedException e) {
                     } catch(Exception e){
                         log.debug(_trainName+" wait unexpected exception "+e);
-                        LogStackTrace(e);
+                        logStackTrace(e);
                     }
                     // And then let our main loop continue
                     notify();
@@ -631,12 +631,12 @@ public class SCWarrant extends Warrant {
             manager.setPower(PowerManager.OFF);
         } catch (Exception e) {
             log.debug(_trainName+" EMERGENCY STOP FAILED WITH EXCEPTION: "+e);
-            LogStackTrace(e);
+            logStackTrace(e);
         }
         log.debug(_trainName+" EMERGENCY STOP");
     }
     
-    void LogStackTrace(Exception e) {
+    private void logStackTrace(Exception e) {
         StringWriter outError = new StringWriter();
         e.printStackTrace(new PrintWriter(outError));
         log.debug(outError.toString());
@@ -679,7 +679,7 @@ public class SCWarrant extends Warrant {
                     }
                 } catch (Exception ex) {
                     log.debug(_trainName+" isItOurTurn exception ignored: "+ex);
-                    LogStackTrace(ex);
+                    logStackTrace(ex);
                 }
             }
             // we should not reach this point, but if we do, we should try to run
@@ -699,7 +699,7 @@ public class SCWarrant extends Warrant {
                         waitToRunQ.put(_warrant);
                     } catch (InterruptedException ie) {
                         log.debug(_trainName+" waitToRunQ.put InterruptedException "+ie);
-                        LogStackTrace(ie);
+                        logStackTrace(ie);
                     }
 
                     while (!AllocationDone) {
@@ -711,11 +711,11 @@ public class SCWarrant extends Warrant {
                                 _warrant.wait(2500 + Math.round(1000*Math.random()));
                             } catch (InterruptedException ie) {
                                 log.debug(_trainName+" _warrant.wait InterruptedException "+ie);
-                                LogStackTrace(ie);
+                                logStackTrace(ie);
                             }
                             catch(Exception e){
                                 log.debug(_trainName+" _warrant.wait unexpected exception "+e);
-                                LogStackTrace(e);
+                                logStackTrace(e);
                             }
                         }
                         allocateStartBlock();
@@ -727,11 +727,11 @@ public class SCWarrant extends Warrant {
                                 _warrant.wait(10000 + Math.round(1000*Math.random()));
                             } catch (InterruptedException ie) {
                                 log.debug(_trainName+" _warrant.wait !AllocationDone InterruptedException "+ie);
-                                LogStackTrace(ie);
+                                logStackTrace(ie);
                             }
                             catch(Exception e){
                                 log.debug(_trainName+" _warrant.wait !AllocationDone unexpected exception "+e);
-                                LogStackTrace(e);
+                                logStackTrace(e);
                             }
                         }
                     }
@@ -745,11 +745,11 @@ public class SCWarrant extends Warrant {
                             _warrant.wait(2500);
                         } catch (InterruptedException ie) {
                             log.debug(_trainName+" _warrant.wait InterruptedException "+ie);
-                            LogStackTrace(ie);
+                            logStackTrace(ie);
                         }
                         catch(Exception e){
                             log.debug(_trainName+" _warrant.wait unexpected exception "+e);
-                            LogStackTrace(e);
+                            logStackTrace(e);
                         }
                     }
                     // And then wait another 3 seconds to make the last turnout settle - just in case the command station is not giving correct feedback
@@ -757,11 +757,11 @@ public class SCWarrant extends Warrant {
                         _warrant.wait(3000);
                     } catch (InterruptedException ie) {
                         log.debug(_trainName+" InterruptedException "+ie);
-                        LogStackTrace(ie);
+                        logStackTrace(ie);
                     }
                     catch(Exception e){
                         log.debug(_trainName+" wait unexpected exception "+e);
-                        LogStackTrace(e);
+                        logStackTrace(e);
                     }
                 }
 
@@ -787,7 +787,7 @@ public class SCWarrant extends Warrant {
                         } catch (Exception e) {
                             emergencyStop();
                             log.debug(_warrant._trainName+" exception trying to stop train due to block not free: "+e);
-                            LogStackTrace(e);
+                            logStackTrace(e);
                         }
                     }
                     log.debug(_warrant._trainName+" "+_warrant.getDisplayName()+" before wait "+_warrant.getRunningMessage()+" _idxCurrentOrder: "+_warrant._idxCurrentOrder+" orders.size(): "+orders.size());
@@ -796,11 +796,11 @@ public class SCWarrant extends Warrant {
                         _warrant.wait(2000);
                     } catch (InterruptedException ie) {
                         log.debug(_warrant._trainName+" InterruptedException "+ie);
-                        LogStackTrace(ie);
+                        logStackTrace(ie);
                     }
                     catch(Exception e){
                         log.debug(_trainName+" wait unexpected exception "+e);
-                        LogStackTrace(e);
+                        logStackTrace(e);
                     }
                     log.debug(_warrant._trainName+" "+_warrant.getDisplayName()+" after wait "+_warrant.getRunningMessage()+" _idxCurrentOrder: "+_warrant._idxCurrentOrder+" orders.size(): "+orders.size());
                 }
@@ -825,11 +825,11 @@ public class SCWarrant extends Warrant {
                         _warrant.wait(500);
                     } catch (InterruptedException ie) {
                         log.debug(_warrant._trainName+" InterruptedException "+ie);
-                        LogStackTrace(ie);
+                        logStackTrace(ie);
                     }
                     catch(Exception e){
                         log.debug(_trainName+" wait unexpected exception "+e);
-                        LogStackTrace(e);
+                        logStackTrace(e);
                     }
                     log.debug(_warrant._trainName+" runSignalControlledTrain woken after last wait.... _orders.size()="+orders.size());
                 }
@@ -843,7 +843,7 @@ public class SCWarrant extends Warrant {
                             _warrant.wait(remaining);
                         } catch (InterruptedException e) {
                             log.debug(_warrant._trainName+" InterruptedException "+e);
-                            LogStackTrace(e);
+                            logStackTrace(e);
                         }
                     }
                 }
