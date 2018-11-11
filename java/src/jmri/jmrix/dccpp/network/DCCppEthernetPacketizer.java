@@ -1,6 +1,3 @@
-/**
- * DCCppEthernetPacketizer.java
- */
 package jmri.jmrix.dccpp.network;
     
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
@@ -12,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * This is an extension of the DCCppPacketizer to handle the device specific
+ * An extension of the DCCppPacketizer to handle the device specific
  * requirements of the DCC++ Ethernet.
  * <p>
  * In particular, DCCppEthernetPacketizer counts the number of commands

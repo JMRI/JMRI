@@ -14,14 +14,13 @@ import org.slf4j.LoggerFactory;
  * the LIUSBEthernet has an IP address of 192.168.0.200 and listens to port
  * 5550. The LIUSBEtherenet disconnects both ports if there is 60 seconds of
  * inactivity on the port.
- * Based on LIUSBEthernetAdapter
  *
  * @author Paul Bender (C) 2011-2013
  * @author Mark Underwood (C) 2015
+ * Based on LIUSBEthernetAdapter
  */
 public class DCCppEthernetAdapter extends DCCppNetworkPortController {
 
-    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.dccpp.DCCppConfigurationBundle");
     static final int COMMUNICATION_TCP_PORT = 2560;
     static final String DEFAULT_IP_ADDRESS = "192.168.0.200";
 
@@ -149,7 +148,7 @@ public class DCCppEthernetAdapter extends DCCppNetworkPortController {
         if (getHostName().equals(DEFAULT_IP_ADDRESS)) {
             setHostName(""); // reset the hostname to none.
         }
-        String serviceType = rb.getString("defaultMDNSServiceType");
+        String serviceType = Bundle.getMessage("defaultMDNSServiceType");
         log.debug("Listening for service: {}", serviceType);
         
         if (mdnsClient == null) {
@@ -172,13 +171,13 @@ public class DCCppEthernetAdapter extends DCCppNetworkPortController {
             // if there is a hostname set, use the host name (which can
             // be changed) to find the service.
             String qualifiedHostName = m_HostName
-                + "." + rb.getString("defaultMDNSDomainName");
+                + "." + Bundle.getMessage("defaultMDNSDomainName");
             setHostAddress(mdnsClient.getServiceOnHost(serviceType,
                                                        qualifiedHostName).getHostAddresses()[0]);
         } catch (java.lang.NullPointerException npe) {
             // if there is no hostname set, use the service name (which can't
             // be changed) to find the service.
-            String qualifiedServiceName = rb.getString("defaultMDNSServiceName")
+            String qualifiedServiceName = Bundle.getMessage("defaultMDNSServiceName")
                 + "." + serviceType;
             setHostAddress(mdnsClient.getServicebyAdName(serviceType,
                                                          qualifiedServiceName).getHostAddresses()[0]);
@@ -194,7 +193,7 @@ public class DCCppEthernetAdapter extends DCCppNetworkPortController {
      */
     @Override
     public String getAdvertisementName() {
-        return rb.getString("defaultMDNSServiceName");
+        return Bundle.getMessage("defaultMDNSServiceName");
     }
     
     /**
@@ -204,7 +203,7 @@ public class DCCppEthernetAdapter extends DCCppNetworkPortController {
      */
     @Override
     public String getServiceType() {
-        return rb.getString("defaultMDNSServiceType");
+        return Bundle.getMessage("defaultMDNSServiceType");
     }
 
     private final static Logger log = LoggerFactory.getLogger(DCCppEthernetAdapter.class);
