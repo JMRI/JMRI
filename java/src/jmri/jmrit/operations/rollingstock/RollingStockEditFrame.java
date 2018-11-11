@@ -16,6 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import jmri.IdTag;
 import jmri.InstanceManager;
@@ -73,12 +74,15 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
 
     // text field
     public JTextField roadNumberTextField = new JTextField(Control.max_len_string_road_number);
-
     public JTextField builtTextField = new JTextField(Control.max_len_string_built_name + 3);
     public JTextField weightTextField = new JTextField(Control.max_len_string_weight_name);
     public JTextField weightTonsTextField = new JTextField(Control.max_len_string_weight_name);
     public JTextField commentTextField = new JTextField(35);
-    public JTextField valueTextField = new JTextField(8);
+    
+    // text area
+    public JTextArea valueTextArea = new JTextArea(3, 35);
+    JScrollPane valueScroller = new JScrollPane(valueTextArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+            JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
     // combo boxes
     public JComboBox<String> roadComboBox = InstanceManager.getDefault(CarRoads.class).getComboBox();
@@ -259,8 +263,11 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
             JPanel pValue = new JPanel();
             pValue.setLayout(new GridBagLayout());
             pValue.setBorder(BorderFactory.createTitledBorder(Setup.getValueLabel()));
-            addItem(pValue, valueTextField, 1, 0);
+            addItem(pValue, valueScroller, 1, 0);
             pOptional.add(pValue);
+            
+            // adjust text area width based on window size
+            adjustTextAreaColumnWidth(valueScroller, valueTextArea);
         }
 
         // row 14
@@ -374,7 +381,7 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
         ownerComboBox.setSelectedItem(rs.getOwner());
 
         commentTextField.setText(rs.getComment());
-        valueTextField.setText(rs.getValue());
+        valueTextArea.setText(rs.getValue());
         rfidComboBox.setSelectedItem(rs.getIdTag());
         
         // enable delete and save buttons
@@ -519,7 +526,7 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
             _rs.setOwner((String) ownerComboBox.getSelectedItem());
         }
         _rs.setComment(commentTextField.getText());
-        _rs.setValue(valueTextField.getText());
+        _rs.setValue(valueTextArea.getText());
         // save the IdTag for this rolling stock
         IdTag idTag = (IdTag) rfidComboBox.getSelectedItem();
         if (idTag != null) {

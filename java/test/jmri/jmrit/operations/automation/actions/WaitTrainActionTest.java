@@ -36,6 +36,24 @@ public class WaitTrainActionTest extends OperationsTestCase {
         WaitTrainAction action = new WaitTrainAction();
         Assert.assertEquals("name", Bundle.getMessage("WaitForTrain"), action.getName());
     }
+    
+    @Test
+    public void testIsMessageOkEnabled() {
+        WaitTrainAction action = new WaitTrainAction();
+        Assert.assertTrue(action.isMessageOkEnabled());
+    }
+    
+    @Test
+    public void testIsMessageFailEnabled() {
+        WaitTrainAction action = new WaitTrainAction();
+        Assert.assertTrue(action.isMessageFailEnabled());
+    }
+    
+    @Test
+    public void testIsConcurrentAction() {
+        WaitTrainAction action = new WaitTrainAction();
+        Assert.assertTrue(action.isConcurrentAction());
+    }
 
     @Test
     public void testActionWaitForTrainToBuild() {
@@ -139,6 +157,9 @@ public class WaitTrainActionTest extends OperationsTestCase {
         action.doAction();
         Assert.assertTrue(automationItem.isActionRunning());
         Assert.assertFalse(automationItem.isActionSuccessful());
+        
+        String message = action.getActionString();
+        Assert.assertTrue("message contains route name", message.contains(train1.getTrainTerminatesRouteLocation().getName()));
 
         // There are 3 locations in the route
         Assert.assertTrue(train1.build());
@@ -151,6 +172,34 @@ public class WaitTrainActionTest extends OperationsTestCase {
         Assert.assertFalse(automationItem.isActionRunning());
         Assert.assertTrue(automationItem.isActionSuccessful());
     }
+    
+    @Test
+    public void testCancel() {
+        JUnitOperationsUtil.initOperationsData();
+        TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
+        Train train1 = tmanager.getTrainById("1");
+        Assert.assertNotNull(train1);
+
+        // confirm default
+        Assert.assertTrue(train1.isBuildEnabled());
+
+        WaitTrainAction action = new WaitTrainAction();
+        Assert.assertNotNull("exists", action);
+        AutomationItem automationItem = new AutomationItem("TestId");
+        automationItem.setAction(action);
+        Assert.assertEquals("confirm registered", automationItem, action.getAutomationItem());
+
+        automationItem.setTrain(train1);
+        action.doAction();
+        Assert.assertTrue(automationItem.isActionRunning());
+        Assert.assertFalse(automationItem.isActionSuccessful());
+
+        // cancel
+        action.cancelAction();
+        Assert.assertFalse(automationItem.isActionRunning());
+        Assert.assertFalse(automationItem.isActionSuccessful());
+    }
+
 
     // The minimal setup for log4J
     @Override
