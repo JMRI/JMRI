@@ -103,7 +103,7 @@ public class Train implements java.beans.PropertyChangeListener {
     protected List<String> _terminationScripts = new ArrayList<>(); // list of script pathnames to run when train
     // is terminated
     protected String _railroadName = NONE; // optional railroad name for this train
-    protected String _logoURL = NONE; // optional manifest logo for this train
+    protected String _logoPathName = NONE; // optional manifest logo for this train
     protected boolean _showTimes = true; // when true, show arrival and departure times for this train
     protected Engine _leadEngine = null; // lead engine for icon
     protected String _switchListStatus = UNKNOWN; // print switch list status
@@ -2633,8 +2633,8 @@ public class Train implements java.beans.PropertyChangeListener {
         }
     }
 
-    public String getManifestLogoURL() {
-        return _logoURL;
+    public String getManifestLogoPathName() {
+        return _logoPathName;
     }
 
     /**
@@ -2642,8 +2642,8 @@ public class Train implements java.beans.PropertyChangeListener {
      *
      * @param pathName file location for the logo.
      */
-    public void setManifestLogoURL(String pathName) {
-        _logoURL = pathName;
+    public void setManifestLogoPathName(String pathName) {
+        _logoPathName = pathName;
     }
 
     public boolean isShowArrivalAndDepartureTimesEnabled() {
@@ -3057,8 +3057,8 @@ public class Train implements java.beans.PropertyChangeListener {
             return true;
         }
         String logoURL = Setup.NONE;
-        if (!getManifestLogoURL().equals(NONE)) {
-            logoURL = FileUtil.getExternalFilename(getManifestLogoURL());
+        if (!getManifestLogoPathName().equals(NONE)) {
+            logoURL = FileUtil.getExternalFilename(getManifestLogoPathName());
         } else if (!Setup.getManifestLogoURL().equals(Setup.NONE)) {
             logoURL = FileUtil.getExternalFilename(Setup.getManifestLogoURL());
         }
@@ -3947,7 +3947,7 @@ public class Train implements java.beans.PropertyChangeListener {
         }
         if ((e.getChild(Xml.MANIFEST_LOGO) != null)) {
             if ((a = e.getChild(Xml.MANIFEST_LOGO).getAttribute(Xml.NAME)) != null) {
-                setManifestLogoURL(a.getValue());
+                setManifestLogoPathName(a.getValue());
             }
         }
         if ((a = e.getAttribute(Xml.SHOW_TIMES)) != null) {
@@ -4198,9 +4198,9 @@ public class Train implements java.beans.PropertyChangeListener {
             r.setAttribute(Xml.NAME, getRailroadName());
             e.addContent(r);
         }
-        if (!getManifestLogoURL().equals(NONE)) {
+        if (!getManifestLogoPathName().equals(NONE)) {
             Element l = new Element(Xml.MANIFEST_LOGO);
-            l.setAttribute(Xml.NAME, getManifestLogoURL());
+            l.setAttribute(Xml.NAME, getManifestLogoPathName());
             e.addContent(l);
         }
 
