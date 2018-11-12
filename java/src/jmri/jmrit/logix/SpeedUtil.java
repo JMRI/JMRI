@@ -108,7 +108,7 @@ public class SpeedUtil {
         return _dccAddress;            
     }
     
-    public String getAddress() {
+    protected String getAddress() {
         if (_dccAddress != null) {
             return _dccAddress.toString();
         }
