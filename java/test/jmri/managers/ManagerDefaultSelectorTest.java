@@ -1,10 +1,8 @@
 package jmri.managers;
 
 import jmri.PowerManager;
-import jmri.jmrix.loconet.LnTrafficController;
-import jmri.jmrix.loconet.LocoNetInterfaceScaffold;
-import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
-import jmri.jmrix.loconet.SlotManager;
+import jmri.jmrix.internal.*;
+import jmri.jmrix.loconet.*;
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.util.JUnitUtil;
@@ -30,11 +28,12 @@ public class ManagerDefaultSelectorTest {
     }
 
     @After
-    public void tearDown() {        JUnitUtil.tearDown();    }
+    public void tearDown() {
+        JUnitUtil.tearDown();
+    }
 
-    @Ignore("Fails if some yet-to-be-identified test is run beforehand")
     @Test
-    public void testIsPreferencesValid() {
+    public void testSingleSystemPreferencesValid() {
         ManagerDefaultSelector mds = new ManagerDefaultSelector();
         // assert default state
         Assert.assertFalse(mds.isAllInternalDefaultsValid());
@@ -46,46 +45,89 @@ public class ManagerDefaultSelectorTest {
         } catch (InitializationException ex) {
             Assert.fail(ex.getMessage());
         }
+        
+        // empty profile has defaults for no managers
+        Assert.assertTrue(mds.isPreferencesValid(profile));
+        Assert.assertEquals("getDefault(ThrottleManager) ", null, mds.getDefault(jmri.ThrottleManager.class));
+        Assert.assertEquals("getDefault(LightManager) ", null, mds.getDefault(jmri.LightManager.class));
+
+        Assert.assertTrue(mds.isPreferencesValid(profile));
+
         // configured with only default Internal connection, preferences are valid
-        Assert.assertTrue(mds.isPreferencesValid(profile));
         mds.configure(profile);
-        // CMRI provides no known managers, so preferences are valid
         Assert.assertTrue(mds.isPreferencesValid(profile));
+     
+        // add a LocoNet connection
         LnTrafficController lnis = new LocoNetInterfaceScaffold();
         SlotManager slotmanager = new SlotManager(lnis);
         LocoNetSystemConnectionMemo loconet = new LocoNetSystemConnectionMemo(lnis, slotmanager);
         mds.configure(profile);
-        // LocoNet provides known managers, so preferences are not valid
-        // since Internal is the default for all known managers
-        Assert.assertFalse(mds.isPreferencesValid(profile));
+        // LocoNet provides known managers, so preferences are valid
+        Assert.assertTrue(mds.isPreferencesValid(profile));
+
+        Assert.assertEquals("getDefault(ThrottleManager) ", null, mds.getDefault(jmri.ThrottleManager.class));
+        Assert.assertEquals("getDefault(LightManager) ", null, mds.getDefault(jmri.LightManager.class));
+        
         mds.setDefault(PowerManager.class, loconet.getUserName());
-        // LocoNet now default for a manager, so preferences are valid
-        Assert.assertTrue(mds.isPreferencesValid(profile));
+        Assert.assertEquals("getDefault(PowerManager) ", "LocoNet", mds.getDefault(jmri.PowerManager.class));
+
         mds.removeConnectionAsDefault(loconet.getUserName());
-        // LocoNet provides known managers, so preferences are not valid
-        // since Internal is the default for all known managers
-        Assert.assertFalse(mds.isPreferencesValid(profile));
-        mds.setAllInternalDefaultsValid(true);
-        // Internal remains default, LocoNet is present, but overriding, so preferences are valid
+        Assert.assertEquals("getDefault(PowerManager) ", null, mds.getDefault(jmri.PowerManager.class));
+
+        // loconet gone, auto internal is by itself, so OK
         Assert.assertTrue(mds.isPreferencesValid(profile));
-        mds.setAllInternalDefaultsValid(false);
-        // Internal remains default, LocoNet is present, not overriding, so preferences are not valid
-        Assert.assertFalse(mds.isPreferencesValid(profile));
+        
     }
 
     @Test
-    public void testIsAllInternalDefaultsValid() {
+    public void testAuxInternalPreferencesValid() {
         ManagerDefaultSelector mds = new ManagerDefaultSelector();
-        // assert default state
-        Assert.assertFalse(mds.isAllInternalDefaultsValid());
-        mds.setAllInternalDefaultsValid(true);
-        // assert set
-        Assert.assertTrue(mds.isAllInternalDefaultsValid());
-        mds.setAllInternalDefaultsValid(false);
-        // assert set again
-        Assert.assertFalse(mds.isAllInternalDefaultsValid());
-    }
+        Profile profile = ProfileManager.getDefault().getActiveProfile();
 
+        // nothing has been configured, preferences are valid
+        Assert.assertTrue(mds.isPreferencesValid(profile));
+        try {
+            mds.initialize(profile);
+        } catch (InitializationException ex) {
+            Assert.fail(ex.getMessage());
+        }
+        
+        // empty profile has defaults for no managers
+        Assert.assertTrue(mds.isPreferencesValid(profile));
+        Assert.assertEquals("getDefault(PowerManager) ", null, mds.getDefault(jmri.PowerManager.class));
+        Assert.assertEquals("getDefault(LightManager) ", null, mds.getDefault(jmri.LightManager.class));
+
+        mds.configure(profile);
+     
+        // add a LocoNet connection
+        LnTrafficController lnis = new LocoNetInterfaceScaffold();
+        SlotManager slotmanager = new SlotManager(lnis);
+        LocoNetSystemConnectionMemo loconet = new LocoNetSystemConnectionMemo(lnis, slotmanager); // self registering
+        mds.configure(profile);
+
+        // add a second internal
+        InternalSystemConnectionMemo internal = new InternalSystemConnectionMemo(false); // self registering
+        
+
+        Assert.assertEquals("getDefault(PowerManager) ", null, mds.getDefault(jmri.PowerManager.class));
+        Assert.assertEquals("getDefault(LightManager) ", null, mds.getDefault(jmri.LightManager.class));
+        
+        mds.setDefault(PowerManager.class, loconet.getUserName());
+        Assert.assertEquals("getDefault(PowerManager) ", "LocoNet", mds.getDefault(jmri.PowerManager.class));
+
+        mds.setDefault(PowerManager.class, internal.getUserName());
+        Assert.assertEquals("getDefault(PowerManager) ", "Internal", mds.getDefault(jmri.PowerManager.class));
+
+        mds.removeConnectionAsDefault(loconet.getUserName());
+        Assert.assertEquals("getDefault(PowerManager) ", "Internal", mds.getDefault(jmri.PowerManager.class));
+
+        mds.removeConnectionAsDefault(internal.getUserName());
+        Assert.assertEquals("getDefault(PowerManager) ", null, mds.getDefault(jmri.PowerManager.class));
+
+        // loconet gone, auto internal is by itself, so OK
+        Assert.assertTrue(mds.isPreferencesValid(profile));
+    }
+    
     @Test
     public void testSetAllInternalDefaultsValid() {
         ManagerDefaultSelector mds = new ManagerDefaultSelector();
@@ -99,4 +141,19 @@ public class ManagerDefaultSelectorTest {
         Assert.assertFalse(mds.isAllInternalDefaultsValid());
     }
 
+    @Test
+    public void testWriteReadAllInternalOK() throws InitializationException {
+        ManagerDefaultSelector mds = new ManagerDefaultSelector();
+        Profile profile = ProfileManager.getDefault().getActiveProfile();
+
+        mds.setAllInternalDefaultsValid(true);
+        mds.savePreferences(profile);
+        
+        mds = new ManagerDefaultSelector();
+        Assert.assertFalse(mds.isAllInternalDefaultsValid());
+
+        mds.initialize(profile);
+        Assert.assertTrue(mds.isAllInternalDefaultsValid());
+    }
+    
 }
