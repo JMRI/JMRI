@@ -30,8 +30,6 @@ import jmri.spi.PreferencesManager;
 import jmri.util.prefs.AbstractPreferencesManager;
 import jmri.util.prefs.InitializationException;
 import org.openide.util.lookup.ServiceProvider;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Records and executes a desired set of defaults for the JMRI InstanceManager
@@ -58,10 +56,10 @@ public class ManagerDefaultSelector extends AbstractPreferencesManager {
     private PropertyChangeListener memoListener;
     private boolean allInternalDefaultsValid = false;
     public final static String ALL_INTERNAL_DEFAULTS = "allInternalDefaults";
-    private final static Logger log = LoggerFactory.getLogger(ManagerDefaultSelector.class);
 
     public ManagerDefaultSelector() {
         memoListener = (PropertyChangeEvent e) -> {
+            log.trace("memoListener fired via {}", e);
             switch (e.getPropertyName()) {
                 case SystemConnectionMemo.USER_NAME:
                     String oldName = (String) e.getOldValue();
@@ -98,6 +96,7 @@ public class ManagerDefaultSelector extends AbstractPreferencesManager {
             // is launched for the first time, so these listeners
             // need to be in place as early as possible.
             //
+            log.trace("addPropertyChangeListener fired via {}", e);
             switch (e.getPropertyName()) {
                 case SystemConnectionMemoManager.CONNECTION_REMOVED:
                     if (e.getOldValue() instanceof SystemConnectionMemo) {
@@ -115,7 +114,13 @@ public class ManagerDefaultSelector extends AbstractPreferencesManager {
                         // check for special case of anything else then Internal
                         // and set first system to be default for all provided defaults
                         List<SystemConnectionMemo> list = InstanceManager.getList(SystemConnectionMemo.class);
-                        if (list.size() == 2 && list.get(1) instanceof InternalSystemConnectionMemo) {
+                        
+                        log.debug("Start CONNECTION_ADDED processing with {} existing", list.size());
+                        if (list.size() > 0) log.debug("    System 0: {}", list.get(0));
+                        if (list.size() > 1) log.debug("    System 1: {}", list.get(1));
+                        if (list.size() > 2) log.debug("    System 2: {}", list.get(2));
+                        
+                        if (list.size() > 0  && ! (list.get(0) instanceof InternalSystemConnectionMemo)) {
                             // first real system added gets defaults for everything it supports
                             log.debug("First real system added, reset defaults");
                             for (Item item : knownManagers) {
@@ -441,4 +446,6 @@ public class ManagerDefaultSelector extends AbstractPreferencesManager {
     public void setAllInternalDefaultsValid(boolean isAllInternalDefaultsValid) {
         this.allInternalDefaultsValid = isAllInternalDefaultsValid;
     }
+
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ManagerDefaultSelector.class);
 }
