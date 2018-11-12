@@ -43,7 +43,7 @@ import org.slf4j.LoggerFactory;
  * preferences window) is the default for at least one type of manager.
  * <p>
  * allInternalDefaults is preserved as a preference when set here, 
- * but {@link #setAllInternalDefaultsValid()} is not (originally)
+ * but {@link #setAllInternalDefaultsValid} is not (originally)
  * invoked from the GUI.
  * 
  * @author Bob Jacobsen Copyright (C) 2010
