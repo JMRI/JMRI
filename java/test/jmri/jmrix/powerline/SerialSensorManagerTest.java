@@ -82,9 +82,9 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
     }
 
     @Override
-    @Ignore
+    @Ignore("ignoring this test due to the system name format, needs to be properly coded")
     @Test
-    public void testUpperLower() { // ignoring this test due to the system name format, needs to be properly coded
+    public void testUpperLower() {
     }
 
     @Test
