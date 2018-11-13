@@ -120,8 +120,8 @@ public class ManagerDefaultSelector extends AbstractPreferencesManager {
                         if (list.size() > 1) log.debug("    System 1: {}", list.get(1));
                         if (list.size() > 2) log.debug("    System 2: {}", list.get(2));
                         
-                        if (list.size() > 0  && ! (list.get(0) instanceof InternalSystemConnectionMemo)) {
-                            // first real system added gets defaults for everything it supports
+                        if (list.size() == 1 && ! (list.get(0) instanceof InternalSystemConnectionMemo)) {
+                            // first system added is hardware, gets defaults for everything it supports
                             log.debug("First real system added, reset defaults");
                             for (Item item : knownManagers) {
                                 if (memo.provides(item.managerClass)) {
