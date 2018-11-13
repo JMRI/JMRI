@@ -1,12 +1,12 @@
 package jmri.jmrix.loconet;
 
-import jmri.JmriException;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrix.loconet.LnSensor class.
@@ -32,36 +32,6 @@ public class LnSensorTest extends jmri.implementation.AbstractSensorTestBase {
         // to send.
     }
     
-    @Override
-    @Test
-    @Ignore("base class test not functioning correctly for Loconet Sensors")
-    public void testAddListener() throws JmriException {
-    }
-
-    @Override
-    @Test
-    @Ignore("base class test not functioning correctly for Loconet Sensors")
-    public void testCommandInactive() throws JmriException {
-    }
-
-    @Override
-    @Test
-    @Ignore("base class test not functioning correctly for Loconet Sensors")
-    public void testCommandActive() throws JmriException {
-    }
-
-    @Override
-    @Test
-    @Ignore("base class test not functioning correctly for Loconet Sensors")
-    public void testInvertAfterInactive() throws JmriException {
-    }
-
-    @Override
-    @Test
-    @Ignore("base class test not functioning correctly for Loconet Sensors")
-    public void testInvertAfterActive() throws JmriException {
-    }
-
     // LnSensor test for incoming status message
     @Test
     public void testLnSensorStatusMsg() {
@@ -88,18 +58,30 @@ public class LnSensorTest extends jmri.implementation.AbstractSensorTestBase {
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         // prepare an interface
-        lnis = new LocoNetInterfaceScaffold();
+        lnis = new LocoNetInterfaceScaffold() {
+            @Override
+            public void sendLocoNetMessage(LocoNetMessage m) {
+                log.debug("sendLocoNetMessage [{}]", m);
+                // save a copy
+                outbound.addElement(m);
+                sendTestMessage(m);
+            }
+        };
         t = new LnSensor("LS042", lnis, "L");
     }
 
     @After
+    @Override
     public void tearDown() {
         t.dispose();
 	lnis = null;
         JUnitUtil.tearDown();
     }
 
+    private final static Logger log = LoggerFactory.getLogger(LnSensorTest.class);
+    
 }

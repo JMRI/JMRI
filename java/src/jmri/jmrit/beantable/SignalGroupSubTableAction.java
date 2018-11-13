@@ -1,6 +1,7 @@
 package jmri.jmrit.beantable;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -499,6 +500,8 @@ public class SignalGroupSubTableAction {
             pa.setLayout(new BoxLayout(pa, BoxLayout.Y_AXIS));
             JPanel p1 = new JPanel();
             p1.setLayout(new FlowLayout());
+            status1.setFont(status1.getFont().deriveFont(0.9f * nameLabel.getFont().getSize())); // a bit smaller
+            status1.setForeground(Color.gray);
             p1.add(status1);
             pa.add(p1);
             Border pBorder = BorderFactory.createEtchedBorder();
@@ -524,7 +527,7 @@ public class SignalGroupSubTableAction {
                     updateSubPressed(e, false);
                 }
             });
-            updateSubButton.setToolTipText(Bundle.getMessage("TooltipUpdate"));
+            updateSubButton.setToolTipText(Bundle.getMessage("TooltipUpdateGroup"));
 
             p2xtSpace.setVisible(false);
             p2xsSpace.setVisible(false);

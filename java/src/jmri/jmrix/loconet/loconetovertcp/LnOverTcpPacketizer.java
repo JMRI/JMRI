@@ -184,7 +184,6 @@ public class LnOverTcpPacketizer extends LnPacketizer {
                                         + " seen length: " + i
                                         + " unexpected byte: "
                                         + Integer.toHexString(b));
-                                opCode = b;
                                 throw new LocoNetMessageException();
                             }
                             msg.setElement(i, b);

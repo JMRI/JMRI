@@ -16,7 +16,7 @@ public class OperationsTestCase {
 
     @Before
     public void setUp() {
-        jmri.util.JUnitUtil.setUp();
+        JUnitUtil.setUp();
 
         // Set things up outside of operations
         JUnitUtil.resetInstanceManager();

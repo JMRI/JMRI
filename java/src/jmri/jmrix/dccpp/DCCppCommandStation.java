@@ -7,7 +7,8 @@ import org.slf4j.LoggerFactory;
  * Defines the standard/common routines used in multiple classes related to the
  * a DCC++ Command Station, on a DCC++ network.
  *
- * @author Bob Jacobsen Copyright (C) 2001 Portions by Paul Bender Copyright (C) 2003
+ * @author Bob Jacobsen Copyright (C) 2001
+ * @author Portions by Paul Bender Copyright (C) 2003
  * @author Mark Underwood Copyright (C) 2015
  *
  * Based on LenzCommandStation by Bob Jacobsen and Paul Bender
@@ -25,10 +26,15 @@ public class DCCppCommandStation implements jmri.CommandStation {
     private String codeBuildDate;
     private DCCppRegisterManager rmgr = null;
 
-    /** ctor */
     public DCCppCommandStation() {
- super();
-     rmgr = new DCCppRegisterManager();
+        super();
+        rmgr = new DCCppRegisterManager();
+    }
+
+    public DCCppCommandStation(DCCppSystemConnectionMemo memo) {
+        super();
+        adaptermemo = memo;
+        rmgr = new DCCppRegisterManager();
     }
 
     public void setBaseStationType(String s) {
@@ -50,7 +56,6 @@ public class DCCppCommandStation implements jmri.CommandStation {
     /**
      * Parses the DCC++ CS status response to pull out the base station version
      * and software version.
-     *
      */
     protected void setCommandStationInfo(DCCppReply l) {
  // V1.0 Syntax
@@ -67,21 +72,18 @@ public class DCCppCommandStation implements jmri.CommandStation {
         
         baseStationType = l.getStatusVersionString();
         codeBuildDate = l.getStatusBuildDateString();
-        
     }
 
     /**
-     * Provides the version string returned during the initial check. This
-     * function is not yet implemented...
-     *
+     * Provide the version string returned during the initial check.
+     * This function is not yet implemented...
      */
     public String getVersionString() {
         return(baseStationType + ": BUILD " + codeBuildDate);
     }
 
     /**
-     * Remember whether or not in service mode
-     *
+     * Remember whether or not in service mode.
      */
     boolean mInServiceMode = false;
 
@@ -95,7 +97,7 @@ public class DCCppCommandStation implements jmri.CommandStation {
     // A few utility functions
     /**
      * Get the Lower byte of a locomotive address from the decimal locomotive
-     * address
+     * address.
      */
     public static int getDCCAddressLow(int address) {
         /* For addresses below 128, we just return the address, otherwise,
@@ -112,7 +114,7 @@ public class DCCppCommandStation implements jmri.CommandStation {
 
     /**
      * Get the Upper byte of a locomotive address from the decimal locomotive
-     * address
+     * address.
      */
     public static int getDCCAddressHigh(int address) {
         /* this isn't actually the high byte, For addresses below 128, we
@@ -127,10 +129,9 @@ public class DCCppCommandStation implements jmri.CommandStation {
             temp = temp / 256;
             return temp;
         }
-
     }
 
-    /* To Implement the CommandStation Interface, we have to define the 
+    /* To implement the CommandStation Interface, we have to define the
      sendPacket function */
     /**
      * Send a specific packet to the rails.
@@ -170,7 +171,11 @@ public class DCCppCommandStation implements jmri.CommandStation {
         adaptermemo = memo;
     }
 
-    DCCppSystemConnectionMemo adaptermemo;
+    public DCCppSystemConnectionMemo getSystemConnectionMemo() {
+        return adaptermemo;
+    }
+
+    private DCCppSystemConnectionMemo adaptermemo;
 
     @Override
     public String getUserName() {
@@ -196,12 +201,12 @@ public class DCCppCommandStation implements jmri.CommandStation {
  rmgr.releaseRegister(addr);
     }
 
-    // REturns DCCppConstants.NO_REGISTER_FREE if address is not in list.
+    // Return DCCppConstants.NO_REGISTER_FREE if address is not in list
     public int getRegisterNum(int addr) {
  return(rmgr.getRegisterNum(addr));
     }
 
-    // Returns DCCppConstants.REGISTER_UNALLOCATED if register is unused.
+    // Return DCCppConstants.REGISTER_UNALLOCATED if register is unused.
     public int getRegisterAddress(int num) {
  return(rmgr.getRegisterAddress(num));
     }
