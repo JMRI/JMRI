@@ -3,6 +3,7 @@ package jmri.jmrit.operations.automation.actions;
 import java.awt.GraphicsEnvironment;
 import java.util.ResourceBundle;
 import jmri.InstanceManager;
+import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.automation.AutomationItem;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
@@ -19,7 +20,7 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class PrintTrainManifestIfSelectedActionTest {
+public class PrintTrainManifestIfSelectedActionTest extends OperationsTestCase {
 
     @Test
     public void testCTor() {
@@ -102,13 +103,15 @@ public class PrintTrainManifestIfSelectedActionTest {
 
 
     // The minimal setup for log4J
+    @Override
     @Before
     public void setUp() {
-        JUnitUtil.setUp();    }
+        super.setUp();    }
 
+    @Override
     @After
     public void tearDown() {
-        JUnitUtil.tearDown();
+        super.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(PrintTrainManifestIfSelectedActionTest.class);

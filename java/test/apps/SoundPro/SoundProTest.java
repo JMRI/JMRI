@@ -166,7 +166,6 @@ public class SoundProTest {
     }
 
     @Test
-    @Ignore
     public void testLaunchSprog() throws IOException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 

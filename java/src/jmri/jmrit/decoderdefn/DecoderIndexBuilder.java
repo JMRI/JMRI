@@ -23,7 +23,7 @@ public class DecoderIndexBuilder {
         }
 
         // print the location where the result is stored
-        System.out.println(jmri.util.FileUtil.getUserFilesPath() + "decoderIndex.xml");
+        System.out.println(jmri.util.FileUtil.getUserFilesPath() + "decoderIndex.xml"); // command line
 
         // recreate the index
         DecoderIndexCreateAction da = new DecoderIndexCreateAction(null);
