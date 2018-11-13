@@ -1175,6 +1175,8 @@ public class SectionTableAction extends AbstractTableAction<Section> {
             JPanel p3 = new JPanel();
             p3.setLayout(new FlowLayout());
             JLabel question = new JLabel(rbx.getString("Message18"));
+            p3.add(question);
+            dialog.add(p3);
             JPanel p4 = new JPanel();
             p4.setLayout(new FlowLayout());
             question = new JLabel(rbx.getString("Message18a"));
