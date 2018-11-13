@@ -2,15 +2,12 @@ package jmri.jmrit.picker;
 
 import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
+import org.netbeans.jemmy.EventTool;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class PickPanelTest {
 
@@ -41,7 +38,4 @@ public class PickPanelTest {
     public void tearDown() {
         JUnitUtil.tearDown();
     }
-
-    // private final static Logger log = LoggerFactory.getLogger(PickPanelTest.class);
-
 }
