@@ -20,7 +20,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import jmri.InstanceManager;
-import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.RollingStockAttribute;
 import jmri.jmrit.operations.rollingstock.RollingStockEditFrame;
@@ -90,10 +89,6 @@ public class CarEditFrame extends RollingStockEditFrame implements java.beans.Pr
 
         // default check box selections
         autoWeightCheckBox.setSelected(true);
-        passengerCheckBox.setSelected(false);
-        cabooseCheckBox.setSelected(false);
-        fredCheckBox.setSelected(false);
-        hazardousCheckBox.setSelected(false);
 
         // load tool tips
         weightTextField.setToolTipText(Bundle.getMessage("TipCarWeightOz"));
@@ -146,6 +141,9 @@ public class CarEditFrame extends RollingStockEditFrame implements java.beans.Pr
         addItem(pLoad, loadComboBox, 1, 0);
         addItem(pLoad, editLoadButton, 2, 0);
         pLoad.setVisible(true);
+        
+        // select first item so load combobox will update
+        typeComboBox.setSelectedIndex(0);
 
         // row 10
         pGroup.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Kernel")));
@@ -247,22 +245,6 @@ public class CarEditFrame extends RollingStockEditFrame implements java.beans.Pr
     @Override
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         super.buttonActionPerformed(ae);
-        if (ae.getSource() == deleteButton) {
-            log.debug("car delete button activated");
-            // disable delete and save buttons
-            deleteButton.setEnabled(false);
-            saveButton.setEnabled(false);
-            if (_rs != null) {
-                _rs.removePropertyChangeListener(this);
-            }
-            Car car = carManager.getByRoadAndNumber((String) roadComboBox.getSelectedItem(), roadNumberTextField
-                    .getText());
-            if (car != null) {
-                carManager.deregister(car);
-            }
-            _rs = null;
-            OperationsXml.save();
-        }
         if (ae.getSource() == fillWeightButton) {
             calculateWeight();
         }
@@ -506,6 +488,15 @@ public class CarEditFrame extends RollingStockEditFrame implements java.beans.Pr
                     }
                 }
             }
+        }
+    }
+    
+    @Override
+    protected void delete() {
+        Car car = carManager.getByRoadAndNumber((String) roadComboBox.getSelectedItem(), roadNumberTextField
+                .getText());
+        if (car != null) {
+            carManager.deregister(car);
         }
     }
 

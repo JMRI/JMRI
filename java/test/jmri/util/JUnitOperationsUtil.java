@@ -284,8 +284,8 @@ public class JUnitOperationsUtil {
         train1.setDescription("Train STF");
 
         // increase test coverage by providing a manifest logo for this train
-        java.net.URL url = FileUtil.findURL("resources/logo.gif", FileUtil.Location.INSTALLED);
-        train1.setManifestLogoURL(url.getPath());
+        String path = FileUtil.getExternalFilename(FileUtil.PROGRAM + "resources/logo.gif");
+        train1.setManifestLogoPathName(path);
 
         tmanager.register(train1);
 
