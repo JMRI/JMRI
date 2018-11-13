@@ -18,19 +18,19 @@ import javax.swing.plaf.basic.BasicSliderUI;
 public class ControlPanelCustomSliderUI extends BasicSliderUI {
     
     // Color are coming from the Tango themes color palette (as well as icons on the Throttle window, for look consistency)
-    private final static Color SLIDER_COLOR_BACK = new Color(0x88, 0x8a, 0x85, 0x88);
-    private final static Color SLIDER_COLOR_FRONT = new Color(0xf57900);
+    private final static Color TRACK_COLOR_BACK = new Color(0x88, 0x8a, 0x85, 0x88);
+    private final static Color TRACK_COLOR_FRONT = new Color(0xf5, 0x79, 0x00, 0xCC);
+//    private final static Color TRACK_COLOR_TICKS = new Color(0x888a85);
     private final static Color THUMB_INNER_COLOR_STOP = new Color(0xcc0000);
-    private final static Color THUMB_INNER_COLOR_RUN = new Color(0x4e0206);
-    private final static Color THUMB_CONTOUR_COLOR = new Color(0xd3d7cf);
-    private final static Color ZERO_INNER_COLOR = new Color(0x2e3436);
-    private final static Color ZERO_CONTOUR_COLOR = new Color(0x555753);    
-    private final static int ZERO_THICKNESS = 4;
+    private final static Color THUMB_INNER_COLOR_RUN = new Color(0xd7d27A);
+    private final static Color THUMB_CONTOUR_COLOR = new Color(0x555753);
+//    private final static Color ZERO_CONTOUR_COLOR = new Color(0x555753);    
+//    private final static int ZERO_THICKNESS = 5;
     
     public ControlPanelCustomSliderUI(JSlider b) {
         super(b);
     }
-
+    
     @Override
     public void paint(Graphics g, JComponent c) {
         Graphics2D g2d = (Graphics2D) g;
@@ -51,9 +51,29 @@ public class ControlPanelCustomSliderUI extends BasicSliderUI {
     public void paintTrack(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         Paint oldPaint = g2d.getPaint();
-        g2d.setPaint(SLIDER_COLOR_BACK);
+        // Track back rectangle
+        g2d.setPaint(TRACK_COLOR_BACK);
         g2d.fillRect(trackRect.x, trackRect.y, trackRect.width, trackRect.height);
-        g2d.setPaint(SLIDER_COLOR_FRONT);
+/*        // Track ticks 
+        g2d.setPaint(TRACK_COLOR_TICKS);
+        // only if it fits 
+        if (slider.getOrientation() == SwingConstants.VERTICAL && trackRect.height > (slider.getMaximum()-slider.getMinimum())*2) {
+            for (int n = 0 ; n<slider.getMaximum()-slider.getMinimum() ; n++) { 
+                g2d.drawLine( trackRect.x, 
+                        trackRect.y+trackRect.height - n*trackRect.height / (slider.getMaximum()-slider.getMinimum()), 
+                        trackRect.x+trackRect.width, 
+                        trackRect.y+trackRect.height - n*trackRect.height / (slider.getMaximum()-slider.getMinimum()));
+            }
+        } else if (slider.getOrientation() == SwingConstants.HORIZONTAL && trackRect.width > (slider.getMaximum()-slider.getMinimum())*2) {
+            for (int n = 0 ; n<slider.getMaximum()-slider.getMinimum() ; n++) { 
+                g2d.drawLine( trackRect.x + n*trackRect.width / (slider.getMaximum()-slider.getMinimum()), 
+                        trackRect.y, 
+                        trackRect.x + n*trackRect.width / (slider.getMaximum()-slider.getMinimum()), 
+                        trackRect.y+trackRect.height );
+            }            
+        }*/
+        // Track front
+        g2d.setPaint(TRACK_COLOR_FRONT);        
         if (slider.getOrientation() == SwingConstants.HORIZONTAL) {
             if (slider.getMinimum()<0 && slider.getMaximum()>0) {
                 double doublerel0Pos = Math.abs((double)slider.getMinimum()) / ((double)slider.getMaximum() - (double)slider.getMinimum());
@@ -64,7 +84,9 @@ public class ControlPanelCustomSliderUI extends BasicSliderUI {
                 } else {
                     g2d.fillRect( (int)Math.round(x0+widthRect), trackRect.y, (int)Math.round(-widthRect), trackRect.height);
                 }
-                paintZeroH(g, (int)Math.round(x0), trackRect.y );
+                // Zero marker
+//                g2d.setPaint(ZERO_CONTOUR_COLOR);
+//                g2d.fillRect( (int)Math.round(x0- ZERO_THICKNESS/2) , trackRect.y+ZERO_THICKNESS/2, ZERO_THICKNESS, trackRect.height-ZERO_THICKNESS );     
             } else {           
                 g2d.fillRect(trackRect.x, trackRect.y, thumbRect.x-thumbRect.width/2, trackRect.height);
             }
@@ -78,50 +100,15 @@ public class ControlPanelCustomSliderUI extends BasicSliderUI {
                 } else {
                     g2d.fillRect( trackRect.x, (int)Math.round(y0+heightRect), trackRect.width, (int)Math.round(-heightRect));
                 }
-                paintZeroV(g, trackRect.x, (int)Math.round(y0) );
+                // Zero marker
+//                g2d.setPaint(ZERO_CONTOUR_COLOR);
+//                g2d.fillRect( trackRect.x+ZERO_THICKNESS/2, (int)Math.round(y0- ZERO_THICKNESS/2), trackRect.width-ZERO_THICKNESS, ZERO_THICKNESS );     
+                
             } else {
                 g2d.fillRect(trackRect.x, thumbRect.y+thumbRect.height/2, trackRect.width, trackRect.height - thumbRect.y+thumbRect.height/2 - trackRect.y  );
             }
         }
         g2d.setPaint(oldPaint);
-    }
-    
-    private void paintZeroH(Graphics g, int x, int y) { 
-        Graphics2D g2d = (Graphics2D) g;
-        int x1 = x - ZERO_THICKNESS/2 ;
-        int x2 = x + ZERO_THICKNESS/2 ;
-        GeneralPath shape = new GeneralPath(GeneralPath.WIND_EVEN_ODD);
-        shape.moveTo(x1, y+1);
-        shape.lineTo(x2, y+1);
-        shape.lineTo(x2, y+thumbRect.height-1);
-        shape.lineTo(x1, y+thumbRect.height-1);
-        shape.closePath();
-        g2d.setPaint(ZERO_INNER_COLOR);
-        g2d.fill(shape);
-        Stroke old = g2d.getStroke();
-        g2d.setStroke(new BasicStroke(2f));
-        g2d.setPaint(ZERO_CONTOUR_COLOR);
-        g2d.draw(shape);
-        g2d.setStroke(old);        
-    }
-    
-    private void paintZeroV(Graphics g, int x, int y) { 
-        Graphics2D g2d = (Graphics2D) g;
-        int y1 = y - ZERO_THICKNESS/2 ;
-        int y2 = y + ZERO_THICKNESS/2 ;
-        GeneralPath shape = new GeneralPath(GeneralPath.WIND_EVEN_ODD);
-        shape.moveTo(x+1, y1);
-        shape.lineTo(x+1, y2);
-        shape.lineTo(x+thumbRect.width-1, y2);
-        shape.lineTo(x+thumbRect.width-1, y1);
-        shape.closePath();
-        g2d.setPaint(ZERO_INNER_COLOR);
-        g2d.fill(shape);
-        Stroke old = g2d.getStroke();
-        g2d.setStroke(new BasicStroke(2f));
-        g2d.setPaint(ZERO_CONTOUR_COLOR);
-        g2d.draw(shape);
-        g2d.setStroke(old);          
     }
 
     @Override
@@ -138,7 +125,7 @@ public class ControlPanelCustomSliderUI extends BasicSliderUI {
         if (slider.getValue()==0) {
             g2d.setPaint(THUMB_INNER_COLOR_STOP);
         } else {             
-            g2d.setPaint(  new Color(THUMB_INNER_COLOR_RUN.getRed(),THUMB_INNER_COLOR_RUN.getGreen() + Math.abs(slider.getValue()), THUMB_INNER_COLOR_RUN.getBlue()) );
+            g2d.setPaint( new Color(THUMB_INNER_COLOR_RUN.getRed() - Math.abs(slider.getValue())*100/slider.getMaximum(),THUMB_INNER_COLOR_RUN.getGreen(), THUMB_INNER_COLOR_RUN.getBlue() - Math.abs(slider.getValue()*100/slider.getMaximum()) ));
         }
         g2d.fill(shape);
         Stroke old = g2d.getStroke();
@@ -146,5 +133,5 @@ public class ControlPanelCustomSliderUI extends BasicSliderUI {
         g2d.setPaint(THUMB_CONTOUR_COLOR);
         g2d.draw(shape);
         g2d.setStroke(old);
-    }
+    }      
 }
