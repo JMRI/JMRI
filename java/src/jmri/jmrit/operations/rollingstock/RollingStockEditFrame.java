@@ -123,6 +123,8 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
     abstract protected ResourceBundle getRb();
 
     abstract protected void save(boolean isSave);
+    
+    abstract protected void delete();
 
     @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "Checks for null")
     @Override
@@ -436,6 +438,18 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
 
             save(!IS_SAVE);
             // save car file
+            OperationsXml.save();
+        }
+        if (ae.getSource() == deleteButton) {
+            log.debug("car delete button activated");
+            // disable delete and save buttons
+            deleteButton.setEnabled(false);
+            saveButton.setEnabled(false);
+            if (_rs != null) {
+                _rs.removePropertyChangeListener(this);
+            }
+            delete();
+            _rs = null;
             OperationsXml.save();
         }
         if (ae.getSource() == clearRoadNumberButton) {
