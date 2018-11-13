@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
  * @author Stephen Williams Copyright (C) 2008
  * @author Mark Underwood Copyright (C) 2015
  *
- *
  * Based on LocoNetOverTCP 
  */
 public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig {
@@ -26,11 +25,11 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
     }
 
     /**
-     * Ctor for a functional Swing object with no prexisting adapter
+     * Ctor for a functional Swing object with no prexisting adapter.
      */
     public ConnectionConfig(jmri.jmrix.NetworkPortAdapter p) {
         super(p);
- log.debug("NetworkPortAdapter ConnectionConfig Ctor called. ");
+        log.info("NetworkPortAdapter opening. Is DCC++ Over TCP Server running on host?");
     }
 
     @Override
@@ -51,4 +50,5 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
     }
 
     private final static Logger log = LoggerFactory.getLogger(ConnectionConfig.class);
+
 }

@@ -480,10 +480,12 @@ public class CbusOpCodes {
         Bundle.getMessage("OPC_VL") + ":,%1"); // NOI18N
         
         result.put(CbusConstants.CBUS_ACDAT, Bundle.getMessage("CBUS_ACDAT") + " " + 
-        Bundle.getMessage("OPC_DA") + ":,%1, ,%1, ,%1, ,%1, ,%1, ,%1, ,%1"); // NOI18N
+        Bundle.getMessage("OPC_NN") + ":,%2, " +
+        Bundle.getMessage("OPC_DA") + ":,%1, ,%1, ,%1, ,%1, ,%1"); // NOI18N
         
         result.put(CbusConstants.CBUS_ARDAT, Bundle.getMessage("CBUS_ARDAT") + " " + 
-        Bundle.getMessage("OPC_DA") + ":,%1, ,%1, ,%1, ,%1, ,%1, ,%1, ,%1"); // NOI18N
+        Bundle.getMessage("OPC_NN") + ":,%2, " +
+        Bundle.getMessage("OPC_DA") + ":,%1, ,%1, ,%1, ,%1, ,%1"); // NOI18N
         
         result.put(CbusConstants.CBUS_ASON3, Bundle.getMessage("CBUS_ASON3") + " " + 
         Bundle.getMessage("OPC_NN") + ":,%2, " + Bundle.getMessage("OPC_DN") + ":,%2, " + 

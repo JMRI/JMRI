@@ -61,17 +61,7 @@ import jmri.implementation.LightControl;
  * @author Ken Cameron Copyright (C) 2008
  * @author Bob Jacobsen Copyright (C) 2008
  */
-public interface Light extends NamedBean {
-
-    /**
-     * State value indicating output intensity is at or above maxIntensity
-     */
-    public static final int ON = 0x02;
-
-    /**
-     * State value indicating output intensity is at or below minIntensity
-     */
-    public static final int OFF = 0x04;
+public interface Light extends DigitalIO {
 
     /**
      * State value indicating output intensity is less than maxIntensity and
@@ -110,6 +100,36 @@ public interface Light extends NamedBean {
      * request to transition.
      */
     public static final int TRANSITIONING = 0x010;
+    
+    /** {@inheritDoc} */
+    @Override
+    default public boolean isConsistentState() {
+        return (getState() == DigitalIO.ON) || (getState() == DigitalIO.OFF);
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    default public void setCommandedState(int s) {
+        setState(s);
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    default public int getCommandedState() {
+        return getState();
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    default public int getKnownState() {
+        return getState();
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    default public void requestUpdateFromLayout() {
+        // Do nothing
+    }
 
     /**
      * Set the demanded output state. Valid values are ON and OFF. ON
