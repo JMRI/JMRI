@@ -36,4 +36,10 @@ public class ControllerInterfaceScaffold implements ControllerInterface {
        return lastInfo;
     }
 
+    public void reset(){
+       lastPacket = null;
+       lastAlert = null;
+       lastInfo = null;
+    }
+
 }
