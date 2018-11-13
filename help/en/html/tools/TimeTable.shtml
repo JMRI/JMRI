@@ -53,6 +53,18 @@
         font-size: .8rem;
     }
   </style>
+<style type="text/css">
+    span.since {
+        color: #fff;
+        float: right;
+        background: #222696;
+        background-size: 100% 100%;
+        border-radius: 4px;
+        margin: 2px 2px 2px 2px;
+        padding: .2em .3em;
+    }
+</style>
+
 </head>
 
 <body>
@@ -63,6 +75,7 @@
     <!-- Sidebar inserts div #mBody-->
 
     <div id="mainContent">
+      <span class="since">since 4.13.4</span>
       <h1>Timetable</h1>
 
       <p>A timetable describes the timing of trains running on a railroad.  This
@@ -89,6 +102,7 @@
         </li>
         <li><a href="#graph">Timetable Graph</a></li>
         <li><a href="#structure">Data Structure</a></li>
+        <li><a href="#technical">Technical</a></li>
       </ul>
 
 
@@ -136,13 +150,13 @@
       <h3>The Edit Process</h3>
       <p>When the Timetable tool is selected from the PanelPro Tools menu,
       the timetable data is loaded from the <strong>TimeTableData.xml</strong>
-      file.  The file is located in <strong>timetable</strong> directory in the
+      file.  The file is located in the <strong>timetable</strong> directory in the
       user files location.  If the file does not exist, a <strong>Sample</strong>
       timetable is copied from the JMRI install location.</p>
 
       <p>When a new node is added, it is created with default values, and the
-      new node is automatically selected.  For most new nodes, a name should be
-      supplied  .</p>
+      new node is automatically selected.  The default name should be changed
+      and the other default values should be reviewed.</p>
 
       <p>When a tree node is selected, the detail section shows the current
       detail information.  The field labels include tooltips.  When a field is
@@ -189,17 +203,16 @@
         <p>The Layout item contains global information.</p>
           <ul>
             <li>Layout name &mdash; The layout name.</li>
+            <li>Scale &mdash; The layout scale.  The default is HO</li>
             <li>Fast clock speed &mdash; The speed of the fast clock, e.g. 4:1,
             is entered as 4.</li>
             <li>Throttles &mdash; The number of the throttles for the throttle
             section of the graph. Optional.</li>
             <li>Metric &mdash; Indicate if distances are metric based.</li>
           </ul>
-          <p>The layout's scale is based on <strong><em>Preferences >> Warrants</em></strong>.
-          This is combined with the fast clock speed and the metric indication
-          to calculate the scale mile or scale kilometer.  The scale and
-          the resulting "smile/skm" are displayed at the bottom.
-        </p>
+        <p>The scale is combined with the fast clock speed and the metric
+        indication to calculate the scale mile or scale kilometer.  The
+        resulting "smile/skm" is displayed at the bottom.</p>
 
         <a name="type" id="type"></a>
         <h3>Train Type</h3>
@@ -224,8 +237,8 @@
 
         <a name="station" id="station"></a>
         <h3>Station</h3>
-        <p>A "station" occurs any place a train can stop or an arrival/depart time
-        is desired.  The first station in a segment will have a distance of zero.
+        <p>A "station" occurs any place a train can stop or an arrival/departure
+        time is desired.  The first station in a segment will have a distance of zero.
         The remaining stations will have the cumulative distance.  The distance
         is measured in feet or meters depending on the layout metric setting.  When
         multiple segments are being used, the first station of a secondary segment
@@ -316,7 +329,7 @@
       <div style="margin-left: 2em">
       <a href="images/TimeTableGraph.png">
       <img src="images/TimeTableGraph.png"
-      alt="Timetable Editor" height="395" width="798">
+      alt="Timetable Editor" height="357" width="809">
       </a>
       </div>
 
@@ -354,8 +367,32 @@
       </a>
       </div>
       <p>Each record (Java class) has a primary key.  This is assigned by the
-      timetable data manager.  Foreign keys create the data structure.  Data
-      integrity is managed by the main maintenance class, TimeTableFrame.</p>
+      timetable data manager.  Foreign keys create the data structure.</p>
+
+      <a name="technical" id="technical"></a>
+      <h2>Technical</h2>
+      <p>The Timetable data is stored in a fixed xml file located at
+      <strong>preference:timetable/TimeTableData.xml</strong>.  The first time
+      the tool is used, the directory is created and a sample data file is
+      copied from <strong>program:xml/demoTimeTable/TimeTableData.xml</strong>.</p>
+
+      <p>Access to the data is handled by the TimeTableDataManager.  The
+      data manager is obtained by calling <strong>TimeTableDataManager.getDataManager()</strong>.
+      This is a static method that returns the current manager or creates a new
+      one.  If a new data manager is created, the data is loaded from the
+      data file.  The can only be one occurance, and therefore data, at the same
+      time.</p>
+
+      <p>The data manager provides data access methods for the TimeTable
+      application as well as any other JMRI components, such as Jython.  The data
+      manager and the data classes perform extensive integrity checking.  The
+      <strong>IllegalArgumentException</strong> will the thrown for any errors.
+      The exception includes a keyword describing the problem.  Some exceptions
+      have additional supporting data.</p>
+
+      <p>A sample Jython program, <strong>TimeTable.py</strong>, is included in
+      the JMRI distribution.  The program shows how to establish the data
+      manager connection and navigate the timetable data structure.</p>
 
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
