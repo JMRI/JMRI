@@ -15,7 +15,7 @@ import jmri.jmrix.dccpp.DCCppPacketizer;
 /**
  * This is an extension of the DCCppPacketizer to handle the device specific
  * requirements of the DCC++.
- * <P>
+ * <p>
  * In particular, SerialDCCppPacketizer adds functions to add and remove the
  * {@literal "<" and ">"} bytes that appear around any message read in.
  *
