@@ -12,6 +12,8 @@ import javax.annotation.Nonnull;
 import jmri.implementation.AbstractNamedBean;
 import jmri.implementation.SignalSpeedMap;
 import jmri.util.PhysicalLocation;
+import java.io.StringWriter;
+import java.io.PrintWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -342,7 +344,11 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
         try {
             firePropertyChange("state", old, _current);
         } catch (Exception e) {
-            log.debug(getDisplayName()+" got exception during fireProperTyChange("+old+","+_current+"): "+e);
+            log.error(getDisplayName()+" got exception during fireProperTyChange("+old+","+_current+") in thread "+
+                    Thread.currentThread().getName()+" "+Thread.currentThread().getId()+": "+e);
+            StringWriter outError = new StringWriter();
+            e.printStackTrace(new PrintWriter(outError));
+            log.error(outError.toString());
         }
     }
 

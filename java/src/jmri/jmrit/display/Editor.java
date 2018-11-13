@@ -28,6 +28,8 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -654,7 +656,11 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                super.paint(g);
                paintTargetPanel(g);
             } catch (Exception e) {
-                log.error("paint failed: "+e);
+                log.error("paint failed in thread "+
+                    Thread.currentThread().getName()+" "+Thread.currentThread().getId()+": "+e);
+                StringWriter outError = new StringWriter();
+                e.printStackTrace(new PrintWriter(outError));
+                log.error(outError.toString());
             }
             
             Stroke stroke = new BasicStroke();

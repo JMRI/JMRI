@@ -2,6 +2,8 @@ package jmri.jmrit.display;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -282,7 +284,11 @@ public class IndicatorTrackIcon extends PositionableIcon
             try {
                 _pathUtil.setLocoIcon(block, getLocation(), getSize(), _editor);
             } catch (Exception e) {
-                log.error("setStatus on indicator track icon failed: "+e);
+                log.error("setStatus on indicator track icon failed in thread "+
+                    Thread.currentThread().getName()+" "+Thread.currentThread().getId()+": "+e);
+                StringWriter outError = new StringWriter();
+                e.printStackTrace(new PrintWriter(outError));
+                log.error(outError.toString());
             }
         }
         repaint();
