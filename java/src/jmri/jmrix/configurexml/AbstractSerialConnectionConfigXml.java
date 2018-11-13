@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
  * Abstract base (and partial implementation) for classes persisting the status
  * of serial port adapters.
  *
- * @author Bob Jacobsen Copyright: Copyright (c) 2003
+ * @author Bob Jacobsen Copyright (c) 2003
  */
 abstract public class AbstractSerialConnectionConfigXml extends AbstractConnectionConfigXml {
 
@@ -56,6 +56,12 @@ abstract public class AbstractSerialConnectionConfigXml extends AbstractConnecti
             e.setAttribute("speed", Bundle.getMessage("noneSelected"));
         }
 
+        if (adapter.getInterval() > 0) {
+            e.setAttribute("turnoutInterval", String.valueOf(adapter.getInterval()));
+        } else {
+            e.setAttribute("turnoutInterval", "0");
+        }
+
         e.setAttribute("class", this.getClass().getName());
 
         extendElement(e);
@@ -64,7 +70,7 @@ abstract public class AbstractSerialConnectionConfigXml extends AbstractConnecti
     }
 
     /**
-     * Customizable method if you need to add anything more
+     * Customizable method if you need to add anything more.
      *
      * @param e Element being created, update as needed
      */
@@ -108,11 +114,13 @@ abstract public class AbstractSerialConnectionConfigXml extends AbstractConnecti
         // once all the configure processing has happened, do any
         // extra config
         unpackElement(shared, perNode);
+        int turnoutInterval = Integer.parseInt(perNode.getAttribute("turnoutInterval").getValue());
+        adapter.setInterval(turnoutInterval);
         return result;
     }
 
     /**
-     * Update static data from XML file
+     * Update static data from XML file.
      *
      * @param element Top level Element to unpack.
      */

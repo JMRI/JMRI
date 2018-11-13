@@ -10,6 +10,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.ItemEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.Map.Entry;
@@ -21,7 +23,12 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
+import javax.swing.JTextField;
 import javax.swing.ListCellRenderer;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import jmri.InstanceManager;
 import jmri.util.PortNameMapper;
 import jmri.util.PortNameMapper.SerialPortFriendlyName;
@@ -30,14 +37,14 @@ import org.slf4j.LoggerFactory;
 import purejavacomm.CommPortIdentifier;
 
 /**
- * Abstract base class for common implementation of the ConnectionConfig
+ * Abstract base class for common implementation of the ConnectionConfig.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
  */
 abstract public class AbstractSerialConnectionConfig extends AbstractConnectionConfig {
 
     /**
-     * Ctor for an object being created during load process
+     * Ctor for an object being created during load process.
      *
      * @param p port being configured
      */
@@ -129,6 +136,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
                 }
             });
         }
+
         portBox.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
@@ -140,6 +148,15 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
             }
 
         });
+
+        // experimental option for Turnout command interval EBR
+        turnoutIntervalSpinner.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                adapter.setInterval((Integer) turnoutIntervalSpinner.getValue());
+            }
+        });
+        // up to here experimental
 
         for (String i : options.keySet()) {
             final String item = i;
@@ -174,6 +191,10 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
     protected JComboBox<String> baudBox = new JComboBox<>();
     protected JLabel baudBoxLabel;
     protected String[] baudList;
+    // experimental EBR (3 lines)
+    protected SpinnerNumberModel intervalSpinner = new SpinnerNumberModel(0,0,10000,1);
+    protected JSpinner turnoutIntervalSpinner = new JSpinner();
+    protected JLabel turnoutIntervalLabel;
     protected jmri.jmrix.SerialPortAdapter adapter = null;
 
     /**
@@ -318,11 +339,11 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         try {
             v = getPortNames();
             if (log.isDebugEnabled()) {
-                log.debug("loadDetails called in class " + this.getClass().getName());
-                log.debug("adapter class: " + adapter.getClass().getName());
-                log.debug("loadDetails called for " + name());
+                log.debug("loadDetails called in class {}", this.getClass().getName());
+                log.debug("adapter class: {}", adapter.getClass().getName());
+                log.debug("loadDetails called for {}", name());
                 if (v != null) {
-                    log.debug("Found " + v.size() + " ports");
+                    log.debug("Found {} ports", v.size());
                 } else {
                     log.debug("Zero-length port vector");
                 }
@@ -349,15 +370,15 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         }
         baudBox.removeAllItems();
         if (log.isDebugEnabled()) {
-            log.debug("after remove, " + baudBox.getItemCount() + " items, first is "
-                    + baudBox.getItemAt(0));
+            log.debug("after remove, {} items, first is {}", baudBox.getItemCount(),
+                    baudBox.getItemAt(0));
         }
         for (String baudList1 : baudList) {
             baudBox.addItem(baudList1);
         }
         if (log.isDebugEnabled()) {
-            log.debug("after reload, " + baudBox.getItemCount() + " items, first is "
-                    + baudBox.getItemAt(0));
+            log.debug("after reload, {} items, first is {}", baudBox.getItemCount(),
+                    baudBox.getItemAt(0));
         }
 
         if (baudList.length > 1) {
@@ -371,9 +392,18 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         NUMOPTIONS = NUMOPTIONS + options.size();
 
         portBoxLabel = new JLabel(Bundle.getMessage("SerialPortLabel"));
-
         baudBoxLabel = new JLabel(Bundle.getMessage("BaudRateLabel"));
         baudBox.setSelectedItem(adapter.getCurrentBaudRate());
+
+        // adapter specific turnout delay option, calls jmri.jmrix.AbstractSerialPortController#setInterval(int) - experimental
+        turnoutIntervalLabel = new JLabel(Bundle.getMessage("TurnoutIntervalLabel"));
+        turnoutIntervalSpinner.setToolTipText(Bundle.getMessage("TurnoutIntervalTooltip"));
+        JTextField field = ((JSpinner.DefaultEditor) turnoutIntervalSpinner.getEditor()).getTextField();
+        field.setColumns(6);
+        turnoutIntervalSpinner.setMaximumSize(turnoutIntervalSpinner.getPreferredSize()); // set spinner JTextField width
+        turnoutIntervalSpinner.setValue(adapter.getInterval());
+        turnoutIntervalSpinner.setEnabled(true);
+
         showAdvanced.setFont(showAdvanced.getFont().deriveFont(9f));
         showAdvanced.setForeground(Color.blue);
         showAdvanced.addItemListener((ItemEvent e) -> {
@@ -424,7 +454,6 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
                 gbLayout.setConstraints(portBoxLabel, cL);
                 gbLayout.setConstraints(portBox, cR);
 
-                //panel.add(row1Label);
                 _details.add(portBoxLabel);
                 _details.add(portBox);
                 i++;
@@ -439,6 +468,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
                 _details.add(baudBox);
                 i++;
             }
+
             for (String item : options.keySet()) {
                 if (options.get(item).isAdvanced()) {
                     cR.gridy = i;
@@ -450,6 +480,16 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
                     i++;
                 }
             }
+
+            // experimental interval config (ms)
+            cR.gridy = i;
+            cL.gridy = i;
+            gbLayout.setConstraints(turnoutIntervalLabel, cL);
+            gbLayout.setConstraints(turnoutIntervalSpinner, cR);
+            _details.add(turnoutIntervalLabel);
+            _details.add(turnoutIntervalSpinner);
+            i++;
+
         }
         cL.gridwidth = 2;
         for (JComponent item : additionalItems) {
