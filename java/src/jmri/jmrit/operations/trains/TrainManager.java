@@ -796,7 +796,7 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
         }
         // manifest options
         newTrain.setRailroadName(train.getRailroadName());
-        newTrain.setManifestLogoURL(train.getManifestLogoURL());
+        newTrain.setManifestLogoPathName(train.getManifestLogoPathName());
         newTrain.setShowArrivalAndDepartureTimes(train.isShowArrivalAndDepartureTimesEnabled());
         // build options
         newTrain.setAllowLocalMovesEnabled(train.isAllowLocalMovesEnabled());
