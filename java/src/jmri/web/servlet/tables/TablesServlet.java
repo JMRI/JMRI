@@ -32,6 +32,7 @@ import org.openide.util.lookup.ServiceProvider;
 @ServiceProvider(service = HttpServlet.class)
 public class TablesServlet extends HttpServlet {
 
+    @SuppressWarnings("deprecation")  // URLDecoder.decode(..) not being removed
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String[] path = request.getRequestURI().split("/"); // NOI18N

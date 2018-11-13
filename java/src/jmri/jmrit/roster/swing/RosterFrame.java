@@ -89,7 +89,6 @@ import jmri.jmrix.ConnectionConfigManager;
 import jmri.jmrix.ConnectionStatus;
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
-import jmri.progdebugger.ProgDebugger;
 import jmri.swing.JTablePersistenceManager;
 import jmri.swing.RowSorterUtil;
 import jmri.util.FileUtil;
@@ -174,7 +173,6 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     JButton prog1Button = new JButton(Bundle.getMessage("Program"));
     JButton prog2Button = new JButton(Bundle.getMessage("BasicProgrammer"));
     ActionListener programModeListener;
-    transient ProgDebugger progDebugger = new ProgDebugger();
 
     // These are the names of the programmer _files_, not what should be displayed to the user
     String programmer1 = "Comprehensive"; // NOI18N
@@ -293,20 +291,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             log.debug("Open programmer pressed");
             startProgrammer(null, re, programmer1);
         });
-        /*
-         * prog2Button.setEnabled(false); prog2Button.addActionListener( new
-         * ActionListener() { public void
-         * actionPerformed(java.awt.event.ActionEvent e) { if
-         * (log.isDebugEnabled()) log.debug("Open progDebugger pressed");
-         * startProgrammer(null, re, programmer2); } });
-         */
- /*
-         * throttleLabels.setEnabled(false); throttleLabels.addActionListener(
-         * new ActionListener() { public void
-         * actionPerformed(java.awt.event.ActionEvent e) { if
-         * (log.isDebugEnabled()) log.debug("Open progDebugger pressed");
-         * editMediaButton(); } });
-         */
+
         rosterMedia.setEnabled(false);
         rosterMedia.addActionListener((ActionEvent e) -> {
             log.debug("Open programmer pressed");
@@ -1196,7 +1181,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     }
 
     /**
-     * Simple method to change over the progDebugger buttons.
+     * Simple method to change over the programmer buttons.
      * <p>
      * TODO This should be implemented with the buttons in their own class etc.
      * but this will work for now.
@@ -1498,7 +1483,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     }
 
     /**
-     * Handle setting up and updating the GUI for the types of progDebugger
+     * Handle setting up and updating the GUI for the types of programmer
      * available.
      *
      * @param evt the triggering event; if not null and if a removal of a

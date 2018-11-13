@@ -64,7 +64,7 @@ public class CarsSetFrameTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeave(f.saveButton);
 
         // no cars selected dialog should appear
-        JemmyUtil.pressDialogButton(f, Bundle.getMessage("carNoneSelected"), "OK");
+        JemmyUtil.pressDialogButton(f, Bundle.getMessage("carNoneSelected"), Bundle.getMessage("ButtonOK"));
 
         JUnitUtil.dispose(ctf);
         JUnitUtil.dispose(f);

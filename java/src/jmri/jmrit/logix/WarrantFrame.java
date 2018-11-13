@@ -545,6 +545,7 @@ public class WarrantFrame extends WarrantRoute {
         startButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                clearTempWarrant();
                 showCommands(true);
                 runLearnModeTrain();
             }

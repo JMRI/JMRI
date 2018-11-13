@@ -24,9 +24,10 @@ import javax.annotation.Nonnull;
 public interface SensorManager extends ProvidingManager<Sensor> {
 
     /**
-     * Locate via user name, then system name if needed. If that fails, create a
-     * new sensor: If the name is a valid system name, it will be used for the
-     * new sensor. Otherwise, the makeSystemName method will attempt to turn it
+     * Get the Sensor with the user name, then system name if needed; if that fails, create a
+     * new Sensor. 
+     * If the name is a valid system name, it will be used for the
+     * new Sensor. Otherwise, the makeSystemName method will attempt to turn it
      * into a valid system name.
      *
      * @param name User name, system name, or address which can be promoted to
@@ -45,8 +46,9 @@ public interface SensorManager extends ProvidingManager<Sensor> {
     default public Sensor provide(@Nonnull String name) throws IllegalArgumentException { return provideSensor(name); }
 
     /**
-     * Locate via user name, then system name if needed. Does not create a new
-     * one if nothing found
+     * Get an existing Sensor or return null if it doesn't exist. 
+     * 
+     * Locates via user name, then system name if needed.
      *
      * @param name User name or system name to match
      * @return null if no match found
@@ -60,7 +62,8 @@ public interface SensorManager extends ProvidingManager<Sensor> {
     public void dispose();
 
     /**
-     * Return an instance with the specified system and user names. Note that
+     * Return a Sensor with the specified system and user names. 
+     * Note that
      * two calls with the same arguments will get the same instance; there is
      * only one Sensor object representing a given physical turnout and
      * therefore only one with a specific system or user name.
@@ -91,10 +94,12 @@ public interface SensorManager extends ProvidingManager<Sensor> {
     @Nonnull
     public Sensor newSensor(@Nonnull String systemName, @CheckForNull String userName) throws IllegalArgumentException;
 
+    /** {@inheritDoc} */
     @CheckReturnValue
     @CheckForNull
     public Sensor getByUserName(@Nonnull String s);
 
+    /** {@inheritDoc} */
     @CheckReturnValue
     @CheckForNull
     public Sensor getBySystemName(@Nonnull String s);

@@ -2,7 +2,6 @@ package jmri.jmrit.logix;
 
 import java.awt.GraphicsEnvironment;
 import java.io.File;
-import java.util.List;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.Sensor;
@@ -10,10 +9,11 @@ import jmri.SensorManager;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
-
-import org.junit.*;
-
-import org.netbeans.jemmy.operators.JButtonOperator;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Before;
+import org.junit.Test;
 import org.netbeans.jemmy.operators.JDialogOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
 import org.netbeans.jemmy.operators.JRadioButtonOperator;
@@ -125,7 +125,6 @@ public class NXFrameTest {
     }
 
     @Test
-    @Ignore("Causes timeouts due to threading issues; probably real problems, but we can't have a 30% PK of CI")
     public void testNXWarrant() throws Exception {
         // The first part of this test duplicates testNXWarrantSetup().  It
         // then goes on to test a Warrant through the WarrantTableFrame.
@@ -168,45 +167,29 @@ public class NXFrameTest {
         jrbo.clickMouse();
         // then the Review Button
         JemmyUtil.pressButton(jdo, Bundle.getMessage("ButtonReview"));
-
-        nxFrame.setThrottleIncrement(0.05f);
-
         JemmyUtil.pressButton(jdo, Bundle.getMessage("ButtonSelect"));
-        nxFrame.setMaxSpeed(2);
-        JemmyUtil.pressButton(nfo, Bundle.getMessage("ButtonRunNX"));
-        JemmyUtil.confirmJOptionPane(nfo, Bundle.getMessage("WarningTitle"), Bundle.getMessage("badSpeed", "2"), "OK");
-        
-        nxFrame.setMaxSpeed(0.6f);
-        JemmyUtil.pressButton(nfo, Bundle.getMessage("ButtonRunNX"));
-        JemmyUtil.confirmJOptionPane(nfo, Bundle.getMessage("WarningTitle"), Bundle.getMessage("BadDccAddress", ""), "OK");
 
-        // from this point to the end of the test, there are no more references
-        // to nxFrame.  Do we need to split this into multiple tests?  
-        // The next part deals with a WarrantTableFrame, should it still be
-        // in this test file?
+        nxFrame.setThrottleIncrement(0.05f);     
+        nxFrame.setMaxSpeed(0.6f);
+        nxFrame.setTrainInfo("666");
+        nxFrame.setTrainName("Nick");
+        JemmyUtil.pressButton(nfo, Bundle.getMessage("ButtonRunNX"));
 
         WarrantTableFrame tableFrame = WarrantTableFrame.getDefault();
         Assert.assertNotNull("tableFrame", tableFrame);
+
         WarrantTableModel model = tableFrame.getModel();
         Assert.assertNotNull("tableFrame model", model);
+        
         JUnitUtil.waitFor(() -> {
-            return model.getRowCount()>0;
+            return model.getWarrantAt(0) != null;
         }, "NXWarrant loaded into table");
+        
         Warrant warrant = tableFrame.getModel().getWarrantAt(0);
+
         Assert.assertNotNull("warrant", warrant);
         Assert.assertNotNull("warrant.getBlockOrders(", warrant.getBlockOrders());
         warrant.getBlockOrders();
-/*        if (orders.size()!=7) {
-            System.out.println();
-            System.out.println(warrant.getSystemName()+" " +warrant.getUserName());
-            for (BlockOrder bo : orders) {
-                System.out.println(bo.toString());
-            }
-            List<ThrottleSetting> commands = warrant.getThrottleCommands();
-            for (ThrottleSetting ts : commands) {
-                System.out.println(ts.toString());
-            }
-        }*/
         Assert.assertEquals("Num Blocks in Route", 7, warrant.getBlockOrders().size());
         Assert.assertTrue("Num Comands", warrant.getThrottleCommands().size()>5);
 
@@ -231,11 +214,11 @@ public class NXFrameTest {
         }, "Start Block Active");
 
         JUnitUtil.waitFor(() -> {
-            return Bundle.getMessage("Halted", name, "0").equals(warrant.getRunningMessage());
+            return Bundle.getMessage("Halted", name, "1").equals(warrant.getRunningMessage());
         }, "Warrant processed sensor change");
 
         Assert.assertEquals("Halted/Resume message", warrant.getRunningMessage(),
-                Bundle.getMessage("Halted", block.getDisplayName(), "0"));
+                Bundle.getMessage("Halted", block.getDisplayName(), "1"));
 
         jmri.util.ThreadingUtil.runOnGUI(() -> {
             warrant.controlRunTrain(Warrant.RESUME);

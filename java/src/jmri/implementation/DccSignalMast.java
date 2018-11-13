@@ -196,8 +196,7 @@ public class DccSignalMast extends AbstractSignalMast {
     protected int dccSignalDecoderAddress;
 
     public static String isDCCAddressUsed(int addr) {
-        for (String val : InstanceManager.getDefault(jmri.SignalMastManager.class).getSystemNameList()) {
-            SignalMast mast = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(val);
+        for (SignalMast mast : InstanceManager.getDefault(jmri.SignalMastManager.class).getNamedBeanSet()) {
             if (mast instanceof jmri.implementation.DccSignalMast) {
                 if (((DccSignalMast) mast).getDccSignalMastAddress() == addr) {
                     return ((DccSignalMast) mast).getDisplayName();

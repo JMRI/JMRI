@@ -14,7 +14,7 @@ import org.junit.runners.Suite;
         BundleTest.class,
         jmri.jmrit.operations.trains.tools.PackageTest.class,
         jmri.jmrit.operations.trains.excel.PackageTest.class,
-        jmri.jmrit.operations.trains.timetable.PackageTest.class,
+        jmri.jmrit.operations.trains.schedules.PackageTest.class,
         jmri.jmrit.operations.trains.configurexml.PackageTest.class,
         BuildFailedExceptionTest.class,
         TrainConductorPanelTest.class, 

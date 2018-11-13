@@ -47,12 +47,12 @@ public class EngineManagerTest extends OperationsTestCase {
         List<Engine> engineList = manager.getByIdList();
 
         Assert.assertEquals("Starting Number of Engines", 0, engineList.size());
-        e1 = manager.newEngine("CP", "1");
-        e2 = manager.newEngine("ACL", "3");
-        e3 = manager.newEngine("CP", "3");
-        e4 = manager.newEngine("CP", "3-1");
-        e5 = manager.newEngine("PC", "2");
-        e6 = manager.newEngine("AA", "1");
+        e1 = manager.newRS("CP", "1");
+        e2 = manager.newRS("ACL", "3");
+        e3 = manager.newRS("CP", "3");
+        e4 = manager.newRS("CP", "3-1");
+        e5 = manager.newRS("PC", "2");
+        e6 = manager.newRS("AA", "1");
         engineList = manager.getByIdList();
         Assert.assertEquals("Finishing Number of Engines", 6, engineList.size());
         manager.dispose();
@@ -621,12 +621,12 @@ public class EngineManagerTest extends OperationsTestCase {
 
         EngineManager manager = InstanceManager.getDefault(EngineManager.class);
 
-        e1 = manager.newEngine("CP", "1");
-        e2 = manager.newEngine("ACL", "3");
-        e3 = manager.newEngine("CP", "3");
-        e4 = manager.newEngine("CP", "3-1");
-        e5 = manager.newEngine("PC", "2");
-        e6 = manager.newEngine("AA", "1");
+        e1 = manager.newRS("CP", "1");
+        e2 = manager.newRS("ACL", "3");
+        e3 = manager.newRS("CP", "3");
+        e4 = manager.newRS("CP", "3-1");
+        e5 = manager.newRS("PC", "2");
+        e6 = manager.newRS("AA", "1");
 
         e1.setModel("GP356");
         e2.setModel("GP354");

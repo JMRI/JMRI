@@ -45,9 +45,10 @@ import javax.annotation.Nullable;
 public interface TurnoutManager extends ProvidingManager<Turnout> {
 
     /**
-     * Locate via user name, then system name if needed. If that fails, create a
-     * new turnout. If the name is a valid system name, it will be used for the
-     * new turnout. Otherwise, the makeSystemName method will attempt to turn it
+     * Get the Turnout with the user name, then system name if needed; if that fails, create a
+     * new Turnout. 
+     * If the name is a valid system name, it will be used for the
+     * new Turnout. Otherwise, the makeSystemName method will attempt to turn it
      * into a valid system name.
      *
      * @param name User name, system name, or address which can be promoted to
@@ -61,13 +62,14 @@ public interface TurnoutManager extends ProvidingManager<Turnout> {
     @Nonnull
     public Turnout provideTurnout(@Nonnull String name) throws IllegalArgumentException;
 
-    @Override
     /** {@inheritDoc} */
+    @Override
     default public Turnout provide(@Nonnull String name) throws IllegalArgumentException { return provideTurnout(name); }
     
     /**
-     * Locate via user name, then system name if needed. If that fails, return
-     * null
+     * Get an existing Turnout or return null if it doesn't exist. 
+     * 
+     * Locates via user name, then system name if needed.
      *
      * @param name User name or system name to match
      * @return null if no match found
@@ -76,7 +78,7 @@ public interface TurnoutManager extends ProvidingManager<Turnout> {
     public Turnout getTurnout(@Nonnull String name);
 
     /**
-     * Locate an instance based on a system name. Returns null if no instance
+     * Get the Turnout with the given system name or return null if no instance
      * already exists.
      *
      * @param systemName the system name
@@ -86,7 +88,7 @@ public interface TurnoutManager extends ProvidingManager<Turnout> {
     public Turnout getBySystemName(@Nonnull String systemName);
 
     /**
-     * Locate an instance based on a user name. Returns null if no instance
+     * Get the Turnout with the given user name or return null if no instance
      * already exists.
      *
      * @param userName the user name
@@ -96,7 +98,8 @@ public interface TurnoutManager extends ProvidingManager<Turnout> {
     public Turnout getByUserName(@Nonnull String userName);
 
     /**
-     * Return an instance with the specified system and user names. Note that
+     * Return a Turnout with the specified system and user names. 
+     * Note that
      * two calls with the same arguments will get the same instance; there is
      * only one Turnout object representing a given physical turnout and
      * therefore only one with a specific system or user name.

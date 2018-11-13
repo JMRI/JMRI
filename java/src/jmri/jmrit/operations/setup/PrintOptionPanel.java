@@ -25,8 +25,8 @@ import javax.swing.colorchooser.AbstractColorChooserPanel;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.FileUtil;
-import jmri.util.swing.SplitButtonColorChooserPanel;
 import jmri.util.swing.FontComboUtil;
+import jmri.util.swing.SplitButtonColorChooserPanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -71,7 +71,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
     JCheckBox printLocCommentsCheckBox = new JCheckBox(Bundle.getMessage("PrintLocationComments"));
     JCheckBox printRouteCommentsCheckBox = new JCheckBox(Bundle.getMessage("PrintRouteComments"));
     JCheckBox printLoadsEmptiesCheckBox = new JCheckBox(Bundle.getMessage("PrintLoadsEmpties"));
-    JCheckBox printTimetableNameCheckBox = new JCheckBox(Bundle.getMessage("PrintTimetableName"));
+    JCheckBox printTrainScheduleNameCheckBox = new JCheckBox(Bundle.getMessage("PrintTrainScheduleName"));
     JCheckBox use12hrFormatCheckBox = new JCheckBox(Bundle.getMessage("12hrFormat"));
     JCheckBox printValidCheckBox = new JCheckBox(Bundle.getMessage("PrintValid"));
     JCheckBox sortByTrackCheckBox = new JCheckBox(Bundle.getMessage("SortByTrack"));
@@ -143,7 +143,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
         printLocCommentsCheckBox.setToolTipText(Bundle.getMessage("AddLocationComments"));
         printRouteCommentsCheckBox.setToolTipText(Bundle.getMessage("AddRouteComments"));
         printLoadsEmptiesCheckBox.setToolTipText(Bundle.getMessage("LoadsEmptiesComment"));
-        printTimetableNameCheckBox.setToolTipText(Bundle.getMessage("ShowTimetableTip"));
+        printTrainScheduleNameCheckBox.setToolTipText(Bundle.getMessage("ShowTrainScheduleTip"));
         use12hrFormatCheckBox.setToolTipText(Bundle.getMessage("Use12hrFormatTip"));
         printValidCheckBox.setToolTipText(Bundle.getMessage("PrintValidTip"));
         sortByTrackCheckBox.setToolTipText(Bundle.getMessage("SortByTrackTip"));
@@ -287,7 +287,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
         pManifestSwtichListOptions.add(printValidCheckBox);
         pManifestSwtichListOptions.add(printLoadsEmptiesCheckBox);
         pManifestSwtichListOptions.add(use12hrFormatCheckBox);
-        pManifestSwtichListOptions.add(printTimetableNameCheckBox);
+        pManifestSwtichListOptions.add(printTrainScheduleNameCheckBox);
         pManifestSwtichListOptions.add(sortByTrackCheckBox);
         pManifestSwtichListOptions.add(printHeadersCheckBox);
 
@@ -364,7 +364,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
         printLocCommentsCheckBox.setSelected(Setup.isPrintLocationCommentsEnabled());
         printRouteCommentsCheckBox.setSelected(Setup.isPrintRouteCommentsEnabled());
         printLoadsEmptiesCheckBox.setSelected(Setup.isPrintLoadsAndEmptiesEnabled());
-        printTimetableNameCheckBox.setSelected(Setup.isPrintTimetableNameEnabled());
+        printTrainScheduleNameCheckBox.setSelected(Setup.isPrintTrainScheduleNameEnabled());
         use12hrFormatCheckBox.setSelected(Setup.is12hrFormatEnabled());
         printValidCheckBox.setSelected(Setup.isPrintValidEnabled());
         sortByTrackCheckBox.setSelected(Setup.isSortByTrackNameEnabled());
@@ -860,7 +860,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
         Setup.setPrintValidEnabled(printValidCheckBox.isSelected());
         Setup.setSortByTrackNameEnabled(sortByTrackCheckBox.isSelected());
         Setup.setPrintHeadersEnabled(printHeadersCheckBox.isSelected());
-        Setup.setPrintTimetableNameEnabled(printTimetableNameCheckBox.isSelected());
+        Setup.setPrintTrainScheduleNameEnabled(printTrainScheduleNameCheckBox.isSelected());
         Setup.setTruncateManifestEnabled(truncateCheckBox.isSelected());
         Setup.setUseDepartureTimeEnabled(departureTimeCheckBox.isSelected());
         Setup.setManifestEditorEnabled(editManifestCheckBox.isSelected());
@@ -911,7 +911,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
                 Setup.isPrintValidEnabled() != printValidCheckBox.isSelected() ||
                 Setup.isSortByTrackNameEnabled() != sortByTrackCheckBox.isSelected() ||
                 Setup.isPrintHeadersEnabled() != printHeadersCheckBox.isSelected() ||
-                Setup.isPrintTimetableNameEnabled() != printTimetableNameCheckBox.isSelected() ||
+                Setup.isPrintTrainScheduleNameEnabled() != printTrainScheduleNameCheckBox.isSelected() ||
                 Setup.isTruncateManifestEnabled() != truncateCheckBox.isSelected() ||
                 Setup.isUseDepartureTimeEnabled() != departureTimeCheckBox.isSelected() ||
                 Setup.isManifestEditorEnabled() != editManifestCheckBox.isSelected() ||

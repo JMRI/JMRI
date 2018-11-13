@@ -297,12 +297,8 @@ public class LnPacketizerStrict extends LnPacketizer {
                                 }
                                 // Oh my lost the echo...
                                 if (waitCount > 19) {
-                                    try {
-                                        log.warn("Retry Send for Lost Packet [{}] Count[{}]", waitForMsg.toString(),
+                                    log.warn("Retry Send for Lost Packet [{}] Count[{}]", waitForMsg,
                                                 reTryCount); // NOI18N
-                                    } catch (NullPointerException npe) {
-                                        log.warn("Retry Send for waitingOnMsg null?  Count[{}]", reTryCount); // NOI18N
-                                    }
                                     if (reTryCount < 5) {
                                         reTryRequired = true;
                                         reTryCount++;

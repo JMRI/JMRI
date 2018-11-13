@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
  * @author Daniel Boudreau Copyright (C) 2010, 2013
  * @param <T> the type of RollingStock in this group
  */
-public class RollingStockGroup<T extends RollingStock> {
+public abstract class RollingStockGroup<T extends RollingStock> {
 
     protected String _name = "";
     protected T _lead = null;

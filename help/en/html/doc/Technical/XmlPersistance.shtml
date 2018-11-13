@@ -163,6 +163,12 @@
             You can remove this after a decent interval.
       </ul>
       
+      There's also a service-oriented approach. For more on that, please see
+      <a href="http://jmri.org/JavaDoc/doc/jmri/configurexml/ClassMigration.html">jmri.configurexml.ClassMigration</a>
+      that works in a similar way.
+      For an example, see
+      <a href="https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/pi/configurexml/RaspberryPiClassMigration.java">jmri.jmrix.pi.configurexml.RaspberryPiClassMigration</a>
+      
       <h2><a id="schema" name="schema">Schema Management</a></h2>
       <p>JMRI controls XML semantics using <a href="XmlSchema.shtml">XML
       Schema</a>.</p>

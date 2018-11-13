@@ -554,7 +554,8 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
                 log.debug("Found starting < ");
                 break; // A bit redundant with setting the loop condition true (false)
             } else {
-                char1 = readByteProtected(inpipe);
+                // drop next character before repeating
+                readByteProtected(inpipe);
             }
         }
         // Now, suck in the rest of the message...

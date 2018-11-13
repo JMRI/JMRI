@@ -45,12 +45,12 @@ public class CarManagerTest extends OperationsTestCase {
         List<Car> carList = manager.getByIdList();
 
         Assert.assertEquals("Starting Number of Cars", 0, carList.size());
-        c1 = manager.newCar("CP", "1");
-        c2 = manager.newCar("ACL", "3");
-        c3 = manager.newCar("CP", "3");
-        c4 = manager.newCar("CP", "3-1");
-        c5 = manager.newCar("PC", "2");
-        c6 = manager.newCar("AA", "1");
+        c1 = manager.newRS("CP", "1");
+        c2 = manager.newRS("ACL", "3");
+        c3 = manager.newRS("CP", "3");
+        c4 = manager.newRS("CP", "3-1");
+        c5 = manager.newRS("PC", "2");
+        c6 = manager.newRS("AA", "1");
         carList = manager.getByIdList();
         Assert.assertEquals("Finishing Number of Cars", 6, carList.size());
         manager.dispose();
@@ -683,12 +683,12 @@ public class CarManagerTest extends OperationsTestCase {
 
         CarManager manager = InstanceManager.getDefault(CarManager.class);
 
-        c1 = manager.newCar("CP", "1");
-        c2 = manager.newCar("ACL", "3");
-        c3 = manager.newCar("CP", "3");
-        c4 = manager.newCar("CP", "3-1");
-        c5 = manager.newCar("PC", "2");
-        c6 = manager.newCar("AA", "1");
+        c1 = manager.newRS("CP", "1");
+        c2 = manager.newRS("ACL", "3");
+        c3 = manager.newRS("CP", "3");
+        c4 = manager.newRS("CP", "3-1");
+        c5 = manager.newRS("PC", "2");
+        c6 = manager.newRS("AA", "1");
 
         //setup the cars
         c1.setTypeName("Boxcar");

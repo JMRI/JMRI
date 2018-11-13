@@ -202,7 +202,7 @@ public interface Manager<E extends NamedBean> {
     public SortedSet<E> getNamedBeanSet();
 
     /**
-     * Locate an instance based on a system name. Returns null if no instance
+     * Locate an existing instance based on a system name. Returns null if no instance
      * already exists.
      *
      * @param systemName System Name of the required NamedBean
@@ -214,7 +214,7 @@ public interface Manager<E extends NamedBean> {
     public E getBeanBySystemName(@Nonnull String systemName);
 
     /**
-     * Locate an instance based on a user name. Returns null if no instance
+     * Locate an existing instance based on a user name. Returns null if no instance
      * already exists.
      *
      * @param userName System Name of the required NamedBean
@@ -225,7 +225,7 @@ public interface Manager<E extends NamedBean> {
     public E getBeanByUserName(@Nonnull String userName);
 
     /**
-     * Locate an instance based on a name. Returns null if no instance already
+     * Locate an existing instance based on a name. Returns null if no instance already
      * exists.
      *
      * @param name System Name of the required NamedBean
@@ -277,7 +277,9 @@ public interface Manager<E extends NamedBean> {
     public void removeVetoableChangeListener(@CheckForNull VetoableChangeListener l);
 
     /**
-     * Method for a UI to delete a bean, the UI should first request a
+     * Method for a UI to delete a bean. 
+     * <p>
+     * The UI should first request a
      * "CanDelete", this will return a list of locations (and descriptions)
      * where the bean is in use via throwing a VetoException, then if that comes
      * back clear, or the user agrees with the actions, then a "DoDelete" can be
@@ -356,8 +358,11 @@ public interface Manager<E extends NamedBean> {
     public int getXMLOrder();
 
     /**
-     * For instances in the code where we are dealing with just a bean and a
-     * message needs to be passed to the user or in a log.
+     * Returns the user-readable name of the type of NamedBean 
+     * handled by this manager.
+     *<p>
+     * For instance, in the code where we are dealing with just a bean and a
+     * message that needs to be passed to the user or in a log.
      *
      * @return a string of the bean type that the manager handles, eg Turnout,
      *         Sensor etc
@@ -539,6 +544,7 @@ public interface Manager<E extends NamedBean> {
 
     /**
      * Temporarily suppress DataListener notifications.
+     * <p>
      * This avoids O(N^2) behavior when doing bulk updates, 
      * i.e. when loading lots of Beans.
      * Note that this is (1) optional, in the sense that the

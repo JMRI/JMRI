@@ -607,7 +607,9 @@
         >Event Table</a> - Mainly event OPCs</li>
        <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/nodeconfig/NodeConfigToolPane.shtml#opc"
         >Node Config</a> - Node Management OPCs</li>
-       <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml#opc"
+       <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/cbusslotmonitor/CbusSlotMonitorPane.shtml#opc"
+        >Command Station Monitor</a> - Command Station Monitor OPCs</li>
+        <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml#opc"
         >Console</a> - All OPCs</li>
        </ul>        
         
@@ -635,7 +637,7 @@
         <p>The flexibility in the hex form of creating Sensors, Turnouts and Lights 
         allows any OPC to be sent, or received as an input.</p>
         
-        <p>When used as a short form address, eg "N123E456" : </p>
+        <p>When used as a short form address, eg "+N123E456" : </p>
       
         <ul>
         <li>ASON / ASOF Sent when status changed, node number = 0</li>
@@ -735,18 +737,18 @@
         <a href="https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/can/cbus/CbusThrottleManager.java"
         >CbusThrottleManager.java</a>
         </p>
-        
+        <p>Messages sent by JMRI</p>
         <ul>
         <li>RLOC - Sent by JMRI</li>
         </ul>
         
-        <p>Messages sent by JMRI</p>
+        <p>Listeners for messages sent by JMRI</p>
         <ul>
         <li>ESTOP - Constant Listener</li>
         <li>RESTP - Constant Listener</li>
         <li>KLOC - Constant Listener</li>
         </ul>
-        
+        <p>Listeners for messages received by JMRI</p>
         <ul>
         <li>PLOC - Constant Listener</li>
         <li>ERR - Constant Listener + Errors translated from error codes</li>

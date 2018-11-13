@@ -17,14 +17,11 @@
         <Confidence value="2" /> <!-- 3 is low priority, 2 is medium priority, 1 is high priority -->
         <Or>
            <Bug pattern="IS2_INCONSISTENT_SYNC" />
-           <Bug pattern="NN_NAKED_NOTIFY" />
            <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE" />
-           <Bug pattern="PZLA_PREFER_ZERO_LENGTH_ARRAYS" />
            <Bug pattern="RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE" />
            <Bug pattern="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD" />
            <Bug pattern="UW_UNCOND_WAIT" />
            <Bug pattern="VO_VOLATILE_INCREMENT" />
-           <Bug pattern="WA_NOT_IN_LOOP" />
            <Bug pattern="WMI_WRONG_MAP_ITERATOR" />
         </Or>
      </Match>
@@ -47,10 +44,10 @@
            <Bug pattern="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD" />
            <Bug pattern="UCF_USELESS_CONTROL_FLOW" />
            <Bug pattern="UC_USELESS_CONDITION" />
-           <Bug pattern="UW_UNCOND_WAIT" />
            <Bug pattern="UPM_UNCALLED_PRIVATE_METHOD" />
            <Bug pattern="URF_UNREAD_FIELD" />
            <Bug pattern="UWF_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR" />
+           <Bug pattern="UW_UNCOND_WAIT" />
            <Bug pattern="WA_NOT_IN_LOOP" />
         </Or>
      </Match>

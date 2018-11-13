@@ -1,16 +1,10 @@
-This is the JMRI distributed "lib" directory, available as the "lib" directory
-in JMRI/JMRI Git.   These are the library files, .jars and others, needed at
-build and run time.
+This is the JMRI distributed "lib" directory, available as the "lib" directory in JMRI/JMRI Git.   These are the library files, .jars and others, needed at build and run time.
 
 ## Contents:
 
-Generally, we use subdirectories to hold the Git-resident versions of
-OS-specific code for Windows (.dll files) and Linux (.so files) so that we can
-separate various builds.
+Generally, we use subdirectories to hold the Git-resident versions of OS-specific code for Windows (.dll files) and Linux (.so files) so that we can separate various builds.
 
-For example, the intelbth.dll comes in separate versions for 32-bit and
-64-bit Windows, but the files have the same name.  We store them in separate
-subdirectories under windows/, and let the installer sort them out.
+For example, the intelbth.dll comes in separate versions for 32-bit and 64-bit Windows, but the files have the same name.  We store them in separate subdirectories under windows/, and let the installer sort them out.
 
 A similar mechanism is used for Linux under the linux/ directory.
 
@@ -18,9 +12,7 @@ macOS binaries are treated slightly differently, see the README file there.
 
 #### Updates
 
-If you make a change in this directory (add/change/remove a file), please make
-corresponding changes in the control files that are used for various JMRI
-development and release operations:
+If you make a change in this directory (add/change/remove a file), please make corresponding changes in the control files that are used for various JMRI development and release operations:
 - build.xml - used by Ant, and in turn by various IDEs
 - .classpath - used by Eclipse
 - pom.xml - used by Maven (see notes below)
@@ -37,16 +29,9 @@ On Linux, these same changes can be affected with:
 find . -type f -not -path './.git/*' -exec sed -i 's/OLD_JAR_NAME/NEW_JAR_NAME/g' {} \;
 ```
 
-Note that Windows installers don't necessarily remove existing library versions.
-(See [JMRI Issue #359](https://github.com/JMRI/JMRI/issues/359) for discussion
-on this)  Until that's changed, if you remove a library from here that really
-needs to _not_ be in user installs, you need to add an explicit delete to the
-scripts/WinInstallFiles/InstallJMRI.nsi file, in addition to modifying those above.
+Note that Windows installers don't necessarily remove existing library versions. (See [JMRI Issue #359](https://github.com/JMRI/JMRI/issues/359) for discussion on this)  Until that's changed, if you remove a library from here that really needs to _not_ be in user installs, you need to add an explicit delete to the scripts/WinInstallFiles/InstallJMRI.nsi file, in addition to modifying those above.
 
-If the specific library being added or updated is not published to
-[Maven Central](http://maven.org) by the upstream provider, run the following
-command after updating the pom.xml file, replacing the tokens in ALL CAPS with
-the correct values for that library:
+If the specific library being added or updated is not published to [Maven Central](http://maven.org) by the upstream provider, run the following command after updating the pom.xml file, replacing the tokens in ALL CAPS with the correct values for that library:
 ```
 mvn deploy:deploy-file -DgroupId=GROUP -DartifactId=ARTIFACT -Dversion=VERSION -Durl=file:./lib -DrepositoryId=lib -DupdateReleaseInfo=true -Dfile=./lib/FILE.jar
 ```
@@ -161,49 +146,49 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - smtp.jar
 
 ##### Joal 2.3.1
-  from <http://jogamp.org/deployment/archive/rc/v2.3.1/jar/>
-  cross-platform .jar files
+- from <http://jogamp.org/deployment/archive/rc/v2.3.1/jar/>
+- cross-platform .jar files
     joal.jar
     gluegen-rt.jar
 
-  plus helper native libraries:
+- plus helper native libraries:
   for MacOS X 10.4+
     extracted from joal-natives-macosx-universal.jar
       libjoal.jnilib
     extracted from gluegen-rt-natives-macosx-universal.jar
       libgluegen-rt.jnilib
 
-  for Windows x86
+- for Windows x86
     extracted from joal-natives-windows-i586.jar
       joal.dll
     extracted from glugen-rt-natives-windows-i586.jar
       gluegen-rt.dll
 
-  for Windows x64
+- for Windows x64
     extracted from joal-natives-windows-amd64.jar
       joal.dll
     extracted from glugen-rt-natives-windows-amd64.jar
       gluegen-rt.dll
 
-  for Linux i386
+- for Linux i386
     extracted from joal-natives-linux-i586.jar
       libjoal.so
     extracted from glugen-rt-natives-linux-i586.jar
       libgluegen-rt.so
 
-  for Linux x86_64
+- for Linux x86_64
     extracted from joal-natives-linux-amd64.jar
       libjoal.so
     extracted from glugen-rt-natives-linux-amd64.jar
       libgluegen-rt.so
 
-  for Linux armv6l
+- for Linux armv6l
     extracted from joal-natives-linux-armv6.jar
       libjoal.so
     extracted from glugen-rt-natives-linux-armv6.jar
       libgluegen-rt.so
 
-  for Linux armv7l
+- for Linux armv7l
     extracted from joal-natives-linux-armv6hf.jar
       libjoal.so
     extracted from glugen-rt-natives-linux-armv6hf.jar
@@ -257,9 +242,12 @@ NOTE: joal.jar is currently replaced by an own-built version with modifications 
     - http://download.eclipse.org/eclipse/downloads/drops4/R-4.6-201606061100/  (via ecj-4.6.jar) June 22, 2016
 - used in ant warnings target
 
+##### jemmy-22-00c9f753cd0a.jar
+- Built from rev 22 repo after changeset 22:00c9f753cd0a; see http://hg.openjdk.java.net/code-tools/jemmy/v2/rev/00c9f753cd0a
+- See also http://hg.openjdk.java.net/code-tools/jemmy/v2/
+
 ##### junit-4.12.jar
 - version 4.12
-- Used for testing only, not at runtime
 - from http://search.maven.org/#artifactdetails%7Cjunit%7Cjunit%7C4.12%7Cjar
 
 ##### hamcrest-core-1.3.jar
@@ -273,14 +261,12 @@ NOTE: joal.jar is currently replaced by an own-built version with modifications 
 - from <http://jfcunit.sourceforge.net>
 
 ##### i18nchecker.jar
-    Internationalization checker: used in source code development, for checking
-    proper implementation of text internationalization.  This archive need not
-    be included in JMRI releases.
-    From https://github.com/phamernik/i18nchecker .
-    See license https://github.com/phamernik/i18nchecker/blob/master/i18nchecker/LICENSE-2.0.txt
-    Usage info at https://github.com/phamernik/i18nchecker/blob/master/README.md
-    Additional useful information at https://blogs.oracle.com/geertjan/entry/i18nchecker
-        and https://blogs.oracle.com/geertjan/entry/i18nchecker_part_2
+- Internationalization checker: used in source code development, for checking proper implementation of text internationalization.  
+- From https://github.com/JMRI/i18nchecker
+- Note: We use a custom version of the original in https://github.com/phamernik/i18nchecker
+- See license https://github.com/phamernik/i18nchecker/blob/master/i18nchecker/LICENSE-2.0.txt
+- Usage info at https://github.com/phamernik/i18nchecker/blob/master/README.md
+- Additional useful information at https://blogs.oracle.com/geertjan/entry/i18nchecker and https://blogs.oracle.com/geertjan/entry/i18nchecker_part_2
 
 ##### rscbundlecheck.jar
 - check for duplicated properties
@@ -293,7 +279,7 @@ NOTE: joal.jar is currently replaced by an own-built version with modifications 
 - from <http://developer.apple.com/library/mac/samplecode/AppleJavaExtensions/>
 - Used for building only, not at runtime
 
-## SpotBugs static analysis
+#### SpotBugs static analysis
 
 ##### jcip-annotations-1.0.jar
 - From Java Concurrency In Practice (http://jcip.net)

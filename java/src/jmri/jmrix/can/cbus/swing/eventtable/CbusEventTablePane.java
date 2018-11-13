@@ -13,6 +13,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.Graphics;
+import java.awt.GridLayout;
 import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -27,11 +28,17 @@ import java.util.regex.PatternSyntaxException;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultCellEditor;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JComponent;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -47,6 +54,8 @@ import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.JToggleButton;
+import javax.swing.JToolBar;
 import javax.swing.RowFilter;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -56,6 +65,7 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableRowSorter;
 import javax.swing.text.BadLocationException;
+import javax.swing.text.DefaultFormatter;
 import javax.swing.text.Element;
 import javax.swing.text.Highlighter;
 import jmri.util.davidflanagan.HardcopyWriter;
@@ -78,7 +88,7 @@ import org.slf4j.LoggerFactory;
  *
  * @since 2.99.2
  */
-public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
+public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel implements TableModelListener {
 
     protected CbusEventTableDataModel eventModel=null;
     protected JTable eventTable=null;
@@ -87,7 +97,12 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
     protected JPanel pane1;
     protected JPanel toppanelcontainer;
     protected JPanel neweventcontainer = new JPanel();
+    private JSpinner newnodenumberSpinner;
+    private JSpinner newevnumberSpinner;
+    private JButton newevbutton;
+    public String currentRowCount;
     protected JPanel filterpanel = new JPanel();
+    final private JToolBar toolBarColumns = new JToolBar(Bundle.getMessage("ColumnShowHide"));
     protected JFileChooser fc = new JFileChooser(FileUtil.getUserFilesPath());
     protected final static JTextField filterText = new JTextField("",8);
     private javax.swing.filechooser.FileNameExtensionFilter fcuxmlfilter = new javax.swing.filechooser.FileNameExtensionFilter(
@@ -118,49 +133,43 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
         super();
     }
 
-    // order needs to match column list top of dtabledatamodel
-    private final String[] columnToolTips = {
-        Bundle.getMessage("EventColTip"),
-        Bundle.getMessage("NodeColTip"),
-        Bundle.getMessage("NameColTip"),
-        Bundle.getMessage("CbusNodeNameTip"),
-        Bundle.getMessage("IDColTip"),
-        Bundle.getMessage("TypeColTip"),
-        Bundle.getMessage("SendOntip"),
-        Bundle.getMessage("SendOfftip"),
-        Bundle.getMessage("SendToggleTip"),
-        Bundle.getMessage("ColumnLastHeard"),
-        Bundle.getMessage("ColumnRequestStatusTip"),
-        Bundle.getMessage("CommentColTip"),
-        Bundle.getMessage("ColumnTotalSession"),
-        Bundle.getMessage("ColumnOnSession"),
-        Bundle.getMessage("ColumnOffSession"),
-        Bundle.getMessage("ColumnInSessionTip"),
-        Bundle.getMessage("ColumnOutSessionTip"),
-        Bundle.getMessage("ColumnEventDeleteTip"),
-        Bundle.getMessage("FBLastTip"),        
-        Bundle.getMessage("FBOutstandingTip"),
-        Bundle.getMessage("FBNumTip"),
-        Bundle.getMessage("FBTimeoutTip"),
-        Bundle.getMessage("FBEventTip"),
-        Bundle.getMessage("FBNodeTip")
 
-    }; // Length = number of items in array should (at least) match number of columns
-    
     public void init() {
         
-        JTable eventTable = new JTable(eventModel); 
+        JTable eventTable = new JTable(eventModel) {
+            // Override JTable Header to implement table header tool tips.
+            @Override
+            protected JTableHeader createDefaultTableHeader() {
+                return new JTableHeader(columnModel) {
+                    @Override
+                    public String getToolTipText(MouseEvent e) {
+                        try {
+                           // log.debug("131 gettttext");
+                            java.awt.Point p = e.getPoint();
+                            int index = columnModel.getColumnIndexAtX(p.x);
+                            int realIndex = columnModel.getColumn(index).getModelIndex();
+                            return CbusEventTableDataModel.columnToolTips[realIndex];    
+                        } catch (RuntimeException e1) {
+                            //catch null pointer exception if mouse is over an empty line
+                        }
+                        return null;
+                    }
+                };
+            }
+        };
 
         // Use XTableColumnModel so we can control which columns are visible
-        XTableColumnModel tcm = new XTableColumnModel();
+        final  XTableColumnModel tcm = new XTableColumnModel();
         eventTable.setColumnModel(tcm);
+        eventTable.createDefaultColumnsFromModel();
+        
         
         eventTable.setAutoCreateRowSorter(true);
         
         final TableRowSorter<CbusEventTableDataModel> sorter = new TableRowSorter<CbusEventTableDataModel>(eventModel);
         eventTable.setRowSorter(sorter);
         
-        eventTable.createDefaultColumnsFromModel();
+
         
         eventTable.setRowSelectionAllowed(true);
         eventTable.setColumnSelectionAllowed(false);
@@ -195,10 +204,6 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
         TableColumn laFbColumn = eventTableModel.getColumn(CbusEventTableDataModel.LASTFEEDBACK_COLUMN);                
         laFbColumn.setCellRenderer(new LafbRenderer());
         
-        TableColumn caIdColumn = eventTableModel.getColumn(CbusEventTableDataModel.CANID_COLUMN);
-        TableColumn seOnColumn = eventTableModel.getColumn(CbusEventTableDataModel.SESSION_ON_COLUMN);
-        TableColumn seOffColumn = eventTableModel.getColumn(CbusEventTableDataModel.SESSION_OFF_COLUMN);
-        
         TableColumn delBColumn = eventTableModel.getColumn(CbusEventTableDataModel.DELETE_BUTTON_COLUMN);
         delBColumn.setCellEditor(new ButtonEditor(new JButton()));
         delBColumn.setCellRenderer(new ButtonRenderer());
@@ -230,21 +235,44 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
                     super.setValue(value);
                 }
             }
-        });
-
+        });        
+        
         // configure items for GUI
         eventModel.configureTable(eventTable);
 
-        // general GUI config
+        for (int i = 0; i < tcm.getColumnCount(); i++) {
+            int colnumber=i;
+            String colName = eventTable.getColumnName(colnumber);
+            JToggleButton selectcol = new JToggleButton(new javax.swing.AbstractAction((colName)) {
+                public void actionPerformed(ActionEvent e) {
+                    TableColumn column  = tcm.getColumnByModelIndex(colnumber);
+                    boolean     visible = tcm.isColumnVisible(column);
+                    tcm.setColumnVisible(column, !visible);
+                    
+                }
+            });
+            selectcol.setToolTipText(CbusEventTableDataModel.columnToolTips[i]);
+            toolBarColumns.add(selectcol);
+            
+            if ( i > 6 ) {
+                //tcm.setColumnVisible(tcm.getColumnByModelIndex(colnumber), false);
+                selectcol.setSelected(true);
+            }
+        }
         
-        tcm.setColumnVisible(caIdColumn, false);
-        tcm.setColumnVisible(delBColumn, false);
-        tcm.setColumnVisible(onBColumn, false);
-        tcm.setColumnVisible(offBColumn, false);
-        tcm.setColumnVisible(seOnColumn, false);
-        tcm.setColumnVisible(seOffColumn, false);
+        for (int ia = 7; ia < (CbusEventTableDataModel.MAX_COLUMN); ia++) {
+            TableColumn column  = tcm.getColumnByModelIndex(ia);
+            tcm.setColumnVisible(column, false);
+            // log.warn("ia is {}   {} ",ia, column);
+
+        }        
         
-        addMouseListenerToHeader(eventTable);
+        eventModel.addTableModelListener(this);
+    // or tcm ?
+        
+        
+        
+        
         
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
        
@@ -260,10 +288,8 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
         
         tablefeedback.setEditable ( false ); // set textArea non-editable
        
-
         h.removeAllHighlights();
 
-        
         // add new event
         neweventcontainer.setBorder(BorderFactory.createTitledBorder(
         BorderFactory.createEtchedBorder(), (Bundle.getMessage("NewEvent"))));
@@ -271,18 +297,39 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
         JPanel newnode = new JPanel();
         JPanel newev = new JPanel();
 
-        
         newnode.add(new JLabel(Bundle.getMessage("CbusNode")));
-        JSpinner newnodenumberSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 65535, 1));
+        newnodenumberSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 65535, 1));
+        JComponent comp = newnodenumberSpinner.getEditor();
+        JFormattedTextField field = (JFormattedTextField) comp.getComponent(0);
+        DefaultFormatter formatter = (DefaultFormatter) field.getFormatter();
+        formatter.setCommitsOnValidEdit(true);
+        newnodenumberSpinner.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                checkNewevent();
+            }
+        });
         newnode.add(newnodenumberSpinner);
         newnode.setToolTipText(Bundle.getMessage("NewNodeTip"));
         newnodenumberSpinner.setToolTipText(Bundle.getMessage("NewNodeTip"));
         
         newev.add(new JLabel(Bundle.getMessage("CbusEvent")));
-        JSpinner newevnumberSpinner = new JSpinner(new SpinnerNumberModel(1, 1, 65535, 1));
+        newevnumberSpinner = new JSpinner(new SpinnerNumberModel(1, 1, 65535, 1));
+        JComponent compe = newevnumberSpinner.getEditor();
+        JFormattedTextField fielde = (JFormattedTextField) compe.getComponent(0);
+        DefaultFormatter formattere = (DefaultFormatter) fielde.getFormatter();
+        formattere.setCommitsOnValidEdit(true);
+        newevnumberSpinner.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                checkNewevent();
+            }
+        });
+        
+        
         newev.add(newevnumberSpinner);
         
-        JButton newevbutton = new JButton((Bundle.getMessage("NewEvent")));
+        newevbutton = new JButton((Bundle.getMessage("NewEvent")));
         
         ActionListener newEventaction = ae -> {
             int ev = (Integer) newevnumberSpinner.getValue();
@@ -298,24 +345,20 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
         
         newevbutton.addActionListener(newEventaction);
         
+        // JLabel newevfb = new JLabel("");
+        
         neweventcontainer.add(newev);        
         neweventcontainer.add(newnode);
         neweventcontainer.add(newevbutton);        
+       //  neweventcontainer.add(newevfb); 
         
- 
-
         filterpanel.setBorder(BorderFactory.createTitledBorder(
             BorderFactory.createEtchedBorder(), Bundle.getMessage("FilterSurround")));
         
-       // JLabel label = new JLabel("Filter");
+        // JLabel label = new JLabel("Filter");
         //filterpanel.add(label, BorderLayout.WEST);
-
-        
-        
-        
         
         JButton clearfilterButton = new JButton(Bundle.getMessage("ClearFilter"));
-    
         ActionListener clearfilter = ae -> {
             filterText.setText("");
         };
@@ -324,15 +367,17 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
         
         clearfilterButton.addActionListener(clearfilter);
         
-        
         filterpanel.add(filterText);
         filterpanel.add(clearfilterButton);        
         
+        
+        toolBarColumns.setLayout(new GridLayout(5,5));
+        
+        toppanelcontainer.add(toolBarColumns);
         toppanelcontainer.add(filterpanel);
         toppanelcontainer.add(neweventcontainer);
         pane1.add(toppanelcontainer, BorderLayout.PAGE_START);
    
-       
         filterText.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
@@ -374,10 +419,27 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
         pane1.add(split, BorderLayout.CENTER);
         
         add(pane1);
-        pane1.setVisible(true);    
-        
+        pane1.setVisible(true);
     }
     
+    public void checkNewevent() {
+        int newno = (Integer) newnodenumberSpinner.getValue();
+        int newev = (Integer) newevnumberSpinner.getValue();
+        
+        CbusEventTableDataModel.Event testIfOnEv = eventModel.new Event();
+        
+        if (testIfOnEv.eventIsOnTable( newno, newev )) {
+            newevbutton.setEnabled(false);
+        } else {
+            newevbutton.setEnabled(true);
+        }
+    }
+    
+    @Override
+    public void tableChanged(TableModelEvent e) {
+        checkNewevent();
+    }    
+  
     /**
      * {@inheritDoc}
      */
@@ -510,12 +572,23 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
             }
         });
         
-        
+
+        JCheckBoxMenuItem showcolumnpanel = new JCheckBoxMenuItem(Bundle.getMessage("ColumnShowHide"));
+        // shownewevent.setMnemonic(KeyEvent.VK_C);
+        showcolumnpanel.setSelected(true);
+        showcolumnpanel.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                toolBarColumns.setVisible(showcolumnpanel.isSelected());
+            }
+        });
+
         fileMenu.add(saveItem);        
         fileMenu.add(saveAsItem);
         fileMenu.add(new JSeparator()); // SEPARATOR
         fileMenu.add(mnItemOpenFile); // FCU Import
         
+        displayMenu.add(showcolumnpanel);   
         displayMenu.add(showfilterpanel);        
         displayMenu.add(shownewevent);
         displayMenu.add(showinfopanel);        
@@ -716,7 +789,6 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
     }
     
     
-    
     /**
      * {@inheritDoc}
      */
@@ -728,105 +800,6 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
         return Bundle.getMessage("EventTableTitle");
     }
     
-    
-    /**
-     * Process the column header click
-     * @param e     the event data
-     * @param table the JTable
-     */
-    protected void showTableHeaderPopup(MouseEvent e, JTable table) {
-        JPopupMenu popupMenu = new JPopupMenu();
-        XTableColumnModel tcm = (XTableColumnModel) table.getColumnModel();
-        for (int i = 0; i < tcm.getColumnCount(false); i++) {
-            TableColumn tc = tcm.getColumnByModelIndex(i);
-            String columnName = table.getModel().getColumnName(i);
-            String xtTooltip = columnToolTips[i];
-            if (columnName != null && !columnName.equals("")) {
-                JCheckBoxMenuItem menuItem = new JCheckBoxMenuItem(
-                    (table.getModel().getColumnName(i) + " : " + xtTooltip), 
-                    tcm.isColumnVisible(tc));
-                menuItem.addActionListener(new HeaderActionListener(tc, tcm));
-                popupMenu.add(menuItem);
-            }
-        }
-        popupMenu.show(e.getComponent(), e.getX(), e.getY());
-    }
-
-    /**
-     * Adds the column header pop listener to a JTable using XTableColumnModel
-     * @param table The JTable effected.
-     */
-    protected void addMouseListenerToHeader(JTable table) {
-        MouseListener mouseHeaderListener = new TableHeaderListener(table);
-        table.getTableHeader().addMouseListener(mouseHeaderListener);
-    }
-    
-    /**
-     * Class to support listner for popup menu on XTableColum model.
-     */
-    static class HeaderActionListener implements ActionListener {
-
-        TableColumn tc;
-        XTableColumnModel tcm;
-
-        HeaderActionListener(TableColumn tc, XTableColumnModel tcm) {
-            this.tc = tc;
-            this.tcm = tcm;
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            JCheckBoxMenuItem check = (JCheckBoxMenuItem) e.getSource();
-            //Do not allow the last column to be hidden
-            if (!check.isSelected() && tcm.getColumnCount(true) == 1) {
-                return;
-            }
-            tcm.setColumnVisible(tc, check.isSelected());
-        }
-    }
-
-    /**
-     * Class to support Columnheader popup menu on XTableColum model.
-     */
-    class TableHeaderListener extends MouseAdapter {
-
-        JTable table;
-
-        TableHeaderListener(JTable tbl) {
-            super();
-            table = tbl;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public void mousePressed(MouseEvent e) {
-            if (e.isPopupTrigger()) {
-                showTableHeaderPopup(e, table);
-            }
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public void mouseReleased(MouseEvent e) {
-            if (e.isPopupTrigger()) {
-                showTableHeaderPopup(e, table);
-            }
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public void mouseClicked(MouseEvent e) {
-            if (e.isPopupTrigger()) {
-                showTableHeaderPopup(e, table);
-            }
-        }
-    }
     
     public void update() {
         eventModel.fireTableDataChanged();

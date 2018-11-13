@@ -9,6 +9,7 @@ import org.junit.runners.Suite;
         AddressPanelTest.class,
         BackgroundPanelTest.class,
         ControlPanelTest.class,
+        ControlPanelCustomSliderUITest.class,
         ControlPanelPropertyEditorTest.class,
         FunctionButtonTest.class,
         FunctionButtonPropertyEditorTest.class,

@@ -14,8 +14,6 @@ public class ClientRxHandlerTest {
     
     @Test
     public void testCTor() {
-        jmri.jmrix.dccpp.DCCppSystemConnectionMemo memo = new jmri.jmrix.dccpp.DCCppSystemConnectionMemo();
-        jmri.InstanceManager.setDefault(jmri.jmrix.dccpp.DCCppSystemConnectionMemo.class, memo);
         ClientRxHandler t = new ClientRxHandler("127.0.0.1",new java.net.Socket());
         Assert.assertNotNull("exists",t);
     }
@@ -24,6 +22,9 @@ public class ClientRxHandlerTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        jmri.jmrix.dccpp.DCCppSystemConnectionMemo memo = new jmri.jmrix.dccpp.DCCppSystemConnectionMemo();
+        jmri.InstanceManager.setDefault(jmri.jmrix.dccpp.DCCppSystemConnectionMemo.class, memo);
+        memo.setDCCppTrafficController(new DCCppOverTcpPacketizer(new jmri.jmrix.dccpp.DCCppCommandStation()));
     }
     
     @After

@@ -1257,11 +1257,7 @@
     <label xml:lang="it">Regolazione fine in Avanti</label>
     <comment xml:lang="it">Valori 0-256</comment>
   </variable>
-  <variable item="Speed Table" CV="67">
-    <speedTableVal/>
-    <label>Speed Table</label>
-    <label xml:lang="it">Tabella Velocità</label>
-  </variable>
+  <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
   <variable CV="95" item="Reverse Motor Trim" default="128" comment="Range 0-256">
     <decVal max="256"/>
     <label>Reverse Motor Trim</label>
@@ -1269,7 +1265,7 @@
     <label xml:lang="it">Regolazione fine indietro</label>
     <comment xml:lang="it">Valori 0-256</comment>
   </variable>
-<xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
   <variable CV="112" default="1" item="Function F0F effect generated">
     <decVal min="1" max="5"/>
     <label>Mars/Gyra Min Brightness</label>

@@ -608,6 +608,13 @@ public class SpeedUtil {
         return rampLengthForSpeedChange(fromSpeed, toSpeed, isForward);
     }
 
+    /**
+     * Get the length of ramp for a speed change
+     * @param fSpeed - starting speed
+     * @param toSpeed - ending speed
+     * @param isForward - direction
+     * @return distance in millimeters
+     */
     protected float rampLengthForSpeedChange(float fSpeed, float toSpeed, boolean isForward) {
         float fromSpeed = fSpeed;
         float rampLength = 0.0f;
