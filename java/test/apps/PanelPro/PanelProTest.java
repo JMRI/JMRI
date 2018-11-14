@@ -176,7 +176,6 @@ public class PanelProTest {
     }
 
     @Test
-    @Ignore
     public void testLaunchSprog() throws IOException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 

@@ -1712,7 +1712,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
         String errorMessage = null;
         
         @SuppressFBWarnings(value = "DLS_DEAD_LOCAL_STORE", justification="false positive")
-        String lastSuccessfulAddress = Bundle.getMessage("NONE");
+        String lastSuccessfulAddress;
         
         int iType = 0;
         int iNum = 1;

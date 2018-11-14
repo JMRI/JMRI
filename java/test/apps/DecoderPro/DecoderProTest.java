@@ -137,7 +137,6 @@ public class DecoderProTest {
     }
 
     @Test
-    @Ignore
     public void testLaunchSprog() throws IOException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 

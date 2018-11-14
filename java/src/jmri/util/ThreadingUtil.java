@@ -5,6 +5,7 @@ import java.lang.reflect.InvocationTargetException;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import javax.annotation.Nonnull;
+import javax.annotation.concurrent.ThreadSafe;
 
 /**
  * Utilities for handling JMRI's threading conventions.
@@ -18,18 +19,8 @@ import javax.annotation.Nonnull;
  *
  * @author Bob Jacobsen Copyright 2015
  */
+@ThreadSafe
 public class ThreadingUtil {
-
-    static public interface ThreadAction extends Runnable {
-
-        /**
-         * {@inheritDoc}
-         * <p>
-         * Must handle its own exceptions.
-         */
-        @Override
-        public void run();
-    }
 
     /**
      * Run some layout-specific code before returning.
@@ -171,10 +162,6 @@ public class ThreadingUtil {
         }
     }
 
-    public interface ReturningThreadAction<E> {
-        public E run();
-    }
-    
     /**
      * Run some GUI-specific code at some later point.
      * <p>
@@ -264,6 +251,27 @@ public class ThreadingUtil {
 
 
     /**
+     * Interface for use in ThreadingUtil's lambda interfaces
+     */
+    static public interface ThreadAction extends Runnable {
+
+        /**
+         * {@inheritDoc}
+         * <p>
+         * Must handle its own exceptions.
+         */
+        @Override
+        public void run();
+    }
+
+    /**
+     * Interface for use in ThreadingUtil's lambda interfaces
+     */
+    static public interface ReturningThreadAction<E> {
+        public E run();
+    }
+    
+    /**
      * Warn if a thread is holding locks. Used when transitioning to another context.
      */
     static public void warnLocks() {
@@ -291,7 +299,10 @@ public class ThreadingUtil {
         }
     }
     private static boolean lastWarnLocksLimit = false;
-    public static RuntimeException lastWarnLocksException = null;
+    private static RuntimeException lastWarnLocksException = null; 
+    public RuntimeException getlastWarnLocksException() { // public for script and test access
+        return lastWarnLocksException;
+    }
     
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ThreadingUtil.class);
 
