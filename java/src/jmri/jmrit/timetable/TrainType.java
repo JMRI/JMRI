@@ -9,17 +9,33 @@ import jmri.util.swing.JmriColorChooser;
  */
 public class TrainType {
 
+    /**
+     * Create a new train type with default values.
+     * @param layoutId The parent layout id.
+     * @throws IllegalArgumentException TYPE_ADD_FAIL
+     */
+    public TrainType(int layoutId) throws IllegalArgumentException {
+        if (_dm.getLayout(layoutId) == null) {
+            throw new IllegalArgumentException(_dm.TYPE_ADD_FAIL);
+        }
+        _typeId = _dm.getNextId("TrainType");  // NOI18N
+        _layoutId = layoutId;
+        _dm.addTrainType(_typeId, this);
+    }
+
     public TrainType(int typeId, int layoutId, String typeName, String typeColor) {
         _typeId = typeId;
         _layoutId = layoutId;
-        _typeName = typeName;
+        setTypeName(typeName);
         setTypeColor(typeColor);
     }
 
-    private int _typeId = 0;
-    private int _layoutId = 0;
-    private String _typeName = "";
-    private String _typeColor = "";
+    TimeTableDataManager _dm = TimeTableDataManager.getDataManager();
+
+    private final int _typeId;
+    private final int _layoutId;
+    private String _typeName = "New Type";  // NOI18N
+    private String _typeColor = "#000000";  // NOI18N
 
     public int getTypeId() {
         return _typeId;
