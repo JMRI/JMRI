@@ -157,23 +157,23 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         return mBaudRate;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int getInterval() {
-        return mInterval;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void setInterval(int interval) {
-        log.debug("Setting interval to {}", interval);
-        mInterval = interval;
-    }
-    protected int mInterval = 0;
+//    /**
+//     * {@inheritDoc} // TODO remove EBR experimental
+//     */
+//    @Override
+//    public int getInterval() {
+//        return mInterval;
+//    }
+//
+//    /**
+//     * {@inheritDoc}
+//     */
+//    @Override
+//    public void setInterval(int interval) {
+//        log.debug("Setting interval to {}", interval);
+//        mInterval = interval;
+//    }
+//    protected int mInterval = 0;
 
     /**
      * Get an array of valid baud rates as integers. This allows subclasses to

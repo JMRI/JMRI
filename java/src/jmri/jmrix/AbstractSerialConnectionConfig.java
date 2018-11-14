@@ -153,7 +153,8 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         turnoutIntervalSpinner.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
-                adapter.setInterval((Integer) turnoutIntervalSpinner.getValue());
+//                adapter.setInterval((Integer) turnoutIntervalSpinner.getValue()); // TODO EBR needed? or prefer only in
+                adapter.getSystemConnectionMemo().setInterval((Integer) turnoutIntervalSpinner.getValue());
             }
         });
         // up to here experimental
@@ -401,7 +402,8 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         JTextField field = ((JSpinner.DefaultEditor) turnoutIntervalSpinner.getEditor()).getTextField();
         field.setColumns(6);
         turnoutIntervalSpinner.setMaximumSize(turnoutIntervalSpinner.getPreferredSize()); // set spinner JTextField width
-        turnoutIntervalSpinner.setValue(adapter.getInterval());
+//        turnoutIntervalSpinner.setValue(adapter.getInterval()); // TODO EBR needed? or prefer
+        turnoutIntervalSpinner.setValue(adapter.getSystemConnectionMemo().getInterval());
         turnoutIntervalSpinner.setEnabled(true);
 
         showAdvanced.setFont(showAdvanced.getFont().deriveFont(9f));

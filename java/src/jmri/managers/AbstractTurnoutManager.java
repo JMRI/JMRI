@@ -365,6 +365,13 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
         return entryToolTip;
     }
 
+    /**
+     * Get the Turnout Interval (delay) in ms for this adapter.
+     */
+    public int getInterval() {
+        return 0;
+    }
+
     private final static Logger log = LoggerFactory.getLogger(AbstractTurnoutManager.class);
 
 }

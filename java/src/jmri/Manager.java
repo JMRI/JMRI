@@ -530,6 +530,13 @@ public interface Manager<E extends NamedBean> {
     }
 
     /**
+     * @return the interval (delay) in ms between output commands for the manager.
+     */
+    public static int getInterval() {
+        return 0;
+    }
+
+    /**
      * Register a {@link ManagerDataListener} to hear about 
      * adding or removing items from the list of NamedBeans
      */

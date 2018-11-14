@@ -57,6 +57,13 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 
     private final String closedText = InstanceManager.turnoutManagerInstance().getClosedText();
     private final String thrownText = InstanceManager.turnoutManagerInstance().getThrownText();
+    /**
+     * Duration of interval between separate Turnout cammands. Experimental EBR
+     * <p>
+     * Defined as "public non-final"
+     * so it can be changed in e.g. the jython/SetTurnoutInterval script.
+     */
+    private static int TURNOUT_INTERVAL = InstanceManager.turnoutManagerInstance().getInterval();
 
     /**
      * Handle a request to change state, typically by sending a message to the
@@ -113,6 +120,10 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
                 (s==Turnout.CLOSED ? closedText : thrownText));
         newCommandedState(s);
         myOperator = getTurnoutOperator(); // MUST set myOperator before starting the thread
+        if (TURNOUT_INTERVAL > 0) { // set in Adapter per hardware (serial) connection, default = 0, experimental
+            jmri.util.ThreadingUtil.runOnLayoutDelayed( () -> { log.debug("interval..."); },
+                    TURNOUT_INTERVAL );
+        }
         if (myOperator == null) {
             forwardCommandChangeToLayout(s);
             // optionally handle feedback
@@ -129,7 +140,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
     }
 
     /**
-     * Define duration of delay for DELAYED feedback mode.
+     * Duration of delay for DELAYED feedback mode.
      * <p>
      * Defined as "public non-final"
      * so it can be changed in e.g. the jython/SetDefaultDelayedTurnoutDelay script.

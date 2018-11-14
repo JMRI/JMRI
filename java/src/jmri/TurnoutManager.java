@@ -262,4 +262,9 @@ public interface TurnoutManager extends ProvidingManager<Turnout> {
 
     public String getDefaultClosedSpeed();
 
+    /**
+     * Get the Interval (in ms) to wait between/before commands are send, configured in AdapterConfig. Experimental EBR
+     */
+    public int getInterval();
+
 }

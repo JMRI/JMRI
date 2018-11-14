@@ -168,6 +168,12 @@ public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
         return entryToolTip;
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public int getInterval() {
+        return tc.getSystemConnectionMemo().getInterval();
+    }
+
     @Deprecated
     static public XNetTurnoutManager instance() {
         //if (_instance == null) _instance = new XNetTurnoutManager();

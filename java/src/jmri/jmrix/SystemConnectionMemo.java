@@ -290,6 +290,21 @@ abstract public class SystemConnectionMemo extends Bean {
 
     private ConsistManager consistManager = null;
 
+
+    /**
+     * Get the Interval (in ms) to wait between/before commands are send, configured in AdapterConfig. Experimental EBR
+     */
+    public int getInterval() {
+        return _interval;
+    }
+
+    private int _interval = 0;
+
+    public void setInterval(int newInterval) {
+        log.debug("Setting interval from {} to {}", _interval, newInterval);
+        _interval = newInterval;
+    }
+
     private final static Logger log = LoggerFactory.getLogger(SystemConnectionMemo.class);
 
 }

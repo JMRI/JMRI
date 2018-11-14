@@ -56,8 +56,8 @@ abstract public class AbstractSerialConnectionConfigXml extends AbstractConnecti
             e.setAttribute("speed", Bundle.getMessage("noneSelected"));
         }
 
-        if (adapter.getInterval() > 0) {
-            e.setAttribute("turnoutInterval", String.valueOf(adapter.getInterval()));
+        if (adapter.getSystemConnectionMemo().getInterval() > 0) {
+            e.setAttribute("turnoutInterval", String.valueOf(adapter.getSystemConnectionMemo().getInterval()));
         } else {
             e.setAttribute("turnoutInterval", "0");
         }
@@ -115,7 +115,7 @@ abstract public class AbstractSerialConnectionConfigXml extends AbstractConnecti
         // extra config
         unpackElement(shared, perNode);
         int turnoutInterval = Integer.parseInt(perNode.getAttribute("turnoutInterval").getValue());
-        adapter.setInterval(turnoutInterval);
+        adapter.getSystemConnectionMemo().setInterval(turnoutInterval);
         return result;
     }
 

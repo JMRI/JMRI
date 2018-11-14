@@ -10,7 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implementation of a TurnoutManager that can serves as a proxy for multiple
+ * Implementation of a TurnoutManager that can serve as a proxy for multiple
  * system-specific implementations.
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2010
@@ -306,6 +306,12 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
     public String getEntryToolTip() {
         String entryToolTip = "Enter a number from 1 to 9999"; // Basic number format help
         return entryToolTip;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public int getInterval() { // Experimental EBR
+        return 0;
     }
 
     @Override
