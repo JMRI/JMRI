@@ -68,14 +68,14 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
     // transient members
     private LearnThrottleFrame _student; // need to callback learning throttle in learn mode
     private boolean _tempRunBlind; // run mode flag to allow running on ET only
-    private boolean _delayStart; // allows start block unoccupied and wait for train
+    protected boolean _delayStart; // allows start block unoccupied and wait for train
     protected int _idxCurrentOrder; // Index of block at head of train (if running)
     protected int _idxLastOrder; // Index of block at tail of train just left
     private String _curSpeedType; // name of last moving speed, i.e. never "Stop".  Used to restore previous speed
     protected ArrayList<BlockSpeedInfo> _speedInfo; // map max speeds and occupation times of each block in route
 
     protected int _runMode;
-    protected Engineer _engineer; // thread that runs the train
+    private Engineer _engineer; // thread that runs the train
     private CommandDelay _delayCommand; // thread for delayed ramp down
     private boolean _allocated; // initial Blocks of _orders have been allocated
     private boolean _totalAllocated; // All Blocks of _orders have been allocated

@@ -60,6 +60,12 @@ public class ImportCarsTest extends OperationsTestCase {
         }, "wait for prompt");
 
         JemmyUtil.pressDialogButton(Bundle.getMessage("ExportComplete"), Bundle.getMessage("ButtonOK"));
+        
+        try {
+            export.join();
+        } catch (InterruptedException e) {
+            // do nothing
+        }
 
         java.io.File file = new java.io.File(ExportCars.defaultOperationsFilename());
         Assert.assertTrue("Confirm file creation", file.exists());

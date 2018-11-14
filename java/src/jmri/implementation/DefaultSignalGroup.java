@@ -30,7 +30,7 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
      * @param userName   provided user name
      */
     public DefaultSignalGroup(String systemName, String userName) {
-        super(systemName, userName);
+        super(systemName.toUpperCase(), userName);
     }
 
     /**
@@ -39,7 +39,8 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
      * @param systemName suggested system name
      */
     public DefaultSignalGroup(String systemName) {
-        super(systemName, null);
+        super(systemName.toUpperCase(), null);
+        log.debug("default SignalGroup {} created", systemName);
     }
 
     @Override
@@ -98,7 +99,6 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
                 }
             }
         });
-
     }
 
     @Override
@@ -171,7 +171,7 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
             mHead = InstanceManager.getDefault(jmri.SignalHeadManager.class).getByUserName(pName);
         }
         if (mHead == null) {
-            log.warn("did not find a SignalHead named " + pName);
+            log.warn("did not find a SignalHead named {}", pName);
         } else {
             addSignalHead(InstanceManager.getDefault(NamedBeanHandleManager.class)
                     .getNamedBeanHandle(pName, mHead));
@@ -748,8 +748,8 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
 
     @Override
     public void setState(int state) {
-
     }
 
     private final static Logger log = LoggerFactory.getLogger(DefaultSignalGroup.class);
+
 }

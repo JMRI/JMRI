@@ -163,7 +163,7 @@ public class XmlTest extends OperationsTestCase {
         t3.setEngineRoad("t3 X engine road");
         t3.setLeadEngine(e1);
         t3.setLoadOption("t3 X load option");
-        t3.setManifestLogoURL("t3 X pathName");
+        t3.setManifestLogoPathName("t3 X pathName");
         t3.setNumberEngines("7");
         t3.setOwnerOption("t3 X owner option");
         t3.setRailroadName("t3 X railroad name");
@@ -202,7 +202,7 @@ public class XmlTest extends OperationsTestCase {
         t1.setEngineRoad("t1 engine road");
         t1.setLeadEngine(e1);
         t1.setLoadOption("t1 load option");
-        t1.setManifestLogoURL("t1 pathName");
+        t1.setManifestLogoPathName("t1 pathName");
         t1.setNumberEngines("1");
         t1.setOwnerOption("t1 owner option");
         t1.setRailroadName("t1 railroad name");
@@ -243,7 +243,7 @@ public class XmlTest extends OperationsTestCase {
         t3.setEngineRoad("t3 engine road");
         t3.setLeadEngine(e2);
         t3.setLoadOption("t3 load option");
-        t3.setManifestLogoURL("t3 pathName");
+        t3.setManifestLogoPathName("t3 pathName");
         t3.setNumberEngines("1");
         t3.setOwnerOption("t3 owner option");
         t3.setRailroadName("t3 railroad name");
@@ -267,7 +267,7 @@ public class XmlTest extends OperationsTestCase {
         t5.setEngineRoad("t5 engine road");
         t5.setLeadEngine(e3);
         t5.setLoadOption("t5 load option");
-        t5.setManifestLogoURL("t5 pathName");
+        t5.setManifestLogoPathName("t5 pathName");
         t5.setNumberEngines("1");
         t5.setOwnerOption("t5 owner option");
         t5.setRailroadName("t5 railroad name");
@@ -295,7 +295,7 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertNotNull("t1 has a lead engine", t1.getLeadEngine());
         Assert.assertEquals("t1 lead engine number", "1", t1.getLeadEngine().getNumber());
         Assert.assertEquals("t1 load option", "t1 load option", t1.getLoadOption());
-        Assert.assertEquals("t1 path name", "t1 pathName", t1.getManifestLogoURL());
+        Assert.assertEquals("t1 path name", "t1 pathName", t1.getManifestLogoPathName());
         Assert.assertEquals("t1 number of engines", "1", t1.getNumberEngines());
         Assert.assertEquals("t1 Owner option", "t1 owner option", t1.getOwnerOption());
         Assert.assertEquals("t1 railroad name", "t1 railroad name", t1.getRailroadName());
@@ -344,7 +344,7 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertEquals("t3 engine road", "t3 engine road", t3.getEngineRoad());
         Assert.assertEquals("t3 lead engine number", "2", t3.getLeadEngine().getNumber());
         Assert.assertEquals("t3 load option", "t3 load option", t3.getLoadOption());
-        Assert.assertEquals("t3 path name", "t3 pathName", t3.getManifestLogoURL());
+        Assert.assertEquals("t3 path name", "t3 pathName", t3.getManifestLogoPathName());
         Assert.assertEquals("t3 number of engines", "1", t3.getNumberEngines());
         Assert.assertEquals("t3 Owner option", "t3 owner option", t3.getOwnerOption());
         Assert.assertEquals("t3 railroad name", "t3 railroad name", t3.getRailroadName());
@@ -385,7 +385,7 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertEquals("t5 engine road", "t5 engine road", t5.getEngineRoad());
         Assert.assertEquals("t5 lead engine number", "3", t5.getLeadEngine().getNumber());
         Assert.assertEquals("t5 load option", "t5 load option", t5.getLoadOption());
-        Assert.assertEquals("t5 path name", "t5 pathName", t5.getManifestLogoURL());
+        Assert.assertEquals("t5 path name", "t5 pathName", t5.getManifestLogoPathName());
         Assert.assertEquals("t5 number of engines", "1", t5.getNumberEngines());
         Assert.assertEquals("t5 Owner option", "t5 owner option", t5.getOwnerOption());
         Assert.assertEquals("t5 railroad name", "t5 railroad name", t5.getRailroadName());
@@ -457,7 +457,7 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertNotNull("t1 has a lead engine", t1.getLeadEngine());
         Assert.assertEquals("t1 lead engine number", "1", t1.getLeadEngine().getNumber());
         Assert.assertEquals("t1 load option", "t1 load option", t1.getLoadOption());
-        Assert.assertEquals("t1 path name", "t1 pathName", t1.getManifestLogoURL());
+        Assert.assertEquals("t1 path name", "t1 pathName", t1.getManifestLogoPathName());
         Assert.assertEquals("t1 number of engines", "1", t1.getNumberEngines());
         Assert.assertEquals("t1 Owner option", "t1 owner option", t1.getOwnerOption());
         Assert.assertEquals("t1 railroad name", "t1 railroad name", t1.getRailroadName());
@@ -506,7 +506,7 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertEquals("t3 engine road", "t3 engine road", t3.getEngineRoad());
         Assert.assertEquals("t3 lead engine number", "2", t3.getLeadEngine().getNumber());
         Assert.assertEquals("t3 load option", "t3 load option", t3.getLoadOption());
-        Assert.assertEquals("t3 path name", "t3 pathName", t3.getManifestLogoURL());
+        Assert.assertEquals("t3 path name", "t3 pathName", t3.getManifestLogoPathName());
         Assert.assertEquals("t3 number of engines", "1", t3.getNumberEngines());
         Assert.assertEquals("t3 Owner option", "t3 owner option", t3.getOwnerOption());
         Assert.assertEquals("t3 railroad name", "t3 railroad name", t3.getRailroadName());
@@ -547,7 +547,7 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertEquals("t5 engine road", "t5 engine road", t5.getEngineRoad());
         Assert.assertEquals("t5 lead engine number", "3", t5.getLeadEngine().getNumber());
         Assert.assertEquals("t5 load option", "t5 load option", t5.getLoadOption());
-        Assert.assertEquals("t5 path name", "t5 pathName", t5.getManifestLogoURL());
+        Assert.assertEquals("t5 path name", "t5 pathName", t5.getManifestLogoPathName());
         Assert.assertEquals("t5 number of engines", "1", t5.getNumberEngines());
         Assert.assertEquals("t5 Owner option", "t5 owner option", t5.getOwnerOption());
         Assert.assertEquals("t5 railroad name", "t5 railroad name", t5.getRailroadName());
@@ -599,7 +599,7 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertEquals("t3 engine model", "t3 X engine model", t3.getEngineModel());
         Assert.assertEquals("t3 engine road", "t3 X engine road", t3.getEngineRoad());
         Assert.assertEquals("t3 load option", "t3 X load option", t3.getLoadOption());
-        Assert.assertEquals("t3 path name", "t3 X pathName", t3.getManifestLogoURL());
+        Assert.assertEquals("t3 path name", "t3 X pathName", t3.getManifestLogoPathName());
         Assert.assertEquals("t3 number of engines", "7", t3.getNumberEngines());
         Assert.assertEquals("t3 Owner option", "t3 X owner option", t3.getOwnerOption());
         Assert.assertEquals("t3 railroad name", "t3 X railroad name", t3.getRailroadName());

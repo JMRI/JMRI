@@ -969,7 +969,7 @@ public class PositionableLabel extends JLabel implements Positionable {
         int width = getFontMetrics(getFont()).stringWidth(text);
         int height = getFontMetrics(getFont()).getHeight();
         // int hOffset = 0;  // variable has no effect, see Issue #5662
-        int vOffset = getFontMetrics(getFont()).getAscent();
+        // int vOffset = getFontMetrics(getFont()).getAscent();
         if (_popupUtil != null) {
             if (_popupUtil.getFixedWidth() != 0) {
                 switch (_popupUtil.getJustification()) {
@@ -991,12 +991,12 @@ public class PositionableLabel extends JLabel implements Positionable {
                 // hOffset += _popupUtil.getMargin() + _popupUtil.getBorderSize(); // variable has no effect, see Issue #5662
             }
             if (_popupUtil.getFixedHeight() != 0) {
-                vOffset = Math.max(vOffset + (_popupUtil.getFixedHeight() - height) / 2, 0);
-                vOffset += _popupUtil.getBorderSize();
+                // vOffset = Math.max(vOffset + (_popupUtil.getFixedHeight() - height) / 2, 0);
+                // vOffset += _popupUtil.getBorderSize();
                 height = _popupUtil.getFixedHeight() + 2 * _popupUtil.getBorderSize();
             } else {
                 height += 2 * (_popupUtil.getMargin() + _popupUtil.getBorderSize());
-                vOffset += _popupUtil.getMargin() + _popupUtil.getBorderSize();
+                // vOffset += _popupUtil.getMargin() + _popupUtil.getBorderSize();
             }
         }
 

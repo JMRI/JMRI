@@ -60,6 +60,12 @@ public class ImportEnginesTest extends OperationsTestCase {
         }, "wait for prompt");
 
         JemmyUtil.pressDialogButton(Bundle.getMessage("ExportComplete"), Bundle.getMessage("ButtonOK"));
+        
+        try {
+            export.join();
+        } catch (InterruptedException e) {
+            // do nothing
+        }
 
         java.io.File file = new java.io.File(ExportEngines.defaultOperationsFilename());
         Assert.assertTrue("Confirm file creation", file.exists());
@@ -149,6 +155,12 @@ public class ImportEnginesTest extends OperationsTestCase {
         }, "wait for prompt");
 
         JemmyUtil.pressDialogButton(Bundle.getMessage("ExportComplete"), Bundle.getMessage("ButtonOK"));
+        
+        try {
+            export.join();
+        } catch (InterruptedException e) {
+            // do nothing
+        }
 
         java.io.File file = new java.io.File(ExportEngines.defaultOperationsFilename());
         Assert.assertTrue("Confirm file creation", file.exists());
@@ -223,9 +235,11 @@ public class ImportEnginesTest extends OperationsTestCase {
         // import complete 
         JemmyUtil.pressDialogButton(Bundle.getMessage("SuccessfulImport"), Bundle.getMessage("ButtonOK"));
 
-        jmri.util.JUnitUtil.waitFor(() -> {
-            return mb.getState().equals(Thread.State.TERMINATED);
-        }, "wait for import complete");
+        try {
+            mb.join();
+        } catch (InterruptedException e) {
+            // do nothing
+        }
 
         // confirm import successful
         Assert.assertEquals("engines", 4, emanager.getNumEntries());

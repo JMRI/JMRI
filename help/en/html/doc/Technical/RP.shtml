@@ -227,9 +227,36 @@
 </pre>
       <p>This lets you pay attention to new deprecation warnings as
       you code.</p>
-
+    
+    <a id="exception" name="exception"></a>
     <h2>Exceptions</h2>
     
+    <h3>Throwing Exceptions</h3>
+
+    When checking inputs (i.e. for valid parameter values) and you find a problem, what should you do?
+    <ul>
+    <li>You can throw an unchecked exception. IllegalArgumentException is a great example:
+        Most of the time it doesn't really have to be thought about. It's rare to
+        explicitly try/catch for it.
+        When an IllegalArgumentException (or whatever) is thrown, it works up to some high-level handler, 
+        where there will be some default handling (usually just logging) it, 
+        and the various libraries will get a chance to clean things up.
+
+    <li>You can thrown a checked exception, i.e. a JmriException subclass or 
+        some on-target Java checked exception class. 
+        This forces all writers of method-using code to think about how to handle problems.  
+        They might wrap with a try-catch or just declare it to go upward, but they have to think about it.
+
+    <li>Don't use error codes or other "check the return value" approaches.  
+        They just make it likely there will be invisible problems that bite people in complicated ways 
+        (because you can ignore them, leaving junk behind)
+        
+    </ul>
+    
+    Generally, JMRI developers tend to throw an unchecked exception, i.e. IllegalArgumentException
+    or similar.
+    
+    <h3>Catching Exceptions</h3>
     SpotBugs will object to code like this:
 <pre style="font-family: monospace;">
   try {
