@@ -13,7 +13,8 @@ public class PickPanelTest {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        PickListModel[] models = {PickListModel.turnoutPickModelInstance(),
+        PickListModel[] models = {
+            PickListModel.turnoutPickModelInstance(),
             PickListModel.sensorPickModelInstance(),
             PickListModel.multiSensorPickModelInstance(),
             PickListModel.signalHeadPickModelInstance(),
@@ -25,7 +26,8 @@ public class PickPanelTest {
             PickListModel.oBlockPickModelInstance(),
             PickListModel.warrantPickModelInstance(),
             PickListModel.entryExitPickModelInstance(),
-            PickListModel.logixPickModelInstance()};
+            PickListModel.logixPickModelInstance()
+        };
         PickPanel t = new PickPanel(models);
         Assert.assertNotNull("exists",t);
     }
