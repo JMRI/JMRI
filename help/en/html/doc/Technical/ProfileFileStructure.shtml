@@ -29,15 +29,24 @@
         <dl>
         <dt>Settings Location (portable name = "settings:")</dt>
         <dd>
-            This is the only fixed location and is determined by the underlying operating system type and your logged-in-username. It's a known place the JMRI program can always look and find essential settings files that tell it where everything else is located.
+            This is the only fixed location and is determined by the underlying operating system type and your logged-in-username.
+            It's a known place the JMRI program can always look and find essential settings files that tell it where everything else is located.
             <p>The following files/folders are always located here:</p>
             <dl>
                 <dt>nodeIdentity.xml</dt>
-                <dd>This file contains a unique nodeIdentity string that is generated the first time JMRI uses this Settings Location, doesn't change and serves to distinguish between other possible Settings Locations (such as under another username, on a different operating system partition or another computer).</dd>
+                <dd>
+                    This file contains a unique nodeIdentity string that is generated the first time JMRI uses this Settings Location,
+                    doesn't change and serves to distinguish between other possible Settings Locations
+                    (such as under another username, on a different operating system partition or another computer).
+                </dd>
                 <dt>profiles.xml</dt>
-                <dd>This file lists the name of every Profile Folder known to this instance of JMRI and its location. It also has a list of all paths you wish to search for profiles and which path is the default for newly-created profiles. "settings:" is always searched but it doesn't have to be the default.</dd>
+                <dd>
+                    This file lists the name of every Profile Folder known to this instance of JMRI and its location.
+                    It also has a list of all paths you wish to search for profiles and which path is the default for newly-created profiles.
+                    "settings:" is always searched but it doesn't have to be the default.
+                </dd>
                 <dt>log</dt>
-                <dd>This folder contains the session.log and messages.log files, plus several previous versions of these files.
+                <dd>This folder contains the "session.log" and "messages.log" files, plus several previous versions of these files.
                     </dd>
                 <dt>DecoderProConfig3.properties</dt>
                 <dt>PanelProConfig2.properties</dt>
@@ -54,14 +63,20 @@
                     <ul>
                     <li>Various Profile Folders you have created. From V4.13.4 on, newly-created Profile Folders will have a ".jmri" extension.
                     <li>Your User Files - panels etc.
-                    <li>our "roster" folder and its (recreatable) roster.xml file.
+                    <li>Your "roster" folder and its (recreatable) roster.xml file.
                     </ul></dd>
         </dl></dd>
     
         <dt>Profile Location (portable name = "profile:")</dt>
         <dd>This folder is the one chosen by the Profile Selector mechanism for the current JMRI session.
-        <p>The "profile" folder at the profile: location contains the "profile.xml" and "profile.properties" files and one or more node specific folders that start with "jmri-".
-        <p>The node specific folders contain local versions of profilexml, profile.properties and user-interface.xml.  The user-interface.xml file contains information on window size and positions, column widths, etc.
+        <p>
+            The "profile" folder at the profile: location contains the "profile.xml" and "profile.properties"
+            files and one or more node specific folders that start with "jmri-".
+        </p>
+        <p>
+            The node specific folders contain local versions of "profile.xml", "profile.properties" and "user-interface.xml".
+            The "user-interface.xml" file contains information on window size and positions, column widths, etc.
+        </p>
 
         <p>Other files/folders:
         <ul>
@@ -83,21 +98,39 @@
         <ul>
         <li>Your "roster" folder and its (recreatable) roster.xml file.
         </ul>
-        You are free to change the User Files Location as you like (Preferences->File Locations).
+        <p>You are free to change the User Files Location as you like (Preferences->File Locations).</p>
         </dd>
     
         <dt>Roster Location (portable name = "roster:")</dt>
         <dd>This location contains:
-            <dl>
-            <dt>Your "roster" folder and its (recreatable) roster.xml file</dt>
-            <dd>By default the Roster Location is the same as (and follows) the User Files location unless you explicitly set a different location.
-            You are free to change the Roster Location as you like (Preferences->Roster->Roster->Location Set/Reset).</dd>
-
-            <dt>Scripts Location (portable name = "scripts:")</dt>
-            <dd>This location defaults to the "jython" sample scripts folder located within your JMRI Program Location. You should never store user-created files anywhere within your Program Location, they are likely to be lost in a JMRI upgrade. 
+            <ul>
+            <li>
+                Your "roster" folder. This contains:
+                <ul>
+                    <li>An XML file for each loco entry in your roster, with stored CV values, etc.</li>
+                   <li>".bak" files, which are backup versions of entries in your roster.</li>
+                   <li>A "consist" folder, which stores information on consists you have created using the Consist tools in JMRI.</li>
+                </ul>
+            </li>
+            <li>
+                A "roster.xml" file, which is a (recreatable) index of the XML files in the "roster" folder.
+                You should create/recreate "roster.xml" (Actions->Recreate Roster Index) if it is missing or you are experiencing roster problems.
+            </li>
+            <li>
+                Copies of media files you have added to roster entries, throttles etc.
+                <br>(Older JMRI versions stored roster images in a "resources" folder in the User Files Location.
+                If you have been using JMRI for a long time, you may have roster images in both locations.)
+            </li>
+            </ul>
+            <p>By default the Roster Location is the same as (and follows) the User Files location unless you explicitly set a different location.</p>
+            <p>You are free to change the Roster Location as you like (Preferences->Roster->Roster->Location Set/Reset).
+                The Reset button causes the Roster Location to again follow the User Files location.
+            </p>
+        </dd>
+    
+        <dt>Scripts Location (portable name = "scripts:")</dt>
+        <dd>This location defaults to the "jython" sample scripts folder located within your JMRI Program Location. You should never store user-created files anywhere within your Program Location, they are likely to be lost in a JMRI upgrade. 
             <p>If you are creating your own scripts you may wish to change the Scripts Location (Preferences->Locations).
-            </dd>
-            </dl>
         </dd>
     
         <dt>Program Location (portable name = "program:")</dt>
