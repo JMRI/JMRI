@@ -105,7 +105,7 @@ public class PickSinglePanel<T extends NamedBean> extends JPanel {
         };
         _addPanel = new jmri.jmrit.beantable.AddNewDevicePanel(
                 _sysNametext, _userNametext, "addToTable", okListener, cancelListener); // No I18N
-        // hide Cancel button as not handled bij Picker Panel
+        // hide Cancel button as not handled by Picker Panel
 
         _cantAddPanel = new JPanel();
         _cantAddPanel.setLayout(new BorderLayout(5, 5));
