@@ -65,6 +65,7 @@ public class LightControl {
     protected int _timeOnDuration = 0;          // duration (milliseconds) if TIMED_ON_CONTROL
     private String _controlSensor2Name = ""; // second controlling sensor if TWO_SENSOR_CONTROL
 
+    @Override
     public boolean equals(Object o) {
         if (o == null) return false;
         if (this == o) {
@@ -106,6 +107,12 @@ public class LightControl {
         return true;
     }
     
+    @Override
+    public int hashCode() {
+        // matches with equals() by contract
+        return _controlType;
+    }
+
     /*
      * Accessor methods
      */
