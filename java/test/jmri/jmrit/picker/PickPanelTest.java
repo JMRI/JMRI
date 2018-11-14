@@ -3,7 +3,6 @@ package jmri.jmrit.picker;
 import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
 import org.junit.*;
-import org.netbeans.jemmy.EventTool;
 
 /**
  *
@@ -16,14 +15,17 @@ public class PickPanelTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         PickListModel[] models = {PickListModel.turnoutPickModelInstance(),
             PickListModel.sensorPickModelInstance(),
+            PickListModel.multiSensorPickModelInstance(),
             PickListModel.signalHeadPickModelInstance(),
             PickListModel.signalMastPickModelInstance(),
             PickListModel.memoryPickModelInstance(),
+            PickListModel.blockPickModelInstance(),
             PickListModel.reporterPickModelInstance(),
             PickListModel.lightPickModelInstance(),
-            PickListModel.warrantPickModelInstance(),
             PickListModel.oBlockPickModelInstance(),
-            PickListModel.entryExitPickModelInstance(),};
+            PickListModel.warrantPickModelInstance(),
+            PickListModel.entryExitPickModelInstance(),
+            PickListModel.logixPickModelInstance()};
         PickPanel t = new PickPanel(models);
         Assert.assertNotNull("exists",t);
     }

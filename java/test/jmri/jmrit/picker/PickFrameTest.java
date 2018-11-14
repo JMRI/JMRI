@@ -49,6 +49,18 @@ public class PickFrameTest {
         JLabelOperator jlo = new JLabelOperator(jfo, 1);
         Assert.assertTrue(jlo.getText().startsWith("Cannot add new items"));
 
+        // Display other pages
+        jtab.selectPage("Turnout Table");
+        jtab.selectPage("Signal Head Table");
+        jtab.selectPage("Signal Mast Table");
+        jtab.selectPage("Memory Table");
+        jtab.selectPage("Reporter Table");
+        jtab.selectPage("Light Table");
+        jtab.selectPage("Warrant Table");
+        jtab.selectPage("Block Table");
+        jtab.selectPage("Entry Exit Table");
+        jtab.selectPage("Logix Table");
+
         JUnitUtil.dispose(f);
     }
 

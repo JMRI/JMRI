@@ -80,10 +80,8 @@ public class PickSinglePanel<T extends NamedBean> extends JPanel {
         if (bean == null) {
             return null;
         }
-//         NamedBeanHandleManager nbhm = InstanceManager.getDefault(NamedBeanHandleManager.class);
-        return InstanceManager.getDefault(NamedBeanHandleManager.class)   // TODO SB
+        return InstanceManager.getDefault(NamedBeanHandleManager.class)
                         .getNamedBeanHandle(beanName, bean);
-//         return nbhm.getNamedBeanHandle(beanName, bean);
     }
 
     public JTable getTable() { return _table; }

@@ -39,7 +39,14 @@ public class PickSinglePanelTest {
         // Add a valid name
         jto = new JTextFieldOperator(jfo, 0);
         jto.enterText("IS999");
+        jto = new JTextFieldOperator(jfo, 1);
+        jto.enterText("User Name");
         new JButtonOperator(jfo, "Add to Table").doClick();  // NOI18N
+
+        JTableOperator jtbo = new JTableOperator(jfo);
+        jtbo.clickOnCell(0, 1);
+        jmri.NamedBeanHandle nbh = sensorPanel.getSelectedBeanHandle();
+        Assert.assertNotNull(nbh);
 
         // Switch to the signal head table
         f.remove(sensorPanel);
@@ -77,4 +84,5 @@ public class PickSinglePanelTest {
     public void tearDown() {
         JUnitUtil.tearDown();
     }
+//     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PickSinglePanelTest.class);
 }
