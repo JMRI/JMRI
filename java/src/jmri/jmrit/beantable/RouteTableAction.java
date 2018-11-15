@@ -78,7 +78,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
     public RouteTableAction(String s) {
         super(s);
         // disable ourself if there is no primary Route manager available
-        if (jmri.InstanceManager.getNullableDefault(jmri.RouteManager.class) == null) {
+        if (InstanceManager.getNullableDefault(jmri.RouteManager.class) == null) {
             setEnabled(false);
         }
     }
@@ -216,14 +216,14 @@ public class RouteTableAction extends AbstractTableAction<Route> {
             public void setValueAt(Object value, int row, int col) {
                 switch (col) {
                     case USERNAMECOL:
-                        //Directly changing the username should only be possible if the username was previously null or ""
+                        // Directly changing the username should only be possible if the username was previously null or ""
                         // check to see if user name already exists
                         if (((String) value).equals("")) {
                             value = null;
                         } else {
                             Route nB = getByUserName((String) value);
                             if (nB != null) {
-                                log.error("User Name is not unique " + value);
+                                log.error("User Name is not unique {}", value);
                                 String msg;
                                 msg = Bundle.getMessage("WarningUserName", new Object[]{("" + value)});
                                 JOptionPane.showMessageDialog(null, msg,
@@ -310,17 +310,17 @@ public class RouteTableAction extends AbstractTableAction<Route> {
 
             @Override
             public RouteManager getManager() {
-                return jmri.InstanceManager.getDefault(RouteManager.class);
+                return InstanceManager.getDefault(RouteManager.class);
             }
 
             @Override
             public Route getBySystemName(String name) {
-                return jmri.InstanceManager.getDefault(RouteManager.class).getBySystemName(name);
+                return InstanceManager.getDefault(RouteManager.class).getBySystemName(name);
             }
 
             @Override
             public Route getByUserName(String name) {
-                return jmri.InstanceManager.getDefault(RouteManager.class).getByUserName(name);
+                return InstanceManager.getDefault(RouteManager.class).getByUserName(name);
             }
 
             @Override
@@ -372,7 +372,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
         int result = jmri.util.StringUtil.getStateFromName(mode, sensorInputModeValues, sensorInputModes);
 
         if (result < 0) {
-            log.warn("unexpected mode string in sensorMode: " + mode);
+            log.warn("unexpected mode string in sensorMode: {}", mode);
             throw new IllegalArgumentException();
         }
         return result;
@@ -388,7 +388,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
         int result = jmri.util.StringUtil.getStateFromName(mode, turnoutInputModeValues, turnoutInputModes);
 
         if (result < 0) {
-            log.warn("unexpected mode string in turnoutMode: " + mode);
+            log.warn("unexpected mode string in turnoutMode: {}", mode);
             throw new IllegalArgumentException();
         }
         return result;
@@ -446,10 +446,10 @@ public class RouteTableAction extends AbstractTableAction<Route> {
     JButton updateButton = new JButton(Bundle.getMessage("ButtonUpdate"));
     JButton exportButton = new JButton(Bundle.getMessage("ButtonExport"));
 
-    static String createInst = Bundle.getMessage("RouteAddStatusInitial1", Bundle.getMessage("ButtonCreate")); // I18N to include original button name in help string
-    static String editInst = Bundle.getMessage("RouteAddStatusInitial2", Bundle.getMessage("ButtonEdit"));
-    static String updateInst = Bundle.getMessage("RouteAddStatusInitial3", Bundle.getMessage("ButtonUpdate"));
-    static String cancelInst = Bundle.getMessage("RouteAddStatusInitial4", Bundle.getMessage("ButtonCancelEdit", Bundle.getMessage("ButtonEdit")));
+    static final String createInst = Bundle.getMessage("RouteAddStatusInitial1", Bundle.getMessage("ButtonCreate")); // I18N to include original button name in help string
+    static final String editInst = Bundle.getMessage("RouteAddStatusInitial2", Bundle.getMessage("ButtonEdit"));
+    static final String updateInst = Bundle.getMessage("RouteAddStatusInitial3", Bundle.getMessage("ButtonUpdate"));
+    static final String cancelInst = Bundle.getMessage("RouteAddStatusInitial4", Bundle.getMessage("ButtonCancelEdit", Bundle.getMessage("ButtonEdit")));
 
     JLabel status1 = new JLabel(createInst);
     JLabel status2 = new JLabel(editInst);
@@ -463,7 +463,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
 
     @Override
     protected void addPressed(ActionEvent e) {
-        pref = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+        pref = InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         if (editMode) {
             cancelEdit();
         }
@@ -916,44 +916,50 @@ public class RouteTableAction extends AbstractTableAction<Route> {
     }
 
     /**
-     * Respond to the Add button.
+     * Respond to the Create button.
      *
      * @param e the action event
      */
     void createPressed(ActionEvent e) {
-
         if (!_autoSystemName.isSelected()) {
             if (!checkNewNamesOK()) {
                 return;
             }
         }
-        updatePressed(e, true);
+        updatePressed(e, true); // close pane after creating
         status2.setText(editInst);
         pref.setSimplePreferenceState(systemNameAuto, _autoSystemName.isSelected());
         // activate the route
     }
 
+    /**
+     * Check name for a new Route object using the _systemName field on
+     * the addFrame pane.
+     *
+     * @return whether name entered is allowed
+     */
     boolean checkNewNamesOK() {
-        // Get system name and user name
+        // Get system name and user name from Add Route pane
         String sName = _systemName.getText();
         String uName = _userName.getText();
         if (sName.length() == 0) {
             status1.setText(Bundle.getMessage("AddBeanStatusEnter"));
+            status1.setForeground(Color.red);
             return false;
         }
         Route g;
         // check if a Route with the same user name exists
         if (!uName.equals("")) {
-            g = jmri.InstanceManager.getDefault(jmri.RouteManager.class).getByUserName(uName);
+            g = InstanceManager.getDefault(jmri.RouteManager.class).getByUserName(uName);
             if (g != null) {
-                // Route with this user name already exists
+                // Route already exists
                 status1.setText(Bundle.getMessage("LightError8"));
                 return false;
             }
         }
         // check if a Route with this system name already exists
-        sName = jmri.InstanceManager.getDefault(jmri.RouteManager.class).normalizeSystemName(sName);
-        g = jmri.InstanceManager.getDefault(jmri.RouteManager.class).getBySystemName(sName);
+        sName = InstanceManager.getDefault(jmri.RouteManager.class).normalizeSystemName(sName);
+        g = InstanceManager.getDefault(jmri.RouteManager.class).getBySystemName(sName);
         if (g != null) {
             // Route already exists
             status1.setText(Bundle.getMessage("LightError1"));
@@ -962,29 +968,37 @@ public class RouteTableAction extends AbstractTableAction<Route> {
         return true;
     }
 
+    /**
+     * Check name and return a new or existing Route object with the name
+     * as entered in the _systemName field on the addFrame pane.
+     *
+     * @return The new/updated Route object
+     */
     Route checkNamesOK() {
         // Get system name and user name
         String sName = _systemName.getText();
         String uName = _userName.getText();
         Route g;
         if (_autoSystemName.isSelected() && !editMode) {
+            log.debug("RouteTableAction checkNamesOK new autogroup");
             // create new Route with auto system name
-            g = jmri.InstanceManager.getDefault(jmri.RouteManager.class).newRoute(uName);
+            g = InstanceManager.getDefault(jmri.RouteManager.class).newRoute(uName);
         } else {
             if (sName.length() == 0) {
                 status1.setText(Bundle.getMessage("AddBeanStatusEnter"));
+                status1.setForeground(Color.red);
                 return null;
             }
             try {
-                sName = jmri.InstanceManager.getDefault(jmri.RouteManager.class).normalizeSystemName(sName);
-                g = jmri.InstanceManager.getDefault(jmri.RouteManager.class).provideRoute(sName, uName);
+                sName = InstanceManager.getDefault(jmri.RouteManager.class).normalizeSystemName(sName);
+                g = InstanceManager.getDefault(jmri.RouteManager.class).provideRoute(sName, uName);
             } catch (IllegalArgumentException ex) {
                 g = null; // for later check
             }
         }
         if (g == null) {
             // should never get here
-            log.error("Unknown failure to create Route with System Name: " + sName); //NOI18N
+            log.error("Unknown failure to create Route with System Name: {}", sName); // NOI18N
         } else {
             g.deActivateRoute();
         }
@@ -1029,22 +1043,22 @@ public class RouteTableAction extends AbstractTableAction<Route> {
         // Get sensor control information if any
         if (sensor1.getSelectedBean() != null) {
             if ((!g.addSensorToRoute(sensor1.getSelectedDisplayName(), sensorModeFromBox(sensor1mode)))) {
-                log.error("Unexpected failure to add Sensor '" + sensor1.getSelectedDisplayName()
-                        + "' to Route '" + g.getSystemName() + "'.");
+                log.error("Unexpected failure to add Sensor '{}' to route '{}'.",
+                        sensor1.getSelectedDisplayName(), g.getSystemName());
             }
         }
 
         if (sensor2.getSelectedBean() != null) {
             if ((!g.addSensorToRoute(sensor2.getSelectedDisplayName(), sensorModeFromBox(sensor2mode)))) {
-                log.error("Unexpected failure to add Sensor '" + sensor2.getSelectedDisplayName()
-                        + "' to Route '" + g.getSystemName() + "'.");
+                log.error("Unexpected failure to add Sensor '{}' to Route '{}'.",
+                        sensor2.getSelectedDisplayName(), g.getSystemName());
             }
         }
 
         if (sensor3.getSelectedBean() != null) {
             if ((!g.addSensorToRoute(sensor3.getSelectedDisplayName(), sensorModeFromBox(sensor3mode)))) {
-                log.error("Unexpected failure to add Sensor '" + sensor3.getSelectedDisplayName()
-                        + "' to Route '" + g.getSystemName() + "'.");
+                log.error("Unexpected failure to add Sensor '{}' to Route '{}'.",
+                        sensor3.getSelectedDisplayName(), g.getSystemName());
             }
         }
 
@@ -1096,7 +1110,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
             try {
                 soundFile.setText(soundChooser.getSelectedFile().getCanonicalPath());
             } catch (java.io.IOException e) {
-                log.error("exception setting sound file: " + e);
+                log.error("exception setting sound file: ", e);
             }
         }
     }
@@ -1117,7 +1131,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
             try {
                 scriptFile.setText(scriptChooser.getSelectedFile().getCanonicalPath());
             } catch (java.io.IOException e) {
-                log.error("exception setting script file: " + e);
+                log.error("exception setting script file: ", e);
             }
         }
     }
@@ -1130,10 +1144,10 @@ public class RouteTableAction extends AbstractTableAction<Route> {
     void editPressed(ActionEvent e) {
         // identify the Route with this name if it already exists
         String sName = _systemName.getText();
-        Route g = jmri.InstanceManager.getDefault(jmri.RouteManager.class).getBySystemName(sName);
+        Route g = InstanceManager.getDefault(jmri.RouteManager.class).getBySystemName(sName);
         if (g == null) {
             sName = _userName.getText();
-            g = jmri.InstanceManager.getDefault(jmri.RouteManager.class).getByUserName(sName);
+            g = InstanceManager.getDefault(jmri.RouteManager.class).getByUserName(sName);
             if (g == null) {
                 // Route does not exist, so cannot be edited
                 status1.setText(Bundle.getMessage("RouteAddStatusErrorNotFound"));
@@ -1242,7 +1256,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
         _systemName.setVisible(false);
         addFrame.setTitle(Bundle.getMessage("TitleEditRoute"));
         editMode = true;
-    }   // editPressed
+    }
 
     /**
      * Respond to the Delete button.
@@ -1289,6 +1303,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
         setControlInformation(g);
         curRoute = g;
         finishUpdate();
+        status1.setForeground(Color.gray);
         status1.setText((newRoute ? Bundle.getMessage("RouteAddStatusCreated") : Bundle.getMessage("RouteAddStatusUpdated")) + ": \""
                 + uName + "\" (" + _includedTurnoutList.size() + " "
                 + Bundle.getMessage("Turnouts") + ", " + _includedSensorList.size() + " " + Bundle.getMessage("Sensors") + ")");
@@ -1360,7 +1375,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
         if (logix == null) {
             logix = InstanceManager.getDefault(jmri.LogixManager.class).createNewLogix(logixSystemName, uName);
             if (logix == null) {
-                log.error("Failed to create Logix " + logixSystemName + ", " + uName);
+                log.error("Failed to create Logix {}, {}", logixSystemName, uName);
                 return;
             }
         }
@@ -1579,7 +1594,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
         }
         logix.activateLogix();
         if (curRoute != null) {
-            jmri.InstanceManager.getDefault(jmri.RouteManager.class).deleteRoute(curRoute);
+            InstanceManager.getDefault(jmri.RouteManager.class).deleteRoute(curRoute);
             curRoute = null;
         }
         status1.setText(Bundle.getMessage("BeanNameRoute") + "\"" + uName + "\" " + Bundle.getMessage("RouteAddStatusExported") + " (" + _includedTurnoutList.size()
@@ -1770,7 +1785,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
                 trigger = false;
                 break;
             default:
-                log.error("Control Sensor " + devName + " has bad mode= " + mode);
+                log.error("Control Sensor {} has bad mode= {}", devName, mode);
                 return null;
         }
         return new ConditionalVariable(negated, oper, type, devName, trigger);
@@ -1824,7 +1839,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
                 negated = true;
                 break;
             default:
-                log.error("Control Turnout " + devName + " has bad mode= " + mode);
+                log.error("Control Turnout {} has bad mode= {}", devName, mode);
                 return null;
         }
         return new ConditionalVariable(negated, oper, type, devName, trigger);
@@ -2246,7 +2261,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
 
     @Override
     public void setMessagePreferencesDetails() {
-        jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class)
+        InstanceManager.getDefault(jmri.UserPreferencesManager.class)
                 .setPreferenceItemDetails(getClassName(), "remindSaveRoute", Bundle.getMessage("HideSaveReminder"));
         super.setMessagePreferencesDetails();
     }

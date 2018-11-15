@@ -2,7 +2,6 @@ package jmri.jmrit.operations.rollingstock.engines.tools;
 
 import java.awt.GraphicsEnvironment;
 import java.io.File;
-import java.util.regex.Pattern;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.OperationsXml;
@@ -85,10 +84,8 @@ public class ImportEnginesTest extends OperationsTestCase {
 
         // opens file chooser path "operations" "JUnitTest"
         JFileChooserOperator fco = new JFileChooserOperator();
-        String[] path = OperationsXml.getOperationsDirectoryName().split(Pattern.quote(File.separator));
-        fco.chooseFile(path[0]);
-        fco.chooseFile(path[1]);
-        fco.chooseFile(ExportEngines.getOperationsFileName());
+        String path = OperationsXml.getOperationsDirectoryName();
+        fco.chooseFile(path + File.separator + ExportEngines.getOperationsFileName());
         
         jmri.util.JUnitUtil.waitFor(() -> {
             return mb.getState().equals(Thread.State.WAITING);
@@ -182,10 +179,8 @@ public class ImportEnginesTest extends OperationsTestCase {
 
         // opens file chooser path "operations" "JUnitTest"
         JFileChooserOperator fco = new JFileChooserOperator();
-        String[] path = OperationsXml.getOperationsDirectoryName().split(Pattern.quote(File.separator));
-        fco.chooseFile(path[0]);
-        fco.chooseFile(path[1]);
-        fco.chooseFile(ExportEngines.getOperationsFileName());
+        String path = OperationsXml.getOperationsDirectoryName();
+        fco.chooseFile(path + File.separator + ExportEngines.getOperationsFileName());
         
         jmri.util.JUnitUtil.waitFor(() -> {
             return mb.getState().equals(Thread.State.WAITING);

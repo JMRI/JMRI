@@ -99,4 +99,25 @@ public abstract class AbstractLightTestBase {
          Assert.assertEquals("bean type",t.getBeanType(),Bundle.getMessage("BeanNameLight"));
     }
 
+    // Test the Light interface
+    @Test
+    public void testLight() {
+        t.setState(Light.ON);
+        Assert.assertTrue("Light is ON", t.getState() == Light.ON);
+        t.setState(Light.OFF);
+        Assert.assertTrue("Light is ON", t.getState() == Light.OFF);
+        t.setCommandedState(Light.ON);
+        Assert.assertTrue("Light is ON", t.getState() == Light.ON);
+        t.setCommandedState(Light.OFF);
+        Assert.assertTrue("Light is ON", t.getState() == Light.OFF);
+        t.setState(Light.ON);
+        Assert.assertTrue("Light is ON", t.getCommandedState() == Light.ON);
+        t.setState(Light.OFF);
+        Assert.assertTrue("Light is ON", t.getCommandedState() == Light.OFF);
+        t.setState(Light.ON);
+        Assert.assertTrue("Light is ON", t.getKnownState() == Light.ON);
+        t.setState(Light.OFF);
+        Assert.assertTrue("Light is ON", t.getKnownState() == Light.OFF);
+    }
+
 }

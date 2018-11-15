@@ -16,7 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implementation of the DCCppOverTcp LbServer Server Protocol
+ * Implementation of the DCCppOverTcp LbServer Server Protocol.
  *
  * @author Alex Shepherd Copyright (C) 2006
  * @author Mark Underwood Copyright (C) 2015
@@ -73,7 +73,7 @@ public final class ClientRxHandler extends Thread implements DCCppListener {
                     log.debug("ClientRxHandler: Remote Connection Closed");
                     interrupt();
                 } else {
-                    log.debug("ClientRxHandler: Received: " + inString);
+                    log.debug("ClientRxHandler: Received: {}", inString);
 
                     // Check for the old server version string.  If present,
                     // append the old-style prefixes to transmissions.
@@ -189,7 +189,7 @@ public final class ClientRxHandler extends Thread implements DCCppListener {
                         outBuf.append("<");
                         outBuf.append(msg.toString());
                         outBuf.append(">");
-                        log.debug("ClientTxHandler: Send: " + outBuf.toString());
+                        log.debug("ClientTxHandler: Send: {}", outBuf.toString());
                         outBuf.append("\r\n");
                         outStream.write(outBuf.toString().getBytes());
                         outStream.flush();
@@ -229,4 +229,5 @@ public final class ClientRxHandler extends Thread implements DCCppListener {
     }
 
     private final static Logger log = LoggerFactory.getLogger(ClientRxHandler.class);
+
 }
