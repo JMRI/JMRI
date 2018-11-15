@@ -676,7 +676,6 @@ public class SpeedUtil {
     }
     
     /*************** dynamic calibration ***********************/
-
     long _timeAtSpeed;
     float _distanceTravelled;
     float _settingsTravelled;
