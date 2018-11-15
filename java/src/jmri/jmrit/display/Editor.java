@@ -28,8 +28,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -652,15 +650,13 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 g2d.scale(_paintScale, _paintScale);
             }
 
+            // It is rather unpleasant that the following needs to be done in a try-catch, but exceptions have been observed
             try {
                super.paint(g);
                paintTargetPanel(g);
             } catch (Exception e) {
                 log.error("paint failed in thread "+
-                    Thread.currentThread().getName()+" "+Thread.currentThread().getId()+": "+e);
-                StringWriter outError = new StringWriter();
-                e.printStackTrace(new PrintWriter(outError));
-                log.error(outError.toString());
+                    Thread.currentThread().getName()+" "+Thread.currentThread().getId()+": ", e);
             }
             
             Stroke stroke = new BasicStroke();

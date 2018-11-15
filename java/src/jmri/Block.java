@@ -12,8 +12,6 @@ import javax.annotation.Nonnull;
 import jmri.implementation.AbstractNamedBean;
 import jmri.implementation.SignalSpeedMap;
 import jmri.util.PhysicalLocation;
-import java.io.StringWriter;
-import java.io.PrintWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -320,35 +318,13 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
         int old = _current;
         _current = v;
         // notify
-        // It is rather unpleasant that the following needs to be done in a try-catch, but exceptions have been observed: 
-        // java.lang.IllegalArgumentException: illegal component position
-	// at java.awt.Container.addImpl(Container.java:1087)
-	// at javax.swing.JLayeredPane.addImpl(JLayeredPane.java:231)
-	// at java.awt.Container.add(Container.java:973)
-	// at jmri.jmrit.display.Editor$TargetPane.add(Editor.java:608)
-	// at jmri.jmrit.display.Editor.addToTarget(Editor.java:1716)
-	// at jmri.jmrit.display.Editor.displayLevelChange(Editor.java:1673)
-	// at jmri.jmrit.display.PositionableJComponent.setDisplayLevel(PositionableJComponent.java:143)
-	// at jmri.jmrit.display.controlPanelEditor.shape.PositionableShape.<init>(PositionableShape.java:70)
-	// at jmri.jmrit.display.controlPanelEditor.shape.PositionableRectangle.<init>(PositionableRectangle.java:16)
-	// at jmri.jmrit.display.controlPanelEditor.shape.PositionableRoundRect.<init>(PositionableRoundRect.java:20)
-	// at jmri.jmrit.display.controlPanelEditor.shape.LocoLabel.<init>(LocoLabel.java:13)
-	// at jmri.jmrit.display.IndicatorTrackPaths.setLocoIcon(IndicatorTrackPaths.java:132)
-	// at jmri.jmrit.display.IndicatorTrackIcon.setStatus(IndicatorTrackIcon.java:282)
-	// at jmri.jmrit.display.IndicatorTrackIcon.propertyChange(IndicatorTrackIcon.java:263)
-	// at java.beans.PropertyChangeSupport.fire(PropertyChangeSupport.java:335)
-	// at java.beans.PropertyChangeSupport.firePropertyChange(PropertyChangeSupport.java:327)
-	// at java.beans.PropertyChangeSupport.firePropertyChange(PropertyChangeSupport.java:263)
-	// at jmri.implementation.AbstractNamedBean.firePropertyChange(AbstractNamedBean.java:243)
-	// at jmri.Block.setState(Block.java:321)
+
+        // It is rather unpleasant that the following needs to be done in a try-catch, but exceptions have been observed
         try {
             firePropertyChange("state", old, _current);
         } catch (Exception e) {
             log.error(getDisplayName()+" got exception during fireProperTyChange("+old+","+_current+") in thread "+
-                    Thread.currentThread().getName()+" "+Thread.currentThread().getId()+": "+e);
-            StringWriter outError = new StringWriter();
-            e.printStackTrace(new PrintWriter(outError));
-            log.error(outError.toString());
+                    Thread.currentThread().getName()+" "+Thread.currentThread().getId()+": ", e);
         }
     }
 

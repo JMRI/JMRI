@@ -2,8 +2,6 @@ package jmri.jmrit.display;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -281,14 +279,12 @@ public class IndicatorTrackIcon extends PositionableIcon
     private void setStatus(OBlock block, int state) {
         _status = _pathUtil.getStatus(block, state);
         if ((state & (OBlock.OCCUPIED | OBlock.RUNNING)) != 0) {
+            // It is rather unpleasant that the following needs to be done in a try-catch, but exceptions have been observed
             try {
                 _pathUtil.setLocoIcon(block, getLocation(), getSize(), _editor);
             } catch (Exception e) {
                 log.error("setStatus on indicator track icon failed in thread "+
-                    Thread.currentThread().getName()+" "+Thread.currentThread().getId()+": "+e);
-                StringWriter outError = new StringWriter();
-                e.printStackTrace(new PrintWriter(outError));
-                log.error(outError.toString());
+                    Thread.currentThread().getName()+" "+Thread.currentThread().getId()+": ", e);
             }
         }
         repaint();
