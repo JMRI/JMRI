@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
     MatrixSignalMastXmlTest.class,
     MergSD2SignalHeadXmlTest.class,
     QuadOutputSignalHeadXmlTest.class,
+    SchemaTest.class,
     SE8cSignalHeadXmlTest.class,
     SignalHeadSignalMastXmlTest.class,
     SingleTurnoutSignalHeadXmlTest.class,

@@ -945,7 +945,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
 
                         } else if ((packet[i] >> 3) == 0x00) {
                             // This should fall through to 00000 three byte instruction
-                            i = i + 2;
+                            // i = i + 2;
 
                         } else {
                             // Remainder are reserved

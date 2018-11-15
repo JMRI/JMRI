@@ -10004,13 +10004,13 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
         // calculate the bounds for the scroll pane
         JScrollPane scrollPane = getPanelScrollPane();
-        Rectangle scrollBounds = scrollPane.getViewportBorderBounds();
-        //log.info("  scrollBounds: " + scrollBounds);
+        // Rectangle scrollBounds = scrollPane.getViewportBorderBounds();
+        // log.info("  scrollBounds: " + scrollBounds);
 
-        Rectangle2D newClipBounds = SwingUtilities.convertRectangle(
-                scrollPane.getParent(), scrollBounds, this);
-        newClipBounds = MathUtil.rectangle2DToRectangle(scrollPane.getVisibleRect());
-        //log.info("  newClipBounds: " + newClipBounds);
+        // Rectangle2D newClipBounds = SwingUtilities.convertRectangle(
+        //        scrollPane.getParent(), scrollBounds, this);
+        Rectangle2D newClipBounds = MathUtil.rectangle2DToRectangle(scrollPane.getVisibleRect());
+        log.debug("  newClipBounds: {}", newClipBounds);
 
         double scale = getZoom();
         int width = (int) (newClipBounds.getWidth() / scale);
