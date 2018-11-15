@@ -309,8 +309,8 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
                     canAddRange(e);
                 }
             };
-            if (reportManager.getClass().getName().contains("ProxyReporterManager")) {
-                jmri.managers.ProxyReporterManager proxy = (jmri.managers.ProxyReporterManager) reportManager;
+            if (InstanceManager.reporterManagerInstance().getClass().getName().contains("ProxyReporterManager")) {            
+            jmri.managers.ProxyReporterManager proxy = (jmri.managers.ProxyReporterManager) InstanceManager.reporterManagerInstance();          
                 List<Manager<Reporter>> managerList = proxy.getDisplayOrderManagerList();
                 for (Manager<Reporter> reporter : managerList) {
                     String manuName = ConnectionNameFromSystemName.getConnectionName(reporter.getSystemPrefix());
@@ -490,16 +490,16 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
             // Tab All or first time opening, default tooltip
             connectionChoice = "TBD";
         }
-        if (reportManager.getClass().getName().contains("ProxyReporterManager")) {
-            jmri.managers.ProxyReporterManager proxy = (jmri.managers.ProxyReporterManager) reportManager;
+        if (InstanceManager.reporterManagerInstance().getClass().getName().contains("ProxyReporterManager")) {            
+            jmri.managers.ProxyReporterManager proxy = (jmri.managers.ProxyReporterManager) InstanceManager.reporterManagerInstance();    
             List<Manager<Reporter>> managerList = proxy.getDisplayOrderManagerList();
             String systemPrefix = ConnectionNameFromSystemName.getPrefixFromName(connectionChoice);
             for (Manager<Reporter> mgr : managerList) {
-                if (mgr.getSystemPrefix().equals(systemPrefix) && ((ReporterManager) mgr).allowMultipleAdditions(systemPrefix)) {
-                    rangeCheckBox.setEnabled(true);
+                if (mgr.getSystemPrefix().equals(systemPrefix)) {
+                    rangeCheckBox.setEnabled(((ReporterManager) mgr).allowMultipleAdditions(systemPrefix));
                     // get tooltip from ProxyReporterManager
                     addEntryToolTip = mgr.getEntryToolTip();
-                    log.debug("R add box set");
+                   log.debug("R add box set");
                     break;
                 }
             }
@@ -508,7 +508,9 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
             log.debug("R add box enabled2");
             // get tooltip from sensor manager
             addEntryToolTip = reportManager.getEntryToolTip();
-            log.debug("ReporterManager tip");
+        }
+        else {
+            log.warn("Unable to set reporter tooltip or rangecheckbox");
         }
         // show hwAddressTextField field tooltip in the Add Reporter pane that matches system connection selected from combobox
         hardwareAddressTextField.setToolTipText("<html>"
