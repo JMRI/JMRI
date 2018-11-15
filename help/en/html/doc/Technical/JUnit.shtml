@@ -1159,6 +1159,28 @@
         can be ignored in headless mode if the first line of the
         test method is:<br>
         <code>Assume.assumeFalse(GraphicsEnvironment.isHeadless());</code></li>
+        
+        <li>
+        <a href="http://jmri.tagadab.com/jenkins/job/Development/job/Ignored%20Test%20Scan/lastBuild/testReport/">
+                    <img src="http://jmri.tagadab.com/jenkins/job/Development/job/Ignored%20Test%20Scan/warnings7/trendGraph/png?url=PRIORITY" align="right">
+                </a>        
+        <a href=
+        "http://junit.sourceforge.net/javadoc/org/junit/Ignore.html">
+        Ignore</a> - mark a test to be unconditionally ignored. For
+        example, a test that isn't fully implemented yet can be marked to be ignored:<br>
+<pre style="font-family: monospace;">
+        @Ignore("not done yet")
+        @Test
+        public void notDoneYet() {
+            // some code that compiles but doesn't run
+        }
+</pre><br>
+        You should provide the reason for ignoring this test in the <code>@Ignore</code> argument. 
+        <code>@Ignore</code> without an argument
+        will compile, but Jenkins will mark it as an error.
+        In general, we'd rather have working tests rather than ignored ones, so
+        we track the number that have been ignored in a Jenkins job, see the image 
+        to the right.        
       </ul>
 
       <p><a href=
