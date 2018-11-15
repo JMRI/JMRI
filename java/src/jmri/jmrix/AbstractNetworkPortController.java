@@ -360,7 +360,7 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
                     connect();
                 } catch (IOException ex) {
                     log.error("restart failed", ex);
-                    return;
+                    // if returned on exception stops thread and connection attempts
                 }
                 
                 reply = !opened;

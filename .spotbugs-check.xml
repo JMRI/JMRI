@@ -21,7 +21,6 @@
            <Bug pattern="RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE" />
            <Bug pattern="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD" />
            <Bug pattern="UW_UNCOND_WAIT" />
-           <Bug pattern="VO_VOLATILE_INCREMENT" />
            <Bug pattern="WMI_WRONG_MAP_ITERATOR" />
         </Or>
      </Match>
@@ -33,14 +32,12 @@
            <Bug pattern="BC_UNCONFIRMED_CAST" />
            <Bug pattern="BC_UNCONFIRMED_CAST_OF_RETURN_VALUE" />
            <Bug pattern="DB_DUPLICATE_SWITCH_CLAUSES" />
-           <Bug pattern="DLS_DEAD_LOCAL_STORE" />           
            <Bug pattern="IS2_INCONSISTENT_SYNC" />
            <Bug pattern="LI_LAZY_INIT_STATIC" />
            <Bug pattern="NO_NOTIFY_NOT_NOTIFYALL" />
            <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE" />
            <Bug pattern="PZLA_PREFER_ZERO_LENGTH_ARRAYS" />
            <Bug pattern="RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE" />
-           <Bug pattern="RV_CHECK_FOR_POSITIVE_INDEXOF" />
            <Bug pattern="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD" />
            <Bug pattern="UCF_USELESS_CONTROL_FLOW" />
            <Bug pattern="UC_USELESS_CONDITION" />

@@ -22,9 +22,9 @@ public class DefaultSignalGroupManagerXml
 
     /**
      * Default implementation for storing the contents of a
-     * DefaultSignalGroupManager
+     * DefaultSignalGroupManager.
      *
-     * @param o Object to store, of type TripleTurnoutSignalHead
+     * @param o Object to store, of type SignalGroup
      * @return Element containing the complete info
      */
     @Override
@@ -118,7 +118,7 @@ public class DefaultSignalGroupManagerXml
             case SignalHead.DARK:
                 return "DARK";
             default:
-                log.warn("Unexpected appearance: " + mAppearance);
+                log.warn("Unexpected appearance: {}", mAppearance);
                 // go dark
                 return "DARK";
         }
@@ -222,7 +222,6 @@ public class DefaultSignalGroupManagerXml
             }
 
         }
-
         return true;
     }
 
@@ -251,7 +250,7 @@ public class DefaultSignalGroupManagerXml
         } else if (colour.equals("FLASHLUNAR")) {
             return SignalHead.FLASHLUNAR;
         } else {
-            log.warn("Unexpected appearance: " + colour);
+            log.warn("Unexpected appearance: {}", colour);
         }
         return SignalHead.DARK;
     }
@@ -262,4 +261,5 @@ public class DefaultSignalGroupManagerXml
     }
 
     private final static Logger log = LoggerFactory.getLogger(DefaultSignalGroupManagerXml.class);
+
 }

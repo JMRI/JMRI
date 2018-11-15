@@ -3532,7 +3532,7 @@ public class LayoutTurnout extends LayoutTrack {
         Point2D pAPR = MathUtil.add(pAP, vAMo);
         Point2D pAPL = MathUtil.subtract(pAP, vAMo);
 
-        Point2D vSo = MathUtil.normalize(vAMo, 2.0);
+        // Point2D vSo = MathUtil.normalize(vAMo, 2.0);
         // Point2D pSL = MathUtil.add(pAPL, vSo);
         // Point2D pSR = MathUtil.subtract(pAPR, vSo);
 
@@ -3788,7 +3788,8 @@ public class LayoutTurnout extends LayoutTrack {
                 Point2D pBFS = MathUtil.subtract(pBFL, vS);
                 Point2D pCFS = MathUtil.add(pCFR, vS);
                 Point2D pDFS = MathUtil.add(pDFR, vS);
-                vSo = MathUtil.orthogonal(vS);
+                
+                // vSo = MathUtil.orthogonal(vS);
                 // Point2D pAFSR = MathUtil.add(pAFL, vSo);
                 // Point2D pBFSR = MathUtil.subtract(pBFL, vSo);
                 // Point2D pCFSL = MathUtil.subtract(pCFR, vSo);
@@ -3953,7 +3954,7 @@ public class LayoutTurnout extends LayoutTrack {
 
                 // end of switch rails (open)
                 Point2D vS = MathUtil.normalize(vAB, 2.0);
-                vSo = MathUtil.orthogonal(vS);
+                Point2D vSo = MathUtil.orthogonal(vS);
                 Point2D pASL = MathUtil.add(pAPL, vSo);
                 // Point2D pASR = MathUtil.subtract(pAPR, vSo);
                 // Point2D pCSL = MathUtil.add(pCPL, vSo);
@@ -4078,7 +4079,7 @@ public class LayoutTurnout extends LayoutTrack {
 
                 // end of switch rails (open)
                 Point2D vS = MathUtil.normalize(vBA, 2.0);
-                vSo = MathUtil.orthogonal(vS);
+                Point2D vSo = MathUtil.orthogonal(vS);
                 Point2D pBSL = MathUtil.subtract(pBPL, vSo);
                 // Point2D pBSR = MathUtil.add(pBPR, vSo);
                 // Point2D pDSL = MathUtil.subtract(pDPL, vSo);
