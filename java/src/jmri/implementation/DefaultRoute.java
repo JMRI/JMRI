@@ -22,6 +22,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Class providing the basic logic of the Route interface.
  *
+ * @see jmri.Route Route
  * @author Dave Duchamp Copyright (C) 2004
  * @author Bob Jacobsen Copyright (C) 2006, 2007
  * @author Simon Reader Copyright (C) 2008
@@ -29,12 +30,24 @@ import org.slf4j.LoggerFactory;
  */
 public class DefaultRoute extends AbstractNamedBean implements Route, java.beans.VetoableChangeListener {
 
+    /**
+     * Constructor for Route instance.
+     *
+     * @param systemName suggested system name
+     * @param userName   provided user name
+     */
     public DefaultRoute(String systemName, String userName) {
         super(systemName.toUpperCase(), userName);
     }
 
+    /**
+     * Constructor for SignalGroup instance.
+     *
+     * @param systemName suggested system name
+     */
     public DefaultRoute(String systemName) {
         super(systemName.toUpperCase());
+        log.debug("default Route {} created", systemName);
     }
 
     @Override

@@ -226,11 +226,6 @@ public final class CbusConstants {
     public static final int DEFAULT_MINOR_PRIORITY = 3;
 
     /**
-     * Event Table
-     */
-    public static final int MAX_TABLE_EVENTS = 5000;
-
-    /**
      * Function bits for group1
      */
     public static final int CBUS_F0 = 16;

@@ -1,6 +1,8 @@
 package jmri;
 
 import javax.annotation.CheckForNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * General input device representation. Often subclassed for specific types of
@@ -20,22 +22,38 @@ import javax.annotation.CheckForNull;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
-public interface Sensor extends NamedBean {
+public interface Sensor extends DigitalIO {
 
     // states are parameters; both closed and thrown is possible!
-    public static final int ACTIVE = 0x02;
-    public static final int INACTIVE = 0x04;
+    public static final int ACTIVE = DigitalIO.ON;
+    public static final int INACTIVE = DigitalIO.OFF;
 
     // MAx value for Debounce Parameter
     public static final Long MAX_DEBOUNCE = 9999999L;
 
-    /**
-     * Known state on layout is a bound parameter
-     *
-     * @return known state value
-     */
-    public int getKnownState();
 
+    /** {@inheritDoc} */
+    @Override
+    default public boolean isConsistentState() {
+        return true;
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    default public void setCommandedState(int s) {
+        try {
+            setState(s);
+        } catch (JmriException ex) {
+            log.error("setCommandedState", ex);
+        }
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    default public int getCommandedState() {
+        return getState();
+    }
+    
     /**
      * Set the known state on the layout. This might not always be available, or
      * effective, depending on the limits of the underlying system and
@@ -45,12 +63,6 @@ public interface Sensor extends NamedBean {
      * @throws jmri.JmriException if unable to set the state
      */
     public void setKnownState(int newState) throws jmri.JmriException;
-
-    /**
-     * Request an update from the layout soft/hardware. May not even happen, and
-     * if it does it will happen later; listen for the result.
-     */
-    public void requestUpdateFromLayout();
 
     /**
      * Control whether the actual sensor input is considered to be inverted,
@@ -240,4 +252,7 @@ public interface Sensor extends NamedBean {
      */
     public PullResistance getPullResistance();
 
+
+    final static Logger log = LoggerFactory.getLogger(Sensor.class);
+    
 }

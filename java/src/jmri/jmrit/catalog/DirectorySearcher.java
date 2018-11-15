@@ -64,13 +64,12 @@ public class DirectorySearcher implements InstanceManagerAutoDefault {
         _directoryChooser.rescanCurrentDirectory();
         _directoryChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 
-        File dir = _directoryChooser.getCurrentDirectory();
         while (true) {
             int retVal = _directoryChooser.showOpenDialog(null);
             if (retVal != JFileChooser.APPROVE_OPTION) {
                 return null;  // give up if no file selected
             }
-            dir = _directoryChooser.getSelectedFile();
+            File dir = _directoryChooser.getSelectedFile();
             if (dir != null) {
                 if (!recurse) {
                     return dir;
