@@ -24,6 +24,7 @@ public class TimeTableImport {
 
     public void importSgn(TimeTableDataManager dm, File file) throws IOException {
         _dm = dm;
+        _dm.setLockCalculate(true);
         try {
             fileReader = new FileReader(file);
             bufferedReader = new BufferedReader(fileReader);
@@ -38,7 +39,7 @@ public class TimeTableImport {
 
             while ((line = bufferedReader.readLine()) != null) {
                 // Split line and remove double quotes
-                String[] lineStrings = line.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)");
+                String[] lineStrings = line.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)");  // NOI18N
                 for (int i = 0; i < lineStrings.length; i++) {
                     lineStrings[i] = lineStrings[i].replace("\"", "");
                 }
@@ -132,12 +133,14 @@ public class TimeTableImport {
                fileReader.close();
             }
         }
+        _dm.setLockCalculate(false);
     }
 
     void createLayout(String[] lineStrings) {
 // "Sierra Western","Default","08/01/11",0,24,"5:1","HO",5
 //         _layoutId = layoutId;
 //         _layoutName = layoutName;
+//         _scale = scale;
 //         _fastClock = fastClock;
 //         _throttles = throttles;
 //         _metric = metric;
@@ -148,6 +151,7 @@ public class TimeTableImport {
         _layoutId = _dm.getNextId("Layout");  // NOI18N
         Layout layout = new Layout(_layoutId,
                 lineStrings[0],
+                lineStrings[6],
                 clock,
                 throttles,
                 false);

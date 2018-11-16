@@ -142,6 +142,7 @@ public class PanelServlet extends AbstractPanelServlet {
                         // I tried using JavaBean Introspection to simply build the contents using Jackson Databindings,
                         // but when a panel element has a reference to the panel or to itself as a property, this leads
                         // to infinite recursion
+                        log.debug("missing code, so not processing Positionable {}", sub);
                     } catch (Exception ex) {
                         log.error("Error storing panel element: {}", sub, ex);
                     }

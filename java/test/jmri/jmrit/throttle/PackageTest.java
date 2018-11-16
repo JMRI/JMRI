@@ -35,6 +35,7 @@ import org.junit.runners.Suite;
         KeyListenerInstallerTest.class,
         WindowPreferencesTest.class,
         SpeedPanelTest.class,
+        StealingThrottleTest.class,
 })
 
 /**

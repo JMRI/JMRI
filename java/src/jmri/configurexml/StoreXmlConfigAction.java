@@ -97,7 +97,6 @@ public class StoreXmlConfigAction extends LoadStoreBaseAction {
             log.error("Failed to get default configure manager");
         } else {
             boolean results = cm.storeConfig(file);
-            System.out.println(results);
             log.debug(results ? "store was successful" : "store failed");
             if (!results) {
                 JOptionPane.showMessageDialog(null,

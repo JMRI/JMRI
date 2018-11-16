@@ -21,6 +21,8 @@ import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.LocationManagerXml;
 import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.locations.schedules.Schedule;
+import jmri.jmrit.operations.locations.schedules.ScheduleItem;
 import jmri.jmrit.operations.locations.schedules.ScheduleManager;
 import jmri.jmrit.operations.rollingstock.RollingStockLogger;
 import jmri.jmrit.operations.rollingstock.cars.Car;
@@ -117,17 +119,17 @@ public class JUnitOperationsUtil {
         InstanceManager.getDefault(EngineManager.class).dispose();
         InstanceManager.getDefault(EngineModels.class).dispose();
         InstanceManager.getDefault(EngineLengths.class).dispose();
-        
+
         // there can be test concurrency issues if auto save is on
         Assert.assertFalse("Confirm disabled", Setup.isAutoSaveEnabled());
     }
 
     /**
      * Populate the Operations Managers with a common set of data for tests.
-     * Creates and places 10 cars on tracks. 2 Cabooses on staging track 1,
-     * 2 Boxcars on staging track 1, 2 Boxcars on staging track 2, 2 Boxcars
-     * and 1 Flat in NI yard.  Also creates 4 engines, and places them into
-     * two separate consists.  Engines are not on a track. 
+     * Creates and places 10 cars on tracks. 2 Cabooses on staging track 1, 2
+     * Boxcars on staging track 1, 2 Boxcars on staging track 2, 2 Boxcars and 1
+     * Flat in NI yard. Also creates 4 engines, and places them into two
+     * separate consists. Engines are not on a track.
      */
     public static void initOperationsData() {
         ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.JmritOperationsBundle");
@@ -145,7 +147,7 @@ public class JUnitOperationsUtil {
         ct.addName(rb.getString("Caboose"));
         ct.addName("Flat");
         et.addName("Diesel");
-        
+
         co.addName("AT");
         co.addName("DAB");
 
@@ -226,7 +228,7 @@ public class JUnitOperationsUtil {
         createAndPlaceCar("CP", "777", "Flat", "50", "AT", "1990", l20yard1, 6);
         createAndPlaceCar("CP", "888", "Boxcar", "60", "DAB", "1985", l20yard1, 0);
         createAndPlaceCar("CP", "99", "Flat", "90", "AT", "6-80", l20yard1, 0);
-        
+
         c1.setColor("Red");
         // make sure the ID tags exist before we
         // try to add it to a car.
@@ -282,8 +284,8 @@ public class JUnitOperationsUtil {
         train1.setDescription("Train STF");
 
         // increase test coverage by providing a manifest logo for this train
-        java.net.URL url = FileUtil.findURL("resources/logo.gif", FileUtil.Location.INSTALLED);
-        train1.setManifestLogoURL(url.getPath());
+        String path = FileUtil.getExternalFilename(FileUtil.PROGRAM + "resources/logo.gif");
+        train1.setManifestLogoPathName(path);
 
         tmanager.register(train1);
 
@@ -404,10 +406,11 @@ public class JUnitOperationsUtil {
 
         return route;
     }
-    
+
     /**
-     * Creates a three location route that is also a turn.  Train
-     * departs North bound and returns South bound.
+     * Creates a three location route that is also a turn. Train departs North
+     * bound and returns South bound.
+     * 
      * @return Route
      */
     public static Route createThreeLocationTurnRoute() {
@@ -454,15 +457,16 @@ public class JUnitOperationsUtil {
 
         return route;
     }
-       
+
     /**
      * Creates a location with 2 spurs, 2 interchanges, and 2 yards
+     * 
      * @param name the name of the location and the tracks there.
      * @return the location created
      */
-    public static Location createOneNormalLocation(String name) {     
+    public static Location createOneNormalLocation(String name) {
         LocationManager lmanager = InstanceManager.getDefault(LocationManager.class);
-        
+
         Location location = lmanager.newLocation(name);
         Track trackSpur1 = location.addTrack(name + " Spur 1", Track.SPUR);
         trackSpur1.setLength(200);
@@ -476,7 +480,7 @@ public class JUnitOperationsUtil {
         trackInterchange1.setLength(500);
         Track trackInterchange2 = location.addTrack(name + " Interchange 2", Track.INTERCHANGE);
         trackInterchange2.setLength(500);
-        
+
         // must set track move counts after all tracks are created
         trackSpur1.setMoves(10);
         trackSpur2.setMoves(20);
@@ -484,16 +488,16 @@ public class JUnitOperationsUtil {
         trackYard2.setMoves(40);
         trackInterchange1.setMoves(50);
         trackInterchange2.setMoves(60);
-        
+
         return location;
     }
 
     /**
-     * Creates 7 locations each with 2 spurs, 2 interchanges, and 2 yards
-     * Acton, Boston, Chelmsford, Danvers, Essex, Foxboro, Gulf
+     * Creates 7 locations each with 2 spurs, 2 interchanges, and 2 yards Acton,
+     * Boston, Chelmsford, Danvers, Essex, Foxboro, Gulf
      */
     public static void createSevenNormalLocations() {
-        
+
         createOneNormalLocation("Acton");
         createOneNormalLocation("Boston");
         createOneNormalLocation("Chelmsford");
@@ -527,7 +531,7 @@ public class JUnitOperationsUtil {
 
         return car;
     }
-    
+
     public static void loadTrain(Location l) {
         Assert.assertNotNull("Test Loc", l);
         TrainManager trainManager = InstanceManager.getDefault(TrainManager.class);
@@ -545,7 +549,7 @@ public class JUnitOperationsUtil {
         ResourceBundle rb = ResourceBundle
                 .getBundle("jmri.jmrit.operations.JmritOperationsBundle");
         String roadNames[] = rb.getString("carRoadNames").split(",");
-//        String roadNames[] = Bundle.getMessage("carRoadNames").split(",");
+        //        String roadNames[] = Bundle.getMessage("carRoadNames").split(",");
         // add caboose to the roster
         Car c = cm.newRS(roadNames[2], "687");
         c.setCaboose(true);
@@ -582,7 +586,7 @@ public class JUnitOperationsUtil {
         // load 5 routes
         loadFiveRoutes();
     }
-    
+
     public static void loadFiveLocations() {
         // create 5 locations
         LocationManager lManager = InstanceManager.getDefault(LocationManager.class);
@@ -598,7 +602,7 @@ public class JUnitOperationsUtil {
         Location l5 = lManager.newLocation("Test Loc A");
         l5.setLength(1005);
     }
-    
+
     public static void loadFiveRoutes() {
         RouteManager rManager = InstanceManager.getDefault(RouteManager.class);
         Route r1 = rManager.newRoute("Test Route E");
@@ -612,7 +616,41 @@ public class JUnitOperationsUtil {
         Route r5 = rManager.newRoute("Test Route A");
         r5.setComment("Comment test route A");
     }
-    
+
+    public static Schedule createSchedules() {
+        LocationManager lmanager = InstanceManager.getDefault(LocationManager.class);
+        Location location = lmanager.getLocationByName("North Industries");
+
+        Assert.assertNotNull("Must initOperationsData() before creating schedule", location);
+        Track spur1 = location.addTrack("Test Spur 1", Track.SPUR);
+        Track spur2 = location.addTrack("Test Spur 2", Track.SPUR);
+        Track alternate = location.addTrack("Test Alternate", Track.YARD);
+        Track yard = location.getTrackByName("NI Yard", null);
+
+        ScheduleManager scheduleManager = InstanceManager.getDefault(ScheduleManager.class);
+        Schedule schedule = scheduleManager.newSchedule("Test Schedule");
+        ScheduleItem schAItem1 = schedule.addItem("Boxcar");
+        schAItem1.setReceiveLoadName("Empty");
+        schAItem1.setShipLoadName("Metal");
+        schAItem1.setDestination(location);
+        schAItem1.setDestinationTrack(yard);
+        ScheduleItem schAItem2 = schedule.addItem("Flat");
+        schAItem2.setReceiveLoadName("Junk");
+        schAItem2.setShipLoadName("Metal");
+        schAItem2.setDestination(location);
+        schAItem2.setDestinationTrack(yard);
+
+        // Add schedule to track
+        spur1.setSchedule(schedule);
+        spur1.setScheduleMode(Track.MATCH); // set schedule into match mode
+        spur1.setAlternateTrack(alternate);
+        spur1.setReservationFactor(60);
+        
+        spur2.setSchedule(schedule);
+        spur2.setScheduleMode(Track.SEQUENTIAL);
+        return schedule;
+    }
+
     public static Automation createAutomation() {
         AutomationManager manager = InstanceManager.getDefault(AutomationManager.class);
         Assert.assertNotNull("test creation", manager);
@@ -638,19 +676,20 @@ public class JUnitOperationsUtil {
 
         AutomationItem item4 = automation.addItem();
         item4.setAction(new ActivateTrainScheduleAction());
-        TrainSchedule trainSchedule = InstanceManager.getDefault(TrainScheduleManager.class).newSchedule("train schedule name");
+        TrainSchedule trainSchedule =
+                InstanceManager.getDefault(TrainScheduleManager.class).newSchedule("train schedule name");
         item4.setOther(trainSchedule);
 
         AutomationItem item5 = automation.addItem();
         item5.setAction(new RunAutomationAction());
-        
+
         // 2nd automation created here
         Automation automationToRun = manager.newAutomation("A TestAutomation2");
         item5.setOther(automationToRun);
         item5.setMessage("item5 OK message");
         item5.setMessageFail("item5 fail message");
         item5.setHaltFailureEnabled(false);
-        
+
         return automation;
     }
 

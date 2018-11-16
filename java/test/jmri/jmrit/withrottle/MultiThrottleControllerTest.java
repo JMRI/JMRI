@@ -62,7 +62,7 @@ public class MultiThrottleControllerTest {
     public void testSetVelocityChange() {
        jmri.DccThrottle t = new jmri.jmrix.debugthrottle.DebugThrottle(new jmri.DccLocoAddress(1,false),null);
        controller.notifyThrottleFound(t);
-       Assert.assertTrue("Continue after velicity",controller.sort("V63"));
+       Assert.assertTrue("Continue after velocity",controller.sort("V63"));
        Assert.assertEquals("Velocity set",0.5f,t.getSpeedSetting(),0.0005f);
     }
 
@@ -123,7 +123,7 @@ public class MultiThrottleControllerTest {
     public void testSetIdle() {
        jmri.DccThrottle t = new jmri.jmrix.debugthrottle.DebugThrottle(new jmri.DccLocoAddress(1,false),null);
        controller.notifyThrottleFound(t);
-       Assert.assertTrue("Continue after velicity",controller.sort("V63"));
+       Assert.assertTrue("Continue after velocity",controller.sort("V63"));
        Assert.assertTrue("Continue after Idle",controller.sort("I"));
        Assert.assertEquals("Idle",0.0f,t.getSpeedSetting(),0.0f);
     }
@@ -189,11 +189,77 @@ public class MultiThrottleControllerTest {
     public void testQuitWithAddress(){
        jmri.DccThrottle t = new jmri.jmrix.debugthrottle.DebugThrottle(new jmri.DccLocoAddress(1,false),null);
        controller.notifyThrottleFound(t);
-       Assert.assertTrue("Continue after velicity",controller.sort("V63"));
+       Assert.assertTrue("Continue after velocity",controller.sort("V63"));
        Assert.assertEquals("Velocity set",0.5f,t.getSpeedSetting(),0.0005f);
        Assert.assertFalse("Stop after quit",controller.sort("Q"));
        // current behavior is to set the speed to 0 after quit.
        Assert.assertEquals("Velocity set",0.0f,t.getSpeedSetting(),0.0005f);
+    }
+
+    @Test
+    public void testVelocityChangeSequence() {
+       jmri.DccThrottle t = new jmri.jmrix.debugthrottle.DebugThrottle(new jmri.DccLocoAddress(1,false),null){
+           @Override
+	   public void setSpeedSetting(float s){
+              // override so we can send property changes in sequence.
+	   }
+       };
+       controller.notifyThrottleFound(t);
+       cis.reset();
+       // withrottle may actually sends more than one speed change when 
+       // moving the slider.
+       Assert.assertTrue("Continue after velocity",controller.sort("V7"));
+       Assert.assertTrue("Continue after velocity",controller.sort("V15"));
+       Assert.assertTrue("Continue after velocity",controller.sort("V25"));
+       controller.propertyChange(new PropertyChangeEvent(this,"SpeedSetting",0.0f,7.0f/126.0f));
+       Assert.assertNull("outgoing message after property change", cis.getLastPacket() );
+       Assert.assertTrue("Continue after velocity",controller.sort("V32"));
+       Assert.assertTrue("Continue after velocity",controller.sort("V45"));
+       Assert.assertTrue("Continue after velocity",controller.sort("V63"));
+       controller.propertyChange(new PropertyChangeEvent(this,"SpeedSetting",7.0f/126.0f,15.0f/126.0f));
+       Assert.assertNull("outgoing message after property change", cis.getLastPacket() );
+       controller.propertyChange(new PropertyChangeEvent(this,"SpeedSetting",15.0f/126.0f,25.0f/126.0f));
+       Assert.assertNull("outgoing message after property change", cis.getLastPacket() );
+       controller.propertyChange(new PropertyChangeEvent(this,"SpeedSetting",25.0f/126.0f,32.0f/126.0f));
+       Assert.assertNull("outgoing message after property change", cis.getLastPacket() );
+       controller.propertyChange(new PropertyChangeEvent(this,"SpeedSetting",32.0f/126.0f,45.0f/126.0f));
+       Assert.assertNull("outgoing message after property change", cis.getLastPacket() );
+       controller.propertyChange(new PropertyChangeEvent(this,"SpeedSetting",0.0f,63.0f/126.0f));
+       Assert.assertNull("outgoing message after property change", cis.getLastPacket() );
+       controller.propertyChange(new PropertyChangeEvent(this,"SpeedSetting",0.0f,63.0f/126.0f));
+       Assert.assertEquals("outgoing message after property change", "MAAtest<;>V63",cis.getLastPacket() );
+    }
+
+    @Test
+    public void testQueryVelocity() {
+       jmri.DccThrottle t = new jmri.jmrix.debugthrottle.DebugThrottle(new jmri.DccLocoAddress(1,false),null);
+       controller.notifyThrottleFound(t);
+       Assert.assertTrue("Continue after query velocity",controller.sort("qV"));
+       Assert.assertEquals("outgoing message after property change", "MAAtest<;>V0",cis.getLastPacket() );
+    }
+
+    @Test
+    public void testQueryDirection() {
+       jmri.DccThrottle t = new jmri.jmrix.debugthrottle.DebugThrottle(new jmri.DccLocoAddress(1,false),null);
+       controller.notifyThrottleFound(t);
+       Assert.assertTrue("Continue after query velocity",controller.sort("qR"));
+       Assert.assertEquals("outgoing message after property change", "MAAtest<;>R1",cis.getLastPacket() );
+    }
+
+    @Test
+    public void testQuerySpeedStepMode() {
+       jmri.DccThrottle t = new jmri.jmrix.debugthrottle.DebugThrottle(new jmri.DccLocoAddress(1,false),null);
+       controller.notifyThrottleFound(t);
+       Assert.assertTrue("Continue after query velocity",controller.sort("qs"));
+       Assert.assertEquals("outgoing message after property change", "MAAtest<;>s1",cis.getLastPacket() );
+    }
+
+    @Test
+    public void testQueryMomentary() {
+       jmri.DccThrottle t = new jmri.jmrix.debugthrottle.DebugThrottle(new jmri.DccLocoAddress(1,false),null);
+       controller.notifyThrottleFound(t);
+       Assert.assertTrue("Continue after query velocity",controller.sort("qm"));
+       Assert.assertEquals("outgoing message after property change", "MAAtest<;>m028",cis.getLastPacket() );
     }
 
     @Before

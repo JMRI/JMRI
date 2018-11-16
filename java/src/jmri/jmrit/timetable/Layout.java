@@ -1,56 +1,64 @@
 package jmri.jmrit.timetable;
 
-import jmri.jmrit.logix.WarrantPreferences;
-
 /**
  * Define the content of a Layout record.
- *
+ * <p>
+ * The fast clock, scale and metric values affect the scale mile / scale km.
+ * When these are changed, the stop times for all of the trains have to be
+ * re-calculated.  Depending on the schedule limits, this can result in
+ * calculation errors.  When this occurs, exceptions occur which trigger
+ * rolling back the changes.
  * @author Dave Sand Copyright (C) 2018
  */
 public class Layout {
 
-    public Layout(int layoutId) {
-        _layoutId = layoutId;
+    /**
+     * Create a new layout with default values.
+     */
+    public Layout() {
+        _layoutId = _dm.getNextId("Layout");  // NOI18N
+        _dm.addLayout(_layoutId, this);
         setScaleMK();
     }
 
-    public Layout(int layoutId, String layoutName, int fastClock, int throttles, boolean metric) {
+    public Layout(int layoutId, String layoutName, String scale, int fastClock, int throttles, boolean metric) {
         _layoutId = layoutId;
-        _layoutName = layoutName;
-        _fastClock = fastClock;
-        _throttles = throttles;
-        _metric = metric;
-        setScaleMK();
+        setLayoutName(layoutName);
+        setScale(scale);
+        setFastClock(fastClock);
+        setThrottles(throttles);
+        setMetric(metric);
     }
 
-    private int _layoutId = 0;
-    private String _layoutName = "";
+    TimeTableDataManager _dm = TimeTableDataManager.getDataManager();
+
+    private final int _layoutId;
+    private String _layoutName = "New Layout";  // NOI18N
+    private String _scale = "HO";  // NOI18N
     private int _fastClock = 4;
     private int _throttles = 0;
     private boolean _metric = false;
 
-    private float _scale = 87.1f;
+    private float _ratio = 87.1f;
     private float _scaleMK;          // Scale mile (real feet) or km (real meter)
-
-    private WarrantPreferences _wp = null;
 
     /**
      * Calculate the length of a scale mile or scale kilometer.
      * The values are adjusted for scale and fast clock ratio.
      * The resulting value is the real feet or meters.
+     * @throws IllegalArgumentException The calculate can throw an exception which will get re-thrown.
      */
-    public void setScaleMK() {
+    public void setScaleMK() throws IllegalArgumentException {
         float distance = (_metric) ? 1000 : 5280;
-        if (_wp == null) {
-            try {
-                _wp = jmri.jmrit.logix.WarrantPreferences.getDefault();
-                _scale = _wp.getLayoutScale();
-            } catch (java.lang.NullPointerException ex) {
-                log.debug("Use HO as the default scale");  // NOI18N
-            }
-        }
-        _scaleMK = distance / _scale / _fastClock;
+        _scaleMK = distance / _ratio / _fastClock;
         log.debug("scaleMK = {}, scale = {}", _scaleMK, _scale);  // NOI18N
+
+        try {
+            _dm.calculateLayoutTrains(getLayoutId(), false);
+            _dm.calculateLayoutTrains(getLayoutId(), true);
+        } catch (IllegalArgumentException ex) {
+            throw ex;
+        }
     }
 
     public float getScaleMK() {
@@ -69,23 +77,90 @@ public class Layout {
         _layoutName = newName;
     }
 
-    public float getScale() {
+    public float getRatio() {
+        return _ratio;
+    }
+
+    public String getScale() {
         return _scale;
+    }
+
+    public void setScale(String newScale) {
+        if (newScale.isEmpty()) {
+            newScale = "HO";  // NOI18N
+            log.warn("No scale found, defaulting to HO");  // NOI18N
+        }
+        Scale eScale;
+        try {
+            eScale = Scale.valueOf(newScale);
+        } catch (IllegalArgumentException ex) {
+            throw new IllegalArgumentException(String.format("%s~%s", _dm.SCALE_NF, newScale));  // NOI18N
+        }
+
+        String oldScale = _scale;
+        Float oldRatio = _ratio;
+        _scale = eScale.name();
+        _ratio = eScale.getRatio();
+
+        try {
+            // Update the smile/skm which includes stop recalcs
+            setScaleMK();
+        } catch (IllegalArgumentException ex) {
+            _scale = oldScale;  // roll back scale and ratio
+            _ratio = oldRatio;
+            setScaleMK();
+            throw ex;
+        }
     }
 
     public int getFastClock() {
         return _fastClock;
     }
 
-    public void setFastClock(int newClock) {
+    /**
+     * Set a new fast clock speed, update smile/skm.
+     * @param newClock The value to be used.
+     * @throws IllegalArgumentException (CLOCK_LT_1) if the value is less than 1.
+     * will also re-throw a recalc error.
+     */
+    public void setFastClock(int newClock) throws IllegalArgumentException {
+        if (newClock < 1) {
+            throw new IllegalArgumentException(_dm.CLOCK_LT_1);
+        }
+        int oldClock = _fastClock;
         _fastClock = newClock;
+
+        try {
+            // Update the smile/skm which includes stop recalcs
+            setScaleMK();
+        } catch (IllegalArgumentException ex) {
+            _fastClock = oldClock;  // roll back
+            setScaleMK();
+            throw ex;
+        }
     }
 
     public int getThrottles() {
         return _throttles;
     }
 
-    public void setThrottles(int newThrottles) {
+    /**
+     * Set the new value for throttles.
+     * @param newThrottles The new throttle count.
+     * @throws IllegalArgumentException (THROTTLES_USED, THROTTLES_LT_0) when the
+     * new count is less than train references or a negative number was passed.
+     */
+    public void setThrottles(int newThrottles) throws IllegalArgumentException {
+        if (newThrottles < 0) {
+            throw new IllegalArgumentException(_dm.THROTTLES_LT_0);
+        }
+        for (Schedule schedule : _dm.getSchedules(_layoutId, true)) {
+            for (Train train : _dm.getTrains(schedule.getScheduleId(), 0, true)) {
+                if (train.getThrottle() > newThrottles) {
+                    throw new IllegalArgumentException(_dm.THROTTLES_IN_USE);
+                }
+            }
+        }
         _throttles = newThrottles;
     }
 
@@ -93,8 +168,23 @@ public class Layout {
         return _metric;
     }
 
-    public void setMetric(boolean newMetric) {
+    /**
+     * Set metric flag, update smile/skm.
+     * @param newMetric True for metric units.
+     * @throws IllegalArgumentException if there was a recalc error.
+     */
+    public void setMetric(boolean newMetric) throws IllegalArgumentException {
+        boolean oldMetric = _metric;
         _metric = newMetric;
+
+        try {
+            // Update the smile/skm which includes stop recalcs
+            setScaleMK();
+        } catch (IllegalArgumentException ex) {
+            _metric = oldMetric;  // roll back
+            setScaleMK();
+            throw ex;
+        }
     }
 
     public String toString() {
