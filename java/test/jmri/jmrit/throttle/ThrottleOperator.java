@@ -94,12 +94,31 @@ public class ThrottleOperator extends JFrameOperator {
    public void pushSetButton(){
         new JButtonOperator(this,Bundle.getMessage("ButtonSet")).push();
    }
+
+   public boolean setButtonEnabled(){
+        return (new JButtonOperator(this,Bundle.getMessage("ButtonSet"))).isEnabled();
+   }
+
    public void pushDispatchButton(){
         new JButtonOperator(this,Bundle.getMessage("ButtonDispatch")).push();
    }
    public void pushReleaseButton(){
         new JButtonOperator(this,Bundle.getMessage("ButtonRelease")).push();
    }
+
+   public boolean releaseButtonEnabled(){
+        return (new JButtonOperator(this,Bundle.getMessage("ButtonRelease"))).isEnabled();
+   }
+
+   public void answerStealQuestion(boolean steal){
+        JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("StealRequestTitle"));
+        if(steal) {
+           (new JButtonOperator(jdo,Bundle.getMessage("ButtonYes"))).doClick();
+        } else {
+           (new JButtonOperator(jdo,Bundle.getMessage("ButtonNo"))).doClick();
+        }
+   }
+
 
    // Function panel operations
    public JInternalFrameOperator getFunctionPanelOperator(){
