@@ -525,6 +525,30 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
     }
 
     /**
+     * When the throttle isn't created becuase the using listener rejected the
+     * steal request, the rejecting listener should be removed from the list of
+     * waiting listeners.
+     * <p>
+     * This applies only to those systems where "stealing" applies, such as LocoNet.
+     * <p>
+     * @param address The DCC Loco Address where controlling requires a steal
+     */
+    public void handleRejectedStealRequest(DccLocoAddress address,ThrottleListener l) {
+        if (throttleListeners != null) {
+            ArrayList<WaitingThrottle> a = throttleListeners.get(address);
+            if (a == null || l == null ) {
+                return;
+            }
+            for (int i = 0; i < a.size(); i++) {
+                if (l == a.get(i).getListener()) {
+                    a.remove(i);
+                }
+            }
+        }
+    }
+
+
+    /**
      * Check to see if the Dispatch Button should be enabled or not Default to
      * true, override if necessary
      *

@@ -342,8 +342,8 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
             // Tab All or first time opening, default tooltip
             connectionChoice = "TBD";
         }
-        if (senManager.getClass().getName().contains("ProxySensorManager")) {
-            jmri.managers.ProxySensorManager proxy = (jmri.managers.ProxySensorManager) senManager;
+        if (InstanceManager.sensorManagerInstance().getClass().getName().contains("ProxySensorManager")) {            
+            jmri.managers.ProxySensorManager proxy = (jmri.managers.ProxySensorManager) InstanceManager.sensorManagerInstance();
             List<Manager<Sensor>> managerList = proxy.getDisplayOrderManagerList();
             String systemPrefix = ConnectionNameFromSystemName.getPrefixFromName(connectionChoice);
             for (Manager<Sensor> mgr : managerList) {
@@ -360,7 +360,9 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
             log.debug("S add box enabled2");
             // get tooltip from sensor manager
             addEntryToolTip = senManager.getEntryToolTip();
-            log.debug("SensorManager tip");
+        }
+        else {
+            log.warn("Unable to set tooltip or Range Allowed Box");
         }
         // show hwAddressTextField field tooltip in the Add Sensor pane that matches system connection selected from combobox
         hardwareAddressTextField.setToolTipText("<html>"

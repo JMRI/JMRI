@@ -1,6 +1,8 @@
 package jmri;
 
 import java.util.ArrayList;
+import javax.annotation.Nonnull;
+
 import jmri.implementation.LightControl;
 
 /**
@@ -337,14 +339,25 @@ public interface Light extends DigitalIO {
      */
     public boolean isTransitioning();
 
+    // LightControl information management methods
+     
     /**
-     * LightControl information management methods
+     * Clears (removes) all LightControl objects for this light
      */
-    public void clearLightControls();  // clears all Light Controls for this Light
+    public void clearLightControls();
 
-    public void addLightControl(jmri.implementation.LightControl c); // add a LightControl
+    /** 
+     * Add a LightControl to this Light.
+     * <p>
+     * Duplicates are considered the same, hence not added
+     */
+    public void addLightControl(@Nonnull jmri.implementation.LightControl c);
 
-    public ArrayList<LightControl> getLightControlList(); // return a list of all LightControls
+    /**
+     * @return a list of all LightControls
+     */
+    @Nonnull
+    public ArrayList<LightControl> getLightControlList();
 
     /**
      * Set the Enabled property, which determines whether the control logic
