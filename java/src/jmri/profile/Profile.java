@@ -96,8 +96,8 @@ public class Profile implements Comparable<Profile> {
             throw new IllegalArgumentException(path + " contains a profile in a subdirectory."); // NOI18N
         }
         if (Profile.inProfile(path) || Profile.inProfile(pathWithExt)) {
-            if (Profile.inProfile(path)) low.warn("Exception: Path {} is with an existing profile.", path); // NOI18N
-            if (Profile.inProfile(pathWithExt)) low.warn("Exception: pathWithExt {} is with an existing profile.", pathWithExt); // NOI18N
+            if (Profile.inProfile(path)) log.warn("Exception: Path {} is with an existing profile.", path); // NOI18N
+            if (Profile.inProfile(pathWithExt)) log.warn("Exception: pathWithExt {} is with an existing profile.", pathWithExt); // NOI18N
             throw new IllegalArgumentException(path + " is within an existing profile."); // NOI18N
         }
         this.name = name;
@@ -376,4 +376,6 @@ public class Profile implements Comparable<Profile> {
         String thatString = "" + o.getName() + o.getPath();
         return thisString.compareTo(thatString);
     }
+
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Profile.class);
 }
