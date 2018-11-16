@@ -10,25 +10,46 @@ public class LayoutTest {
 
     @Test
     public void testCreate() {
-        new Layout(1);
+        new Layout();
     }
 
     @Test
     public void testSettersAndGetters() {
-        Layout l = new Layout(1);
-        Assert.assertEquals(1, l.getLayoutId());
-        l.setLayoutName("Test Name");  // NOI18N
-        Assert.assertEquals("Test Name", l.getLayoutName());  // NOI18N
-        Assert.assertEquals(87.1, l.getScale(), 1.0);
-        l.setFastClock(6);
-        Assert.assertEquals(6, l.getFastClock());
-        l.setThrottles(3);
-        Assert.assertEquals(3, l.getThrottles());
-        l.setMetric(true);
-        Assert.assertTrue(l.getMetric());
-        l.setScaleMK();
-        Assert.assertEquals(1.914, l.getScaleMK(), .1);
-        Assert.assertEquals("Test Name", l.toString());  // NOI18N
+        Layout layout = new Layout();
+        Assert.assertNotNull(layout);
+        layout.setLayoutName("Test Name");  // NOI18N
+        Assert.assertEquals("Test Name", layout.getLayoutName());  // NOI18N
+        Assert.assertEquals("HO", layout.getScale());  // NOI18N
+        try {
+            layout.setFastClock(0);
+        } catch (IllegalArgumentException ex) {
+            Assert.assertEquals(ex.getMessage(), "FastClockLt1");  // NOI18N
+        }
+        try {
+            layout.setFastClock(100);
+        } catch (IllegalArgumentException ex) {
+            Assert.assertEquals(ex.getMessage(), "TimeOutOfRange");  // NOI18N
+        }
+        layout.setFastClock(6);
+        Assert.assertEquals(6, layout.getFastClock());
+        Assert.assertTrue(layout.getRatio() > 0.0f);
+        try {
+            layout.setScale("XY");
+        } catch (IllegalArgumentException ex) {
+            Assert.assertEquals(ex.getMessage(), "ScaleNotFound~XY");  // NOI18N
+        }
+        try {
+            layout.setThrottles(-2);
+        } catch (IllegalArgumentException ex) {
+            Assert.assertEquals(ex.getMessage(), "ThrottlesLt0");  // NOI18N
+        }
+        layout.setThrottles(3);
+        Assert.assertEquals(3, layout.getThrottles());
+        layout.setMetric(true);
+        Assert.assertTrue(layout.getMetric());
+        layout.setScaleMK();
+        Assert.assertEquals(1.914, layout.getScaleMK(), .1);
+        Assert.assertEquals("Test Name", layout.toString());  // NOI18N
     }
 
     @Before

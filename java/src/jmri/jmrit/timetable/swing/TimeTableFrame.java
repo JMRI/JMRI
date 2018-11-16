@@ -39,7 +39,6 @@ import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
-import jmri.jmrit.logix.WarrantPreferences;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.SplitButtonColorChooserPanel;
 
@@ -71,32 +70,15 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         super(true, true);
         setTitle(Bundle.getMessage("TitleTimeTable"));  // NOI18N
         InstanceManager.setDefault(TimeTableFrame.class, this);
-        _dataMgr = new TimeTableDataManager();
-        if (!TimeTableXml.doLoad()) {
-            log.error("Unabled to load the time table data");  // NOI18N
-        }
+        _dataMgr = TimeTableDataManager.getDataManager();
         buildComponents();
         createFrame();
         createMenu();
         setEditMode(false);
         setShowReminder(false);
-        log.info("{} is ready", hashCode());  // NOI18N
-        try {
-            _wp = jmri.jmrit.logix.WarrantPreferences.getDefault();
-            _wp.addPropertyChangeListener("layoutScale", warrantListener);  // NOI18N
-        } catch (java.lang.NullPointerException ex) {
-            log.debug("Disable scale changes");  // NOI18N
-        }
-
-    }  // TODO
-
-//     private WarrantPreferences _wp = jmri.jmrit.logix.WarrantPreferences.getDefault();
-    private WarrantPreferences _wp = null;
+    }
 
     TimeTableDataManager _dataMgr;
-    public TimeTableDataManager getDataManager() {
-        return _dataMgr;
-    }
     boolean _isDirty = false;
     boolean _showTrainTimes = false;
 
@@ -137,10 +119,10 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
 
     // Layout
     JTextField _editLayoutName;
+    JComboBox<Scale> _editScale;
     JTextField _editFastClock;
     JTextField _editThrottles;
     JCheckBox _editMetric;
-    JLabel _showScale;
     JLabel _showScaleMK;
 
     // TrainType
@@ -398,7 +380,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
 
         JMenuItem imp = new JMenuItem(Bundle.getMessage("MenuImport"));  // NOI18N
         imp.addActionListener((ActionEvent event) -> {
-                importPressed();
+            importPressed();
         });
 
         JMenu ttMenu = new JMenu(Bundle.getMessage("MenuTimetable"));  // NOI18N
@@ -422,13 +404,14 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
     void buildComponents() {
         // Layout
         _editLayoutName = new JTextField(20);
+        _editScale = new JComboBox<>();
         _editFastClock = new JTextField(5);
         _editThrottles = new JTextField(5);
         _editMetric = new JCheckBox();
-        _showScale = new JLabel();
         _showScaleMK = new JLabel();
 
         _editLayoutName.addFocusListener(detailFocusEvent);
+        _editScale.addFocusListener(detailFocusEvent);
         _editFastClock.addFocusListener(detailFocusEvent);
         _editThrottles.addFocusListener(detailFocusEvent);
         _editMetric.addChangeListener(detailChangeEvent);
@@ -637,17 +620,17 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         makeGridLabel(0, "LabelLayoutName", "HintLayoutName", c);  // NOI18N
         _gridPanel.add(_editLayoutName, c);
 
-        makeGridLabel(1, "LabelFastClock", "HintFastClock", c);  // NOI18N
+        makeGridLabel(1, "LabelScale", "HintScale", c);  // NOI18N
+        _gridPanel.add(_editScale, c);
+
+        makeGridLabel(2, "LabelFastClock", "HintFastClock", c);  // NOI18N
         _gridPanel.add(_editFastClock, c);
 
-        makeGridLabel(2, "LabelThrottles", "HintThrottles", c);  // NOI18N
+        makeGridLabel(3, "LabelThrottles", "HintThrottles", c);  // NOI18N
         _gridPanel.add(_editThrottles, c);
 
-        makeGridLabel(3, "LabelMetric", "HintMetric", c);  // NOI18N
+        makeGridLabel(4, "LabelMetric", "HintMetric", c);  // NOI18N
         _gridPanel.add(_editMetric, c);
-
-        makeGridLabel(4, "LabelScale", "HintScale", c);  // NOI18N
-        _gridPanel.add(_showScale, c);
 
         makeGridLabel(5, "LabelScaleMK", "HintScaleMK", c);  // NOI18N
         _gridPanel.add(_showScaleMK, c);
@@ -842,9 +825,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
      * Add the layout node and the TrainTypes, Segments and Schedules collection nodes.
      */
     void addLayout() {
-        int newId = _dataMgr.getNextId("Layout");  // NOI18N
-        Layout newLayout = new Layout(newId);
-        _dataMgr.addLayout(newId, newLayout);
+        Layout newLayout = new Layout();
         setShowReminder(true);
 
         // Build tree components
@@ -869,9 +850,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
     void addTrainType() {
         TimeTableTreeNode layoutNode = (TimeTableTreeNode) _curNode.getParent();
         int layoutId = layoutNode.getId();
-        int newId = _dataMgr.getNextId("TrainType");  // NOI18N
-        TrainType newType = new TrainType(newId, layoutId, "", "#000000");  // NOI18N
-        _dataMgr.addTrainType(newId, newType);
+        TrainType newType = new TrainType(layoutId);
         setShowReminder(true);
 
         // Build tree components
@@ -889,9 +868,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
     void addSegment() {
         TimeTableTreeNode layoutNode = (TimeTableTreeNode) _curNode.getParent();
         int layoutId = layoutNode.getId();
-        int newId = _dataMgr.getNextId("Segment");  // NOI18N
-        Segment newSegment = new Segment(newId, layoutId, "");
-        _dataMgr.addSegment(newId, newSegment);
+        Segment newSegment = new Segment(layoutId);
         setShowReminder(true);
 
         // Build tree components
@@ -907,9 +884,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
      * Create a new Station object with default values.
      */
     void addStation() {
-        int newId = _dataMgr.getNextId("Station");  // NOI18N
-        Station newStation = new Station(newId, _curNodeId);
-        _dataMgr.addStation(newId, newStation);
+        Station newStation = new Station(_curNodeId);
         setShowReminder(true);
 
         // Build tree components
@@ -927,9 +902,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
     void addSchedule() {
         TimeTableTreeNode layoutNode = (TimeTableTreeNode) _curNode.getParent();
         int layoutId = layoutNode.getId();
-        int newId = _dataMgr.getNextId("Schedule");  // NOI18N
-        Schedule newSchedule = new Schedule(newId, layoutId);
-        _dataMgr.addSchedule(newId, newSchedule);
+        Schedule newSchedule = new Schedule(layoutId);
         setShowReminder(true);
 
         // Build tree components
@@ -942,9 +915,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
     }
 
     void addTrain() {
-        int newId = _dataMgr.getNextId("Train");  // NOI18N
-        Train newTrain = new Train(newId, _curNodeId);
-        _dataMgr.addTrain(newId, newTrain);
+        Train newTrain = new Train(_curNodeId);
         setShowReminder(true);
 
         // Build tree components
@@ -957,10 +928,8 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
     }
 
     void addStop() {
-        int newId = _dataMgr.getNextId("Stop");
         int newSeq = _dataMgr.getStops(_curNodeId, 0, false).size();
-        Stop newStop = new Stop(newId, _curNodeId, newSeq + 1);
-        _dataMgr.addStop(newId, newStop);
+        Stop newStop = new Stop(_curNodeId, newSeq + 1);
         setShowReminder(true);
 
         // Build tree components
@@ -1028,11 +997,17 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         _editFastClock.setText(Integer.toString(layout.getFastClock()));
         _editThrottles.setText(Integer.toString(layout.getThrottles()));
         _editMetric.setSelected(layout.getMetric());
-        _showScale.setText(Float.toString(layout.getScale()));
         String unitMeasure = (layout.getMetric())
                 ? Bundle.getMessage("LabelRealMeters") // NOI18N
                 : Bundle.getMessage("LabelRealFeet"); // NOI18N
         _showScaleMK.setText(String.format("%.2f %s", layout.getScaleMK(), unitMeasure)); // NOI18N
+
+        _editScale.removeAllItems();
+        for (Scale scale : Scale.values()) {
+            _editScale.addItem(scale);
+        }
+        jmri.util.swing.JComboBoxUtil.setupComboBoxMaxRows(_editScale);
+        _editScale.setSelectedItem(Scale.valueOf(layout.getScale()));
     }
 
     /*
@@ -1187,68 +1162,100 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
     void updateLayout() {
         Layout layout = _dataMgr.getLayout(_curNodeId);
 
+        // Pre-validate and convert inputs
         String newName = _editLayoutName.getText().trim();
+        Scale scale = (Scale) _editScale.getSelectedItem();
+        String newScale = scale.name();
+        log.info("s = {}, n = {}", scale, newScale);
         int newFastClock = parseNumber(_editFastClock, "fast clock");  // NOI18N
-        if (newFastClock == -1) {
+        if (newFastClock < 1) {
             newFastClock = layout.getFastClock();
         }
         int newThrottles = parseNumber(_editThrottles, "throttles");  // NOI18N
-        if (newThrottles == -1) {
-            newThrottles = layout.getThrottles();
-        }
-        // Check throttle references
-        ArrayList<String> trainThrottles = new ArrayList<>();
-        for (Schedule schedule : _dataMgr.getSchedules(_curNodeId, true)) {
-            for (Train train : _dataMgr.getTrains(schedule.getScheduleId(), 0, true)) {
-                if (train.getThrottle() > newThrottles) {
-                    trainThrottles.add(String.format("%s [ %d ]", train.getTrainName(), train.getThrottle()));
-                }
-            }
-        }
-        if (!trainThrottles.isEmpty()) {
-            StringBuilder msg = new StringBuilder(Bundle.getMessage("ThrottlesInUse"));  // NOI18N
-            for (String trainThrottle : trainThrottles) {
-                msg.append("\n    " + trainThrottle);  // NOI18N
-            }
-            JOptionPane.showMessageDialog(null,
-                    msg.toString(),
-                    Bundle.getMessage("WarningTitle"),  // NOI18N
-                    JOptionPane.WARNING_MESSAGE);
+        if (newThrottles < 0) {
             newThrottles = layout.getThrottles();
         }
         boolean newMetric =_editMetric.isSelected();
 
         boolean update = false;
-        boolean recalc = false;
+        List<String> exceptionList = new ArrayList<>();
 
+        // Perform updates
         if (!layout.getLayoutName().equals(newName)) {
             layout.setLayoutName(newName);
             _curNode.setText(newName);
             _timetableModel.nodeChanged(_curNode);
             update = true;
         }
+
+        if (layout.getScale().equals(newScale)) {
+            try {
+                layout.setScale(newScale);
+                update = true;
+            } catch (IllegalArgumentException ex) {
+                exceptionList.add(ex.getMessage());
+            }
+        }
+
         if (layout.getFastClock() != newFastClock) {
-            layout.setFastClock(newFastClock);
-            layout.setScaleMK();
-            update = true;
-            recalc = true;
+            try {
+                layout.setFastClock(newFastClock);
+                update = true;
+            } catch (IllegalArgumentException ex) {
+                exceptionList.add(ex.getMessage());
+            }
         }
-        if (layout.getThrottles() != newThrottles) {
-            layout.setThrottles(newThrottles);
-            update = true;
-        }
+
         if (layout.getMetric() != newMetric) {
-            layout.setMetric(newMetric);
-            layout.setScaleMK();
-            update = true;
-            recalc = true;
+            try {
+                layout.setMetric(newMetric);
+                update = true;
+            } catch (IllegalArgumentException ex) {
+                exceptionList.add(ex.getMessage());
+            }
+        }
+
+        if (layout.getThrottles() != newThrottles) {
+            try {
+                layout.setThrottles(newThrottles);
+                update = true;
+            } catch (IllegalArgumentException ex) {
+                exceptionList.add(ex.getMessage());
+            }
         }
 
         if (update) {
             setShowReminder(true);
-            if (recalc) {
-                calculateLayoutTrains(_curNodeId);
+        }
+
+        // Display exceptions if necessary
+        if (!exceptionList.isEmpty()) {
+            StringBuilder msg = new StringBuilder(Bundle.getMessage("LayoutUpdateErrors"));  // NOI18N
+            for (String keyWord : exceptionList) {
+                if (keyWord.startsWith(_dataMgr.TIME_OUT_OF_RANGE)) {
+                    String[] comps = keyWord.split("~");
+                    msg.append(Bundle.getMessage(comps[0], comps[1], comps[2]));
+                } else if (keyWord.startsWith(_dataMgr.SCALE_NF)) {
+                    String[] scaleMsg = keyWord.split("~");
+                    msg.append(Bundle.getMessage(scaleMsg[0], scaleMsg[1]));
+                } else {
+                    msg.append(String.format("%n%s", Bundle.getMessage(keyWord)));
+                    if (keyWord.equals(_dataMgr.THROTTLES_IN_USE)) {
+                        // Add the affected trains
+                        for (Schedule schedule : _dataMgr.getSchedules(_curNodeId, true)) {
+                            for (Train train : _dataMgr.getTrains(schedule.getScheduleId(), 0, true)) {
+                                if (train.getThrottle() > newThrottles) {
+                                    msg.append(String.format("%n      %s [ %d ]", train.getTrainName(), train.getThrottle()));
+                                }
+                            }
+                        }
+                    }
+                }
             }
+            JOptionPane.showMessageDialog(null,
+                    msg.toString(),
+                    Bundle.getMessage("WarningTitle"),  // NOI18N
+                    JOptionPane.WARNING_MESSAGE);
         }
     }
 
@@ -1302,6 +1309,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
     void updateStation() {
         Station station = _dataMgr.getStation(_curNodeId);
 
+        // Pre-validate and convert inputs
         String newName = _editStationName.getText().trim();
         double newDistance;
         try {
@@ -1317,54 +1325,77 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         boolean newDoubleTrack =_editDoubleTrack.isSelected();
         int newSidings = (int) _editSidings.getValue();
         int newStaging = (int) _editStaging.getValue();
-        // Staging cannot be less than the highest staging reference
-        boolean stagingError = false;
-        for (Stop stop : _dataMgr.getStops(0, station.getStationId(), false)) {
-            if (stop.getStagingTrack() > newStaging) {
-                stagingError = true;
-                break;
-            }
-        }
-        if (stagingError) {
-            JOptionPane.showMessageDialog(null,
-                    Bundle.getMessage("StagingInUse"),  // NOI18N
-                    Bundle.getMessage("WarningTitle"),  // NOI18N
-                    JOptionPane.WARNING_MESSAGE);
-            newStaging = station.getStaging();
-        }
 
         boolean update = false;
-        boolean recalc = false;
+        List<String> exceptionList = new ArrayList<>();
 
+        // Perform updates
         if (!station.getStationName().equals(newName)) {
             station.setStationName(newName);
             _curNode.setText(newName);
             _timetableModel.nodeChanged(_curNode);
             update = true;
         }
-        if (Math.abs(station.getDistance() - newDistance) > .01 ) {
-            station.setDistance(newDistance);
-            update = true;
-            recalc = true;
+
+        if (newDistance < 0.0) {
+            newDistance = station.getDistance();
         }
+        if (Math.abs(station.getDistance() - newDistance) > .01 ) {
+            try {
+                station.setDistance(newDistance);
+                update = true;
+            } catch (IllegalArgumentException ex) {
+                exceptionList.add(ex.getMessage());
+            }
+        }
+
         if (station.getDoubleTrack() != newDoubleTrack) {
             station.setDoubleTrack(newDoubleTrack);
             update = true;
         }
+
         if (station.getSidings() != newSidings) {
             station.setSidings(newSidings);
             update = true;
         }
+
         if (station.getStaging() != newStaging) {
-            station.setStaging(newStaging);
-            update = true;
+            try {
+                station.setStaging(newStaging);
+                update = true;
+            } catch (IllegalArgumentException ex) {
+                exceptionList.add(ex.getMessage());
+            }
         }
 
         if (update) {
             setShowReminder(true);
-            if (recalc) {
-                calculateLayoutTrains((_dataMgr.getSegment(station.getSegmentId()).getLayoutId()));
+        }
+
+        // Display exceptions if necessary
+        if (!exceptionList.isEmpty()) {
+            StringBuilder msg = new StringBuilder(Bundle.getMessage("StationUpdateErrors"));  // NOI18N
+            for (String keyWord : exceptionList) {
+                if (keyWord.startsWith(_dataMgr.TIME_OUT_OF_RANGE)) {
+                    String[] comps = keyWord.split("~");
+                    msg.append(Bundle.getMessage(comps[0], comps[1], comps[2]));
+                } else {
+                    msg.append(String.format("%n%s", Bundle.getMessage(keyWord)));
+                    if (keyWord.equals(_dataMgr.STAGING_IN_USE)) {
+                        // Add the affected stops
+                        for (Stop stop : _dataMgr.getStops(0, _curNodeId, false)) {
+                            if (stop.getStagingTrack() > newStaging) {
+                                Train train = _dataMgr.getTrain(stop.getTrainId());
+                                msg.append(String.format("%n      %s, %d", train.getTrainName(), stop.getSeq()));
+                            }
+                        }
+                    }
+                }
             }
+            JOptionPane.showMessageDialog(null,
+                    msg.toString(),
+                    Bundle.getMessage("WarningTitle"),  // NOI18N
+                    JOptionPane.WARNING_MESSAGE);
         }
     }
 
@@ -1376,6 +1407,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
     void updateSchedule() {
         Schedule schedule = _dataMgr.getSchedule(_curNodeId);
 
+        // Pre-validate and convert inputs
         String newName = _editScheduleName.getText().trim();
         String newEffDate = _editEffDate.getText().trim();
         int newStartHour = (int) _editStartHour.getValue();
@@ -1387,65 +1419,64 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
             newDuration = schedule.getDuration();
         }
 
-        // Check for trains and stops outside of the time range
-        int startTime = newStartHour * 60;
-        int endTime = (newStartHour + newDuration) * 60;
-        List<String> trainList = new ArrayList<>();
-        for (Train train : _dataMgr.getTrains(_curNodeId, 0 , true)) {
-            if (train.getStartTime() < startTime || train.getStartTime() > endTime) {
-                trainList.add(train.getTrainName());
-            } else {
-                for (Stop stop : _dataMgr.getStops(train.getTrainId(), 0, false)) {
-                    if (stop.getArriveTime() < startTime
-                            || stop.getArriveTime() > endTime
-                            || stop.getDepartTime() < startTime
-                            || stop.getDepartTime() > endTime) {
-                        if (!trainList.contains(train.getTrainName())) {
-                            trainList.add(train.getTrainName());
-                        }
-                    }
-                }
-            }
-        }
-        if (!trainList.isEmpty()) {
-            StringBuilder msg = new StringBuilder(Bundle.getMessage("TrainStopTime"));  // NOI18N
-            for (String trainTime : trainList) {
-                msg.append("\n    " + trainTime);  // NOI18N
-            }
-            JOptionPane.showMessageDialog(null,
-                    msg.toString(),
-                    Bundle.getMessage("WarningTitle"),  // NOI18N
-                    JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-
         boolean update = false;
+        List<String> exceptionList = new ArrayList<>();
 
+        // Perform updates
         if (!schedule.getScheduleName().equals(newName)) {
             schedule.setScheduleName(newName);
             update = true;
         }
+
         if (!schedule.getEffDate().equals(newEffDate)) {
             schedule.setEffDate(newEffDate);
             update = true;
         }
+
         if (update) {
             _curNode.setText(buildNodeText("Schedule", schedule, 0));  // NOI18N
             _timetableModel.nodeChanged(_curNode);
         }
+
         if (schedule.getStartHour() != newStartHour) {
-            schedule.setStartHour(newStartHour);
-            update = true;
+            try {
+                schedule.setStartHour(newStartHour);
+                update = true;
+            } catch (IllegalArgumentException ex) {
+                exceptionList.add(ex.getMessage());
+            }
         }
+
         if (schedule.getDuration() != newDuration) {
-            schedule.setDuration(newDuration);
-            update = true;
+            try {
+                schedule.setDuration(newDuration);
+                update = true;
+            } catch (IllegalArgumentException ex) {
+                exceptionList.add(ex.getMessage());
+            }
         }
 
         if (update) {
             setShowReminder(true);
         }
-    }  // TODO -- check for midnight wrap
+
+        // Display exceptions if necessary
+        if (!exceptionList.isEmpty()) {
+            StringBuilder msg = new StringBuilder(Bundle.getMessage("ScheduleUpdateErrors"));  // NOI18N
+            for (String keyWord : exceptionList) {
+                if (keyWord.startsWith(_dataMgr.TIME_OUT_OF_RANGE)) {
+                    String[] comps = keyWord.split("~");
+                    msg.append(Bundle.getMessage(comps[0], comps[1], comps[2]));
+                } else {
+                    msg.append(String.format("%n%s", Bundle.getMessage(keyWord)));
+                }
+            }
+            JOptionPane.showMessageDialog(null,
+                    msg.toString(),
+                    Bundle.getMessage("WarningTitle"),  // NOI18N
+                    JOptionPane.WARNING_MESSAGE);
+        }
+    }
 
     /**
      * Update the train information.
@@ -1454,74 +1485,80 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
      */
     void updateTrain() {
         Train train = _dataMgr.getTrain(_curNodeId);
-        Schedule schedule = _dataMgr.getSchedule(train.getScheduleId());
+        List<String> exceptionList = new ArrayList<>();
 
+        // Pre-validate and convert inputs
         String newName = _editTrainName.getText().trim();
         String newDesc = _editTrainDesc.getText().trim();
         int newType = ((TrainType) _editTrainType.getSelectedItem()).getTypeId();
         int newSpeed = parseNumber(_editDefaultSpeed, "default train speed");  // NOI18N
-        if (newSpeed == -1) {
+        if (newSpeed < 0) {
             newSpeed = train.getDefaultSpeed();
         }
+
         LocalTime newTime;
         int newStart;
         try {
             newTime = LocalTime.parse(_editTrainStartTime.getText().trim(), DateTimeFormatter.ofPattern("H:mm"));  // NOI18N
             newStart = newTime.getHour() * 60 + newTime.getMinute();
         } catch (java.time.format.DateTimeParseException ex) {
-            log.warn("Bad train start time format: {}", ex.getMessage());  // NOI18N
-            JOptionPane.showMessageDialog(null,
-                    Bundle.getMessage("StartTimeFormat", ex.getParsedString()),  // NOI18N
-                    Bundle.getMessage("WarningTitle"),  // NOI18N
-                    JOptionPane.WARNING_MESSAGE);
+            exceptionList.add(_dataMgr.START_TIME_FORMAT + "~" + ex.getParsedString());
             newStart = train.getStartTime();
         }
-        int startHour = schedule.getStartHour();
-        int endHour = startHour + schedule.getDuration();
-        if (newStart < startHour * 60 || newStart > endHour * 60) {
-            log.warn("Train start time is not between {}:00 and {}:00", startHour, endHour);  // NOI18N
-            JOptionPane.showMessageDialog(null,
-                    Bundle.getMessage("StartTimeError", startHour, endHour),  // NOI18N
-                    Bundle.getMessage("WarningTitle"),  // NOI18N
-                    JOptionPane.WARNING_MESSAGE);
-            newStart = train.getStartTime();
-        }
+
         int newThrottle = (int) _editThrottle.getValue();
         String newNotes = _editTrainNotes.getText();
 
         boolean update = false;
-        boolean recalc = false;
 
+        // Perform updates
         if (!train.getTrainName().equals(newName)) {
             train.setTrainName(newName);
             update = true;
         }
+
         if (!train.getTrainDesc().equals(newDesc)) {
             train.setTrainDesc(newDesc);
             update = true;
         }
+
         if (update) {
             _curNode.setText(buildNodeText("Train", train, 0));  // NOI18N
             _timetableModel.nodeChanged(_curNode);
         }
+
         if (train.getTypeId() != newType) {
             train.setTypeId(newType);
             update = true;
         }
+
         if (train.getDefaultSpeed() != newSpeed) {
-            train.setDefaultSpeed(newSpeed);
-            update = true;
-            recalc = true;
+            try {
+                train.setDefaultSpeed(newSpeed);
+                update = true;
+            } catch (IllegalArgumentException ex) {
+                exceptionList.add(ex.getMessage());
+            }
         }
+
         if (train.getStartTime() != newStart) {
-            train.setStartTime(newStart);
-            update = true;
-            recalc = true;
+            try {
+                train.setStartTime(newStart);
+                update = true;
+            } catch (IllegalArgumentException ex) {
+                exceptionList.add(ex.getMessage());
+            }
         }
+
         if (train.getThrottle() != newThrottle) {
-            train.setThrottle(newThrottle);
-            update = true;
+            try {
+                train.setThrottle(newThrottle);
+                update = true;
+            } catch (IllegalArgumentException ex) {
+                exceptionList.add(ex.getMessage());
+            }
         }
+
         if (!train.getTrainNotes().equals(newNotes)) {
             train.setTrainNotes(newNotes);
             update = true;
@@ -1529,9 +1566,30 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
 
         if (update) {
             setShowReminder(true);
-            if (recalc) {
-                calculateTrain(train.getTrainId());
+        }
+
+        // Display exceptions if necessary
+        if (!exceptionList.isEmpty()) {
+            StringBuilder msg = new StringBuilder(Bundle.getMessage("TrainUpdateErrors"));  // NOI18N
+            for (String keyWord : exceptionList) {
+                log.info("kw = {}", keyWord);
+                if (keyWord.startsWith(_dataMgr.TIME_OUT_OF_RANGE)) {
+                    String[] comps = keyWord.split("~");
+                    msg.append(Bundle.getMessage(comps[0], comps[1], comps[2]));
+                } else if (keyWord.startsWith(_dataMgr.START_TIME_FORMAT)) {
+                    String[] timeMsg = keyWord.split("~");
+                    msg.append(Bundle.getMessage(timeMsg[0], timeMsg[1]));
+                } else if (keyWord.startsWith(_dataMgr.START_TIME_RANGE)) {
+                    String[] schedMsg = keyWord.split("~");
+                    msg.append(Bundle.getMessage(schedMsg[0], schedMsg[1], schedMsg[2]));
+                } else {
+                    msg.append(String.format("%n%s", Bundle.getMessage(keyWord)));
+                }
             }
+            JOptionPane.showMessageDialog(null,
+                    msg.toString(),
+                    Bundle.getMessage("WarningTitle"),  // NOI18N
+                    JOptionPane.WARNING_MESSAGE);
         }
     }
 
@@ -1541,47 +1599,59 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
     void updateStop() {
         Stop stop = _dataMgr.getStop(_curNodeId);
 
+        // Pre-validate and convert inputs
         TimeTableDataManager.SegmentStation stopSegmentStation =
                 (TimeTableDataManager.SegmentStation) _editStopStation.getSelectedItem();
         int newStation = stopSegmentStation.getStationId();
         int newDuration = parseNumber(_editStopDuration, "stop duration");  // NOI18N
-        if (newDuration == -1) {
+        if (newDuration < 0) {
             newDuration = stop.getDuration();
         }
         int newSpeed = parseNumber(_editNextSpeed, "next speed");  // NOI18N
-        if (newSpeed == -1) {
+        if (newSpeed < 0) {
             newSpeed = stop.getNextSpeed();
         }
         int newStagingTrack = (int) _editStagingTrack.getValue();
         String newNotes = _editStopNotes.getText();
 
-        log.info("Stop station = {} ({}), dur = {}, next = {}, stg = {}, notes = {}",  // NOI18N
-                stopSegmentStation, newStation, newDuration, newSpeed, newStagingTrack, newNotes);
-
         boolean update = false;
-        boolean recalc = false;
+        List<String> exceptionList = new ArrayList<>();
 
+        // Perform updates
         if (stop.getStationId() != newStation) {
             stop.setStationId(newStation);
             _curNode.setText(buildNodeText("Stop", stop, 0));  // NOI18N
             _timetableModel.nodeChanged(_curNode);
             update = true;
-            recalc = true;
         }
+
         if (stop.getDuration() != newDuration) {
-            stop.setDuration(newDuration);
-            update = true;
-            recalc = true;
+            try {
+                stop.setDuration(newDuration);
+                update = true;
+            } catch (IllegalArgumentException ex) {
+                exceptionList.add(ex.getMessage());
+            }
         }
+
         if (stop.getNextSpeed() != newSpeed) {
-            stop.setNextSpeed(newSpeed);
-            update = true;
-            recalc = true;
+            try {
+                stop.setNextSpeed(newSpeed);
+                update = true;
+            } catch (IllegalArgumentException ex) {
+                exceptionList.add(ex.getMessage());
+            }
         }
+
         if (stop.getStagingTrack() != newStagingTrack) {
-            stop.setStagingTrack(newStagingTrack);
-            update = true;
+            try {
+                stop.setStagingTrack(newStagingTrack);
+                update = true;
+            } catch (IllegalArgumentException ex) {
+                exceptionList.add(ex.getMessage());
+            }
         }
+
         if (!stop.getStopNotes().equals(newNotes)) {
             stop.setStopNotes(newNotes);
             update = true;
@@ -1589,9 +1659,23 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
 
         if (update) {
             setShowReminder(true);
-            if (recalc) {
-                calculateTrain(stop.getTrainId());
+        }
+
+        // Display exceptions if necessary
+        if (!exceptionList.isEmpty()) {
+            StringBuilder msg = new StringBuilder(Bundle.getMessage("StopUpdateErrors"));  // NOI18N
+            for (String keyWord : exceptionList) {
+                if (keyWord.startsWith(_dataMgr.TIME_OUT_OF_RANGE)) {
+                    String[] comps = keyWord.split("~");
+                    msg.append(Bundle.getMessage(comps[0], comps[1], comps[2]));
+                } else {
+                    msg.append(String.format("%n%s", Bundle.getMessage(keyWord)));
+                }
             }
+            JOptionPane.showMessageDialog(null,
+                    msg.toString(),
+                    Bundle.getMessage("WarningTitle"),  // NOI18N
+                    JOptionPane.WARNING_MESSAGE);
         }
     }
 
@@ -1834,7 +1918,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         List<Train> trainList = new ArrayList<>(_dataMgr.getTrains(_curNodeId, 0, true));
         if (!trainList.isEmpty()) {
             // The schedule still has trains.
-            // Present the option to delete the trains and the schedule
+            // Present the option to delete the stops, trains and the schedule
             Object[] options = {Bundle.getMessage("ButtonNo"), Bundle.getMessage("ButtonYes")};  // NOI18N
             int selectedOption = JOptionPane.showOptionDialog(null,
                     Bundle.getMessage("ScheduleCascade"), // NOI18N
@@ -1907,9 +1991,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
      */
     void deleteStop() {
         // delete the stop
-        int trainId = _dataMgr.getStop(_curNodeId).getTrainId();
         _dataMgr.deleteStop(_curNodeId);
-        calculateTrain(trainId);
         setShowReminder(true);
 
         // Update the tree
@@ -2009,7 +2091,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         setMoveButtons();
 
         // Update times
-        calculateTrain(_dataMgr.getStop(_curNodeId).getTrainId());
+        _dataMgr.calculateTrain(_dataMgr.getStop(_curNodeId).getTrainId(), true);
     }
 
     /**
@@ -2057,13 +2139,28 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         } else {
             scheduleId = schedules.get(0).getScheduleId();
             if (schedules.size() > 1) {
-                log.info("do selection dialog");  // NOI18N
                 // do selection dialog
+                Schedule[] schedArr = new Schedule[schedules.size()];
+                schedArr = schedules.toArray(schedArr);
+                Schedule schedSelected = (Schedule) JOptionPane.showInputDialog(
+                        null,
+                        Bundle.getMessage("GraphScheduleMessage"),  // NOI18N
+                        Bundle.getMessage("QuestionTitle"),  // NOI18N
+                        JOptionPane.QUESTION_MESSAGE,
+                        null,
+                        schedArr,
+                        schedArr[0]
+                );
+                if (schedSelected == null) {
+                    log.warn("Schedule not selected, graph request cancelled");  // NOI18N
+                    return;
+                }
+                scheduleId = schedSelected.getScheduleId();
             }
         }
 
         TimeTableGraph graph = new TimeTableGraph();
-        graph.init(_curNodeId, scheduleId, _dataMgr, _showTrainTimes);
+        graph.init(_curNodeId, scheduleId, _showTrainTimes);
 
         JmriJFrame f = new JmriJFrame(Bundle.getMessage("TitleTimeTableGraph"), true, true);  // NOI18N
         f.setMinimumSize(new Dimension(600, 300));
@@ -2071,7 +2168,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         f.pack();
         f.addHelpMenu("html.tools.TimeTable", true);  // NOI18N
         f.setVisible(true);
-    }  // TODO schedule dialog
+    }
 
     JFileChooser fileChooser;
     void importPressed() {
@@ -2123,179 +2220,6 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         }
         InstanceManager.reset(TimeTableFrame.class);
         dispose();
-    }
-
-    // ------------  Calculate Train Times ------------
-
-    /**
-     * Update the trains for all of the trains for this layout.
-     * Invoked by updates to fast clock speed, metric, scale and station distances.
-     * @param layoutId The id for the layout that has been updated.
-     */
-    void calculateLayoutTrains(int layoutId) {
-        for (Schedule schedule : _dataMgr.getSchedules(layoutId, false)) {
-            calculateScheduleTrains(schedule.getScheduleId());
-        }
-    }
-
-    /**
-     * Update the train times for all of the trains that use this schedule.
-     * @param scheduleId The id for the schedule that has been updated.
-     */
-    void calculateScheduleTrains(int scheduleId) {
-        for (Train train : _dataMgr.getTrains(scheduleId, 0, false)) {
-            calculateTrain(train.getTrainId());
-        }
-    }
-
-    /**
-     * Calculate the arrival and departure times for all of the stops.
-     * @param trainId The id of the train to be updated.
-     */
-    void calculateTrain(int trainId) {
-        // Get the data
-        Train train = _dataMgr.getTrain(trainId);
-        Schedule schedule = _dataMgr.getSchedule(train.getScheduleId());
-        Layout layout = _dataMgr.getLayout(schedule.getLayoutId());
-        ArrayList<Stop> stops = _dataMgr.getStops(trainId, 0, true);
-
-        float smile = layout.getScaleMK();
-        int startHH = schedule.getStartHour();
-        int duration = schedule.getDuration();
-        int currentTime = train.getStartTime();
-        int defaultSpeed = train.getDefaultSpeed();
-
-        checkStart = startHH;
-        checkDuration = duration;
-
-        String currentStationName = "";
-        double currentDistance = 0.0;
-        int currentSegment = 0;
-        int currentSpeed = 0;
-        int newArrive = 0;
-        int newDepart = 0;
-        int elapseTime = 0;
-        boolean firstStop = true;
-
-        for (Stop stop : stops) {
-            Station station = _dataMgr.getStation(stop.getStationId());
-            Segment segment = _dataMgr.getSegment(station.getSegmentId());
-            if (firstStop) {
-                newArrive = currentTime;
-                currentTime += stop.getDuration();
-                newDepart = currentTime;
-                currentDistance = station.getDistance();
-                currentSpeed = (stop.getNextSpeed() > 0) ? stop.getNextSpeed() : defaultSpeed;
-                currentStationName = station.getStationName();
-                currentSegment = segment.getSegmentId();
-
-                if (validateTime(newArrive) && validateTime(newDepart)) {
-                    stop.setArriveTime(newArrive);
-                    stop.setDepartTime(newDepart);
-                } else {
-                    JOptionPane.showMessageDialog(null,
-                            Bundle.getMessage("TimeOutOfRange", stop.getSeq(), train.getTrainName()),  // NOI18N
-                            Bundle.getMessage("WarningTitle"),  // NOI18N
-                            JOptionPane.WARNING_MESSAGE);
-                    return;
-                }
-                firstStop = false;
-                continue;
-            }
-
-            // Calculate times for remaining stops
-            double wrkDistance = Math.abs(currentDistance - station.getDistance());
-
-            // If the segment has changed, a new distance will need to be calculated.
-            if (segment.getSegmentId() != currentSegment) {
-                // Find the station in the current segment that has the same name
-                // as the station in the previous segment.
-                Station wrkStation = null;
-                for (Station findStation : _dataMgr.getStations(segment.getSegmentId(), false)) {
-                    if (findStation.getStationName().equals(currentStationName)) {
-                        wrkStation = findStation;
-                        break;
-                    }
-                }
-                if (wrkStation == null) {
-                    JOptionPane.showMessageDialog(null,
-                            Bundle.getMessage("SegmentChangeError", currentStationName, segment.getSegmentName()),  // NOI18N
-                            Bundle.getMessage("WarningTitle"),  // NOI18N
-                            JOptionPane.WARNING_MESSAGE);
-                    return;
-                }
-                wrkDistance = Math.abs(station.getDistance() - wrkStation.getDistance());
-            }
-
-            elapseTime = (int) Math.round(wrkDistance / smile / currentSpeed * 60);
-            if (elapseTime < 1) {
-                elapseTime = 1;
-            }
-            currentTime += elapseTime;
-            if (currentTime > 1439)
-                currentTime -= 1440;
-            newArrive = currentTime;
-            currentTime += stop.getDuration();
-            if (currentTime > 1439)
-                currentTime -= 1440;
-            newDepart = currentTime;
-
-            currentDistance = station.getDistance();
-            currentSpeed = (stop.getNextSpeed() > 0) ? stop.getNextSpeed() : defaultSpeed;
-            currentSegment = station.getSegmentId();
-            currentStationName = station.getStationName();
-
-            if (validateTime(newArrive) && validateTime(newDepart)) {
-                stop.setArriveTime(newArrive);
-                stop.setDepartTime(newDepart);
-            } else {
-                JOptionPane.showMessageDialog(null,
-                        Bundle.getMessage("TimeOutOfRange", stop.getSeq(), train.getTrainName()),  // NOI18N
-                        Bundle.getMessage("WarningTitle"),  // NOI18N
-                        JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-        }
-    }
-
-    int checkStart;
-    int checkDuration;
-    /**
-     * Check to see if the supplied time is within the time range for the supplied schedule.
-     * If the duration is 24 hours, then all times are valid.
-     * Otherwise, we need to calculate the valid range, which can span midnight.
-     * @param checkTime The time value to be check.
-     * @return true if the time is valid.
-     */
-    boolean validateTime(int checkTime) {
-        if (checkDuration == 24 && checkTime < 1440) {
-            return true;
-        }
-
-        boolean dayWrap;
-        int lowLimit;
-        int highLimit;
-
-        if (checkStart + checkDuration > 24) {
-            dayWrap = true;
-            lowLimit = checkStart * 60;
-            highLimit = ((checkStart + checkDuration - 24) * 60) - 1;
-        } else {
-            dayWrap = false;
-            lowLimit = checkStart * 60;
-            highLimit = ((checkStart + checkDuration) * 60) - 1;
-        }
-
-        if (dayWrap) {
-            if (checkTime < 1440 && (checkTime >= lowLimit || checkTime <= highLimit)) {
-                return true;
-            }
-        } else {
-            if (checkTime < 1440 && (checkTime >= lowLimit && checkTime <= highLimit)) {
-                return true;
-            }
-        }
-        return false;
     }
 
     // ------------  Tree Content and Navigation ------------
@@ -2608,20 +2532,6 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
             return ttText;
         }
     }
-
-    /**
-     * When notified by a Warrant scale property change, update the Layouts to use the new scale.
-     */
-    protected PropertyChangeListener warrantListener = new PropertyChangeListener() {
-        @Override
-        public void propertyChange(PropertyChangeEvent e) {
-            for (Layout layout : _dataMgr.getLayouts(false)) {
-                layout.setScaleMK();
-                calculateLayoutTrains(layout.getLayoutId());
-                setShowReminder(true);
-            }
-        }
-    };
 
     protected String getClassName() {
         return TimeTableFrame.class.getName();

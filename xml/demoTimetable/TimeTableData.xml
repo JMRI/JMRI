@@ -4,7 +4,7 @@
     <layout>
       <layout_id>12</layout_id>
       <layout_name>Sample</layout_name>
-      <fast_clock>10</fast_clock>
+      <fast_clock>5</fast_clock>
       <throttles>6</throttles>
       <metric>no</metric>
     </layout>
@@ -163,6 +163,14 @@
       <start_hour>0</start_hour>
       <duration>24</duration>
     </schedule>
+    <schedule>
+      <schedule_id>2</schedule_id>
+      <layout_id>12</layout_id>
+      <schedule_name>123</schedule_name>
+      <eff_date>Tomorrow</eff_date>
+      <start_hour>10</start_hour>
+      <duration>8</duration>
+    </schedule>
   </schedules>
   <trains>
     <train>
@@ -215,7 +223,7 @@
       <start_time>420</start_time>
       <throttle>3</throttle>
       <route_duration>31</route_duration>
-      <train_notes />
+      <train_notes>A train note</train_notes>
     </train>
     <train>
       <train_id>127</train_id>
@@ -321,6 +329,18 @@
       <train_desc>Over night peddler</train_desc>
       <default_speed>30</default_speed>
       <start_time>1380</start_time>
+      <throttle>2</throttle>
+      <route_duration>0</route_duration>
+      <train_notes />
+    </train>
+    <train>
+      <train_id>136</train_id>
+      <schedule_id>2</schedule_id>
+      <type_id>93</type_id>
+      <train_name>EXP</train_name>
+      <train_desc>Sunday Execursion</train_desc>
+      <default_speed>30</default_speed>
+      <start_time>720</start_time>
       <throttle>0</throttle>
       <route_duration>0</route_duration>
       <train_notes />
@@ -332,12 +352,12 @@
       <train_id>126</train_id>
       <station_id>87</station_id>
       <seq>1</seq>
-      <duration>0</duration>
+      <duration>5</duration>
       <next_speed>0</next_speed>
       <arrive_time>420</arrive_time>
-      <depart_time>420</depart_time>
+      <depart_time>425</depart_time>
       <staging_track>2</staging_track>
-      <stop_notes />
+      <stop_notes>A stop note</stop_notes>
     </stop>
     <stop>
       <stop_id>2</stop_id>
@@ -346,8 +366,8 @@
       <seq>2</seq>
       <duration>5</duration>
       <next_speed>0</next_speed>
-      <arrive_time>423</arrive_time>
-      <depart_time>428</depart_time>
+      <arrive_time>427</arrive_time>
+      <depart_time>432</depart_time>
       <staging_track>0</staging_track>
       <stop_notes />
     </stop>
@@ -370,8 +390,8 @@
       <seq>4</seq>
       <duration>5</duration>
       <next_speed>0</next_speed>
-      <arrive_time>442</arrive_time>
-      <depart_time>447</depart_time>
+      <arrive_time>441</arrive_time>
+      <depart_time>446</depart_time>
       <staging_track>0</staging_track>
       <stop_notes />
     </stop>
@@ -382,8 +402,8 @@
       <seq>5</seq>
       <duration>0</duration>
       <next_speed>0</next_speed>
-      <arrive_time>451</arrive_time>
-      <depart_time>451</depart_time>
+      <arrive_time>448</arrive_time>
+      <depart_time>448</depart_time>
       <staging_track>2</staging_track>
       <stop_notes />
     </stop>
@@ -406,8 +426,8 @@
       <seq>2</seq>
       <duration>30</duration>
       <next_speed>0</next_speed>
-      <arrive_time>13</arrive_time>
-      <depart_time>43</depart_time>
+      <arrive_time>7</arrive_time>
+      <depart_time>37</depart_time>
       <staging_track>0</staging_track>
       <stop_notes>Drop all cars not destined for Omega or beyond.
       Picks up all cars destined for Omega or beyond.</stop_notes>
@@ -419,8 +439,8 @@
       <seq>3</seq>
       <duration>0</duration>
       <next_speed>40</next_speed>
-      <arrive_time>56</arrive_time>
-      <depart_time>56</depart_time>
+      <arrive_time>44</arrive_time>
+      <depart_time>44</depart_time>
       <staging_track>0</staging_track>
       <stop_notes />
     </stop>
@@ -431,8 +451,8 @@
       <seq>4</seq>
       <duration>0</duration>
       <next_speed>0</next_speed>
-      <arrive_time>61</arrive_time>
-      <depart_time>61</depart_time>
+      <arrive_time>46</arrive_time>
+      <depart_time>46</depart_time>
       <staging_track>4</staging_track>
       <stop_notes />
     </stop>
@@ -455,8 +475,8 @@
       <seq>2</seq>
       <duration>120</duration>
       <next_speed>0</next_speed>
-      <arrive_time>185</arrive_time>
-      <depart_time>305</depart_time>
+      <arrive_time>182</arrive_time>
+      <depart_time>302</depart_time>
       <staging_track>0</staging_track>
       <stop_notes />
     </stop>
@@ -467,8 +487,8 @@
       <seq>3</seq>
       <duration>0</duration>
       <next_speed>0</next_speed>
-      <arrive_time>310</arrive_time>
-      <depart_time>310</depart_time>
+      <arrive_time>304</arrive_time>
+      <depart_time>304</depart_time>
       <staging_track>0</staging_track>
       <stop_notes />
     </stop>
@@ -503,8 +523,8 @@
       <seq>2</seq>
       <duration>120</duration>
       <next_speed>0</next_speed>
-      <arrive_time>613</arrive_time>
-      <depart_time>733</depart_time>
+      <arrive_time>607</arrive_time>
+      <depart_time>727</depart_time>
       <staging_track>0</staging_track>
       <stop_notes>Work the following industries:
       Chemical Factory
@@ -521,8 +541,8 @@
       <seq>3</seq>
       <duration>0</duration>
       <next_speed>0</next_speed>
-      <arrive_time>746</arrive_time>
-      <depart_time>746</depart_time>
+      <arrive_time>734</arrive_time>
+      <depart_time>734</depart_time>
       <staging_track>0</staging_track>
       <stop_notes />
     </stop>
@@ -545,8 +565,8 @@
       <seq>2</seq>
       <duration>0</duration>
       <next_speed>50</next_speed>
-      <arrive_time>785</arrive_time>
-      <depart_time>785</depart_time>
+      <arrive_time>782</arrive_time>
+      <depart_time>782</depart_time>
       <staging_track>0</staging_track>
       <stop_notes />
     </stop>
@@ -557,8 +577,8 @@
       <seq>3</seq>
       <duration>30</duration>
       <next_speed>0</next_speed>
-      <arrive_time>793</arrive_time>
-      <depart_time>823</depart_time>
+      <arrive_time>786</arrive_time>
+      <depart_time>816</depart_time>
       <staging_track>0</staging_track>
       <stop_notes />
     </stop>
@@ -569,8 +589,8 @@
       <seq>4</seq>
       <duration>0</duration>
       <next_speed>0</next_speed>
-      <arrive_time>836</arrive_time>
-      <depart_time>836</depart_time>
+      <arrive_time>823</arrive_time>
+      <depart_time>823</depart_time>
       <staging_track>1</staging_track>
       <stop_notes />
     </stop>
@@ -593,8 +613,8 @@
       <seq>2</seq>
       <duration>180</duration>
       <next_speed>0</next_speed>
-      <arrive_time>160</arrive_time>
-      <depart_time>340</depart_time>
+      <arrive_time>140</arrive_time>
+      <depart_time>320</depart_time>
       <staging_track>0</staging_track>
       <stop_notes />
     </stop>
@@ -605,8 +625,8 @@
       <seq>3</seq>
       <duration>0</duration>
       <next_speed>0</next_speed>
-      <arrive_time>350</arrive_time>
-      <depart_time>350</depart_time>
+      <arrive_time>325</arrive_time>
+      <depart_time>325</depart_time>
       <staging_track>0</staging_track>
       <stop_notes />
     </stop>
@@ -629,8 +649,8 @@
       <seq>2</seq>
       <duration>30</duration>
       <next_speed>0</next_speed>
-      <arrive_time>805</arrive_time>
-      <depart_time>835</depart_time>
+      <arrive_time>801</arrive_time>
+      <depart_time>831</depart_time>
       <staging_track>0</staging_track>
       <stop_notes />
     </stop>
@@ -641,8 +661,8 @@
       <seq>3</seq>
       <duration>0</duration>
       <next_speed>0</next_speed>
-      <arrive_time>845</arrive_time>
-      <depart_time>845</depart_time>
+      <arrive_time>836</arrive_time>
+      <depart_time>836</depart_time>
       <staging_track>4</staging_track>
       <stop_notes />
     </stop>
@@ -665,8 +685,8 @@
       <seq>2</seq>
       <duration>5</duration>
       <next_speed>0</next_speed>
-      <arrive_time>1039</arrive_time>
-      <depart_time>1044</depart_time>
+      <arrive_time>1037</arrive_time>
+      <depart_time>1042</depart_time>
       <staging_track>0</staging_track>
       <stop_notes />
     </stop>
@@ -677,8 +697,8 @@
       <seq>3</seq>
       <duration>5</duration>
       <next_speed>0</next_speed>
-      <arrive_time>1046</arrive_time>
-      <depart_time>1051</depart_time>
+      <arrive_time>1043</arrive_time>
+      <depart_time>1048</depart_time>
       <staging_track>0</staging_track>
       <stop_notes />
     </stop>
@@ -689,8 +709,8 @@
       <seq>4</seq>
       <duration>5</duration>
       <next_speed>0</next_speed>
-      <arrive_time>1058</arrive_time>
-      <depart_time>1063</depart_time>
+      <arrive_time>1051</arrive_time>
+      <depart_time>1056</depart_time>
       <staging_track>0</staging_track>
       <stop_notes />
     </stop>
@@ -701,8 +721,8 @@
       <seq>5</seq>
       <duration>0</duration>
       <next_speed>0</next_speed>
-      <arrive_time>1066</arrive_time>
-      <depart_time>1066</depart_time>
+      <arrive_time>1058</arrive_time>
+      <depart_time>1058</depart_time>
       <staging_track>2</staging_track>
       <stop_notes />
     </stop>
@@ -725,8 +745,8 @@
       <seq>2</seq>
       <duration>30</duration>
       <next_speed>0</next_speed>
-      <arrive_time>490</arrive_time>
-      <depart_time>520</depart_time>
+      <arrive_time>485</arrive_time>
+      <depart_time>515</depart_time>
       <staging_track>0</staging_track>
       <stop_notes />
     </stop>
@@ -737,8 +757,8 @@
       <seq>3</seq>
       <duration>0</duration>
       <next_speed>0</next_speed>
-      <arrive_time>527</arrive_time>
-      <depart_time>527</depart_time>
+      <arrive_time>518</arrive_time>
+      <depart_time>518</depart_time>
       <staging_track>3</staging_track>
       <stop_notes />
     </stop>
@@ -761,8 +781,8 @@
       <seq>2</seq>
       <duration>10</duration>
       <next_speed>0</next_speed>
-      <arrive_time>374</arrive_time>
-      <depart_time>384</depart_time>
+      <arrive_time>372</arrive_time>
+      <depart_time>382</depart_time>
       <staging_track>0</staging_track>
       <stop_notes />
     </stop>
@@ -773,8 +793,8 @@
       <seq>3</seq>
       <duration>10</duration>
       <next_speed>0</next_speed>
-      <arrive_time>389</arrive_time>
-      <depart_time>399</depart_time>
+      <arrive_time>384</arrive_time>
+      <depart_time>394</depart_time>
       <staging_track>0</staging_track>
       <stop_notes />
     </stop>
@@ -785,8 +805,8 @@
       <seq>4</seq>
       <duration>0</duration>
       <next_speed>0</next_speed>
-      <arrive_time>401</arrive_time>
-      <depart_time>401</depart_time>
+      <arrive_time>395</arrive_time>
+      <depart_time>395</depart_time>
       <staging_track>0</staging_track>
       <stop_notes />
     </stop>
@@ -797,8 +817,8 @@
       <seq>5</seq>
       <duration>0</duration>
       <next_speed>0</next_speed>
-      <arrive_time>406</arrive_time>
-      <depart_time>406</depart_time>
+      <arrive_time>397</arrive_time>
+      <depart_time>397</depart_time>
       <staging_track>0</staging_track>
       <stop_notes />
     </stop>
@@ -821,8 +841,8 @@
       <seq>2</seq>
       <duration>0</duration>
       <next_speed>0</next_speed>
-      <arrive_time>905</arrive_time>
-      <depart_time>905</depart_time>
+      <arrive_time>902</arrive_time>
+      <depart_time>902</depart_time>
       <staging_track>0</staging_track>
       <stop_notes />
     </stop>
@@ -833,8 +853,8 @@
       <seq>3</seq>
       <duration>10</duration>
       <next_speed>0</next_speed>
-      <arrive_time>907</arrive_time>
-      <depart_time>917</depart_time>
+      <arrive_time>903</arrive_time>
+      <depart_time>913</depart_time>
       <staging_track>0</staging_track>
       <stop_notes />
     </stop>
@@ -845,8 +865,8 @@
       <seq>4</seq>
       <duration>10</duration>
       <next_speed>0</next_speed>
-      <arrive_time>922</arrive_time>
-      <depart_time>932</depart_time>
+      <arrive_time>915</arrive_time>
+      <depart_time>925</depart_time>
       <staging_track>0</staging_track>
       <stop_notes />
     </stop>
@@ -857,8 +877,8 @@
       <seq>5</seq>
       <duration>10</duration>
       <next_speed>0</next_speed>
-      <arrive_time>935</arrive_time>
-      <depart_time>945</depart_time>
+      <arrive_time>926</arrive_time>
+      <depart_time>936</depart_time>
       <staging_track>0</staging_track>
       <stop_notes />
     </stop>
@@ -881,8 +901,8 @@
       <seq>2</seq>
       <duration>30</duration>
       <next_speed>0</next_speed>
-      <arrive_time>1417</arrive_time>
-      <depart_time>7</depart_time>
+      <arrive_time>1413</arrive_time>
+      <depart_time>3</depart_time>
       <staging_track>0</staging_track>
       <stop_notes />
     </stop>
@@ -893,8 +913,8 @@
       <seq>3</seq>
       <duration>30</duration>
       <next_speed>0</next_speed>
-      <arrive_time>20</arrive_time>
-      <depart_time>50</depart_time>
+      <arrive_time>10</arrive_time>
+      <depart_time>40</depart_time>
       <staging_track>0</staging_track>
       <stop_notes />
     </stop>
@@ -905,8 +925,8 @@
       <seq>4</seq>
       <duration>30</duration>
       <next_speed>0</next_speed>
-      <arrive_time>55</arrive_time>
-      <depart_time>85</depart_time>
+      <arrive_time>42</arrive_time>
+      <depart_time>72</depart_time>
       <staging_track>0</staging_track>
       <stop_notes />
     </stop>
@@ -917,8 +937,116 @@
       <seq>5</seq>
       <duration>0</duration>
       <next_speed>0</next_speed>
-      <arrive_time>93</arrive_time>
-      <depart_time>93</depart_time>
+      <arrive_time>76</arrive_time>
+      <depart_time>76</depart_time>
+      <staging_track>0</staging_track>
+      <stop_notes />
+    </stop>
+    <stop>
+      <stop_id>50</stop_id>
+      <train_id>136</train_id>
+      <station_id>83</station_id>
+      <seq>1</seq>
+      <duration>0</duration>
+      <next_speed>0</next_speed>
+      <arrive_time>720</arrive_time>
+      <depart_time>720</depart_time>
+      <staging_track>0</staging_track>
+      <stop_notes />
+    </stop>
+    <stop>
+      <stop_id>51</stop_id>
+      <train_id>136</train_id>
+      <station_id>84</station_id>
+      <seq>2</seq>
+      <duration>30</duration>
+      <next_speed>0</next_speed>
+      <arrive_time>724</arrive_time>
+      <depart_time>754</depart_time>
+      <staging_track>0</staging_track>
+      <stop_notes />
+    </stop>
+    <stop>
+      <stop_id>52</stop_id>
+      <train_id>136</train_id>
+      <station_id>85</station_id>
+      <seq>3</seq>
+      <duration>30</duration>
+      <next_speed>0</next_speed>
+      <arrive_time>756</arrive_time>
+      <depart_time>786</depart_time>
+      <staging_track>0</staging_track>
+      <stop_notes />
+    </stop>
+    <stop>
+      <stop_id>53</stop_id>
+      <train_id>136</train_id>
+      <station_id>86</station_id>
+      <seq>4</seq>
+      <duration>30</duration>
+      <next_speed>0</next_speed>
+      <arrive_time>793</arrive_time>
+      <depart_time>823</depart_time>
+      <staging_track>0</staging_track>
+      <stop_notes />
+    </stop>
+    <stop>
+      <stop_id>54</stop_id>
+      <train_id>136</train_id>
+      <station_id>87</station_id>
+      <seq>5</seq>
+      <duration>60</duration>
+      <next_speed>0</next_speed>
+      <arrive_time>826</arrive_time>
+      <depart_time>886</depart_time>
+      <staging_track>0</staging_track>
+      <stop_notes />
+    </stop>
+    <stop>
+      <stop_id>55</stop_id>
+      <train_id>136</train_id>
+      <station_id>86</station_id>
+      <seq>6</seq>
+      <duration>30</duration>
+      <next_speed>0</next_speed>
+      <arrive_time>889</arrive_time>
+      <depart_time>919</depart_time>
+      <staging_track>0</staging_track>
+      <stop_notes />
+    </stop>
+    <stop>
+      <stop_id>56</stop_id>
+      <train_id>136</train_id>
+      <station_id>85</station_id>
+      <seq>7</seq>
+      <duration>30</duration>
+      <next_speed>0</next_speed>
+      <arrive_time>926</arrive_time>
+      <depart_time>956</depart_time>
+      <staging_track>0</staging_track>
+      <stop_notes />
+    </stop>
+    <stop>
+      <stop_id>57</stop_id>
+      <train_id>136</train_id>
+      <station_id>84</station_id>
+      <seq>8</seq>
+      <duration>30</duration>
+      <next_speed>0</next_speed>
+      <arrive_time>958</arrive_time>
+      <depart_time>988</depart_time>
+      <staging_track>0</staging_track>
+      <stop_notes />
+    </stop>
+    <stop>
+      <stop_id>58</stop_id>
+      <train_id>136</train_id>
+      <station_id>83</station_id>
+      <seq>9</seq>
+      <duration>0</duration>
+      <next_speed>0</next_speed>
+      <arrive_time>992</arrive_time>
+      <depart_time>992</depart_time>
       <staging_track>0</staging_track>
       <stop_notes />
     </stop>

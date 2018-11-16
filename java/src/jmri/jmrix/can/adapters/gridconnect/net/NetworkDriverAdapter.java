@@ -26,6 +26,7 @@ public class NetworkDriverAdapter extends jmri.jmrix.AbstractNetworkPortControll
         options.put(option2Name, new Option(Bundle.getMessage("ConnectionProtocol"), jmri.jmrix.can.ConfigurationManager.getSystemOptions(), false));
         this.getSystemConnectionMemo().setUserName("OpenLCB");
         setManufacturer(jmri.jmrix.openlcb.OlcbConnectionTypeList.OPENLCB);
+        allowConnectionRecovery = true;
     }
 
     /**
@@ -69,6 +70,17 @@ public class NetworkDriverAdapter extends jmri.jmrix.AbstractNetworkPortControll
     @Override
     public CanSystemConnectionMemo getSystemConnectionMemo() {
         return (CanSystemConnectionMemo) super.getSystemConnectionMemo();
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void resetupConnection() {
+        log.info("reconnected to Network after lost connection");
+        if (opened) {
+            this.getSystemConnectionMemo().getTrafficController().connectPort(this);
+        }
     }
 
     private final static Logger log = LoggerFactory.getLogger(NetworkDriverAdapter.class);

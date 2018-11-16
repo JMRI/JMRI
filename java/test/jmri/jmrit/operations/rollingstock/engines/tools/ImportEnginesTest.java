@@ -2,7 +2,6 @@ package jmri.jmrit.operations.rollingstock.engines.tools;
 
 import java.awt.GraphicsEnvironment;
 import java.io.File;
-import java.util.regex.Pattern;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.OperationsXml;
@@ -60,6 +59,12 @@ public class ImportEnginesTest extends OperationsTestCase {
         }, "wait for prompt");
 
         JemmyUtil.pressDialogButton(Bundle.getMessage("ExportComplete"), Bundle.getMessage("ButtonOK"));
+        
+        try {
+            export.join();
+        } catch (InterruptedException e) {
+            // do nothing
+        }
 
         java.io.File file = new java.io.File(ExportEngines.defaultOperationsFilename());
         Assert.assertTrue("Confirm file creation", file.exists());
@@ -79,10 +84,8 @@ public class ImportEnginesTest extends OperationsTestCase {
 
         // opens file chooser path "operations" "JUnitTest"
         JFileChooserOperator fco = new JFileChooserOperator();
-        String[] path = OperationsXml.getOperationsDirectoryName().split(Pattern.quote(File.separator));
-        fco.chooseFile(path[0]);
-        fco.chooseFile(path[1]);
-        fco.chooseFile(ExportEngines.getOperationsFileName());
+        String path = OperationsXml.getOperationsDirectoryName();
+        fco.chooseFile(path + File.separator + ExportEngines.getOperationsFileName());
         
         jmri.util.JUnitUtil.waitFor(() -> {
             return mb.getState().equals(Thread.State.WAITING);
@@ -149,6 +152,12 @@ public class ImportEnginesTest extends OperationsTestCase {
         }, "wait for prompt");
 
         JemmyUtil.pressDialogButton(Bundle.getMessage("ExportComplete"), Bundle.getMessage("ButtonOK"));
+        
+        try {
+            export.join();
+        } catch (InterruptedException e) {
+            // do nothing
+        }
 
         java.io.File file = new java.io.File(ExportEngines.defaultOperationsFilename());
         Assert.assertTrue("Confirm file creation", file.exists());
@@ -170,10 +179,8 @@ public class ImportEnginesTest extends OperationsTestCase {
 
         // opens file chooser path "operations" "JUnitTest"
         JFileChooserOperator fco = new JFileChooserOperator();
-        String[] path = OperationsXml.getOperationsDirectoryName().split(Pattern.quote(File.separator));
-        fco.chooseFile(path[0]);
-        fco.chooseFile(path[1]);
-        fco.chooseFile(ExportEngines.getOperationsFileName());
+        String path = OperationsXml.getOperationsDirectoryName();
+        fco.chooseFile(path + File.separator + ExportEngines.getOperationsFileName());
         
         jmri.util.JUnitUtil.waitFor(() -> {
             return mb.getState().equals(Thread.State.WAITING);
@@ -223,9 +230,11 @@ public class ImportEnginesTest extends OperationsTestCase {
         // import complete 
         JemmyUtil.pressDialogButton(Bundle.getMessage("SuccessfulImport"), Bundle.getMessage("ButtonOK"));
 
-        jmri.util.JUnitUtil.waitFor(() -> {
-            return mb.getState().equals(Thread.State.TERMINATED);
-        }, "wait for import complete");
+        try {
+            mb.join();
+        } catch (InterruptedException e) {
+            // do nothing
+        }
 
         // confirm import successful
         Assert.assertEquals("engines", 4, emanager.getNumEntries());
