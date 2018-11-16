@@ -12,6 +12,7 @@ public class ThrottleControllerListenerScaffold implements ThrottleControllerLis
 
     private boolean addressFound = false;
     private boolean addressReleased = false;
+    private boolean addressDeclined = false;
 
     public void notifyControllerAddressFound(ThrottleController TC){
         addressFound = true;
@@ -30,5 +31,10 @@ public class ThrottleControllerListenerScaffold implements ThrottleControllerLis
     }
     
     public void notifyControllerAddressDeclined(ThrottleController tc, DccLocoAddress address, String reason){
+        addressDeclined = true;
+    }
+
+    public boolean hasAddressBeenDeclined(){
+       return addressReleased;
     }
 }
