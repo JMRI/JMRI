@@ -14,8 +14,6 @@ import java.util.Arrays;
 import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
@@ -33,12 +31,9 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableRowSorter;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.Element;
 import javax.swing.UIManager;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.throttle.LargePowerManagerButton;
-import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficController;
 import jmri.util.swing.XTableColumnModel;
@@ -54,13 +49,11 @@ import org.slf4j.LoggerFactory;
  * @author Steve Young Copyright (C) 2018
  * @since 4.13.4
  */
-public class CbusSlotMonitorPane extends jmri.jmrix.can.swing.CanPanel implements CanListener {
+public class CbusSlotMonitorPane extends jmri.jmrix.can.swing.CanPanel {
 
     TrafficController tc;
 
-    static private int MAX_LINES = 5000;
-    private static TextAreaFIFO tablefeedback = new TextAreaFIFO(MAX_LINES);
-    private static JScrollPane scrolltablefeedback = new JScrollPane (tablefeedback);
+    private JScrollPane scrolltablefeedback;
     private JSplitPane split;
     private double _splitratio = 0.95;
     protected JScrollPane slotScroll;
@@ -69,15 +62,12 @@ public class CbusSlotMonitorPane extends jmri.jmrix.can.swing.CanPanel implement
     protected JTable slotTable=null;
     protected final XTableColumnModel tcm = new XTableColumnModel();
 
-    private JMenu cabsigMenu = new JMenu("CabData Options");
+    private JMenu cabsigMenu = new JMenu(Bundle.getMessage("SigDataOpt"));
     private JMenu cabsigSpeedMenu = new JMenu(Bundle.getMessage("Speed"));
     private JMenu colMenu = new JMenu((Bundle.getMessage("SessCol")));
-    private JMenu cabSigColMenu = new JMenu(("CabData Columns"));
-    private JMenu debugMenu = new JMenu(Bundle.getMessage("CBUS_DBG1"));
+    private JMenu cabSigColMenu = new JMenu(Bundle.getMessage("SigDataCol"));
     
     // private JMenu cancmdMenu = new JMenu("CANCMD Setup");
-    protected static JRadioButtonMenuItem lowdebugitem = new JRadioButtonMenuItem(Bundle.getMessage("Low"));
-    protected static JRadioButtonMenuItem highdebugitem  = new JRadioButtonMenuItem(Bundle.getMessage("High"));    
     protected List<JCheckBoxMenuItem> colMenuList = new ArrayList<JCheckBoxMenuItem>();
     protected List<JCheckBoxMenuItem> cabSigColMenuList = new ArrayList<JCheckBoxMenuItem>();    
     private JToggleButton masterSendCabDataButton;
@@ -85,8 +75,6 @@ public class CbusSlotMonitorPane extends jmri.jmrix.can.swing.CanPanel implement
     @Override
     public void initComponents(CanSystemConnectionMemo memo) {
         super.initComponents(memo);
-        tc = memo.getTrafficController();
-        tc.addCanListener(this);
         slotModel = new CbusSlotMonitorDataModel(memo, 5,
             CbusSlotMonitorDataModel.MAX_COLUMN); // controller, row, column
         init();
@@ -191,7 +179,7 @@ public class CbusSlotMonitorPane extends jmri.jmrix.can.swing.CanPanel implement
         
         JPanel toppanelcontainer = new JPanel();
         toppanelcontainer.setLayout(new BoxLayout(toppanelcontainer, BoxLayout.X_AXIS));
-        tablefeedback.setEditable ( false );
+        scrolltablefeedback = new JScrollPane (slotModel.tablefeedback());
         
         Dimension scrolltablefeedbackminimumSize = new Dimension(150, 20);
         scrolltablefeedback.setMinimumSize(scrolltablefeedbackminimumSize);
@@ -206,7 +194,6 @@ public class CbusSlotMonitorPane extends jmri.jmrix.can.swing.CanPanel implement
         estopButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                updateLogFromModel( 1, "Sending system-wide e-stop to Command Station" );
                 slotModel.sendcbusestop();
             }
         });
@@ -215,20 +202,20 @@ public class CbusSlotMonitorPane extends jmri.jmrix.can.swing.CanPanel implement
         
         toppanelcontainer.add(new LargePowerManagerButton(true));
         
-        masterSendCabDataButton= new JToggleButton(("CabData On"));
+        masterSendCabDataButton= new JToggleButton(Bundle.getMessage("SigDataOn"));
         masterSendCabDataButton.setIcon(new NamedIcon("resources/icons/throttles/power_green.png", "resources/icons/throttles/power_green.png"));
         
         masterSendCabDataButton.addActionListener (new ActionListener () {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (masterSendCabDataButton.isSelected()) {
-                    masterSendCabDataButton.setText("CabData Off");
+                    masterSendCabDataButton.setText(Bundle.getMessage("SigDataOff"));
                     masterSendCabDataButton.setIcon(new NamedIcon("resources/icons/throttles/power_red.png", "resources/icons/throttles/power_red.png"));                    
                     slotModel.masterSendCabData = false;
                     slotModel.masterSendCabDataButton(false);
                 }
                 else {
-                    masterSendCabDataButton.setText("CabData On");
+                    masterSendCabDataButton.setText(Bundle.getMessage("SigDataOn"));
                     masterSendCabDataButton.setIcon(new NamedIcon("resources/icons/throttles/power_green.png", "resources/icons/throttles/power_green.png"));
                     slotModel.masterSendCabData = true;
                     slotModel.masterSendCabDataButton(true);
@@ -315,6 +302,7 @@ public class CbusSlotMonitorPane extends jmri.jmrix.can.swing.CanPanel implement
         return Bundle.getMessage("MenuItemCbusSlotMonitor");
     }
 
+    
     public CbusSlotMonitorPane() {
         super();
     }
@@ -349,91 +337,17 @@ public class CbusSlotMonitorPane extends jmri.jmrix.can.swing.CanPanel implement
         speeddisabled.setSelected(true);
         speedgroup.add(speeddisabled);
         cabsigSpeedMenu.add(speeddisabled);
-        
-        ButtonGroup debuggroup = new ButtonGroup();
 
-        
-        debuggroup.add(lowdebugitem);
-        debuggroup.add(highdebugitem);
-        lowdebugitem.setSelected(true);
-        
-        debugMenu.add(lowdebugitem);
-        debugMenu.add(highdebugitem);
-        // cancmdMenu.setEnabled(false);
-        
-        
-        highdebugitem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                CbusSlotMonitorDataModel.sethighdebug (highdebugitem.isSelected());
-            }
-        });
-
-        lowdebugitem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                CbusSlotMonitorDataModel.sethighdebug (highdebugitem.isSelected());
-            }
-        });
-        
+        // cancmdMenu.setEnabled(false);        
         // menuList.add(cancmdMenu);
         
         menuList.add(colMenu);
         menuList.add(cabSigColMenu);
         menuList.add(cabsigMenu);
-        menuList.add(debugMenu);
         return menuList;
     }
     
 
-    @Override
-    public void reply(jmri.jmrix.can.CanReply m) {
-    }
-
-    @Override
-    public void message(jmri.jmrix.can.CanMessage m) {
-    }
-    
-    protected static void updateLogFromModel(int cbuserror, String cbustext){
-        tablefeedback.append( "\n"+cbustext);
-    }
-    
-    /**
-     * Keeps the message log windows to a reasonable length
-     * https://community.oracle.com/thread/1373400
-     */
-    private static class TextAreaFIFO extends JTextArea implements DocumentListener {
-        private int maxLines;
-    
-        public TextAreaFIFO(int lines) {
-            maxLines = lines;
-            getDocument().addDocumentListener( this );
-        }
-    
-        public void insertUpdate(DocumentEvent e) {
-            javax.swing.SwingUtilities.invokeLater( new Runnable() {
-                public void run() {
-                    removeLines();
-                }
-            });
-        }
-        public void removeUpdate(DocumentEvent e) {}
-        public void changedUpdate(DocumentEvent e) {}
-        public void removeLines()
-        {
-            Element root = getDocument().getDefaultRootElement();
-            while (root.getElementCount() > maxLines) {
-                Element firstLine = root.getElement(0);
-                try {
-                    getDocument().remove(0, firstLine.getEndOffset());
-                } catch(BadLocationException ble) {
-                    System.out.println(ble);
-                }
-            }
-        setCaretPosition( getDocument().getLength() );
-        }
-    }
-    
     /**
      * {@inheritDoc}
      */
@@ -444,12 +358,8 @@ public class CbusSlotMonitorPane extends jmri.jmrix.can.swing.CanPanel implement
     
     @Override
     public void dispose() {
-        // todo - send messages to null signal data on any cabs
-
         slotTable = null;
         slotModel.dispose();
-        // disconnect from CBUS
-        tc.removeCanListener(this);
         super.dispose();
     }
 
