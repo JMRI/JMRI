@@ -2,7 +2,9 @@ package jmri.jmrix.dcc;
 
 import jmri.CommandStation;
 import jmri.InstanceManager;
+import jmri.implementation.MockCommandStation;
 import jmri.implementation.AbstractTurnoutTestBase;
+
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -15,57 +17,32 @@ import org.junit.Before;
  */
 public class DccTurnoutTest extends AbstractTurnoutTestBase {
 
-    CommandStationScaffold tcis;
+    MockCommandStation tcis;
 
     @Override
     @Before
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
-        tcis = new CommandStationScaffold();
+        tcis = new MockCommandStation();
         InstanceManager.setDefault(CommandStation.class, tcis);
         t = new DccTurnout(4);
     }
 
     @Override
     public int numListeners() {
-        return tcis.numListeners();
+        return 0;
     }
 
     @Override
     public void checkThrownMsgSent() {
-        Assert.assertTrue("message sent", tcis.outbound.size() > 0);
-        Assert.assertEquals("content", "[-127, -2, 127]", java.util.Arrays.toString(tcis.outbound.get(tcis.outbound.size() - 1)));  // THROWN message
+        Assert.assertTrue("message sent", tcis.lastPacket != null);
+        Assert.assertEquals("content", "[-127, -2, 127]", java.util.Arrays.toString(tcis.lastPacket));  // THROWN message
     }
 
     @Override
     public void checkClosedMsgSent() {
-        Assert.assertTrue("message sent", tcis.outbound.size() > 0);
-        Assert.assertEquals("content", "[-127, -1, 126]", java.util.Arrays.toString(tcis.outbound.get(tcis.outbound.size() - 1)));  // CLOSED message
-    }
-
-    class CommandStationScaffold implements CommandStation {
-
-        java.util.ArrayList<byte[]> outbound = new java.util.ArrayList<byte[]>();
-
-        @Override
-        public boolean sendPacket(byte[] packet, int repeats) {
-            outbound.add(packet);
-            return true;
-        }
-
-        @Override
-        public String getUserName() {
-            return "";
-        }
-
-        @Override
-        public String getSystemPrefix() {
-            return "";
-        }
-
-        public int numListeners() {
-            return 0;
-        }
+        Assert.assertTrue("message sent", tcis.lastPacket != null);
+        Assert.assertEquals("content", "[-127, -1, 126]", java.util.Arrays.toString(tcis.lastPacket));  // CLOSED message
     }
 
     // The minimal setup for log4J
