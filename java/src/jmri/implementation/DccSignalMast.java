@@ -66,8 +66,8 @@ public class DccSignalMast extends AbstractSignalMast {
             String commandStationPrefix = parts[0].substring(0, parts[0].indexOf("$") - 1);
             java.util.List<jmri.CommandStation> connList = jmri.InstanceManager.getList(jmri.CommandStation.class);
 
-            for (int x = 0; x < connList.size(); x++) {
-                jmri.CommandStation station = connList.get(x);
+            for (jmri.CommandStation station : connList) {
+                log.trace(" check against {} with letter {}", station, station.getSystemPrefix());
                 if (station.getSystemPrefix().equals(commandStationPrefix)) {
                     c = station;
                     break;
@@ -76,7 +76,7 @@ public class DccSignalMast extends AbstractSignalMast {
 
             if (c == null) {
                 c = InstanceManager.getNullableDefault(CommandStation.class);
-                log.error("No match against the command station for " + parts[0] + ", so will use the default");
+                log.error("No match against the command station for \"{}\", so will use the default {}", commandStationPrefix, c);
             }
         }
         String system = parts[1];

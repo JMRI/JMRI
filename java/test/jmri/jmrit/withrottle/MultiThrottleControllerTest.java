@@ -225,6 +225,8 @@ public class MultiThrottleControllerTest {
        controller.propertyChange(new PropertyChangeEvent(this,"SpeedSetting",32.0f/126.0f,45.0f/126.0f));
        Assert.assertNull("outgoing message after property change", cis.getLastPacket() );
        controller.propertyChange(new PropertyChangeEvent(this,"SpeedSetting",0.0f,63.0f/126.0f));
+       Assert.assertNull("outgoing message after property change", cis.getLastPacket() );
+       controller.propertyChange(new PropertyChangeEvent(this,"SpeedSetting",0.0f,63.0f/126.0f));
        Assert.assertEquals("outgoing message after property change", "MAAtest<;>V63",cis.getLastPacket() );
     }
 

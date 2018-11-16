@@ -105,7 +105,7 @@ public class AccessoryOpsModeProgrammerFacadeTest {
         Assert.assertTrue("target not directly written", !dp.hasBeenWritten(value));
         Assert.assertTrue("index not written", !dp.hasBeenWritten(81));
         // Check that a packet was sent.
-        Assert.assertNotNull("packet sent", lastPacket);
+        Assert.assertNotNull("packet sent", mockCS.lastPacket);
     }
 
     // Extract test parameters from test name.
@@ -138,27 +138,7 @@ public class AccessoryOpsModeProgrammerFacadeTest {
         return retString;
     }
 
-    @Ignore
-    class MockCommandStation implements CommandStation {
-
-        @Override
-        public boolean sendPacket(byte[] packet, int repeats) {
-            lastPacket = packet;
-            return true;
-        }
-
-        @Override
-        public String getUserName() {
-            return "I";
-        }
-
-        @Override
-        public String getSystemPrefix() {
-            return "I";
-        }
-    }
-
-    byte[] lastPacket;
+    MockCommandStation mockCS;
     int readValue = -2;
     boolean replied = false;
 
@@ -175,8 +155,8 @@ public class AccessoryOpsModeProgrammerFacadeTest {
     public void setUp() throws Exception {
         jmri.util.JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
-        InstanceManager.setDefault(CommandStation.class, new MockCommandStation());
-        lastPacket = null;
+        InstanceManager.setDefault(CommandStation.class, mockCS = new MockCommandStation());
+        mockCS.lastPacket = null;
     }
 
     @After

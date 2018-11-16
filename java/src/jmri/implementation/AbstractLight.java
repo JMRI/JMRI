@@ -3,6 +3,8 @@ package jmri.implementation;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.ArrayList;
 import javax.annotation.CheckReturnValue;
+import javax.annotation.Nonnull;
+
 import jmri.Light;
 
 /**
@@ -74,7 +76,7 @@ public abstract class AbstractLight extends AbstractNamedBean
     protected int mState = OFF;
 
     @Override
-    @CheckReturnValue
+    @Nonnull
     public String describeState(int state) {
         switch (state) {
             case ON: return Bundle.getMessage("StateOn");
@@ -511,8 +513,14 @@ public abstract class AbstractLight extends AbstractNamedBean
         }
     }
 
+    /** {@inheritDoc}
+     */
     @Override
     public void addLightControl(jmri.implementation.LightControl c) {
+        if (lightControlList.contains(c)) {
+            log.debug("not adding duplicate LightControl {}", c);
+            return;
+        }
         lightControlList.add(c);
     }
 

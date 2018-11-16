@@ -843,13 +843,12 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager<NamedB
             try {
                 Thread.sleep(1000);
             } catch (Exception e) {
-                System.out.println(e.toString());
+                log.error(e.toString());
             }
             wait = p.getPreferencesLoaded();
             if (x >= 100) {
                 wait = true;
-                System.out.println(x);
-                log.error("Timeout occurred on waiting for the Ecos preferences to be loaded");
+                log.warn("Timeout {} occurred on waiting for the Ecos preferences to be loaded", x);
             }
             x++;
         }

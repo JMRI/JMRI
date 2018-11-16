@@ -27,6 +27,20 @@ public class LightControlTest {
         LightControl l = new LightControl(o);
         Assert.assertNotNull("LightControl not null", l);
     }
+    
+    @Test
+    public void testEquals() {
+        Light o = new AbstractLight("IL1","test light"){
+        };
+        LightControl l1 = new LightControl(o);
+        
+        Assert.assertFalse(l1.equals(null));
+        Assert.assertTrue(l1.equals(l1));
+        Assert.assertFalse(l1.equals(""));
+        
+        LightControl l2 = new LightControl(o);
+        Assert.assertTrue(l1.equals(l2));
+    }
 
     // The minimal setup for log4J
     @Before
