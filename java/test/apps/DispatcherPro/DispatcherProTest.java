@@ -12,6 +12,7 @@ import org.junit.Test;
 import org.junit.Rule;
 import org.junit.rules.Timeout;
 import jmri.InstanceManager;
+import jmri.profile.ProfileManager;
 import jmri.managers.DefaultShutDownManager;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
@@ -52,7 +53,7 @@ public class DispatcherProTest {
             File tempFolder = folder.newFolder();
             FileUtils.copyDirectory(new File("java/test/apps/PanelPro/profiles/LocoNet_Simulator"), tempFolder);
             System.setProperty("org.jmri.profile", tempFolder.getAbsolutePath() );
-            System.out.println("testLaunchLocoNet uses "+tempFolder.getAbsolutePath() );
+            System.out.println("testLaunchLocoNet uses "+tempFolder.getAbsolutePath()+" "+System.getProperty(ProfileManager.SYSTEM_PROPERTY) );
 
             // launch!
             DispatcherPro.main(new String[]{"DispatcherPro"});
@@ -85,7 +86,7 @@ public class DispatcherProTest {
             File tempFolder = folder.newFolder();
             FileUtils.copyDirectory(new File("java/test/apps/PanelPro/profiles/EasyDcc_Simulator"), tempFolder);
             System.setProperty("org.jmri.profile", tempFolder.getAbsolutePath() );
-            System.out.println("testLaunchEasyDcc uses "+tempFolder.getAbsolutePath() );
+            System.out.println("testLaunchEasyDcc uses "+tempFolder.getAbsolutePath()+" "+System.getProperty(ProfileManager.SYSTEM_PROPERTY) );
 
             // launch!
             DispatcherPro.main(new String[]{"DispatcherPro"});
@@ -116,7 +117,7 @@ public class DispatcherProTest {
             File tempFolder = folder.newFolder();
             FileUtils.copyDirectory(new File("java/test/apps/PanelPro/profiles/Grapevine_Simulator"), tempFolder);
             System.setProperty("org.jmri.profile", tempFolder.getAbsolutePath() );
-            System.out.println("testLaunchGrapevine uses "+tempFolder.getAbsolutePath() );
+            System.out.println("testLaunchGrapevine uses "+tempFolder.getAbsolutePath()+" "+System.getProperty(ProfileManager.SYSTEM_PROPERTY) );
 
             // launch!
             DispatcherPro.main(new String[]{"DispatcherPro"});
@@ -150,7 +151,7 @@ public class DispatcherProTest {
             File tempFolder = folder.newFolder();
             FileUtils.copyDirectory(new File("java/test/apps/PanelPro/profiles/TMCC_Simulator"), tempFolder);
             System.setProperty("org.jmri.profile", tempFolder.getAbsolutePath() );
-            System.out.println("testLaunchTmcc uses "+tempFolder.getAbsolutePath() );
+            System.out.println("testLaunchTmcc uses "+tempFolder.getAbsolutePath()+" "+System.getProperty(ProfileManager.SYSTEM_PROPERTY) );
 
             // launch!
             DispatcherPro.main(new String[]{"DispatcherPro"});
@@ -181,7 +182,7 @@ public class DispatcherProTest {
             File tempFolder = folder.newFolder();
             FileUtils.copyDirectory(new File("java/test/apps/PanelPro/profiles/Prevent_Init_Loop"), tempFolder);
             System.setProperty("org.jmri.profile", tempFolder.getAbsolutePath() );
-            System.out.println("testLaunchInitLoop uses "+tempFolder.getAbsolutePath() );
+            System.out.println("testLaunchInitLoop uses "+tempFolder.getAbsolutePath()+" "+System.getProperty(ProfileManager.SYSTEM_PROPERTY) );
 
             // launch!
             DispatcherPro.main(new String[]{"DispatcherPro"});
