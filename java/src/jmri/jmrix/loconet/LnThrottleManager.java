@@ -434,6 +434,8 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
         if (slotForAddress.containsKey(address.getNumber())) {
             slotForAddress.remove(address.getNumber());
         }
+        requestOutstanding = false;
+        processQueuedThrottleSetupRequest();
     }
 
     /**
@@ -456,6 +458,8 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
         if (slotForAddress.containsKey(address)) {
             slotForAddress.remove(address);
         }
+        requestOutstanding = false;
+        processQueuedThrottleSetupRequest();
     }
 
     protected int throttleID = 0x0171;
@@ -535,8 +539,9 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
                 failedThrottleRequest(address, "User chose not to 'steal' the throttle.");
             } else {
                 log.error("cannot cast address to DccLocoAddress.");
+                requestOutstanding = false;
+                processQueuedThrottleSetupRequest();
             }
-            requestOutstanding = false;
         } else {
            // The warning message below is, at a minimum, confusing.
            // Steal is currently implemented by using the same method
