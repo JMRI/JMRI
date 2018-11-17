@@ -1,5 +1,7 @@
 package apps.PanelPro;
 
+import java.io.IOException;
+
 import jmri.util.JUnitUtil;
 import jmri.util.JUnitAppender;
 

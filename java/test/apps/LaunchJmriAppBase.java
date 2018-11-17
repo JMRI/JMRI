@@ -11,6 +11,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.Rule;
 import org.junit.rules.Timeout;
+import org.junit.rules.TemporaryFolder;
 import jmri.InstanceManager;
 import jmri.profile.ProfileManager;
 import jmri.managers.DefaultShutDownManager;
@@ -18,7 +19,6 @@ import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.JUnitAppender;
 import jmri.util.junit.rules.RetryRule;
-import jmri.util.junit.rules.JmriTemporaryFolder;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,7 +34,7 @@ abstract public class LaunchJmriAppBase {
     static final int TESTMAXTIME = 20;    // seconds - not too long, so job doesn't hang
 
     @Rule
-    public JmriTemporaryFolder folder = new jmri.util.junit.rules.JmriTemporaryFolder();
+    public TemporaryFolder folder = new TemporaryFolder();
 
     @Rule
     public Timeout globalTimeout = Timeout.seconds(TESTMAXTIME);
