@@ -550,7 +550,9 @@ The rest of the document provides information about specific cases.
 If you can't use Jenkins for the actual build, you can create the files locally:
 
 If you're building locally:
-* You need to have installed NSIS from http://nsis.sourceforge.net (we use version 3.01 with long string support; see [Issue 3913](https://github.com/JMRI/JMRI/issues/3913) for instructions on how to build that for Linux)
+* You need to have installed NSIS from http://nsis.sourceforge.net (we use version 3.01 with long string support; see [Issue 3913](https://github.com/JMRI/JMRI/issues/3913) for instructions on how to build that for Linux). On macOS, install (currently [version 3.03](https://formulae.brew.sh/formula/makensis) via Homebrew
+ - brew install makensis --with-large-strings
+ - add an entry in "local.properties" nsis.home=/usr/local/bin/
 
 * Either make sure that 'makensis' is in your path, or set nsis.home in your local.properties file to the root of the nsis installation:
 

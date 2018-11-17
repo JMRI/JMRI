@@ -60,7 +60,6 @@ public class AccessoryOpsModeProgrammerFacadeTest {
 
     // from here down is testing infrastructure
     // Perform tests with parameters parsed from the name of the calling method.
-    @Ignore
     synchronized void testMethod() throws jmri.ProgrammerException, InterruptedException {
         String methodName = "";
         int addr = 0;
@@ -109,7 +108,6 @@ public class AccessoryOpsModeProgrammerFacadeTest {
     }
 
     // Extract test parameters from test name.
-    @Ignore
     synchronized ArrayList<String> itemsFromMethodName(int methodOffset, int groupReps) {
         StringBuilder sb = new StringBuilder();
         Pattern pattern;
@@ -142,7 +140,6 @@ public class AccessoryOpsModeProgrammerFacadeTest {
     int readValue = -2;
     boolean replied = false;
 
-    @Ignore
     synchronized void waitReply() throws InterruptedException {
         while (!replied) {
             wait(200);
