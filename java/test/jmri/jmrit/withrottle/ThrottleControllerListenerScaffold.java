@@ -35,6 +35,6 @@ public class ThrottleControllerListenerScaffold implements ThrottleControllerLis
     }
 
     public boolean hasAddressBeenDeclined(){
-       return addressReleased;
+       return addressDeclined;
     }
 }
