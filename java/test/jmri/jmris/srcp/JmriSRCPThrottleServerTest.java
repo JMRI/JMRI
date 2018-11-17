@@ -30,7 +30,7 @@ public class JmriSRCPThrottleServerTest extends jmri.jmris.AbstractThrottleServe
     }
 
     /**
-     * confirm the throttle request succeeded and an appropirate response
+     * confirm the throttle request succeeded and an appropriate response
      * was forwarded to the client.
      */
     public void confirmThrottleRequestSucceeded(){
