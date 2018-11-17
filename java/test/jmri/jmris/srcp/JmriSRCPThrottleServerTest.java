@@ -91,8 +91,8 @@ public class JmriSRCPThrottleServerTest extends jmri.jmris.AbstractThrottleServe
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
-        // verify the Internal System Connection memo is available.
-        jmri.InstanceManager.getDefault(jmri.jmrix.internal.InternalSystemConnectionMemo.class);
+        // ensure the Internal System Connection memo is available.
+        jmri.InstanceManager.setDefault(jmri.jmrix.internal.InternalSystemConnectionMemo.class, new jmri.jmrix.internal.InternalSystemConnectionMemo(false));
  
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();
