@@ -286,8 +286,6 @@
                 <version>${surefire.version}</version>
                 <configuration>
                     <excludes>
-                        <!-- DURING TESTING -->
-                        <exclude>%regex[jmri.*]</exclude>
                         <!-- ignore until #3492 is resolved -->
                         <exclude>%regex[jmri.jmrix.loconet.locormi.LnMessage[Client|Server]Test]</exclude>
                         <!-- ignore to avoid duplicate test runs -->
