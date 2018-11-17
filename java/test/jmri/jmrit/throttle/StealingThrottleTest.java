@@ -56,6 +56,33 @@ public class StealingThrottleTest {
         Assert.assertTrue("set button enabled",to.setButtonEnabled());
     }
 
+    @Test
+    public void testRefuseOneStealOne() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        to.typeAddressValue(42);
+        to.pushSetButton();
+
+        // because of the throttle manager we are using, a steal
+        // request is expected next, and we do not want to steal.
+        to.answerStealQuestion(false); 
+ 
+        Assert.assertFalse("release button disabled",to.releaseButtonEnabled());
+        Assert.assertTrue("set button enabled",to.setButtonEnabled());
+
+        to.typeAddressValue(45);
+        to.pushSetButton();
+
+        // because of the throttle manager we are using, a steal
+        // request is expected next, and we want to steal.
+        to.answerStealQuestion(true); 
+
+        Assert.assertEquals("address set",new DccLocoAddress(4245,false),
+		                    to.getAddressValue());
+
+        to.pushReleaseButton();	
+    }
+
 
     @Before
     public void setUp() {
