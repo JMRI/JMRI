@@ -12,6 +12,7 @@ import org.junit.Test;
  * @author Paul Bender Copyright (C) 2017
  * @author Bob Jacobsen Copyright (C) 2017
  */
+
 public class DecoderProTest extends apps.LaunchJmriAppBase {
 
     protected void launch(String[] args) {
