@@ -157,24 +157,6 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         return mBaudRate;
     }
 
-//    /**
-//     * {@inheritDoc} // TODO remove EBR experimental
-//     */
-//    @Override
-//    public int getInterval() {
-//        return mInterval;
-//    }
-//
-//    /**
-//     * {@inheritDoc}
-//     */
-//    @Override
-//    public void setInterval(int interval) {
-//        log.debug("Setting interval to {}", interval);
-//        mInterval = interval;
-//    }
-//    protected int mInterval = 0;
-
     /**
      * Get an array of valid baud rates as integers. This allows subclasses to
      * change the arrays of speeds.
@@ -430,7 +412,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
                 reply = !opened;
                 if (count >= retryAttempts) {
                     log.error("Unable to reconnect after {} attempts, increasing duration of retries", count);
-                    //retrying but with twice the retry interval.
+                    // retrying but with twice the retry interval.
                     reconnectinterval = reconnectinterval * 2;
                     count = 0;
                     secondCount++;

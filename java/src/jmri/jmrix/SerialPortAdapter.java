@@ -61,16 +61,6 @@ public interface SerialPortAdapter extends PortAdapter {
 
     public String getCurrentBaudRate();
 
-//    /**
-//     * Get wait interval in ms between turnout commands on this adapter. Experimental EBR
-//     */
-//    public int getInterval();
-//
-//    /**
-//     * Set wait interval in ms between turnout commands on this adapter. Experimental EBR
-//     */
-//    public void setInterval(int interval);
-
     /**
      * Set the first port option. Only to be used after construction, but before
      * the openPort call

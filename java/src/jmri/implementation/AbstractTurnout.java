@@ -126,7 +126,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         } else {
             myOperator.start();
         }
-        waitOutputInterval(); // if > 0, wait before next output command (experimental)
+        waitOutputInterval(); // if > 0, wait before next output command. Experimental EBR
     }
 
     /**
@@ -137,31 +137,29 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
      */
     public static int DELAYED_FEEDBACK_INTERVAL = 4000;
 
-    public void waitOutputInterval() {
-        if (TURNOUT_INTERVAL > 0) { // is set in the Memo per hardware connection, default = 0, experimental
-            log.debug("interval = {} ms", TURNOUT_INTERVAL);
-            // insert wait before next output command
-            try {
-                log.debug("sleep...");
-                Thread.sleep(TURNOUT_INTERVAL);
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt(); // retain if needed later
-                log.debug("interrupted");
-            }
-            log.debug("woke up...");
-        }
-        return;
-    }
-
     /**
-     * Duration of interval in Milliseconds between separate Turnout cammands. Experimental EBR
+     * Duration of interval in Milliseconds between separate Turnout commands - experimental EBR
      * <p>
-     * Defined as "public static" so it can be read and changed from e.g. XNetTurnout extensions and scripts.
+     * Read and change from e.g. XNetTurnout extensions and scripts using #setOutputInterval(int)
      */
     private static int TURNOUT_INTERVAL = InstanceManager.turnoutManagerInstance().getInterval();
 
     public void setOutputInterval(int newInterval) {
         TURNOUT_INTERVAL = newInterval;
+    }
+
+    public void waitOutputInterval() {
+        if (TURNOUT_INTERVAL > 0) { // is set in the Memo per hardware connection, default = 0 - experimental EBR
+            log.debug("interval = {} ms", TURNOUT_INTERVAL);
+            // insert wait before next output command
+            try {
+                Thread.sleep(TURNOUT_INTERVAL);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt(); // retain if needed later
+            }
+            log.debug("woke up...");
+        }
+        return;
     }
 
     @Override

@@ -147,9 +147,7 @@ public abstract class AbstractLight extends AbstractNamedBean
      */
     @Override
     public void setTargetIntensity(double intensity) {
-        if (log.isDebugEnabled()) {
-            log.debug("setTargetIntensity " + intensity);
-        }
+        log.debug("setTargetIntensity {}", intensity);
         if (intensity < 0.0 || intensity > 1.0) {
             throw new IllegalArgumentException("Target intensity value " + intensity + " not in legal range");
         }
@@ -397,14 +395,13 @@ public abstract class AbstractLight extends AbstractNamedBean
     /**
      * Handle a request for a state change. For these lights, ON and OFF just
      * transition immediately between MinIntensity and MaxIntensity.
+     * Ignores any outputDelay setting for connection.
      *
      * @param newState new state
      */
     @Override
     public void setState(int newState) {
-        if (log.isDebugEnabled()) {
-            log.debug("setState " + newState + " was " + mState);
-        }
+        log.debug("setState {} was {}", newState, mState);
         //int oldState = mState;
         if (newState != ON && newState != OFF) {
             throw new IllegalArgumentException("cannot set state value " + newState);

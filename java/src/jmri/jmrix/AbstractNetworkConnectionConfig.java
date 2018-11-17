@@ -17,14 +17,18 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
 import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Abstract base class for common implementation of the ConnectionConfig
+ * Abstract base class for common implementation of the ConnectionConfig.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
  */
@@ -210,17 +214,26 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
                 }
             });
         }
+
+        // set optional delay interval between (actually before) output (Turnout) commands
+        outputIntervalSpinner.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                adapter.getSystemConnectionMemo().setInterval((Integer) outputIntervalSpinner.getValue());
+            }
+        });
+
         init = true;
     }
 
     @Override
     public void updateAdapter() {
         if (adapter.getMdnsConfigure()) {
-            // set the hostname if it is not blank.
+            // set the hostname if it is not blank
             if (!(hostNameField.getText().equals(""))) {
                 adapter.setHostName(hostNameField.getText());
             }
-            // set the advertisement name if it is not blank.
+            // set the advertisement name if it is not blank
             if (!(adNameField.getText().equals(""))) {
                 adapter.setAdvertisementName(adNameField.getText());
             }
@@ -255,6 +268,10 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
     protected JLabel adNameFieldLabel;
     protected JTextField serviceTypeField = new JTextField(15);
     protected JLabel serviceTypeFieldLabel;
+
+    protected SpinnerNumberModel intervalSpinner = new SpinnerNumberModel(0,0,10000,1); // 10 sec max seems long enough
+    protected JSpinner outputIntervalSpinner = new JSpinner();
+    protected JLabel outputIntervalLabel;
 
     protected NetworkPortAdapter adapter = null;
 
@@ -334,6 +351,15 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
         serviceTypeField.setText("" + adapter.getServiceType());
         serviceTypeFieldLabel = new JLabel(Bundle.getMessage("ServiceTypeFieldLabel"));
         serviceTypeFieldLabel.setEnabled(false);
+
+        // connection (memo) specific output command delay option, calls jmri.jmrix.SystemConnectionMemo#setInterval(int)
+        outputIntervalLabel = new JLabel(Bundle.getMessage("OutputIntervalLabel"));
+        outputIntervalSpinner.setToolTipText(Bundle.getMessage("OutputIntervalTooltip"));
+        JTextField field = ((JSpinner.DefaultEditor) outputIntervalSpinner.getEditor()).getTextField();
+        field.setColumns(6);
+        outputIntervalSpinner.setMaximumSize(outputIntervalSpinner.getPreferredSize()); // set spinner JTextField width
+        outputIntervalSpinner.setValue(adapter.getSystemConnectionMemo().getInterval());
+        outputIntervalSpinner.setEnabled(true);
 
         showAutoConfig.setFont(showAutoConfig.getFont().deriveFont(9f));
         showAutoConfig.setForeground(Color.blue);
@@ -442,6 +468,14 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
                     i++;
                 }
             }
+            // interval config field
+            cR.gridy = i;
+            cL.gridy = i;
+            gbLayout.setConstraints(outputIntervalLabel, cL);
+            gbLayout.setConstraints(outputIntervalSpinner, cR);
+            _details.add(outputIntervalLabel);
+            _details.add(outputIntervalSpinner);
+            i++;
         }
         cL.gridwidth = 2;
         for (JComponent item : additionalItems) {

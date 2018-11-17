@@ -292,7 +292,8 @@ abstract public class SystemConnectionMemo extends Bean {
 
 
     /**
-     * Get the Interval (in ms) to wait between/before commands are send, configured in AdapterConfig. Experimental EBR
+     * Get the Interval (in ms) to wait between/before commands are send, configured in AdapterConfig.
+     * Used in {@link jmri.AbstractTurnout#setCommandedState(int)}
      */
     public int getInterval() {
         return _interval;

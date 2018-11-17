@@ -86,7 +86,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
             @Override
             public void actionPerformed(ActionEvent e) {
                 adapter.configureBaudRate((String) baudBox.getSelectedItem());
-                p.setComboBoxLastSelection(adapter.getClass().getName() + ".baud", (String) baudBox.getSelectedItem());
+                p.setComboBoxLastSelection(adapter.getClass().getName() + ".baud", (String) baudBox.getSelectedItem()); // NOI18N
             }
         });
 
@@ -146,18 +146,15 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
             @Override
             public void focusLost(FocusEvent e) {
             }
-
         });
 
-        // experimental option for Turnout command interval EBR
-        turnoutIntervalSpinner.addChangeListener(new ChangeListener() {
+        // set optional delay interval between (actually before) output (Turnout) commands
+        outputIntervalSpinner.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
-//                adapter.setInterval((Integer) turnoutIntervalSpinner.getValue()); // TODO EBR needed? or prefer only in
-                adapter.getSystemConnectionMemo().setInterval((Integer) turnoutIntervalSpinner.getValue());
+                adapter.getSystemConnectionMemo().setInterval((Integer) outputIntervalSpinner.getValue());
             }
         });
-        // up to here experimental
 
         for (String i : options.keySet()) {
             final String item = i;
@@ -192,10 +189,11 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
     protected JComboBox<String> baudBox = new JComboBox<>();
     protected JLabel baudBoxLabel;
     protected String[] baudList;
-    // experimental EBR (3 lines)
-    protected SpinnerNumberModel intervalSpinner = new SpinnerNumberModel(0,0,10000,1);
-    protected JSpinner turnoutIntervalSpinner = new JSpinner();
-    protected JLabel turnoutIntervalLabel;
+
+    protected SpinnerNumberModel intervalSpinner = new SpinnerNumberModel(0,0,10000,1); // 10 sec max seems long enough
+    protected JSpinner outputIntervalSpinner = new JSpinner();
+    protected JLabel outputIntervalLabel;
+
     protected jmri.jmrix.SerialPortAdapter adapter = null;
 
     /**
@@ -351,7 +349,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
             }
         } catch (java.lang.UnsatisfiedLinkError e1) {
             log.error("UnsatisfiedLinkError - the serial library has not been installed properly");
-            log.error("java.library.path=" + System.getProperty("java.library.path", "<unknown>"));
+            log.error("java.library.path={}", System.getProperty("java.library.path", "<unknown>"));
             javax.swing.JOptionPane.showMessageDialog(null, "Failed to load comm library.\nYou have to fix that before setting preferences.");
             return;
         }
@@ -396,15 +394,14 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         baudBoxLabel = new JLabel(Bundle.getMessage("BaudRateLabel"));
         baudBox.setSelectedItem(adapter.getCurrentBaudRate());
 
-        // adapter specific turnout delay option, calls jmri.jmrix.AbstractSerialPortController#setInterval(int) - experimental
-        turnoutIntervalLabel = new JLabel(Bundle.getMessage("TurnoutIntervalLabel"));
-        turnoutIntervalSpinner.setToolTipText(Bundle.getMessage("TurnoutIntervalTooltip"));
-        JTextField field = ((JSpinner.DefaultEditor) turnoutIntervalSpinner.getEditor()).getTextField();
+        // connection (memo) specific output command delay option, calls jmri.jmrix.SystemConnectionMemo#setInterval(int)
+        outputIntervalLabel = new JLabel(Bundle.getMessage("OutputIntervalLabel"));
+        outputIntervalSpinner.setToolTipText(Bundle.getMessage("OutputIntervalTooltip"));
+        JTextField field = ((JSpinner.DefaultEditor) outputIntervalSpinner.getEditor()).getTextField();
         field.setColumns(6);
-        turnoutIntervalSpinner.setMaximumSize(turnoutIntervalSpinner.getPreferredSize()); // set spinner JTextField width
-//        turnoutIntervalSpinner.setValue(adapter.getInterval()); // TODO EBR needed? or prefer
-        turnoutIntervalSpinner.setValue(adapter.getSystemConnectionMemo().getInterval());
-        turnoutIntervalSpinner.setEnabled(true);
+        outputIntervalSpinner.setMaximumSize(outputIntervalSpinner.getPreferredSize()); // set spinner JTextField width
+        outputIntervalSpinner.setValue(adapter.getSystemConnectionMemo().getInterval());
+        outputIntervalSpinner.setEnabled(true);
 
         showAdvanced.setFont(showAdvanced.getFont().deriveFont(9f));
         showAdvanced.setForeground(Color.blue);
@@ -483,13 +480,13 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
                 }
             }
 
-            // experimental interval config (ms)
+            // interval config field
             cR.gridy = i;
             cL.gridy = i;
-            gbLayout.setConstraints(turnoutIntervalLabel, cL);
-            gbLayout.setConstraints(turnoutIntervalSpinner, cR);
-            _details.add(turnoutIntervalLabel);
-            _details.add(turnoutIntervalSpinner);
+            gbLayout.setConstraints(outputIntervalLabel, cL);
+            gbLayout.setConstraints(outputIntervalSpinner, cR);
+            _details.add(outputIntervalLabel);
+            _details.add(outputIntervalSpinner);
             i++;
 
         }

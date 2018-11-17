@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
  * Abstract base class for common implementation of the Simulator
  * ConnectionConfig.
  * <p>
- * Currently uses the serial adapter, but this will change to
+ * Currently uses the SerialPortAdapter, but this will change to
  * the simulator adapter in due course.
  *
  * @author Kevin Dickerson Copyright (C) 2001, 2003
