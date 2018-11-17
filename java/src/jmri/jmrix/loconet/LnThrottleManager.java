@@ -531,13 +531,19 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
         log.debug("stealThrottleRequest() invoked for address {}, with steal boolean = {}",address.getNumber(),steal);
         if (steal == false) {
             if (address instanceof DccLocoAddress) {
+                cancelThrottleRequest((DccLocoAddress)address,l);
                 failedThrottleRequest(address, "User chose not to 'steal' the throttle.");
             } else {
                 log.error("cannot cast address to DccLocoAddress.");
             }
+            requestOutstanding = false;
         } else {
-           log.warn("user agreed to steal address {}, but no code is in-place to handle the 'steal' (yet)",address.getNumber());
-            commitToAcquireThrottle(slotForAddress.get(address.getNumber()));
+           // The warning message below is, at a minimum, confusing.
+           // Steal is currently implemented by using the same method
+           // we used to aquire the slot prior to the release of 
+           // Digitrax command stations with expanded slots.
+           //log.warn("user agreed to steal address {}, but no code is in-place to handle the 'steal' (yet)",address.getNumber());
+           commitToAcquireThrottle(slotForAddress.get(address.getNumber()));
         }
     }
 
