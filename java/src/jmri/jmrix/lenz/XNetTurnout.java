@@ -122,7 +122,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
     @SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC")
     protected int _mClosed = jmri.Turnout.CLOSED;
 
-    protected String _prefix = "X"; // default to "X"
+    protected String _prefix = "X"; // default
     protected XNetTrafficController tc = null;
 
     public XNetTurnout(String prefix, int pNumber, XNetTrafficController controller) {  // a human-readable turnout number must be specified!
