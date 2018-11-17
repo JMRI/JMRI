@@ -57,13 +57,6 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 
     private final String closedText = InstanceManager.turnoutManagerInstance().getClosedText();
     private final String thrownText = InstanceManager.turnoutManagerInstance().getThrownText();
-    /**
-     * Duration of interval between separate Turnout cammands. Experimental EBR
-     * <p>
-     * Defined as "public non-final"
-     * so it can be changed in e.g. the jython/SetTurnoutInterval script.
-     */
-    private static int TURNOUT_INTERVAL = InstanceManager.turnoutManagerInstance().getInterval();
 
     /**
      * Handle a request to change state, typically by sending a message to the
@@ -120,10 +113,6 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
                 (s==Turnout.CLOSED ? closedText : thrownText));
         newCommandedState(s);
         myOperator = getTurnoutOperator(); // MUST set myOperator before starting the thread
-        if (TURNOUT_INTERVAL > 0) { // set in Adapter per hardware (serial) connection, default = 0, experimental
-            jmri.util.ThreadingUtil.runOnLayoutDelayed( () -> { log.debug("interval..."); },
-                    TURNOUT_INTERVAL );
-        }
         if (myOperator == null) {
             forwardCommandChangeToLayout(s);
             // optionally handle feedback
@@ -137,6 +126,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         } else {
             myOperator.start();
         }
+        waitOutputInterval(); // if > 0, wait before next output command (experimental)
     }
 
     /**
@@ -146,6 +136,33 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
      * so it can be changed in e.g. the jython/SetDefaultDelayedTurnoutDelay script.
      */
     public static int DELAYED_FEEDBACK_INTERVAL = 4000;
+
+    public void waitOutputInterval() {
+        if (TURNOUT_INTERVAL > 0) { // is set in the Memo per hardware connection, default = 0, experimental
+            log.debug("interval = {} ms", TURNOUT_INTERVAL);
+            // insert wait before next output command
+            try {
+                log.debug("sleep...");
+                Thread.sleep(TURNOUT_INTERVAL);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt(); // retain if needed later
+                log.debug("interrupted");
+            }
+            log.debug("woke up...");
+        }
+        return;
+    }
+
+    /**
+     * Duration of interval in Milliseconds between separate Turnout cammands. Experimental EBR
+     * <p>
+     * Defined as "public static" so it can be read and changed from e.g. XNetTurnout extensions and scripts.
+     */
+    private static int TURNOUT_INTERVAL = InstanceManager.turnoutManagerInstance().getInterval();
+
+    public void setOutputInterval(int newInterval) {
+        TURNOUT_INTERVAL = newInterval;
+    }
 
     @Override
     public int getCommandedState() {
