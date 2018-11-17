@@ -53,11 +53,13 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
     DccThrottle functionThrottle;
     RosterEntry rosterLoco = null;
     DccLocoAddress leadAddress;
+    LocoAddress lastStealAddress;
     char whichThrottle;
     float speedMultiplier;
     protected Queue<Float> lastSentSpeed;
     protected float newSpeed;
-    boolean isAddressSet;
+    protected boolean isAddressSet;
+    protected boolean isStealInProgress;
     protected ArrayList<ThrottleControllerListener> listeners;
     protected ArrayList<ControllerInterface> controllerListeners;
     boolean useLeadLocoF;
@@ -144,6 +146,7 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
 
     public void addressDispatch() {
         isAddressSet = false;
+        isStealInProgress = false;
         jmri.InstanceManager.throttleManagerInstance().dispatchThrottle(throttle, this);
         throttle.removePropertyChangeListener(this);
         throttle = null;
@@ -215,10 +218,8 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
 
     @Override
     public void notifyStealThrottleRequired(LocoAddress address) {
-        notifyFailedThrottleRequest(address, "Steal Required");
-
         // this is an automatically stealing impelementation.
-//        InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, true);
+        InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, true);
     }
 
 
@@ -507,6 +508,13 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
         }
     }
 
+    private void resetSteal() {
+        if (isStealInProgress){
+               isStealInProgress = false;
+               lastStealAddress = null;
+        }
+    }
+
     public void setFunctionThrottle(DccThrottle t) {
         functionThrottle = t;
         functionThrottle.addPropertyChangeListener(this);
@@ -562,6 +570,10 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
             log.warn("No throttle to shutdown");
         }
         clearLeadLoco();
+        if(isStealInProgress) {
+           InstanceManager.throttleManagerInstance().stealThrottleRequest(lastStealAddress, this, false );
+           resetSteal();
+        }
     }
 
     /**
@@ -595,7 +607,21 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
     }
 
     protected void setAddress(int number, boolean isLong) {
-        log.debug("setAddress: {}, isLong: {}", number, isLong);
+        log.debug("setAddress: {}, isLong: {} steal in progress: {}", 
+                  number, isLong,isStealInProgress);
+        if (isStealInProgress){
+            LocoAddress address = new DccLocoAddress(number,isLong);
+            if(lastStealAddress.equals(address)) {
+               // accept the steal
+               InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, true );
+               resetSteal();
+               return; 
+            } else {
+               // decline the steal
+               InstanceManager.throttleManagerInstance().stealThrottleRequest(lastStealAddress, this, false );
+               resetSteal();
+            }
+        }
         if (rosterLoco != null) {
             jmri.InstanceManager.throttleManagerInstance().requestThrottle(rosterLoco, this);
         } else {

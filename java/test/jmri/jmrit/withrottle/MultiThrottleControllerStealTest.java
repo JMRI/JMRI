@@ -32,7 +32,32 @@ public class MultiThrottleControllerStealTest {
        // then release it.
        Assert.assertTrue("Continue after release",controller.sort("r"));
        Assert.assertTrue("Address Released",tcls.hasAddressBeenReleased());
-       Assert.assertEquals("outgoing message after release", "Mx-",cis.getLastPacket() );
+       Assert.assertEquals("outgoing message after release", "MA-test<;>",cis.getLastPacket() );
+    }
+
+    @Test
+    public void testRefuseOneStealOne() {
+       // set the address
+       Assert.assertTrue("Continue after address",controller.sort("L1234"));
+       Assert.assertFalse("Address Found",tcls.hasAddressBeenFound());
+       // the throttle manager send a steal request, which triggers a message 
+       // from the controller to the device 
+       Assert.assertEquals("outgoing message after throttle request", "MAStest<;>test",cis.getLastPacket() );
+       // to refuse the steal, we have to send a different address
+       Assert.assertTrue("Continue after address",controller.sort("L4321"));
+       Assert.assertFalse("Address Found",tcls.hasAddressBeenFound());
+       // from the controller to the device 
+       Assert.assertEquals("outgoing message after throttle request", "MAStest<;>test",cis.getLastPacket() );
+
+       // to refuse the steal, we have to send a different address
+       // the device then confirms the steal.
+       Assert.assertTrue("Continue after confirm steal",controller.sort("L4321"));
+       // and the sequence continues as normal.
+       Assert.assertTrue("Address Found",tcls.hasAddressBeenFound());
+       // then release it.
+       Assert.assertTrue("Continue after release",controller.sort("r"));
+       Assert.assertTrue("Address Released",tcls.hasAddressBeenReleased());
+       Assert.assertEquals("outgoing message after release", "MA-test<;>",cis.getLastPacket() );
     }
 
     @Before

@@ -254,8 +254,9 @@ public class MultiThrottleController extends ThrottleController {
      */
     @Override
     public void notifyStealThrottleRequired(LocoAddress address) {
+        lastStealAddress = address;
+        isStealInProgress = true;
         sendStealAddress();
-        notifyFailedThrottleRequest(address, "Steal Required");
     }
 
     public void requestStealAddress(String action) {
