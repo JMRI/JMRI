@@ -9,7 +9,7 @@ import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.JUnitAppender;
 import jmri.util.junit.rules.RetryRule;
-import jmri.util.junit.rules.JmriTemporaryFolder;
+import org.junit.rules.TemporaryFolder;;
 
 import org.apache.commons.io.*;
 import org.junit.After;
@@ -36,7 +36,7 @@ public class DecoderProTest {
     static final int TESTMAXTIME = 20;    // seconds - not too long, so job doesn't hang
 
     @Rule
-    public JmriTemporaryFolder folder = new JmriTemporaryFolder();
+    public TemporaryFolder folder = new TemporaryFolder();
 
     @Rule
     public RetryRule retryRule = new RetryRule(2); // allow 1 retry
