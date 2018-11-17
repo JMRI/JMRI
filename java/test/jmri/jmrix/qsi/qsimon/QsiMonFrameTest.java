@@ -27,6 +27,7 @@ public class QsiMonFrameTest {
 
     @Test
     public void testMsg() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         QsiMessage m = new QsiMessage(3);
         m.setOpCode('L');
         m.setElement(1, '0');
@@ -43,6 +44,7 @@ public class QsiMonFrameTest {
 
     @Test
     public void testReply() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         QsiReply m = new QsiReply();
         m.setOpCode('C');
         m.setElement(1, 'o');
