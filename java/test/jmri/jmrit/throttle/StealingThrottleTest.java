@@ -77,7 +77,7 @@ public class StealingThrottleTest {
         // request is expected next, and we want to steal.
         to.answerStealQuestion(true); 
 
-        Assert.assertEquals("address set",new DccLocoAddress(4245,false),
+        Assert.assertEquals("address set",new DccLocoAddress(4245,true),
 		                    to.getAddressValue());
 
         to.pushReleaseButton();	
