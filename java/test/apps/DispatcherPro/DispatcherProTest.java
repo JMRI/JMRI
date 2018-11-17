@@ -18,7 +18,6 @@ import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.JUnitAppender;
 import jmri.util.junit.rules.RetryRule;
-import jmri.util.junit.rules.JmriTemporaryFolder;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
