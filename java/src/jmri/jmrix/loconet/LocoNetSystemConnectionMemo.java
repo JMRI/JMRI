@@ -55,6 +55,9 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
     public LocoNetSystemConnectionMemo() {
         super("L", "LocoNet"); // NOI18N
 
+        // self-register
+        register();
+
         // create and register the ComponentFactory for the GUI
         InstanceManager.store(cf = new LnComponentFactory(this),
                 ComponentFactory.class);
