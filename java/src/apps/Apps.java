@@ -144,7 +144,6 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         // refer to this on the Swing thread
         final File profileFile;
         profileFilename = configFilename.replaceFirst(".xml", ".properties");
-        System.out.println("profileFilename: {} "+ profileFilename);
         // decide whether name is absolute or relative
         if (!new File(profileFilename).isAbsolute()) {
             // must be relative, but we want it to
@@ -153,12 +152,10 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         } else {
             profileFile = new File(profileFilename);
         }
-        System.out.println("setConfigFile({}) "+ profileFile);
         ProfileManager.getDefault().setConfigFile(profileFile);
         // See if the profile to use has been specified on the command line as
         // a system property org.jmri.profile as a profile id.
         if (System.getProperties().containsKey(ProfileManager.SYSTEM_PROPERTY)) {
-            System.out.println("found SYSTEM_PROPERTY {}, setting active profile"+System.getProperty(ProfileManager.SYSTEM_PROPERTY));
             ProfileManager.getDefault().setActiveProfile(System.getProperty(ProfileManager.SYSTEM_PROPERTY));
         }
         log.trace("check if profile exists");
@@ -382,7 +379,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         InstanceManager.getDefault(jmri.LogixManager.class);
         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class);
 
-        // Once all the preferences have been loaded we can initial the preferences.
+        // Once all the preferences have been loaded we can initialize the preferences.
         // Doing it in a thread at this stage means we can let it work in the background.
         new Thread(() -> {
             try {
