@@ -31,6 +31,8 @@ public class SoundProTest extends apps.LaunchJmriAppBase {
     @Test
     public void testLaunchGrapevine() throws IOException {
         runOne("Grapevine_Simulator", "SoundPro", "SoundPro version");
+        jmri.util.JUnitAppender.suppressWarnMessage("Timeout can't be handled due to missing node (index 1)");
+        jmri.util.JUnitAppender.suppressWarnMessage("Timeout can't be handled due to missing node (index 0)");
     }
 
     @Test
@@ -43,4 +45,5 @@ public class SoundProTest extends apps.LaunchJmriAppBase {
     public void testLaunchInitLoop() throws IOException {
         runOne("Prevent_Init_Loop", "SoundPro", "SoundPro version");
     }
+    
 }

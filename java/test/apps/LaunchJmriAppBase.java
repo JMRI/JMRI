@@ -73,7 +73,8 @@ abstract public class LaunchJmriAppBase {
             // maybe have it run a script to indicate that it's really up?
             
             // now clean up frames, depending on what's actually left
-
+            cleanup();
+            
             // gracefully shutdown, but don't exit
             ((DefaultShutDownManager)InstanceManager.getDefault(jmri.ShutDownManager.class)).shutdown(0, false);
 
@@ -86,6 +87,7 @@ abstract public class LaunchJmriAppBase {
     abstract protected void launch(String[] args);
     
     protected void extraChecks() {}
+    protected void cleanup() {}
     
     // The minimal setup for log4J
     @Before
