@@ -119,6 +119,12 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         return entryToolTip;
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public int getInterval() {
+        return _memo.getInterval();
+    }
+
     /**
      * Get from the user, the number of addressed bits used to control a
      * turnout. Normally this is 1, and the default routine returns 1

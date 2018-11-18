@@ -73,4 +73,5 @@ public class InternalTurnoutManager extends AbstractTurnoutManager {
     public String[] getValidOperationTypes() {
         return new String[]{"NoFeedback"};
     }
+
 }

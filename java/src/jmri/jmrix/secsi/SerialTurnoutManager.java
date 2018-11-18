@@ -73,6 +73,12 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         return entryToolTip;
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public int getInterval() {
+        return memo.getInterval();
+    }
+
     @Deprecated
     static public SerialTurnoutManager instance() {
         return null;

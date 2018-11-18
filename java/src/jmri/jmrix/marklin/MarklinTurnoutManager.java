@@ -51,6 +51,12 @@ public class MarklinTurnoutManager extends jmri.managers.AbstractTurnoutManager 
 
     boolean noWarnDelete = false;
 
+    /** {@inheritDoc} */
+    @Override
+    public int getInterval() {
+        return adaptermemo.getInterval();
+    }
+
     private final static Logger log = LoggerFactory.getLogger(MarklinTurnoutManager.class);
 
 }

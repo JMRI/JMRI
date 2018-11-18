@@ -46,6 +46,12 @@ public class SRCPTurnoutManager extends jmri.managers.AbstractTurnoutManager {
         return true;
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public int getInterval() {
+        return _memo.getInterval();
+    }
+
     // private final static Logger log = LoggerFactory.getLogger(SRCPTurnout.class);
 
 }

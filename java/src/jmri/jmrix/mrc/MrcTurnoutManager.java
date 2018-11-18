@@ -40,4 +40,10 @@ public class MrcTurnoutManager extends jmri.managers.AbstractTurnoutManager {
         return true;
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public int getInterval() {
+        return tc.getAdapterMemo().getInterval();
+    }
+
 }

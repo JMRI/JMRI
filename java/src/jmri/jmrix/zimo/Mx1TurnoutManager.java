@@ -39,4 +39,10 @@ public class Mx1TurnoutManager extends jmri.managers.AbstractTurnoutManager {
         return true;
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public int getInterval() {
+        return tc.getAdapterMemo().getInterval();
+    }
+
 }

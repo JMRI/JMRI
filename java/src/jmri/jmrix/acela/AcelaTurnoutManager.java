@@ -119,6 +119,12 @@ public class AcelaTurnoutManager extends AbstractTurnoutManager {
         return true;
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public int getInterval() {
+        return _memo.getInterval();
+    }
+
     /**
      * Allow access to AcelaTurnoutManager.
      * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure

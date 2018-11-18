@@ -91,6 +91,12 @@ public class SprogTurnoutManager extends jmri.managers.AbstractTurnoutManager {
         return entryToolTip;
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public int getInterval() {
+        return _memo.getInterval();
+    }
+
     /**
      * @deprecated JMRI Since 4.4 instance() shouldn't be used; convert to JMRI multi-system support structure
      */

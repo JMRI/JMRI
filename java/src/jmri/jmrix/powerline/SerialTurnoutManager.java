@@ -118,6 +118,12 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         return entryToolTip;
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public int getInterval() {
+        return tc.getAdapterMemo().getInterval();
+    }
+
     private final static Logger log = LoggerFactory.getLogger(SerialTurnoutManager.class);
 
 }

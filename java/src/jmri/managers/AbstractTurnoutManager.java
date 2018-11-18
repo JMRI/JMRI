@@ -366,7 +366,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
     }
 
     /**
-     * Get the Turnout Interval (delay) in ms for this adapter.
+     * Get the Turnout Interval (delay) in ms for this connection (memo).
      */
     public int getInterval() {
         return 0;

@@ -6,8 +6,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Implement turnout manager for Tams systems. Reworked to support binary
- * commands and polling of command station
- * <P>
+ * commands and polling of command station.
  *
  * Based on work by Bob Jacobsen and Kevin Dickerson
  *
@@ -52,6 +51,12 @@ public class TamsTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
     @Override
     public boolean allowMultipleAdditions(String systemName) {
         return true;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public int getInterval() {
+        return adaptermemo.getInterval();
     }
 
     boolean noWarnDelete = false;

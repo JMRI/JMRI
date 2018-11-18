@@ -10,8 +10,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Implement turnout manager for CMRI serial systems
- * <P>
- * System names are "CTnnn", where nnn is the turnout number without padding.
+ * <p>
+ * System names are "CTnnn", where nnn is the turnout number without padding,
+ * prefix C is user configurable.
  *
  * @author Bob Jacobsen Copyright (C) 2003
  */
@@ -375,6 +376,12 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     public String getEntryToolTip() {
         String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
         return entryToolTip;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public int getInterval() {
+        return _memo.getInterval();
     }
 
     private final static Logger log = LoggerFactory.getLogger(SerialTurnoutManager.class);

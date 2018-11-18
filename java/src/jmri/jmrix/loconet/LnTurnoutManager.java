@@ -234,6 +234,12 @@ public class LnTurnoutManager extends jmri.managers.AbstractTurnoutManager imple
         return entryToolTip;
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public int getInterval() {
+        return ((LnTrafficController) fastcontroller).getSystemConnectionMemo().getInterval();
+    }
+
     private final static Logger log = LoggerFactory.getLogger(LnTurnoutManager.class);
 
 }

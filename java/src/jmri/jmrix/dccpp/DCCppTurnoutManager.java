@@ -200,6 +200,12 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
         return entryToolTip;
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public int getInterval() {
+        return tc.getSystemConnectionMemo().getInterval();
+    }
+
     @Deprecated
     static public DCCppTurnoutManager instance() {
         //if (_instance == null) _instance = new DCCppTurnoutManager();

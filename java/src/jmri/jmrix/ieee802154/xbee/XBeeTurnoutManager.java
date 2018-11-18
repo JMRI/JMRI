@@ -218,6 +218,12 @@ public class XBeeTurnoutManager extends AbstractTurnoutManager {
         return entryToolTip;
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public int getInterval() {
+        return tc.getAdapterMemo().getInterval();
+    }
+
     /**
      * {@inheritDoc}
      */
