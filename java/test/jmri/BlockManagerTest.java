@@ -8,9 +8,9 @@ import org.junit.Assert;
 
 /**
  * Tests for the BlockManager class
- * <P>
+ * <p>
  * Based upon a stub by Bob Jacobsen Copyright (C) 2006
- * <P>
+ * <p>
  * @author Bob Coleman Copyright 2012
  * @author Bob Jacobsen Copyright 2014
  */

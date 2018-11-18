@@ -18,10 +18,10 @@ import org.junit.Assert;
 
 /**
  * Tests for BlockManagerXml.
- * <P>
+ * <p>
  * Just tests Elements, not actual files. Based upon a stub by Bob Jacobsen
  * Copyright 2008
- * <P>
+ * <p>
  * @author Bob Coleman Copyright 2012
   */
 public class BlockManagerXmlTest extends TestCase {

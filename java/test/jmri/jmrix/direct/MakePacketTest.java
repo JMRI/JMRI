@@ -81,7 +81,7 @@ public class MakePacketTest extends TestCase {
      * Test all possible three-byte packets. This ensures that MakePacket thinks
      * it can find a way of representing each of those packets. Note that the
      * output packet is not checked for correctness.
-     * <P>
+     * <p>
      * Unfortunately, due to the number of trials, this takes too long to be
      * included in normal runs. Hence it's name has been modified so that JUnit
      * will not routinely select it to be run.
@@ -112,7 +112,7 @@ public class MakePacketTest extends TestCase {
      * forms) and speed value. This ensures that MakePacket thinks it can find a
      * way of representing each of those packets. Note that the output packet is
      * not checked for correctness.
-     * <P>
+     * <p>
      * Unfortunately, due to the number of trials, this takes too long to be
      * included in normal runs. Hence it's name has been modified so that JUnit
      * will not routinely select it to be run.
@@ -162,7 +162,7 @@ public class MakePacketTest extends TestCase {
      * forms) and CV address/value to write. This ensures that MakePacket thinks
      * it can find a way of representing each of those packets. Note that the
      * output packet is not checked for correctness.
-     * <P>
+     * <p>
      * Unfortunately, due to the number of trials, this takes too long to be
      * included in normal runs. Hence it's name has been modified so that JUnit
      * will not routinely select it to be run.
