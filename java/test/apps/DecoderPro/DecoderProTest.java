@@ -9,7 +9,7 @@ import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.JUnitAppender;
 import jmri.util.junit.rules.RetryRule;
-import org.junit.rules.TemporaryFolder;;
+import org.junit.rules.TemporaryFolder;
 
 import org.apache.commons.io.*;
 import org.junit.After;
