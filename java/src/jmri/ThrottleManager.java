@@ -42,6 +42,21 @@ public interface ThrottleManager {
     public boolean requestThrottle(BasicRosterEntry re, ThrottleListener l);
 
     /**
+     * Request a readonly throttle from a given RosterEntry. When the decoder
+     * address is located, the ThrottleListener gets a callback via the
+     * ThrottleListener.notifyThrottleFound method.
+     *
+     * @param re desired RosterEntry
+     * @param l  ReadonlyThrottleListener awaiting notification of a found throttle
+     * @return true if the request will continue, false if the request will not
+     *         be made; false may be returned if a the throttle is already in
+     *         use
+     */
+    default public boolean requestReadonlyThrottle(BasicRosterEntry re, ReadonlyThrottleListener l) {
+        throw new UnsupportedOperationException("Readonly throttles not supported");
+    }
+
+    /**
      * Request a throttle, given a decoder address. When the decoder address is
      * located, the ThrottleListener gets a callback via the
      * ThrottleListener.notifyThrottleFound method.
@@ -58,6 +73,24 @@ public interface ThrottleManager {
     public boolean requestThrottle(int address, ThrottleListener l);
 
     /**
+     * Request a readonly throttle, given a decoder address. When the decoder
+     * address is located, the ThrottleListener gets a callback via the
+     * ThrottleListener.notifyThrottleFound method.
+     * <P>
+     * This is a convenience version of the call, which uses system-specific
+     * logic to tell whether the address is a short or long form.
+     *
+     * @param address desired decoder address
+     * @param l       ReadonlyThrottleListener awaiting notification of a found throttle
+     * @return true if the request will continue, false if the request will not
+     *         be made; false may be returned if a the throttle is already in
+     *         use
+     */
+    default public boolean requestReadonlyThrottle(int address, ReadonlyThrottleListener l) {
+        throw new UnsupportedOperationException("Readonly throttles not supported");
+    }
+
+    /**
      * Request a throttle, given a decoder address and whether it is a long or
      * short DCC address. When the decoder address is located, the
      * ThrottleListener gets a callback via the
@@ -71,6 +104,23 @@ public interface ThrottleManager {
      *         use
      */
     public boolean requestThrottle(int address, boolean isLong, ThrottleListener l);
+
+    /**
+     * Request a readonly throttle, given a decoder address and whether it is a
+     * long or short DCC address. When the decoder address is located, the
+     * ThrottleListener gets a callback via the
+     * ThrottleListener.notifyThrottleFound method.
+     *
+     * @param address desired decoder address
+     * @param isLong  true if requesting a DCC long (extended) address
+     * @param l       ReadonlyThrottleListener awaiting notification of a found throttle
+     * @return true if the request will continue, false if the request will not
+     *         be made; false may be returned if a the throttle is already in
+     *         use
+     */
+    default public boolean requestReadonlyThrottle(int address, boolean isLong, ReadonlyThrottleListener l) {
+        throw new UnsupportedOperationException("Readonly throttles not supported");
+    }
 
     /**
      * Request a throttle, given a decoder address. When the decoder address is
@@ -89,6 +139,24 @@ public interface ThrottleManager {
     public boolean requestThrottle(LocoAddress address, ThrottleListener l);
 
     /**
+     * Request a readonly throttle, given a decoder address. When the decoder
+     * address is located, the ThrottleListener gets a callback via the
+     * ThrottleListener.notifyThrottleFound method.
+     * <P>
+     * This is a convenience version of the call, which uses system-specific
+     * logic to tell whether the address is a short or long form.
+     *
+     * @param address desired decoder address
+     * @param l       ReadonlyThrottleListener awaiting notification of a found throttle
+     * @return true if the request will continue, false if the request will not
+     *         be made; false may be returned if a the throttle is already in
+     *         use
+     */
+    default public boolean requestReadonlyThrottle(LocoAddress address, ReadonlyThrottleListener l) {
+        throw new UnsupportedOperationException("Readonly throttles not supported");
+    }
+
+    /**
      * Request a throttle, given a decoder address or a RosterEntry. When the
      * decoder address is located, the ThrottleListener gets a callback via the
      * ThrottleListener.notifyThrottleFound method.
@@ -104,6 +172,25 @@ public interface ThrottleManager {
      *         use
      */
     public boolean requestThrottle(LocoAddress address, BasicRosterEntry re, ThrottleListener l);
+
+    /**
+     * Request a readonly throttle, given a decoder address or a RosterEntry.
+     * When the decoder address is located, the ThrottleListener gets a callback
+     * via the ThrottleListener.notifyThrottleFound method.
+     * <P>
+     * This is a convenience version of the call, which uses system-specific
+     * logic to tell whether the address is a short or long form.
+     *
+     * @param address desired decoder address
+     * @param re      desired RosterEntry
+     * @param l       ReadonlyThrottleListener awaiting notification of a found throttle
+     * @return true if the request will continue, false if the request will not
+     *         be made; false may be returned if a the throttle is already in
+     *         use
+     */
+    default public boolean requestReadonlyThrottle(LocoAddress address, BasicRosterEntry re, ReadonlyThrottleListener l) {
+        throw new UnsupportedOperationException("Readonly throttles not supported");
+    }
 
     /**
      * Cancel a request for a throttle.
