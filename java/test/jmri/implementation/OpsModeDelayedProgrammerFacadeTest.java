@@ -66,7 +66,6 @@ public class OpsModeDelayedProgrammerFacadeTest extends TestCase {
     transient volatile boolean facProgReplied = false;
 
     // Perform tests with parameters parsed from the name of the calling method.
-    @Ignore
     synchronized void testMethod(int addr, boolean addrType) throws jmri.ProgrammerException, InterruptedException {
         String methodName = "";
         String cv = "";
@@ -120,7 +119,6 @@ public class OpsModeDelayedProgrammerFacadeTest extends TestCase {
     }
 
     // Extract test parameters from test name.
-    @Ignore
     synchronized ArrayList<String> itemsFromMethodName(int methodOffset, int groupReps) {
         StringBuilder sb = new StringBuilder();
         Pattern pattern;
@@ -149,7 +147,6 @@ public class OpsModeDelayedProgrammerFacadeTest extends TestCase {
         return retString;
     }
 
-    @Ignore
     synchronized void facProgWaitReply() throws InterruptedException {
         while (!facProgReplied) {
             wait(10);
