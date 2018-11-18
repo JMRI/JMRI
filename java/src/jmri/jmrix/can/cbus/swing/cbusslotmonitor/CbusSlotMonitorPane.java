@@ -309,10 +309,6 @@ public class CbusSlotMonitorPane extends jmri.jmrix.can.swing.CanPanel {
     
     /**
      * Creates a Menu List
-     * <p>
-     * 
-     * 
-     * </p>
      */
     @Override
     public List<JMenu> getMenus() {

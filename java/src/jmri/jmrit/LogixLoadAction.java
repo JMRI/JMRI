@@ -28,7 +28,7 @@ public class LogixLoadAction extends AbstractAction {
         // Set option to force Logixs to be loaded disabled
 
         Object[] options = {"Disable",
-            "Enable"};
+            "Enable"}; // TODO I18N
 
         int retval = JOptionPane.showOptionDialog(_who, Bundle.getMessage("LogixDisabledMessage"), Bundle.getMessage("DebugOption"),
                 JOptionPane.YES_NO_OPTION,

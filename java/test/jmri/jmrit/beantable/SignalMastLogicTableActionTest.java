@@ -29,7 +29,7 @@ public class SignalMastLogicTableActionTest extends AbstractTableActionBase {
     @Override
     @Test
     public void testIncludeAddButton(){
-         Assert.assertTrue("Default include add button",a.includeAddButton());
+         Assert.assertTrue("Default include add button", a.includeAddButton());
     }
 
     // The minimal setup for log4J
