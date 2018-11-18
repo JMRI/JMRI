@@ -18,12 +18,8 @@
 # at the bottom.  Then the logging level on each appender (see
 # below) is used to decide if the data is actually logged.
 
-<<<<<<< HEAD
-log4j.rootCategory= WARN, R, J, A1
-=======
 # Add A1 in the next line to turn it on
 log4j.rootCategory= WARN, R, J
->>>>>>> deprecations
 log4j.category.jmri=WARN
 
 # The R appender writes all logging output to the tests.log

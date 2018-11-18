@@ -91,6 +91,7 @@ abstract public class LaunchJmriAppBase {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetApplication();
     }
 
     @After
