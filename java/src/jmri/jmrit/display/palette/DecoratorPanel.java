@@ -713,5 +713,4 @@ public class DecoratorPanel extends JPanel implements ChangeListener {
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DecoratorPanel.class);
-
 }
