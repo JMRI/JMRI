@@ -7,7 +7,7 @@ import org.junit.Test;
 
 /**
  * Description:	tests for the jmri.jmrix.xpa.XpaPowerManager class
- * <P>
+ * <p>
  * @author	Paul Bender
  */
 public class XpaPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBase {
