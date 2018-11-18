@@ -1,7 +1,6 @@
 package jmri.util;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import javax.annotation.OverridingMethodsMustInvokeSuper;
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.Insets;
@@ -16,6 +15,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import javax.annotation.Nonnull;
+import javax.annotation.OverridingMethodsMustInvokeSuper;
 import javax.swing.AbstractAction;
 import javax.swing.InputMap;
 import javax.swing.JComponent;
@@ -184,10 +184,13 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
                 if ((reuseFrameSavedSized)
                         && (!((prefsMgr.getWindowSize(windowFrameRef).getWidth() == 0.0) || (prefsMgr.getWindowSize(
                         windowFrameRef).getHeight() == 0.0)))) {
-                    log.debug("setFrameLocation 2nd clause sets \"{}\" preferredSize to {}", getTitle(), prefsMgr.getWindowSize(windowFrameRef));
-                    this.setPreferredSize(prefsMgr.getWindowSize(windowFrameRef));
-                    log.debug("setFrameLocation 2nd clause sets \"{}\" size to {}", getTitle(), prefsMgr.getWindowSize(windowFrameRef));
-                    this.setSize(prefsMgr.getWindowSize(windowFrameRef));
+                    if (this.getParent() != null && this.getParent().getLayout() != null ) {
+                        log.debug("setFrameLocation 2nd clause sets \"{}\" preferredSize to {}", getTitle(), prefsMgr.getWindowSize(windowFrameRef));
+                        this.setPreferredSize(prefsMgr.getWindowSize(windowFrameRef));
+                    } else {
+                        log.debug("setFrameLocation 2nd clause sets \"{}\" size to {}", getTitle(), prefsMgr.getWindowSize(windowFrameRef));
+                        this.setSize(prefsMgr.getWindowSize(windowFrameRef));
+                    }
                 }
 
                 //
@@ -881,32 +884,15 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
     }
 
     /*
-     * Daniel Boudreau 3/19/2014. There is a problem with saving the correct window size on a Linux OS. The testing was
-     * done using Oracle Java JRE 1.7.0_51 and Debian (Wheezy) Linux on a PC. One issue is that the window size returned
-     * by getSize() is slightly smaller than the actual window size. If we use getSize() to save the window size the
-     * window will shrink each time the window is closed and reopened. The previous workaround was to use
-     * getPreferredSize(), that returns whatever we've set in setPreferredSize() which keeps the window size constant
-     * when we save the data to the user preference file. However, if the user resizes the window, getPreferredSize()
-     * doesn't change, only getSize() changes when the user resizes the window. So we need to try and detect when the
-     * window size was modified by the user. Testing has shown that the window width is short by 4 pixels and the height
-     * is short by 3. This code will save the window size if the width or height was changed by at least 5 pixels. Sorry
-     * for this kludge.
+     * If the JFrame has a parent, and that parent has a layout manager then we need the "PreferredSize",
+     * else we need the "Size", and then set in similar fashion.
      */
     private void saveWindowSize(jmri.UserPreferencesManager p) {
-        if (SystemType.isLinux()) {
-            // try to determine if user has resized the window
-            log.debug("getSize() width: {}, height: {}", super.getSize().getWidth(), super.getSize().getHeight());
+        if (this.getParent() != null && this.getParent().getLayout() != null ) {
             log.debug("getPreferredSize() width: {}, height: {}", super.getPreferredSize().getWidth(), super.getPreferredSize().getHeight());
-            if (Math.abs(super.getPreferredSize().getWidth() - (super.getSize().getWidth() + 4)) > 5
-                    || Math.abs(super.getPreferredSize().getHeight() - (super.getSize().getHeight() + 3)) > 5) {
-                // adjust the new window size to be slight wider and higher than actually returned
-                Dimension size = new Dimension((int) super.getSize().getWidth() + 4, (int) super.getSize().getHeight() + 3);
-                log.debug("setting new window size {}", size);
-                p.setWindowSize(windowFrameRef, size);
-            } else {
-                p.setWindowSize(windowFrameRef, super.getPreferredSize());
-            }
+            p.setWindowSize(windowFrameRef, super.getPreferredSize());
         } else {
+            log.debug("getSize() width: {}, height: {}", super.getSize().getWidth(), super.getSize().getHeight());
             p.setWindowSize(windowFrameRef, super.getSize());
         }
     }
