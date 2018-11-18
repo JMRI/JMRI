@@ -413,7 +413,7 @@ public class JmriJTablePersistenceManagerTest {
      * Test of savePreferences method, of class JmriJTablePersistenceManager.
      */
     @Test
-    @Ignore
+    @Ignore("test code is incomplete prototype")
     public void testSavePreferences() {
         System.out.println("savePreferences");
         Profile profile = null;

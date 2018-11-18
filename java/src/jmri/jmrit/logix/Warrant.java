@@ -2628,8 +2628,10 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             }
             _engineer.rampSpeedTo(speedType, endBlockIdx, true);
         } else {    // cancelDelayRamp has been called
-            _delayCommand = new CommandDelay(speedType, waitTime, endBlockIdx, true);
-            _delayCommand.start();
+            synchronized(this) {
+                _delayCommand = new CommandDelay(speedType, waitTime, endBlockIdx, true);
+                _delayCommand.start();
+            }
         }
     }
 

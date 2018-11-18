@@ -26,83 +26,157 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
      <h1>JMRI : MERG CBUS Command Station Monitor</h1>
-        <p>Main Table - Train session monitor.</p>
+        <p>Main Table - Monitoring train sessions.</p>
+        <p>Edit configuration options on a MERG CANCMD with v4 Firmware.</p>
+        <p>Monitors JMRI track blocks to generate CAB Signalling messages.</p>
 
+    <h3>Top Menu Items</h3>    
+        <p>Stop All Button - This is different to the JMRI throttle stop all in that this sends 
+        a system-wide stop, not just to JMRI throttles.</p>
+        <p>Track Power Button - On / Off / Unknown</p>
+        <p>Signal data Button - On / Off - Experimental</p>
+        <p>Session Columns Dropdown - Choose which columns to display in table</p>
+        <p>Signal data Columns - Choose which columns to display in table</p>
+        <p>Signal data Options - Experimental</p>
         
-    <h2>Train List</h2>
+    <h2>Main Table - Train List</h2>
         <p> Every train heard on the network will be added to the table, 
         there is one row per loco.</p>
-        <p>Train speed and direction are updated in real time 
+        <p>Train speed and direction, function status etc. are updated in real time 
         according to the latest instruction by 
         a JMRI throttle, MERG CANCAB throttle controller, 
         or MERG CBUS connected Command Station.</p>
-        <p>Train columns : </p>
+        
+        <p>Train Session columns : </p>
+        
         <ul>
-        <li>Session</li>
-        <li>Loco ID</li>
-        <li>Long Address Format?</li>
+        <li>Session Number as determined by command station</li>
+        <li>Loco address ID</li>
+        <li>E-Stop Button - Stops individual loco</li>
+        <li>Long Address true / false flag</li>
         <li>Speed (Commanded)</li>
-        <li>Direction</li>
-        <li>Speed Steps</li>
+        <li>Direction ( loco )</li>
+        <li>Functions - If a loco function is on, the function number will display.</li>
+        <li>Speed Steps ( System defaults to 128 )</li>
+        <li>Consist ID</li>
+        <li>Flags</li>
+        
+        </ul>
+        
+    <h3>Block Tracking</h3>        
+        
+        <ul>
         <li>TD Alt - Alternative Block Value to track</li>
         <li>Block - Current Block Username</li>
+        <li>Block Button - "Block Lookup" Will search for a block which 
+            matches the loco ID or alternative TD value.
+            <br>If an existing block is set, the "Reverse Direction" button 
+            can manually reverse the current block direction.</li>
         <li>Direction of current block</li>
         <li>Next Block Username</li>
         <li>Next Signal Mast Username</li>
         <li>Next Aspect </li>
+        <li>Send Cabdata checkbox - Will send an experimental OPC for Cab Signalling when 
+        the next signal aspect or speed changes.
+        Over-ridden by the master Cabdata button being switched off.</li>
         </ul>
+        
+
+
+        <p>The table will attempt to identify which 
+        block the train is in via the 
+        block value ( train describer ).</p>
+        
+        <p>By default, the table will update when the 
+        train number is the block value,
+        this can be changed to track a different block value 
+        by adding an alternative in the table.</p>
+        
+        <p>A block initially has no direction set, 
+        forward values can only be calculated 
+        when JMRI knows what direction the block is set.</p>
+        
+        <p>The direction is normally calculated by 
+        JMRI when a new block is occupied, 
+        then comparing neighbouring blocks.</p>
+        
+        <p>This process can be triggered manually by clicking 
+        the Block Lookup button.</p>
+        
+        <p>The button will change to a Reverse Direction button 
+        if a block is located for the train ID.</p>
+        
+        <p>In Cabdata options, the Auto-Reverse Block Direction 
+        will reverse the block direction on the loco direction changing.</p>
+        
+        <p>Layout Editor blocks can be checked for continuity 
+        in Layout Editor by 
+        taking the panel into edit mode, 
+        then clicking on Tools > Check.</p>
+        
+        <p>You can view block routing by right clicking 
+        on an individual Layout Editor 
+        track segment and selecting View Block Routing.</p>
+        
+        <p>As the tracking takes data from the block table, 
+        you will currently need to 
+        load the Command Station monitor after opening any panels.</p>
         
         <p>The table will follow the block route of the train until 
         it finds the next signal.</p>
         <p>This system uses Signal Mast Logic, the legacy 
         Simple Signal Logic within JMRI is not supported.</p>
         
-    <h3>Block Tracking</h3>
-        <p>The table will attempt to identify which 
-        block the train is in via the 
-        block value ( train describer ).</p>
-        <p>By default, the table will update when the 
-        train number is the block value,
-        this can be changed to track a different block value 
-        by adding an alternative in the table.</p>
-        <p>A block initially has no direction set, 
-        forward values can only be calculated 
-        when JMRI knows what direction the block is set.</p>
-        <p>The direction is normally calculated by 
-        JMRI when a new block is occupied, 
-        then comparing neighbouring blocks.</p>
-        <p>Layout Editor blocks can be checked by 
-        taking the panel into edit mode, 
-        then clicking on Tools > Check.</p>
-        <p>You can view block routing by right clicking 
-        on an individual Layout Editor 
-        track segment and selecting View Block Routing.</p>
-        <p>As the tracking takes data from the block table, 
-        you will currently need to 
-        load the Command Station monitor after opening any panels.</p>
+        
+    <h3>CAB Data / Cab Signalling</h3>        
+        
+        <p>Is currently an experimental feature to enable development 
+        of potential Cabdata OPCs, ie Cab-signalling. </p>
+        
+        <p>This can be disabled on a system-wide basis by selecting the top menu button,
+        or siabled by train by deselcting the check-box in the main table.</p>
+        
+        <p>When the JMRI MERG CBUS Command Station Monitor is closed, 
+        a final message will be sent to all trains indicating no data available.</p>
         
     <h3><a name="opc" id="opc">Supported Operation Codes</a></h3>
 
-<p>Sent by the Command Station Monitor</p>
-
-QLOC
-RSTAT
-
-
-
-<p>Listeners for message sent by JMRI instance or external to JMRI</p>
+    <p>Sent by the Command Station Monitor</p>
     
+        <ul>
+        <li>QLOC </li>
+        <li>RSTAT </li>
+        <li>ESTOP</li>
+        <li>RTON</li>
+        <li>RTOF</li>
+        <li>0xc2 - Experimental </li>
+        </ul>
+
+
+      <p>Listeners for message sent, either by JMRI itself or external to JMRI</p>
     
-    PLOC
-RLOC
-DSPD
-KLOC
-DKEEP ( if session not on table sends a QLOC )
-STAT ( Used to determine if command station is capable of CBUS protocol 8a )
-GLOC
-ERR
-STMOD
-    
+        <ul>
+        <li>PLOC </li>
+        <li>RLOC </li>
+        <li>DSPD </li>
+        <li>KLOC </li>
+        <li>DKEEP ( if session not on table sends a QLOC ) </li>
+        <li>STAT ( Used to determine if command station is capable of CBUS protocol 8a ) </li>
+        <li>GLOC </li>
+        <li>ERR </li>
+        <li>STMOD </li>
+        <li>DFUN</li>
+        <li>DFNON</li>
+        <li>DFNOF</li>
+        <li>PCON</li>
+        <li>KCON</li>
+        <li>DFLG</li>
+        <li>ESTOP</li>
+        <li>RTON</li>
+        <li>RTOF</li>
+        <li>TON</li>
+        <li>TOF</li>
+        </ul>
 
     <h3>JMRI Help</h3>
       
@@ -110,6 +184,11 @@ STMOD
         MERG CBUS Command Station Monitor.</p>
       
         <p><a href="../../../../../../../html/hardware/can/cbus/index.shtml">Main JMRI MERG CBUS Help page</a>.</p>
+        
+        <p>View debug information for the Command station Monitor by adding 
+        log4j.category.jmri.jmrix.can.cbus.swing.cbusslotmonitor=DEBUG 
+        to your default.lcf file.</p>
+        
         
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->

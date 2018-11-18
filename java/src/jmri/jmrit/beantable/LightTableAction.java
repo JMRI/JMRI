@@ -823,14 +823,15 @@ public class LightTableAction extends AbstractTableAction<Light> {
         // Update tooltip in the Add Light pane to match system connection selected from combobox.
         log.debug("Connection choice = [{}]", connectionChoice);
         // get tooltip from ProxyLightManager
-        if (lightManager.getClass().getName().contains("ProxyLightManager")) {
-            jmri.managers.ProxyLightManager proxy = (jmri.managers.ProxyLightManager) lightManager;
+        if (jmri.InstanceManager.getDefault(LightManager.class) instanceof jmri.managers.AbstractProxyManager) {
+            jmri.managers.ProxyLightManager proxy = (jmri.managers.ProxyLightManager) jmri.InstanceManager.getDefault(LightManager.class);
             List<Manager<Light>> managerList = proxy.getDisplayOrderManagerList();
             String systemPrefix = ConnectionNameFromSystemName.getPrefixFromName(connectionChoice);
             for (Manager<Light> mgr : managerList) {
                 if (mgr.getSystemPrefix().equals(systemPrefix)) {
                     // get tooltip from ProxyLightManager
                     addEntryToolTip = mgr.getEntryToolTip();
+                    addRangeBox.setEnabled(((LightManager) mgr).allowMultipleAdditions(systemPrefix));
                     log.debug("L Add box set");
                     break;
                 }
@@ -840,7 +841,9 @@ public class LightTableAction extends AbstractTableAction<Light> {
             log.debug("L add box enabled2");
             // get tooltip from light manager
             addEntryToolTip = lightManager.getEntryToolTip();
-            log.debug("LightManager tip");
+        }
+        else {
+            log.warn("Unable to set light tooltip or range box");
         }
         log.debug("DefaultLightManager tip: {}", addEntryToolTip);
         // show Hardware address field tooltip in the Add Light pane to match system connection selected from combobox
@@ -1017,7 +1020,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
                         Bundle.getMessage("WarningTitle"),
                         JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
                         new Object[]{Bundle.getMessage("ButtonYes"), Bundle.getMessage("ButtonNo"),
-                            Bundle.getMessage("ButtonYesPlus")}, Bundle.getMessage("ButtonNo"));
+                            Bundle.getMessage("ButtonYesPlus")}, Bundle.getMessage("ButtonNo")); // default choice = No
                 if (selectedValue == 1) {
                     return;   // return without creating if "No" response
                 }

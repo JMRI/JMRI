@@ -255,7 +255,7 @@ public abstract class AbstractNamedBean implements NamedBean {
     }
 
     @Override
-    @CheckReturnValue
+    @Nonnull
     public String describeState(int state) {
         switch (state) {
             case UNKNOWN:

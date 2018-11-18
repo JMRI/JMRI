@@ -12,7 +12,7 @@ import org.junit.Test;
 
 
 /**
- * <P>
+ * <p>
  * Tests for RaspberryPiSensorManager
  * </P><p>
  * This is somehow not reseting the GPIO support, so each reference to a "pin"

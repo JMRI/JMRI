@@ -314,10 +314,10 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
         }
     }
 
-    private void cancelThrottleRequest(DccLocoAddress la, ThrottleListener l) {
+    protected void cancelThrottleRequest(DccLocoAddress la, ThrottleListener l) {
         if (throttleListeners != null) {
             ArrayList<WaitingThrottle> a = throttleListeners.get(la);
-            if (a == null) {
+            if (a == null || l == null ) {
                 return;
             }
             for (int i = 0; i < a.size(); i++) {
