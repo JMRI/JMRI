@@ -45,6 +45,15 @@ public class TurnoutOperationFrame extends JDialog {
         outerBox.add(tabPane);
         Box bottomBox = Box.createHorizontalBox();
         bottomBox.add(Box.createHorizontalGlue());
+        JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
+        cancelButton.addActionListener(new ActionListener() {
+                                           @Override
+                                           public void actionPerformed(ActionEvent a) {
+                                               setVisible(false);
+                                           }
+                                       }
+        );
+        bottomBox.add(cancelButton);
         JButton okButton = new JButton(Bundle.getMessage("ButtonOK"));
         okButton.addActionListener(new ActionListener() {
             @Override
@@ -54,15 +63,6 @@ public class TurnoutOperationFrame extends JDialog {
         }
         );
         bottomBox.add(okButton);
-        JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
-        cancelButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent a) {
-                setVisible(false);
-            }
-        }
-        );
-        bottomBox.add(cancelButton);
         JButton deleteButton = new JButton(Bundle.getMessage("ButtonDelete"));
         deleteButton.addActionListener(new ActionListener() {
             @Override
@@ -98,11 +98,11 @@ public class TurnoutOperationFrame extends JDialog {
         String query = "";
         if (currentOperation != null && !currentOperation.isDefinitive()) {
             if (currentOperation.isInUse()) {
-                query = Bundle.getMessage("DeleteOperation") + " " + currentOperation.getName() + " " + Bundle.getMessage("DeleteIsInUse")
+                query = Bundle.getMessage("DeleteOperationInUse", currentOperation.getName())
                         + Bundle.getMessage("DeleteRevert");
             }
-            if (JOptionPane.showConfirmDialog(this, query + "Delete operation " + currentOperation.getName() + "?",
-                    "Confirm delete", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+            if (JOptionPane.showConfirmDialog(this, query + Bundle.getMessage("DeleteOperationDialog", currentOperation.getName()),
+                    Bundle.getMessage("WarningTitle"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                 currentOperation.dispose();
                 populateTabs();
             }
@@ -165,4 +165,5 @@ public class TurnoutOperationFrame extends JDialog {
             previousSelectionName = currentOperation.getName();
         }
     }
+
 }

@@ -650,9 +650,15 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 g2d.scale(_paintScale, _paintScale);
             }
 
-            super.paint(g);
-            paintTargetPanel(g);
-
+            // It is rather unpleasant that the following needs to be done in a try-catch, but exceptions have been observed
+            try {
+               super.paint(g);
+               paintTargetPanel(g);
+            } catch (Exception e) {
+                log.error("paint failed in thread "+
+                    Thread.currentThread().getName()+" "+Thread.currentThread().getId()+": ", e);
+            }
+            
             Stroke stroke = new BasicStroke();
             if (g2d != null) {
                 stroke = g2d.getStroke();
