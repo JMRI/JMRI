@@ -17,6 +17,7 @@ public class TestClassMainMethod {
         className = className.replace("//","/");    
         if (className.endsWith(".java")) className = className.replace(".java","");
         if (className.startsWith("java/test/")) className = className.replace("java/test/","");
+        if (className.startsWith("java/src/")) className = className.replace("java/src/","");
         if (className.startsWith("/")) className = className.substring(1, className.length());
 
         // as a convenience, allow e.g. jmri/BundleTest in addition to jmri.BundleTest

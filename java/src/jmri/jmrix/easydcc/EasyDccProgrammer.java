@@ -44,6 +44,7 @@ public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccList
 
     // programming interface
     @Override
+    @Deprecated // 4.1.1
     public synchronized void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) {
             log.debug("writeCV " + CV + " listens " + p);
@@ -73,6 +74,7 @@ public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccList
     }
 
     @Override
+    @Deprecated // 4.1.1
     public synchronized void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) {
             log.debug("readCV " + CV + " listens " + p);
@@ -209,7 +211,7 @@ public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccList
         // clear the current listener _first_
         jmri.ProgListener temp = _usingProgrammer;
         _usingProgrammer = null;
-        temp.programmingOpReply(value, status);
+        notifyProgListenerEnd(temp,value,status);
     }
 
     /**

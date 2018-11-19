@@ -19,7 +19,8 @@ import org.junit.runners.Suite;
         EnginesTableActionTest.class,
         EnginesTableModelTest.class,
         ConsistTest.class,
-        jmri.jmrit.operations.rollingstock.engines.tools.PackageTest.class       
+        jmri.jmrit.operations.rollingstock.engines.tools.PackageTest.class, 
+        BundleTest.class,
 })
 
 /**

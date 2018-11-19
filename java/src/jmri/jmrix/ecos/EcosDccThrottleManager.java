@@ -122,7 +122,7 @@ public class EcosDccThrottleManager extends AbstractThrottleManager implements E
             notifyThrottleKnown(throttle, address);
         } else {
             log.debug("Ecos Throttle has NO control over loco " + address);
-            failedThrottleRequest((DccLocoAddress) address, "Loco is alredy in use by anoher throttle " + address);
+            failedThrottleRequest(address, "Loco is alredy in use by anoher throttle " + address);
         }
     }
 

@@ -1,8 +1,9 @@
 package jmri.jmrit.operations.setup;
 
 import java.awt.GraphicsEnvironment;
-import jmri.jmrit.operations.OperationsSwingTestCase;
+import jmri.jmrit.operations.OperationsTestCase;
 import jmri.util.JUnitUtil;
+import jmri.util.swing.JemmyUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -15,7 +16,7 @@ import org.junit.Test;
  * @author Dan Boudreau Copyright (C) 2009
  * @author Paul Bender Copyright (C) 2017	
  */
-public class OptionFrameTest extends OperationsSwingTestCase {
+public class OptionFrameTest extends OperationsTestCase {
 
     @Test
     public void testCTor() {
@@ -43,34 +44,34 @@ public class OptionFrameTest extends OperationsSwingTestCase {
         Assert.assertFalse("engine logger", p.engineLoggerCheckBox.isSelected());
         Assert.assertTrue("router", p.routerCheckBox.isSelected());
 
-        enterClickAndLeave(p.buildAggressive);
+        JemmyUtil.enterClickAndLeave(p.buildAggressive);
         Assert.assertFalse("build normal", p.buildNormal.isSelected());
         Assert.assertTrue("build aggressive", p.buildAggressive.isSelected());
 
-        enterClickAndLeave(p.localSpurCheckBox);
+        JemmyUtil.enterClickAndLeave(p.localSpurCheckBox);
         Assert.assertTrue("local", p.localSpurCheckBox.isSelected());
 
-        enterClickAndLeave(p.localInterchangeCheckBox);
+        JemmyUtil.enterClickAndLeave(p.localInterchangeCheckBox);
         Assert.assertTrue("interchange", p.localInterchangeCheckBox.isSelected());
 
-        enterClickAndLeave(p.localYardCheckBox);
+        JemmyUtil.enterClickAndLeave(p.localYardCheckBox);
         Assert.assertTrue("yard", p.localYardCheckBox.isSelected());
 
-        //        enterClickAndLeave(p.rfidCheckBox);
+        //        JemmyUtil.enterClickAndLeave(p.rfidCheckBox);
         // use doClick() in case the checkbox isn't visible due to scrollbars.
         p.rfidCheckBox.doClick();
         Assert.assertTrue("rfid", p.rfidCheckBox.isSelected());
 
-        enterClickAndLeave(p.carLoggerCheckBox);
+        JemmyUtil.enterClickAndLeave(p.carLoggerCheckBox);
         Assert.assertTrue("car logger", p.carLoggerCheckBox.isSelected());
 
-        enterClickAndLeave(p.engineLoggerCheckBox);
+        JemmyUtil.enterClickAndLeave(p.engineLoggerCheckBox);
         Assert.assertTrue("engine logger", p.engineLoggerCheckBox.isSelected());
 
-        enterClickAndLeave(p.routerCheckBox);
+        JemmyUtil.enterClickAndLeave(p.routerCheckBox);
         Assert.assertFalse("router", p.routerCheckBox.isSelected());
 
-        enterClickAndLeave(p.saveButton);
+        JemmyUtil.enterClickAndLeave(p.saveButton);
         // done
         JUnitUtil.dispose(f);
 
@@ -96,7 +97,7 @@ public class OptionFrameTest extends OperationsSwingTestCase {
     // Ensure minimal setup for log4J
     @Override
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         super.setUp();
 
         new Setup();
@@ -104,7 +105,7 @@ public class OptionFrameTest extends OperationsSwingTestCase {
 
     @Override
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         super.tearDown();
     }
 

@@ -5,6 +5,8 @@ import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.setup.Control;
+import jmri.jmrit.operations.trains.schedules.TrainSchedule;
+import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -87,6 +89,16 @@ public class ScheduleItem implements java.beans.PropertyChangeListener {
     public String getSetoutTrainScheduleId() {
         return _setoutTrainScheduleId;
     }
+    
+    public String getSetoutTrainScheduleName() {
+        String name = "";
+        TrainSchedule sch = InstanceManager.getDefault(TrainScheduleManager.class)
+                .getScheduleById(getSetoutTrainScheduleId());
+        if (sch != null) {
+            name = sch.getName();
+        }
+        return name;
+    }
 
     public void setSetoutTrainScheduleId(String id) {
         String old = _setoutTrainScheduleId;
@@ -96,6 +108,16 @@ public class ScheduleItem implements java.beans.PropertyChangeListener {
 
     public String getPickupTrainScheduleId() {
         return _pickupTrainScheduleId;
+    }
+    
+    public String getPickupTrainScheduleName() {
+        String name = "";
+        TrainSchedule sch = InstanceManager.getDefault(TrainScheduleManager.class)
+                .getScheduleById(getPickupTrainScheduleId());
+        if (sch != null) {
+            name = sch.getName();
+        }
+        return name;
     }
 
     public void setPickupTrainScheduleId(String id) {

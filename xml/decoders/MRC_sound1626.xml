@@ -142,10 +142,7 @@
         <label>Air Release Volume</label>
         <comment>Range 0-31</comment>
       </variable>
-      <variable item="Speed Table" CV="67">
-        <speedTableVal/>
-        <label>Speed Table</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
       <!-- CV 105-106 -->
       <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
       <variable CV="50" item="Sound Option 1" default="1" comment="Range 0-2">

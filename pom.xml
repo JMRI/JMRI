@@ -6,7 +6,7 @@
     <name>JMRI</name>
     <groupId>org.jmri</groupId>
     <artifactId>jmri</artifactId>
-    <version>4.13.4-SNAPSHOT</version>
+    <version>4.13.5-SNAPSHOT</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <release.build_user>${user.name}</release.build_user>
@@ -18,6 +18,7 @@
         dependency source) -->
         <cucumber.version>2.0.1</cucumber.version>
         <jetty.version>9.4.7.v20170914</jetty.version>
+        <jemmy.version>22-00c9f753cd0a</jemmy.version> <!-- this is a custom version, see lib/README.md -->
         <slf4j.version>1.7.25</slf4j.version>
         <jackson.version>2.8.11</jackson.version>
         <jogamp.version>2.3.2</jogamp.version>
@@ -29,7 +30,7 @@
         <jinput.plugins>net.bobis.jinput.hidraw.HidRawEnvironmentPlugin</jinput.plugins>
         <ant.version>1.10.1</ant.version>
         <ant.jvm.args></ant.jvm.args>
-        <argLine>-Xmx1536m</argLine>
+        <argLine>-Xmx1536m -Duser.language=en -Duser.region=US</argLine>
         <surefire.version>2.20</surefire.version>
     </properties>
     <scm>
@@ -479,7 +480,7 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.7.9</version>
+                <version>0.8.2</version>
                 <executions>
                     <execution>
                         <id>prepare-agent</id>
@@ -531,12 +532,12 @@
                                         <limit>
                                             <counter>LINE</counter>
                                             <value>COVEREDRATIO</value>
-                                            <minimum>0.35</minimum>
+                                            <minimum>0.40</minimum>
                                         </limit>
                                         <limit>
                                             <counter>CLASS</counter>
                                             <value>COVEREDRATIO</value>
-                                            <minimum>0.75</minimum>
+                                            <minimum>0.80</minimum>
                                         </limit>
                                     </limits>
                                 </rule>
@@ -984,8 +985,8 @@
         -->
         <dependency>
             <groupId>org.netbeans.external</groupId>
-            <artifactId>jemmy-2.3.1.1</artifactId>
-            <version>RELEASE802</version>
+            <artifactId>jemmy</artifactId>
+            <version>${jemmy.version}</version>
             <scope>test</scope>
         </dependency>
         <!--

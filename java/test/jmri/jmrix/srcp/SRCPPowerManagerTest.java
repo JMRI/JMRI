@@ -40,6 +40,16 @@ public class SRCPPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBas
     }
 
     @Override
+    protected void sendIdleReply() {
+       return;
+    }
+
+    @Override
+    protected void hearIdle() {
+       return;
+    }
+
+    @Override
     protected int numListeners() {
         return stc.numListeners();
     }
@@ -59,6 +69,11 @@ public class SRCPPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBas
         return ((stc.outbound.elementAt(index))).toString().equals("SET 1 POWER OFF\n");
     }
 
+    @Override
+    protected boolean outboundIdleOK(int index) {
+        return ((stc.outbound.elementAt(index))).toString().equals("SET 1 POWER OFF\n");
+    }
+
     @Test
     @Override
     @Ignore("unsolicited state changes are currently ignored")
@@ -69,11 +84,6 @@ public class SRCPPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBas
     @Override
     @Ignore("unsolicited state changes are currently ignored")
     public void testStateOff(){
-    }
-
-    @Test 
-    public void testDefaultCtor() {
-        Assert.assertNotNull(new SRCPPowerManager());
     }
 
     // The minimal setup for log4J

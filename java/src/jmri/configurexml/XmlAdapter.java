@@ -119,11 +119,13 @@ public interface XmlAdapter {
      * instead
      */
     @Deprecated
-    public void creationErrorEncountered(
+    public default void creationErrorEncountered(
             String description,
             String systemName,
             String userName,
-            Exception exception) throws JmriConfigureXmlException;
+            Exception exception) throws JmriConfigureXmlException {
+        this.handleException(description, null, systemName, userName, exception);
+    }
 
     /**
      * Provide a simple handler for errors.

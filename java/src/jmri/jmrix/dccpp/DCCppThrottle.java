@@ -53,10 +53,6 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
         this.speedIncrement = SPEED_STEP_128_INCREMENT;
         this.speedStepMode = DccThrottle.SpeedStepMode128;
 
-        f0Momentary = f1Momentary = f2Momentary = f3Momentary = f4Momentary
-                = f5Momentary = f6Momentary = f7Momentary = f8Momentary = f9Momentary
-                = f10Momentary = f11Momentary = f12Momentary = false;
-
         requestList = new LinkedBlockingQueue<RequestMessage>();
         if (log.isDebugEnabled()) {
             log.debug("DCCppThrottle constructor called for address " + address);
@@ -267,7 +263,7 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
     /*
      * setSpeedStepMode - set the speed step value and the related
      *                    speedIncrement value.
-     * <P>
+     * <p>
      * @param Mode - the current speed step mode - default should be 128
      *              speed step mode in most cases
      *

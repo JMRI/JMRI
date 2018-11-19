@@ -122,6 +122,8 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
             static public final int DELCOL = 5;
             static public final int ENABLECOL = 6;
             static public final int EDITLOGICCOL = 7;
+            static public final int MAXSPEEDCOL = 8;
+            static public final int COLUMNCOUNT = 9;
 
             //We have to set a manager first off, but this gets replaced.
             @Override
@@ -231,7 +233,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
 
             @Override
             public int getColumnCount() {
-                return EDITLOGICCOL + 1;
+                return COLUMNCOUNT;
             }
 
             @Override
@@ -287,6 +289,8 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
                         return ""; // override default, no title for Edit column
                     case ENABLECOL:
                         return Bundle.getMessage("ColumnHeadEnabled");
+                    case MAXSPEEDCOL:
+                        return Bundle.getMessage("LabelMaxSpeed");
                     default:
                         return "unknown";
                 }
@@ -300,6 +304,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
                     case SOURCEAPPCOL:
                     case COMCOL:
                     case DESTAPPCOL:
+                    case MAXSPEEDCOL:
                         return String.class;
                     case ENABLECOL:
                         return Boolean.class;
@@ -360,6 +365,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
                     case DESTCOL:
                     case DESTAPPCOL:
                     case SOURCEAPPCOL:
+                    case MAXSPEEDCOL:
                         return new JTextField(10).getPreferredSize().width;
                     case COMCOL:
                         return 75;
@@ -448,6 +454,8 @@ public class SignalMastLogicTableAction extends AbstractTableAction<SignalMastLo
                         return Bundle.getMessage("ButtonEdit");
                     case ENABLECOL:
                         return (b != null) ? b.isEnabled(getDestMastFromRow(row)) : null;
+                    case MAXSPEEDCOL:
+                        return  b.getMaximumSpeed(getDestMastFromRow(row));
                     default:
                         //log.error("internal state inconsistent with table requst for "+row+" "+col);
                         return null;

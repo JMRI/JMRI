@@ -39,17 +39,21 @@
         <label>
           <text> </text>
         </label>
-        <display item="Locomotive Direction" tooltip="Sets the relative direction of the loco when told                 to move forward">
-          <tooltip xml:lang="it">Programma la direzione relativa della loco quando                 muove in avanti</tooltip>
-		  <tooltip xml:lang="ca">Estableix el sentit de la màquina relatiu quan                 es mou endavant</tooltip>
+        <display item="Locomotive Direction" tooltip="Sets the relative direction of the loco when told to move forward">
+          <tooltip xml:lang="it">Programma la direzione relativa della loco quando muove in avanti</tooltip>
+		  <tooltip xml:lang="ca">Estableix el sentit de la màquina relatiu quan es mou endavant</tooltip>
         </display>
         <display item="Speed Step Mode" tooltip="Sets the speed step mode for headlight control">
           <tooltip xml:lang="it">Programma modalità Step velocità per il controllo Luci</tooltip>
 		  <tooltip xml:lang="ca">Estableix el mode de passos per el control de llums</tooltip>
         </display>
-        <display item="Analog (DC) Operation" tooltip="Determines whether loco can operate on conventional         DC current (enables Power Source Conversion)">
-          <tooltip xml:lang="it">Determina se la loco può operare in DC          (abilita Conversione Alimentazione)</tooltip>
-		  <tooltip xml:lang="ca">Estableix si la locomotora funcionarà en CC          (Habilita Conversió d'Alimentació)</tooltip>
+        <display item="Analog (DC) Operation" tooltip="Determines whether loco can operate on conventional DC current (enables Power Source Conversion)">
+          <tooltip xml:lang="it">Determina se la loco può operare in DC (abilita Conversione Alimentazione)</tooltip>
+          <tooltip xml:lang="fr">Détermine si une locomotive peut fonctionner en courant alternatif</tooltip>
+		  <tooltip xml:lang="ca">Estableix si la locomotora funcionarà en CC (Habilita Conversió d'Alimentació)</tooltip>
+          <tooltip xml:lang="de">Legt fest, ob die Lok auch analog (DC) fahren kann</tooltip>
+          <tooltip xml:lang="cs">Určuje zdali lokomotiva může být provozována se stejnosměrným (DC) napájením (povoluje změnu napájecího zdroje)</tooltip>
+          <tooltip xml:lang="nl">Bepaalt of de Loc ook analoog (DC) kan rijden</tooltip>
         </display>
       </column>
       <name xml:lang="it">Basic</name>
@@ -58,9 +62,9 @@
     <pane>
       <name>Motor</name>
       <column>
-        <display item="Kick Start" tooltip="Provides an initial higher voltage spike to loco      to overcome starting friction">
-          <tooltip xml:lang="it">Provvede a dare un impulso iniziale a tensione alta alla loco      per superare la frizione in partenza</tooltip>
-		  <tooltip xml:lang="ca">Dóna un impuls inicial de tensió més alt a la locomotora      per a superar la fricció inicial</tooltip>
+        <display item="Kick Start" tooltip="Provides an initial higher voltage spike to loco to overcome starting friction">
+          <tooltip xml:lang="it">Provvede a dare un impulso iniziale a tensione alta alla loco per superare la frizione in partenza</tooltip>
+		  <tooltip xml:lang="ca">Dóna un impuls inicial de tensió més alt a la locomotora per a superar la fricció inicial</tooltip>
         </display>
         <display item="Accel" tooltip="Sets the acceleration rate (delay)">
           <tooltip xml:lang="it">Programma Grado di Accellerazione (ritardo)</tooltip>
@@ -191,10 +195,13 @@
           <text> </text>
         </label>
         <label>
-          <text>Will decoder respond to function     requests at consist address?</text>
+          <text>Will decoder respond to function requests at consist address?</text>
           <text xml:lang="it">Il decoder risponde alle Funzioni anche all'indirizzo del Consist ?</text>
-		  <text xml:lang="ca">Les funcions del descodificador seran controlades per l'adreça de multi-tracció ?
-</text>
+          <text xml:lang="fr">Le décodeur répondra-t-il aux commandes de fonctions à l'adresse de Multi-Traction (UM)?</text>
+		  <text xml:lang="ca">Les funcions del descodificador seran controlades per l'adreça de multi-tracció ?</text>
+          <text xml:lang="cs">Bude dekodér reagovat na vyžádané funkce na adrese soupravy?</text>
+          <text xml:lang="de">Sind Decoderfunktionen steuerbar durch die Mehrfachtrakstionsadresse?</text>
+          <text xml:lang="nl">Reageert de decoder op functiecommando's aan het Multitractie-adres?</text>
         </label>
         <label>
           <text> </text>

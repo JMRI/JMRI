@@ -43,6 +43,7 @@ public class MrcOpsModeProgrammer extends MrcProgrammer implements jmri.Addresse
      * Forward a write request to an ops-mode write operation
      */
     @Override
+    @Deprecated // 4.1.1
     public synchronized void writeCV(int CV, int val, ProgListener p) throws ProgrammerException {
         log.debug("write CV={} val={}", CV, val); //IN18N
         MrcMessage msg = MrcMessage.getPOM(addressLo, addressHi, CV, val);
@@ -60,6 +61,7 @@ public class MrcOpsModeProgrammer extends MrcProgrammer implements jmri.Addresse
     }
 
     @Override
+    @Deprecated // 4.1.1
     public synchronized void readCV(int CV, ProgListener p) throws ProgrammerException {
         log.debug("read CV={}", CV);
         log.error("readCV not available in this protocol"); //IN18N

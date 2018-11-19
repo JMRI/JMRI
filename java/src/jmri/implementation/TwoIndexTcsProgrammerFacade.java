@@ -62,7 +62,7 @@ public class TwoIndexTcsProgrammerFacade extends AbstractProgrammerFacade implem
     int valueMSB;  //  value to write to MSB or -1
     int valueLSB;  //  value to write to LSB or -1
 
-    void parseCV(String cv) throws IllegalArgumentException {
+    private void parseCV(String cv) throws IllegalArgumentException {
         valuePI = -1;
         valueSI = -1;
         if (cv.contains(".")) {
@@ -152,10 +152,11 @@ public class TwoIndexTcsProgrammerFacade extends AbstractProgrammerFacade implem
 
     int upperByte;
 
-    // get notified of the final result
-    // Note this assumes that there's only one phase to the operation
+    /** {@inheritDoc}
+     * Note this assumes that there's only one phase to the operation
+     */
     @Override
-    public void programmingOpReply(int value, int status) {
+    synchronized public void programmingOpReply(int value, int status) {
         if (log.isDebugEnabled()) {
             log.debug("notifyProgListenerEnd value " + value + " status " + status);
         }

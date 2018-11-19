@@ -114,27 +114,6 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     protected Date dateModified = null;
     protected int _maxSpeedPCT = 100;
 
-    /**
-     * @return the default owner
-     * @deprecated since 4.1.4 use
-     * {@link jmri.jmrit.roster.RosterConfigManager#getDefaultOwner()} instead
-     */
-    @Deprecated
-    public static String getDefaultOwner() {
-        return InstanceManager.getDefault(RosterConfigManager.class).getDefaultOwner();
-    }
-
-    /**
-     * @param n the default owner
-     * @deprecated since 4.1.4 use
-     * {@link jmri.jmrit.roster.RosterConfigManager#setDefaultOwner(java.lang.String)}
-     * instead
-     */
-    @Deprecated
-    public static void setDefaultOwner(String n) {
-        InstanceManager.getDefault(RosterConfigManager.class).setDefaultOwner(n);
-    }
-
     public final static int MAXFNNUM = 28;
 
     public int getMAXFNNUM() {
@@ -1399,49 +1378,40 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
             w.write(newLine, 0, 1);
 
             int colWidth = 15;
-            int startNext = colWidth;
             // roster entry ID (not the filname)
             if (_id != null) {
                 thisText = String.format("%-" + colWidth + "s", _id.substring(0, Math.min(_id.length(), colWidth))); // %- = left align
-                log.debug("thisText = |{}|, length = {}, startNext = {}", thisText, thisText.length(), startNext);
+                log.debug("thisText = |{}|, length = {}", thisText, thisText.length());
             } else {
                 thisText = String.format("%-" + colWidth + "s", "<null>");
             }
             thisLine += thisText;
             colWidth = 6;
-            startNext += colWidth;
             // _dccAddress
             thisLine += StringUtil.padString(_dccAddress, colWidth);
             colWidth = 6;
-            startNext += colWidth;
             // _roadName
             thisLine += StringUtil.padString(_roadName, colWidth);
             colWidth = 6;
-            startNext += colWidth;
             // _roadNumber
             thisLine += StringUtil.padString(_roadNumber, colWidth);
             colWidth = 6;
-            startNext += colWidth;
             // _mfg
             thisLine += StringUtil.padString(_mfg, colWidth);
             colWidth = 10;
-            startNext += colWidth;
             // _model
             thisLine += StringUtil.padString(_model, colWidth);
             colWidth = 10;
-            startNext += colWidth;
             // _decoderModel
             thisLine += StringUtil.padString(_decoderModel, colWidth);
             colWidth = 12;
-            startNext += colWidth;
             // _protocol (type)
             thisLine += StringUtil.padString(_protocol.toString(), colWidth);
             colWidth = 6;
-            startNext += colWidth;
             // _owner
             thisLine += StringUtil.padString(_owner, colWidth);
             colWidth = 10;
-            startNext += colWidth;
+
             // dateModified (type)
             if (dateModified != null) {
                 DateFormat.getDateTimeInstance().format(dateModified);

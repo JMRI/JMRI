@@ -12,7 +12,7 @@ import org.junit.runners.Suite;
 
 /**
  * Invoke complete set of tests for the Jmri.progdebugger package.
- * <P>
+ * <p>
  * Due to existing package and class names, this is both the test suite for the
  * package, but also contains some tests for the ProgDebugger class.
  *

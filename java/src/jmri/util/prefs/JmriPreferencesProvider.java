@@ -124,6 +124,7 @@ public final class JmriPreferencesProvider {
      * non-existent package or class.
      */
     @Nonnull
+    @Deprecated
     public static Preferences getPreferences(@Nullable final Profile project, @Nullable final String pkg, final boolean shared) {
         if (project != null) {
             return findProvider(project.getPath(), shared).getPreferences(pkg);
@@ -150,6 +151,7 @@ public final class JmriPreferencesProvider {
      * is preferred and recommended unless being used to during the construction
      * of a Profile object.
      */
+    @Deprecated
     public static Preferences getPreferences(@Nullable final File path, @Nullable final Class<?> clazz, final boolean shared) {
         return findProvider(path, shared).getPreferences(clazz);
     }

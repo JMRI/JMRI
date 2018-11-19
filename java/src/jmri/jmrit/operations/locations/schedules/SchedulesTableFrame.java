@@ -82,6 +82,7 @@ public class SchedulesTableFrame extends OperationsFrame {
         toolMenu.add(new ScheduleCopyAction());
         toolMenu.add(new SchedulesByLoadAction(Bundle.getMessage("MenuItemShowSchedulesByLoad")));
         toolMenu.add(new SchedulesResetHitsAction(Bundle.getMessage("MenuItemResetHits")));
+        toolMenu.add(new ExportSchedulesAction(Bundle.getMessage("MenuItemExportSchedules")));
         toolMenu.addSeparator();
         toolMenu.add(new PrintLocationsAction(Bundle.getMessage("MenuItemPrint"), false));
         toolMenu.add(new PrintLocationsAction(Bundle.getMessage("MenuItemPreview"), true));

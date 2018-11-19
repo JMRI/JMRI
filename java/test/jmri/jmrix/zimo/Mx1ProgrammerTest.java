@@ -37,7 +37,7 @@ public class Mx1ProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        Mx1TrafficController tc = new Mx1TrafficController(){
+        Mx1TrafficController tc = new Mx1TrafficController(new Mx1CommandStation(),false){
            @Override
            public boolean status(){
               return true;

@@ -125,6 +125,9 @@ public class OlcbSignalMast extends AbstractSignalMast {
         
         try {
             mastNumber = Integer.parseInt(tmp);
+            if (mastNumber > lastRef) {
+                lastRef = mastNumber;
+            }
         } catch (NumberFormatException e) {
             log.warn("Mast number of SystemName {} is not in the correct format: {} is not an integer", systemName, tmp);
         }

@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="schema2xhtml.xsl" type="text/xsl"?>
+
+<!-- XML Schema for JMRI Timetable support                                  -->
+
+<!-- This schema is part of JMRI. Copyright 2018.                           -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+<xs:schema xmlns:xs  ="http://www.w3.org/2001/XMLSchema"
+           xmlns:xsi ="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:docbook="http://docbook.org/ns/docbook"
+           xmlns:jmri="http://jmri.org/xml/schema/JMRIschema"
+           xsi:schemaLocation="
+                http://jmri.org/xml/schema/JMRIschema http://jmri.org/xml/schema/JMRIschema.xsd
+                http://docbook.org/ns/docbook http://jmri.org/xml/schema/docbook/docbook.xsd
+            "
+           >
+
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/general.xsd"/>
+  <xs:import namespace='http://docbook.org/ns/docbook' schemaLocation='http://jmri.org/xml/schema/docbook/docbook.xsd'/>
+
+  <xs:element name="timetable-data" type="timetable-dataType"/>
+  <xs:complexType name="layoutType">
+    <xs:sequence>
+      <xs:element type="xs:integer" name="layout_id"/>
+      <xs:element type="xs:string" name="layout_name"/>
+      <xs:element type="xs:string" name="scale" maxOccurs="1" minOccurs="0"/>
+      <xs:element type="xs:integer" name="fast_clock"/>
+      <xs:element type="xs:integer" name="throttles"/>
+      <xs:element type="yesNoType" name="metric"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="layoutsType">
+    <xs:sequence>
+      <xs:element type="layoutType" name="layout" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="train_typeType">
+    <xs:sequence>
+      <xs:element type="xs:integer" name="type_id"/>
+      <xs:element type="xs:integer" name="layout_id"/>
+      <xs:element type="xs:string" name="type_name"/>
+      <xs:element type="xs:string" name="type_color"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="train_typesType">
+    <xs:sequence>
+      <xs:element type="train_typeType" name="train_type" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="segmentType">
+    <xs:sequence>
+      <xs:element type="xs:integer" name="segment_id"/>
+      <xs:element type="xs:integer" name="layout_id"/>
+      <xs:element type="xs:string" name="segment_name"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="segmentsType">
+    <xs:sequence>
+      <xs:element type="segmentType" name="segment" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="stationType">
+    <xs:choice maxOccurs="unbounded" minOccurs="0">
+      <xs:element type="xs:integer" name="station_id"/>
+      <xs:element type="xs:integer" name="segment_id"/>
+      <xs:element type="xs:string" name="station_name"/>
+      <xs:element type="xs:double" name="distance"/>
+      <xs:element type="yesNoType" name="double_track"/>
+      <xs:element type="xs:integer" name="sidings"/>
+      <xs:element type="xs:integer" name="staging"/>
+    </xs:choice>
+  </xs:complexType>
+  <xs:complexType name="stationsType">
+    <xs:sequence>
+      <xs:element type="stationType" name="station" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="scheduleType">
+    <xs:sequence>
+      <xs:element type="xs:integer" name="schedule_id"/>
+      <xs:element type="xs:integer" name="layout_id"/>
+      <xs:element type="xs:string" name="eff_date"/>
+      <xs:element type="xs:integer" name="start_hour"/>
+      <xs:element type="xs:integer" name="duration"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="schedulesType">
+    <xs:sequence>
+      <xs:element type="scheduleType" name="schedule" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="trainType">
+    <xs:sequence>
+      <xs:element type="xs:integer" name="train_id"/>
+      <xs:element type="xs:integer" name="schedule_id"/>
+      <xs:element type="xs:integer" name="type_id"/>
+      <xs:element type="xs:string" name="train_name"/>
+      <xs:element type="xs:string" name="train_desc"/>
+      <xs:element type="xs:integer" name="default_speed"/>
+      <xs:element type="xs:integer" name="start_time"/>
+      <xs:element type="xs:integer" name="throttle"/>
+      <xs:element type="xs:integer" name="route_duration"/>
+      <xs:element type="xs:string" name="train_notes"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="trainsType">
+    <xs:sequence>
+      <xs:element type="trainType" name="train" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="stopType">
+    <xs:sequence>
+      <xs:element type="xs:integer" name="stop_id"/>
+      <xs:element type="xs:integer" name="train_id"/>
+      <xs:element type="xs:integer" name="station_id"/>
+      <xs:element type="xs:integer" name="seq"/>
+      <xs:element type="xs:integer" name="duration"/>
+      <xs:element type="xs:integer" name="next_speed"/>
+      <xs:element type="xs:integer" name="arrive_time"/>
+      <xs:element type="xs:integer" name="depart_time"/>
+      <xs:element type="xs:integer" name="staging_track"/>
+      <xs:element type="xs:string" name="stop_notes"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="stopsType">
+    <xs:sequence>
+      <xs:element type="stopType" name="stop" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="timetable-dataType">
+    <xs:sequence>
+      <xs:element type="layoutsType" name="layouts" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element type="train_typesType" name="train_types" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element type="segmentsType" name="segments" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element type="stationsType" name="stations" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element type="schedulesType" name="schedules" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element type="trainsType" name="trains" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element type="stopsType" name="stops" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

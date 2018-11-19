@@ -18,9 +18,6 @@ public class PacketTableFrame extends jmri.util.JmriJFrame implements DataListen
     JTable table;
     JScrollPane scroll;
 
-    static java.util.ResourceBundle rb
-            = java.util.ResourceBundle.getBundle("jmri.jmrix.pricom.pockettester.TesterBundle");
-
     @Override
     public void initComponents() {
 
@@ -37,7 +34,7 @@ public class PacketTableFrame extends jmri.util.JmriJFrame implements DataListen
         getContentPane().add(scroll);
 
         JPanel p1 = new JPanel();
-        JButton b = new JButton(rb.getString("ButtonClear"));
+        JButton b = new JButton(Bundle.getMessage("ButtonClear"));
         b.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {

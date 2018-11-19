@@ -18,6 +18,7 @@ public class TrainConductorAction extends AbstractAction {
     public TrainConductorAction(String s, Train train) {
         super(s);
         this.train = train;
+        setEnabled(train != null);
     }
 
     @Override

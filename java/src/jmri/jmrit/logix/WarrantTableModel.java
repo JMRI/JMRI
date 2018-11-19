@@ -470,7 +470,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
             break;
         case ALLOCATE_COLUMN:
             if (w.getRunMode() == Warrant.MODE_NONE) {
-                msg = w.allocateRoute(null);
+                msg = w.allocateRoute(true, null);
                 if (msg == null) {
                     _frame.setStatusText(
                             Bundle.getMessage("completeAllocate",
@@ -493,7 +493,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
             break;
         case SET_COLUMN:
             if (w.getRunMode() == Warrant.MODE_NONE) {
-                msg = w.setRoute(1, null);
+                msg = w.setRoute(true, null);
                 if (msg == null) {
                     _frame.setStatusText(
                             Bundle.getMessage("pathsSet",
@@ -538,6 +538,8 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
                         s = Warrant.ABORT;
                     } else if (setting.equals(WarrantTableFrame.ramp)) {
                         s = Warrant.RAMP_HALT;
+                    } else if (setting.equals("Debug")) {
+                        s = Warrant.DEBUG;
                     }
                     w.controlRunTrain(s);
                 }
@@ -718,8 +720,8 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
                         _frame.setStatusText(Bundle.getMessage("RampHalt",
                                 bean.getTrainName(), bean.getCurrentBlockName()), myGreen, true);
                     } else  {
-                        String s = (bean.isWaitingForSignal() ? 
-                                Bundle.getMessage("Signal") : Bundle.getMessage("Occupancy"));
+                        String s = (bean.isWaitingForSignal() ? Bundle.getMessage("Signal") : 
+                                (bean.isWaitingForClear() ? Bundle.getMessage("Occupancy"):Bundle.getMessage("Halt")));
                         _frame.setStatusText(Bundle.getMessage("RampWaitForClear", 
                                 bean.getTrainName(), bean.getCurrentBlockName(), s), myGreen, true);
                     }

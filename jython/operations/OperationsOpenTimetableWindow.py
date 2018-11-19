@@ -9,8 +9,8 @@ import jmri
 
 class openTimetableWindow(jmri.jmrit.automat.AbstractAutomaton) : 
   def init(self):
-    # Open the timetable window
-    f = jmri.jmrit.operations.trains.timetable.TrainsScheduleTableFrame()
+    # Open the train schedules window
+    f = jmri.jmrit.operations.trains.schedules.TrainsScheduleTableFrame()
     f.setVisible(True)
     return
 

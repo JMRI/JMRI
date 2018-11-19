@@ -1,5 +1,6 @@
 package jmri.jmrit.catalog;
 
+import java.awt.Container;
 import java.awt.GraphicsEnvironment;
 import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
@@ -29,9 +30,9 @@ public class ImageIndexEditorTest extends jmri.util.SwingTestCase {
             indexEditor.addNode(null);
         });
         flushAWT();
-        java.awt.Container pane = findContainer(Bundle.getMessage("QuestionTitle"));
+        Container pane = JUnitUtil.findContainer(Bundle.getMessage("QuestionTitle"));
         Assert.assertNotNull("Select node prompt not found", pane);
-        pressButton(pane, Bundle.getMessage("ButtonOK"));
+        JUnitUtil.pressButton(this, pane, Bundle.getMessage("ButtonOK"));
         junit.extensions.jfcunit.TestHelper.disposeWindow(indexEditor, this);
     }
 
@@ -43,9 +44,9 @@ public class ImageIndexEditorTest extends jmri.util.SwingTestCase {
         jmri.util.ThreadingUtil.runOnGUIEventually(() -> {
             InstanceManager.getDefault(DirectorySearcher.class).openDirectory();
         });
-        java.awt.Container pane = findContainer(Bundle.getMessage("openDirMenu"));
+        Container pane = JUnitUtil.findContainer(Bundle.getMessage("openDirMenu"));
         Assert.assertNotNull("FileChooser not found", pane);
-        pressButton(pane, "Cancel");
+        JUnitUtil.pressButton(this, pane, "Cancel");
     }
 /*
     public void testPreviewDialog()  throws FileNotFoundException, IOException {
@@ -70,51 +71,34 @@ public class ImageIndexEditorTest extends jmri.util.SwingTestCase {
             chooser.setCurrentDirectory(file);
         });
         flushAWT();
-        pressButton(chooser, "Open");
+        JUnitUtil.pressButton(this, chooser, "Open");
         flushAWT();
         System.out.println("Mid testPreviewDialog: elapsed time = "+ (System.currentTimeMillis()-time)+"ms");
 
         // search a few directories
         int cnt = 0;
         while (cnt<1) {     // was 5.  not enough memory on Mac test machine?
-            java.awt.Container pane = findContainer(Bundle.getMessage("previewDir"));
+            Container pane = JUnitUtil.findContainer(Bundle.getMessage("previewDir"));
             Assert.assertNotNull("Preview directory not found", pane);
-            pressButton(pane, Bundle.getMessage("ButtonKeepLooking"));
+            JUnitUtil.pressButton(this, pane, Bundle.getMessage("ButtonKeepLooking"));
             cnt++;
             flushAWT();
         }
         System.out.println("Mid testPreviewDialog: elapsed time = "+ (System.currentTimeMillis()-time)+"ms");
 
         // cancel search of more directories
-        java.awt.Container pane = findContainer(Bundle.getMessage("previewDir"));
+        Container pane = JUnitUtil.findContainer(Bundle.getMessage("previewDir"));
         Assert.assertNotNull("Preview Cancel not found", pane);
-        pressButton(pane, Bundle.getMessage("ButtonCancel"));
+        JUnitUtil.pressButton(this, pane, Bundle.getMessage("ButtonCancel"));
         flushAWT();
 
         // dismiss info dialog of count of number of icons found
-        pane = findContainer(Bundle.getMessage("info"));
+        pane = JUnitUtil.findContainer(Bundle.getMessage("info"));
         Assert.assertNotNull("Preview dismiss not found", pane);
-        pressButton(pane, "OK");
+        JUnitUtil.pressButton(this, pane, Bundle.getMessage("ButtonOK"));
         System.out.println("End testPreviewDialog: elapsed time = "+ (System.currentTimeMillis()-time)+"ms");
     }
      */
-    java.awt.Container findContainer(String title) {
-        DialogFinder finder = new DialogFinder(title);
-        JUnitUtil.waitFor(() -> {
-            return (java.awt.Container) finder.find() != null;
-        }, "Found dialog + \"title\"");
-        java.awt.Container pane = (java.awt.Container) finder.find();
-        return pane;
-
-    }
-
-    private javax.swing.AbstractButton pressButton(java.awt.Container frame, String text) {
-        AbstractButtonFinder buttonFinder = new AbstractButtonFinder(text);
-        javax.swing.AbstractButton button = (javax.swing.AbstractButton) buttonFinder.find(frame, 0);
-        Assert.assertNotNull(text + " Button not found", button);
-        getHelper().enterClickAndLeave(new MouseEventData(this, button));
-        return button;
-    }
 
     // from here down is testing infrastructure
     public ImageIndexEditorTest(String s) {

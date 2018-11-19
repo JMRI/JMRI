@@ -20,6 +20,7 @@ import org.junit.Assert;
  * support for enterClickAndLeave() etc.)
  *
  * @author	Bob Jacobsen Copyright 2009, 2010
+ * @author	Egbert Broerse Copyright 2018
  */
 public class SensorTableWindowTest extends jmri.util.SwingTestCase {
 
@@ -92,6 +93,45 @@ public class SensorTableWindowTest extends jmri.util.SwingTestCase {
         Assert.assertNotNull(jmri.InstanceManager.sensorManagerInstance().getSensor("IS1"));
     }
 
+    public void testMenus() throws Exception {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't Assume in TestCase
+        }
+
+        SensorTableAction a = new SensorTableAction();
+        a.actionPerformed(new java.awt.event.ActionEvent(a, 1, ""));
+
+        // Find sensor table window by name
+        JmriJFrame ft = JmriJFrame.getFrame(Bundle.getMessage("TitleSensorTable"));
+
+        // ask for the Debounce menu to open
+        jmri.util.ThreadingUtil.runOnGUIEventually(() -> {
+            a.setDefaultDebounce(null);
+        });
+        flushAWT();
+        // Find new dialog window by name
+        java.awt.Container dialog = JUnitUtil.findContainer(Bundle.getMessage("SensorGlobalDebounceMessageTitle"));
+        Assert.assertNotNull("Not found Global Debounce dialog", dialog);
+        // Find the cancel button
+        JUnitUtil.pressButton(this, dialog, Bundle.getMessage("ButtonCancel"));
+
+        // ask for the Initial Sensor State menu to open
+        jmri.util.ThreadingUtil.runOnGUIEventually(() -> {
+            a.setDefaultState(null);
+        });
+        flushAWT();
+        // Find new dialog window by name
+        dialog = JUnitUtil.findContainer(Bundle.getMessage("InitialSensorState"));
+        Assert.assertNotNull("Not found Global Debounce dialog", dialog);
+        // Find the cancel button
+        JUnitUtil.pressButton(this, dialog, Bundle.getMessage("ButtonCancel"));
+
+        // Ask to close table window
+        TestHelper.disposeWindow(ft, this);
+
+        flushAWT();
+    }
+
     // from here down is testing infrastructure
     public SensorTableWindowTest(String s) {
         super(s);
@@ -125,4 +165,5 @@ public class SensorTableWindowTest extends jmri.util.SwingTestCase {
         JUnitUtil.tearDown();
         super.tearDown();
     }
+
 }

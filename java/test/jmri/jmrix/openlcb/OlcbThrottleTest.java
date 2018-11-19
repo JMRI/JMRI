@@ -376,11 +376,8 @@ public class OlcbThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @BeforeClass
     public static void preClassInit() {
         JUnitUtil.setUp();
-        m = new OlcbSystemConnectionMemo();
-        TestTrafficController tc = new TestTrafficController();
-        m.setTrafficController(tc);
-        ocm = new OlcbConfigurationManagerScaffold(m);
-        ocm.configureManagers();
+        m = OlcbTestInterface.createForLegacyTests();
+        m.configureManagers();
     }
 
     @AfterClass

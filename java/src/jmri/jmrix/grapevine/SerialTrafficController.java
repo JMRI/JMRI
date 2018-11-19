@@ -237,19 +237,6 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     }
 
     /**
-     * @deprecated JMRI Since 4.11.4 instance() shouldn't be used
-     */
-    @Deprecated
-    static volatile protected SerialTrafficController self = null;
-
-    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-            justification = "temporary until multi-system; only set at startup")
-    @Override
-    @Deprecated
-    protected void setInstance() {
-    }
-
-    /**
      * Reference to the system connection memo.
      */
     GrapevineSystemConnectionMemo mMemo = null;

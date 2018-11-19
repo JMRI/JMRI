@@ -65,6 +65,11 @@ abstract public class ProgrammerTestBase {
         Assert.assertEquals("Write Confirm Mode",Programmer.WriteConfirmMode.NotVerified,
                 programmer.getWriteConfirmMode("1234"));
     }
+
+    @Test
+    public void testWriteCVNullListener() throws jmri.ProgrammerException {
+                programmer.writeCV("1",42,null);
+    }
     
     // The minimal setup for log4J
     @Before

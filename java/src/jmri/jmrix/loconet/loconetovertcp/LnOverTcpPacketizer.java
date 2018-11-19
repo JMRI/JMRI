@@ -113,7 +113,7 @@ public class LnOverTcpPacketizer extends LnPacketizer {
 
         // readline is deprecated, but there are no problems
         // with multi-byte characters here.
-        @SuppressWarnings({"deprecation", "null"})
+        @SuppressWarnings("deprecation")
         @Override
         public void run() {
 
@@ -184,7 +184,6 @@ public class LnOverTcpPacketizer extends LnPacketizer {
                                         + " seen length: " + i
                                         + " unexpected byte: "
                                         + Integer.toHexString(b));
-                                opCode = b;
                                 throw new LocoNetMessageException();
                             }
                             msg.setElement(i, b);

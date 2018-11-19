@@ -71,7 +71,7 @@ public class LocoNetThrottledTransmitterTest {
 
         LocoNetMessage m1;
 
-        m1 = new LocoNetMessage(1);
+        m1 = new LocoNetMessage(2);
         m1.setElement(0, 0x01);  // dummy value
 
         q.minInterval = 0;
@@ -91,9 +91,9 @@ public class LocoNetThrottledTransmitterTest {
         LocoNetInterfaceScaffold s = new LocoNetInterfaceScaffold();
         LocoNetThrottledTransmitter q = new LocoNetThrottledTransmitter(s, false);
 
-        LocoNetMessage m1 = new LocoNetMessage(1);
+        LocoNetMessage m1 = new LocoNetMessage(2);
         m1.setElement(0, 0x01);  // dummy value
-        LocoNetMessage m2 = new LocoNetMessage(1);
+        LocoNetMessage m2 = new LocoNetMessage(2);
         m2.setElement(0, 0x02);  // dummy value
 
         q.minInterval = 1;
@@ -120,9 +120,9 @@ public class LocoNetThrottledTransmitterTest {
         LocoNetInterfaceScaffold s = new LocoNetInterfaceScaffold();
         LocoNetThrottledTransmitter q = new LocoNetThrottledTransmitter(s, false);
 
-        LocoNetMessage m1 = new LocoNetMessage(1);
+        LocoNetMessage m1 = new LocoNetMessage(2);
         m1.setElement(0, 0x01);  // dummy value
-        LocoNetMessage m2 = new LocoNetMessage(1);
+        LocoNetMessage m2 = new LocoNetMessage(2);
         m2.setElement(0, 0x02);  // dummy value
 
         q.minInterval = 100;

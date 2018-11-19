@@ -127,7 +127,6 @@ public class PrintRosterEntry implements PaneContainer {
         d.loadVariableModel(decoderRoot.getChild("decoder"), variableModel);
         d.loadResetModel(decoderRoot.getChild("decoder"), resetModel);
 
-        @SuppressWarnings("unchecked")
         List<Element> rawPaneList = base.getChildren("pane");
         log.debug("rawPaneList size = {}", rawPaneList.size());
         for (Element elPane : rawPaneList) {

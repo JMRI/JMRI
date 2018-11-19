@@ -42,15 +42,6 @@ public class NetworkDriverAdapter extends SRCPPortController implements jmri.jmr
     // private control members
     private boolean opened = false;
 
-    /*
-     * @deprecated since 4.3.5
-     */
-    @Deprecated
-    static public NetworkDriverAdapter instance() {
-        log.error("Deprecated instance() method called");
-        return null;
-    }
-
-    private final static Logger log = LoggerFactory.getLogger(NetworkDriverAdapter.class);
+    // private final static Logger log = LoggerFactory.getLogger(NetworkDriverAdapter.class);
 
 }

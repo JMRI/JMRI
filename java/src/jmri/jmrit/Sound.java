@@ -7,12 +7,14 @@ import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Arrays;
+import java.util.concurrent.atomic.AtomicReference;
 import javax.annotation.Nonnull;
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.DataLine;
+import javax.sound.sampled.LineEvent;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
 import javax.sound.sampled.UnsupportedAudioFileException;
@@ -41,7 +43,8 @@ public class Sound {
     private final URL url;
     private boolean streaming = false;
     private boolean streamingStop = false;
-    private Clip clip = null;
+    private AtomicReference<Clip> clipRef = new AtomicReference<>();
+    private boolean autoClose = true;
     private final static Logger log = LoggerFactory.getLogger(Sound.class);
 
     /**
@@ -78,13 +81,36 @@ public class Sound {
         }
         this.url = url;
         try {
-            this.clip = AudioSystem.getClip();
             streaming = this.needStreaming();
             if (!streaming) {
-                this.clip.open(AudioSystem.getAudioInputStream(this.url));
+                clipRef.updateAndGet(clip -> {
+                    return openClip();
+                });
             }
         } catch (URISyntaxException ex) {
             streaming = false;
+        } catch (IOException ex) {
+            log.error("Unable to open {}", url);
+        }
+    }
+    
+    private Clip openClip() {
+        Clip newClip = null;
+        try {
+            newClip = AudioSystem.getClip();
+            newClip.addLineListener(event -> {
+                if (LineEvent.Type.STOP.equals(event.getType())) {
+                    if (autoClose) {
+                        clipRef.updateAndGet(clip -> {
+                            if (clip != null) {
+                                clip.close();
+                            }
+                            return null;
+                        });
+                    }
+                }
+            });
+            newClip.open(AudioSystem.getAudioInputStream(url));
         } catch (IOException ex) {
             log.error("Unable to open {}", url);
         } catch (LineUnavailableException ex) {
@@ -92,8 +118,58 @@ public class Sound {
         } catch (UnsupportedAudioFileException ex) {
             log.error("{} is not a recognised audio format", url);
         }
+        
+        return newClip;
     }
-
+    
+    /**
+     * Set if the clip be closed automatically.
+     * @param autoClose true if closed automatically
+     */
+    public void setAutoClose(boolean autoClose) {
+        this.autoClose = autoClose;
+    }
+    
+    /**
+     * Get if the clip is closed automatically.
+     * @return true if closed automatically
+     */
+    public boolean getAutoClose() {
+        return autoClose;
+    }
+    
+    /**
+     * Closes the sound.
+     */
+    public void close() {
+        if (streaming) {
+            streamingStop = true;
+        } else {
+            clipRef.updateAndGet(clip -> {
+                if (clip != null) {
+                    clip.close();
+                }
+                return null;
+            });
+        }
+    }
+    
+    @Override
+    public void finalize() throws Throwable {
+        try {
+            if (!streaming) {
+                clipRef.updateAndGet(clip -> {
+                    if (clip != null) {
+                        clip.close();
+                    }
+                    return null;
+                });
+            }
+        } finally {
+            super.finalize();
+        }
+    }
+    
     /**
      * Play the sound once.
      */
@@ -103,7 +179,15 @@ public class Sound {
             Thread tStream = new Thread(streamSound);
             tStream.start();
         } else {
-            this.clip.start();
+            clipRef.updateAndGet(clip -> {
+                if (clip == null) {
+                    clip = openClip();
+                }
+                if (clip != null) {
+                    clip.start();
+                }
+                return clip;
+            });
         }
     }
 
@@ -125,7 +209,15 @@ public class Sound {
         if (streaming) {
             log.warn("Streaming this audio file, loop() not allowed");
         } else {
-            this.clip.loop(count);
+            clipRef.updateAndGet(clip -> {
+                if (clip == null) {
+                    clip = openClip();
+                }
+                if (clip != null) {
+                    clip.loop(count);
+                }
+                return clip;
+            });
         }
     }
 
@@ -136,7 +228,12 @@ public class Sound {
         if (streaming) {
             streamingStop = true;
         } else {
-            this.clip.stop();
+            clipRef.updateAndGet(clip -> {
+                if (clip != null) {
+                    clip.stop();
+                }
+                return clip;
+            });
         }
     }
 

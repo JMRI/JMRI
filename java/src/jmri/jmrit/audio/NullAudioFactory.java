@@ -63,12 +63,10 @@ public class NullAudioFactory extends AbstractAudioFactory {
         AudioManager am = InstanceManager.getDefault(jmri.AudioManager.class);
 
         // Retrieve list of Audio Objects and remove the sources
-        List<String> audios = am.getSystemNameList();
-        for (String audioName : audios) {
-            Audio audio = am.getAudio(audioName);
+        for (Audio audio : am.getNamedBeanSet()) {
             if (audio.getSubType() == Audio.SOURCE) {
                 if (log.isDebugEnabled()) {
-                    log.debug("Removing NullAudioSource: " + audioName);
+                    log.debug("Removing NullAudioSource: " + audio.getSystemName());
                 }
                 // Cast to NullAudioSource and cleanup
                 ((NullAudioSource) audio).cleanup();
@@ -76,12 +74,10 @@ public class NullAudioFactory extends AbstractAudioFactory {
         }
 
         // Now, re-retrieve list of Audio objects and remove the buffers
-        audios = am.getSystemNameList();
-        for (String audioName : audios) {
-            Audio audio = am.getAudio(audioName);
+        for (Audio audio : am.getNamedBeanSet()) {
             if (audio.getSubType() == Audio.BUFFER) {
                 if (log.isDebugEnabled()) {
-                    log.debug("Removing NullAudioBuffer: " + audioName);
+                    log.debug("Removing NullAudioBuffer: " + audio.getSystemName());
                 }
                 // Cast to NullAudioBuffer and cleanup
                 ((NullAudioBuffer) audio).cleanup();
@@ -89,12 +85,10 @@ public class NullAudioFactory extends AbstractAudioFactory {
         }
 
         // Lastly, re-retrieve list and remove listener.
-        audios = am.getSystemNameList();
-        for (String audioName : audios) {
-            Audio audio = am.getAudio(audioName);
+        for (Audio audio : am.getNamedBeanSet()) {
             if (audio.getSubType() == Audio.LISTENER) {
                 if (log.isDebugEnabled()) {
-                    log.debug("Removing NullAudioListener: " + audioName);
+                    log.debug("Removing NullAudioListener: " + audio.getSystemName());
                 }
                 // Cast to NullAudioListener and cleanup
                 ((NullAudioListener) audio).cleanup();

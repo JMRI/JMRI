@@ -72,17 +72,6 @@ public class ProgrammerConfigPane extends JPanel implements PreferencesPanel {
     }
     JComboBox<String> programmerBox;
 
-    /**
-     * This constructor does nothing different than the default constructor.
-     *
-     * @param include ignored
-     * @deprecated since 3.9.5
-     */
-    @Deprecated
-    public ProgrammerConfigPane(boolean include) {
-        this();
-    }
-
     @CheckForNull
     public String getSelectedItem() {
         return (String) programmerBox.getSelectedItem();

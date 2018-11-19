@@ -201,7 +201,7 @@
       <strong>Departure Times</strong> to print departure times on
       manifest<br>
       <input name="checkbox5" id="checkbox5" type="checkbox">
-      <strong>Show Timetable show which timetable was used when
+      <strong>Show Train Schedule shows which train schedule was used when
       train build was made.<br>
       <input name="checkbox7" id="checkbox7" type="checkbox">
       Truncate</strong> Reduces the amount of information at a

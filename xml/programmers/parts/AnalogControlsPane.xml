@@ -14,12 +14,16 @@
       <tooltip xml:lang="de">Legt fest, ob die Lok mit konventionellem Gleichstrom betrieben werden kann</tooltip>
       <tooltip xml:lang="fr">Détermine si une locomotiva peut fonctionner en courant continu</tooltip>
       <tooltip xml:lang="it">Determina se una locomotiva può funzionare in DC</tooltip>
+      <tooltip xml:lang="cs">Určuje zdali lokomotiva může být provozována se stejnosměrným (DC) napájením (povoluje změnu napájecího zdroje)</tooltip>
+      <tooltip xml:lang="nl">Bepaalt of de Loc ook analoog (DC) kan rijden</tooltip>
     </display>
     <display item="Analog (DC) Mode" tooltip="Determines whether loco can operate on conventional DC current">
       <tooltip xml:lang="ca">Determina si una locomotora pot funcionar en CC</tooltip>
       <tooltip xml:lang="de">Legt fest, ob die Lok mit konventionellem Gleichstrom betrieben werden kann</tooltip>
       <tooltip xml:lang="fr">Détermine si une locomotive peut fonctionner en courant continu</tooltip>
       <tooltip xml:lang="it">Determina se una locomotiva può funzionare in DC convenzionale</tooltip>
+      <tooltip xml:lang="cs">Určuje zdali lokomotiva může být provozována se stejnosměrným (DC) napájením (povoluje změnu napájecího zdroje)</tooltip>
+      <tooltip xml:lang="nl">Bepaalt of de Loc ook analoog (DC) kan rijden</tooltip>
     </display>
     <display item="Analog Vstart" tooltip="Sets the analog input voltage to be reached before the motor begins to move at programmed minimum speed">
       <tooltip xml:lang="ca">Estableix el voltatge mínim per a que el motor comenci a girar a la mínima velocitat</tooltip>
@@ -38,6 +42,8 @@
       <tooltip xml:lang="de">Legt fest, ob die Lok mit konventionellem Wechselstrom betrieben werden kann</tooltip>
       <tooltip xml:lang="fr">Détermine si une locomotive peut fonctionner en courant alternatif</tooltip>
       <tooltip xml:lang="it">Determina se una locomotiva può funzionare in AC convenzionale</tooltip>
+      <tooltip xml:lang="cs">Určuje zdali lokomotiva může být provozována se stejnosměrným (DC) napájením (povoluje změnu napájecího zdroje)</tooltip>
+      <tooltip xml:lang="nl">Bepaalt of de Loc ook analoog (DC) kan rijden</tooltip>
     </display>
     <display item="Analog (AC) Vstart" tooltip="Sets the analog AC input voltage to be reached before the motor begins to move at programmed minimum speed">
       <tooltip xml:lang="ca">Estableix el voltatge mínim d'AC per a que el motor comenci a girar a la mínima velocitat</tooltip>

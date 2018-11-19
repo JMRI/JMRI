@@ -162,17 +162,17 @@ public class TrainIconAnimationTest {
 
         Assert.assertEquals("Location 1 Length", 700, l1.getLength());
 
-        Location l2 = new Location("2", "North Industries");
-        Assert.assertEquals("Location 2 Id", "2", l2.getId());
+        Location l2 = new Location("20", "North Industries");
+        Assert.assertEquals("Location 2 Id", "20", l2.getId());
         Assert.assertEquals("Location 2 Name", "North Industries", l2.getName());
         l2.setLocationOps(Location.NORMAL);
         l2.setTrainDirections(DIRECTION_ALL);
         l2.setSwitchListEnabled(true);
         lmanager.register(l2);
 
-        Track l2s1 = new Track("2s1", "NI Yard", Track.YARD, l2);
+        Track l2s1 = new Track("20s1", "NI Yard", Track.YARD, l2);
         l2s1.setLength(432);
-        Assert.assertEquals("Location 2s1 Id", "2s1", l2s1.getId());
+        Assert.assertEquals("Location 2s1 Id", "20s1", l2s1.getId());
         Assert.assertEquals("Location 2s1 Name", "NI Yard", l2s1.getName());
         Assert.assertEquals("Location 2s1 LocType", Track.YARD, l2s1.getTrackType());
         Assert.assertEquals("Location 2s1 Length", 432, l2s1.getLength());
