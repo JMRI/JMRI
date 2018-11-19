@@ -28,8 +28,6 @@ public class BackgroundItemPanel extends IconItemPanel {
     @Override
     public void init() {
         if (!_initialized) {
-            if (!jmri.util.ThreadingUtil.isGUIThread()) log.error("Not on GUI thread", new Exception("traceback"));
-            Thread.yield();
             super.init();
             _iconPanel.setImage(_backgrounds[0]);
         }
@@ -37,7 +35,6 @@ public class BackgroundItemPanel extends IconItemPanel {
 
     @Override
     protected JPanel instructions() {
-        if (!jmri.util.ThreadingUtil.isGUIThread()) log.error("Not on GUI thread", new Exception("traceback"));
         JPanel panel = super.instructions();
         JPanel blurb = (JPanel) panel.getComponent(0);
         blurb.add(new JLabel(Bundle.getMessage("ToColorBackground", Bundle.getMessage("ButtonBackgroundColor"))));
@@ -47,7 +44,6 @@ public class BackgroundItemPanel extends IconItemPanel {
 
     @Override
     protected void initLinkPanel() {
-        if (!jmri.util.ThreadingUtil.isGUIThread()) log.error("Not on GUI thread", new Exception("traceback"));
         JPanel bottomPanel = new JPanel();
         JButton backgroundButton = new JButton(Bundle.getMessage("ButtonBackgroundColor"));
         backgroundButton.addActionListener(new ActionListener() {
@@ -83,6 +79,4 @@ public class BackgroundItemPanel extends IconItemPanel {
     protected JPanel makeBgButtonPanel(ImagePanel preview1, ImagePanel preview2) {
         return null; // no button to set Preview Bg on BackgroundItemPanel
     }
-
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BackgroundItemPanel.class);
 }
