@@ -26,7 +26,7 @@ public class MultiThrottleStealTest {
        // from the controller to the device 
        Assert.assertEquals("outgoing message after throttle request", "MASL1234<;>L1234",cis.getLastPacket() );
        // the device then confirms the steal.
-       throttle.handleMessage("+L1234<;>L1234");
+       throttle.handleMessage("SL1234<;>L1234");
        // and the sequence continues as normal.
        Assert.assertTrue("Address Found",tcls.hasAddressBeenFound());
        // then release it.
@@ -49,7 +49,7 @@ public class MultiThrottleStealTest {
        // from the controller to the device 
        Assert.assertEquals("outgoing message after throttle request", "MASL4321<;>L4321",cis.getLastPacket() );
        // the device then confirms the steal.
-       throttle.handleMessage("+L4321<;>L4321");
+       throttle.handleMessage("SL4321<;>L4321");
        // and the sequence continues as normal.
        Assert.assertTrue("Address Found",tcls.hasAddressBeenFound());
        // then release it.
