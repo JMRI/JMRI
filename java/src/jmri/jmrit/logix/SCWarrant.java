@@ -107,7 +107,7 @@ public class SCWarrant extends Warrant {
      * This method has been overridden in order to avoid allocation of occupied blocks.
      */
     @Override
-     public String setRoute(int delay, List<BlockOrder> orders) {
+     public String setRoute(boolean delay, List<BlockOrder> orders) {
         return allocateStartBlock();
     }
 

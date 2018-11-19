@@ -46,7 +46,8 @@ public class StealingThrottleManager extends DebugThrottleManager {
         if(steal) {
            notifyThrottleKnown(new DebugThrottle(address, adapterMemo), a);
         } else {
-           handleRejectedStealRequest(address,l);
+           cancelThrottleRequest(address,l);
+           failedThrottleRequest(a,"user declined to steal");
         }
     }
 

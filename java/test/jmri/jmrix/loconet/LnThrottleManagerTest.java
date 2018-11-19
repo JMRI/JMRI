@@ -439,7 +439,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
         Assert.assertEquals("Got a steal request", 256, flagGotStealRequest);
         jmri.util.JUnitAppender.assertWarnMessage("slot 8 address 256 is already in-use.");
         Assert.assertNotNull("Throttle should be created and non-null", throttle);
-        jmri.util.JUnitAppender.assertWarnMessage("user agreed to steal address 256, but no code is in-place to handle the 'steal' (yet)");
+        //jmri.util.JUnitAppender.assertWarnMessage("user agreed to steal address 256, but no code is in-place to handle the 'steal' (yet)");
         jmri.util.JUnitAppender.assertErrorMessage("created a throttle");
         tm.releaseThrottle(throttle, throtListen);
         throtListen = null;
@@ -991,7 +991,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
         Assert.assertEquals("Got a steal request", 262, flagGotStealRequest);
         jmri.util.JUnitAppender.assertWarnMessage("slot 11 address 262 is already in-use.");
         Assert.assertNotNull("Throttle should be created and non-null", throttle);
-        jmri.util.JUnitAppender.assertWarnMessage("user agreed to steal address 262, but no code is in-place to handle the 'steal' (yet)");
+        //jmri.util.JUnitAppender.assertWarnMessage("user agreed to steal address 262, but no code is in-place to handle the 'steal' (yet)");
         jmri.util.JUnitAppender.assertErrorMessage("created a throttle");
 
         int netTxMsgCount = lnis.outbound.size()-1;

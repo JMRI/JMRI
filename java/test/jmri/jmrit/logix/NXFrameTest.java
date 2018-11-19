@@ -226,8 +226,8 @@ public class NXFrameTest {
 
         jmri.util.JUnitUtil.waitFor(() -> {
             String m =  warrant.getRunningMessage();
-            return m.endsWith("Cmd #7.");
-        }, "Train starts to move at 7th command");
+            return m.endsWith("Cmd #8.");
+        }, "Train starts to move at 8th command");
 
         // OBlock sensor names
         String[] route = {"OB0", "OB1", "OB2", "OB3", "OB7", "OB5", "OB10"};
