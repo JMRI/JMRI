@@ -116,6 +116,7 @@ public class TamsTurnout extends AbstractTurnout
             log.debug("Returning");
             return;
         }
+        waitOutputInterval(); // if > 0, wait before next output command (experimental)
         log.debug("Setting to state " + state);
         newCommandedState(state);
     }

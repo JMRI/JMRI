@@ -72,7 +72,15 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
 
     LocoNetInterface controller;
     protected String _prefix = "L"; // default to "L"
-    
+
+    @Override // Experimental EBR remove once operating
+    public void setCommandedState(int s) {
+        log.debug("set commanded state for LnTurnout {} on memo \"{}\", interval = {}",
+                getFullyFormattedDisplayName(), controller.getSystemConnectionMemo().getUserName(), controller.getSystemConnectionMemo().getInterval());
+        setOutputInterval(controller.getSystemConnectionMemo().getInterval()); // why is this needed?
+        super.setCommandedState(s);
+    }
+
     /**
      * True when setFeedbackMode has specified the mode;
      * false when the mode is just left over from initialization.

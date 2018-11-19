@@ -139,9 +139,14 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
         return mNumber;
     }
 
+    /**
+     * Set the Commanded State.
+     * This method overides {@link jmri.implementation.AbstractTurnout#setCommandedState(int)}.
+     */
     @Override
     public void setCommandedState(int s) {
         log.debug("set commanded state for turnout {} to {}", getSystemName(), s);
+        waitOutputInterval(); // if > 0, wait before next output command (experimental)
         synchronized (this) {
             newCommandedState(s);
         }
@@ -157,7 +162,6 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
                 newKnownState(s);
             }
 	    }
-        waitOutputInterval(); // if > 0, wait before next output command (experimental)
     }
 
     // Handle a request to change state by sending a DCC++ command

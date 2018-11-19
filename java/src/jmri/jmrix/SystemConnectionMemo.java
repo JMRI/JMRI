@@ -113,7 +113,7 @@ abstract public class SystemConnectionMemo extends Bean {
      * <p>
      * This was previously fixed at configuration time.
      *
-     * @return User name
+     * @return User name of the connection
      */
     public String getUserName() {
         return userName;
@@ -293,13 +293,14 @@ abstract public class SystemConnectionMemo extends Bean {
 
     /**
      * Get the Interval (in ms) to wait between/before commands are send, configured in AdapterConfig.
-     * Used in {@link jmri.AbstractTurnout#setCommandedState(int)}
+     * Used in {@link jmri.implementation.AbstractTurnout#setCommandedState(int)}
      */
     public int getInterval() {
+        log.debug("Getting interval {}", _interval);
         return _interval;
     }
 
-    private int _interval = 0;
+    protected int _interval = 0;
 
     public void setInterval(int newInterval) {
         log.debug("Setting interval from {} to {}", _interval, newInterval);

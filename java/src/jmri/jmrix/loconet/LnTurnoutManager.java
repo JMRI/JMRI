@@ -39,10 +39,11 @@ import org.slf4j.LoggerFactory;
 public class LnTurnoutManager extends jmri.managers.AbstractTurnoutManager implements LocoNetListener {
 
     // ctor has to register for LocoNet events
-    public LnTurnoutManager(LocoNetInterface fastcontroller, LocoNetInterface throttledcontroller, String prefix, boolean mTurnoutNoRetry) {
+    public LnTurnoutManager(LocoNetInterface fastcontroller, LocoNetInterface throttledcontroller, LocoNetSystemConnectionMemo memo, boolean mTurnoutNoRetry) {
         this.fastcontroller = fastcontroller;
         this.throttledcontroller = throttledcontroller;
-        this.prefix = prefix;
+        _memo = memo;
+        this.prefix = memo.getSystemPrefix();
         this.mTurnoutNoRetry = mTurnoutNoRetry;
 
         if (fastcontroller != null) {
@@ -52,9 +53,15 @@ public class LnTurnoutManager extends jmri.managers.AbstractTurnoutManager imple
         }
     }
 
+    public LnTurnoutManager(LocoNetInterface fastcontroller, LocoNetInterface throttledcontroller, String prefix, boolean mTurnoutNoRetry) {
+        this(fastcontroller, throttledcontroller, ((LnTrafficController) fastcontroller).getSystemConnectionMemo(), mTurnoutNoRetry);
+        this.prefix = prefix;
+    }
+
     LocoNetInterface fastcontroller;
     LocoNetInterface throttledcontroller;
     boolean mTurnoutNoRetry;
+    private LocoNetSystemConnectionMemo _memo;
     private String prefix;
 
     @Override
@@ -92,7 +99,7 @@ public class LnTurnoutManager extends jmri.managers.AbstractTurnoutManager imple
                     systemName.substring(prefix.length() + 1) +
                     " to LocoNet turnout address"); // NOI18N
         }
-        LnTurnout t = new LnTurnout(getSystemPrefix(), addr, throttledcontroller);
+        LnTurnout t = new LnTurnout(prefix, addr, throttledcontroller);
         t.setUserName(userName);
         if (_binaryOutput) t.setBinaryOutput(true);
         if (_useOffSwReqAsConfirmation) {
@@ -237,7 +244,8 @@ public class LnTurnoutManager extends jmri.managers.AbstractTurnoutManager imple
     /** {@inheritDoc} */
     @Override
     public int getInterval() {
-        return ((LnTrafficController) fastcontroller).getSystemConnectionMemo().getInterval();
+        log.debug("LnTurnoutMemo ={}, interval ={}", _memo.getUserName(), _memo.getInterval());
+        return _memo.getInterval();
     }
 
     private final static Logger log = LoggerFactory.getLogger(LnTurnoutManager.class);

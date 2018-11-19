@@ -1,7 +1,7 @@
 package jmri.jmrix.loconet.locobuffer;
 
 /**
- * Definition of objects to handle configuring an LocoBuffer layout connection
+ * Definition of objects to handle configuring a LocoBuffer layout connection
  * via a LocoBufferAdapter object.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003, 2010

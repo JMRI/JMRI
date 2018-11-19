@@ -328,7 +328,7 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
             return null;
         }
         if (turnoutManager == null) {
-            turnoutManager = new LnTurnoutManager(getLnTrafficController(), tm, getSystemPrefix(), mTurnoutNoRetry);
+            turnoutManager = new LnTurnoutManager(getLnTrafficController(), tm, this, mTurnoutNoRetry); // pass on this memo as well
         }
         return turnoutManager;
     }
@@ -423,6 +423,16 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
             tm.dispose();
         }
         super.dispose();
+    }
+
+    /**
+     * removed once working
+     */
+    @Override
+    public int getInterval() {
+        int interval = super.getInterval();
+        log.debug("Getting Ln interval {}", interval);
+        return interval;
     }
 
     private final static Logger log = LoggerFactory.getLogger(LocoNetSystemConnectionMemo.class);

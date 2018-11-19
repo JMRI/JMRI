@@ -189,13 +189,14 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
 
     /**
      * Set the Commanded State.
-     * This method overides setCommandedState in the {@link jmri.implementation.AbstractTurnout} class.
+     * This method overides {@link jmri.implementation.AbstractTurnout#setCommandedState(int)}.
      */
     @Override
     public void setCommandedState(int s) {
         if (log.isDebugEnabled()) {
-            log.debug("set commanded state for turnout {} to {}", getSystemName(), s);
+            log.debug("set commanded state for XNet turnout {} to {}", getSystemName(), s);
         }
+        waitOutputInterval(); // if > 0, wait before next output command (experimental)
         synchronized (this) {
             newCommandedState(s);
         }
@@ -208,7 +209,6 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
         } else {
             myOperator.start();
         }
-        waitOutputInterval(); // if > 0, wait before next output command (experimental)
     }
 
     /**

@@ -83,6 +83,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
      * <p>
      * This is used when a new commanded state
      * is noticed from another command.
+     *
      * @param s new state
      */
     protected void newCommandedState(int s) {
@@ -101,7 +102,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 
     /**
      * Public access to changing turnout state. Sets the commanded state and, if
-     * appropriate starts a TurnoutOperator to do its thing. If there is no
+     * appropriate, starts a TurnoutOperator to do its thing. If there is no
      * TurnoutOperator (not required or nothing suitable) then just tell the
      * layout and hope for the best.
      *
@@ -111,6 +112,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
     public void setCommandedState(int s) {
         log.debug("set commanded state for turnout {} to {}", getFullyFormattedDisplayName(),
                 (s==Turnout.CLOSED ? closedText : thrownText));
+        waitOutputInterval(); // if interval > 0, wait before next output command
         newCommandedState(s);
         myOperator = getTurnoutOperator(); // MUST set myOperator before starting the thread
         if (myOperator == null) {
@@ -126,11 +128,10 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         } else {
             myOperator.start();
         }
-        waitOutputInterval(); // if > 0, wait before next output command. Experimental EBR
     }
 
     /**
-     * Duration of delay for DELAYED feedback mode.
+     * Duration in Milliseconds of delay for DELAYED feedback mode.
      * <p>
      * Defined as "public non-final"
      * so it can be changed in e.g. the jython/SetDefaultDelayedTurnoutDelay script.
@@ -138,7 +139,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
     public static int DELAYED_FEEDBACK_INTERVAL = 4000;
 
     /**
-     * Duration of interval in Milliseconds between separate Turnout commands - experimental EBR
+     * Duration in Milliseconds of interval between separate Turnout commands.
      * <p>
      * Read and change from e.g. XNetTurnout extensions and scripts using #setOutputInterval(int)
      */
@@ -146,10 +147,11 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 
     public void setOutputInterval(int newInterval) {
         TURNOUT_INTERVAL = newInterval;
+        log.debug("newInterval = {}", newInterval);
     }
 
     public void waitOutputInterval() {
-        if (TURNOUT_INTERVAL > 0) { // is set in the Memo per hardware connection, default = 0 - experimental EBR
+        if (TURNOUT_INTERVAL > 0) { // is set in the Memo per hardware connection, default = 0
             log.debug("interval = {} ms", TURNOUT_INTERVAL);
             // insert wait before next output command
             try {

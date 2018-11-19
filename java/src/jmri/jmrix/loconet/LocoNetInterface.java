@@ -103,4 +103,23 @@ public interface LocoNetInterface {
      */
     public static final int POWER = 16;
 
+    /**
+     * Reference to the system connection memo.
+     */
+    LocoNetSystemConnectionMemo memo = null;
+
+    /**
+     * Set the system connection memo associated with this connection.
+     *
+     * @param m associated systemConnectionMemo object
+     */
+    public void setSystemConnectionMemo(LocoNetSystemConnectionMemo m);
+
+    /**
+     * Get the system connection memo associated with this connection.
+     *
+     * @return the associated systemConnectionMemo object
+     */
+    public LocoNetSystemConnectionMemo getSystemConnectionMemo();
+
 }
