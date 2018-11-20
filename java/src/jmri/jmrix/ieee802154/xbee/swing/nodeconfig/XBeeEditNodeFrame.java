@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2004
  * @author Dave Duchamp Copyright (C) 2004
- * @author Paul Bender Copyright (C) 2013,2016
+ * @author Paul Bender Copyright (C) 2013,2016,2018
  */
 public class XBeeEditNodeFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.EditNodeFrame {
 
