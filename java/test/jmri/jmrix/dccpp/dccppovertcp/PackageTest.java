@@ -15,7 +15,8 @@ import org.slf4j.LoggerFactory;
    ServerFrameTest.class,
    ConnectionConfigTest.class,
    DCCppTcpDriverAdapterTest.class,
-   ClientRxHandlerTest.class
+   ClientRxHandlerTest.class,
+   BundleTest.class
 })
 /**
  * Tests for the jmri.jmrix.dccpp.dccppovertcp package.

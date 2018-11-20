@@ -8,6 +8,7 @@ import org.junit.runners.Suite;
    LnStreamPortPacketizerTest.class,
    LnStreamPortControllerTest.class,
    BundleTest.class,
+   LnStreamConnectionConfigTest.class,
 })
 
 /**
