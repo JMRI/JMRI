@@ -3,6 +3,7 @@ package jmri.jmrix.loconet;
 import java.util.concurrent.DelayQueue;
 import java.util.concurrent.Delayed;
 import java.util.concurrent.TimeUnit;
+import javax.annotation.Nonnull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,7 +22,7 @@ import org.slf4j.LoggerFactory;
  */
 public class LocoNetThrottledTransmitter implements LocoNetInterface {
 
-    public LocoNetThrottledTransmitter(LocoNetInterface controller, boolean mTurnoutExtraSpace) {
+    public LocoNetThrottledTransmitter(@Nonnull LocoNetInterface controller, boolean mTurnoutExtraSpace) {
         this.controller = controller;
         this.memo = controller.getSystemConnectionMemo();
         this.mTurnoutExtraSpace = mTurnoutExtraSpace;

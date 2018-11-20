@@ -18,7 +18,6 @@ public abstract class LnTrafficController implements LocoNetInterface {
 
     /**
      * {@inheritDoc}
-     * TODO Attach a memo instance to those classes extending LnTrafficController that lack a memo
      */
     LocoNetSystemConnectionMemo memo = null;
 

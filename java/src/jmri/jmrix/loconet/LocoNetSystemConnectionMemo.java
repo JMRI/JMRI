@@ -55,6 +55,16 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
                 ComponentFactory.class);
     }
 
+    public LocoNetSystemConnectionMemo(String prefix) {
+        super(prefix, "LocoNet"); // NOI18N
+        register(); // registers general type
+        InstanceManager.store(this, LocoNetSystemConnectionMemo.class); // also register as specific type
+
+        // create and register the ComponentFactory for the GUI
+        InstanceManager.store(cf = new LnComponentFactory(this),
+                ComponentFactory.class);
+    }
+
     ComponentFactory cf = null;
     private LnTrafficController lt;
     private SlotManager sm;

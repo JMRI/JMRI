@@ -41,6 +41,6 @@ public class UhlenbrockSystemConnectionMemo extends LocoNetSystemConnectionMemo 
     public void configureManagers() {
         super.configureManagers();
         getTurnoutManager().setUhlenbrockMonitoring();
-}
+    }
 
 }

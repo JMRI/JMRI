@@ -147,7 +147,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 
     public void setOutputInterval(int newInterval) {
         TURNOUT_INTERVAL = newInterval;
-        log.debug("newInterval = {}", newInterval);
+        log.debug("(jmri.implementation.abstractTurnout_TURNOUT_INTERVAL set to: {}", newInterval);
     }
 
     public void waitOutputInterval() {
