@@ -139,8 +139,6 @@ public class XBeeEditNodeFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Ed
         // create the RemoteXBeeDevice for the node.
         RemoteXBeeDevice remoteDevice = new RemoteXBeeDevice(xtc.getXBee(),
               guid,address,Identifier);
-        // get a XBeeNode corresponding to this node address if one exists
-        XBeeNode existingNode = (XBeeNode) xtc.getNodeFromXBeeDevice(remoteDevice);
         // save the old remote device
         RemoteXBeeDevice oldDevice = ((XBeeNode)curNode).getXBee();
         // and then add the new device to the network
