@@ -1460,7 +1460,7 @@ public class TrainBuilder extends TrainCommon {
      *
      * @param roadCaboose Optional road name for this car.
      * @param leadEngine The lead engine for this train. Used to find a caboose
-     *            with the same road name as the the engine.
+     *            with the same road name as the engine.
      * @param rl Where in the route to pick up this car.
      * @param rld Where in the route to set out this car.
      * @param requiresCaboose When true, the train requires a caboose.

@@ -8,7 +8,7 @@ import javax.annotation.Nonnull;
 import jmri.Light;
 
 /**
- * Abstract class providing partial implementation of the the Light interface.
+ * Abstract class providing partial implementation of the Light interface.
  * <p>
  * Light objects require a number of instance variables. Since Light objects are
  * created using the standard JMRI systemName/userName concept, accessor

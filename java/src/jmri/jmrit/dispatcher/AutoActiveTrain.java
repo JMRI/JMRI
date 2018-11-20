@@ -1313,7 +1313,7 @@ public class AutoActiveTrain implements ThrottleListener {
     }
 
     /**
-     * Sets the the throttle percent unless it is already less than the new setting
+     * Sets the throttle percent unless it is already less than the new setting
      * @param throttleSetting - Max ThrottleSetting required.
      */
     private synchronized void setToAMaximumThrottle(float throttleSetting) {

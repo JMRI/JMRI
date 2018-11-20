@@ -55,7 +55,7 @@ public class LayoutBlockConnectivityTools {
     public final static int ANY = 0x08;
 
     /**
-     * Constant used in the getLayoutBlocks to indicate that the the system
+     * Constant used in the getLayoutBlocks to indicate that the system
      * should not check for signal masts or heads on the path.
      */
     public final static int NONE = 0x00;

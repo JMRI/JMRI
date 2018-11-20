@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
  *   from JMRI. (This might be a problem if more than one computer is executing
  *   this algorithm)
  *   <li>By sending the message as fast as we can, we tie up the LocoNet during
- *   the the recovery. This is a mixed bag; delaying can cause messages to get out
+ *   the recovery. This is a mixed bag; delaying can cause messages to get out
  *   of sequence on the rails. But not delaying takes up a lot of LocoNet
  *   bandwidth.
  * </ul>
@@ -212,7 +212,7 @@ public class LnTurnoutManager extends jmri.managers.AbstractTurnoutManager imple
             log.error("invalid character in header field of loconet turnout system name: {}", systemName);
             return (0);
         }
-        // name must be in the LTnnnnn format (L is user configurable)
+        // name must be in the LiTnnnnn format (Li is user configurable)
         int num = 0;
         try {
             num = Integer.parseInt(systemName.substring(

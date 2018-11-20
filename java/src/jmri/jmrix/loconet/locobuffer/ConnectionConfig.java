@@ -23,13 +23,13 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         super();
     }
 
-    public boolean isOptList2Advanced() {
-        return false;
-    }
-
     @Override
     public String name() {
         return "LocoNet LocoBuffer"; // NOI18N
+    }
+
+    public boolean isOptList2Advanced() {
+        return false;
     }
 
     @Override
@@ -38,4 +38,5 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
             adapter = new LocoBufferAdapter();
         }
     }
+
 }

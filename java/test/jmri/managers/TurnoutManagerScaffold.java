@@ -231,4 +231,9 @@ public class TurnoutManagerScaffold implements TurnoutManager {
     /** {@inheritDoc} */
     public void removeDataListener(ManagerDataListener e) {}
 
+    /** {@inheritDoc} */
+    public int getInterval() {
+        return 0;
+    }
+
 }

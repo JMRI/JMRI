@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  * This implementation implements the "SENT" feedback, where LocoNet messages
  * originating on the layout can change both KnownState and CommandedState. We
  * change both because we consider a LocoNet message to reflect how the turnout
- * should be, even if its a readback status message. E.g. if you use a DS54
+ * should be, even if it's a readback status message. E.g. if you use a DS54
  * local input to change the state, resulting in a status message, we still
  * consider that to be a commanded state change.
  * <p>
@@ -77,7 +77,7 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
     public void setCommandedState(int s) {
         log.debug("set commanded state for LnTurnout {} on memo \"{}\", interval = {}",
                 getFullyFormattedDisplayName(), controller.getSystemConnectionMemo().getUserName(), controller.getSystemConnectionMemo().getInterval());
-        setOutputInterval(controller.getSystemConnectionMemo().getInterval()); // why is this needed?
+        //setOutputInterval(controller.getSystemConnectionMemo().getInterval()); // why is this needed?
         super.setCommandedState(s);
     }
 
