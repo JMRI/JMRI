@@ -820,6 +820,11 @@ public class LocoNetSlot {
                 return;
             }
             case LnConstants.OPC_MOVE_SLOTS: {
+                int toSlot = l.getElement(2);
+                if ( toSlot == 0 ) {
+                    //dispatched implies common
+                    stat = (stat & ~LnConstants.LOCOSTAT_MASK) | LnConstants.LOCO_COMMON;
+                }
                 // change in slot status will be reported by the reply,
                 // so don't need to do anything here (but could)
                 lastUpdateTime = System.currentTimeMillis();
@@ -1028,7 +1033,7 @@ public class LocoNetSlot {
     private long lastUpdateTime; // Time of last update for detecting stale slots
 
     // data members to hold contact with the slot listeners
-    final private List<SlotListener> slotListeners = new ArrayList<SlotListener>();
+    final private List<SlotListener> slotListeners = new ArrayList<>();
 
     /**
      * Registers a slot listener if it is not already registered.
@@ -1070,7 +1075,7 @@ public class LocoNetSlot {
         // make a copy of the listener list to synchronized not needed for transmit
         List<SlotListener> v;
         synchronized (this) {
-            v = new ArrayList<SlotListener>(slotListeners);
+            v = new ArrayList<>(slotListeners);
         }
         log.debug("notify {} SlotListeners",v.size()); // NOI18N
         // forward to all listeners
