@@ -16,8 +16,8 @@ public class PR2SystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemo
     @Before
     public void setUp() {
        JUnitUtil.setUp();
-       LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
        PR2SystemConnectionMemo memo = new PR2SystemConnectionMemo();
+       LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold(memo);
        memo.setLnTrafficController(lnis);
        memo.configureCommandStation(jmri.jmrix.loconet.LnCommandStationType.COMMAND_STATION_DCS100,false,false,false);
        memo.configureManagers();
