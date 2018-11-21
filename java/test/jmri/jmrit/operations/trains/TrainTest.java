@@ -33,33 +33,33 @@ import org.junit.Test;
  * Tests for the Operations Trains class Last manually cross-checked on 20090131
  * <p>
  * Still to do:
- * <P>
+ * <p>
  * Train: DepartureTime, ArrivalTime
- * <P>
+ * <p>
  * Train: numberCarsWorked
- * <P>
+ * <p>
  * Train: isTraininRoute
- * <P>
+ * <p>
  * Train: getBuild, setBuildEnabled, buildIfSelected
- * <P>
+ * <p>
  * Train: printBuildReport, printManifest, printReport
- * <P>
+ * <p>
  * Train: getPrint, setPrint, printIfSelected
- * <P>
+ * <p>
  * Train: setTrainIconCoordinates
- * <P>
+ * <p>
  * Train: terminateIfSelected
- * <P>
+ * <p>
  * Train: load/move/get/create Train Icon
- * <P>
+ * <p>
  * Train: get/set Lead Engine
- * <P>
+ * <p>
  * Train: setIconColor
- * <P>
+ * <p>
  * Train: reset
- * <P>
+ * <p>
  * Train: xml read/write
- * <P>
+ * <p>
  * Train: Most build scenarios.
  * <p>
  * TrainBuilder: Everything. TrainSwitchLists: Everything.

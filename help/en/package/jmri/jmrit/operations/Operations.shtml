@@ -1697,7 +1697,7 @@
     added to the train.</p>
 
    <h4>Manifests and Switch List Options</h4>
-   There are six checkboxes that modify both Manifests and switch lists and are as follows:
+   There are eight checkboxes that modify both Manifests and switch lists and are as follows:
 
    <p>The "Print Valid" checkbox causes the program to print date and time the train was built,
     which isn't the same as when the Manifest was printed. The print time is always shown at the top
@@ -1705,6 +1705,10 @@
 
    <p>If you want the Manifest and switch list to show how many car loads and empties are in the
     train, select the "Loads and Empties" checkbox.</p>
+
+   <p>The default is not to show load names for caboose or passenger cars on your Manifests and switch lists, if
+    however you want to see load names for those cars select the appropriate "Print Caboose Load" or "Print Passenger
+    Load" checkboxes.</p>
 
    <p>You can decide to use a 12 hour AM/PM rather than a 24 hour clock format for your
     Manifests and switch lists.</p>

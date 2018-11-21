@@ -27,7 +27,6 @@ public class LRouteTableActionTest extends jmri.util.SwingTestCase {
     private LogixTableAction _logixTable;
 
     public void testRouteElementComparator() {
-        System.out.println("running");
         LRouteTableAction.RouteElement e1 = new LRouteTableAction.RouteElement("ISname1", "B", LRouteTableAction.SENSOR_TYPE);
         LRouteTableAction.RouteElement e2 = new LRouteTableAction.RouteElement("ISname2", "B", LRouteTableAction.SENSOR_TYPE);
         

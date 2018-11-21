@@ -9,6 +9,7 @@ import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.JUnitAppender;
 import jmri.util.junit.rules.RetryRule;
+import org.junit.rules.TemporaryFolder;
 
 import org.apache.commons.io.*;
 import org.junit.After;
@@ -17,7 +18,6 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.Rule;
-import org.junit.rules.TemporaryFolder;
 import org.junit.rules.Timeout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the XmlFile class.
- * <P>
+ * <p>
  * Uses (creates, modifies, destroys) files in the local preferences directory
  * and the custom <user.home>/temp/xml directory
  *
