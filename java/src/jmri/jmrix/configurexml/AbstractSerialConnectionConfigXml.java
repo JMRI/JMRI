@@ -24,7 +24,7 @@ abstract public class AbstractSerialConnectionConfigXml extends AbstractConnecti
 
     /**
      * Default implementation for storing the static contents of the serial port
-     * implementation
+     * implementation.
      *
      * @param object Object to store, of type AbstractSerialConnectionConfig
      * @return Element containing the complete info
@@ -114,8 +114,10 @@ abstract public class AbstractSerialConnectionConfigXml extends AbstractConnecti
         // once all the configure processing has happened, do any
         // extra config
         unpackElement(shared, perNode);
-        int turnoutInterval = Integer.parseInt(perNode.getAttribute("turnoutInterval").getValue());
-        adapter.getSystemConnectionMemo().setInterval(turnoutInterval);
+        String turnoutInterval = perNode.getAttribute("turnoutInterval").getValue();
+        if (turnoutInterval != null) {
+            adapter.getSystemConnectionMemo().setInterval(Integer.parseInt(turnoutInterval)); // defaults to 0
+        }
         return result;
     }
 
