@@ -114,9 +114,8 @@ abstract public class AbstractSerialConnectionConfigXml extends AbstractConnecti
         // once all the configure processing has happened, do any
         // extra config
         unpackElement(shared, perNode);
-        String turnoutInterval = perNode.getAttribute("turnoutInterval").getValue();
-        if (turnoutInterval != null) {
-            adapter.getSystemConnectionMemo().setInterval(Integer.parseInt(turnoutInterval)); // defaults to 0
+        if (perNode.getAttribute("turnoutInterval") != null) { // migrate existing profile, defaults to 0 ms in memo
+            adapter.getSystemConnectionMemo().setInterval(Integer.parseInt(perNode.getAttribute("turnoutInterval").getValue()));
         }
         return result;
     }
