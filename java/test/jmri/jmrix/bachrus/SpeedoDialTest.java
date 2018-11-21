@@ -1,6 +1,7 @@
 package jmri.jmrix.bachrus;
 
 import java.awt.GraphicsEnvironment;
+import org.netbeans.jemmy.operators.JFrameOperator;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 
@@ -24,13 +25,13 @@ public class SpeedoDialTest {
         // the overriden paint method.
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         jmri.util.JmriJFrame frame = new jmri.util.JmriJFrame("SpeedoDial test frame");
-        frame.getContentPane().setPreferredSize(new java.awt.Dimension(600, 300));;
+        frame.getContentPane().setPreferredSize(new java.awt.Dimension(600, 300));
         frame.getContentPane().add(dial);
         frame.pack();
         frame.setVisible(true);
         dial.reset();
-        frame.setVisible(false);
-        frame.dispose();
+        jmri.util.JUnitUtil.waitFor(() -> { return dial.isVisible(); },"dial visible");
+        new JFrameOperator("SpeedoDial test frame").requestClose();
     }
 
     // The minimal setup for log4J
