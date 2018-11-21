@@ -1188,7 +1188,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
             update = true;
         }
 
-        if (layout.getScale().equals(newScale)) {
+        if (!layout.getScale().equals(newScale)) {
             try {
                 layout.setScale(newScale);
                 update = true;

@@ -184,6 +184,8 @@
 
 <mapID target="html.hardware.SRCP.index_connecting" url="html/hardware/SRCP/index.shtml#connecting"/>
 
+<mapID target="package.jmri.jmrit.operations.Operations_TrainSchedules" url="package/jmri/jmrit/operations/Operations.shtml#TrainSchedules"/>
+
 <mapID target="package.apps.TabbedPreferences_Simple_Server" url="package/apps/TabbedPreferences.shtml#Simple_Server"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_CopyTrain" url="package/jmri/jmrit/operations/Operations.shtml#CopyTrain"/>
@@ -1422,8 +1424,6 @@
 
 <mapID target="package.jmri.jmrit.powerpanel.PowerPanelFrame" url="package/jmri/jmrit/powerpanel/PowerPanelFrame.shtml"/>
 
-<mapID target="package.jmri.jmrit.operations.Operations_Timetable" url="package/jmri/jmrit/operations/Operations.shtml#Timetable"/>
-
 <mapID target="html.hardware.loconet.StandaloneLocoNet_routeconnprefix" url="html/hardware/loconet/StandaloneLocoNet.shtml#routeconnprefix"/>
 
 <mapID target="html.hardware.cmri.CMRI_L580" url="html/hardware/cmri/CMRI.shtml#L580"/>
@@ -1787,6 +1787,8 @@
 <mapID target="html.apps.DecoderPro.FAQ_update" url="html/apps/DecoderPro/FAQ.shtml#update"/>
 
 <mapID target="html.hardware.loconet.StandaloneLocoNet_isolthrdetsig" url="html/hardware/loconet/StandaloneLocoNet.shtml#isolthrdetsig"/>
+
+<mapID target="html.tools.TimeTable_technical" url="html/tools/TimeTable.shtml#technical"/>
 
 <mapID target="manual.DecoderPro3.Main_NCE_EditMacro" url="manual/DecoderPro3/Main_NCE.shtml#EditMacro"/>
 
@@ -4033,6 +4035,8 @@
 <mapID target="html.hardware.loconet.StandaloneLocoNet_pseudoground" url="html/hardware/loconet/StandaloneLocoNet.shtml#pseudoground"/>
 
 <mapID target="html.doc.Technical.I8N_bundlekeysreport" url="html/doc/Technical/I8N.shtml#bundlekeysreport"/>
+
+<mapID target="html.doc.Technical.ProfileFileStructure" url="html/doc/Technical/ProfileFileStructure.shtml"/>
 
 <mapID target="manual.DecoderPro3.Main_OakTreeSystems" url="manual/DecoderPro3/Main_OakTreeSystems.shtml"/>
 
