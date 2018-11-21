@@ -41,7 +41,11 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
         // a human-readable turnout number must be specified!
         super(prefix + "T" + number);  // can't use prefix here, as still in construction
         _prefix = prefix;
-        setOutputInterval(controller.getSystemConnectionMemo().getInterval()); // why is this needed?
+        if (this.controller != null) {
+            setOutputInterval(controller.getSystemConnectionMemo().getInterval()); // why is this needed?
+        } else {
+            log.warn("No LocoNet connection, turnout won't update");
+        }
         log.debug("new turnout {}", number);
         if (number < NmraPacket.accIdLowLimit || number > NmraPacket.accIdAltHighLimit) {
             throw new IllegalArgumentException("Turnout value: " + number // NOI18N
