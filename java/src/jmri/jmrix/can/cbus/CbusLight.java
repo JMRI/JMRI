@@ -105,6 +105,33 @@ public class CbusLight extends AbstractLight
             setState(OFF);
         }
     }
+    
+    /**
+     * Package method returning CanMessage for the On Light Address
+     */    
+    public CanMessage getAddrOn(){
+        CanMessage m;
+        m = addrOn.makeMessage(tc.getCanid());
+        return m;
+    }
+    
+    /**
+     * Package method returning CanMessage for the Off Light Address
+     */    
+    public CanMessage getAddrOff(){
+        CanMessage m;
+        m = addrOff.makeMessage(tc.getCanid());
+        return m;
+    }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void dispose() {
+        tc.removeCanListener(this);
+        super.dispose();
+    }    
+    
     private static final Logger log = LoggerFactory.getLogger(CbusLight.class);
 }

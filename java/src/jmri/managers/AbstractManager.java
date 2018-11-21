@@ -185,9 +185,9 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         registerUserName(s);
 
         // notifications
-        firePropertyChange("length", null, _beans.size());
         int position = getPosition(s);
         fireDataListenersAdded(position, position, s);
+        firePropertyChange("length", null, _beans.size());
         // listen for name and state changes to forward
         s.addPropertyChangeListener(this, "", "Manager");
     }
