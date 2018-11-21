@@ -25,9 +25,13 @@ public class MultiThrottleStealTest {
        // the throttle manager send a steal request, which triggers a message 
        // from the controller to the device 
        Assert.assertEquals("outgoing message after throttle request", "MASL1234<;>L1234",cis.getLastPacket() );
+       // normally the ThrottleControllerListener notifies the throttle of 
+       // a canceled request.
+       throttle.canceledThrottleRequest("L1234");
        // the device then confirms the steal.
        throttle.handleMessage("SL1234<;>L1234");
        // and the sequence continues as normal.
+       jmri.util.JUnitUtil.waitFor( () -> { return tcls.hasAddressBeenFound(); }," Address not found");
        Assert.assertTrue("Address Found",tcls.hasAddressBeenFound());
        // then release it.
        throttle.handleMessage("-L1234<;>r");
@@ -48,6 +52,9 @@ public class MultiThrottleStealTest {
        Assert.assertFalse("Address Found",tcls.hasAddressBeenFound());
        // from the controller to the device 
        Assert.assertEquals("outgoing message after throttle request", "MASL4321<;>L4321",cis.getLastPacket() );
+       // normally the ThrottleControllerListener notifies the throttle of 
+       // a canceled request.
+       throttle.canceledThrottleRequest("L4321");
        // the device then confirms the steal.
        throttle.handleMessage("SL4321<;>L4321");
        // and the sequence continues as normal.
