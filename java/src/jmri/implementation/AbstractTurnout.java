@@ -143,7 +143,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
      * <p>
      * Read and change from e.g. XNetTurnout extensions and scripts using #setOutputInterval(int)
      */
-    private static int TURNOUT_INTERVAL = InstanceManager.turnoutManagerInstance().getInterval();
+    private int TURNOUT_INTERVAL = InstanceManager.turnoutManagerInstance().getInterval();
 
     public void setOutputInterval(int newInterval) {
         TURNOUT_INTERVAL = newInterval;
