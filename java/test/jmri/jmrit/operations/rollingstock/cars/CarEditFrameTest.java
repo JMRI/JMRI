@@ -379,8 +379,8 @@ public class CarEditFrameTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeave(f.saveButton);
         // Change all car type to caboose dialog window should appear
         // need to push the "No" button in the dialog window to close
-        JemmyUtil.pressDialogButton(f,
-                Bundle.getMessage("carModifyAllType", new Object[]{Bundle.getMessage("Caboose")}),
+        JemmyUtil.pressDialogButton(f, MessageFormat.format(
+                Bundle.getMessage("carModifyAllType"), new Object[]{Bundle.getMessage("Caboose")}),
                 Bundle.getMessage("ButtonNo"));
 
         Assert.assertTrue("now a caboose", c6.isCaboose());
@@ -391,8 +391,8 @@ public class CarEditFrameTest extends OperationsTestCase {
         Assert.assertFalse("still no fred", c6.hasFred());
         JemmyUtil.enterClickAndLeave(f.saveButton);
         // need to push the "No" button in the dialog window to close
-        JemmyUtil.pressDialogButton(f,
-                Bundle.getMessage("carModifyAllType", new Object[]{Bundle.getMessage("Caboose")}),
+        JemmyUtil.pressDialogButton(f, MessageFormat.format(
+                Bundle.getMessage("carModifyAllType"), new Object[]{Bundle.getMessage("Caboose")}),
                 Bundle.getMessage("ButtonNo"));
         Assert.assertFalse("no longer a caboose", c6.isCaboose());
         Assert.assertTrue("now has a fred", c6.hasFred());
@@ -402,8 +402,8 @@ public class CarEditFrameTest extends OperationsTestCase {
         Assert.assertFalse("still not hazardous 3", c6.isHazardous());
         JemmyUtil.enterClickAndLeave(f.saveButton);
         // need to push the "No" button in the dialog window to close
-        JemmyUtil.pressDialogButton(f,
-                Bundle.getMessage("carModifyAllType", new Object[]{Bundle.getMessage("Caboose")}),
+        JemmyUtil.pressDialogButton(f, MessageFormat.format(
+                Bundle.getMessage("carModifyAllType"), new Object[]{Bundle.getMessage("Caboose")}),
                 Bundle.getMessage("ButtonNo"));
         Assert.assertFalse("still no longer a caboose", c6.isCaboose());
         Assert.assertTrue("still has a fred", c6.hasFred());
@@ -413,8 +413,8 @@ public class CarEditFrameTest extends OperationsTestCase {
         Assert.assertFalse("not utility", c6.isUtility());
         JemmyUtil.enterClickAndLeave(f.saveButton);
         // need to push the "No" button in the dialog window to close
-        JemmyUtil.pressDialogButton(f,
-                Bundle.getMessage("carModifyAllType", new Object[]{Bundle.getMessage("Caboose")}),
+        JemmyUtil.pressDialogButton(f,MessageFormat.format(
+                Bundle.getMessage("carModifyAllType"), new Object[]{Bundle.getMessage("Caboose")}),
                 Bundle.getMessage("ButtonNo"));
         Assert.assertTrue("now utility", c6.isUtility());
         Assert.assertFalse("not a caboose", c6.isCaboose());
