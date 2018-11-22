@@ -586,18 +586,29 @@ public class NXFrame extends WarrantRoute {
         if (len <= 0) {
             return lengthError(bo.getPathName(), bo.getBlock().getDisplayName(), len, oDist, true);                        
         }
+        if (oDist < 0) {
+            return Bundle.getMessage("MustBeFloat", oDist);
+        }
         if (_originUnits.getText().equals("In")){
             oDist *= 25.4f;
-            if (oDist > 0 && oDist < len) {
+            if (oDist >= 0 && oDist <= len) {
                 _startDist = oDist;
             } else {
+                if (oDist > len) {
+                    float num = Math.round(len * 100 / 25.4f);
+                    _originDist.setText(formatter.format(num / 100f));
+                }
                 return lengthError(bo.getPathName(), bo.getBlock().getDisplayName(), len, oDist, true);            
             }
         } else {
             oDist *= 10f;
-            if (oDist > 0 && oDist < len) {
+            if (oDist >= 0 && oDist <= len) {
                 _startDist = oDist;
             } else {
+                if (oDist > len) {
+                    float num = Math.round(len * 100);
+                    _originDist.setText(formatter.format(num / 1000f));
+                }
                 return lengthError(bo.getPathName(), bo.getBlock().getDisplayName(), len, oDist, false);            
             }
         }
@@ -606,18 +617,29 @@ public class NXFrame extends WarrantRoute {
         if (len <= 0) {
             return lengthError(bo.getPathName(), bo.getBlock().getDisplayName(), len, oDist, true);                        
         }
+        if (dDist < 0) {
+            return Bundle.getMessage("MustBeFloat", dDist);
+        }
         if (_destUnits.getText().equals("In")) {
             dDist *= 25.4f;
-            if (dDist > 0 && dDist < len) {
+            if (dDist >= 0 && dDist <= len) {
                 _stopDist = dDist;
             } else {
+                if (dDist > len) {
+                    float num = Math.round(len * 100 / 25.4f);
+                    _destDist.setText(formatter.format(num / 100f));
+                }
                 return lengthError(bo.getPathName(), bo.getBlock().getDisplayName(), len, dDist, true);            
             }
         } else {
             dDist *= 10f;
-            if (dDist > 0 && dDist < len) {
+            if (dDist >= 0 && dDist <= len) {
                 _stopDist = dDist;
             } else {
+                if (dDist > len) {
+                    float num = Math.round(len * 100);
+                    _destDist.setText(formatter.format(num / 1000f));
+                }
                 return lengthError(bo.getPathName(), bo.getBlock().getDisplayName(), len, dDist, false);            
             }
         }

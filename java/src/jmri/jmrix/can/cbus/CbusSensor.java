@@ -129,6 +129,32 @@ public class CbusSensor extends AbstractSensor implements CanListener {
     }    
     
     /**
+     * Package method returning CanMessage for the Active Sensor Address
+     */    
+    public CanMessage getAddrActive(){
+        CanMessage m;
+        if (getInverted()){
+            m = addrInactive.makeMessage(tc.getCanid());              
+        } else {
+            m = addrActive.makeMessage(tc.getCanid());
+        }
+        return m;
+    }
+    
+    /**
+     * Package method returning CanMessage for the Inactive Sensor Address
+     */    
+    public CanMessage getAddrInactive(){
+        CanMessage m;
+        if (getInverted()){
+            m = addrActive.makeMessage(tc.getCanid());              
+        } else {
+            m = addrInactive.makeMessage(tc.getCanid());
+        }
+        return m;
+    }    
+    
+    /**
      * Track layout status from messages being sent to CAN
      *
      */

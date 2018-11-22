@@ -22,6 +22,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import jmri.InstanceManager;
@@ -342,8 +343,8 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
             // Tab All or first time opening, default tooltip
             connectionChoice = "TBD";
         }
-        if (senManager.getClass().getName().contains("ProxySensorManager")) {
-            jmri.managers.ProxySensorManager proxy = (jmri.managers.ProxySensorManager) senManager;
+        if (InstanceManager.sensorManagerInstance().getClass().getName().contains("ProxySensorManager")) {            
+            jmri.managers.ProxySensorManager proxy = (jmri.managers.ProxySensorManager) InstanceManager.sensorManagerInstance();
             List<Manager<Sensor>> managerList = proxy.getDisplayOrderManagerList();
             String systemPrefix = ConnectionNameFromSystemName.getPrefixFromName(connectionChoice);
             for (Manager<Sensor> mgr : managerList) {
@@ -360,7 +361,9 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
             log.debug("S add box enabled2");
             // get tooltip from sensor manager
             addEntryToolTip = senManager.getEntryToolTip();
-            log.debug("SensorManager tip");
+        }
+        else {
+            log.warn("Unable to set tooltip or Range Allowed Box");
         }
         // show hwAddressTextField field tooltip in the Add Sensor pane that matches system connection selected from combobox
         hardwareAddressTextField.setToolTipText("<html>"
@@ -378,39 +381,43 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
     }
 
     protected void setDefaultDebounce(JFrame _who) {
-        JTextField activeField = new JTextField(String.valueOf(senManager.getDefaultSensorDebounceGoingActive()), 4);
-        JTextField inActiveField = new JTextField(String.valueOf(senManager.getDefaultSensorDebounceGoingInActive()), 4);
+        SpinnerNumberModel activeSpinnerModel = new SpinnerNumberModel((Long)senManager.getDefaultSensorDebounceGoingActive(), (Long)0L, Sensor.MAX_DEBOUNCE, (Long)1L); // MAX_DEBOUNCE is a Long; casts are to force needed signature
+        JSpinner activeSpinner = new JSpinner(activeSpinnerModel);
+        activeSpinner.setPreferredSize(new JTextField(Long.toString(Sensor.MAX_DEBOUNCE).length()+1).getPreferredSize());
+        SpinnerNumberModel inActiveSpinnerModel = new SpinnerNumberModel((Long)senManager.getDefaultSensorDebounceGoingInActive(), (Long)0L, Sensor.MAX_DEBOUNCE, (Long)1L); // MAX_DEBOUNCE is a Long; casts are to force needed signature
+        JSpinner inActiveSpinner = new JSpinner(inActiveSpinnerModel);
+        inActiveSpinner.setPreferredSize(new JTextField(Long.toString(Sensor.MAX_DEBOUNCE).length()+1).getPreferredSize());
+
+        JPanel input = new JPanel(); // panel to hold formatted input for dialog
+        input.setLayout(new BoxLayout(input, BoxLayout.Y_AXIS));
+
+        JTextArea message = new JTextArea(Bundle.getMessage("SensorGlobalDebounceMessageBox")); // multi line
+        message.setEditable(false);
+        message.setOpaque(false);
+        input.add(message);
 
         JPanel active = new JPanel();
         active.add(new JLabel(Bundle.getMessage("SensorActiveTimer")));
-        active.add(activeField);
+        active.add(activeSpinner);
+        input.add(active);
 
         JPanel inActive = new JPanel();
         inActive.add(new JLabel(Bundle.getMessage("SensorInactiveTimer")));
-        inActive.add(inActiveField);
+        inActive.add(inActiveSpinner);
+        input.add(inActive);
 
         int retval = JOptionPane.showOptionDialog(_who,
-                Bundle.getMessage("SensorGlobalDebounceMessageBox"), Bundle.getMessage("SensorGlobalDebounceMessageTitle"),
+                input, Bundle.getMessage("SensorGlobalDebounceMessageTitle"),
                 0, JOptionPane.INFORMATION_MESSAGE, null,
-                new Object[]{Bundle.getMessage("ButtonCancel"), Bundle.getMessage("ButtonOK"), active, inActive}, null);
-        if (retval != 1) {
+                new Object[]{Bundle.getMessage("ButtonOK"), Bundle.getMessage("ButtonCancel")}, null);
+        log.debug("dialog retval={}", retval);
+        if (retval != 0) {
             return;
         }
 
-        //We will allow the sensor manager to handle checking if the values have changed
-        try {
-            long goingActive = Long.parseLong(activeField.getText());
-            senManager.setDefaultSensorDebounceGoingActive(goingActive);
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(_who, Bundle.getMessage("SensorDebounceActError") + "\n\"" + activeField.getText() + "\"", "Input Error", JOptionPane.ERROR_MESSAGE);
-        }
-
-        try {
-            long goingInActive = Long.parseLong(inActiveField.getText());
-            senManager.setDefaultSensorDebounceGoingInActive(goingInActive);
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(_who, Bundle.getMessage("SensorDebounceActError") + "\n\"" + inActiveField.getText() + "\"", "Input Error", JOptionPane.ERROR_MESSAGE);
-        }
+        // Allow the sensor manager to handle checking if the values have changed
+        senManager.setDefaultSensorDebounceGoingActive((Long) activeSpinner.getValue());
+        senManager.setDefaultSensorDebounceGoingInActive((Long) inActiveSpinner.getValue());
         m.fireTableDataChanged();
     }
 
@@ -430,11 +437,18 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
             default:
                 stateCombo.setSelectedItem(Bundle.getMessage("BeanStateUnknown"));
         }
+
+        JPanel input = new JPanel(); // panel to hold formatted input for dialog
+        input.add(new JLabel(Bundle.getMessage("SensorInitialStateMessageBox")));
+        JPanel stateBoxPane = new JPanel();
+        stateBoxPane.add(stateCombo);
+        input.add(stateBoxPane);
+
         int retval = JOptionPane.showOptionDialog(_who,
-                Bundle.getMessage("SensorInitialStateMessageBox"), Bundle.getMessage("InitialSensorState"),
+                input, Bundle.getMessage("InitialSensorState"),
                 0, JOptionPane.INFORMATION_MESSAGE, null,
-                new Object[]{Bundle.getMessage("ButtonCancel"), Bundle.getMessage("ButtonOK"), stateCombo}, null);
-        if (retval != 1) {
+                new Object[]{Bundle.getMessage("ButtonOK"), Bundle.getMessage("ButtonCancel")}, null);
+        if (retval != 0) {
             return;
         }
         int defaultState = jmri.Sensor.UNKNOWN;
@@ -448,7 +462,6 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
         }
 
         jmri.jmrix.internal.InternalSensorManager.setDefaultStateForNewSensors(defaultState);
-
     }
 
     /**

@@ -112,7 +112,32 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
             tc.sendCanMessage(m, this);
         }
     }
-
+    
+    /**
+     * Package method returning CanMessage for the Thrown Turnout Address
+     */    
+    public CanMessage getAddrThrown(){
+        CanMessage m;
+        if (getInverted()){
+            m = addrClosed.makeMessage(tc.getCanid());
+        } else {
+            m = addrThrown.makeMessage(tc.getCanid());
+        }
+        return m;
+    }
+    
+    /**
+     * Package method returning CanMessage for the Closed Turnout Address
+     */    
+    public CanMessage getAddrClosed(){
+        CanMessage m;
+        if (getInverted()){
+            m = addrThrown.makeMessage(tc.getCanid());
+        } else {
+            m = addrClosed.makeMessage(tc.getCanid());
+        }
+        return m;
+    }
     
     /**
      * {@inheritDoc}
@@ -155,5 +180,15 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
         return true;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void dispose() {
+        tc.removeCanListener(this);
+        super.dispose();
+    }    
+    
+    
     private final static Logger log = LoggerFactory.getLogger(CbusTurnout.class);
 }

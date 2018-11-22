@@ -50,6 +50,7 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
         log.debug("default Route {} created", systemName);
     }
 
+    /** {@inheritDoc} */
     @Override
     public String getBeanType() {
         return Bundle.getMessage("BeanNameRoute");
@@ -230,11 +231,13 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
     private boolean busy = false;
     private boolean _enabled = true;
 
+    /** {@inheritDoc} */
     @Override
     public boolean getEnabled() {
         return _enabled;
     }
 
+    /** {@inheritDoc} */
     @Override
     public void setEnabled(boolean v) {
         boolean old = _enabled;
@@ -246,11 +249,13 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
 
     private boolean _locked = false;
 
+    /** {@inheritDoc} */
     @Override
     public boolean getLocked() {
         return _locked;
     }
 
+    /** {@inheritDoc} */
     @Override
     public void setLocked(boolean v) {
         lockTurnouts(v);
@@ -261,10 +266,7 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
         }
     }
 
-    /**
-     * Determine if route can be locked. Requres at least one turnout that can
-     * be locked
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean canLock() {
         for (int i = 0; i < _outputTurnoutList.size(); i++) {
@@ -275,14 +277,7 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
         return false;
     }
 
-    /**
-     * Add an output Turnout to this Route
-     *
-     * @param turnoutName  The turnout system name
-     * @param turnoutState must be Turnout.CLOSED, Turnout.THROWN, or
-     *                     Route.TOGGLE, which determines how the Turnout is to
-     *                     be switched when this Route is set
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean addOutputTurnout(String turnoutName, int turnoutState) {
         OutputTurnout outputTurnout = new OutputTurnout(turnoutName);
@@ -293,23 +288,19 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
         return true;
     }
 
-    /**
-     * Delete all output Turnouts from this Route
-     */
+    /** {@inheritDoc} */
     @Override
     public void clearOutputTurnouts() {
         _outputTurnoutList = new ArrayList<>();
     }
 
+    /** {@inheritDoc} */
     @Override
     public int getNumOutputTurnouts() {
         return _outputTurnoutList.size();
     }
 
-    /**
-     * Method to get a Route Turnout Name by Index Returns null if there is no
-     * turnout with that index
-     */
+    /** {@inheritDoc} */
     @Override
     public String getOutputTurnoutByIndex(int index) {
         try {
@@ -319,12 +310,7 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
         }
     }
 
-    /**
-     * Method to inquire if a Turnout is included in this Route.
-     * <P>
-     * Complicated by the fact that either the argument or the internal names
-     * might be user or system names
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean isOutputTurnoutIncluded(String turnoutName) throws IllegalArgumentException {
         Turnout t1 = InstanceManager.turnoutManagerInstance().provideTurnout(turnoutName);
@@ -355,13 +341,7 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
 
     }
 
-    /**
-     * Method to get the Set State of a Turnout included in this Route
-     * <P>
-     * Noth the input and internal names can be either a user or system name
-     *
-     * @return -1 if there are less than 'k' Turnouts defined
-     */
+    /** {@inheritDoc} */
     @Override
     public int getOutputTurnoutSetState(String name) throws IllegalArgumentException {
         Turnout t1 = InstanceManager.turnoutManagerInstance().provideTurnout(name);
@@ -374,11 +354,7 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
         return -1;
     }
 
-    /**
-     * Method to return the 'k'th Turnout of the Route.
-     *
-     * @return null if there are less than 'k' Turnouts defined
-     */
+    /** {@inheritDoc} */
     @Override
     public Turnout getOutputTurnout(int k) {
         try {
@@ -388,10 +364,7 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
         }
     }
 
-    /**
-     * Method to get the desired state of 'k'th Turnout of the Route. Returns -1
-     * if there are less than 'k' Turnouts defined
-     */
+    /** {@inheritDoc} */
     @Override
     public int getOutputTurnoutState(int k) {
         try {
@@ -401,14 +374,7 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
         }
     }
 
-    /**
-     * Add an output Sensor to this Route
-     *
-     * @param sensorName The sensor name either system or user
-     * @param state      must be Sensor.ACTIVE, Sensor.INACTIVE, or
-     *                   Route.TOGGLE, which determines how the Sensor is to be
-     *                   set when this Route is set
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean addOutputSensor(String sensorName, int state) {
         OutputSensor outputSensor = new OutputSensor(sensorName);
@@ -419,9 +385,7 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
         return true;
     }
 
-    /**
-     * Delete all output Sensors from this Route
-     */
+    /** {@inheritDoc} */
     @Override
     public void clearOutputSensors() {
         _outputSensorList = new ArrayList<>();
@@ -432,10 +396,7 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
         return _outputSensorList.size();
     }
 
-    /**
-     * Method to get an ouput Sensor name by Index Returns null if there is no
-     * sensor with that index
-     */
+    /** {@inheritDoc} */
     @Override
     public String getOutputSensorByIndex(int index) {
         try {
@@ -445,9 +406,7 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
         }
     }
 
-    /**
-     * Method to inquire if a Sensor is included in this Route
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean isOutputSensorIncluded(String sensorName) throws IllegalArgumentException {
         Sensor s1 = InstanceManager.sensorManagerInstance().provideSensor(sensorName);
@@ -464,12 +423,7 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
         return false;
     }
 
-    /**
-     * Method to get the Set State of a Sensor included in this Route If the
-     * Sensor is not found, -1 is returned.
-     * <P>
-     * Both the input or internal names can be either system or user names
-     */
+    /** {@inheritDoc} */
     @Override
     public int getOutputSensorSetState(String name) throws IllegalArgumentException {
         Sensor s1 = InstanceManager.sensorManagerInstance().provideSensor(name);
@@ -482,11 +436,7 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
         return -1;
     }
 
-    /**
-     * Method to return the 'k'th Sensor of the Route.
-     *
-     * @return null if there are less than 'k' Sensors defined
-     */
+    /** {@inheritDoc} */
     @Override
     public Sensor getOutputSensor(int k) {
         try {
@@ -496,10 +446,7 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
         }
     }
 
-    /**
-     * Method to get the desired state of 'k'th Sensor of the Route. Returns -1
-     * if there are less than 'k' Sensors defined
-     */
+    /** {@inheritDoc} */
     @Override
     public int getOutputSensorState(int k) {
         try {
@@ -522,41 +469,31 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
         }
     }
 
-    /**
-     * Set name of script file to be run when Route is fired
-     */
+    /** {@inheritDoc} */
     @Override
     public void setOutputScriptName(String filename) {
         scriptFilename = filename;
     }
 
-    /**
-     * Get name of script file to be run when Route is fired
-     */
+    /** {@inheritDoc} */
     @Override
     public String getOutputScriptName() {
         return scriptFilename;
     }
 
-    /**
-     * Set name of sound file to be played when Route is fired
-     */
+    /** {@inheritDoc} */
     @Override
     public void setOutputSoundName(String filename) {
         soundFilename = filename;
     }
 
-    /**
-     * Get name of sound file to be played when Route is fired
-     */
+    /** {@inheritDoc} */
     @Override
     public String getOutputSoundName() {
         return soundFilename;
     }
 
-    /**
-     * Method to set turnouts aligned sensor
-     */
+    /** {@inheritDoc} */
     @Override
     public void setTurnoutsAlignedSensor(String sensorName) throws IllegalArgumentException {
         log.debug("setTurnoutsAlignedSensor {} {}", getSystemName(), sensorName);
@@ -570,9 +507,7 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
         mTurnoutsAlignedNamedSensor = nbhm.getNamedBeanHandle(mTurnoutsAlignedSensor, s);
     }
 
-    /**
-     * Method to get turnouts aligned sensor
-     */
+    /** {@inheritDoc} */
     @Override
     public String getTurnoutsAlignedSensor() {
         if (mTurnoutsAlignedNamedSensor != null) {
@@ -581,6 +516,7 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
         return mTurnoutsAlignedSensor;
     }
 
+    /** {@inheritDoc} */
     @Override
     @CheckForNull
     public Sensor getTurnoutsAlgdSensor() throws IllegalArgumentException {
@@ -595,9 +531,7 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
     }
     // Inputs ----------------
 
-    /**
-     * Method to delete all control Sensors from this Route
-     */
+    /** {@inheritDoc} */
     @Override
     public void clearRouteSensors() {
         _controlSensorList = new ArrayList<>();
@@ -621,20 +555,12 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
         return false;
     }
 
-    /**
-     * Method to add a Sensor to the list of control Sensors for this Route.
-     *
-     * @param sensorName either a system or username of a sensor
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean addSensorToRoute(String sensorName, int mode) {
+        log.debug("addSensorToRoute({}, {}) as {} in {}", sensorName, mode, _controlSensorList.size(), getSystemName());
 
-        if (_controlSensorList.size() >= MAX_CONTROL_SENSORS) {
-            // reached maximum
-            log.warn("Reached maximum number of control Sensors for Route: {}", getSystemName());
-        }
         ControlSensor sensor = new ControlSensor(sensorName);
-        log.debug("addSensorToRoute {} {}", getSystemName(), sensorName);
         if (!sensor.setState(mode)) {
             return false;
         }
@@ -644,15 +570,16 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
         } else {
             _controlSensorList.add(sensor);
         }
+
+        if (_controlSensorList.size() > MAX_CONTROL_SENSORS) {
+            // reached maximum
+            log.warn("Sensor {} exceeded maximum number of control Sensors for Route: {}", sensorName, getSystemName());
+        }
+
         return true;
     }
 
-    /**
-     * Method to get the Name of a control Sensor in this Route 'index' is the
-     * index in the Sensor array of the requested Sensor. If there is no Sensor
-     * with that 'index', or if 'index' is not in the range 0 thru
-     * MAX_SENSORS-1, null is returned.
-     */
+    /** {@inheritDoc} */
     @Override
     public String getRouteSensorName(int index) {
         try {
@@ -662,12 +589,7 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
         }
     }
 
-    /**
-     * Method to get the control Sensor in this Route 'index' is the index in
-     * the Sensor array of the requested Sensor. If there is no Sensor with that
-     * 'index', or if 'index' is not in the range 0 thru MAX_SENSORS-1, null is
-     * returned.
-     */
+    /** {@inheritDoc} */
     @Override
     public Sensor getRouteSensor(int index) {
         try {
@@ -677,12 +599,7 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
         }
     }
 
-    /**
-     * Method to get the mode associated with a control Sensor in this Route
-     * 'index' is the index in the Sensor array of the requested Sensor. If
-     * there is no Sensor with that 'index', or if 'index' is not in the range 0
-     * thru MAX_SENSORS-1, ONACTIVE is returned
-     */
+    /** {@inheritDoc} */
     @Override
     public int getRouteSensorMode(int index) {
         try {
@@ -715,9 +632,7 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
         }
     }
 
-    /**
-     * Method to set the Name of a control Turnout for this Route
-     */
+    /** {@inheritDoc} */
     @Override
     public void setControlTurnout(String turnoutName) throws IllegalArgumentException {
         mControlTurnout = turnoutName;
@@ -729,9 +644,7 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
         mControlNamedTurnout = nbhm.getNamedBeanHandle(mControlTurnout, t);
     }
 
-    /**
-     * Method to get the Name of a control Turnout for this Route
-     */
+    /** {@inheritDoc} */
     @Override
     public String getControlTurnout() {
         if (mControlNamedTurnout != null) {
@@ -740,6 +653,7 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
         return mControlTurnout;
     }
 
+    /** {@inheritDoc} */
     @Override
     @CheckForNull
     public Turnout getCtlTurnout() throws IllegalArgumentException {
@@ -753,11 +667,7 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
         return null;
     }
 
-    /**
-     * Method to set the Name of a lock control Turnout for this Route
-     *
-     * @param turnoutName the turnout name
-     */
+    /** {@inheritDoc} */
     @Override
     public void setLockControlTurnout(@Nullable String turnoutName) throws IllegalArgumentException {
         mLockControlTurnout = turnoutName;
@@ -769,9 +679,7 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
         mLockControlNamedTurnout = nbhm.getNamedBeanHandle(mLockControlTurnout, t);
     }
 
-    /**
-     * Method to get the Name of a lock control Turnout for this Route
-     */
+    /** {@inheritDoc} */
     @Override
     public String getLockControlTurnout() {
         if (mLockControlNamedTurnout != null) {
@@ -780,6 +688,7 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
         return mLockControlTurnout;
     }
 
+    /** {@inheritDoc} */
     @Override
     @CheckForNull
     public Turnout getLockCtlTurnout() throws IllegalArgumentException {
@@ -793,9 +702,7 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
         return null;
     }
 
-    /**
-     * Method to set delay (milliseconds) between issuing Turnout commands
-     */
+    /** {@inheritDoc} */
     @Override
     public void setRouteCommandDelay(int delay) {
         if (delay >= 0) {
@@ -803,17 +710,13 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
         }
     }
 
-    /**
-     * Method to get delay (milliseconds) between issuing Turnout commands
-     */
+    /** {@inheritDoc} */
     @Override
     public int getRouteCommandDelay() {
         return mDelay;
     }
 
-    /**
-     * Method to set the State of control Turnout that fires this Route
-     */
+    /** {@inheritDoc} */
     @Override
     public void setControlTurnoutState(int turnoutState) {
         if ((turnoutState == Route.ONTHROWN)
@@ -827,17 +730,13 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
         }
     }
 
-    /**
-     * Method to get the State of control Turnout that fires this Route
-     */
+    /** {@inheritDoc} */
     @Override
     public int getControlTurnoutState() {
         return (mControlTurnoutState);
     }
 
-    /**
-     * Method to set the State of lock control Turnout
-     */
+    /** {@inheritDoc} */
     @Override
     public void setLockControlTurnoutState(int turnoutState) {
         if ((turnoutState == Route.ONTHROWN)
@@ -849,9 +748,7 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
         }
     }
 
-    /**
-     * Method to get the State of lock control Turnout
-     */
+    /** {@inheritDoc} */
     @Override
     public int getLockControlTurnoutState() {
         return (mLockControlTurnoutState);
@@ -868,11 +765,7 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
         }
     }
 
-    /**
-     * Method to set the Route Sets all Route Turnouts to the state shown in the
-     * Route definition This call is ignored if the Route is 'busy', i.e., if
-     * there is a thread currently sending commands to this Route's turnouts.
-     */
+    /** {@inheritDoc} */
     @Override
     public void setRoute() {
         if ((!_outputTurnoutList.isEmpty())
@@ -1058,11 +951,7 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
         }
     }
 
-    /**
-     * Method to activate the Route via Sensors and control Turnout Sets up for
-     * Route activation based on a list of Sensors and a control Turnout
-     * Registers to receive known state changes for output turnouts
-     */
+    /** {@inheritDoc} */
     @Override
     public void activateRoute() {
         activatedRoute = true;
@@ -1143,10 +1032,7 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
         return false;
     }
 
-    /**
-     * Method to deactivate the Route Deactivates Route based on a list of
-     * Sensors and two control Turnouts
-     */
+    /** {@inheritDoc} */
     @Override
     public void deActivateRoute() {
         //Check that the route isn't already deactived.
@@ -1229,12 +1115,7 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
         return busy;
     }
 
-    /**
-     * Get the turnouts aligned sensor state.
-     *
-     * @return {@link jmri.Sensor#getKnownState()} for the sensor returned by
-     *         {@link #getTurnoutsAlgdSensor()} or {@link #UNKNOWN}.
-     */
+    /** {@inheritDoc} */
     @Override
     public int getState() {
         Sensor s = getTurnoutsAlgdSensor();
@@ -1244,18 +1125,13 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
         return UNKNOWN;
     }
 
-    /**
-     * Call {@link #setRoute()} ignoring the passed in value.
-     * <p>
-     * Use {@link #setRoute()} instead.
-     *
-     * @param state ignored
-     */
+    /** {@inheritDoc} */
     @Override
     public void setState(int state) {
         setRoute();
     }
 
+    /** {@inheritDoc} */
     @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
         NamedBean nb = (NamedBean) evt.getOldValue();
