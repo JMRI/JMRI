@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Store the JMRI configuration information as XML.
- * <P>
+ * <p>
  * Note that this does not store preferences, tools or user information in the
  * file. This is not a complete store! See {@link jmri.ConfigureManager} for
  * information on the various types of information stored in configuration
@@ -27,7 +27,7 @@ public class StoreXmlConfigAction extends LoadStoreBaseAction {
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle");
 
     public StoreXmlConfigAction() {
-        this("Store configuration ...");
+        this("Store configuration...");
     }
 
     public StoreXmlConfigAction(String s) {
@@ -110,4 +110,5 @@ public class StoreXmlConfigAction extends LoadStoreBaseAction {
 
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(StoreXmlConfigAction.class);
+
 }
