@@ -197,7 +197,7 @@ public class WarrantTest {
 
         jmri.util.JUnitUtil.waitFor(() -> {
             String m =  warrant.getRunningMessage();
-            return m.endsWith("Cmd #2.");
+            return m.endsWith("Cmd #2.") || m.endsWith("Cmd #3.");
         }, "Train starts to move after 2nd command");
         jmri.util.JUnitUtil.releaseThread(this, 100); // What should we specifically waitFor?
 
