@@ -37,7 +37,7 @@ import org.slf4j.LoggerFactory;
  * of the macro data word is xFF, then the next byte contains the address of the
  * next macro to be executed by the NCE CS. For example, xFF08 means link to
  * macro 8. NCE uses the NMRA DCC accessory decoder packet format for the word
- * defination of their macros.
+ * definition of their macros.
  *
  * Macro data byte:
  *

@@ -190,6 +190,7 @@ public abstract class TrainCustomCommon {
      *         timeout.
      * @throws InterruptedException if process thread is interrupted
      */
+    @SuppressFBWarnings(value = "UW_UNCOND_WAIT")
     public boolean waitForProcessToComplete() throws InterruptedException {
         boolean status = false;
         synchronized (process) {
