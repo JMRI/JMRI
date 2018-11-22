@@ -121,7 +121,8 @@ public class SignalMastLogicTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        JUnitUtil.setUp();        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.setUp();
+        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
         jmri.util.JUnitUtil.initInternalSensorManager();
         jmri.util.JUnitUtil.initInternalTurnoutManager();
     }
@@ -130,4 +131,5 @@ public class SignalMastLogicTest {
     public void tearDown() {
         JUnitUtil.tearDown();
     }
+
 }

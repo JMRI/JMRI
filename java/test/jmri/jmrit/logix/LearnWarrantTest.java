@@ -94,6 +94,12 @@ public class LearnWarrantTest {
         // occupy starting block
         Sensor sensor = _OBlockMgr.getBySystemName(route[0]).getSensor();
         sensor.setState(Sensor.ACTIVE);
+        
+        OBlock blk = _OBlockMgr.getOBlock(route[0]);
+        JUnitUtil.waitFor(() -> {
+            int state = blk.getState();
+            return  state == (OBlock.ALLOCATED | OBlock.OCCUPIED);
+        }, "Train occupies block ");
         pressButton(jfo, Bundle.getMessage("Start"));
 
         JUnitUtil.waitFor(() -> {

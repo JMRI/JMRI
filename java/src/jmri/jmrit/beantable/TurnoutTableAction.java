@@ -690,9 +690,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
             }
 
             public void comboBoxAction(ActionEvent e) {
-                if (log.isDebugEnabled()) {
-                    log.debug("Combobox change");
-                }
+                log.debug("Combobox change");
                 if (table != null && table.getCellEditor() != null) {
                     table.getCellEditor().stopCellEditing();
                 }
@@ -1156,7 +1154,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
     }
 
     /**
-     * Add the content and make the appropriate selection to a combox box for a
+     * Add the content and make the appropriate selection to a combo box for a
      * turnout's automation choices.
      *
      * @param t  turnout
@@ -1170,9 +1168,10 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
         log.debug("opsCombo start {}", ops.length);
         for (int i = 0; i < ops.length; ++i) {
             if (log.isDebugEnabled()) {
-                log.debug("isDef " + ops[i].isDefinitive()
-                        + " mFMM " + ops[i].matchFeedbackMode(t.getFeedbackMode())
-                        + " isNonce " + ops[i].isNonce());
+                log.debug("isDef {} mFMM {} isNonce {}",
+                        ops[i].isDefinitive(),
+                        ops[i].matchFeedbackMode(t.getFeedbackMode()),
+                        ops[i].isNonce());
             }
             if (!ops[i].isDefinitive()
                     && ops[i].matchFeedbackMode(t.getFeedbackMode())
@@ -1605,9 +1604,9 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
     }
 
     /**
-     * Insert a table specific Operations menu. Account for the Window and Help
+     * Insert table specific Automation and Speeds menus. Account for the Window and Help
      * menus, which are already added to the menu bar as part of the creation of
-     * the JFrame, by adding the Operations menu 2 places earlier unless the
+     * the JFrame, by adding the Automation menu 2 places earlier unless the
      * table is part of the ListedTableFrame, that adds the Help menu later on.
      *
      * @param f the JFrame of this table
@@ -1629,7 +1628,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
         if (menuAbsent) { // create it
             int pos = menuBar.getMenuCount() - 1; // count the number of menus to insert the TableMenu before 'Window' and 'Help'
             int offset = 1;
-            log.debug("setMenuBar number of menu items = " + pos);
+            log.debug("setMenuBar number of menu items = {}", pos);
             for (int i = 0; i <= pos; i++) {
                 if (menuBar.getComponent(i) instanceof JMenu) {
                     if (((JMenu) menuBar.getComponent(i)).getText().equals(Bundle.getMessage("MenuHelp"))) {
@@ -1748,7 +1747,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
                     getBySystemName(testSN);
             if (testLight != null) {
                 // Address (number part) is already used as a Light
-                log.warn("Requested Turnout " + sName + " uses same address as Light " + testSN);
+                log.warn("Requested Turnout {} uses same address as Light {}", sName, testSN);
                 if (!noWarn) {
                     int selectedValue = JOptionPane.showOptionDialog(addFrame,
                             Bundle.getMessage("TurnoutWarn1", sName, testSN)
@@ -1882,15 +1881,15 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
             // Tab All or first time opening, use default tooltip
             connectionChoice = "TBD";
         }
-        if (turnManager.getClass().getName().contains("ProxyTurnoutManager")) {
-            jmri.managers.ProxyTurnoutManager proxy = (jmri.managers.ProxyTurnoutManager) turnManager;
+        if (InstanceManager.turnoutManagerInstance() instanceof jmri.managers.AbstractProxyManager) {
+            jmri.managers.ProxyTurnoutManager proxy = (jmri.managers.ProxyTurnoutManager) InstanceManager.turnoutManagerInstance();
             List<Manager<Turnout>> managerList = proxy.getDisplayOrderManagerList();
             String systemPrefix = ConnectionNameFromSystemName.getPrefixFromName(connectionChoice);
             for (Manager<Turnout> turnout : managerList) {
                 jmri.TurnoutManager mgr = (jmri.TurnoutManager) turnout;
                 if (mgr.getSystemPrefix().equals(systemPrefix)) {
                     rangeBox.setEnabled(mgr.allowMultipleAdditions(systemPrefix));
-                    log.debug("T Add box enabled1");
+                    log.debug("T Add box 1");
                     // get tooltip from ProxyTurnoutManager
                     addEntryToolTip = mgr.getEntryToolTip();
                     break;
@@ -1901,7 +1900,9 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
             log.debug("T Add box enabled2");
             // get tooltip from turnout manager
             addEntryToolTip = turnManager.getEntryToolTip();
-            log.debug("TurnoutManager tip");
+        }
+        else {
+            log.warn("Unable to set tooltip or Range Allowed Box");
         }
         // show sysName (HW address) field tooltip in the Add Turnout pane that matches system connection selected from combobox
         hardwareAddressTextField.setToolTipText("<html>"

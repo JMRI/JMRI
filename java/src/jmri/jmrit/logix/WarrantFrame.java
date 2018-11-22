@@ -916,7 +916,7 @@ public class WarrantFrame extends WarrantRoute {
             msg = Bundle.getMessage("NoRouteSet", _origin.getBlockName(), _destination.getBlockName());
             return msg;
         }
-        msg = _warrant.setRoute(0, orders);     // calls allocateRoute
+        msg = _warrant.setRoute(false, orders);     // calls allocateRoute
         if (msg != null) {
             return msg;
         }

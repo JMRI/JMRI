@@ -534,7 +534,7 @@ public class TimeTableDataManager {
                         stop.setDepartTime(newDepart);
                     }
                 } else {
-                    throw new IllegalArgumentException(TIME_OUT_OF_RANGE);
+                    throw new IllegalArgumentException(String.format("%s~%d~%s", TIME_OUT_OF_RANGE, stop.getSeq(), train.getTrainName()));  // NOI18N
                 }
                 firstStop = false;
                 continue;

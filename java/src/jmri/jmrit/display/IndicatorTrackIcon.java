@@ -279,7 +279,13 @@ public class IndicatorTrackIcon extends PositionableIcon
     private void setStatus(OBlock block, int state) {
         _status = _pathUtil.getStatus(block, state);
         if ((state & (OBlock.OCCUPIED | OBlock.RUNNING)) != 0) {
-            _pathUtil.setLocoIcon(block, getLocation(), getSize(), _editor);
+            // It is rather unpleasant that the following needs to be done in a try-catch, but exceptions have been observed
+            try {
+                _pathUtil.setLocoIcon(block, getLocation(), getSize(), _editor);
+            } catch (Exception e) {
+                log.error("setStatus on indicator track icon failed in thread "+
+                    Thread.currentThread().getName()+" "+Thread.currentThread().getId()+": ", e);
+            }
         }
         repaint();
         if ((block.getState() & OBlock.OUT_OF_SERVICE) != 0) {
