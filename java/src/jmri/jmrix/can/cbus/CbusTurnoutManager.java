@@ -114,8 +114,8 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
         CbusAddress a = new CbusAddress(address);
         CbusAddress[] v = a.split();
         switch (v.length) {
-			case 0:
-				throw new IllegalArgumentException("Did not find usable hardware address: " + address + " for a valid Cbus turnout address");
+            case 0:
+                throw new IllegalArgumentException("Did not find usable hardware address: " + address + " for a valid Cbus turnout address");
             case 1:
                 int unsigned = 0;
                 try {

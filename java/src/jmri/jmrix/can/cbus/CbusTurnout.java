@@ -41,9 +41,9 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
         CbusAddress a = new CbusAddress(address);
         CbusAddress[] v = a.split();
         switch (v.length) {
-			case 0:
-				log.error("Did not find usable system name: " + address);
-				return;
+            case 0:
+                log.error("Did not find usable system name: " + address);
+                return;
             case 1:
                 addrThrown = v[0];
                 // need to complement here for addr 1

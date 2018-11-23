@@ -39,9 +39,9 @@ public class CbusLight extends AbstractLight
         CbusAddress a = new CbusAddress(address);
         CbusAddress[] v = a.split();
         switch (v.length) {
-			case 0:
-				log.error("Did not find usable system name: " + address);
-				return;
+            case 0:
+                log.error("Did not find usable system name: " + address);
+                return;
             case 1:
                 addrOn = v[0];
                 // need to complement here for addr 1
