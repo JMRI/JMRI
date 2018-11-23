@@ -277,6 +277,20 @@ public interface Programmer {
         ReadAfterWrite
     }
 
+    /**
+     * wrapper to call {@link jmri.ProgListener#programmingOpReply} that verifies
+     * the specified progListener is not null.
+     *
+     * @param p listener to notify
+     * @param value result value or CV
+     * @param status code from jmri.ProgListener 
+     */
+    default public void notifyProgListenerEnd(ProgListener p, int value, int status) {
+        if ( p != null ) {
+           p.programmingOpReply(value, status);
+        }
+    }
+
     public void addPropertyChangeListener(PropertyChangeListener p);
 
     public void removePropertyChangeListener(PropertyChangeListener p);

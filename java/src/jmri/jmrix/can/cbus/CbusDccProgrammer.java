@@ -202,13 +202,9 @@ public class CbusDccProgrammer extends AbstractProgrammer implements CanListener
         }
         // the programmingOpReply handler might send an immediate reply, so
         // clear the current listener _first_
-        if (_usingProgrammer == null) {
-            log.error("No listener to notify");
-        } else {
-            jmri.ProgListener temp = _usingProgrammer;
-            _usingProgrammer = null;
-            temp.programmingOpReply(value, status);
-        }
+        jmri.ProgListener temp = _usingProgrammer;
+        _usingProgrammer = null;
+        notifyProgListenerEnd(temp,value,status);
     }
 
     private final static Logger log = LoggerFactory.getLogger(CbusDccProgrammer.class);

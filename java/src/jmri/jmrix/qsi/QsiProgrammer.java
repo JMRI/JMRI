@@ -204,7 +204,7 @@ public class QsiProgrammer extends AbstractProgrammer implements QsiListener {
         // clear the current listener _first_
         jmri.ProgListener temp = _usingProgrammer;
         _usingProgrammer = null;
-        temp.programmingOpReply(value, status);
+        notifyProgListenerEnd(temp, value, status);
     }
 
     QsiTrafficController _controller = null;

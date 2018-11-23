@@ -2,7 +2,8 @@ package jmri.jmrit.operations.trains;
 
 import java.awt.GraphicsEnvironment;
 import jmri.InstanceManager;
-import jmri.jmrit.operations.OperationsSwingTestCase;
+import jmri.jmrit.operations.OperationsTestCase;
+import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.JemmyUtil;
@@ -16,7 +17,7 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class TrainsTableFrameTest extends OperationsSwingTestCase {
+public class TrainsTableFrameTest extends OperationsTestCase {
 
     @Test
     public void testCTor() {
@@ -83,14 +84,14 @@ public class TrainsTableFrameTest extends OperationsSwingTestCase {
     // The minimal setup for log4J
     @Override
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         super.setUp();
-        loadTrains();
+        JUnitOperationsUtil.loadTrains();
     }
     
      @Override
      @After
-     public void tearDown() throws Exception {
+     public void tearDown() {
          super.tearDown();
      }
 

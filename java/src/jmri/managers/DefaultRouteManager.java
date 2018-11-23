@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Basic Implementation of a RouteManager.
- * <P>
+ * <p>
  * Note that this does not enforce any particular system naming convention
  *
  * @author Dave Duchamp Copyright (C) 2004
@@ -42,10 +42,14 @@ public class DefaultRouteManager extends AbstractManager<Route>
     }
 
     /**
-     * Method to provide a Route whether or not is already exists.
+     * {@inheritDoc}
+     *
+     * Keep autostring in line with {@link #newRoute(String)},
+     * {@link #getSystemPrefix()} and {@link #typeLetter()}
      */
     @Override
     public Route provideRoute(String systemName, String userName) {
+        log.debug("provideRoute({})", systemName);
         Route r;
         r = getByUserName(systemName);
         if (r != null) {
@@ -59,9 +63,9 @@ public class DefaultRouteManager extends AbstractManager<Route>
         r = new DefaultRoute(systemName, userName);
         // save in the maps
         register(r);
-        /*The following keeps track of the last created auto system name.
-         currently we do not reuse numbers, although there is nothing to stop the
-         user from manually recreating them*/
+        /* The following keeps track of the last created auto system name.
+         Currently we do not reuse numbers, although there is nothing to stop the
+         user from manually recreating them. */
         if (systemName.startsWith("IR:AUTO:")) {
             try {
                 int autoNumber = Integer.parseInt(systemName.substring(8));
@@ -69,12 +73,18 @@ public class DefaultRouteManager extends AbstractManager<Route>
                     lastAutoRouteRef = autoNumber;
                 }
             } catch (NumberFormatException e) {
-                log.warn("Auto generated SystemName " + systemName + " is not in the correct format");
+                log.warn("Auto generated SystemName {} is not in the correct format", systemName);
             }
         }
         return r;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * Keep autostring in line with {@link #provideRoute(String, String)},
+     * {@link #getSystemPrefix()} and {@link #typeLetter()}
+     */
     @Override
     public Route newRoute(String userName) {
         int nextAutoRouteRef = lastAutoRouteRef + 1;
@@ -152,4 +162,5 @@ public class DefaultRouteManager extends AbstractManager<Route>
     }
 
     private final static Logger log = LoggerFactory.getLogger(DefaultRouteManager.class);
+
 }

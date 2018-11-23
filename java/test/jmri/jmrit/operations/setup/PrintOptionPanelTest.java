@@ -29,8 +29,10 @@ public class PrintOptionPanelTest {
         Assert.assertFalse(p.editManifestCheckBox.isSelected());
         Assert.assertFalse(p.printLocCommentsCheckBox.isSelected());
         Assert.assertFalse(p.printRouteCommentsCheckBox.isSelected());
+        Assert.assertFalse(p.printCabooseLoadCheckBox.isSelected());
+        Assert.assertFalse(p.printPassengerLoadCheckBox.isSelected());
         Assert.assertFalse(p.printLoadsEmptiesCheckBox.isSelected());
-        Assert.assertFalse(p.printTimetableNameCheckBox.isSelected());
+        Assert.assertFalse(p.printTrainScheduleNameCheckBox.isSelected());
         Assert.assertTrue(p.printValidCheckBox.isSelected());
         Assert.assertFalse(p.sortByTrackCheckBox.isSelected());
         Assert.assertFalse(p.printHeadersCheckBox.isSelected());
@@ -38,7 +40,6 @@ public class PrintOptionPanelTest {
         Assert.assertFalse(p.departureTimeCheckBox.isSelected());
         Assert.assertTrue(p.trackSummaryCheckBox.isSelected());
         Assert.assertTrue(p.routeLocationCheckBox.isSelected());
-
     }
 
 

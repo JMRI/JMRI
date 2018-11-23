@@ -277,7 +277,7 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
         // clear the current listener _first_
         jmri.ProgListener temp = _usingProgrammer;
         _usingProgrammer = null;
-        temp.programmingOpReply(value, status);
+        notifyProgListenerEnd(temp, value, status);
     }
 
     private final static Logger log = LoggerFactory.getLogger(NceProgrammer.class);

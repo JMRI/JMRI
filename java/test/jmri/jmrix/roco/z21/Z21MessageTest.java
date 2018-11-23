@@ -179,11 +179,13 @@ public class Z21MessageTest extends jmri.jmrix.AbstractMessageTestBase {
            (byte)0x00,(byte)0x00,(byte)0x00};
         jmri.jmrix.loconet.LocoNetMessage l = new jmri.jmrix.loconet.LocoNetMessage(message);
         msg = new Z21Message(l);
+        Assert.assertEquals("right length",17,msg.getNumDataElements());
         jmri.jmrix.loconet.LocoNetMessage x = msg.getLocoNetMessage();
         Assert.assertEquals("0th byte", 0xEF, x.getElement(0) & 0xFF);
         Assert.assertEquals("1st byte", 0x0E, x.getElement(1) & 0xFF);
         Assert.assertEquals("2nd byte", 0x03, x.getElement(2) & 0xFF);
         Assert.assertEquals("4nd byte", 0x03, x.getElement(4) & 0xFF);
+        Assert.assertEquals("two messaes the same",l,x);
     }
 
     @Test
@@ -202,6 +204,16 @@ public class Z21MessageTest extends jmri.jmrix.AbstractMessageTestBase {
         jmri.jmrix.loconet.LocoNetMessage l = new jmri.jmrix.loconet.LocoNetMessage(message);
         msg = new Z21Message(l);
         Assert.assertEquals("Monitor String","LocoNet Tunnel Message: Write slot 3 information:\n\tLoco 3 (short) is Not Consisted, Free, operating in 28 SS mode, and is moving Forward at speed 0,\n\tF0=Off, F1=Off, F2=Off, F3=Off, F4=Off, F5=Off, F6=Off, F7=Off, F8=Off\n\tMaster supports DT200; Track Status: Off/Paused; Programming Track Status: Available; STAT2=0x00, ThrottleID=0x00 0x00 (0).\n",msg.toMonitorString());
+    }
+
+    @Test
+    public void MonitorStringLocoNetMessage2(){
+        byte message[]={
+           (byte)0xD0,(byte)0x20,(byte)0x04,
+           (byte)0x7D,(byte)0x0A,(byte)0x7C};
+        jmri.jmrix.loconet.LocoNetMessage l = new jmri.jmrix.loconet.LocoNetMessage(message);
+        msg = new Z21Message(l);
+        Assert.assertEquals("Monitor String","LocoNet Tunnel Message: Transponder address 10 (short) (or long address 16010) present at LR5 () (BDL16x Board ID 1 RX4 zone C or BXP88 Board ID 1 section 5 or the BXPA1 Board ID 5 section).\n",msg.toMonitorString());
     }
 
 

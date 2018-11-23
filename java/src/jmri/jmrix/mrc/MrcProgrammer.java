@@ -232,7 +232,7 @@ public class MrcProgrammer extends AbstractProgrammer implements MrcTrafficListe
         tc.removeTrafficListener(MrcInterface.PROGRAMMING, this);
         jmri.ProgListener temp = _usingProgrammer;
         _usingProgrammer = null;
-        temp.programmingOpReply(value, status);
+        notifyProgListenerEnd(temp,value,status);
     }
 
     private final static Logger log = LoggerFactory.getLogger(MrcProgrammer.class);

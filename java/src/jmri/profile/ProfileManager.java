@@ -117,11 +117,12 @@ public class ProfileManager extends Bean {
      *
      * @return the in use Profile or null if there is no Profile in use
      */
-    @Nonnull
     public Profile getActiveProfile() {
-        if (activeProfile == null) {
-            throw new NullPointerException("activeProfile is null");
-        }
+        // can be null if user deletes directory
+        // DBoudreau 10/24/2018
+//        if (activeProfile == null) {
+//            throw new NullPointerException("activeProfile is null");
+//        }
         return activeProfile;
     }
 

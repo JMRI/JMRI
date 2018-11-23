@@ -203,7 +203,7 @@ public class CbusProgrammer extends AbstractProgrammer implements CanListener, A
         // clear the current listener _first_
         jmri.ProgListener temp = programmerUser;
         programmerUser = null;
-        temp.programmingOpReply(value, status);
+        notifyProgListenerEnd(temp,value,status);
     }
 
     private final static Logger log = LoggerFactory.getLogger(CbusProgrammer.class);

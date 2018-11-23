@@ -101,7 +101,7 @@ public class EliteXNetProgrammer extends XNetProgrammer implements XNetListener 
 
         if (!getCanRead()) {
             // should not invoke this if cant read, but if done anyway set NotImplemented error
-            p.programmingOpReply(CV, jmri.ProgListener.NotImplemented);
+            notifyProgListenerEnd(p,CV,jmri.ProgListener.NotImplemented);
             return;
         }
 

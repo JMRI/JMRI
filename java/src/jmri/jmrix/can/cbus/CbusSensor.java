@@ -6,7 +6,9 @@ import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.TrafficController;
+import jmri.jmrix.can.cbus.CbusConstants;
 import jmri.jmrix.can.cbus.CbusMessage;
+import jmri.jmrix.can.cbus.CbusOpCodes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -68,34 +70,90 @@ public class CbusSensor extends AbstractSensor implements CanListener {
     }
 
     /**
-     * Request an update on status by sending CBUS message.
-     * <p>
-     * There is no known way to do this, so the request is just ignored.
+     * Request an update on status by sending CBUS request message to active address.
      */
     @Override
     public void requestUpdateFromLayout() {
+        CanMessage m;
+        m = addrActive.makeMessage(tc.getCanid());
+        int opc = CbusMessage.getOpcode(m);
+        if (CbusOpCodes.isShortEvent(opc)) {
+            m.setOpCode(CbusConstants.CBUS_ASRQ);
+        }
+        else {
+            m.setOpCode(CbusConstants.CBUS_AREQ);
+        }
+        tc.sendCanMessage(m, this);
     }
 
     /**
      * User request to set the state, which means that we broadcast that to all
      * listeners by putting it out on CBUS. In turn, the code in this class
      * should use setOwnState to handle internal sets and bean notifies.
+     * Unknown state does not send a message to CBUS but updates 
+     * internal sensor state, enabling user test of Start of Day / Logix.
      *
      */
     @Override
     public void setKnownState(int s) throws jmri.JmriException {
         CanMessage m;
         if (s == Sensor.ACTIVE) {
-            m = addrActive.makeMessage(tc.getCanid());
+            if (getInverted()){
+                m = addrInactive.makeMessage(tc.getCanid());
+                setOwnState(Sensor.ACTIVE);
+            } else {
+                m = addrActive.makeMessage(tc.getCanid());
+                setOwnState(Sensor.ACTIVE);
+            }
             tc.sendCanMessage(m, this);
-            setOwnState(Sensor.ACTIVE);
         } else if (s == Sensor.INACTIVE) {
-            m = addrInactive.makeMessage(tc.getCanid());
+            if (getInverted()){
+                m = addrActive.makeMessage(tc.getCanid());
+                setOwnState(Sensor.INACTIVE);                
+            } else {
+                m = addrInactive.makeMessage(tc.getCanid());
+                setOwnState(Sensor.INACTIVE);
+            }
             tc.sendCanMessage(m, this);
-            setOwnState(Sensor.INACTIVE);
+        } else if (s == Sensor.UNKNOWN){
+            setOwnState(Sensor.UNKNOWN);
         }
     }
-
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean canInvert() {
+        return true;
+    }    
+    
+    /**
+     * Package method returning CanMessage for the Active Sensor Address
+     */    
+    public CanMessage getAddrActive(){
+        CanMessage m;
+        if (getInverted()){
+            m = addrInactive.makeMessage(tc.getCanid());              
+        } else {
+            m = addrActive.makeMessage(tc.getCanid());
+        }
+        return m;
+    }
+    
+    /**
+     * Package method returning CanMessage for the Inactive Sensor Address
+     */    
+    public CanMessage getAddrInactive(){
+        CanMessage m;
+        if (getInverted()){
+            m = addrActive.makeMessage(tc.getCanid());              
+        } else {
+            m = addrInactive.makeMessage(tc.getCanid());
+        }
+        return m;
+    }    
+    
     /**
      * Track layout status from messages being sent to CAN
      *
@@ -103,9 +161,9 @@ public class CbusSensor extends AbstractSensor implements CanListener {
     @Override
     public void message(CanMessage f) {
         if (addrActive.match(f)) {
-            setOwnState(Sensor.ACTIVE);
+            setOwnState(!getInverted() ? Sensor.ACTIVE : Sensor.INACTIVE);
         } else if (addrInactive.match(f)) {
-            setOwnState(Sensor.INACTIVE);
+            setOwnState(!getInverted() ? Sensor.INACTIVE : Sensor.ACTIVE);
         }
     }
 
@@ -118,12 +176,15 @@ public class CbusSensor extends AbstractSensor implements CanListener {
         // convert response events to normal
         f = CbusMessage.opcRangeToStl(f);
         if (addrActive.match(f)) {
-            setOwnState(Sensor.ACTIVE);
+            setOwnState(!getInverted() ? Sensor.ACTIVE : Sensor.INACTIVE);
         } else if (addrInactive.match(f)) {
-            setOwnState(Sensor.INACTIVE);
+            setOwnState(!getInverted() ? Sensor.INACTIVE : Sensor.ACTIVE);
         }
     }
-
+    
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void dispose() {
         tc.removeCanListener(this);

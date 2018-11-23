@@ -11,10 +11,11 @@ import org.netbeans.jemmy.operators.JDialogOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
 import org.netbeans.jemmy.operators.JRadioButtonOperator;
 import org.netbeans.jemmy.operators.JToggleButtonOperator;
+import org.netbeans.jemmy.operators.WindowOperator;
 import org.netbeans.jemmy.util.NameComponentChooser;
 
 /**
- * Utility Methods for Jemmy Tests
+ * Utility Methods for Jemmy Tests.
  * 
  * @author Paul Bender Copyright (C) 2018
  */
@@ -63,4 +64,19 @@ public class JemmyUtil {
         JToggleButtonOperator jtbo = new JToggleButtonOperator(comp);
         jtbo.doClick();
     }
+
+    static public void pressButton(WindowOperator frame, String text) {
+        JButtonOperator jbo = new JButtonOperator(frame, text);
+        jbo.push();
+    }
+
+    static public void confirmJOptionPane(WindowOperator wo, String title, String message, String buttonLabel) {
+        // the previous version of this message verified the text string
+        // if the dialog matched the passed message value.  We need to
+        // determine how to do that using Jemmy.
+        JDialogOperator jdo = new JDialogOperator(wo, title);
+        JButtonOperator jbo = new JButtonOperator(jdo, buttonLabel);
+        jbo.push();
+    }
+
 }

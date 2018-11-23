@@ -1,7 +1,8 @@
 package jmri.jmrit.operations.locations.tools;
 
 import java.awt.GraphicsEnvironment;
-import jmri.jmrit.operations.OperationsSwingTestCase;
+import jmri.jmrit.operations.OperationsTestCase;
+import jmri.util.JUnitOperationsUtil;
 import jmri.util.swing.JemmyUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -13,7 +14,7 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017
  */
-public class ExportLocationsTest extends OperationsSwingTestCase {
+public class ExportLocationsTest extends OperationsTestCase {
 
     @Test
     public void testCTor() {
@@ -27,7 +28,7 @@ public class ExportLocationsTest extends OperationsSwingTestCase {
         ExportLocations exportLoc = new ExportLocations();
         Assert.assertNotNull("exists", exportLoc);
         
-        loadLocations(); //only Test Loc E has a track
+        JUnitOperationsUtil.loadFiveLocations(); //only Test Loc E has a track
         
         // should cause export complete dialog to appear
         Thread export = new Thread(new Runnable() {
@@ -43,7 +44,7 @@ public class ExportLocationsTest extends OperationsSwingTestCase {
             return export.getState().equals(Thread.State.WAITING);
         }, "wait for prompt");
         
-        JemmyUtil.pressDialogButton(Bundle.getMessage("ExportComplete"), "OK");
+        JemmyUtil.pressDialogButton(Bundle.getMessage("ExportComplete"), Bundle.getMessage("ButtonOK"));
         
         java.io.File file = new java.io.File(ExportLocations.defaultOperationsFilename());   
         Assert.assertTrue("Confirm file creation", file.exists());        
@@ -52,13 +53,13 @@ public class ExportLocationsTest extends OperationsSwingTestCase {
     // The minimal setup for log4J
     @Override
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         super.setUp();
     }
 
     @Override
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         super.tearDown();
     }
 

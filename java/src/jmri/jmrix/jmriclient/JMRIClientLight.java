@@ -40,7 +40,8 @@ public class JMRIClientLight extends AbstractLight implements JMRIClientListener
     }
 
     //request a status update from the layout
-    protected void requestUpdateFromLayout() {
+    @Override
+    public void requestUpdateFromLayout() {
         // create the message
         String text = "LIGHT " + transmitName + "\n";
         // create and send the message

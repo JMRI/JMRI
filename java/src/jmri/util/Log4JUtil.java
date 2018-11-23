@@ -1,12 +1,17 @@
 package jmri.util;
 
 import apps.SystemConsole;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.*;
+
+import javax.annotation.Nonnull;
+
 import jmri.util.exceptionhandler.UncaughtExceptionHandler;
+
 import org.apache.log4j.Appender;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.FileAppender;
@@ -48,7 +53,7 @@ public class Log4JUtil {
      */
     // Goal is to be lightweight and fast; this will only be used in a few places,
     // and only those should appear in data structure.
-    static public boolean warnOnce(Logger log, String msg, Object... args) {
+    static public boolean warnOnce(@Nonnull Logger log, @Nonnull String msg, Object... args) {
         // the  Map<String, Boolean> is just being checked for existence; it's never False
         Map<String, Boolean> loggerMap = warnedOnce.get(log);
         if (loggerMap == null) {
@@ -86,7 +91,7 @@ public class Log4JUtil {
      *
      * @param controlfile the logging control file
      */
-    static public void initLogging(String controlfile) {
+    static public void initLogging(@Nonnull String controlfile) {
         initLog4J(controlfile);
     }
 
@@ -102,7 +107,7 @@ public class Log4JUtil {
      * @see jmri.util.FileUtil#getPreferencesPath()
      * @see jmri.util.FileUtil#getProgramPath()
      */
-    static void initLog4J(String logFile) {
+    static void initLog4J(@Nonnull String logFile) {
         if (log4JSetUp) {
             log.debug("initLog4J already initialized!");
             return;
@@ -148,7 +153,7 @@ public class Log4JUtil {
     }
 
     @SuppressWarnings("unchecked")
-    static public String startupInfo(String program) {
+    static public @Nonnull String startupInfo(@Nonnull String program) {
         log.info(jmriLog);
         Enumeration<org.apache.log4j.Logger> e = org.apache.log4j.Logger.getRootLogger().getAllAppenders();
         while (e.hasMoreElements()) {
@@ -175,9 +180,9 @@ public class Log4JUtil {
      *
      * @see jmri.util.FileUtil#getPreferencesPath()
      */
-    static private void configureLogging(String config) throws IOException {
+    static private void configureLogging(@Nonnull String configFile) throws IOException {
         Properties p = new Properties();
-        try (FileInputStream f = new FileInputStream(config)) {
+        try (FileInputStream f = new FileInputStream(configFile)) {
             p.load(f);
         }
 
@@ -196,4 +201,18 @@ public class Log4JUtil {
         PropertyConfigurator.configure(p);
     }
 
+    /**
+     * Shorten this stack trace in a Throwable.  If you then pass it to 
+     * Log4J for logging, it'll take up less space.
+     * @param t The Throwable to truncate and return
+     * @param len The number of stack trace entries to keep.
+     * @return THe original object with truncated stack trace
+     */
+    public  @Nonnull static <T extends Throwable> T shortenStacktrace(@Nonnull T t, int len) {
+        StackTraceElement[]	originalTrace = t.getStackTrace();
+        StackTraceElement[] newTrace = new StackTraceElement[len];
+        for (int i = 0; i < len; i++) newTrace[i] = originalTrace[i];
+        t.setStackTrace(newTrace);
+        return t;
+    }
 }

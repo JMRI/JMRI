@@ -2,9 +2,10 @@ package jmri.jmrit.operations.locations;
 
 import java.awt.GraphicsEnvironment;
 import jmri.InstanceManager;
-import jmri.jmrit.operations.OperationsSwingTestCase;
+import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
+import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
 import org.junit.After;
@@ -17,7 +18,7 @@ import org.junit.Test;
  *
  * @author	Dan Boudreau Copyright (C) 2009
  */
-public class InterchangeEditFrameTest extends OperationsSwingTestCase {
+public class InterchangeEditFrameTest extends OperationsTestCase {
 
     final static int ALL = Track.EAST + Track.WEST + Track.NORTH + Track.SOUTH;
     private LocationManager lManager = null;
@@ -155,12 +156,12 @@ public class InterchangeEditFrameTest extends OperationsSwingTestCase {
     // Ensure minimal setup for log4J
     @Override
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         super.setUp();
         CarTypes ct = InstanceManager.getDefault(CarTypes.class);
         ct.addName("Boxcar");
 
-        loadLocations();
+        JUnitOperationsUtil.loadFiveLocations();
 
         // add UP road name
         CarRoads cr = InstanceManager.getDefault(CarRoads.class);
@@ -169,14 +170,14 @@ public class InterchangeEditFrameTest extends OperationsSwingTestCase {
         lManager = InstanceManager.getDefault(LocationManager.class);
         l = lManager.getLocationByName("Test Loc C");
         
-        loadTrain(l);
+        JUnitOperationsUtil.loadTrain(l);
        
     }
 
     // The minimal setup for log4J
     @Override
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         super.tearDown();
     }
 }

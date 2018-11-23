@@ -47,16 +47,17 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
     protected static final int LOCOS_COLUMN = 7;
     protected static final int PICKUPS_COLUMN = 8;
     protected static final int SETOUT_COLUMN = 9;
-    protected static final int ROAD_COLUMN = 10;
-    protected static final int LOAD_COLUMN = 11;
-    protected static final int SHIP_COLUMN = 12;
-    protected static final int RESTRICTION_COLUMN = 13;
-    protected static final int DESTINATION_COLUMN = 14;
-    protected static final int POOL_COLUMN = 15;
-    protected static final int PLANPICKUP_COLUMN = 16;
-    protected static final int ALT_TRACK_COLUMN = 17;
-    protected static final int ORDER_COLUMN = 18;
-    protected static final int EDIT_COLUMN = 19;
+    protected static final int SCHEDULE_COLUMN = 10;
+    protected static final int ROAD_COLUMN = 11;
+    protected static final int LOAD_COLUMN = 12;
+    protected static final int SHIP_COLUMN = 13;
+    protected static final int RESTRICTION_COLUMN = 14;
+    protected static final int DESTINATION_COLUMN = 15;
+    protected static final int POOL_COLUMN = 16;
+    protected static final int PLANPICKUP_COLUMN = 17;
+    protected static final int ALT_TRACK_COLUMN = 18;
+    protected static final int ORDER_COLUMN = 19;
+    protected static final int EDIT_COLUMN = 20;
 
     protected static final int HIGHESTCOLUMN = EDIT_COLUMN + 1;
 
@@ -125,6 +126,8 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
                 Math.max(60, new JLabel(getColumnName(PICKUPS_COLUMN)).getPreferredSize().width + 10));
         tcm.getColumn(SETOUT_COLUMN).setPreferredWidth(
                 Math.max(60, new JLabel(getColumnName(SETOUT_COLUMN)).getPreferredSize().width + 10));
+        tcm.getColumn(SCHEDULE_COLUMN).setPreferredWidth(
+                Math.max(90, new JLabel(getColumnName(SCHEDULE_COLUMN)).getPreferredSize().width + 10));
         tcm.getColumn(RESTRICTION_COLUMN).setPreferredWidth(90);
         tcm.getColumn(LOAD_COLUMN).setPreferredWidth(50);
         tcm.getColumn(SHIP_COLUMN).setPreferredWidth(50);
@@ -142,9 +145,10 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
         setColumnsVisible();
     }
 
-    // only show "Load", "Ship", "Road", "Destination", "Planned", "Pool" "Alternate" "Order" if they are needed
+    // only show "Schedule", "Load", "Ship", "Road", "Destination", "Planned", "Pool" "Alternate" "Order" if they are needed
     protected void setColumnsVisible() {
         XTableColumnModel tcm = (XTableColumnModel) _table.getColumnModel();
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(SCHEDULE_COLUMN), _location.hasSchedules());
         tcm.setColumnVisible(tcm.getColumnByModelIndex(RESTRICTION_COLUMN), _location.hasServiceRestrictions());
         tcm.setColumnVisible(tcm.getColumnByModelIndex(LOAD_COLUMN), _location.hasLoadRestrictions());
         tcm.setColumnVisible(tcm.getColumnByModelIndex(SHIP_COLUMN), _location.hasShipLoadRestrictions());
@@ -191,6 +195,8 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
                 return Bundle.getMessage("Pickups");
             case SETOUT_COLUMN:
                 return Bundle.getMessage("Drop");
+            case SCHEDULE_COLUMN:
+                return Bundle.getMessage("Schedule");
             case RESTRICTION_COLUMN:
                 return Bundle.getMessage("Restrictions");
             case LOAD_COLUMN:
@@ -238,6 +244,8 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
             case PICKUPS_COLUMN:
                 return String.class;
             case SETOUT_COLUMN:
+                return String.class;
+            case SCHEDULE_COLUMN:
                 return String.class;
             case RESTRICTION_COLUMN:
                 return String.class;
@@ -305,13 +313,15 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
                 return Integer.toString(track.getPickupRS());
             case SETOUT_COLUMN:
                 return Integer.toString(track.getDropRS());
+            case SCHEDULE_COLUMN:
+                return track.getScheduleName();
             case RESTRICTION_COLUMN:
                 return getRestrictions(track);
             case LOAD_COLUMN:
                 return getModifiedString(track.getLoadNames().length, track.getLoadOption().equals(Track.ALL_LOADS),
                         track
                                 .getLoadOption().equals(Track.INCLUDE_LOADS)) +
-                        (track.getTrackType().equals(Track.SPUR) && track.isHoldCarsWithCustomLoadsEnabled() ? " H"
+                        (track.isSpur() && track.isHoldCarsWithCustomLoadsEnabled() ? " H"
                                 : "");
             case SHIP_COLUMN:
                 return getModifiedString(track.getShipLoadNames().length,
@@ -443,6 +453,7 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
         if (e.getSource().getClass().equals(Track.class) &&
                 (e.getPropertyName().equals(Track.DROP_CHANGED_PROPERTY) ||
                         e.getPropertyName().equals(Track.PICKUP_CHANGED_PROPERTY) ||
+                        e.getPropertyName().equals(Track.SCHEDULE_ID_CHANGED_PROPERTY) ||
                         e.getPropertyName().equals(Track.LOADS_CHANGED_PROPERTY) ||
                         e.getPropertyName().equals(Track.ROADS_CHANGED_PROPERTY) ||
                         e.getPropertyName().equals(Track.DESTINATION_OPTIONS_CHANGED_PROPERTY) ||

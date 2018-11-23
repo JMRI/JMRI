@@ -135,7 +135,7 @@ public class ProgDebugger implements AddressedProgrammer {
             public void run() {
                 log.debug("write CV reply");
                 if (l != null) {
-                    l.programmingOpReply(val, 0);
+                    notifyProgListenerEnd(l, val, 0);
                 }
             }  // 0 is OK status
         };
@@ -193,9 +193,9 @@ public class ProgDebugger implements AddressedProgrammer {
             public void run() {
                 log.debug("read CV reply");
                 if (confirmOK) {
-                    l.programmingOpReply(result, ProgListener.OK);
+                    notifyProgListenerEnd(l, val, ProgListener.OK);
                 } else {
-                    l.programmingOpReply(result, ProgListener.ConfirmFailed);
+                    notifyProgListenerEnd(l, result, ProgListener.ConfirmFailed);
                 }
             }
         };
@@ -233,7 +233,7 @@ public class ProgDebugger implements AddressedProgrammer {
             @Override
             public void run() {
                 log.debug("read CV reply");
-                l.programmingOpReply(retval, 0);
+                notifyProgListenerEnd(l, retval, 0);
             }  // 0 is OK status
         };
         sendReturn(r);

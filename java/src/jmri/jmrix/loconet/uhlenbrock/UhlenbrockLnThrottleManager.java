@@ -95,7 +95,7 @@ public class UhlenbrockLnThrottleManager extends LnThrottleManager implements Th
     }
 
     @Override
-    public void failedThrottleRequest(DccLocoAddress address, String reason) {
+    public void failedThrottleRequest(LocoAddress address, String reason) {
         if (waitingForNotification.containsKey(address.getNumber())) {
             waitingForNotification.get(address.getNumber()).interrupt();
             waitingForNotification.remove(address.getNumber());

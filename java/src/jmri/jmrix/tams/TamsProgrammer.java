@@ -255,7 +255,7 @@ public class TamsProgrammer extends AbstractProgrammer implements TamsListener {
         // clear the current listener _first_
         jmri.ProgListener temp = _usingProgrammer;
         _usingProgrammer = null;
-        temp.programmingOpReply(value, status);
+        notifyProgListenerEnd(temp, value, status);
     }
 
     private final static Logger log = LoggerFactory.getLogger(TamsProgrammer.class);

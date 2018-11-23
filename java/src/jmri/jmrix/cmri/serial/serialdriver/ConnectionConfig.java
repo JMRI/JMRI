@@ -16,6 +16,8 @@ import jmri.jmrix.cmri.serial.nodeconfigmanager.NodeConfigManagerAction;
  */
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
+    public final static String NAME = "Serial";
+
     /**
      * Ctor for an object being created during load process; Swing init is
      * deferred.
@@ -29,6 +31,11 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
      */
     public ConnectionConfig() {
         super();
+    }
+
+    @Override
+    public String name() {
+        return NAME;
     }
 
     JButton b;
@@ -49,11 +56,6 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
     @Override
     protected ResourceBundle getActionModelResourceBundle() {
         return ResourceBundle.getBundle("jmri.jmrix.cmri.CmriActionListBundle");
-    }
-
-    @Override
-    public String name() {
-        return "Serial";
     }
 
     @Override

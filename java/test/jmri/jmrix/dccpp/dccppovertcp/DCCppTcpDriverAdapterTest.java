@@ -22,6 +22,8 @@ public class DCCppTcpDriverAdapterTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        jmri.jmrix.dccpp.DCCppSystemConnectionMemo memo = new jmri.jmrix.dccpp.DCCppSystemConnectionMemo();
+        jmri.InstanceManager.setDefault(jmri.jmrix.dccpp.DCCppSystemConnectionMemo.class, memo);
     }
 
     @After

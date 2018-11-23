@@ -327,11 +327,7 @@
         <label>User Private ID #2</label>
         <label xml:lang="de">User Id #2</label>
       </variable>
-      <variable item="Speed Table" CV="67">
-        <speedTableVal/>
-        <label>Speed Table</label>
-        <label xml:lang="de">Speed Table</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
       <variable item="Decoder Software Version" CV="128" readOnly="yes" default="3">
         <decVal/>
         <label>Decoder Software Version</label>

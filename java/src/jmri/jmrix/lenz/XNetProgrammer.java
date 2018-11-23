@@ -235,7 +235,7 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
         // If can't read (e.g. multiMaus CS), this shouldnt be invoked, but
         // still we need to do something rational by returning a NotImplemented error
         if (!getCanRead()) {
-            p.programmingOpReply(CV, jmri.ProgListener.NotImplemented);
+            notifyProgListenerEnd(p, CV, jmri.ProgListener.NotImplemented);
             return;
         }
         useProgrammer(p);
@@ -550,11 +550,12 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
         if (log.isDebugEnabled()) {
             log.debug("notifyProgListenerEnd value " + value + " status " + status);
         }
-        // the programmingOpReply handler might send an immediate reply, so
+        // programmingOpReply, called by noitfyProgListenerEnd
+        // in the super class, might send an immediate reply, so
         // clear the current listener _first_
         jmri.ProgListener temp = _usingProgrammer;
         _usingProgrammer = null;
-        temp.programmingOpReply(value, status);
+        notifyProgListenerEnd(temp,value, status);
     }
 
     XNetTrafficController _controller = null;

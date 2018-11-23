@@ -41,6 +41,7 @@ session.log
 /xml/XSLT/pages
 .run.sh
 hs_err_pid*.log
+nohup.out
 
 # private / per-user configuration files
 /nbproject/private

@@ -259,7 +259,7 @@ public class SRCPProgrammer extends AbstractProgrammer implements SRCPListener {
         // clear the current listener _first_
         jmri.ProgListener temp = _usingProgrammer;
         _usingProgrammer = null;
-        temp.programmingOpReply(value, status);
+        notifyProgListenerEnd(temp,value,status);
     }
 
     SRCPTrafficController _controller = null;

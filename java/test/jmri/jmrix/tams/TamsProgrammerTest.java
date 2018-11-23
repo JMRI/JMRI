@@ -32,7 +32,7 @@ public class TamsProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     @Override
     public void setUp() {
         JUnitUtil.setUp();
-        TamsTrafficController tc = new TamsTrafficController();
+        TamsTrafficController tc = new TamsInterfaceScaffold();
         TamsProgrammer t = new TamsProgrammer(tc);
         programmer = t;
     }

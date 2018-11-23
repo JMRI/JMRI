@@ -13,6 +13,7 @@ import org.junit.runners.Suite;
     NceConsistRestoreTest.class,
     NceConsistRosterMenuTest.class,
     PrintNceConsistRosterActionTest.class,
+    BundleTest.class,
 })
 /**
  * Tests for the jmri.jmrix.nce.consist package

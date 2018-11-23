@@ -68,9 +68,9 @@
 		<dt><h3>How To</h3></dt>
 		<dd>
 			<ul>
-			<li><a href="plugins.shtml">Extend with Plugins</a>
-			<li><a href="NewType.shtml">Add a New Type</a>
+			<li><a href="plugins.shtml">Extend JMRI</a>
 			<li><a href="NewSystem.shtml">Add a New System</a>
+			<li><a href="NewType.shtml">Add a New Type</a>
 			</ul>
 		</dd>
 
