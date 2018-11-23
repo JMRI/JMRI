@@ -2,6 +2,7 @@ package jmri.jmrix.can.cbus;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.annotation.Nonnull;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 
@@ -219,6 +220,7 @@ public class CbusAddress {
      *
      * @return 0 length if entire string can't be parsed.
      */
+    @Nonnull
     public CbusAddress[] split() {
         // reject strings ending in ";"
         if (aString.endsWith(";")) {
