@@ -30,7 +30,6 @@ import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
-import jmri.CommandStation;
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.GlobalProgrammerManager;
@@ -223,7 +222,6 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     //protected int profileAddress = 0;
     protected int readAddress = 0;
     protected Programmer prog = null;
-    protected CommandStation commandStation = null;
 
     String selectedScalePref = this.getClass().getName() + ".SelectedScale"; // NOI18N
     String customScalePref = this.getClass().getName() + ".CustomScale"; // NOI18N
@@ -346,7 +344,11 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         customScaleLabel.setText("1: ");
         customScaleLabel.setVisible(true);
         customScaleField.setVisible(true);
-        customScaleField.setText(prefs.getProperty(customScalePref, "customScale").toString());
+        try {
+            customScaleField.setText(prefs.getProperty(customScalePref, "customScale").toString());
+        } catch(java.lang.NullPointerException npe){
+            customScaleField.setText("1");
+        }
         checkCustomScale();
         getCustomScale();
 
