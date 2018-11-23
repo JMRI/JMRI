@@ -217,7 +217,7 @@ public class CbusAddress {
     /**
      * Split a string containing one or more addresses into individual ones.
      *
-     * @return null if entire string can't be parsed.
+     * @return 0 length if entire string can't be parsed.
      */
     public CbusAddress[] split() {
         // reject strings ending in ";"
