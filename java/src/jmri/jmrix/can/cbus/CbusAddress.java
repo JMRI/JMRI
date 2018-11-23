@@ -222,7 +222,7 @@ public class CbusAddress {
     public CbusAddress[] split() {
         // reject strings ending in ";"
         if (aString.endsWith(";")) {
-            return null;
+            return new CbusAddress[0];
         }
 
         // split string at ";" points
@@ -233,15 +233,15 @@ public class CbusAddress {
         for (int i = 0; i < pStrings.length; i++) {
             // check validity of each
             if (pStrings[i].equals("")) {
-                return null;
+                return new CbusAddress[0];
             }
             if (!hCode.reset(pStrings[i]).matches()) {
-                return null;
+                return new CbusAddress[0];
             }
 
             retval[i] = new CbusAddress(pStrings[i]);
             if (retval[i] == null) {
-                return null;
+                return new CbusAddress[0];
             }
         }
         return retval;
