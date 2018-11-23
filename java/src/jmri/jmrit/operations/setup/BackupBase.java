@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import jmri.jmrit.XmlFile;
@@ -151,6 +152,7 @@ public abstract class BackupBase {
         // This is a bit of a kludge for now, until I learn more about dynamic
         // sets
         File[] dirs = getBackupRoot().listFiles();
+        Arrays.sort(dirs);
         BackupSet[] sets = new BackupSet[dirs.length];
 
         for (int i = 0; i < dirs.length; i++) {
