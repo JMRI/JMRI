@@ -247,8 +247,18 @@ public class CbusAddress {
         return retval;
     }
 
+    /**
+     * Used in Testing
+     *
+     */
     public boolean checkSplit() {
-        return (split() != null);
+        switch (split().length) {
+            case 1:
+            case 2:
+                return true;
+            default:
+                return false;
+        }
     }
 
     int[] elements() {
