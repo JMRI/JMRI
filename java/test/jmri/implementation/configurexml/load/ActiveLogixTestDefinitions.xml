@@ -68,12 +68,39 @@
       <userName>Check Fast Clock 2</userName>
     </turnout>
   </turnouts>
+  <lights class="jmri.jmrix.internal.configurexml.InternalLightManagerXml">
+    <light minIntensity="0.0" maxIntensity="1.0" transitionTime="0.0">
+      <systemName>IL501</systemName>
+    </light>
+    <light minIntensity="0.0" maxIntensity="1.0" transitionTime="0.0">
+      <systemName>IL502</systemName>
+    </light>
+  </lights>
   <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
-    <memory value="2:04 PM">
+    <memory value="2:31 PM">
       <systemName>IMCURRENTTIME</systemName>
     </memory>
     <memory value="1.0">
       <systemName>IMRATEFACTOR</systemName>
+    </memory>
+    <memory>
+      <systemName>IM401</systemName>
+      <userName>Test Memory Access 1</userName>
+    </memory>
+    <memory>
+      <systemName>IM402</systemName>
+      <userName>Test Memory Access 2</userName>
+    </memory>
+    <memory>
+      <systemName>IM403</systemName>
+      <userName>Test Memory Access 3</userName>
+    </memory>
+    <memory value="OK">
+      <systemName>IM404</systemName>
+      <userName>Test Memory Access 4</userName>
+    </memory>
+    <memory>
+      <systemName>IM </systemName>
     </memory>
   </memories>
   <signalmasts class="jmri.managers.configurexml.DefaultSignalMastManagerXml" />
@@ -100,6 +127,17 @@
       <logixConditional systemName="IX:AUTO:0003C1" order="0" />
       <logixConditional systemName="IX:AUTO:0003C2" order="1" />
       <logixConditional systemName="IX:AUTO:0003C3" order="2" />
+    </logix>
+    <logix userName="Test Memory Access 1" enabled="yes">
+      <systemName>IX:AUTO:0004</systemName>
+      <userName>Test Memory Access 1</userName>
+      <logixConditional systemName="IX:AUTO:0004C1" order="0" />
+      <logixConditional systemName="IX:AUTO:0004C2" order="1" />
+    </logix>
+    <logix userName="Light sets Light" enabled="yes">
+      <systemName>IX:AUTO:0005</systemName>
+      <userName>Light sets Light</userName>
+      <logixConditional systemName="IX:AUTO:0005C1" order="0" />
     </logix>
   </logixs>
   <conditionals class="jmri.managers.configurexml.DefaultConditionalManagerXml">
@@ -139,6 +177,25 @@
       <conditionalStateVariable operator="4" negated="no" type="3" systemName="IT302" dataString="" num1="0" num2="0" triggersCalc="yes" />
       <conditionalAction option="1" type="23" systemName=" " data="842" delay="0" string="" />
     </conditional>
+    <conditional systemName="IX:AUTO:0004C1" userName="IM401 case-insensitive aaa copies to IM402" antecedent="R1" logicType="1" triggerOnChange="yes">
+      <systemName>IX:AUTO:0004C1</systemName>
+      <userName>IM401 case-insensitive aaa copies to IM402</userName>
+      <conditionalStateVariable operator="4" negated="no" type="23" systemName="IM401" dataString="aaa" num1="3" num2="0" triggersCalc="yes" />
+      <conditionalAction option="1" type="26" systemName="IM401" data="-1" delay="0" string="IM402" />
+    </conditional>
+    <conditional systemName="IX:AUTO:0004C2" userName="IM403 less than IM402 case insensitive sets IM404" antecedent="R1" logicType="1" triggerOnChange="yes">
+      <systemName>IX:AUTO:0004C2</systemName>
+      <userName>IM403 less than IM402 case insensitive sets IM404</userName>
+      <conditionalStateVariable operator="4" negated="no" type="24" systemName="IM403" dataString="IM402" num1="1" num2="0" triggersCalc="yes" />
+      <conditionalAction option="1" type="12" systemName="IM404" data="-1" delay="0" string="OK" />
+    </conditional>
+    <conditional systemName="IX:AUTO:0005C1" userName="IL501 sets IL502 opposite" antecedent="R1" logicType="1" triggerOnChange="yes">
+      <systemName>IX:AUTO:0005C1</systemName>
+      <userName>IL501 sets IL502 opposite</userName>
+      <conditionalStateVariable operator="4" negated="no" type="7" systemName="IL501" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalAction option="1" type="11" systemName="IL502" data="4" delay="0" string="" />
+      <conditionalAction option="2" type="11" systemName="IL502" data="2" delay="0" string="" />
+    </conditional>
   </conditionals>
   <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Fri Nov 23 18:09:00 PST 2018" rate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startsettime="no" startclockoption="0" showbutton="no" />
   <filehistory>
@@ -149,9 +206,9 @@
     </operation>
     <operation>
       <type>Store</type>
-      <date>Fri Nov 23 20:01:46 PST 2018</date>
+      <date>Fri Nov 23 20:29:00 PST 2018</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.13.6ish+jake+20181123T2326Z+R9a44bdf23d on Fri Nov 23 20:01:46 PST 2018-->
+  <!--Written by JMRI version 4.13.6ish+jake+20181123T2326Z+R9a44bdf23d on Fri Nov 23 20:29:00 PST 2018-->
 </layout-config>

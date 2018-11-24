@@ -129,6 +129,59 @@ public class ActiveLogixTest {
         JUnitUtil.waitFor(()->{return timebase.getTime().equals(cal.getTime());},"date 14:02:00");
     }
 
+    @Test
+    public void testMemoryAccess() {
+        Memory memory1 = InstanceManager.getDefault(MemoryManager.class).getMemory("IM401");
+        Assert.assertNotNull(memory1);
+        Memory memory2 = InstanceManager.getDefault(MemoryManager.class).getMemory("IM402");
+        Assert.assertNotNull(memory1);
+        Memory memory3 = InstanceManager.getDefault(MemoryManager.class).getMemory("IM403");
+        Assert.assertNotNull(memory3);
+        Memory memory4 = InstanceManager.getDefault(MemoryManager.class).getMemory("IM404");
+        Assert.assertNotNull(memory4);
+   
+        // test the IM401 to IM402 conditional
+        ThreadingUtil.runOnLayout(()->{memory2.setValue("bbb");});
+        ThreadingUtil.runOnLayout(()->{memory1.setValue("aaa");});
+        JUnitUtil.waitFor(()->{return memory2.getValue().equals("aaa");},"Value aaa after aaa");
+
+        ThreadingUtil.runOnLayout(()->{memory2.setValue("bbb");});
+        ThreadingUtil.runOnLayout(()->{memory1.setValue("aatta");});
+        JUnitUtil.waitFor(()->{return memory2.getValue().equals("bbb");},"Value bbb after aatta");
+        
+        ThreadingUtil.runOnLayout(()->{memory2.setValue("bbb");});
+        ThreadingUtil.runOnLayout(()->{memory1.setValue("aAa");});
+        JUnitUtil.waitFor(()->{return memory2.getValue().equals("aAa");},"Value aAa after aAa");
+
+        // test the IM401 to IM402 conditional
+        ThreadingUtil.runOnLayout(()->{memory4.setValue("No");});
+        ThreadingUtil.runOnLayout(()->{memory2.setValue("100");});
+
+        ThreadingUtil.runOnLayout(()->{memory3.setValue("200");});
+        JUnitUtil.waitFor(()->{return memory4.getValue().equals("No");},"No after 200");
+        
+        ThreadingUtil.runOnLayout(()->{memory3.setValue("50");});
+        JUnitUtil.waitFor(()->{return memory4.getValue().equals("OK");},"OK after 50");        
+    }
+
+    @Test
+    public void testLightDrivesLight() {
+        Light light1 = InstanceManager.getDefault(LightManager.class).getLight("IL501");
+        Assert.assertNotNull(light1);
+        Light light2 = InstanceManager.getDefault(LightManager.class).getLight("IL502");
+        Assert.assertNotNull(light2);
+
+        ThreadingUtil.runOnLayout(()->{light1.setState(Light.ON);});
+        JUnitUtil.waitFor(()->{return light2.getState()==Light.OFF;},"light Off");
+        
+        ThreadingUtil.runOnLayout(()->{light1.setState(Light.OFF);});
+        JUnitUtil.waitFor(()->{return light2.getState()==Light.ON;},"light On");
+        
+        ThreadingUtil.runOnLayout(()->{light1.setState(Light.ON);});
+        JUnitUtil.waitFor(()->{return light2.getState()==Light.OFF;},"light Off");
+        
+    }
+
     @AfterClass
     public static void tearDown() throws Exception {
         JUnitUtil.tearDown();
