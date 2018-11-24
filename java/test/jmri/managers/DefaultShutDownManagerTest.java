@@ -27,7 +27,6 @@ public class DefaultShutDownManagerTest {
         Assert.assertNotNull("exists", dsdm);
     }
 
-    @SuppressWarnings("null")
     @Test
     public void testRegister() {
         DefaultShutDownManager dsdm = new DefaultShutDownManager();

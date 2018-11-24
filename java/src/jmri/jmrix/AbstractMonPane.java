@@ -389,6 +389,45 @@ public abstract class AbstractMonPane extends JmriPanel {
     public String getHelpTarget() {
         return "package.jmri.jmrix.AbstractMonFrame"; // NOI18N
     }
+        
+    /**
+     *  Log an Message derived message.
+     *
+     *  @param message message object to log.
+     */
+    public void logMessage(Message message){
+	    logMessage("","",message);
+    }
+
+    /**
+     *  Log an Message derived message.
+     *
+     *  @param messagePrefix text to prefix the message with.
+     *  @param message message object to log.
+     */
+    public void logMessage(String messagePrefix,Message message){
+	    logMessage(messagePrefix,"",message);
+    }
+
+    /**
+     *  Log an Message derived message with a prefixed label.
+     *
+     *  @param messagePrefix text to prefix the message with.
+     *  @param rawPrefix label to add to the start of the message.
+     *  @param message message object to log.
+     */
+    public void logMessage(String messagePrefix,String rawPrefix,Message message){
+        // display the raw data if requested  
+        StringBuilder raw = new StringBuilder(rawPrefix);
+        if (rawCheckBox.isSelected()) {
+            raw.append(message.toString());
+        }
+
+        // display the decoded data
+        String text=message.toMonitorString();
+        nextLine(messagePrefix + " " + text + "\n", raw.toString());
+    }
+
 
     public void nextLine(String line, String raw) {
         nextLineWithTime(new Date(), line, raw);
@@ -557,13 +596,7 @@ public abstract class AbstractMonPane extends JmriPanel {
             try {
                 logStream = new PrintStream(new FileOutputStream(logFile));
             } catch (java.io.FileNotFoundException ex) {
-                if (logStream != null) {
-                    synchronized (logStream) {
-                        logStream.flush();
-                        logStream.close();
-                    }
-                    logStream = null;
-                }
+                stopLogButtonActionPerformed(null);
                 log.error("startLogButtonActionPerformed: FileOutputStream cannot open the file '{}'.  Exception: {}", logFileChooser.getSelectedFile().getName(), ex.getMessage());
                 JOptionPane.showMessageDialog(this,
                         (Bundle.getMessage("ErrorCannotOpenFileForWriting",

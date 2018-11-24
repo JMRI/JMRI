@@ -289,7 +289,6 @@ public class ReportContext {
      * Add communication port information
      */
     private void addCommunicationPortInfo() {
-        @SuppressWarnings("unchecked")
         Enumeration<CommPortIdentifier> portIDs = CommPortIdentifier.getPortIdentifiers();
 
         ArrayList<CommPortIdentifier> ports = new ArrayList<>();

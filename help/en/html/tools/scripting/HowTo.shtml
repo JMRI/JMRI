@@ -1,0 +1,477 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI: Scripting "How To..."</title>
+    <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+    <!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
+
+    <div id="mainContent">
+      <!-- Page Body -->
+
+      <h1>JMRI: Scripting "How To..."</h1>
+
+      <p class="subtitle">Some hints and examples on how to do basic operations in scripts</p>
+	  
+      <ul>
+	  <li><a href="#running">How do I run a saved script?</a></li>
+      <li><a href="#varnaming">How should I name variables in JMRI scripts?</a></li>
+	  <li><a href="#objects"> How do I create JMRI objects (sensors, memories, etc.) in a script?</a></li>
+      <li><a href="#windows">How do I access the JMRI application windows?</a></li>
+      <li><a href="#priority">How can I limit the priority of a script?</a></li>
+      <li><a href="#panelload">How do I load a panel file from within a script?</a></li>
+      <li><a href="#preferences">How do I find a file in the preferences directory?</a></li>
+      <li><a href="#several">How do I wait for something(s) to change on my layout?</a></li>
+      <li><a href="#multturnouts">How do I "listen" to a Turnout or Sensor?</a></li>
+      <li><a href="#sound">How can I get a script to play a sound?</a></li>
+      <li><a href="#invoke">How do I invoke another script file from a script?</a></li>
+      <li><a href="#communicate">How do I communicate between scripts?</a></li>
+      </ul>
+      
+	  <p>See the <a href="Examples.shtml">examples page</a> for many sample scripts. Also,
+        the <a href="Start.shtml">introductory page</a> shows some
+        of the basic commands.</p>
+	  <p>See also <a href="Python.shtml">Python/Jython Language</a> for general FAQ about the language.</p>
+	  <p>See also <a href="WhatWhere.shtml">Jython Scripting "What...Where"</a> for other interesting tidbits.</p>
+
+	  
+      <h2><a id="running">How do I run a saved script?</a></h2>
+	  
+	  <div class="para">
+	  
+	  <p>From the PanelPro main screen, click on "Panels" in the top menu. Or, from the DecoderPro main screen,
+	  click on "Actions" in the top menu. Select "Run Script..." from the dropdown.</p>
+
+      The directory set up in Preferences (which you can change) will appear and you can select a script to run.  
+	  YOu can also navigate to any other directory that contains stored scripts.  [On PCs, Jython script files have
+	  a ".py" suffix standing for Python.]
+      
+      </div>
+	  
+	  <h2><a id="varnaming">How should I name variables in JMRI scripts?</a></h2>
+
+      <div class="para">
+        Short answer: you can name them any way you like!
+		
+		<p>In many of the sample files, turnouts are referred to by
+        names like "to12", signals by names like "si21", and
+        sensors by names like "bo45". These conventions grew out of
+        how some older code was written, and they can make the code
+        clearer. But they are in no way required; the program
+        doesn't care what you call variables.</p>
+
+        <p>For example, "self.to12" is just the name of a variable.
+        You can call it anything you want, e.g.
+        self.MyBigFatNameForTheLeftTurnout</p>
+
+        <p>The "self" part makes it completely local; "self" refers
+        to "an object of the particular class I'm defining right
+        now". Alternately, you can define a global variable, but
+        that's not recommended. If you have multiple scripts
+        running (and you can have as many as you'd like; we
+        recommend that you put each signal head in a separate one),
+        the variables can get confused if you use the same variable
+        name to mean too different things. Using "self" like this
+        one does makes sure that doesn't happen.</p>
+
+        <p>Note that turnouts, etc, do have "System Names" that
+        look like "LT12". You'll see those occasionally, but that's
+        something different from the variable names in a script
+        file.</p>
+      </div>
+
+	  
+	  <h2><a id="objects"> How do I create JMRI objects (sensors, memories, etc.) in a script?</a></h2>
+		<!-- Section created by Jerry Grochow 2018-10-18 -->
+		
+	  <div class="para">
+		
+		<p>All of the JMRI input and output objects listed in <a href="help/en/html/tools/index.shtml">
+		Common Tools </a>, such as sensors, memories, lights, signals, reporters, etc., can be created 
+		within a script (all can also be accessed, of course). A simple line of code typed into the Script
+		Entry window is all it takes:</p>
+		
+		<pre>
+	a=memories.provideMemory("IM" + "XXX")
+	b=sensors.provideSensor("IS" + "XXX")
+		</pre>
+		
+		<p>Using the "provide" method for a specific type of input or output either creates a new object
+		with the system name specified (IMXXX or ISXXX in these examples) or finds a reference to an existing
+		object. Variables within the object can then be set using statements like:</p>
+		
+		<pre>
+	a.userName = "My memory 1"
+	b.userName = "My Sensor 1 at East Yard"
+	a.value = "Something I want to save"
+	b.state = ACTIVE
+		</pre>
+		
+		<h3>System names versus user names</h3>
+		
+		<p>System names for sensors, turnouts, lights and others, are connection specific. A LocoNet sensor
+		name begins with "LS" while a CMRI sensor begins with "CS" and an internal sensor with "IS". 
+		"provide" methods check the prefix of the passed string to determine if it matches a defined connection
+		or internal. If so, and the rest of the name is valid, the sensor is created. If a match does not 
+		exist, it assigns the prefix for the first connection in the currently open connection list.</p>
+		
+		<p>Example: If your connections are LocoNet and CMRI, a provideSensor request without a prefix of LS, 
+		CS or IS, will be assigned LS. If the name value is not one to four numeric digits (a LocoNet 
+		requirement), you get a bad format error. Memories are only internal, so provideMemory uses "IM" as 
+		the default prefix.</p>
+		
+		<p>User names are set after input and outputs are created. They can be any character string you want. 
+		You can use user name or system name in scripts and Logix. The use of user names is recommended for 
+		these purposes if there is the possibility that you will be changing your control system in which case 
+		system names will be changing as well.</p>
+		
+		<p>Click for more information on <a href="help/en/html/doc/Technical/Names.shtml"> Names and Naming</a>.</p>
+		
+		<h3>Alternative syntax in Python</h3>
+		
+		<p>The Python language provides alternative ways of addressing objects and methods. It is not the purpose 
+		of this FAQ to explain all of these, but it is worth noting that the above examples could have been written 
+		as:</p>
+		
+		<pre>
+	memories.provideMemory("IMXXX").setValue("Anything")
+	sensors.provideSensor("ISXXX").setState(ACTIVE)
+		</pre>
+		
+		<p>No assignment operator (=) is necessary as the "set" methods do that work. Use whichever syntax you prefer, 
+		although it is a good practice is to be consistent for future readability.</p>
+		
+		</div>
+
+		
+      <h2><a id="windows">How do I access the JMRI application windows?</a></h2>
+
+      <div class="para">
+        Your scripts can change the
+        properties of all the main JMRI windows. They're all
+        jmri.util.JmriJFrame objects, so they have all the various
+        methods of a Swing JFrame. For example, this code
+        snippet
+
+        <p><code>window =
+        jmri.util.JmriJFrame.getFrameList()[1]<br>
+        window.setLocation(java.awt.Point(0,0))</code></p>
+
+        <p>locates the application's main window, and sets its
+        location to the upper left corner of the screen.</p>
+
+        <p>The <code>jmri.util.JmriJFrame.getFrameList()</code>
+        call in the first line returns a list of the existing
+        windows. The [0] element of this list is the original
+        splash screen and the [1] element is the main window; after
+        that, they're the various windows in the order they are
+        created. To find a particular one, you can index through
+        the list checking e.g. the window's title with the
+        <code>getTitle()</code> method.</p>
+      </div>
+
+      
+      <h2><a id="priority">How can I limit the priority of a script?</a></h2>
+
+      <div class="para">
+        <p>If the script runs a loop that's supposed to update
+        something, it can't be written to run continuously or else
+        it will just suck up as much computer time as it can.
+        Rather, it should wait.</p>
+
+        <p>The best thing to do is to wait for something to change.
+        For example, if your script looks at some sensors to decide
+        what to do, wait for one of those sensors to change (see
+        the sample scripts for examples)</p>
+
+        <p>Simpler, but not as efficient, is to just wait for a
+        little while before checking again. For example</p>
+        <pre>
+    waitMsec(1000)
+</pre>causes an automaton or Siglet script to wait for 1000
+milliseconds (one second) before continuing.
+
+        <p>For just a simple script, something that doesn't use the
+        Automat or Siglet classes, you can sleep by doing</p>
+        <pre>
+from time import sleep
+sleep(10)
+</pre>The first line defines the "sleep" routine, and only needs to
+be done once. The second line then sleeps for 10 seconds. Note that
+the accuracy of this method is not as good as using one of the
+special classes.
+      </div>
+
+
+      <h2><a id="panelload">How do I load a panel file from within a script?</a></h2>
+
+      <div class="para">
+        <pre>
+<code>jmri.InstanceManager.getDefault(jmri.ConfigureManager).load(java.io.File("filename.xml"))</code>
+</pre>
+      </div>That looks for "filename.xml" in the JMRI program
+      directory, which is not a good place to keep your files.
+      (They tend to get lost or damaged when JMRI is updated). See
+      the next question for a solution to this.
+
+
+      <h2><a id="preferences">How do I find a file in the preferences directory?</a></h2>
+	  
+	  <p>You can always specify the complete pathname
+      to a file, e.g. <code>C:\Documents and
+      Files\mine\JMRI\filename.xml</code> or
+      <code>/Users/mine/.jmri/filename.xml</code>. This is not very
+      portable from computer to computer, however, and can become a
+      pain to keep straight.
+
+      <p>JMRI provides a routine to convert "portable" names to
+      names your computer will recognize:</p>
+
+      <div class="para">
+        <pre>
+<code>fullname = jmri.util.FileUtil.getExternalFilename("preference:filename.xml")</code>
+</pre>
+      </div>The "<code>preference:</code>" means to look for that
+      file starting in the preferences directory on the current
+      computer. Other choices are "program:" and "home:", see the
+      <a href=
+      "http://jmri.org/JavaDoc/doc/jmri/util/FileUtil.html#getExternalFilename(java.lang.String)" target="_blank">
+      documentation</a>.
+
+	    
+      <h2><a id="several">How do I wait for something(s) to change on my layout?</a></h2>
+
+      <div class="para">
+        If your script is based on a Siglet or <a href=
+        "http://jmri.org/JavaDoc/doc/jmri/jmrit/automat/AbstractAutomaton.html" target="_blank">
+        AbstractAutomaton</a> class (e.g. if you're writing a
+        "handle" routine" - <a href="#siglet-automaton">see below for more info on these classes</a>), there's a general "<a href=
+        "http://jmri.org/JavaDoc/doc/jmri/jmrit/automat/AbstractAutomaton.html#waitChange-jmri.NamedBean:A-" target="_blank">waitChange</a>"
+        routine which waits for any of several sensors to change
+        before returning to you. Note that more than one may change
+        at the same time, so you can't assume that just one has a
+        different value! And you'll then have to check whether
+        they've become some particular state. It's written as:
+        <pre>
+    self.waitChange([self.sensorA, self.sensorB, self.sensorC])
+</pre>where you've previously defined each of those "self.sensorA"
+things via a line like:
+        <pre>
+    self.sensorA = sensors.provideSensor("21")
+</pre>You can then check for various combinations like:
+        <pre>
+   if self.sensorA.knownState == ACTIVE :
+        print "The plane! The plane!"
+   elif self.sensorB.knownState == INACTIVE :
+        print "Would you believe a really fast bird?"
+   else
+        print "Nothing to see here, move along..."
+</pre>You can also wait for any changes in objects of multiple
+types:
+        <pre>
+    self.waitChange([self.sensorA, self.turnoutB, self.signalC])
+</pre>Finally, you can specify the maximum time to wait before
+continuing even though nothing has changed:
+        <pre>
+    self.waitChange([self.sensorA, self.sensorB, self.sensorC], 5000)
+</pre>will wait a maximum of 5000 milliseconds, e.g. 5 seconds. If
+nothing has changed, the script will continue anyway.
+      </div>
+
+	  
+      <h2><a id="multturnouts">How do I "listen" to a Turnout or Sensor?</a></h2>
+
+      <div class="para">
+        JMRI objects (Turnouts, Sensors, etc) can have "Listeners"
+        attached to them. These are then notified when the status
+        of the object changes. If you're using the Automat or
+        Siglet classes, you don't need to use this capability;
+        those classes handle all the creationg and registering of
+        listeners. But if you want to do something special, you may
+        need to use that capability.
+
+        <p>A single routine can listen to one or more Turnout,
+        Sensor, etc.</p>
+
+        <p>If you retain a reference to your listener object, you
+        can attach it to more than one object:</p>
+        <pre>
+m = MyListener()
+turnouts.provideTurnout("12").addPropertyChangeListener(m)
+turnouts.provideTurnout("13").addPropertyChangeListener(m)
+turnouts.provideTurnout("14").addPropertyChangeListener(m)
+</pre>
+
+        <p>But how does the listener know what changed?</p>
+
+        <p>A listener routine looks like this:</p>
+        <pre>
+class MyListener(java.beans.PropertyChangeListener):
+  def propertyChange(self, event):
+    print "change",event.propertyName
+    print "from", event.oldValue, "to", event.newValue
+    print "source systemName", event.source.systemName
+    print "source userName", event.source.userName
+</pre>
+
+        <p>When the listener is called, it's given an object
+        (called event above) that contains the name of the property
+        that changed, plus the old and new values of that
+        property.</p>
+
+        <p>You can also get a reference to the original object that
+        changed via "name", and then do whatever you'd like through
+        that. In the example above, you can retrieve the
+        systemName, userName (or even other types of status).</p>
+
+
+        <h2><a id="sound">How can I get a script to play a sound?</a></h2>
+		
+		<p>The
+        jython/SampleSound.py file shows how to play a sound within
+        a script. Briefly, you load a sound into a variable ("snd"
+        in this case), then call "play()" to play it once, etc. </p>
+
+        <p>Note that if more than one sound is playing at a time,
+        the program combines them as best it can. Generally, it
+        does a pretty good job.</p>
+
+        <p>You can combine the play() call with other logic to play
+        a sound when a Sensor changes, etc. Ron McKinnon provided
+        an example of doing this. It plays a railroad crossing bell
+        when the sensor goes active.</p>
+        <pre>
+# It listens for changes to a sensor,
+# and then plays a sound file when sensor active
+
+import jarray
+import jmri
+
+# create the sound object by loading a file
+snd = jmri.jmrit.Sound("resources/sounds/Crossing.wav")
+
+class SensndExample(jmri.jmrit.automat.Siglet) :
+
+        # Modify this to define all of your turnouts, sensors and 
+        # signal heads.
+        def defineIO(self):
+                
+                # get the sensor 
+                self.Sen1Sensor = sensors.provideSensor("473")
+                                
+                 # Register the inputs so setOutput will be called when needed.
+                 self.setInputs(jarray.array([self.Sen1Sensor], jmri.NamedBean))
+
+                return
+
+        # setOutput is called when one of the inputs changes, and is
+        # responsible for setting the correct output
+        #
+        # Modify this to do your calculation.
+        def setOutput(self):
+                                
+                if self.Sen1Sensor.knownState==ACTIVE:
+                        snd.play()
+
+                return
+        
+# end of class definition
+
+# start one of these up
+SensndExample().start()
+</pre>
+
+
+      <h2><a id="invoke">How do I invoke another script file from a script?</a></h2>
+
+      <div class="para">
+        <pre>
+execfile("filename.py")
+</pre>
+      </div>That will look for the file in the top-level JMRI
+      program directory, which might now be what you want. If you
+      want JMRI to search for the file in the default scripts
+      directory (which you can set in preferences), use the
+      slightly more complex form:
+
+      <div class="para">
+        <pre>
+execfile(jmri.util.FileUtil.getExternalFilename("scripts:filename.py"))
+</pre>
+      </div>The call to jmri.util.FileUtil.getExternalFilename(..) translates
+      the string using JMRI's standard prefixes. The "scripts:"
+      tells JMRI to search in the default scripts directory. You
+      can also use other prefixes, see the <a href=
+      "http://jmri.org/JavaDoc/doc/jmri/util/FileUtil.html#getExternalFilename(java.lang.String)" target="_blank">
+      documentation</a>.
+
+      <h2><a id="communicate">How do I communicate between scripts?</a></h2>
+
+      <div class="para">
+        All scripts run in the same default namespace, which means
+        that a variable like "x" refers to the same location in all
+        scripts. This allows you to define a procedure, for
+        example, in one script, and use it elsewhere. For example,
+        if a "definitions.py" file contained:
+        <pre>
+def printStatus() :
+  print "x is", x
+  print "y is", y
+  print "z is", z
+  return
+
+x = 0
+y = 0
+z = 0
+</pre>Once that file has been executed, any later script can invoke
+the <code>printStatus()</code> routine in the global namespace
+whenever needed.
+      </div>
+
+      <div class="para">
+        You can also share variables, which allows two routines to
+        share information. In the example above, the
+        <code>x</code>, <code>y</code>, and <code>z</code>
+        variables are available to anybody. This can lead to
+        obscure bugs if two different routines are using a variable
+        of the same name, without realizing that they are sharing
+        data with each other. Putting your code into "classes" is a
+        way to avoid that.
+      </div>
+
+      <p>Note that scripts imported into another script using
+      <code>import</code> statements are not in the same namespace
+      as other scripts and do not share variables or routines. To
+      share variables from the default namespace with an imported
+      script, you need to explicitly add the shared variable:</p>
+      <pre>
+import myImport
+myImport.x = x # make x available to myImport
+</pre>
+
+	  
+        <!--#include virtual="/Footer" -->
+      </div><!-- closes #mainContent-->
+    </div><!-- closes #mBody-->
+  </div>
+</body>
+</html>

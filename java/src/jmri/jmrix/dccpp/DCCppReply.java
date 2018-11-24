@@ -8,13 +8,11 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Represents a single response from the DCC++ system.
- * <P>
  *
  * @author Paul Bender Copyright (C) 2004
  * @author Mark Underwood Copyright (C) 2015
   *
  * Based on XNetReply
- *
  */
 
 /*
@@ -39,7 +37,6 @@ import org.slf4j.LoggerFactory;
  * message format.  For example, there is no need for the listener code to know
  * that the speed is the second number after the "T" in the reply (nor that a
  * Throttle reply starts with a "T").
- *
  */
 
 public class DCCppReply extends jmri.jmrix.AbstractMRReply {
@@ -489,13 +486,13 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
             return(m);
 
         } catch (PatternSyntaxException e) {
-            log.error("Malformed DCC++ reply syntax! s = ", pat);
+            log.error("Malformed DCC++ reply syntax! s = {}", pat);
             return(null);
         } catch (IllegalStateException e) {
-            log.error("Group called before match operation executed string= " + s);
+            log.error("Group called before match operation executed string = {}", s);
             return(null);
         } catch (IndexOutOfBoundsException e) {
-            log.error("Index out of bounds string= " + s);
+            log.error("Index out of bounds string = {}", s);
             return(null);
         }
     }
@@ -1090,7 +1087,6 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     // NOTE: Methods below here are holdovers from XpressNet implementation
     // They should be removed when/if possible.
 
-
     /**
      * Is this a feedback response message?
      * @return true for feedback response
@@ -1147,7 +1143,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
      * <li>0 for a turnout with no feedback</li>
      * <li>1 for a turnout with feedback</li>
      * <li>2 for a feedback encoder</li>
-     * <li>3 is reserved by Lenz for future use.</li>
+     * <li>3 is reserved by Lenz (?) for future use.</li>
      * </ul>
      */
     public int getFeedbackMessageType(int startByte) {

@@ -21,7 +21,7 @@ class RemoveCarKernels(jmri.jmrit.automat.AbstractAutomaton):
   def handle(self):
 
     # get the car manager
-    carManager = jmri.jmrit.operations.rollingstock.cars.CarManager.instance()
+    carManager = jmri.InstanceManager.getDefault(jmri.jmrit.operations.rollingstock.cars.CarManager)
 
     # get a list of cars
     carList = carManager.getByIdList()

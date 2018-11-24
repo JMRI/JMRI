@@ -34,6 +34,7 @@ public class TamsOpsModeProgrammer extends TamsProgrammer implements AddressedPr
      * Forward a write request to an ops-mode write operation
      */
     @Override
+    @Deprecated // 4.1.1
     public synchronized void writeCV(int CV, int val, ProgListener p) throws ProgrammerException {
         if (log.isDebugEnabled()) {
             log.debug("write CV=" + CV + " val=" + val);
@@ -53,6 +54,7 @@ public class TamsOpsModeProgrammer extends TamsProgrammer implements AddressedPr
     }
 
     @Override
+    @Deprecated // 4.1.1
     public synchronized void readCV(int CV, ProgListener p) throws ProgrammerException {
         if (log.isDebugEnabled()) {
             log.debug("read CV=" + CV);

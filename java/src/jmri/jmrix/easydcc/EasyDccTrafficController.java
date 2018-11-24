@@ -102,25 +102,6 @@ public class EasyDccTrafficController extends AbstractMRTrafficController
     }
 
     /**
-     * Static function returning the EasyDccTrafficController instance to use.
-     *
-     * @return The registered EasyDccTrafficController instance for general use,
-     *         if need be creating one.
-     * @deprecated JMRI Since 4.9.5 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static public EasyDccTrafficController instance() {
-        log.warn("deprecated instance() call for EasyDccTrafficController");
-        return null;
-    }
-
-    /**
-     * @deprecated JMRI Since 4.9.5 instance() shouldn't be used
-     */
-    @Deprecated
-    static volatile protected EasyDccTrafficController self = null;
-
-    /**
      * Reference to the system connection memo.
      */
     EasyDccSystemConnectionMemo mMemo = null;
@@ -142,15 +123,6 @@ public class EasyDccTrafficController extends AbstractMRTrafficController
      */
     public void setSystemConnectionMemo(EasyDccSystemConnectionMemo m) {
         mMemo = m;
-    }
-
-    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-            justification = "temporary until multi-system; only set at startup")
-    @Override
-    @Deprecated
-    protected void setInstance() {
-        // this is called from AbstractMRTrafficController, so suppress this
-        // error.
     }
 
     @Override

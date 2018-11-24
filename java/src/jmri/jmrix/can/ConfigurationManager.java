@@ -58,7 +58,6 @@ abstract public class ConfigurationManager {
      */
     abstract public boolean provides(Class<?> type);
 
-    @SuppressWarnings("unchecked")
     abstract public <T> T get(Class<?> T);
 
     abstract public void dispose();

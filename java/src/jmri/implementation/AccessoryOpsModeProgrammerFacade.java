@@ -178,21 +178,11 @@ public class AccessoryOpsModeProgrammerFacade extends AbstractProgrammerFacade i
         }
 
         // set up a delayed completion reply
-        new Thread(new Runnable() {
-            @Override
-            public synchronized void run() {
-                log.debug("delaying {} milliseconds for cv={}, value={}", _delay, Integer.parseInt(cv), val);
-                if (_delay > 0) {
-                    try {
-                        Thread.sleep(_delay);
-                    } catch (InterruptedException ie) {
-                        log.error("Interrupted while sleeping {}", ie);
-                    }
-                }
-                log.debug("            delay elapsed for cv={}, value={}", Integer.parseInt(cv), val);
-                programmingOpReply(val, ProgListener.OK);
-            }
-        }).start();
+        log.debug("delaying {} milliseconds for cv={}, value={}", _delay, Integer.parseInt(cv), val);
+        jmri.util.ThreadingUtil.runOnLayoutDelayed(() -> {
+            log.debug("            delay elapsed for cv={}, value={}", Integer.parseInt(cv), val);
+            programmingOpReply(val, ProgListener.OK);
+        }, _delay);
     }
 
     @Override

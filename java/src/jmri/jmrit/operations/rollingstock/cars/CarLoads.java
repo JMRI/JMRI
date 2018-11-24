@@ -542,7 +542,6 @@ public class CarLoads extends RollingStockAttribute implements InstanceManagerAu
                 _emptyName = a.getValue();
             }
         }
-        @SuppressWarnings("unchecked")
         List<Element> eLoads = e.getChild(Xml.LOADS).getChildren(Xml.LOAD);
         log.debug("readFile sees {} car loads", eLoads.size());
         for (Element eLoad : eLoads) {
@@ -561,7 +560,6 @@ public class CarLoads extends RollingStockAttribute implements InstanceManagerAu
                     }
                 }
                 // new style load and comments
-                @SuppressWarnings("unchecked")
                 List<Element> eCarLoads = eLoad.getChildren(Xml.CAR_LOAD);
                 log.debug("{} car loads for type: {}", eCarLoads.size(), type);
                 for (Element eCarLoad : eCarLoads) {

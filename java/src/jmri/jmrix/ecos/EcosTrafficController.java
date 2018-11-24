@@ -125,12 +125,6 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
         return self;
     }
 
-    //This can be removed once multi-connection is complete
-    @Override
-    @Deprecated
-    public void setInstance() {
-    }
-
     @SuppressFBWarnings(value = "MS_PKGPROTECT")
     // SpotBugs wants this package protected, but we're removing it when multi-connection
     // migration is complete

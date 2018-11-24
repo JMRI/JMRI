@@ -176,8 +176,7 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
      * @return true if and only if sGroupPassword is a valid Duplex Group
      *         Password.
      */
-    // TODO: This warning is suppressed for now, but there is no way currently to set limitPasswordToNumericCharacters to true
-    @SuppressWarnings("unused")
+    // TODO: There is no way currently to set limitPasswordToNumericCharacters to true
     public static final boolean validateGroupPassword(String sGroupPassword) {
         // force the value to uppercase
         if (sGroupPassword.length() == 0) {
@@ -775,6 +774,8 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
      * @return true if message is an IPL device report indicating a UR92
      *         present, else return false.
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DLS_DEAD_LOCAL_STORE", 
+                justification = "False positive on the implied local variable in numUr92++")
     private boolean handleMessageIplResult(LocoNetMessage m) {
         if (LnIPLImplementation.isIplUr92IdentityReportMessage(m)) {
             numUr92++;

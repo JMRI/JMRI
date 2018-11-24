@@ -49,6 +49,7 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
 
     // programming interface
     @Override
+    @Deprecated // 4.1.1
     synchronized public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) {
             log.debug("writeCV " + CV + " mode " + getMode() + " listens " + p);
@@ -64,6 +65,7 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
     }
 
     @Override
+    @Deprecated // 4.1.1
     synchronized public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) {
             log.debug("readCV " + CV + " mode " + getMode() + " listens " + p);
@@ -90,7 +92,7 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
             controller().sendSprogMessage(progTaskStart(getMode(), val, CV), this);
         } catch (Exception e) {
             // program op failed, go straight to end
-            log.error("program operation failed, exception " + e);
+            log.error("program operation failed, exception {}",e);
             progState = NOTPROGRAMMING;
         }
     }
@@ -191,13 +193,9 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
         log.debug("notifyProgListenerEnd value " + value + " status " + status);
         // the programmingOpReply handler might send an immediate reply, so
         // clear the current listener _first_
-        if (_usingProgrammer == null) {
-            log.error("No listener to notify");
-        } else {
-            jmri.ProgListener temp = _usingProgrammer;
-            _usingProgrammer = null;
-            temp.programmingOpReply(value, status);
-        }
+        jmri.ProgListener temp = _usingProgrammer;
+        _usingProgrammer = null;
+        notifyProgListenerEnd(temp, value, status);
     }
 
     SprogTrafficController _controller = null;

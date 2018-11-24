@@ -29,6 +29,10 @@ valueSpeedTimerRepeat = 25 # repeat time in ms for speed set task
 valueSpeedIncrement = 0.01
 
 import java
+import java.awt
+import java.awt.event
+import java.beans
+import java.util
 import java.beans.PropertyChangeListener as PropertyChangeListener
 import java.awt.event.ActionListener as ActionListener
 import java.util.Calendar as Calendar

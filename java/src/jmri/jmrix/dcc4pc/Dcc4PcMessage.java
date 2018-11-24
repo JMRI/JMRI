@@ -58,7 +58,6 @@ public class Dcc4PcMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     // copy one
-    @SuppressWarnings("null")
     public Dcc4PcMessage(Dcc4PcMessage m) {
         if (m == null) {
             log.error("copy ctor of null message");
@@ -83,13 +82,15 @@ public class Dcc4PcMessage extends jmri.jmrix.AbstractMRMessage {
         return childBoard;
     }
 
+    /** {@inheritDoc} */
     @Override
     public void setElement(int n, int v) {
         _dataChars[n] = v;
     }
 
-    public String toHexString() {
-
+    /** {@inheritDoc} */
+    @Override
+    public String toString() {
         StringBuilder buf = new StringBuilder();
         buf.append("0x");
         buf.append(Integer.toHexString(0xFF & _dataChars[0]));

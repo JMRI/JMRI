@@ -18,7 +18,8 @@ import javax.swing.JPopupMenu;
 import javax.swing.JSplitPane;
 import javax.swing.JTree;
 import javax.swing.SwingConstants;
-import javax.swing.tree.TreePath;
+import javax.swing.tree.*;
+
 import jmri.CatalogTreeManager;
 import jmri.InstanceInitializer;
 import jmri.InstanceManager;
@@ -310,23 +311,21 @@ public final class ImageIndexEditor extends JmriJFrame {
         }
     }
 
-    @SuppressWarnings("unchecked")
     int countSubNodes(CatalogTreeNode node) {
         int cnt = 0;
-        Enumeration<CatalogTreeNode> e = node.children();
+        Enumeration<TreeNode> e = node.children();
         while (e.hasMoreElements()) {
-            CatalogTreeNode n = e.nextElement();
+            CatalogTreeNode n = (CatalogTreeNode)e.nextElement();
             cnt += countSubNodes(n) + 1;
         }
         return cnt;
     }
 
-    @SuppressWarnings("unchecked")
     private int countIcons(CatalogTreeNode node) {
         int cnt = 0;
-        Enumeration<CatalogTreeNode> e = node.children();
+        Enumeration<TreeNode> e = node.children();
         while (e.hasMoreElements()) {
-            CatalogTreeNode n = e.nextElement();
+            CatalogTreeNode n =(CatalogTreeNode)e.nextElement();
             cnt += countIcons(n);
         }
         cnt += node.getNumLeaves();

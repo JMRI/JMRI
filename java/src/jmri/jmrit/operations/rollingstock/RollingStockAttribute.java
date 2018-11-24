@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * @author Daniel Boudreau Copyright (C) 2014
  *
  */
-public class RollingStockAttribute {
+public abstract class RollingStockAttribute {
 
     protected static final int MIN_NAME_LENGTH = 4;
 
@@ -97,10 +97,10 @@ public class RollingStockAttribute {
         if (name == null) {
             return;
         }
-        // insert at start of list, sort later
         if (list.contains(name)) {
             return;
         }
+        // insert at start of list, sort on restart
         list.add(0, name);
         maxNameLength = 0; // reset maximum name length
     }
@@ -175,7 +175,6 @@ public class RollingStockAttribute {
     public void load(Element root, String eNames, String eName, String oldName) {
         // new format using elements starting version 3.3.1
         if (root.getChild(eNames) != null) {
-            @SuppressWarnings("unchecked")
             List<Element> l = root.getChild(eNames).getChildren(eName);
             Attribute a;
             String[] names = new String[l.size()];

@@ -9,6 +9,8 @@ import org.junit.runners.Suite;
         ScheduleTest.class,
         ScheduleManagerTest.class,
         BundleTest.class,
+        ExportSchedulesActionTest.class,
+        ExportSchedulesTest.class,
         ScheduleEditFrameGuiTest.class,
         ScheduleGuiTests.class,
         ScheduleCopyActionTest.class,

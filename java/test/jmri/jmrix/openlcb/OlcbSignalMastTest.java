@@ -35,9 +35,12 @@ public class OlcbSignalMastTest {
         
     @Test
     public void testCtor1() {
-        OlcbSignalMast t = new OlcbSignalMast("MF$olm:AAR-1946:PL-1-high-abs($1)");
+        OlcbSignalMast t = new OlcbSignalMast("MF$olm:AAR-1946:PL-1-high-abs($5)");
 
-        Assert.assertEquals("system name", "MF$olm:AAR-1946:PL-1-high-abs($1)", t.getSystemName());
+        Assert.assertEquals("system name", "MF$olm:AAR-1946:PL-1-high-abs($5)", t.getSystemName());
+        
+        // check last reference using 5 above
+        Assert.assertEquals(5, OlcbSignalMast.getLastRef());
     }
 
     @Test
@@ -82,6 +85,7 @@ public class OlcbSignalMastTest {
         t.setNotLitEventId("1.2.3.4.5.6.7.2");
         t.setHeldEventId("1.2.3.4.5.6.7.3");
         t.setNotHeldEventId("1.2.3.4.5.6.7.4");
+        
         t.setOutputForAppearance("Clear", "1.2.3.4.5.6.7.10");
         t.setOutputForAppearance("Approach", "1.2.3.4.5.6.7.11");
         t.setOutputForAppearance("Permissive", "1.2.3.4.5.6.7.12");

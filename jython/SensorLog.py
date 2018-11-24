@@ -13,6 +13,7 @@
 
 import jmri
 import java
+import java.beans
 
 # Define routine to map status numbers to text
 def stateName(state) :

@@ -299,7 +299,9 @@ public class ManageLocationsFrame extends JmriJFrame {
         for (String s : data.keySet()) {
             log.debug("Reporter: {}, Location: {}", s, data.get(s));
             Reporter r = mgr.getByDisplayName(s);
-            PhysicalLocation.setBeanPhysicalLocation(data.get(s), r);
+            if (r != null) {
+                PhysicalLocation.setBeanPhysicalLocation(data.get(s), r);
+            }
         }
 
         data = blockModel.getDataMap();
@@ -307,7 +309,9 @@ public class ManageLocationsFrame extends JmriJFrame {
         for (String s : data.keySet()) {
             log.debug("Block: {}, Location: {}", s, data.get(s));
             Block b = bmgr.getByDisplayName(s);
-            PhysicalLocation.setBeanPhysicalLocation(data.get(s), b);
+            if (b != null) {
+                PhysicalLocation.setBeanPhysicalLocation(data.get(s), b);
+            }
         }
 
         data = opsModel.getDataMap();

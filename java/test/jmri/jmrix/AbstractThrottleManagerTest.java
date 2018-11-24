@@ -1,20 +1,24 @@
 package jmri.jmrix;
 
 import jmri.util.JUnitUtil;
+import jmri.DccLocoAddress;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class AbstractThrottleManagerTest {
+public class AbstractThrottleManagerTest extends jmri.managers.AbstractThrottleManagerTestBase {
 
-    @Test
-    public void testCTor() {
-        AbstractThrottleManager t = new AbstractThrottleManager(new SystemConnectionMemo("T","Test"){
+    AbstractThrottleManager t = null;
+
+    // The minimal setup for log4J
+    @Before
+    @Override
+    public void setUp() {
+        JUnitUtil.setUp();
+        tm = t = new AbstractThrottleManager(new SystemConnectionMemo("T","Test"){
            @Override
            protected java.util.ResourceBundle getActionModelResourceBundle(){
               return null;
@@ -22,6 +26,7 @@ public class AbstractThrottleManagerTest {
         }){
            @Override
            public void requestThrottleSetup(jmri.LocoAddress a, boolean control){
+              notifyThrottleKnown(new jmri.jmrix.debugthrottle.DebugThrottle((DccLocoAddress)a,adapterMemo),a);
            }
            @Override
            public boolean addressTypeUnique(){
@@ -36,17 +41,11 @@ public class AbstractThrottleManagerTest {
               return true;
            }
         };
-        Assert.assertNotNull("exists",t);
-    }
-
-    // The minimal setup for log4J
-    @Before
-    public void setUp() {
-        JUnitUtil.setUp();
     }
 
     @After
     public void tearDown() {
+        tm = t = null;
         JUnitUtil.tearDown();
     }
 

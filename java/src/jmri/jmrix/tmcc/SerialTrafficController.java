@@ -102,19 +102,6 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
     }
 
     /**
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used
-     */
-    @Deprecated
-    static volatile protected SerialTrafficController self = null;
-
-    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-            justification = "temporary until mult-system; only set at startup")
-    @Override
-    protected void setInstance() {
-        self = this;
-    }
-
-    /**
      * Forward a SerialMessage to all registered SerialInterface listeners.
      */
     @Override

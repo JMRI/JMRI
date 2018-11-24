@@ -50,6 +50,7 @@ public class CbusDccProgrammer extends AbstractProgrammer implements CanListener
 
     // programming interface
     @Override
+    @Deprecated // 4.1.1
     synchronized public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) {
             log.debug("writeCV " + CV + " listens " + p);
@@ -78,6 +79,7 @@ public class CbusDccProgrammer extends AbstractProgrammer implements CanListener
     }
 
     @Override
+    @Deprecated // 4.1.1
     synchronized public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) {
             log.debug("readCV " + CV + " listens " + p);
@@ -200,13 +202,9 @@ public class CbusDccProgrammer extends AbstractProgrammer implements CanListener
         }
         // the programmingOpReply handler might send an immediate reply, so
         // clear the current listener _first_
-        if (_usingProgrammer == null) {
-            log.error("No listener to notify");
-        } else {
-            jmri.ProgListener temp = _usingProgrammer;
-            _usingProgrammer = null;
-            temp.programmingOpReply(value, status);
-        }
+        jmri.ProgListener temp = _usingProgrammer;
+        _usingProgrammer = null;
+        notifyProgListenerEnd(temp,value,status);
     }
 
     private final static Logger log = LoggerFactory.getLogger(CbusDccProgrammer.class);

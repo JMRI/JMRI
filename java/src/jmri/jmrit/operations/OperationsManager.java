@@ -16,7 +16,7 @@ import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.setup.AutoBackup;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.TrainManager;
-import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
+import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

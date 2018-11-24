@@ -18,7 +18,6 @@ public class SpeedoReply extends jmri.jmrix.AbstractMRReply {
     }
 
     // copy one
-    @SuppressWarnings("null")
     public SpeedoReply(SpeedoReply m) {
         this();
         if (m == null) {
@@ -49,7 +48,7 @@ public class SpeedoReply extends jmri.jmrix.AbstractMRReply {
             return -1;
         }
         try {
-            return Integer.valueOf(this.toString().substring(2, 8), 16);
+            return Integer.parseInt(this.toString().substring(2, 8), 16);
         } catch (NumberFormatException ex) {
             return 0;
         }
@@ -60,20 +59,10 @@ public class SpeedoReply extends jmri.jmrix.AbstractMRReply {
             return 0;
         }
         try {
-            return Integer.valueOf(this.toString().substring(1, 2));
+            return Integer.parseInt(this.toString().substring(1, 2));
         } catch (NumberFormatException ex) {
             return 0;
         }
-    }
-
-    // display format
-    @Override
-    public String toString() {
-        StringBuffer buf = new StringBuffer();
-        for (int i = 0; i < _nDataChars; i++) {
-            buf.append(_dataChars[i]);
-        }
-        return buf.toString();
     }
 
     @Override

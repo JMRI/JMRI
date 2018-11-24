@@ -166,6 +166,7 @@ public class NXFrame extends WarrantRoute {
         p.add(Box.createGlue());
         JButton button = new JButton(Bundle.getMessage("ButtonRoute"));
         button.addActionListener((ActionEvent e) -> {
+            clearTempWarrant();
             JPanel con = (JPanel)getContentPane().getComponent(0);
             con.removeAll();
             con.add(_routePanel);
@@ -175,6 +176,7 @@ public class NXFrame extends WarrantRoute {
         p.add(Box.createHorizontalStrut(2 * STRUT_SIZE));
         button = new JButton(Bundle.getMessage("ButtonRunNX"));
         button.addActionListener((ActionEvent e) -> {
+            clearTempWarrant();
             makeAndRunWarrant();
         });
         p.add(button);
@@ -443,7 +445,7 @@ public class NXFrame extends WarrantRoute {
         updateAutoRunPanel();
         pack();
     }
-    
+
     private void makeAndRunWarrant() {
         if (log.isDebugEnabled()) {
             log.debug("NXFrame selectedRoute()");
@@ -476,7 +478,6 @@ public class NXFrame extends WarrantRoute {
         }
         WarrantTableFrame tableFrame = WarrantTableFrame.getDefault();
         if (msg == null) {
-//            WarrantTableAction.setNXFrame(this);        // redundant
             tableFrame.getModel().addNXWarrant(warrant);   //need to catch propertyChange at start
             if (log.isDebugEnabled()) {
                 log.debug("NXWarrant added to table");
@@ -492,7 +493,6 @@ public class NXFrame extends WarrantRoute {
         }
 
         if (msg == null && mode == Warrant.MODE_RUN) {
-//            if (log.isDebugEnabled()) log.debug("Warrant "+warrant.getDisplayName()+" running.");
             if (_haltStartBox.isSelected()) {
                 class Halter implements Runnable {
 
@@ -586,18 +586,29 @@ public class NXFrame extends WarrantRoute {
         if (len <= 0) {
             return lengthError(bo.getPathName(), bo.getBlock().getDisplayName(), len, oDist, true);                        
         }
+        if (oDist < 0) {
+            return Bundle.getMessage("MustBeFloat", oDist);
+        }
         if (_originUnits.getText().equals("In")){
             oDist *= 25.4f;
-            if (oDist > 0 && oDist < len) {
+            if (oDist >= 0 && oDist <= len) {
                 _startDist = oDist;
             } else {
+                if (oDist > len) {
+                    float num = Math.round(len * 100 / 25.4f);
+                    _originDist.setText(formatter.format(num / 100f));
+                }
                 return lengthError(bo.getPathName(), bo.getBlock().getDisplayName(), len, oDist, true);            
             }
         } else {
             oDist *= 10f;
-            if (oDist > 0 && oDist < len) {
+            if (oDist >= 0 && oDist <= len) {
                 _startDist = oDist;
             } else {
+                if (oDist > len) {
+                    float num = Math.round(len * 100);
+                    _originDist.setText(formatter.format(num / 1000f));
+                }
                 return lengthError(bo.getPathName(), bo.getBlock().getDisplayName(), len, oDist, false);            
             }
         }
@@ -606,18 +617,29 @@ public class NXFrame extends WarrantRoute {
         if (len <= 0) {
             return lengthError(bo.getPathName(), bo.getBlock().getDisplayName(), len, oDist, true);                        
         }
+        if (dDist < 0) {
+            return Bundle.getMessage("MustBeFloat", dDist);
+        }
         if (_destUnits.getText().equals("In")) {
             dDist *= 25.4f;
-            if (dDist > 0 && dDist < len) {
+            if (dDist >= 0 && dDist <= len) {
                 _stopDist = dDist;
             } else {
+                if (dDist > len) {
+                    float num = Math.round(len * 100 / 25.4f);
+                    _destDist.setText(formatter.format(num / 100f));
+                }
                 return lengthError(bo.getPathName(), bo.getBlock().getDisplayName(), len, dDist, true);            
             }
         } else {
             dDist *= 10f;
-            if (dDist > 0 && dDist < len) {
+            if (dDist >= 0 && dDist <= len) {
                 _stopDist = dDist;
             } else {
+                if (dDist > len) {
+                    float num = Math.round(len * 100);
+                    _destDist.setText(formatter.format(num / 1000f));
+                }
                 return lengthError(bo.getPathName(), bo.getBlock().getDisplayName(), len, dDist, false);            
             }
         }

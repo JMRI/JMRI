@@ -564,8 +564,8 @@ public class JmriJTablePersistenceManager extends AbstractPreferencesManager imp
 
     protected final static class JTableListener implements PropertyChangeListener, RowSorterListener, TableColumnModelListener {
 
-        protected final JTable table;
-        protected final JmriJTablePersistenceManager manager;
+        private final JTable table;
+        private final JmriJTablePersistenceManager manager;
         private Timer delay = null;
 
         public JTableListener(JTable table, JmriJTablePersistenceManager manager) {

@@ -148,7 +148,7 @@ public class SetTrainIconRouteFrame extends OperationsFrame implements PropertyC
         }
         if (ae.getSource() == applyButton) {
             if (value != JOptionPane.YES_OPTION) {
-                value = JOptionPane.showConfirmDialog(null, MessageFormat.format(Bundle
+                value = JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle
                         .getMessage("UpdateTrainIconRoute"), new Object[]{_route.getName()}), Bundle
                                 .getMessage("DoYouWantThisRoute"),
                         JOptionPane.YES_NO_OPTION);

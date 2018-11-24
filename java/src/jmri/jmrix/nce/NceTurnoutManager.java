@@ -29,7 +29,7 @@ public class NceTurnoutManager extends jmri.managers.AbstractTurnoutManager impl
 
     @Override
     public Turnout createNewTurnout(String systemName, String userName) {
-        int addr = Integer.valueOf(systemName.substring(getSystemPrefix().length() + 1)).intValue();
+        int addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
         Turnout t = new NceTurnout(tc, getSystemPrefix(), addr);
         t.setUserName(userName);
 
@@ -52,9 +52,9 @@ public class NceTurnoutManager extends jmri.managers.AbstractTurnoutManager impl
         // name must be in the NLnnnnn format (N is user configurable)
         int num = 0;
         try {
-            num = Integer.valueOf(systemName.substring(
-                    getSystemPrefix().length() + 1, systemName.length())
-            ).intValue();
+            num = Integer.parseInt(systemName.substring(
+                        getSystemPrefix().length() + 1, systemName.length())
+                    );
         } catch (Exception e) {
             log.debug("illegal character in number field of system name: " + systemName);
             return (0);

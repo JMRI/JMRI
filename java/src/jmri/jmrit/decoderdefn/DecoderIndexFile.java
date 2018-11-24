@@ -419,7 +419,6 @@ public class DecoderIndexFile extends XmlFile {
         }
     }
 
-    @SuppressWarnings("unchecked")
     void readMfgSection(Element decoderIndex) {
         Element mfgList = decoderIndex.getChild("mfgList");
         if (mfgList != null) {
@@ -458,7 +457,6 @@ public class DecoderIndexFile extends XmlFile {
         }
     }
 
-    @SuppressWarnings("unchecked")
     void readFamilySection(Element decoderIndex) {
         Element familyList = decoderIndex.getChild("familyList");
         if (familyList != null) {
@@ -475,7 +473,6 @@ public class DecoderIndexFile extends XmlFile {
         }
     }
 
-    @SuppressWarnings("unchecked")
     void readFamily(Element family) {
         Attribute attr;
         String filename = family.getAttribute("file").getValue();
@@ -620,6 +617,9 @@ public class DecoderIndexFile extends XmlFile {
                 log.error("could not read {}: {}", fileName, exj.getMessage());
             } catch (IOException exj) {
                 log.error("other exception while dealing with {}: {}", fileName, exj.getMessage());
+            } catch (Exception exq) {
+                log.error("exception reading {}", fileName, exq);
+                throw exq;
             }
         }
 

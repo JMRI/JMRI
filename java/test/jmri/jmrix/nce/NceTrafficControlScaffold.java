@@ -12,10 +12,6 @@ import org.slf4j.LoggerFactory;
 public class NceTrafficControlScaffold extends NceTrafficController {
 
     public NceTrafficControlScaffold() {
-        if (log.isDebugEnabled()) {
-            log.debug("setting instance: " + this);
-        }
-        self = this;
     }
 
     // override some NceTrafficController methods for test purposes

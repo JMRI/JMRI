@@ -260,7 +260,7 @@ public class BoardListPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
                 return;
             }
             //Need some validation!
-            senMan.changeBoardAddress(boardAddress, Integer.valueOf(newAddressField.getText()));
+            senMan.changeBoardAddress(boardAddress, Integer.parseInt(newAddressField.getText()));
         }
 
         public static final int ADDRESS_COLUMN = 0;

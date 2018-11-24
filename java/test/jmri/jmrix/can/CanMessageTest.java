@@ -134,6 +134,28 @@ public class CanMessageTest extends CanMRCommonTestBase {
         Assert.assertTrue("3 Element 2", m.getElement(2) == 0x83);
     }
 
+    @Test
+    @Override
+    public void testToString() {
+        CanMessage m = new CanMessage(0x12);
+        m.setNumDataElements(3);
+        m.setElement(0, 0x81);
+        m.setElement(1, 0x02);
+        m.setElement(2, 0x83);
+        Assert.assertEquals("string representation", "[12] 81 02 83",m.toString());
+    }
+
+    @Test
+    @Override
+    public void testToMonitorString() {
+        CanMessage m = new CanMessage(0x12);
+        m.setNumDataElements(3);
+        m.setElement(0, 0x81);
+        m.setElement(1, 0x02);
+        m.setElement(2, 0x83);
+        Assert.assertEquals("string representation", "(12) 81 02 83",m.toMonitorString());
+    }
+
     // The minimal setup for log4J
     @Before
     @Override

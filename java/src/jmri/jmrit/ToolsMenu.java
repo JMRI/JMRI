@@ -114,6 +114,7 @@ public class ToolsMenu extends JMenu {
         add(new jmri.jmrit.simplelightctrl.SimpleLightCtrlAction(Bundle.getMessage("MenuItemLightControl")));
         add(new jmri.jmrit.ampmeter.AmpMeterAction());
         add(new jmri.jmrit.dispatcher.DispatcherAction(Bundle.getMessage("MenuItemDispatcher")));
+        add(new jmri.jmrit.timetable.swing.TimeTableAction(Bundle.getMessage("MenuItemTimeTable")));
 
         add(new JSeparator());
 

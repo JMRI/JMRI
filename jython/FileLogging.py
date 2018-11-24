@@ -8,6 +8,8 @@
 import jmri
 
 import java
+import java.beans
+import java.util
 import jarray
 import java.util.Calendar
 

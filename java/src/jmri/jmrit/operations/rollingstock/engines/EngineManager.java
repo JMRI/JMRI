@@ -67,7 +67,7 @@ public class EngineManager extends RollingStockManager<Engine> implements Instan
      *
      * @return new engine or existing engine
      */
-    public Engine newEngine(String engineRoad, String engineNumber) {
+    public Engine newRS(String engineRoad, String engineNumber) {
         Engine engine = getByRoadAndNumber(engineRoad, engineNumber);
         if (engine == null) {
             engine = new Engine(engineRoad, engineNumber);
@@ -274,7 +274,6 @@ public class EngineManager extends RollingStockManager<Engine> implements Instan
     public void load(Element root) {
         // new format using elements starting version 3.3.1
         if (root.getChild(Xml.NEW_CONSISTS) != null) {
-            @SuppressWarnings("unchecked")
             List<Element> consists = root.getChild(Xml.NEW_CONSISTS).getChildren(Xml.CONSIST);
             log.debug("Engine manager sees {} consists", consists.size());
             Attribute a;
@@ -296,7 +295,6 @@ public class EngineManager extends RollingStockManager<Engine> implements Instan
         }
 
         if (root.getChild(Xml.ENGINES) != null) {
-            @SuppressWarnings("unchecked")
             List<Element> engines = root.getChild(Xml.ENGINES).getChildren(Xml.ENGINE);
             log.debug("readFile sees {} engines", engines.size());
             for (Element e : engines) {

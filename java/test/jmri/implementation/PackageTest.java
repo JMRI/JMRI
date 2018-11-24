@@ -9,6 +9,7 @@ import org.junit.runners.Suite;
         NamedBeanTest.class,
 
         // implementations
+        AbstractAudioTest.class,
         AbstractSensorTest.class,
         AccessoryOpsModeProgrammerFacadeTest.class,
         OpsModeDelayedProgrammerFacadeTest.class,

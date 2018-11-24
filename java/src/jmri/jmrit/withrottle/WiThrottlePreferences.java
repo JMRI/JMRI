@@ -69,7 +69,7 @@ public class WiThrottlePreferences extends AbstractWiThrottlePreferences {
         }
         if ((a = child.getAttribute("getEStopDelay")) != null) {
             try {
-                setEStopDelay(Integer.valueOf(a.getValue()));
+                setEStopDelay(Integer.parseInt(a.getValue()));
                 this.asLoadedEStopDelay = this.getEStopDelay();
             } catch (NumberFormatException e) {
                 log.debug(e.getLocalizedMessage(), e);

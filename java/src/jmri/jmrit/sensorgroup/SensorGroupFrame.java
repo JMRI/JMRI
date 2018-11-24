@@ -216,7 +216,7 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
                 if (sensor == null || sensor.length() == 0) {
                     sensor = (String) _sensorModel.getValueAt(i, BeanTableModel.SNAME_COLUMN);
                 }
-                variableList.add(new ConditionalVariable(false, Conditional.OPERATOR_OR,
+                variableList.add(new ConditionalVariable(false, Conditional.Operator.OR,
                         Conditional.TYPE_SENSOR_ACTIVE, sensor, true));
                 actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE,
                         Conditional.ACTION_SET_SENSOR, sensor,
@@ -285,7 +285,7 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
                     if (c == null) {
                         log.error("Conditional \"" + name + "\" expected but NOT found in Logix " + logix.getSystemName());
                     } else {
-                        ArrayList<ConditionalVariable> variableList = c.getCopyOfStateVariables();
+                        List<ConditionalVariable> variableList = c.getCopyOfStateVariables();
                         for (int k = 0; k < variableList.size(); k++) {
                             String sensor = variableList.get(k).getName();
                             if (sensor != null) {

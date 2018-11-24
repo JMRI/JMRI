@@ -109,17 +109,6 @@ public class ServletUtil implements InstanceManagerAutoDefault {
      * Get the default ServletUtil instance.
      *
      * @return the default instance of ServletUtil
-     * @deprecated since 4.7.4; use {@link #getDefault() } instead
-     */
-    @Deprecated
-    public static ServletUtil getInstance() {
-        return getDefault();
-    }
-
-    /**
-     * Get the default ServletUtil instance.
-     *
-     * @return the default instance of ServletUtil
      * @deprecated since 4.9.2; use
      * {@link jmri.InstanceManager#getDefault(java.lang.Class)} with the
      * argument {@code ServletUtil.class} instead

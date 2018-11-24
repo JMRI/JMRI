@@ -38,6 +38,10 @@ valueSpeedIncrement = 0.01
 delay4double = 500 # delay for double tap on button (ms)
 
 import java
+import java.awt
+import java.awt.event
+import java.beans
+import java.util
 import jmri
 import jmri.jmrit.jython.Jynstrument as Jynstrument
 import java.beans.PropertyChangeListener as PropertyChangeListener

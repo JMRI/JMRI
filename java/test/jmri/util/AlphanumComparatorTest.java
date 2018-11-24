@@ -1,7 +1,5 @@
 package jmri.util;
 
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
 import org.junit.*;
 
 /**

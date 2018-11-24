@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Daniel Boudreau Copyright (C) 2009, 2010, 2013
  */
-public class RollingStock implements java.beans.PropertyChangeListener {
+public abstract class RollingStock implements java.beans.PropertyChangeListener {
 
     public static final String NONE = "";
     public static final int DEFAULT_BLOCKING_ORDER = 0;

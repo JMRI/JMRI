@@ -25,6 +25,7 @@ import jarray
 import jmri
 import xAPlib
 import java
+import java.beans
 
 # create the network
 print "opening "

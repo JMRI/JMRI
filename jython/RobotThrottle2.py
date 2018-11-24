@@ -96,6 +96,9 @@
 
 import jmri
 import java
+import java.awt
+import java.awt.event
+import java.beans
 import javax.swing
 
 HighDebug = 3

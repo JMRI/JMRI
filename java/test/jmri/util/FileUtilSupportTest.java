@@ -95,7 +95,6 @@ public class FileUtilSupportTest {
     }
 
     // tests of external to internal mapping
-    @SuppressWarnings("unused")
     @Test
     public void testGetpfPreferenceF() throws IOException {
         File f = new File(instance.getUserFilesPath() + "non-existant-file-foo");
@@ -109,7 +108,6 @@ public class FileUtilSupportTest {
         Assert.assertEquals("preference:non-existant-file-foo", name);
     }
 
-    @SuppressWarnings("unused")
     @Test
     public void testGetpfResourceF() throws IOException {
         File f = new File(instance.getUserFilesPath() + "resources" + File.separator + "non-existant-file-foo");
@@ -152,7 +150,6 @@ public class FileUtilSupportTest {
         Assert.assertEquals("home:non-existant-file-foo", name);
     }
 
-    @SuppressWarnings("unused")
     @Test
     public void testGetpfHomeF() throws IOException {
         File f = new File(System.getProperty("user.home") + File.separator + "resources" + File.separator + "non-existant-file-foo");

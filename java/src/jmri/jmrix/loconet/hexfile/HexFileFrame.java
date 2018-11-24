@@ -236,10 +236,12 @@ public class HexFileFrame extends JmriJFrame {
         sourceThread.start();
     }
 
+    @SuppressWarnings("deprecation")  // Thread.suspend() not being removed
     public void filePauseButtonActionPerformed(java.awt.event.ActionEvent e) {
         sourceThread.suspend();
     }
 
+    @SuppressWarnings("deprecation")  // Thread.resume() not being removed
     public void jButton1ActionPerformed(java.awt.event.ActionEvent e) {  // resume button
         sourceThread.resume();
     }
@@ -247,7 +249,7 @@ public class HexFileFrame extends JmriJFrame {
     public void delayFieldActionPerformed(java.awt.event.ActionEvent e) {
         // if the hex file has been started, change its delay
         if (port != null) {
-            port.setDelay(Integer.valueOf(delayField.getText()).intValue());
+            port.setDelay(Integer.parseInt(delayField.getText()));
         }
     }
 

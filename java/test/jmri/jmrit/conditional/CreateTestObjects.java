@@ -1,6 +1,7 @@
 package jmri.jmrit.conditional;
 
 import java.util.ArrayList;
+import java.util.List;
 import jmri.Conditional;
 import jmri.ConditionalAction;
 import jmri.ConditionalVariable;
@@ -29,7 +30,7 @@ public class CreateTestObjects {
         
 //       <conditionalStateVariable operator="2" negated="yes" type="1" systemName="Reset" dataString="" num1="0" num2="0" triggersCalc="yes" />
         ConditionalVariable var1 = new ConditionalVariable();
-        var1.setOpern(2);
+        var1.setOpern(Conditional.Operator.NONE);
         var1.setNegation(true);
         var1.setType(1);
         var1.setName("Sensor 1");  // NOI18N
@@ -41,7 +42,7 @@ public class CreateTestObjects {
 
 //       <conditionalStateVariable operator="3" negated="yes" type="2" systemName="Reset" dataString="" num1="0" num2="0" triggersCalc="yes" />
         ConditionalVariable var2 = new ConditionalVariable();
-        var2.setOpern(3);
+        var2.setOpern(Conditional.Operator.AND);
         var2.setNegation(true);
         var2.setType(2);
         var2.setName("Sensor 1");  // NOI18N
@@ -54,7 +55,7 @@ public class CreateTestObjects {
         cdl.setStateVariables(variableList);
 
         // Create actions
-        ArrayList<ConditionalAction> actionList = ((DefaultConditional) cdl).getActionList();
+        List<ConditionalAction> actionList = ((DefaultConditional) cdl).getActionList();
 
 //       <conditionalAction option="1" type="9" systemName="Reset" data="4" delay="0" string="" />
         ConditionalAction act1 = new DefaultConditionalAction();

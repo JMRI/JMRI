@@ -1,6 +1,6 @@
 package jmri.jmrit.ussctc;
 
-import java.util.ArrayList;
+import java.util.List;
 import jmri.Conditional;
 import jmri.ConditionalAction;
 import jmri.ConditionalVariable;
@@ -64,18 +64,18 @@ public class OsIndicator implements Constants {
         }
 
         // Load variable into the Conditional
-        ArrayList<ConditionalVariable> variableList = c.getCopyOfStateVariables();
-        variableList.add(new ConditionalVariable(false, Conditional.OPERATOR_NONE,
+        List<ConditionalVariable> variableList = c.getCopyOfStateVariables();
+        variableList.add(new ConditionalVariable(false, Conditional.Operator.NONE,
                 Conditional.TYPE_SENSOR_INACTIVE,
                 osSensor, true));
         if (!lock.equals("")) {
-            variableList.add(new ConditionalVariable(false, Conditional.OPERATOR_AND,
+            variableList.add(new ConditionalVariable(false, Conditional.Operator.AND,
                     Conditional.TYPE_SENSOR_INACTIVE,
                     lock, true));
         }
         c.setStateVariables(variableList);
 
-        ArrayList<ConditionalAction> actionList = c.getCopyOfActions();
+        List<ConditionalAction> actionList = c.getCopyOfActions();
         actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE,
                 Conditional.ACTION_SET_TURNOUT, output,
                 Turnout.CLOSED, " ")); //NOI18N
@@ -115,7 +115,7 @@ public class OsIndicator implements Constants {
         }
 
         // Load variables from the Conditional
-        ArrayList<ConditionalVariable> variableList = c.getCopyOfStateVariables();
+        List<ConditionalVariable> variableList = c.getCopyOfStateVariables();
         ConditionalVariable variable = variableList.get(0);
         osSensor = variable.getName();
         if (variableList.size() > 0) {

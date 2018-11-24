@@ -69,7 +69,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
     LocationManager locationManager = InstanceManager.getDefault(LocationManager.class);
 
     public Location _location = null;
-    ArrayList<JCheckBox> checkBoxes = new ArrayList<JCheckBox>();
+    ArrayList<JCheckBox> checkBoxes = new ArrayList<>();
     JPanel panelCheckBoxes = new JPanel();
     JScrollPane typePane;
     JPanel directionPanel = new JPanel();
@@ -107,7 +107,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
             JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
     // Reader selection dropdown.
-    JComboBox<Reporter> readerSelector = new JComboBox<Reporter>();
+    JComboBox<Reporter> readerSelector = new JComboBox<>();
 
     public static final String NAME = Bundle.getMessage("Name");
     public static final int MAX_NAME_LENGTH = Control.max_len_string_location_name;
@@ -515,10 +515,9 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
             return false;
         }
         if (!OperationsXml.checkFileName(locationNameTextField.getText())) { // NOI18N
-            log.error("location name must not contain reserved characters");
             JOptionPane.showMessageDialog(this,
-                    Bundle.getMessage("LocationNameResChar") + NEW_LINE + Bundle.getMessage("ReservedChar"),
-                    Bundle.getMessage("CanNotLocation"),
+                    Bundle.getMessage("NameResChar") + NEW_LINE + Bundle.getMessage("ReservedChar"),
+                    MessageFormat.format(Bundle.getMessage("CanNotLocation"), new Object[]{s}),
                     JOptionPane.ERROR_MESSAGE);
             return false;
         }

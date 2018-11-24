@@ -293,7 +293,6 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     /**
      * {@inheritDoc}
      */
-    @SuppressWarnings("unchecked")
     @Override
     public Vector<String> getPortNames() {
         //reloadDriver(); // Refresh the list of communication ports
@@ -386,7 +385,6 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
             _status = THREADFAIL;
         }
 
-        @SuppressWarnings("unchecked")
         @Override
         public void run() {
             boolean reply = true;

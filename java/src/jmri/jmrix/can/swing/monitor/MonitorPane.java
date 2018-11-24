@@ -54,16 +54,7 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
         if (log.isDebugEnabled()) {
             log.debug("Message: " + l.toString());
         }
-        StringBuffer buf = new StringBuffer();
-        //String formatted = "("+Integer.toHexString(l.getHeader())
-        //                    + (l.isExtended() ? " ext)" : ")");
-        buf.append("(" + Integer.toHexString(l.getHeader())
-                + (l.isExtended() ? " ext)" : ")"));
-        for (int i = 0; i < l.getNumDataElements(); i++) //formatted += " "+jmri.util.StringUtil.twoHexFromInt(l.getElement(i));
-        {
-            buf.append(" " + jmri.util.StringUtil.twoHexFromInt(l.getElement(i)));
-        }
-        nextLine("M: " + buf.toString() + "\n", l.toString());
+        logMessage("M: ",l);
     }
 
     @Override
@@ -71,16 +62,7 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
         if (log.isDebugEnabled()) {
             log.debug("Reply: " + l.toString());
         }
-        StringBuffer buf = new StringBuffer();
-        //String formatted = "("+Integer.toHexString(l.getHeader())
-        //                    + (l.isExtended() ? " ext)" : ")");
-        buf.append("(" + Integer.toHexString(l.getHeader())
-                + (l.isExtended() ? " ext)" : ")"));
-        for (int i = 0; i < l.getNumDataElements(); i++) //formatted += " "+jmri.util.StringUtil.twoHexFromInt(l.getElement(i));
-        {
-            buf.append(" " + jmri.util.StringUtil.twoHexFromInt(l.getElement(i)));
-        }
-        nextLine("R: " + buf.toString() + "\n", l.toString());
+        logMessage("R: ",l);
     }
 
     @Override

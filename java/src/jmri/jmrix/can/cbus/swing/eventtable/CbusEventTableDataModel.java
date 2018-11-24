@@ -9,6 +9,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -16,14 +18,15 @@ import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.RowSorter;
-import javax.swing.SortOrder;
+import javax.swing.text.BadLocationException;
 import javax.swing.Timer;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.util.ArrayList;
 import java.util.Date;
+import jmri.InstanceManager;
 import jmri.util.FileUtil;
 import java.util.List;
 import jmri.util.table.ButtonEditor;
@@ -35,8 +38,11 @@ import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.CbusConstants;
+import jmri.jmrix.can.cbus.CbusLight;
 import jmri.jmrix.can.cbus.CbusMessage;
 import jmri.jmrix.can.cbus.CbusOpCodes;
+import jmri.jmrix.can.cbus.CbusSensor;
+import jmri.jmrix.can.cbus.CbusTurnout;
 import jmri.jmrix.can.TrafficController;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -54,27 +60,7 @@ import org.slf4j.LoggerFactory;
  * 
  */
 public class CbusEventTableDataModel extends javax.swing.table.AbstractTableModel implements CanListener {
-    
-    private int _rowCount = 0;
-    private int[] _canid = null;
-    private int[] _node = null;
-    private String[] _name = null;
-    private int[] _event = null;
-    private int[] _type = null;
-    private String[] _comment = null;
-    private int[] _sessionoff = null;
-    private int[] _sessionon = null;
-    private int[] _sessionout = null;
-    private int[] _sessionin = null;
-    private Date[] _latesttimestamp = null;
-    private String[] _nodename = null;
-    private int[] _feedbackreqd = null;
-    private int[] _feedbackoutstanding = null;
-    private int[] _feedbackevent = null;
-    private int[] _feedbacknode = null;
-    private int[] _feedbacktimeout = null;
-    private int[] _lfb = null;
-    private Timer[] _mytimers = null; 
+
     private File _saveFile = null;
     private String _saveFileName = null;
     private boolean _saved = false;
@@ -83,10 +69,33 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
     protected int _contype=0; // event table pane console message type
     protected String _context=null; // event table pane console text
     private int _defaultfeedbackdelay = 4000;
-    
+    static private int MAX_LINES = 500; // tablefeedback screen log size
     final JFileChooser fileChooser = new JFileChooser(FileUtil.getUserFilesPath());
     private ActionListener eventFeedbackListener;
+
+    private ArrayList<Integer> eventarr;
+    private ArrayList<Integer> nodearr;
+    private ArrayList<Integer> canidarr;
+    private ArrayList<Integer> typearr;
+    private ArrayList<String> namearr;
+    private ArrayList<String> nodenamearr;
+    private ArrayList<String> commentarr;
+    private ArrayList<Integer> sessiononarr;
+    private ArrayList<Integer> sessionoffarr;
+    private ArrayList<Integer> sessioninarr;
+    private ArrayList<Integer> sessionoutarr;
+    private ArrayList<Integer> feedbackreqdarr;    
+    private ArrayList<Integer> feedbackoutstandingarr;    
+    private ArrayList<Integer> feedbackeventarr;    
+    private ArrayList<Integer> feedbacknodearr;
+    private ArrayList<Integer> feedbacktimeoutarr;    
+    private ArrayList<Date> latesttimestamparr;   
+    private ArrayList<Integer> lfbarr;
+    private ArrayList<Timer> mytimersarr;
+    private ArrayList<String> stlonarr;
+    private ArrayList<String> stloffarr;
     
+    TextAreaFIFO tablefeedback;
     CanSystemConnectionMemo memo;
     TrafficController tc;
     
@@ -95,14 +104,14 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
     static public final int NODE_COLUMN = 1; 
     static public final int NAME_COLUMN = 2; 
     static public final int NODENAME_COLUMN = 3;
-    static public final int CANID_COLUMN = 4;
+    static public final int COMMENT_COLUMN = 4;
     static public final int TYPE_COLUMN = 5;
-    static public final int ON_BUTTON_COLUMN = 6; 
-    static public final int OFF_BUTTON_COLUMN = 7; 
-    static public final int TOGGLE_BUTTON_COLUMN = 8;
-    static public final int LATEST_TIMESTAMP_COLUMN = 9;
-    static public final int STATUS_REQUEST_BUTTON_COLUMN = 10;
-    static public final int COMMENT_COLUMN = 11;
+    static public final int TOGGLE_BUTTON_COLUMN = 6;
+    static public final int ON_BUTTON_COLUMN = 7; 
+    static public final int OFF_BUTTON_COLUMN = 8; 
+    static public final int CANID_COLUMN = 9;
+    static public final int LATEST_TIMESTAMP_COLUMN = 10;
+    static public final int STATUS_REQUEST_BUTTON_COLUMN = 11;
     static public final int SESSION_TOTAL_COLUMN = 12;
     static public final int SESSION_ON_COLUMN = 13;
     static public final int SESSION_OFF_COLUMN = 14;
@@ -115,44 +124,84 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
     static public final int FEEDBACKTIMEOUT_COLUMN = 21;
     static public final int FEEDBACKEVENT_COLUMN = 22;
     static public final int FEEDBACKNODE_COLUMN = 23;
+    static public final int STLR_ON_COLUMN = 24;
+    static public final int STLR_OFF_COLUMN = 25;
+    static public final int STLR_ICON_COLUMN = 99;
     
-    static public final int MAX_COLUMN = 24;
+    static public final int MAX_COLUMN = 26;
     
     // order + which columns to use when saving
-    protected int[] saveColumns = {0,1,2,3,9,11}; // will need to change CVS file order if changed
-    protected int[] whichPrintColumns = {0,1,2,3,11}; // no changes needed to other files if changed    
+    protected int[] saveColumns = {0,1,2,3,10,4}; // will need to change CVS file order if changed
+    protected int[] whichPrintColumns = {0,1,2,3,4}; // no changes needed to other files if changed    
 
     CbusEventTableDataModel(CanSystemConnectionMemo memo, int row, int column) {
-        _canid = new int[CbusConstants.MAX_TABLE_EVENTS];
-        _node = new int[CbusConstants.MAX_TABLE_EVENTS];
-        _nodename = new String[CbusConstants.MAX_TABLE_EVENTS];
-        _name = new String[CbusConstants.MAX_TABLE_EVENTS];
-        _event = new int[CbusConstants.MAX_TABLE_EVENTS];
-        _type = new int[CbusConstants.MAX_TABLE_EVENTS];
-        _comment = new String[CbusConstants.MAX_TABLE_EVENTS];
-        _sessionoff = new int[CbusConstants.MAX_TABLE_EVENTS];
-        _sessionon = new int[CbusConstants.MAX_TABLE_EVENTS];
-        _sessionout = new int[CbusConstants.MAX_TABLE_EVENTS];
-        _sessionin = new int[CbusConstants.MAX_TABLE_EVENTS];
-        _latesttimestamp = new Date[CbusConstants.MAX_TABLE_EVENTS];
-        _feedbackreqd = new int[CbusConstants.MAX_TABLE_EVENTS];
-        _feedbackoutstanding = new int[CbusConstants.MAX_TABLE_EVENTS];
-        _feedbackevent = new int[CbusConstants.MAX_TABLE_EVENTS];
-        _feedbacknode = new int[CbusConstants.MAX_TABLE_EVENTS];
-        _feedbacktimeout = new int[CbusConstants.MAX_TABLE_EVENTS];
-        _lfb = new int[CbusConstants.MAX_TABLE_EVENTS];
-        _mytimers = new Timer[CbusConstants.MAX_TABLE_EVENTS]; 
+        
+        eventarr = new ArrayList<Integer>();
+        nodearr = new ArrayList<Integer>();
+        canidarr = new ArrayList<Integer>();
+        typearr = new ArrayList<Integer>();
+        namearr = new ArrayList<String>();
+        nodenamearr = new ArrayList<String>();
+        commentarr = new ArrayList<String>();
+        sessiononarr = new ArrayList<Integer>();
+        sessionoffarr = new ArrayList<Integer>();
+        sessioninarr = new ArrayList<Integer>();
+        sessionoutarr = new ArrayList<Integer>();
+        feedbackreqdarr = new ArrayList<Integer>();
+        feedbackoutstandingarr = new ArrayList<Integer>();
+        feedbackeventarr = new ArrayList<Integer>();
+        feedbacknodearr = new ArrayList<Integer>();
+        feedbacktimeoutarr = new ArrayList<Integer>();
+        latesttimestamparr = new ArrayList<Date>();
+        lfbarr = new ArrayList<Integer>();
+        mytimersarr = new ArrayList<Timer>();
+        stlonarr = new ArrayList<String>();
+        stloffarr = new ArrayList<String>();
+        tablefeedback = new TextAreaFIFO(MAX_LINES);
+        
         // connect to the CanInterface
         tc = memo.getTrafficController();
         tc.addCanListener(this);
     }
 
+    
+    // order needs to match column list top of dtabledatamodel
+    static protected final String[] columnToolTips = {
+        Bundle.getMessage("EventColTip"),
+        Bundle.getMessage("NodeColTip"),
+        Bundle.getMessage("NameColTip"),
+        Bundle.getMessage("CbusNodeNameTip"),
+        Bundle.getMessage("CommentColTip"),
+        Bundle.getMessage("TypeColTip"),
+        Bundle.getMessage("SendToggleTip"),
+        Bundle.getMessage("SendOntip"),
+        Bundle.getMessage("SendOfftip"),
+        Bundle.getMessage("IDColTip"),
+        Bundle.getMessage("ColumnLastHeard"),
+        Bundle.getMessage("ColumnRequestStatusTip"),
+        Bundle.getMessage("ColumnTotalSession"),
+        Bundle.getMessage("ColumnOnSession"),
+        Bundle.getMessage("ColumnOffSession"),
+        Bundle.getMessage("ColumnInSessionTip"),
+        Bundle.getMessage("ColumnOutSessionTip"),
+        Bundle.getMessage("ColumnEventDeleteTip"),
+        Bundle.getMessage("FBLastTip"),        
+        Bundle.getMessage("FBOutstandingTip"),
+        Bundle.getMessage("FBNumTip"),
+        Bundle.getMessage("FBTimeoutTip"),
+        Bundle.getMessage("FBEventTip"),
+        Bundle.getMessage("FBNodeTip"),
+        Bundle.getMessage("StlrOnTip"),
+        Bundle.getMessage("StlrOffTip")
+
+    }; // Length = number of items in array should (at least) match number of columns
+    
     /**
      * Return the number of rows to be displayed.
      */
     @Override
-    public synchronized int getRowCount() {
-        return _rowCount;
+    public int getRowCount() {
+        return eventarr.size();
     }
 
     @Override
@@ -160,7 +209,6 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
         return MAX_COLUMN;
     }
 
-    
     
     /**
      * Returns String of column name from column int
@@ -171,7 +219,7 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
     public String getColumnName(int col) { // not in any order
         switch (col) {
             case CANID_COLUMN:
-                return Bundle.getMessage("ColumnID");
+                return Bundle.getMessage("CanID");
             case NODE_COLUMN:
                 return Bundle.getMessage("CbusNode");
             case NODENAME_COLUMN:
@@ -218,6 +266,10 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
                 return Bundle.getMessage("FBNode");
             case FEEDBACKTIMEOUT_COLUMN:
                 return Bundle.getMessage("FBTimeout");
+            case STLR_ON_COLUMN:
+                return Bundle.getMessage("JmriOnEv");
+            case STLR_OFF_COLUMN:
+                return Bundle.getMessage("JmriOffEv");
             default:
                 return "unknown"; // NOI18N
         }
@@ -247,37 +299,30 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
             case DELETE_BUTTON_COLUMN:
                 return new JTextField(10).getPreferredSize().width;
             case ON_BUTTON_COLUMN:
-                return new JTextField(8).getPreferredSize().width;
-            case OFF_BUTTON_COLUMN:
-                return new JTextField(8).getPreferredSize().width;                
+            case OFF_BUTTON_COLUMN:               
             case TOGGLE_BUTTON_COLUMN:
                 return new JTextField(8).getPreferredSize().width; 
             case STATUS_REQUEST_BUTTON_COLUMN:
                 return new JTextField(9).getPreferredSize().width;
             case SESSION_ON_COLUMN:
-                return new JTextField(7).getPreferredSize().width;
             case SESSION_OFF_COLUMN:
-                return new JTextField(7).getPreferredSize().width;
             case SESSION_IN_COLUMN:
-                return new JTextField(7).getPreferredSize().width;
             case SESSION_OUT_COLUMN:
-                return new JTextField(7).getPreferredSize().width;
+                return new JTextField(5).getPreferredSize().width;
             case SESSION_TOTAL_COLUMN:
                 return new JTextField(7).getPreferredSize().width;
             case LATEST_TIMESTAMP_COLUMN:
                 return new JTextField(7).getPreferredSize().width;
             case LASTFEEDBACK_COLUMN:
-                return new JTextField(6).getPreferredSize().width;
             case FEEDBACKREQUIRED_COLUMN:
-                return new JTextField(5).getPreferredSize().width;
             case FEEDBACKOUTSTANDING_COLUMN:
-                return new JTextField(5).getPreferredSize().width;
             case FEEDBACKTIMEOUT_COLUMN:
-                return new JTextField(5).getPreferredSize().width;
             case FEEDBACKNODE_COLUMN:
-                return new JTextField(5).getPreferredSize().width;
             case FEEDBACKEVENT_COLUMN:
                 return new JTextField(5).getPreferredSize().width;
+            case STLR_ON_COLUMN:
+            case STLR_OFF_COLUMN:
+                return new JTextField(20).getPreferredSize().width;
             default:
                 return new JLabel(" <unknown> ").getPreferredSize().width; // NOI18N
         }
@@ -336,6 +381,10 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
             case FEEDBACKREQUIRED_COLUMN:
                 return 4;
             case FEEDBACKOUTSTANDING_COLUMN:
+                return 4;
+            case STLR_ON_COLUMN:
+                return 4;
+            case STLR_OFF_COLUMN:
                 return 4;
             default:
                 return -1;
@@ -396,6 +445,10 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
                 return Integer.class;
             case FEEDBACKTIMEOUT_COLUMN:
                 return Integer.class;
+            case STLR_ON_COLUMN:
+                return String.class;
+            case STLR_OFF_COLUMN:
+                return String.class;
             default:
                 return null;
         }
@@ -409,34 +462,22 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
     public boolean isCellEditable(int row, int col) {
         switch (col) {
             case NAME_COLUMN:
-                return true;
             case COMMENT_COLUMN:
-                return true;
             case DELETE_BUTTON_COLUMN:
-                return true;
             case ON_BUTTON_COLUMN:
-                return true;
             case OFF_BUTTON_COLUMN:
-                return true;
             case TOGGLE_BUTTON_COLUMN:
-                return true;
             case STATUS_REQUEST_BUTTON_COLUMN:
-                return true;
             case FEEDBACKREQUIRED_COLUMN:
-                return true;
             case FEEDBACKEVENT_COLUMN:
-                return true;
             case FEEDBACKNODE_COLUMN:
-                return true;
             case FEEDBACKTIMEOUT_COLUMN:
-                return true;
             case FEEDBACKOUTSTANDING_COLUMN:
                 return true;
             default:
                 return false;
         }
     }
-
 
 
      /**
@@ -448,27 +489,27 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
     public Object getValueAt(int row, int col) {
         switch (col) {
             case NODE_COLUMN:
-                if (_node[row]>0) {
-                    return _node[row];
+                if ( nodearr.get(row) > 0 ) {
+                    return nodearr.get(row);
                 } else {
                     return null;
                 }
             case EVENT_COLUMN:
-                return _event[row];
+                return eventarr.get(row);
             case NAME_COLUMN:
-                return _name[row];
+                return namearr.get(row);
             case NODENAME_COLUMN:
-                return _nodename[row];
+                return nodenamearr.get(row);
             case CANID_COLUMN:
-                if (_canid[row]>0) {
-                    return _canid[row];
+                if (canidarr.get(row)>0) {
+                    return canidarr.get(row);
                 } else {
                     return null;
                 }
             case TYPE_COLUMN:  // on or off event  1 is on, 0 is off, null unknown
-                if (_type[row]==1) { 
+                if (typearr.get(row)==1) { 
                     return Bundle.getMessage("CbusEventOff");
-                } else if (_type[row]==0) {
+                } else if (typearr.get(row)==0) {
                     return Bundle.getMessage("CbusEventOn");
                 } else {
                     return("");
@@ -478,72 +519,74 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
             case OFF_BUTTON_COLUMN:
                 return Bundle.getMessage("CbusSendOff");
             case TOGGLE_BUTTON_COLUMN:  // on or off event  1 is on, 0 is off, null unknown
-                if (_type[row]==1) { 
+                if (typearr.get(row)==1) { 
                     return Bundle.getMessage("CbusSendOn");
-                } else if (_type[row]==0) {
+                } else if (typearr.get(row)==0) {
                     return Bundle.getMessage("CbusSendOff");
                 } else
                     return Bundle.getMessage("CbusSendOff");
             case STATUS_REQUEST_BUTTON_COLUMN:
-                return("Get Status");
+                return Bundle.getMessage("StatusButton");
             case COMMENT_COLUMN:
-                return _comment[row];
+                return commentarr.get(row);
             case DELETE_BUTTON_COLUMN:
                 return Bundle.getMessage("ButtonDelete");
             case SESSION_ON_COLUMN:
-                if (_sessionon[row]>0) {
-                    return _sessionon[row];
+                if (sessiononarr.get(row)>0) {
+                    return sessiononarr.get(row);
                 } else {
                     return null;
                 }
             case SESSION_OFF_COLUMN:
-                if (_sessionoff[row]>0) {
-                    return _sessionoff[row];
+                if (sessionoffarr.get(row)>0) {
+                    return sessionoffarr.get(row);
                 } else {
                     return null;
                 }
             case SESSION_IN_COLUMN:
-                if (_sessionin[row]>0) {
-                    return _sessionin[row];
+                if (sessioninarr.get(row)>0) {
+                    return sessioninarr.get(row);
                 } else {
                     return null;
                 }
             case SESSION_OUT_COLUMN:
-                if (_sessionout[row]>0) {
-                    return _sessionout[row];
+                if (sessionoutarr.get(row)>0) {
+                    return sessionoutarr.get(row);
                 } else {
                     return null;
                 }
             case SESSION_TOTAL_COLUMN:
-                if ((_sessionon[row]+_sessionoff[row])>0) {
-                    return (_sessionon[row]+_sessionoff[row]);
+                if ((sessiononarr.get(row) + sessionoffarr.get(row))>0) {
+                    return (sessiononarr.get(row) + sessionoffarr.get(row));
                 } else {
                     return null;
                 }
             case LATEST_TIMESTAMP_COLUMN:
-                return (_latesttimestamp[row]); // in Date format
+                return (latesttimestamparr.get(row)); // in Date format
             case LASTFEEDBACK_COLUMN:  // on or off event  1 is on, 0 is off, null unknown
-                if (_lfb[row]==0) { 
-                    return ("");
-                } else if (_lfb[row]==1) {
+                if (lfbarr.get(row)==1) {
                     return Bundle.getMessage("LfbFinding");
-                } else if (_lfb[row]==2) {
+                } else if (lfbarr.get(row)==2) {
                     return Bundle.getMessage("LfbGood");
-                } else if (_lfb[row]==3) {
+                } else if (lfbarr.get(row)==3) {
                     return Bundle.getMessage("LfbBad");
                 } else {
                     return("");
                 }
             case FEEDBACKREQUIRED_COLUMN:
-                return _feedbackreqd[row];
+                return feedbackreqdarr.get(row);
             case FEEDBACKOUTSTANDING_COLUMN:
-                return _feedbackoutstanding[row];
+                return feedbackoutstandingarr.get(row);
             case FEEDBACKEVENT_COLUMN:
-                return _feedbackevent[row];
+                return feedbackeventarr.get(row);
             case FEEDBACKNODE_COLUMN:
-                return _feedbacknode[row];
+                return feedbacknodearr.get(row);
             case FEEDBACKTIMEOUT_COLUMN:
-                return _feedbacktimeout[row];
+                return feedbacktimeoutarr.get(row);
+            case STLR_ON_COLUMN:
+                return stlonarr.get(row);
+            case STLR_OFF_COLUMN:
+                return stloffarr.get(row);
             default:
                 log.error("internal state inconsistent with table request for row {} col {}", row, col);
                 return null;
@@ -551,7 +594,6 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
     }
     
     
-
     /**
      * Capture new comments or node names.
      * Button events
@@ -563,37 +605,21 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
     public void setValueAt(Object value, int row, int col) {
         // log.debug("427 set valueat called row: {} col: {}", row, col);
         if (col == NAME_COLUMN) {
-            _name[row] = (String) value;
-            // look for other occurrences of the same node
-          /*  for (int i = 0; i < getRowCount(); i++) {
-                // ignore this one
-                if (i != row) {
-                    if (_node[i] == _node[row]) {
-                        // copy the name if not present
-                        if (_name[i]==null) {
-                            _name[i] = _name[row];
-                        }
-                    }
-                }
-            }
-            
-            */
+            namearr.set(row, (String) value);
             Runnable r = new Notify(-1, this);
-            javax.swing.SwingUtilities.invokeLater(r);            
-            
+            javax.swing.SwingUtilities.invokeLater(r);
         }  else if (col == COMMENT_COLUMN) {        
-            _comment[row] = (String) value;
+            commentarr.set(row, (String) value);
             Runnable r = new Notify(row, this);
             javax.swing.SwingUtilities.invokeLater(r);
         }
-        
         else if (col == NODENAME_COLUMN) {        
-            _nodename[row] = (String) value;
+            nodenamearr.set(row, (String) value);
             Runnable r = new Notify(row, this);
             javax.swing.SwingUtilities.invokeLater(r);
         }
         else if (col == TYPE_COLUMN) {
-            _type[row] = (int) value;
+            typearr.set(row, (Integer) value);
             Runnable r = new Notify(row, this);
             javax.swing.SwingUtilities.invokeLater(r);
         }
@@ -609,7 +635,7 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
             sendEventFromRow(row,0);
         }        
         else if (col == TOGGLE_BUTTON_COLUMN) {
-            if ( _type[row]==1) {
+            if ( typearr.get(row)==1) {
                 sendEventFromRow(row,1);
             } else {
                 sendEventFromRow(row,0);
@@ -619,78 +645,88 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
             sendEventFromRow(row,2);
         }
         else if (col == SESSION_ON_COLUMN) {
-            _sessionon[row] = _sessionon[row] + 1;
+            sessiononarr.set(row, (sessiononarr.get(row)+1));
             Runnable r = new Notify(row, this); 
             javax.swing.SwingUtilities.invokeLater(r);
             }
         else if (col == SESSION_OFF_COLUMN) {
-            _sessionoff[row] = _sessionoff[row] + 1;
+            sessionoffarr.set(row, (sessionoffarr.get(row)+1));
             Runnable r = new Notify(row, this);
             javax.swing.SwingUtilities.invokeLater(r);
         }
         else if (col == SESSION_IN_COLUMN) {
-            _sessionin[row] = _sessionin[row] + 1;
+            sessioninarr.set(row, (sessioninarr.get(row)+1));
             Runnable r = new Notify(row, this); 
             javax.swing.SwingUtilities.invokeLater(r);
         }
         else if (col == CANID_COLUMN) {
-            _canid[row] =  (int) value;
+            canidarr.set(row, (Integer) value);
             Runnable r = new Notify(row, this); 
             javax.swing.SwingUtilities.invokeLater(r);
         }
         else if (col == SESSION_OUT_COLUMN) {
-            _sessionout[row] = _sessionout[row] + 1;
+            sessionoutarr.set(row, (sessionoutarr.get(row)+1));
             Runnable r = new Notify(row, this);
             javax.swing.SwingUtilities.invokeLater(r);
         }
         else if (col == LATEST_TIMESTAMP_COLUMN) {
-            _latesttimestamp[row] = new Date();
+            latesttimestamparr.set(row,new Date());
             Runnable r = new Notify(row, this);
             javax.swing.SwingUtilities.invokeLater(r);
         }
         else if (col == FEEDBACKREQUIRED_COLUMN) {
             int fbreqd = (int) value;
-            if ((_feedbackevent[row]>0)||(_feedbacknode[row]>0)) { 
+            if ((feedbackeventarr.get(row) > 0 )||(feedbacknodearr.get(row)>0)) { 
                 fbreqd=0; 
             }
-            _feedbackreqd[row] = fbreqd;
+            feedbackreqdarr.set(row,fbreqd);
             Runnable r = new Notify(row, this);
             javax.swing.SwingUtilities.invokeLater(r);
         }
         else if (col == FEEDBACKOUTSTANDING_COLUMN) {
-            _feedbackoutstanding[row] = (int) value;
+            feedbackoutstandingarr.set(row, (Integer) value);
             Runnable r = new Notify(row, this);
             javax.swing.SwingUtilities.invokeLater(r);
         }
         else if (col == FEEDBACKEVENT_COLUMN) {
             int fbreqd = (int) value;
-            if ((_feedbacktimeout[row]>0)||(_feedbackreqd[row]>0)) { 
+            if ((feedbacktimeoutarr.get(row)>0)||(feedbackreqdarr.get(row)>0)) {
                 fbreqd=0; 
             }
-            _feedbackevent[row] = fbreqd;
+            feedbackeventarr.set(row, fbreqd);
             Runnable r = new Notify(row, this);
             javax.swing.SwingUtilities.invokeLater(r);
         }        
         else if (col == FEEDBACKNODE_COLUMN) {
             int fbreqd = (int) value;
-            if ((_feedbacktimeout[row]>0)||(_feedbackreqd[row]>0)) { 
+            if ((feedbacktimeoutarr.get(row)>0)||(feedbackreqdarr.get(row)>0)) {
                 fbreqd=0; 
             }
-        _feedbacknode[row] = fbreqd;
+            feedbacknodearr.set(row, fbreqd);
             Runnable r = new Notify(row, this);
             javax.swing.SwingUtilities.invokeLater(r);
         }
         else if (col == FEEDBACKTIMEOUT_COLUMN) {
             int fbreqd = (int) value;
-            if ((_feedbackevent[row]>0)||(_feedbacknode[row]>0)) { 
+            if ((feedbackeventarr.get(row)>0)||(feedbacknodearr.get(row)>0)) { 
                 fbreqd=0; 
             }
-            _feedbacktimeout[row] = fbreqd;
+            feedbacktimeoutarr.set(row, fbreqd);
             Runnable r = new Notify(row, this);
             javax.swing.SwingUtilities.invokeLater(r);
         }
         else if (col == LASTFEEDBACK_COLUMN) {
-            _lfb[row] = (int) value;
+            lfbarr.set(row, (Integer) value);
+            Runnable r = new Notify(row, this);
+            javax.swing.SwingUtilities.invokeLater(r);
+        }
+        else if (col == STLR_ON_COLUMN) {
+            stlonarr.set(row, (String) value);
+            Runnable r = new Notify(row, this);
+            javax.swing.SwingUtilities.invokeLater(r);
+        }
+        else if (col == STLR_OFF_COLUMN) {
+            stloffarr.set(row, (String) value);
             Runnable r = new Notify(row, this);
             javax.swing.SwingUtilities.invokeLater(r);
         }
@@ -698,16 +734,12 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
         _saved = false;
     }
 
-    
-
-
     public class Event {
-        
         public String getEventName(int nn, int en) {
             StringBuilder buf = new StringBuilder(30);
-            String eventname = _name[eventRow(nn,en)];
+            String eventname = namearr.get(eventRow(nn,en));
             // really this should be got from a node table
-            String nodename = _nodename[eventRow(nn,en)];
+            String nodename = nodenamearr.get(eventRow(nn,en));
             
             if (eventname!=null) {
                 buf.append( eventname + ", ");
@@ -716,7 +748,6 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
             if (nodename!=null) {
                 buf.append( nodename + ". ");
             }            
-            
             
             buf.append(Bundle.getMessage("CbusEvent") + en);
             if (nn!=0) {
@@ -730,31 +761,36 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
             int ar[] = new int[2];
             ar[0] = nn;
             ar[1] = en;
-            if (_feedbackevent[eventRow(nn,en)]>0) {
+            if ( feedbackeventarr.get(eventRow(nn,en)) > 0 ) {
                 // log.debug("match pair found ");
-                ar[0] = _feedbacknode[eventRow(nn,en)];
-                ar[1] = _feedbackevent[eventRow(nn,en)];
+                ar[0] = feedbacknodearr.get(eventRow(nn,en));
+                ar[1] = feedbackeventarr.get(eventRow(nn,en));
             }
             return ar; //returning two values at once
         }
         
-        
         public synchronized int eventRow(int nn, int en) {
             for (int i = 0; i < getRowCount(); i++) {
-                int testnode = (_node[i]);
-                int testevent = (_event[i]);
-                if ((en==testevent) && (nn == testnode)) {
+                if ((en==eventarr.get(i)) && (nn == nodearr.get(i))) {
                     return i;
                 }
             }
             return -1;
         }
         
+        public boolean eventIsOnTable(int nn, int en) { 
+            for (int i = 0; i < getRowCount(); i++) {
+                if ((en==eventarr.get(i)) && (nn == nodearr.get(i))) {
+                    return true;
+                }
+            }
+            return false;
+        }
         
         private void startTheTimer(int nn, int en) {
             // log.debug("startTheTimer starting timer for nn {} ev {}  ",nn,en);
             
-            int delay = _feedbacktimeout[eventRow(nn,en)];
+            int delay = feedbacktimeoutarr.get(eventRow(nn,en));
             if (delay==0) {
                 delay = _defaultfeedbackdelay;
             }
@@ -769,18 +805,17 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
                 }
             };
             setValueAt(1, eventRow(nn,en), LASTFEEDBACK_COLUMN);
-            _mytimers[eventRow(nn,en)] = new Timer( delay, eventFeedbackListener);
-            _mytimers[eventRow(nn,en)].setRepeats( false );
-            _mytimers[eventRow(nn,en)].start();
+            mytimersarr.set(eventRow(nn,en), new Timer( delay, eventFeedbackListener));
+            mytimersarr.get(eventRow(nn,en)).setRepeats( false );
+            mytimersarr.get(eventRow(nn,en)).start();
            // log.debug("starting timer");
         }
-        
         
         private synchronized void stopTheTimer(int nn, int en) {
             // log.debug("stopTheTimer stopping timer for nn {} ev {}",nn,en);
             try {
-                _mytimers[eventRow(nn,en)].stop();
-                _mytimers[eventRow(nn,en)]=null;
+                mytimersarr.get(eventRow(nn,en)).stop();
+                mytimersarr.set(eventRow(nn,en),null);
                 eventFeedbackListener=null;
             } catch (NullPointerException e) {
                 log.warn("Trouble stopping timer : Nullpointer {} ", e);
@@ -802,11 +837,11 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
     public void sendEventFromRow(int row, int OfforOn){
         // log.debug( "313 send from row {} ", row);
         int nn, ev;
-        nn = parseBinDecHexByte(String.valueOf(_node[row]), 65535, true, Bundle.getMessage("WarningTitle"), Bundle.getMessage("SendEventNodeError"));
+        nn = parseBinDecHexByte(String.valueOf(nodearr.get(row)), 65535, true, Bundle.getMessage("WarningTitle"), Bundle.getMessage("SendEventNodeError"));
         if (nn == -1) {
             return;
         }
-        ev = parseBinDecHexByte(String.valueOf(_event[row]), 65535, true, Bundle.getMessage("WarningTitle"), Bundle.getMessage("SendEventInvalidError"));
+        ev = parseBinDecHexByte(String.valueOf(eventarr.get(row)), 65535, true, Bundle.getMessage("WarningTitle"), Bundle.getMessage("SendEventInvalidError"));
         if (ev == -1) {
             return;
         }
@@ -845,8 +880,6 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
         tc.sendCanMessage(m, this);
     }
 
-    
-    
     /**
      * Delete Button Clicked
      * See whether to display confirm popup
@@ -870,15 +903,10 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
                     if (dontShow) {
                         sessionConfirmDeleteRow=false;
                     }
-                    // log.warn("delete from dialogue ");
                     removeRow(row);
-    
-            } else {
-                // log.warn("cancelled, not deleted ");
-                }
+            }
         } else {
             // no need to show warning, just delete
-            // log.warn("322 just delete ");
             removeRow(row);
         }
     }
@@ -888,44 +916,39 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
      * @see buttonDeleteClicked
      * @param row int row number
      */    
-    synchronized void removeRow(int row) { // would be better off with events all in 1 array!!
+    synchronized void removeRow(int row) {
         // log.warn("322 delete row {} with max rows rowcount as {} ", row, _rowCount);
-        int imaxrows = _rowCount;
         Event deleteEv = new Event();
-        _context = deleteEv.getEventName(_node[row], _event[row]) + " " + Bundle.getMessage("TableConfirmDelete");
+        _context = deleteEv.getEventName(nodearr.get(row), eventarr.get(row)) + " " + Bundle.getMessage("TableConfirmDelete");
         
-        for(int i = row; i < imaxrows; i++) {
-            // log.warn("331 bump up row i {} eventid {} is now to be eventid {} ", i, _eventid[i], _eventid[i+1]);
-            _event[i] = _event[i+1];
-            _node[i] = _node[i+1];
-            _name[i] = _name[i+1];
-            _nodename[i] = _nodename[i+1];
-            _comment[i] = _comment[i+1];
-            _canid[i] = _canid[i+1];
-            _type[i] = _type[i+1];
-            _latesttimestamp[i] = _latesttimestamp[i+1];
-            _sessionon[i] = _sessionon[i+1];
-            _sessionoff[i] = _sessionoff[i+1];
-            _sessionin[i] = _sessionin[i+1];
-            _sessionout[i] = _sessionout[i+1];
-            _feedbackreqd[i] = _feedbackreqd[i+1];
-            _feedbackoutstanding[i] = _feedbackoutstanding[i+1];
-            _feedbackevent[i] = _feedbackevent[i+1];
-            _feedbacknode[i] = _feedbacknode[i+1];
-            _feedbacktimeout[i] = _feedbacktimeout[i+1];
-            _lfb[i] = _lfb[i+1];
-        }
-
-        _rowCount--;
+        eventarr.remove(row);
+        nodearr.remove(row);
+        canidarr.remove(row);
+        typearr.remove(row); 
+        namearr.remove(row);
+        nodenamearr.remove(row);
+        sessiononarr.remove(row);
+        sessionoffarr.remove(row);
+        sessioninarr.remove(row);
+        sessionoutarr.remove(row);
+        commentarr.remove(row);
+        feedbackreqdarr.remove(row);
+        feedbackoutstandingarr.remove(row);
+        feedbackeventarr.remove(row);
+        feedbacknodearr.remove(row);
+        feedbacktimeoutarr.remove(row);
+        latesttimestamparr.remove(row);
+        lfbarr.remove(row);
+        mytimersarr.remove(row);
+        stlonarr.remove(row);
+        stloffarr.remove(row);
         
         Runnable r = new Notify(row, this);
         javax.swing.SwingUtilities.invokeLater(r);
-        
         addToLog(3,_context);
     }
     
     
-
     /**
      * Configure a table to have our standard rows and columns.
      * <p>
@@ -946,6 +969,7 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
             eventTable.getColumnModel().getColumn(i).setPreferredWidth(width);
         }
         eventTable.sizeColumnsToFit(-1);
+        tablefeedback.setEditable ( false ); // set textArea non-editable
     }
 
     /**
@@ -1034,7 +1058,6 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
     }
 
 
-
     public void processEvForFeedback( int nn, int en){
         int orignn = nn;
         int origen = en;
@@ -1042,63 +1065,49 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
         
         Event couldBeFeedBackEv = new Event();
         int mainEvent[] = couldBeFeedBackEv.getMainEvent(nn,en);
-            nn = mainEvent[0];
-            en = mainEvent[1];
-            
-            if (nn != orignn || en != origen) {
-                isfeedbackev=true;
-            }
+        nn = mainEvent[0];
+        en = mainEvent[1];
         
-            int existing=0;
-            
-            if (couldBeFeedBackEv.eventRow(nn,en)>=0) {
-                existing = _feedbackoutstanding[couldBeFeedBackEv.eventRow(nn,en)];
-            
-                if ((existing == 0 ) && 
-                    (_feedbackreqd[couldBeFeedBackEv.eventRow(nn,en)]>0) && 
-                    (isfeedbackev==false) )  {
-                    // log.debug(" actual event, not the feedback response event! ");
-                    setValueAt(_feedbackreqd[couldBeFeedBackEv.eventRow(nn,en)],
-                    couldBeFeedBackEv.eventRow(nn,en), 
-                    FEEDBACKOUTSTANDING_COLUMN);
-                    couldBeFeedBackEv.startTheTimer(nn,en);
-                } 
-                else if (existing==1) {
-                    setValueAt(0, couldBeFeedBackEv.eventRow(nn,en), FEEDBACKOUTSTANDING_COLUMN);
-                    couldBeFeedBackEv.stopTheTimer(nn,en);
-                }
-                else {
-                    setValueAt((existing-1), couldBeFeedBackEv.eventRow(nn,en), FEEDBACKOUTSTANDING_COLUMN);
-                }
-            
-            }
+        if (nn != orignn || en != origen) {
+            isfeedbackev=true;
+        }
         
+        int existing=0;
+        
+        if (couldBeFeedBackEv.eventRow(nn,en)>=0) {
+            existing = feedbackoutstandingarr.get(couldBeFeedBackEv.eventRow(nn,en));
+        
+            if ((existing == 0 ) && 
+                (feedbackreqdarr.get(couldBeFeedBackEv.eventRow(nn,en)) > 0 ) && 
+                (isfeedbackev==false) )  {
+                // log.debug(" actual event, not the feedback response event! ");
+                setValueAt(feedbackreqdarr.get(couldBeFeedBackEv.eventRow(nn,en)),
+                couldBeFeedBackEv.eventRow(nn,en), 
+                FEEDBACKOUTSTANDING_COLUMN);
+                couldBeFeedBackEv.startTheTimer(nn,en);
+            } 
+            else if (existing==1) {
+                setValueAt(0, couldBeFeedBackEv.eventRow(nn,en), FEEDBACKOUTSTANDING_COLUMN);
+                couldBeFeedBackEv.stopTheTimer(nn,en);
+            }
+            else {
+                setValueAt((existing-1), couldBeFeedBackEv.eventRow(nn,en), FEEDBACKOUTSTANDING_COLUMN);
+            }
+        }
     }
     
 
-    public synchronized void processEvRequest( int nn, int en ) {
+    public void processEvRequest( int nn, int en ) {
         Event couldBeFeedBackEv = new Event();
         
         int existingRow = seeIfEventOnTable( en, nn);
         // log.debug(" 339 existing event: {} ", existingRow);
-        if (existingRow<0) { 
-            _event[_rowCount] = en;
-            _node[_rowCount] = nn;
-            _type[_rowCount] = 2;
-            _feedbackoutstanding[_rowCount] =0;
-            _feedbackreqd[_rowCount] = _defaultFeedback;
-            _sessionon[_rowCount] = 0;
-            _sessionoff[_rowCount]=0;
-            _sessionin[_rowCount]=0;
-            _sessionout[_rowCount]=0;
-            addEvent(); 
-        }        
+        if (existingRow<0) {
+            addEvent(en,nn,0,2,null,null,null,0,0,0,0); 
+        }
         
-        
-        
-        
-        int existing = _feedbackoutstanding[couldBeFeedBackEv.eventRow(nn,en)];
-        int fbr=_feedbackreqd[couldBeFeedBackEv.eventRow(nn,en)];
+        int existing = feedbackoutstandingarr.get(couldBeFeedBackEv.eventRow(nn,en));
+        int fbr=feedbackreqdarr.get(couldBeFeedBackEv.eventRow(nn,en));
         // log.debug(" existing feedback outstanding is :{}: ",existing);
         
         if (fbr < 1) {
@@ -1110,7 +1119,6 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
                 fbr, 
                 couldBeFeedBackEv.eventRow(nn,en), 
                 FEEDBACKOUTSTANDING_COLUMN);
-                
             couldBeFeedBackEv.startTheTimer(nn,en);
         }
     }
@@ -1126,7 +1134,7 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
      * @param eventOnOrOff of can message 
      * @param inOrOut incoming or outgoing message
      */
-    public synchronized void parseMessage( int canid, int node, int event, int eventOnOrOff, int inOrOut) {
+    public void parseMessage( int canid, int node, int event, int eventOnOrOff, int inOrOut) {
         // log.debug("304 parseMessage  ");
         // log.debug(" 310 event: {}  node: {}  canid: {} ", event, node, canid);
         // log.debug(" 326 event onoroff 1 is off, 0 is on : {} ", eventOnOrOff);
@@ -1135,50 +1143,39 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
         int existingRow = seeIfEventOnTable( event, node);
         // log.debug(" 339 existing event: {} ", existingRow);
         if (existingRow<0) {
-            _canid[_rowCount] = canid;  
-            _event[_rowCount] = event;
-            _node[_rowCount] = node;
-            _type[_rowCount] = eventOnOrOff;
-            _feedbackoutstanding[_rowCount] =0;
-            _feedbackreqd[_rowCount] = _defaultFeedback;
-            
+            int on=0;
+            int off=0;
+            int in=0;
+            int out=0;
             if (eventOnOrOff==0) {
-                _sessionon[_rowCount]=1;
+                on=1;
             }
-            if (eventOnOrOff==1) {       
-                _sessionoff[_rowCount]=1;
+            if (eventOnOrOff==1) {
+                off=1;
             }
-
             if (inOrOut==1) {
-                _sessionin[_rowCount]=1;
+                in=1;
             }
-            if (inOrOut==0) {       
-                _sessionout[_rowCount]=1;
+            if (inOrOut==0) {
+                out=1;
             }
-            
-            _latesttimestamp[_rowCount] = new Date();
-            addEvent(); 
+            addEvent(event,node,canid,eventOnOrOff,null,null,null,on,off,in,out); // on off in out
         } else {
             updateEventfromNetwork(existingRow, eventOnOrOff, inOrOut, canid);
-        }
-        
+        } 
     }
     
     
     /**
-     * Do Node, Event + CANID check, returns -1 if not on table, otherwise the row id
+     * Do Node + Event check, returns -1 if not on table, otherwise the row id
      * @since 4.13.3
      * @param event int
      * @param node int
      * @return int of row, otherwise -1
      */
-    public synchronized int seeIfEventOnTable( int event, int node) {
+    public int seeIfEventOnTable( int event, int node) {
         for (int i = 0; i < getRowCount(); i++) {
-            int testnode = (_node[i]);
-            int testevent = (_event[i]);
-            // log.debug(" 343 testevent: {}  tetsnode: {} row {} ", testevent, testnode, i);
-            if ((event==testevent) && (node == testnode)) {
-                // log.debug(" 398 match found {} ", i);
+            if ((event==eventarr.get(i)) && (node == nodearr.get(i))) {
                 return i;
             }
         }
@@ -1198,12 +1195,7 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
         // log.debug("new event button clicked event {} node {} canid {} ", ev, nd, canid);
         int existingRow = seeIfEventOnTable(ev,nd);
         if ( existingRow < 0 ) {
-            // log.debug (" not on table so creatng new ");
-            _canid[_rowCount] = 0;
-            _event[_rowCount] = ev;
-            _node[_rowCount] = nd;
-            _type[_rowCount] = 2; // on or off unknown
-            addEvent();
+            addEvent(ev,nd,0,2,null,null,null,0,0,0,0);
             return 1;
         } else {    
             _context = Bundle.getMessage("CbusEvent") + ev + " " +
@@ -1221,7 +1213,7 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
      * @param canId CAN ID of the message sender
      * @since 4.13.3
      */    
-    public synchronized void updateEventfromNetwork( int existingRow, int eventOnOrOff, int inOrOut, int canId ) {
+    public void updateEventfromNetwork( int existingRow, int eventOnOrOff, int inOrOut, int canId ) {
         // log.debug(" 393 updating row {} with status {} ", existingRow, eventOnOrOff);        
         setValueAt(eventOnOrOff, existingRow, TYPE_COLUMN);
         setValueAt(1, existingRow, LATEST_TIMESTAMP_COLUMN);
@@ -1234,71 +1226,207 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
     }
     
     
-    
     /**
      * Register new event to table
      */
-    public synchronized void addEvent() {
-        // log.debug(" adding event ");
-        if (_rowCount < CbusConstants.MAX_TABLE_EVENTS) {
-            _feedbackreqd[_rowCount]=0;
-            _feedbackoutstanding[_rowCount]=0;
-            _feedbackevent[_rowCount]=0;
-            _feedbacknode[_rowCount]=0;
-            _feedbacktimeout[_rowCount]=0;
-            
-            StringBuilder addevbuf = new StringBuilder(50);
-            
-            addevbuf.append (Bundle.getMessage("CbusEvent"));
-            addevbuf.append (" ");
-            addevbuf.append (_event[_rowCount]);
-            addevbuf.append (" ");
-            
-            if (_node[_rowCount]>0) {
-                addevbuf.append (Bundle.getMessage("CbusNode"));
-                addevbuf.append (" ");
-                addevbuf.append (_node[_rowCount]);
-                addevbuf.append (" ");
-            }
-            
-            if (_name[_rowCount]!=null) {
-                addevbuf.append (_name[_rowCount]);
-                addevbuf.append (" ");
-            }
-            
-            if (_nodename[_rowCount]!=null) {
-                addevbuf.append (_nodename[_rowCount]);
-                addevbuf.append (" ");
-            }
-            
-            addevbuf.append (Bundle.getMessage("AddedToTable"));
-            _context =addevbuf.toString();
-            
-            
-            // notify the JTable object that a row has changed; do that in the Swing thread!
-            Runnable r = new Notify(_rowCount, this);   // -1 in first arg means all
-            javax.swing.SwingUtilities.invokeLater(r);
-            _rowCount++;
-            addToLog(1,_context);
+    public synchronized void addEvent(int event, int node, int canid, int type, 
+        String eventName, String nodeName, String evComment, int on, int off, int in, int out) {
+        
+        eventarr.add(event);
+        nodearr.add(node);
+        canidarr.add(canid); 
+
+        typearr.add(type); 
+        namearr.add(eventName);
+        nodenamearr.add(nodeName);
+        commentarr.add(evComment);
+        
+        sessiononarr.add(on);
+        sessionoffarr.add(off);
+        sessioninarr.add(in);
+        sessionoutarr.add(out);
+        
+        feedbackreqdarr.add(_defaultFeedback);
+        feedbackoutstandingarr.add(0);
+        feedbackeventarr.add(0);
+        feedbacknodearr.add(0);
+        feedbacktimeoutarr.add(_defaultfeedbackdelay);
+        stlonarr.add("");
+        stloffarr.add("");
+        
+        lfbarr.add(0);
+        mytimersarr.add(null);
+
+        if ( ( in > 0 ) || ( out > 0 ) ) {
+            latesttimestamparr.add( new Date());
+        } else {
+            latesttimestamparr.add(null);
         }
+        
+        StringBuilder addevbuf = new StringBuilder(50);
+        
+        addevbuf.append (Bundle.getMessage("CbusEvent"));
+        addevbuf.append (" ");
+        addevbuf.append (event);
+        addevbuf.append (" ");
+        
+        if ( node > 0 ) {
+            addevbuf.append (Bundle.getMessage("CbusNode"));
+            addevbuf.append (" ");
+            addevbuf.append (node);
+            addevbuf.append (" ");
+        }
+        
+        if (eventName!=null) {
+            addevbuf.append (eventName);
+            addevbuf.append (" ");
+        }
+        
+        if (nodeName!=null) {
+            addevbuf.append (nodeName);
+            addevbuf.append (" ");
+        }
+        
+        addevbuf.append (Bundle.getMessage("AddedToTable"));
+        _context =addevbuf.toString();
+        
+        // notify the JTable object that a row has changed; do that in the Swing thread!
+        Runnable r = new Notify(getRowCount(), this);   // -1 in first arg means all
+        javax.swing.SwingUtilities.invokeLater(r);
+        addToLog(1,_context);
     }
     
     
+    public int getEventFromCan(CanMessage m){
+        int en=0;
+        int opc = CbusMessage.getOpcode(m);
+        if (CbusOpCodes.isEvent(opc)) {
+            en = (m.getElement(3) * 256 + m.getElement(4));
+        }
+        return en;
+    }
+
+    public int getNodeFromCan(CanMessage m){
+        int nn=0;
+        int opc = CbusMessage.getOpcode(m);
+        if ((CbusOpCodes.isEvent(opc)) && (!CbusOpCodes.isShortEvent(opc))) {
+            nn = (m.getElement(1) * 256 + m.getElement(2));
+        }
+        return nn;
+    }
+    
+    private void updatejmricell(int row, Boolean ison, String name){
+        String bb;
+        if (ison) {
+            bb = getValueAt(row, STLR_ON_COLUMN).toString();
+            setValueAt(bb + " " + name, row, STLR_ON_COLUMN);
+        }
+        else {
+            bb = getValueAt(row, STLR_OFF_COLUMN).toString();
+            setValueAt(bb + " " + name, row, STLR_OFF_COLUMN);
+        }
+    }
+    
+    private void linkHwaddtoEvent(CanMessage m, String text ){
+        int event = getEventFromCan(m);
+        int node = getNodeFromCan(m);
+        int opc = CbusMessage.getOpcode(m);
+        int row = seeIfEventOnTable( event, node);
+        if (row<0) {
+            addEvent(event,node,0,2,null,null,null,0,0,0,0);
+            row = seeIfEventOnTable( event, node);
+        }
+        updatejmricell(row, CbusOpCodes.isOnEvent(opc), text );
+    }
+    
+    /**
+     * Update all columns for JMRI Sensor, Turnout and light details
+     */
+    protected void updatejmricols(){
+        log.debug("update jmri columns");
+        // reset all columns
+        for (int i = 0; i < getRowCount(); i++) {
+            setValueAt("", i, STLR_ON_COLUMN);
+            setValueAt("", i, STLR_OFF_COLUMN);
+        }
+        jmri.SensorManager sm = InstanceManager.sensorManagerInstance();
+        
+        sm.getNamedBeanSet().forEach((nb) -> {
+            CbusSensor cs;
+            String userName = nb.getDisplayName();
+            CanMessage m;
+            String text;
+            try {
+                cs = (CbusSensor) sm.provideSensor(nb.toString());
+                m = cs.getAddrActive();
+                text = Bundle.getMessage("cbSensActive",userName);
+                linkHwaddtoEvent( m, text );
+
+                m = cs.getAddrInactive();
+                text = Bundle.getMessage("cbSensInactive",userName);
+                linkHwaddtoEvent( m, text );
+            } catch(java.lang.ClassCastException cce){
+                log.trace("not a cbus sensor");
+            }
+        });
+
+        jmri.TurnoutManager tm = InstanceManager.turnoutManagerInstance();
+        tm.getNamedBeanSet().forEach((nb) -> {
+            CbusTurnout ct;
+            String userName = nb.getDisplayName();
+            CanMessage m;
+            String text;
+            try {
+                ct = (CbusTurnout) tm.provideTurnout(nb.toString());
+                m = ct.getAddrThrown();
+                text = Bundle.getMessage("cbTurnThrown",userName);
+                linkHwaddtoEvent( m, text );
+
+                m = ct.getAddrClosed();
+                text = Bundle.getMessage("cbTurnClosed",userName);
+                linkHwaddtoEvent( m, text );
+            } catch(java.lang.ClassCastException cce){
+                log.trace("not a cbus turnout");
+            }
+        });
+        
+        jmri.LightManager lm = InstanceManager.lightManagerInstance();
+        lm.getNamedBeanSet().forEach((nb) -> {
+            CbusLight cl;
+            String userName = nb.getDisplayName();
+            CanMessage m;
+            String text;
+            try {
+                cl = (CbusLight) lm.provideLight(nb.toString());
+                m = cl.getAddrOn();
+                text = Bundle.getMessage("cbLightOn",userName);
+                linkHwaddtoEvent( m, text );
+
+                m = cl.getAddrOff();
+                text = Bundle.getMessage("cbLightOff",userName);
+                linkHwaddtoEvent( m, text );
+            } catch(java.lang.ClassCastException cce){
+                log.trace("not a cbus light");
+            }
+        });
+    }
+
     /**
      * Add to Event Table Console Log
      * @param cbuserror int
      * @param cbustext String console message
      */
-    public static void addToLog(int cbuserror, String cbustext){
-        final int senderror=cbuserror;
-        final String sendtext= cbustext;
-        CbusEventTablePane.updateLogFromModel( senderror, sendtext );
+    public void addToLog(int cbuserror, String cbustext){
+        if (cbuserror==3) {
+          tablefeedback.append ("\n * * * * * * * * * * * * * * * * * * * * * * " + cbustext);
+        } else {
+          tablefeedback.append( "\n"+cbustext);
+        }
     }
     
     
-
     static class Notify implements Runnable {
-    public int _row;
+        public int _row;
         javax.swing.table.AbstractTableModel _model;
         public Notify(int row, javax.swing.table.AbstractTableModel model) {
             _row = row;
@@ -1325,8 +1453,9 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
         
     }
 
-    
-    
+    /**
+     * Import events from a MERG FCU XML File
+     */
     public synchronized void readTheFCU14742File(final String filePath){
 
         _context = Bundle.getMessage("ImportStart") + filePath;
@@ -1370,12 +1499,7 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
                 //    log.warn(" 1173 eventnum is {} nodenum is {} ",eventnum, nodenum);
                 int existingRow = seeIfEventOnTable(eventnum,nodenum);
                 if ( existingRow < 0 ) {
-                    _event[_rowCount] = eventnum;
-                    _node[_rowCount] = nodenum;
-                    _type[_rowCount] = 2; // on or off unknown
-                    _nodename[_rowCount] = nodeName;
-                    _name[_rowCount] = eventName;
-                    addEvent();
+                    addEvent(eventnum,nodenum,0,2,eventName,nodeName,null,0,0,0,0);
                     addedtotable++;
                 } else {
                     
@@ -1393,20 +1517,20 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
                     addbuf.append (" ");
                     addbuf.append (Bundle.getMessage("AlreadyOnTable"));
                     
-                    if (_name[existingRow]==null) {
+                    if (namearr.get(existingRow)==null) {
                             setValueAt(eventName, existingRow, NAME_COLUMN);
                             addbuf.append (Bundle.getMessage("EventNameAdded", eventName));
                     } else {
                         addbuf.append (" ");
-                        addbuf.append (_name[existingRow]);
+                        addbuf.append (namearr.get(existingRow));
                     }
                     
-                    if (_nodename[existingRow]==null) {
+                    if (nodenamearr.get(existingRow)==null) {
                             setValueAt(nodeName, existingRow, NODENAME_COLUMN);
                             addbuf.append (Bundle.getMessage("NodeNameAdded", nodeName));
                     } else {
                         addbuf.append (" ");
-                        addbuf.append (_nodename[existingRow]);
+                        addbuf.append (nodenamearr.get(existingRow));
                     }
                     
                     _context = addbuf.toString();
@@ -1534,28 +1658,28 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
 
         // print rows
         for (int i = 0; i < this.getRowCount(); i++) {
-            p.print(_canid[i]);
+            p.print(canidarr.get(i));
             p.print(",");
-            p.print(_event[i]);
+            p.print(eventarr.get(i));
             p.print(",");
-            p.print(_node[i]);
+            p.print(nodearr.get(i));
             p.print(",");
-            p.print(_type[i]);
+            p.print(typearr.get(i));
             p.print(",");
-            p.print(_latesttimestamp[i]); // Date format
+            p.print(latesttimestamparr.get(i)); // Date format
             
             p.print(",");
             
-            if (_name[i] == null) {
+            if (namearr.get(i) == null) {
                 p.print("");
             } else {
-                p.print('"' + _name[i] + '"');
+                p.print('"' + namearr.get(i) + '"');
             }
             p.print(",");
-            if (_comment[i] == null) {
+            if (commentarr.get(i) == null) {
                 p.print("");
             } else {
-                p.print('"'+ _comment[i] + '"');
+                p.print('"'+ commentarr.get(i) + '"');
             }
             p.println("");
         }
@@ -1572,9 +1696,6 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
         // mark that the table has been saved
         _saved = true; // TODO disable the Save menu item in CbusEventTablePane
     }
-
-
-
 
     
     // move this to global cbus for sending events from other swing
@@ -1634,7 +1755,45 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
         return data;
     }
 
-
+    protected TextAreaFIFO tablefeedback(){
+        return tablefeedback;
+    }    
+    
+    /**
+     * Keeps the message log windows to a reasonable length
+     * https://community.oracle.com/thread/1373400
+     */
+    protected static class TextAreaFIFO extends JTextArea implements DocumentListener {
+        private int maxLines;
+    
+        public TextAreaFIFO(int lines) {
+            maxLines = lines;
+            getDocument().addDocumentListener( this );
+        }
+    
+        public void insertUpdate(DocumentEvent e) {
+            javax.swing.SwingUtilities.invokeLater( new Runnable() {
+                public void run() {
+                    removeLines();
+                }
+            });
+        }
+        public void removeUpdate(DocumentEvent e) {}
+        public void changedUpdate(DocumentEvent e) {}
+        public void removeLines()
+        {
+            javax.swing.text.Element root = getDocument().getDefaultRootElement();
+            while (root.getElementCount() > maxLines) {
+                javax.swing.text.Element firstLine = root.getElement(0);
+                try {
+                    getDocument().remove(0, firstLine.getEndOffset());
+                } catch(BadLocationException ble) {
+                    System.out.println(ble);
+                }
+            }
+        setCaretPosition( getDocument().getLength() );
+        }
+    }
     
     /**
      * Self print or print preview the table.
@@ -1651,17 +1810,13 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
         // [AC] variable column sizes
         int columnTotal = 0;
         
-        
-        // whichPrintColumns
-            //    for (int i = 0; i < whichPrintColumns.length; i++) {
-            // log.debug("save column array column {}", saveColumns[i]);
+        // log.debug("save column array column {}", saveColumns[i]);
         
         int[] columnWidth = new int[this.whichPrintColumns.length];
         // in a test, thats 86 chars on a line
         for (int i = 0; i < this.whichPrintColumns.length; i++) {
             
             int columnworkedon=whichPrintColumns[i];
-            
             // log.debug(" 1016 print column i {} worked on is {} has width {} ",i, columnworkedon, this.getColumnWidth(columnworkedon));
             
             if (this.getColumnWidth(columnworkedon) == 0) {
@@ -1671,11 +1826,9 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
                 columnWidth[i] = this.getColumnWidth(columnworkedon);
                 columnTotal = columnTotal + columnWidth[i] + 1;
             }
-            
             // log.debug(" 1027 print column i {} columnTotal {} has width {} ",i, columnTotal, columnWidth[i]);
         }
 
-        // log.debug("got to 1032 ");
         // Draw horizontal dividing line
         w.write(w.getCurrentLineNumber(), 0, w.getCurrentLineNumber(),
                 w.getCharactersPerLine());

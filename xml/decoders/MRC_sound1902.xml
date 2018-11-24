@@ -280,10 +280,7 @@
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/kickStart_63.xml"/>
       <!-- Speed table -->
-      <variable item="Speed Table" CV="67">
-        <speedTableVal/>
-        <label>Speed Table</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
       <!-- MRC CVs continue -->
       <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
       <variable CV="112" item="Sound Setting 12" default="12" comment="Range 0-15">

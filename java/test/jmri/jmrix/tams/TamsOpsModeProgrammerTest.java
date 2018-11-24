@@ -16,7 +16,7 @@ public class TamsOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgram
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        TamsTrafficController tc = new TamsTrafficController();
+        TamsTrafficController tc = new TamsInterfaceScaffold();
         TamsOpsModeProgrammer t = new TamsOpsModeProgrammer(tc,1234,true);
         programmer = t;
     }

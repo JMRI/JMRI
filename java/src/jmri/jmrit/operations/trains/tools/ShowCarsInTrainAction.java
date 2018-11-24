@@ -24,7 +24,6 @@ public class ShowCarsInTrainAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        // create a copy train frame
         if (f == null || !f.isVisible()) {
             f = new ShowCarsInTrainFrame();
             f.initComponents(_train);

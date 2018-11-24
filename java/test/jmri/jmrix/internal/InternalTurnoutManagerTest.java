@@ -1,10 +1,8 @@
 package jmri.jmrix.internal;
 
-
+import jmri.Turnout;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
-
+import org.junit.*;
 
 /**
  * Tests for the jmri.jmrix.internal.InternalTurnoutManager class.
@@ -16,6 +14,20 @@ public class InternalTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgr
     @Override
     public String getSystemName(int i) {
         return "IT" + i;
+    }
+
+    @Test
+    public void testAsAbstractFactory() {
+
+        // ask for a Turnout, and check type
+        Turnout tl = l.newTurnout("IT21", "my name");
+
+        Assert.assertTrue(null != tl);
+
+        // make sure loaded into tables
+        Assert.assertTrue(null != l.getBySystemName("IT21"));
+        Assert.assertTrue(null != l.getByUserName("my name"));
+
     }
 
     // from here down is testing infrastructure

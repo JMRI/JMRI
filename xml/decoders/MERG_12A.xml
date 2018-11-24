@@ -450,10 +450,7 @@
         <label>Feedback Filter Kfr</label>
         <comment>Range 255-0 lower values increase filter</comment>
       </variable>
-      <variable item="Speed Table" CV="67">
-        <speedTableVal/>
-        <label>Speed Table</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
     </variables>
   </decoder>
   <pane>

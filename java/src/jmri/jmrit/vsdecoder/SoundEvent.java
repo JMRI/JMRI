@@ -209,7 +209,6 @@ public class SoundEvent implements PropertyChangeListener {
         this.setXml(el, null);
     }
 
-    @SuppressWarnings("cast")
     protected void addXmlTrigger(Element te, VSDFile vf) {
         String tts;
         Trigger.TriggerType tt;

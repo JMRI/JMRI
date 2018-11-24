@@ -33,6 +33,8 @@ import org.slf4j.LoggerFactory;
  * @author kcameron Copyright (C) 2014
  */
 public class NceMessage extends jmri.jmrix.AbstractMRMessage {
+ 
+    protected static final jmri.jmrix.nce.ncemon.NceMonBinary nceMon = new jmri.jmrix.nce.ncemon.NceMonBinary();
 
     public static final int NOP_CMD = 0x80; //NCE NOP command
     public static final int ASSIGN_CAB_CMD = 0x81; // NCE Assign loco to cab command, NCE-USB no
@@ -615,6 +617,14 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
         m.setElement(4, mess[4]);
         m.setElement(5, mess[5]);
         return m;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String toMonitorString(){
+	    return nceMon.displayMessage(this);
     }
 
     private final static Logger log = LoggerFactory.getLogger(NceMessage.class);

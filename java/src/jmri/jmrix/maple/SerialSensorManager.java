@@ -173,8 +173,8 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
             //Address format passed is in the form of sysNode:address or T:turnout address
             int seperator = curAddress.indexOf(":");
             try {
-                sysNode = Integer.valueOf(curAddress.substring(0, seperator)).intValue();
-                address = Integer.valueOf(curAddress.substring(seperator + 1)).intValue();
+                sysNode = Integer.parseInt(curAddress.substring(0, seperator));
+                address = Integer.parseInt(curAddress.substring(seperator + 1));
             } catch (NumberFormatException ex) {
                 log.error("Unable to convert {} into the cab and address format of nn:xx", curAddress);
                 throw new JmriException("Hardware Address passed should be a number");

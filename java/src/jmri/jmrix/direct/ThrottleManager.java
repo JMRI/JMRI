@@ -49,7 +49,7 @@ public class ThrottleManager extends AbstractThrottleManager {
     public void requestThrottleSetup(LocoAddress address, boolean control) {
         if (currentThrottle != null) {
             log.error("DCC Direct cannot handle more than one throttle");
-            failedThrottleRequest((DccLocoAddress) address, "DCC direct cannot handle more than one throttle " + address);
+            failedThrottleRequest(address, "DCC direct cannot handle more than one throttle " + address);
             return;
         }
         currentThrottle = new Throttle(((DccLocoAddress) address), tc); // uses address object

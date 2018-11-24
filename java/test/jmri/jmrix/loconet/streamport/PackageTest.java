@@ -7,6 +7,7 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
    LnStreamPortPacketizerTest.class,
    LnStreamPortControllerTest.class,
+   BundleTest.class,
 })
 
 /**

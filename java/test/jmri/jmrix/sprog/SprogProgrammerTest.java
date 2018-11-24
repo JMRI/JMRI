@@ -48,7 +48,7 @@ public class SprogProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
         SprogSystemConnectionMemo m = new SprogSystemConnectionMemo(jmri.jmrix.sprog.SprogConstants.SprogMode.SERVICE);
         stcs = new SprogTrafficControlScaffold(m);
         m.setSprogTrafficController(stcs);
-
+        m.configureManagers();
         programmer = new SprogProgrammer(m);
     }
 

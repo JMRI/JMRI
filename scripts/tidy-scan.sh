@@ -9,4 +9,5 @@ else
     WHERE=$@
 fi
 
-find ${WHERE} -name \*html -exec echo Filename: {} \; -exec tidy -e -access 0 {} \; 2>&1 | grep -v '<table> lacks "summary" attribute' | grep -v '<img> lacks "alt" attribute' | tr '<' '&lt;' | tr '>' '&gt;' | awk -f scripts/tidy.awk
+# first, scan for whether there's an issue (omitting known fragment files)
+find ${WHERE}  -name \*html ! -name Sidebar.shtml -exec echo Filename: {} \; -exec tidy -e -access 0 {} \; 2>&1 | grep -v '<table> lacks "summary" attribute' | grep -v '<img> lacks "alt" attribute' | tr '<' '&lt;' | tr '>' '&gt;' | awk -f scripts/tidy.awk

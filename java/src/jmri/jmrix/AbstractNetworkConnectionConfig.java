@@ -50,7 +50,6 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
 
     protected boolean init = false;
 
-    @SuppressWarnings("unchecked")
     @Override
     protected void checkInitDone() {
         log.debug("init called for {}", name());

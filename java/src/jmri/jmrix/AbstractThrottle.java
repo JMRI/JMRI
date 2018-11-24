@@ -60,6 +60,35 @@ abstract public class AbstractThrottle implements DccThrottle {
     public AbstractThrottle(SystemConnectionMemo memo) {
         active = true;
         adapterMemo = memo;
+	// set defaults for Momentary status.
+	f0Momentary = false;
+        f1Momentary = false;
+        f2Momentary = false;
+        f3Momentary = false;
+        f4Momentary = false;
+        f5Momentary = false;
+        f6Momentary = false;
+        f7Momentary = false;
+        f9Momentary = false;
+        f10Momentary = false;
+        f11Momentary = false;
+        f12Momentary = false;
+        f13Momentary = false;
+        f14Momentary = false;
+        f15Momentary = false;
+        f16Momentary = false;
+        f17Momentary = false;
+        f18Momentary = false;
+        f19Momentary = false;
+        f20Momentary = false;
+        f21Momentary = false;
+        f22Momentary = false;
+        f23Momentary = false;
+        f24Momentary = false;
+        f25Momentary = false;
+        f26Momentary = false;
+        f27Momentary = false;
+        f28Momentary = false;
     }
 
     protected SystemConnectionMemo adapterMemo;
@@ -1387,7 +1416,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         String currentDurationString = re.getAttribute("OperatingDuration");
         long currentDuration = 0;
         try {
-            currentDuration = Long.valueOf(currentDurationString);
+            currentDuration = Long.parseLong(currentDurationString);
         } catch (NumberFormatException e) {
             log.warn("current stored duration is not a valid number \"" + currentDurationString + " \"");
         }

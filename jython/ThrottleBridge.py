@@ -27,6 +27,7 @@
 
 import jmri
 import java
+import java.beans
 
 from time import sleep
 

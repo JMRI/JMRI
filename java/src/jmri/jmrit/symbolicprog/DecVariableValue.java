@@ -76,7 +76,7 @@ public class DecVariableValue extends VariableValue
     }
 
     int textToValue(String s) {
-        return (Integer.valueOf(s));
+        return (Integer.parseInt(s));
     }
 
     String valueToText(int v) {

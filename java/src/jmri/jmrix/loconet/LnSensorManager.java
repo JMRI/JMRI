@@ -138,14 +138,14 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
                 turnout = true;
             } else {
                 try {
-                    board = Integer.valueOf(curAddress.substring(0, seperator)).intValue();
+                    board = Integer.parseInt(curAddress.substring(0, seperator));
                 } catch (NumberFormatException ex) {
                     log.error("Unable to convert '{}' into the cab and channel format of nn:xx", curAddress); // NOI18N
                     throw new JmriException("Hardware Address passed should be a number"); // NOI18N
                 }
             }
             try {
-                channel = Integer.valueOf(curAddress.substring(seperator + 1)).intValue();
+                channel = Integer.parseInt(curAddress.substring(seperator + 1));
             } catch (NumberFormatException ex) {
                 log.error("Unable to convert '{}' into the cab and channel format of nn:xx", curAddress); // NOI18N
                 throw new JmriException("Hardware Address passed should be a number"); // NOI18N
@@ -182,9 +182,9 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
         // name must be in the LSnnnnn format (L is user configurable)
         int num = 0;
         try {
-            num = Integer.valueOf(systemName.substring(
-                    getSystemPrefix().length() + 1, systemName.length())
-            ).intValue();
+            num = Integer.parseInt(systemName.substring(
+                        getSystemPrefix().length() + 1, systemName.length()
+                    ));
         } catch (Exception e) {
             log.debug("invalid character in number field of system name: {}", systemName);
             return (0);
@@ -286,22 +286,8 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
                 }
                 msg.setElement(1, sw1[k]);
                 msg.setElement(2, sw2[k]);
-                while (true) {
-                    try {
-                        tc.sendLocoNetMessage(msg);
-                        break;
-                    } catch (NullPointerException npe) {
-                        // sleep(500) or (750) mSec infrequently causes NPE upon sending first msg via tc, so retry
-                        log.debug("init of LnSensorManager delayed");
-                        try {
-                            Thread.sleep(10); // wait 1 cycle for tc to init
-                        } catch (InterruptedException e) {
-                            Thread.currentThread().interrupt(); // retain if needed later
-                            sm.setUpdateNotBusy();
-                            return; // and stop work
-                        }
-                    }
-                }
+                        
+                tc.sendLocoNetMessage(msg);
                 log.debug("LnSensorUpdate sent");
             }
             sm.setUpdateNotBusy();

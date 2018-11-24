@@ -27,7 +27,7 @@ public class DCCppOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implem
     int mAddress;
     int progState = 0;
     int value;
-    jmri.ProgListener progListener = null;
+    ProgListener progListener = null;
 
     protected DCCppTrafficController tc = null;
 
@@ -50,6 +50,7 @@ public class DCCppOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implem
      * Send an ops-mode write request to the DCC++.
      */
     @Override
+    @Deprecated // 4.1.1
     synchronized public void writeCV(int CV, int val, ProgListener p) throws ProgrammerException {
         DCCppMessage msg = DCCppMessage.makeWriteOpsModeCVMsg(mAddress, CV, val);
         tc.sendDCCppMessage(msg, this);
@@ -76,16 +77,17 @@ public class DCCppOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implem
         }
         progState = DCCppProgrammer.NOTPROGRAMMING;
         stopTimer();
-        progListener.programmingOpReply(value, jmri.ProgListener.OK);
+        notifyProgListenerEnd(progListener,value,ProgListener.OK);
     }
 
     @Override
+    @Deprecated // 4.1.1
     synchronized public void readCV(int CV, ProgListener p) throws ProgrammerException {
         //DCCppMessage msg = DCCppMessage.getVerifyOpsModeCVMsg(mAddressHigh, mAddressLow, CV, value);
         //tc.sendDCCppMessage(msg, this);
         /* We can trigger a read to an LRC120, but the information is not
          currently sent back to us via the XPressNet */
-        p.programmingOpReply(CV, jmri.ProgListener.NotImplemented);
+        notifyProgListenerEnd(p,CV,ProgListener.NotImplemented);
     }
 
     @Override
@@ -94,7 +96,7 @@ public class DCCppOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implem
         //tc.sendDCCppMessage(msg, this);
         /* We can trigger a read to an LRC120, but the information is not
          currently sent back to us via the XPressNet */
-        p.programmingOpReply(val, jmri.ProgListener.NotImplemented);
+        notifyProgListenerEnd(p,val,ProgListener.NotImplemented);
     }
 
     /**
@@ -109,23 +111,15 @@ public class DCCppOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implem
     }
 
     /*
-     * Can this ops-mode programmer read back values?
-     * Indirectly we can, though this requires an external display 
-     * (a Lenz LRC120) and enabling railcom.
-     * @return true to allow us to trigger an ops mode read
+     * This method is leftover from the initial implementation based on
+     * XPressNet.  This always sends a NotImplemented message to the progammer
+     * listener, regardless of the reply.  Does the DCC++ command station 
+     * really send a response to Ops Mode programming instructions?  If the 
+     * answer is no, this should be removed.
      */
-    // An operations mode read can be triggered on command 
-    // stations which support Operations Mode Writes (LZ100,
-    // LZV100,MultiMouse).  Whether or not the operation produces
-    // a result depends on additional external hardware (a booster 
-    // with an enabled  RailCom cutout (LV102 or similar) and a 
-    // RailCom receiver circuit (LRC120 or similar)).
-    // We have no way of determining if the required external 
-    // hardware is present, so we return true for all command 
-    // stations on which the Operations Mode Programmer is enabled.
     @Override
     synchronized public void message(DCCppReply l) {
- progListener.programmingOpReply(value, jmri.ProgListener.NotImplemented);     
+        notifyProgListenerEnd(progListener,value,ProgListener.NotImplemented);
         if (progState == DCCppProgrammer.NOTPROGRAMMING) {
             // We really don't care about any messages unless we send a 
             // request, so just ignore anything that comes in
@@ -143,10 +137,9 @@ public class DCCppOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implem
                 }
                 progState = DCCppProgrammer.NOTPROGRAMMING;
                 stopTimer();
-                progListener.programmingOpReply(value, jmri.ProgListener.OK);
+                notifyProgListenerEnd(progListener,value,ProgListener.OK);
             } else {
-  // This is a message we can (and/or should) ignore.
-  return;
+                return;
             }
         }
     }
@@ -183,7 +176,7 @@ public class DCCppOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implem
     synchronized protected void timeout() {
         progState = DCCppProgrammer.NOTPROGRAMMING;
         stopTimer();
-        progListener.programmingOpReply(value, jmri.ProgListener.FailedTimeout);
+        notifyProgListenerEnd(progListener,value,ProgListener.FailedTimeout);
     }
 
     // initialize logging

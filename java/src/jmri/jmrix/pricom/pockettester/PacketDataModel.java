@@ -19,8 +19,6 @@ import org.slf4j.LoggerFactory;
   */
 public class PacketDataModel extends javax.swing.table.AbstractTableModel {
 
-    static java.util.ResourceBundle rb
-            = java.util.ResourceBundle.getBundle("jmri.jmrix.pricom.pockettester.TesterBundle");
     static public final int ADDRESSCOLUMN = 0;
     static public final int TYPECOLUMN = 1;
     static public final int DETAILCOLUMN = 2;
@@ -46,11 +44,11 @@ public class PacketDataModel extends javax.swing.table.AbstractTableModel {
     public String getColumnName(int col) {
         switch (col) {
             case ADDRESSCOLUMN:
-                return rb.getString("ColumnAddress");
+                return Bundle.getMessage("ColumnAddress");
             case TYPECOLUMN:
-                return rb.getString("ColumnType");
+                return Bundle.getMessage("ColumnType");
             case DETAILCOLUMN:
-                return rb.getString("ColumnDetails");
+                return Bundle.getMessage("ColumnDetails");
             case MONITORBUTTONCOLUMN:
                 return "";   // no heading, as button is clear
             default:
@@ -96,9 +94,9 @@ public class PacketDataModel extends javax.swing.table.AbstractTableModel {
             case DETAILCOLUMN:  //
                 return details.elementAt(row);
             case MONITORBUTTONCOLUMN:  //
-                return rb.getString("ButtonTrace");
+                return Bundle.getMessage("ButtonTrace");
             default:
-                log.error("internal state inconsistent with table request for " + row + " " + col);
+                log.error("internal state inconsistent with table request for {} {}", row, col);
                 return null;
         }
     }

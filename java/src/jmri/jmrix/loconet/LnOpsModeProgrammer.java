@@ -49,13 +49,13 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
      * Forward a write request to an ops-mode write operation.
      */
     @Override
-    @Deprecated
+    @Deprecated // 4.1.1
     public void writeCV(int CV, int val, ProgListener p) throws ProgrammerException {
         mSlotMgr.writeCVOpsMode(CV, val, p, mAddress, mLongAddr);
     }
 
     @Override
-    @Deprecated
+    @Deprecated // 4.1.1
     public void readCV(int CV, ProgListener p) throws ProgrammerException {
         mSlotMgr.readCVOpsMode(CV, p, mAddress, mLongAddr);
     }
@@ -224,8 +224,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
     }
 
     @Override
-    @Deprecated
-    @SuppressWarnings("deprecation") // parent Programmer method deprecated, will remove at same time
+    @Deprecated // 4.1.1
     public final void confirmCV(int CV, int val, ProgListener p) throws ProgrammerException {
         confirmCV(""+CV, val, p);
     }
@@ -243,7 +242,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
         else if (getMode().equals(LnProgrammerManager.LOCONETSV2MODE)) {
             // SV2 mode
             log.warn("confirm CV \"{}\" addr:{} in SV2 mode not implemented", CV, mAddress);
-            pL.programmingOpReply(0, ProgListener.UnknownError);
+            notifyProgListenerEnd(pL, 0, ProgListener.UnknownError);
         } else {
             // DCC ops mode
             mSlotMgr.confirmCVOpsMode(CV, val, pL, mAddress, mLongAddr);
@@ -279,7 +278,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
 
                 ProgListener temp = p;
                 p = null;
-                temp.programmingOpReply(val, code);
+                notifyProgListenerEnd(temp, val, code);
 
                 return;
             }
@@ -297,7 +296,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
 
             ProgListener temp = p;
             p = null;
-            temp.programmingOpReply(val, code);
+            notifyProgListenerEnd(temp, val, code);
 
 
         } else if (getMode().equals(LnProgrammerManager.LOCONETSV1MODE)) {
@@ -336,7 +335,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
                 }
                 ProgListener temp = p;
                 p = null;
-                temp.programmingOpReply(val, code);
+                notifyProgListenerEnd(temp, val, code);
             }
         } else if (getMode().equals(LnProgrammerManager.LOCONETSV2MODE)) {
             // see if reply to LNSV 1 or LNSV2 request
@@ -363,14 +362,14 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
 
                 ProgListener temp = p;
                 p = null;
-                temp.programmingOpReply(val, code);
+                notifyProgListenerEnd(temp, val, code);
             }
         }
     }
 
     int decodeCvNum(String CV) {
         try {
-            return Integer.valueOf(CV).intValue();
+            return Integer.parseInt(CV);
         } catch (java.lang.NumberFormatException e) {
             return 0;
         }
@@ -545,7 +544,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
             bdOpSwAccessTimer = new javax.swing.Timer(1000, (ActionEvent e) -> {
                 ProgListener temp = p;
                 p = null;
-                temp.programmingOpReply(0, ProgListener.FailedTimeout);
+                notifyProgListenerEnd(temp, 0, ProgListener.FailedTimeout);
             });
         bdOpSwAccessTimer.setInitialDelay(1000);
         bdOpSwAccessTimer.setRepeats(false);

@@ -251,33 +251,6 @@ public class SRCPTrafficController extends AbstractMRTrafficController
         return SRCPMessage.getExitProgMode(1);
     }
 
-    /**
-     * static function returning the SRCPTrafficController instance to use.
-     *
-     * @return The registered SRCPTrafficController instance for general use, if
-     *         need be creating one.
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static public SRCPTrafficController instance() {
-        if (self == null) {
-            if (log.isDebugEnabled()) {
-                log.debug("creating a new SRCP TrafficController object");
-            }
-            self = new SRCPTrafficController();
-        }
-        return self;
-    }
-
-    static volatile protected SRCPTrafficController self = null;
-
-    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-            justification = "temporary until mult-system; only set at startup")
-    @Override
-    protected void setInstance() {
-        self = this;
-    }
-
     @Override
     protected AbstractMRReply newReply() {
         return new SRCPReply();

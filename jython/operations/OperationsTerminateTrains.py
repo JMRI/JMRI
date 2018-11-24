@@ -10,7 +10,7 @@ import jmri
 class terminateTrains(jmri.jmrit.automat.AbstractAutomaton) :      
   def init(self):
     # get the train manager
-    self.tm = jmri.jmrit.operations.trains.TrainManager.instance()
+    self.tm = jmri.InstanceManager.getDefault(jmri.jmrit.operations.trains.TrainManager)
     return
 
   def handle(self):

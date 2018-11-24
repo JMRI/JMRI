@@ -10,6 +10,7 @@
 
 import jmri
 import java
+import java.beans
 
 # First, define the listener class.  This gets messages
 # from the reporter, uses them to keep track of the decoders
@@ -92,5 +93,5 @@ class ReporterFormatter(java.beans.PropertyChangeListener):
 
 #########################################################
 
-# See jython/test/ReporterFormatterText.py for test code and sample LocoNet sequences
+# See jython/test/ReporterFormatterTest.py for test code and sample LocoNet sequences
 

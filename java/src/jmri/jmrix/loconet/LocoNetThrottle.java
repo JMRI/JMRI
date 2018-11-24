@@ -95,6 +95,10 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         this.f27 = slot.isF27();
         this.f28 = slot.isF28();
 
+	// for LocoNet throttles, the default is f2 momentary (for the horn)
+	// all other functions are continuos (as set in AbstractThrottle).
+        this.f2Momentary = true;
+
         this.address = slot.locoAddr();
         this.isForward = slot.isForward();
         this.slotStatus = slot.slotStatus();
@@ -360,7 +364,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         }
 
         // reset timeout
-        if (mRefreshTimer != null) { // got NullPointerException sometimes
+        if (mRefreshTimer != null) {
             mRefreshTimer.stop();
             mRefreshTimer.setRepeats(true);     // refresh until stopped by dispose
             mRefreshTimer.start();

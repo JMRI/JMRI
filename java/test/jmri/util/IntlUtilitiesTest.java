@@ -1,18 +1,17 @@
 package jmri.util;
 
 import java.util.Locale;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-import org.junit.Assert;
+
+import org.junit.*;
 
 /**
  * Tests for the jmri.util.IntlUtilities class.
  *
  * @author	Bob Jacobsen Copyright 2014
  */
-public class IntlUtilitiesTest extends TestCase {
+public class IntlUtilitiesTest {
 
+    @Test
     public void testFloatInUSEnglish() throws java.text.ParseException {
         Locale startingLocale = Locale.getDefault();
         try {
@@ -24,6 +23,7 @@ public class IntlUtilitiesTest extends TestCase {
         }
     }
 
+    @Test
     public void testFloatInItalyItalian() throws java.text.ParseException {
         Locale startingLocale = Locale.getDefault();
         try {
@@ -35,6 +35,7 @@ public class IntlUtilitiesTest extends TestCase {
         }
     }
 
+    @Test
     public void testDoubleInUSEnglish() throws java.text.ParseException {
         Locale startingLocale = Locale.getDefault();
         try {
@@ -46,6 +47,7 @@ public class IntlUtilitiesTest extends TestCase {
         }
     }
 
+    @Test
     public void testDoubleInItalyItalian() throws java.text.ParseException {
         Locale startingLocale = Locale.getDefault();
         try {
@@ -57,6 +59,7 @@ public class IntlUtilitiesTest extends TestCase {
         }
     }
 
+    @Test
     public void testOutputAssumption() {
         // tests the assumption that output requires using specific formatting
         // because String.valueOf() doesn't do I18N
@@ -71,6 +74,7 @@ public class IntlUtilitiesTest extends TestCase {
         }
     }
 
+    @Test
     public void testStringInUSEnglish() {
         Locale startingLocale = Locale.getDefault();
         try {
@@ -86,6 +90,7 @@ public class IntlUtilitiesTest extends TestCase {
         }
     }
 
+    @Test
     public void testStringInItalyItalian() {
         Locale startingLocale = Locale.getDefault();
         try {
@@ -99,23 +104,6 @@ public class IntlUtilitiesTest extends TestCase {
         } finally {
             Locale.setDefault(startingLocale);
         }
-    }
-
-    // from here down is testing infrastructure
-    public IntlUtilitiesTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", IntlUtilitiesTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(IntlUtilitiesTest.class);
-        return suite;
     }
 
 }

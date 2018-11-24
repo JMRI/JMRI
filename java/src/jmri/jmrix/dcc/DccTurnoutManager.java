@@ -22,7 +22,7 @@ public class DccTurnoutManager extends jmri.managers.AbstractTurnoutManager {
     @Override
     public Turnout createNewTurnout(String systemName, String userName) {
         Turnout t;
-        int addr = Integer.valueOf(systemName.substring(2)).intValue();
+        int addr = Integer.parseInt(systemName.substring(2));
         t = new DccTurnout(addr);
         t.setUserName(userName);
 

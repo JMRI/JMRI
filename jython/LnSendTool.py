@@ -17,6 +17,8 @@
 import jmri
 
 import java
+import java.awt
+import java.awt.event
 import javax.swing
 
 typePacket = 0

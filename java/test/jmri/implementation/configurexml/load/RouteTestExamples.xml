@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/panelfile-2-9-6.xsl" type="text/xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
+  <jmriversion>
+    <major>4</major>
+    <minor>13</minor>
+    <test>5</test>
+    <modifier>ish</modifier>
+  </jmriversion>
+  <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
+    <defaultInitialState>unknown</defaultInitialState>
+    <sensor inverted="false">
+      <systemName>ISCLOCKRUNNING</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS1</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS2</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS3</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS4</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS5</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS6</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS7</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS8</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS9</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS10</systemName>
+    </sensor>
+  </sensors>
+  <turnouts class="jmri.jmrix.internal.configurexml.InternalTurnoutManagerXml">
+    <operations automate="false">
+      <operation name="NoFeedback" class="jmri.configurexml.turnoutoperations.NoFeedbackTurnoutOperationXml" interval="300" maxtries="2" />
+      <operation name="Raw" class="jmri.configurexml.turnoutoperations.RawTurnoutOperationXml" interval="300" maxtries="1" />
+      <operation name="Sensor" class="jmri.configurexml.turnoutoperations.SensorTurnoutOperationXml" interval="300" maxtries="3" />
+    </operations>
+    <defaultclosedspeed>Normal</defaultclosedspeed>
+    <defaultthrownspeed>Restricted</defaultthrownspeed>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT1</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT2</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT3</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT4</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT5</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT6</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT7</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT8</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT9</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT10</systemName>
+    </turnout>
+  </turnouts>
+  <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
+    <memory value="7:43 AM">
+      <systemName>IMCURRENTTIME</systemName>
+    </memory>
+    <memory value="1.0">
+      <systemName>IMRATEFACTOR</systemName>
+    </memory>
+  </memories>
+  <signalmasts class="jmri.managers.configurexml.DefaultSignalMastManagerXml" />
+  <signalgroups class="jmri.managers.configurexml.DefaultSignalGroupManagerXml" />
+  <oblocks class="jmri.jmrit.logix.configurexml.OBlockManagerXml" />
+  <routes class="jmri.managers.configurexml.DefaultRouteManagerXml">
+    <route userName="Simple">
+      <systemName>IR:AUTO:0001</systemName>
+      <userName>Simple</userName>
+      <routeOutputTurnout systemName="IT1" state="THROWN" />
+      <routeOutputSensor systemName="IS1" state="INACTIVE" />
+    </route>
+    <route userName="Full" controlTurnout="IT2" controlTurnoutState="THROWN" controlLockTurnout="IT6" controlLockTurnoutState="THROWN" addedDelay="5">
+      <systemName>IR:AUTO:0002</systemName>
+      <userName>Full</userName>
+      <routeOutputTurnout systemName="IT1" state="THROWN" />
+      <routeOutputTurnout systemName="IT2" state="THROWN" />
+      <routeOutputSensor systemName="IS1" state="INACTIVE" />
+      <routeSensor systemName="IS6" mode="onInactive" />
+      <routeSensor systemName="IS7" mode="onChange" />
+      <routeSensor systemName="IS8" mode="vetoActive" />
+      <routeSoundFile name="program:resources/sounds/Bell.wav" />
+      <routeScriptFile name="scripts:PowerOff.py" />
+      <turnoutsAlignedSensor name="IS10" />
+    </route>
+    <route userName="Extrra" controlLockTurnout="IT5" controlLockTurnoutState="CHANGE" addedDelay="5">
+      <systemName>IR:AUTO:0003</systemName>
+      <userName>Extrra</userName>
+      <routeOutputSensor systemName="IS1" state="INACTIVE" />
+      <routeSensor systemName="IS2" mode="vetoInactive" />
+    </route>
+  </routes>
+  <warrants class="jmri.jmrit.logix.configurexml.WarrantManagerXml" />
+  <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
+    <logicDelay>500</logicDelay>
+  </signalmastlogics>
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Tue Nov 13 07:37:54 PST 2018" rate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startsettime="no" startclockoption="0" showbutton="no" />
+  <filehistory>
+    <operation>
+      <type>app</type>
+      <date>Tue Nov 13 07:37:53 PST 2018</date>
+      <filename>JMRI program</filename>
+    </operation>
+    <operation>
+      <type>Store</type>
+      <date>Tue Nov 13 07:43:50 PST 2018</date>
+      <filename />
+    </operation>
+  </filehistory>
+  <!--Written by JMRI version 4.13.5ish+jake+20181113T1537Z+Re1e75ae7c6 on Tue Nov 13 07:43:50 PST 2018-->
+</layout-config>

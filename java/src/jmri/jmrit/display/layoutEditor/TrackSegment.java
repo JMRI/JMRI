@@ -2642,9 +2642,10 @@ public class TrackSegment extends LayoutTrack {
             int offset) {
         Point2D p1, p2, p3, p4, p5, p6;
         switch (arrowStyle) {
-            //$FALL-THROUGH$
-            default:
+            default: {
                 arrowStyle = 0;
+                break;
+            }
             case 0: {
                 break;
             }
@@ -3274,7 +3275,7 @@ public class TrackSegment extends LayoutTrack {
 
     public void setArrowLineWidth(int newVal) {
         if (arrowLineWidth != newVal) {
-            arrowLineWidth = Math.max(1, newVal);
+            arrowLineWidth = Math.max(1, newVal);   // don't let value be less than 1
             layoutEditor.redrawPanel();
             layoutEditor.setDirty();
         }
@@ -3382,7 +3383,7 @@ public class TrackSegment extends LayoutTrack {
 
     public void setBridgeDeckWidth(int newVal) {
         if (bridgeDeckWidth != newVal) {
-            bridgeDeckWidth = newVal;
+            bridgeDeckWidth = Math.max(0, newVal);   // don't let value be less than 0
             layoutEditor.redrawPanel();
             layoutEditor.setDirty();
         }
@@ -3395,7 +3396,7 @@ public class TrackSegment extends LayoutTrack {
 
     public void setBridgeLineWidth(int newVal) {
         if (bridgeLineWidth != newVal) {
-            bridgeLineWidth = newVal;
+            bridgeLineWidth = Math.max(1, newVal);   // don't let value be less than 1
             layoutEditor.redrawPanel();
             layoutEditor.setDirty();
         }
@@ -3408,7 +3409,7 @@ public class TrackSegment extends LayoutTrack {
 
     public void setBridgeApproachWidth(int newVal) {
         if (bridgeApproachWidth != newVal) {
-            bridgeApproachWidth = newVal;
+            bridgeApproachWidth = Math.max(0, newVal);   // don't let value be less than 0
             layoutEditor.redrawPanel();
             layoutEditor.setDirty();
         }
@@ -3464,7 +3465,7 @@ public class TrackSegment extends LayoutTrack {
 
     public void setBumperLineWidth(int newVal) {
         if (bumperLineWidth != newVal) {
-            bumperLineWidth = newVal;
+            bumperLineWidth = Math.max(1, newVal);   // don't let value be less than 1
             layoutEditor.redrawPanel();
             layoutEditor.setDirty();
         }
@@ -3499,7 +3500,7 @@ public class TrackSegment extends LayoutTrack {
 
     public void setBumperLength(int newVal) {
         if (bumperLength != newVal) {
-            bumperLength = newVal;
+            bumperLength = Math.max(0, newVal);   // don't let value be less than 0
             layoutEditor.redrawPanel();
             layoutEditor.setDirty();
         }
@@ -3594,7 +3595,7 @@ public class TrackSegment extends LayoutTrack {
 
     public void setTunnelFloorWidth(int newVal) {
         if (tunnelFloorWidth != newVal) {
-            tunnelFloorWidth = newVal;
+            tunnelFloorWidth = Math.max(0, newVal);   // don't let value be less than 0
             layoutEditor.redrawPanel();
             layoutEditor.setDirty();
         }
@@ -3607,7 +3608,7 @@ public class TrackSegment extends LayoutTrack {
 
     public void setTunnelLineWidth(int newVal) {
         if (tunnelLineWidth != newVal) {
-            tunnelLineWidth = newVal;
+            tunnelLineWidth = Math.max(1, newVal);   // don't let value be less than 1
             layoutEditor.redrawPanel();
             layoutEditor.setDirty();
         }
@@ -3620,7 +3621,7 @@ public class TrackSegment extends LayoutTrack {
 
     public void setTunnelEntranceWidth(int newVal) {
         if (tunnelEntranceWidth != newVal) {
-            tunnelEntranceWidth = newVal;
+            tunnelEntranceWidth = Math.max(0, newVal);   // don't let value be less than 0
             layoutEditor.redrawPanel();
             layoutEditor.setDirty();
         }

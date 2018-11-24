@@ -417,16 +417,6 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
         return null;
     }
 
-    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-            justification = "temporary until mult-system; only set at startup")
-    @Override
-    @Deprecated
-    protected void setInstance() {
-        // this is called from AbstractMRTrafficController, so suppress this
-        // error.
-        //log.error("Deprecated method setInstance called");
-    }
-
     @Override
     protected AbstractMRReply newReply() {
         return new AcelaReply();

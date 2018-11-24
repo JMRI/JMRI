@@ -80,7 +80,6 @@ public class XpaTrafficController implements XpaInterface, Runnable {
      * @param m     the message to forward
      * @param notMe registered listener not to forward the message to
      */
-    @SuppressWarnings("unchecked")
     protected void notifyMessage(XpaMessage m, XpaListener notMe) {
         // make a copy of the listener vector to synchronized not needed for transmit
         ArrayList<XpaListener> v;
@@ -104,7 +103,6 @@ public class XpaTrafficController implements XpaInterface, Runnable {
 
     XpaListener lastSender = null;
 
-    @SuppressWarnings("unchecked")
     protected void notifyReply(XpaMessage r) {
         // make a copy of the listener vector to synchronized (not needed for transmit?)
         ArrayList<XpaListener> v;

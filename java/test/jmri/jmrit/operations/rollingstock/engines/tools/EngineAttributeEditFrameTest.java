@@ -2,16 +2,16 @@ package jmri.jmrit.operations.rollingstock.engines.tools;
 
 import java.awt.GraphicsEnvironment;
 import jmri.InstanceManager;
-import jmri.jmrit.operations.OperationsSwingTestCase;
+import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.CarOwners;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
-import jmri.jmrit.operations.rollingstock.engines.EngineEditFrame;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.util.JUnitUtil;
+import jmri.util.swing.JemmyUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -24,18 +24,18 @@ import org.junit.Test;
  * @author	Dan Boudreau Copyright (C) 2010
  *
  */
-public class EngineAttributeEditFrameTest extends OperationsSwingTestCase {
+public class EngineAttributeEditFrameTest extends OperationsTestCase {
 
     @Test
     public void testEngineAttributeEditFrameModel() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         EngineAttributeEditFrame f = new EngineAttributeEditFrame();
-        f.initComponents(EngineEditFrame.MODEL);
+        f.initComponents(EngineAttributeEditFrame.MODEL);
         // confirm that the right number of models were loaded
         Assert.assertEquals(27, f.comboBox.getItemCount());
         // now add a new model name
         f.addTextBox.setText("New Model");
-        enterClickAndLeave(f.addButton);
+        JemmyUtil.enterClickAndLeave(f.addButton);
         // new model should appear at start of list
         Assert.assertEquals("new model name", "New Model", f.comboBox.getItemAt(0));
 
@@ -43,13 +43,13 @@ public class EngineAttributeEditFrameTest extends OperationsSwingTestCase {
         f.comboBox.setSelectedItem("SD45");
         f.addTextBox.setText("DS54");
         // push replace button
-        enterClickAndLeave(f.replaceButton);
+        JemmyUtil.enterClickAndLeave(f.replaceButton);
         // need to also push the "Yes" button in the dialog window
-        pressDialogButton(f, Bundle.getMessage("replaceAll"), Bundle.getMessage("ButtonYes"));
+        JemmyUtil.pressDialogButton(f, Bundle.getMessage("replaceAll"), Bundle.getMessage("ButtonYes"));
         // did the replace work?
         Assert.assertEquals("replaced SD45 with DS54", "DS54", f.comboBox.getItemAt(0));
 
-        enterClickAndLeave(f.deleteButton);
+        JemmyUtil.enterClickAndLeave(f.deleteButton);
         // new model was next
         Assert.assertEquals("new model after delete", "New Model", f.comboBox.getItemAt(0));
 
@@ -60,22 +60,22 @@ public class EngineAttributeEditFrameTest extends OperationsSwingTestCase {
     public void testEngineAttributeEditFrame2() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         EngineAttributeEditFrame f = new EngineAttributeEditFrame();
-        f.initComponents(EngineEditFrame.LENGTH);
+        f.initComponents(EngineAttributeEditFrame.LENGTH);
         JUnitUtil.dispose(f);
         f = new EngineAttributeEditFrame();
-        f.initComponents(EngineEditFrame.OWNER);
+        f.initComponents(EngineAttributeEditFrame.OWNER);
         JUnitUtil.dispose(f);
         f = new EngineAttributeEditFrame();
-        f.initComponents(EngineEditFrame.ROAD);
+        f.initComponents(EngineAttributeEditFrame.ROAD);
         JUnitUtil.dispose(f);
         f = new EngineAttributeEditFrame();
-        f.initComponents(EngineEditFrame.TYPE);
+        f.initComponents(EngineAttributeEditFrame.TYPE);
         JUnitUtil.dispose(f);
     }
 
     @Override
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         super.setUp();
 
         loadEngines();
@@ -112,7 +112,7 @@ public class EngineAttributeEditFrameTest extends OperationsSwingTestCase {
 
         EngineManager eManager = InstanceManager.getDefault(EngineManager.class);
         // add 5 Engines to table
-        Engine e1 = eManager.newEngine("NH", "1");
+        Engine e1 = eManager.newRS("NH", "1");
         e1.setModel("RS1");
         e1.setBuilt("2009");
         e1.setMoves(55);
@@ -124,7 +124,7 @@ public class EngineAttributeEditFrameTest extends OperationsSwingTestCase {
         Assert.assertEquals("e1 location", Track.OKAY, e1.setLocation(westford, westfordYard));
         Assert.assertEquals("e1 destination", Track.OKAY, e1.setDestination(boxford, boxfordJacobson));
 
-        Engine e2 = eManager.newEngine("UP", "2");
+        Engine e2 = eManager.newRS("UP", "2");
         e2.setModel("FT");
         e2.setBuilt("2004");
         e2.setMoves(50);
@@ -132,7 +132,7 @@ public class EngineAttributeEditFrameTest extends OperationsSwingTestCase {
         jmri.InstanceManager.getDefault(jmri.IdTagManager.class).provideIdTag("RFID 2");
         e2.setRfid("RFID 2");
 
-        Engine e3 = eManager.newEngine("AA", "3");
+        Engine e3 = eManager.newRS("AA", "3");
         e3.setModel("SW8");
         e3.setBuilt("2006");
         e3.setMoves(40);
@@ -142,7 +142,7 @@ public class EngineAttributeEditFrameTest extends OperationsSwingTestCase {
         Assert.assertEquals("e3 location", Track.OKAY, e3.setLocation(boxford, boxfordHood));
         Assert.assertEquals("e3 destination", Track.OKAY, e3.setDestination(boxford, boxfordYard));
 
-        Engine e4 = eManager.newEngine("SP", "2");
+        Engine e4 = eManager.newRS("SP", "2");
         e4.setModel("GP35");
         e4.setBuilt("1990");
         e4.setMoves(30);
@@ -152,7 +152,7 @@ public class EngineAttributeEditFrameTest extends OperationsSwingTestCase {
         Assert.assertEquals("e4 location", Track.OKAY, e4.setLocation(westford, westfordSiding));
         Assert.assertEquals("e4 destination", Track.OKAY, e4.setDestination(boxford, boxfordHood));
 
-        Engine e5 = eManager.newEngine("NH", "5");
+        Engine e5 = eManager.newRS("NH", "5");
         e5.setModel("SW1200");
         e5.setBuilt("1956");
         e5.setMoves(25);
@@ -165,7 +165,7 @@ public class EngineAttributeEditFrameTest extends OperationsSwingTestCase {
 
     @Override
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         super.tearDown();
     }
 }

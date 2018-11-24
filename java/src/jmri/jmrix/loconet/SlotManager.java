@@ -257,10 +257,10 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * Provide a mapping between locomotive addresses and the SlotListener
      * that's interested in them.
      */
-    Hashtable<Integer, SlotListener> mLocoAddrHash = new Hashtable<Integer, SlotListener>();
+    Hashtable<Integer, SlotListener> mLocoAddrHash = new Hashtable<>();
 
     // data members to hold contact with the slot listeners
-    final private Vector<SlotListener> slotListeners = new Vector<SlotListener>();
+    final private Vector<SlotListener> slotListeners = new Vector<>();
 
     /**
      * Add a slot listener, if it is not already registered
@@ -526,8 +526,9 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
                 i = m.getElement(1);
                 break;
 
-            case LnConstants.OPC_MOVE_SLOTS:  // handle the follow-on message when it comes
-                return i; // need to cope with that!!
+            case LnConstants.OPC_MOVE_SLOTS:  // No follow on for some moves
+                i = m.getElement(1);
+                return i;
 
             default:
                 // nothing here for us
@@ -807,7 +808,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
 
     @Override
     public List<ProgrammingMode> getSupportedModes() {
-        List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
+        List<ProgrammingMode> ret = new ArrayList<>();
         ret.add(ProgrammingMode.PAGEMODE);
         ret.add(ProgrammingMode.DIRECTBYTEMODE);
         ret.add(ProgrammingMode.REGISTERMODE);
@@ -973,7 +974,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
             } else {
                 log.warn("rejecting the cs opsw access account unsupported CV name format");
                 // unsupported format in "cv" name. Signal an error
-                p.programmingOpReply(1, ProgListener.SequenceError);
+                notifyProgListenerEnd(p, 1, ProgListener.SequenceError);
                 return;
 
             }
@@ -991,6 +992,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * @throws jmri.ProgrammerException if an unsupported programming mode is exercised
      */
     @Override
+    @Deprecated // 4.1.1
     public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         lopsa = 0;
         hopsa = 0;
@@ -1086,7 +1088,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
             } else {
                 log.warn("rejecting the cs opsw access account unsupported CV name format");
                 // unsupported format in "cv" name.  Signal an error.
-                p.programmingOpReply(1, ProgListener.SequenceError);
+                notifyProgListenerEnd(p, 1, ProgListener.SequenceError);
                 return;
             }
         }
@@ -1169,7 +1171,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
             } else {
                 log.warn("rejecting the cs opsw access account unsupported CV name format");
                 // unsupported format in "cv" name.  Signal an error.
-                p.programmingOpReply(1, ProgListener.SequenceError);
+                notifyProgListenerEnd(p, 1, ProgListener.SequenceError);
                 return;
 
             }
@@ -1202,6 +1204,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * @throws jmri.ProgrammerException if an unsupported programming mode is exercised
      */
     @Override
+    @Deprecated // 4.1.1
     public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
         lopsa = 0;
         hopsa = 0;
@@ -1354,7 +1357,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         javax.swing.Timer timer = new javax.swing.Timer(delay, new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
-                p.programmingOpReply(value, status);
+                notifyProgListenerEnd(p, value, status);
             }
         });
         timer.setInitialDelay(delay);

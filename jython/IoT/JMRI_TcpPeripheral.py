@@ -53,6 +53,7 @@
 # imports, module variables and imediate running code
 
 import java
+import java.beans
 import socket
 import threading
 import time

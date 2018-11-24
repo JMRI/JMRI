@@ -1889,7 +1889,7 @@ public class PaneProgPane extends javax.swing.JPanel
                 case "int": {
                     int attribValue;
                     try {
-                        attribValue = Integer.valueOf(attribRawValue);
+                        attribValue = Integer.parseInt(attribRawValue);
                         constraint.set(globs.gridConstraints, attribValue);
                     } catch (IllegalAccessException ey) {
                         log.error("Unable to set constraint \"" + attribName + ". IllegalAccessException error thrown.");
@@ -1923,7 +1923,7 @@ public class PaneProgPane extends javax.swing.JPanel
                     try {
                         String[] insetStrings = attribRawValue.split(",");
                         if (insetStrings.length == 4) {
-                            Insets attribValue = new Insets(Integer.valueOf(insetStrings[0]), Integer.valueOf(insetStrings[1]), Integer.valueOf(insetStrings[2]), Integer.valueOf(insetStrings[3]));
+                            Insets attribValue = new Insets(Integer.parseInt(insetStrings[0]), Integer.parseInt(insetStrings[1]), Integer.parseInt(insetStrings[2]), Integer.parseInt(insetStrings[3]));
                             constraint.set(globs.gridConstraints, attribValue);
                         } else {
                             log.error("Invalid value \"" + attribRawValue + "\" for attribute \"" + attribName + "\"");
@@ -2112,7 +2112,7 @@ public class PaneProgPane extends javax.swing.JPanel
      * @param cs constraints on layout manager
      */
     protected void makeSoundLabel(Element e, JPanel c, GridBagLayout g, GridBagConstraints cs) {
-        String labelText = rosterEntry.getSoundLabel(Integer.valueOf(LocaleSelector.getAttribute(e, "num")));
+        String labelText = rosterEntry.getSoundLabel(Integer.parseInt(LocaleSelector.getAttribute(e, "num")));
         final JLabel l = new JLabel(labelText);
         l.setAlignmentX(1.0f);
         cs.fill = GridBagConstraints.BOTH;

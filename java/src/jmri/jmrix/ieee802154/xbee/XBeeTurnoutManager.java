@@ -135,9 +135,9 @@ public class XBeeTurnoutManager extends AbstractTurnoutManager {
             int len = systemName.length();
             try {
                 if ((seperator2 >= 0) && (seperator2 <= len)) {
-                    input = Integer.valueOf(systemName.substring(seperator + 1, seperator2)).intValue();
+                    input = Integer.parseInt(systemName.substring(seperator + 1, seperator2));
                 } else {
-                    input = Integer.valueOf(systemName.substring(seperator + 1, len)).intValue();
+                    input = Integer.parseInt(systemName.substring(seperator + 1, len));
                 }
             } catch (NumberFormatException ex) {
                 log.debug("Unable to convert {} into the XBee node and pin format of nn:xx", systemName);
@@ -166,7 +166,7 @@ public class XBeeTurnoutManager extends AbstractTurnoutManager {
             int seperator = systemName.indexOf(":");
             int seperator2 = systemName.indexOf(":", seperator + 1);
             try {
-                input = Integer.valueOf(systemName.substring(seperator2 + 1)).intValue();
+                input = Integer.parseInt(systemName.substring(seperator2 + 1));
             } catch (NumberFormatException ex) {
                 log.debug("Unable to convert " + systemName + " into the cab and input format of nn:xx");
                 return -1;

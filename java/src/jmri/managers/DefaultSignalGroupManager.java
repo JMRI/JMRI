@@ -2,6 +2,7 @@ package jmri.managers;
 
 import java.io.File;
 import java.net.URISyntaxException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,10 +21,10 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Default implementation of a SignalGroupManager.
- * <P>
+ * <p>
  * This loads automatically the first time used.
  *
- * @author Bob Jacobsen Copyright (C) 2009
+ * @author Bob Jacobsen Copyright (C) 2009, 2018
  */
 public class DefaultSignalGroupManager extends AbstractManager<SignalGroup>
         implements SignalGroupManager, java.beans.PropertyChangeListener {
@@ -48,7 +49,7 @@ public class DefaultSignalGroupManager extends AbstractManager<SignalGroup>
 
     @Override
     public char typeLetter() {
-        return 'F';
+        return 'G'; // according to JMRI: Names and Naming
     }
 
     @Override
@@ -75,27 +76,28 @@ public class DefaultSignalGroupManager extends AbstractManager<SignalGroup>
      * {@inheritDoc}
      * 
      * Forces upper case and trims leading and trailing whitespace.
-     * Does not check for valid prefix, hence doesn't throw NamedBean.BadSystemNameException.
+     * The IG prefix is added if necessary.
      */
     @CheckReturnValue
     @Override
     public @Nonnull
-    String normalizeSystemName(@Nonnull String inputName) throws NamedBean.BadSystemNameException {
-        // does not check for valid prefix, hence doesn't throw NamedBean.BadSystemNameException
+    String normalizeSystemName(@Nonnull String inputName) {
+        // does not check for valid system connection prefix, hence doesn't throw NamedBean.BadSystemNameException
+        if (inputName.length() < 3 || !inputName.startsWith("IG")) {
+            inputName = "IG" + inputName;
+        }
         return inputName.toUpperCase().trim();
     }
 
-    @Override
-    public SignalGroup newSignalGroup(String sys) {
-        SignalGroup g;
-        g = new DefaultSignalGroup(sys);
-        register(g);
-        return g;
-
-    }
-
+    /**
+     * {@inheritDoc}
+     *
+     * Keep autostring in line with {@link #newSignalGroup(String)},
+     * {@link #getSystemPrefix()} and {@link #typeLetter()}
+     */
     @Override
     public SignalGroup provideSignalGroup(String systemName, String userName) {
+        log.debug("provideGroup({})", systemName);
         SignalGroup r;
         r = getByUserName(systemName);
         if (r != null) {
@@ -105,12 +107,45 @@ public class DefaultSignalGroupManager extends AbstractManager<SignalGroup>
         if (r != null) {
             return r;
         }
-        // Group does not exist, create a new group
+        // Group does not exist, create a new signal group
         r = new DefaultSignalGroup(systemName, userName);
         // save in the maps
         register(r);
+        /* The following keeps track of the last created auto system name.
+         Currently we do not reuse numbers, although there is nothing to stop the
+         user from manually recreating them. */
+        if (systemName.startsWith("IG:AUTO:")) {
+            try {
+                int autoNumber = Integer.parseInt(systemName.substring(8));
+                if (autoNumber > lastAutoGroupRef) {
+                    lastAutoGroupRef = autoNumber;
+                }
+            } catch (NumberFormatException e) {
+                log.warn("Auto generated SystemName {} is not in the correct format", systemName);
+            }
+        }
         return r;
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * Keep autostring in line with {@link #provideSignalGroup(String, String)},
+     * {@link #getSystemPrefix()} and {@link #typeLetter()}
+     */
+    @Override
+    public SignalGroup newSignalGroup(String userName) {
+        int nextAutoGroupRef = lastAutoGroupRef + 1;
+        StringBuilder b = new StringBuilder("IG:AUTO:");
+        String nextNumber = paddedNumber.format(nextAutoGroupRef);
+        b.append(nextNumber);
+        log.debug("SignalGroupManager - new autogroup with sName: {}", b);
+        return provideSignalGroup(b.toString(), userName);
+    }
+
+    DecimalFormat paddedNumber = new DecimalFormat("0000");
+
+    int lastAutoGroupRef = 0;
 
     List<String> getListOfNames() {
         List<String> retval = new ArrayList<String>();
@@ -132,7 +167,7 @@ public class DefaultSignalGroupManager extends AbstractManager<SignalGroup>
                 // check that there's an aspects.xml file
                 File aspects = new File(file.getPath() + File.separator + "aspects.xml");
                 if (aspects.exists()) {
-                    log.debug("found system: " + file.getName());
+                    log.debug("found system: {}", file.getName());
                     retval.add(file.getName());
                 }
             }
@@ -160,4 +195,5 @@ public class DefaultSignalGroupManager extends AbstractManager<SignalGroup>
     }
 
     private final static Logger log = LoggerFactory.getLogger(DefaultSignalGroupManager.class);
+
 }

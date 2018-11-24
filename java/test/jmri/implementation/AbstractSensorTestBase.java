@@ -162,12 +162,40 @@ public abstract class AbstractSensorTestBase {
        Assert.assertEquals("Pull Direction",jmri.Sensor.PullResistance.PULL_OFF,t.getPullResistance());
     }
 
+    @Test
+    public void testGetBeanType(){
+         Assert.assertEquals("bean type",t.getBeanType(),Bundle.getMessage("BeanNameSensor"));
+    }
+
     // Test outgoing status request
     @Test
     public void testXNetSensorStatusRequest() {
         t.requestUpdateFromLayout();
         // check that the correct message was sent
         checkStatusRequestMsgSent();
+    }
+
+    // Test the Sensor interface
+    @Test
+    public void testSensor() throws JmriException {
+        t.setState(Sensor.ON);
+        jmri.util.JUnitUtil.waitFor(()->{return t.getState() == Sensor.ON;}, "state = ON");
+        Assert.assertTrue("Sensor is ON", t.getState() == Sensor.ON);
+        t.setState(Sensor.OFF);
+        jmri.util.JUnitUtil.waitFor(()->{return t.getState() == Sensor.OFF;}, "state = OFF");
+        Assert.assertTrue("Sensor is ON", t.getState() == Sensor.OFF);
+        t.setCommandedState(Sensor.ON);
+        jmri.util.JUnitUtil.waitFor(()->{return t.getState() == Sensor.ON;}, "state = ON");
+        Assert.assertTrue("Sensor is ON", t.getState() == Sensor.ON);
+        t.setCommandedState(Sensor.OFF);
+        jmri.util.JUnitUtil.waitFor(()->{return t.getState() == Sensor.OFF;}, "state = OFF");
+        Assert.assertTrue("Sensor is ON", t.getState() == Sensor.OFF);
+        t.setState(Sensor.ON);
+        jmri.util.JUnitUtil.waitFor(()->{return t.getCommandedState() == Sensor.ON;}, "commanded state = ON");
+        Assert.assertTrue("Sensor is ON", t.getCommandedState() == Sensor.ON);
+        t.setState(Sensor.OFF);
+        jmri.util.JUnitUtil.waitFor(()->{return t.getCommandedState() == Sensor.OFF;}, "commanded state = OFF");
+        Assert.assertTrue("Sensor is ON", t.getCommandedState() == Sensor.OFF);
     }
 
 

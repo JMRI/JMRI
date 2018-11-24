@@ -33,7 +33,7 @@ public class DuplicateTest {
                 failed = check(file) || failed;
             }
         }
-        System.out.println("checked total of " + models.size());
+        log.debug("checked total of{}", models.size());
         if (failed) {
             Assert.fail("test failed, see System.err");
         }
@@ -41,7 +41,6 @@ public class DuplicateTest {
 
     ArrayList<String> models = new ArrayList<>();
 
-    @SuppressWarnings("unchecked")
     boolean check(File file) throws JDOMException, IOException {
         Element root = readFile(file);
 

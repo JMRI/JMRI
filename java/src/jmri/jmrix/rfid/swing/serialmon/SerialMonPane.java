@@ -63,26 +63,18 @@ public class SerialMonPane extends jmri.jmrix.AbstractMonPane implements RfidLis
     @Override
     public synchronized void message(RfidMessage l) {  // receive a message and log it
         if (l.isBinary()) {
-            nextLine("binary cmd: " + l.toMonitorString() + "\n", null);
+            logMessage("binary cmd: ",l);
         } else {
-            nextLine("cmd: \"" + l.toMonitorString() + "\"\n", null);
+            logMessage("cmd: ",l);
         }
     }
 
     @Override
     public synchronized void reply(RfidReply l) {  // receive a reply message and log it
-        String raw = "";
-        for (int i = 0; i < l.getNumDataElements(); i++) {
-            if (i > 0) {
-                raw += " ";
-            }
-            raw = jmri.util.StringUtil.appendTwoHexFromInt(l.getElement(i) & 0xFF, raw);
-        }
-
         if (l.isUnsolicited()) {
-            nextLine("msg: \"" + l.toMonitorString() + "\"\n", raw);
+            logMessage("msg: ",l);
         } else {
-            nextLine("rep: \"" + l.toMonitorString() + "\"\n", raw);
+            logMessage("rep: ", l);
         }
     }
 
