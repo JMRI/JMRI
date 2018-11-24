@@ -20,7 +20,6 @@
            <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE" />
            <Bug pattern="RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE" />
            <Bug pattern="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD" />
-           <Bug pattern="UW_UNCOND_WAIT" />
            <Bug pattern="WMI_WRONG_MAP_ITERATOR" />
         </Or>
      </Match>
