@@ -455,23 +455,25 @@ limitation when connected to a Power Pro.</p> -->
     <dt>All systems:</dt>
 
     <dd>No Turnout MONITORING, No Clock functions.</dd>
+    <dd>No Ops Mode Signal (Extended Accessory) programming.</dd>
     <!--  <dt>Power Cab and SB3:</dt>
         <dd>Can only access accessory addresses between 1 and 250.</dd> -->
 
-    <dt>SB3:</dt>
+    <dt>SB3 and SB5:</dt>
 
-    <dd>No programming track support, operation mode only.</dd>
+    <dd>No programming track support, Ops Mode programming only.</dd>
 
     <dt>Power Pro:</dt>
 
-    <dd>No loco programming</dd>
+    <dd>No programming of any kind.</dd>
+    <dd>No AIU support.</dd>
 
     <dt>AIU Support:</dt>
 
-    <dd>USB below 7.* version, no AIU support</dd>
+    <dd>USB below 7.* version, no AIU support.</dd>
 
     <dd>USB version 7.* and above, system with version 1.65 and
-    above firmware, AIU supported</dd>
+    above firmware, AIU supported.</dd>
   </dl><a name="troubleShoot" id="troubleShoot"></a>
 
   <h2>Troubleshooting</h2>
