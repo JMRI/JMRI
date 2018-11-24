@@ -97,7 +97,6 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     /**
      * Tells which managers this class provides.
      */
-    @SuppressWarnings("deprecation")
     @Override
     public boolean provides(Class<?> type) {
         if (getDisabled()) {
@@ -140,7 +139,7 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     /**
      * Provide manager by class
      */
-    @SuppressWarnings({"unchecked", "deprecation"})
+    @SuppressWarnings({"unchecked"})
     @Override
     public <T> T get(Class<?> T) {
         if (getDisabled()) {
@@ -191,8 +190,8 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
      * Configure the common managers for NCE connections. This puts the common
      * manager config in one place.
      */
-    @SuppressWarnings("deprecation")
     public void configureManagers() {
+        log.trace("configureManagers() with: {} ", getNceUsbSystem());
         powerManager = new jmri.jmrix.nce.NcePowerManager(this);
         InstanceManager.store(powerManager, jmri.PowerManager.class);
 
@@ -209,14 +208,27 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         InstanceManager.setThrottleManager(throttleManager);
 
         if (getNceUsbSystem() != NceTrafficController.USB_SYSTEM_NONE) {
-            if (getNceUsbSystem() != NceTrafficController.USB_SYSTEM_POWERHOUSE) {
-                // don't set a service mode programmer
+            switch (getNceUsbSystem()) {
+                case NceTrafficController.USB_SYSTEM_SB5:
+                    log.debug("USB with just addressed programmer");
+                    InstanceManager.store(getProgrammerManager(), jmri.AddressedProgrammerManager.class);
+                    break;
+
+                case NceTrafficController.USB_SYSTEM_POWERCAB:
+                case NceTrafficController.USB_SYSTEM_SB3:
+                case NceTrafficController.USB_SYSTEM_POWERHOUSE:
+                case NceTrafficController.USB_SYSTEM_TWIN:
+                default:
+                    log.debug("USB with no programmer");
+                    break;
             }
         } else {
             if (getProgrammerManager().isAddressedModePossible()) {
+                log.trace("store AddressedProgrammerManager");
                 InstanceManager.store(getProgrammerManager(), jmri.AddressedProgrammerManager.class);
             }
             if (getProgrammerManager().isGlobalProgrammerAvailable()) {
+                log.trace("store GlobalProgrammerManage");
                 InstanceManager.store(getProgrammerManager(), GlobalProgrammerManager.class);
             }
         }
@@ -228,6 +240,7 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
         setConsistManager(new jmri.jmrix.nce.NceConsistManager(this));
 
+        log.trace("configureManagers() end");
     }
 
     public NcePowerManager getPowerManager() {
@@ -288,4 +301,5 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         super.dispose();
     }
 
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NceSystemConnectionMemo.class);
 }
