@@ -159,7 +159,7 @@ public class WarrantTest {
         Assert.assertEquals("BlockOrder", warrant.getLastOrder().toString(), lastOrder.toString());
         Assert.assertEquals("BlockOrder", warrant.getViaOrder().toString(), viaOrder.toString());
 
-        String msg = warrant.allocateRoute(orders);
+        String msg = warrant.allocateRoute(false, orders);
         Assert.assertNull("allocateRoute - "+msg, msg);
         warrant.deAllocate();
         
@@ -177,7 +177,7 @@ public class WarrantTest {
 //        DccLocoAddress dccAddress = new DccLocoAddress(999, true);
 //        Assert.assertNotNull("dccAddress", dccAddress);
         warrant.getSpeedUtil().setDccAddress("999(L)");
-        msg = warrant.setRoute(0, orders);
+        msg = warrant.setRoute(false, orders);
         Assert.assertNull("setRoute - "+msg, msg);
         msg =  warrant.checkStartBlock(Warrant.MODE_RUN);
         Assert.assertNull("checkStartBlock - "+msg, msg);
@@ -197,7 +197,7 @@ public class WarrantTest {
 
         jmri.util.JUnitUtil.waitFor(() -> {
             String m =  warrant.getRunningMessage();
-            return m.endsWith("Cmd #2.");
+            return m.endsWith("Cmd #2.") || m.endsWith("Cmd #3.");
         }, "Train starts to move after 2nd command");
         jmri.util.JUnitUtil.releaseThread(this, 100); // What should we specifically waitFor?
 

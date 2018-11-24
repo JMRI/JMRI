@@ -190,7 +190,6 @@ public class CbusAddressTest extends TestCase {
     }
 
     public void testMultiTermSplitCheckOK() {
-        assertTrue(new CbusAddress("+1;+1;+1").checkSplit());
         assertTrue(new CbusAddress("+1;+1").checkSplit());
         assertTrue(new CbusAddress("+N12e34;+1").checkSplit());
         assertTrue(new CbusAddress("+1;X1234").checkSplit());
@@ -206,6 +205,7 @@ public class CbusAddressTest extends TestCase {
         assertTrue(!new CbusAddress("ABC").check());
         assertTrue(!new CbusAddress("Xprs0").check());
 
+        assertTrue(!new CbusAddress("+1;+1;+1").checkSplit());
         assertTrue(!new CbusAddress("+1;;+1").checkSplit());
         assertTrue(!new CbusAddress("+001;").checkSplit());
         assertTrue(!new CbusAddress("-001;").checkSplit());

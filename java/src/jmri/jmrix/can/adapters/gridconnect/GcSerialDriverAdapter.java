@@ -293,8 +293,8 @@ public class GcSerialDriverAdapter extends GcPortController {
             if (bufferedStream == null) {
                 bufferedStream = new AsyncBufferInputStream(serialStream, activeSerialPort.getName());
             }
+            return new DataInputStream(bufferedStream);
         }
-        return new DataInputStream(bufferedStream);
     }
 
     @Override

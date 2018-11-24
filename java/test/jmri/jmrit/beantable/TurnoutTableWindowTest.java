@@ -156,6 +156,36 @@ public class TurnoutTableWindowTest extends jmri.util.SwingTestCase {
         Assert.assertNotNull(jmri.InstanceManager.turnoutManagerInstance().getTurnout("IT1"));
     }
 
+    public void testMenus() throws Exception {
+        if (GraphicsEnvironment.isHeadless()) {
+            return; // can't Assume in TestCase
+        }
+
+        TurnoutTableAction a = new TurnoutTableAction();
+        a.actionPerformed(new java.awt.event.ActionEvent(a, 1, ""));
+
+        // Find Turnout table window by name
+        JmriJFrame ft = JmriJFrame.getFrame(Bundle.getMessage("TitleTurnoutTable"));
+
+        // no need to test Automation menu, has its own tests in jmri.jmrit.turnoutoperation
+
+        // ask for the Speeds menu to open
+        jmri.util.ThreadingUtil.runOnGUIEventually(() -> {
+            a.setDefaultSpeeds(ft);
+        });
+        flushAWT();
+        // Find new dialog window by name
+        java.awt.Container dialog = JUnitUtil.findContainer(Bundle.getMessage("TurnoutGlobalSpeedMessageTitle"));
+        Assert.assertNotNull("Not found Speeds dialog", dialog);
+        // Find the cancel button
+        JUnitUtil.pressButton(this, dialog, Bundle.getMessage("ButtonCancel"));
+
+        // Ask to close table window
+        TestHelper.disposeWindow(ft, this);
+
+        flushAWT();
+    }
+
     // from here down is testing infrastructure
     public TurnoutTableWindowTest(String s) {
         super(s);
