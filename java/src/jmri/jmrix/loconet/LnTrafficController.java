@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 public abstract class LnTrafficController implements LocoNetInterface {
 
     /**
-     * {@inheritDoc}
+     * Reference to the system connection memo.
      */
     LocoNetSystemConnectionMemo memo = null;
 

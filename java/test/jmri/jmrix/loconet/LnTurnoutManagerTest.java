@@ -131,7 +131,7 @@ public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBa
         jmri.util.JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
         // prepare an interface, register
-        memo = new LocoNetSystemConnectionMemo("L");
+        memo = new LocoNetSystemConnectionMemo("L", "LocoNet");
         lnis = new LocoNetInterfaceScaffold(memo);
         // create and register the manager object
         l = new LnTurnoutManager(lnis, lnis, memo, false);

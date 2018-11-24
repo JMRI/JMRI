@@ -23,7 +23,7 @@ public class LocoNetMessageInterpretTest {
     @Test
     public void testTransponding() {
         LocoNetMessage l;
-        LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo("L");
+        LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo("L", "LocoNet");
         jmri.jmrix.loconet.LocoNetInterfaceScaffold lnis = new jmri.jmrix.loconet.LocoNetInterfaceScaffold(memo);
         LnReporterManager lnrm = new LnReporterManager(lnis, memo.getSystemPrefix());
 
@@ -3346,7 +3346,7 @@ public class LocoNetMessageInterpretTest {
     @Test
     public void testBasicTurnoutControlMessages() {
         LocoNetMessage l;
-        LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo("L");
+        LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo("L", "LocoNet");
         jmri.jmrix.loconet.LocoNetInterfaceScaffold lnis = new jmri.jmrix.loconet.LocoNetInterfaceScaffold(memo);
         LnTurnoutManager lntm = new LnTurnoutManager(lnis, lnis, memo, false);
 
@@ -5745,7 +5745,7 @@ public class LocoNetMessageInterpretTest {
     @Test
     public void testSwichMessages() {
         LocoNetMessage l;
-        LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo("L");
+        LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo("L", "LocoNet");
         jmri.jmrix.loconet.LocoNetInterfaceScaffold lnis = new jmri.jmrix.loconet.LocoNetInterfaceScaffold(memo);
         LnTurnoutManager lntm = new LnTurnoutManager(lnis, lnis, memo, false);
 

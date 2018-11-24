@@ -269,7 +269,7 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
     public void setUp() {
         JUnitUtil.setUp();
         // prepare an interface
-        memo = new LocoNetSystemConnectionMemo("L");
+        memo = new LocoNetSystemConnectionMemo("L", "LocoNet");
         lnis = new LocoNetInterfaceScaffold(memo);
         memo.setLnTrafficController(lnis);
 

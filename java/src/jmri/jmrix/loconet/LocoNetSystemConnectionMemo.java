@@ -1,6 +1,7 @@
 package jmri.jmrix.loconet;
 
 import java.util.ResourceBundle;
+import javax.annotation.Nonnull;
 import jmri.AddressedProgrammerManager;
 import jmri.ClockControl;
 import jmri.CommandStation;
@@ -46,17 +47,11 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
     }
 
     public LocoNetSystemConnectionMemo() {
-        super("L", "LocoNet"); // NOI18N
-        register(); // registers general type
-        InstanceManager.store(this, LocoNetSystemConnectionMemo.class); // also register as specific type
-
-        // create and register the ComponentFactory for the GUI
-        InstanceManager.store(cf = new LnComponentFactory(this),
-                ComponentFactory.class);
+        this("L", "LocoNet"); // NOI18N
     }
 
-    public LocoNetSystemConnectionMemo(String prefix) {
-        super(prefix, "LocoNet"); // NOI18N
+    public LocoNetSystemConnectionMemo(@Nonnull String prefix, @Nonnull String name) {
+        super(prefix, name); // NOI18N
         register(); // registers general type
         InstanceManager.store(this, LocoNetSystemConnectionMemo.class); // also register as specific type
 

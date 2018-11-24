@@ -115,7 +115,7 @@ public class LocoMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
         JUnitUtil.initDefaultUserMessagePreferences();
 
         // prepare an interface, register
-        LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo("L");
+        LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo("L", "LocoNet");
         jmri.jmrix.loconet.LocoNetInterfaceScaffold lnis = new jmri.jmrix.loconet.LocoNetInterfaceScaffold(memo);
         // create and register the manager object
         jmri.util.JUnitUtil.initInternalTurnoutManager();
@@ -143,4 +143,5 @@ public class LocoMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
         
         jmri.util.JUnitUtil.tearDown();
     }
+
 }

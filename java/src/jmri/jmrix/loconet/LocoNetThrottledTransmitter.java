@@ -40,7 +40,6 @@ public class LocoNetThrottledTransmitter implements LocoNetInterface {
 
     /**
      * Reference to the system connection memo.
-     * TODO Attach a memo instance to those classes extending LocoNetThrottledTransmitter that lack a memo
      */
     LocoNetSystemConnectionMemo memo = null;
 

@@ -6528,7 +6528,7 @@ public class LlnmonTest extends TestCase {
     protected void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.initReporterManager();
-        LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo("L");
+        LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo("L", "LocoNet");
         jmri.jmrix.loconet.LocoNetInterfaceScaffold lnis = new jmri.jmrix.loconet.LocoNetInterfaceScaffold(memo);
         lntm = new LnTurnoutManager(lnis, lnis, memo, false);
         lnsm = new LnSensorManager(lnis, memo.getSystemPrefix());
