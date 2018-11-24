@@ -235,6 +235,7 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
                     break;
             }
         } else {
+            // non-USB case
             if (getProgrammerManager().isAddressedModePossible()) {
                 log.trace("store AddressedProgrammerManager");
                 InstanceManager.store(getProgrammerManager(), jmri.AddressedProgrammerManager.class);
