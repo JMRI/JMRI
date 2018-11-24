@@ -266,6 +266,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
         }
         if (ae.getSource() == buildButton) {
             switchListsButton.setEnabled(false);
+            runFileButton.setEnabled(false);
             // uses a thread which allows table updates during build
             trainManager.buildSelectedTrains(getSortByList());
         }
@@ -297,6 +298,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
                         File csvFile = train.createCSVManifestFile();
                         // Add it to our collection to be processed.
                         InstanceManager.getDefault(TrainCustomManifest.class).addCVSFile(csvFile);
+                        train.setPrinted(true);
                     }
                 }
             }
@@ -522,6 +524,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
         }
         if (e.getPropertyName().equals(TrainManager.TRAINS_BUILT_CHANGED_PROPERTY)) {
             switchListsButton.setEnabled(true);
+            runFileButton.setEnabled(true);
         }
         if (e.getPropertyName().equals(Setup.REAL_TIME_PROPERTY_CHANGE)) {
             setSwitchListButtonText();

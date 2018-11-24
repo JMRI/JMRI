@@ -3133,7 +3133,7 @@ public class Train implements java.beans.PropertyChangeListener {
         return file;
     }
 
-    private void setPrinted(boolean printed) {
+    public void setPrinted(boolean printed) {
         boolean old = _printed;
         _printed = printed;
         if (old != printed) {
