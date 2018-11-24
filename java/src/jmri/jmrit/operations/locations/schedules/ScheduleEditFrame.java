@@ -182,17 +182,17 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
         getContentPane().add(p3);
         getContentPane().add(pB);
 
-        // setup buttons
+        // set up buttons
         addButtonAction(addTypeButton);
         addButtonAction(deleteScheduleButton);
         addButtonAction(addScheduleButton);
         addButtonAction(saveScheduleButton);
 
-        // setup radio buttons
+        // set up radio buttons
         addRadioButtonAction(sequentialRadioButton);
         addRadioButtonAction(matchRadioButton);
 
-        // setup combobox
+        // set up combobox
         loadTypeComboBox();
 
         // build menu

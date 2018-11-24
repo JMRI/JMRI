@@ -53,12 +53,17 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
      */
     @Override
     synchronized public void requestThrottleSetup(LocoAddress address, boolean control) {
-        _dccAddr = (DccLocoAddress) address;
+        try {
+            _dccAddr = (DccLocoAddress) address;
+        }
+        catch(java.lang.ClassCastException cce){
+            log.error("{} is not a DccLocoAddress",address);
+        }
         _intAddr = _dccAddr.getNumber();
 
         // The CBUS protocol requires that we request a session from the command
         // station. Throttle object will be notified by Command Station
-        log.debug("Requesting session for throttle");
+        log.debug("Requesting session for loco {}",_intAddr);
 
         CanMessage msg = new CanMessage(3, tc.getCanid());
         // Request a session for this throttle
@@ -411,9 +416,14 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
     public boolean disposeThrottle(DccThrottle t, jmri.ThrottleListener l) {
         log.debug("disposeThrottle called for " + t);
         if (super.disposeThrottle(t, l)) {
-            CbusThrottle lnt = (CbusThrottle) t;
-            lnt.throttleDispose();
-            return true;
+            try {
+                CbusThrottle lnt = (CbusThrottle) t;
+                lnt.throttleDispose();
+                return true;
+            }
+            catch(java.lang.ClassCastException cce){
+                log.error("{} is not a CbusThrottle",t);
+            }
         }
         return false;
     }
