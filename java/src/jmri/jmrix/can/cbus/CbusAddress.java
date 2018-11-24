@@ -2,6 +2,7 @@ package jmri.jmrix.can.cbus;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.annotation.Nonnull;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 
@@ -217,12 +218,13 @@ public class CbusAddress {
     /**
      * Split a string containing one or more addresses into individual ones.
      *
-     * @return null if entire string can't be parsed.
+     * @return 0 length if entire string can't be parsed.
      */
+    @Nonnull
     public CbusAddress[] split() {
         // reject strings ending in ";"
         if (aString.endsWith(";")) {
-            return null;
+            return new CbusAddress[0];
         }
 
         // split string at ";" points
@@ -233,22 +235,32 @@ public class CbusAddress {
         for (int i = 0; i < pStrings.length; i++) {
             // check validity of each
             if (pStrings[i].equals("")) {
-                return null;
+                return new CbusAddress[0];
             }
             if (!hCode.reset(pStrings[i]).matches()) {
-                return null;
+                return new CbusAddress[0];
             }
 
             retval[i] = new CbusAddress(pStrings[i]);
             if (retval[i] == null) {
-                return null;
+                return new CbusAddress[0];
             }
         }
         return retval;
     }
 
+    /**
+     * Used in Testing
+     *
+     */
     public boolean checkSplit() {
-        return (split() != null);
+        switch (split().length) {
+            case 1:
+            case 2:
+                return true;
+            default:
+                return false;
+        }
     }
 
     int[] elements() {
