@@ -113,6 +113,7 @@ public class UsbDriverAdapter extends NcePortController {
      */
     @Override
     public void configure() {
+        log.trace("configure with {}", getSystemConnectionMemo());
         NceTrafficController tc = new NceTrafficController();
         this.getSystemConnectionMemo().setNceTrafficController(tc);
         tc.setAdapterMemo(this.getSystemConnectionMemo());
