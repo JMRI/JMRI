@@ -209,15 +209,27 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
         if (getNceUsbSystem() != NceTrafficController.USB_SYSTEM_NONE) {
             switch (getNceUsbSystem()) {
+                case NceTrafficController.USB_SYSTEM_SB3:
                 case NceTrafficController.USB_SYSTEM_SB5:
-                    log.debug("USB with just addressed programmer");
-                    InstanceManager.store(getProgrammerManager(), jmri.AddressedProgrammerManager.class);
+                    if (getProgrammerManager().isAddressedModePossible()) {
+                        log.trace("USB with AddressedProgrammerManager");
+                        InstanceManager.store(getProgrammerManager(), jmri.AddressedProgrammerManager.class);
+                    }
                     break;
 
                 case NceTrafficController.USB_SYSTEM_POWERCAB:
-                case NceTrafficController.USB_SYSTEM_SB3:
-                case NceTrafficController.USB_SYSTEM_POWERHOUSE:
                 case NceTrafficController.USB_SYSTEM_TWIN:
+                    if (getProgrammerManager().isAddressedModePossible()) {
+                        log.trace("USB with AddressedProgrammerManager");
+                        InstanceManager.store(getProgrammerManager(), jmri.AddressedProgrammerManager.class);
+                    }
+                    if (getProgrammerManager().isGlobalProgrammerAvailable()) {
+                        log.trace("USB with GlobalProgrammerManager");
+                        InstanceManager.store(getProgrammerManager(), GlobalProgrammerManager.class);
+                    }
+                    break;
+
+                case NceTrafficController.USB_SYSTEM_POWERHOUSE:
                 default:
                     log.debug("USB with no programmer");
                     break;
@@ -228,7 +240,7 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
                 InstanceManager.store(getProgrammerManager(), jmri.AddressedProgrammerManager.class);
             }
             if (getProgrammerManager().isGlobalProgrammerAvailable()) {
-                log.trace("store GlobalProgrammerManage");
+                log.trace("store GlobalProgrammerManager");
                 InstanceManager.store(getProgrammerManager(), GlobalProgrammerManager.class);
             }
         }
