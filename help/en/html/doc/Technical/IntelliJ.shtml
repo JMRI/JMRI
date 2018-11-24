@@ -36,7 +36,7 @@
 
         <li><a href="#push">Push changes</a></li>
 
-        <li><a href="#debug">Debugging (Set-up)</a></li>
+        <li><a href="#debug">Debugging (Setup)</a></li>
 
         <li><a href="#tricks">Tricks</a></li>
 
@@ -522,7 +522,7 @@
           <li>Make sure the prefilled "Working directory:" is showing your local path to JMRI (see example).<br>
           Set "Default" as the "JRE:" choice.</li>
           <li>Select "JMRI" using the "Search sources using module's classpath:" drop down.</li>
-          <li>Click "OK" to complete the configuration set-up.</li>
+          <li>Click "OK" to complete the configuration setup.</li>
           </ul>
         <li>To run your first debug session, start by opening a .java file and setting a Breakpoint on a line in your
         code by clicking in the left margin of the central edit pane:<br>

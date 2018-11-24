@@ -388,7 +388,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
                     tp.init();
                 });
             } catch (RuntimeException ex) {
-                log.error("Error trying to setup preferences {}", ex.getLocalizedMessage(), ex);
+                log.error("Error trying to set up preferences {}", ex.getLocalizedMessage(), ex);
             }
         }, "init prefs").start();
 

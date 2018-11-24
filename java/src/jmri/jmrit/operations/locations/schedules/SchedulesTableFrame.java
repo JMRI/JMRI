@@ -71,7 +71,7 @@ public class SchedulesTableFrame extends OperationsFrame {
         controlPanel.setMaximumSize(new Dimension(Control.panelWidth1025, 50));
         getContentPane().add(controlPanel);
 
-        // setup buttons
+        // set up buttons
         // addButtonAction(addButton);
         addRadioButtonAction(sortByName);
         addRadioButtonAction(sortById);
