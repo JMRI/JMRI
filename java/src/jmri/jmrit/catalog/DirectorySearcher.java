@@ -226,7 +226,7 @@ public class DirectorySearcher implements InstanceManagerAutoDefault {
          * @param dir    directory
          * @param filter file filter for images
          */
-        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "WA_NOT_IN_LOOP", justification="Waiting for single possible event")
+        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = {"WA_NOT_IN_LOOP", "UW_UNCOND_WAIT"}, justification="Waiting for single possible event")
         private void getImageDirectory(File dir, String[] filter) {
             if (jmri.util.ThreadingUtil.isGUIThread() || jmri.util.ThreadingUtil.isLayoutThread()) log.error("getImageDirectory called on wrong thread");
             

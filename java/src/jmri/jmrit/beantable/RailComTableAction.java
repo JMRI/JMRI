@@ -77,7 +77,7 @@ public class RailComTableAction extends AbstractTableAction<RailCom> {
                 if (tag == null) {
                     return "?";
                 }
-                return tag.getTagID().toString();
+                return tag.getTagID();
             }
 
             @Override
