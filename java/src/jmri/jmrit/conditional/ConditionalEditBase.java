@@ -972,7 +972,7 @@ public class ConditionalEditBase {
 
     /**
      * Display an error message to user when an invalid number is provided in
-     * Conditional set up.
+     * Conditional setup.
      *
      * @param actionType integer representing the Conditional action type being
      *                   checked, i.e. ACTION_DELAYED_TURNOUT

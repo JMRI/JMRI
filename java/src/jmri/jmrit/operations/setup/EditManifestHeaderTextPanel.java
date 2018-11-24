@@ -214,7 +214,7 @@ public class EditManifestHeaderTextPanel extends OperationsPreferencesPanel {
         add(pManifestPane);
         add(pControl);
 
-        // setup buttons
+        // set up buttons
         addButtonAction(resetButton);
         addButtonAction(saveButton);
 
