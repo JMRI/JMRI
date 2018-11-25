@@ -135,15 +135,15 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
     protected void loadOptions(Element shared, Element perNode, PortAdapter adapter) {
         super.loadOptions(shared, perNode, adapter);
 
-        jmri.jmrix.openlcb.configurexml.ConnectionConfigXml.maybeLoadOlcbProfileSettings(shared.getParentElement(),
-                perNode.getParentElement(), adapter);
+        jmri.jmrix.openlcb.configurexml.ConnectionConfigXml.maybeLoadOlcbProfileSettings(
+                shared.getParentElement(), perNode.getParentElement(), adapter);
 
     }
 
     @Override
     protected void extendElement(Element e) {
-        jmri.jmrix.openlcb.configurexml.ConnectionConfigXml.maybeSaveOlcbProfileSettings(e,
-                adapter);
+        jmri.jmrix.openlcb.configurexml.ConnectionConfigXml.maybeSaveOlcbProfileSettings(
+                e, adapter);
     }
 
     // initialize logging

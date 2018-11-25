@@ -1,5 +1,8 @@
 package jmri.jmrix.can.adapters.lawicell.canusb.serialdriver.configurexml;
 
+import org.jdom2.Element;
+
+import jmri.jmrix.PortAdapter;
 import jmri.jmrix.can.adapters.lawicell.canusb.serialdriver.CanUsbDriverAdapter;
 import jmri.jmrix.can.adapters.lawicell.canusb.serialdriver.ConnectionConfig;
 import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
@@ -36,5 +39,19 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
     @Override
     protected void register() {
         this.register(new ConnectionConfig(adapter));
+    }
+
+    @Override
+    protected void loadOptions(Element shared, Element perNode, PortAdapter adapter) {
+        super.loadOptions(shared, perNode, adapter);
+
+        jmri.jmrix.openlcb.configurexml.ConnectionConfigXml.maybeLoadOlcbProfileSettings(
+                shared.getParentElement(), perNode.getParentElement(), adapter);
+    }
+
+    @Override
+    protected void extendElement(Element e) {
+        jmri.jmrix.openlcb.configurexml.ConnectionConfigXml.maybeSaveOlcbProfileSettings(
+                e, adapter);
     }
 }

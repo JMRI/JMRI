@@ -4,7 +4,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ResourceBundle;
 import javax.swing.JComboBox;
+import javax.swing.JPanel;
+
 import jmri.jmrix.can.ConfigurationManager;
+import jmri.jmrix.openlcb.swing.protocoloptions.ConfigPaneHelper;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -77,6 +81,13 @@ abstract public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnecti
                 }
             }
         }
+    }
+
+    @Override
+    public void loadDetails(JPanel details) {
+        setInstance();
+        ConfigPaneHelper.maybeAddOpenLCBProtocolOptionsButton(this, additionalItems);
+        super.loadDetails(details);
     }
 
     @Override
