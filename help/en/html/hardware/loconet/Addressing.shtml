@@ -43,6 +43,7 @@
           <ul>
             <li><a href="#SVs">Addressing LocoNet Device "System Variables" (SVs)</a></li>
             <li><a href="#boards">Addressing "Op Switches" in Digitrax boards</a></li>
+            <li><a href="#CommandStationOpSw">Addressing "Op Switches" in Digitrax command stations</a></li>
           </ul></li>
         <!-- h2 TOC -->
       </ul>
@@ -942,7 +943,7 @@
         OpSw 7.  You may ignore the "device type number" when referencing CV
         numbers shown in the JMRI "Symbolic Programmer".
         </p>
-      <a name="boards" id="boards"></a>
+      <a name="CommandStationOpSw" id="CommandStationOpSw"></a>
 
       <h2>Addressing "Op Switches" in Digitrax command stations</h2>
       <p>(The following was first fully available in <a href=
