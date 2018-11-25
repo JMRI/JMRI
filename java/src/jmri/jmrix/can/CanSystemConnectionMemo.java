@@ -156,7 +156,7 @@ public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
      * @param option name of the option.
      * @return null if option has never been set; or the option value if set.
      */
-    public String getProtocolOption(String protocol, String option) {
+    public synchronized String getProtocolOption(String protocol, String option) {
         if (!protocolOptions.containsKey(protocol)) return null;
         Map<String, String> m = getProtocolAllOptions(protocol);
         return m.getOrDefault(option, null);
