@@ -2,6 +2,8 @@ package jmri.jmrix.nce;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Nonnull;
+
 import jmri.ProgrammingMode;
 import jmri.jmrix.AbstractProgrammer;
 import org.slf4j.Logger;
@@ -33,16 +35,37 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
      * Programming modes available depend on settings
      */
     @Override
+    @Nonnull
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
-        if (tc != null && tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_POWERCAB
-                && tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_NONE) {
-            log.warn("NCE USB-SB3/SB5/TWIN getSupportedModes returns no modes, should not have been called", new Exception("traceback"));
-            return ret;  // empty list
-        }
+        if (tc == null) log.warn("getSupportedModes called with null tc", new Exception("traceback"));
+        java.util.Objects.requireNonNull(tc, "TrafficController reference needed");
+        
+        if (tc != null) { // don't think we should need this test
+            if (tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_NONE) {
+                // USB connection
+                switch (tc.getUsbSystem()) {
+                    case NceTrafficController.USB_SYSTEM_POWERCAB:
+                    case NceTrafficController.USB_SYSTEM_TWIN:
+                        ret.add(ProgrammingMode.PAGEMODE);
+                        ret.add(ProgrammingMode.REGISTERMODE);
+                        return ret;
 
-        if (tc != null && tc.getCommandOptions() >= NceTrafficController.OPTION_2006) {
-            ret.add(ProgrammingMode.DIRECTMODE);
+                    case NceTrafficController.USB_SYSTEM_SB3:
+                    case NceTrafficController.USB_SYSTEM_SB5:
+                    case NceTrafficController.USB_SYSTEM_POWERHOUSE:
+                        log.trace("no programming modes available for USB {}", tc.getUsbSystem());
+                        return ret;
+                        
+                    default:
+                        log.warn("should not have hit default");
+                        return ret;
+                }
+            } 
+            
+            if (tc.getCommandOptions() >= NceTrafficController.OPTION_2006) {
+                ret.add(ProgrammingMode.DIRECTMODE);
+            }
         }
 
         ret.add(ProgrammingMode.PAGEMODE);
