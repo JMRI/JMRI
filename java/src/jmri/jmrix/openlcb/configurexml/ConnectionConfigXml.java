@@ -31,17 +31,8 @@ public class ConnectionConfigXml {
      */
     public static void maybeLoadOlcbProfileSettings(Element shared, Element perNode, PortAdapter
             adapter) {
-        CanSystemConnectionMemo sc = (CanSystemConnectionMemo) adapter.getSystemConnectionMemo();
-        if (sc == null) {
-            log.error("Adapter is expected to have a CanSystemConnectionMemo to be used for " +
-                    "OpenLCB protocol.");
-            return;
-        }
-        if (!ConfigurationManager.OPENLCB.equals(adapter.getOptionState("Protocol"))) {
-            log.debug("Skipping OpenLCB protocol properties load, because protocol is not " +
-                    "OpenLCB, but {}", adapter.getOptionState("Protocol"));
-            return;
-        }
+        CanSystemConnectionMemo sc = isOpenLCBProtocol(adapter);
+        if (sc == null) return;
         loadSettingsElement(sc, shared);
         loadSettingsElement(sc, perNode);
     }
@@ -68,17 +59,8 @@ public class ConnectionConfigXml {
      *                connection memo.
      */
     public static void maybeSaveOlcbProfileSettings(Element element, PortAdapter adapter) {
-        CanSystemConnectionMemo sc = (CanSystemConnectionMemo) adapter.getSystemConnectionMemo();
-        if (sc == null) {
-            log.error("Adapter is expected to have a CanSystemConnectionMemo to be used for " +
-                    "OpenLCB protocol.");
-            return;
-        }
-        if (!ConfigurationManager.OPENLCB.equals(adapter.getOptionState("Protocol"))) {
-            log.debug("Skipping OpenLCB protocol properties save, because protocol is not " +
-                    "OpenLCB, but {}", adapter.getOptionState("Protocol"));
-            return;
-        }
+        CanSystemConnectionMemo sc = isOpenLCBProtocol(adapter);
+        if (sc == null) return;
 
         for (String protocol : sc.getProtocolsWithOptions()) {
             Element n = new Element("node");
@@ -93,6 +75,21 @@ public class ConnectionConfigXml {
                 n.addContent(p);
             }
         }
+    }
+
+    public static CanSystemConnectionMemo isOpenLCBProtocol(PortAdapter adapter) {
+        CanSystemConnectionMemo sc = (CanSystemConnectionMemo) adapter.getSystemConnectionMemo();
+        if (sc == null) {
+            log.error("Adapter is expected to have a CanSystemConnectionMemo to be used for " +
+                    "OpenLCB protocol.");
+            return null;
+        }
+        if (!ConfigurationManager.OPENLCB.equals(adapter.getOptionState("Protocol"))) {
+            log.debug("Skipping OpenLCB protocol properties action, because protocol is not " +
+                    "OpenLCB, but {}", adapter.getOptionState("Protocol"));
+            return null;
+        }
+        return sc;
     }
 
     private static final Logger log = LoggerFactory.getLogger(ConnectionConfigXml.class);
