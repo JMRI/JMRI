@@ -169,7 +169,7 @@ public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
      * @param value option value
      */
     public synchronized void setProtocolOption(String protocol, String option, String value) {
-        log.info("Setting protocol option {} {} := {}", protocol, option, value);
+        log.debug("Setting protocol option {} {} := {}", protocol, option, value);
         if (value == null) return;
         Map<String, String> m = protocolOptions.get(protocol);
         if (m == null) {
