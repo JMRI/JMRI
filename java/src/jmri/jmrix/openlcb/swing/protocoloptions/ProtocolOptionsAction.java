@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 
 import jmri.jmrix.can.CanSystemConnectionMemo;
+import jmri.util.JmriJFrame;
 
 /**
  * Created by bracz on 11/24/18.
@@ -21,7 +22,8 @@ class ProtocolOptionsAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
-        // @todo create and open frame for setting the properties.
-
+        JmriJFrame f = new ProtocolOptionsFrame(sc);
+        f.initComponents();
+        f.setVisible(true);
     }
 }

@@ -40,6 +40,12 @@ import org.slf4j.LoggerFactory;
  */
 public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManager {
 
+    public static final String OPT_PROTOCOL_IDENT = "Ident";
+
+    public static final String OPT_IDENT_NODEID = "NodeId";
+    public static final String OPT_IDENT_USERNAME = "UserName";
+    public static final String OPT_IDENT_DESCRIPTION = "UserDescription";
+
     public OlcbConfigurationManager(CanSystemConnectionMemo memo) {
         super(memo);
 
