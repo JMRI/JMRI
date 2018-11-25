@@ -89,19 +89,6 @@ public class ProtocolOptionsPersistenceTest {
         assertEquals(1, connectionConfigManager.getConnections().length);
     }
 
-    private void addLccBuffer() {
-        jmri.jmrix.SerialPortAdapter a = new jmri.jmrix.can.adapters.gridconnect.lccbuffer.serialdriver.SerialDriverAdapter();
-        adapter = a;
-        jmri.jmrix.can.adapters.gridconnect.lccbuffer.serialdriver.ConnectionConfig cfg = new jmri.jmrix.can.adapters.gridconnect.lccbuffer.serialdriver.ConnectionConfig(a);
-        canSystemConnectionMemo = (CanSystemConnectionMemo) a.getSystemConnectionMemo();
-        assertNotNull(canSystemConnectionMemo);
-        cfg.setManufacturer("Foo Bar");
-        a.setUserName("OOOO");
-        a.setOptionState("Protocol", "OpenLCB");
-        connectionConfigManager.add(cfg);
-        assertEquals(1, connectionConfigManager.getConnections().length);
-    }
-
     private void restart() throws IOException, HasConnectionButUnableToConnectException {
         resetSystem();
 
@@ -185,15 +172,6 @@ public class ProtocolOptionsPersistenceTest {
         expectOptionValue("Throttles", "Steal", "2");
         expectOptionValue("Throttles", "MaxFn", "29");
         expectOptionValue("Single", "Foo", "");
-    }
-
-    @Test
-    public void testLccBuffer() throws Exception {
-        createEmptyProfile();
-        addLccBuffer();
-        canSystemConnectionMemo.setProtocolOption("Ident", "UserName", "Hello, World");
-        connectionConfigManager.savePreferences(profile);
-        // Can't test restart here because loading this connection config fails on missing serial port.
     }
 
     // private final static Logger log = LoggerFactory.getLogger(ProtocolOptionsPersistenceTest.class);
