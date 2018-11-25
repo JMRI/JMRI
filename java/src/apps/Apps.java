@@ -380,7 +380,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         InstanceManager.getDefault(jmri.LogixManager.class);
         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class);
 
-        // Once all the preferences have been loaded we can initial the preferences.
+        // Once all the preferences have been loaded we can initialise the preferences.
         // Doing it in a thread at this stage means we can let it work in the background.
         new Thread(() -> {
             try {
@@ -388,7 +388,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
                     tp.init();
                 });
             } catch (RuntimeException ex) {
-                log.error("Error trying to setup preferences {}", ex.getLocalizedMessage(), ex);
+                log.error("Error trying to set up preferences {}", ex.getLocalizedMessage(), ex);
             }
         }, "init prefs").start();
 

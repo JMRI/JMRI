@@ -507,6 +507,7 @@ The download links, along with lots of other information which we hope you'll re
 - Close the [current release GitHub Issue](https://github.com/JMRI/JMRI/issues) with a note saying that
 ```
 JMRI 4.13.5 has been released. Files are available in the GitHub release section.
+
 ```
 
 - Wait a day for complaints

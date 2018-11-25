@@ -548,6 +548,7 @@ public class Mx1Packetizer extends Mx1TrafficController {
             trafficController = lt;
         }
 
+        @SuppressFBWarnings(value = "UW_UNCOND_WAIT", justification="false postive, guarded by if statement")
         @Override
         public void run() {
             while (true) {   // loop permanently

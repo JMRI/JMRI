@@ -188,7 +188,7 @@
 
       <p>With the <b>Turnout Only</b> interlock type, as no further
       logic or interlocking is done, it is possible to allow the
-      interlock to be set-up no matter which way round the NX
+      interlock to be set up no matter which way round the NX
       buttons are selected. This can be done by selecting the "Both
       Way" flag in the table against an entry. You can then set the
       path in reverse, eg "NX Up Outer" to "NX Bay Mast".</p>
