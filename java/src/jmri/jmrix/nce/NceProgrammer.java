@@ -47,6 +47,7 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
                 switch (tc.getUsbSystem()) {
                     case NceTrafficController.USB_SYSTEM_POWERCAB:
                     case NceTrafficController.USB_SYSTEM_TWIN:
+                        ret.add(ProgrammingMode.DIRECTMODE);
                         ret.add(ProgrammingMode.PAGEMODE);
                         ret.add(ProgrammingMode.REGISTERMODE);
                         return ret;
@@ -63,6 +64,7 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
                 }
             } 
             
+            // here not USB
             if (tc.getCommandOptions() >= NceTrafficController.OPTION_2006) {
                 ret.add(ProgrammingMode.DIRECTMODE);
             }
