@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Handle XML persistance of SimpleTimebase objects.
  *
- * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008, 2017
+ * @author Bob Jacobsen Copyright (c) 2003, 2008, 2017
  */
 public class SimpleTimebaseXml extends jmri.configurexml.AbstractXmlAdapter {
 
@@ -21,7 +21,7 @@ public class SimpleTimebaseXml extends jmri.configurexml.AbstractXmlAdapter {
 
     /**
      * Default implementation for storing the contents of a SimpleTimebase.
-     * <P>
+     *
      * @param o Object to start process, but not actually used
      * @return Element containing the complete info
      */
