@@ -173,6 +173,8 @@ public class ProtocolOptionsFrame extends JmriJFrame {
                         .this, WindowEvent.WINDOW_CLOSING));
             }
         });
+
+        pack();
     }
 
     private void saveButtonClicked() {
