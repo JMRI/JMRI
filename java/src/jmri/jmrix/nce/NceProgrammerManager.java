@@ -24,6 +24,8 @@ public class NceProgrammerManager extends DefaultProgrammerManager {
                 : null,
                 memo);
         this.tc = memo.getNceTrafficController();
+        log.trace("NceProgrammerManager({}) with {}", memo, 
+            checkGlobalProgrammerAvailable(memo.getNceTrafficController()));
     }
 
     /**
@@ -50,11 +52,14 @@ public class NceProgrammerManager extends DefaultProgrammerManager {
     static private boolean checkGlobalProgrammerAvailable(NceTrafficController tc) {
         if (tc != null && (tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_NONE)) {
             if ((tc.getCmdGroups() & NceTrafficController.CMDS_PROGTRACK) == 0) {
+                log.trace("checkGlobalProgrammerAvailable return false");
                 return false;
             } else {
+                log.trace("checkGlobalProgrammerAvailable return false");
                 return true;
             }
         } else {
+            log.trace("checkGlobalProgrammerAvailable return false");
             return true;
         }
     }
@@ -83,4 +88,6 @@ public class NceProgrammerManager extends DefaultProgrammerManager {
     public AddressedProgrammer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return null;
     }
+
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NceProgrammerManager.class);
 }

@@ -14,7 +14,7 @@ import org.junit.Test;
 public class SystemConsoleConfigPanelTest {
 
     @Test
-    @Ignore("Needs more set-up")
+    @Ignore("Needs more setup")
     public void testCTor() {
         SystemConsoleConfigPanel t = new SystemConsoleConfigPanel();
         Assert.assertNotNull("exists",t);

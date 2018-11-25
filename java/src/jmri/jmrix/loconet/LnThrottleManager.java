@@ -543,12 +543,16 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
                 processQueuedThrottleSetupRequest();
             }
         } else {
-           // The warning message below is, at a minimum, confusing.
-           // Steal is currently implemented by using the same method
-           // we used to aquire the slot prior to the release of 
-           // Digitrax command stations with expanded slots.
-           //log.warn("user agreed to steal address {}, but no code is in-place to handle the 'steal' (yet)",address.getNumber());
-           commitToAcquireThrottle(slotForAddress.get(address.getNumber()));
+            // Steal is currently implemented by using the same method
+            // we used to aquire the slot prior to the release of 
+            // Digitrax command stations with expanded slots.
+            LocoNetSlot slot = slotForAddress.get(address.getNumber());
+            // Only continue if address is found in a slot
+            if (slot != null) {
+                commitToAcquireThrottle(slot);
+            } else {
+                log.error("Address {} not found in list of slots", address.getNumber());
+            }
         }
     }
 

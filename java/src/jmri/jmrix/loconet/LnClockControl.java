@@ -9,8 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * LnClockControl.java
- *
  * Implementation of the Hardware Fast Clock for Loconet
  * <p>
  * This module is based on a GUI module developed by Bob Jacobsen and Alex
@@ -123,7 +121,7 @@ public class LnClockControl extends DefaultClockControl implements SlotListener 
      */
     @Override
     public String getHardwareClockName() {
-        return ("Loconet Fast Clock"); // NOI18N
+        return (Bundle.getMessage("LocoNetFastClockName"));
     }
 
     @Override

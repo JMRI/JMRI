@@ -47,10 +47,11 @@
       provides the basic time information, while one or more
       displays show you what's going on.</p>
 
-      <h2>Fast Clock Timebase</h2>To create a Timebase, use the
+      <h2>Fast Clock Timebase</h2>
+      <p>To create a Timebase, use the
       "<a href=
-      "../../../package/jmri/jmrit/simpleclock/SimpleClockFrame.shtml">Setup
-      Fast Clock</a>" item in the "Clocks" submenu under the JMRI
+      "../../../package/jmri/jmrit/simpleclock/SimpleClockFrame.shtml">Set
+      up Fast Clock...</a>" item in the "Clocks" submenu under the JMRI
       "Tools" menu. This gives you a window where you can:
 
       <ul>

@@ -1,5 +1,7 @@
 package jmri;
 
+import javax.annotation.Nonnull;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,35 +49,47 @@ public class PushbuttonPacket {
     private final static String[] VALIDDECODERNAMES = {unknown, NCEname, CVP_1Bname,
         CVP_2Bname};
 
-    public static byte[] pushbuttonPkt(String prefix, int turnoutNum, boolean locked) {
+    /**
+     * @throws IllegalArgumentException if input not OK
+     * @return a DCC packet
+     */
+    @Nonnull
+    public static byte[] pushbuttonPkt(@Nonnull String prefix, int turnoutNum, boolean locked) {
 
         Turnout t = InstanceManager.turnoutManagerInstance().getBySystemName(prefix + turnoutNum);
         byte[] bl;
 
         if (t == null || t.getDecoderName() == null ) {
-            return null;
+            throw new IllegalArgumentException("No turnout or turnout decoder name");
         } else if (unknown.equals(t.getDecoderName())) {
-            return null;
+            throw new IllegalArgumentException("Turnout decoder name is unknown");
         } else if (NCEname.equals(t.getDecoderName())) {
             if (locked) {
                 bl = NmraPacket.accDecoderPktOpsMode(turnoutNum, 556, 1);
             } else {
                 bl = NmraPacket.accDecoderPktOpsMode(turnoutNum, 556, 0);
             }
+            if (bl == null) {
+                throw new IllegalArgumentException("No valid DCC packet address");
+            }
             return bl;
 
-            // Note CVP decoders use the old legacy accessory  format
+        // Note CVP decoders use the old legacy accessory  format
         } else if (CVP_1Bname.equals(t.getDecoderName())
                 || CVP_2Bname.equals(t.getDecoderName())) {
             int CVdata = CVPturnoutLockout(prefix, turnoutNum);
             bl = NmraPacket.accDecoderPktOpsModeLegacy(turnoutNum, 514, CVdata);
+            if (bl == null) {
+                throw new IllegalArgumentException("No valid DCC packet address");
+            }
             return bl;
         } else {
             log.error("Invalid decoder name for turnout " + turnoutNum);
-            return null;
+            throw new IllegalArgumentException("Illegal decoder name");
         }
     }
 
+    @Nonnull
     public static String[] getValidDecoderNames() {
         String[] arrayCopy = new String[VALIDDECODERNAMES.length];
 
@@ -86,7 +100,7 @@ public class PushbuttonPacket {
     // builds the data byte for CVP decoders, builds based on JMRI's current
     // knowledge of turnout pushbutton lockout states. If a turnout doesn't
     // exist, assume single button operation.
-    private static int CVPturnoutLockout(String prefix, int turnoutNum) {
+    private static int CVPturnoutLockout(@Nonnull String prefix, int turnoutNum) {
 
         int CVdata = 0;
         int oneButton = 1;       // one pushbutton enable

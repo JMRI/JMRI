@@ -181,8 +181,8 @@ public class AbstractAutomaton implements Runnable {
      * <p>
      * Overrides superclass method to handle local accounting.
      */
-    // The stop method on a thread has been deprecated, we need to find another way to deal with this.
-    // AbstractAutomaton objects can be waiting on _lots_ of things....
+    @SuppressWarnings("deprecation") // AbstractAutomaton objects can be waiting on _lots_ of things, so
+                                     // we need to find another way to deal with this besides Interrupt
     public void stop() {
         log.trace("stop() invoked");
         if (currentThread == null) {
