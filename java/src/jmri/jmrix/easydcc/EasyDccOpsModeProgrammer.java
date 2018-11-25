@@ -2,6 +2,8 @@ package jmri.jmrix.easydcc;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Nonnull;
+
 import jmri.AddressedProgrammer;
 import jmri.NmraPacket;
 import jmri.ProgListener;
@@ -84,6 +86,7 @@ public class EasyDccOpsModeProgrammer extends EasyDccProgrammer implements Addre
      * Types implemented here.
      */
     @Override
+    @Nonnull
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
         ret.add(ProgrammingMode.OPSBYTEMODE);

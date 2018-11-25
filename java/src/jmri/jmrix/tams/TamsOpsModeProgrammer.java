@@ -2,6 +2,8 @@ package jmri.jmrix.tams;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Nonnull;
+
 import jmri.AddressedProgrammer;
 import jmri.ProgListener;
 import jmri.ProgrammerException;
@@ -90,6 +92,7 @@ public class TamsOpsModeProgrammer extends TamsProgrammer implements AddressedPr
      * Types implemented here.
      */
     @Override
+    @Nonnull
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
         ret.add(ProgrammingMode.OPSBYTEMODE);
