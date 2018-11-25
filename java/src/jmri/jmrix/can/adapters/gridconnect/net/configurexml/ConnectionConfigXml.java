@@ -45,9 +45,8 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
     protected void loadOptions(Element shared, Element perNode, PortAdapter adapter) {
         super.loadOptions(shared, perNode, adapter);
 
-        jmri.jmrix.openlcb.configurexml.ConnectionConfigXml.maybeLoadOlcbProfileSettings(shared
-                        .getParentElement(),
-                perNode.getParentElement(), adapter);
+        jmri.jmrix.openlcb.configurexml.ConnectionConfigXml.maybeLoadOlcbProfileSettings(
+                shared.getParentElement(), perNode.getParentElement(), adapter);
     }
 
     @Override

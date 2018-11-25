@@ -12,10 +12,10 @@ import jmri.jmrix.can.ConfigurationManager;
 
 /**
  * This class encapsulates common code for reading and writing per-connection information from/to
- * the XML of the connection profile. It is intended to be called by all conforming Adaptor
+ * the XML of the connection profile. It is intended to be called by all conforming Adapter
  * implementations that are the possible choices for an OpenLCB connection.
  * <p>
- * Created by bracz on 11/23/18.
+ * (C) Balazs Racz, 2018.
  */
 
 public class ConnectionConfigXml {
@@ -77,6 +77,13 @@ public class ConnectionConfigXml {
         }
     }
 
+    /**
+     * Tests whether a CAN adapter is set to openLCB protocol or not.
+     *
+     * @param adapter CAN adapter 9may be serial, loopback or network).
+     * @return null for non-OpenLCB connections; for OpenLCB the connection-associated the
+     * CanSystemConnectionMemo.
+     */
     public static CanSystemConnectionMemo isOpenLCBProtocol(PortAdapter adapter) {
         CanSystemConnectionMemo sc = (CanSystemConnectionMemo) adapter.getSystemConnectionMemo();
         if (sc == null) {

@@ -24,7 +24,7 @@ import jmri.util.JUnitUtil;
 import jmri.util.prefs.HasConnectionButUnableToConnectException;
 
 /**
- * Created by bracz on 11/23/18.
+ * @author Balazs Racz, (C) 2018.
  */
 
 public class ProtocolOptionsPersistenceTest {

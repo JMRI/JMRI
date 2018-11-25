@@ -36,7 +36,9 @@ import static jmri.jmrix.openlcb.OlcbConfigurationManager.*;
 
 
 /**
- * Created by bracz on 11/25/18.
+ * JmriFrame that allows the user to edit the OpenLCB protocol options.
+ *
+ * @author Balazs Racz, (C) 2018.
  */
 
 public class ProtocolOptionsFrame extends JmriJFrame {
@@ -45,7 +47,6 @@ public class ProtocolOptionsFrame extends JmriJFrame {
     public ProtocolOptionsFrame(CanSystemConnectionMemo scm) {
         super();
         this.scm = scm;
-
     }
 
     private Map<String, JPanel> protocolPanels = new HashMap<>();
@@ -73,7 +74,6 @@ public class ProtocolOptionsFrame extends JmriJFrame {
         c2.gridx = 1;
         c2.gridy = 0;
         p.add(new JPanel(), c2);
-
 
         return p;
     }
@@ -181,7 +181,8 @@ public class ProtocolOptionsFrame extends JmriJFrame {
         }
         if (anyChanged) {
             // Save current profile's connection config xml.
-            InstanceManager.getDefault(ConnectionConfigManager.class).savePreferences(ProfileManager.getDefault().getActiveProfile());
+            InstanceManager.getDefault(ConnectionConfigManager.class).savePreferences(
+                    ProfileManager.getDefault().getActiveProfile());
             // This will pop up a restart message for the user.
             InstanceManager.getDefault(TabbedPreferences.class).savePressed(true);
         }

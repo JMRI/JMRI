@@ -26,7 +26,7 @@ abstract public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnecti
 
     /**
      * Create a connection configuration with a preexisting adapter. This is
-     * used principally when loading a configuration that defines this
+     * used principally when loading a configuratioon that defines this
      * connection.
      *
      * @param p the adapter to create a connection configuration for

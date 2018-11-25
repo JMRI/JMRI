@@ -43,10 +43,17 @@ import org.slf4j.LoggerFactory;
  */
 public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManager {
 
+    // Constants for the protocol options keys. These option keys are used to save configuration
+    // in the profile.xml and set on a per-connection basis in the connection preferences.
+
+    // Protocol key for node identification
     public static final String OPT_PROTOCOL_IDENT = "Ident";
 
+    // Option key for Node ID
     public static final String OPT_IDENT_NODEID = "NodeId";
+    // Option key for User Name, used for the Simple Node Ident Protocol
     public static final String OPT_IDENT_USERNAME = "UserName";
+    // Option key for User Description, used for the Simple Node Ident Protocol
     public static final String OPT_IDENT_DESCRIPTION = "UserDescription";
 
     public OlcbConfigurationManager(CanSystemConnectionMemo memo) {
@@ -321,6 +328,13 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
     }
 
     class SimpleNodeIdentInfoHandler extends MessageDecoder {
+        /**
+         * Helper function to add a string value to the sequence of bytes to send for SNIP
+         * response content.
+         *
+         * @param value    string to render into byte stream
+         * @param contents represents the byte stream that will be sent.
+         */
         private void  addStringPart(String value, List<Byte> contents) {
             if (value == null || value.isEmpty()) {
                 contents.add((byte)0);
@@ -389,7 +403,7 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
                 nodeID = new NodeID(userOption);
                 return;
             } catch (IllegalArgumentException e) {
-                log.error("User set node ID protocol option which is in invalid format ({}). Expected dotted hex notation like 02.01.12.33.22.11", userOption);
+                log.error("User set node ID protocol option which is in invalid format ({}). Expected dotted hex notation like 02.01.12.FF.EE.DD", userOption);
             }
         }
         List<NodeID> previous = InstanceManager.getList(NodeID.class);

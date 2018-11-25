@@ -8,7 +8,9 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.util.JmriJFrame;
 
 /**
- * Created by bracz on 11/24/18.
+ * Invokeable action to open the protocol settings frame.
+ *
+ * @author Balazs Racz, (C) 2018.
  */
 
 class ProtocolOptionsAction extends AbstractAction {
