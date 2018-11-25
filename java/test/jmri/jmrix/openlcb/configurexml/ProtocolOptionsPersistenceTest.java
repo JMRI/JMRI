@@ -35,8 +35,6 @@ public class ProtocolOptionsPersistenceTest {
     private CanSystemConnectionMemo canSystemConnectionMemo;
     private String profileId;
     private PortAdapter adapter;
-    private ConnectionConfig connectionConfig;
-
 
     @Before
     public void setUp() throws Exception {
@@ -67,7 +65,6 @@ public class ProtocolOptionsPersistenceTest {
         connectionConfigManager = null;
         canSystemConnectionMemo = null;
         adapter = null;
-        connectionConfig = null;
     }
 
     private void createEmptyProfile() throws IOException, HasConnectionButUnableToConnectException {
@@ -83,7 +80,6 @@ public class ProtocolOptionsPersistenceTest {
         adapter = a;
         jmri.jmrix.can.adapters.loopback.ConnectionConfig cfg = new jmri.jmrix.can.adapters
                 .loopback.ConnectionConfig(a);
-        connectionConfig = cfg;
         canSystemConnectionMemo = (CanSystemConnectionMemo) a.getSystemConnectionMemo();
         assertNotNull(canSystemConnectionMemo);
         cfg.setManufacturer("Foo Bar");
@@ -97,7 +93,6 @@ public class ProtocolOptionsPersistenceTest {
         jmri.jmrix.SerialPortAdapter a = new jmri.jmrix.can.adapters.gridconnect.lccbuffer.serialdriver.SerialDriverAdapter();
         adapter = a;
         jmri.jmrix.can.adapters.gridconnect.lccbuffer.serialdriver.ConnectionConfig cfg = new jmri.jmrix.can.adapters.gridconnect.lccbuffer.serialdriver.ConnectionConfig(a);
-        connectionConfig = cfg;
         canSystemConnectionMemo = (CanSystemConnectionMemo) a.getSystemConnectionMemo();
         assertNotNull(canSystemConnectionMemo);
         cfg.setManufacturer("Foo Bar");
@@ -117,7 +112,6 @@ public class ProtocolOptionsPersistenceTest {
 
         ConnectionConfig[] connList = connectionConfigManager.getConnections();
         assertEquals(1, connList.length);
-        connectionConfig = connList[0];
         canSystemConnectionMemo = (CanSystemConnectionMemo)connList[0].getAdapter().getSystemConnectionMemo();
         assertNotNull(canSystemConnectionMemo);
     }
@@ -202,5 +196,5 @@ public class ProtocolOptionsPersistenceTest {
         // Can't test restart here because loading this connection config fails on missing serial port.
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ProtocolOptionsPersistenceTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(ProtocolOptionsPersistenceTest.class);
 }
