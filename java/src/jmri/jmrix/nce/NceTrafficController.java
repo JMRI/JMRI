@@ -233,9 +233,9 @@ public class NceTrafficController extends AbstractMRTrafficController implements
     public static final int USB_SYSTEM_SB3 = 2;
 
     /**
-     * Create commands compatible with a NCE USB connected to a PowerHouse.
+     * Create commands compatible with a NCE USB connected to a PowerPro.
      */
-    public static final int USB_SYSTEM_POWERHOUSE = 3;
+    public static final int USB_SYSTEM_POWERPRO = 3;
 
     /**
      * Create commands compatible with a NCE USB with {@literal >=7.*} connected
@@ -257,7 +257,7 @@ public class NceTrafficController extends AbstractMRTrafficController implements
      * <LI>{@link #USB_SYSTEM_NONE}
      * <LI>{@link #USB_SYSTEM_POWERCAB}
      * <LI>{@link #USB_SYSTEM_SB3}
-     * <LI>{@link #USB_SYSTEM_POWERHOUSE}
+     * <LI>{@link #USB_SYSTEM_POWERPRO}
      * <LI>{@link #USB_SYSTEM_TWIN}
      * <LI>{@link #USB_SYSTEM_SB5}
      * </UL>
@@ -279,7 +279,7 @@ public class NceTrafficController extends AbstractMRTrafficController implements
      * <LI>{@link #USB_SYSTEM_NONE}
      * <LI>{@link #USB_SYSTEM_POWERCAB}
      * <LI>{@link #USB_SYSTEM_SB3}
-     * <LI>{@link #USB_SYSTEM_POWERHOUSE}
+     * <LI>{@link #USB_SYSTEM_POWERPRO}
      * <LI>{@link #USB_SYSTEM_TWIN}
      * <LI>{@link #USB_SYSTEM_SB5}
      * </UL>

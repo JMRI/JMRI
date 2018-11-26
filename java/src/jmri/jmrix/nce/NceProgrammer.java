@@ -53,7 +53,7 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
 
                 case NceTrafficController.USB_SYSTEM_SB3:
                 case NceTrafficController.USB_SYSTEM_SB5:
-                case NceTrafficController.USB_SYSTEM_POWERHOUSE:
+                case NceTrafficController.USB_SYSTEM_POWERPRO:
                     log.trace("no programming modes available for USB {}", tc.getUsbSystem());
                     return ret;
                     
@@ -90,7 +90,7 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
     }
 
     boolean getCanWrite(int cv) {
-        // prevent writing Prog Track mode CV > 256 on PowerHouse 2007C and earlier
+        // prevent writing Prog Track mode CV > 256 on PowerPro 2007C and earlier
         if (    (cv > 256)
                 && ((getMode() == ProgrammingMode.PAGEMODE)
                     || (getMode() == ProgrammingMode.DIRECTMODE)
@@ -125,7 +125,7 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
             log.debug("writeCV " + CV + " listens " + p);
         }
         useProgrammer(p);
-        // prevent writing Prog Track mode CV > 256 on PowerHouse 2007C and earlier
+        // prevent writing Prog Track mode CV > 256 on PowerPro 2007C and earlier
         if (!getCanWrite(CV)) {
             throw new jmri.ProgrammerException("CV number not supported");
         }

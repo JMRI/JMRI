@@ -44,7 +44,7 @@ public class NceProgrammerManager extends DefaultProgrammerManager {
         Objects.requireNonNull(memo, "require NceSystemConnectionMemo");
 
         switch (memo.getNceUsbSystem()) {
-            case NceTrafficController.USB_SYSTEM_POWERHOUSE:
+            case NceTrafficController.USB_SYSTEM_POWERPRO:
                 log.trace("isAddressedModePossible returns false");
                 return false;
             default:
