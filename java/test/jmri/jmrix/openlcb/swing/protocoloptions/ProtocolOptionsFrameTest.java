@@ -21,9 +21,7 @@ public class ProtocolOptionsFrameTest {
 
     @Before
     public void setUp() throws Exception {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         scm = new OlcbSystemConnectionMemo();
-        f = new ProtocolOptionsFrame(scm);
     }
 
     @After
@@ -33,6 +31,8 @@ public class ProtocolOptionsFrameTest {
 
     @Test
     public void initComponents() throws Exception {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        f = new ProtocolOptionsFrame(scm);
         f.initComponents();
     }
 }
