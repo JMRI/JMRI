@@ -3,6 +3,7 @@ package jmri.jmrix.openlcb;
 import org.openlcb.NodeID;
 import org.openlcb.OlcbInterface;
 import org.openlcb.protocols.TimeBroadcastConsumer;
+import org.openlcb.protocols.TimeBroadcastGenerator;
 import org.openlcb.protocols.TimeProtocol;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,9 +23,15 @@ import jmri.implementation.DefaultClockControl;
  */
 
 public class OlcbClockControl extends DefaultClockControl {
-    public OlcbClockControl(OlcbInterface iface, boolean isMaster) {
-        consumer = new TimeBroadcastConsumer(iface, TimeProtocol.DEFAULT_CLOCK);
-        hardwareClock = consumer;
+    public OlcbClockControl(OlcbInterface iface, NodeID clockID, boolean isMaster) {
+        this.clockId = clockID;
+        if (isMaster) {
+            generator = new TimeBroadcastGenerator(iface, clockID);
+            hardwareClock = generator;
+        } else {
+            consumer = new TimeBroadcastConsumer(iface, clockID);
+            hardwareClock = consumer;
+        }
         jmriClock = jmri.InstanceManager.getDefault(jmri.Timebase.class);
         listener = new PropertyChangeListener() {
             @Override
@@ -62,23 +69,23 @@ public class OlcbClockControl extends DefaultClockControl {
 
     @Override
     public String getHardwareClockName() {
-        if (consumer != null) {
-            NodeID clockDef = consumer.getClockID();
-            String clockName;
-            if (clockDef.equals(TimeProtocol.DEFAULT_CLOCK)) {
-                clockName = Bundle.getMessage("OlcbClockDefault");
-            } else if (clockDef.equals(TimeProtocol.DEFAULT_RT_CLOCK)) {
-                clockName = Bundle.getMessage("OlcbClockDefaultRT");
-            } else if (clockDef.equals(TimeProtocol.ALT_CLOCK_1)) {
-                clockName = Bundle.getMessage("OlcbClockAlt1");
-            } else if (clockDef.equals(TimeProtocol.ALT_CLOCK_2)) {
-                clockName = Bundle.getMessage("OlcbClockAlt2");
-            } else {
-                clockName = Bundle.getMessage("OlcbClockCustom", clockDef.toString());
-            }
-            return Bundle.getMessage("OlcbClockListenerFor", clockName);
+        String clockName;
+        if (clockId.equals(TimeProtocol.DEFAULT_CLOCK)) {
+            clockName = Bundle.getMessage("OlcbClockDefault");
+        } else if (clockId.equals(TimeProtocol.DEFAULT_RT_CLOCK)) {
+            clockName = Bundle.getMessage("OlcbClockDefaultRT");
+        } else if (clockId.equals(TimeProtocol.ALT_CLOCK_1)) {
+            clockName = Bundle.getMessage("OlcbClockAlt1");
+        } else if (clockId.equals(TimeProtocol.ALT_CLOCK_2)) {
+            clockName = Bundle.getMessage("OlcbClockAlt2");
+        } else {
+            clockName = Bundle.getMessage("OlcbClockCustom", clockId.toString());
         }
-        return super.getHardwareClockName();
+        if (consumer != null) {
+            return Bundle.getMessage("OlcbClockListenerFor", clockName);
+        } else {
+            return Bundle.getMessage("OlcbClockGeneratorFor", clockName);
+        }
     }
 
     @Override
@@ -146,8 +153,12 @@ public class OlcbClockControl extends DefaultClockControl {
     private Timebase jmriClock;
     /// This is the interface to the clock generator or consumer.
     private TimeProtocol hardwareClock;
+    /// The clock identifier on the OpenLCB bus.
+    private NodeID clockId;
     /// If we instantiated a clock consumer, this is the object.
     private TimeBroadcastConsumer consumer;
+    /// If we instantiated a generator, this is the object
+    private TimeBroadcastGenerator generator;
     /// The listener registered for the hardwareClock.
     private PropertyChangeListener listener;
 
