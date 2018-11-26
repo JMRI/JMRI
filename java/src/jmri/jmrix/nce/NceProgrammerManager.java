@@ -18,7 +18,7 @@ public class NceProgrammerManager extends DefaultProgrammerManager {
 
     NceTrafficController tc;
     NceSystemConnectionMemo memo;
-    
+
     public NceProgrammerManager(@Nonnull NceSystemConnectionMemo memo) {
         super(
                 checkGlobalProgrammerAvailable(memo.getNceTrafficController())
@@ -27,45 +27,37 @@ public class NceProgrammerManager extends DefaultProgrammerManager {
                 memo);
         this.tc = memo.getNceTrafficController();
         this.memo = memo;
-        log.trace("NceProgrammerManager({}) with {}", memo, 
-            checkGlobalProgrammerAvailable(memo.getNceTrafficController()));
+        log.trace("NceProgrammerManager({}) with {}", memo,
+                checkGlobalProgrammerAvailable(memo.getNceTrafficController()));
         Objects.requireNonNull(memo, "require NceSystemConnectionMemo");
     }
 
     /**
      * {@inheritDoc}
+     *
+     * @return true if selected NCE hardware and connection type support Ops
+     *         Mode
      */
     @Override
     public boolean isAddressedModePossible() {
         Objects.requireNonNull(tc, "require NceTrafficController");
         Objects.requireNonNull(memo, "require NceSystemConnectionMemo");
-        
-        if (memo.getNceUsbSystem() != NceTrafficController.USB_SYSTEM_NONE) {
-            // USB connection
-            switch (memo.getNceUsbSystem()) {
-                case NceTrafficController.USB_SYSTEM_SB3:
-                case NceTrafficController.USB_SYSTEM_SB5:
-                case NceTrafficController.USB_SYSTEM_POWERCAB:
-                case NceTrafficController.USB_SYSTEM_TWIN:
-                    return true;
-                    
-                case NceTrafficController.USB_SYSTEM_POWERHOUSE:
-                default:
-                    return false;
-            }
+
+        switch (memo.getNceUsbSystem()) {
+            case NceTrafficController.USB_SYSTEM_POWERHOUSE:
+                log.trace("isAddressedModePossible returns false");
+                return false;
+            default:
+                log.trace("isAddressedModePossible returns true");
+                return true;
         }
-        
-        // serial connection
-        return true;
     }
 
     /**
      * {@inheritDoc}
-     * <p>
-     * Works with PH command station to provide Service Mode and USB connect to
-     * PowerCab.
      *
-     * @return true if not USB connect to SB3,PowerPro,SB5
+     * @return true if selected NCE hardware and connection type support Service
+     *         Mode
      */
     @Override
     public boolean isGlobalProgrammerAvailable() {
@@ -73,21 +65,19 @@ public class NceProgrammerManager extends DefaultProgrammerManager {
         return checkGlobalProgrammerAvailable(tc);
     }
 
-    // this centralizes the isGlobalProgrammerAvailable logic.  It 
-    // has to be static so it can be called during the construction of 
+    // this centralizes the isGlobalProgrammerAvailable logic.  It
+    // has to be static so it can be called during the construction of
     // an object of this class
     static private boolean checkGlobalProgrammerAvailable(@Nonnull NceTrafficController tc) {
-        if (tc != null && (tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_NONE)) {
-            if ((tc.getCmdGroups() & NceTrafficController.CMDS_PROGTRACK) == 0) {
-                log.trace("checkGlobalProgrammerAvailable return false");
-                return false;
-            } else {
-                log.trace("checkGlobalProgrammerAvailable return false");
+        switch (tc.getUsbSystem()) {
+            case NceTrafficController.USB_SYSTEM_NONE: // Serial or Simulator
+            case NceTrafficController.USB_SYSTEM_POWERCAB:
+            case NceTrafficController.USB_SYSTEM_TWIN:
+                log.trace("checkGlobalProgrammerAvailable returns true");
                 return true;
-            }
-        } else {
-            log.trace("checkGlobalProgrammerAvailable return false");
-            return true;
+            default:
+                log.trace("checkGlobalProgrammerAvailable returns false");
+                return false;
         }
     }
 
