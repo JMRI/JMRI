@@ -1,8 +1,11 @@
 package jmri.jmrix.openlcb.swing.protocoloptions;
 
 import org.junit.After;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.awt.GraphicsEnvironment;
 
 import jmri.jmrix.openlcb.OlcbSystemConnectionMemo;
 
@@ -18,6 +21,7 @@ public class ProtocolOptionsFrameTest {
 
     @Before
     public void setUp() throws Exception {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         scm = new OlcbSystemConnectionMemo();
         f = new ProtocolOptionsFrame(scm);
     }
