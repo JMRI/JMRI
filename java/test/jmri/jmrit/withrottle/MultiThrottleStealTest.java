@@ -1,9 +1,8 @@
 package jmri.jmrit.withrottle;
 
 import java.beans.PropertyChangeEvent;
-//import jmri.InstanceManager;
-//import jmri.NamedBeanHandleManager;
 import jmri.util.JUnitUtil;
+import jmri.util.JUnitAppender;
 import org.junit.*;
 
 /**
@@ -37,6 +36,7 @@ public class MultiThrottleStealTest {
        throttle.handleMessage("-L1234<;>r");
        Assert.assertEquals("outgoing yymessage after throttle release", "MA-L1234<;>",cis.getLastPacket() );
        Assert.assertTrue("Address Released",tcls.hasAddressBeenReleased());
+       JUnitAppender.assertWarnMessage("Throttle request failed for 1234(L) because Steal Required.");       
     }
 
     @Test
@@ -63,6 +63,8 @@ public class MultiThrottleStealTest {
        throttle.handleMessage("-L4321<;>r");
        Assert.assertTrue("Address Released",tcls.hasAddressBeenReleased());
        Assert.assertEquals("outgoing yymessage after throttle release", "MA-L4321<;>",cis.getLastPacket() );
+       JUnitAppender.assertWarnMessage("Throttle request failed for 1234(L) because Steal Required.");       
+       JUnitAppender.assertWarnMessage("Throttle request failed for 4321(L) because Steal Required.");       
     }
 
     @Before
