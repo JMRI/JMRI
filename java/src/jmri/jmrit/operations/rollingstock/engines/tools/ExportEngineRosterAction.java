@@ -1,6 +1,5 @@
 package jmri.jmrit.operations.rollingstock.engines.tools;
 
-import java.awt.Component;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 
@@ -11,7 +10,7 @@ import javax.swing.AbstractAction;
  */
 public class ExportEngineRosterAction extends AbstractAction {
 
-    public ExportEngineRosterAction(String actionName, Component frame) {
+    public ExportEngineRosterAction(String actionName) {
         super(actionName);
     }
 

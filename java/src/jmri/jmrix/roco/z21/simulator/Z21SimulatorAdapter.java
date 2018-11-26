@@ -167,7 +167,6 @@ public class Z21SimulatorAdapter extends Z21Adapter implements Runnable {
 
     // generateReply is the heart of the simulation.  It translates an
     // incoming XNetMessage into an outgoing XNetReply.
-    @SuppressWarnings("fallthrough") // document values for specific cases
     private Z21Reply generateReply(Z21Message m) throws LogoffException {
         log.debug("generate Reply called with message {}",m);
         Z21Reply reply;

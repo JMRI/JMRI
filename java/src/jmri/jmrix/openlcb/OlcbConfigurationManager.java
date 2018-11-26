@@ -16,6 +16,8 @@ import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficController;
+import jmri.util.ThreadingUtil;
+
 import org.openlcb.Connection;
 import org.openlcb.LoaderClient;
 import org.openlcb.MessageDecoder;
@@ -264,7 +266,7 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
             return null;
         }
         if (throttleManager == null) {
-            throttleManager = new OlcbThrottleManager(adapterMemo, this);
+            throttleManager = new OlcbThrottleManager(adapterMemo);
         }
         return throttleManager;
     }
@@ -448,6 +450,7 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
                 olcbIf.frameInput().send(convertFromCan(m));
             }
         });
+        olcbIf.getInterface().setLoopbackThread((Runnable r)->ThreadingUtil.runOnLayout(r::run));
         return olcbIf;
     }
 

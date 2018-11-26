@@ -18,8 +18,8 @@ public class NamedBeanHandleManagerTest extends TestCase {
     }
 
     public void testNameBeanManager() throws JmriException {
-        SensorManager sm = new jmri.managers.InternalSensorManager();
-        TurnoutManager tm = new jmri.managers.InternalTurnoutManager();
+        SensorManager sm = jmri.InstanceManager.sensorManagerInstance();
+        TurnoutManager tm = jmri.InstanceManager.turnoutManagerInstance();
         MemoryManager mm = jmri.InstanceManager.memoryManagerInstance();
 
         String name = "MyUserName";
@@ -108,6 +108,7 @@ public class NamedBeanHandleManagerTest extends TestCase {
     protected void setUp() throws Exception {
         JUnitUtil.setUp();
         super.setUp();
+        JUnitUtil.resetInstanceManager();
         jmri.InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
         nbhm = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class);
     }

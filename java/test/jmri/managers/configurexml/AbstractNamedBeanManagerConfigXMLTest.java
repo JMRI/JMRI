@@ -231,7 +231,7 @@ public class AbstractNamedBeanManagerConfigXMLTest extends TestCase {
         AbstractNamedBeanManagerConfigXML x = new NamedBeanManagerConfigXMLTest();
 
         jmri.Turnout t = null;
-        jmri.TurnoutManager tm = new jmri.managers.InternalTurnoutManager();
+        jmri.TurnoutManager tm = jmri.InstanceManager.turnoutManagerInstance();
         tm.provideTurnout("IT01").setUserName("foo");
 
         Assert.assertEquals(null, x.checkedNamedBeanName(null, t, tm));
@@ -245,7 +245,7 @@ public class AbstractNamedBeanManagerConfigXMLTest extends TestCase {
         AbstractNamedBeanManagerConfigXML x = new NamedBeanManagerConfigXMLTest();
 
         jmri.Turnout t = null;
-        jmri.TurnoutManager tm = new jmri.managers.InternalTurnoutManager();
+        jmri.TurnoutManager tm = jmri.InstanceManager.turnoutManagerInstance();
         NamedBean nb = tm.provideTurnout("IT01");
         nb.setUserName("foo");
 
@@ -261,7 +261,7 @@ public class AbstractNamedBeanManagerConfigXMLTest extends TestCase {
         jmri.util.JUnitUtil.resetInstanceManager();
         
         jmri.Turnout t = null;
-        jmri.TurnoutManager tm = new jmri.managers.InternalTurnoutManager();
+        jmri.TurnoutManager tm = jmri.InstanceManager.turnoutManagerInstance();
         jmri.Turnout nb = tm.provideTurnout("IT01");
         nb.setUserName("foo");
         
@@ -294,6 +294,7 @@ public class AbstractNamedBeanManagerConfigXMLTest extends TestCase {
     @Override
     protected void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetInstanceManager();
     }
 
     @Override

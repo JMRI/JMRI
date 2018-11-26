@@ -38,11 +38,10 @@ public class CbusLight extends AbstractLight
         // build local addresses
         CbusAddress a = new CbusAddress(address);
         CbusAddress[] v = a.split();
-        if (v == null) {
-            log.error("Did not find usable system name: " + address);
-            return;
-        }
         switch (v.length) {
+            case 0:
+                log.error("Did not find usable system name: " + address);
+                return;
             case 1:
                 addrOn = v[0];
                 // need to complement here for addr 1
@@ -105,6 +104,33 @@ public class CbusLight extends AbstractLight
             setState(OFF);
         }
     }
+    
+    /**
+     * Package method returning CanMessage for the On Light Address
+     */    
+    public CanMessage getAddrOn(){
+        CanMessage m;
+        m = addrOn.makeMessage(tc.getCanid());
+        return m;
+    }
+    
+    /**
+     * Package method returning CanMessage for the Off Light Address
+     */    
+    public CanMessage getAddrOff(){
+        CanMessage m;
+        m = addrOff.makeMessage(tc.getCanid());
+        return m;
+    }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void dispose() {
+        tc.removeCanListener(this);
+        super.dispose();
+    }    
+    
     private static final Logger log = LoggerFactory.getLogger(CbusLight.class);
 }

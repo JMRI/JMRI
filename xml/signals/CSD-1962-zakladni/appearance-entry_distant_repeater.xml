@@ -21,8 +21,14 @@
     <revision>
         <revnumber>1</revnumber>
         <date>2016-07-02</date>
-        <authorinitials>PS</authorinitials>
+        <authorinitials>PŠ</authorinitials>
         <revremark>Initial version</revremark>
+    </revision>    
+    <revision>
+        <revnumber>2</revnumber>
+        <date>2018-09-21</date>
+        <authorinitials>PŠ</authorinitials>
+        <revremark>Panel indicators</revremark>
     </revision>    
   </revhistory>
 
@@ -37,26 +43,36 @@
     <appearance>
       <aspectname>Opakovaná volno</aspectname>
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/021_opvolno_po.gif</imagelink>
+      <imagelink type="AŽD z">../../../resources/icons/smallschematics/aspects/CSD/AZD/01_g.png</imagelink>
+      <imagelink type="ESP z">../../../resources/icons/smallschematics/aspects/CSD/ESP/01_g.png</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Opakovaná výstraha</aspectname>
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/022_opvystraha_po.gif</imagelink>
+      <imagelink type="AŽD z">../../../resources/icons/smallschematics/aspects/CSD/AZD/02_g.png</imagelink>
+      <imagelink type="ESP z">../../../resources/icons/smallschematics/aspects/CSD/ESP/02_g.png</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Opakovaná očekávej 40</aspectname>
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/023_opo40_po.gif</imagelink>
+      <imagelink type="AŽD z">../../../resources/icons/smallschematics/aspects/CSD/AZD/01_g.png</imagelink>
+      <imagelink type="ESP z">../../../resources/icons/smallschematics/aspects/CSD/ESP/01_g.png</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Opakovaná očekávej 60</aspectname>
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/024_opo60_po.gif</imagelink>
+      <imagelink type="AŽD z">../../../resources/icons/smallschematics/aspects/CSD/AZD/01_g.png</imagelink>
+      <imagelink type="ESP z">../../../resources/icons/smallschematics/aspects/CSD/ESP/01_g.png</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Opakovaná očekávej 80</aspectname>
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/025_opo80_po.gif</imagelink>
+      <imagelink type="AŽD z">../../../resources/icons/smallschematics/aspects/CSD/AZD/01_g.png</imagelink>
+      <imagelink type="ESP z">../../../resources/icons/smallschematics/aspects/CSD/ESP/01_g.png</imagelink>
     </appearance>
 
   </appearances>
@@ -71,15 +87,15 @@
       <ourAspect>Opakovaná výstraha</ourAspect>
     </aspectMapping>
     <aspectMapping>
-      <advancedAspect>40 a výstraha</advancedAspect>
+      <advancedAspect>Rychlost 40 a výstraha</advancedAspect>
       <ourAspect>Opakovaná očekávej 40</ourAspect>
     </aspectMapping>
     <aspectMapping>
-      <advancedAspect>60 a výstraha</advancedAspect>
+      <advancedAspect>Rychlost 60 a výstraha</advancedAspect>
       <ourAspect>Opakovaná očekávej 60</ourAspect>
     </aspectMapping>
     <aspectMapping>
-      <advancedAspect>80 a výstraha</advancedAspect>
+      <advancedAspect>Rychlost 80 a výstraha</advancedAspect>
       <ourAspect>Opakovaná očekávej 80</ourAspect>
     </aspectMapping>
   </aspectMappings>

@@ -9,6 +9,7 @@ import org.junit.runners.Suite;
         jmri.jmrix.pricom.downloader.LoaderPaneTest.class,
         LoaderFrameTest.class,
         LoaderPanelActionTest.class,
+        BundleTest.class,
 })
 
 /**

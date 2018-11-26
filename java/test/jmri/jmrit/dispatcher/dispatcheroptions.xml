@@ -4,6 +4,6 @@
 
 <dispatcheroptions>
     <!--Written by JMRI version 2.9.5+dev on Sun Apr 25 11:20:40 EDT 2010 $Id$-->
-    <options useconnectivity="no" trainsfromroster="yes" trainsfromtrains="no" trainsfromuser="no" autoallocate="no" autoturnouts="yes" hasoccupancydetection="yes" shortactivetrainnames="no" shortnameinblock="yes" extracolorforallocated="no" nameinallocatedblock="no" layoutscale="HO" usescalemeters="no" />
+    <options useconnectivity="no" trainsfromroster="yes" trainsfromtrains="no" trainsfromuser="no" autoallocate="no" autoturnouts="yes" hasoccupancydetection="yes" shortactivetrainnames="no" shortnameinblock="yes" extracolorforallocated="no" nameinallocatedblock="no" layoutscale="G" usescalemeters="yes" stoppingspeedname="Restricted"/>
 </dispatcheroptions>
 

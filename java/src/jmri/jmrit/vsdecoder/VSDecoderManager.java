@@ -89,7 +89,7 @@ public class VSDecoderManager implements PropertyChangeListener {
     protected javax.swing.event.EventListenerList listenerList = new javax.swing.event.EventListenerList();
 
     //private static VSDecoderManager instance = null;   // sole instance of this class
-    private static VSDecoderManagerThread thread = null; // thread for running the manager
+    private volatile static VSDecoderManagerThread thread = null; // thread for running the manager
 
     private VSDecoderPreferences vsdecoderPrefs; // local pointer to the preferences object
 
@@ -511,11 +511,18 @@ public class VSDecoderManager implements PropertyChangeListener {
 
     protected void registerReporterListeners() {
         // Walk through the list of reporters
-        for (String sysName : jmri.InstanceManager.getDefault(jmri.ReporterManager.class).getSystemNameList()) {
-            registerReporterListener(sysName);
+        Set<Reporter> reporterSet = jmri.InstanceManager.getDefault(jmri.ReporterManager.class).getNamedBeanSet();
+        for (Reporter r : reporterSet) {
+            if (r != null) {
+                registerReporterListener(r.getSystemName());
+            }
         }
-        for (String sysname : jmri.InstanceManager.getDefault(jmri.BlockManager.class).getSystemNameList()) {
-            registerBeanListener(jmri.InstanceManager.getDefault(jmri.BlockManager.class), sysname);
+
+        Set<Block> blockSet = jmri.InstanceManager.getDefault(jmri.BlockManager.class).getNamedBeanSet();
+        for (Block b : blockSet) {
+            if (b != null) {
+                registerBeanListener(jmri.InstanceManager.getDefault(jmri.BlockManager.class), b.getSystemName());
+            }
         }
     }
 
@@ -534,11 +541,18 @@ public class VSDecoderManager implements PropertyChangeListener {
 
         // Now, the Reporter Table might already be loaded and filled out, so we need to get all the Reporters and list them.
         // And add ourselves as a listener to them.
-        for (String sysName : jmri.InstanceManager.getDefault(jmri.ReporterManager.class).getSystemNameList()) {
-            registerReporterListener(sysName);
-        }
-        for (String sysname : jmri.InstanceManager.getDefault(jmri.BlockManager.class).getSystemNameList()) {
-            registerBeanListener(jmri.InstanceManager.getDefault(jmri.BlockManager.class), sysname);
+        Set<Reporter> reporterSet = jmri.InstanceManager.getDefault(jmri.ReporterManager.class).getNamedBeanSet();
+        for (Reporter r : reporterSet) {
+            if (r != null) {
+                registerReporterListener(r.getSystemName());
+            }
+        } 
+
+        Set<Block> blockSet = jmri.InstanceManager.getDefault(jmri.BlockManager.class).getNamedBeanSet();
+        for (Block b : blockSet) {
+            if (b != null) {
+                registerBeanListener(jmri.InstanceManager.getDefault(jmri.BlockManager.class), b.getSystemName());
+            }
         }
     }
 

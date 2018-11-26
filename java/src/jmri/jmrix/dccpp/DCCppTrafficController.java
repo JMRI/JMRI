@@ -41,31 +41,6 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
 
     protected HashMap<DCCppListener, Integer> mListenerMasks;
 
-    /**
-     * Static function returning the TrafficController instance to use.
-     *
-     * @return The registered TrafficController instance for general use, if
-     *         need be creating one.
-     */
-    @Deprecated
-    static public DCCppTrafficController instance() {
-        return self;
-    }
-
-    /**
-     * Static function setting this object as the TrafficController instance to
-     * use.
-     */
-    @Override
-    @Deprecated
-    protected void setInstance() {
-        if (self == null) {
-            self = this;
-        }
-    }
-
-    static DCCppTrafficController self = null;
-
     // Abstract methods for the DCCppInterface
 
     /**
@@ -265,9 +240,9 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
 
     //    /**
     //     * Get characters from the input source, and file a message.
-    //     * <P>
+    //     * <p>
     //     * Returns only when the message is complete.
-    //     * <P>
+    //     * <p>
     //     * Only used in the Receive thread.
     //     *
     //     * @param msg     message to fill

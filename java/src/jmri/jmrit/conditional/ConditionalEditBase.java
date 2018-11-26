@@ -231,10 +231,10 @@ public class ConditionalEditBase {
             for (int i = 1; i < variableList.size(); i++) {
                 ConditionalVariable variable = variableList.get(i);
                 switch (variable.getOpern()) {
-                    case Conditional.OPERATOR_AND:
+                    case AND:
                         antecedent.append(" and ");
                         break;
-                    case Conditional.OPERATOR_OR:
+                    case OR:
                         antecedent.append(" or ");
                         break;
                     default:
@@ -972,7 +972,7 @@ public class ConditionalEditBase {
 
     /**
      * Display an error message to user when an invalid number is provided in
-     * Conditional set up.
+     * Conditional setup.
      *
      * @param actionType integer representing the Conditional action type being
      *                   checked, i.e. ACTION_DELAYED_TURNOUT

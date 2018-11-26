@@ -98,7 +98,7 @@ public class Z21Reply extends AbstractMRReply {
            case 0x0040:
                return Bundle.getMessage("Z21XpressNetTunnelReply", getXNetReply().toMonitorString());
            case 0x00A0:
-               return Bundle.getMessage("Z21LocoNetRxReply", new jmri.jmrix.loconet.locomon.Llnmon().displayMessage(getLocoNetMessage()));
+               return Bundle.getMessage("Z21LocoNetRxReply", getLocoNetMessage().toMonitorString());
            case 0x00A1:
                return Bundle.getMessage("Z21LocoNetTxReply", new jmri.jmrix.loconet.locomon.Llnmon().displayMessage(getLocoNetMessage()));
            case 0x00A2:

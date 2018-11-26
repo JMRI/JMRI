@@ -445,7 +445,6 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
 
             // First read configuration
             if (root.getChild("configuration") != null) { // NOI18N
-                @SuppressWarnings("unchecked")
                 List<Element> l = root.getChild("configuration").getChildren(); // NOI18N
                 log.debug("readFile sees {} configurations", l.size());
                 for (int i = 0; i < l.size(); i++) {
@@ -462,7 +461,6 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
 
             // Now read tag information
             if (root.getChild("idtags") != null) { // NOI18N
-                @SuppressWarnings("unchecked")
                 List<Element> l = root.getChild("idtags").getChildren("idtag"); // NOI18N
                 log.debug("readFile sees {} idtags", l.size());
                 for (int i = 0; i < l.size(); i++) {

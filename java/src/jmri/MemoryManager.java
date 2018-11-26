@@ -44,8 +44,9 @@ import javax.annotation.Nonnull;
 public interface MemoryManager extends Manager<Memory> {
 
     /**
-     * Locate via user name, then system name if needed. If that fails, create a
-     * new Memory. If the name is a valid system name, it will be used for the
+     * Get the Memory with the user name, then system name if needed; if that fails, create a
+     * new Memory. 
+     * If the name is a valid system name, it will be used for the
      * new Memory. Otherwise, the makeSystemName method will attempt to turn it
      * into a valid system name.
      *
@@ -61,8 +62,9 @@ public interface MemoryManager extends Manager<Memory> {
     public Memory provideMemory(@Nonnull String name) throws IllegalArgumentException;
 
     /**
-     * Locate via user name, then system name if needed. If that fails, return
-     * null
+     * Get an existing Turnout or return null if it doesn't exist. 
+     * 
+     * Locates via user name, then system name if needed.
      *
      * @param name User name or system name to match
      * @return null if no match found
@@ -71,7 +73,7 @@ public interface MemoryManager extends Manager<Memory> {
     public Memory getMemory(@Nonnull String name);
 
     /**
-     * Locate an instance based on a system name. Returns null if no instance
+     * Locate an existing Memory based on a system name. Returns null if no instance
      * already exists.
      *
      * @param systemName the system name
@@ -81,7 +83,7 @@ public interface MemoryManager extends Manager<Memory> {
     public Memory getBySystemName(@Nonnull String systemName);
 
     /**
-     * Locate an instance based on a user name. Returns null if no instance
+     * Locate an existing Memory based on a user name. Returns null if no instance
      * already exists.
      *
      * @param userName the user name
@@ -91,7 +93,7 @@ public interface MemoryManager extends Manager<Memory> {
     public Memory getByUserName(@Nonnull String userName);
 
     /**
-     * Return an instance with the specified system and user names. Note that
+     * Return a Memory with the specified system and user names. Note that
      * two calls with the same arguments will get the same instance; there is
      * only one Memory object representing a given physical Memory and therefore
      * only one with a specific system or user name.

@@ -1074,7 +1074,7 @@ public class AutoActiveTrain implements ThrottleListener {
                     _stoppingUsingSpeedProfile = true;
                 } else {
                     // sensor is not active
-                    setTargetSpeedState(RESTRICTED_SPEED);
+                    setToAMaximumThrottle(_speedRatio[RESTRICTED_SPEED]);
                 }
                 _stopSensor.addPropertyChangeListener(_stopSensorListener = (java.beans.PropertyChangeEvent e) -> {
                     if (e.getPropertyName().equals("KnownState")) {
@@ -1299,22 +1299,80 @@ public class AutoActiveTrain implements ThrottleListener {
         // note: _stoppingBlock must be set before invoking this method
         //  verify that _stoppingBlock is actually occupied, if not stop immed
         if (_stoppingBlock.getState() == Block.OCCUPIED) {
-            setTargetSpeedState(RESTRICTED_SPEED);
+            float signalSpeed = 25;
+            try {
+                signalSpeed = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getSpeed(InstanceManager.getDefault(DispatcherFrame.class).getStoppingSpeedName());
+            } catch (IllegalArgumentException ex) {
+                log.error("Missing [{}] from Speed table - defaulting to 25",InstanceManager.getDefault(DispatcherFrame.class).getStoppingSpeedName());
+            }
+            setToAMaximumThrottle(getThrottleSettingFromSpeed(signalSpeed));
             _stoppingByBlockOccupancy = true;
         } else {
             setStopNow();
         }
     }
 
+    /**
+     * Sets the the throttle percent unless it is already less than the new setting
+     * @param throttleSetting - Max ThrottleSetting required.
+     */
+    private synchronized void setToAMaximumThrottle(float throttleSetting) {
+        if (throttleSetting < _targetSpeed) {
+            _targetSpeed = throttleSetting;
+        }
+    }
+
+    /**
+     * Calculates the throttle setting for a given speed.
+     * @param speed - the unadjusted speed.
+     * @return - throttle setting (a percentage)
+     */
+    private synchronized float getThrottleSettingFromSpeed(float speed) {
+        if (useSpeedProfile) {
+            float throttleSetting = _activeTrain.getRosterEntry().getSpeedProfile()
+                    .getThrottleSettingFromSignalMapSpeed(speed, _forward);
+            return applyMaxThrottleAndFactor(throttleSetting);
+        }
+        if (InstanceManager.getDefault(DispatcherFrame.class).getSignalType() == DispatcherFrame.SIGNALMAST) {
+            float mls = 100.0F;
+            if (_controllingSignalMast != null) {
+                mls = _controllingSignalMast.getSignalSystem().getMaximumLineSpeed();
+            } else {
+                //plan B
+                mls = InstanceManager.getDefault(DispatcherFrame.class).getMaximumLineSpeed();
+            }
+            float throttleSetting = (speed / mls);
+            return applyMaxThrottleAndFactor(throttleSetting);
+        } else {
+            return applyMaxThrottleAndFactor(speed);
+        }
+    }
+
+    /**
+     *
+     * @param throttleSetting the throttle setting that would normally be set
+     * @return the adjusted throttle setting after applying Max Throttle and Percentage throttle settings
+     */
+    private synchronized float applyMaxThrottleAndFactor(float throttleSetting) {
+        if (throttleSetting > 0.0f) {
+            if (throttleSetting > _maxSpeed) {
+                return _maxSpeed * _speedFactor;
+            }
+            return (throttleSetting * _speedFactor); //adjust for train's Speed Factor
+        } else {
+            return throttleSetting;
+        }
+    }
+
+    /**
+     * sets the throttle based on an index number into _speedRatio array
+     * @param speedState - Index value
+     */
     private synchronized void setTargetSpeedState(int speedState) {
         _autoEngineer.slowToStop(false);
         log.debug("Speed[{}]",speedState);
         if (speedState > STOP_SPEED) {
-            float speed = _speedRatio[speedState];
-            if (speed > _maxSpeed) {
-                speed = _maxSpeed;
-            }
-            _targetSpeed = speed * _speedFactor;
+            _targetSpeed = applyMaxThrottleAndFactor(_speedRatio[speedState]);
         } else if (useSpeedProfile && _stopBySpeedProfile) {
             // we are going to stop by profile
             _stoppingUsingSpeedProfile = true;
@@ -1332,7 +1390,8 @@ public class AutoActiveTrain implements ThrottleListener {
                 if (throttleSetting > 0.009) {
                     _autoEngineer.setHalt(false);
                     _autoEngineer.slowToStop(false);
-                    _targetSpeed = throttleSetting * _speedFactor;
+                    //TODO is this next bit correct do we need to apply max speed?
+                    _targetSpeed = throttleSetting * _speedFactor;  // only apply speed factor not max
                  } else if (useSpeedProfile && _stopBySpeedProfile) {
                     _targetSpeed = 0.0f;
                     _stoppingUsingSpeedProfile = true;
@@ -1365,10 +1424,7 @@ public class AutoActiveTrain implements ThrottleListener {
         float mls = _controllingSignalMast.getSignalSystem().getMaximumLineSpeed();
         float decSpeed = (speed / mls);
         if (decSpeed > 0.0f) {
-            if (decSpeed > _maxSpeed) {
-                decSpeed = _maxSpeed;
-            }
-            _targetSpeed = decSpeed * _speedFactor; //adjust for train's Speed Factor
+            _targetSpeed = applyMaxThrottleAndFactor(decSpeed);
         } else {
             _targetSpeed = 0.0f;
             _autoEngineer.setHalt(true);

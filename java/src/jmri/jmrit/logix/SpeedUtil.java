@@ -108,7 +108,7 @@ public class SpeedUtil {
         return _dccAddress;            
     }
     
-    public String getAddress() {
+    protected String getAddress() {
         if (_dccAddress != null) {
             return _dccAddress.toString();
         }
@@ -392,11 +392,6 @@ public class SpeedUtil {
             WarrantManager manager = InstanceManager.getDefault(WarrantManager.class);
             manager.setSpeedProfiles(_rosterId, _mergeProfile, _sessionProfile);
         }
-        if (_throttle != null) {  // quiet
-            _throttle.setF0(false);
-            _throttle.setF1(false);
-            _throttle.setF2(false);
-        }
     }
 
     /************* runtime speed needs - throttle, engineer acquired ***************/
@@ -564,6 +559,32 @@ public class SpeedUtil {
     }
 
     /**
+     * get time to ramp up/down from/to speed 0 and travel no farther than given distance.
+     * @param rampLen ramp length
+     * @return time
+     *
+    protected float timeOfRampDistance(float rampLen, boolean isForward) {
+        float time = 0.0f;
+        float dist = 0.0f;
+        float deltaTime = getRampTimeIncrement();
+        float deltaThrottle = getRampThrottleIncrement();
+        float momentumTime = getMomentumTime(deltaThrottle, isForward);
+        float speed = deltaThrottle;
+
+        while (dist <= rampLen) {
+            float d = getTrackSpeed(speed + deltaThrottle/2, isForward) * momentumTime;
+            if (deltaTime > momentumTime) {
+                d += getTrackSpeed(speed + deltaThrottle, isForward) * (deltaTime - momentumTime);
+            }
+            speed += deltaThrottle;
+            dist += d;
+            time += deltaTime;
+        }
+        time -= deltaTime;  // back out time when dist exceeded
+        return time;
+    }*/
+
+    /**
      * Get ramp length needed to change speed using the WarrantPreference deltas for 
      * throttle increment and time increment.  This should only be used for ramping down.
      * @param curSetting current throttle setting
@@ -587,6 +608,13 @@ public class SpeedUtil {
         return rampLengthForSpeedChange(fromSpeed, toSpeed, isForward);
     }
 
+    /**
+     * Get the length of ramp for a speed change
+     * @param fSpeed - starting speed
+     * @param toSpeed - ending speed
+     * @param isForward - direction
+     * @return distance in millimeters
+     */
     protected float rampLengthForSpeedChange(float fSpeed, float toSpeed, boolean isForward) {
         float fromSpeed = fSpeed;
         float rampLength = 0.0f;
@@ -611,8 +639,8 @@ public class SpeedUtil {
                 deltaThrottle *= NXFrame.INCRE_RATE;
                 numSteps++;
             }
-        } else {
-            // Start with largest throttle increment
+        } else {    // decreasing
+            // Get largest throttle increment to start
             float tempSpeed = toSpeed;
             while (tempSpeed + deltaThrottle <= fromSpeed) {
                 tempSpeed += deltaThrottle;
@@ -648,7 +676,6 @@ public class SpeedUtil {
     }
     
     /*************** dynamic calibration ***********************/
-
     long _timeAtSpeed;
     float _distanceTravelled;
     float _settingsTravelled;

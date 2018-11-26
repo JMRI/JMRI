@@ -5,8 +5,8 @@
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-  <meta name="keywords" content="JMRI help MERGCBUS Connecting connection canusb4 network">
-  <title>JMRI Hardware Support - MERGCBUS - Tech Details</title>
+  <meta name="keywords" content="JMRI help MERG CBUS Connecting connection canusb4 network">
+  <title>JMRI Hardware Support - MERG CBUS - Tech Details</title>
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
@@ -23,7 +23,7 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>Hardware Support: MERGCBUS - Connection Details</h1>
+      <h1>Hardware Support: MERG CBUS - Connection Details</h1>
         <ul class="snav">
         <li><a href="#canid">CBUS CAN Network ID</a></li>
         <li><a href="#c1">CAN via MERG CAN-RS or CAN-USB</a></li>
@@ -35,7 +35,7 @@
         <li><a href="#c7">Direct Serial Connection</a></li>
        </ul>
 
-      <p>This page describes technical details of JMRI's MERGCBUS
+      <p>This page describes technical details of JMRI's MERG CBUS
       connection support.</p>
 
       <h2>CAN Adapters</h2>
@@ -71,26 +71,23 @@
       <p>Where USB interfaces are used, the Baud rate is irrelevant.</p>
       
       
-      <h2><a name="canid" id="canid">MERGCBUS CAN Network ID</a></h2>
+      <h2><a name="canid" id="canid">MERG CBUS CAN Network ID</a></h2>
       
-        <p>All MERGCBUS modules need a CAN ID, and JMRI is no exception.</p>
+        <p>All MERG CBUS modules need a CAN ID, and JMRI is no exception.</p>
         
         <p>Modules must not have a duplicate CAN ID</p>
         
-        <p>The CAN ID is separate to any NODE ID's used in MERGCBUS Long Events.</p>
+        <p>The CAN ID is separate to any NODE ID's used in MERG CBUS Long Events.</p>
 
-        <p>Node numbers are for MERGCBUS long events, CAN ID's are purely for the CAN protocol transmission 
-        and are largely irrelevant in JMRI processing MERGCBUS events.</p>
+        <p>Node numbers are for MERG CBUS long events, CAN ID's are purely for the CAN protocol transmission 
+        and are largely irrelevant in JMRI processing MERG CBUS events.</p>
       
-
-        
-        
-        <p>Most MERG modules can do "enumeration" for MERGCBUS, 
+        <p>Most MERG modules can do "enumeration" for MERG CBUS, 
         but some
         other adapters can't because of their intrinsic latency.
         Their slow replies effectively make them invisible.
         <br>
-        Therefore Mike Bolton, one of the MERGCBUS developers
+        Therefore Mike Bolton, one of the MERG CBUS developers
         suggested that JMRI use a CAN ID of 126. That's a
         fixed value in some systems.</p>
       
@@ -263,13 +260,13 @@
       
       <h2>JMRI Help</h2>
 
-        <p><a href="index.shtml">Main JMRI MERGCBUS Support page</a></p>
+        <p><a href="index.shtml">Main JMRI MERG CBUS Support page</a></p>
 
         <p><a href="../index.shtml">JMRI's general CAN support</a></p>
         
         <p><a href="../../rfid/index.shtml">JMRI RFID Support</a></p>
         
-        <p><a href="index.shtml#thirdparty">MERGCBUS 3rd Party Links</a> See link for the MERGCBUS Developers Guide</p>
+        <p><a href="index.shtml#thirdparty">MERG CBUS 3rd Party Links</a> See link for the MERG CBUS Developers Guide</p>
         
         
       <!--#include virtual="/Footer" -->

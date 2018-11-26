@@ -11,22 +11,23 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class CbusReporterTest {
+public class CbusReporterTest extends jmri.implementation.AbstractReporterTestBase {
 
-    @Test
-    public void testCTor() {
-        CbusReporter t = new CbusReporter(1,new TrafficControllerScaffold(),"Test");
-        Assert.assertNotNull("exists",t);
+    @Override
+    protected Object generateObjectToReport(){
+        return new jmri.implementation.DefaultIdTag("ID0413276BC1", "Test Tag");
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        r = new CbusReporter(1,new TrafficControllerScaffold(),"Test");
     }
 
     @After
     public void tearDown() {
+	r = null;
         JUnitUtil.tearDown();
     }
 

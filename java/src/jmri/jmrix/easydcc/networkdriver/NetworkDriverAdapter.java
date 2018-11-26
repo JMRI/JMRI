@@ -48,6 +48,7 @@ public class NetworkDriverAdapter extends EasyDccNetworkPortController {
     /**
      * @deprecated JMRI Since 4.9.5 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
+    @Deprecated
     static public NetworkDriverAdapter instance() {
         log.error("Unexpected call to instance()");
         return null;

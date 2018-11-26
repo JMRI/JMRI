@@ -116,7 +116,6 @@ public abstract class AbstractMemoryManagerConfigXML extends AbstractNamedBeanMa
      *
      * @param memories Element containing the Memory elements to load.
      */
-    @SuppressWarnings("unchecked")
     public void loadMemories(Element memories) {
         List<Element> memoryList = memories.getChildren("memory");
         if (log.isDebugEnabled()) {

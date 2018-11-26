@@ -47,7 +47,6 @@ public class CanReply extends AbstractMRReply implements CanMutableFrame {
     }
 
     // copy one
-    @SuppressWarnings("null")
     public CanReply(@Nonnull CanReply m) {
         _header = m._header;
         _isExtended = m._isExtended;
@@ -61,7 +60,6 @@ public class CanReply extends AbstractMRReply implements CanMutableFrame {
     }
 
     // copy type
-    @SuppressWarnings("null")
     public CanReply(@Nonnull CanMessage m) {
         _header = m._header;
         _isExtended = m._isExtended;

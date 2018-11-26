@@ -91,7 +91,6 @@ public class IconItemPanel extends ItemPanel {
      */
     @Override
     public void init(ActionListener doneAction) {
-        if (!jmri.util.ThreadingUtil.isGUIThread()) log.error("Not on GUI thread", new Exception("traceback"));
         _update = true;
         _suppressDragging = true; // no dragging when updating
         add(new JLabel(Bundle.getMessage("ToUpdateIcon", Bundle.getMessage("updateButton"))));
@@ -163,14 +162,14 @@ public class IconItemPanel extends ItemPanel {
         HashMap<String, HashMap<String, NamedIcon>> families = ItemPalette.getFamilyMaps(_itemType);
         if (families != null && families.size() > 0) {
             if (families.size() != 1) {
-                log.warn("ItemType \"{}\" has {}", _itemType, families.size());
+                log.warn("ItemType \"{}\" has {} entries, more than the single one expected", _itemType, families.size());
             }
-            Iterator<String> iter = families.keySet().iterator();
-            while (iter.hasNext()) {
-                String family = iter.next();
-                _iconMap = families.get(family);
+            
+            for (HashMap<String, NamedIcon> map : families.values() ) {
+                _iconMap = map; // setting object member variable
                 addIconsToPanel(_iconMap);
             }
+
         } else {
             // make create message
             log.error("Item type \"{}\" has {} families.", _itemType, (families == null ? "null" : families.size()));

@@ -106,7 +106,6 @@ abstract public class AbstractMRTrafficController {
         mCurrentMode = NORMALMODE;
         mCurrentState = IDLESTATE;
         allowUnexpectedReply = false;
-        setInstance();
 
         // We use a shutdown hook here to make sure the connection is left
         // in a clean state prior to exiting.  This is required on systems
@@ -126,11 +125,6 @@ abstract public class AbstractMRTrafficController {
     protected boolean getSynchronizeRx() {
         return synchronizeRx;
     }
-
-    /**
-     * Set the instance variable.
-     */
-    abstract protected void setInstance();
 
     // The methods to implement the abstract Interface
 
@@ -926,7 +920,6 @@ abstract public class AbstractMRTrafficController {
      * Dummy routine, to be filled by protocols that have to skip some
      * start-of-message characters.
      */
-    @SuppressWarnings("unused")
     protected void waitForStartOfReply(DataInputStream istream) throws IOException {
     }
 

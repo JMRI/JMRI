@@ -44,7 +44,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
     private final Object lock = new Object();
     private boolean replyAvailable = false;
     // Make this public so it can be overridden by a script for debug
-    public static int timeout = SprogConstants.TC_PROG_REPLY_TIMEOUT;
+    public int timeout = SprogConstants.TC_PROG_REPLY_TIMEOUT;
     
     /**
      * Create a new SprogTrafficController instance.
@@ -387,8 +387,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
     OutputStream ostream = null;
 
     boolean endReply(SprogReply msg) {
-        return msg.endNormalReply() || msg.endBootReply()
-                || msg.endBootloaderReply(this.getSprogState());
+        return msg.endNormalReply() || msg.endBootReply();
     }
 
     private boolean unsolicited;

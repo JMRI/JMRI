@@ -100,12 +100,10 @@ public class JavaSoundAudioFactory extends AbstractAudioFactory {
         AudioManager am = InstanceManager.getDefault(jmri.AudioManager.class);
 
         // Retrieve list of Audio Objects and remove the sources
-        List<String> audios = am.getSystemNameList();
-        for (String audioName : audios) {
-            Audio audio = am.getAudio(audioName);
+        for (Audio audio : am.getNamedBeanSet()) {
             if (audio.getSubType() == Audio.SOURCE) {
                 if (log.isDebugEnabled()) {
-                    log.debug("Removing JavaSoundAudioSource: " + audioName);
+                    log.debug("Removing JavaSoundAudioSource: " + audio.getSystemName());
                 }
                 // Cast to JavaSoundAudioSource and cleanup
                 ((JavaSoundAudioSource) audio).cleanup();
@@ -113,12 +111,10 @@ public class JavaSoundAudioFactory extends AbstractAudioFactory {
         }
 
         // Now, re-retrieve list of Audio objects and remove the buffers
-        audios = am.getSystemNameList();
-        for (String audioName : audios) {
-            Audio audio = am.getAudio(audioName);
+        for (Audio audio : am.getNamedBeanSet()) {
             if (audio.getSubType() == Audio.BUFFER) {
                 if (log.isDebugEnabled()) {
-                    log.debug("Removing JavaSoundAudioBuffer: " + audioName);
+                    log.debug("Removing JavaSoundAudioBuffer: " + audio.getSystemName());
                 }
                 // Cast to JavaSoundAudioBuffer and cleanup
                 ((JavaSoundAudioBuffer) audio).cleanup();
@@ -126,12 +122,10 @@ public class JavaSoundAudioFactory extends AbstractAudioFactory {
         }
 
         // Lastly, re-retrieve list and remove listener.
-        audios = am.getSystemNameList();
-        for (String audioName : audios) {
-            Audio audio = am.getAudio(audioName);
+        for (Audio audio : am.getNamedBeanSet()) {
             if (audio.getSubType() == Audio.LISTENER) {
                 if (log.isDebugEnabled()) {
-                    log.debug("Removing JavaSoundAudioListener: " + audioName);
+                    log.debug("Removing JavaSoundAudioListener: " + audio.getSystemName());
                 }
                 // Cast to JavaSoundAudioListener and cleanup
                 ((JavaSoundAudioListener) audio).cleanup();

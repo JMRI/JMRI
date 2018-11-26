@@ -96,7 +96,6 @@ public class SlipTurnoutIconXml extends PositionableLabelXml {
      * @param element Top level Element to unpack.
      * @param o       Editor as an Object
      */
-    @SuppressWarnings("null")
     @Override
     public void load(Element element, Object o) {
         // create the objects

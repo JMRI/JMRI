@@ -202,7 +202,6 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
 
     // This is the heart of the simulation. It translates an
     // incoming XNetMessage into an outgoing XNetReply.
-    @SuppressWarnings("fallthrough")
     private XNetReply generateReply(XNetMessage m) {
         XNetReply reply = new XNetReply();
         switch (m.getElement(0) & 0xff) {

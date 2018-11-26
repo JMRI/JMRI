@@ -143,7 +143,14 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
      * @return the display list used by this combo box
      */
     public String[] getDisplayList() {
-        ArrayList<String> nameList = new ArrayList<>(Arrays.asList(_manager.getSystemNameArray()));
+        // working through names in this code is slow, as is making a list and
+        // then removing items.  Should be completely rewritten to use the
+        // native Manager interfaces
+        
+        ArrayList<String> nameList = new ArrayList<>();
+        for (Object obj : _manager.getNamedBeanSet()) {
+            nameList.add( ((NamedBean)obj).getSystemName());
+        }
 
         exclude.stream().filter((bean) -> (bean != null)).forEachOrdered((bean) -> {
             nameList.remove(bean.getSystemName());

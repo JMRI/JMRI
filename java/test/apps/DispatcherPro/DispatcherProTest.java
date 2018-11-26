@@ -10,8 +10,8 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.Rule;
-import org.junit.rules.TemporaryFolder;
 import org.junit.rules.Timeout;
+import org.junit.rules.TemporaryFolder;
 import jmri.InstanceManager;
 import jmri.managers.DefaultShutDownManager;
 import jmri.util.JUnitUtil;
@@ -138,7 +138,7 @@ public class DispatcherProTest {
     }
 
     @Test
-    @Ignore // Unreliable and causing too many false failures
+    @Ignore("Unreliable and causing too many false failures")
     public void testLaunchTmcc() throws IOException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
@@ -167,31 +167,6 @@ public class DispatcherProTest {
             jmri.util.JUnitUtil.releaseThread(this, RELEASETIME);
         }
     }
-
-//    @Test
-//    public void testLaunchSprog() throws IOException {
-//        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-//
-//        try {
-//            // create a custom profile
-//            File tempFolder = folder.newFolder();
-//            FileUtils.copyDirectory(new File("java/test/apps/PanelPro/profiles/Sprog_Simulator"), tempFolder);
-//            System.setProperty("org.jmri.profile", tempFolder.getAbsolutePath() );
-//
-//            // launch!
-//            DispatcherPro.main(new String[]{"DispatcherPro"});
-//            log.debug("started SprogSim");
-//
-//            JUnitUtil.waitFor(()->{return JmriJFrame.getFrame("DispatcherPro") != null;}, "window up");
-//
-//            JUnitUtil.waitFor(()->{return JUnitAppender.checkForMessageStartingWith("DispatcherPro version") != null;}, "first Info line seen");
-//
-//            // DispatcherPro
-//        } finally {
-//            // wait for threads, etc
-//            jmri.util.JUnitUtil.releaseThread(this, RELEASETIME);
-//        }
-//    }
 
     @Test
     public void testLaunchInitLoop() throws IOException {

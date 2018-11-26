@@ -4,7 +4,9 @@ import jmri.Turnout;
 import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
+import jmri.jmrix.can.cbus.CbusConstants;
 import jmri.jmrix.can.cbus.CbusMessage;
+import jmri.jmrix.can.cbus.CbusOpCodes;
 import jmri.jmrix.can.TrafficController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,11 +40,10 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
         // build local addresses
         CbusAddress a = new CbusAddress(address);
         CbusAddress[] v = a.split();
-        if (v == null) {
-            log.error("Did not find usable system name: " + address);
-            return;
-        }
         switch (v.length) {
+            case 0:
+                log.error("Did not find usable system name: " + address);
+                return;
             case 1:
                 addrThrown = v[0];
                 // need to complement here for addr 1
@@ -69,6 +70,23 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
     }
 
     /**
+     * Request an update on status by sending CBUS request message to thrown address.
+     */
+    @Override
+    public void requestUpdateFromLayout() {
+        CanMessage m;
+        m = addrThrown.makeMessage(tc.getCanid());
+        int opc = CbusMessage.getOpcode(m);
+        if (CbusOpCodes.isShortEvent(opc)) {
+            m.setOpCode(CbusConstants.CBUS_ASRQ);
+        }
+        else {
+            m.setOpCode(CbusConstants.CBUS_AREQ);
+        }
+        tc.sendCanMessage(m, this);
+    }
+    
+    /**
      * Handle a request to change state by sending CBUS events.
      *
      * @param s new state value
@@ -77,37 +95,99 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
     protected void forwardCommandChangeToLayout(int s) {
         CanMessage m;
         if (s == Turnout.THROWN) {
-            m = addrThrown.makeMessage(tc.getCanid());
+            if (getInverted()){
+                m = addrClosed.makeMessage(tc.getCanid());
+            } else {
+                m = addrThrown.makeMessage(tc.getCanid());
+            }
             tc.sendCanMessage(m, this);
         } else if (s == Turnout.CLOSED) {
-            m = addrClosed.makeMessage(tc.getCanid());
+            if (getInverted()){
+                m = addrThrown.makeMessage(tc.getCanid());
+            }
+            else {
+                m = addrClosed.makeMessage(tc.getCanid());
+            }
             tc.sendCanMessage(m, this);
         }
     }
-
+    
+    /**
+     * Package method returning CanMessage for the Thrown Turnout Address
+     */    
+    public CanMessage getAddrThrown(){
+        CanMessage m;
+        if (getInverted()){
+            m = addrClosed.makeMessage(tc.getCanid());
+        } else {
+            m = addrThrown.makeMessage(tc.getCanid());
+        }
+        return m;
+    }
+    
+    /**
+     * Package method returning CanMessage for the Closed Turnout Address
+     */    
+    public CanMessage getAddrClosed(){
+        CanMessage m;
+        if (getInverted()){
+            m = addrThrown.makeMessage(tc.getCanid());
+        } else {
+            m = addrClosed.makeMessage(tc.getCanid());
+        }
+        return m;
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void message(CanMessage f) {
         if (addrThrown.match(f)) {
-            newCommandedState(THROWN);
+            newCommandedState(!getInverted() ? THROWN : CLOSED);
         } else if (addrClosed.match(f)) {
-            newCommandedState(CLOSED);
+            newCommandedState(!getInverted() ? CLOSED : THROWN);
         }
     }
-
+    
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void reply(CanReply f) {
         // convert response events to normal
         f = CbusMessage.opcRangeToStl(f);
         if (addrThrown.match(f)) {
-            newCommandedState(THROWN);
+            newCommandedState(!getInverted() ? THROWN : CLOSED);
         } else if (addrClosed.match(f)) {
-            newCommandedState(CLOSED);
+            newCommandedState(!getInverted() ? CLOSED : THROWN);
         }
     }
-
+    
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void turnoutPushbuttonLockout(boolean locked) {
     }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean canInvert() {
+        return true;
+    }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void dispose() {
+        tc.removeCanListener(this);
+        super.dispose();
+    }    
+    
+    
     private final static Logger log = LoggerFactory.getLogger(CbusTurnout.class);
 }

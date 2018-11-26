@@ -464,7 +464,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
                     public void run() {
                         engineEditFrame = new EngineEditFrame();
                         engineEditFrame.initComponents();
-                        engineEditFrame.loadEngine(engine);
+                        engineEditFrame.load(engine);
                     }
                 });
                 break;

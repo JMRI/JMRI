@@ -12,7 +12,7 @@ import org.junit.Assert;
 
 /**
  * JUnit tests for the rps.PositionFile class.
- * <P>
+ * <p>
  * Stores a PositionFileTest.xml file in the temp directory below current
  * working directory.
  *

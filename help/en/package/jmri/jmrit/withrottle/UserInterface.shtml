@@ -22,7 +22,7 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>JMRI: WiFi Throttle</h1>This window controls the
+      <h1>JMRI: WiFi Connected Throttle</h1>The WiThrottle window controls the
       connection between WiFi throttles, e.g. an iPhone, iPod
       Touch, or Android Phone, and JMRI.
 
@@ -80,6 +80,10 @@
       Google Play Store</a> or the <a href=
       "http://enginedriver.mstevetodd.com">EngineDriver site</a></p>
 
+      <p>You can use any of these devices via the same or a different (remote) 
+      network than the one that your JMRI computer is running on.  See below
+      for more information on remote use of mobile devices.</p>
+      
       <p>The protocol is described on a <a href=
       "Protocol.shtml">separate page</a>. For more on JMRI
       networking, see the <a href=
@@ -130,6 +134,52 @@
       built and controlled. These consists should perform better
       when built with a WiFi device, but controlled by a throttle
       from the DCC manufacturer of your system.</p>
+      
+      <h2>Using A Remote Mobile Device Throttle</h2>
+      <!-- Section added by Jerry Grochow 2018-09-29 -->
+	  
+ <p>Typically, people using smartphones or tablets as throttles are physically in the same room as the layout
+ they are controlling.  Mobile device throttles, however, can be operated from anywhere in the world,
+ significantly adding to the fun of model railroading by making it possible to share control of a layout with
+ family or friends many miles away.</p>
+
+ <p>Setting up a mobile device throttle is straighforward, as discussed above.  Apps such as the similarly named WiThrottle
+ (for IOS devices) and EngineDriver (for Android devices) will either recognize that JMRI WiThrottle 
+ Server is transmitting or ask you to connect to the server manually by entering its IP address and 
+ port.  The WiThrottle Server displays its broadcast IP address and port in the top section of the WiThrottle
+ window.  If you are using a typical home router, this will begin with 192 or 10 and consist of four parts,
+ for example 192.168.0.103.  This "internal" IP address will only be recognized by other devices connecting
+ to the same local network.</p>
+
+ <p>Setting up for a remote mobile device throttle requires some additional steps. If the mobile device you are
+ going to use as a throttle is connecting to a different network than your
+ local network (as, for example, is obviously the case if the remote operator is in another city),
+ that mobile device will have to be told the "external" or "public" address of your JMRI computer and a port
+ number that will allow it to connect remotely to your JMRI computer.  You can look up the public IP address
+ for your local router either by logging into the router's administrative portal or using a browser on your
+ JMRI computer to go to the web site <a href="https://whatismypublicip.com">WhatIsMyPublicIP.com</a> or
+ similar.  You then have to create a link between that IP address and a port number to the internal IP address
+ and port number of the JMRI WiThrottle Server.  This is called "port forwarding" and needs to be set up on
+ your local router.  Setting up port forwarding varies with the model of router so we won't attempt to give
+ specific instructions on how to do that.  However, detailed instructions can usually be found on the internet
+ and the topic has been addressed in the JMRI online forum as well.</p>
+
+<p>Once you have determined the public address of your JMRI computer and set up port forwarding 
+ to the WiThrottle Server, you enter this information into the throttle app on your mobile device. 
+ You will know you have been successful when your mobile device's name appears in the WiThrottle Server
+ window and your engine roster appears on your app.
+
+<p>TROUBLESHOOTING: if you get an error or your mobile device app doesn't appear to connect, check that
+ you have the correct internal and public IP addresses (which may change from day to day due to the way
+ your network router and internet service provider assign addresses), correct port number, and that you
+ saved the port forwarding information to your router's memory.</p>
+ 
+<p>Now all you have to do is provide a way for the remote engineer to talk with you and see your layout
+ while he or she takes control of your JMRI-enabled layout via a mobile device throttle from anywhere in
+ the world!  [FYI: use FaceTime or Skype or some other video system that provides realtime communication
+ for this purpose.  It is generally not recommended to use remote monitoring cameras such as are used for
+ baby monitoring or security cameras as most introduce a several second delay -- something that could lead
+ to some very interesting railroad accidents!]</p>
 
       <!--#include virtual="/Footer" -->
     </div>

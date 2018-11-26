@@ -228,6 +228,8 @@ public class DefaultConditionalTest {
         // Test single condition
         testCalculate(Conditional.TRUE, "R1", conditionalVariablesList_True, "");
         testCalculate(Conditional.FALSE, "R1", conditionalVariablesList_False, "");
+        testCalculate(Conditional.FALSE, "not R1", conditionalVariablesList_True, "");
+        testCalculate(Conditional.TRUE, "not R1", conditionalVariablesList_False, "");
         
         // Test single condition with variables that has the flag "not" set
         testCalculate(Conditional.FALSE, "R1", conditionalVariablesList_NotTrue, "");
@@ -247,6 +249,8 @@ public class DefaultConditionalTest {
         testCalculate(Conditional.FALSE, "R12 and R10",
                 conditionalVariablesList_TrueTrueFalseTrueTrueFalseTrueTrueFalseTrueTrueFalse, "");
         testCalculate(Conditional.TRUE, "R12 or R10",
+                conditionalVariablesList_TrueTrueFalseTrueTrueFalseTrueTrueFalseTrueTrueFalse, "");
+        testCalculate(Conditional.FALSE, "not (R12 or R10)",
                 conditionalVariablesList_TrueTrueFalseTrueTrueFalseTrueTrueFalseTrueTrueFalse, "");
         
         // Test parentheses
@@ -544,6 +548,112 @@ public class DefaultConditionalTest {
         return testConditionalAction;
     }
     
+    // Test takeActionIfNeeded()
+    // This test tests currentState and option
+    @Test
+    public void testActionCurrentState() {
+        ConditionalVariable[] conditionalVariables_True
+                = { new ConditionalVariableStatic(Conditional.TRUE) };
+        List<ConditionalVariable> conditionalVariablesList_True = Arrays.asList(conditionalVariables_True);
+        
+        ConditionalVariable[] conditionalVariables_False
+                = { new ConditionalVariableStatic(Conditional.FALSE) };
+        List<ConditionalVariable> conditionalVariablesList_False = Arrays.asList(conditionalVariables_False);
+        
+        TestConditionalAction testConditionalAction;
+        
+        // Test old state == TRUE && currentState == TRUE && option == ACTION_OPTION_ON_CHANGE_TO_TRUE
+        Memory myMemory = InstanceManager.getDefault(MemoryManager.class).newMemory("MySystemName", "MemoryValue");
+        testConditionalAction = getConditionalAction(Conditional.ACTION_SET_MEMORY, myMemory);
+        testConditionalAction._option = Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE;
+        testConditionalAction._actionString = "NewValue";
+        DefaultConditional ix1 = getConditional(conditionalVariablesList_True, testConditionalAction);
+        ix1.calculate(true, null);
+        myMemory.setValue("OldValue");
+        ix1.setStateVariables(conditionalVariablesList_True);
+        ix1.calculate(true, null);
+        Assert.assertTrue("memory has not been set", "OldValue".equals(myMemory.getValue()));
+        
+        // Test old state == FALSE && currentState == TRUE && option == ACTION_OPTION_ON_CHANGE_TO_TRUE
+        testConditionalAction = getConditionalAction(Conditional.ACTION_SET_MEMORY, myMemory);
+        testConditionalAction._actionString = "NewValue";
+        testConditionalAction._option = Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE;
+        ix1 = getConditional(conditionalVariablesList_False, testConditionalAction);
+        ix1.calculate(true, null);
+        ix1 = getConditional(conditionalVariablesList_True, testConditionalAction);
+        myMemory.setValue("OldValue");
+        ix1.calculate(true, null);
+        Assert.assertTrue("memory has been set", "NewValue".equals(myMemory.getValue()));
+        
+        // Test old state == FALSE && currentState == FALSE && option == ACTION_OPTION_ON_CHANGE_TO_FALSE
+        testConditionalAction = getConditionalAction(Conditional.ACTION_SET_MEMORY, myMemory);
+        testConditionalAction._option = Conditional.ACTION_OPTION_ON_CHANGE_TO_FALSE;
+        testConditionalAction._actionString = "NewValue";
+        ix1 = getConditional(conditionalVariablesList_False, testConditionalAction);
+        ix1.calculate(true, null);
+        myMemory.setValue("OldValue");
+        ix1.setStateVariables(conditionalVariablesList_False);
+        ix1.calculate(true, null);
+        Assert.assertTrue("memory has not been set", "OldValue".equals(myMemory.getValue()));
+        
+        // Test old state == TRUE && currentState == FALSE && option == ACTION_OPTION_ON_CHANGE_TO_FALSE
+        testConditionalAction = getConditionalAction(Conditional.ACTION_SET_MEMORY, myMemory);
+        testConditionalAction._actionString = "NewValue";
+        testConditionalAction._option = Conditional.ACTION_OPTION_ON_CHANGE_TO_FALSE;
+        ix1 = getConditional(conditionalVariablesList_True, testConditionalAction);
+        ix1.calculate(true, null);
+        myMemory.setValue("OldValue");
+        ix1.setStateVariables(conditionalVariablesList_False);
+        ix1 = getConditional(conditionalVariablesList_False, testConditionalAction);
+        ix1.calculate(true, null);
+        Assert.assertTrue("memory has been set", "NewValue".equals(myMemory.getValue()));
+        
+        // Test old state == FALSE && currentState == FALSE && option == ACTION_OPTION_ON_CHANGE
+        testConditionalAction = getConditionalAction(Conditional.ACTION_SET_MEMORY, myMemory);
+        testConditionalAction._option = Conditional.ACTION_OPTION_ON_CHANGE;
+        testConditionalAction._actionString = "NewValue";
+        ix1 = getConditional(conditionalVariablesList_False, testConditionalAction);
+        ix1.calculate(true, null);
+        myMemory.setValue("OldValue");
+        ix1.setStateVariables(conditionalVariablesList_False);
+        ix1.calculate(true, null);
+        Assert.assertTrue("memory has not been set", "OldValue".equals(myMemory.getValue()));
+        
+        // Test old state == FALSE && currentState == TRUE && option == ACTION_OPTION_ON_CHANGE
+        testConditionalAction = getConditionalAction(Conditional.ACTION_SET_MEMORY, myMemory);
+        testConditionalAction._actionString = "NewValue";
+        testConditionalAction._option = Conditional.ACTION_OPTION_ON_CHANGE;
+        ix1 = getConditional(conditionalVariablesList_True, testConditionalAction);
+        ix1.calculate(true, null);
+        myMemory.setValue("OldValue");
+        ix1.setStateVariables(conditionalVariablesList_True);
+        ix1 = getConditional(conditionalVariablesList_False, testConditionalAction);
+        ix1.calculate(true, null);
+        Assert.assertTrue("memory has been set", "NewValue".equals(myMemory.getValue()));
+        
+        // Test old state == TRUE && currentState == FALSE && option == ACTION_OPTION_ON_CHANGE
+        testConditionalAction = getConditionalAction(Conditional.ACTION_SET_MEMORY, myMemory);
+        testConditionalAction._option = Conditional.ACTION_OPTION_ON_CHANGE;
+        testConditionalAction._actionString = "NewValue";
+        ix1 = getConditional(conditionalVariablesList_True, testConditionalAction);
+        ix1.calculate(true, null);
+        myMemory.setValue("OldValue");
+        ix1.setStateVariables(conditionalVariablesList_False);
+        ix1.calculate(true, null);
+        Assert.assertTrue("memory has been set", "NewValue".equals(myMemory.getValue()));
+        
+        // Test old state == TRUE && currentState == TRUE && option == ACTION_OPTION_ON_CHANGE
+        testConditionalAction = getConditionalAction(Conditional.ACTION_SET_MEMORY, myMemory);
+        testConditionalAction._actionString = "NewValue";
+        testConditionalAction._option = Conditional.ACTION_OPTION_ON_CHANGE;
+        ix1 = getConditional(conditionalVariablesList_True, testConditionalAction);
+        ix1.calculate(true, null);
+        myMemory.setValue("OldValue");
+        ix1.setStateVariables(conditionalVariablesList_True);
+        ix1.calculate(true, null);
+        Assert.assertTrue("memory has not been set", "OldValue".equals(myMemory.getValue()));
+    }
+    
     @Test
     public void testAction() {
         ConditionalVariable[] conditionalVariables_True
@@ -667,19 +777,6 @@ public class DefaultConditionalTest {
         // Test ACTION_SET_NXPAIR_ENABLED
         // Test ACTION_SET_NXPAIR_DISABLED
         // Test ACTION_SET_NXPAIR_SEGMENT
-       
-        
-        
-        
-        
-        // Test takeActionIfNeeded()
-        // Test currentState == TRUE && option == ACTION_OPTION_ON_CHANGE_TO_TRUE
-        // Test currentState != TRUE && option == ACTION_OPTION_ON_CHANGE_TO_TRUE
-        // Test currentState == FALSE && option == ACTION_OPTION_ON_CHANGE_TO_FALSE
-        // Test currentState != FALSE && option == ACTION_OPTION_ON_CHANGE_TO_FALSE
-        // Test option == ACTION_OPTION_ON_CHANGE
-        
-        // Test every type. Conditional.ACTION_NONE, ...
     }
     
     @Test

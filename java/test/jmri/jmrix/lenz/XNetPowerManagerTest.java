@@ -46,8 +46,18 @@ public class XNetPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBas
     }
 
     @Override
+    protected void sendIdleReply() {
+        return;
+    }
+
+    @Override
     protected void hearOff() {
         sendOffReply();
+    }
+
+    @Override
+    protected void hearIdle() {
+        return;
     }
 
     @Override
@@ -70,6 +80,11 @@ public class XNetPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBas
     protected boolean outboundOffOK(int index) {
         XNetMessage m = XNetMessage.getEmergencyOffMsg();
         return tc.outbound.elementAt(index).equals(m);
+    }
+
+    @Override
+    protected boolean outboundIdleOK(int index) {
+        return true;
     }
 
     @Test

@@ -10,7 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * <P>
+ * <p>
  * Tests for RaspberryPiTurnoutManager
  * </P>
  * @author Paul Bender Copyright (C) 2016

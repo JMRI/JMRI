@@ -116,6 +116,7 @@ public class ProgDebugger implements AddressedProgrammer {
     }
 
     @Override
+    @Deprecated // 4.1.1
     public void writeCV(int CV, int val, ProgListener p) throws ProgrammerException {
         nOperations++;
         final ProgListener m = p;
@@ -134,7 +135,7 @@ public class ProgDebugger implements AddressedProgrammer {
             public void run() {
                 log.debug("write CV reply");
                 if (l != null) {
-                    l.programmingOpReply(val, 0);
+                    notifyProgListenerEnd(l, val, 0);
                 }
             }  // 0 is OK status
         };
@@ -158,7 +159,7 @@ public class ProgDebugger implements AddressedProgrammer {
     boolean confirmOK;  // cached result of last compare
 
     @Override
-    @SuppressWarnings("deprecation") // parent Programmer method deprecated, will remove at same time
+    @Deprecated // 4.1.1
     public final void confirmCV(int CV, int val, ProgListener p) throws ProgrammerException {
         confirmCV("" + CV, val, p);
     }
@@ -192,9 +193,9 @@ public class ProgDebugger implements AddressedProgrammer {
             public void run() {
                 log.debug("read CV reply");
                 if (confirmOK) {
-                    l.programmingOpReply(result, ProgListener.OK);
+                    notifyProgListenerEnd(l, val, ProgListener.OK);
                 } else {
-                    l.programmingOpReply(result, ProgListener.ConfirmFailed);
+                    notifyProgListenerEnd(l, result, ProgListener.ConfirmFailed);
                 }
             }
         };
@@ -208,6 +209,7 @@ public class ProgDebugger implements AddressedProgrammer {
     }
 
     @Override
+    @Deprecated // 4.1.1
     public void readCV(int CV, ProgListener p) throws ProgrammerException {
         final ProgListener m = p;
         _lastReadCv = CV;
@@ -231,7 +233,7 @@ public class ProgDebugger implements AddressedProgrammer {
             @Override
             public void run() {
                 log.debug("read CV reply");
-                l.programmingOpReply(retval, 0);
+                notifyProgListenerEnd(l, retval, 0);
             }  // 0 is OK status
         };
         sendReturn(r);

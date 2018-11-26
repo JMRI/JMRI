@@ -17,9 +17,7 @@ public class DataSourceAction extends jmri.util.JmriJFrameAction {
 
     public DataSourceAction() {
         super(""); // have to invoke a ctor that exists
-        java.util.ResourceBundle rb
-                = java.util.ResourceBundle.getBundle("jmri.jmrix.pricom.pockettester.TesterBundle");
-        putValue(javax.swing.Action.NAME, rb.getString("ActionSource"));
+        putValue(javax.swing.Action.NAME, Bundle.getMessage("ActionSource"));
     }
 
     /**

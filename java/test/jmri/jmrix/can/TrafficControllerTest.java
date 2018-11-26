@@ -33,8 +33,6 @@ public class TrafficControllerTest extends AbstractCanTrafficControllerTest {
         JUnitUtil.resetInstanceManager();
         tc = new TrafficController(){
            @Override
-           protected void setInstance() {}
-           @Override
            protected void forwardMessage(AbstractMRListener client, AbstractMRMessage m){
            }
            @Override

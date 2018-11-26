@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2018 All rights reserved                            -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2018</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Alain</firstname>
+        <surname>Le Marchand</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2018-10-06</date>
+      <authorinitials>ALM</authorinitials>
+      <revremark>Initial version as separate file for Uhlenbrock_36300.xml.
+      Based on uhlenbrock/cv100error</revremark>
+    </revision>
+  <!-- Uhlenbrock Decoder Configuration CV 62 - error register -->
+  </revhistory>
+  <variable item="Error register" CV="62" default="0">
+	<enumVal>
+	  <enumChoice choice="No error" value="0">
+            <choice>No error</choice>
+            <choice xml:lang="de">kein Fehler</choice>
+            <choice xml:lang="it">Nessun Errore</choice>
+            <choice xml:lang="nl">Geen fout</choice>
+	  </enumChoice>
+	  <enumChoice choice="Motor short circuit">
+            <choice>Motor short circuit</choice>
+            <choice xml:lang="de">Kurzschluss Motor</choice>
+            <choice xml:lang="it">Corto-Circuito Motore</choice>
+            <choice xml:lang="nl">Fout in motor</choice>
+	  </enumChoice>
+	  <enumChoice choice="Function output short circuit">
+            <choice>Function output short circuit</choice>
+            <choice xml:lang="de">Kurzschluss Funktionsausgang</choice>
+            <choice xml:lang="it">Corto-Circuito Functione</choice>
+            <choice xml:lang="nl">Fout in functie-uitgang</choice>
+	  </enumChoice>
+	  <enumChoice choice="Motor+Light short circuit">
+            <choice>Motor+Functions short circuit</choice>
+            <choice xml:lang="de">Kurzschluss Motor+Funktione</choice>
+            <choice xml:lang="it">Corto-Circuito Motore e Functione</choice>
+            <choice xml:lang="nl">Fout in Moter+Functie</choice>
+	  </enumChoice>
+      <enumChoice choice="Temperature error">
+            <choice>Temperature Error</choice>
+            <choice xml:lang="de">Temperaturüberschreitung</choice>
+            <choice xml:lang="nl">Temperatuuroverschrijding</choice>
+       </enumChoice>
+    </enumVal>
+	<label>Error register</label>
+	<label xml:lang="de">Fehlerspeicher</label>
+    <label xml:lang="it">Errore registro</label>
+    <label xml:lang="nl">Fout-register</label>
+	<tooltip>0 = No error (reset error register)</tooltip>
+	<tooltip xml:lang="de">0 = kein Fehler (Fehlerspeicher zurücksetzen)</tooltip>
+    <tooltip xml:lang="it">0 = Nessun errore (reset registro errori)</tooltip>
+    <tooltip xml:lang="nl">0 = Geen fout (reset het Fout-register)</tooltip>
+  </variable>
+</variables>

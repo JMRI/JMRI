@@ -380,7 +380,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         InstanceManager.getDefault(jmri.LogixManager.class);
         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class);
 
-        // Once all the preferences have been loaded we can initial the preferences.
+        // Once all the preferences have been loaded we can initialise the preferences.
         // Doing it in a thread at this stage means we can let it work in the background.
         new Thread(() -> {
             try {
@@ -388,7 +388,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
                     tp.init();
                 });
             } catch (RuntimeException ex) {
-                log.error("Error trying to setup preferences {}", ex.getLocalizedMessage(), ex);
+                log.error("Error trying to set up preferences {}", ex.getLocalizedMessage(), ex);
             }
         }, "init prefs").start();
 
@@ -799,7 +799,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         if (name == null) {
             name = conn.getManufacturer();
         }
-        if (ConnectionStatus.instance().isConnectionOk(conn.getInfo())) {
+        if (ConnectionStatus.instance().isConnectionOk(null, conn.getInfo())) {
             cs.setForeground(Color.black);
             String cf = Bundle.getMessage("ConnectionSucceeded", name, conn.name(), conn.getInfo());
             cs.setText(cf);
@@ -1129,12 +1129,13 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         Dimension screen = frame.getToolkit().getScreenSize();
         Dimension size = frame.getSize();
 
-        Point p = InstanceManager.getDefault(UserPreferencesManager.class).getWindowLocation(containedPane.getClass().getName());
-        if (p != null) {
-            frame.setLocation(p);
-        } else {
-            frame.setLocation((screen.width - size.width) / 2, (screen.height - size.height) / 2);
-        }
+        // first set a default position and size
+        frame.setLocation((screen.width - size.width) / 2, (screen.height - size.height) / 2);
+        
+        // then attempt set from stored preference
+        frame.setFrameLocation();
+        
+        // and finally show
         frame.setVisible(true);
     }
 

@@ -42,6 +42,7 @@ import javax.swing.tree.DefaultTreeSelectionModel;
 import javax.swing.tree.TreePath;
 import jmri.Audio;
 import jmri.Conditional;
+import jmri.Conditional.Operator;
 import jmri.ConditionalAction;
 import jmri.ConditionalVariable;
 import jmri.InstanceManager;
@@ -756,9 +757,9 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         // default of operator for postion 0 (row 1) is Conditional.OPERATOR_NONE
         if (size > 1) {
             if (_logicType == Conditional.ALL_OR) {
-                _curVariable.setOpern(Conditional.OPERATOR_OR);
+                _curVariable.setOpern(Conditional.Operator.OR);
             } else {
-                _curVariable.setOpern(Conditional.OPERATOR_AND);
+                _curVariable.setOpern(Conditional.Operator.AND);
             }
         }
         appendToAntecedent();
@@ -987,11 +988,11 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         }
 
         makeAntecedent();
-        int oper;
+        Operator oper;
         if (newType != Conditional.MIXED) {
-            oper = Conditional.OPERATOR_OR;
+            oper = Conditional.Operator.OR;
             if (newType == Conditional.ALL_AND) {
-                oper = Conditional.OPERATOR_AND;
+                oper = Conditional.Operator.AND;
             }
 
             // Update the variable list and tree node entries
@@ -1193,7 +1194,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
 
                 // Adjust operator
                 if (_curNodeRow == 0 && _variableList.size() > 1) {
-                    _variableList.get(1).setOpern(Conditional.OPERATOR_NONE);
+                    _variableList.get(1).setOpern(Conditional.Operator.NONE);
                 }
 
                 // Remove the row, update and refresh the Variable list, update references
@@ -1285,9 +1286,9 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 _variableList.set(newVarRow, tempVar);
                 // Adjust operator
                 if (newVarRow == 0) {
-                    _variableList.get(newVarRow).setOpern(Conditional.OPERATOR_NONE);
-                    int newOper = (_logicType == Conditional.ALL_AND)
-                            ? Conditional.OPERATOR_AND : Conditional.OPERATOR_OR;
+                    _variableList.get(newVarRow).setOpern(Conditional.Operator.NONE);
+                    Operator newOper = (_logicType == Conditional.ALL_AND)
+                            ? Conditional.Operator.AND : Conditional.Operator.OR;
                     _variableList.get(_curNodeRow).setOpern(newOper);
                 }
                 updateVariableList();
@@ -1330,9 +1331,9 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 _variableList.set(newVarRow, tempVar);
                 // Adjust operator
                 if (_curNodeRow == 0) {
-                    _variableList.get(_curNodeRow).setOpern(Conditional.OPERATOR_NONE);
-                    int newOper = (_logicType == Conditional.ALL_AND)
-                            ? Conditional.OPERATOR_AND : Conditional.OPERATOR_OR;
+                    _variableList.get(_curNodeRow).setOpern(Conditional.Operator.NONE);
+                    Operator newOper = (_logicType == Conditional.ALL_AND)
+                            ? Conditional.Operator.AND : Conditional.Operator.OR;
                     _variableList.get(newVarRow).setOpern(newOper);
                 }
                 updateVariableList();
@@ -3077,15 +3078,15 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
      */
     @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "Except for the root node, all nodes are ConditionalTreeNode")  // NOI18N
     void updateVariableOperator() {
-        int oldOper = _curVariable.getOpern();
+        Operator oldOper = _curVariable.getOpern();
         if (_curNodeRow > 0) {
             if (_variableOperBox.getSelectedIndex() == 0) {
-                _curVariable.setOpern(Conditional.OPERATOR_AND);
+                _curVariable.setOpern(Conditional.Operator.AND);
             } else {
-                _curVariable.setOpern(Conditional.OPERATOR_OR);
+                _curVariable.setOpern(Conditional.Operator.OR);
             }
         } else {
-            _curVariable.setOpern(Conditional.OPERATOR_NONE);
+            _curVariable.setOpern(Conditional.Operator.NONE);
         }
         if (_curVariable.getOpern() != oldOper) {
             makeAntecedent();

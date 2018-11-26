@@ -38,7 +38,7 @@ class xnetListener(jmri.jmrix.lenz.XNetListener):
 # we need to create a listener and register it.
 xl=xnetListener()
 # this requires gaining access to the traffic controller
-tc= jmri.jmrix.lenz.XNetTrafficController.instance()
+tc = jmri.InstanceManager.getDefault(jmri.jmrix.lenz.XNetSystemConnectionMemo).getTrafficController()
 # and registering as a listener.  The first parameter to this
 # routine is a mask.  The mask used here returns all messages
 # received to/from the command station.

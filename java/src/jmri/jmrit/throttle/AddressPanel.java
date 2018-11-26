@@ -596,7 +596,6 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
      *
      * @param e The Element containing prefs as defined in DTD/throttle-config
      */
-    @SuppressWarnings("unchecked")
     public void setXml(Element e) {
         Element window = e.getChild("window");
         WindowPreferences.setPreferences(this, window);

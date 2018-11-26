@@ -22,11 +22,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import jmri.BeanSetting;
-import jmri.InstanceManager;
-import jmri.NamedBean;
-import jmri.Path;
-import jmri.ShutDownTask;
+import jmri.*;
 import jmri.implementation.swing.SwingShutDownTask;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -78,6 +74,7 @@ public class WarrantTableAction extends AbstractAction {
     }
 
     @Override
+    @InvokeOnGuiThread
     public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand();
         if (Bundle.getMessage("ShowWarrants").equals(command)) {
@@ -93,9 +90,7 @@ public class WarrantTableAction extends AbstractAction {
         }
         initPathPortalCheck();
         OBlockManager manager = InstanceManager.getDefault(OBlockManager.class);
-        String[] sysNames = manager.getSystemNameArray();
-        for (String sysName : sysNames) {
-            OBlock block = manager.getBySystemName(sysName);
+        for (OBlock block : manager.getNamedBeanSet()) {
             checkPathPortals(block);
         }
         if (_edit) {
@@ -120,6 +115,7 @@ public class WarrantTableAction extends AbstractAction {
         return null;
     }
 
+    @InvokeOnGuiThread
     synchronized protected static void updateWarrantMenu() {
         _warrantMenu.removeAll();
         _warrantMenu.add(getDefault());
@@ -129,15 +125,14 @@ public class WarrantTableAction extends AbstractAction {
             openWarrantFrame(e.getActionCommand());
         };
         WarrantManager manager = InstanceManager.getDefault(WarrantManager.class);
-        String[] sysNames = manager.getSystemNameArray();
-        if (sysNames.length == 0) { // when there are no Warrants, enter the word "None" to the submenu
+        if (manager.getObjectCount() == 0) { // when there are no Warrants, enter the word "None" to the submenu
             JMenuItem _noWarrants = new JMenuItem(Bundle.getMessage("None"));
             editWarrantMenu.add(_noWarrants);
             // disable it
             _noWarrants.setEnabled(false);
         } else { // when there are Warrents, add them to the submenu
-            for (String sysName : sysNames) {
-                Warrant warrant = manager.getBySystemName(sysName);
+            for (Warrant warrant : manager.getNamedBeanSet()) {
+                // Warrant warrent = (Warrant) object;
                 JMenuItem mi = new JMenuItem(warrant.getDisplayName());
                 mi.setActionCommand(warrant.getDisplayName());
                 mi.addActionListener(editWarrantAction);
@@ -155,7 +150,7 @@ public class WarrantTableAction extends AbstractAction {
         });
         _warrantMenu.add(makeLogMenu());
 
-        log.debug("updateMenu to {} warrants.", sysNames.length);
+        log.debug("updateMenu to {} warrants.", manager.getObjectCount());
     }
 
     protected static JMenuItem makeLogMenu() {
@@ -198,6 +193,7 @@ public class WarrantTableAction extends AbstractAction {
         }
     }
 
+    @InvokeOnGuiThread
     synchronized protected static void closeNXFrame(NXFrame frame) {
         if (frame != null) {
             if (frame.equals(_nxFrame)) {
@@ -448,16 +444,14 @@ public class WarrantTableAction extends AbstractAction {
     public static boolean checkSharedTurnouts(OBlock block) {
         boolean hasShared = false;
         OBlockManager manager = InstanceManager.getDefault(OBlockManager.class);
-        String[] sysNames = manager.getSystemNameArray();
         List<Path> pathList = block.getPaths();
         Iterator<Path> iter = pathList.iterator();
         while (iter.hasNext()) {
             OPath path = (OPath) iter.next();
-            for (String sysName : sysNames) {
-                if (block.getSystemName().equals(sysName)) {
+            for (OBlock b : manager.getNamedBeanSet()) {
+                if (block.getSystemName().equals(b.getSystemName())) {
                     continue;
                 }
-                OBlock b = manager.getBySystemName(sysName);
                 Iterator<Path> it = b.getPaths().iterator();
                 while (it.hasNext()) {
                     boolean shared = sharedTO(path, (OPath) it.next());

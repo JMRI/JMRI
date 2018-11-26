@@ -129,4 +129,10 @@ public abstract class AbstractSignalHeadTestBase {
         Assert.assertTrue(! (s.isShowingRestricting() && s.isCleared()));
     }
 
+    @Test
+    public void testGetBeanType(){
+         SignalHead s = getHeadToTest();
+         Assert.assertEquals("bean type",s.getBeanType(),Bundle.getMessage("BeanNameSignalHead"));
+    }
+
 }
