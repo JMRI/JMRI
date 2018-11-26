@@ -247,9 +247,9 @@ public class ProtocolOptionsFrame extends JmriJFrame {
             }
         });
 
-        JButton closeButton = new JButton(Bundle.getMessage("ButtonClose"));
-        bottomPanel.add(closeButton);
-        closeButton.addActionListener(new ActionListener() {
+        JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
+        bottomPanel.add(cancelButton);
+        cancelButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 ProtocolOptionsFrame.this.dispatchEvent(new WindowEvent(ProtocolOptionsFrame

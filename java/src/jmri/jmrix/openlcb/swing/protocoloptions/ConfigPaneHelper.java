@@ -26,7 +26,6 @@ public class ConfigPaneHelper {
      * adapter configs. The loadDetails() function needs to be overridden with the following
      * code:
      * <code>
-     *     @Override
      *     public void loadDetails(JPanel details) {
      *         setInstance();
      *         ConfigPaneHelper.maybeAddOpenLCBProtocolOptionsButton(this, additionalItems);
