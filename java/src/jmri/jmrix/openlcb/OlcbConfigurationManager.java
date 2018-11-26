@@ -398,8 +398,8 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         }
         InstanceManager.deregister(this, OlcbConfigurationManager.class);
 
-        clockControl.dispose();
         if (clockControl != null) {
+            clockControl.dispose();
             InstanceManager.deregister(clockControl, ClockControl.class);
         }
     }

@@ -130,7 +130,7 @@ public class ProtocolOptionsFrame extends JmriJFrame {
         tab.add(label, c1);
     }
 
-    private class ComboSelectionEntry {
+    private static class ComboSelectionEntry {
         final String displayKey;
         final String selectionKey;
 
