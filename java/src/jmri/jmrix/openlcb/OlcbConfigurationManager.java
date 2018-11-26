@@ -36,6 +36,7 @@ import org.openlcb.can.MessageBuilder;
 import org.openlcb.can.OpenLcbCanFrame;
 import org.openlcb.implementations.DatagramService;
 import org.openlcb.implementations.MemoryConfigurationService;
+import org.openlcb.protocols.TimeProtocol;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -98,6 +99,48 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
 
     jmri.jmrix.swing.ComponentFactory cf = null;
 
+    private void initializeFastClock() {
+        boolean isMaster = true;
+        String enableOption = adapterMemo.getProtocolOption(OPT_PROTOCOL_FASTCLOCK, OPT_FASTCLOCK_ENABLE);
+        if (OPT_FASTCLOCK_ENABLE_GENERATOR.equals(enableOption)) {
+            isMaster = true;
+        } else if (OPT_FASTCLOCK_ENABLE_CONSUMER.equals(enableOption)) {
+            isMaster = false;
+        } else {
+            // no clock needed.
+            return;
+        }
+
+        NodeID clockId = null;
+        String clockIdSetting = adapterMemo.getProtocolOption(OPT_PROTOCOL_FASTCLOCK, OPT_FASTCLOCK_ID);
+        if (OPT_FASTCLOCK_ID_DEFAULT.equals(clockIdSetting)) {
+            clockId = TimeProtocol.DEFAULT_CLOCK;
+        } else if (OPT_FASTCLOCK_ID_DEFAULT_RT.equals(clockIdSetting)) {
+            clockId = TimeProtocol.DEFAULT_RT_CLOCK;
+        } else if (OPT_FASTCLOCK_ID_ALT_1.equals(clockIdSetting)) {
+            clockId = TimeProtocol.ALT_CLOCK_1;
+        } else if (OPT_FASTCLOCK_ID_ALT_2.equals(clockIdSetting)) {
+            clockId = TimeProtocol.ALT_CLOCK_2;
+        } else if (OPT_FASTCLOCK_ID_CUSTOM.equals(clockIdSetting)) {
+            String customId = adapterMemo.getProtocolOption(OPT_PROTOCOL_FASTCLOCK, OPT_FASTCLOCK_CUSTOM_ID);
+            if (customId == null || customId.isEmpty()) {
+                log.error("OpenLCB clock initialize: User selected custom clock, but did not provide a Custom Clock ID. Using default clock.");
+            } else {
+                try {
+                    clockId = new NodeID(customId);
+                } catch (IllegalArgumentException e) {
+                    log.error("OpenLCB clock initialize: Custom Clock ID '{}' is in illegal format. Use dotted hex notation like 05.01.01.01.DD.EE", customId);
+                }
+            }
+        }
+        if (clockId == null) {
+            clockId = TimeProtocol.DEFAULT_CLOCK;
+        }
+        log.warn("Creating olcb clock with id {} is_master {}", clockId, isMaster);
+        clockControl = new OlcbClockControl(getInterface(), clockId, isMaster);
+        InstanceManager.setDefault(ClockControl.class, clockControl);
+    }
+
     @Override
     public void configureManagers() {
 
@@ -141,8 +184,7 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
 
         iface.registerMessageListener(new SimpleNodeIdentInfoHandler());
 
-        clockControl = new OlcbClockControl(iface, false);
-        InstanceManager.setDefault(ClockControl.class, clockControl);
+        initializeFastClock();
 
         aliasMap = new AliasMap();
         tc.addCanListener(new CanListener() {
@@ -233,7 +275,7 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
             return true;
         }
         if (type.equals(ClockControl.class)) {
-            return true;
+            return clockControl != null;
         }
         return false; // nothing, by default
     }
