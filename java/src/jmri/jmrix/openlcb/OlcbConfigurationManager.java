@@ -59,6 +59,35 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
     // Option key for User Description, used for the Simple Node Ident Protocol
     public static final String OPT_IDENT_DESCRIPTION = "UserDescription";
 
+    // Protocol key for fast clock
+    public static final String OPT_PROTOCOL_FASTCLOCK = "FastClock";
+
+    // Option key for fast clock mode
+    public static final String OPT_FASTCLOCK_ENABLE = "EnableMode";
+    // Option value for setting fast clock to disabled.
+    public static final String OPT_FASTCLOCK_ENABLE_OFF = "disabled";
+    // Option value for setting fast clock to clock generator/producer/master.
+    public static final String OPT_FASTCLOCK_ENABLE_GENERATOR = "generator";
+    // Option value for setting fast clock to clock consumer/slave.
+    public static final String OPT_FASTCLOCK_ENABLE_CONSUMER = "consumer";
+
+    // Option key for setting the clock identifier.
+    public static final String OPT_FASTCLOCK_ID = "ClockId";
+    // Option value for using the well-known clock id "default clock"
+    public static final String OPT_FASTCLOCK_ID_DEFAULT = "default";
+    // Option value for using the well-known clock id "default real-time clock"
+    public static final String OPT_FASTCLOCK_ID_DEFAULT_RT = "realtime";
+    // Option value for using the well-known clock id "alternate clock 1"
+    public static final String OPT_FASTCLOCK_ID_ALT_1 = "alt1";
+    // Option value for using the well-known clock id "alternate clock 2"
+    public static final String OPT_FASTCLOCK_ID_ALT_2 = "alt2";
+    // Option value for using a custom clock ID
+    public static final String OPT_FASTCLOCK_ID_CUSTOM = "custom";
+
+    // Option key for setting the clock identifier to a custom value. Must set ClockId==custom in
+    // order to be in effect. The custom clock id is in node ID format.
+    public static final String OPT_FASTCLOCK_CUSTOM_ID = "ClockCustomId";
+
     public OlcbConfigurationManager(CanSystemConnectionMemo memo) {
         super(memo);
 
