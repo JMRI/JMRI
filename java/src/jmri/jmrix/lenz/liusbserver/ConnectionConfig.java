@@ -66,6 +66,6 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
     }
 
     protected JTextField bcastPortField = new JTextField(String.valueOf(LIUSBServerAdapter.BROADCAST_TCP_PORT));
-    protected JLabel bcastPortFieldLabel = new JLabel(Bundle.getMessage("BroadCastPortLabel"));
+    protected JLabel bcastPortFieldLabel = new JLabel(Bundle.getMessage("BroadcastPortLabel"));
 
 }
