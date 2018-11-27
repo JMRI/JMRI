@@ -128,7 +128,7 @@ public class MarklinSensorManager extends jmri.managers.AbstractSensorManager
                     showErrorMessage(Bundle.getMessage("ErrorTitle"), Bundle.getMessage("ErrorConvertNumberX", curAddress), "" + ex, "", true, false);
             return null;
         }
-        if (tmpSName == null) { return null;}
+
         // Check to determine if the System Name is in use, return null if it is,
         // otherwise return the next valid address.
         Sensor s = getBySystemName(tmpSName);

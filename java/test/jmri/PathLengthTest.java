@@ -3,7 +3,7 @@ package jmri;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.junit.*;
+import org.junit.Assert;
 
 /**
  * Tests for setting and changing path lengths of the Path class
@@ -32,13 +32,13 @@ public class PathLengthTest extends TestCase {
         p.setBlock(b);
         b.addPath(p);
         b.setLength(100);
-        p.setLength(50);
-
-        Assert.assertEquals("check path length", 50f, p.getLengthMm(), 0.0);
         Assert.assertEquals("check block length", 100f, b.getLengthMm(), 0.0);
+        Assert.assertEquals("check path length equals block length", p.getLengthMm(), b.getLengthMm(), 0.0);
 
+        p.setLength(50);
+        Assert.assertEquals("check path length", 50f, p.getLengthMm(), 0.0);
         p.setLength(150);
-        Assert.assertEquals("check path length", b.getLengthMm(), p.getLengthMm(), 0.0);
+        Assert.assertEquals("check path length", 150f, p.getLengthMm(), 0.0);
         Assert.assertEquals("check block length", 100f, b.getLengthMm(), 0.0);
     }
 

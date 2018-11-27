@@ -34,6 +34,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
     private String realisticPresetName = Bundle.getMessage("RealisticPresetName");
     private String realisticOhPresetName = Bundle.getMessage("RealisticOhPresetName");
     private String british70sPresetName = Bundle.getMessage("British70sPresetName");
+    private String csdazd71PresetName = Bundle.getMessage("CsdAzd71PresetName");
     private String customPresetName = Bundle.getMessage("CustomPresetName");
 
     private transient final List<LayoutTrackDrawingOptions> ltdoList = new ArrayList<>();
@@ -1268,6 +1269,33 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         tempLTDO.setSideRailGap(0);
         tempLTDO.setSideRailWidth(1);
         tempLTDO.setSideTieColor(Color.BLACK);
+        tempLTDO.setSideTieGap(0);
+        tempLTDO.setSideTieLength(0);
+        tempLTDO.setSideTieWidth(0);
+        ltdoList.add(tempLTDO);
+
+        tempLTDO = new LayoutTrackDrawingOptions(csdazd71PresetName);
+        tempLTDO.setMainBallastColor(Color.decode("#000000"));
+        tempLTDO.setMainBallastWidth(0);
+        tempLTDO.setMainBlockLineDashPercentageX10(8);
+        tempLTDO.setMainBlockLineWidth(8);
+        tempLTDO.setMainRailColor(Color.decode("#202020"));
+        tempLTDO.setMainRailCount(1);
+        tempLTDO.setMainRailGap(0);
+        tempLTDO.setMainRailWidth(10);
+        tempLTDO.setMainTieColor(Color.decode("#000000"));
+        tempLTDO.setMainTieGap(0);
+        tempLTDO.setMainTieLength(0);
+        tempLTDO.setMainTieWidth(0);
+        tempLTDO.setSideBallastColor(Color.decode("#000000"));
+        tempLTDO.setSideBallastWidth(0);
+        tempLTDO.setSideBlockLineDashPercentageX10(8);
+        tempLTDO.setSideBlockLineWidth(8);
+        tempLTDO.setSideRailColor(Color.decode("#202020"));
+        tempLTDO.setSideRailCount(1);
+        tempLTDO.setSideRailGap(0);
+        tempLTDO.setSideRailWidth(10);
+        tempLTDO.setSideTieColor(Color.decode("#000000"));
         tempLTDO.setSideTieGap(0);
         tempLTDO.setSideTieLength(0);
         tempLTDO.setSideTieWidth(0);

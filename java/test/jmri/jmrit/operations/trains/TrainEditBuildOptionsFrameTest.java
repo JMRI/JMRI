@@ -152,7 +152,7 @@ public class TrainEditBuildOptionsFrameTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeave(f.saveTrainButton);
 
         // clear dialogue box
-        JemmyUtil.pressDialogButton(f, Bundle.getMessage("CanNotSave"), "OK");
+        JemmyUtil.pressDialogButton(f, Bundle.getMessage("CanNotSave"), Bundle.getMessage("ButtonOK"));
 
         Assert.assertEquals("loco 1 change", Train.CHANGE_ENGINES, t.getSecondLegOptions());
         Assert.assertEquals("loco 1 departure name", "", t.getSecondLegStartLocationName());
@@ -179,7 +179,7 @@ public class TrainEditBuildOptionsFrameTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeave(f.saveTrainButton);
 
         // clear dialogue box
-        JemmyUtil.pressDialogButton(f, Bundle.getMessage("CanNotSave"), "OK");
+        JemmyUtil.pressDialogButton(f, Bundle.getMessage("CanNotSave"), Bundle.getMessage("ButtonOK"));
 
         Assert.assertEquals("caboose 1 change", Train.ADD_CABOOSE, t.getSecondLegOptions());
 
@@ -194,7 +194,7 @@ public class TrainEditBuildOptionsFrameTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeave(f.saveTrainButton);
 
         // clear dialogue box
-        JemmyUtil.pressDialogButton(f, Bundle.getMessage("CanNotSave"), "OK");
+        JemmyUtil.pressDialogButton(f, Bundle.getMessage("CanNotSave"), Bundle.getMessage("ButtonOK"));
 
         Assert.assertEquals("helper 1 change", Train.HELPER_ENGINES, t.getSecondLegOptions());
 
@@ -217,7 +217,7 @@ public class TrainEditBuildOptionsFrameTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeave(f.saveTrainButton);
 
         // clear dialogue box
-        JemmyUtil.pressDialogButton(f, Bundle.getMessage("CanNotSave"), "OK");
+        JemmyUtil.pressDialogButton(f, Bundle.getMessage("CanNotSave"), Bundle.getMessage("ButtonOK"));
 
         Assert.assertEquals("loco 2 change", Train.CHANGE_ENGINES, t.getThirdLegOptions());
         Assert.assertEquals("loco 2 departure name", "", t.getThirdLegStartLocationName());
@@ -243,7 +243,7 @@ public class TrainEditBuildOptionsFrameTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeave(f.saveTrainButton);
 
         // clear dialogue box
-        JemmyUtil.pressDialogButton(f, Bundle.getMessage("CanNotSave"), Bundle.getMessage("OK"));
+        JemmyUtil.pressDialogButton(f, Bundle.getMessage("CanNotSave"), Bundle.getMessage("ButtonOK"));
 
         Assert.assertEquals("caboose 2 change", Train.ADD_CABOOSE, t.getThirdLegOptions());
 
@@ -258,7 +258,7 @@ public class TrainEditBuildOptionsFrameTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeave(f.saveTrainButton);
 
         // clear dialogue box
-        JemmyUtil.pressDialogButton(f, Bundle.getMessage("CanNotSave"), "OK");
+        JemmyUtil.pressDialogButton(f, Bundle.getMessage("CanNotSave"), Bundle.getMessage("ButtonOK"));
 
         Assert.assertEquals("helper 2 change", Train.HELPER_ENGINES, t.getThirdLegOptions());
 

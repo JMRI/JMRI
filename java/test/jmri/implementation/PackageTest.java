@@ -20,6 +20,7 @@ import org.junit.runners.Suite;
         DefaultConditionalActionTest.class,
         DefaultIdTagTest.class,
         DefaultLogixTest.class,
+        ActiveLogixTest.class,
         DefaultSignalSystemTest.class,
         DefaultSignalAppearanceMapTest.class,
         MultiIndexProgrammerFacadeTest.class,

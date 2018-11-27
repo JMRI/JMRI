@@ -26,11 +26,28 @@
     June 2003 version of the "Signals and indicators controlling train movements", 
     Module S1. </p>
     
-    <p>These masts do not cover route (Theatre) indicators. They should be created via signal heads and controlled via logixs.
-    Support for Junction (Feather) indicators is limited, and whilst a Feather can be described using a Signal Mast, its behaviour needs to be set up manually, 
-    using either Routes or Logix. </p>
+
+    <p>All definitions are suitable for Signal Mast Logic.</p>
+   
+    <p>The signal masts are added to Layout Editor Block changes,
+    with the exception of Buffer stops and Feather aspects.<p>
+   
+    <p>
+    Junction (Feather) indicators can be described using a Signal Mast, 
+    although its behaviour needs to be set up manually, 
+    using either Routes or Logix. 
+    <br>
+    Disable any unused aspect positions ( though most people include the Zero aspect
+    as it will be used as an unlit status for toggling ),
+    and add to a LE panel via the
+    Signal Mast Icon button in the add item bar.
     
-    
+    </p>
+
+    <p>These masts do not cover route (Theatre) indicators. 
+    They should be created via signal heads and controlled via logixs.
+    </p>
+   
    
     <p>
     For three and four aspect signals, there are two options on how they can be built using Signal Heads
@@ -42,7 +59,7 @@
     </p>
     
     
-    <p>Layouts using a CAN event-based system may be better off using Turnout Controlled Signal Masts, 
+    <p>Layouts using a CAN event-based system may be better off using Output Matrix or Turnout Controlled Signal Masts, 
     see an example at <a href="../../../help/en/html/hardware/can/cbus/index.shtml#signalling">MERG CBUS Signalling</a></p>
     
 
@@ -86,13 +103,22 @@
     <li><a href="appearance-4-i-c.xml">4 Aspect Signal With Call On  - Built using individual heads for each aspect</a>
     </ul>
     
-    <p>
-    Junction (Feather) indicator definitions:</p>
+    <p> Junction (Feather) indicator definitions:</p>
+    <table>
+    <tr><th>Aspect Name</th><th>Feather Direction</th></tr>
+    <tr><td>Zero</td><td>Unlit</td></tr>
+    <tr><td>One</td><td>North West</td></tr>
+    <tr><td>Two</td><td>West</td></tr>
+    <tr><td>Three</td><td>South West</td></tr>
+    <tr><td>Four</td><td>North East</td></tr>
+    <tr><td>Five</td><td>East</td></tr>
+    <tr><td>Six</td><td>South East</td></tr>
+    </table>  
     <ul>
     <li><a href="appearance-feather.xml">Feather with up to 6 positions</a></li>
     </ul>
     
-    <p>Position Light Signals definitions:</p>
+    <p>Position Light Signals definitions ( aka Shunt or Shunting Signals ):</p>
     <ul>
     <li><a href="appearance-plr.xml">Position Light Signal Red White Apperance</a>
     <li><a href="appearance-ply.xml">Position Light Signal Yellow White Apperance</a>

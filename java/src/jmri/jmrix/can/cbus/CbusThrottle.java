@@ -30,7 +30,12 @@ public class CbusThrottle extends AbstractThrottle {
      */
     public CbusThrottle(CanSystemConnectionMemo memo, LocoAddress address, int handle) {
         super(memo);
-
+        DccLocoAddress castaddress=null;
+        try {
+            castaddress = (DccLocoAddress) address;
+        } catch(java.lang.ClassCastException cce){
+            log.error("{} is not a DccLocoAddress",address);
+        }
         log.debug("Throttle created");
         cs = (CbusCommandStation) adapterMemo.get(jmri.CommandStation.class);
         _handle = handle;
@@ -70,7 +75,7 @@ public class CbusThrottle extends AbstractThrottle {
         this.f27 = false;
         this.f28 = false;
 
-        this.dccAddress = (DccLocoAddress) address;
+        this.dccAddress = castaddress;
         this.isForward = true;
 
 //        switch(slot.decoderType())
@@ -417,8 +422,11 @@ public class CbusThrottle extends AbstractThrottle {
             new_spd = new_spd | 0x80;
         }
         if (log.isDebugEnabled()) log.debug("Sending speed/dir for speed: " + new_spd);
+        // reset timeout
+        mRefreshTimer.stop();
+        mRefreshTimer.setRepeats(true);
+        mRefreshTimer.start();
         cs.setSpeedDir(_handle, new_spd);
-
         if (Math.abs(oldSpeed - this.speedSetting) > 0.0001) {
             notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting);
         }
@@ -553,7 +561,7 @@ public class CbusThrottle extends AbstractThrottle {
             mRefreshTimer.stop();
             mRefreshTimer.setRepeats(true);     // refresh until stopped by dispose
             mRefreshTimer.start();
-        } 
+        }
     }
 
     @Override

@@ -75,9 +75,13 @@ public class LnPacketizer extends LnTrafficController {
     public LinkedList<byte[]> xmtList = new LinkedList<byte[]>();
 
     /**
-     * XmtHandler (a local class) object to implement the transmit thread
+     * XmtHandler (a local class) object to implement the transmit thread.
+     * <p>
+     * We create this at construction time so that we can synchronize on it
+     * even as the object is coming up.  But we don't initialize and start it
+     * until later.
      */
-    protected Runnable xmtHandler;
+    protected Runnable xmtHandler = new XmtHandler();
 
     /**
      * RcvHandler (a local class) object to implement the receive thread
@@ -107,17 +111,15 @@ public class LnPacketizer extends LnTrafficController {
             msg[i] = (byte) m.getElement(i);
         }
 
-        log.debug("queue LocoNet packet: {}", m.toString());
-        // in an atomic operation, queue the request and wake the xmit thread
+        log.debug("queue LocoNet packet: {}", m);
+        // We need to queue the request and wake the xmit thread in an atomic operation
+        // But the thread might not be running, in which case the request is just 
+        // queued up.
         try {
             synchronized (xmtHandler) {
                 xmtList.addLast(msg);
-                xmtHandler.notify(); // NPE here on slow systems init state query
-                // null test added in 4.11.6 in LnPowerManager and LnSensorManager
+                xmtHandler.notify(); 
             }
-        } catch (NullPointerException npe) {
-            log.warn("xmtHandler.notify() npe");
-            throw npe; // is caught by LnSensor/PowerManager run()
         } catch (RuntimeException e) {
             log.warn("passing to xmit: unexpected exception: ", e);
         }
@@ -140,8 +142,7 @@ public class LnPacketizer extends LnTrafficController {
 
     // methods to connect/disconnect to a source of data in a LnPortController
 
-    // This is public to allow access from the internal class(es) when compiling with Java 1.1
-    public LnPortController controller = null;
+    protected LnPortController controller = null;
 
     /**
      * Make connection to an existing LnPortController object.
@@ -372,7 +373,7 @@ public class LnPacketizer extends LnTrafficController {
     class XmtHandler implements Runnable {
 
         /**
-         * {@inheritDoc}
+         * Loops forever, looking for message to send and processing them.
          */
         @Override
         public void run() {
@@ -464,9 +465,6 @@ public class LnPacketizer extends LnTrafficController {
         // make sure that the xmt priority is no lower than the current priority
         int xmtpriority = (Thread.MAX_PRIORITY - 1 > priority ? Thread.MAX_PRIORITY - 1 : Thread.MAX_PRIORITY);
         // start the XmtHandler in a thread of its own
-        if (xmtHandler == null) {
-            xmtHandler = new XmtHandler();
-        }
         Thread xmtThread = new Thread(xmtHandler, "LocoNet transmit handler"); // NOI18N
         log.debug("Xmt thread starts at priority {}", xmtpriority); // NOI18N
         xmtThread.setDaemon(true);

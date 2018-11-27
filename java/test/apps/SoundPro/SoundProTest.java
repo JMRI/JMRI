@@ -10,8 +10,8 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.Rule;
-import org.junit.rules.TemporaryFolder;
 import org.junit.rules.Timeout;
+import org.junit.rules.TemporaryFolder;
 import jmri.InstanceManager;
 import jmri.managers.DefaultShutDownManager;
 
@@ -166,7 +166,6 @@ public class SoundProTest {
     }
 
     @Test
-    @Ignore
     public void testLaunchSprog() throws IOException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 

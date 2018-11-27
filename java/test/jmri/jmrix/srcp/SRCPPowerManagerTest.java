@@ -40,6 +40,16 @@ public class SRCPPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBas
     }
 
     @Override
+    protected void sendIdleReply() {
+       return;
+    }
+
+    @Override
+    protected void hearIdle() {
+       return;
+    }
+
+    @Override
     protected int numListeners() {
         return stc.numListeners();
     }
@@ -56,6 +66,11 @@ public class SRCPPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBas
 
     @Override
     protected boolean outboundOffOK(int index) {
+        return ((stc.outbound.elementAt(index))).toString().equals("SET 1 POWER OFF\n");
+    }
+
+    @Override
+    protected boolean outboundIdleOK(int index) {
         return ((stc.outbound.elementAt(index))).toString().equals("SET 1 POWER OFF\n");
     }
 

@@ -37,6 +37,7 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
     public Element store(Object o) {
         getInstance(o);
         Element e = new Element("connection");
+        storeCommon(e, adapter);
         e.setAttribute("class", this.getClass().getName());
         return e;
     }

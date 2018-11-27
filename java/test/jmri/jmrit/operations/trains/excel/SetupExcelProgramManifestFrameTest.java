@@ -55,7 +55,7 @@ public class SetupExcelProgramManifestFrameTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeave(f.testButton);
 
         // kill dialog
-        JemmyUtil.pressDialogButton(f, Bundle.getMessage("ManifestCreatorNotFound"), "OK");
+        JemmyUtil.pressDialogButton(f, Bundle.getMessage("ManifestCreatorNotFound"), Bundle.getMessage("ButtonOK"));
 
         JUnitUtil.dispose(f);
     }

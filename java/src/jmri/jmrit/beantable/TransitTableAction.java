@@ -1325,7 +1325,6 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
     }
 
     private void initializeSectionCombos() {
-        List<String> allSections = sectionManager.getSystemNameList();
         primarySectionBox.removeAllItems();
         alternateSectionBox.removeAllItems();
         insertAtBeginningBox.removeAllItems();
@@ -1334,10 +1333,21 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
         insertAtBeginningBoxList.clear();
         if (sectionList.size() == 0) {
             // no Sections currently in Transit - all Sections and all Directions OK
-            for (int i = 0; i < allSections.size(); i++) {
-                String sName = allSections.get(i);
-                Section s = sectionManager.getBySystemName(sName);
-                if (s != null) {
+            for (Section s : sectionManager.getNamedBeanSet()) {
+                String sName = s.getSystemName();
+                String uname = s.getUserName();
+                if ((uname != null) && (!uname.equals(""))) {
+                    sName = sName + "( " + uname + " )";
+                }
+                primarySectionBox.addItem(sName);
+                primarySectionBoxList.add(s);
+                priSectionDirection[primarySectionBoxList.size() - 1] = Section.FORWARD;
+            }
+        } else {
+            // limit to Sections that connect to the current Section and are not the previous Section
+            for (Section s : sectionManager.getNamedBeanSet()) {
+                String sName = s.getSystemName();
+                if ((s != prevSection) && (forwardConnected(s, curSection, curSectionDirection))) {
                     String uname = s.getUserName();
                     if ((uname != null) && (!uname.equals(""))) {
                         sName = sName + "( " + uname + " )";
@@ -1345,58 +1355,38 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
                     primarySectionBox.addItem(sName);
                     primarySectionBoxList.add(s);
                     priSectionDirection[primarySectionBoxList.size() - 1] = Section.FORWARD;
-                }
-            }
-        } else {
-            // limit to Sections that connect to the current Section and are not the previous Section
-            for (int i = 0; i < allSections.size(); i++) {
-                String sName = allSections.get(i);
-                Section s = sectionManager.getBySystemName(sName);
-                if (s != null) {
-                    if ((s != prevSection) && (forwardConnected(s, curSection, curSectionDirection))) {
-                        String uname = s.getUserName();
-                        if ((uname != null) && (!uname.equals(""))) {
-                            sName = sName + "( " + uname + " )";
-                        }
-                        primarySectionBox.addItem(sName);
-                        primarySectionBoxList.add(s);
-                        priSectionDirection[primarySectionBoxList.size() - 1] = Section.FORWARD;
-                    } else if ((s != prevSection) && (reverseConnected(s, curSection, curSectionDirection))) {
-                        String uname = s.getUserName();
-                        if ((uname != null) && (!uname.equals(""))) {
-                            sName = sName + "( " + uname + " )";
-                        }
-                        primarySectionBox.addItem(sName);
-                        primarySectionBoxList.add(s);
-                        priSectionDirection[primarySectionBoxList.size() - 1] = Section.REVERSE;
+                } else if ((s != prevSection) && (reverseConnected(s, curSection, curSectionDirection))) {
+                    String uname = s.getUserName();
+                    if ((uname != null) && (!uname.equals(""))) {
+                        sName = sName + "( " + uname + " )";
                     }
+                    primarySectionBox.addItem(sName);
+                    primarySectionBoxList.add(s);
+                    priSectionDirection[primarySectionBoxList.size() - 1] = Section.REVERSE;
                 }
             }
             // check if there are any alternate Section choices
             if (prevSection != null) {
-                for (int i = 0; i < allSections.size(); i++) {
-                    String sName = allSections.get(i);
-                    Section s = sectionManager.getBySystemName(sName);
-                    if (s != null) {
-                        if ((notIncludedWithSeq(s, curSequenceNum))
-                                && forwardConnected(s, prevSection, prevSectionDirection)) {
-                            String uname = s.getUserName();
-                            if ((uname != null) && (!uname.equals(""))) {
-                                sName = sName + "( " + uname + " )";
-                            }
-                            alternateSectionBox.addItem(sName);
-                            alternateSectionBoxList.add(s);
-                            altSectionDirection[alternateSectionBoxList.size() - 1] = Section.FORWARD;
-                        } else if (notIncludedWithSeq(s, curSequenceNum)
-                                && reverseConnected(s, prevSection, prevSectionDirection)) {
-                            String uname = s.getUserName();
-                            if ((uname != null) && (!uname.equals(""))) {
-                                sName = sName + "( " + uname + " )";
-                            }
-                            alternateSectionBox.addItem(sName);
-                            alternateSectionBoxList.add(s);
-                            altSectionDirection[alternateSectionBoxList.size() - 1] = Section.REVERSE;
+                for (Section s : sectionManager.getNamedBeanSet()) {
+                    String sName = s.getSystemName();
+                    if ((notIncludedWithSeq(s, curSequenceNum))
+                            && forwardConnected(s, prevSection, prevSectionDirection)) {
+                        String uname = s.getUserName();
+                        if ((uname != null) && (!uname.equals(""))) {
+                            sName = sName + "( " + uname + " )";
                         }
+                        alternateSectionBox.addItem(sName);
+                        alternateSectionBoxList.add(s);
+                        altSectionDirection[alternateSectionBoxList.size() - 1] = Section.FORWARD;
+                    } else if (notIncludedWithSeq(s, curSequenceNum)
+                            && reverseConnected(s, prevSection, prevSectionDirection)) {
+                        String uname = s.getUserName();
+                        if ((uname != null) && (!uname.equals(""))) {
+                            sName = sName + "( " + uname + " )";
+                        }
+                        alternateSectionBox.addItem(sName);
+                        alternateSectionBoxList.add(s);
+                        altSectionDirection[alternateSectionBoxList.size() - 1] = Section.REVERSE;
                     }
                 }
             }
@@ -1406,27 +1396,24 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             if (direction[0] == Section.FORWARD) {
                 testDirection = Section.REVERSE;
             }
-            for (int i = 0; i < allSections.size(); i++) {
-                String sName = allSections.get(i);
-                Section s = sectionManager.getBySystemName(sName);
-                if (s != null) {
-                    if ((s != firstSection) && (forwardConnected(s, firstSection, testDirection))) {
-                        String uname = s.getUserName();
-                        if ((uname != null) && (!uname.equals(""))) {
-                            sName = sName + "( " + uname + " )";
-                        }
-                        insertAtBeginningBox.addItem(sName);
-                        insertAtBeginningBoxList.add(s);
-                        insertAtBeginningDirection[insertAtBeginningBoxList.size() - 1] = Section.REVERSE;
-                    } else if ((s != firstSection) && (reverseConnected(s, firstSection, testDirection))) {
-                        String uname = s.getUserName();
-                        if ((uname != null) && (!uname.equals(""))) {
-                            sName = sName + "( " + uname + " )";
-                        }
-                        insertAtBeginningBox.addItem(sName);
-                        insertAtBeginningBoxList.add(s);
-                        insertAtBeginningDirection[insertAtBeginningBoxList.size() - 1] = Section.FORWARD;
+            for (Section s : sectionManager.getNamedBeanSet()) {
+                String sName = s.getSystemName();
+                if ((s != firstSection) && (forwardConnected(s, firstSection, testDirection))) {
+                    String uname = s.getUserName();
+                    if ((uname != null) && (!uname.equals(""))) {
+                        sName = sName + "( " + uname + " )";
                     }
+                    insertAtBeginningBox.addItem(sName);
+                    insertAtBeginningBoxList.add(s);
+                    insertAtBeginningDirection[insertAtBeginningBoxList.size() - 1] = Section.REVERSE;
+                } else if ((s != firstSection) && (reverseConnected(s, firstSection, testDirection))) {
+                    String uname = s.getUserName();
+                    if ((uname != null) && (!uname.equals(""))) {
+                        sName = sName + "( " + uname + " )";
+                    }
+                    insertAtBeginningBox.addItem(sName);
+                    insertAtBeginningBoxList.add(s);
+                    insertAtBeginningDirection[insertAtBeginningBoxList.size() - 1] = Section.FORWARD;
                 }
             }
         }
@@ -1452,7 +1439,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
     private boolean forwardConnected(Section s1, Section s2, int restrictedDirection) {
         if ((s1 != null) && (s2 != null)) {
             List<EntryPoint> s1ForwardEntries = s1.getForwardEntryPointList();
-            List<EntryPoint> s2Entries = new ArrayList<>();
+            List<EntryPoint> s2Entries;
             if (restrictedDirection == Section.FORWARD) {
                 s2Entries = s2.getReverseEntryPointList();
             } else if (restrictedDirection == Section.REVERSE) {
@@ -1477,7 +1464,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
     private boolean reverseConnected(Section s1, Section s2, int restrictedDirection) {
         if ((s1 != null) && (s2 != null)) {
             List<EntryPoint> s1ReverseEntries = s1.getReverseEntryPointList();
-            List<EntryPoint> s2Entries = new ArrayList<>();
+            List<EntryPoint> s2Entries;
             if (restrictedDirection == Section.FORWARD) {
                 s2Entries = s2.getReverseEntryPointList();
             } else if (restrictedDirection == Section.REVERSE) {

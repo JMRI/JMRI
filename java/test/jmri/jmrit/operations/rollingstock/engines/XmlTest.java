@@ -34,9 +34,9 @@ public class XmlTest extends OperationsTestCase {
         List<Engine> tempengineList = manager.getByIdList();
 
         Assert.assertEquals("Starting Number of Engines", 0, tempengineList.size());
-        Engine e1 = manager.newEngine("CP", "Test Number 1");
-        Engine e2 = manager.newEngine("ACL", "Test Number 2");
-        Engine e3 = manager.newEngine("CP", "Test Number 3");
+        Engine e1 = manager.newRS("CP", "Test Number 1");
+        Engine e2 = manager.newRS("ACL", "Test Number 2");
+        Engine e3 = manager.newRS("CP", "Test Number 3");
 
         // modify engine attributes
         e1.setBuilt("5619");
@@ -100,9 +100,9 @@ public class XmlTest extends OperationsTestCase {
 
         // Add some more engines and write file again
         // so we can test the backup facility
-        Engine e4 = manager.newEngine("PC", "Test Number 4");
-        Engine e5 = manager.newEngine("BM", "Test Number 5");
-        Engine e6 = manager.newEngine("SP", "Test Number 6");
+        Engine e4 = manager.newRS("PC", "Test Number 4");
+        Engine e5 = manager.newRS("BM", "Test Number 5");
+        Engine e6 = manager.newRS("SP", "Test Number 6");
 
         Assert.assertNotNull("engine e4 exists", e4);
         Assert.assertNotNull("engine e5 exists", e5);

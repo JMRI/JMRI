@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2014 All rights reserved                            -->
-<!-- $Id$             -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -40,28 +39,34 @@
             <choice>No error</choice>
             <choice xml:lang="de">kein Fehler</choice>
             <choice xml:lang="it">Nessun Errore</choice>
+            <choice xml:lang="nl">Geen fout</choice>
 	  </enumChoice>
 	  <enumChoice choice="Motor short circuit">
             <choice>Motor short circuit</choice>
             <choice xml:lang="de">Kurzschluss Motor</choice>
-            <choice xml:lang="it">Corto-Circuito Motore</choice>			
+            <choice xml:lang="it">Corto-Circuito Motore</choice>
+            <choice xml:lang="nl">Kortsluiting in motor</choice>
 	  </enumChoice>
 	  <enumChoice choice="Light short circuit">
             <choice>Light short circuit</choice>
             <choice xml:lang="de">Kurzschluss Licht</choice>
-            <choice xml:lang="it">Corto-Circuito Luci</choice>			
+            <choice xml:lang="it">Corto-Circuito Luci</choice>
+            <choice xml:lang="nl">Kortsluiting in functie-uitgang</choice>
 	  </enumChoice>
 	  <enumChoice choice="Motor+Light short circuit">
             <choice>Motor+Light short circuit</choice>
             <choice xml:lang="de">Kurzschluss Motor+Licht</choice>
-            <choice xml:lang="it">Corto-Circuito Motore e Luci</choice>			
+            <choice xml:lang="it">Corto-Circuito Motore e Luci</choice>
+            <choice xml:lang="nl">Kortsluiting in motor+functie</choice>
 	  </enumChoice>	  
 	</enumVal>
 	<label>Error register</label>
 	<label xml:lang="de">Fehlerspeicher</label>
-        <label xml:lang="it">Errore registro</label>
+    <label xml:lang="it">Errore registro</label>
+    <label xml:lang="nl">Fout-register</label>
 	<tooltip>0 = No error (reset error register)</tooltip>
 	<tooltip xml:lang="de">0 = kein Fehler (Fehlerspeicher zurücksetzen)</tooltip>
-        <tooltip xml:lang="it">0 = Nessun errore (reset registro errori)</tooltip>		
+    <tooltip xml:lang="it">0 = Nessun errore (reset registro errori)</tooltip>
+    <tooltip xml:lang="nl">0 = Geen fout (reset het Fout-register)</tooltip>
   </variable>
 </variables>

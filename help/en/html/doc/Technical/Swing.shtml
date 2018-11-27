@@ -53,6 +53,7 @@
       this, but we're moving classes in this direction as time
       allows.</p>
 
+      <a href="images/SwingStructureExample.png"><img src="images/SwingStructureExample.png" align="right" height="193" width="334"></a>
       <p>The basic structure is:
       <ul>
       <li>Keep Swing code in packages with <code>swing</code>

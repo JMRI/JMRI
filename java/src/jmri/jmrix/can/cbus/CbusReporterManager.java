@@ -116,11 +116,11 @@ public class CbusReporterManager extends AbstractReporterManager implements
     @Override
     public void message(CanMessage m) {
         // TODO Auto-generated method stub
-        log.debug("CbusReporterManager: handle message: {}", m.getOpCode());
         if (m.getOpCode() != CbusConstants.CBUS_DDES) {
             return;
         }
         // message type OK, check address
+        log.debug("CbusReporterManager: handle message: {}", m.getOpCode());
         int addr = CbusMessage.getNodeNumber(m);
 
         CbusReporter r = (CbusReporter) provideReporter("MR" + addr);
@@ -136,11 +136,11 @@ public class CbusReporterManager extends AbstractReporterManager implements
     @Override
     public void reply(CanReply m) {
         // TODO Auto-generated method stub
-        log.debug("CbusReporterManager: handle reply: {} node: {}", m.getOpCode(), CbusMessage.getNodeNumber(m));
         if (m.getOpCode() != CbusConstants.CBUS_DDES || m.getOpCode() != CbusConstants.CBUS_ACDAT) {
             return;
         }
         // message type OK, check address
+        log.debug("CbusReporterManager: handle reply: {} node: {}", m.getOpCode(), CbusMessage.getNodeNumber(m));
         int addr = m.getElement(1) * 256 + m.getElement(2);
 
         CbusReporter r = (CbusReporter) provideReporter("MR" + addr);

@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Extends jmri.AbstractTurnout for DCCpp layouts
- * <P>
+ * <p>
  * Turnouts on DCC++ are controlled (as of V1.5 Firmware) are controlled
  * with unidirectional Stationary Decoder commands, or with bidirectional
  * (predefined) Turnout commands, or with bidirectional (predefined) Output
@@ -273,7 +273,6 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
         case DIRECT:
         default:
             // Default is direct mode - we should never get here, actually.
-            handleDirectModeFeedback(l);
         }
     }
 
@@ -291,42 +290,9 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
     }
 
     /*
-     * With DIRECT mode we don't actually expect a response from the
-     * Base Station, but we'll leave this code in, in case the Base Station
-     * implements an ACK or OK response later.
-     */
-    synchronized private void handleDirectModeFeedback(DCCppReply l) {
-        /* If commanded state does not equal known state, we are 
-         going to check to see if one of the following conditions 
-         applies:
-         1) The received message is a feedback message for a turnout
-         and one of the two addresses to which it applies is our 
-         address
-         2) We receive an "OK" message, indicating the command was
-         successfully sent
-           
-         If either of these two cases occur, we trigger an off message
-         */
-
-        if (log.isDebugEnabled()) {
-            log.debug("Handle Message for turnout "
-                      + mNumber + " in DIRECT feedback mode ");
-        }
-        if (getCommandedState() != getKnownState() || internalState == COMMANDSENT) {
-            if (l.isTurnoutReply() && l.getTOIDInt() == mNumber) {
-                // This message includes feedback for this turnout  
-                if (log.isDebugEnabled()) {
-                    log.debug("Turnout " + mNumber + " DIRECT feedback mode - directed reply received.");
-                }
-            }
-        }
-        return;
-    }
-
-    /*
      *  With Monitoring Mode feedback, if we see a feedback message, we 
      *  interpret that message and use it to display our feedback. 
-     *  <P> 
+     *  <p>
      *  After we send a request to operate a turnout, We ask the command 
      *  station to stop sending information to the stationary decoder
      *  when the either a feedback message or an "OK" message is received.

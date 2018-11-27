@@ -34,11 +34,7 @@ public class RaspberryPiConnectionConfigXml extends AbstractConnectionConfigXml 
         if (adapter == null) {
             adapter = new RaspberryPiAdapter();
             if (adapter.getGPIOController() == null) {
-                try {
-                    this.creationErrorEncountered("Not running on Raspberry PI.", adapter.getSystemPrefix(), adapter.getUserName(), null);
-                } catch (JmriConfigureXmlException ex) {
-                    log.error("Not running on Raspberry PI.", ex);
-                }
+                handleException("Not running on Raspberry PI.", null, adapter.getSystemPrefix(), adapter.getUserName(), null);
             }
         }
     }

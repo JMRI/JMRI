@@ -127,7 +127,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
 
         m.addDataListener(this);
         updateOrderList();
-        updateNamedBeanSet();
+        recomputeNamedBeanSet();
 
         if (log.isDebugEnabled()) {
             log.debug("added manager " + m.getClass());
@@ -519,7 +519,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
     }
 
     private TreeSet<E> namedBeanSet = null;
-    protected void updateNamedBeanSet() {
+    protected void recomputeNamedBeanSet() {
         if (namedBeanSet == null) return; // only maintain if requested
         namedBeanSet.clear();
         for (Manager<E> m : mgrs) {
@@ -531,8 +531,10 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
     @Override
     @Nonnull
     public SortedSet<E> getNamedBeanSet() {
-        namedBeanSet = new TreeSet<>(new NamedBeanComparator());
-        updateNamedBeanSet();
+        if (namedBeanSet == null) {
+            namedBeanSet = new TreeSet<>(new NamedBeanComparator());
+            recomputeNamedBeanSet();
+        }
         return Collections.unmodifiableSortedSet(namedBeanSet);
     }
 
@@ -565,7 +567,13 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
     @Override
     public void intervalAdded(AbstractProxyManager.ManagerDataEvent<E> e) {
         updateOrderList();
-        updateNamedBeanSet();
+
+        if (namedBeanSet != null && e.getIndex0() == e.getIndex1()) {
+            // just one element added, and we have the object reference
+            namedBeanSet.add(e.getChangedBean());
+        } else {
+            recomputeNamedBeanSet();
+        }
 
         if (muted) return;
 
@@ -590,7 +598,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
     @Override
     public void intervalRemoved(AbstractProxyManager.ManagerDataEvent<E> e) {
         updateOrderList();
-        updateNamedBeanSet();
+        recomputeNamedBeanSet();
 
         if (muted) return;
 

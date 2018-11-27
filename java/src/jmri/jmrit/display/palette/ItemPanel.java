@@ -86,8 +86,6 @@ public abstract class ItemPanel extends JPanel {
      */
     public void init() {
         if (!_initialized) {
-            if (!jmri.util.ThreadingUtil.isGUIThread()) log.error("Not on GUI thread", new Exception("traceback"));
-            Thread.yield();
             add(Box.createVerticalGlue());
             _initialized = true;
         }

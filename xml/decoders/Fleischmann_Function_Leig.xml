@@ -311,6 +311,8 @@
 	</decoder>
 	<pane>
 	    <name>Function Map</name>
+		<name xml:lang="de">Funktionszuordnung</name>
+		<name xml:lang="nl">Functietoewijzing</name>
 		<column>
 			<row>
 				<column>

@@ -599,10 +599,10 @@ public class NceConsistRosterEntry {
         while (commentTokens.hasMoreTokens()) {
             String commentToken = commentTokens.nextToken();
             int startIndex = 0;
-            int endIndex = textSpace;
-            //Check each token to see if it needs to have a line wrap.
-            //Get a piece of the token, either the size of the allowed space or
-            //a shorter piece if there isn't enough text to fill the space
+            int endIndex;
+            // Check each token to see if it needs to have a line wrap.
+            // Get a piece of the token, either the size of the allowed space or
+            // a shorter piece if there isn't enough text to fill the space
             if (commentToken.length() < startIndex + textSpace) {
                 //the piece will fit.
                 textVector.addElement(commentToken);
@@ -637,11 +637,11 @@ public class NceConsistRosterEntry {
                     //Check the remaining piece to see if it fits -Loco2rtIndex now points
                     //to the start of the next piece
                     if (commentToken.substring(startIndex).length() < textSpace) {
-                        //It will fit so just insert it, otherwise will cycle through the
-                        //while loop and the checks above will take care of the remainder.
-                        //Line feed is not required as this is the last part of the token.
+                        // It will fit so just insert it, otherwise will cycle through the
+                        // while loop and the checks above will take care of the remainder.
+                        // Line feed is not required as this is the last part of the token.
                         tokenPiece = commentToken.substring(startIndex);
-                        textVector.addElement(commentToken.substring(startIndex));
+                        textVector.addElement(tokenPiece);
                         startIndex += textSpace;
                     }
                 }

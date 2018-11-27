@@ -568,6 +568,14 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
 //        setState(getState() | ALLOCATED);  DO NOT ALLOCATE
         return null;
     }
+    
+    public String getAllocatingWarrantName() {
+        if (_warrant == null) {
+            return ("no warrant");
+        } else {
+            return _warrant.getDisplayName();
+        }
+    }
 
     /**
      * Remove allocation state Remove listener regardless of ownership

@@ -98,7 +98,27 @@ public class XNetInitializationManager extends AbstractXNetInitializationManager
                 jmri.InstanceManager.setLightManager(systemMemo.getLightManager());
                 systemMemo.setSensorManager(new jmri.jmrix.lenz.XNetSensorManager(systemMemo.getXNetTrafficController(), systemMemo.getSystemPrefix()));
                 jmri.InstanceManager.setSensorManager(systemMemo.getSensorManager());
-            } else if (CSType == 0x10) {
+            } else if (CSType == 0x04) {
+                if (log.isDebugEnabled()) {
+                    log.debug("Command Station is LokMaus II");
+                }
+                systemMemo.setTurnoutManager(new jmri.jmrix.lenz.XNetTurnoutManager(systemMemo.getXNetTrafficController(), systemMemo.getSystemPrefix()));
+                jmri.InstanceManager.setTurnoutManager(systemMemo.getTurnoutManager());
+                systemMemo.setLightManager(new jmri.jmrix.lenz.XNetLightManager(systemMemo.getXNetTrafficController(), systemMemo.getSystemPrefix()));
+                jmri.InstanceManager.setLightManager(systemMemo.getLightManager());
+                systemMemo.setSensorManager(new jmri.jmrix.lenz.XNetSensorManager(systemMemo.getXNetTrafficController(), systemMemo.getSystemPrefix()));
+                jmri.InstanceManager.setSensorManager(systemMemo.getSensorManager());
+                systemMemo.setProgrammerManager(new XNetProgrammerManager(new XNetProgrammer(systemMemo.getXNetTrafficController()), systemMemo));
+                if (systemMemo.getProgrammerManager().isAddressedModePossible()) {
+                    jmri.InstanceManager.store(systemMemo.getProgrammerManager(), jmri.AddressedProgrammerManager.class);
+                }
+                if (systemMemo.getProgrammerManager().isGlobalProgrammerAvailable()) {
+                    jmri.InstanceManager.store(systemMemo.getProgrammerManager(), GlobalProgrammerManager.class);
+                }
+                systemMemo.setCommandStation(systemMemo.getXNetTrafficController().getCommandStation());
+                jmri.InstanceManager.store(systemMemo.getCommandStation(), jmri.CommandStation.class);
+                // LokMaus does not support XpressNET consist commands. Let's the default consist manager be loaded.
+            } else if (CSType == 0x10 ) {
                 if (log.isDebugEnabled()) {
                     log.debug("Command Station is multiMaus");
                 }

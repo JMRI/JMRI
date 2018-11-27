@@ -1,6 +1,5 @@
 package jmri.jmrit.operations.automation.actions;
 
-
 public class MessageYesNoAction extends Action {
 
     private static final int _code = ActionCodes.MESSAGE_YES_NO;
@@ -14,7 +13,7 @@ public class MessageYesNoAction extends Action {
     public String getName() {
         return Bundle.getMessage("MessageYesNo");
     }
-    
+
     @Override
     public String getActionSuccessfulString() {
         return Bundle.getMessage("ButtonYes");
@@ -27,11 +26,14 @@ public class MessageYesNoAction extends Action {
 
     @Override
     public void doAction() {
-        setRunning(true);
-        int response = sendMessage(getAutomationItem().getMessage(), new Object[]{Bundle.getMessage("ButtonYes"), Bundle.getMessage("ButtonNo")}, true);
-        getAutomationItem().setActionSuccessful(response != 1);
-        setRunning(false);
-        firePropertyChange(ACTION_COMPLETE_CHANGED_PROPERTY, false, true);
+        if (getAutomationItem() != null) {
+            setRunning(true);
+            int response = sendMessage(getAutomationItem().getMessage(),
+                    new Object[]{Bundle.getMessage("ButtonYes"), Bundle.getMessage("ButtonNo")}, true);
+            getAutomationItem().setActionSuccessful(response != 1);
+            setRunning(false);
+            firePropertyChange(ACTION_COMPLETE_CHANGED_PROPERTY, false, true);
+        }
     }
 
     @Override
