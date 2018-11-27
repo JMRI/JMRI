@@ -18,14 +18,14 @@ import org.junit.Test;
 /**
  * Tests for the Operations CarAttributeEditFrame class
  *
- * @author	Dan Boudreau Copyright (C) 2009
+ * @author Dan Boudreau Copyright (C) 2009
  */
 public class CarAttributeEditFrameTest extends OperationsTestCase {
 
     @Test
     public void testCarAttributeEditFrameColor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        
+
         JUnitOperationsUtil.initOperationsData();
         CarAttributeEditFrame f = new CarAttributeEditFrame();
         f.initComponents(CarAttributeEditFrame.COLOR);
@@ -95,7 +95,7 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
 
         JUnitUtil.dispose(f);
     }
-    
+
     @Test
     public void testCarAttributeEditFrameLength() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -124,7 +124,7 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
 
         JUnitUtil.dispose(f);
     }
-    
+
     @Test
     public void testCarAttributeEditFrameLengthInches() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -150,28 +150,17 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
 
         JemmyUtil.enterClickAndLeave(f.deleteButton);
         Assert.assertEquals("1st number after delete", "32", f.comboBox.getItemAt(0));
-        
+
         // now try error condition
         f.addTextBox.setText("A" + "\"");
         // should cause error dialog to appear
-        Thread add = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                JemmyUtil.enterClickAndLeave(f.addButton);
-            }
-        });
-        add.setName("Add length attribute"); // NOI18N
-        add.start();
-
-        jmri.util.JUnitUtil.waitFor(() -> {
-            return add.getState().equals(Thread.State.WAITING);
-        }, "wait for prompt");
+        JemmyUtil.enterClickAndLeave(f.addButton);
 
         JemmyUtil.pressDialogButton(Bundle.getMessage("ErrorCarLength"), Bundle.getMessage("ButtonOK"));
 
         JUnitUtil.dispose(f);
     }
-    
+
     @Test
     public void testCarAttributeEditFrameLengthCm() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -187,27 +176,17 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
 
         JemmyUtil.enterClickAndLeave(f.deleteButton);
         Assert.assertEquals("1st number after delete", "32", f.comboBox.getItemAt(0));
-        
+
         // now try error condition
         f.addTextBox.setText("A" + "cm");
         // should cause error dialog to appear
-        Thread add = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                JemmyUtil.enterClickAndLeave(f.addButton);
-            }
-        });
-        add.setName("Add length attribute"); // NOI18N
-        add.start();
-
-        jmri.util.JUnitUtil.waitFor(() -> {
-            return add.getState().equals(Thread.State.WAITING);
-        }, "wait for prompt");
+        JemmyUtil.enterClickAndLeave(f.addButton);
 
         JemmyUtil.pressDialogButton(Bundle.getMessage("ErrorCarLength"), Bundle.getMessage("ButtonOK"));
 
         JUnitUtil.dispose(f);
     }
+
     @Test
     public void testCarAttributeEditFrameLengthErrors() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -218,52 +197,41 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
         // now add a bogus length
         f.addTextBox.setText("A");
         JemmyUtil.enterClickAndLeave(f.addButton);
-        
+
         jmri.util.JUnitAppender.assertErrorMessage("length (A) is not an integer");
         Assert.assertEquals("1st number before bogus add", "32", f.comboBox.getItemAt(0));
-        
+
         // check for the value "A" 
         for (int i = 0; i < f.comboBox.getItemCount(); i++) {
             Assert.assertNotEquals("check for A", "A", f.comboBox.getItemAt(i));
         }
-        
+
         // now add a negative length
         f.addTextBox.setText("-1");
         JemmyUtil.enterClickAndLeave(f.addButton);
-        
+
         jmri.util.JUnitAppender.assertErrorMessage("length (-1) has to be a positive number");
         Assert.assertEquals("1st number before bogus add", "32", f.comboBox.getItemAt(0));
-        
+
         // check for the value "-1" 
         for (int i = 0; i < f.comboBox.getItemCount(); i++) {
             Assert.assertNotEquals("check for -1", "-1", f.comboBox.getItemAt(i));
         }
-        
+
         // now add a length that is too long
         f.addTextBox.setText("10000");
-                
-        // should cause error dialog to appear
-        Thread add = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                JemmyUtil.enterClickAndLeave(f.addButton);
-            }
-        });
-        add.setName("Add length attribute"); // NOI18N
-        add.start();
 
-        jmri.util.JUnitUtil.waitFor(() -> {
-            return add.getState().equals(Thread.State.WAITING);
-        }, "wait for prompt");
+        // should cause error dialog to appear
+        JemmyUtil.enterClickAndLeave(f.addButton);
 
         JemmyUtil.pressDialogButton(MessageFormat.format(Bundle
                 .getMessage("canNotAdd"), new Object[]{Bundle.getMessage("Length")}), Bundle.getMessage("ButtonOK"));
-              
+
         Assert.assertEquals("1st number before bogus add", "32", f.comboBox.getItemAt(0));
-        
+
         JUnitUtil.dispose(f);
     }
-    
+
     @Test
     public void testCarAttributeEditFrameType() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -272,7 +240,7 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
         // confirm that the right number of default lengths were loaded
         Assert.assertEquals(33, f.comboBox.getItemCount());
         Assert.assertEquals("1st type", "Baggage", f.comboBox.getItemAt(0));
-        
+
         // now add a new type
         f.addTextBox.setText("ABC-TEST_TEST_TEST");
         // should cause two dialog windows to appear
@@ -290,13 +258,14 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
         }, "wait for prompt");
 
         JemmyUtil.pressDialogButton(Bundle.getMessage("ModifyLocations"), Bundle.getMessage("ButtonNo"));
-        
-//        jmri.util.JUnitUtil.waitFor(() -> {
-//            return add.getState().equals(Thread.State.WAITING);
-//        }, "wait for prompt");
-
         JemmyUtil.pressDialogButton(Bundle.getMessage("ModifyTrains"), Bundle.getMessage("ButtonNo"));
-        
+
+        try {
+            add.join();
+        } catch (InterruptedException e) {
+            // do nothing
+        }
+
         // new type should appear at start of list
         Assert.assertEquals("new type name", "ABC-TEST_TEST_TEST", f.comboBox.getItemAt(0));
 
@@ -312,28 +281,18 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
 
         JemmyUtil.enterClickAndLeave(f.deleteButton);
         Assert.assertEquals("1st type after delete", "Baggage", f.comboBox.getItemAt(0));
-        
+
         // enter a type name that is too long
         f.addTextBox.setText("ABCDEFGHIJKLM-TEST");
-        // should cause error dialog to appear
-        Thread addError = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                JemmyUtil.enterClickAndLeave(f.addButton);
-            }
-        });
-        addError.setName("Add type attribute"); // NOI18N
-        addError.start();
+        JemmyUtil.enterClickAndLeave(f.addButton);
 
-        jmri.util.JUnitUtil.waitFor(() -> {
-            return addError.getState().equals(Thread.State.WAITING);
-        }, "wait for prompt");
-
-        JemmyUtil.pressDialogButton(MessageFormat.format(Bundle.getMessage("canNotAdd"), new Object[]{Bundle.getMessage("Type")}), Bundle.getMessage("ButtonOK"));
+        JemmyUtil.pressDialogButton(
+                MessageFormat.format(Bundle.getMessage("canNotAdd"), new Object[]{Bundle.getMessage("Type")}),
+                Bundle.getMessage("ButtonOK"));
 
         JUnitUtil.dispose(f);
     }
-    
+
     @Test
     public void testCarAttributeEditFrameRoad() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -360,43 +319,25 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
 
         JemmyUtil.enterClickAndLeave(f.deleteButton);
         Assert.assertEquals("1st road after delete", "AA", f.comboBox.getItemAt(0));
-        
+
         // enter a road name that is too long
         f.addTextBox.setText("ABCDEFGHIJKLM-TEST");
         // should cause error dialog to appear
-        Thread add = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                JemmyUtil.enterClickAndLeave(f.replaceButton);
-            }
-        });
-        add.setName("Add road attribute"); // NOI18N
-        add.start();
+        JemmyUtil.enterClickAndLeave(f.replaceButton);
 
-        jmri.util.JUnitUtil.waitFor(() -> {
-            return add.getState().equals(Thread.State.WAITING);
-        }, "wait for prompt");
-
-        JemmyUtil.pressDialogButton(MessageFormat.format(Bundle.getMessage("canNotReplace"), new Object[]{Bundle.getMessage("Road")}), Bundle.getMessage("ButtonOK"));
+        JemmyUtil.pressDialogButton(
+                MessageFormat.format(Bundle.getMessage("canNotReplace"), new Object[]{Bundle.getMessage("Road")}),
+                Bundle.getMessage("ButtonOK"));
 
         // enter a road name that has a reserved character
         f.addTextBox.setText("A.B");
         // should cause error dialog to appear
-        Thread addError = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                JemmyUtil.enterClickAndLeave(f.replaceButton);
-            }
-        });
-        addError.setName("Add road attribute"); // NOI18N
-        addError.start();
+        JemmyUtil.enterClickAndLeave(f.replaceButton);
 
-        jmri.util.JUnitUtil.waitFor(() -> {
-            return addError.getState().equals(Thread.State.WAITING);
-        }, "wait for prompt");
+        JemmyUtil.pressDialogButton(
+                MessageFormat.format(Bundle.getMessage("canNotReplace"), new Object[]{Bundle.getMessage("Road")}),
+                Bundle.getMessage("ButtonOK"));
 
-        JemmyUtil.pressDialogButton(MessageFormat.format(Bundle.getMessage("canNotReplace"), new Object[]{Bundle.getMessage("Road")}), Bundle.getMessage("ButtonOK"));
-        
         JUnitUtil.dispose(f);
     }
 
@@ -404,16 +345,7 @@ public class CarAttributeEditFrameTest extends OperationsTestCase {
     public void testCarAttributeEditFrame2() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         CarAttributeEditFrame f = new CarAttributeEditFrame();
-        f.initComponents(CarAttributeEditFrame.LENGTH);
-        JUnitUtil.dispose(f);
-        f = new CarAttributeEditFrame();
         f.initComponents(CarAttributeEditFrame.OWNER);
-        JUnitUtil.dispose(f);
-        f = new CarAttributeEditFrame();
-        f.initComponents(CarAttributeEditFrame.ROAD);
-        JUnitUtil.dispose(f);
-        f = new CarAttributeEditFrame();
-        f.initComponents(CarAttributeEditFrame.TYPE);
         JUnitUtil.dispose(f);
     }
 
