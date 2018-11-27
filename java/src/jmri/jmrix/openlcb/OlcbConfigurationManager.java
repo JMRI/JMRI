@@ -1,8 +1,10 @@
 package jmri.jmrix.openlcb;
 
+import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import jmri.GlobalProgrammerManager;
@@ -13,6 +15,7 @@ import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficController;
+import jmri.profile.ProfileManager;
 import jmri.util.ThreadingUtil;
 
 import org.openlcb.Connection;
@@ -39,6 +42,19 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2010
  */
 public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManager {
+
+    // Constants for the protocol options keys. These option keys are used to save configuration
+    // in the profile.xml and set on a per-connection basis in the connection preferences.
+
+    // Protocol key for node identification
+    public static final String OPT_PROTOCOL_IDENT = "Ident";
+
+    // Option key for Node ID
+    public static final String OPT_IDENT_NODEID = "NodeId";
+    // Option key for User Name, used for the Simple Node Ident Protocol
+    public static final String OPT_IDENT_USERNAME = "UserName";
+    // Option key for User Description, used for the Simple Node Ident Protocol
+    public static final String OPT_IDENT_DESCRIPTION = "UserDescription";
 
     public OlcbConfigurationManager(CanSystemConnectionMemo memo) {
         super(memo);
@@ -312,31 +328,49 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
     }
 
     class SimpleNodeIdentInfoHandler extends MessageDecoder {
+        /**
+         * Helper function to add a string value to the sequence of bytes to send for SNIP
+         * response content.
+         *
+         * @param value    string to render into byte stream
+         * @param contents represents the byte stream that will be sent.
+         */
+        private void  addStringPart(String value, List<Byte> contents) {
+            if (value == null || value.isEmpty()) {
+                contents.add((byte)0);
+            } else {
+                byte[] bb;
+
+                try {
+                    bb = value.getBytes("UTF-8");
+                } catch (UnsupportedEncodingException e) {
+                    bb = new byte[] {'?'};
+                }
+                for (byte b : bb) {
+                    contents.add(b);
+                }
+                // terminating null byte.
+                contents.add((byte)0);
+            }
+        }
 
         SimpleNodeIdentInfoHandler() {
-            byte[] part1 = new byte[]{1, 'J', 'M', 'R', 'I', 0, 'P', 'a', 'n', 'e', 'l', 'P', 'r', 'o', 0}; // NOI18N
-            byte[] part2 = new byte[]{0};
-            byte[] part3;
-            try {
-                part3 = jmri.Version.name().getBytes("UTF-8");  // OpenLCB is UTF-8           // NOI18N
-            } catch (java.io.UnsupportedEncodingException e) {
-                log.error("Cannot proceed if UTF-8 not supported?");
-                part3 = new byte[]{'?'};                                                      // NOI18N
+            List<Byte> l = new ArrayList<>(256);
+            l.add((byte)4); // version byte
+            addStringPart("JMRI", l);
+            addStringPart("PanelPro", l);
+            if (ProfileManager.getDefault().hasActiveProfile()) {
+                addStringPart("Profile " + ProfileManager.getDefault().getActiveProfileName(), l); // hardware version
+            } else {
+                addStringPart("", l); // hardware version
             }
-            byte[] part4 = new byte[]{0, ' ', 0, ' ', 0};                                         // NOI18N
-            content = new byte[part1.length + part2.length + part3.length + part4.length];
-            int i = 0;
-            for (int j = 0; j < part1.length; j++) {
-                content[i++] = part1[j];
-            }
-            for (int j = 0; j < part2.length; j++) {
-                content[i++] = part2[j];
-            }
-            for (int j = 0; j < part3.length; j++) {
-                content[i++] = part3[j];
-            }
-            for (int j = 0; j < part4.length; j++) {
-                content[i++] = part4[j];
+            addStringPart(jmri.Version.name(), l); // software version
+            l.add((byte)2); // version byte
+            addStringPart(adapterMemo.getProtocolOption(OPT_PROTOCOL_IDENT, OPT_IDENT_USERNAME), l);
+            addStringPart(adapterMemo.getProtocolOption(OPT_PROTOCOL_IDENT, OPT_IDENT_DESCRIPTION), l);
+            content = new byte[l.size()];
+            for (int i = 0; i < l.size(); ++i) {
+                content[i] = l.get(i);
             }
         }
         private final byte[] content;
@@ -363,6 +397,15 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
      * bytes of PID. That changes each time, which isn't perhaps what's wanted.
      */
     protected void getOurNodeID() {
+        String userOption = adapterMemo.getProtocolOption(OPT_PROTOCOL_IDENT, OPT_IDENT_NODEID);
+        if (userOption != null && !userOption.isEmpty()) {
+            try {
+                nodeID = new NodeID(userOption);
+                return;
+            } catch (IllegalArgumentException e) {
+                log.error("User set node ID protocol option which is in invalid format ({}). Expected dotted hex notation like 02.01.12.FF.EE.DD", userOption);
+            }
+        }
         List<NodeID> previous = InstanceManager.getList(NodeID.class);
         if (!previous.isEmpty()) {
             nodeID = previous.get(0);
