@@ -1,9 +1,9 @@
 package jmri.jmrix.lenz;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.implementation.AbstractTurnout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import javax.annotation.concurrent.GuardedBy;
 
 /**
  * Extend jmri.AbstractTurnout for XNet layouts
@@ -117,9 +117,9 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
     static String[] modeNames = null;
     static int[] modeValues = null;
 
-    @SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC")
+    @GuardedBy("this")
     protected int _mThrown = jmri.Turnout.THROWN;
-    @SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC")
+    @GuardedBy("this")
     protected int _mClosed = jmri.Turnout.CLOSED;
 
     protected String _prefix = "X"; // default to "X"
@@ -644,7 +644,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
         tc.sendHighPriorityXNetMessage(msg, this);
     }
 
-    protected XNetMessage getOffMessage(){
+    synchronized protected XNetMessage getOffMessage(){
          return ( XNetMessage.getTurnoutCommandMsg(mNumber,
                 getCommandedState() == _mClosed,
                 getCommandedState() == _mThrown,
