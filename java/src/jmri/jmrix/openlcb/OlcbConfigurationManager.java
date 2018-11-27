@@ -136,7 +136,7 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         if (clockId == null) {
             clockId = TimeProtocol.DEFAULT_CLOCK;
         }
-        log.warn("Creating olcb clock with id {} is_master {}", clockId, isMaster);
+        log.debug("Creating olcb clock with id {} is_master {}", clockId, isMaster);
         clockControl = new OlcbClockControl(getInterface(), clockId, isMaster);
         InstanceManager.setDefault(ClockControl.class, clockControl);
     }
