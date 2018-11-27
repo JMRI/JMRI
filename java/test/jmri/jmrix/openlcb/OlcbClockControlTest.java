@@ -179,5 +179,5 @@ public class OlcbClockControlTest {
         iface.assertSentMessage(":X195B4C4CN0101000001030223;");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(OlcbClockControlTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(OlcbClockControlTest.class);
 }
