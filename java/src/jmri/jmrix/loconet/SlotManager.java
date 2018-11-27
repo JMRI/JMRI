@@ -257,10 +257,10 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * Provide a mapping between locomotive addresses and the SlotListener
      * that's interested in them.
      */
-    Hashtable<Integer, SlotListener> mLocoAddrHash = new Hashtable<Integer, SlotListener>();
+    Hashtable<Integer, SlotListener> mLocoAddrHash = new Hashtable<>();
 
     // data members to hold contact with the slot listeners
-    final private Vector<SlotListener> slotListeners = new Vector<SlotListener>();
+    final private Vector<SlotListener> slotListeners = new Vector<>();
 
     /**
      * Add a slot listener, if it is not already registered
@@ -526,8 +526,9 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
                 i = m.getElement(1);
                 break;
 
-            case LnConstants.OPC_MOVE_SLOTS:  // handle the follow-on message when it comes
-                return i; // need to cope with that!!
+            case LnConstants.OPC_MOVE_SLOTS:  // No follow on for some moves
+                i = m.getElement(1);
+                return i;
 
             default:
                 // nothing here for us
@@ -807,7 +808,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
 
     @Override
     public List<ProgrammingMode> getSupportedModes() {
-        List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
+        List<ProgrammingMode> ret = new ArrayList<>();
         ret.add(ProgrammingMode.PAGEMODE);
         ret.add(ProgrammingMode.DIRECTBYTEMODE);
         ret.add(ProgrammingMode.REGISTERMODE);
