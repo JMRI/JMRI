@@ -23,7 +23,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
         super(p);
 	additionalItems.add(bcastPortFieldLabel);
 	additionalItems.add(bcastPortField);
-	bcastPortFieldLabel.labelFor(bcastPortField);
+	bcastPortFieldLabel.setLabelFor(bcastPortField);
 
     }
 
@@ -34,7 +34,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
         super();
 	additionalItems.add(bcastPortFieldLabel);
 	additionalItems.add(bcastPortField);
-	bcastPortFieldLabel.labelFor(bcastPortField);
+	bcastPortFieldLabel.setLabelFor(bcastPortField);
     }
 
     @Override
@@ -66,6 +66,6 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
     }
 
     protected JTextField bcastPortField = new JTextField(String.valueOf(LIUSBServerAdapter.BROADCAST_TCP_PORT));
-    protected JLabel bcastPortFieldLabel.setText(Bundle.getMessage("BroadCastPortLabel"));
+    protected JLabel bcastPortFieldLabel = new JLabel(Bundle.getMessage("BroadCastPortLabel"));
 
 }
