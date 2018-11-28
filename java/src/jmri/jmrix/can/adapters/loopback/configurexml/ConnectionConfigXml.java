@@ -1,5 +1,6 @@
 package jmri.jmrix.can.adapters.loopback.configurexml;
 
+import jmri.jmrix.PortAdapter;
 import jmri.jmrix.can.adapters.loopback.ConnectionConfig;
 import jmri.jmrix.can.adapters.loopback.Port;
 import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
@@ -56,6 +57,8 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         saveOptions(e, adapter);
 
         e.setAttribute("class", this.getClass().getName());
+
+        extendElement(e);
 
         return e;
     }
@@ -126,6 +129,21 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
     protected void register() {
         this.register(new ConnectionConfig(adapter));
         log.info("CAN Simulator Started");
+    }
+
+    @Override
+    protected void loadOptions(Element shared, Element perNode, PortAdapter adapter) {
+        super.loadOptions(shared, perNode, adapter);
+
+        jmri.jmrix.openlcb.configurexml.ConnectionConfigXml.maybeLoadOlcbProfileSettings(
+                shared.getParentElement(), perNode.getParentElement(), adapter);
+
+    }
+
+    @Override
+    protected void extendElement(Element e) {
+        jmri.jmrix.openlcb.configurexml.ConnectionConfigXml.maybeSaveOlcbProfileSettings(
+                e, adapter);
     }
 
     // initialize logging

@@ -138,7 +138,7 @@ public class Z21XNetTurnout extends XNetTurnout implements XNetListener {
     }
 
     @Override
-    protected XNetMessage getOffMessage() {
+    synchronized protected XNetMessage getOffMessage() {
         return( Z21XNetMessage.getZ21SetTurnoutRequestMessage(mNumber,
                 (getCommandedState() ==  _mThrown),
                 false, false ) );// for now always not active and not queued.

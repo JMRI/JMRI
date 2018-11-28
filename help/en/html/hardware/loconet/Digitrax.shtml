@@ -44,8 +44,13 @@
 
             <ul>
               <li><a href="#Using">Using JMRI with
-              LocoNet&reg;</a></li>
+              LocoNet&reg;</a>
+                <ul>
+                  <li><a href="#LocoNetAddressing">LocoNet Device Addressing</a></li>
 
+                  <li><a href="#LocoNetTools">LocoNet Tools</a></li>
+                </ul>
+              </li>
               <li><a href="#Network">Networked Computers and
               LocoNet&reg;</a></li>
             </ul>
@@ -470,22 +475,23 @@
 
       <h2><a name="Using" id="Using">Using JMRI with
       LocoNet&reg;</a></h2>JMRI provides a number of features which
-      allow it to interact with LocoNet.
-
-      <ul>
-        <li>Many LocoNet devices can be directly addressed by JMRI,
+      allow it to interact with LocoNet.  Some key things to know about
+      are included here.
+      
+      <h3><a name="LocoNetAddressing" id="LocoNetAddressing">LocoNet Device Addressing</a></h3>
+      <p>Many LocoNet devices can be directly addressed by JMRI,
         such as the individual turnout outputs on a DS54, or the
         individual block detection inputs on a BDL16x. For more
         information on how to find those addresses, see <a href=
-        "Addressing.shtml">this page</a>.</li>
+        "Addressing.shtml">this page</a>.</p>
 
-        <li>JMRI provides a variety of LocoNet-related tools. These
+      <h3><a name="LocoNetTools" id="LocoNetTools">LocoNet Tools</a></h3>
+        <p>JMRI provides a variety of LocoNet-related tools. These
         primarily allow configuration of LocoNet device
         functionality, but also include some tools for status
         monitoring. Information on these tools can be found at the
         <a href="LocoNetTools.shtml">LocoNet&reg; tools
-        page</a>.</li>
-      </ul>
+        page</a>.</p>
 
       <h2><a name="Network" id="Network">Networked Computers and
       LocoNet&reg;</a></h2>There are several mechanisms available
