@@ -19,6 +19,7 @@ import java.util.MissingResourceException;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
@@ -79,20 +80,11 @@ public class ProtocolOptionsFrame extends JmriJFrame {
     }
 
     private void addTextSetting(final String protocolKey, final String optionKey) {
-        JPanel tab = getProtocolTab(protocolKey);
         String pastValue = scm.getProtocolOption(protocolKey, optionKey);
         if (pastValue == null) pastValue = "";
+        JPanel tab = getProtocolTab(protocolKey);
 
-        String labelText = Bundle.getMessage("Label" + protocolKey + optionKey);
-
-        JLabel label = new JLabel(labelText);
-        GridBagConstraints c1 = new GridBagConstraints();
-        c1.gridy = GridBagConstraints.RELATIVE;
-        c1.gridx = 0;
-        c1.anchor = GridBagConstraints.FIRST_LINE_END;
-        c1.insets = new Insets(0, 0, 0, 3);
-
-        tab.add(label, c1);
+        addOptionLabel(protocolKey, optionKey, tab);
 
         final JTextField valueField = new JTextField(pastValue, 20);
         GridBagConstraints c2 = new GridBagConstraints();
@@ -125,6 +117,92 @@ public class ProtocolOptionsFrame extends JmriJFrame {
         });
     }
 
+    private void addOptionLabel(String protocolKey, String optionKey, JPanel tab) {
+        String labelText = Bundle.getMessage("Label" + protocolKey + optionKey);
+
+        JLabel label = new JLabel(labelText);
+        GridBagConstraints c1 = new GridBagConstraints();
+        c1.gridy = GridBagConstraints.RELATIVE;
+        c1.gridx = 0;
+        c1.anchor = GridBagConstraints.FIRST_LINE_END;
+        c1.insets = new Insets(0, 0, 0, 3);
+
+        tab.add(label, c1);
+    }
+
+    private static class ComboSelectionEntry {
+        final String displayKey;
+        final String selectionKey;
+
+        private ComboSelectionEntry(String displayKey, String selectionKey) {
+            this.displayKey = displayKey;
+            this.selectionKey = selectionKey;
+        }
+
+        @Override
+        public String toString() {
+            return displayKey;
+        }
+    }
+
+    private void addComboBoxSetting(String protocolKey, String optionKey, String[] choices, String defaultChoice) {
+        JPanel tab = getProtocolTab(protocolKey);
+        String pastValue = scm.getProtocolOption(protocolKey, optionKey);
+
+
+        addOptionLabel(protocolKey, optionKey, tab);
+
+        final JComboBox<ComboSelectionEntry> valueField = new JComboBox<>();
+        int defaultNum = -1;
+        int pastNum = -1;
+        for (int i = 0; i < choices.length; ++i) {
+            if (choices[i].equals(pastValue)) {
+                pastNum = i;
+            }
+            if (choices[i].equals(defaultChoice)) {
+                defaultNum = i;
+            }
+            String displayKey;
+            try {
+                displayKey = Bundle.getMessage("Selection" + protocolKey + optionKey + choices[i]);
+
+            } catch (MissingResourceException e) {
+                displayKey = choices[i];
+            }
+            valueField.addItem(new ComboSelectionEntry(displayKey, choices[i]));
+        }
+        if (pastNum >= 0) {
+            valueField.setSelectedIndex(pastNum);
+        } else if (pastValue == null) {
+            valueField.setSelectedIndex(defaultNum);
+        }
+
+        GridBagConstraints c2 = new GridBagConstraints();
+        c2.gridy = GridBagConstraints.RELATIVE;
+        c2.gridx = 1;
+        c2.anchor = GridBagConstraints.FIRST_LINE_START;
+        c2.insets = new Insets(0, 0, 0, 3);
+
+        tab.add(valueField, c2);
+
+        try {
+            String tip = Bundle.getMessage("ToolTip" + protocolKey + optionKey);
+            valueField.setToolTipText(tip);
+        } catch (MissingResourceException e) {
+            // Ignore: no tool tip if bundle does not have it.
+        }
+
+        saveCallbacks.add(() -> {
+            String v = scm.getProtocolOption(protocolKey, optionKey);
+            ComboSelectionEntry newO = (ComboSelectionEntry) valueField.getSelectedItem();
+            if (newO == null) return;
+            String newV = newO.selectionKey;
+            if (newV.equals(v)) return;
+            scm.setProtocolOption(protocolKey, optionKey, newV);
+            anyChanged = true;
+        });
+    }
+
     @Override
     public void initComponents() {
         setTitle(Bundle.getMessage("WindowTitle", scm.getUserName()));
@@ -139,6 +217,11 @@ public class ProtocolOptionsFrame extends JmriJFrame {
         addTextSetting(OPT_PROTOCOL_IDENT, OPT_IDENT_NODEID);
         addTextSetting(OPT_PROTOCOL_IDENT, OPT_IDENT_USERNAME);
         addTextSetting(OPT_PROTOCOL_IDENT, OPT_IDENT_DESCRIPTION);
+
+        getProtocolTab(OPT_PROTOCOL_FASTCLOCK);
+        addComboBoxSetting(OPT_PROTOCOL_FASTCLOCK, OPT_FASTCLOCK_ENABLE, new String[] {OPT_FASTCLOCK_ENABLE_OFF, OPT_FASTCLOCK_ENABLE_GENERATOR, OPT_FASTCLOCK_ENABLE_CONSUMER}, OPT_FASTCLOCK_ENABLE_OFF);
+        addComboBoxSetting(OPT_PROTOCOL_FASTCLOCK, OPT_FASTCLOCK_ID, new String[]{OPT_FASTCLOCK_ID_DEFAULT, OPT_FASTCLOCK_ID_DEFAULT_RT, OPT_FASTCLOCK_ID_ALT_1, OPT_FASTCLOCK_ID_ALT_2, OPT_FASTCLOCK_ID_CUSTOM}, OPT_FASTCLOCK_ID_DEFAULT);
+        addTextSetting(OPT_PROTOCOL_FASTCLOCK, OPT_FASTCLOCK_CUSTOM_ID);
 
         JPanel helpHintPanel = new JPanel();
         BoxLayout helpLayout = new BoxLayout(helpHintPanel, BoxLayout.X_AXIS);
