@@ -1,10 +1,6 @@
 package jmri.jmris.srcp;
 
-import org.junit.Assert;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.*;
 
 import jmri.util.JUnitUtil;
 import jmri.DccLocoAddress;
