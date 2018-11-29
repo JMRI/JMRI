@@ -30,8 +30,9 @@ public class TamsTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
 
     @Test
     @Override
-    @Ignore("requires work for tams turnouts")
-    public void testDirectFeedback() throws jmri.JmriException {
+    public void testDirectFeedback() throws Exception {
+	t.setFeedbackMode(jmri.Turnout.DIRECT);
+	super.testDirectFeedback();
     }
 
     // The minimal setup for log4J
