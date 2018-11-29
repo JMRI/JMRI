@@ -1,6 +1,8 @@
 package jmri.jmrix.jmriclient;
 
 import org.junit.*;
+import jmri.Turnout;
+import jmri.util.JUnitUtil;
 
 /**
  * JMRIClientTurnoutTest.java
@@ -43,18 +45,20 @@ public class JMRIClientTurnoutTest extends jmri.implementation.AbstractTurnoutTe
 
     @Test
     @Override
-    @Ignore("requires work for jmriclient turnouts")
-    public void testDirectFeedback() throws jmri.JmriException {
+    public void testDirectFeedback() throws Exception {
+
+	t.setFeedbackMode(Turnout.DIRECT);
+	super.testDirectFeedback();
     }
 
     // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {
-        jmri.util.JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
-        jmri.util.JUnitUtil.initInternalSensorManager();
-        jmri.util.JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.setUp();
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.initInternalSensorManager();
+        JUnitUtil.initInternalTurnoutManager();
         
         jcins = new JMRIClientTrafficControlScaffold();
         t = new JMRIClientTurnout(3, new JMRIClientSystemConnectionMemo(jcins));
@@ -62,7 +66,7 @@ public class JMRIClientTurnoutTest extends jmri.implementation.AbstractTurnoutTe
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.tearDown();
+        JUnitUtil.tearDown();
 
         jcins = null;
     }
