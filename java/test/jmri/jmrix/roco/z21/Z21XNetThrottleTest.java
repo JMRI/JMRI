@@ -5,11 +5,7 @@ import jmri.jmrix.lenz.XNetReply;
 import jmri.jmrix.lenz.XNetSystemConnectionMemo;
 import jmri.jmrix.lenz.XNetThrottle;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * Tests for the jmri.jmrix.roco.z21.z21XNetThrottle class
@@ -31,12 +27,6 @@ public class Z21XNetThrottleTest extends jmri.jmrix.roco.RocoXNetThrottleTest {
     @Override
     public void testCtorWithArg() throws Exception {
         Assert.assertNotNull(instance);
-    }
-
-    @Override
-    @Ignore("only one software version for Z21")
-    @Test(timeout=1000)
-    public void testSendFunctionGroup4v35() {
     }
 
     // run the throttle through the initilization sequence,

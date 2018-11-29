@@ -9,11 +9,7 @@ import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.util.JUnitUtil;
 import jmri.util.prefs.InitializationException;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * Test simple functioning of ManagerDefaultSelector

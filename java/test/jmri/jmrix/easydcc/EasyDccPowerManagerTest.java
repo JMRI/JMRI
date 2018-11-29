@@ -3,10 +3,7 @@ package jmri.jmrix.easydcc;
 import jmri.JmriException;
 import jmri.jmrix.AbstractPowerManagerTestBase;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * JUnit tests for the EasyDccPowerManager class
