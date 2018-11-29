@@ -38,9 +38,11 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
     @Nonnull
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
-        if (tc == null) log.warn("getSupportedModes called with null tc", new Exception("traceback"));
+        if (tc == null) {
+            log.warn("getSupportedModes called with null tc", new Exception("traceback"));
+        }
         java.util.Objects.requireNonNull(tc, "TrafficController reference needed");
-        
+
         if (tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_NONE) {
             // USB connection
             switch (tc.getUsbSystem()) {
@@ -56,7 +58,7 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
                 case NceTrafficController.USB_SYSTEM_POWERPRO:
                     log.trace("no programming modes available for USB {}", tc.getUsbSystem());
                     return ret;
-                    
+
                 default:
                     log.warn("should not have hit default");
                     return ret;
@@ -76,13 +78,9 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
 
     @Override
     public boolean getCanRead() {
-        if (tc != null && tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_POWERCAB
+        return !(tc != null && tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_POWERCAB
                 && tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_TWIN
-                && tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_NONE) {
-            return false;
-        } else {
-            return true;
-        }
+                && tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_NONE);
     }
 
     @Override
@@ -92,21 +90,14 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
 
     boolean getCanWrite(int cv) {
         // prevent writing Prog Track mode CV > 256 on PowerPro 2007C and earlier
-        if (    (cv > 256)
+        return !((cv > 256)
                 && ((getMode() == ProgrammingMode.PAGEMODE)
-                    || (getMode() == ProgrammingMode.DIRECTMODE)
-                    || (getMode() == ProgrammingMode.REGISTERMODE))
+                || (getMode() == ProgrammingMode.DIRECTMODE)
+                || (getMode() == ProgrammingMode.REGISTERMODE))
                 && ((tc != null)
-                        && ((tc.getCommandOptions() == NceTrafficController.OPTION_1999)
-                            || (tc.getCommandOptions() == NceTrafficController.OPTION_2004)
-                            || (tc.getCommandOptions() == NceTrafficController.OPTION_2006)
-                            )
-                    )
-                ) {
-            return false;
-        } else {
-            return true;
-        }
+                && ((tc.getCommandOptions() == NceTrafficController.OPTION_1999)
+                || (tc.getCommandOptions() == NceTrafficController.OPTION_2004)
+                || (tc.getCommandOptions() == NceTrafficController.OPTION_2006))));
     }
 
     // members for handling the programmer interface
