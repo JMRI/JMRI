@@ -280,8 +280,9 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
                 ccCurrent.dispose();
             }
             ccCurrent = classConnectionList[current];
-            classConnectionList[current].loadDetails(details);
-            classConnectionList[current].setManufacturer((String) manuBox.getSelectedItem());
+            ccCurrent.setInstance();
+            ccCurrent.setManufacturer((String) manuBox.getSelectedItem());
+            ccCurrent.loadDetails(details);
         } else {
             if (ccCurrent != null) {
                 ccCurrent.dispose();
