@@ -77,6 +77,7 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
     @Override
     public boolean getCanRead() {
         if (tc != null && tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_POWERCAB
+                && tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_TWIN
                 && tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_NONE) {
             return false;
         } else {
