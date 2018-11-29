@@ -1,11 +1,7 @@
 package jmri.jmrix.roco.z21.simulator;
 
 import jmri.util.JUnitUtil;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.*;
 
 
 /**
