@@ -48,13 +48,13 @@ public class Pr2ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     public void testGetSpeed_float() {
         // set speed step mode to 128.
         instance.setSpeedStepMode(jmri.DccThrottle.SpeedStepMode128);
-        Assert.assertEquals("Full Speed", 127, ((LocoNetThrottle)instance).intSpeed(1.0F));
+        Assert.assertEquals("Full Speed", 127, ((Pr2Throttle)instance).intSpeed(1.0F));
         float incre = 0.007874016f;
         float speed = incre;
         // Cannot get speeedStep 1. range is 2 to 127
         int i = 2;
         while (speed < 0.999f) {
-            int result = ((LocoNetThrottle)instance).intSpeed(speed);
+            int result = ((Pr2Throttle)instance).intSpeed(speed);
             Assert.assertEquals("speed step ", i++, result);
             speed += incre;
         }
