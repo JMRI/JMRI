@@ -264,7 +264,7 @@ public abstract class AbstractTurnoutTestBase {
         // DIRECT mode is implemented in the AbstractTurnout class, so
 	// it is possible on all systems.
 	if(t.getFeedbackMode() != Turnout.DIRECT){
-		t.setFeedbackMode(Turnout.DIRECt);
+		t.setFeedbackMode(Turnout.DIRECT);
 	}
         Assert.assertEquals(Turnout.DIRECT, t.getFeedbackMode());
 
