@@ -103,13 +103,6 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
         Assert.assertTrue(t.getCommandedState() == jmri.Turnout.THROWN);
     }
 
-    @Test
-    @Override
-    public void testDirectFeedback() throws Exception {
-	t.setFeedbackMode(jmri.Turnout.DIRECT);
-	super.testDirectFeedback();
-    }
-
     // LnTurnout test for incoming status message
     @Test
     public void testLnTurnoutStatusMsg() {

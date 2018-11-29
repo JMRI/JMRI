@@ -28,13 +28,6 @@ public class TamsTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
                 tnis.outbound.elementAt(tnis.outbound.size() - 1).toString());
     }
 
-    @Test
-    @Override
-    public void testDirectFeedback() throws Exception {
-	t.setFeedbackMode(jmri.Turnout.DIRECT);
-	super.testDirectFeedback();
-    }
-
     // The minimal setup for log4J
     @Before
     public void setUp() {

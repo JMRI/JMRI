@@ -43,14 +43,6 @@ public class JMRIClientTurnoutTest extends jmri.implementation.AbstractTurnoutTe
         Assert.assertEquals("controller listeners remaining", 1, numListeners());
     }
 
-    @Test
-    @Override
-    public void testDirectFeedback() throws Exception {
-
-	t.setFeedbackMode(Turnout.DIRECT);
-	super.testDirectFeedback();
-    }
-
     // The minimal setup for log4J
     @Override
     @Before
