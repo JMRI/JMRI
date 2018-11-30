@@ -2,6 +2,8 @@ package jmri.jmrix.can.cbus;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Nonnull;
+
 import jmri.AddressedProgrammer;
 import jmri.ProgrammingMode;
 import jmri.jmrix.AbstractProgrammer;
@@ -34,6 +36,7 @@ public class CbusProgrammer extends AbstractProgrammer implements CanListener, A
      * Types implemented here.
      */
     @Override
+    @Nonnull
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
         ret.add(CBUSNODEVARMODE);

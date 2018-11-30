@@ -244,6 +244,7 @@ public class ProgDebugger implements AddressedProgrammer {
     protected ProgrammingMode mode;
 
     @Override
+    @Nonnull
     public final void setMode(ProgrammingMode m) {
         log.debug("Setting mode from {} to {}", mode, m);
         if (getSupportedModes().contains(m)) {
