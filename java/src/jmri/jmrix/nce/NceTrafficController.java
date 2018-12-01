@@ -1,6 +1,5 @@
 package jmri.jmrix.nce;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.CommandStation;
 import jmri.JmriException;
 import jmri.NmraPacket;
@@ -217,35 +216,37 @@ public class NceTrafficController extends AbstractMRTrafficController implements
     }
 
     /**
-     * Default when a NCE USB isn't selected in user system preferences
+     * Default when a NCE USB isn't selected in user system preferences.
+     * <br><br>
+     * Also the case when Serial or Simulator is selected.
      */
-    static public final int USB_SYSTEM_NONE = 0;
+    public static final int USB_SYSTEM_NONE = 0;
 
     /**
-     * Create commands compatible with a NCE USB connected to a PowerCab
+     * Create commands compatible with a NCE USB connected to a PowerCab.
      */
-    static public final int USB_SYSTEM_POWERCAB = 1;
+    public static final int USB_SYSTEM_POWERCAB = 1;
 
     /**
-     * Create commands compatible with a NCE USB connected to a Smart Booster
+     * Create commands compatible with a NCE USB connected to a Smart Booster.
      */
-    static public final int USB_SYSTEM_SB3 = 2;
+    public static final int USB_SYSTEM_SB3 = 2;
 
     /**
-     * Create commands compatible with a NCE USB connected to a PowerHouse
+     * Create commands compatible with a NCE USB connected to a PowerPro.
      */
-    static public final int USB_SYSTEM_POWERHOUSE = 3;
+    public static final int USB_SYSTEM_POWERPRO = 3;
 
     /**
      * Create commands compatible with a NCE USB with {@literal >=7.*} connected
-     * to a Twin
+     * to a Twin.
      */
-    static public final int USB_SYSTEM_TWIN = 4;
+    public static final int USB_SYSTEM_TWIN = 4;
 
     /**
-     * Create commands compatible with a NCE USB with SB5
+     * Create commands compatible with a NCE USB with SB5.
      */
-    static public final int USB_SYSTEM_SB5 = 5;
+    public static final int USB_SYSTEM_SB5 = 5;
 
     private int usbSystem = USB_SYSTEM_NONE;
     private boolean usbSystemSet = false;
@@ -256,7 +257,7 @@ public class NceTrafficController extends AbstractMRTrafficController implements
      * <LI>{@link #USB_SYSTEM_NONE}
      * <LI>{@link #USB_SYSTEM_POWERCAB}
      * <LI>{@link #USB_SYSTEM_SB3}
-     * <LI>{@link #USB_SYSTEM_POWERHOUSE}
+     * <LI>{@link #USB_SYSTEM_POWERPRO}
      * <LI>{@link #USB_SYSTEM_TWIN}
      * <LI>{@link #USB_SYSTEM_SB5}
      * </UL>
@@ -278,7 +279,7 @@ public class NceTrafficController extends AbstractMRTrafficController implements
      * <LI>{@link #USB_SYSTEM_NONE}
      * <LI>{@link #USB_SYSTEM_POWERCAB}
      * <LI>{@link #USB_SYSTEM_SB3}
-     * <LI>{@link #USB_SYSTEM_POWERHOUSE}
+     * <LI>{@link #USB_SYSTEM_POWERPRO}
      * <LI>{@link #USB_SYSTEM_TWIN}
      * <LI>{@link #USB_SYSTEM_SB5}
      * </UL>

@@ -2,6 +2,8 @@ package jmri.jmrix.mrc;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Nonnull;
+
 import jmri.ProgListener;
 import jmri.ProgrammerException;
 import jmri.ProgrammingMode;
@@ -91,6 +93,7 @@ public class MrcOpsModeProgrammer extends MrcProgrammer implements jmri.Addresse
      * Types implemented here.
      */
     @Override
+    @Nonnull
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
         ret.add(ProgrammingMode.OPSBYTEMODE);
