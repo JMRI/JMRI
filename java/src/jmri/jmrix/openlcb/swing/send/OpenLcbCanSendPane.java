@@ -397,7 +397,8 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
     }
 
     EventID eventID() {
-        return new EventID(jmri.util.StringUtil.bytesFromHexString(sendEventField.getText()));
+        return new EventID(jmri.util.StringUtil.bytesFromHexString(sendEventField.getText()
+                .replace(".", " ")));
     }
 
     public void sendVerifyNodeGlobal(java.awt.event.ActionEvent e) {
