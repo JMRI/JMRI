@@ -65,7 +65,8 @@ public class ManagerDefaultSelector extends AbstractPreferencesManager {
                     String oldName = (String) e.getOldValue();
                     String newName = (String) e.getNewValue();
                     log.debug("ConnectionNameChanged from \"{}\" to \"{}\"", oldName, newName);
-                    defaults.keySet().stream().forEach((c) -> {
+                    // Takes a copy of the keys to avoid ConcurrentModificationException.
+                    new HashSet<>(defaults.keySet()).forEach((c) -> {
                         String connectionName = this.defaults.get(c);
                         if (connectionName.equals(oldName)) {
                             ManagerDefaultSelector.this.defaults.put(c, newName);
@@ -214,7 +215,9 @@ public class ManagerDefaultSelector extends AbstractPreferencesManager {
         InitializationException error = null;
         List<SystemConnectionMemo> connList = InstanceManager.getList(SystemConnectionMemo.class);
         log.debug("configure defaults into InstanceManager from {} memos, {} defaults", connList.size(), defaults.keySet().size());
-        for (Map.Entry<Class<?>, String> entry : defaults.entrySet()) {
+        // Takes a copy to avoid ConcurrentModificationException.
+        Set<Map.Entry<Class<?>, String>> entries = new HashSet<>(defaults.entrySet());
+        for (Map.Entry<Class<?>, String> entry : entries) {
             // 'c' is the class to load
             Class<?> c = entry.getKey();
             String connectionName = entry.getValue();
