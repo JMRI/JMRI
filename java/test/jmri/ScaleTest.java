@@ -35,7 +35,7 @@ public class ScaleTest {
         } catch (Exception ex) {
         }
         Assert.assertEquals(scale.getUserName(), "XYZ");
-        jmri.util.JUnitAppender.assertWarnMessage("Create preference:resources/scale failed");
+//         jmri.util.JUnitAppender.assertWarnMessage("Create preference:resources/scale failed");
     }
 
     @Test
@@ -69,7 +69,7 @@ public class ScaleTest {
         } catch (Exception ex) {
         }
         Assert.assertEquals(scale.getScaleFactor(), .025, .001);
-        jmri.util.JUnitAppender.assertWarnMessage("Create preference:resources/scale failed");
+//         jmri.util.JUnitAppender.assertWarnMessage("Create preference:resources/scale failed");
     }
 
     @Test

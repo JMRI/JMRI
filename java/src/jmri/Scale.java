@@ -129,7 +129,7 @@ public class Scale extends ConstrainedBean {
 
     @Override
     public String toString() {
-        return String.format("%s (%.1f)", (String) getUserName(), getScaleRatio());
+        return String.format("%s (%.1f)", getUserName(), getScaleRatio());
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Scale.class);

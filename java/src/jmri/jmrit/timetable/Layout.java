@@ -104,7 +104,7 @@ public class Layout implements VetoableChangeListener {
         Scale oldScale = _scale;
         double oldRatio = _ratio;
         _scale = newScale;
-        _ratio = (double) newScale.getScaleRatio();
+        _ratio = newScale.getScaleRatio();
 
         try {
             // Update the smile/skm which includes stop recalcs
