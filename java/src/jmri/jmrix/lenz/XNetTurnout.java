@@ -676,14 +676,12 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
             }
             if (l.getTurnoutStatus(startByte, 1) == THROWN) {
                 synchronized (this) {
-                    newCommandedState(_mThrown);
-                    newKnownState(getCommandedState());
+                    newKnownState(_mThrown);
                 }
                 return (0);
             } else if (l.getTurnoutStatus(startByte, 1) == CLOSED) {
                 synchronized (this) {
-                    newCommandedState(_mClosed);
-                    newKnownState(getCommandedState());
+                    newKnownState(_mClosed);
                 }
                 return (0);
             } else {
@@ -706,14 +704,12 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
             }
             if (l.getTurnoutStatus(startByte, 0) == THROWN) {
                 synchronized (this) {
-                    newCommandedState(_mThrown);
-                    newKnownState(getCommandedState());
+                    newKnownState(_mThrown);
                 }
                 return (0);
             } else if (l.getTurnoutStatus(startByte, 0) == CLOSED) {
                 synchronized (this) {
-                    newCommandedState(_mClosed);
-                    newKnownState(getCommandedState());
+                    newKnownState(_mClosed);
                 }
                 return (0);
             } else {

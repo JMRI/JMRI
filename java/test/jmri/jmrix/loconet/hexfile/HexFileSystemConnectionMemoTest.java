@@ -9,7 +9,7 @@ import jmri.jmrix.loconet.LocoNetInterfaceScaffold;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class LocoNetSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
+public class HexFileSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
 
 
     // The minimal setup for log4J
@@ -18,7 +18,7 @@ public class LocoNetSystemConnectionMemoTest extends jmri.jmrix.SystemConnection
     public void setUp() {
        JUnitUtil.setUp();
        LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
-       LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo();
+       HexFileSystemConnectionMemo memo = new HexFileSystemConnectionMemo();
        memo.setLnTrafficController(lnis);
        memo.configureCommandStation(jmri.jmrix.loconet.LnCommandStationType.COMMAND_STATION_DCS100,false,false,false);
        memo.configureManagers();
@@ -28,7 +28,7 @@ public class LocoNetSystemConnectionMemoTest extends jmri.jmrix.SystemConnection
     @Override
     @After
     public void tearDown() {
-        ((LocoNetSystemConnectionMemo)scm).dispose();
+        ((HexFileSystemConnectionMemo)scm).dispose();
         JUnitUtil.tearDown();
     }
 

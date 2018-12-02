@@ -210,8 +210,8 @@ public abstract class AbstractTurnoutTestBase {
         Sensor s1 = InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("IS1");
         t.setFeedbackMode(Turnout.ONESENSOR); 
         listenStatus = Turnout.UNKNOWN;
-	t.addPropertyChangeListener(new Listen());
-	t.provideFirstFeedbackSensor("IS1");
+        t.addPropertyChangeListener(new Listen());
+        t.provideFirstFeedbackSensor("IS1");
         s1.setKnownState(Sensor.INACTIVE);
         Assert.assertEquals("known state for ONESENSOR feedback Inactive",Turnout.CLOSED,t.getKnownState());
         Assert.assertEquals("listener notified of change for ONESENSOR feedback",Turnout.CLOSED,listenStatus);
@@ -229,8 +229,8 @@ public abstract class AbstractTurnoutTestBase {
         t.setFeedbackMode(Turnout.TWOSENSOR); 
         Assert.assertEquals("known state for TWOSENSOR feedback (UNKNOWN,UNKNOWN)",Turnout.UNKNOWN,t.getKnownState());
 
-	listenStatus = Turnout.UNKNOWN;
-	t.addPropertyChangeListener(new Listen());
+	    listenStatus = Turnout.UNKNOWN;
+	    t.addPropertyChangeListener(new Listen());
 
         s1.setKnownState(Sensor.ACTIVE);
         s2.setKnownState(Sensor.INACTIVE);
@@ -241,7 +241,7 @@ public abstract class AbstractTurnoutTestBase {
 
         Assert.assertEquals("state changed by TWOSENSOR feedback (Active,Inactive)", Turnout.THROWN, t.getKnownState());
 
-	Assert.assertEquals("listener notified of change for TWOSENSOR feedback",Turnout.THROWN,listenStatus);
+        Assert.assertEquals("listener notified of change for TWOSENSOR feedback",Turnout.THROWN,listenStatus);
 
         s1.setKnownState(Sensor.INACTIVE);
         s2.setKnownState(Sensor.INACTIVE);
@@ -251,7 +251,7 @@ public abstract class AbstractTurnoutTestBase {
         s2.setKnownState(Sensor.ACTIVE);
         Assert.assertEquals("state changed by TWOSENSOR feedback (Inactive,Active)", Turnout.CLOSED, t.getKnownState());
 
-	Assert.assertEquals("listener notified of change for TWOSENSOR feedback ",Turnout.CLOSED,listenStatus);
+        Assert.assertEquals("listener notified of change for TWOSENSOR feedback ",Turnout.CLOSED,listenStatus);
 
         s1.setKnownState(Sensor.ACTIVE);
         s2.setKnownState(Sensor.ACTIVE);
@@ -261,7 +261,11 @@ public abstract class AbstractTurnoutTestBase {
     @Test 
     public void testDirectFeedback() throws Exception {
 
-        // Default mode is DIRECT
+        // DIRECT mode is implemented in the AbstractTurnout class, so
+	// it is possible on all systems.
+	if(t.getFeedbackMode() != Turnout.DIRECT){
+		t.setFeedbackMode(Turnout.DIRECT);
+	}
         Assert.assertEquals(Turnout.DIRECT, t.getFeedbackMode());
 
 	listenStatus = Turnout.UNKNOWN;

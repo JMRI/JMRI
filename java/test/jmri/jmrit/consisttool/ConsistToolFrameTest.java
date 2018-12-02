@@ -10,13 +10,7 @@ import jmri.LocoAddress;
 import jmri.jmrit.throttle.ThrottleOperator;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.rules.TemporaryFolder;
 import org.netbeans.jemmy.operators.JFrameOperator;
 

@@ -2,11 +2,7 @@ package jmri.jmrix.roco.z21;
 
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.*;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.PipedInputStream;
