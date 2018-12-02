@@ -13,13 +13,13 @@ import org.junit.Test;
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-public class CbusEventFilterPanelTest {
+public class CbusEventHighlightPanelTest {
 
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        CbusEventFilterFrame frame = new CbusEventFilterFrame();
-        CbusEventFilterPanel panel = new CbusEventFilterPanel(frame,1);
+        CbusEventHighlightFrame frame = new CbusEventHighlightFrame();
+        CbusEventHighlightPanel panel = new CbusEventHighlightPanel(frame,1);
         Assert.assertNotNull("exists", panel);
     }
 
