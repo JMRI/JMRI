@@ -290,6 +290,18 @@ public class TimeTableFrameTest {
         textArea.clickMouse();
         textArea.setText(java.util.UUID.randomUUID().toString());  // NOI18N
         new JButtonOperator(_jfo, Bundle.getMessage("ButtonUpdate")).doClick();  // NOI18N
+
+        // Indirect layout listener veto tests
+        try {
+            jmri.ScaleManager.getScale("N").setScaleRatio(500.0);
+        } catch (java.beans.PropertyVetoException ex) {
+        }
+
+        try {
+            jmri.ScaleManager.getScale("N").setScaleRatio(150.0);
+        } catch (Exception ex) {
+        }
+        jmri.util.JUnitAppender.assertWarnMessage("Create preference:resources/scale failed");
     }
 
     void timeRangeTests() {

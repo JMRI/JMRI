@@ -10,6 +10,11 @@ import org.junit.*;
 public class ScaleConfigXMLTest {
 
     @Test
+    public void ctorTest() {
+        ScaleConfigXML sxml = new ScaleConfigXML();
+        Assert.assertNotNull(sxml);
+    }
+
     public void testLoad() {
         boolean loadResult = ScaleConfigXML.doLoad();
         Assert.assertTrue("load worked", loadResult);

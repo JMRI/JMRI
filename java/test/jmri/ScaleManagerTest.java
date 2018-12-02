@@ -10,6 +10,12 @@ import org.junit.*;
 public class ScaleManagerTest {
 
     @Test
+    public void ctorTest() {
+        ScaleManager sm = new ScaleManager();
+        Assert.assertNotNull(sm);
+    }
+
+    @Test
     public void testManager() {
         java.util.ArrayList list = jmri.ScaleManager.getScales();
         Assert.assertEquals(list.size(), 12);
@@ -19,6 +25,9 @@ public class ScaleManagerTest {
 
         scale = ScaleManager.getScaleByName("QR");
         Assert.assertNull(scale);
+
+        scale = ScaleManager.getScaleByName("N");
+        Assert.assertEquals(scale.getScaleRatio(), 160.0, .1);
     }
 
     // The minimal setup for log4J
