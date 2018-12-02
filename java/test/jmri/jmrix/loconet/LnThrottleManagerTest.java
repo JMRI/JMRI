@@ -169,17 +169,20 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
 
         throttle.dispatch(throtListen);
 
-        Assert.assertEquals("Expect the slot to be dispatched",
-                "BA 11 00 00",
-                lnis.outbound.elementAt(4).toString());
-
         Assert.assertEquals("slot is set to 'common' status",
                 "B5 11 10 00",
+                lnis.outbound.elementAt(4).toString());
+
+        Assert.assertEquals("Expect the slot to be dispatched",
+                "BA 11 00 00",
                 lnis.outbound.elementAt(5).toString());
+        // common is sent twice due to the way the release works.
+        Assert.assertEquals("slot is set to 'common' status",
+                "B5 11 10 00",
+                lnis.outbound.elementAt(6).toString());
 
-        JUnitUtil.waitFor(()->{return 5 < lnis.outbound.size();},"didn't get the 5th LocoNet message");
-        Assert.assertEquals("check count of sent messages", 5, lnis.outbound.size()-1);
-
+        JUnitUtil.waitFor(()->{return 6 < lnis.outbound.size();},"didn't get the 5th LocoNet message");
+        Assert.assertEquals("check count of sent messages", 6, lnis.outbound.size()-1);
 
         Assert.assertEquals("slot speed not zeroed", 26, memo.getSlotManager()._slots[17].speed());
     }
@@ -743,8 +746,14 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
         tm.dispatchThrottle(throttle2, throtListen2);
         Assert.assertFalse("Address no longer required",
                 InstanceManager.throttleManagerInstance().addressStillRequired(new DccLocoAddress(260, true)));
+        Assert.assertEquals("slot is set to 'common' status",
+                "B5 09 10 00",
+                lnis.outbound.elementAt(4).toString());
+        Assert.assertEquals("Expect the slot to be dispatched",
+                "BA 09 00 00",
+                lnis.outbound.elementAt(5).toString());
 
-        Assert.assertEquals("No more loconet messages sent at throttle release", 5, lnis.outbound.size()-1);
+        Assert.assertEquals("No more loconet messages sent at throttle release", 6, lnis.outbound.size()-1);
 
         throtListen = null;
         throtListen2 = null;
@@ -1026,6 +1035,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
     LocoNetSystemConnectionMemo memo;
 
     // The minimal setup for log4J
+    @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();
