@@ -216,11 +216,10 @@ public class ManagerDefaultSelector extends AbstractPreferencesManager {
         List<SystemConnectionMemo> connList = InstanceManager.getList(SystemConnectionMemo.class);
         log.debug("configure defaults into InstanceManager from {} memos, {} defaults", connList.size(), defaults.keySet().size());
         // Takes a copy to avoid ConcurrentModificationException.
-        Set<Map.Entry<Class<?>, String>> entries = new HashSet<>(defaults.entrySet());
-        for (Map.Entry<Class<?>, String> entry : entries) {
+        Set<Class<?>> keys = new HashSet<>(defaults.keySet());
+        for (Class<?> c : keys) {
             // 'c' is the class to load
-            Class<?> c = entry.getKey();
-            String connectionName = entry.getValue();
+            String connectionName = defaults.get(c);
             // have to find object of that type from proper connection
             boolean found = false;
             for (SystemConnectionMemo memo : connList) {
