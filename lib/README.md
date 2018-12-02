@@ -155,6 +155,7 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 
 ##### Joal 2.3.1
 - from <http://jogamp.org/deployment/archive/rc/v2.3.1/jar/>
+- -javadoc at https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/
 - cross-platform .jar files
     joal.jar
     gluegen-rt.jar
