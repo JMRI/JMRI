@@ -868,6 +868,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      */
 
     @Override
+    @Nonnull
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<>();
         ret.add(ProgrammingMode.PAGEMODE);

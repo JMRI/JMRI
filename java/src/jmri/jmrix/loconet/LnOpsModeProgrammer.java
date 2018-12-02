@@ -422,6 +422,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
     protected ProgrammingMode mode = ProgrammingMode.OPSBYTEMODE;
 
     @Override
+    @Nonnull
     public final void setMode(ProgrammingMode m) {
         if (getSupportedModes().contains(m)) {
             mode = m;
