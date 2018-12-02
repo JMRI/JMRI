@@ -244,7 +244,6 @@ public class ProgDebugger implements AddressedProgrammer {
     protected ProgrammingMode mode;
 
     @Override
-    @Nonnull
     public final void setMode(ProgrammingMode m) {
         log.debug("Setting mode from {} to {}", mode, m);
         if (getSupportedModes().contains(m)) {
@@ -262,6 +261,7 @@ public class ProgDebugger implements AddressedProgrammer {
     }
 
     @Override
+    @Nonnull
     public List<ProgrammingMode> getSupportedModes() {
         if (address >= 0) {
             // addressed programmer
