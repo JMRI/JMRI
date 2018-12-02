@@ -1,11 +1,7 @@
 package jmri.jmrix.loconet;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  *
@@ -49,15 +45,16 @@ public class Pr2ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      */
     @Test
     @Override
-    @Ignore("Speed steps on LocoNet are off. 1.0F reports back as speed step 124, not 127 as expected.  Speed step for 0.007874016f reports as speed step 12, not 2 as expected.")
     public void testGetSpeed_float() {
-        Assert.assertEquals("Full Speed", 127, ((LocoNetThrottle)instance).intSpeed(1.0F));
+        // set speed step mode to 128.
+        instance.setSpeedStepMode(jmri.DccThrottle.SpeedStepMode128);
+        Assert.assertEquals("Full Speed", 127, ((Pr2Throttle)instance).intSpeed(1.0F));
         float incre = 0.007874016f;
         float speed = incre;
         // Cannot get speeedStep 1. range is 2 to 127
         int i = 2;
         while (speed < 0.999f) {
-            int result = ((LocoNetThrottle)instance).intSpeed(speed);
+            int result = ((Pr2Throttle)instance).intSpeed(speed);
             Assert.assertEquals("speed step ", i++, result);
             speed += incre;
         }

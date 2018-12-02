@@ -4,11 +4,7 @@ import jmri.util.JUnitUtil;
 import jmri.Turnout;
 import jmri.Sensor;
 import jmri.InstanceManager;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
