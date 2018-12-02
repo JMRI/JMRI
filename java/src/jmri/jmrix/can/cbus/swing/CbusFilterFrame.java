@@ -93,54 +93,52 @@ public class CbusFilterFrame extends JmriJFrame {
         fPane = new JPanel();
         fPane.setLayout(new BoxLayout(fPane, BoxLayout.Y_AXIS));
         fPaneScroll = new JScrollPane();
-        
-        CbusFilterPanel filterpanel;
 
-        listFilters.add(new CbusFilterPanel(this,_filter.CFIN,Bundle.getMessage("Incoming"),false,0));
-        listFilters.add(new CbusFilterPanel(this,_filter.CFOUT,Bundle.getMessage("Outgoing"),false,0));
+        listFilters.add(new CbusFilterPanel(this,CbusFilter.CFIN,Bundle.getMessage("Incoming"),false,0));
+        listFilters.add(new CbusFilterPanel(this,CbusFilter.CFOUT,Bundle.getMessage("Outgoing"),false,0));
         
-        listFilters.add(new CbusFilterPanel(this,_filter.CFEVENT,Bundle.getMessage("CbusEvents"),true,1));
-        listFilters.add(new CbusFilterPanel(this,_filter.CFON,Bundle.getMessage("CbusOnEvents"),false,1));
-        listFilters.add(new CbusFilterPanel(this,_filter.CFOF,Bundle.getMessage("CbusOffEvents"),false,1));          
-        listFilters.add(new CbusFilterPanel(this,_filter.CFSHORT,Bundle.getMessage("ShortEvents"),false,1));
-        listFilters.add(new CbusFilterPanel(this,_filter.CFLONG,Bundle.getMessage("LongEvents"),false,1));
-        listFilters.add(new CbusFilterPanel(this,_filter.CFSTD,Bundle.getMessage("StandardEvents"),false,1));
-        listFilters.add(new CbusFilterPanel(this,_filter.CFREQUEST,Bundle.getMessage("RequestEvents"),false,1));
-        listFilters.add(new CbusFilterPanel(this,_filter.CFRESPONSE,Bundle.getMessage("ResponseEvents"),false,1));
-        listFilters.add(new CbusFilterPanel(this,_filter.CFED0,Bundle.getMessage("EVD0"),false,1));
-        listFilters.add(new CbusFilterPanel(this,_filter.CFED1,Bundle.getMessage("EVD1"),false,1));
-        listFilters.add(new CbusFilterPanel(this,_filter.CFED2,Bundle.getMessage("EVD2"),false,1));        
-        listFilters.add(new CbusFilterPanel(this,_filter.CFED3,Bundle.getMessage("EVD3"),false,1));        
+        listFilters.add(new CbusFilterPanel(this,CbusFilter.CFEVENT,Bundle.getMessage("CbusEvents"),true,1));
+        listFilters.add(new CbusFilterPanel(this,CbusFilter.CFON,Bundle.getMessage("CbusOnEvents"),false,1));
+        listFilters.add(new CbusFilterPanel(this,CbusFilter.CFOF,Bundle.getMessage("CbusOffEvents"),false,1));          
+        listFilters.add(new CbusFilterPanel(this,CbusFilter.CFSHORT,Bundle.getMessage("ShortEvents"),false,1));
+        listFilters.add(new CbusFilterPanel(this,CbusFilter.CFLONG,Bundle.getMessage("LongEvents"),false,1));
+        listFilters.add(new CbusFilterPanel(this,CbusFilter.CFSTD,Bundle.getMessage("StandardEvents"),false,1));
+        listFilters.add(new CbusFilterPanel(this,CbusFilter.CFREQUEST,Bundle.getMessage("RequestEvents"),false,1));
+        listFilters.add(new CbusFilterPanel(this,CbusFilter.CFRESPONSE,Bundle.getMessage("ResponseEvents"),false,1));
+        listFilters.add(new CbusFilterPanel(this,CbusFilter.CFED0,Bundle.getMessage("EVD0"),false,1));
+        listFilters.add(new CbusFilterPanel(this,CbusFilter.CFED1,Bundle.getMessage("EVD1"),false,1));
+        listFilters.add(new CbusFilterPanel(this,CbusFilter.CFED2,Bundle.getMessage("EVD2"),false,1));        
+        listFilters.add(new CbusFilterPanel(this,CbusFilter.CFED3,Bundle.getMessage("EVD3"),false,1));        
         
-        listFilters.add(new CbusFilterPanel(this,_filter.CFDATA,Bundle.getMessage("OPC_DA"),true,2));
-        listFilters.add(new CbusFilterPanel(this,_filter.CFACDAT,"ACDAT",false,2)); // NOI18N
-        listFilters.add(new CbusFilterPanel(this,_filter.CFDDES,"DDES",false,2)); // NOI18N
-        listFilters.add(new CbusFilterPanel(this,_filter.CFRQDAT,"RQDAT",false,2)); // NOI18N
-        listFilters.add(new CbusFilterPanel(this,_filter.CFARDAT,"ARDAT",false,2)); // NOI18N
-        listFilters.add(new CbusFilterPanel(this,_filter.CFDDRS,"DDRS",false,2)); // NOI18N
-        listFilters.add(new CbusFilterPanel(this,_filter.CFRQDDS,"RQDDS",false,2)); // NOI18N
-        listFilters.add(new CbusFilterPanel(this,_filter.CFCABDAT,"Cabdata (experimental)",false,2));
+        listFilters.add(new CbusFilterPanel(this,CbusFilter.CFDATA,Bundle.getMessage("OPC_DA"),true,2));
+        listFilters.add(new CbusFilterPanel(this,CbusFilter.CFACDAT,"ACDAT",false,2)); // NOI18N
+        listFilters.add(new CbusFilterPanel(this,CbusFilter.CFDDES,"DDES",false,2)); // NOI18N
+        listFilters.add(new CbusFilterPanel(this,CbusFilter.CFRQDAT,"RQDAT",false,2)); // NOI18N
+        listFilters.add(new CbusFilterPanel(this,CbusFilter.CFARDAT,"ARDAT",false,2)); // NOI18N
+        listFilters.add(new CbusFilterPanel(this,CbusFilter.CFDDRS,"DDRS",false,2)); // NOI18N
+        listFilters.add(new CbusFilterPanel(this,CbusFilter.CFRQDDS,"RQDDS",false,2)); // NOI18N
+        listFilters.add(new CbusFilterPanel(this,CbusFilter.CFCABDAT,"Cabdata (experimental)",false,2));
         
-        listFilters.add(new CbusFilterPanel(this,_filter.CFCS,Bundle.getMessage("CommandStation"),true,3));
-        listFilters.add(new CbusFilterPanel(this,_filter.CFCSAQRL,Bundle.getMessage("LocoCommands"),false,3));
-        listFilters.add(new CbusFilterPanel(this,_filter.CFCSKA,Bundle.getMessage("KeepAlive"),false,3));       
-        listFilters.add(new CbusFilterPanel(this,_filter.CFCSDSPD,Bundle.getMessage("SpeedDirection"),false,3));
-        listFilters.add(new CbusFilterPanel(this,_filter.CFCSFUNC,Bundle.getMessage("Functions"),false,3));
-        listFilters.add(new CbusFilterPanel(this,_filter.CFCSPROG,Bundle.getMessage("Programming"),false,3));
-        listFilters.add(new CbusFilterPanel(this,_filter.CFCSLC,Bundle.getMessage("LayoutCommands"),false,3));        
-        listFilters.add(new CbusFilterPanel(this,_filter.CFCSC,Bundle.getMessage("CommandStationControl"),false,3));
+        listFilters.add(new CbusFilterPanel(this,CbusFilter.CFCS,Bundle.getMessage("CommandStation"),true,3));
+        listFilters.add(new CbusFilterPanel(this,CbusFilter.CFCSAQRL,Bundle.getMessage("LocoCommands"),false,3));
+        listFilters.add(new CbusFilterPanel(this,CbusFilter.CFCSKA,Bundle.getMessage("KeepAlive"),false,3));       
+        listFilters.add(new CbusFilterPanel(this,CbusFilter.CFCSDSPD,Bundle.getMessage("SpeedDirection"),false,3));
+        listFilters.add(new CbusFilterPanel(this,CbusFilter.CFCSFUNC,Bundle.getMessage("Functions"),false,3));
+        listFilters.add(new CbusFilterPanel(this,CbusFilter.CFCSPROG,Bundle.getMessage("Programming"),false,3));
+        listFilters.add(new CbusFilterPanel(this,CbusFilter.CFCSLC,Bundle.getMessage("LayoutCommands"),false,3));        
+        listFilters.add(new CbusFilterPanel(this,CbusFilter.CFCSC,Bundle.getMessage("CommandStationControl"),false,3));
         
-        listFilters.add(new CbusFilterPanel(this,_filter.CFNDCONFIG,Bundle.getMessage("NodeConfiguration"),true,4));
-        listFilters.add(new CbusFilterPanel(this,_filter.CFNDSETUP,Bundle.getMessage("GeneralNodeSetup"),false,4));
-        listFilters.add(new CbusFilterPanel(this,_filter.CFNDVAR,Bundle.getMessage("NodeVariables"),false,4));
-        listFilters.add(new CbusFilterPanel(this,_filter.CFNDEV,Bundle.getMessage("NodeEvents"),false,4));
-        listFilters.add(new CbusFilterPanel(this,_filter.CFNDNUM,Bundle.getMessage("NodeNumbers"),false,4));
+        listFilters.add(new CbusFilterPanel(this,CbusFilter.CFNDCONFIG,Bundle.getMessage("NodeConfiguration"),true,4));
+        listFilters.add(new CbusFilterPanel(this,CbusFilter.CFNDSETUP,Bundle.getMessage("GeneralNodeSetup"),false,4));
+        listFilters.add(new CbusFilterPanel(this,CbusFilter.CFNDVAR,Bundle.getMessage("NodeVariables"),false,4));
+        listFilters.add(new CbusFilterPanel(this,CbusFilter.CFNDEV,Bundle.getMessage("NodeEvents"),false,4));
+        listFilters.add(new CbusFilterPanel(this,CbusFilter.CFNDNUM,Bundle.getMessage("NodeNumbers"),false,4));
         
-        listFilters.add(new CbusFilterPanel(this,_filter.CFMISC,Bundle.getMessage("Misc"),true,5));
-        listFilters.add(new CbusFilterPanel(this,_filter.CFNETWK,Bundle.getMessage("NetworkCommands"),false,5));
-        listFilters.add(new CbusFilterPanel(this,_filter.CFCLOCK,Bundle.getMessage("CBUS_FCLK"),false,5));
-        listFilters.add(new CbusFilterPanel(this,_filter.CFOTHER,Bundle.getMessage("Others"),false,5));
-        listFilters.add(new CbusFilterPanel(this,_filter.CFUNKNOWN,Bundle.getMessage("Unknown"),false,5));
+        listFilters.add(new CbusFilterPanel(this,CbusFilter.CFMISC,Bundle.getMessage("Misc"),true,5));
+        listFilters.add(new CbusFilterPanel(this,CbusFilter.CFNETWK,Bundle.getMessage("NetworkCommands"),false,5));
+        listFilters.add(new CbusFilterPanel(this,CbusFilter.CFCLOCK,Bundle.getMessage("CBUS_FCLK"),false,5));
+        listFilters.add(new CbusFilterPanel(this,CbusFilter.CFOTHER,Bundle.getMessage("Others"),false,5));
+        listFilters.add(new CbusFilterPanel(this,CbusFilter.CFUNKNOWN,Bundle.getMessage("Unknown"),false,5));
         
         // Nodes
         // Node List

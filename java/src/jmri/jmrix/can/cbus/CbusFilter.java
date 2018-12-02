@@ -79,7 +79,7 @@ public class CbusFilter {
      *
      */
     public int filter(CanMessage m) {
-        CanFrame test = ( CanFrame ) m;
+        CanFrame test = m;
         if (filters.get(1)){
             return 1;
         }
@@ -91,7 +91,7 @@ public class CbusFilter {
         if (filters.get(0)){
             return 0;
         }
-        CanFrame test = ( CanFrame ) r;
+        CanFrame test = r;
         incrementCount(0);
         return mainfilter(test);
     }

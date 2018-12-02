@@ -1,5 +1,6 @@
 package jmri.jmrix.can.cbus.swing;
 
+import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -14,6 +15,7 @@ public class CbusFilterFrameTest {
 
     @Test
     public void testCTor() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         CbusFilterFrame t = new CbusFilterFrame();
         Assert.assertNotNull("exists",t);
     }

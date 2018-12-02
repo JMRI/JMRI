@@ -414,7 +414,7 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
                 f1.setText(CbusMessage.toAddress(m));
                 b1.setSelected(false);
                 if ( high > -1 ) {
-                    f1.setBackground(_highlightFrame.highlightColors[high]);
+                    f1.setBackground(CbusEventHighlightFrame.highlightColors[high]);
                 } else {
                     f1.setBackground(Color.WHITE);
                 }
@@ -423,7 +423,7 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
                 f2.setText(CbusMessage.toAddress(m));
                 b2.setSelected(false);
                 if ( high > -1 ) {
-                    f2.setBackground(_highlightFrame.highlightColors[high]);
+                    f2.setBackground(CbusEventHighlightFrame.highlightColors[high]);
                 } else {
                     f2.setBackground(Color.WHITE);
                 }
@@ -432,7 +432,7 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
                 f3.setText(CbusMessage.toAddress(m));
                 b3.setSelected(false);
                 if ( high > -1 ) {
-                    f3.setBackground(_highlightFrame.highlightColors[high]);
+                    f3.setBackground(CbusEventHighlightFrame.highlightColors[high]);
                 } else {
                     f3.setBackground(Color.WHITE);
                 }
@@ -446,7 +446,7 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
                 f1.setText(CbusMessage.toAddress(m));
                 b1.setSelected(false);
                 if ( high > -1 ) {
-                    f1.setBackground(_highlightFrame.highlightColors[high]);
+                    f1.setBackground(CbusEventHighlightFrame.highlightColors[high]);
                 } else {
                     f1.setBackground(Color.WHITE);
                 }
@@ -455,7 +455,7 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
                 f2.setText(CbusMessage.toAddress(m));
                 b2.setSelected(false);
                 if ( high > -1 ) {
-                    f2.setBackground(_highlightFrame.highlightColors[high]);
+                    f2.setBackground(CbusEventHighlightFrame.highlightColors[high]);
                 } else {
                     f2.setBackground(Color.WHITE);
                 }
@@ -464,7 +464,7 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
                 f3.setText(CbusMessage.toAddress(m));
                 b3.setSelected(false);
                 if ( high > -1 ) {
-                    f3.setBackground(_highlightFrame.highlightColors[high]);
+                    f3.setBackground(CbusEventHighlightFrame.highlightColors[high]);
                 } else {
                     f3.setBackground(Color.WHITE);
                 }
@@ -503,7 +503,7 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
                 capture.setSelected(false);
                 int high = (_highlightFrame != null) ? _highlightFrame.highlight(m) : -1;
                 if ( high > -1 ) {
-                    event.setBackground(_highlightFrame.highlightColors[high]);
+                    event.setBackground(CbusEventHighlightFrame.highlightColors[high]);
                 } else {
                     event.setBackground(Color.WHITE);
                 }
@@ -517,7 +517,7 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
                 capture.setSelected(false);
                 int high = (_highlightFrame != null) ? _highlightFrame.highlight(m) : -1;
                 if ( high > -1 ) {
-                    event.setBackground(_highlightFrame.highlightColors[high]);
+                    event.setBackground(CbusEventHighlightFrame.highlightColors[high]);
                 } else {
                     event.setBackground(Color.WHITE);
                 }

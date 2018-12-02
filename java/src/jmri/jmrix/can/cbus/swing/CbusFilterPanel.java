@@ -144,7 +144,7 @@ public class CbusFilterPanel extends JPanel {
         });
         
         this.setVisible( _catHead || _category==0 );
-        // log.debug("completed init components");
+        log.debug("completed init components");
     }
     
     private void resetenableButton(){
