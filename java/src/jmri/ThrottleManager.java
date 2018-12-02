@@ -375,4 +375,12 @@ public interface ThrottleManager {
      */
     public String getUserName();
 
+    /**
+     * Get the number of Throttles sharing the throttle for a ddcaddress.
+     *
+     * @param la - DccLocoAddress of the loco you want the throttle usage count for.
+     * @return number of throttles for this address, or 0 if throttle does not exist
+     */
+    public int getThrottleUsageCount(DccLocoAddress la);
+
 }

@@ -628,6 +628,14 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
         releaseThrottle(t, l);
     }
 
+    @Override
+    public int getThrottleUsageCount(DccLocoAddress la) {
+        if (addressThrottles.containsKey(la)) {
+            return addressThrottles.get(la).getUseCount();
+        }
+        return 0;
+    }
+
     protected boolean addressReleased(DccLocoAddress la, ThrottleListener l) {
         if (addressThrottles.containsKey(la)) {
             if (addressThrottles.get(la).containsListener(l)) {

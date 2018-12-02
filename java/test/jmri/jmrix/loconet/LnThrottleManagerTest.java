@@ -102,6 +102,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
 
     @Test
     public void testCreateLnThrottleRunAndDispatch() {
+        tm = memo.throttleManager;
         ThrottleListener throtListen = new ThrottleListener() {
             @Override
             public void notifyThrottleFound(DccThrottle t) {
@@ -121,16 +122,16 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
                 InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, false);
             }
         };
-        tm.requestThrottle(1203, throtListen);
+        tm.requestThrottle(1204, throtListen);
 
         Assert.assertEquals("address request message",
-                "BF 09 33 00",
+                "BF 09 34 00",
                 lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
         memo.getSlotManager().message(lnis.outbound.elementAt(lnis.outbound.size()-1));
 
         Assert.assertEquals("count is correct", 1, lnis.outbound.size());
         LocoNetMessage cmdStationReply = new LocoNetMessage(new int[] {
-                0xe7, 0x0e, 0x11, 0x00, 0x33, 0x0, 0x0, 0x7, 0x0, 0x09, 0x0, 0x0, 0x0, 0x53});
+                0xe7, 0x0e, 0x11, 0x00, 0x34, 0x0, 0x0, 0x7, 0x0, 0x09, 0x0, 0x0, 0x0, 0x53});
         lnis.sendTestMessage(cmdStationReply);
         memo.getSlotManager().message(lnis.outbound.elementAt(1));
         Assert.assertEquals("count is correct", 2, lnis.outbound.size());
@@ -141,10 +142,10 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
         memo.getSlotManager().message(lnis.outbound.elementAt(lnis.outbound.size()-1));
 
         cmdStationReply = new LocoNetMessage(new int[] {
-                0xe7, 0x0e, 0x11, 0x30, 0x33, 0x0, 0x0, 0x7, 0x0, 0x09, 0x0, 0x0, 0x0, 0x00});
+                0xe7, 0x0e, 0x11, 0x30, 0x34, 0x0, 0x0, 0x7, 0x0, 0x09, 0x0, 0x0, 0x0, 0x00});
         lnis.sendTestMessage(cmdStationReply);
         Assert.assertEquals("write Throttle ID",
-                "EF 0E 11 30 33 00 00 07 00 09 00 71 02 00",
+                "EF 0E 11 30 34 00 00 07 00 09 00 71 02 00",
                 lnis.outbound.elementAt(2).toString());
         memo.getSlotManager().message(lnis.outbound.elementAt(lnis.outbound.size()-1));
 
@@ -168,16 +169,17 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
 
         throttle.dispatch(throtListen);
 
+        Assert.assertEquals("Expect the slot to be dispatched",
+                "BA 11 00 00",
+                lnis.outbound.elementAt(4).toString());
+
         Assert.assertEquals("slot is set to 'common' status",
                 "B5 11 10 00",
-                lnis.outbound.elementAt(4).toString());
+                lnis.outbound.elementAt(5).toString());
 
         JUnitUtil.waitFor(()->{return 5 < lnis.outbound.size();},"didn't get the 5th LocoNet message");
         Assert.assertEquals("check count of sent messages", 5, lnis.outbound.size()-1);
 
-        Assert.assertEquals("Expect the slot to be dispatched",
-                "BA 11 00 00",
-                lnis.outbound.elementAt(5).toString());
 
         Assert.assertEquals("slot speed not zeroed", 26, memo.getSlotManager()._slots[17].speed());
     }
@@ -719,21 +721,12 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
                 "A0 09 44 00", lnis.outbound.elementAt(lnis.outbound.size() -1). toString());
 
         Assert.assertEquals("only one new loconet message", 2, lnis.outbound.size()-1);
-        tm.dispatchThrottle(throttle2, throtListen2);
-        Assert.assertEquals("first new loconet message at dispatchThrottle", 3, lnis.outbound.size()-1);
-        Assert.assertEquals("set slot as 'common' LocoNet message received", "B5 09 10 00", lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
-        // propagate the slot status write to the slot manager
-        memo.getSlotManager().message(lnis.outbound.elementAt(lnis.outbound.size()-1));
-
+        tm.dispatchThrottle(throttle2, throtListen2); // this fails as loco is in use on multiple throttles
+        Assert.assertEquals("Message Count still 2", 2, lnis.outbound.size()-1);
+        Assert.assertEquals("Usage Count 2", 2,
+                InstanceManager.throttleManagerInstance().getThrottleUsageCount(new DccLocoAddress(260, true)));
         Assert.assertTrue("Address still required",
                 InstanceManager.throttleManagerInstance().addressStillRequired(new DccLocoAddress(260, true)));
-
-        JUnitUtil.waitFor(()->{return 4 < lnis.outbound.size();},"didn't get the 4th LocoNet message");
-
-        Assert.assertEquals("first new loconet message at dispatchThrottle", 4, lnis.outbound.size()-1);
-        Assert.assertEquals("dispatch the slot LocoNet message received", "BA 09 00 00", lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
-        // propagate the slot dispatch to the slot manager
-        memo.getSlotManager().message(lnis.outbound.elementAt(lnis.outbound.size()-1));
 
         throttle.setSpeedSetting(0.25f);
         Assert.assertEquals("sent speed message",
@@ -747,7 +740,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
         Assert.assertTrue("Address still required",
                 InstanceManager.throttleManagerInstance().addressStillRequired(new DccLocoAddress(260, true)));
 
-        tm.releaseThrottle(throttle2, throtListen2);
+        tm.dispatchThrottle(throttle2, throtListen2);
         Assert.assertFalse("Address no longer required",
                 InstanceManager.throttleManagerInstance().addressStillRequired(new DccLocoAddress(260, true)));
 
