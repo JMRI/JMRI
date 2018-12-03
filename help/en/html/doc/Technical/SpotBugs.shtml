@@ -102,7 +102,7 @@ scanning through the code.
       "https://docs.oracle.com/javase/tutorial/java/annotations/">Java
       annotations tutorial</a>.</p>
 
-      <a name="annotations" id="annotations">
+      <a name="annotations" id="annotations" />
       <p>It can be useful to mark code with one of the following
           annotations so that SpotBugs does a good job of reasoning
           about it:</p>
