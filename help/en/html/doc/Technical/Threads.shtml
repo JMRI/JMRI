@@ -132,7 +132,7 @@
     In addition to the <code>@InvokeOnGuiThread</code>, <code>@InvokeOnLayoutThread</code>
     and <code>@InvokeOnAnyThread</code> annotations mentioned here, there are
     <code>@ThreadSafe</code>, <code>@NotThreadSafe</code>, 
-    <code>@Immutable</code>, <code>@NotThreadSafe</code>, and 
+    <code>@Immutable</code>, and 
     <code>@GuardedBy</code> annotations that are useful.
     See the discussion on the 
     <a href="SpotBugs.html#annotations">JMRI SpotBugs page</a>.
