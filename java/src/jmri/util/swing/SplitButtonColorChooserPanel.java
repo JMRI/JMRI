@@ -49,6 +49,9 @@ public class SplitButtonColorChooserPanel extends AbstractColorChooserPanel {
     }
 
     @Override
+    @SuppressWarnings("deprecation") // JSplitButton.addSplitButtonActionListener unlikely to be removed.
+                                     // For more info, see Javadoc via
+                                     // https://static.javadoc.io/com.alexandriasoftware.swing/jsplitbutton/1.3.0/com/alexandriasoftware/swing/JSplitButton.html#addButtonClickedActionListener-com.alexandriasoftware.swing.action.ButtonClickedActionListener-
     protected void buildChooser(){
         BufferedImage image = new BufferedImage(ICON_DIMENSION, ICON_DIMENSION,
                 BufferedImage.TYPE_INT_RGB);
