@@ -236,7 +236,7 @@ public class Z21ReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         byte msg[]={(byte)0x14,(byte)0x00,(byte)0x84,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x05,(byte)0x06,(byte)0x07,(byte)0x08,(byte)0x00,(byte)0x00,(byte)0x00};
         message = new Z21Reply(msg,20);
         Assert.assertTrue("System Data Changed Reply",message.isSystemDataChangedReply());
-        Assert.assertEquals("Main Current",1798,message.getSystemDataVCCVoltage());
+        Assert.assertEquals("Internal Voltage",1798,message.getSystemDataVCCVoltage());
     }
 
     @Test
