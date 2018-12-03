@@ -4,7 +4,7 @@ import jmri.util.JUnitUtil;
 import org.junit.*;
 
 /**
- *
+ * Scale XML tests
  * @author Dave Sand Copyright (C) 2018
  */
 public class ScaleConfigXMLTest {
