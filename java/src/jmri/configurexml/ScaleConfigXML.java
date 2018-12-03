@@ -108,7 +108,6 @@ public class ScaleConfigXML {
             File chkdir = new File(userPath);
             if (!chkdir.exists()) {
                 if (!chkdir.mkdir()) {
-                    log.error("Create preference:resources/scale failed");  // NOI18N
                     return null;
                 }
             }

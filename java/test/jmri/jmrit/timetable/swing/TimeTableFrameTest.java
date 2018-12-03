@@ -301,7 +301,6 @@ public class TimeTableFrameTest {
             jmri.ScaleManager.getScale("N").setScaleRatio(150.0);
         } catch (Exception ex) {
         }
-        jmri.util.JUnitAppender.assertWarnMessage("Create preference:resources/scale failed");
     }
 
     void timeRangeTests() {
