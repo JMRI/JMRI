@@ -396,18 +396,11 @@ public final class InstanceManager {
         Object oldDefault = containsDefault(type) ? getNullableDefault(type) : null;
         List<T> l = getList(type);
         l.remove(item);
-        synchronized (type) {
-            if (!getDefault().instanceManagerIsClosing) {
-                l.add(item);
-                if (oldDefault == null || !oldDefault.equals(item)) {
-                    getDefault().pcs.firePropertyChange(getDefaultsPropertyName(type), oldDefault, item);
-                }
-                return getDefault(type);
-            } else {
-                // If we are here, the InstanceManager is closing.
-                return item;
-            }
+        l.add(item);
+        if (oldDefault == null || !oldDefault.equals(item)) {
+            getDefault().pcs.firePropertyChange(getDefaultsPropertyName(type), oldDefault, item);
         }
+        return getDefault(type);
     }
 
     /**
