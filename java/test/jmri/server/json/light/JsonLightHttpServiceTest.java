@@ -1,9 +1,7 @@
 package jmri.server.json.light;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
-import java.util.Locale;
 import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
 import jmri.JmriException;
@@ -27,24 +25,24 @@ public class JsonLightHttpServiceTest extends JsonHttpServiceTestBase {
 
     @Test
     public void testDoGet() throws JmriException, IOException {
-        JsonLightHttpService service = new JsonLightHttpService(new ObjectMapper());
+        JsonLightHttpService service = new JsonLightHttpService(mapper);
         LightManager manager = InstanceManager.getDefault(LightManager.class);
         Light light1 = manager.provideLight("IL1");
         JsonNode result;
         try {
-            result = service.doGet(JsonLight.LIGHT, "IL1", Locale.ENGLISH);
+            result = service.doGet(JsonLight.LIGHT, "IL1", locale);
             Assert.assertNotNull(result);
             this.validate(result);
             Assert.assertEquals(JsonLight.LIGHT, result.path(JSON.TYPE).asText());
             Assert.assertEquals("IL1", result.path(JSON.DATA).path(JSON.NAME).asText());
             Assert.assertEquals(JSON.OFF, result.path(JSON.DATA).path(JSON.STATE).asInt());
             light1.setState(Light.ON);
-            result = service.doGet(JsonLight.LIGHT, "IL1", Locale.ENGLISH);
+            result = service.doGet(JsonLight.LIGHT, "IL1", locale);
             Assert.assertNotNull(result);
             this.validate(result);
             Assert.assertEquals(JSON.ON, result.path(JSON.DATA).path(JSON.STATE).asInt());
             light1.setState(Light.OFF);
-            result = service.doGet(JsonLight.LIGHT, "IL1", Locale.ENGLISH);
+            result = service.doGet(JsonLight.LIGHT, "IL1", locale);
             Assert.assertNotNull(result);
             this.validate(result);
             Assert.assertEquals(JSON.OFF, result.path(JSON.DATA).path(JSON.STATE).asInt());
@@ -61,21 +59,21 @@ public class JsonLightHttpServiceTest extends JsonHttpServiceTestBase {
         try {
             // set off
             JsonNode message = mapper.createObjectNode().put(JSON.NAME, "IL1").put(JSON.STATE, JSON.OFF);
-            JsonNode result = service.doPost(JsonLight.LIGHT, "IL1", message, Locale.ENGLISH);
+            JsonNode result = service.doPost(JsonLight.LIGHT, "IL1", message, locale);
             Assert.assertEquals(Light.OFF, light1.getState());
             Assert.assertNotNull(result);
             this.validate(result);
             Assert.assertEquals(JSON.OFF, result.path(JSON.DATA).path(JSON.STATE).asInt());
             // set on
             message = mapper.createObjectNode().put(JSON.NAME, "IL1").put(JSON.STATE, JSON.ON);
-            result = service.doPost(JsonLight.LIGHT, "IL1", message, Locale.ENGLISH);
+            result = service.doPost(JsonLight.LIGHT, "IL1", message, locale);
             Assert.assertEquals(Light.ON, light1.getState());
             Assert.assertNotNull(result);
             this.validate(result);
             Assert.assertEquals(JSON.ON, result.path(JSON.DATA).path(JSON.STATE).asInt());
             // set unknown - remains on
             message = mapper.createObjectNode().put(JSON.NAME, "IL1").put(JSON.STATE, JSON.UNKNOWN);
-            result = service.doPost(JsonLight.LIGHT, "IL1", message, Locale.ENGLISH);
+            result = service.doPost(JsonLight.LIGHT, "IL1", message, locale);
             Assert.assertEquals(Light.ON, light1.getState());
             Assert.assertNotNull(result);
             this.validate(result);
@@ -84,7 +82,7 @@ public class JsonLightHttpServiceTest extends JsonHttpServiceTestBase {
             message = mapper.createObjectNode().put(JSON.NAME, "IL1").put(JSON.STATE, 42); // Invalid value
             JsonException exception = null;
             try {
-                service.doPost(JsonLight.LIGHT, "IL1", message, Locale.ENGLISH);
+                service.doPost(JsonLight.LIGHT, "IL1", message, locale);
             } catch (JsonException ex) {
                 exception = ex;
             }
@@ -104,7 +102,7 @@ public class JsonLightHttpServiceTest extends JsonHttpServiceTestBase {
             // add a light
             Assert.assertNull(manager.getLight("IL1"));
             JsonNode message = mapper.createObjectNode().put(JSON.NAME, "IL1").put(JSON.STATE, Light.OFF);
-            JsonNode result = service.doPut(JsonLight.LIGHT, "IL1", message, Locale.ENGLISH);
+            JsonNode result = service.doPut(JsonLight.LIGHT, "IL1", message, locale);
             Assert.assertNotNull(result);
             this.validate(result);
             Assert.assertNotNull(manager.getLight("IL1"));
@@ -118,12 +116,12 @@ public class JsonLightHttpServiceTest extends JsonHttpServiceTestBase {
         try {
             JsonLightHttpService service = new JsonLightHttpService(mapper);
             LightManager manager = InstanceManager.getDefault(LightManager.class);
-            JsonNode result = service.doGetList(JsonLight.LIGHT, Locale.ENGLISH);
+            JsonNode result = service.doGetList(JsonLight.LIGHT, locale);
             Assert.assertNotNull(result);
             Assert.assertEquals(0, result.size());
             manager.provideLight("IL1");
             manager.provideLight("IL2");
-            result = service.doGetList(JsonLight.LIGHT, Locale.ENGLISH);
+            result = service.doGetList(JsonLight.LIGHT, locale);
             Assert.assertNotNull(result);
             Assert.assertEquals(2, result.size());
             this.validate(result);
@@ -135,7 +133,7 @@ public class JsonLightHttpServiceTest extends JsonHttpServiceTestBase {
     @Test
     public void testDelete() {
         try {
-            (new JsonLightHttpService(new ObjectMapper())).doDelete(JsonLight.LIGHT, "", Locale.ENGLISH);
+            (new JsonLightHttpService(mapper)).doDelete(JsonLight.LIGHT, "", locale);
         } catch (JsonException ex) {
             Assert.assertEquals(HttpServletResponse.SC_METHOD_NOT_ALLOWED, ex.getCode());
             return;

@@ -1,6 +1,5 @@
 package jmri.server.json;
 
-import java.util.Locale;
 import jmri.NamedBean;
 import jmri.server.json.turnout.JsonTurnoutHttpService;
 import org.junit.After;
@@ -41,7 +40,6 @@ public class JsonNamedBeanHttpServiceTest extends JsonHttpServiceTestBase {
         NamedBean bean = null;
         String name = "non-existant";
         String type = "non-existant";
-        Locale locale = Locale.ENGLISH;
         JsonNamedBeanHttpService instance = new JsonTurnoutHttpService(this.mapper);
         try {
             instance.getNamedBean(bean, name, type, locale);
@@ -63,7 +61,6 @@ public class JsonNamedBeanHttpServiceTest extends JsonHttpServiceTestBase {
         NamedBean bean = null;
         String name = "non-existant";
         String type = "non-existant";
-        Locale locale = Locale.ENGLISH;
         JsonNamedBeanHttpService instance = new JsonTurnoutHttpService(this.mapper);
         try {
             instance.postNamedBean(bean, this.mapper.createObjectNode(), name, type, locale);

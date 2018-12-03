@@ -1,11 +1,9 @@
 package jmri.server.json.util;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.awt.GraphicsEnvironment;
-import java.util.Locale;
 import javax.servlet.http.HttpServletResponse;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
@@ -29,6 +27,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -63,8 +62,6 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase {
      */
     @Test
     public void testDoGet() throws JsonException {
-        Locale locale = Locale.ENGLISH;
-        ObjectMapper mapper = new ObjectMapper();
         JsonUtilHttpService instance = new JsonUtilHttpService(mapper);
         InstanceManager.getDefault(JsonServerPreferences.class).setHeartbeatInterval(10);
         Assert.assertEquals(instance.getHello(locale, 10), instance.doGet(JSON.HELLO, null, locale));
@@ -114,8 +111,6 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase {
      */
     @Test
     public void testDoGetList() throws JsonException {
-        Locale locale = Locale.ENGLISH;
-        ObjectMapper mapper = new ObjectMapper();
         JsonUtilHttpService instance = new JsonUtilHttpService(mapper);
         InstanceManager.getDefault(JsonServerPreferences.class).setHeartbeatInterval(10);
         Assert.assertEquals(instance.getMetadata(locale), instance.doGetList(JSON.METADATA, locale));
@@ -132,8 +127,6 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase {
      */
     @Test
     public void testDoPost() throws JsonException {
-        Locale locale = Locale.ENGLISH;
-        ObjectMapper mapper = new ObjectMapper();
         JsonUtilHttpService instance = new JsonUtilHttpService(mapper);
         String type = JSON.HELLO;
         String name = JSON.HELLO;
@@ -147,9 +140,7 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase {
      */
     @Test
     public void testGetHello() throws JsonException {
-        Locale locale = Locale.ENGLISH;
         int heartbeat = 1000; // one second
-        ObjectMapper mapper = new ObjectMapper();
         JsonUtilHttpService instance = new JsonUtilHttpService(mapper);
         JsonNode result = instance.getHello(locale, heartbeat);
         this.validate(result);
@@ -174,8 +165,6 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase {
      */
     @Test
     public void testGetMetadata_Locale_String() throws JsonException {
-        Locale locale = Locale.ENGLISH;
-        ObjectMapper mapper = new ObjectMapper();
         JsonUtilHttpService instance = new JsonUtilHttpService(mapper);
         JsonNode result;
         for (String metadata : Metadata.getSystemNameList()) {
@@ -201,8 +190,6 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase {
      */
     @Test
     public void testGetMetadata_Locale() throws JsonException {
-        Locale locale = Locale.ENGLISH;
-        ObjectMapper mapper = new ObjectMapper();
         JsonUtilHttpService instance = new JsonUtilHttpService(mapper);
         JsonNode result = instance.getMetadata(locale);
         this.validate(result);
@@ -217,8 +204,6 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase {
      */
     @Test
     public void testGetNetworkServices() throws JsonException {
-        Locale locale = Locale.ENGLISH;
-        ObjectMapper mapper = new ObjectMapper();
         JsonUtilHttpService instance = new JsonUtilHttpService(mapper);
         // no services published
         JsonNode result = instance.getNetworkServices(locale);
@@ -258,8 +243,6 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase {
      */
     @Test
     public void testGetNode() throws JsonException {
-        Locale locale = Locale.ENGLISH;
-        ObjectMapper mapper = new ObjectMapper();
         JsonUtilHttpService instance = new JsonUtilHttpService(mapper);
         JsonNode result = instance.getNode(locale);
         this.validate(result);
@@ -276,8 +259,6 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase {
      */
     @Test
     public void testGetSystemConnections() throws JsonException {
-        Locale locale = Locale.ENGLISH;
-        ObjectMapper mapper = new ObjectMapper();
         JsonUtilHttpService instance = new JsonUtilHttpService(mapper);
         JsonNode result = instance.getSystemConnections(locale);
         this.validate(result);
@@ -298,8 +279,6 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase {
      */
     @Test
     public void testGetNetworkService() throws JsonException {
-        Locale locale = Locale.ENGLISH;
-        ObjectMapper mapper = new ObjectMapper();
         JsonUtilHttpService instance = new JsonUtilHttpService(mapper);
         JsonNode result = null;
         // non-existant service
@@ -345,8 +324,6 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase {
      */
     @Test
     public void testGetRailroad() throws JsonException {
-        Locale locale = Locale.ENGLISH;
-        ObjectMapper mapper = new ObjectMapper();
         JsonUtilHttpService instance = new JsonUtilHttpService(mapper);
         JsonNode result = instance.getRailroad(locale);
         this.validate(result);
@@ -363,9 +340,8 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase {
     @Test
     public void testGetPanel() throws JsonException {
         Assume.assumeFalse("Needs GUI", GraphicsEnvironment.isHeadless());
-        Locale locale = Locale.ENGLISH;
         Editor editor = new SwitchboardEditor("test");
-        JsonUtilHttpService instance = new JsonUtilHttpService(new ObjectMapper());
+        JsonUtilHttpService instance = new JsonUtilHttpService(mapper);
         ObjectNode result = instance.getPanel(locale, editor, JSON.XML);
         this.validate(result);
         editor.getTargetFrame().dispose();
@@ -380,9 +356,8 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase {
     @Test
     public void testGetPanels_Locale_String() throws JsonException {
         Assume.assumeFalse("Needs GUI", GraphicsEnvironment.isHeadless());
-        Locale locale = Locale.ENGLISH;
         Editor editor = new SwitchboardEditor("test");
-        JsonUtilHttpService instance = new JsonUtilHttpService(new ObjectMapper());
+        JsonUtilHttpService instance = new JsonUtilHttpService(mapper);
         JsonNode result = instance.getPanels(locale, JSON.XML);
         this.validate(result);
         editor.getTargetFrame().dispose();
@@ -397,9 +372,8 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase {
     @Test
     public void testGetPanels_Locale() throws JsonException {
         Assume.assumeFalse("Needs GUI", GraphicsEnvironment.isHeadless());
-        Locale locale = Locale.ENGLISH;
         Editor editor = new SwitchboardEditor("test");
-        JsonUtilHttpService instance = new JsonUtilHttpService(new ObjectMapper());
+        JsonUtilHttpService instance = new JsonUtilHttpService(mapper);
         JsonNode result = instance.getPanels(locale);
         this.validate(result);
         editor.getTargetFrame().dispose();
@@ -415,8 +389,6 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase {
     @Ignore // See Issue #5642
     @Test
     public void testGetConfigProfiles() throws JsonException {
-        Locale locale = Locale.ENGLISH;
-        ObjectMapper mapper = new ObjectMapper();
         JsonUtilHttpService instance = new JsonUtilHttpService(mapper);
         ArrayNode result = instance.getConfigProfiles(locale);
         this.validate(result);

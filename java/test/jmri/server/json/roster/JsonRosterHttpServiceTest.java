@@ -1,7 +1,6 @@
 package jmri.server.json.roster;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import java.util.Locale;
 import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
 import jmri.jmrit.roster.Roster;
@@ -23,7 +22,6 @@ public class JsonRosterHttpServiceTest extends JsonHttpServiceTestBase {
 
     private final static String TEST_GROUP1 = "testGroup1";
     private final static String TEST_ENTRY1 = "testEntry1";
-    private final Locale locale = Locale.ENGLISH;
     // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(JsonRosterHttpServiceTest.class);
 
     @Before

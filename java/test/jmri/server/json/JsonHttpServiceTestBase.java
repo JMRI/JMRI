@@ -16,6 +16,7 @@ import org.junit.Assert;
 public class JsonHttpServiceTestBase {
 
     protected ObjectMapper mapper = null;
+    protected Locale locale = Locale.ENGLISH;
 
     /**
      *
@@ -44,7 +45,7 @@ public class JsonHttpServiceTestBase {
      */
     public final void validate(JsonNode node) {
         try {
-            InstanceManager.getDefault(JsonSchemaServiceCache.class).validateMessage(node, true, Locale.ENGLISH);
+            InstanceManager.getDefault(JsonSchemaServiceCache.class).validateMessage(node, true, locale);
         } catch (JsonException ex) {
             Assert.fail("Unable to validate schema.");
         }
