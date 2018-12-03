@@ -79,7 +79,8 @@
       file, spend some time munging it, and then create a window to
       present it all, you might want to do all that work on a
       separate thread. At the end, when it's time to set your new
-      frame visible, you have to to that on the Swing (GUI) thread.
+      frame visible, 
+      <a href="http://web.archive.org/web/20090526170426/http://java.sun.com/developer/JDCTechTips/2003/tt1208.html">you have to to that on the Swing (GUI) thread</a>.
       Here's the code to do that:</p>
 <pre style="font-family: monospace;">
     frame = new JmriJFrame();  // frame declared as instance variable<br>
