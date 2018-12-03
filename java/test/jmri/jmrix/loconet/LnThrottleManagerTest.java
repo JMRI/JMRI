@@ -1,11 +1,16 @@
 package jmri.jmrix.loconet;
 
-import jmri.util.JUnitUtil;
-import org.junit.*;
-import jmri.ThrottleListener;
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
+import jmri.ThrottleListener;
+import jmri.jmrit.roster.RosterEntry;
+import jmri.util.JUnitUtil;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,14 +25,17 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
     private DccThrottle throttle;
     private DccThrottle throttle2;
     private DccThrottle throttle3;
+    private DccThrottle throttle4;
 
     boolean failedThrottleRequest = false;
     boolean failedThrottleRequest2 = false;
     boolean failedThrottleRequest3 = false;
+    boolean failedThrottleRequest4 = false;
 
     int flagGotStealRequest = -1;
     int flagGotStealRequest2 = -1;
     int flagGotStealRequest3 = -1;
+    int flagGotStealRequest4 = -1;
 
     @Test
     @Override
@@ -623,7 +631,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
         Assert.assertEquals("No loconet traffic at throttle2 release", netTxMsgCount +1, lnis.outbound.size()-1);
 
         Assert.assertTrue("Address still required",
-                InstanceManager.throttleManagerInstance().addressStillRequired(new DccLocoAddress(260, true)));
+                InstanceManager.throttleManagerInstance().addressStillRequired(260));
 
         tm.releaseThrottle(throttle, throtListen);
         Assert.assertFalse("Address no longer required",
@@ -1021,7 +1029,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
         tm.releaseThrottle(throttle, throtListen);
 
         Assert.assertFalse("Address no longer required",
-                InstanceManager.throttleManagerInstance().addressStillRequired(new DccLocoAddress(262, true)));
+                InstanceManager.throttleManagerInstance().addressStillRequired(262, true));
 
         Assert.assertEquals("One loconet message sent at throttle release", netTxMsgCount +3, lnis.outbound.size()-1);
         Assert.assertEquals("sent set slot status to COMMON message",
@@ -1029,6 +1037,101 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
 
         throtListen = null;
         throtListen2 = null;
+    }
+    
+    @Test 
+    public void testUseRosterEntry() {
+        tm = memo.throttleManager; 
+        org.jdom2.Element e = new org.jdom2.Element("locomotive")
+                .setAttribute("id", "our id 1")
+                .setAttribute("fileName", "file here")
+                .setAttribute("roadNumber", "431")
+                .setAttribute("roadName", "SP")
+                .setAttribute("mfg", "Athearn")
+                .setAttribute("dccAddress", "1234")
+                .addContent(
+                        new org.jdom2.Element("locoaddress").addContent(
+                                new org.jdom2.Element("dcclocoaddress")
+                                .setAttribute("number", "1234")
+                                .setAttribute("longaddress", "yes")
+                        )
+                ); // end create element
+
+        RosterEntry re = new RosterEntry(e);
+        
+        ThrottleListener throtListen = new ThrottleListener() {
+            @Override
+            public void notifyThrottleFound(DccThrottle t) {
+                throttle4 = t;
+                log.error("created a throttle4");
+            }
+
+            @Override
+            public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
+                log.error("Throttle4 request failed for " + address + " because " + reason);
+                failedThrottleRequest4 = true;
+            }
+
+            @Override
+            public void notifyStealThrottleRequired(jmri.LocoAddress address){
+                // this is a never-stealing impelementation.
+                flagGotStealRequest4 = address.getNumber();
+                log.debug("Throttle4 going to steal loco {}", address);
+                tm.stealThrottleRequest(address, this, false);
+            }
+        };
+
+        tm.requestThrottle(re, throtListen);
+
+        Assert.assertEquals("address request message",
+                "BF 09 52 00",
+                lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
+
+        LocoNetMessage cmdStationReply = new LocoNetMessage(new int[] {
+                0xe7, 0x0e, 0x04, 0x03, 0x52, 0x0, 0x0, 0x7, 0x0, 0x09, 0x0, 0x0, 0x0, 0x53});
+        lnis.sendTestMessage(cmdStationReply);
+        Assert.assertEquals("null move",
+                "BA 04 04 00",
+                lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
+
+        cmdStationReply = new LocoNetMessage(new int[] {
+                0xe7, 0x0e, 0x04, 0x30, 0x52, 0x0, 0x0, 0x7, 0x0, 0x09, 0x0, 0x0, 0x0, 0x00});
+        lnis.sendTestMessage(cmdStationReply);
+        Assert.assertEquals("write Throttle ID",
+                "EF 0E 04 30 52 00 00 07 00 09 00 71 02 00",
+                lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
+
+        cmdStationReply = new LocoNetMessage(new int[] {
+                0xb4, 0x6f, 0x7f, 0x5B});
+        lnis.sendTestMessage(cmdStationReply);
+
+        Assert.assertNotNull("have created a throttle", throttle4);
+        Assert.assertEquals("is LnThrottle", throttle4.getClass(), jmri.jmrix.loconet.LocoNetThrottle.class);
+        Assert.assertEquals("throttleId is set", ((jmri.jmrix.loconet.LocoNetThrottle) throttle4).slot.id(),0x171);
+        jmri.util.JUnitAppender.assertErrorMessage("created a throttle4");
+
+        throttle4.setSpeedSetting(0.5f);
+
+        Assert.assertEquals("set speed a half",
+                "A0 04 40 00",
+                lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
+
+        Assert.assertTrue("Address still is not still required",
+                InstanceManager.throttleManagerInstance().addressStillRequired(re));
+
+        Assert.assertEquals("Throttle usage 1",1,
+                InstanceManager.throttleManagerInstance().getThrottleUsageCount(re));
+
+        
+        throttle4.release(throtListen);
+
+        JUnitUtil.waitFor(()->{return 4 < lnis.outbound.size();},"didn't get the 6th LocoNet message");
+
+        Assert.assertEquals("slot is set to 'common' status",
+                "B5 04 10 00",
+                lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
+        
+        throttle4 = null;
     }
 
     LocoNetInterfaceScaffold lnis;

@@ -535,7 +535,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
      */
     public void dispatchAddress() {
         if (throttle != null) {
-            int usageCount  = InstanceManager.throttleManagerInstance().getThrottleUsageCount((DccLocoAddress)throttle.getLocoAddress()) - 1;
+            int usageCount  = InstanceManager.throttleManagerInstance().getThrottleUsageCount(throttle.getLocoAddress()) - 1;
 
             if ( usageCount != 0 ) {
                 JOptionPane.showMessageDialog(mainPanel, Bundle.getMessage("CannotDisptach", usageCount));

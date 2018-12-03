@@ -1,7 +1,7 @@
 package jmri.jmrix.loconet;
 
-import java.util.concurrent.LinkedBlockingQueue;
 import java.util.Hashtable;
+import java.util.concurrent.LinkedBlockingQueue;
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.LocoAddress;
@@ -155,7 +155,7 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
 
     volatile Thread retrySetupThread;
 
-    Hashtable<Integer, Thread> waitingForNotification = new Hashtable<Integer, Thread>(5);
+    Hashtable<Integer, Thread> waitingForNotification = new Hashtable<>(5);
 
     Hashtable<Integer, LocoNetSlot> slotForAddress;
     LinkedBlockingQueue<ThrottleRequest> requestList;
@@ -396,7 +396,7 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
         // Use slot to dispatch, then release
         if (t instanceof LocoNetThrottle) {
             // only dispatch if its the last throttle use
-            if (super.getThrottleUsageCount((DccLocoAddress) t.getLocoAddress()) == 1)  {
+            if (super.getThrottleUsageCount(t.getLocoAddress()) == 1)  {
                 ((LocoNetThrottle) t).dispatchThrottle(t, l);
             } else {
                 return;
