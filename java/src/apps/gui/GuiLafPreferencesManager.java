@@ -102,7 +102,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
             this.setGraphicTableState(preferences.getBoolean(GRAPHICTABLESTATE, this.isGraphicTableState()));
             this.setToolTipDismissDelay(preferences.getInt(SHOW_TOOL_TIP_TIME, this.getToolTipDismissDelay()));
 
-            log.debug("About to setDefault Locale", new Exception(""));
+            log.debug("About to setDefault Locale");
             Locale.setDefault(this.getLocale());
             javax.swing.JComponent.setDefaultLocale(this.getLocale());
             javax.swing.JOptionPane.setDefaultLocale(this.getLocale());

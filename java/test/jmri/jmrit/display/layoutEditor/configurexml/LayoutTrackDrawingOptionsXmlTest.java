@@ -1,11 +1,6 @@
 package jmri.jmrit.display.layoutEditor.configurexml;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.*;
 import java.awt.GraphicsEnvironment;
 
 /**

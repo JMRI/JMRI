@@ -8,8 +8,8 @@ import org.slf4j.LoggerFactory;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
      CbusConsolePaneTest.class,
-     CbusEventFilterFrameTest.class,
-     CbusEventFilterPanelTest.class,
+     CbusEventHighlightFrameTest.class,
+     CbusEventHighlightPanelTest.class,
      BundleTest.class
 })
 

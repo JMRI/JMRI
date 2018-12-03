@@ -53,26 +53,29 @@ public final class ManagerDefaultsConfigPane extends JmriPanel implements Prefer
      * Invoke when first displayed to load and present options
      */
     public void update() {
+        log.debug(" update start");
         matrix.removeAll();
 
         // this doesn't find non-migrated systems, how do we handle that eventually?
         List<SystemConnectionMemo> connList = InstanceManager.getList(SystemConnectionMemo.class);
         if (!connList.isEmpty()) {
-            log.debug("update of {} connections", connList.size());
+            log.debug("   update of {} connections", connList.size());
             reloadConnections(connList);
         } else {
-            log.debug("update with no new-form system connections configured");
+            log.debug("   update with no new-form system connections configured");
             matrix.add(new JLabel("No new-form system connections configured"));
         }
+        log.debug(" update end");
     }
 
     void reloadConnections(List<SystemConnectionMemo> connList) {
-        log.debug(" reloadConnections");
+        log.debug(" reloadConnections start");
         ManagerDefaultSelector manager = InstanceManager.getDefault(ManagerDefaultSelector.class);
         matrix.setLayout(new GridLayout2(connList.size() + 1, manager.knownManagers.length + 1));
         matrix.add(new JLabel(""));
 
         for (ManagerDefaultSelector.Item item : manager.knownManagers) {
+            log.trace("   Add typeName {}", item.typeName);
             matrix.add(new JLabel(item.typeName));
         }
         groups = new ButtonGroup[manager.knownManagers.length];
@@ -83,14 +86,17 @@ public final class ManagerDefaultsConfigPane extends JmriPanel implements Prefer
         for (int x = 0; x < connList.size(); x++) { // up to down
             jmri.jmrix.SystemConnectionMemo memo = connList.get(x);
             String name = memo.getUserName();
+            log.trace("   Connection name {}", name);
             matrix.add(new JLabel(name));
             int i = 0;
             for (ManagerDefaultSelector.Item item : manager.knownManagers) { // left to right
+                log.trace("      item {}", item.typeName);
                 if (memo.provides(item.managerClass)) {
                     JRadioButton r = new SelectionButton(name, item.managerClass, this);
                     matrix.add(r);
                     groups[i].add(r);
                     if (!selected[i] && manager.getDefault(item.managerClass) == null) {
+                        log.trace("      setting selected based on default");
                         r.setSelected(true);
                         selected[i] = true;
                     }
@@ -104,7 +110,7 @@ public final class ManagerDefaultsConfigPane extends JmriPanel implements Prefer
             }
         }
         revalidate();
-
+        log.debug(" reloadConnections end");
     }
 
     ButtonGroup[] groups;
@@ -177,6 +183,7 @@ public final class ManagerDefaultsConfigPane extends JmriPanel implements Prefer
             this.managerClass = managerClass;
             this.name = name;
 
+            log.trace("      SelectionButton ctor for {}", name);
             if (name.equals(InstanceManager.getDefault(ManagerDefaultSelector.class).getDefault(managerClass))) {
                 this.setSelected(true);
             }
@@ -195,6 +202,7 @@ public final class ManagerDefaultsConfigPane extends JmriPanel implements Prefer
         @Override
         public void setSelected(boolean t) {
             super.setSelected(t);
+            log.debug("SelectionButton setSelected called with {}", t);
             if (t) {
                 InstanceManager.getDefault(ManagerDefaultSelector.class).setDefault(this.managerClass, this.name);
             }
