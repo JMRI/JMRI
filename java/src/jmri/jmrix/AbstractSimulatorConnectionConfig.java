@@ -253,6 +253,7 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
 
     @Override
     public void setManufacturer(String manufacturer) {
+        setInstance();
         adapter.setManufacturer(manufacturer);
     }
 

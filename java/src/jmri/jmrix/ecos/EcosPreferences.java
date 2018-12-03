@@ -8,7 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Stores User Preferences on how to deal with syncronising the Ecos Database
+ * Stores User Preferences on how to deal with synchronising the Ecos Database
  * with JMRI.
  *
  * @author Kevin Dickerson Copyright (C) 2009

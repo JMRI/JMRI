@@ -556,6 +556,7 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
 
     @Override
     public void setManufacturer(String manufacturer) {
+        setInstance();
         adapter.setManufacturer(manufacturer);
     }
 

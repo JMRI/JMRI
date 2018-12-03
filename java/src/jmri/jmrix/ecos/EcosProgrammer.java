@@ -2,6 +2,8 @@ package jmri.jmrix.ecos;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Nonnull;
+
 import jmri.ProgrammingMode;
 import jmri.jmrix.AbstractProgrammer;
 import jmri.jmrix.ecos.utilities.GetEcosObjectNumber;
@@ -29,6 +31,7 @@ public class EcosProgrammer extends AbstractProgrammer implements EcosListener {
      * @return list of programming modes implemented for ECoS
      */
     @Override
+    @Nonnull
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
         ret.add(ProgrammingMode.DIRECTBYTEMODE);

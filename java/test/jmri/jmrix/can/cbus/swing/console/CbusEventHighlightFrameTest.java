@@ -13,12 +13,12 @@ import org.junit.Test;
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-public class CbusEventFilterFrameTest {
+public class CbusEventHighlightFrameTest {
 
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        CbusEventFilterFrame pane = new CbusEventFilterFrame();
+        CbusEventHighlightFrame pane = new CbusEventHighlightFrame();
         Assert.assertNotNull("exists", pane);
     }
 
@@ -26,7 +26,7 @@ public class CbusEventFilterFrameTest {
     public void testPaneCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         CbusConsolePane pane = new CbusConsolePane();
-        CbusEventFilterFrame frame = new CbusEventFilterFrame(pane);
+        CbusEventHighlightFrame frame = new CbusEventHighlightFrame(pane,null);
         Assert.assertNotNull("exists", frame);
     }
 

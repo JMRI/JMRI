@@ -3,6 +3,8 @@ package jmri.jmrix.mrc;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.annotation.Nonnull;
+
 import jmri.ProgrammingMode;
 import jmri.jmrix.AbstractProgrammer;
 import org.slf4j.Logger;
@@ -35,6 +37,7 @@ public class MrcProgrammer extends AbstractProgrammer implements MrcTrafficListe
      * Types implemented here.
      */
     @Override
+    @Nonnull
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> retval = new ArrayList<ProgrammingMode>();
         retval.add(AUTOMATICMODE);

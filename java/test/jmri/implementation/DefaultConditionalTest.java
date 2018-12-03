@@ -8,12 +8,7 @@ import java.util.List;
 import javax.swing.Timer;
 import jmri.*;
 import jmri.jmrit.Sound;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * Test the DefaultConditional implementation class

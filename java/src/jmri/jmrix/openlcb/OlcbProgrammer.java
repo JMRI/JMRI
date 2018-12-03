@@ -2,6 +2,8 @@ package jmri.jmrix.openlcb;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Nonnull;
+
 import jmri.ProgListener;
 import jmri.ProgrammerException;
 import jmri.ProgrammingMode;
@@ -48,6 +50,7 @@ import jmri.ProgrammingMode;
 public class OlcbProgrammer extends jmri.jmrix.AbstractProgrammer implements jmri.AddressedProgrammer  {
     
     @Override
+    @Nonnull
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> retval = new ArrayList<ProgrammingMode>();
         retval.add(OlcbProgrammerManager.OPENLCBMODE);

@@ -121,10 +121,9 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager imple
     void validateSystemNameFormat(String address) throws IllegalArgumentException {
         CbusAddress a = new CbusAddress(address);
         CbusAddress[] v = a.split();
-        if (v == null) {
-            throw new IllegalArgumentException("Did not find usable hardware address: " + address + " for a valid Cbus sensor address");
-        }
         switch (v.length) {
+            case 0:
+                throw new IllegalArgumentException("Did not find usable hardware address: " + address + " for a valid Cbus sensor address");
             case 1:
                 int unsigned = 0;
                 try {

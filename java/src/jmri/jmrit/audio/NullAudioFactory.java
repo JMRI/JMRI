@@ -40,7 +40,7 @@ public class NullAudioFactory extends AbstractAudioFactory {
             return true;
         }
 
-        log.warn("Initialised Null audio system - no sounds will be available.");
+        log.info("Initialised Null audio system - no sounds will be available.");
 
         super.init();
         initialised = true;

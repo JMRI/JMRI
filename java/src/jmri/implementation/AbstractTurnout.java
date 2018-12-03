@@ -220,8 +220,8 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
      * going to THROWN or CLOSED, because there may be others listening to
      * network state.
      * <p>
-     * This method is intended for general use, e.g. for users to set the KnownState,
-     * so it doesn't appear in the Turnout interface.
+     * This method is not intended for general use, e.g. for users to set the 
+     * KnownState, so it doesn't appear in the Turnout interface.
      *
      * @param s New state value
      */
@@ -232,6 +232,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
             firePropertyChange("KnownState", Integer.valueOf(oldState),
                     Integer.valueOf(_knownState));
         }
+        _knownState = s;
         // if known state has moved to Thrown or Closed,
         // set the commanded state to match
         if ((_knownState == THROWN && _commandedState != THROWN)

@@ -61,7 +61,7 @@ abstract public class SystemConnectionMemoTestBase {
 
     @Test
     public void testProvidesConsistManager() {
-       Assert.assertTrue("Memo Provides Consist Manager",scm.provides(jmri.ConsistManager.class));
+        getTest(jmri.ReporterManager.class);
     }
 
     @Test

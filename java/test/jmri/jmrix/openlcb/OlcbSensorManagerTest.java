@@ -2,13 +2,7 @@ package jmri.jmrix.openlcb;
 
 import jmri.Sensor;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * Tests for the jmri.jmrix.openlcb.OlcbSensorManager class.

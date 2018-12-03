@@ -2,11 +2,7 @@ package jmri.jmrix.loconet;
 
 import jmri.DccLocoAddress;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  *
@@ -135,7 +131,7 @@ public class LocoNetConsistTest extends jmri.implementation.AbstractConsistTestB
         m.setElement(9, 0x01);
         slotmanager.slot(4).setSlot(m);
         } catch(LocoNetException lne) {
-          Assert.fail("failed to add addresses to slot during set-up");
+          Assert.fail("failed to add addresses to slot during setup");
         }
         c = new LocoNetConsist(3,memo);
         ReturnSlotInfo();

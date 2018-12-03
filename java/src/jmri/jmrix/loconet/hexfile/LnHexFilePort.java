@@ -31,7 +31,7 @@ public class LnHexFilePort extends LnPortController implements Runnable, jmri.jm
     volatile BufferedReader sFile = null;
 
     public LnHexFilePort() {
-        this(new LocoNetSystemConnectionMemo());
+        this(new HexFileSystemConnectionMemo());
     }
 
     public LnHexFilePort(LocoNetSystemConnectionMemo memo) {

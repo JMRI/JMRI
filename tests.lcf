@@ -70,6 +70,13 @@ log4j.appender.R.layout=org.apache.log4j.PatternLayout
 log4j.appender.R.layout.ConversionPattern=%d{ss,SSS} [%t] %-5p %c{2}.%M() - %m%n
 log4j.appender.R.Threshold=TRACE
 
+# A1 is set to be a ConsoleAppender which outputs to System.err.
+log4j.appender.A1=org.apache.log4j.ConsoleAppender
+log4j.appender.A1.target=System.err
+log4j.appender.A1.layout=org.apache.log4j.PatternLayout
+log4j.appender.A1.layout.ConversionPattern=%d{ss,SSS} [%t] %-5p %c{2}.%M() - %m%n
+log4j.appender.A1.Threshold=TRACE
+
 # ###################################################################
 #   Configure some verbose components
 # ###################################################################
@@ -97,7 +104,6 @@ log4j.category.io.github.bonigarcia.wdm=OFF
 # Examples of changing priority of specific categories (classes, packages):
 #
 # log4j.category.apps=DEBUG
-# log4j.category.jmri.InstanceManager=DEBUG
 # log4j.category.jmri.profile=DEBUG
 # log4j.category.jmri.implementation.SignalSpeedMap=DEBUG
 # log4j.category.jmri.jmrit.symbolicprog.DecVariableValue=DEBUG
