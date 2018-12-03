@@ -27,9 +27,11 @@ import jmri.profile.ProfileManager;
  * @author Kevin Dickerson Copyright (C) 2012
  */
 public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
+    // This user name will be overwritten by the adapter and saved to the connection config.
+    public static String DEFAULT_USERNAME = "CAN";
 
     public CanSystemConnectionMemo() {
-        super("M", "MERG");
+        super("M", DEFAULT_USERNAME);
         register(); // registers general type
         InstanceManager.store(this, CanSystemConnectionMemo.class); // also register as specific type
     }
