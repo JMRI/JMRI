@@ -135,6 +135,9 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getEntryToolTip() {
         String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");

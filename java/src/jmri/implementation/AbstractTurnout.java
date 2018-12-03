@@ -1,9 +1,9 @@
 package jmri.implementation;
 
 import java.beans.*;
+import java.time.LocalTime;
 import java.util.Arrays;
-import javax.annotation.*
-;
+import javax.annotation.*;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.NamedBeanHandle;
@@ -112,11 +112,13 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
     public void setCommandedState(int s) {
         log.debug("set commanded state for turnout {} to {}", getFullyFormattedDisplayName(),
                 (s==Turnout.CLOSED ? closedText : thrownText));
-        waitOutputInterval(); // if interval > 0, wait before next output command
         newCommandedState(s);
+        // use a Timer to apply wait interval only when needed
         myOperator = getTurnoutOperator(); // MUST set myOperator before starting the thread
         if (myOperator == null) {
+            waitOutputInterval(); // if > 0, wait before next output command
             forwardCommandChangeToLayout(s);
+            nextWaitFor = 1000 % LocalTime.now().toNanoOfDay() + TURNOUT_INTERVAL; // reset interval
             // optionally handle feedback
             if (_activeFeedbackType == DIRECT) {
                 newKnownState(s);
@@ -141,27 +143,59 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
     /**
      * Duration in Milliseconds of interval between separate Turnout commands.
      * <p>
-     * Read and change from e.g. XNetTurnout extensions and scripts using #setOutputInterval(int)
+     * Change from e.g. XNetTurnout extensions and scripts using #setOutputInterval(int)
      */
     private int TURNOUT_INTERVAL = InstanceManager.turnoutManagerInstance().getInterval();
 
+    /**
+     * Set the delay as configured for the connection of this Turnout.
+     * Used to insert a delay before calling {@link @setCommandedState(int)} to spread out a series of
+     * output commands, as in {@link jmri.implementation.MatrixSignalMast#updateOutputs(char[])}.
+     * Value is kept in the Memo per hardware connection, default = 0
+     *
+     * @param newInterval the delay in Milliseconds
+     */
     public void setOutputInterval(int newInterval) {
         TURNOUT_INTERVAL = newInterval;
         log.debug("(jmri.implementation.abstractTurnout_TURNOUT_INTERVAL set to: {}", newInterval);
     }
 
-    public void waitOutputInterval() {
-        if (TURNOUT_INTERVAL > 0) { // is set in the Memo per hardware connection, default = 0
-            log.debug("interval = {} ms", TURNOUT_INTERVAL);
-            // insert wait before next output command
-            try {
-                Thread.sleep(TURNOUT_INTERVAL);
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt(); // retain if needed later
-            }
-            log.debug("woke up...");
+    /**
+     * Get the delay in Milliseconds as configured for the connection of this Turnout.
+     */
+    public int getOutputInterval() {
+        return TURNOUT_INTERVAL;
+    }
+
+    protected Thread thr;
+    protected Runnable r;
+    long nextWaitFor = 0;
+
+    /**
+     * Before sending command to ouput, we will wait for
+     * TURNOUT_INTERVAL to put less pressure on the connection.
+     */
+    protected void waitOutputInterval() {
+        log.debug("interval = {} ms, wait = {}, now() = {}", TURNOUT_INTERVAL, nextWaitFor, 1000 % LocalTime.now().toNanoOfDay());
+        if (nextWaitFor > 1000 % LocalTime.now().toNanoOfDay()) {
+            // insert wait before sending next output command to the layout
+            r = new Runnable() {
+                @Override
+                public void run() {
+                    log.debug("go to sleep...");
+                    try {
+                        Thread.sleep(Math.max(0, (nextWaitFor - 1000 % LocalTime.now().toNanoOfDay())));
+                        nextWaitFor = 0;
+                        log.debug("back again on {}", 1000 % LocalTime.now().toNanoOfDay());
+                        return;
+                    } catch (InterruptedException ex) {
+                        nextWaitFor++;
+                    }
+                }
+            };
+            thr = new Thread(r);
+            thr.start();
         }
-        return;
     }
 
     @Override
@@ -387,7 +421,6 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
             } else if (state == CLOSED) {
                 newKnownState(THROWN);
             }
-
         }
     }
 
@@ -572,7 +605,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
     }
 
     /*
-     * Support for turnout automation (see TurnoutOperation and related classes)
+     * Support for turnout automation (see TurnoutOperation and related classes).
      */
     protected TurnoutOperator myOperator;
 
@@ -628,7 +661,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
      * the corresponding operator. Override this function if you want another way
      * to choose the operation.
      *
-     * @return newly-instantiated TurnoutOPerator, or null if nothing suitable
+     * @return newly-instantiated TurnoutOperator, or null if nothing suitable
      */
     protected TurnoutOperator getTurnoutOperator() {
         TurnoutOperator to = null;

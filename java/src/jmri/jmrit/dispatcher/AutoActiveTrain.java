@@ -1575,7 +1575,7 @@ public class AutoActiveTrain implements ThrottleListener {
                 log.debug("executing task[{}]",_task);
                 executeStopTasks(_task);
             } catch (InterruptedException e) {
-                log.warn("Waiting for train to stop interupted - stop tasks not executing");
+                log.warn("Waiting for train to stop interrupted - stop tasks not executing");
             } catch (Exception e) {
                 log.error("Waiting for train to stop crashed - stop tasks not executing.", e);
             }

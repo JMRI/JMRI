@@ -233,7 +233,7 @@ public class LnTurnoutManager extends jmri.managers.AbstractTurnoutManager imple
     }
 
     /**
-     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     * {@inheritDoc}
      */
     @Override
     public String getEntryToolTip() {

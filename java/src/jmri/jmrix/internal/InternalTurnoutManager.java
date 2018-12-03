@@ -58,7 +58,7 @@ public class InternalTurnoutManager extends AbstractTurnoutManager {
     }
 
     /**
-     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     * {@inheritDoc}
      */
     @Override
     public String getEntryToolTip() {
