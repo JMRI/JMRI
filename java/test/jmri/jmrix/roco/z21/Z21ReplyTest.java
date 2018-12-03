@@ -298,7 +298,7 @@ public class Z21ReplyTest extends jmri.jmrix.AbstractMessageTestBase {
            (byte)0xB3,(byte)0x44,(byte)0x00,(byte)0x00,(byte)0x04,
            (byte)0x00};
         message = new Z21Reply(msg,20);
-        Assert.assertEquals("Z21 System State:\n\tmain track current 86mA\n\tprogramming track current 3mA\n\tFiltered Main Track current 93mA\n\tInternal Temperature 35C\n\tSupply Voltage 18,192mV\n\tInternal Voltage 17,331mV\n\tState 0\n\tExtended State 0",message.toMonitorString());
+        Assert.assertEquals("Z21 System State:\n\tmain track current 86mA\n\tprogramming track current 3mA\n\tFiltered Main Track current 93mA\n\tInternal Temperature 35C\n\tSupply Voltage 18,192mV\n\tInternal Voltage 17,587mV\n\tState 0\n\tExtended State 0",message.toMonitorString());
     }
 
 
