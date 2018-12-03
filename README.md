@@ -6,9 +6,17 @@ For more information, see [JMRI.org](http://jmri.org)
 
 For development information, see [Technical Info](http://jmri.org/help/en/html/doc/Technical)
 
-User discussions are on the [JMRIusers Yahoo group](https://groups.yahoo.com/neo/groups/jmriusers/info)
+User discussions are on the [JMRI users Groups.io group](https://groups.io/g/jmriusers)
 
 Infrastructure status available at [status.jmri.org](http://status.jmri.org)
+
+Test:
+![Test release](https://img.shields.io/github/release/JMRI/JMRI.svg)
+![Test release](https://img.shields.io/github/downloads/JMRI/JMRI/latest/total.svg)
+Production:
+![Test release](https://img.shields.io/github/downloads/JMRI/JMRI/v4.12/total.svg)
+Total (since 2017):
+![Test release](https://img.shields.io/github/downloads/JMRI/JMRI/total.svg)
 
 Jenkins: [![Build Status](http://jmri.tagadab.com/jenkins/buildStatus/icon?job=Development/Builds)](http://jmri.tagadab.com/jenkins/job/Development/job/Builds/)
 [![Build Status](http://jmri.tagadab.com/jenkins/buildStatus/icon?job=Development/Packages)](http://jmri.tagadab.com/jenkins/job/Development/job/Packages/)
@@ -18,5 +26,5 @@ Jenkins: [![Build Status](http://jmri.tagadab.com/jenkins/buildStatus/icon?job=D
 [![Build Status](http://jmri.tagadab.com/jenkins/buildStatus/icon?job=Development/Separate_Tests)](http://jmri.tagadab.com/jenkins/job/Development/job/Separate_Tests/)
 
 Travis: [![Build Status](https://travis-ci.org/JMRI/JMRI.svg?branch=master)](https://travis-ci.org/JMRI/JMRI)
-AppVeyor: [![Build status](https://ci.appveyor.com/api/projects/status/1wa25bdftg5241hk/branch/master?svg=true)](https://ci.appveyor.com/project/JMRI/jmri/branch/master)
+AppVeyor: [![Build status](https://ci.appveyor.com/api/projects/status/lmdrtxjxf62xym0p/branch/master?svg=true)](https://ci.appveyor.com/project/JMRI/jmri/branch/master)
 Coveralls: [![Coverage Status](https://coveralls.io/repos/github/JMRI/JMRI/badge.svg?branch=master)](https://coveralls.io/github/JMRI/JMRI?branch=master)

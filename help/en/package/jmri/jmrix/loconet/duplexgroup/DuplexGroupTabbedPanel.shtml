@@ -74,7 +74,11 @@
                 </ul>
               </li>
 
-              <li><a href="#Notes">Notes</a></li>
+              <li><a href="#Notes">Notes</a>
+                  <ul>
+                      <li><a href="#LNWISideEffects">Effect on LNWI device configuration</a></li>
+                  </ul>
+              </li>
 
               <li><a href="#Interfere">Some possible interference
               sources</a></li>
@@ -128,8 +132,10 @@
       It is not possible to guarantee that this tool will work
       properly with future Digitrax Duplex-related hardware.</p>
 
-      <p>At the time this help page was last edited, there have
-      been no reports of incompatibility.</p>
+      <p>Note that this tool can have some effect on the configuration
+          of the Digitrax LNWI device.  This is a "feature" of the 
+          Digitrax design.  The Digitrax software package "DigiGroupSetup"
+          has the same sorts of effects.  See <a href="#LNWISideEffects">Effect on LNWI device configuration</a>.</p>
 
       <h2><a name="Starting" id="Starting">Starting the Duplex
       Network Configuration Tool</a></h2>
@@ -660,6 +666,46 @@
           are connected to the same wired LocoNet.</p>
         </li>
       </ul>
+      <h3><a name="LNWISideEffects" id="LNWISideEffects">Effect on LNWI device configuration</a></h3>
+      <p>Like the Digitra DigiGroupSetup program, this tool can have an effect on the
+          LNWI device.</p>
+      <p>If a LNWI device is connected to LocoNet and has certaion OpSw settings, 
+          when this tool is used to configure the Duplex Group identity information,
+          the LNWI device can also be re-configured.  The UR92 and LNWI are configured by
+          default to use the same "name" and "net number".  They also, under the 
+          default configuration, configure their "channel" number to be related but not
+          identical values.  This is summarized below:</p>
+      <ul>
+          <li>When the Duplex Group "name" is changed, the LNWI will inherit the 
+              same name if the LNWI OpSw 11 is set to "t"hrown.  If the LNWI OpSw 11
+          is set to "c"losed, then the LNWI will ignore changes to the Duplex 
+          Group "name".</li>
+          <li>When the Duplex Group "channel" is changed, the LNWI will inherit 
+          a WIFI channel number which is 10 less than the duplex group channel 
+          number if the LNWI OpSw 12 is set to "t"hrown.  If the LNWI OpSw 12
+          is set to "c"losed, then the LNWI will ignore changes to the Duplex 
+          Group "channel" number.  If the Duplex Group "channel" number is greater 
+          than 21, then the LNWI seems to default to WIFI channel 1.</li>
+          <li>When the Duplex Group "net" number is changed, the LNWI will inherit
+          the same "net" number if the LNWI OpSw13 is set to "t"hrown.  If the 
+          LNWI OpSw13 is set to "c"losed, then the LNWI will ignore changes to 
+          the Duplex Group "net" number.  Note that the Duplex system seems to 
+          ignore the "net" number, but the LNWI does pay attention to the "net" 
+          number.  Note that it may be desirable to set LNWI OpSw 13 to "c" to avoid 
+          sharing the same frequency spectrum between LNWI WiFi and Duplex 
+          operations - see <a href="#DuplexLnWiChannels">a note on Duplex and WiFi 
+          frequency sharing</a>, below.</li>
+          <li>When the Duplex Group "passcode" is set, the LNWI accepts the passcode 
+          if LNWI OpSw 17 is "c"losed and OpSw18 is "t"hrown, and uses this as 
+          a WiFi "WPA2" passcode.  If LNWI OpSw 17 is 
+          "t"hrown or LNWI Opsw 18 is "c"losed, then the Duplex Group "passcode" 
+          is ignored.</li>
+      </ul>
+      <p>Note that any time that the LNWI "name", "channel" number, "net" number, 
+      or "passcode" is chaged, all LNWI WiFi connections are "dropped" it will 
+      need to be re-established using the new WiFi SSID "connection name" and/or 
+      new security passcode.</p>
+          
 
       <h2><a name="Interfere" id="Interfere">Some possible
       interference sources</a></h2>
@@ -678,6 +724,42 @@
         <li>"Bluetooth" devices</li>
 
         <li>2.4 GHz wireless video cameras</li>
+      </ul>
+      
+      <p><a name="DuplexLnWiChannels" id="DuplexLnWiChannels">Note</a> that, by 
+          default, the LNWI "WiFi" device "channel" shares some frequency spectrum 
+          with the Duplex "channel".  This can cause "contention" between the 
+          LNWI radio signal and the Duplex radio signal.  Ideally, each radio system
+          would operate within non-overlapping frequency spectra.  The table below 
+          summarizes the "overlap" between WiFi channels and Duplex channels:</p>
+      <table border="2">
+          <tr><th align="center">WiFi Channel</th><th align="center">Overlapping Duplex Channels</th></tr>
+          <tr><td align="center">1</td><td align="center">11, 12, 13, 14</td></tr>
+          <tr><td align="center">2</td><td align="center">12, 13, 14, 15</td></tr>
+          <tr><td align="center">3</td><td align="center">13, 14, 15, 16</td></tr>
+          <tr><td align="center">4</td><td align="center">14, 15, 16, 17</td></tr>
+          <tr><td align="center">5</td><td align="center">15, 16, 17, 18</td></tr>
+          <tr><td align="center">6</td><td align="center">16, 17, 18, 19</td></tr>
+          <tr><td align="center">7</td><td align="center">17, 18, 19, 20</td></tr>
+          <tr><td align="center">8</td><td align="center">18, 19, 20, 21</td></tr>
+          <tr><td align="center">9</td><td align="center">19, 20, 21, 22</td></tr>
+          <tr><td align="center">10</td><td align="center">20, 21, 22, 23</td></tr>
+          <tr><td align="center">11</td><td align="center">21, 22, 23, 24</td></tr>
+          <tr><td align="center">12</td><td align="center">22, 23, 24, 25</td></tr>
+          <tr><td align="center">13</td><td align="center">23, 24, 25, 26</td></tr>
+          <tr><td colspan="2">Note that the table above reflects regulatory requirements for North America only.</td></tr>
+      </table>
+      <p>As such, it may be appropriate to configure the LNWI so that it does not
+          respond to Duplex "channel" changes.  This may be done by following the
+          steps listed below:</p>
+      <ul>
+          <li>Set the LNWI to accept Duplex "channel" number writes (LNWI OpSw 12 = "t")</li>
+          <li>Use this tool to configure set the Duplex channel to give the desired 
+              LNWI channel, which is 10 less than the Duplex "channel" number</li>
+          <li>Set the LNWI to ignore Duplex "channel" writes by setting LNWI 
+              OpSw 12 to "c"</li>
+          <li>)Use this tool to configure the desired "channel" number for use 
+              by the Duplex radio system.</li>
       </ul>
 
       <h2><a name="SimplexInteract" id="SimplexInteract">Digitrax
@@ -704,8 +786,8 @@
       Tool</a> allows reading and writing the LocoNet ID number</p>
 
       <p>Support for this software tool is available through the
-      <a href="http://groups.yahoo.com/group/jmriusers/">JMRI User
-      forum at Yahoo Groups</a>. Digitrax does <b>NOT</b> provide
+      <a href="https://groups.io/g/jmriusers/">JMRI User
+      forum at "groups.io"</a>. Digitrax does <b>NOT</b> provide
       support for this tool.</p>
 
       <p>The <a href="http://www.digitrax.com">Digitrax web

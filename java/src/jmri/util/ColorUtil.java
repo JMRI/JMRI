@@ -33,9 +33,11 @@ public class ColorUtil {
     public final static String ColorMagenta = "magenta";
     public final static String ColorCyan = "cyan";
     public final static String ColorClear = "clear";
+    public final static String ColorBrown = "brown";
 
     public final static Color clear = setAlpha(Color.BLACK, 0);
     public final static Color CLEAR = clear;
+    public final static Color BROWN = new Color(102, 51, 0);
 
     /**
      * Handles known colors plus special value for track.
@@ -76,6 +78,26 @@ public class ColorUtil {
     }
 
     /**
+     * Returns localized color name or hex value in form #RRGGBB.
+     *
+     * @since 4.13.1
+     * @param color the color object
+     * @return the localized name or hex value of color; returns null if color is null
+     */
+    @CheckForNull
+    public static String colorToLocalizedName(@Nullable Color color) {
+        if (color == null) {
+            return null;
+        }
+        String colorName = colorToName(color);
+        if (colorName != null) {
+            colorName = Character.toUpperCase(colorName.charAt(0)) + colorName.substring(1);
+            return Bundle.getMessage(colorName);
+        }
+        return colorToHexString(color);
+    }
+
+    /**
      * @param string Either a hexadecimal representation of the rgb value of a
      * color or a color name defined as a constant.
      */
@@ -110,6 +132,8 @@ public class ColorUtil {
                    return Color.magenta;
                case ColorCyan:
                    return Color.cyan;
+               case ColorBrown:
+                   return BROWN;
                case ColorTrack:
                    return null;
                default:
@@ -217,6 +241,8 @@ public class ColorUtil {
             return ColorMagenta;
         } else if (color.equals(Color.cyan)) {
             return ColorCyan;
+        } else if (color.equals(BROWN)) {
+            return ColorBrown;
         }
         return null;
     }

@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  *
+ * <a href="doc-files/Heirarchy.png"><img src="doc-files/Heirarchy.png" alt="UML class diagram for package" height="33%" width="33%"></a>
  * @author Howard G. Penny copyright (C) 2005
  */
 public class PositionableJComponent extends JComponent implements Positionable {

@@ -22,14 +22,14 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import jmri.InstanceManager;
 import jmri.jmrit.display.LocoIcon;
-import jmri.jmrit.operations.ExceptionDisplayFrame;
 import jmri.jmrit.operations.OperationsXml;
-import jmri.jmrit.operations.UnexpectedExceptionContext;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.routes.RouteManagerXml;
+import jmri.util.swing.ExceptionDisplayFrame;
+import jmri.util.swing.UnexpectedExceptionContext;
 import jmri.web.server.WebServerPreferences;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -372,7 +372,7 @@ public class OperationsSetupPanel extends OperationsPreferencesPanel implements 
         add(pIconPane);
         add(pControl);
 
-        // setup buttons
+        // set up buttons
         addButtonAction(backupButton);
         addButtonAction(restoreButton);
         addButtonAction(saveButton);

@@ -21,9 +21,11 @@ abstract public class PositionableTestBase {
     protected Editor editor = null;   // derived classes should set editor in setup;
     protected Positionable p = null;  //derived classes should set p in setUp
 
+    // Should do JUnitUtil.setUp() in subclass to make sure it's before anything
     @Before
-    abstract public void setUp();
+    abstract public void setUp(); 
 
+    // Should do JUnitUtil.tearDown() in subclass to make sure it's after everything
     @After
     @javax.annotation.OverridingMethodsMustInvokeSuper 
     public void tearDown() {
@@ -39,7 +41,6 @@ abstract public class PositionableTestBase {
         JUnitUtil.resetWindows(false, false);  // don't log here.  should be from this class.
         editor = null;
         p = null;
-        JUnitUtil.tearDown();
     }
 
     @Test

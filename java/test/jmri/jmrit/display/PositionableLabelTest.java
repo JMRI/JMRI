@@ -535,6 +535,7 @@ public class PositionableLabelTest extends PositionableTestBase {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
         JUnitUtil.initConfigureManager();
         JUnitUtil.initDefaultUserMessagePreferences();
         if(!GraphicsEnvironment.isHeadless()) {

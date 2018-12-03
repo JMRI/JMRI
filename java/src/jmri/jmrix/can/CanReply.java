@@ -47,7 +47,6 @@ public class CanReply extends AbstractMRReply implements CanMutableFrame {
     }
 
     // copy one
-    @SuppressWarnings("null")
     public CanReply(@Nonnull CanReply m) {
         _header = m._header;
         _isExtended = m._isExtended;
@@ -61,7 +60,6 @@ public class CanReply extends AbstractMRReply implements CanMutableFrame {
     }
 
     // copy type
-    @SuppressWarnings("null")
     public CanReply(@Nonnull CanMessage m) {
         _header = m._header;
         _isExtended = m._isExtended;
@@ -177,6 +175,18 @@ public class CanReply extends AbstractMRReply implements CanMutableFrame {
     @Override
     public void setRtr(boolean b) {
         _isRtr = b;
+    }
+
+    @Override
+    public String toMonitorString() {
+        StringBuffer buf = new StringBuffer();
+        buf.append("(" + Integer.toHexString(getHeader())
+                + (isExtended() ? " ext)" : ")"));
+        for (int i = 0; i < getNumDataElements(); i++) 
+        {
+            buf.append(" " + jmri.util.StringUtil.twoHexFromInt(getElement(i)));
+        }
+	return buf.toString();
     }
 
     // contents (package access)

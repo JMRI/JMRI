@@ -13,6 +13,9 @@ import org.slf4j.LoggerFactory;
     jmri.jmrix.can.cbus.swing.nodeconfig.PackageTest.class,
     jmri.jmrix.can.cbus.swing.console.PackageTest.class,
     jmri.jmrix.can.cbus.swing.configtool.PackageTest.class,
+    jmri.jmrix.can.cbus.swing.cbusslotmonitor.PackageTest.class,
+    jmri.jmrix.can.cbus.swing.CbusFilterFrameTest.class,
+    jmri.jmrix.can.cbus.swing.CbusFilterPanelTest.class,
     BundleTest.class
 })
 

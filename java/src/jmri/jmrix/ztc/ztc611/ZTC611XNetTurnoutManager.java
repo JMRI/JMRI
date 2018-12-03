@@ -18,7 +18,7 @@ public class ZTC611XNetTurnoutManager extends jmri.jmrix.lenz.XNetTurnoutManager
     // XNet-specific methods
     @Override
     public Turnout createNewTurnout(String systemName, String userName) {
-        int addr = Integer.valueOf(systemName.substring(2)).intValue();
+        int addr = Integer.parseInt(systemName.substring(2));
         Turnout t = new ZTC611XNetTurnout(prefix, addr, tc);
         t.setUserName(userName);
         return t;

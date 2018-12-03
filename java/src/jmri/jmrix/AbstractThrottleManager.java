@@ -314,10 +314,10 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
         }
     }
 
-    private void cancelThrottleRequest(DccLocoAddress la, ThrottleListener l) {
+    protected void cancelThrottleRequest(DccLocoAddress la, ThrottleListener l) {
         if (throttleListeners != null) {
             ArrayList<WaitingThrottle> a = throttleListeners.get(la);
-            if (a == null) {
+            if (a == null || l == null ) {
                 return;
             }
             for (int i = 0; i < a.size(); i++) {
@@ -421,10 +421,10 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
      * notification message back to the requestor with a string reason as to why
      * the request has failed.
      *
-     * @param address The DCC Loco Address that the request failed on.
+     * @param address The Loco Address that the request failed on.
      * @param reason  A text string passed by the ThrottleManae as to why
      */
-    public void failedThrottleRequest(DccLocoAddress address, String reason) {
+    public void failedThrottleRequest(LocoAddress address, String reason) {
         ArrayList<WaitingThrottle> a = throttleListeners.get(address);
         if (a == null) {
             log.warn("failedThrottleRequest with zero-length listeners: " + address);

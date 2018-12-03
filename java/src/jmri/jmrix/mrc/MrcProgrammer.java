@@ -3,6 +3,8 @@ package jmri.jmrix.mrc;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.annotation.Nonnull;
+
 import jmri.ProgrammingMode;
 import jmri.jmrix.AbstractProgrammer;
 import org.slf4j.Logger;
@@ -35,6 +37,7 @@ public class MrcProgrammer extends AbstractProgrammer implements MrcTrafficListe
      * Types implemented here.
      */
     @Override
+    @Nonnull
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> retval = new ArrayList<ProgrammingMode>();
         retval.add(AUTOMATICMODE);
@@ -76,6 +79,7 @@ public class MrcProgrammer extends AbstractProgrammer implements MrcTrafficListe
 
     // programming interface
     @Override
+    @Deprecated // 4.1.1
     public synchronized void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         log.debug("writeCV {} listens {}", CV, p); //IN18N
         useProgrammer(p);
@@ -103,6 +107,7 @@ public class MrcProgrammer extends AbstractProgrammer implements MrcTrafficListe
     }
 
     @Override
+    @Deprecated // 4.1.1
     public synchronized void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
         log.debug("readCV {} listens {}", CV, p); //IN18N
         useProgrammer(p);
@@ -230,7 +235,7 @@ public class MrcProgrammer extends AbstractProgrammer implements MrcTrafficListe
         tc.removeTrafficListener(MrcInterface.PROGRAMMING, this);
         jmri.ProgListener temp = _usingProgrammer;
         _usingProgrammer = null;
-        temp.programmingOpReply(value, status);
+        notifyProgListenerEnd(temp,value,status);
     }
 
     private final static Logger log = LoggerFactory.getLogger(MrcProgrammer.class);

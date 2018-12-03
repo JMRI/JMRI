@@ -6,8 +6,7 @@ import jmri.LocoAddress;
 import jmri.Throttle;
 import jmri.jmrix.AbstractThrottle;
 import jmri.jmrix.SystemConnectionMemo;
-import org.openlcb.MimicNodeStore;
-import org.openlcb.implementations.DatagramService;
+import org.openlcb.OlcbInterface;
 import org.openlcb.implementations.throttle.ThrottleImplementation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,15 +17,27 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2012
  */
 public class OlcbThrottle extends AbstractThrottle {
-
+        
     /**
      * Constructor
      * @param address Dcc loco address
      * @param memo system connection memo
      * @param mgr config manager
+     * @deprecated since 4.13.4
      */
+    @Deprecated
     public OlcbThrottle(DccLocoAddress address, SystemConnectionMemo memo, OlcbConfigurationManager mgr) {
+           this(address,memo);
+    }
+
+    /**
+     * Constructor
+     * @param address Dcc loco address
+     * @param memo system connection memo
+     */
+    public OlcbThrottle(DccLocoAddress address, SystemConnectionMemo memo) {
         super(memo);
+        OlcbInterface iface = memo.get(OlcbInterface.class);
 
         // cache settings. It would be better to read the
         // actual state, but I don't know how to do this
@@ -49,24 +60,24 @@ public class OlcbThrottle extends AbstractThrottle {
         this.address = address;
 
         // create OpenLCB library object that does the magic & activate
-        if (mgr.get(MimicNodeStore.class) == null) {
+        if (iface.getNodeStore() == null) {
             log.error("Failed to access Mimic Node Store");
         }
-        if (mgr.get(DatagramService.class) == null) {
+        if (iface.getDatagramService() == null) {
             log.error("Failed to access Datagram Service");
         }
         if (address instanceof OpenLcbLocoAddress) {
             oti = new ThrottleImplementation(
                     ((OpenLcbLocoAddress) address).getNode(),
-                    (MimicNodeStore) mgr.get(MimicNodeStore.class),
-                    (DatagramService) mgr.get(DatagramService.class)
+                    iface.getNodeStore(),
+                    iface.getDatagramService()
             );
         } else {
             oti = new ThrottleImplementation(
                     this.address.getNumber(),
                     this.address.isLongAddress(),
-                    (MimicNodeStore) mgr.get(MimicNodeStore.class),
-                    (DatagramService) mgr.get(DatagramService.class)
+                    iface.getNodeStore(),
+                    iface.getDatagramService()
             );
         }
         oti.start();

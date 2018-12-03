@@ -4,12 +4,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ResourceBundle;
 import javax.swing.JComboBox;
+import javax.swing.JPanel;
+
 import jmri.jmrix.can.ConfigurationManager;
+import jmri.jmrix.openlcb.swing.protocoloptions.ConfigPaneHelper;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Abstract base for of objects to handle configuring a layout connection via
+ * Abstract base for objects to handle configuring a layout connection via
  * various types of SerialDriverAdapter object.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003, 2012
@@ -22,7 +26,7 @@ abstract public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnecti
 
     /**
      * Create a connection configuration with a preexisting adapter. This is
-     * used principally when loading a configuration that defines this
+     * used principally when loading a configuratioon that defines this
      * connection.
      *
      * @param p the adapter to create a connection configuration for
@@ -41,9 +45,7 @@ abstract public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnecti
     @SuppressWarnings("unchecked")
     @Override
     protected void checkInitDone() {
-        if (log.isDebugEnabled()) {
-            log.debug("init called for " + name());
-        }
+        log.debug("init called for {}", name());
         if (init) {
             return;
         }
@@ -82,6 +84,13 @@ abstract public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnecti
     }
 
     @Override
+    public void loadDetails(JPanel details) {
+        setInstance();
+        ConfigPaneHelper.maybeAddOpenLCBProtocolOptionsButton(this, additionalItems);
+        super.loadDetails(details);
+    }
+
+    @Override
     abstract public String name();
 
     @Override
@@ -91,4 +100,5 @@ abstract public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnecti
 
     @Override
     abstract protected void setInstance(); // necessary to get right type
+
 }

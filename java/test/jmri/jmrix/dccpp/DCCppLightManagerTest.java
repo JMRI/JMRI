@@ -54,7 +54,7 @@ public class DCCppLightManagerTest extends jmri.managers.AbstractLightMgrTestBas
     @Before
     @Override
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
         // prepare an interface, register
         xnis = new DCCppInterfaceScaffold(new DCCppCommandStation());
         // create and register the manager object
@@ -65,6 +65,11 @@ public class DCCppLightManagerTest extends jmri.managers.AbstractLightMgrTestBas
 
     @After
     public void tearDown() {
+        l.dispose();
+        l = null;
+        xnis = null;
+        jmri.util.JUnitUtil.clearShutDownManager();
+        jmri.util.JUnitUtil.resetInstanceManager();
         JUnitUtil.tearDown();
     }
 

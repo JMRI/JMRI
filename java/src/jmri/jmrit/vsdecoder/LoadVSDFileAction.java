@@ -1,6 +1,14 @@
 package jmri.jmrit.vsdecoder;
 
-/*
+import java.awt.event.ActionEvent;
+import java.io.File;
+import javax.swing.AbstractAction;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+/**
  * <hr>
  * This file is part of JMRI.
  * <P>
@@ -15,16 +23,8 @@ package jmri.jmrit.vsdecoder;
  * for more details.
  * <P>
  *
- * @author   Mark Underwood Copyright (C) 2011
- * 
+ * @author Mark Underwood Copyright (C) 2011
  */
-import java.awt.event.ActionEvent;
-import java.io.File;
-import javax.swing.AbstractAction;
-import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Load VSDecoder Profiles from XML
@@ -51,7 +51,7 @@ public class LoadVSDFileAction extends AbstractAction {
     }
 
     JFileChooser fileChooser;
-    static private String last_path = null;
+    private String last_path = null;
 
     /**
      * The action is performed. Let the user choose the file to load from. Read
@@ -69,7 +69,7 @@ public class LoadVSDFileAction extends AbstractAction {
                 start_dir = last_path;
             }
 
-            log.debug("Using path: " + start_dir);
+            log.debug("Using path: {}", start_dir);
 
             fileChooser = new JFileChooser(start_dir);
             jmri.util.FileChooserFilter filt = new jmri.util.FileChooserFilter(Bundle.getMessage("LoadVSDFileChooserFilterLabel"));
@@ -101,7 +101,7 @@ public class LoadVSDFileAction extends AbstractAction {
         // Create a VSD (zip) file.
         try {
             vsdfile = new VSDFile(f);
-            log.debug("VSD File name = " + vsdfile.getName());
+            log.debug("VSD File name = {}", vsdfile.getName());
             if (vsdfile.isInitialized()) {
                 VSDecoderManager.instance().loadProfiles(vsdfile);
             }
@@ -113,14 +113,14 @@ public class LoadVSDFileAction extends AbstractAction {
                         Bundle.getMessage("VSDFileError"), JOptionPane.ERROR_MESSAGE);
             }
 
-            return (vsdfile.isInitialized());
+            return vsdfile.isInitialized();
 
         } catch (java.util.zip.ZipException ze) {
             log.error("ZipException opening file " + f.toString(), ze);
-            return (false);
+            return false;
         } catch (java.io.IOException ze) {
             log.error("IOException opening file " + f.toString(), ze);
-            return (false);
+            return false;
         }
     }
 
@@ -130,33 +130,32 @@ public class LoadVSDFileAction extends AbstractAction {
         try {
             // Create a VSD (zip) file.
             vsdfile = new VSDFile(fp);
-            log.debug("VSD File name = " + vsdfile.getName());
+            log.debug("VSD File name: {}", vsdfile.getName());
             if (vsdfile.isInitialized()) {
                 VSDecoderManager.instance().loadProfiles(vsdfile);
             }
             // Cleanup and close files.
             vsdfile.close();
-
-            return (vsdfile.isInitialized());
+            return vsdfile.isInitialized();
         } catch (java.util.zip.ZipException ze) {
             log.error("ZipException opening file " + fp, ze);
-            return (false);
+            return false;
         } catch (java.io.IOException ze) {
             log.error("IOException opening file " + fp, ze);
-            return (false);
+            return false;
         }
 
         /*
          File f = null;
          try {
          f = new File(fp);
-         return(loadVSDFile(f));
+         return loadVSDFile(f);
          } catch (java.io.IOException ioe) {
          log.warn("IO Error auto-loading VSD File: " + (f==null?"(null)":f.getAbsolutePath()) + " ", ioe);
-         return(false);
+         return false;
          } catch (NullPointerException npe) {
          log.warn("NP Error auto-loading VSD File: FP = " + fp, npe);
-         return(false);
+         return false;
          }
          */
     }

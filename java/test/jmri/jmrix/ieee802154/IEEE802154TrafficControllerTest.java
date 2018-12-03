@@ -155,11 +155,8 @@ public class IEEE802154TrafficControllerTest extends jmri.jmrix.AbstractMRNodeTr
     @Before
     @Override
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
         tc = new IEEE802154TrafficController() {
-            @Override
-            public void setInstance() {
-            }
             @Override
             protected AbstractMRReply newReply() {
                 return null;

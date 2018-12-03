@@ -1,10 +1,10 @@
-//TrainCommonTest.java
 package jmri.jmrit.operations.trains;
 
 import jmri.jmrit.operations.OperationsTestCase;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the TrainCommon class 
@@ -13,12 +13,14 @@ import org.junit.Assert;
  */
 public class TrainCommonTest extends OperationsTestCase {
 
+    @Test
     public void testGetDate_DateArgument(){
        java.util.Calendar calendar = java.util.Calendar.getInstance();
        String date = TrainCommon.getDate(calendar.getTime());
        Assert.assertNotNull("Date String",date);
     }
 
+    @Test
     public void testGetDate_BooleanArgument(){
        String date = TrainCommon.getDate(false);
        Assert.assertNotNull("Date String",date);
@@ -27,29 +29,15 @@ public class TrainCommonTest extends OperationsTestCase {
     // from here down is testing infrastructure
     // Ensure minimal setup for log4J
     @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() {
         super.setUp();
-    }
-
-    public TrainCommonTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", TrainCommonTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(TrainCommonTest.class);
-        return suite;
     }
 
     // The minimal setup for log4J
     @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() {
         super.tearDown();
     }
 

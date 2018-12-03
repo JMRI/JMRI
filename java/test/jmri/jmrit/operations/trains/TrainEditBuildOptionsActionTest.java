@@ -28,6 +28,7 @@ public class TrainEditBuildOptionsActionTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
     }
 
     @After

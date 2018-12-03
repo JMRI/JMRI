@@ -10,21 +10,17 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class Dcc4PcReporterTest {
+public class Dcc4PcReporterTest extends jmri.implementation.AbstractRailComReporterTest {
 
-    @Test
-    public void testCTor() {
-        Dcc4PcReporter t = new Dcc4PcReporter("DR1","test");
-        Assert.assertNotNull("exists",t);
-    }
-
-    // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
+        r = new Dcc4PcReporter("DR1","test");
         JUnitUtil.setUp();
     }
 
     @After
+    @Override
     public void tearDown() {
         JUnitUtil.tearDown();
     }

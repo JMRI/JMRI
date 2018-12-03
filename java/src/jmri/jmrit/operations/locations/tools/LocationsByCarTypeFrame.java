@@ -199,7 +199,7 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
                 loc.addTypeName((String) typeComboBox.getSelectedItem());
                 // save tracks that have the same id as the location
                 for (JCheckBox cbt : trackCheckBoxList) {
-                    String[] id = cbt.getName().split("s");
+                    String[] id = cbt.getName().split(Location.LOC_TRACK_REGIX);
                     if (loc.getId().equals(id[0])) {
                         Track track = loc.getTrackById(cbt.getName());
                         if (cbt.isSelected()) {
@@ -300,7 +300,7 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
                     String locId = cb.getName();
                     for (int i = 0; i < trackCheckBoxList.size(); i++) {
                         cb = trackCheckBoxList.get(i);
-                        String[] id = cb.getName().split("s");
+                        String[] id = cb.getName().split(Location.LOC_TRACK_REGIX);
                         if (locId.equals(id[0])) {
                             cb.setSelected(false);
                         }
@@ -311,7 +311,7 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
                 log.debug("Checkbox track {}", cb.getText());
                 // Must select location if track is selected
                 if (cb.isSelected()) {
-                    String[] loc = cb.getName().split("s");
+                    String[] loc = cb.getName().split(Location.LOC_TRACK_REGIX);
                     for (int i = 0; i < locationCheckBoxList.size(); i++) {
                         cb = locationCheckBoxList.get(i);
                         if (cb.getName().equals(loc[0])) {

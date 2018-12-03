@@ -284,6 +284,10 @@ public class DefaultRailCom extends DefaultIdTag implements jmri.RailCom {
 
     Hashtable<Integer, Integer> cvValues = new Hashtable<>();
 
+    // note that this doesn't properly implement the 
+    // contract in {@link NamedBean.toString()}, 
+    // which means things like tables and persistance 
+    // might not behave properly.
     @Override
     public String toString() {
         String comment;

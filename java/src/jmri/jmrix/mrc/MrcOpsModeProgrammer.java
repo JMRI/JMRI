@@ -2,6 +2,8 @@ package jmri.jmrix.mrc;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Nonnull;
+
 import jmri.ProgListener;
 import jmri.ProgrammerException;
 import jmri.ProgrammingMode;
@@ -43,6 +45,7 @@ public class MrcOpsModeProgrammer extends MrcProgrammer implements jmri.Addresse
      * Forward a write request to an ops-mode write operation
      */
     @Override
+    @Deprecated // 4.1.1
     public synchronized void writeCV(int CV, int val, ProgListener p) throws ProgrammerException {
         log.debug("write CV={} val={}", CV, val); //IN18N
         MrcMessage msg = MrcMessage.getPOM(addressLo, addressHi, CV, val);
@@ -60,6 +63,7 @@ public class MrcOpsModeProgrammer extends MrcProgrammer implements jmri.Addresse
     }
 
     @Override
+    @Deprecated // 4.1.1
     public synchronized void readCV(int CV, ProgListener p) throws ProgrammerException {
         log.debug("read CV={}", CV);
         log.error("readCV not available in this protocol"); //IN18N
@@ -89,6 +93,7 @@ public class MrcOpsModeProgrammer extends MrcProgrammer implements jmri.Addresse
      * Types implemented here.
      */
     @Override
+    @Nonnull
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
         ret.add(ProgrammingMode.OPSBYTEMODE);

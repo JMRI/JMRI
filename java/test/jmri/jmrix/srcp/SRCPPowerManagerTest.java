@@ -1,11 +1,7 @@
 package jmri.jmrix.srcp;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * SRCPPowerManagerTest.java
@@ -40,6 +36,16 @@ public class SRCPPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBas
     }
 
     @Override
+    protected void sendIdleReply() {
+       return;
+    }
+
+    @Override
+    protected void hearIdle() {
+       return;
+    }
+
+    @Override
     protected int numListeners() {
         return stc.numListeners();
     }
@@ -59,6 +65,11 @@ public class SRCPPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBas
         return ((stc.outbound.elementAt(index))).toString().equals("SET 1 POWER OFF\n");
     }
 
+    @Override
+    protected boolean outboundIdleOK(int index) {
+        return ((stc.outbound.elementAt(index))).toString().equals("SET 1 POWER OFF\n");
+    }
+
     @Test
     @Override
     @Ignore("unsolicited state changes are currently ignored")
@@ -71,16 +82,11 @@ public class SRCPPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBas
     public void testStateOff(){
     }
 
-    @Test 
-    public void testDefaultCtor() {
-        Assert.assertNotNull(new SRCPPowerManager());
-    }
-
     // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
         stc = new SRCPTrafficControlScaffold();
         SRCPBusConnectionMemo memo = new SRCPBusConnectionMemo(stc, "TEST", 1);
         p = new SRCPPowerManager(memo, 1);

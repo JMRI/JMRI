@@ -26,6 +26,7 @@ public class ChangeDepartureTimesFrameTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
     }
 
     @After

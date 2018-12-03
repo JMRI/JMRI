@@ -13,7 +13,7 @@ public class LawicellTrafficControllerTest extends jmri.jmrix.can.TrafficControl
     @Override
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp(); 
+        jmri.util.JUnitUtil.setUp(); 
         JUnitUtil.resetInstanceManager();
         tc = new LawicellTrafficController();
     }
@@ -21,7 +21,7 @@ public class LawicellTrafficControllerTest extends jmri.jmrix.can.TrafficControl
     @Override
     @After
     public void tearDown(){
-       tc = null;
+        tc = null;
         JUnitUtil.tearDown(); 
     }
 

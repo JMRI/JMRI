@@ -21,7 +21,7 @@ import jmri.util.table.ButtonRenderer;
 
 /**
  * Frame providing a command station slot manager.
- * <P>
+ * <p>
  * Slots 102 through 127 are normally not used for loco control, so are shown
  * separately.
  *
@@ -193,7 +193,8 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
             public boolean include(RowFilter.Entry<? extends SlotMonDataModel, ? extends Integer> entry) {
                 int slotNum = entry.getIdentifier();
                 // default filter is IN-USE and regular systems slot
-                boolean include = entry.getModel().getSlot(entry.getIdentifier()).slotStatus() == LnConstants.LOCO_IN_USE && (slotNum > 0 && slotNum < 121);
+                boolean include = entry.getModel().getSlot(entry.getIdentifier()).slotStatus() != LnConstants.LOCO_FREE && (slotNum > 0 && slotNum < 121);
+                
                 if (!include && showUnusedCheckBox.isSelected() && (slotNum > 0 && slotNum < 121)) {
                     include = true;
                 }

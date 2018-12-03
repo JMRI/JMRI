@@ -197,7 +197,7 @@ public class ProxyTurnoutManagerTest extends TestCase {
     // The minimal setup for log4J
     @Override
     protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
         // create and register the manager object
         l = new InternalTurnoutManager() {
             @Override
@@ -205,7 +205,7 @@ public class ProxyTurnoutManagerTest extends TestCase {
                 return "J";
             }
         };
-        jmri.InstanceManager.setTurnoutManager(l);
+        InstanceManager.setTurnoutManager(l);
     }
 
     @Override

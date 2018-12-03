@@ -85,15 +85,15 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
             // Address format passed is in the form of node:cardOutput or node:card:address
             int separator = curAddress.indexOf(":");
             try {
-                nNode = Integer.valueOf(curAddress.substring(0, separator)).intValue();
+                nNode = Integer.parseInt(curAddress.substring(0, separator));
                 int nxSeparator = curAddress.indexOf(":", separator + 1);
                 if (nxSeparator == -1) {
                     //Address has been entered in the format node:cardOutput
-                    bitNum = Integer.valueOf(curAddress.substring(separator + 1)).intValue();
+                    bitNum = Integer.parseInt(curAddress.substring(separator + 1));
                 } else {
                     //Address has been entered in the format node:card:output
-                    nCard = Integer.valueOf(curAddress.substring(separator + 1, nxSeparator)).intValue() * 100;
-                    bitNum = Integer.valueOf(curAddress.substring(nxSeparator + 1)).intValue();
+                    nCard = Integer.parseInt(curAddress.substring(separator + 1, nxSeparator)) * 100;
+                    bitNum = Integer.parseInt(curAddress.substring(nxSeparator + 1));
                 }
             } catch (NumberFormatException ex) {
                 log.error("Unable to convert {} Hardware Address to a number", curAddress);

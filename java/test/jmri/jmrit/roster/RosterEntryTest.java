@@ -3,22 +3,22 @@ package jmri.jmrit.roster;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.*;
+
 import jmri.InstanceManager;
-import jmri.util.FileUtil;
-import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import jmri.util.*;
+
 import org.jdom2.JDOMException;
-import org.junit.Assert;
+import org.junit.*;
 
 /**
  * Tests for the jmrit.roster.RosterEntry class.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002
+ * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2018
   */
-public class RosterEntryTest extends TestCase {
+public class RosterEntryTest {
 
+    @Test
     public void testCreate() {
         RosterEntry r = new RosterEntry("file here");
         Assert.assertEquals("file name ", "file here", r.getFileName());
@@ -30,6 +30,7 @@ public class RosterEntryTest extends TestCase {
         Assert.assertEquals("family ", "", r.getDecoderFamily());
     }
 
+    @Test
     public void testPartialLoad() {
         // create Element
         org.jdom2.Element e = new org.jdom2.Element("locomotive")
@@ -58,6 +59,7 @@ public class RosterEntryTest extends TestCase {
         Assert.assertEquals("family ", "", r.getDecoderFamily());
     }
 
+    @Test
     public void testEmptyLoad() {
         // create Element
         org.jdom2.Element e = new org.jdom2.Element("locomotive")
@@ -79,6 +81,7 @@ public class RosterEntryTest extends TestCase {
         Assert.assertEquals("family ", "", r.getDecoderFamily());
     }
 
+    @Test
     public void testFullLoad() {
         // create Element
         org.jdom2.Element e = new org.jdom2.Element("locomotive")
@@ -109,6 +112,7 @@ public class RosterEntryTest extends TestCase {
         Assert.assertEquals("family ", "91", r.getDecoderFamily());
     }
 
+    @Test
     public void testFromFile() throws JDOMException, IOException {
         
         //create a RosterEntry from a test xml file
@@ -123,6 +127,7 @@ public class RosterEntryTest extends TestCase {
         Assert.assertEquals("family ", "Brilliance Sound Decoders", r.getDecoderFamily());
     }
 
+    @Test
     public void testStoreFunctionLabel() {
         RosterEntry r = new RosterEntry("file here");
 
@@ -132,7 +137,8 @@ public class RosterEntryTest extends TestCase {
 
     }
 
-    public void testModifyDate() {
+    @Test
+    public void testModifyDateUnparseable() {
         RosterEntry r = new RosterEntry("file here");
 
         r.setId("test Id");
@@ -141,6 +147,38 @@ public class RosterEntryTest extends TestCase {
         jmri.util.JUnitAppender.assertWarnMessage("Unable to parse \"unparseable date\" as a date in roster entry \"test Id\"."); 
     }
 
+    @Test
+    public void testDateFormatISO() {
+        RosterEntry r = new RosterEntry("file here");
+
+        r.setId("test Id");
+        r.setDateUpdated("2018-03-05T02:34:55Z");
+        
+        Assert.assertTrue(jmri.util.JUnitAppender.verifyNoBacklog()); 
+        Assert.assertEquals("2018-03-05T02:34:55Z", r.getDateUpdated().toString());
+    }
+
+    @Test
+    public void testDateFormatTraditional() throws java.text.ParseException {
+        RosterEntry r = new RosterEntry("file here");
+
+        r.setId("test Id");
+        
+        TimeZone tz = TimeZone.getDefault();
+        try {
+            TimeZone.setDefault(TimeZone.getTimeZone("GMT-7"));
+            r.setDateUpdated("Mar 2, 2016 9:57:04 AM"); // this is in local time
+        } finally {
+            TimeZone.setDefault(tz);
+        }
+        
+        Assert.assertTrue(jmri.util.JUnitAppender.verifyNoBacklog()); 
+        
+        // convert that same local time in ISO format and compare
+        Assert.assertEquals("2016-03-02T16:57:04Z", r.getDateUpdated());
+    }
+
+    @Test
     public void testStoreFunctionLockable() {
         RosterEntry r = new RosterEntry("file here");
 
@@ -158,6 +196,7 @@ public class RosterEntryTest extends TestCase {
 
     }
 
+    @Test
     public void testXmlLoadStore() {
         // create Element
         org.jdom2.Element e = new org.jdom2.Element("locomotive")
@@ -185,6 +224,7 @@ public class RosterEntryTest extends TestCase {
         Assert.assertEquals("model ", "33", o.getChild("decoder").getAttribute("model").getValue());
     }
 
+    @Test
     public void testXmlFunctionLabelsLoadStore() {
         // create Element
         org.jdom2.Element e = new org.jdom2.Element("locomotive")
@@ -233,6 +273,7 @@ public class RosterEntryTest extends TestCase {
         Assert.assertEquals("label 2", "label 2", o.getChild("functionlabels").getChild("functionlabel").getText());
     }
 
+    @Test
     public void testEnsureFilenameExistsNew() {
         RosterEntry r = new RosterEntry();
         Assert.assertEquals("initial filename ", null, r.getFileName());
@@ -249,6 +290,7 @@ public class RosterEntryTest extends TestCase {
         }
     }
 
+    @Test
     public void testEnsureFilenameExistsOld() throws IOException {
         FileUtil.createDirectory(LocoFile.getFileLocation());
         RosterEntry r = new RosterEntry();
@@ -279,17 +321,20 @@ public class RosterEntryTest extends TestCase {
         }
     }
 
+    @Test
     public void testNoAttribute() {
         RosterEntry r = new RosterEntry();
         Assert.assertNull(r.getAttribute("foo"));
     }
 
+    @Test
     public void testOneAttribute() {
         RosterEntry r = new RosterEntry();
         r.putAttribute("foo", "bar");
         Assert.assertEquals("bar", r.getAttribute("foo"));
     }
 
+    @Test
     public void testReplaceAttribute() {
         RosterEntry r = new RosterEntry();
         r.putAttribute("foo", "bar");
@@ -297,6 +342,7 @@ public class RosterEntryTest extends TestCase {
         Assert.assertEquals("a nicer bar", r.getAttribute("foo"));
     }
 
+    @Test
     public void testNullAttributeValue() {
         RosterEntry r = new RosterEntry();
         r.putAttribute("foo", "bar");
@@ -304,6 +350,7 @@ public class RosterEntryTest extends TestCase {
         Assert.assertNull(r.getAttribute("foo"));
     }
 
+    @Test
     public void testAttributeList() {
         RosterEntry r = new RosterEntry();
         r.putAttribute("key 2", "value 2");
@@ -318,6 +365,7 @@ public class RosterEntryTest extends TestCase {
         Assert.assertTrue(!i.hasNext());
     }
 
+    @Test
     public void testXmlAttributesLoadStore() {
         // create Element
         org.jdom2.Element e = new org.jdom2.Element("locomotive")
@@ -361,6 +409,7 @@ public class RosterEntryTest extends TestCase {
         Assert.assertEquals(null, r.getAttribute("key 4"));
     }
 
+    @Test
     public void testStoreAttribute() {
         RosterEntry r = new RosterEntry("dummy filename");
         r.putAttribute("foo", "bar");
@@ -384,32 +433,15 @@ public class RosterEntryTest extends TestCase {
                 .getChild("value").getText());
     }
 
-    // from here down is testing infrastructure
-    public RosterEntryTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", RosterEntryTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(RosterEntryTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    @Override
-    protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+    @Before
+    public void setUp() {
+        JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
         InstanceManager.setDefault(RosterConfigManager.class, new RosterConfigManager());
     }
 
-    @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 

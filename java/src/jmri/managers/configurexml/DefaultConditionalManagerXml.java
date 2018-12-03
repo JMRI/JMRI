@@ -98,12 +98,7 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                 for (int k = 0; k < variableList.size(); k++) {
                     ConditionalVariable variable = variableList.get(k);
                     Element vElem = new Element("conditionalStateVariable");  // NOI18N
-                    int oper = variable.getOpern();
-                    if (oper == Conditional.OPERATOR_AND && variable.isNegated()) {
-                        oper = Conditional.OPERATOR_AND_NOT;    // backward compatibility
-                    } else if (oper == Conditional.OPERATOR_NONE && variable.isNegated()) {
-                        oper = Conditional.OPERATOR_NOT;        // backward compatibility
-                    }
+                    int oper = variable.getOpern().getIntValue();
                     vElem.setAttribute("operator", Integer.toString(oper));  // NOI18N
                     if (variable.isNegated()) {
                         vElem.setAttribute("negated", "yes");  // NOI18N
@@ -123,7 +118,7 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                     elem.addContent(vElem);
                 }
                 // save action information
-                ArrayList<ConditionalAction> actionList = c.getCopyOfActions();
+                List<ConditionalAction> actionList = c.getCopyOfActions();
                 /*               	if (numCond>1190) {
                  partTime = System.currentTimeMillis() - partTime;
                  System.out.println("time to for getCopyOfActions "+partTime+"ms. numActions= "+actionList.size());
@@ -291,14 +286,8 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                 } else {
                     int oper = Integer.parseInt(conditionalVarList.get(n)
                             .getAttribute("operator").getValue());  // NOI18N
-                    if (oper == Conditional.OPERATOR_AND_NOT) {
-                        variable.setNegation(true);
-                        oper = Conditional.OPERATOR_AND;
-                    } else if (oper == Conditional.OPERATOR_NOT) {
-                        variable.setNegation(true);
-                        oper = Conditional.OPERATOR_NONE;
-                    }
-                    variable.setOpern(oper);
+                    Conditional.Operator operator = Conditional.Operator.getOperatorFromIntValue(oper);
+                    variable.setOpern(operator);
                 }
                 if (conditionalVarList.get(n).getAttribute("negated") != null) {  // NOI18N
                     if ("yes".equals(conditionalVarList.get(n)
@@ -344,7 +333,7 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
             //if (conditionalActionList.size() == 0) {
             //    log.warn("No actions found for conditional "+sysName);
             //}
-            ArrayList<ConditionalAction> actionList = ((DefaultConditional)c).getActionList();
+            List<ConditionalAction> actionList = ((DefaultConditional)c).getActionList();
             org.jdom2.Attribute attr = null;
             for (int n = 0; n < conditionalActionList.size(); n++) {
                 ConditionalAction action = new DefaultConditionalAction();

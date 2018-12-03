@@ -1,4 +1,3 @@
-// LnSv2MessageContents
 package jmri.jmrix.loconet.lnsvf2;
 
 import java.util.Locale;

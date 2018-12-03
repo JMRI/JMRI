@@ -68,6 +68,12 @@
 # JAVA imports
 
 import java
+import java.awt
+import java.awt.event
+import java.beans
+import java.io
+import java.util
+
 import jmri
 
 from java.beans import PropertyChangeListener

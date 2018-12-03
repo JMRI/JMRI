@@ -68,7 +68,7 @@ public class EntryExitPairsTest {
 
     @Test
     public void testDiscoverPairs() throws Exception {
-        eep.automaticallyDiscoverEntryExitPairs(panels.get("Alpha"), eep.FULLINTERLOCK);  // NOI18N
+        eep.automaticallyDiscoverEntryExitPairs(panels.get("Alpha"), EntryExitPairs.FULLINTERLOCK);  // NOI18N
     }
 
     @Test
@@ -99,8 +99,10 @@ public class EntryExitPairsTest {
     public static void before() throws Exception {
         JUnitUtil.setUp();
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        jmri.util.JUnitUtil.resetProfileManager();
+
         tools = new EntryExitTestTools();
-        panels = tools.getPanels();
+        panels = EntryExitTestTools.getPanels();
         Assert.assertNotNull("Get LE panels", panels);  // NOI18N
         eep = InstanceManager.getDefault(EntryExitPairs.class);
         lbm = InstanceManager.getDefault(LayoutBlockManager.class);
@@ -111,6 +113,13 @@ public class EntryExitPairsTest {
     @AfterClass
     public static void after() {
         panels.forEach((name, panel) -> JUnitUtil.dispose(panel));
+        eep = null;
+        lbm = null;
+        sm = null;
+        tm = null;
+        panels = null;
+        tools = null;
+        
         JUnitUtil.tearDown();
     }
 

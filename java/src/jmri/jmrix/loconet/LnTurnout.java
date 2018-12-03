@@ -1,5 +1,6 @@
 package jmri.jmrix.loconet;
 
+import javax.annotation.*;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.NmraPacket;
 import jmri.implementation.AbstractTurnout;
@@ -8,31 +9,30 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Extend jmri.AbstractTurnout for LocoNet layouts
- * <P>
+ * <p>
  * This implementation implements the "SENT" feedback, where LocoNet messages
  * originating on the layout can change both KnownState and CommandedState. We
  * change both because we consider a LocoNet message to reflect how the turnout
  * should be, even if its a readback status message. E.g. if you use a DS54
  * local input to change the state, resulting in a status message, we still
  * consider that to be a commanded state change.
- * <P>
+ * <p>
  * Adds several additional feedback modes:
- * <UL>
- * <LI>MONITORING - listen to the LocoNet, so that commands from other LocoNet
- * sources (e.g. throttles) are properly reflected in the turnout state. This is
- * the default for LnTurnout objects as created.
- * <LI>INDIRECT - listen to the LocoNet for messages back from a DS54 that has a
- * microswitch attached to its Switch input.
- * <LI>EXACT - listen to the LocoNet for messages back from a DS54 that has two
- * microswitches, one connected to the Switch input and one to the Aux input.
- * </UL>
- * <P>
+ * <ul>
+ *   <li>MONITORING - listen to the LocoNet, so that commands from other LocoNet
+ *   sources (e.g. throttles) are properly reflected in the turnout state. This is
+ *   the default for LnTurnout objects as created.
+ *   <li>INDIRECT - listen to the LocoNet for messages back from a DS54 that has a
+ *   microswitch attached to its Switch input.
+ *   <li>EXACT - listen to the LocoNet for messages back from a DS54 that has two
+ *   microswitches, one connected to the Switch input and one to the Aux input.
+ * </ul>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
  * and used with permission as part of the JMRI project. That permission does
  * not extend to uses in other software products. If you wish to use this code,
  * algorithm or these message formats outside of JMRI, please contact Digitrax
  * Inc for separate permission.
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2001
  */
 public class LnTurnout extends AbstractTurnout implements LocoNetListener {
@@ -70,6 +70,26 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
     }
 
     LocoNetInterface controller;
+    
+    /**
+     * True when setFeedbackMode has specified the mode;
+     * false when the mode is just left over from initialization.
+     * This is intended to indicate (when true) that a configuration 
+     * file has set the value; message-created turnouts have it false.
+     */     
+    boolean feedbackDeliberatelySet = false; // package to allow access from LnTurnoutManager
+    
+    @Override
+    public void setFeedbackMode(@Nonnull String mode) throws IllegalArgumentException {
+        feedbackDeliberatelySet = true;
+        super.setFeedbackMode(mode);
+    }
+
+    @Override
+    public void setFeedbackMode(int mode) throws IllegalArgumentException {
+        feedbackDeliberatelySet = true;
+        super.setFeedbackMode(mode);
+    }
 
     @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "Only used during creation of 1st turnout") // NOI18N
@@ -220,9 +240,8 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
                 int sw1 = l.getElement(1);
                 int sw2 = l.getElement(2);
                 if (myAddress(sw1, sw2)) {
-                    if (log.isDebugEnabled()) {
-                        log.debug("SW_REQ received with valid address");
-                    }
+                
+                    log.debug("SW_REQ received with valid address");
                     //sort out states
                     int state;
                     if ((sw2 & LnConstants.OPC_SW_REQ_DIR) != 0) {
@@ -238,17 +257,17 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
                         newKnownState(state);
                     }
                 }
-                break;
+                return;
             }
+            
             case LnConstants.OPC_SW_REP: {
                 /* page 9 of Loconet PE */
 
                 int sw1 = l.getElement(1);
                 int sw2 = l.getElement(2);
                 if (myAddress(sw1, sw2)) {
-                    if (log.isDebugEnabled()) {
-                        log.debug("SW_REP received with valid address");
-                    }
+
+                    log.debug("SW_REP received with valid address");
                     // see if its a turnout state report
                     if ((sw2 & LnConstants.OPC_SW_REP_INPUTS) == 0) {
                         // LnConstants.OPC_SW_REP_INPUTS not set, these report outputs
@@ -297,6 +316,10 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
                                 } else if (getFeedbackMode() == INDIRECT) {
                                     // reached closed state
                                     newKnownState(adjustStateForInversion(CLOSED));
+                                } else if (!feedbackDeliberatelySet) {
+                                    // don't have a defined feedback mode, but know we've reached closed state 
+                                    log.debug("setting CLOSED with !feedbackDeliberatelySet");
+                                    newKnownState(adjustStateForInversion(CLOSED));
                                 }
                             } else {
                                 // switch input thrown (input on)
@@ -308,10 +331,22 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
                                 } else if (getFeedbackMode() == INDIRECT) {
                                     // reached thrown state
                                     newKnownState(adjustStateForInversion(THROWN));
+                                } else if (!feedbackDeliberatelySet) {
+                                    // don't have a defined feedback mode, but know we're not in closed state, most likely is actually thrown
+                                    log.debug("setting THROWN with !feedbackDeliberatelySet");
+                                    newKnownState(adjustStateForInversion(THROWN));
                                 }
                             }
                         } else {
                             // Aux input report
+                            
+                            // This is only valid in EXACT mode, so if we encounter it
+                            //  without a feedback mode set, we switch to EXACT
+                            if (!feedbackDeliberatelySet) {
+                                setFeedbackMode(EXACT);
+                                feedbackDeliberatelySet = false; // was set when setting feedback
+                            }
+                            
                             if ((sw2 & LnConstants.OPC_SW_REP_HI) != 0) {
                                 // aux input closed (off)
                                 if (getFeedbackMode() == EXACT) {
@@ -331,12 +366,12 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
 
                     }
                 }
+                return;
             }
-            //$FALL-THROUGH$
+
             default:
                 return;
         }
-        // reach here only in error
     }
 
     @Override
@@ -359,7 +394,7 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
     }
 
     // data members
-    int _number;   // loconet turnout number
+    int _number;   // LocoNet Turnout number
 
     private boolean myAddress(int a1, int a2) {
         // the "+ 1" in the following converts to throttle-visible numbering
@@ -373,8 +408,8 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
     }
 
     /**
-     * Method which takes a turnout state as a parameter and adjusts it as necessary
-     * to reflect the turnout invert property.
+     * Take a turnout state as a parameter and adjusts it as necessary
+     * to reflect the turnout "Invert" property.
      *
      * @param rawState "original" turnout state before optional inverting
      */

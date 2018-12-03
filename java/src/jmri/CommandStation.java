@@ -26,8 +26,10 @@ public interface CommandStation {
      * @param packet  Byte array representing the packet, including the
      *                error-correction byte.
      * @param repeats Number of times to repeat the transmission.
+     *
+     * @return {@code true} if the operation succeeds, {@code false} otherwise.
      */
-    public void sendPacket(@Nonnull byte[] packet, int repeats);
+    public boolean sendPacket(@Nonnull byte[] packet, int repeats);
 
     public String getUserName();
 

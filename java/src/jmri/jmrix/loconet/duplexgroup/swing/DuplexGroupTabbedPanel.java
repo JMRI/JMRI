@@ -6,10 +6,11 @@ import jmri.jmrix.loconet.swing.LnPanel;
 import jmri.util.JmriJFrame;
 
 /**
- * Implements a panel with tabs which allows: . configuration of Duplex Group
- * identity information and . scanning of Duplex channels for interfering signal
- * sources
- *
+ * Implements a panel with tabs which allows:
+ * <ul>
+ *     <li>configuration of Duplex Group identity information
+ *     <li>scanning of Duplex channels for interfering signal sources
+ * </ul>
  * This tool works equally well with UR92 and UR92CE devices. The UR92 and
  * UR92CE behave identically with respect to this tool. For the purpose of
  * clarity, only the term UR92 is used herein.
@@ -26,7 +27,6 @@ public class DuplexGroupTabbedPanel extends LnPanel {
     public DuplexGroupTabbedPanel() {
         super();
         thisone = this;
-
     }
 
     /**
@@ -37,10 +37,10 @@ public class DuplexGroupTabbedPanel extends LnPanel {
         tabbedPane = new javax.swing.JTabbedPane();
         dgsp = new DuplexGroupScanPanel();
         dgip = new DuplexGroupInfoPanel();
-        tabbedPane.addTab(rb.getString("TabTextGroupIdentity"), null,
-                dgip, rb.getString("TabToolTipGroupIdentity"));
-        tabbedPane.addTab(rb.getString("TabTextChannelScan"), null,
-                dgsp, rb.getString("TabToolTipChannelScan"));
+        tabbedPane.addTab(Bundle.getMessage("TabTextGroupIdentity"), null,
+                dgip, Bundle.getMessage("TabToolTipGroupIdentity"));
+        tabbedPane.addTab(Bundle.getMessage("TabTextChannelScan"), null,
+                dgsp, Bundle.getMessage("TabToolTipChannelScan"));
         add(tabbedPane);
         dgip.initComponents();
         dgsp.initComponents();
@@ -55,7 +55,6 @@ public class DuplexGroupTabbedPanel extends LnPanel {
         super.initComponents(memo);
         dgip.initComponents(memo);
         dgsp.initComponents(memo);
-
     }
     javax.swing.Timer tmr = null;
 
@@ -81,7 +80,6 @@ public class DuplexGroupTabbedPanel extends LnPanel {
         tmr.start();
         return;
     }
-    private static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.loconet.duplexgroup.swing.DuplexGroupTabbed");
 
     /**
      * {@inheritDoc}
@@ -96,7 +94,7 @@ public class DuplexGroupTabbedPanel extends LnPanel {
      */
     @Override
     public String getTitle() {
-        return rb.getString("Title");
+        return Bundle.getMessage("TabbedTitle");
     }
 
     /**
@@ -106,6 +104,6 @@ public class DuplexGroupTabbedPanel extends LnPanel {
     public void dispose() {
         dgip.dispose();
         dgsp.dispose();
-
     }
+
 }

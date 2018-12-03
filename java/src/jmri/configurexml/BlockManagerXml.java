@@ -218,10 +218,6 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
     }
 
     void addBeanSetting(Element e, BeanSetting bs) {
-        if (bs.getBean() == null) {
-            log.error("Invalid BeanSetting - did not save");
-            return;
-        }
         // persist bean name, type and value
         Element bse = new Element("beansetting");
         // for now, assume turnout

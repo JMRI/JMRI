@@ -96,6 +96,9 @@
 
 import jmri
 import java
+import java.awt
+import java.awt.event
+import java.beans
 import javax.swing
 
 HighDebug = 3
@@ -420,10 +423,10 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
                 # signal dropped, that's bad
                 self.msgText("signal dropped, same signal being watched.\n")
                 if (self.compareSignalAspects(self.haltOnSignalHeadAppearance, watchAspect) >= 0) : # Only stop on dropping below this
-                	self.findNewSpeed(self.currentBlock, self.nextBlock)
+                    self.findNewSpeed(self.currentBlock, self.nextBlock)
                 else :
-                	self.msgText("Signal dropped in front of train. Halting!!\n")
-                	self.doHalt()
+                    self.msgText("Signal dropped in front of train. Halting!!\n")
+                    self.doHalt()
             else :
                 #self.msgText("We moved, signal or aspect changed.\n")
                 self.findNewSpeed(self.currentBlock, self.nextBlock)

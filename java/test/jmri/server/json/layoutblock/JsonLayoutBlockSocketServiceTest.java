@@ -26,6 +26,7 @@ public class JsonLayoutBlockSocketServiceTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
         JUnitUtil.initLayoutBlockManager();
     }
 
@@ -127,8 +128,8 @@ public class JsonLayoutBlockSocketServiceTest {
         Assert.assertEquals("LayoutBlock1 has 1 listener", 1, lb1.getPropertyChangeListeners().length);
         JsonLayoutBlockSocketService instance = new JsonLayoutBlockSocketService(connection);
         instance.onList(JsonLayoutBlock.LAYOUTBLOCK, null, Locale.ENGLISH);
-        // onList does not cause a listener to be added to requested LayoutBlocks if not already listening
-        Assert.assertEquals("LayoutBlock1 has 1 listeners", 1, lb1.getPropertyChangeListeners().length);
+        // onList adds a listener to all LayoutBlocks
+        Assert.assertEquals("LayoutBlock1 has 2 listeners", 2, lb1.getPropertyChangeListeners().length);
         JsonNode message = connection.getMessage();
         Assert.assertTrue("Message is an array", message.isArray());
         Assert.assertEquals("All LayoutBlocks are listed", manager.getNamedBeanList().size(), message.size());

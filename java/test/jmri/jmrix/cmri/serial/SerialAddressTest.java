@@ -362,7 +362,6 @@ public class SerialAddressTest extends TestCase {
 
     // test suite from all defined tests
     public static Test suite() {
-        apps.tests.AllTest.initLogging();
         TestSuite suite = new TestSuite(SerialAddressTest.class);
         return suite;
     }

@@ -58,10 +58,10 @@ public class JsonTurnoutSocketService extends JsonSocketService<JsonTurnoutHttpS
 
     @Override
     public void onList(String type, JsonNode data, Locale locale) throws IOException, JmriException, JsonException {
-        log.debug("adding TurnoutsListener");
         this.setLocale(locale);
         this.connection.sendMessage(this.service.doGetList(type, locale));
 
+        log.debug("adding TurnoutsListener");
         InstanceManager.getDefault(TurnoutManager.class).addPropertyChangeListener(turnoutsListener); //add parent listener
         addListenersToChildren();
 

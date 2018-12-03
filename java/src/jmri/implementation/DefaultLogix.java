@@ -2,6 +2,7 @@ package jmri.implementation;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import jmri.Conditional;
@@ -328,7 +329,7 @@ public class DefaultLogix extends AbstractNamedBean
                     getSystemName(), cName);
                 continue;
             }
-            ArrayList<ConditionalVariable> varList = conditional.getCopyOfStateVariables();
+            List<ConditionalVariable> varList = conditional.getCopyOfStateVariables();
             boolean isDirty = false;
             ArrayList<ConditionalVariable> badVariable = new ArrayList<>();
             for (ConditionalVariable var : varList) {
@@ -382,7 +383,7 @@ public class DefaultLogix extends AbstractNamedBean
                 conditional.setStateVariables(varList);
             }
 
-            ArrayList<ConditionalAction> actionList = conditional.getCopyOfActions();
+            List<ConditionalAction> actionList = conditional.getCopyOfActions();
             isDirty = false;
             ArrayList<ConditionalAction> badAction = new ArrayList<>();
             for (ConditionalAction action : actionList) {
@@ -431,7 +432,7 @@ public class DefaultLogix extends AbstractNamedBean
         for (int i = 0; i < _conditionalSystemNames.size(); i++) {
             Conditional conditional = getConditional(_conditionalSystemNames.get(i));
             if (conditional != null) {
-                ArrayList<ConditionalVariable> variableList = conditional.getCopyOfStateVariables();
+                List<ConditionalVariable> variableList = conditional.getCopyOfStateVariables();
                 for (int k = 0; k < variableList.size(); k++) {
                     ConditionalVariable variable = variableList.get(k);
                     // check if listening for a change has been suppressed

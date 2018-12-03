@@ -181,6 +181,12 @@ class EngineSound extends VSDSound {
         engine_started = es;
     }
 
+    public void functionKey(String e, boolean v, String n) {
+    }
+
+    public void changeLocoDirection(int d) {
+    }
+
     @Override
     public void shutdown() {
         // do nothing.

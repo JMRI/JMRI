@@ -190,7 +190,10 @@ public abstract class AbstractLoaderPane extends jmri.util.swing.JmriPanel
                 p = new JPanel();
                 p.setLayout(new FlowLayout());
                 status.setText(Bundle.getMessage("StatusSelectFile"));
+                // layout
                 status.setAlignmentX(JLabel.LEFT_ALIGNMENT);
+                status.setFont(status.getFont().deriveFont(0.9f * inputFileName.getFont().getSize())); // a bit smaller
+                status.setForeground(Color.gray);
                 p.add(status);
                 add(p);
             }
@@ -203,13 +206,13 @@ public abstract class AbstractLoaderPane extends jmri.util.swing.JmriPanel
     /**
      * Add filter(s) for possible types to the input file chooser.
      *
-     * @param chooser the choose to add filter(s) to
+     * @param chooser the file chooser to add filter(s) to
      */
     protected void addChooserFilters(JFileChooser chooser) {
         javax.swing.filechooser.FileNameExtensionFilter filter;
         chooser.addChoosableFileFilter(
                 filter = new javax.swing.filechooser.FileNameExtensionFilter(
-                        "Intel Hex Format Firmware (*.hex)", "hex")); //NOI18N
+                        "Intel Hex Format Firmware (*.hex)", "hex")); // NOI18N
 
         // make the downloadable file filter the default active filter
         chooser.setFileFilter(filter);
@@ -381,9 +384,7 @@ public abstract class AbstractLoaderPane extends jmri.util.swing.JmriPanel
      *
      */
     protected void enableDownloadVerifyButtons() {
-        if (log.isDebugEnabled()) {
             log.debug("enableGUI");
-        }
 
         if (isOperationAborted()) {
             status.setText(Bundle.getMessage("StatusAbort"));
@@ -410,9 +411,7 @@ public abstract class AbstractLoaderPane extends jmri.util.swing.JmriPanel
      *
      */
     protected void disableDownloadVerifyButtons() {
-        if (log.isDebugEnabled()) {
             log.debug("disableGUI");
-        }
 
         setOperationAborted(false);
 
@@ -518,6 +517,7 @@ public abstract class AbstractLoaderPane extends jmri.util.swing.JmriPanel
         updateDownloadVerifyButtons();
         log.info("ActionListener");
     }
+
     private final static Logger log = LoggerFactory.getLogger(AbstractLoaderPane.class);
 
 }

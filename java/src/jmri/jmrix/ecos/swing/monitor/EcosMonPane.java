@@ -61,26 +61,18 @@ public class EcosMonPane extends jmri.jmrix.AbstractMonPane implements EcosListe
     @Override
     public synchronized void message(EcosMessage l) {  // receive a message and log it
         if (l.isBinary()) {
-            nextLine("binary cmd: " + l.toString() + "\n", null);
+            logMessage("binary cmd: ",l);
         } else {
-            nextLine("cmd: \"" + l.toString() + "\"\n", null);
+            logMessage("cmd: ",l);
         }
     }
 
     @Override
     public synchronized void reply(EcosReply l) {  // receive a reply message and log it
-        String raw = "";
-        for (int i = 0; i < l.getNumDataElements(); i++) {
-            if (i > 0) {
-                raw += " ";
-            }
-            raw = jmri.util.StringUtil.appendTwoHexFromInt(l.getElement(i) & 0xFF, raw);
-        }
-
         if (l.isUnsolicited()) {
-            nextLine("msg: \"" + l.toString() + "\"\n", raw);
+            logMessage("msg: ",l);
         } else {
-            nextLine("rep: \"" + l.toString() + "\"\n", raw);
+            logMessage("rep: ",l);
         }
     }
 

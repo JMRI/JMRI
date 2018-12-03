@@ -53,4 +53,5 @@ public class ConcentratorReply extends RfidReply {
     public String toMonitorString() {
         return pr.toMonitorString(this);
     }
+
 }

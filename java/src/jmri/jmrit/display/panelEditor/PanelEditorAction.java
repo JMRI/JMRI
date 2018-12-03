@@ -37,5 +37,6 @@ public class PanelEditorAction extends AbstractAction {
 
         frame.pack();
         frame.setVisible(true);
+        frame.newPanelDefaults();
     }
 }

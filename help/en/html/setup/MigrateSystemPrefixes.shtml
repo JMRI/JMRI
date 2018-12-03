@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="en">
+<head>
+
+  <title>JMRI Setup - Migrating System Prefixes</title>
+  <meta name="keywords" content=
+  "java model railroad JMRI install Dropbox"><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
+
+    <div id="mainContent">
+      <!-- Page Body -->
+
+      <h1>JMRI Setup: Migrating System Prefixes</h1>
+
+      <a href="../doc/Technical/Names.shtml">JMRI system names</a>
+      are supposed to have a 
+      <a href="../doc/Technical/Names.shtml#format">specific format</a>
+      that starts with a "system prefix" consisting of a single
+      letter, optionally followed by digits.
+      Unfortunately, for a while JMRI wasn't enforcing that properly, and 
+      in a few cases JMRI set itself up with prefixes that contained
+      multiple letters.  This can cause significant 
+      long term problems, so we're getting people to migrate their 
+      configurations and panel files to the proper format.
+      
+      <h2 id="if">Does this affect me?</h2>
+      You can check if this is an issue for your setup any of a couple ways:
+      <ul>
+      <li>Open the Preferences, and look at each of the "Connection" panes.  If the connection prefix 
+            has a letter or a single letter plus digits, this doesn't affect you.
+            If it has more than a single letter, you should do this migration.
+            (With JMRI 4.13.4 or later, the background will be colored red 
+            and the tooltip will say "This is a legacy prefix that should be migrated, ask on JMRIusers" 
+            if the prefix needs to be migrated)
+      <li>Check the system log after running and quiting the program to see if there's a 
+            warning message about "The following system names need to be migrated..."
+            If it's there, you should do this migration.
+      </ul>
+      
+      <h2 id="do">How to fix the issue</h2>
+      
+      To fix this issue, you update your configuration and panel files to
+      use new prefixes.
+
+      <ul>
+      <li>First, you should be using JMRI 4.12 or later. If you're using an earlier
+            version, please update to at least JMRI 4.12 and fix any problems.
+      <li>Next, ask for help on the JMRIusers mailing list.  
+            There are people there who will happily do the necessary file modifications.
+      </ul>
+      
+      
+      <!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+</body>
+</html>

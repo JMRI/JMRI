@@ -231,7 +231,7 @@ public class TrainCommon {
             printLocalMoveHeader = true;
         }
         List<Track> tracks = rl.getLocation().getTrackByNameList(null);
-        List<String> trackNames = new ArrayList<String>();
+        List<String> trackNames = new ArrayList<>();
         clearUtilityCarTypes(); // list utility cars by quantity
         boolean isOnlyPassenger = train.isOnlyPassengerCars();
         for (Track track : tracks) {
@@ -374,7 +374,7 @@ public class TrainCommon {
         index = 0;
         int lineLength = getLineLength(isManifest);
         List<Track> tracks = rl.getLocation().getTrackByNameList(null);
-        List<String> trackNames = new ArrayList<String>();
+        List<String> trackNames = new ArrayList<>();
         clearUtilityCarTypes(); // list utility cars by quantity
         if (printHeader) {
             printCarHeader(file, isManifest, !IS_TWO_COLUMN_TRACK);
@@ -451,7 +451,7 @@ public class TrainCommon {
         }
     }
 
-    List<Car> doneCars = new ArrayList<Car>();
+    List<Car> doneCars = new ArrayList<>();
 
     /**
      * Produces a two column format for car pick ups and set outs. Sorted by
@@ -472,7 +472,7 @@ public class TrainCommon {
         index = 0;
         int lineLength = getLineLength(isManifest);
         List<Track> tracks = rl.getLocation().getTrackByNameList(null);
-        List<String> trackNames = new ArrayList<String>();
+        List<String> trackNames = new ArrayList<>();
         doneCars.clear();
         clearUtilityCarTypes(); // list utility cars by quantity
         if (printHeader) {
@@ -869,7 +869,7 @@ public class TrainCommon {
         return buf.toString();
     }
 
-    List<String> utilityCarTypes = new ArrayList<String>();
+    List<String> utilityCarTypes = new ArrayList<>();
     private static final int UTILITY_CAR_COUNT_FIELD_SIZE = 3;
 
     /**
@@ -1422,7 +1422,7 @@ public class TrainCommon {
                                     InstanceManager.getDefault(CarLoads.class).getMaxNameLength() +
                                             1)
                                     : " " +
-                                            padAndTruncateString(car.getLoadName(),
+                                            padAndTruncateString(car.getLoadName().split("-")[0],
                                                     InstanceManager.getDefault(CarLoads.class).getMaxNameLength());
         } else if (attribute.equals(Setup.HAZARDOUS)) {
             return (car.isHazardous() ? " " +

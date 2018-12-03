@@ -1,10 +1,10 @@
-//ScheduleTest.java
 package jmri.jmrit.operations.locations.schedules;
 
 import jmri.jmrit.operations.OperationsTestCase;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the Operations Locations class Last manually cross-checked on
@@ -21,6 +21,7 @@ public class ScheduleTest extends OperationsTestCase {
 
     // test Schedule class
     // test schedule public constants
+    @Test
     public void testScheduleConstants() {
         Assert.assertEquals("Location Schedule Constant LISTCHANGE_CHANGED_PROPERTY", "scheduleListChange",
                 Schedule.LISTCHANGE_CHANGED_PROPERTY);
@@ -28,6 +29,7 @@ public class ScheduleTest extends OperationsTestCase {
     }
 
     // test schedule attributes
+    @Test
     public void testScheduleAttributes() {
         Schedule lts = new Schedule("Test id", "Test Name");
         Assert.assertEquals("Location Schedule id", "Test id", lts.getId());
@@ -41,7 +43,8 @@ public class ScheduleTest extends OperationsTestCase {
         Assert.assertEquals("Location Schedule set Comment", "New Test Comment", lts.getComment());
     }
 
-    // test schedule scheduleitem
+    // test schedule schedule items
+    @Test
     public void testScheduleScheduleItems() {
         Schedule lts = new Schedule("Test id", "Test Name");
         Assert.assertEquals("Location Schedule ScheduleItem id", "Test id", lts.getId());
@@ -81,29 +84,15 @@ public class ScheduleTest extends OperationsTestCase {
     }
 
     @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() {
         super.setUp();
-    }
-
-    public ScheduleTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", ScheduleTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(ScheduleTest.class);
-        return suite;
     }
 
     // The minimal setup for log4J
     @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() {
         super.tearDown();
     }
 }

@@ -32,15 +32,6 @@ public interface SignalMastLogicManager extends Manager<SignalMastLogic> {
     public void automaticallyDiscoverSignallingPairs() throws JmriException;
 
     /**
-     * Use the Layout Editor to check if the destination signal mast is
-     * reachable from the source signal mast.
-     *
-     * @param sourceMast Source Signal Mast
-     * @param destMast   Destination Signal Mast
-     * @return true if valid, false if not valid
-     */
-    // public boolean checkValidDest(SignalMast sourceMast, SignalMast destMast) throws JmriException;
-    /**
      * Discover valid destination signal masts for a given source Signal Mast on
      * a given Layout Editor Panel.
      *

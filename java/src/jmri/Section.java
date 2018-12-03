@@ -495,7 +495,7 @@ public class Section extends AbstractNamedBean {
             for (Block block : mBlockEntries) if (block == b) return false; // already present
             // Note: connectivity to current block is assumed to have been checked
         }
-        
+
         // a lot of this code searches for blocks by their user name.
         // warn if there isn't one.
         if (b.getUserName()== null) log.warn("Block {} does not have a user name, may not work correctly in Section {}", b.getSystemName(), getSystemName());
@@ -1268,7 +1268,7 @@ public class Section extends AbstractNamedBean {
      * should only happen if blocks are not set up correctly--if all connections
      * go to the same Block, or not all Blocks set. An error message is logged
      * if EntryPoint.UNKNOWN is returned.
-     * 
+     *
      * @param t Actually of type LayoutSlip, this is the track segment to check.
      */
     private int getDirectionSlip(LayoutTurnout t, ConnectivityUtil cUtil) {
@@ -2610,7 +2610,7 @@ public class Section extends AbstractNamedBean {
     public void clearNameInUnoccupiedBlocks() {
         for (Block b : mBlockEntries) {
             if (b.getState() == Block.UNOCCUPIED) {
-                b.setValue("  ");
+                b.setValue(null);
             }
         }
     }
@@ -2677,7 +2677,7 @@ public class Section extends AbstractNamedBean {
                     throw new PropertyVetoException(Bundle.getMessage("VetoBlockInSection", getDisplayName()), e);
                 }
             }
-        } 
+        }
         // "DoDelete" case, if needed, should be handled here.
     }
 

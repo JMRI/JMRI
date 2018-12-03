@@ -58,14 +58,14 @@ public class ApplicationTest extends TestCase {
     // The minimal setup for log4J
     @Override
     protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetApplication();
     }
 
     @Override
     protected void tearDown() {
         jmri.util.JUnitUtil.resetApplication();
-        apps.tests.Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.tearDown();
     }
 
     private static final Logger log = LoggerFactory.getLogger(ApplicationTest.class);

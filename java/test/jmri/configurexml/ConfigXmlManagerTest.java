@@ -15,7 +15,7 @@ import org.junit.Assert;
 
 /**
  * Tests for ConfigXmlManager.
- * <P>
+ * <p>
  * Uses the local preferences for test files.
  *
  * @author Bob Jacobsen Copyright 2003
@@ -179,6 +179,7 @@ public class ConfigXmlManagerTest extends TestCase {
     @Override
     protected void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
     }
 
     @Override

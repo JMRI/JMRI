@@ -3,6 +3,7 @@ package jmri.jmrit.display.controlPanelEditor.shape;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.geom.GeneralPath;
@@ -26,10 +27,10 @@ public class DrawPolygon extends DrawFrame {
     int _curX;
     int _curY;
     private static final int NEAR = PositionableShape.SIZE;
-    private boolean _editing;
+    private final boolean _editing;
 
-    public DrawPolygon(String which, String title, PositionableShape ps) {
-        super(which, title, ps);
+    public DrawPolygon(String which, String title, PositionableShape ps, Editor ed, boolean create) {
+        super(which, title, ps, ed, create);
         _vertices = new ArrayList<>();
         _editing = (ps != null);
     }
@@ -48,7 +49,7 @@ public class DrawPolygon extends DrawFrame {
                 iter.next();
             }            
         }
-        _shape.editing(true);
+        ((PositionablePolygon)_shape).editing(_editing);
         _shape.drawHandles();
 
         panel.add(Box.createVerticalGlue());
@@ -75,7 +76,8 @@ public class DrawPolygon extends DrawFrame {
     }
 
     // double click was made - 
-    protected void makeShape(MouseEvent event, Editor ed) {
+    @Override
+    protected PositionableShape makeFigure(Rectangle r, Editor ed) {
 /*        Point pt = new Point(event.getX(), event.getY());
         boolean closed;           Do this later
         if (near(_vertices.get(0), pt)) {
@@ -85,17 +87,11 @@ public class DrawPolygon extends DrawFrame {
         }*/
         Point spt = getStartPoint();
         _shape = new PositionablePolygon(ed, makePath(spt));
+        log.debug("makeFigure {} vertices", _vertices.size());
         if (_vertices.size() < 2) {
-            closingEvent(true);
-            return;
+            return null;
         }
-        _shape.setLocation(spt);
-        _shape.updateSize();
-        _shape.setEditFrame(this);
-        setDisplayParams();
-        ed.putItem(_shape);
-        _editing = true;
-        _shape._editing = true;
+        return _shape;
     }
 
     /*
@@ -103,6 +99,7 @@ public class DrawPolygon extends DrawFrame {
      * @see jmri.jmrit.display.controlPanelEditor.shape.DrawFrame#drawLine(int, int)
      */
     protected void moveTo(int x, int y) {
+//        log.debug("moveTo ({}, {})", x, y);
         if (!_editing) {
             _curX = x;
             _curY = y;
@@ -110,6 +107,7 @@ public class DrawPolygon extends DrawFrame {
     }
 
     protected void anchorPoint(int x, int y) {
+        log.debug("anchorPoint ({}, {})", x, y);
         _curX = x;
         _curY = y;
         Point anchorPt = new Point(x, y);
@@ -139,8 +137,8 @@ public class DrawPolygon extends DrawFrame {
         }
     }
 
-    @Override
-    protected void makeFigure(MouseEvent event, Editor ed) {
+    protected void makeVertex(MouseEvent event, Editor ed) {
+        log.debug("makeVertex point= ({}, {}), _editing= {}", event.getX(), event.getY(), _editing);
         if (!_editing) {    // creating new polygon
              Point pt = new Point(event.getX(), event.getY());
              int size = _vertices.size();
@@ -175,11 +173,11 @@ public class DrawPolygon extends DrawFrame {
         return path;
     }
 
-    /**
+    /*
      * "startPoint" will be the upper left corner of the figure
      * <p>
      */
-    private Point getStartPoint() {
+    protected Point getStartPoint() {
         if (_vertices.size() > 0) {
             int x = _vertices.get(0).x;
             int y = _vertices.get(0).y;
@@ -270,5 +268,5 @@ public class DrawPolygon extends DrawFrame {
         }
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(DrawPolygon.class);
+    private final static Logger log = LoggerFactory.getLogger(DrawPolygon.class);
 }

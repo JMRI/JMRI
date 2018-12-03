@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2007, 2008 All rights reserved -->
-<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -48,6 +47,7 @@
       Version History:
 
         1.0 - Initial release 20 Aug 2011
+        1.1 - Set value for SUSI range 08 Oct 2018
 
 -->
   <decoder>
@@ -63,10 +63,9 @@
     <variables>
       <variable item="SUSI-range" CV="897" default="2" tooltip="Will not read/write properly if multiple SUSI modules attached">
         <enumVal>
-          <enumChoice choice="Not used"/>
-          <enumChoice choice="Range I (CVs 900-939)"/>
-          <enumChoice choice="Range II (CVs 940-979)"/>
-          <enumChoice choice="Range III (CVs 980-1019)"/>
+          <enumChoice choice="Range I (CVs 900-939)" value="1"/>
+          <enumChoice choice="Range II (CVs 940-979)" value="2"/>
+          <enumChoice choice="Range III (CVs 980-1019)" value="3"/>
         </enumVal>
         <label>SUSI-range</label>
       </variable>

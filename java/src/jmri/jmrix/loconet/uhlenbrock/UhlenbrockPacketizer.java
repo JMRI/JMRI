@@ -16,17 +16,17 @@ import org.slf4j.LoggerFactory;
  * side sends/receives LocoNetMessage objects. The connection to a
  * LnPortController is via a pair of *Streams, which then carry sequences of
  * characters for transmission.
- * <P>
+ * <p>
  * Messages come to this via the main GUI thread, and are forwarded back to
  * listeners in that same thread. Reception and transmission are handled in
  * dedicated threads by RcvHandler and XmtHandler objects. Those are internal
  * classes defined here. The thread priorities are:
- * <UL>
- * <LI> RcvHandler - at highest available priority
- * <LI> XmtHandler - down one, which is assumed to be above the GUI
- * <LI> (everything else)
- * </UL>
- * <P>
+ * <ul>
+ *   <li> RcvHandler - at highest available priority
+ *   <li> XmtHandler - down one, which is assumed to be above the GUI
+ *   <li> (everything else)
+ * </ul>
+ *
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
  * and used with permission as part of the JMRI project. That permission does
  * not extend to uses in other software products. If you wish to use this code,
@@ -34,7 +34,6 @@ import org.slf4j.LoggerFactory;
  * Inc for separate permission.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2010
- *
  */
 public class UhlenbrockPacketizer extends LnPacketizer implements LocoNetInterface {
 
@@ -54,13 +53,13 @@ public class UhlenbrockPacketizer extends LnPacketizer implements LocoNetInterfa
      * Forward a preformatted LocoNetMessage to the actual interface.
      *
      * Checksum is computed and overwritten here, then the message is converted
-     * to a byte array and queue for transmission
+     * to a byte array and queued for transmission
      *
      * @param m Message to send; will be updated with CRC
      */
     @Override
     public void sendLocoNetMessage(LocoNetMessage m) {
-        log.debug("add to queue message " + m);
+        log.debug("add to queue message {}", m.toString());
         // update statistics
         transmittedMsgCount++;
 
@@ -91,7 +90,7 @@ public class UhlenbrockPacketizer extends LnPacketizer implements LocoNetInterfa
 
     /**
      * Synchronized list used as a transmit queue.
-     * <P>
+     * <p>
      * This is public to allow access from the internal class(es) when compiling
      * with Java 1.1
      */
@@ -221,15 +220,15 @@ public class UhlenbrockPacketizer extends LnPacketizer implements LocoNetInterfa
                         log.debug("queue message for notification");
 //log.info("-------------------Uhlenbrock IB-COM Loconet message RECEIVED: "+msg.toString());
                         final LocoNetMessage thisMsg = msg;
-                        final LnPacketizer thisTC = trafficController;
+                        final LnPacketizer thisTc = trafficController;
                         // return a notification via the queue to ensure end
                         Runnable r = new Runnable() {
                             LocoNetMessage msgForLater = thisMsg;
-                            LnPacketizer myTC = thisTC;
+                            LnPacketizer myTc = thisTc;
 
                             @Override
                             public void run() {
-                                myTC.notify(msgForLater);
+                                myTc.notify(msgForLater);
                             }
                         };
                         javax.swing.SwingUtilities.invokeLater(r);
@@ -293,7 +292,7 @@ public class UhlenbrockPacketizer extends LnPacketizer implements LocoNetInterfa
                             ostream.write(msg);
                             ostream.flush();
                             log.debug("end write to stream");
-                            messageTransmited(msg);
+                            messageTransmitted(msg);
                             mCurrentState = WAITMSGREPLYSTATE;
                             transmitWait(defaultWaitTimer, WAITMSGREPLYSTATE);
                         } else {
@@ -376,4 +375,5 @@ public class UhlenbrockPacketizer extends LnPacketizer implements LocoNetInterfa
     }
 
     private final static Logger log = LoggerFactory.getLogger(UhlenbrockPacketizer.class);
+
 }

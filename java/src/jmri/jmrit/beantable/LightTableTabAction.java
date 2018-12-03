@@ -1,9 +1,8 @@
 package jmri.jmrit.beantable;
 
-import jmri.InstanceManager;
-import jmri.Manager;
+import jmri.*;
 
-public class LightTableTabAction extends AbstractTableTabAction {
+public class LightTableTabAction extends AbstractTableTabAction<Light> {
 
     public LightTableTabAction(String s) {
         super(s);
@@ -14,7 +13,7 @@ public class LightTableTabAction extends AbstractTableTabAction {
     }
 
     @Override
-    protected Manager getManager() {
+    protected Manager<Light> getManager() {
         return InstanceManager.lightManagerInstance();
     }
 
@@ -24,7 +23,7 @@ public class LightTableTabAction extends AbstractTableTabAction {
     }
 
     @Override
-    protected AbstractTableAction getNewTableAction(String choice) {
+    protected LightTableAction getNewTableAction(String choice) {
         return new LightTableAction(choice);
     }
 

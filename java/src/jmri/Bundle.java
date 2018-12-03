@@ -142,6 +142,7 @@ public class Bundle {
      * @throws MissingResourceException if message cannot be found
      */
     public String handleGetMessage(Locale locale, String key) {
+        log.trace("handleGetMessage for key {}", key);
         if (bundleName() != null) {
             ResourceBundle rb = ResourceBundle.getBundle(bundleName(), locale);
             if (rb.containsKey(key)) {
@@ -211,4 +212,7 @@ public class Bundle {
     //           log.error("Failed to load defaults because of missing bundle");
     //           return;
     //        }
+    
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Bundle.class);
+
 }

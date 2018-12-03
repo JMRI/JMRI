@@ -1,6 +1,5 @@
 package jmri.jmrit.vsdecoder;
 
-import apps.tests.Log4JFixture;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -68,12 +67,15 @@ public class VSDSoundTest extends TestCase {
     @Before
     @Override
     public void setUp() {
-        Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
+
     }
 
     @After
     @Override
     public void tearDown() {
-        Log4JFixture.tearDown();
+        jmri.util.JUnitAppender.suppressWarnMessage("Initialised Null audio system - no sounds will be available.");
+        jmri.util.JUnitUtil.tearDown();
+
     }
 }

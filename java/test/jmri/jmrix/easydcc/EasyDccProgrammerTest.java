@@ -15,12 +15,26 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class EasyDccProgrammerTest {
+public class EasyDccProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
         
     private EasyDccTrafficControlScaffold t = null;
     private EasyDccSystemConnectionMemo memo = null;
     private EasyDccListenerScaffold l = null;
     private EasyDccProgrammer p = null;
+
+    @Test
+    @Override
+    public void testDefault() {
+        Assert.assertEquals("Check Default", ProgrammingMode.PAGEMODE,
+                programmer.getMode());        
+    }
+    
+    @Override
+    @Test
+    public void testDefaultViaBestMode() {
+        Assert.assertEquals("Check Default", ProgrammingMode.PAGEMODE,
+                ((EasyDccProgrammer)programmer).getBestMode());        
+    }
 
     @Test
     public void testWriteSequence() throws JmriException {
@@ -236,13 +250,13 @@ public class EasyDccProgrammerTest {
         t = new EasyDccTrafficControlScaffold(memo);
         memo.setEasyDccTrafficController(t);
         l = new EasyDccListenerScaffold();
-        p = new EasyDccProgrammer(memo);
+        programmer = p = new EasyDccProgrammer(memo);
     }
 
     @After
     public void tearDown() {
         t.terminateThreads();
-        p = null;
+        programmer = p = null;
         memo = null;
         JUnitUtil.tearDown();
     }

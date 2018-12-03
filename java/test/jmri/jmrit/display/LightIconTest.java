@@ -2,10 +2,7 @@ package jmri.jmrit.display;
 
 import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * Test simple functioning of LightIcon
@@ -23,10 +20,18 @@ public class LightIconTest extends PositionableTestBase {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        if( !GraphicsEnvironment.isHeadless()) {
-           editor = new EditorScaffold();
-           p = new LightIcon(editor);
+        if ( !GraphicsEnvironment.isHeadless()) {
+            JUnitUtil.resetProfileManager();
+            editor = new EditorScaffold();
+            p = new LightIcon(editor);
         }
+    }
+
+    @After
+    public void tearDown() {
+        editor = null;
+        p = null;
+        JUnitUtil.tearDown();
     }
 
 }

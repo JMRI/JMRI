@@ -191,7 +191,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
      * Tell the traffic controller we expect this
      * message to have a broadcast reply.
      */
-    void setBroadcastReply() {
+    public void setBroadcastReply() {
         broadcastReply = true;
     }
 

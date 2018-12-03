@@ -217,15 +217,15 @@
         This is equivalent to the action above, except with a
         different target Sensor state.</li>
 
-        <li><b>Hold Signal</b> - Set a specified Signal Head or
-        Signal Mast to HELD. Select either a Signal Head or
-        Mast from one of the drop downs.<br>
-        <img src="images/AddEditWhatHold.png" height="164" width="399">
+        <li><b>Hold Signal</b> - Set a specified Signal Mast or
+        Signal Head to HELD. Select either a Signal Mast or
+        Head from one of the drop downs.<br>
+        <img src="images/AddEditWhatHold.png" height="151" width="424">
         </li>
 
-        <li><b>Release Signal</b> - Set a specified Signal Head or
-        Signal Mast to NOT HELD. Select either a Signal Head or
-        Mast from one of the drop downs.</li>
+        <li><b>Release Signal</b> - Set a specified Signal Mast or
+        Signal Head to NOT HELD. Select either a Signal Mast or
+        Head from one of the drop downs.</li>
       </ul>
 
       <h2>The View Actions Window</h2>

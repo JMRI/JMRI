@@ -115,7 +115,6 @@ public class OlcbSignalMastXml
             }
         }
 
-        System.out.println("register "+m);
         InstanceManager.getDefault(jmri.SignalMastManager.class)
                 .register(m);
         return true;

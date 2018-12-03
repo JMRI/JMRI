@@ -2,9 +2,7 @@ package jmri.jmrix.easydcc.packetgen;
 
 import jmri.jmrix.easydcc.EasyDccSystemConnectionMemo;
 import java.awt.GraphicsEnvironment;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * Tests for the jmri.jmrix.easydcc.packetgen.EasyDccPacketGenFrame
@@ -21,4 +19,13 @@ public class EasyDccPacketGenFrameTest {
         Assert.assertNotNull(easyDccPacketGenFrame);
     }
 
+    @Before
+    public void setUp() {
+        jmri.util.JUnitUtil.setUp();
+    }
+
+    @After
+    public void tearDown() {
+        jmri.util.JUnitUtil.tearDown();
+    }
 }

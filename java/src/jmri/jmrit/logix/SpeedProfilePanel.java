@@ -99,6 +99,10 @@ public class SpeedProfilePanel extends JPanel {
         add(pane);
     }
 
+    void setEditable(boolean set ) {
+        ((SpeedTableModel)_table.getModel()).setEditable(set);
+    }
+
     private void deleteRow() {
         int row = _table.getSelectedRow();
         if (row >= 0) {
@@ -147,14 +151,14 @@ public class SpeedProfilePanel extends JPanel {
         static final int NUMCOLS = 4;
         
         java.text.DecimalFormat threeDigit = new java.text.DecimalFormat("0.000");
-        ArrayList<Map.Entry<Integer, SpeedStep>> speedArray = new  ArrayList<Map.Entry<Integer, SpeedStep>>();
+        ArrayList<Map.Entry<Integer, SpeedStep>> speedArray = new  ArrayList<>();
         RosterSpeedProfile profile;
         Boolean _editable;
         HashMap<Integer, Boolean> _anomaly;
         
         SpeedTableModel(RosterSpeedProfile sp, HashMap<Integer, Boolean> anomaly) {
             profile = sp;
-            _editable = (anomaly != null && anomaly.size() > 0);
+            _editable = (anomaly != null); // allow mergeProfile editing
             _anomaly = anomaly;
             TreeMap<Integer, SpeedStep> speeds = sp.getProfileSpeeds();
             Map.Entry<Integer, SpeedStep> entry = speeds.firstEntry();
@@ -162,6 +166,10 @@ public class SpeedProfilePanel extends JPanel {
                 speedArray.add(entry);
                 entry = speeds.higherEntry(entry.getKey());
             }
+        }
+
+        void setEditable(boolean set ) {
+            _editable = set;
         }
 
         HashMap<Integer, Boolean> getAnomalies() {

@@ -82,7 +82,9 @@ public class LoadAndCheckTest {
 
     @Before
     public void setUp() {
-        JUnitUtil.setUp();        JUnitUtil.initConfigureManager();
+        JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();

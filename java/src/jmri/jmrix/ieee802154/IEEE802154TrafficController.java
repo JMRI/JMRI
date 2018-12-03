@@ -5,6 +5,7 @@ import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRNodeTrafficController;
 import jmri.jmrix.AbstractMRReply;
 import jmri.jmrix.AbstractNode;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,17 +42,6 @@ abstract public class IEEE802154TrafficController extends AbstractMRNodeTrafficC
         // use poll delay just to spread out startup
         setAllowUnexpectedReply(true);
         mWaitBeforePoll = 1000;  // can take a long time to send
-    }
-
-    /**
-     * instance use of the traffic controller is no longer used for multiple
-     * connections
-     * @deprecated since version 3.6
-     */
-    @Override
-    @Deprecated
-    public void setInstance() {
-        log.debug("Deprecated Method setInstance called");
     }
 
     /**
@@ -298,6 +288,7 @@ abstract public class IEEE802154TrafficController extends AbstractMRNodeTrafficC
      *
      * @param nodeAddress text of hex node address
      */
+    @SuppressFBWarnings(value="VO_VOLATILE_INCREMENT", justification="synchronized method provides locking")
     public synchronized void deleteNode(String nodeAddress) {
         // find the serial node
         int index = 0;

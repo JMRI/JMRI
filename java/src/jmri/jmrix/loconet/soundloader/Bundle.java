@@ -24,7 +24,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public class Bundle extends jmri.jmrix.loconet.Bundle {
 
     @Nullable
-    private static final String name = null;// NOI18N
+    private static final String name = "jmri.jmrix.loconet.soundloader.Soundloader"; // NOI18N
 
     //
     // below here is boilerplate to be copied exactly

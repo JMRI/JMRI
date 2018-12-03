@@ -31,6 +31,7 @@ public class PowerPane extends jmri.util.swing.JmriPanel
     JLabel onOffStatus = new JLabel(Bundle.getMessage("LabelUnknown"));
     JButton onButton = new JButton(Bundle.getMessage("ButtonOn"));
     JButton offButton = new JButton(Bundle.getMessage("ButtonOff"));
+    JButton idleButton = new JButton(Bundle.getMessage("ButtonIdle"));
 
     jmri.swing.PowerManagerMenu selectMenu;
 
@@ -72,14 +73,31 @@ public class PowerPane extends jmri.util.swing.JmriPanel
             }
         });
 
+        idleButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                idleButtonPushed();
+            }
+        });
+        
+        if ((selectMenu != null) && (selectMenu.getManager() != null)) {
+            idleButton.setVisible(selectMenu.getManager().implementsIdle());
+        } else {
+            // assume IDLE not supported if no manager or selectMenu
+            idleButton.setVisible(false);
+        }
+        idleButton.setToolTipText(Bundle.getMessage("ToolTipIdleButton"));
+
         // general GUI config
-        setLayout(new jmri.util.javaworld.GridLayout2(2, 2, 6, 0)); // r, c, hgap , vgap
+        setLayout(new jmri.util.javaworld.GridLayout2(3, 2, 6, 0)); // r, c, hgap , vgap
 
         // install items in GUI
         add(new JLabel(Bundle.getMessage("LabelLayoutPower")));
         add(onButton);
         add(onOffStatus); // on row 2
         add(offButton);
+        add(new JLabel("")); // on row 3
+        add(idleButton);
 
         setStatus();
     }
@@ -95,6 +113,8 @@ public class PowerPane extends jmri.util.swing.JmriPanel
                     onOffStatus.setText(Bundle.getMessage("StatusOn"));
                 } else if (listening.getPower() == PowerManager.OFF) {
                     onOffStatus.setText(Bundle.getMessage("StatusOff"));
+                } else if (listening.getPower() == PowerManager.IDLE) {
+                    onOffStatus.setText(Bundle.getMessage("StatusIdle"));
                 } else if (listening.getPower() == PowerManager.UNKNOWN) {
                     onOffStatus.setText(Bundle.getMessage("StatusUnknown"));
                 } else {
@@ -125,13 +145,14 @@ public class PowerPane extends jmri.util.swing.JmriPanel
     private boolean mgrOK() {
         if (listening == null) {
             listening = selectMenu.getManager();
-         log.debug("Manager = {}", listening);
+            log.debug("Manager = {}", listening);
             if (listening == null) {
                 log.debug("No power manager instance found, panel not active");
                 return false;
             } else {
                 listening.addPropertyChangeListener(this);
             }
+            idleButton.setVisible(listening.implementsIdle());
         }
         return true;
     }
@@ -162,6 +183,22 @@ public class PowerPane extends jmri.util.swing.JmriPanel
         }
     }
 
+    /**
+     * Respond to Power Idle button pressed.
+     */
+    public void idleButtonPushed() {
+        if (mgrOK()) {
+            if (!listening.implementsIdle()) {
+                return;
+            }
+            try {
+                selectMenu.getManager().setPower(PowerManager.IDLE);
+            } catch (JmriException e) {
+                log.error("Exception trying to set power to idle {0}", e);
+            }
+        }
+    }
+
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent ev) {
         log.debug("PropertyChange received ");
@@ -170,6 +207,8 @@ public class PowerPane extends jmri.util.swing.JmriPanel
                 onOffStatus.setText(Bundle.getMessage("StatusOn"));
             } else if (listening.getPower() == PowerManager.OFF) {
                 onOffStatus.setText(Bundle.getMessage("StatusOff"));
+            } else if (listening.getPower() == PowerManager.IDLE) {
+                onOffStatus.setText(Bundle.getMessage("StatusIdle"));
             } else if (listening.getPower() == PowerManager.UNKNOWN) {
                 onOffStatus.setText(Bundle.getMessage("StatusUnknown"));
             } else {

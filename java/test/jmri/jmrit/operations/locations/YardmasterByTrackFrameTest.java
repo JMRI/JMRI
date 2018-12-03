@@ -26,7 +26,9 @@ public class YardmasterByTrackFrameTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        JUnitUtil.setUp();    }
+        JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
+    }
 
     @After
     public void tearDown() {

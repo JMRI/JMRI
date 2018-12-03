@@ -29,14 +29,17 @@ public class SignalMastLogicTableActionTest extends AbstractTableActionBase {
     @Override
     @Test
     public void testIncludeAddButton(){
-         Assert.assertTrue("Default include add button",a.includeAddButton());
+         Assert.assertTrue("Default include add button", a.includeAddButton());
     }
 
     // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {
-        JUnitUtil.setUp();        a = new SignalMastLogicTableAction();
+        JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
+        helpTarget = "package.jmri.jmrit.beantable.SignalMastLogicTable"; 
+        a = new SignalMastLogicTableAction();
     }
 
     @Override

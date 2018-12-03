@@ -18,6 +18,7 @@ public class NceTurnoutTest extends AbstractTurnoutTestBase {
     @Before
     @Override
     public void setUp() {
+        jmri.util.JUnitUtil.setUp();
         // prepare an interface
         tcis = new NceTrafficControlScaffold();
 

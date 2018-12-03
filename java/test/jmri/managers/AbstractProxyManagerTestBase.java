@@ -18,7 +18,7 @@ import org.junit.Test;
  *
  * @author Bob Jacobsen Copyright (C) 2017	
  */
-public abstract class AbstractProxyManagerTestBase<T extends Manager> {
+public abstract class AbstractProxyManagerTestBase<T extends Manager<E>, E extends NamedBean> {
 
     // ProxyManager<E> under test - setUp() loads this
     protected T l = null;
@@ -27,10 +27,10 @@ public abstract class AbstractProxyManagerTestBase<T extends Manager> {
     @Test
     public void checkSimpleAddAndRemove() {
         
-        Manager.ManagerDataListener listener = new Manager.ManagerDataListener(){
-            @Override public void contentsChanged(Manager.ManagerDataEvent e){}
-            @Override public void intervalAdded(Manager.ManagerDataEvent e) {}
-            @Override public void intervalRemoved(Manager.ManagerDataEvent e) {}
+        Manager.ManagerDataListener<E> listener = new Manager.ManagerDataListener<E>(){
+            @Override public void contentsChanged(Manager.ManagerDataEvent<E> e){}
+            @Override public void intervalAdded(Manager.ManagerDataEvent<E> e) {}
+            @Override public void intervalRemoved(Manager.ManagerDataEvent<E> e) {}
         };
         
         l.addDataListener(listener);
@@ -47,4 +47,10 @@ public abstract class AbstractProxyManagerTestBase<T extends Manager> {
         
     }
 
+    @Test
+    public final void testMakeSystemName() {
+        String s = l.makeSystemName("1");
+        Assert.assertTrue(s != null);
+        Assert.assertTrue(! s.isEmpty());
+    }
 }

@@ -3,9 +3,10 @@ package jmri.jmrit.operations.rollingstock.cars;
 import javax.swing.JComboBox;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the Operations RollingStock Cars Roads class Last manually
@@ -17,6 +18,7 @@ import org.junit.Assert;
  */
 public class CarRoadsTest extends OperationsTestCase {
 
+    @Test
     public void testDefaultCarRoads() {
         CarRoads cr1 = InstanceManager.getDefault(CarRoads.class);
 
@@ -26,6 +28,7 @@ public class CarRoadsTest extends OperationsTestCase {
         Assert.assertNotNull("Car Roads not empty", cr1.getNames());
     }
 
+    @Test
     public void testAddAndDeleteCarRoads() {
         CarRoads cr1 = InstanceManager.getDefault(CarRoads.class);
         cr1.getNames();	//load predefined roads
@@ -53,28 +56,14 @@ public class CarRoadsTest extends OperationsTestCase {
     // from here down is testing infrastructure
     // Ensure minimal setup for log4J
     @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() {
         super.setUp();
     }
 
-    public CarRoadsTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", CarRoadsTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(CarRoadsTest.class);
-        return suite;
-    }
-
     @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() {
         super.tearDown();
     }
 }

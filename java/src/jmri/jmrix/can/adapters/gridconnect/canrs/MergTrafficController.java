@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Traffic controller for the MERG variant of the GridConnect protocol.
- * <P>
+ * <p>
  * MERG CAN-RS/CAN-USB uses messages transmitted as an ASCII string of up to 24
  * characters of the form: :ShhhhNd0d1d2d3d4d5d6d7; The S indicates a standard
  * CAN frame hhhh is the two byte header (11 useful bits), left justified on
@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
  * to) 8 data bytes
  *
  * @author Andrew Crosland Copyright (C) 2008
-  */
+ */
 public class MergTrafficController extends GcTrafficController {
 
     public MergTrafficController() {
@@ -41,7 +41,12 @@ public class MergTrafficController extends GcTrafficController {
     @Override
     public CanReply decodeFromHardware(AbstractMRReply m) {
         log.debug("Decoding from hardware");
-        MergReply gc = (MergReply) m;
+        MergReply gc = new MergReply();
+        try {
+            gc = (MergReply) m;
+        } catch(java.lang.ClassCastException cce){
+            log.error("{} is not a MergReply",m);
+        }
         CanReply ret = gc.createReply();
         return ret;
     }
@@ -66,7 +71,5 @@ public class MergTrafficController extends GcTrafficController {
     }
 
     private final static Logger log = LoggerFactory.getLogger(MergTrafficController.class);
+
 }
-
-
-

@@ -73,7 +73,7 @@ Cette page liste les messages d'erreur pui peuvent en r&#233;sulter, et d&#233;c
 <p> Cela signifie que JMRI a demand&#233; &#224; la centrale de faire quelque chose pour laquelle elle n'est pas con&#231;ue .</p>
  </dd>
   <dd>
-   <P> Ceci n'est pas cens&#233; se produire, car JMRI devrait d&#233;sactiver les modes de programmation que la centrale ne peut pas fournir. Si vous voyez ce message, veuillez en informer sur les circonstances sur forum des <a href="https://groups.yahoo.com/neo/groups/jmriusers/info"> utilisateurs de JMRI Yahoo Group </a>. </p>
+   <P> Ceci n'est pas cens&#233; se produire, car JMRI devrait d&#233;sactiver les modes de programmation que la centrale ne peut pas fournir. Si vous voyez ce message, veuillez en informer sur les circonstances sur forum des <a href="https://groups.io/g/jmriusers"> utilisateurs de JMRI Group </a>. </p>
 </dd>
 
 <dt><strong>304 &#8212;Annul&#233; par l'utilisateur.</strong></dt>

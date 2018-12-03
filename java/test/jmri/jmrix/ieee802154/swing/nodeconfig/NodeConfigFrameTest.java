@@ -46,10 +46,9 @@ public class NodeConfigFrameTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
+
         tc = new IEEE802154TrafficController() {
-            @Override
-            public void setInstance() {
-            }
             @Override
             protected jmri.jmrix.AbstractMRReply newReply() {
                 return null;

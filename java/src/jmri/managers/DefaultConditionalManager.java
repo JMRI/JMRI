@@ -289,8 +289,6 @@ public class DefaultConditionalManager extends AbstractManager<Conditional>
      */
     @Override
     public List<String> getSystemNameListForLogix(Logix x) {
-//        log.error("getSystemNameListForLogix - Not implemented yet.");
-//        return null;
         if (x == null) {
             return null;
         }
@@ -299,7 +297,6 @@ public class DefaultConditionalManager extends AbstractManager<Conditional>
         for (int i = 0; i < x.getNumConditionals(); i++) {
             nameList.add(x.getConditionalByNumberOrder(i));
         }
-        Collections.sort(nameList);
         return nameList;
     }
 

@@ -180,7 +180,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
      * @return selected node id
      */
     NodeID destNodeID() {
-        return (NodeID) nodeSelector.getSelectedItem();
+        return nodeSelector.getSelectedItem();
     }
 
     @Override

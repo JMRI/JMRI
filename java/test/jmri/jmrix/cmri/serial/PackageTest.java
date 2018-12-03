@@ -15,7 +15,6 @@ import org.slf4j.LoggerFactory;
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-   jmri.jmrix.cmri.serial.SerialTurnoutTest.class,
    jmri.jmrix.cmri.serial.SerialTurnoutManagerTest.class,
    jmri.jmrix.cmri.serial.SerialSensorManagerTest.class,
    jmri.jmrix.cmri.serial.SerialNodeTest.class,

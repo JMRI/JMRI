@@ -37,29 +37,6 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
         highPriorityListeners = new LinkedBlockingQueue<>();
     }
 
-    /**
-     * Get the TrafficController instance to use.
-     *
-     * @return The registered TrafficController instance for general use, if
-     *         need be creating one.
-     * @deprecated - does not work with multi-system support, needs to have other classes migrated and then be removed
-     */
-    @Deprecated
-    static public XNetTrafficController instance() {
-        return self;
-    }
-
-    /**
-     * Set this object as the TrafficController instance to use.
-     */
-    @Override
-    @Deprecated
-    protected void setInstance() {
-        if (self == null) {
-            self = this;
-        }
-    }
-
     static XNetTrafficController self = null;
 
     // Abstract methods for the XNetInterface

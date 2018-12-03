@@ -126,8 +126,8 @@ public class SignalMastRepeaterPanel extends jmri.util.swing.JmriPanel implement
             _addRepeater.setEnabled(false);
             return;
         }
-        java.util.Iterator<String> iter
-                = dsmm.getSystemNameList().iterator();
+        java.util.Iterator<SignalMast> iter
+                = dsmm.getNamedBeanSet().iterator();
 
         // don't return an element if there are not sensors to include
         if (!iter.hasNext()) {
@@ -135,18 +135,15 @@ public class SignalMastRepeaterPanel extends jmri.util.swing.JmriPanel implement
         }
         ArrayList<NamedBean> excludeList = new ArrayList<>();
         while (iter.hasNext()) {
-            String mname = iter.next();
-            if (mname != null) {
-                SignalMast s = dsmm.getBySystemName(mname);
-                if (s.getAppearanceMap() != masterMast.getAppearanceMap()) {
-                    excludeList.add(s);
-                } else if (s == masterMast) {
-                    excludeList.add(s);
-                }
+            SignalMast s = iter.next();
+            if (s.getAppearanceMap() != masterMast.getAppearanceMap()) {
+                excludeList.add(s);
+            } else if (s == masterMast) {
+                excludeList.add(s);
             }
         }
         _SlaveBox.excludeItems(excludeList);
-        if (excludeList.size() == dsmm.getSystemNameList().size()) {
+        if (excludeList.size() == dsmm.getNamedBeanSet().size()) {
             _SlaveBox.setEnabled(false);
             _addRepeater.setEnabled(false);
         } else {

@@ -1,5 +1,6 @@
 package jmri.jmrit.simpleclock;
 
+import java.beans.*;
 import java.time.Instant;
 import java.util.Date;
 import junit.framework.Test;
@@ -40,6 +41,11 @@ public class SimpleTimebaseTest extends TestCase {
         p.dispose();
     }
 
+    public void testGetBeanType() {
+        SimpleTimebase p = new SimpleTimebase();
+        Assert.assertEquals("Time", p.getBeanType());
+    }
+    
     public void testSetStartTime() {
         SimpleTimebase p = new SimpleTimebase();
         p.setRun(false); // prevent clock ticking during test
@@ -66,17 +72,25 @@ public class SimpleTimebaseTest extends TestCase {
     public void testSetTimeDate() {
         SimpleTimebase p = new SimpleTimebase();
         p.setRun(false); // prevent clock ticking during test
+        Assert.assertFalse(p.getRun());
 
         Date now = new Date();
 
         p.setTime(now);
+        Assert.assertFalse(p.getRun());  // still
         Assert.assertEquals("Time Set",now.toString(),p.getTime().toString());
+        
+        p.setRun(true);       
+        Assert.assertTrue(p.getRun());
+
         p.dispose();
     }
 
     // set the time based on an instant.
     public void testSetTimeInstant() {
         SimpleTimebase p = new SimpleTimebase();
+        p.setRun(false); // prevent clock ticking during test
+
         Instant now = Instant.now();
         
         p.setTime(now);
@@ -84,6 +98,45 @@ public class SimpleTimebaseTest extends TestCase {
         p.dispose();
     }
 
+    public void testSetGetRate() {
+        SimpleTimebase p = new SimpleTimebase();
+        p.setRun(false); // prevent clock ticking during test
+
+        Assert.assertEquals(1.0, p.getRate(), 0.01);
+        
+        p.setRate(2.0);
+        Assert.assertEquals(2.0, p.getRate(), 0.01);        
+        Assert.assertFalse(p.getRun());  // still
+        
+    }
+    
+    double seenNewMinutes;
+    double seenOldMinutes;
+    
+    public void testSetSendsUpdate() {
+        SimpleTimebase p = new SimpleTimebase();
+        p.setRun(false); // prevent clock ticking during test
+
+        seenNewMinutes = -1;
+        seenOldMinutes = -1;
+        p.addMinuteChangeListener(new PropertyChangeListener() {
+            public void propertyChange(PropertyChangeEvent e) {
+                seenOldMinutes = (Double) e.getOldValue();
+                seenNewMinutes = (Double) e.getNewValue();
+            }
+        });
+
+        Date date = p.getTime();
+        Date tenMinLater = new Date(10*60*1000L+date.getTime());
+
+        p.setTime(tenMinLater);
+
+        // minutes wrap at 60
+        if (seenNewMinutes < seenOldMinutes) seenNewMinutes += 60.;
+        
+        Assert.assertEquals(seenOldMinutes + 10.0, seenNewMinutes, 0.01);
+    }
+    
     /* 	public void testShortDelay() { */
     /* 		SimpleTimebase p = new SimpleTimebase(); */
     /* 		Date now = new Date(); */
@@ -110,5 +163,15 @@ public class SimpleTimebaseTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite(SimpleTimebaseTest.class);
         return suite;
+    }
+
+    @Override
+    public void setUp() {
+        jmri.util.JUnitUtil.setUp();
+    }
+
+    @Override
+    public void tearDown() {
+        jmri.util.JUnitUtil.tearDown();
     }
 }

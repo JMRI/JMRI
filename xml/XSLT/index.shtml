@@ -52,7 +52,7 @@
         <hr class="hide">
         <div id="footer">
             <ul id="bn">
-                <li>Contact us via the <a href="https://groups.yahoo.com/neo/groups/jmriusers/info">JMRI users</a> Yahoo group</li>
+                <li>Contact us via the <a href="https://groups.io/g/jmriusers">JMRI users</a> group</li>
             </ul>
 
             <p>Thanks and congratulations to
@@ -64,9 +64,9 @@
             <p><a href="http://jmri.org/Copyright.html">Additional information on copyright,
                 trademarks and licenses is linked here.</a></p>
 
-            <br>Site hosted by:<br>
-                <a href="http://sourceforge.net/projects/jmri">
-    <img src="https://sourceforge.net/sflogo.php?type=13&amp;group_id=26788" border="0" alt="JMRI Model Railroad Interface at SourceForge.net"/></a>
+            <br>Site hosted by: <br/>
+            <a href="http://www.tagadab.com/">
+            <img src="https://www.tagadab.com/sites/default/files/logo-tagadab-nostrap.png" height="28" width="103" border="0" alt="Tagadab logo"/></a>
         </div>
     </div><!-- closes #mainContent-->
 </div><!-- closes #mBody-->

@@ -18,7 +18,7 @@ public class TamsTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficContr
     @Override
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
         tc = new TamsTrafficController();
     }
 

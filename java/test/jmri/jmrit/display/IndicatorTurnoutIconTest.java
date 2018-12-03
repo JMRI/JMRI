@@ -4,11 +4,7 @@ import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
 import jmri.jmrit.display.panelEditor.PanelEditor;
 import jmri.util.JUnitUtil;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * IndicatorTurnoutIconTest.java
@@ -58,6 +54,7 @@ public class IndicatorTurnoutIconTest extends PositionableIconTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
         if (!GraphicsEnvironment.isHeadless()) {
             editor = new PanelEditor("Test IndicatorTurnoutIcon Panel");
             IndicatorTurnoutIcon to = new IndicatorTurnoutIcon(editor);

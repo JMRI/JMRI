@@ -8,6 +8,7 @@ import com.digi.xbee.api.io.IOLine;
 import com.digi.xbee.api.io.IOMode;
 import com.digi.xbee.api.io.IOSample;
 import com.digi.xbee.api.listeners.IIOSampleReceiveListener;
+import javax.annotation.*;
 import jmri.JmriException;
 import jmri.Sensor;
 import org.slf4j.Logger;
@@ -209,7 +210,7 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
             //Address format passed is in the form of encoderAddress:input or L:light address
             int seperator = systemName.indexOf(":");
             try {
-                input = Integer.valueOf(systemName.substring(seperator + 1)).intValue();
+                input = Integer.parseInt(systemName.substring(seperator + 1));
             } catch (NumberFormatException ex) {
                 log.debug("Unable to convert " + systemName + " into the cab and input format of nn:xx");
                 return -1;
@@ -278,6 +279,17 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
     public String getEntryToolTip() {
         String entryToolTip = Bundle.getMessage("AddInputEntryToolTip");
         return entryToolTip;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @CheckReturnValue
+    @Override
+    public @Nonnull
+    String normalizeSystemName(@Nonnull String inputName) {
+        return inputName; // toUpperCase and trim don't behave well with 
+                          // the XBee Node Identifier based addresses.
     }
 
     private final static Logger log = LoggerFactory.getLogger(XBeeSensorManager.class);

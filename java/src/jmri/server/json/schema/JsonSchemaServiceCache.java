@@ -34,7 +34,6 @@ public class JsonSchemaServiceCache implements InstanceManagerAutoDefault {
     private final HashMap<String, JsonSchema> clientSchemas = new HashMap<>();
     private final HashMap<String, JsonSchema> serverSchemas = new HashMap<>();
     private final ObjectMapper mapper = new ObjectMapper();
-    private final static Logger log = LoggerFactory.getLogger(JsonSchemaServiceCache.class);
 
     @Nonnull
     public synchronized Set<JsonHttpService> getServices(@Nonnull String type) {
@@ -141,6 +140,7 @@ public class JsonSchemaServiceCache implements InstanceManagerAutoDefault {
      * @throws JsonException if the message does not validate
      */
     public void validateMessage(@Nonnull JsonNode message, boolean server, @Nonnull Locale locale) throws JsonException {
+        log.trace("validateMessage(\"{}\", \"{}\", \"{}\", ...)", message, server, locale);
         HashMap<String, JsonSchema> map = server ? this.serverSchemas : this.clientSchemas;
         this.validateJsonNode(message, JSON.JSON, server, locale, map);
         if (message.isArray()) {
@@ -158,6 +158,7 @@ public class JsonSchemaServiceCache implements InstanceManagerAutoDefault {
     }
 
     private void validateJsonNode(@Nonnull JsonNode node, @Nonnull String type, boolean server, @Nonnull Locale locale, @Nonnull HashMap<String, JsonSchema> map) throws JsonException {
+        log.trace("validateJsonNode(\"{}\", \"{}\", \"{}\", ...)", node, type, server);
         Set<ValidationMessage> errors = null;
         try {
             errors = this.getSchema(type, server, locale, map).validate(node);
@@ -209,4 +210,5 @@ public class JsonSchemaServiceCache implements InstanceManagerAutoDefault {
             }
         }
     }
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(JsonSchemaServiceCache.class);
 }

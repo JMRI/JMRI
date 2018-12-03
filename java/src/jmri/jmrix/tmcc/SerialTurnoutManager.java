@@ -58,7 +58,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager implements Seri
         // check under alternate name - not supported on TMCC
         // create the turnout
         log.debug("new SerialTurnout with addr = {}", systemName.substring(prefix.length() + 1));
-        int addr = Integer.valueOf(systemName.substring(prefix.length() + 1)).intValue(); // this won't work for B-names
+        int addr = Integer.parseInt(systemName.substring(prefix.length() + 1)); // this won't work for B-names
         t = new SerialTurnout(prefix, addr, _memo);
         t.setUserName(userName);
 
@@ -114,8 +114,8 @@ public class SerialTurnoutManager extends AbstractTurnoutManager implements Seri
             // Address format passed is in the form node:address (not used in TMCC)
             int seperator = curAddress.indexOf(":");
             try {
-                nAddress = Integer.valueOf(curAddress.substring(0, seperator)).intValue();
-                bitNum = Integer.valueOf(curAddress.substring(seperator + 1)).intValue();
+                nAddress = Integer.parseInt(curAddress.substring(0, seperator));
+                bitNum = Integer.parseInt(curAddress.substring(seperator + 1));
             } catch (NumberFormatException ex) {
                 throw new JmriException("Unable to convert " + curAddress + " to a valid Hardware Address");
             }

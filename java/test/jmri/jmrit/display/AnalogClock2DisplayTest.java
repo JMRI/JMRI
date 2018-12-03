@@ -55,6 +55,7 @@ public class AnalogClock2DisplayTest extends PositionableJComponentTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
         if(!GraphicsEnvironment.isHeadless()){
            editor = new EditorScaffold();
            p = a = new AnalogClock2Display(editor);

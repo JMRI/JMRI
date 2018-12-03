@@ -2,6 +2,8 @@ package jmri.jmrix.easydcc;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Nonnull;
+
 import jmri.AddressedProgrammer;
 import jmri.NmraPacket;
 import jmri.ProgListener;
@@ -34,6 +36,7 @@ public class EasyDccOpsModeProgrammer extends EasyDccProgrammer implements Addre
      * Forward a write request to an ops-mode write operation.
      */
     @Override
+    @Deprecated // 4.1.1
     public synchronized void writeCV(int CV, int val, ProgListener p) throws ProgrammerException {
         log.debug("write CV={} val={}", CV, val);
         // create the message and fill it,
@@ -65,6 +68,7 @@ public class EasyDccOpsModeProgrammer extends EasyDccProgrammer implements Addre
     }
 
     @Override
+    @Deprecated // 4.1.1
     public synchronized void readCV(int CV, ProgListener p) throws ProgrammerException {
         log.debug("read CV={}", CV);
         log.error("readCV not available in this protocol");
@@ -82,6 +86,7 @@ public class EasyDccOpsModeProgrammer extends EasyDccProgrammer implements Addre
      * Types implemented here.
      */
     @Override
+    @Nonnull
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
         ret.add(ProgrammingMode.OPSBYTEMODE);

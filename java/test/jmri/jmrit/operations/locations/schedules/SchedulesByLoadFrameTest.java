@@ -25,7 +25,9 @@ public class SchedulesByLoadFrameTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        JUnitUtil.setUp();        jmri.util.JUnitOperationsUtil.resetOperationsManager();
+        JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
+        jmri.util.JUnitOperationsUtil.resetOperationsManager();
         jmri.util.JUnitOperationsUtil.initOperationsData();
     }
 

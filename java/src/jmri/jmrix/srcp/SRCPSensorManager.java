@@ -27,7 +27,7 @@ public class SRCPSensorManager extends jmri.managers.AbstractSensorManager {
     @Override
     public Sensor createNewSensor(String systemName, String userName) {
         Sensor t;
-        int addr = Integer.valueOf(systemName.substring(getSystemPrefix().length() + 1)).intValue();
+        int addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
         t = new SRCPSensor(addr, _memo);
         t.setUserName(userName);
 

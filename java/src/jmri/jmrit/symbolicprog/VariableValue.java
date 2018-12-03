@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Represents a single Variable value; abstract base class.
- *
  * <p>
  * The "changed" parameter (non-bound, accessed via isChanged) indicates whether
  * a "write changes" or "read changes" operation should handle this object.
@@ -416,8 +415,8 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
     }
 
     /**
-     * Find number of places to shift a value left to align if with a mask. For
-     * example, as mask of "XXVVVXXX" means that the value 5 needs to be shifted
+     * Find number of places to shift a value left to align it with a mask. For
+     * example, a mask of "XXVVVXXX" means that the value 5 needs to be shifted
      * left 3 places before being masked and stored as XX101XXX
      */
     protected int offsetVal(String maskString) {

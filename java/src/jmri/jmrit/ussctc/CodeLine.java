@@ -27,8 +27,8 @@ public class CodeLine {
         TurnoutManager tm = InstanceManager.getDefault(TurnoutManager.class);
 
         logMemory = InstanceManager.getDefault(MemoryManager.class).provideMemory(
-                        Constants.commonNamePrefix+"CODELINE"+Constants.commonNameSuffix+"LOG");
-        log.debug("log memory name is {}", logMemory.getSystemName());
+                        Constants.commonNamePrefix+"CODELINE"+Constants.commonNameSuffix+"LOG");  // NOI18N
+        log.debug("log memory name is {}", logMemory.getSystemName());  // NOI18N
         
         hStartTO = hm.getNamedBeanHandle(startTO, tm.provideTurnout(startTO));
 
@@ -83,7 +83,7 @@ public class CodeLine {
         }
         active = false;
         logMemory.setValue("");
-        log.debug("CodeLine goes inactive");
+        log.debug("CodeLine goes inactive");  // NOI18N
     }
     
     /**
@@ -102,8 +102,8 @@ public class CodeLine {
 
     void startSendCode(Station station) {
         final Station s = station;
-        log.debug("CodeLine startSendCode - Tell hardware to start sending code");
-        logMemory.setValue("Sending Code: Station "+station.getName());
+        log.debug("CodeLine startSendCode - Tell hardware to start sending code");  // NOI18N
+        logMemory.setValue("Sending Code: Station "+station.getName());  // NOI18N
         startExternalCodeLine();
         
         // Wait time for sequence complete, then proceed to end of code send
@@ -111,14 +111,14 @@ public class CodeLine {
         jmri.util.ThreadingUtil.runOnGUIDelayed( ()->{
                     s.codeValueDelivered();
                     // and see if anything else needs to be done
-                    log.debug("end of codeValueDelivered");
+                    log.debug("end of codeValueDelivered");  // NOI18N
                     endAndCheckNext();
                 }, CODE_SEND_DELAY);
     }
     
     void startExternalCodeLine() {
         hStartTO.getBean().setCommandedState(Turnout.THROWN);
-        new Timer("Codeline Timer").schedule(new TimerTask() {
+        new Timer("Codeline Timer").schedule(new TimerTask() {  // NOI18N
             @Override
             public void run() {
                 hStartTO.getBean().setCommandedState(Turnout.CLOSED);
@@ -148,7 +148,7 @@ public class CodeLine {
         station.indicationStart();
     
         log.debug("Tell hardware to start sending indication");
-        logMemory.setValue("Receiving Indication: Station "+station.getName());
+        logMemory.setValue("Receiving Indication: Station "+station.getName());  // NOI18N
         startExternalCodeLine();
         
         // Wait time for sequence complete, then proceed to end of indication send

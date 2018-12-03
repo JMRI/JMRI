@@ -84,7 +84,7 @@
 	<p>Si l'environnement de variable IDEA_VM_OPTIONS est d&#233;fini, ou un fichier *.vmoptions existe, alors ce fichier est utilis&#233; au lieu du fichier localis&#233; dans le dossier d'installationin de IntelliJ IDEA.</p>
 	
 	<p>Plus d'information sur la d&#233;finitions de ces importantes vmoptions est disponible sur le <a href="https://www.jetbrains.com/idea/help/tuning-intellij-idea.html">site web Idea</a>.<br>
-	Note: Si vous avez un doute sur comment d&#233;finir ceci au niveau du projet au lieu de bricoler avec les param&#232;tres locaux de l'application, SVP contactez les <a href="https://groups.yahoo.com/neo/groups/jmriusers/info">utilisateurs JMRI</a> Yahoo group.</p>
+	Note: Si vous avez un doute sur comment d&#233;finir ceci au niveau du projet au lieu de bricoler avec les param&#232;tres locaux de l'application, SVP contactez les <a href="https://groups.io/g/jmriusers">utilisateurs JMRI</a>  group.</p>
 	
 <h3>D&#233;finir les Pr&#233;f&#233;rences</h3>
 <p>D&#233;marrer IntelliJ et choisir "Preferences" depuis le menu application (OS X) ou le menu Edit (Win).</p>

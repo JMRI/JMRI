@@ -491,6 +491,8 @@ public class RosterSpeedProfile {
      * @param speed the speed to set
      * @param usePercentage the percentage of the block to be used for stopping
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY", 
+        justification = "OK to compare floats, as even tiny differences should trigger update")
     public void changeLocoSpeed(DccThrottle t, Block blk, float speed, float usePercentage) {
         if (blk == referenced && speed == desiredSpeedStep) {
             //if(log.isDebugEnabled()) log.debug("Already setting to desired speed step for this block");
@@ -837,7 +839,6 @@ public class RosterSpeedProfile {
         e.addContent(d);
     }
 
-    @SuppressWarnings({"unchecked"})
     public void load(Element e) {
         try {
             setOverRunTimeForward(Float.parseFloat(e.getChild("overRunTimeForward").getText()));

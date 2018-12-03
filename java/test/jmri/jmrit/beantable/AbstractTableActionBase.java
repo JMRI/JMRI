@@ -20,6 +20,7 @@ import org.netbeans.jemmy.operators.JFrameOperator;
 public abstract class AbstractTableActionBase {
 
     protected AbstractTableAction a = null;
+    protected String helpTarget = "index"; // index is default value specified in AbstractTableAction.
 
     @Test
     public void testGetTableDataModel() {
@@ -68,6 +69,11 @@ public abstract class AbstractTableActionBase {
     @Test
     public void testIncludeAddButton() {
         Assert.assertFalse("Default include add button", a.includeAddButton());
+    }
+
+    @Test
+    public void testHelpTarget(){
+        Assert.assertEquals("help target",helpTarget,a.helpTarget());
     }
 
     /**

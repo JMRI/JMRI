@@ -62,11 +62,15 @@ public class SerialDriverAdapter extends TamsPortController implements jmri.jmri
                 return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();
             }
 
-            configureLeadsAndFlowControl(activeSerialPort, SerialPort.FLOWCONTROL_RTSCTS_IN | SerialPort.FLOWCONTROL_RTSCTS_OUT);
+            // Hardware flow control
+            //configureLeadsAndFlowControl(activeSerialPort, SerialPort.FLOWCONTROL_RTSCTS_IN | SerialPort.FLOWCONTROL_RTSCTS_OUT);
+
+            // Xon/Xoff flow control
+            configureLeadsAndFlowControl(activeSerialPort, 0);
 
             // set timeout
             try {
-                activeSerialPort.enableReceiveTimeout(10);  // 10 mSec timeout before sending chars
+                activeSerialPort.enableReceiveTimeout(50);  // Set to 50 was 10 mSec timeout before sending chars
                 log.debug("Serial timeout was observed as: " + activeSerialPort.getReceiveTimeout()
                         + " " + activeSerialPort.isReceiveTimeoutEnabled());
             } catch (Exception et) {
@@ -155,8 +159,8 @@ public class SerialDriverAdapter extends TamsPortController implements jmri.jmri
         return Arrays.copyOf(validSpeeds, validSpeeds.length);
     }
 
-    private String[] validSpeeds = new String[]{"57,600 baud", "2,400 baud", "9,600 baud", "19,200 baud"};
-    private int[] validSpeedValues = new int[]{57600, 2400, 9600, 19200};
+    private final String[] validSpeeds = new String[]{"57,600 baud", "2,400 baud", "9,600 baud", "19,200 baud"};
+    private final int[] validSpeedValues = new int[]{57600, 2400, 9600, 19200};
 
     // private control members
     private boolean opened = false;

@@ -3,12 +3,7 @@ package jmri.jmrit.display.controlPanelEditor;
 import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
 import jmri.jmrit.display.PositionableIconTest;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * Test simple functioning of the PortalIcon class.
@@ -41,6 +36,7 @@ public class PortalIconTest extends PositionableIconTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
         if (!GraphicsEnvironment.isHeadless()) {
            editor = new ControlPanelEditor("Portal Icon Test Panel");
            p = new PortalIcon(editor);

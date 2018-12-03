@@ -10,22 +10,18 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class Dcc4PcMessageTest {
-
-    @Test
-    public void testCTor() {
-        Dcc4PcMessage t = new Dcc4PcMessage(5);
-        Assert.assertNotNull("exists",t);
-    }
+public class Dcc4PcMessageTest extends jmri.jmrix.AbstractMessageTestBase {
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        m = new Dcc4PcMessage(5);
     }
 
     @After
     public void tearDown() {
+	m = null;
         JUnitUtil.tearDown();
     }
 

@@ -2,10 +2,7 @@ package jmri.jmrix.rfid;
 
 import jmri.Reporter;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * RfidReporterManagerTest.java
@@ -28,6 +25,12 @@ public class RfidReporterManagerTest extends jmri.managers.AbstractReporterMgrTe
     @Override
     @Ignore("Abstract Class under test, test does not apply")
     public void testSingleObject(){
+    }
+
+    @Test
+    @Override
+    @Ignore("Abstract Class under test, test does not apply")
+    public void testProvideName() {
     }
 
     @Test

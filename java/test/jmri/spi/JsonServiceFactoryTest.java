@@ -47,6 +47,7 @@ public class JsonServiceFactoryTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
     }
 
     @After

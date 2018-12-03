@@ -283,7 +283,6 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
      *
      * @param audio Element containing the Audio elements to load.
      */
-    @SuppressWarnings("unchecked")
     public void loadAudio(Element audio) {
 
         AudioManager am = InstanceManager.getDefault(jmri.AudioManager.class);

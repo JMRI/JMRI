@@ -8,15 +8,11 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Writer;
 import java.lang.Math;
-import java.text.DateFormat;
-import java.text.ParseException;
+import java.text.*;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.*;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.StringTokenizer;
-import java.util.TreeMap;
-import java.util.Vector;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.ImageIcon;
@@ -67,7 +63,6 @@ import org.slf4j.LoggerFactory;
  * @author Dennis Miller Copyright 2004
  * @author Egbert Broerse Copyright (C) 2018
  * @see jmri.jmrit.roster.LocoFile
- *
  */
 public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRosterEntry {
 
@@ -118,27 +113,6 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     protected String _dateUpdated = "";
     protected Date dateModified = null;
     protected int _maxSpeedPCT = 100;
-
-    /**
-     * @return the default owner
-     * @deprecated since 4.1.4 use
-     * {@link jmri.jmrit.roster.RosterConfigManager#getDefaultOwner()} instead
-     */
-    @Deprecated
-    public static String getDefaultOwner() {
-        return InstanceManager.getDefault(RosterConfigManager.class).getDefaultOwner();
-    }
-
-    /**
-     * @param n the default owner
-     * @deprecated since 4.1.4 use
-     * {@link jmri.jmrit.roster.RosterConfigManager#setDefaultOwner(java.lang.String)}
-     * instead
-     */
-    @Deprecated
-    public static void setDefaultOwner(String n) {
-        InstanceManager.getDefault(RosterConfigManager.class).setDefaultOwner(n);
-    }
 
     public final static int MAXFNNUM = 28;
 
@@ -536,12 +510,18 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     public void setDateModified(@Nonnull String date) throws ParseException {
         try {
             // parse using ISO 8601 date format(s)
-            this.setDateModified(new ISO8601DateFormat().parse(date));
+            setDateModified(new ISO8601DateFormat().parse(date));
         } catch (ParseException ex) {
-            log.debug("ParseException in setDateModified");
-            // parse using defaults since thats how it was saved if saved
+            log.debug("ParseException in setDateModified ISO attempt: \"{}\"", date);
+            // next, try parse using defaults since thats how it was saved if saved
             // by earlier versions of JMRI
-            this.setDateModified(DateFormat.getDateTimeInstance().parse(date));
+            try {
+                setDateModified(DateFormat.getDateTimeInstance().parse(date));
+            } catch (ParseException ex2) {
+                // then try with a specific format to handle e.g. "Apr 1, 2016 9:13:36 AM"
+                DateFormat customFmt = new SimpleDateFormat ("MMM dd, yyyy hh:mm:ss a");
+                setDateModified(customFmt.parse(date));
+            }
         } catch (IllegalArgumentException ex2) {
             // warn that there's perhaps something wrong with the classpath
             log.error("IllegalArgumentException in RosterEntry.setDateModified - this may indicate a problem with the classpath, specifically multiple copies of the 'jackson` library. See release notes" );
@@ -1387,10 +1367,10 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
     public void printEntryLine(HardcopyWriter w) {
         // no image
         // @see #printEntryDetails(w);
-        int linesadded = -1;
 
         try {
-            int textSpace = w.getCharactersPerLine() - 1; // no indent
+            //int textSpace = w.getCharactersPerLine() - 1; // could be used to truncate line.
+            // for now, text just flows to next line
             String thisText ="";
             String thisLine = "";
 
@@ -1398,54 +1378,43 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
             w.write(newLine, 0, 1);
 
             int colWidth = 15;
-            int startNext = colWidth;
             // roster entry ID (not the filname)
             if (_id != null) {
                 thisText = String.format("%-" + colWidth + "s", _id.substring(0, Math.min(_id.length(), colWidth))); // %- = left align
-                log.debug("thisText = |{}|, length = {}, startNext = {}", thisText, thisText.length(), startNext);
+                log.debug("thisText = |{}|, length = {}", thisText, thisText.length());
             } else {
                 thisText = String.format("%-" + colWidth + "s", "<null>");
             }
             thisLine += thisText;
             colWidth = 6;
-            startNext += colWidth;
             // _dccAddress
             thisLine += StringUtil.padString(_dccAddress, colWidth);
             colWidth = 6;
-            startNext += colWidth;
             // _roadName
             thisLine += StringUtil.padString(_roadName, colWidth);
             colWidth = 6;
-            startNext += colWidth;
             // _roadNumber
             thisLine += StringUtil.padString(_roadNumber, colWidth);
             colWidth = 6;
-            startNext += colWidth;
             // _mfg
             thisLine += StringUtil.padString(_mfg, colWidth);
             colWidth = 10;
-            startNext += colWidth;
             // _model
             thisLine += StringUtil.padString(_model, colWidth);
             colWidth = 10;
-            startNext += colWidth;
             // _decoderModel
             thisLine += StringUtil.padString(_decoderModel, colWidth);
             colWidth = 12;
-            startNext += colWidth;
             // _protocol (type)
             thisLine += StringUtil.padString(_protocol.toString(), colWidth);
             colWidth = 6;
-            startNext += colWidth;
             // _owner
             thisLine += StringUtil.padString(_owner, colWidth);
             colWidth = 10;
-            startNext += colWidth;
+
             // dateModified (type)
             if (dateModified != null) {
-                if (dateModified instanceof Date) {
-                    DateFormat.getDateTimeInstance().format(dateModified);
-                }
+                DateFormat.getDateTimeInstance().format(dateModified);
                 thisText = String.format("%-" + colWidth + "s", dateModified.toString().substring(0, Math.min(dateModified.toString().length(), colWidth)));
                 thisLine += thisText;
             }

@@ -32,11 +32,13 @@ public class SignalSystemTestUtil {
             {
                 Path inPath = new File(new File(FileUtil.getProgramPath(), "java/test/jmri/implementation"), "testAspects.xml").toPath();
                 Path outPath = new File(dummy, "aspects.xml").toPath();
+                new File(dummy, "aspects.xml").delete();  // in case left over
                 Files.copy(inPath, outPath);
             }
             {
                 Path inPath = new File(new File(FileUtil.getProgramPath(), "java/test/jmri/implementation"), "test-appearance-one-searchlight.xml").toPath();
                 Path outPath = new File(dummy, "appearance-one-searchlight.xml").toPath();
+                new File(dummy, "appearance-one-searchlight.xml").delete();  // in case left over
                 Files.copy(inPath, outPath);
             }
         } catch (IOException e) {

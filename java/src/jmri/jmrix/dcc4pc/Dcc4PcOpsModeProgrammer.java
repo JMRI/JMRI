@@ -2,6 +2,8 @@ package jmri.jmrix.dcc4pc;
 
 import java.beans.PropertyChangeListener;
 import java.util.List;
+import javax.annotation.Nonnull;
+
 import jmri.AddressedProgrammer;
 import jmri.AddressedProgrammerManager;
 import jmri.ProgListener;
@@ -46,6 +48,7 @@ public class Dcc4PcOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer imple
      * Send an ops-mode write request to the XPressnet.
      */
     @Override
+    @Deprecated // 4.1.1
     synchronized public void writeCV(int CV, int val, ProgListener p) throws ProgrammerException {
         rcTag.setExpectedCv(cv);
         progListener = p;
@@ -53,6 +56,7 @@ public class Dcc4PcOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer imple
     }
 
     @Override
+    @Deprecated // 4.1.1
     synchronized public void readCV(int cv, ProgListener p) throws ProgrammerException {
         rcTag.addPropertyChangeListener(this);
         rcTag.setExpectedCv(cv);
@@ -60,7 +64,7 @@ public class Dcc4PcOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer imple
         this.cv = cv;
         startLongTimer();
         defaultProgrammer.readCV(cv, new ProxyProgList());
-        progListener.programmingOpReply(cv, jmri.ProgListener.OK);
+        notifyProgListenerEnd(progListener, cv, jmri.ProgListener.OK);
     }
 
     static class ProxyProgList implements jmri.ProgListener {
@@ -71,7 +75,7 @@ public class Dcc4PcOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer imple
         @Override
         public void programmingOpReply(int value, int status) {
             /*if(status!=NotImplemented){
-             progListener.programmingOpReply(0, status);
+                notifyProgListenerEnd(progListener, 0, status);
              }
              log.debug("Actual Command station returned " + status + " " + value);*/
         }
@@ -93,6 +97,7 @@ public class Dcc4PcOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer imple
      * Types implemented here.
      */
     @Override
+    @Nonnull
     public List<ProgrammingMode> getSupportedModes() {
         return defaultProgrammer.getSupportedModes();
     }
@@ -101,7 +106,7 @@ public class Dcc4PcOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer imple
     synchronized protected void timeout() {
         rcTag.removePropertyChangeListener(this);
         rcTag.setExpectedCv(-1);
-        progListener.programmingOpReply(0, jmri.ProgListener.FailedTimeout);
+        notifyProgListenerEnd(progListener, 0, ProgListener.FailedTimeout);
     }
 
     @Override
@@ -117,7 +122,7 @@ public class Dcc4PcOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer imple
                 stopTimer();
                 rcTag.removePropertyChangeListener(this);
                 synchronized (this) {
-                    progListener.programmingOpReply(newValue, ProgListener.OK);
+                    notifyProgListenerEnd(progListener, newValue, ProgListener.OK);
                 }
             } else {
                 log.error("Unexpected cv {} returned, was expecting CV {}", repliedCv, cv);

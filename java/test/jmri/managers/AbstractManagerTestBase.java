@@ -18,19 +18,19 @@ import org.junit.Test;
  *
  * @author Bob Jacobsen Copyright (C) 2017	
  */
-public abstract class AbstractManagerTestBase<T extends Manager> {
+public abstract class AbstractManagerTestBase<T extends Manager<E>, E extends NamedBean> {
 
     // Manager<E> under test - setUp() loads this
     protected T l = null;
 
     // check that you can add and remove listeners
     @Test
-    public void checkSimpleAddAndRemove() {
+    public final void checkSimpleAddAndRemove() {
         
-        Manager.ManagerDataListener listener = new Manager.ManagerDataListener(){
-            @Override public void contentsChanged(Manager.ManagerDataEvent e){}
-            @Override public void intervalAdded(Manager.ManagerDataEvent e) {}
-            @Override public void intervalRemoved(Manager.ManagerDataEvent e) {}
+        Manager.ManagerDataListener<E> listener = new Manager.ManagerDataListener<E>(){
+            @Override public void contentsChanged(Manager.ManagerDataEvent<E> e){}
+            @Override public void intervalAdded(Manager.ManagerDataEvent<E> e) {}
+            @Override public void intervalRemoved(Manager.ManagerDataEvent<E> e) {}
         };
         
         l.addDataListener(listener);
@@ -45,6 +45,13 @@ public abstract class AbstractManagerTestBase<T extends Manager> {
         l.addDataListener(listener);
         l.removeDataListener(null);
         
+    }
+
+    @Test
+    public void testMakeSystemName() {
+        String s = l.makeSystemName("1");
+        Assert.assertTrue(s != null);
+        Assert.assertTrue(! s.isEmpty());
     }
 
 }

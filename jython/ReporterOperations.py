@@ -14,6 +14,7 @@
 
 import jmri
 import java
+import java.beans
 
 # First, define the listener class.  This gets messages
 # from the reporter, uses the reports to look up equipment

@@ -2,6 +2,8 @@ package jmri.jmrix.can.cbus;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Nonnull;
+
 import jmri.AddressedProgrammer;
 import jmri.ProgrammingMode;
 import jmri.jmrix.AbstractProgrammer;
@@ -34,6 +36,7 @@ public class CbusProgrammer extends AbstractProgrammer implements CanListener, A
      * Types implemented here.
      */
     @Override
+    @Nonnull
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
         ret.add(CBUSNODEVARMODE);
@@ -52,6 +55,7 @@ public class CbusProgrammer extends AbstractProgrammer implements CanListener, A
 
     // programming interface
     @Override
+    @Deprecated // 4.1.1
     synchronized public void writeCV(int varnum, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) {
             log.debug("write " + varnum + " listens " + p);
@@ -79,6 +83,7 @@ public class CbusProgrammer extends AbstractProgrammer implements CanListener, A
     }
 
     @Override
+    @Deprecated // 4.1.1
     synchronized public void readCV(int varnum, jmri.ProgListener p) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) {
             log.debug("readCV " + varnum + " listens " + p);
@@ -201,7 +206,7 @@ public class CbusProgrammer extends AbstractProgrammer implements CanListener, A
         // clear the current listener _first_
         jmri.ProgListener temp = programmerUser;
         programmerUser = null;
-        temp.programmingOpReply(value, status);
+        notifyProgListenerEnd(temp,value,status);
     }
 
     private final static Logger log = LoggerFactory.getLogger(CbusProgrammer.class);

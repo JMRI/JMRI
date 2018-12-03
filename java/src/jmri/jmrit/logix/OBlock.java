@@ -568,6 +568,14 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
 //        setState(getState() | ALLOCATED);  DO NOT ALLOCATE
         return null;
     }
+    
+    public String getAllocatingWarrantName() {
+        if (_warrant == null) {
+            return ("no warrant");
+        } else {
+            return _warrant.getDisplayName();
+        }
+    }
 
     /**
      * Remove allocation state Remove listener regardless of ownership
@@ -649,7 +657,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     public void addPortal(Portal portal) {
         String name = getDisplayName();
         if (!name.equals(portal.getFromBlockName()) && !name.equals(portal.getToBlockName())) {
-            log.warn("{} not in block {}", portal, getDisplayName());
+            log.warn("{} not in block {}", portal.getDescription(), getDisplayName());
             return;
         }
         String pName = portal.getName();
@@ -945,11 +953,6 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     public String getDescription() {
         return java.text.MessageFormat.format(
                 Bundle.getMessage("BlockDescription"), getDisplayName());
-    }
-
-    @Override
-    public String toString() {
-        return getDisplayName();
     }
 
     @Override

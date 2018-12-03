@@ -17,7 +17,8 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
@@ -27,7 +28,7 @@
     <div id="mainContent">
       <h1>Configure DS64</h1><a href=
       "../../../../../html/hardware/loconet/images/DS64TabbedPanel.png"><img src="../../../../../html/hardware/loconet/images/DS64TabbedPanel.png"
-      align="right" height="400" width="300" alt=
+      align="right" height="408" width="438" alt=
       "Configure DS64 panel image"></a>
 
       <p>The JMRI DS64 Configuration tool lets you configure the
@@ -35,7 +36,7 @@
       directly from your computer running JMRI.</p>
 
       <p>To open this tool select "Configure DS64" from the LocoNet
-      menu.</p>
+      menu for the connection this DS64 is attached to.</p>
       
       <h2>Selecting the DS64 board</h2>
       <p>Each DS64 present on LocoNet is identified uniquely by its <a href=
@@ -55,9 +56,9 @@
       <p>The "Read full Sheet" button may be used to read the OpSw settings from the DS64.</p>
           
       <h2>Configuring the OpSws</h2>
-      <p>This tab displays the "OpSw" settings which correspond to the settings found
-          on the "Basic Settings" tab.  Changes made on this tab will immediately 
-          reflected on the "Basic Settings" tab.</p>
+      <p>The "OpSw Values" tab displays the individual "OpSw" settings which correspond to
+          the settings found on the "Basic Settings" tab.  Changes made on this tab will
+          immediately reflected on the "Basic Settings" tab.</p>
       <p>The "Read full Sheet" pushbutton may be used to read the OpSws from the 
           addressed DS64.  The "Write Full Sheet" pushbutton may be used to write 
           the OpSw values to the addressed DS64.</p>
@@ -118,9 +119,10 @@
               the information that the top-most entry is "Unused", and then clear 
               the route display.  The remaining information from the route remains 
               un-modified in the DS64.  It cannot be executed as a route.
-              A "read full sheet" operation, for the route, will display the remaining 
+              A "Read full sheet" operation, for the route, will display the remaining
               "orphaned" route information.
       </ul>
+
       <!--#include virtual="/Footer" -->
     </div>
   </div>

@@ -8,7 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Stores User Preferences on how to deal with syncronising the Ecos Database
+ * Stores User Preferences on how to deal with synchronising the Ecos Database
  * with JMRI.
  *
  * @author Kevin Dickerson Copyright (C) 2009
@@ -53,9 +53,7 @@ public class EcosPreferences /*implements java.beans.PropertyChangeListener*/ {
     ShutDownTask ecosPreferencesShutDownTask = null;
 
     public static final int ASK = 0x00; // ie always ask the question
-    @SuppressWarnings("unused")
     public static final int NO = 0x01; //ie never do the operation
-    @SuppressWarnings("unused")
     public static final int YES = 0x02; //ie always perform the operation
 
     private boolean _changeMade = false;

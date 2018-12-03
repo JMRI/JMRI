@@ -54,7 +54,7 @@ public class TrafficController implements jmri.CommandStation {
      *                in the current implementation
      */
     @Override
-    public void sendPacket(byte[] packet, int repeats) {
+    public boolean sendPacket(byte[] packet, int repeats) {
 
         if (repeats != 1) {
             log.warn("Only single transmissions currently available");
@@ -66,7 +66,7 @@ public class TrafficController implements jmri.CommandStation {
         if (msgAsInt[0] == 0) {
             // failed to make packet
             log.error("Failed to convert packet to transmitable form: {}", java.util.Arrays.toString(packet));
-            return;
+            return false;
         }
 
         // have to recopy & reformat, as there's only a byte write in Java 1
@@ -94,6 +94,7 @@ public class TrafficController implements jmri.CommandStation {
         } catch (IOException e) {
             log.warn("sendMessage: Exception: {}", e.getMessage());
         }
+        return true;
     }
 
     // methods to connect/disconnect to a source of data in an AbstractSerialPortController

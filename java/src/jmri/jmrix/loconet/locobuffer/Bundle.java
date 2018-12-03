@@ -19,12 +19,13 @@ import javax.annotation.ParametersAreNonnullByDefault;
  * Convention is to provide a subclass of this name
  * in each package, working off the local resource bundle name.
  *
- * @author      Bob Jacobsen  Copyright (C) 2012
- * @since       3.7.2
+ * @author Bob Jacobsen  Copyright (C) 2012
+ * @since 3.7.2
  */
 public class Bundle extends jmri.jmrix.loconet.Bundle {
 
-    @Nullable private static final String name = null; // No local resources
+    @Nullable
+    private static final String name = null; // No local resources
 
     //
     // below here is boilerplate to be copied exactly

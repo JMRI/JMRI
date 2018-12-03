@@ -3,6 +3,7 @@ package jmri.server.json.reporter;
 import static jmri.server.json.JSON.NAME;
 import static jmri.server.json.JSON.PUT;
 import static jmri.server.json.reporter.JsonReporter.REPORTER;
+import static jmri.server.json.reporter.JsonReporter.REPORTERS;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import java.beans.PropertyChangeEvent;
@@ -17,6 +18,8 @@ import jmri.ReporterManager;
 import jmri.server.json.JsonConnection;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonSocketService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -24,7 +27,10 @@ import jmri.server.json.JsonSocketService;
  */
 public class JsonReporterSocketService extends JsonSocketService<JsonReporterHttpService> {
 
-    private final HashMap<String, ReporterListener> reporters = new HashMap<>();
+    private final HashMap<String, ReporterListener> reporterListeners = new HashMap<>();
+    private final ReportersListener reportersListener = new ReportersListener();
+    private final static Logger log = LoggerFactory.getLogger(JsonReporterSocketService.class);
+
 
     public JsonReporterSocketService(JsonConnection connection) {
         super(connection, new JsonReporterHttpService(connection.getObjectMapper()));
@@ -39,12 +45,12 @@ public class JsonReporterSocketService extends JsonSocketService<JsonReporterHtt
         } else {
             this.connection.sendMessage(this.service.doPost(type, name, data, locale));
         }
-        if (!this.reporters.containsKey(name)) {
+        if (!this.reporterListeners.containsKey(name)) {
             Reporter reporter = InstanceManager.getDefault(ReporterManager.class).getReporter(name);
             if (reporter != null) {
                 ReporterListener listener = new ReporterListener(reporter);
                 reporter.addPropertyChangeListener(listener);
-                this.reporters.put(name, listener);
+                this.reporterListeners.put(name, listener);
             }
         }
     }
@@ -53,14 +59,30 @@ public class JsonReporterSocketService extends JsonSocketService<JsonReporterHtt
     public void onList(String type, JsonNode data, Locale locale) throws IOException, JmriException, JsonException {
         this.setLocale(locale);
         this.connection.sendMessage(this.service.doGetList(type, locale));
+        log.debug("adding ReportersListener");
+        InstanceManager.getDefault(ReporterManager.class).addPropertyChangeListener(reportersListener); //add parent listener
+        addListenersToChildren();
     }
+
+    private void addListenersToChildren() {
+        InstanceManager.getDefault(ReporterManager.class).getSystemNameList().stream().forEach((rn) -> { //add listeners to each child (if not already)
+            if (!reporterListeners.containsKey(rn)) {
+                log.debug("adding ReporterListener for Reporter '{}'", rn);
+                Reporter r = InstanceManager.getDefault(ReporterManager.class).getReporter(rn);
+                if (r != null) {
+                    reporterListeners.put(rn, new ReporterListener(r));
+                    r.addPropertyChangeListener(this.reporterListeners.get(rn));
+                }
+            }
+        });
+    }    
 
     @Override
     public void onClose() {
-        reporters.values().stream().forEach((reporter) -> {
+        reporterListeners.values().stream().forEach((reporter) -> {
             reporter.reporter.removePropertyChangeListener(reporter);
         });
-        reporters.clear();
+        reporterListeners.clear();
     }
 
     private class ReporterListener implements PropertyChangeListener {
@@ -73,8 +95,7 @@ public class JsonReporterSocketService extends JsonSocketService<JsonReporterHtt
 
         @Override
         public void propertyChange(PropertyChangeEvent e) {
-            // If the Commanded State changes, show transition state as "<inconsistent>"
-            if (e.getPropertyName().equals("currentReport")) {
+//            if (e.getPropertyName().equals("currentReport")) {
                 try {
                     try {
                         connection.sendMessage(service.doGet(REPORTER, this.reporter.getSystemName(), getLocale()));
@@ -84,10 +105,36 @@ public class JsonReporterSocketService extends JsonSocketService<JsonReporterHtt
                 } catch (IOException ex) {
                     // if we get an error, de-register
                     reporter.removePropertyChangeListener(this);
-                    reporters.remove(this.reporter.getSystemName());
+                    reporterListeners.remove(this.reporter.getSystemName());
                 }
+//            }
+        }
+    }
+    
+    private class ReportersListener implements PropertyChangeListener {
+        @Override
+        public void propertyChange(PropertyChangeEvent evt) {
+            log.debug("in ReportersListener for '{}' ('{}' => '{}')", evt.getPropertyName(), evt.getOldValue(), evt.getNewValue());
+
+            try {
+                try {
+                 // send the new list
+                    connection.sendMessage(service.doGetList(REPORTERS, getLocale()));
+                    //child added or removed, reset listeners
+                    if (evt.getPropertyName().equals("length")) { // NOI18N
+                        addListenersToChildren();
+                    }
+                } catch (JsonException ex) {
+                    log.warn("json error sending Reporters: {}", ex.getJsonMessage());
+                    connection.sendMessage(ex.getJsonMessage());
+                }
+            } catch (IOException ex) {
+                // if we get an error, de-register
+                log.debug("deregistering reportersListener due to IOException");
+                InstanceManager.getDefault(ReporterManager.class).removePropertyChangeListener(reportersListener);
             }
         }
     }
+    
 
 }

@@ -93,6 +93,11 @@ public class RaspberryPiSensor extends AbstractSensor implements GpioPinListener
 
     @Override
     public void dispose() {
+	try {
+            gpio.unprovisionPin(pin);
+	} catch ( com.pi4j.io.gpio.exception.GpioPinNotProvisionedException npe ){
+            log.trace("Pin not provisioned, was this sensor already disposed?");
+	}	
         super.dispose();
     }
 

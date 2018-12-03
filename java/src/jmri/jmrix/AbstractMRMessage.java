@@ -104,7 +104,7 @@ abstract public class AbstractMRMessage extends AbstractMessage {
      * timeout is needed before the next message can be sent.
      * <p>
      * If this returns false, the transmit queue will immediately go on to
-     * transmitt the next message (if any).
+     * transmit the next message (if any).
      */
     public boolean replyExpected() {
         return true;

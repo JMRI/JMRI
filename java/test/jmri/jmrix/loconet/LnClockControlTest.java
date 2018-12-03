@@ -84,8 +84,7 @@ public class LnClockControlTest {
         Assert.assertEquals("message 1", "EF 0E 7B 01 7B 78 43 06 68 01 00 00 00 00", lnis.outbound.get(0).toString());
         Assert.assertEquals("message 2", "BB 7B 00 00", lnis.outbound.get(1).toString());     
     }
-    
-    // The minimal setup for log4J
+
     @Before
     public void setUp() {
         JUnitUtil.setUp();

@@ -182,17 +182,17 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
         getContentPane().add(p3);
         getContentPane().add(pB);
 
-        // setup buttons
+        // set up buttons
         addButtonAction(addTypeButton);
         addButtonAction(deleteScheduleButton);
         addButtonAction(addScheduleButton);
         addButtonAction(saveScheduleButton);
 
-        // setup radio buttons
+        // set up radio buttons
         addRadioButtonAction(sequentialRadioButton);
         addRadioButtonAction(matchRadioButton);
 
-        // setup combobox
+        // set up combobox
         loadTypeComboBox();
 
         // build menu
@@ -321,11 +321,16 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
             if (!_track.getScheduleId().equals(_schedule.getId())) {
                 InstanceManager.getDefault(LocationManager.class).resetMoves();
             }
-            _track.setScheduleId(_schedule.getId());
+            _track.setSchedule(_schedule);
             if (sequentialRadioButton.isSelected()) {
                 _track.setScheduleMode(Track.SEQUENTIAL);
             } else {
                 _track.setScheduleMode(Track.MATCH);
+            }
+            // check for errors, ignore no schedule items error when creating a new schedule
+            String status = _track.checkScheduleValid();
+            if (_schedule.getItemsBySequenceList().size() != 0 && !status.equals(Track.SCHEDULE_OKAY)) {
+                JOptionPane.showMessageDialog(this, status, Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             }
         }
 

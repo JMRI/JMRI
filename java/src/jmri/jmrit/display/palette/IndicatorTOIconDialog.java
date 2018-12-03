@@ -21,16 +21,11 @@ public class IndicatorTOIconDialog extends IconDialog {
 
     String _key;
 
-    /**
-     * Constructor for existing family to change icons, add/delete icons, or to
-     * delete the family.
-     */
     public IndicatorTOIconDialog(String type, String family, IndicatorTOItemPanel parent, String key,
             HashMap<String, NamedIcon> iconMap) {
         super(type, key, parent, iconMap); // temporarily use key for family to set JL
         _family = family;
         _key = key;
-        sizeLocate();
         log.debug("IndicatorTOIconDialog ctor done. type= \"{}\" family =\"{}\", key= \"{}\"", type, family, key);
     }
 
@@ -132,7 +127,6 @@ public class IndicatorTOIconDialog extends IconDialog {
         if (_family != null && _family.equals(subFamily)) {
             ItemPalette.removeLevel4IconMap(_type, _parent._family, subFamily);
         }
-//        InstanceManager.getDefault(ImageIndexEditor.class).indexChanged(true);
         return addFamilySet(_parent._family, _iconMap, subFamily);
     }
 

@@ -64,6 +64,7 @@ public class OBlockTableActionTest extends jmri.util.SwingTestCase {
     protected void setUp() throws Exception {
         super.setUp();
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
     }
 

@@ -14,7 +14,7 @@ import purejavacomm.UnsupportedCommOperationException;
  * jmri.jmrix.loconet.intellibox package is for the first version of Uhlenbrock
  * Intellibox, whereas this package (jmri.jmrix.loconet.uhlenbrock is for the
  * Intellibox II and the IB-COM.
- * <P>
+ * <p>
  * Since this is by definition connected to an Intellibox II or IB-COM, the
  * command station prompt is suppressed.
  *

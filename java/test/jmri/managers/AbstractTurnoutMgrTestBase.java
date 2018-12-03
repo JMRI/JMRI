@@ -16,7 +16,7 @@ import org.junit.Test;
  *
  * @author Bob Jacobsen
  */
-public abstract class AbstractTurnoutMgrTestBase extends AbstractManagerTestBase<TurnoutManager> {
+public abstract class AbstractTurnoutMgrTestBase extends AbstractManagerTestBase<TurnoutManager, Turnout> {
 
     // implementing classes must implement to convert integer (count) to a system name
     abstract public String getSystemName(int i);
@@ -68,6 +68,15 @@ public abstract class AbstractTurnoutMgrTestBase extends AbstractManagerTestBase
         Assert.assertNotNull("real object returned ", t);
         Assert.assertEquals("user name correct ", t, l.getByUserName("mine"));
         Assert.assertEquals("system name correct ", t, l.getBySystemName(getSystemName(getNumToTest1())));
+    }
+
+    @Test
+    public void testProvideName() {
+        // create
+        Turnout t = l.provide("" + getNumToTest1());
+        // check
+        Assert.assertTrue("real object returned ", t != null);
+        Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
     }
 
     @Test

@@ -461,28 +461,6 @@ abstract public class PaneProgFrame extends JmriJFrame
                 resetMenu.setEnabled(true);
             }
         }
-        // and build the GUI
-        loadProgrammerFile(pRosterEntry);
-
-        // optionally, add extra panes from the decoder file
-        Attribute a;
-        if ((a = programmerRoot.getChild("programmer").getAttribute("decoderFilePanes")) != null
-                && a.getValue().equals("yes")) {
-            if (decoderRoot != null) {
-                if (log.isDebugEnabled()) {
-                    log.debug("will process " + decoderPaneList.size() + " pane definitions from decoder file");
-                }
-                for (int i = 0; i < decoderPaneList.size(); i++) {
-                    // load each pane
-                    String pname = jmri.util.jdom.LocaleSelector.getAttribute(decoderPaneList.get(i), "name");
-
-                    // handle include/exclude
-                    if (isIncludedFE(decoderPaneList.get(i), modelElem, _rosterEntry, "", "")) {
-                        newPane(pname, decoderPaneList.get(i), modelElem, true, false);  // show even if empty not a programmer pane
-                    }
-                }
-            }
-        }
 
         // set the programming mode
         if (pProg != null) {
@@ -527,12 +505,35 @@ abstract public class PaneProgFrame extends JmriJFrame
             }
         }
 
+        // and build the GUI (after programmer mode because it depends on what's available)
+        loadProgrammerFile(pRosterEntry);
+
+        // optionally, add extra panes from the decoder file
+        Attribute a;
+        if ((a = programmerRoot.getChild("programmer").getAttribute("decoderFilePanes")) != null
+                && a.getValue().equals("yes")) {
+            if (decoderRoot != null) {
+                if (log.isDebugEnabled()) {
+                    log.debug("will process " + decoderPaneList.size() + " pane definitions from decoder file");
+                }
+                for (int i = 0; i < decoderPaneList.size(); i++) {
+                    // load each pane
+                    String pname = jmri.util.jdom.LocaleSelector.getAttribute(decoderPaneList.get(i), "name");
+
+                    // handle include/exclude
+                    if (isIncludedFE(decoderPaneList.get(i), modelElem, _rosterEntry, "", "")) {
+                        newPane(pname, decoderPaneList.get(i), modelElem, true, false);  // show even if empty not a programmer pane
+                    }
+                }
+            }
+        }
+
         // now that programmer is configured, set the programming GUI
-        setProgrammingGui(tempPane);
+        setProgrammingGui(tempPane);        
 
         pack();
 
-        if (log.isDebugEnabled()) {
+        if (log.isDebugEnabled()) {  // because size elements take time
             log.debug("PaneProgFrame \"" + pFrameTitle
                     + "\" constructed for file " + _rosterEntry.getFileName()
                     + ", unconstrained size is " + super.getPreferredSize()

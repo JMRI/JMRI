@@ -3,6 +3,7 @@
 <enumVal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <enumChoice choice="None">
     <choice>None</choice>
+	<choice xml:lang="da">Ingen</choice>
     <choice xml:lang="cs">Nic</choice>
     <choice xml:lang="fr">Aucun</choice>
     <choice xml:lang="it">Nessuna</choice>
@@ -11,6 +12,7 @@
   </enumChoice>
   <enumChoice choice="Horn">
     <choice>Horn</choice>
+	<choice xml:lang="da">Horn</choice>
     <choice xml:lang="cs">Píšťala</choice>
     <choice xml:lang="fr">Corne</choice>
     <choice xml:lang="it">Tromba</choice>
@@ -19,6 +21,7 @@
   </enumChoice>
   <enumChoice choice="Bell">
     <choice>Bell</choice>
+	<choice xml:lang="da">Klokke</choice>
     <choice xml:lang="cs">Zvon</choice>
     <choice xml:lang="fr">Cloche</choice>
     <choice xml:lang="it">Campana</choice>

@@ -174,7 +174,6 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         if (type.equals(jmri.AddressedProgrammerManager.class)) {
             return getProgrammerManager().isAddressedModePossible();
         }
-
         if (type.equals(jmri.PowerManager.class)) {
             return true;
         }

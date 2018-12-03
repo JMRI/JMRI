@@ -132,6 +132,7 @@ public class TurnoutIconTest extends PositionableIconTest {
     @Override
     public void setUp() {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
         if (!GraphicsEnvironment.isHeadless()) {
            editor = new jmri.jmrit.display.panelEditor.PanelEditor("Test TurnoutIcon Panel");
            Editor e = new EditorScaffold();

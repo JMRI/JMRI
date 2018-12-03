@@ -7,25 +7,41 @@ import org.slf4j.LoggerFactory;
 /**
  * Implements a LocoNetInterface by doing a scatter-gather to another, simpler
  * implementation.
- * <P>
+ * <p>
  * This is intended for remote operation, where only one copy of each message
- * should go to/from another node. By putting a LnTrafficRouter implementation
+ * should go to/from another node. By putting an LnTrafficRouter implementation
  * at the remote node, all of the routing of messages to multiple consumers can
  * be done without traffic over the connection.
  *
  * @author Bob Jacobsen Copyright (C) 2002
- *
  */
 public class LnTrafficRouter extends LnTrafficController implements LocoNetListener {
 
+    /**
+     * Create a default LnTrafficRouter instance without a SystemConnectionMemo.
+     * Not compatible with multi connections.
+     *
+     * @deprecated since 4.11.6, use LnTrafficRouter(LocoNetSystemConnectionMemo) instead
+     */
+    @Deprecated
     @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "Only used during system initialization") // NOI18N
     public LnTrafficRouter() {
-        // set the instance to point here
-        self = this;
     }
 
-    // The methods to implement the LocoNetInterface for clients.
+    /**
+     * Create a default instance connected to a given SystemConnectionMemo.
+     *
+     * @since 4.11.6
+     * @param m the connected LocoNetSystemConnectionMemo
+     */
+    public LnTrafficRouter(LocoNetSystemConnectionMemo m) {
+        // set the memo to point here
+        memo = m;
+        m.setLnTrafficController(this);
+    }
+
+    // Methods to implement the LocoNetInterface for clients.
     // These use the parent implementations of listeners, addLocoNetListener,
     // removeLocoNetListener, notify
     boolean connected = false;
@@ -100,4 +116,5 @@ public class LnTrafficRouter extends LnTrafficController implements LocoNetListe
     }
 
     private final static Logger log = LoggerFactory.getLogger(LnTrafficRouter.class);
+
 }

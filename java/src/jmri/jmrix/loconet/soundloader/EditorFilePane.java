@@ -18,15 +18,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Pane for editing Digitrax SPJ files
+ * Pane for editing Digitrax SPJ files.
  *
  * @author Bob Jacobsen Copyright (C) 2006, 2010
  */
 public class EditorFilePane extends javax.swing.JPanel {
 
     // GUI member declarations
-    static ResourceBundle res = ResourceBundle.getBundle("jmri.jmrix.loconet.soundloader.Editor");
-
     SpjFile file;
     EditorTableDataModel dataModel;
 
@@ -64,7 +62,7 @@ public class EditorFilePane extends javax.swing.JPanel {
         bottom.setLayout(new BoxLayout(bottom, BoxLayout.Y_AXIS));
 
         JPanel p1 = new JPanel();
-        p1.add(new JLabel(res.getString("LabelSize")));
+        p1.add(new JLabel(Bundle.getMessage("LabelSize")));
         JTextField t1 = new JTextField(12);
         t1.setEditable(false);
         p1.add(t1);

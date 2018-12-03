@@ -29,21 +29,28 @@ public abstract class AbstractTurnoutTestBase {
     @Before
     abstract public void setUp();    	// load t with actual object; create scaffolds as needed
 
-    abstract public int numListeners();	// return number of listeners registered with the TrafficController
+    /** 
+     * @return number of listeners registered with the TrafficController by the object under test
+     */
+    abstract public int numListeners();
 
     abstract public void checkThrownMsgSent() throws InterruptedException;
 
     abstract public void checkClosedMsgSent() throws InterruptedException;
 
-    protected Turnout t = null;	// holds objects under test
+    protected Turnout t = null;	// holds objects under test; set by setUp()
 
     static protected boolean listenerResult = false;
+    static protected int listenStatus = Turnout.UNKNOWN;
 
-    protected class Listen implements PropertyChangeListener {
+    public class Listen implements PropertyChangeListener {
 
         @Override
         public void propertyChange(java.beans.PropertyChangeEvent e) {
             listenerResult = true;
+            if(e.getPropertyName().equals("KnownState")){
+		    listenStatus = ((Integer) e.getNewValue()).intValue();
+	    }
         }
     }
 
@@ -82,8 +89,7 @@ public abstract class AbstractTurnoutTestBase {
 
     @Test
     public void testDispose() {
-        t.setCommandedState(Turnout.CLOSED);  	// in case registration with TrafficController
-        //is deferred to after first use
+        t.setCommandedState(Turnout.CLOSED);  	// in case registration with TrafficController is deferred to after first use
         t.dispose();
         Assert.assertEquals("controller listeners remaining", 0, numListeners());
     }
@@ -203,10 +209,14 @@ public abstract class AbstractTurnoutTestBase {
     public void testOneSensorFeedback() throws jmri.JmriException {
         Sensor s1 = InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("IS1");
         t.setFeedbackMode(Turnout.ONESENSOR); 
+        listenStatus = Turnout.UNKNOWN;
+        t.addPropertyChangeListener(new Listen());
         t.provideFirstFeedbackSensor("IS1");
         s1.setKnownState(Sensor.INACTIVE);
         Assert.assertEquals("known state for ONESENSOR feedback Inactive",Turnout.CLOSED,t.getKnownState());
+        Assert.assertEquals("listener notified of change for ONESENSOR feedback",Turnout.CLOSED,listenStatus);
         s1.setKnownState(Sensor.ACTIVE);
+        Assert.assertEquals("listener notified of change for ONESENSOR feedback",Turnout.THROWN,listenStatus);
         Assert.assertEquals("known state for ONESENSOR feedback active",Turnout.THROWN,t.getKnownState());
     }
 
@@ -214,10 +224,13 @@ public abstract class AbstractTurnoutTestBase {
     public void testTwoSensorFeedback() throws jmri.JmriException {
         Sensor s1 = InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("IS1");
         Sensor s2 = InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("IS2");
-        t.setFeedbackMode(Turnout.TWOSENSOR); 
         t.provideFirstFeedbackSensor("IS1");
         t.provideSecondFeedbackSensor("IS2");
+        t.setFeedbackMode(Turnout.TWOSENSOR); 
         Assert.assertEquals("known state for TWOSENSOR feedback (UNKNOWN,UNKNOWN)",Turnout.UNKNOWN,t.getKnownState());
+
+	    listenStatus = Turnout.UNKNOWN;
+	    t.addPropertyChangeListener(new Listen());
 
         s1.setKnownState(Sensor.ACTIVE);
         s2.setKnownState(Sensor.INACTIVE);
@@ -228,6 +241,8 @@ public abstract class AbstractTurnoutTestBase {
 
         Assert.assertEquals("state changed by TWOSENSOR feedback (Active,Inactive)", Turnout.THROWN, t.getKnownState());
 
+        Assert.assertEquals("listener notified of change for TWOSENSOR feedback",Turnout.THROWN,listenStatus);
+
         s1.setKnownState(Sensor.INACTIVE);
         s2.setKnownState(Sensor.INACTIVE);
         Assert.assertEquals("known state for TWOSENSOR feedback (Inactive,Inactive)",Turnout.INCONSISTENT,t.getKnownState());
@@ -236,9 +251,41 @@ public abstract class AbstractTurnoutTestBase {
         s2.setKnownState(Sensor.ACTIVE);
         Assert.assertEquals("state changed by TWOSENSOR feedback (Inactive,Active)", Turnout.CLOSED, t.getKnownState());
 
+        Assert.assertEquals("listener notified of change for TWOSENSOR feedback ",Turnout.CLOSED,listenStatus);
+
         s1.setKnownState(Sensor.ACTIVE);
         s2.setKnownState(Sensor.ACTIVE);
         Assert.assertEquals("state changed by TWOSENSOR feedback (Active,Active)", Turnout.INCONSISTENT, t.getKnownState());
+    }
+
+    @Test 
+    public void testDirectFeedback() throws Exception {
+
+        // DIRECT mode is implemented in the AbstractTurnout class, so
+	// it is possible on all systems.
+	if(t.getFeedbackMode() != Turnout.DIRECT){
+		t.setFeedbackMode(Turnout.DIRECT);
+	}
+        Assert.assertEquals(Turnout.DIRECT, t.getFeedbackMode());
+
+	listenStatus = Turnout.UNKNOWN;
+	t.addPropertyChangeListener(new Listen());
+        
+        // Check that state changes appropriately
+        t.setCommandedState(Turnout.THROWN);
+        checkThrownMsgSent();
+        Assert.assertEquals(t.getState(), Turnout.THROWN);
+	Assert.assertEquals("listener notified of change for DIRECT feedback",Turnout.THROWN,listenStatus);
+
+	t.setCommandedState(Turnout.CLOSED);
+        checkClosedMsgSent();
+        Assert.assertEquals(t.getState(), Turnout.CLOSED);
+	Assert.assertEquals("listener notified of change for DIRECT feedback",Turnout.CLOSED,listenStatus);
+    }
+
+    @Test
+    public void testGetBeanType(){
+         Assert.assertEquals("bean type",t.getBeanType(),Bundle.getMessage("BeanNameTurnout"));
     }
 
 }

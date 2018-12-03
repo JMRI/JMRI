@@ -16,12 +16,12 @@ public class OsIndicatorFrame extends jmri.util.JmriJFrame {
 
     @Override
     public void initComponents() {
-        addHelpMenu("package.jmri.jmrit.ussctc.OsIndicatorFrame", true);
+        addHelpMenu("package.jmri.jmrit.ussctc.OsIndicatorFrame", true); // NOI18N
 
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
         getContentPane().add(new OsIndicatorPanel());
-        setTitle(OsIndicatorPanel.rb.getString("TitleOsIndicator"));
+        setTitle(Bundle.getMessage("TitleOsIndicator")); // NOI18N
 
         // pack to cause display
         pack();

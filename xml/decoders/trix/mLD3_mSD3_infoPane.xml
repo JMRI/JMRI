@@ -37,10 +37,10 @@
         <text xml:lang="fr">Type Décodeur </text>
         <text xml:lang="it">Tipo di Decoder </text>
       </label>
-      <display item="Decoder Type Byte 4" label=""/>
-      <display item="Decoder Type Byte 3" label=""/>
-      <display item="Decoder Type Byte 2" label=""/>
       <display item="Decoder Type Byte 1" label=""/>
+      <display item="Decoder Type Byte 2" label=""/>
+      <display item="Decoder Type Byte 3" label=""/>
+      <display item="Decoder Type Byte 4" label=""/>
     </row>
     <label>
       <text> </text>
@@ -56,10 +56,13 @@
         <text xml:lang="fr">Version du Firmware </text>
         <text xml:lang="it">Versione del Firmware </text>
       </label>
-      <display item="Firmware Version Byte 4" label=""/>
-      <display item="Firmware Version Byte 3" label=""/>
-      <display item="Firmware Version Byte 2" label=""/>
       <display item="Firmware Version Byte 1" label=""/>
+      <label><text>.</text></label>
+      <display item="Firmware Version Byte 2" label=""/>
+      <label><text>.</text></label>
+      <display item="Firmware Version Byte 3" label=""/>
+      <label><text>.</text></label>
+      <display item="Firmware Version Byte 4" label=""/>
     </row>
   </column>
 </pane>

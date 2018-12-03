@@ -13,6 +13,9 @@ public class LocoNetMenu extends JMenu {
     /**
      * Create a LocoNet menu. Preloads the TrafficController to certain actions.
      * Actions will open new windows.
+     * <p>
+     * @param memo      {@link jmri.jmrix.loconet.LocoNetSystemConnectionMemo} to
+     *                  be used by this object
      */
     public LocoNetMenu(LocoNetSystemConnectionMemo memo) {
         super();

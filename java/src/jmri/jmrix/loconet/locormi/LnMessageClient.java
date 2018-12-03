@@ -11,16 +11,16 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Client for the RMI LocoNet server.
- * <P>
+ * <p>
  * The main() in this class is for test purposes only.
  *
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
@@ -61,8 +61,8 @@ public class LnMessageClient extends LnTrafficRouter {
         }
     }
 
-    // messages that are received from the server should
-    // be passed to this.notify(LocoNetMessage m);
+    // Messages that are received from the server should
+    // be passed to this.notify(LocoNetMessage m)
     /**
      * Start the connection to the server. This is invoked once.
      */
@@ -85,7 +85,7 @@ public class LnMessageClient extends LnTrafficRouter {
             LnMessageServerInterface lnServer = (LnMessageServerInterface) java.rmi.Naming.lookup(
                     "//" + serverName + "/" + LnMessageServer.serviceName); // NOI18N
 
-            lnMessageBuffer = lnServer.getMessageBuffer();
+            lnMessageBuffer = lnServer.getMessageBuffer(clientMemo.getLnTrafficController());
             lnMessageBuffer.enable(0);
             pollThread = new LnMessageClientPollThread(this);
         } catch (java.rmi.NotBoundException | java.rmi.RemoteException | java.net.MalformedURLException ex) {
@@ -120,4 +120,5 @@ public class LnMessageClient extends LnTrafficRouter {
     }
 
     private final static Logger log = LoggerFactory.getLogger(LnMessageClient.class);
+
 }

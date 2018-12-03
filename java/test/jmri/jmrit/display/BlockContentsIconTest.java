@@ -35,6 +35,7 @@ public class BlockContentsIconTest extends PositionableLabelTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
         JUnitUtil.initConfigureManager();
         if(!GraphicsEnvironment.isHeadless()){
            editor = new EditorScaffold();

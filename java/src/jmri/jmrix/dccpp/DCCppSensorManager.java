@@ -59,7 +59,7 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
     public Sensor createNewSensor(String systemName, String userName) throws IllegalArgumentException {
         int addr;
         try {
-            addr = Integer.valueOf(systemName.substring(getSystemPrefix().length() + 1)).intValue();
+            addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("Can't convert " +  // NOI18N
                     systemName.substring(getSystemPrefix().length() + 1) +
@@ -140,8 +140,8 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
             // Address format passed is in the form of encoderAddress:input or T:turnout address
             int seperator = curAddress.indexOf(":");
             try {
-                encoderAddress = Integer.valueOf(curAddress.substring(0, seperator)).intValue();
-                input = Integer.valueOf(curAddress.substring(seperator + 1)).intValue();
+                encoderAddress = Integer.parseInt(curAddress.substring(0, seperator));
+                input = Integer.parseInt(curAddress.substring(seperator + 1));
             } catch (NumberFormatException ex) {
                 log.error("Unable to convert {} into the cab and input format of nn:xx", curAddress);
                 JOptionPane.showMessageDialog(null, Bundle.getMessage("WarningAddressAsNumber"),
@@ -211,8 +211,8 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
         // name must be in the DCCppSnnnnn format (DCCPP prefix is user configurable)
         int num = 0;
         try {
-            num = Integer.valueOf(systemName.substring(
-                    getSystemPrefix().length() + 1, systemName.length())).intValue();
+            num = Integer.parseInt(systemName.substring(
+                    getSystemPrefix().length() + 1, systemName.length()));
         } catch (Exception e) {
             log.debug("invalid character in number field of system name: {}", systemName);
             return (0);

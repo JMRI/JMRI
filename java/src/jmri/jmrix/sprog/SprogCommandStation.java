@@ -105,7 +105,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
      * @param repeats number of times to repeat the packet
      */
     @Override
-    public void sendPacket(byte[] packet, int repeats) {
+    public boolean sendPacket(byte[] packet, int repeats) {
         if (packet.length <= 1) {
             log.error("Invalid DCC packet length: {}", packet.length);
         }
@@ -114,6 +114,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
         }
         final SprogMessage m = new SprogMessage(packet);
         sendMessage(m);
+        return true;
     }
 
     /**

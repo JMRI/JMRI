@@ -4,8 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * A specialization of the LocoNet Throttle for Intellibox-II foibles
- * <P>
+ * A specialization of the LocoNet Throttle for Intellibox-II foibles.
+ *
  * @author Bob Jacobsen Copyright (C) 2014
  */
 public class Ib2Throttle extends LocoNetThrottle {

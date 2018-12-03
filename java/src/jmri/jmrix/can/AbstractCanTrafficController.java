@@ -28,12 +28,6 @@ abstract public class AbstractCanTrafficController
         allowUnexpectedReply = true;
     }
 
-    @Override
-    @Deprecated
-    protected void setInstance() {
-
-    }
-
     // The methods to implement the CAN Interface
     @Override
     public synchronized void addCanListener(CanListener l) {
@@ -65,10 +59,8 @@ abstract public class AbstractCanTrafficController
         Runnable r = new XmtNotifier(m, mLastSender, this);
         javax.swing.SwingUtilities.invokeLater(r);
 
-        // Create the correct concrete class for sending to the hardware
-        AbstractMRMessage hm = newMessage();
-
-        // Encode the message to be sent
+        // Create the correct concrete class for sending to the hardware and encode the message to be sent
+        AbstractMRMessage hm;
         if (((CanMessage) m).isTranslated()) {
             hm = m;
         } else {

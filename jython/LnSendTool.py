@@ -17,8 +17,13 @@
 import jmri
 
 import java
+import java.awt
+import java.awt.event
 import javax.swing
+
 typePacket = 0
+# set the intended LocoNet connection by its index; when you have just 1 connection index = 0
+connectionIndex = 0
 
 def whenSendButtonClicked(event) :
      # Based on user selection, prepare the arg for the specific LocoNet message
@@ -26,9 +31,9 @@ def whenSendButtonClicked(event) :
      lnAddress = int(lAddress.text) - 1    # get address from entry field and adjust for LocoNet
      ARG1 = lnAddress - ((lnAddress / 128) * 128)
      ARG2 = lnAddress / 128
-     ARG3 = ARG4 = ARG5 = ARG6 = ARG7 = ARG8 = ARG9 = 0 
+     ARG3 = ARG4 = ARG5 = ARG6 = ARG7 = ARG8 = ARG9 = 0
      msgLength = 4      # number of bytes in the LocoNet message - includes checksum
-     
+
      if  msgTypeBox.getSelectedItem() == "Switch" :
          opcode = 176        # 0xB0
          if msgActBox.getSelectedIndex() == 0 :  # if close
@@ -56,7 +61,7 @@ def whenSendButtonClicked(event) :
              ARG2 = ARG2 + 32                # set bit 5
          if msgActBox.getSelectedIndex() == 0 : # if Hi
              ARG2 = ARG2 + 16                # set bit 4
-             
+
      sendLoconetMsg(msgLength,opcode,ARG1,ARG2,ARG3,ARG4,ARG5,ARG6,ARG7,ARG8,ARG9)
      return
 
@@ -64,13 +69,13 @@ def whenSetButtonClicked(event) :
      # Based on user selection, prepare the LocoNet interrogation message
      msgTypeBox.setSelectedIndex(0)
      msgOutBox.setSelectedIndex(1)
-     
+
      if   interBox.getSelectedItem() == "1017c" :
          lAddress.setText("1017")     # put address in field
          msgActBox.setSelectedIndex(0)
      elif  interBox.getSelectedItem() == "1017t" :
          lAddress.setText("1017")     # put address in field
-         msgActBox.setSelectedIndex(1) 
+         msgActBox.setSelectedIndex(1)
      elif  interBox.getSelectedItem() == "1018c" :
          lAddress.setText("1018")     # put address in field
          msgActBox.setSelectedIndex(0)
@@ -85,11 +90,11 @@ def whenSetButtonClicked(event) :
          msgActBox.setSelectedIndex(1)
      elif  interBox.getSelectedItem() == "1020c" :
          lAddress.setText("1020")     # put address in field
-         msgActBox.setSelectedIndex(0)         
+         msgActBox.setSelectedIndex(0)
      else :
          interBox.getSelectedItem() == "1020t"
          lAddress.setText("1020")     # put address in field
-         msgActBox.setSelectedIndex(1)  
+         msgActBox.setSelectedIndex(1)
      return
 
 def whenSendDccButtonClicked(event) :
@@ -97,8 +102,8 @@ def whenSendDccButtonClicked(event) :
      # OPC_IMM_PACKET      0xED    ;SEND n-byte packet immediate    LACK
      # <0xED>,<0B>,<7F>,<REPS>,<DHI>,<IM1>,<IM2>,<IM3>,<IM4>,<IM5>,<CHK>
      # <DHI>=<0,0,1,IM5.7-IM4.7,IM3.7,IM2.7,IM1.7>
-     # <REPS> D4,5,6=#IM bytes,D3=0(reserved); D2,1,0=repeat CNT 
-     global typePacket 
+     # <REPS> D4,5,6=#IM bytes,D3=0(reserved); D2,1,0=repeat CNT
+     global typePacket
      repeatCount = 1    # causes two DCC packets to be sent from command station
      numOfBytes = 2     # number of bytes in the DCC packet - not including checksum
      msgLength = 11     # number of bytes in the LocoNet message - includes checksum
@@ -107,7 +112,7 @@ def whenSendDccButtonClicked(event) :
      opcode3 = 127      # 0X7F
      dhi = 32
      im1 = im3 = im4 = im5 = 0
-     
+
      if  typePacket == 0 :
          im1 = 0
          im2 = 0
@@ -119,7 +124,7 @@ def whenSendDccButtonClicked(event) :
      elif  typePacket == 2 :   # Broadcast Stop
          im1 = 0
          im2 = 96
-     else :	    # Signal packet - 10AAAAAA 0 0AAA0aa1 0 000XXXXX 0 EEEEEEEE
+     else :     # Signal packet - 10AAAAAA 0 0AAA0aa1 0 000XXXXX 0 EEEEEEEE
                 # a - two low bit of the address
                 # A - address, X - aspect number
          addr = int(sgAddress.text) - 1 # change text to a number and subtrac one
@@ -138,7 +143,7 @@ def whenSendDccButtonClicked(event) :
          # print "im2 final", im2
          im3 = int(aspect.text)
          numOfBytes = 3
-         
+
      reps = repeatCount + (numOfBytes * 16)
      sendLoconetMsg(msgLength,opcode,opcode2,opcode3,reps,dhi,im1,im2,im3,im4,im5)
      return
@@ -162,8 +167,8 @@ def sendLoconetMsg(msgLength,opcode,ARG1,ARG2,ARG3,ARG4,ARG5,ARG6,ARG7,ARG8,ARG9
         packet.setElement(7, ARG7)
         packet.setElement(8, ARG8)
         packet.setElement(9, ARG9)
-      
-     jmri.jmrix.loconet.LnTrafficController.instance().sendLocoNetMessage(packet)
+
+     jmri.InstanceManager.getList(jmri.jmrix.loconet.LocoNetSystemConnectionMemo).get(connectionIndex).getLnTrafficController().sendLocoNetMessage(packet)
      print "Packet", packet           # print packet to Script Output window
      prevMsg.setText(str(packet))     # put packet in hex in field
      return
@@ -189,7 +194,7 @@ def whenSnButtonClicked(event) :
 
 def whenSgButtonClicked(event) :
      global typePacket
-     typePacket = 3 
+     typePacket = 3
      aspect.setEnabled(True)
      sgAddress.setEnabled(True)
      sgAddress.setToolTipText("Range 1-2040")
@@ -208,7 +213,7 @@ class MsgTypeListener(java.awt.event.ItemListener):
      def itemStateChanged(self, event):
          if (event.getItem() == "Switch") :
              # print msgTypeBox.getSelectedIndex(), "Selected index"
-      
+
              if (event.getStateChange() == java.awt.event.ItemEvent.SELECTED) :
                  # Switch selected
                  print event.getItem(), "Selected"
@@ -222,7 +227,7 @@ class MsgTypeListener(java.awt.event.ItemListener):
              else :
                  # Switch deselected
                  print event.getItem(), "Deselected"
-                 
+
          elif (event.getItem() == "Feedback") :
              if (event.getStateChange() == java.awt.event.ItemEvent.SELECTED) :
                  print event.getItem(), "Selected"
@@ -251,7 +256,7 @@ class MsgTypeListener(java.awt.event.ItemListener):
                  msgActBox.insertItemAt("Throw",1)
                  msgOutBox.setEnabled(True)
                  msgOutBox.setToolTipText(None)
-                 
+
          else :
              print "Error, unexpected item:", event.getItem()
          return
@@ -326,34 +331,34 @@ outputLabel = javax.swing.JLabel("             Output")  # insert spaces to help
 f = javax.swing.JFrame("LocoNet Send Tool")
 f.contentPane.setLayout(javax.swing.BoxLayout(f.contentPane, javax.swing.BoxLayout.Y_AXIS))
 
-group1 = javax.swing.ButtonGroup()	# create a radio button group
+group1 = javax.swing.ButtonGroup()  # create a radio button group
 group1.add(swButton)
 group1.add(fbButton)
 group1.add(snButton)
 group1.add(sgButton)
 
-radioPanel1 = javax.swing.JPanel()	# put the radio buttons in a panel
+radioPanel1 = javax.swing.JPanel()  # put the radio buttons in a panel
 radioPanel1.setLayout(javax.swing.BoxLayout(radioPanel1, javax.swing.BoxLayout.Y_AXIS))
 radioPanel1.add(swButton)
 radioPanel1.add(fbButton)
 radioPanel1.add(snButton)
 radioPanel1.add(sgButton)
 
-panela = javax.swing.JPanel()	# panel to hold interrogate and set button
+panela = javax.swing.JPanel()   # panel to hold interrogate and set button
 panela.add(interBox)
 panela.add(setButton)
 #    put a border around the interrogate selection box and set button
 panela.setBorder(javax.swing.BorderFactory.createMatteBorder(1,1,1,1, java.awt.Color.gray))
-panelb = javax.swing.JPanel()	# panel to hold send button
+panelb = javax.swing.JPanel()   # panel to hold send button
 panelb.add(sendButton)
-panelc = javax.swing.JPanel()	# panel to create a space
-panel = javax.swing.JPanel()	# panel to hold the following panels
-panel.add(panela)		# add the interrogate and set button panel
-panel.add(panelc)		# add a panel to put a space between the other panels
-panel.add(panelb)		# add the send button panel
+panelc = javax.swing.JPanel()   # panel to create a space
+panel = javax.swing.JPanel()    # panel to hold the following panels
+panel.add(panela)       # add the interrogate and set button panel
+panel.add(panelc)       # add a panel to put a space between the other panels
+panel.add(panelb)       # add the send button panel
 
-panel0 = javax.swing.JPanel()	# use panel to display items horizontally
-panel0.add(javax.swing.JLabel("Address"))	# put label discription before combobox
+panel0 = javax.swing.JPanel()   # use panel to display items horizontally
+panel0.add(javax.swing.JLabel("Address"))   # put label discription before combobox
 panel0.add(lAddress)
 
 panel1 = javax.swing.JPanel()
@@ -386,7 +391,7 @@ panel7.add(javax.swing.JLabel("------ DCC Packet ------"))
 panel8 = javax.swing.JPanel()
 panel8.add(sendDccButton)
 
-f.contentPane.add(panel0)	# put the buttons and panels in the frame
+f.contentPane.add(panel0)   # put the buttons and panels in the frame
 f.contentPane.add(panel1)
 f.contentPane.add(panel2)
 f.contentPane.add(panel3)
@@ -400,5 +405,3 @@ f.contentPane.add(panel8)
 f.contentPane.add(panel6)
 f.pack()
 f.show()
-
-

@@ -324,6 +324,9 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
         try {
             if (a != null) {
                 util.setFont(new Font(a.getValue(), util.getFontStyle(), util.getFontSize()));
+                // Reset util to the new instance
+                // The setFont process clones the current util instance but the rest of loadTextInfo used the orignal instance.
+                util = l.getPopupUtility();
             }
         } catch (NullPointerException e) {  // considered normal if the attributes are not present
         }

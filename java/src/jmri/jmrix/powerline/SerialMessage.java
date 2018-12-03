@@ -79,8 +79,6 @@ abstract public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
         return responseLength;
     }
 
-    abstract public String toMonitorString();
-
     // static methods to recognize a message
     public boolean isPoll() {
         return getElement(1) == 48;

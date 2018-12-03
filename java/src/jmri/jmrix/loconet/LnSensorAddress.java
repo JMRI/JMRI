@@ -5,27 +5,26 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Utilities for handling LocoNet sensor addresses.
- * <P>
+ * <p>
  * There are three addressing spaces for LocoNet sensors:
- * <UL>
- * <LI>The space used for DS54 inputs, where the least-significant-bit in the
- * address refers to the "Aux" and "Switch" inputs. These are represented by
- * system names of the form LSnnnA and LSnnnS respectively. nnn is then the
- * turnout number of the DS54 channel.
- * <LI>The space used for BDL16 inputs, where the card and section numbers are
- * part of the address. These are represented by names of the form LScccA1
- * through LScccA4, LScccB1 through LScccB4, and on through LScccD4. ccc is the
- * BDL16 card number.
- * <LI>A straight-forward numeric space, represented by LSmmm. Note that this is
- * a 1-4096 scheme, not a 0-4095.
- * </UL>
- * <P>
+ * <ul>
+ *   <li>The space used for DS54 inputs, where the least-significant-bit in the
+ *   address refers to the "Aux" and "Switch" inputs. These are represented by
+ *   system names of the form LSnnnA and LSnnnS respectively. nnn is then the
+ *   turnout number of the DS54 channel.
+ *   <li>The space used for BDL16 inputs, where the card and section numbers are
+ *   part of the address. These are represented by names of the form LScccA1
+ *   through LScccA4, LScccB1 through LScccB4, and on through LScccD4. ccc is the
+ *   BDL16 card number.
+ *   <li>A straight-forward numeric space, represented by LSmmm. Note that this is
+ *   a 1-4096 scheme, not a 0-4095.
+ * </ul>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
  * and used with permission as part of the JMRI project. That permission does
  * not extend to uses in other software products. If you wish to use this code,
  * algorithm or these message formats outside of JMRI, please contact Digitrax
  * Inc for separate permission.
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2001, 2002
  */
 public class LnSensorAddress {

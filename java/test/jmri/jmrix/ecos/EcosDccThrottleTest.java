@@ -2,13 +2,7 @@ package jmri.jmrix.ecos;
 
 import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  *
@@ -389,6 +383,7 @@ public class EcosDccThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @BeforeClass
     public static void earlySetup(){
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
         tc = new EcosInterfaceScaffold();
     }

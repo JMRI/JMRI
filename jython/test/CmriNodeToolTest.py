@@ -2,6 +2,7 @@
 
 import jmri
 import java
+import java.awt
 
 # create and self-register
 c = jmri.jmrix.cmri.CMRISystemConnectionMemo()

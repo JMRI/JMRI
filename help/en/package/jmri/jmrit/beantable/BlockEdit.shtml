@@ -92,8 +92,8 @@
         to select if the sensor will use the default sensor
         debounce values if configured.</li>
 
-        <li><b>Sensor Inactive Debounce</b> and <b>Sensor Active
-        Debounce</b> allow you to specify the amount of time in
+        <li><b>Inactive Delay</b> and <b>Active
+        Delay</b> allow you to specify the amount of time in
         milliseconds that the system waits before registering the
         state change of a sensor.</li>
       </ul>

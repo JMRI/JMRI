@@ -69,10 +69,6 @@ public abstract class LayoutTrack {
 
     // package-private
     static Color defaultTrackColor = Color.black;
-    //TODO: Add accessor methods
-    //TODO: Should these be 1)Global, 2)Per-layout, 3)Per-Block or 4)Per-Track?
-    static Color defaultBallastColor = Color.gray;
-    static Color defaultTieColor = new Color(122, 74, 50);
 
     /**
      * constructor method
@@ -111,6 +107,13 @@ public abstract class LayoutTrack {
      */
     public void setCoordsCenter(@Nonnull Point2D p) {
         center = p;
+    }
+
+    /**
+     * @return true if this track segment has decorations
+     */
+    public boolean hasDecorations() {
+        return false;
     }
 
     /**
@@ -201,7 +204,7 @@ public abstract class LayoutTrack {
     /**
      * highlight unconnected connections
      *
-     * @param g2 the graphics context
+     * @param g2           the graphics context
      * @param specificType the specific connection to draw (or NONE for all)
      */
     protected abstract void highlightUnconnected(Graphics2D g2, int specificType);

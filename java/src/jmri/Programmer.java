@@ -68,7 +68,7 @@ public interface Programmer {
      * @deprecated As of 4.1.1, use #writeCV(java.lang.String, int,
      * jmri.ProgListener)
      */
-    @Deprecated
+    @Deprecated // 4.1.1
     public void writeCV(int CV, int val, ProgListener p) throws ProgrammerException;
 
     /**
@@ -115,7 +115,7 @@ public interface Programmer {
      * @deprecated As of 4.1.1, use #readCV(java.lang.String, int,
      * jmri.ProgListener)
      */
-    @Deprecated
+    @Deprecated // 4.1.1
     public void readCV(int CV, ProgListener p) throws ProgrammerException;
 
     /**
@@ -162,7 +162,7 @@ public interface Programmer {
      * @deprecated As of 4.1.1, use #confirmCV(java.lang.String, int,
      * jmri.ProgListener)
      */
-    @Deprecated
+    @Deprecated // 4.1.1
     public void confirmCV(int CV, int val, ProgListener p) throws ProgrammerException;
 
     /**
@@ -275,6 +275,20 @@ public interface Programmer {
          * Programmer does a read after write to verify
          */
         ReadAfterWrite
+    }
+
+    /**
+     * wrapper to call {@link jmri.ProgListener#programmingOpReply} that verifies
+     * the specified progListener is not null.
+     *
+     * @param p listener to notify
+     * @param value result value or CV
+     * @param status code from jmri.ProgListener 
+     */
+    default public void notifyProgListenerEnd(ProgListener p, int value, int status) {
+        if ( p != null ) {
+           p.programmingOpReply(value, status);
+        }
     }
 
     public void addPropertyChangeListener(PropertyChangeListener p);

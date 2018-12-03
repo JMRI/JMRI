@@ -10,8 +10,10 @@ import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.util.*;
-
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.SortedSet;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -24,7 +26,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-
 import jmri.InstanceManager;
 import jmri.jmrit.catalog.DragJLabel;
 import jmri.jmrit.catalog.NamedIcon;
@@ -45,19 +46,18 @@ import org.slf4j.LoggerFactory;
  */
 public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelectionListener {
 
-    private OBlock _homeBlock;
-    private CircuitBuilder _parent;
+    private final OBlock _homeBlock;
+    private final CircuitBuilder _parent;
     private OBlock _adjacentBlock;
 
     private PortalList _portalList;
     private String _currentPortalName;   // name of last portal Icon made
 
-    private JTextField _portalName = new JTextField();
+    private final JTextField _portalName = new JTextField();
     private JPanel _dndPanel;
 
     static int STRUT_SIZE = 10;
-    static boolean _firstInstance = true;
-    static Point _loc = null;
+    static Point _loc = new Point(-1, -1);
     static Dimension _dim = null;
 
     /* Ctor for fix a portal error  */
@@ -112,12 +112,10 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
         JPanel border = new JPanel();
         border.setLayout(new java.awt.BorderLayout(10, 10));
         border.add(contentPane);
-        setContentPane(border);
+        setContentPane(new JScrollPane(border));
         pack();
-        if (_firstInstance) {
-            setLocationRelativeTo(_parent._editor);
-//            setSize(500,500);
-            _firstInstance = false;
+        if (_loc.x < 0) {
+            setLocation(jmri.util.PlaceWindow. nextTo(_parent._editor, null, this));
         } else {
             setLocation(_loc);
             setSize(_dim);
@@ -511,7 +509,7 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
      */
 
     private OBlock findAdjacentBlock(PortalIcon icon) {
-        ArrayList<OBlock> neighbors = new ArrayList<OBlock>();
+        ArrayList<OBlock> neighbors = new ArrayList<>();
         OBlockManager manager = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class);
         SortedSet<OBlock> oblocks = manager.getNamedBeanSet();
         for (OBlock block : oblocks) {

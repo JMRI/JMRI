@@ -5,10 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 import javax.annotation.Nonnull;
 
-import jmri.Manager;
-import jmri.Turnout;
-import jmri.TurnoutManager;
-import jmri.TurnoutOperationManager;
+import jmri.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,7 +32,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
     @Override
     public void addManager(Manager<Turnout> m) {
         super.addManager(m);
-        TurnoutOperationManager.getInstance().loadOperationTypes();
+        InstanceManager.getDefault(TurnoutOperationManager.class).loadOperationTypes();
     }
 
     /**

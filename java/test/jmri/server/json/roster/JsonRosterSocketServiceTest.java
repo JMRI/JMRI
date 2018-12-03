@@ -31,7 +31,11 @@ public class JsonRosterSocketServiceTest {
     @Before
     public void setUp() throws Exception {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
         JUnitUtil.initConfigureManager();
+
+        connection = new JsonMockConnection((DataOutputStream) null);
+
         InstanceManager.setDefault(Roster.class, new Roster("java/test/jmri/server/json/roster/data/roster.xml"));
         connection = new JsonMockConnection((DataOutputStream) null);
     }

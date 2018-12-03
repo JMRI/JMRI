@@ -181,8 +181,13 @@ public class LocoNetThrottledTransmitter implements LocoNetInterface {
         @Override
         public int compareTo(Delayed d) {
             // -1 means this is less than m
-            long delta = this.getDelay(TimeUnit.MILLISECONDS)
-                    - d.getDelay(TimeUnit.MILLISECONDS);
+            long delta;
+            if (d instanceof Memo) {
+                delta = this.endTimeMsec - ((Memo)d).endTimeMsec;
+            } else {
+                delta = this.getDelay(TimeUnit.MILLISECONDS)
+                        - d.getDelay(TimeUnit.MILLISECONDS);
+            }
             if (delta > 0) {
                 return 1;
             } else if (delta < 0) {

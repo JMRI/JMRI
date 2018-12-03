@@ -51,11 +51,11 @@ public class FontComboUtil {
     private static List<String> character = null;
     private static List<String> symbol = null;
 
-    private static boolean prepared = false;
-    private static boolean preparing = false;
+    private static volatile boolean prepared = false;
+    private static volatile boolean preparing = false;
 
     public static List<String> getFonts(int which) {
-        if (!prepared) {
+        if (!prepared && !preparing) { // prepareFontLists is synchronized; don't do it if you don't have to
             prepareFontLists();
         }
 
@@ -81,7 +81,7 @@ public class FontComboUtil {
      * @return true if a symbol font; false if not
      */
     public static boolean isSymbolFont(String font) {
-        if (!prepared) {
+        if (!prepared && !preparing) { // prepareFontLists is synchronized; don't do it if you don't have to
             prepareFontLists();
         }
         return symbol.contains(font);
@@ -328,12 +328,12 @@ public class FontComboUtil {
     }
 
     /**
-     * Determine if usable.
+     * Determine if usable; starts the process of making it so if needed
      *
      * @return true if ready for use; false otherwise
      */
     public static boolean isReady() {
-        if (!prepared) {
+        if (!prepared && !preparing) { // prepareFontLists is synchronized; don't do it if you don't have to
             new Thread(() -> {
                 prepareFontLists();
             }, "FontComboUtil Prepare").start();

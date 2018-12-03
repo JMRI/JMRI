@@ -201,7 +201,7 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
         }
         if (ae.getSource() == applyButton) {
             // update all routes?
-            int value = JOptionPane.showConfirmDialog(null,
+            int value = JOptionPane.showConfirmDialog(this,
                     MessageFormat.format(Bundle.getMessage("UpdateTrainIcon"), new Object[]{l.getName()}),
                     Bundle.getMessage("DoYouWantAllRoutes"),
                     JOptionPane.YES_NO_OPTION);
@@ -211,7 +211,7 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
             }
         }
         if (ae.getSource() == saveButton) {
-            int value = JOptionPane.showConfirmDialog(null,
+            int value = JOptionPane.showConfirmDialog(this,
                     MessageFormat.format(Bundle.getMessage("UpdateTrainIcon"), new Object[]{l.getName()}),
                     Bundle.getMessage("UpdateDefaults"),
                     JOptionPane.YES_NO_OPTION);

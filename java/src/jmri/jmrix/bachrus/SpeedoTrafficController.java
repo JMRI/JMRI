@@ -211,16 +211,16 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
             if (unsolicited) {
                 thisReply.setUnsolicited();
             }
-            final SpeedoTrafficController thisTC = this;
+            final SpeedoTrafficController thisTc = this;
             // return a notification via the queue to ensure end
             Runnable r = new Runnable() {
 
                 SpeedoReply msgForLater = thisReply;
-                SpeedoTrafficController myTC = thisTC;
+                SpeedoTrafficController myTc = thisTc;
 
                 @Override
                 public void run() {
-                    myTC.notifyReply(msgForLater);
+                    myTc.notifyReply(msgForLater);
                 }
             };
             javax.swing.SwingUtilities.invokeLater(r);

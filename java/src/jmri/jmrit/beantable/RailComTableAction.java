@@ -77,12 +77,7 @@ public class RailComTableAction extends AbstractTableAction<RailCom> {
                 if (tag == null) {
                     return "?";
                 }
-                Object t = tag.getTagID();
-                if (t != null) {
-                    return t.toString();
-                } else {
-                    return "";
-                }
+                return tag.getTagID();
             }
 
             @Override
@@ -316,7 +311,7 @@ public class RailComTableAction extends AbstractTableAction<RailCom> {
     }
 
     @Override
-    public void addToPanel(AbstractTableTabAction f) {
+    public void addToPanel(AbstractTableTabAction<RailCom> f) {
         log.debug("Added CheckBox in addToPanel method");
     }
 

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2014 All rights reserved                            -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2018</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Egbert</firstname>
+        <surname>Broerse</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2018-10-17</date>
+      <authorinitials>EBR</authorinitials>
+      <revremark>Initial version used in Uhlenbrock_36500.xml (decoder 365x)</revremark>
+    </revision>
+  <!-- Uhlenbrock Decoder Configuration CV 51 - advanced config -->
+  </revhistory>
+  <!-- CV51 was expanded with bits 2, 3, 6, 7 in 2016 IntelliSound4 decoders eg. 365xx/325xx -->
+  <variable item="Cv51 bit2" CV="51" default="0" mask="XXXXXVXX">
+    <enumVal>
+      <enumChoice choice="Digital operation only">
+        <choice>Adaptive</choice>
+        <choice xml:lang="de">Adaptiv</choice>
+        <choice xml:lang="nl">Automatisch</choice>
+      </enumChoice>
+      <enumChoice choice="Analog operation only">
+        <choice>Direct (non-adaptive)</choice>
+        <choice xml:lang="de">Direkt (ohne)</choice>
+        <choice xml:lang="nl">Direct (zonder)</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Motor Drive</label>
+    <label xml:lang="de">Motorregelung</label>
+    <label xml:lang="nl">Motorregeling</label>
+  </variable>
+  <variable item="Cv51 bit3" CV="51" default="0" mask="XXXXVXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Light on for Delta Control</label>
+    <label xml:lang="de">Dauerlicht für Deltabetrieb</label>
+    <label xml:lang="nl">Licht aan voor Deltacentrale</label>
+    <tooltip>Continuously On for Märklin Delta Control</tooltip>
+  </variable>
+  <variable item="Cv51 bit6" CV="51" default="0" mask="XVXXXXXX">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Send Speed Step over SUSI</label>
+    <label xml:lang="de">Fahrstufe auf SUSI ausgeben</label>
+    <label xml:lang="nl">Snelheidsstap via SUSI melden</label>
+    <tooltip>Send Motor Control Speed Step over SUSI connector</tooltip>
+  </variable>
+  <variable item="Cv51 bit7" CV="51" default="0" mask="VXXXXXXX">
+    <enumVal>
+      <enumChoice choice="PID">
+        <choice>PID Controller</choice>
+        <choice xml:lang="de">PID Regler</choice>
+        <choice xml:lang="nl">PID Regelaar</choice>
+      </enumChoice>
+      <enumChoice choice="SX">
+        <choice>SX Controller</choice>
+        <choice xml:lang="de">SX Regler</choice>
+        <choice xml:lang="nl">SX Regelaar</choice>
+      </enumChoice>
+    </enumVal>
+    <label>In Analog Mode use</label>
+    <label xml:lang="de">Analogfahren mit</label>
+    <label xml:lang="nl">Analoog rijden met</label>
+  </variable>
+</variables>

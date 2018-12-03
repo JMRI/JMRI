@@ -14,21 +14,17 @@ import org.junit.Test;
  * @author	Bob Jacobsen
  * @author  Paul Bender Copyright (C) 2017
  */
-public class SRCPMessageTest {
+public class SRCPMessageTest extends jmri.jmrix.AbstractMessageTestBase {
 
-    @Test
-    public void testCtor() {
-        SRCPMessage m = new SRCPMessage();
-        Assert.assertNotNull(m);
-    }
+    private SRCPMessage msg = null;
 
     // Test the string constructor.
     @Test
     public void testStringCtor() {
         String s = "100 OK REASON GOES HERE\n\r";
-        SRCPMessage m = new SRCPMessage(s);
+        msg = new SRCPMessage(s);
         Assert.assertNotNull(m);
-        Assert.assertTrue("String Constructor Correct", s.equals(m.toString()));
+        Assert.assertTrue("String Constructor Correct", s.equals(msg.toString()));
     }
 
     // check validation methods.
@@ -55,14 +51,16 @@ public class SRCPMessageTest {
     //Test canned message formats
     @Test
     public void checkGetEnableMain(){
-      Assert.assertEquals("Enable Main Message",new SRCPMessage("SET 1 POWER ON\n"),SRCPMessage.getEnableMain());
-      Assert.assertFalse("not binary",SRCPMessage.getEnableMain().isBinary());
+      msg = SRCPMessage.getEnableMain();
+      Assert.assertEquals("Enable Main Message",new SRCPMessage("SET 1 POWER ON\n"),msg);
+      Assert.assertFalse("not binary",msg.isBinary());
     }
 
     @Test
     public void checkGetKillMain(){
-      Assert.assertEquals("Kill Main Message",new SRCPMessage("SET 1 POWER OFF\n"),SRCPMessage.getKillMain());
-      Assert.assertFalse("not binary",SRCPMessage.getEnableMain().isBinary());
+      msg = SRCPMessage.getKillMain();
+      Assert.assertEquals("Kill Main Message",new SRCPMessage("SET 1 POWER OFF\n"),msg);
+      Assert.assertFalse("not binary",msg.isBinary());
     }
 
     @Test
@@ -77,51 +75,51 @@ public class SRCPMessageTest {
 
     @Test
     public void checkGetReadDirectCV(){
-      SRCPMessage m = SRCPMessage.getReadDirectCV(2,19);
-      Assert.assertEquals("Read CV in Direct Mode Message",new SRCPMessage("GET 2 SM 0 CV 19\n"),m);
-      Assert.assertEquals("Timeout",180000,m.getTimeout());
+      msg = SRCPMessage.getReadDirectCV(2,19);
+      Assert.assertEquals("Read CV in Direct Mode Message",new SRCPMessage("GET 2 SM 0 CV 19\n"),msg);
+      Assert.assertEquals("Timeout",180000,msg.getTimeout());
     }
 
     @Test
     public void checkGetConfirmDirectCV(){
-      SRCPMessage m = SRCPMessage.getConfirmDirectCV(2,19,20);
-      Assert.assertEquals("Confirm CV in Direct Mode Message",new SRCPMessage("VERIFY 2 SM 0 CV 19 20\n"),m);
-      Assert.assertEquals("Timeout",180000,m.getTimeout());
+      msg = SRCPMessage.getConfirmDirectCV(2,19,20);
+      Assert.assertEquals("Confirm CV in Direct Mode Message",new SRCPMessage("VERIFY 2 SM 0 CV 19 20\n"),msg);
+      Assert.assertEquals("Timeout",180000,msg.getTimeout());
     }
 
     @Test
     public void checkGetWriteDirectCV(){
-      SRCPMessage m = SRCPMessage.getWriteDirectCV(2,19,20);
-      Assert.assertEquals("Write CV in Direct Mode Message",new SRCPMessage("SET 2 SM 0 CV 19 20\n"),m);
-      Assert.assertEquals("Timeout",180000,m.getTimeout());
+      msg = SRCPMessage.getWriteDirectCV(2,19,20);
+      Assert.assertEquals("Write CV in Direct Mode Message",new SRCPMessage("SET 2 SM 0 CV 19 20\n"),msg);
+      Assert.assertEquals("Timeout",180000,msg.getTimeout());
     }
 
     @Test
     public void checkGetReadBitDirectCV(){
-      SRCPMessage m = SRCPMessage.getReadDirectBitCV(2,19,1);
-      Assert.assertEquals("Read CV Bit in Direct Mode Message",new SRCPMessage("GET 2 SM 0 CVBIT 19 1\n"),m);
-      Assert.assertEquals("Timeout",180000,m.getTimeout());
+      msg = SRCPMessage.getReadDirectBitCV(2,19,1);
+      Assert.assertEquals("Read CV Bit in Direct Mode Message",new SRCPMessage("GET 2 SM 0 CVBIT 19 1\n"),msg);
+      Assert.assertEquals("Timeout",180000,msg.getTimeout());
     }
 
     @Test
     public void checkGetConfirmBitDirectCV(){
-      SRCPMessage m = SRCPMessage.getConfirmDirectBitCV(2,19,1,0);
-      Assert.assertEquals("Confirm CV in Direct Mode Message",new SRCPMessage("VERIFY 2 SM 0 CVBIT 19 1 0\n"),m);
-      Assert.assertEquals("Timeout",180000,m.getTimeout());
+      msg = SRCPMessage.getConfirmDirectBitCV(2,19,1,0);
+      Assert.assertEquals("Confirm CV in Direct Mode Message",new SRCPMessage("VERIFY 2 SM 0 CVBIT 19 1 0\n"),msg);
+      Assert.assertEquals("Timeout",180000,msg.getTimeout());
     }
 
     @Test
     public void checkGetWriteBitDirectCV(){
-      SRCPMessage m = SRCPMessage.getWriteDirectBitCV(2,19,1,0);
-      Assert.assertEquals("Write CV in Direct Mode Message",new SRCPMessage("SET 2 SM 0 CVBIT 19 1 0\n"),m);
-      Assert.assertEquals("Timeout",180000,m.getTimeout());
+      msg = SRCPMessage.getWriteDirectBitCV(2,19,1,0);
+      Assert.assertEquals("Write CV in Direct Mode Message",new SRCPMessage("SET 2 SM 0 CVBIT 19 1 0\n"),msg);
+      Assert.assertEquals("Timeout",180000,msg.getTimeout());
     }
 
     @Test
     public void checkGetReadRegister(){
-      SRCPMessage m = SRCPMessage.getReadRegister(2,2);
-      Assert.assertEquals("Read Register Message",new SRCPMessage("GET 2 SM 0 REG 2\n"),m);
-      Assert.assertEquals("Timeout",180000,m.getTimeout());
+      msg = SRCPMessage.getReadRegister(2,2);
+      Assert.assertEquals("Read Register Message",new SRCPMessage("GET 2 SM 0 REG 2\n"),msg);
+      Assert.assertEquals("Timeout",180000,msg.getTimeout());
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -131,9 +129,9 @@ public class SRCPMessageTest {
 
     @Test
     public void checkGetConfirmRegister(){
-      SRCPMessage m = SRCPMessage.getConfirmRegister(2,2,5);
-      Assert.assertEquals("Confirm Register Message",new SRCPMessage("VERIFY 2 SM 0 REG 2 5\n"),m);
-      Assert.assertEquals("Timeout",180000,m.getTimeout());
+      msg = SRCPMessage.getConfirmRegister(2,2,5);
+      Assert.assertEquals("Confirm Register Message",new SRCPMessage("VERIFY 2 SM 0 REG 2 5\n"),msg);
+      Assert.assertEquals("Timeout",180000,msg.getTimeout());
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -143,9 +141,9 @@ public class SRCPMessageTest {
 
     @Test
     public void checkGetWriteRegister(){
-      SRCPMessage m = SRCPMessage.getWriteRegister(2,2,5);
-      Assert.assertEquals("Write Register Message",new SRCPMessage("SET 2 SM 0 REG 2 5\n"),m);
-      Assert.assertEquals("Timeout",180000,m.getTimeout());
+      msg = SRCPMessage.getWriteRegister(2,2,5);
+      Assert.assertEquals("Write Register Message",new SRCPMessage("SET 2 SM 0 REG 2 5\n"),msg);
+      Assert.assertEquals("Timeout",180000,msg.getTimeout());
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -153,16 +151,17 @@ public class SRCPMessageTest {
       SRCPMessage.getWriteRegister(2,10,5);
     }
 
-    @Test
-
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
+        m = msg = new SRCPMessage();
     }
 
     @After
     public void tearDown() {
+        m = msg = null;
         JUnitUtil.tearDown();
     }
 }

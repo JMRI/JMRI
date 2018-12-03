@@ -15,6 +15,7 @@
 
 import jmri
 import java
+import java.beans
 
 # Define the listener. 
 class SignalSensorListener(java.beans.PropertyChangeListener):
@@ -41,7 +42,7 @@ def connect(signal, red, yellow, green) :
     return
 
 # Example of use - add a line like this for 
-# each signal head and read, yellow, green input 
+# each signal head and red, yellow, green input 
 # you'd like. Use None if a color input doesn't exist.
 connect("IH1","LS1001","LS1002","LS1003")
  

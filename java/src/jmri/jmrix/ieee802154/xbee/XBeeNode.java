@@ -327,6 +327,7 @@ public class XBeeNode extends IEEE802154Node {
     public XBeeIOStream getIOStream() {
         if (mStream == null) {
             mStream = new XBeeIOStream(this, tc);
+	        mStream.configure(); // start the threads for the stream.
         }
         return mStream;
     }
@@ -368,6 +369,33 @@ public class XBeeNode extends IEEE802154Node {
     }
 
     private jmri.jmrix.AbstractStreamPortController connectedController = null;
+
+    /**
+     * Connect a StreamConnectionConfig object to the XBeeIOStream
+     * associated with this node.
+     *
+     * @param cfg AbstractStreamConnectionConfig object to connect
+     */
+    public void connectPortController(jmri.jmrix.AbstractStreamConnectionConfig cfg) {
+        connectedConfig = cfg;
+        connectPortController(cfg.getAdapter());
+    }
+
+    /**
+     * Get the StreamConnectionConfig ojbect associated with the XBeeIOStream
+     * associated with this node.
+     *
+     * @return connected {@link jmri.jmrix.AbstractStreamConnectionConfig}
+     */
+    public jmri.jmrix.AbstractStreamConnectionConfig getConnectionConfig() {
+        return connectedConfig;
+    }
+
+    private jmri.jmrix.AbstractStreamConnectionConfig connectedConfig = null;
+
+    /**
+     * Provide a string representation of this XBee Node.
+     */
 
     /**
      * Provide a string representation of this XBee Node.

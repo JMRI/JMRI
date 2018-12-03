@@ -17,7 +17,7 @@ import javax.annotation.Nonnull;
  * The "system" name is provided by the system-specific implementations, and
  * provides a unique mapping to the layout control system (for example LocoNet
  * or NCE) and address within that system. It must be present and unique across
- * the JMRI instance.
+ * the JMRI instance. Two beans are identical if they have the same system name; if not, not.
  * <p>
  * The "user" name is optional. It's free form text except for two restrictions:
  * <ul>
@@ -352,7 +352,7 @@ public interface NamedBean extends Comparable<NamedBean> {
     /**
      * Provide a comparison between the system names of two beans.
      * This provides a implementation for e.g. {@link java.util.Comparator}.
-     * @return 0 if the names are the same, -1 if the first argument orders before
+     * Returns 0 if the names are the same, -1 if the first argument orders before
      * the second argument's name, +1 if the first argument's name  orders after the second argument's name.
      * The comparison is alphanumeric on the system prefix, then alphabetic on the
      * type letter, then system-specific comparison on the two suffix parts
@@ -367,7 +367,7 @@ public interface NamedBean extends Comparable<NamedBean> {
         jmri.util.AlphanumComparator ac = new jmri.util.AlphanumComparator();
         String o1 = this.getSystemName();
         String o2 = n2.getSystemName();
-        
+
         int p1len = Manager.getSystemPrefixLength(o1);
         int p2len = Manager.getSystemPrefixLength(o2);
         
@@ -402,4 +402,5 @@ public interface NamedBean extends Comparable<NamedBean> {
 
     public class BadSystemNameException extends IllegalArgumentException {
     }
+
 }

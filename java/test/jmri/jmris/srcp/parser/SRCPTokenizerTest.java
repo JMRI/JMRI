@@ -262,6 +262,7 @@ public class SRCPTokenizerTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
     }
 
     @After

@@ -1,5 +1,5 @@
 #
-# Listener for Loconet MULTI_SENSE_POWER Autoreverse/ShortCircuit messages from PM42's
+# Listener for LocoNet MULTI_SENSE_POWER Autoreverse/ShortCircuit messages from PM42's
 # that contain status (OK or SHORT) for each of the 4 channels
 #
 # When a PM42 message is received, update Internal Sensors
@@ -25,8 +25,10 @@ import jmri
 
 import java
 
-#
-# loconet listener class
+# set the intended LocoNet connection by its index; when you have just 1 connection index = 0
+connectionIndex = 0
+
+# LocoNet listener class
 # this does all the work
 #
 class PM42Listener(jmri.jmrix.loconet.LocoNetListener):
@@ -62,17 +64,17 @@ class PM42Listener(jmri.jmrix.loconet.LocoNetListener):
                 else : s.state = INACTIVE
             return
 
-#create the loconet listener
+# create the loconet listener
 ln = PM42Listener()
-jmri.jmrix.loconet.LnTrafficController.instance().addLocoNetListener(0xFF,ln)
+jmri.InstanceManager.getList(jmri.jmrix.loconet.LocoNetSystemConnectionMemo).get(connectionIndex).getLnTrafficController().addLocoNetListener(0xFF,ln)
 # Start Panelpro Select Tools - Tables - Sensors - Sensor tables 
 # Click Add  System name. in the small window that opens enter System Name - ISPM_nn1  Where nn is
 # your pm42 board id and User name which can be a decription # of the Power District 
-#E.G Yard or Power District 1, whatever helps you remember what the sensor is monitoring.
+# E.G Yard or Power District 1, whatever helps you remember what the sensor is monitoring.
 # If you make a mistake click the delete button, you will get a warning that object is in use by at
 # least 1 item, just ignore it in this case and click Yes.
 # Now to add LEDS to your panel, Load your panel and open panel or layout editor
-# In the box next to add Sensor enter your first sensor name ISPM_nn1
+# In the box next to Add Sensor enter your first sensor name ISPM_nn1
 # click the change icon button, scroll to the LED icons section.  I use a small red led for unknown or
 # inconsistent state a large red led icon for active and a green led for inactive.
 # Now go to your panel and move the icon to the appropriate place on the screen.  You can click on the
@@ -80,7 +82,7 @@ jmri.jmrix.loconet.LnTrafficController.instance().addLocoNetListener(0xFF,ln)
 # Repeat for ISPM_nn2 through ISPM_nn4. 
 # The final step is to have this scipt load every time you start your PanelPro application.
 # On PanelPro or Decoder Pro Screen  Select Edit - Preferences
-# Once the screen opens click the Show Advanced Preferences box
+# Once the screen opens, click the Show Advanced Preferences box
 # Scroll down to the run scripts at startup section - Click Add Script - scroll to where your
 # scripts are stored - On windows normally c:\Program Files\JMRI\Jython\your script name here.
 # click open and your script will now appear on the preferences screen. When you restart PanelPro

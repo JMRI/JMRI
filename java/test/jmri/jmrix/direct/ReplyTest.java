@@ -10,22 +10,18 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class ReplyTest {
-
-    @Test
-    public void testCTor() {
-        Reply t = new Reply();
-        Assert.assertNotNull("exists", t);
-    }
+public class ReplyTest extends jmri.jmrix.AbstractMessageTestBase {
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        m = new Reply();
     }
 
     @After
     public void tearDown() {
+	m = null;
         JUnitUtil.tearDown();
     }
 

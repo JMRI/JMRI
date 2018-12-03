@@ -72,6 +72,7 @@ public class LinkingLabelTest extends PositionableTestBase {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
         if (!GraphicsEnvironment.isHeadless()) {
            editor = new jmri.jmrit.display.panelEditor.PanelEditor("LinkingLabel Test Panel");
            p = to = new LinkingLabel("JMRI Link", editor, "http://jmri.org");

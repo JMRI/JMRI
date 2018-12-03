@@ -358,13 +358,14 @@ public class ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
     // The minimal setup for log4J
     @Before
-    public void setUp() {
+    public void setUp() throws Exception {
         JUnitUtil.setUp();
         JUnitUtil.initDebugCommandStation();
 
         // prepare an interface
         DirectSystemConnectionMemo m = new DirectSystemConnectionMemo();
 
+        m.getTrafficController().connectPort(new jmri.jmrix.AbstractSerialPortControllerScaffold(m));
         jmri.CommandStation cs = jmri.InstanceManager.getDefault(jmri.CommandStation.class);
         jmri.InstanceManager.setDefault(jmri.ThrottleManager.class, new ThrottleManager(m));
         instance = new Throttle(new jmri.DccLocoAddress(5, false), cs);
@@ -372,6 +373,7 @@ public class ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
     @After
     public void tearDown() {
+        jmri.util.JUnitAppender.suppressWarnMessage("Only single transmissions currently available");
         JUnitUtil.tearDown();
     }
 

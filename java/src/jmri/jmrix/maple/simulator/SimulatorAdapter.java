@@ -41,10 +41,6 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
 
     private boolean outputBufferEmpty = true;
     private boolean checkBuffer = true;
-    /**
-     * Simulator auto-init setting for number of banks to auto-reply on poll
-     */
-    private int autoInit = 0;
 
     /**
      * Create a new SimulatorAdapter.
@@ -184,6 +180,11 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
     }
 
     @Override
+    public String getCurrentPortName(){
+        return "";
+    }
+
+    @Override
     public void run() { // start a new thread
         // This thread has one task. It repeatedly reads from the input pipe
         // and writes an appropriate response to the output pipe. This is the heart
@@ -256,7 +257,6 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
      * @return a single Maple message to confirm the requested operation, or a series
      * of messages for each (fictitious) node/pin/state. To ignore certain commands, return null.
      */
-    @SuppressWarnings("fallthrough")
     private SerialReply generateReply(SerialMessage msg) {
         log.debug("Generate Reply to message from node {} (string = {})", msg.getAddress(), msg.toString());
 
@@ -274,10 +274,6 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
             case "RC": // Read Coils message
                 log.debug("Read Coils (poll) message detected");
                 int i = 1;
-                int lastNode = 1;
-                if (nodeAddress == 0) { // broadcast poll, reply from all existing nodes
-                    lastNode = 99;
-                }
                 // init reply
                 log.debug("RC Reply from node {}", nodeAddress);
                 reply.setElement(0, 0x02); // <STX>
@@ -326,7 +322,7 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
     }
 
     /**
-     * Extract the number of coils to precess from RC/WC message.
+     * Extract the number of coils to process from RC/WC message.
      *
      * @param msg te SerialMessage received from Simulator inpipe
      * @return the number of consecutive coils to read/write (decimal)
@@ -418,8 +414,8 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
         return r;
     }
 
-    int SignalBankSize = 16; // theoretically: 16
-    int SensorBankSize = 64; // theoretically: 0x3F
+    int signalBankSize = 16; // theoretically: 16
+    int sensorBankSize = 64; // theoretically: 0x3F
     javax.swing.Timer timer;
 
     // streams to share with user class

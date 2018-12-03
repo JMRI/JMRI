@@ -10,22 +10,33 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class NceSensorTest {
+public class NceSensorTest extends jmri.implementation.AbstractSensorTestBase {
+    
+    @Override
+    public int numListeners() {return 0;}
 
-    @Test
-    public void testCTor() {
-        NceSensor t = new NceSensor("NS1");
-        Assert.assertNotNull("exists",t);
-    }
+    @Override
+    public void checkOnMsgSent() {}
+
+    @Override
+    public void checkOffMsgSent() {}
+
+    @Override
+    public void checkStatusRequestMsgSent() {}
+
 
     // The minimal setup for log4J
+    @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        t = new NceSensor("NS1");
     }
 
+    @Override
     @After
     public void tearDown() {
+        t.dispose();
         JUnitUtil.tearDown();
     }
 

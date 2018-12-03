@@ -166,6 +166,7 @@ public class NXFrame extends WarrantRoute {
         p.add(Box.createGlue());
         JButton button = new JButton(Bundle.getMessage("ButtonRoute"));
         button.addActionListener((ActionEvent e) -> {
+            clearTempWarrant();
             JPanel con = (JPanel)getContentPane().getComponent(0);
             con.removeAll();
             con.add(_routePanel);
@@ -175,6 +176,7 @@ public class NXFrame extends WarrantRoute {
         p.add(Box.createHorizontalStrut(2 * STRUT_SIZE));
         button = new JButton(Bundle.getMessage("ButtonRunNX"));
         button.addActionListener((ActionEvent e) -> {
+            clearTempWarrant();
             makeAndRunWarrant();
         });
         p.add(button);
@@ -443,7 +445,7 @@ public class NXFrame extends WarrantRoute {
         updateAutoRunPanel();
         pack();
     }
-    
+
     private void makeAndRunWarrant() {
         if (log.isDebugEnabled()) {
             log.debug("NXFrame selectedRoute()");
@@ -476,7 +478,6 @@ public class NXFrame extends WarrantRoute {
         }
         WarrantTableFrame tableFrame = WarrantTableFrame.getDefault();
         if (msg == null) {
-//            WarrantTableAction.setNXFrame(this);        // redundant
             tableFrame.getModel().addNXWarrant(warrant);   //need to catch propertyChange at start
             if (log.isDebugEnabled()) {
                 log.debug("NXWarrant added to table");
@@ -492,7 +493,6 @@ public class NXFrame extends WarrantRoute {
         }
 
         if (msg == null && mode == Warrant.MODE_RUN) {
-//            if (log.isDebugEnabled()) log.debug("Warrant "+warrant.getDisplayName()+" running.");
             if (_haltStartBox.isSelected()) {
                 class Halter implements Runnable {
 
@@ -586,18 +586,29 @@ public class NXFrame extends WarrantRoute {
         if (len <= 0) {
             return lengthError(bo.getPathName(), bo.getBlock().getDisplayName(), len, oDist, true);                        
         }
+        if (oDist < 0) {
+            return Bundle.getMessage("MustBeFloat", oDist);
+        }
         if (_originUnits.getText().equals("In")){
             oDist *= 25.4f;
-            if (oDist > 0 && oDist < len) {
+            if (oDist >= 0 && oDist <= len) {
                 _startDist = oDist;
             } else {
+                if (oDist > len) {
+                    float num = Math.round(len * 100 / 25.4f);
+                    _originDist.setText(formatter.format(num / 100f));
+                }
                 return lengthError(bo.getPathName(), bo.getBlock().getDisplayName(), len, oDist, true);            
             }
         } else {
             oDist *= 10f;
-            if (oDist > 0 && oDist < len) {
+            if (oDist >= 0 && oDist <= len) {
                 _startDist = oDist;
             } else {
+                if (oDist > len) {
+                    float num = Math.round(len * 100);
+                    _originDist.setText(formatter.format(num / 1000f));
+                }
                 return lengthError(bo.getPathName(), bo.getBlock().getDisplayName(), len, oDist, false);            
             }
         }
@@ -606,18 +617,29 @@ public class NXFrame extends WarrantRoute {
         if (len <= 0) {
             return lengthError(bo.getPathName(), bo.getBlock().getDisplayName(), len, oDist, true);                        
         }
+        if (dDist < 0) {
+            return Bundle.getMessage("MustBeFloat", dDist);
+        }
         if (_destUnits.getText().equals("In")) {
             dDist *= 25.4f;
-            if (dDist > 0 && dDist < len) {
+            if (dDist >= 0 && dDist <= len) {
                 _stopDist = dDist;
             } else {
+                if (dDist > len) {
+                    float num = Math.round(len * 100 / 25.4f);
+                    _destDist.setText(formatter.format(num / 100f));
+                }
                 return lengthError(bo.getPathName(), bo.getBlock().getDisplayName(), len, dDist, true);            
             }
         } else {
             dDist *= 10f;
-            if (dDist > 0 && dDist < len) {
+            if (dDist >= 0 && dDist <= len) {
                 _stopDist = dDist;
             } else {
+                if (dDist > len) {
+                    float num = Math.round(len * 100);
+                    _destDist.setText(formatter.format(num / 1000f));
+                }
                 return lengthError(bo.getPathName(), bo.getBlock().getDisplayName(), len, dDist, false);            
             }
         }
@@ -690,7 +712,7 @@ public class NXFrame extends WarrantRoute {
         float rampLength = 0.0f;
         int numSteps = 0;
         float incre = _throttleIncr;
-        float momentumTime = _speedUtil.getMomentumTime(true);
+        float momentumTime = _speedUtil.getMomentumTime(incre, true);
         while (speed < _maxThrottle) {
             float dist = _speedUtil.getTrackSpeed(speed + incre/2,  _forward.isSelected()) * momentumTime;
             if (_intervalTime > momentumTime) {
@@ -732,7 +754,7 @@ public class NXFrame extends WarrantRoute {
         int numSteps = 0;
         float incre = _throttleIncr;
         boolean isForward = _forward.isSelected();
-        float momentumTime = _speedUtil.getMomentumTime(false);
+        float momentumTime = _speedUtil.getMomentumTime(incre, false);
         while (speed + incre <= _maxThrottle) {
             speed += incre;
             incre *= INCRE_RATE;
@@ -749,8 +771,10 @@ public class NXFrame extends WarrantRoute {
            }
            if (rampLength + dist >= _totalLen / 2) {
                // remove first step's distance
-               float d = _speedUtil.getTrackSpeed(_maxThrottle, isForward) * momentumTime
-                       + _speedUtil.getTrackSpeed(_maxThrottle - incre, isForward) * (_intervalTime - momentumTime);
+               float d = _speedUtil.getTrackSpeed(_maxThrottle, isForward) * momentumTime;
+                       if (_intervalTime > momentumTime) {
+                           d += _speedUtil.getTrackSpeed(_maxThrottle - incre, isForward) * (_intervalTime - momentumTime);
+                       }
                if (rampLength >= d) {
                    rampLength -= d;                    
                } else {
@@ -817,7 +841,8 @@ public class NXFrame extends WarrantRoute {
         if (msg != null) {
             return msg;
         }
-        float momentumTime = _speedUtil.getMomentumTime(false);
+        float increment = _throttleIncr;
+        float momentumTime = _speedUtil.getMomentumTime(increment, false);
         float upRampLength;
         float dnRampLength ;
         if (_intervalTime >= momentumTime) {   // do longer ramp first
@@ -852,7 +877,6 @@ public class NXFrame extends WarrantRoute {
             log.debug("Start Ramp Up in block \"" + blockName + "\" in "
                     + (int) speedTime + "ms, remRamp= " + remRamp + ", blockLen= " + blockLen);
         }
-        float increment = _throttleIncr;
 
         if (_maxThrottle < increment) {
             return Bundle.getMessage("BadSettings", bo.getPathName(), bo.getBlock().getDisplayName());
@@ -881,7 +905,7 @@ public class NXFrame extends WarrantRoute {
                             (hasProfileSpeeds ? _speedUtil.getTrackSpeed(curThrottle, isForward) : 0.0f)));
                     if (log.isDebugEnabled()) {
                         log.debug("{}. Ramp Up in block \"{}\" to speed {} in {}ms to distance= {}, remRamp= {}",
-                                cmdNum++, blockName, curThrottle, (int) speedTime, curDistance, remRamp);
+                                ++cmdNum, blockName, curThrottle, (int) speedTime, curDistance, remRamp);
                     }
                     speedTime = _intervalTime;
                     increment *= INCRE_RATE;
@@ -953,7 +977,6 @@ public class NXFrame extends WarrantRoute {
                 _totalLen -= blockLen;
                 // constant speed, get time to next block
                 noopTime = _speedUtil.getTimeForDistance(curThrottle, blockLen - curDistance, isForward);   // time to next block
-                speedTime = _intervalTime - noopTime;   // time to next speed change
                 if (log.isDebugEnabled()) {
                     log.debug("Leave MidRoute block \"" + blockName + "\" noopTime= " + noopTime
                             + ", curDistance=" + curDistance + ", blockLen= " + blockLen + ", totalLen= " + _totalLen);
@@ -1008,7 +1031,10 @@ public class NXFrame extends WarrantRoute {
                 }
                 curDistance += dist;
                 curThrottle -= increment;
-                if (curThrottle <.002) {   // fraction less than 1/4 step
+                if (curThrottle < _throttleIncr && nextIdx < orders.size()) {
+                    break;  // don't set speed 0 until last block
+                }
+                if (curThrottle <.00397) {   // fraction less than 1/2 step
                     curThrottle = 0.0f;
                 }
                 remRamp -= dist;
@@ -1016,7 +1042,7 @@ public class NXFrame extends WarrantRoute {
                         (hasProfileSpeeds ? _speedUtil.getTrackSpeed(curThrottle, isForward) : 0.0f)));
                 if (log.isDebugEnabled()) {
                     log.debug("{}. Ramp Down in block \"{}\" incr= {} to curThrottle {} in {}ms to reach curDistance= {}, remRamp= {}",
-                            cmdNum++, blockName, increment, curThrottle, (int) speedTime, curDistance, remRamp);
+                            ++cmdNum, blockName, increment, curThrottle, (int) speedTime, curDistance, remRamp);
                 }
                 if (curDistance >= blockLen) {
                     speedTime = _speedUtil.getTimeForDistance(curThrottle, curDistance - blockLen, isForward); // time to next block
@@ -1025,6 +1051,9 @@ public class NXFrame extends WarrantRoute {
                 }
                 increment /= INCRE_RATE;
                 noopTime = _intervalTime - speedTime;
+                if (noopTime < 0) {
+                    noopTime = 0;
+                }
             } while (curDistance < blockLen && curThrottle >= _throttleIncr);
 
             if (nextIdx < orders.size()) {

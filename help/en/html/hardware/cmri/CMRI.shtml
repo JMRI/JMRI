@@ -92,9 +92,9 @@
         <li><a href="#L580">CMRInet Packet Monitor</a></li>
         <li><a href="#L597">CMRInet Network Metrics</a></li>
       </ul>
-      <ul>
+
         <li><a href="#L609">Listing C/MRI Bit Assignments</a></li>
-      </ul>
+
         <li><a href="#L624">Diagnostics</a></li>
         <li style="margin-left:0;"><a href="#L632">CMRInet Network
         Connections</a></li>
@@ -114,6 +114,7 @@
 
   <a name="intro" id="intro"></a>
   <a name="L170" id="L170"></a><h2>Introduction to C/MRI on JMRI</h2>
+  <p><img alt="" src="images/splashscreen.png" width="727" height="391"></p>
 
   <p>C/MRI is a system of digital input and digital output lines that can be
   used to connect a computer to a model railroad layout, allowing computer
@@ -121,7 +122,7 @@
   input/output device is called a node and connects to the computer using a
   simple 4-wire serial network cable.</p>
 
-  <p>There are three types of CMRI nodes; USIC/SUSIC, SMINI, and cpNode. The
+  <p>There are three types of C/MRI nodes; USIC/SUSIC, SMINI, and cpNode. The
   USIC/SUSIC and SMINI are Classic nodes. The cpNode and other Open Source/DIY
   offerings, which comply with the CMRInet protocol, are referred to as Open
   Source Nodes (OSN).</p>
@@ -148,7 +149,7 @@
   different places on the layout, and perhaps one or two SUSIC's located at CTC
   panels. cpNodes are small physical footprint nodes, which can be distributed
   around a layout to provide connection to devices clustered in an area. All
-  CMRI node types may coexist and interoperate within a CMRInet network.</p>
+  C/MRI node types may coexist and interoperate within a CMRInet network.</p>
 
   <p>C/MRI is not a train control system. You may run C/MRI with a DCC train
   control system (such as Digitrax, NCE, or Lenz) or with a DC train control
@@ -182,9 +183,9 @@
 
   <p>Access to system-dependent features is via a menu titled for the hardware
   system supported; C/MRI specific features are accessed via the
-  <strong>CMRI</strong> menu from the <strong>PanelPro main screen.</strong></p>
+  <strong>C/MRI</strong> menu from the <strong>PanelPro main screen.</strong></p>
 
-  <p><img alt="" src="images/cmrimenu.png" width="699" height="219"></p>
+  <p><img alt="" src="images/menu_CMRI.png" width="672" height="217"></p>
 
   <p><a name="iobits" id="iobits"></a>JMRI presents itself to users via several
   application front ends, each focusing on a type of use, but all based on the
@@ -243,8 +244,7 @@
   <p>To create a CMRInet connection, open the Preferences window. Click on
   <strong>Connections</strong> in the left selection box.</p>
 
-  <p><img alt="xxx" src="images/cmripreferences.png" width="919"
-  height="523"></p>
+  <p><img alt="xxx" src="images/cmripreferences.png" width="919" height="523"></p>
 
   <p>Select <strong>C/MRI</strong> in the <strong>System manufacturer</strong>
   menu popup. Select <strong>Serial</strong> from the <strong>System
@@ -299,7 +299,7 @@
   configuration. Use the "Save" button in the Preferences window to do this.</p>
 
   <a name="L268" id="L268"></a><h2>Configuring C/MRI Nodes</h2>
-
+  <p><img alt="" src="images/menu_Configure_Nodes.png" width="672" height="217"></p>
   <p>CMRInet nodes are created from the Node Configuration Manager window.</p>
 
   <p>C/MRI nodes require certain information be established for proper
@@ -308,7 +308,7 @@
   mapping.</p>
 
   <p>To open the Node Configuration Manager window from the PanelPro Main menu
-  and select <strong>CMRI</strong> -&gt; <strong>Configure Nodes</strong>. You
+  and select <strong>C/MRI</strong> -&gt; <strong>Configure Nodes</strong>. You
   may also click on the "Configure CMRInet nodes" button in the Preferences
   window. </p>
 
@@ -374,7 +374,7 @@
   <a name="L323" id="L323"></a><h2>Creating a USIC/SUSIC Node Definition</h2>
 
   <p>Open the Node Configuration Window from either the Preferences window or
-  from the PanelPro main menu, select CMRI -&gt; Configure Nodes.</p>
+  from the PanelPro main menu, select C/MRI -&gt; Configure Nodes.</p>
 
   <p><img alt="" src="images/addnodeusicsusic.png" width="654" height="780"></p>
 
@@ -413,7 +413,7 @@
   <a name="L352" id="L352"></a><h2>Creating a CPNODE Node Definition</h2>
 
   <p>Open the Node Configuration Window from either the Preferences window or
-  from the PanelPro main menu, select CMRI -&gt; Configure Nodes.</p>
+  from the PanelPro main menu, select C/MRI -&gt; Configure Nodes.</p>
 
   <p><img alt="" src="images/addnodecpnode.png" width="654" height="780"></p>
 
@@ -477,7 +477,8 @@
   warning dialog will be presented reminding you to save your changes from the
   Preferences window.</p>
 
-  <a name="L391" id="L391"></a><h2>C/MRI Input and Output Bits</h2>
+  <a name="L391" id="L391"></a><h2>C/MRI Input and Output Bits - JMRI Tables</h2>
+  <p><img alt="" src="images/menu_Tools_Tables.png" width="680" height="400"></p>
 
   <p>JMRI refers to C/MRI Input bits as <strong>Sensors</strong> and Output
   bits as <strong>Turnouts</strong> or <strong>Lights</strong>. The definition
@@ -619,7 +620,7 @@
   physical data bit or port on the node.</p>
 
   <p>A C/MRI Sensor System Name is in the format: CSnbbb, where: "C" designates
-  a CMRI system bit, "S" means the bit is a CMRI Sensor, "n" is the node
+  a C/MRI system bit, "S" means the bit is a C/MRI Sensor, "n" is the node
   address, and "bbb" is the address or position of the bit in the input data
   stream.</p>
 
@@ -650,7 +651,7 @@
   physical data bit or port on the node.</p>
 
   <p>A C/MRI Turnout System Name is in the format: CTnbbb, where: "C"
-  designates a CMRI system bit, "T" means the bit is a CMRI turnout, "n" is the
+  designates a C/MRI system bit, "T" means the bit is a C/MRI turnout, "n" is the
   node address, and "bbb" is the address or position of the bit in the output
   data stream.</p>
 
@@ -731,8 +732,7 @@
   <p>If "Use 1 bit" control is selected, the user must select either 'steady
   state' or 'pulsed' control.</p>
 
-  <p><img alt="" src="images/turnoutoutputtype.png" width="603"
-  height="247"></p>
+  <p><img alt="" src="images/turnoutoutputtype.png" width="603" height="247"></p>
 
   <p>If 'steady state' is selected, then that output bit is set "Off" for
   CLOSED ('normal' in C/MRI manuals) or "On" for THROWN ('reverse' in C/MRI
@@ -802,7 +802,7 @@
   physical data bit or port on the node.</p>
 
   <p>A C/MRI Light System Name is in the format: CHnbbb, where: "C" designates
-  a CMRI system bit, "T" means the bit is a CMRI turnout, "n" is the node
+  a C/MRI system bit, "T" means the bit is a C/MRI turnout, "n" is the node
   address, and "bbb" is the address or position of the bit in the output data
   stream.</p>
 
@@ -878,31 +878,29 @@
 
   <a name="L562" id="L562"></a><h1>CMRInet Network Management Tools</h1>
 
-  <p>The CMRI menu contains three tools which are used to manage nodes in a
+  <p>The C/MRI menu contains three tools which are used to manage nodes in a
   CMRInet network. Controlling the polling of nodes, displaying the operational
   states of configured nodes, and monitoring the data message traffic on the
   network are all functions available in the tool suite.</p>
 
   <a name="L568" id="L568"></a><h2>CMRInet Network Manager</h2>
 
-  <p>The CMRInet Manager is selected by selecting the <strong>CMRInet
-  Manager</strong> menu item from the <strong>CMRI</strong> menu in the main
-  PanelPro window.</p>
+  <p>The CMRInet Manager is selected by selecting the <strong>C/MRI Network Manager</strong> 
+  menu item from the <strong>C/MRI</strong> menu.</p>
 
-  <p>The CMRInet Manger displays the status of each configured node. Polling of
+  <p>The CMRInet Manager displays the status of each configured node. Polling of
   individual nodes can be enabled or disabled by checking the
   <strong>Enabled</strong> check box for the node. The <strong>Status</strong>
   column shows the real time state of the node.</p>
 
-  <p><img alt="" src="images/cmrimenu.png" width="699" height="219"></p>
+  <p><img alt="" src="images/menu_Network_Manager.png" width="699" height="219"></p>
 
-  <p><img alt="" src="images/cmrinetnetworkmanager.png" width="830"
-  height="580"></p>
+  <p><img alt="" src="images/cmrinetnetworkmanager.png" width="830" height="580"></p>
 
   <a name="L580" id="L580"></a><h2>CMRInet Packet Monitor</h2>
 
-  <p>CMRInet protocol messages can be viewed by selecting <strong>CMRInet
-  Monitor</strong> from the <strong>CMRI</strong> menu in main PanelPro window.
+  <p>CMRInet protocol messages can be viewed by selecting <strong>C/MRI
+  Monitor</strong> from the <strong>C/MRI</strong> menu in main PanelPro window.
   The monitor window decodes and formats the CMRInet data message to a readable
   form. The message traffic is displayed in real time with options selected by
   the user. The window has a scroll bar which will move the display up or down
@@ -924,8 +922,7 @@
   <strong>Stop Logging</strong> will stop the data capture and close the log
   file.</p>
 
-  <p><img alt="" src="images/cmrinetworkmonitormenu.png" width="708"
-  height="220"></p>
+  <p><img alt="" src="images/menu_Monitor.png" width="672" height="217"></p>
 
   <p>The following screen shows polling with responses for nodes 20 and 21. </p>
 
@@ -948,11 +945,9 @@
   <p>Here are examples of the Initialization messages for each of the node
   types.</p>
 
-  <p><img alt="" src="images/cmrinetinit-USICSUSIC.png" width="426"
-  height="255"></p>
+  <p><img alt="" src="images/cmrinetinit-USICSUSIC.png" width="426" height="255"></p>
 
-  <p><img alt="" src="images/cmrinetinit-SMINI.png" width="427"
-  height="169"></p>
+  <p><img alt="" src="images/cmrinetinit-SMINI.png" width="427" height="169"></p>
 
   <p>The following screen shows the node initialization message sequence for
   node 20, followed by the node coming on line and responding to polls. The
@@ -978,10 +973,7 @@
   <p>The following screen shows a poll to node 20, followed by a response, then
   output bytes sent to the node.</p>
   
-  
-
-<p><img alt="" src="images/cmrinetmonitor-transmitmessage.png" width="1040"
-height="586"></p>
+  <p><img alt="" src="images/cmrinetmonitor-transmitmessage.png" width="1040" height="586"></p>
 
   <p>The following screen shows all of the display options enabled. The order
   of options is:</p>
@@ -989,8 +981,7 @@ height="586"></p>
   <p style="margin-left:2em;"><strong>timestamp</strong>s as hh:mm:ss:mss,
   <strong>raw data</strong> in hexadecimal, <strong>data message</strong></p>
 
-  <p><img alt="" src="images/cmrinetmonitor-timestampraw.png" width="997"
-  height="480"></p>
+  <p><img alt="" src="images/cmrinetmonitor-timestampraw.png" width="997" height="480"></p>
 
   <p>CMRInet messages can be filtered from display by clicking the
   <strong>Filter Packets</strong> button. The packet filter window lets you
@@ -1000,19 +991,17 @@ height="586"></p>
   Poll</strong> button will stop network polling. Clicking <strong>Resume
   Polling</strong> will restart polling.</p>
 
-  <p><img alt="" src="images/cmrinetworkpacketfilter.png" width="700"
-  height="455"></p>
+  <p><img alt="" src="images/cmrinetworkpacketfilter.png" width="700" height="455"></p>
 
   <a name="L597" id="L597"></a><h2>CMRInet Network Metrics</h2>
 
   <p>Anytime the CMRInet is active, a network metrics collector is running in
   the background. The metrics collected are errors and performance or
   instrumentation data. CMRInet metrics can be viewed by selecting
-  <strong>CMRInet Metrics</strong> from the <strong>CMRI</strong> menu in main
+  <strong>C/MRI Network Metrics</strong> from the <strong>C/MRI</strong> menu in main
   PanelPro window</p>
 
-  <p><img alt="" src="images/cmrinetworkmetricsmenu.png" width="702"
-  height="219"></p>
+  <p><img alt="" src="images/menu_Network_Metrics.png" width="702" height="219"></p>
 
   <p>Each of the Error and Data Metric values can be reset to zero by clicking
   the appropriate <strong>Reset</strong> button. All of the metrics can be
@@ -1021,17 +1010,17 @@ height="586"></p>
   button. A file create dialog window will open, enter a file name for the
   metric data. &lt;PHOTO-CMRInet Metrics&gt;</p>
 
-  <p><img alt="" src="images/cmrinetworkmetrics.png" width="925"
-  height="480"></p>
+  <p><img alt="" src="images/cmrinetworkmetrics.png" width="925" height="480"></p>
 
   <a name="L609" id="L609"></a><h2>Listing C/MRI Bit Assignments</h2>
-
+  
   <p>For each node, you can view a summary list of C/MRI bits that are in use
   and those that are available.</p>
 
-  <p>Select <strong>List Bit Assignments</strong> in the CMRI main menu or from
+  <p>Select <strong>List Assignments</strong> in the C/MRI main menu or from
   the Select column in the Node Configuration Manager to bring up Bit
   Assignments window.</p>
+  <p><img alt="" src="images/menu_List_Assignments.png" width="672" height="217"></p>
 
   <p>List Assignments is useful for checking that you have configured the
   correct numbers of input and output bits and the correct node address for
@@ -1042,42 +1031,76 @@ height="586"></p>
   your input/output bit assignments. The Comment field information is also
   displayed.</p>
 
-  <p><img alt="" src="images/listbitassignment.png" width="773"
-  height="726"></p>
+  <p><img alt="" src="images/listbitassignment.png" width="773" height="726"></p>
 
-  <a name="L624" id="L624"></a><h2>Diagnostics</h2>
+  <a name="L624" id="L624"></a><h1>Diagnostics</h1>
+  <p>Diagnostics are useful for checking the functioning of your C/MRI hardware. 
+  These automated procedures are controlled via a dialog available by selecting 
+  Run Diagnostics in the C/MRI menu.  Some of the diagnostic tests require external hardware
+  to operate.  Chapter 6 of Bruce Chubb's C/MRI User's Manual, Version 3.0, describes
+  a test output card and loopback cable.  These items connect to input and output ports
+  on Classic nodes and provide hardware devices which are driven by the diagnostic test
+  code.  An integrated test card (IOTEST) from MRCS provides compatible test hardware 
+  support.
+  </p>
+  <p>By opening the C/MRI Monitor, the test message traffic can be viewed.</p>  
+  <p><img alt="" src="images/menu_diagnostics.png" width="672" height="217"></p>  
+  <p><img alt="" src="images/diagmain.png" width="698" height="612"></p>
+  <p>The C/MRI Diagnostics window has five sections.</p>
+  <p><b>Test Node</b> provides a popup menu for the selection of the node to be tested. 
+  The menu only displays the addresses of configured nodes for the connection.  Node type
+  and card assignment information for the selected node are displayed.
+  </p>
+  <p><b>Test Suite</b> has the test selection popup menu which lists available
+  tests.  The suggested equipment needed to run the test is also listed.  The Halt polling
+  button stops polling of nodes on the connection.  Polling should be halted when running
+  diagnostics so as not to interfere with the test sequences. 
+  </p>
+  <p><b>Test Set Up</b> provides user input fields for data card selection and options
+  for each test suite.
+  </p>
+  <p><b>Status</b> displays the progress of the running tests and any error messages
+  related to the test sequences.
+  </p>
+  <p><b>Test Control</b> buttons displayed at the bottom of the window control the various
+  test sequences and are specific to each test suite.
+  </p>
 
-  <p>JMRI supports the two automated diagnostic procedures mentioned in Chapter
-  6 of Bruce Chubb's C/MRI User's Manual, Version 3.0. Diagnostics are useful
-  for checking the functioning of your C/MRI hardware. These automated
-  procedures are controlled via a dialog available by selecting Run Diagnostic
-  in the CMRI menu.</p>
+  <a name="L625" id="L625"></a><h2>Output Test</h2>
+  <p>The Output Test writes a walking bit pattern to the output test card, lighting the
+  LEDs corresponding to the bit pattern.  The number of bits written is based upon card
+  size (8, 24, 32).  The Output Card number is checked to be a valid defined output card.
+  Observation delay is the number of milliseconds delay between each write. Checking the
+  Invert box flips the state of the bits.  This is useful for output cards which drive 
+  Common Anode (sinking) devices.
+  </p>
+  <p><img alt="" src="images/diagoutputtest.png" width="698" height="612"></p>
 
-  <p>The Wraparound Test requires a special wraparound test cable, and the
-  Output Test requires a special output test card. Both devices are described
-  in the above reference. Any other connections to input or output bits on the
-  card(s) being tested should be unplugged when these tests are run. The
-  diagnostics are easy to use. Simply follow the instructions Select "Configure
-  C/MRI Nodes" from the CMRI menu, and from to top right hand drop down list
-  choose either an SMINI or USIC Node Type to configure. Next enter a Node
-  Number in the left hand field and click on one of the little check-boxes to
-  configure a specific output.</p>
-
-  <p>Click "Edit Node" to update, then close the pane.</p>
-
+  <a name="L626" id="L626"></a><h2>Loopback Test</h2>
+  <p>The Loopback Test uses a loopback cable connected to a card of outputs and a card
+  of inputs.  The test writes a data value pattern to each output port and reads the
+  value from the corresponding input port.  The input value is compared to the output
+  value and displays any comparison errors.  If a compare error occurs, the test is 
+  paused.  Clicking the Continue button will write the next value to the output. 
+  Observation Delay and Filtering Delay adds time delay intervals to the write and read 
+  operations.  Invert works the same as in the Output Test.
+  </p>
+  <p><img alt="" src="images/diagloopback.png" width="698" height="612"></p>
+  
+  <a name="L627" id="L627"></a><h2>Send Commands</h2>
+  <p>Send Commands provides raw CMRInet packet transmissions to the test node.</p>
+  <p><b>Initialize Node</b> transmits an Initialize (I) message to the node.  The node
+  would then execute the onboard initialize code.</p>
+  <p><b>Poll Node</b> transmits a poll message (P) to the node.  The count of input 
+  bytes in the response is returned.  If the node does not respond to the poll, a 
+  timeout error is reported.</p>
+  <p><b>Write Bytes</b> transmits (T) the user entered byte string to the output card 
+  number.  The bytes need to be entered as hexadecimal values separated by a space.  
+  The maximum number of bytes written is the defined by size of the card (1, 3, 4).  
+  Invert works the same as in the Output Test.</p>
+  <p><img alt="" src="images/diagsendcommands.png" width="698" height="612"></p>
+  
   <a name="L632" id="L632"></a><h1>CMRInet Network Connections</h1>
-
-  <h2>Send Command
-  <img alt="" src="images/CMRISendSerialCommand.png" width="246"
-          height="146" align ="right"></h2>
-  <p>To send a command to the C/MRI nodes, select <b>Send Command</b> from the C/MRI menu.<br>
-  Enter a command and click [Send].</p>
-  <p>To poll a node, enter its address in the UA text box and click [Send poll].</p>
-
-  <h2>Extra hints</h2>
-
-  <h3>CMRInet Network Connections</h3>
-
   <p>Using USB-serial adapters</p>
 
   <p>Most C/MRI systems use RS-422/485 electrical signals to communicate
@@ -1168,7 +1191,7 @@ height="586"></p>
   <p>When the C/MRI hardware is again available, go the JMRI Preferences,
   select "C/MRI Serial", save Preferences, quit and restart.</p>
 
-  <a name="L676" id="L676"></a><h3>PanelPro Signaling Example Using C/MRI</h3>
+  <a name="L676" id="L676"></a><h1>PanelPro Signaling Example Using C/MRI</h1>
 
   <p>The following is an example of what is needed to create a simple ABS
   signaling system using an SMINI node and Control Panel Editor (CPE) in
@@ -1189,8 +1212,7 @@ height="586"></p>
   only Yellow (Approach) and Red (Stop) as it is assumed these are low speed
   routes.</p>
 
-  <p><img alt="" src="images/example-ruckersection.png" width="627"
-  height="399"></p>
+  <p><img alt="" src="images/example-ruckersection.png" width="627" height="399"></p>
 
   <p>Sensors are the block occupancy detectors and two fascia toggle switches
   controlling the turnouts. The detectors will present an Active state when a
@@ -1216,8 +1238,7 @@ height="586"></p>
   communicating with the Master and that the port assignments match the actual
   connected device.</p>
 
-  <p><img alt="" src="images/example-sensortable.png" width="1153"
-  height="449"></p>
+  <p><img alt="" src="images/example-sensortable.png" width="1153" height="449"></p>
 
   <p>Outputs are defined in the Turnouts table. As described earlier, the name
   "turnout" is historical. Again, just think of turnouts as the output ports.
@@ -1227,8 +1248,7 @@ height="586"></p>
   the Cmd button will toggle the turnout from Closed to Thrown. This capability
   can be used to test connections and proper operation of output devices.</p>
 
-  <p><img alt="" src="images/example-turnouttable.png" width="1158"
-  height="970"></p>
+  <p><img alt="" src="images/example-turnouttable.png" width="1158" height="970"></p>
 
   <p>There are two output ports assigned to turnout controller bits. The
   turnout control bits are assigned to Card 0, ports A0 through C7, and Card 1
@@ -1245,16 +1265,9 @@ height="586"></p>
   for signal 80LA (SG80LA-G) is connected to SMINI node 15, turnout, bit 10,
   Card 0, port B1.</p>
 
-  <p><img alt="" src="images/example-addsignalhead.png" width="345"
-  height="501"></p>
-
+  <p><img alt="" src="images/example-addsignalhead.png" width="345" height="501"></p>
   <p><img alt="" src="images/example-signalmasttable.png" width="1234"></p>
-
-  <p><img alt="" src="images/example-addsignalmast.png" width="495"
-  height="492"></p>
-
-  <a name="documentation" id="documentation"></a>
-  <a name="L737" id="L737"></a><h2>Documentation</h2>
+  <p><img alt="" src="images/example-addsignalmast.png" width="495" height="492"></p>
 
   <a name="L739" id="L739"></a><h2>JMRI Help</h2>
   <ul>
@@ -1262,7 +1275,6 @@ height="586"></p>
   </ul>
 
   <a name="L746" id="L746"></a><h2>Third Party info</h2>
-
   <a name="L145" id="L145"></a><h2>Supported Hardware</h2>
       <ul>
         <li>Chubb C/MRI USIC</li>

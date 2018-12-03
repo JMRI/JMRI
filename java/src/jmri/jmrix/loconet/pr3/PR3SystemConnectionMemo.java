@@ -9,7 +9,6 @@ import jmri.jmrix.loconet.LnPowerManager;
 import jmri.jmrix.loconet.LnTrafficController;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
-import jmri.jmrix.loconet.LocoNetThrottledTransmitter;
 import jmri.jmrix.loconet.SlotManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -179,38 +178,11 @@ public class PR3SystemConnectionMemo extends LocoNetSystemConnectionMemo {
     }
 
     /**
-     * Configure the subset of LocoNet managers valid for the PR3 in MS100 mode.
+     * Configure the LocoNet managers valid for the PR3 in MS100 mode, same as super, flag the interface type.
      */
     public void configureManagersMS100() {
         mode = MS100MODE;
-
-        tm = new LocoNetThrottledTransmitter(getLnTrafficController(), mTurnoutExtraSpace);
-        log.debug("ThrottleTransmitted configured with :{}", mTurnoutExtraSpace); // NOI18N
-
-        InstanceManager.store(super.getPowerManager(), jmri.PowerManager.class);
-
-        InstanceManager.setTurnoutManager(getTurnoutManager());
-
-        InstanceManager.setLightManager(getLightManager());
-
-        InstanceManager.setSensorManager(getSensorManager());
-
-        InstanceManager.setThrottleManager(super.getThrottleManager());
-
-        if (getProgrammerManager().isAddressedModePossible()) {
-            InstanceManager.store(getProgrammerManager(), jmri.AddressedProgrammerManager.class);
-        }
-        if (getProgrammerManager().isGlobalProgrammerAvailable()) {
-            InstanceManager.store(getProgrammerManager(), GlobalProgrammerManager.class);
-        }
-
-        InstanceManager.setReporterManager(getReporterManager());
-
-        jmri.ClockControl cc = getClockControl();
-        // make sure InstanceManager knows about that
-        InstanceManager.store(cc, jmri.ClockControl.class);
-        InstanceManager.setDefault(jmri.ClockControl.class, cc);
-
+        super.configureManagers();
     }
 
     @Override

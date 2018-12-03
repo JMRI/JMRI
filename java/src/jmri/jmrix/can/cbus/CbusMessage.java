@@ -9,11 +9,34 @@ import org.slf4j.LoggerFactory;
 /**
  * Class to allow use of CBUS concepts to access the underlying can message
  *
+ *  * https://github.com/MERG-DEV/CBUSlib
+ * 
  * @author Andrew Crosland Copyright (C) 2008
+ * @author Steve Young (C) 2018
+ * 
  */
 public class CbusMessage {
     /* Methods that take a CanMessage as argument */
 
+    
+    /**
+     * Return a CBUS Message for use in sensors, turnouts + light
+     * If a response event, set to normal event
+     * In future, this may also translate extended messages down to normal messages.
+     *
+     * @param msg CbusMessage to be coverted to normal opc
+     * @return CBUS message converted from response to normal.
+     */
+    public static CanReply opcRangeToStl(CanReply msg){
+        int opc = getOpcode(msg);
+        // log.debug(" about to check opc {} ",opc);
+        if (opc==CbusConstants.CBUS_ARON) { msg.setElement(0, CbusConstants.CBUS_ACON); }
+        else if (opc==CbusConstants.CBUS_AROF) { msg.setElement(0, CbusConstants.CBUS_ACOF); }
+        else if (opc==CbusConstants.CBUS_ARSON) { msg.setElement(0, CbusConstants.CBUS_ASON); }
+        else if (opc==CbusConstants.CBUS_ARSOF) { msg.setElement(0, CbusConstants.CBUS_ASOF); }
+        return msg;
+    }
+    
     public static int getId(CanMessage m) {
         if (m.isExtended()) {
             return m.getHeader() & 0x1FFFFFF;
@@ -54,16 +77,85 @@ public class CbusMessage {
         }
     }
 
+    // returns 0, 1
     public static int getEventType(CanMessage m) {
-        if ((m.getElement(0) & 1) == 1) {
+        if (
+           (m.getElement(0) == 0x91)
+        || (m.getElement(0) == 0x94)
+        || (m.getElement(0) == 0x99)
+        || (m.getElement(0) == 0x9E)
+        || (m.getElement(0) == 0xB1)
+        || (m.getElement(0) == 0xB4)
+        || (m.getElement(0) == 0xB9)
+        || (m.getElement(0) == 0xBE)
+        || (m.getElement(0) == 0xD1)
+        || (m.getElement(0) == 0xD5)
+        || (m.getElement(0) == 0xD9)
+        || (m.getElement(0) == 0xDE)
+        || (m.getElement(0) == 0xF1)
+        || (m.getElement(0) == 0xF4)
+        || (m.getElement(0) == 0xF9)
+        || (m.getElement(0) == 0xFE)
+        ) {
             return CbusConstants.EVENT_OFF;
         } else {
             return CbusConstants.EVENT_ON;
         }
     }
 
+    // is an event boolean
+    // this adheres to cbus spec, ie on off responses to an AREQ are events
+    // D4 D5 not typo
     public static boolean isEvent(CanMessage m) {
-        if ((m.getElement(0) == 0x90) || (m.getElement(0) == 0x91)) {
+        if 
+          ((m.getElement(0) == 0x90) || (m.getElement(0) == 0x91)
+        || (m.getElement(0) == 0x93) || (m.getElement(0) == 0x94)
+        || (m.getElement(0) == 0x98) || (m.getElement(0) == 0x99)
+        || (m.getElement(0) == 0x9D) || (m.getElement(0) == 0x9E)
+        || (m.getElement(0) == 0xB0) || (m.getElement(0) == 0xB1)
+        || (m.getElement(0) == 0xB3) || (m.getElement(0) == 0xB4)
+        || (m.getElement(0) == 0xB8) || (m.getElement(0) == 0xB9)
+        || (m.getElement(0) == 0xBD) || (m.getElement(0) == 0xBE)
+        || (m.getElement(0) == 0xD0) || (m.getElement(0) == 0xD1)
+        || (m.getElement(0) == 0xD4) || (m.getElement(0) == 0xD5) 
+        || (m.getElement(0) == 0xD8) || (m.getElement(0) == 0xD9)
+        || (m.getElement(0) == 0xDD) || (m.getElement(0) == 0xDE)
+        || (m.getElement(0) == 0xF0) || (m.getElement(0) == 0xF1)
+        || (m.getElement(0) == 0xF3) || (m.getElement(0) == 0xF4)
+        || (m.getElement(0) == 0xF8) || (m.getElement(0) == 0xF9)
+        || (m.getElement(0) == 0xFD) || (m.getElement(0) == 0xFE)
+     ) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    /**
+     * Checks if can message passed is a short event
+     * boolean 
+     */
+    public static boolean isShort(CanMessage m) {
+        if (
+           (m.getElement(0) == 0x98)
+        || (m.getElement(0) == 0x99)
+        || (m.getElement(0) == 0x9D)
+        || (m.getElement(0) == 0x9E)
+        || (m.getElement(0) == 0xB1)
+        || (m.getElement(0) == 0xB8)
+        || (m.getElement(0) == 0xB9)
+        || (m.getElement(0) == 0xBD)
+        || (m.getElement(0) == 0xBE)
+        || (m.getElement(0) == 0xD8)
+        || (m.getElement(0) == 0xD9)
+        || (m.getElement(0) == 0xDD)
+        || (m.getElement(0) == 0xDE)
+        || (m.getElement(0) == 0xF8)
+        || (m.getElement(0) == 0xF9)
+        || (m.getElement(0) == 0xFB)
+        || (m.getElement(0) == 0xFD)
+        || (m.getElement(0) == 0xFE)
+        ) {
             return true;
         } else {
             return false;
@@ -175,7 +267,24 @@ public class CbusMessage {
     }
 
     public static int getEventType(CanReply r) {
-        if ((r.getElement(0) & 1) == 1) {
+        if (
+           (r.getElement(0) == 0x91)
+        || (r.getElement(0) == 0x94)
+        || (r.getElement(0) == 0x99)
+        || (r.getElement(0) == 0x9E)
+        || (r.getElement(0) == 0xB1)
+        || (r.getElement(0) == 0xB4)
+        || (r.getElement(0) == 0xB9)
+        || (r.getElement(0) == 0xBE)
+        || (r.getElement(0) == 0xD1)
+        || (r.getElement(0) == 0xD5)
+        || (r.getElement(0) == 0xD9)
+        || (r.getElement(0) == 0xDE)
+        || (r.getElement(0) == 0xF1)
+        || (r.getElement(0) == 0xF4)
+        || (r.getElement(0) == 0xF9)
+        || (r.getElement(0) == 0xFE)
+        ) {
             return CbusConstants.EVENT_OFF;
         } else {
             return CbusConstants.EVENT_ON;
@@ -183,13 +292,64 @@ public class CbusMessage {
     }
 
     public static boolean isEvent(CanReply r) {
-        if ((r.getElement(0) == 0x90) || (r.getElement(0) == 0x91)) {
+        if (
+           (r.getElement(0) == 0x90) || (r.getElement(0) == 0x91)
+        || (r.getElement(0) == 0x93) || (r.getElement(0) == 0x94)
+        || (r.getElement(0) == 0x98) || (r.getElement(0) == 0x99)
+        || (r.getElement(0) == 0x9D) || (r.getElement(0) == 0x9E)
+        || (r.getElement(0) == 0xB0) || (r.getElement(0) == 0xB1)
+        || (r.getElement(0) == 0xB3) || (r.getElement(0) == 0xB4)
+        || (r.getElement(0) == 0xB8) || (r.getElement(0) == 0xB9)
+        || (r.getElement(0) == 0xBD) || (r.getElement(0) == 0xBE)
+        || (r.getElement(0) == 0xD0) || (r.getElement(0) == 0xD1)
+        || (r.getElement(0) == 0xD4) || (r.getElement(0) == 0xD5) 
+        || (r.getElement(0) == 0xD8) || (r.getElement(0) == 0xD9)
+        || (r.getElement(0) == 0xDD) || (r.getElement(0) == 0xDE)
+        || (r.getElement(0) == 0xF0) || (r.getElement(0) == 0xF1)
+        || (r.getElement(0) == 0xF3) || (r.getElement(0) == 0xF4)
+        || (r.getElement(0) == 0xF8) || (r.getElement(0) == 0xF9)
+        || (r.getElement(0) == 0xFD) || (r.getElement(0) == 0xFE)
+        ) {
             return true;
         } else {
             return false;
         }
     }
 
+    
+    /**
+     * Checks if can message passed is a short event
+     * boolean 
+     */
+    public static boolean isShort(CanReply r) {
+        if (
+           (r.getElement(0) == 0x98)
+        || (r.getElement(0) == 0x99)
+        || (r.getElement(0) == 0x9D)
+        || (r.getElement(0) == 0x9E)
+        || (r.getElement(0) == 0xB1)
+        || (r.getElement(0) == 0xB8)
+        || (r.getElement(0) == 0xB9)
+        || (r.getElement(0) == 0xBD)
+        || (r.getElement(0) == 0xBE)
+        || (r.getElement(0) == 0xD8)
+        || (r.getElement(0) == 0xD9)
+        || (r.getElement(0) == 0xDD)
+        || (r.getElement(0) == 0xDE)
+        || (r.getElement(0) == 0xF8)
+        || (r.getElement(0) == 0xF9)
+        || (r.getElement(0) == 0xFB)
+        || (r.getElement(0) == 0xFD)
+        || (r.getElement(0) == 0xFE)
+        ) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    
+    
     public static void setId(CanReply r, int id) {
         if (r.isExtended()) {
             if ((id & ~0x1fffff) != 0) {

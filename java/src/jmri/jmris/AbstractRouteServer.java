@@ -1,4 +1,3 @@
-//AbstractRouteServer.java
 package jmri.jmris;
 
 import java.beans.PropertyChangeEvent;

@@ -1,6 +1,7 @@
 package jmri.jmrix.oaktree;
 
 import jmri.implementation.AbstractTurnoutTestBase;
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Before;
 
@@ -34,6 +35,7 @@ public class SerialTurnoutTest extends AbstractTurnoutTestBase {
     @Before
     @Override
     public void setUp() {
+        JUnitUtil.setUp();
         // prepare an interface
         _memo = new OakTreeSystemConnectionMemo("O", "Oaktree");
         tcis = new SerialTrafficControlScaffold(_memo);
@@ -42,13 +44,12 @@ public class SerialTurnoutTest extends AbstractTurnoutTestBase {
         t = new SerialTurnout("OT0104", "t4", _memo);
     }
 
-    // OK to used this for class clean up?
     @After
     public void tearDown() {
         tcis = null;
         _memo.dispose();
         t = null;
-        // JUnitUtil.tearDown() clean up is done through the AbstractTurnoutTestBase
+        JUnitUtil.tearDown();
     }
 
 }

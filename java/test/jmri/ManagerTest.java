@@ -13,7 +13,7 @@ import org.junit.Test;
  * Tests the static methods of the interface.
  * 
  * Detailed tests are in jmri.managers.AbstractManagerTestBase with even more
- * detailed tests (which require beans, etc) in jmri.managers.InternalSensorManagerTest
+ * detailed tests (which require beans, etc) in type-specific subclasses
  * 
  * @author Bob Jacobsen Copyright (C) 2017	
  */
@@ -24,6 +24,43 @@ public class ManagerTest {
         Assert.assertEquals("LT1", 1, Manager.getSystemPrefixLength("LT1"));
         Assert.assertEquals("L2T1", 2, Manager.getSystemPrefixLength("L2T1"));
         Assert.assertEquals("L21T1", 3, Manager.getSystemPrefixLength("L21T1"));
+    }
+
+    @Test
+    public void testGetSystemPrefixLengthThrow1() {
+        try {
+            Manager.getSystemPrefixLength(".T1");
+        } catch (NamedBean.BadSystemNameException e) { 
+            return; // OK
+        }
+        Assert.fail("Should have thrown");
+    }
+
+    @Test
+    public void testLegacyLog() {
+        jmri.Manager.legacyNameSet.clear(); // clean start
+
+        // start actual test
+        Assert.assertEquals("Empty at first", 0, Manager.legacyNameSet.size());
+
+        Manager.getSystemPrefix("DCCPPS01");
+        Assert.assertEquals("Didn't catch reference", 1, Manager.legacyNameSet.size());
+
+        Manager.getSystemPrefix("IS01");
+        Assert.assertEquals("Logged one in error", 1, Manager.legacyNameSet.size());
+
+        // there should be a ShutDownTask registered, remove it
+        InstanceManager.getDefault(jmri.ShutDownManager.class).deregister(Manager.legacyReportTask);
+    }
+    
+    @Test
+    public void testGetSystemPrefixLengthThrow2() {
+        try {
+            Manager.getSystemPrefixLength("1T1");
+        } catch (NamedBean.BadSystemNameException e) { 
+            return; // OK
+        }
+        Assert.fail("Should have thrown");
     }
 
     // Test legacy prefixes
@@ -108,6 +145,10 @@ public class ManagerTest {
         Assert.assertEquals(-1, Manager.startsWithLegacySystemPrefix("CT1"));
         Assert.assertEquals(-1, Manager.startsWithLegacySystemPrefix("C2T12"));
         Assert.assertEquals(-1, Manager.startsWithLegacySystemPrefix("DT12132"));
+
+        Assert.assertEquals(-1, Manager.startsWithLegacySystemPrefix(""));
+        Assert.assertEquals(-1, Manager.startsWithLegacySystemPrefix("X"));
+        Assert.assertEquals(-1, Manager.startsWithLegacySystemPrefix("-"));
         
         for (String s : Manager.LEGACY_PREFIXES.toArray(new String[0])) {
             Assert.assertEquals("Length test of \""+s+"\"",s.length(), Manager.startsWithLegacySystemPrefix(s+"T12"));

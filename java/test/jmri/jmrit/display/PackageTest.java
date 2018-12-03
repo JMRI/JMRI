@@ -61,6 +61,7 @@ import org.junit.runners.Suite;
         PositionablePopupUtilTest.class,
         PositionablePropertiesUtilTest.class,
         DisplayFrameTest.class,
+        EditorIconFrameTest.class,
 })
 public class PackageTest {
 }

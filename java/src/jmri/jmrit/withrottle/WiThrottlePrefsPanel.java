@@ -47,6 +47,7 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
 
     JCheckBox powerCB;
     JCheckBox turnoutCB;
+    JCheckBox turnoutCreationCB;
     JCheckBox routeCB;
     JCheckBox consistCB;
     JCheckBox startupCB;
@@ -95,6 +96,7 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
         port.setValue(localPrefs.getPort());
         powerCB.setSelected(localPrefs.isAllowTrackPower());
         turnoutCB.setSelected(localPrefs.isAllowTurnout());
+        turnoutCreationCB.setSelected(localPrefs.isAllowTurnoutCreation());
         routeCB.setSelected(localPrefs.isAllowRoute());
         fastClockDisplayCB.setSelected(localPrefs.isDisplayFastClock());
         consistCB.setSelected(localPrefs.isAllowConsist());
@@ -138,6 +140,7 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
 
         localPrefs.setAllowTrackPower(powerCB.isSelected());
         localPrefs.setAllowTurnout(turnoutCB.isSelected());
+        localPrefs.setAllowTurnoutCreation(turnoutCreationCB.isSelected());
         localPrefs.setAllowRoute(routeCB.isSelected());
         localPrefs.setDisplayFastClock(fastClockDisplayCB.isSelected());
         localPrefs.setAllowConsist(consistCB.isSelected());
@@ -234,6 +237,9 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
         turnoutCB = new JCheckBox(Bundle.getMessage("Turnouts"));
         turnoutCB.setToolTipText(Bundle.getMessage("ToolTipTurnout"));
 
+        turnoutCreationCB = new JCheckBox(Bundle.getMessage("TurnoutCreation"));
+        turnoutCreationCB.setToolTipText(Bundle.getMessage("ToolTipTurnoutCreation"));
+
         routeCB = new JCheckBox(Bundle.getMessage("LabelRoute"));
         routeCB.setToolTipText(Bundle.getMessage("ToolTipRoute"));
 
@@ -258,6 +264,7 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
         gridPanel.add(powerCB);
         gridPanel.add(fastClockDisplayCB);
         gridPanel.add(turnoutCB);
+        gridPanel.add(turnoutCreationCB);
         gridPanel.add(routeCB);
         
         conPanel.setLayout(new BoxLayout(conPanel, BoxLayout.Y_AXIS));

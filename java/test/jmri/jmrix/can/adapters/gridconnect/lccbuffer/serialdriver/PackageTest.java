@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 @Suite.SuiteClasses({
    ConnectionConfigTest.class,
    SerialDriverAdapterTest.class,
+   BundleTest.class,
    jmri.jmrix.can.adapters.gridconnect.lccbuffer.serialdriver.configurexml.PackageTest.class
 })
 /**

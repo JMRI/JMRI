@@ -2,6 +2,8 @@ package jmri.jmrix.srcp;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Nonnull;
+
 import jmri.ProgrammingMode;
 import jmri.jmrix.AbstractProgrammer;
 import org.slf4j.Logger;
@@ -29,6 +31,7 @@ public class SRCPProgrammer extends AbstractProgrammer implements SRCPListener {
      * Types implemented here.
      */
     @Override
+    @Nonnull
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<>();
         ret.add(ProgrammingMode.DIRECTBYTEMODE);
@@ -48,6 +51,7 @@ public class SRCPProgrammer extends AbstractProgrammer implements SRCPListener {
 
     // programming interface
     @Override
+    @Deprecated // 4.1.1
     synchronized public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) {
             log.debug("writeCV " + CV + " listens " + p);
@@ -115,6 +119,7 @@ public class SRCPProgrammer extends AbstractProgrammer implements SRCPListener {
     }
 
     @Override
+    @Deprecated // 4.1.1
     synchronized public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) {
             log.debug("readCV " + CV + " listens " + p);
@@ -257,7 +262,7 @@ public class SRCPProgrammer extends AbstractProgrammer implements SRCPListener {
         // clear the current listener _first_
         jmri.ProgListener temp = _usingProgrammer;
         _usingProgrammer = null;
-        temp.programmingOpReply(value, status);
+        notifyProgListenerEnd(temp,value,status);
     }
 
     SRCPTrafficController _controller = null;

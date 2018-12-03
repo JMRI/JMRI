@@ -30,10 +30,18 @@ public class OlcbTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
 
     @Override
     @Test
-    public void testUpperLower() {
-        Turnout t = l.provideTurnout("MTX010203040506070" + getNumToTest2() + ";X010203040506070"
-                + (getNumToTest2() - 1));
+    public void testProvideName() {
+        // create
+        Turnout t = l.provide(getSystemName(getNumToTest1()));
+        // check
+        Assert.assertTrue("real object returned ", t != null);
+        Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
+    }
 
+    @Override
+    @Test
+    public void testUpperLower() {
+        Turnout t = l.provide(getSystemName(getNumToTest1()));
         Assert.assertNull(l.getTurnout(t.getSystemName().toLowerCase()));
     }
 
@@ -41,8 +49,7 @@ public class OlcbTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
     @Test
     public void testDefaultSystemName() {
         // create
-        Turnout t = l.provideTurnout("MTX010203040506070" + getNumToTest1() + ";X010203040506070"
-                + (getNumToTest1() - 1));
+        Turnout t = l.provide(getSystemName(getNumToTest1()));
         // check
         Assert.assertTrue("real object returned ", t != null);
         Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));

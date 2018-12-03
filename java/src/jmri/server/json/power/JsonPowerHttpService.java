@@ -42,8 +42,8 @@ public class JsonPowerHttpService extends JsonHttpService {
         root.put(TYPE, POWER);
         ObjectNode data = root.putObject(DATA);
         try {
-            PowerManager manager = InstanceManager.getDefault(PowerManager.class);
-            if (!name.isEmpty()) {
+            PowerManager manager = InstanceManager.getNullableDefault(PowerManager.class);
+            if (name != null && !name.isEmpty()) {
                 for (PowerManager pm : InstanceManager.getList(PowerManager.class)) {
                     if (pm.getUserName().equals(name)) {
                         manager = pm;

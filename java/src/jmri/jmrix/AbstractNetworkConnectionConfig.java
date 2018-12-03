@@ -50,7 +50,6 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
 
     protected boolean init = false;
 
-    @SuppressWarnings("unchecked")
     @Override
     protected void checkInitDone() {
         log.debug("init called for {}", name());
@@ -61,7 +60,7 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
             @Override
             public void actionPerformed(ActionEvent e) {
                 adapter.setHostName(hostNameField.getText());
-                p.addComboBoxLastSelection(adapter.getClass().getName() + ".hostname", hostNameField.getText());
+                p.setComboBoxLastSelection(adapter.getClass().getName() + ".hostname", hostNameField.getText());
             }
         });
         hostNameField.addKeyListener(new KeyListener() {
@@ -72,7 +71,7 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
             @Override
             public void keyReleased(KeyEvent keyEvent) {
                 adapter.setHostName(hostNameField.getText());
-                p.addComboBoxLastSelection(adapter.getClass().getName() + ".hostname", hostNameField.getText());
+                p.setComboBoxLastSelection(adapter.getClass().getName() + ".hostname", hostNameField.getText());
             }
 
             @Override

@@ -4,8 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.*;
 import java.util.concurrent.TimeUnit;
 import javax.annotation.Nonnull;
 import javax.swing.JButton;
@@ -117,6 +116,7 @@ public class AbstractAutomaton implements Runnable {
      * <p>
      * Overrides the superclass method to do local accounting.
      */
+    @SuppressWarnings("deprecation") // Thread.stop not likely to be removed
     public void start() {
         if (currentThread != null) {
             log.error("Start with currentThread not null!");
@@ -181,8 +181,8 @@ public class AbstractAutomaton implements Runnable {
      * <p>
      * Overrides superclass method to handle local accounting.
      */
-    // The stop method on a thread has been deprecated, we need to find another way to deal with this.
-    // AbstractAutomaton objects can be waiting on _lots_ of things....
+    @SuppressWarnings("deprecation") // AbstractAutomaton objects can be waiting on _lots_ of things, so
+                                     // we need to find another way to deal with this besides Interrupt
     public void stop() {
         log.trace("stop() invoked");
         if (currentThread == null) {
@@ -870,7 +870,7 @@ public class AbstractAutomaton implements Runnable {
 
     NamedBean[] waitChangePrecheckBeans = null;
     int[] waitChangePrecheckStates = null;
-    BlockingQueue<PropertyChangeEvent> waitChangeQueue = new ArrayBlockingQueue<PropertyChangeEvent>(5);
+    BlockingQueue<PropertyChangeEvent> waitChangeQueue = new LinkedBlockingQueue<PropertyChangeEvent>();
 
     /**
      * Wait forever for one of a list of NamedBeans (sensors, signal heads

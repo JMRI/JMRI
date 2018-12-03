@@ -1,8 +1,7 @@
 package jmri.jmrix.loconet.lnsvf2;
 
 import java.util.Locale;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * Tests for the Bundle class
@@ -45,6 +44,17 @@ public class BundleTest  {
     @Test public void testLocaleMessageArg() {
         Assert.assertEquals("Scambio", Bundle.getMessage(Locale.ITALY, "BeanNameTurnout", new Object[]{}));
         Assert.assertEquals("Informazioni su Test", Bundle.getMessage(Locale.ITALY, "TitleAbout", "Test"));
+    }
+
+    // needed because the Bundle is implemented via class, not .properties file
+    @Before
+    public void setUp() {
+        jmri.util.JUnitUtil.setUp();
+    }
+
+    @After
+    public void tearDown() {
+        jmri.util.JUnitUtil.tearDown();
     }
 
 

@@ -29,7 +29,7 @@ public class MrcTurnoutManager extends jmri.managers.AbstractTurnoutManager {
 
     @Override
     public Turnout createNewTurnout(String systemName, String userName) {
-        int addr = Integer.valueOf(systemName.substring(getSystemPrefix().length() + 1)).intValue();
+        int addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
         Turnout t = new MrcTurnout(addr, tc, getSystemPrefix());
         t.setUserName(userName);
         return t;

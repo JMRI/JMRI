@@ -61,7 +61,7 @@ public class NceProgrammerManagerTest extends TestCase {
     // The minimal setup is for log4J
     @Override
     public void setUp() {
-        apps.tests.Log4JFixture.setUp(); 
+        jmri.util.JUnitUtil.setUp(); 
         jmri.util.JUnitUtil.resetInstanceManager();
         
         memo = new NceSystemConnectionMemo();
@@ -69,8 +69,9 @@ public class NceProgrammerManagerTest extends TestCase {
     }
 
     @Override
-    public void tearDown() {        
-        apps.tests.Log4JFixture.tearDown();
+    public void tearDown() {
+        memo = null;     
+        jmri.util.JUnitUtil.tearDown();
     }
 
     //private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NceProgrammerManagerTest.class);

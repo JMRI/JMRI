@@ -85,28 +85,65 @@ public class MultiThrottle {
 
     }
 
-    protected boolean addThrottleController(String key, String action) {   //  key is address format L#### or S##
+    private MultiThrottleController createThrottleController(String key) {
+        if (!isValidAddr(key) ) { //make sure address is acceptable before proceeding
+            return null;
+        }
         if (throttles == null) {
             throttles = new HashMap<>(1);
         }
 
         if (throttles.containsKey(key)) {
-            if (log.isDebugEnabled()) {
-                log.debug("Throttle: " + key + " already in MultiThrottle consist.");
-            }
-            return false;
+            log.debug("Throttle: {} already in MultiThrottle consist.", key);
+            return null;
         }
         MultiThrottleController mtc = new MultiThrottleController(whichThrottle, key, parentTCL, parentController);
         throttles.put(key, mtc);
+        log.debug("Throttle: {} added to MultiThrottle consist.", key);
+        return mtc;
+    }
+    
+    protected void addThrottleController(String key, String action) {   //  key is address format L#### or S##
+        MultiThrottleController mtc = createThrottleController(key);
+        if (mtc != null) {
+            //  This will request the loco as a DccTrottle
+            mtc.sort(action);
+        }
+    }
+    
+    protected void stealThrottleController(String key, String action) {
+        MultiThrottleController mtc = createThrottleController(key);
+        if (mtc != null) {
+            //  This will request the loco as a DccTrottle
+            mtc.isStealAddress = true;
+            mtc.sort(action);
+        }
+        log.debug("Throttle: {} stolen to MultiThrottle consist.", key);
+    }
 
-        //  This will request the loco as a DccTrottle
-        mtc.sort(action);
-
-        if (log.isDebugEnabled()) {
-            log.debug("Throttle: " + key + " added to MultiThrottle consist.");
+    /**
+     * Validate that address is going to be allowed by throttle controller. 
+     *   If not, send an error string to client.
+     *
+     * @param key address to be validated, of form Lnnnn or Snnn
+     */
+    private boolean isValidAddr(String key) {
+        int addr = Integer.parseInt(key.substring(1));
+        if ((key.charAt(0) == 'L') && 
+                !jmri.InstanceManager.throttleManagerInstance().canBeLongAddress(addr)) {
+            String msg = Bundle.getMessage("ErrorLongAddress", key);
+            log.warn(msg);
+            parentController.sendAlertMessage(msg);
+            return false;
+        } else if ((key.charAt(0) == 'S') && 
+                !jmri.InstanceManager.throttleManagerInstance().canBeShortAddress(addr)) {
+            String msg = Bundle.getMessage("ErrorShortAddress", key);
+            log.warn(msg);
+            parentController.sendAlertMessage(msg);
+            return false;            
         }
         return true;
-    }
+}
 
     protected boolean removeThrottleController(String key, String action) {
 
@@ -162,28 +199,6 @@ public class MultiThrottle {
         }
     }
 
-    protected void stealThrottleController(String key, String action) {
-        if (throttles == null) {
-            throttles = new HashMap<>(1);
-        }
-
-        if (throttles.containsKey(key)) {
-            if (log.isDebugEnabled()) {
-                log.debug("Throttle: " + key + " already in MultiThrottle consist.");
-            }
-            return;
-        }
-        MultiThrottleController mtc = new MultiThrottleController(whichThrottle, key, parentTCL, parentController);
-        throttles.put(key, mtc);
-
-        //  This will request the loco as a DccTrottle
-        mtc.requestStealAddress(action);
-
-        if (log.isDebugEnabled()) {
-            log.debug("Throttle: " + key + " stolen to MultiThrottle consist.");
-        }
-    }
-
     public void dispose() {
         if (throttles == null) {
             return;
@@ -206,7 +221,8 @@ public class MultiThrottle {
 
     /**
      * A request for a this address has been cancelled, clean up the waiting
-     * ThrottleController
+     * MultiThrottleController. If the MTC is marked as a steal, this cancel needs 
+     * to not happen.
      *
      * @param key The string to use as a key to remove the proper
      *            MultiThrottleController
@@ -223,9 +239,9 @@ public class MultiThrottle {
             return;
         }
         MultiThrottleController mtc = throttles.get(key);
-        mtc.removeControllerListener(parentController);
-        throttles.remove(key);
-        if (log.isDebugEnabled()) {
+        if (!mtc.isStealAddress) {
+            mtc.removeControllerListener(parentController);
+            throttles.remove(key);
             log.debug("Throttle: {} cancelled from MultiThrottle.", key);
         }
     }
