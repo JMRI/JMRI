@@ -1,4 +1,4 @@
-package jmri.jmrix.can.cbus;
+package jmri.jmrix.can.cbus.swing;
 
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -10,11 +10,11 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class CbusEventFilterTest {
+public class CbusFilterPanelTest {
 
     @Test
     public void testCTor() {
-        CbusEventFilter t = new CbusEventFilter();
+        CbusFilterPanel t = new CbusFilterPanel();
         Assert.assertNotNull("exists",t);
     }
 

@@ -107,6 +107,10 @@
       or
       <a href="http://jmri.org/JavaDoc/doc/jmri/InvokeOnLayoutThread.html">@InvokeOnLayoutThread</a>
       to ease later static checking.
+
+      <p>
+      If you know your method is thread safe and may be run on any thread, please mark it with
+      <a href="http://jmri.org/JavaDoc/doc/jmri/InvokeOnAnyThread.html">@InvokeOnAnyThread</a>
       
       <p>
       If you want to check at runtime that something is running on the intended thread:
