@@ -331,13 +331,13 @@ public final class InstanceManager {
                     } else {
                         log.debug("        no initializer registered for {}", type.getName());
                     }
-                }
 
-                // don't have, can't make
-                setInitializationState(type, InitializationState.FAILED);
-                if (traceFileActive) {
-                    traceFileIndent--;
-                    traceFilePrint("End initialization (no object) E: " + type.toString());
+                    // don't have, can't make
+                    setInitializationState(type, InitializationState.FAILED);
+                    if (traceFileActive) {
+                        traceFileIndent--;
+                        traceFilePrint("End initialization (no object) E: " + type.toString());
+                    }
                 }
                 return null;
             }
