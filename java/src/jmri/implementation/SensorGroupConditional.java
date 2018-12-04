@@ -33,7 +33,7 @@ public class SensorGroupConditional extends DefaultConditional {
 
     @Override
     protected String descriptionForUser() {
-        return Bundle.getMessage("DescriptionForSGConditional", "", getUserName(), getSystemName());
+        return Bundle.getMessage("DescriptionForSGConditional", getDisplayName(), getSystemName());
     }
     @Override
     public int calculate(boolean enabled, PropertyChangeEvent evt) {
@@ -63,7 +63,9 @@ public class SensorGroupConditional extends DefaultConditional {
             if (sn == null) {
                 log.error("invalid sensor name in action - " + action.getDeviceName());
             }
-            setSensorGroupSensor(evtSensor, action, sn);
+            guardRecursionStageHelper(
+                    ()->{setSensorGroupSensor(evtSensor, action, sn);},
+                    ()-> {return describeAction(action);});
         }
     }
 

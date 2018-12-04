@@ -43,6 +43,7 @@ import jmri.jmrit.audio.AudioSource;
 import jmri.jmrit.entryexit.DestinationPoints;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.Warrant;
+import jmri.managers.DefaultConditionalManager;
 import jmri.script.JmriScriptEngineManager;
 import jmri.script.ScriptOutput;
 import org.slf4j.Logger;
@@ -342,10 +343,11 @@ public class DefaultConditional extends AbstractNamedBean
     }
 
     protected String descriptionForUser() {
-        return Bundle.getMessage("DescriptionForDefaultConditional", "", getUserName(), getSystemName());
+        String logixDisplayName = InstanceManager.getDefault(DefaultConditionalManager.class).getParentLogix(getSystemName()).getDisplayName();
+        return Bundle.getMessage("DescriptionForDefaultConditional", logixDisplayName, getDisplayName(), getSystemName());
     }
 
-    private String describeAction(ConditionalAction action) {
+    protected String describeAction(ConditionalAction action) {
         return action.description(_triggerActionsOnChange);
     }
 
