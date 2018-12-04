@@ -32,6 +32,10 @@ public class SensorGroupConditional extends DefaultConditional {
     }
 
     @Override
+    protected String descriptionForUser() {
+        return Bundle.getMessage("DescriptionForSGConditional", "", getUserName(), getSystemName());
+    }
+    @Override
     public int calculate(boolean enabled, PropertyChangeEvent evt) {
         int currentState = super.calculate(false, evt);
         if (!enabled || evt == null) {
@@ -46,50 +50,21 @@ public class SensorGroupConditional extends DefaultConditional {
         if (Sensor.INACTIVE == ((Integer) evt.getNewValue()).intValue()) {
             return currentState;
         }
-        try {
-            synchronized (this) {
-                ++_currentConditionalNesting;
-                if (_currentConditionalNesting >= CONDITIONAL_NESTING_LIMIT) {
-                    // throw exception.
-                    // @todo maybe the toString is not a good representation for the user.
-                    throw new LogixRecursionException(this, toString());
-                }
-            }
-            try {
-                if (takeAction(evtSensor)) return currentState;
-            } catch (LogixRecursionException e) {
-                if (e.isCollectingStack()) {
-                    e.prependDescription(toString());
-                }
-                if (e.getTriggerSource() == this) {
-                    // if we threw this exception and we are catching, we have unwound one
-                    // iteration of the loop.
-                    e.stopCollectingStack();
-                }
-                // re-throw to collect and unwind more stack frames.
-                throw e;
-            }
-        } finally {
-            synchronized (this) {
-                --_currentConditionalNesting;
-            }
-        }
+        guardRecursionEndHelper(()->{takeAction(evtSensor);});
         log.debug("SGConditional \"" + getUserName() + "\" (" + getSystemName() + "), state= " + currentState
                 + "has set the group actions for " + listener);
         return currentState;
     }
 
-    private boolean takeAction(Sensor evtSensor) {
+    private void takeAction(Sensor evtSensor) {
         for (int i = 0; i < _actionList.size(); i++) {
             ConditionalAction action = _actionList.get(i);
             Sensor sn = InstanceManager.sensorManagerInstance().getSensor(action.getDeviceName());
             if (sn == null) {
                 log.error("invalid sensor name in action - " + action.getDeviceName());
-                return true;
             }
             setSensorGroupSensor(evtSensor, action, sn);
         }
-        return false;
     }
 
     private void setSensorGroupSensor(Sensor evtSensor, ConditionalAction action, Sensor sn) {
