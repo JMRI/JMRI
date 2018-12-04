@@ -83,6 +83,9 @@ public class DefaultConditional extends AbstractNamedBean
     private int _currentState = NamedBean.UNKNOWN;
     private boolean _triggerActionsOnChange = true;
 
+    protected int _currentConditionalNesting = 0;
+    protected static final int CONDITIONAL_NESTING_LIMIT = 3;
+
     public static int getIndexInTable(int[] table, int entry) {
         for (int i = 0; i < table.length; i++) {
             if (entry == table[i]) {
@@ -300,7 +303,35 @@ public class DefaultConditional extends AbstractNamedBean
         }
         setState(newState);
         if (enabled) {
-            takeActionIfNeeded();
+            try {
+                synchronized (this) {
+                    ++_currentConditionalNesting;
+                    if (_currentConditionalNesting >= CONDITIONAL_NESTING_LIMIT) {
+                        // throw exception.
+                        // @todo maybe the toString is not a good representation for the user.
+                        throw new LogixRecursionException(this, toString());
+                    }
+                }
+                try {
+                    takeActionIfNeeded();
+                } catch (LogixRecursionException e) {
+                    if (e.isCollectingStack()) {
+                        e.prependDescription(toString());
+                    }
+                    if (e.getTriggerSource() == this) {
+                        // if we threw this exception and we are catching, we have unwound one
+                        // iteration of the loop.
+                        e.stopCollectingStack();
+                    }
+                    // re-throw to collect and unwind more stack frames.
+                    throw e;
+                }
+            } finally {
+                synchronized (this) {
+                    --_currentConditionalNesting;
+                }
+            }
+
         }
         return _currentState;
     }
