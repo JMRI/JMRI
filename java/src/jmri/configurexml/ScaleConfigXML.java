@@ -23,11 +23,15 @@ public class ScaleConfigXML {
     public static boolean doStore() {
         ScaleXmlFile x = new ScaleXmlFile();
         File file = x.getStoreFile();
+        if (file == null) {
+            log.warn("Unable to create local scale file");
+            return false;
+        }
 
         // Create root element
         Element root = new Element("scale-data");  // NOI18N
         root.setAttribute("noNamespaceSchemaLocation",  // NOI18N
-                "http://jmri.org/xml/schema/timetable.xsd",  // NOI18N
+                "http://jmri.org/xml/schema/scale.xsd",  // NOI18N
                 org.jdom2.Namespace.getNamespace("xsi",
                         "http://www.w3.org/2001/XMLSchema-instance"));  // NOI18N
         Document doc = new Document(root);
@@ -107,7 +111,7 @@ public class ScaleConfigXML {
         public File getStoreFile() {
             File chkdir = new File(userPath);
             if (!chkdir.exists()) {
-                if (!chkdir.mkdir()) {
+                if (!chkdir.mkdirs()) {
                     return null;
                 }
             }
