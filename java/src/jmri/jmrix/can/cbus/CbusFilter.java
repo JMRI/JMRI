@@ -148,36 +148,37 @@ public class CbusFilter {
                     return checknode((test.getElement(1) * 256 + test.getElement(2))); }
                 if ( filters.get(CFCS) ){ return CFCS; } else { incrementCount(CFCS); }
                 if ( filters.get(CFCSC) ){ return CFCSC; } else { incrementCount(CFCSC); }
-            case CbusConstants.CBUS_RQNP: // in setup
-            case CbusConstants.CBUS_RQMN: // in setup
-            case CbusConstants.CBUS_NAME: // in setup
-            case CbusConstants.CBUS_PARAMS: // setup
+                break;
+            case CbusConstants.CBUS_RQNP:
+            case CbusConstants.CBUS_RQMN:
+            case CbusConstants.CBUS_NAME: 
+            case CbusConstants.CBUS_PARAMS: 
                 if ( filters.get(CFNDCONFIG) ){ return CFNDCONFIG; } else { incrementCount(CFNDCONFIG); }
                 if ( filters.get(CFNDSETUP) ){ return CFNDSETUP; } else { incrementCount(CFNDSETUP); }
                 break;            
-            case CbusConstants.CBUS_NNLRN: // 1 2
-            case CbusConstants.CBUS_NNULN: // 1 2
-            case CbusConstants.CBUS_WRACK: // 1 2
-            case CbusConstants.CBUS_BOOTM: // 1 2
-            case CbusConstants.CBUS_ENUM: // 1 2
-            case CbusConstants.CBUS_CMDERR: // 1 2
-            case CbusConstants.CBUS_RQNPN: // 1 2
-            case CbusConstants.CBUS_CANID: // 1 2
-            case CbusConstants.CBUS_PARAN: // 1 2
-            case CbusConstants.CBUS_PNN: // 1 2
+            case CbusConstants.CBUS_NNLRN: 
+            case CbusConstants.CBUS_NNULN: 
+            case CbusConstants.CBUS_WRACK: 
+            case CbusConstants.CBUS_BOOTM: 
+            case CbusConstants.CBUS_ENUM: 
+            case CbusConstants.CBUS_CMDERR: 
+            case CbusConstants.CBUS_RQNPN: 
+            case CbusConstants.CBUS_CANID: 
+            case CbusConstants.CBUS_PARAN: 
+            case CbusConstants.CBUS_PNN:
                 if ( checknode((test.getElement(1) * 256 + test.getElement(2))) > -1 ) {
                     return checknode((test.getElement(1) * 256 + test.getElement(2))); }
                 if ( filters.get(CFNDCONFIG) ){ return CFNDCONFIG; } else { incrementCount(CFNDCONFIG); }
                 if ( filters.get(CFNDSETUP) ){ return CFNDSETUP; } else { incrementCount(CFNDSETUP); }
                 break;
-            case CbusConstants.CBUS_QNN: // setup
+            case CbusConstants.CBUS_QNN:
                 if ( filters.get(CFNDCONFIG) ){ return CFNDCONFIG; } else { incrementCount(CFNDCONFIG); }
                 if ( filters.get(CFNDNUM) ){ return CFNDNUM; } else { incrementCount(CFNDNUM); }
                 break;
-            case CbusConstants.CBUS_SNN: // 1 2
-            case CbusConstants.CBUS_RQNN: // 1 2
-            case CbusConstants.CBUS_NNREL: // 1 2
-            case CbusConstants.CBUS_NNACK: // 1 2
+            case CbusConstants.CBUS_SNN:
+            case CbusConstants.CBUS_RQNN:
+            case CbusConstants.CBUS_NNREL: 
+            case CbusConstants.CBUS_NNACK:
                 if ( checknode((test.getElement(1) * 256 + test.getElement(2))) > -1 ) {
                     return checknode((test.getElement(1) * 256 + test.getElement(2))); }
                 if ( filters.get(CFNDCONFIG) ){ return CFNDCONFIG; } else { incrementCount(CFNDCONFIG); }
@@ -211,21 +212,21 @@ public class CbusFilter {
                 if ( filters.get(CFCS) ){ return CFCS; } else { incrementCount(CFCS); }
                 if ( filters.get(CFCSDSPD) ){ return CFCSDSPD; } else { incrementCount(CFCSDSPD); }
                 break;
-            case CbusConstants.CBUS_NNCLR: // 1 2
-            case CbusConstants.CBUS_NNEVN: // 1 2
-            case CbusConstants.CBUS_NERD: // 1 2
-            case CbusConstants.CBUS_RQEVN: // 1 2
-            case CbusConstants.CBUS_EVNLF: // 1 2
-            case CbusConstants.CBUS_NENRD: // 1 2
-            case CbusConstants.CBUS_NUMEV: // 1 2
-            case CbusConstants.CBUS_EVULN: // 1 2
-            case CbusConstants.CBUS_REVAL: // 1 2
-            case CbusConstants.CBUS_REQEV: // 1 2
-            case CbusConstants.CBUS_NEVAL: // 1 2
-            case CbusConstants.CBUS_EVLRN: // 1 2
-            case CbusConstants.CBUS_EVANS: // 1 2
-            case CbusConstants.CBUS_ENRSP: // 1 2
-            case CbusConstants.CBUS_EVLRNI: // 1 2
+            case CbusConstants.CBUS_NNCLR:
+            case CbusConstants.CBUS_NNEVN:
+            case CbusConstants.CBUS_NERD: 
+            case CbusConstants.CBUS_RQEVN:
+            case CbusConstants.CBUS_EVNLF:
+            case CbusConstants.CBUS_NENRD:
+            case CbusConstants.CBUS_NUMEV:
+            case CbusConstants.CBUS_EVULN:
+            case CbusConstants.CBUS_REVAL:
+            case CbusConstants.CBUS_REQEV:
+            case CbusConstants.CBUS_NEVAL:
+            case CbusConstants.CBUS_EVLRN:
+            case CbusConstants.CBUS_EVANS:
+            case CbusConstants.CBUS_ENRSP:
+            case CbusConstants.CBUS_EVLRNI:
                 if ( checknode((test.getElement(1) * 256 + test.getElement(2))) > -1 ) {
                     return checknode((test.getElement(1) * 256 + test.getElement(2))); }
                 if ( filters.get(CFNDCONFIG) ){ return CFNDCONFIG; } else { incrementCount(CFNDCONFIG); }

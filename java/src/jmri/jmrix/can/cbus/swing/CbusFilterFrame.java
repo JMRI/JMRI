@@ -34,7 +34,6 @@ public class CbusFilterFrame extends JmriJFrame {
     private JPanel fPane;
     private JScrollPane fPaneScroll;
     private CbusFilter _filter;
-    private int _numNodes;
 
     /**
      * Create a new instance of CbusFilterFrame.
@@ -85,8 +84,6 @@ public class CbusFilterFrame extends JmriJFrame {
      */
     @Override
     public void initComponents() {
-        _numNodes = 0;
-        
         listMapped = new ArrayList<Integer>();
         for ( int k=0 ; (k < CbusFilter.CFMAXCATS + CbusFilter.CFMAX_NODES) ; k++){
             listMapped.add(-1);
@@ -185,7 +182,6 @@ public class CbusFilterFrame extends JmriJFrame {
 
     public void addNode(int nodenum, int position) {
         log.debug("New node {} notification to position {} ",nodenum,position);
-        _numNodes++;
         listFilters.get(listMapped.get(position)).setNode(nodenum,
             listFilters.get(listMapped.get(CbusFilter.CFNODE)).getButton(),
             listFilters.get(listMapped.get(CbusFilter.CFNODEMIN)).getVisible()
@@ -205,11 +201,7 @@ public class CbusFilterFrame extends JmriJFrame {
             }
         }
         else if ( category > 0 ) {
-            if ( ( category == CbusFilter.CFNODE ) 
-               // && ( _numNodes == 0 ) 
-            ) {
-                
-                log.debug("found node child cat {}",category);
+            if ( category == CbusFilter.CFNODE ) {
                 return;
             }
             int filterId=0;
