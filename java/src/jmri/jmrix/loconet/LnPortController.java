@@ -51,7 +51,7 @@ public abstract class LnPortController extends jmri.jmrix.AbstractSerialPortCont
     protected boolean mTurnoutExtraSpace = false;
 
     protected boolean mTranspondingAvailable = false;
-    
+
     protected boolean mLoconetProtocolAutoDetect = true;
 
     protected LnCommandStationType[] commandStationTypes = {
@@ -121,7 +121,7 @@ public abstract class LnPortController extends jmri.jmrix.AbstractSerialPortCont
         mLoconetProtocolAutoDetect = (value.equals("Yes") || value.equals(Bundle.getMessage("LoconetProtocolAutoDetect")));
         log.debug("Loconet XPSlots: {}", mLoconetProtocolAutoDetect); // NOI18N
     }
-    
+
     @Override
     public LocoNetSystemConnectionMemo getSystemConnectionMemo() {
         return (LocoNetSystemConnectionMemo) super.getSystemConnectionMemo();

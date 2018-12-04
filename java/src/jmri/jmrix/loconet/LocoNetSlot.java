@@ -840,7 +840,7 @@ public class LocoNetSlot {
                     localF18 = ((l.getElement(4) & 0b00010000) != 0);
                     localF19 = ((l.getElement(4) & 0b00100000) != 0);
                     localF20 = ((l.getElement(4) & 0b01000000) != 0);
-                } else if ((l.getElement(1) & LnConstants.OPC_EXP_SEND_SUB_CODE_MASK_FUNCTION) == LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F21F28_F28OFF_MASK 
+                } else if ((l.getElement(1) & LnConstants.OPC_EXP_SEND_SUB_CODE_MASK_FUNCTION) == LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F21F28_F28OFF_MASK
                         || (l.getElement(1) & LnConstants.OPC_EXP_SEND_SUB_CODE_MASK_FUNCTION) == LnConstants.OPC_EXP_SEND_FUNCTION_GROUP_F21F28_F28ON_MASK) {
                     localF21 = ((l.getElement(4) & 0b00000001) != 0);
                     localF22 = ((l.getElement(4) & 0b00000010) != 0);
@@ -928,10 +928,10 @@ public class LocoNetSlot {
                     log.error("Asked to handle message not for this slot ("
                             + slot + ") " + l);
                 }
-                
+
                 // a loconet type 1 slot read or write sets slot protocol to LOCONETPROTOCOL_ONE
                 loconetProtocol = LnConstants.LOCONETPROTOCOL_ONE;
-                
+
                 stat = l.getElement(3);
                 _pcmd = l.getElement(4);
                 addr = l.getElement(4) + 128 * l.getElement(9);
@@ -1262,8 +1262,8 @@ public class LocoNetSlot {
             l.setElement(8, ss2 & 0x7F);
             // item 9 is add2
             l.setElement(10, snd & 0x7F);
-            l.setElement(11, id & 0x7F);  
-            l.setElement(12, (id / 128) & 0x7F); 
+            l.setElement(11, id & 0x7F);
+            l.setElement(12, (id / 128) & 0x7F);
             return l;
         }
         LocoNetMessage l = new LocoNetMessage(21);
@@ -1306,8 +1306,8 @@ public class LocoNetSlot {
                 | (isF25() ? 0b00010000 : 0x00)
                 | (isF26() ? 0b00100000 : 0x00)
                 | (isF27() ? 0b01000000 : 0x00));
-        l.setElement(18, id & 0x7F); 
-        l.setElement(19, (id / 128) & 0x7F); 
+        l.setElement(18, id & 0x7F);
+        l.setElement(19, (id / 128) & 0x7F);
         return l;
     }
 

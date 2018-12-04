@@ -125,7 +125,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         slot.addSlotListener(this);
 
         network.sendLocoNetMessage(slot.writeNullMove());
-        
+
         // start periodically sending the speed, to keep this
         // attached
         startRefresh();
@@ -608,7 +608,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     /**
      * Send the LocoNet message to set the state of locomotive direction and
      * functions F0, F1, F2, F3, F4
-     * Unfortunately this is used by all throttles to send direction changes, but the expanded slots dont use this 
+     * Unfortunately this is used by all throttles to send direction changes, but the expanded slots dont use this
      * for direction changes, they use speed... And we don't know if the caller wants to send functions or direction.
      */
     @Override

@@ -1598,7 +1598,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     public boolean getTranspondingAvailable() { return transpondingAvailable; }
 
     /**
-     * 
+     *
      * @param val If false then we only use protocol one.
      */
     public void setLoconetProtocolAutoDetect(boolean val) {

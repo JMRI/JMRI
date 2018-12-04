@@ -142,7 +142,7 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
      *                           between turnout operations?
      * @param mTranspondingAvailable    Is the layout configured to provide
      *                                  transopnding reports
-     * @param mLoconetProtocolAutoDetect Do we automatically detect the protocol to use or force LocoNet 1.1                                 
+     * @param mLoconetProtocolAutoDetect Do we automatically detect the protocol to use or force LocoNet 1.1
      */
     public void configureCommandStation(LnCommandStationType type, boolean mTurnoutNoRetry,
                                             boolean mTurnoutExtraSpace, boolean mTranspondingAvailable,
