@@ -652,6 +652,19 @@
                     </reportSet>
                 </reportSets>
             </plugin>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.7.9</version>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <!-- select non-aggregate reports -->
+                            <report>report</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
         </plugins>
     </reporting>
 
@@ -1063,14 +1076,4 @@
             <url>file://${project.basedir}/lib</url>
         </repository>
     </repositories>
-
-    <dependencyManagement>
-    	<dependencies>
-    		<dependency>
-    			<groupId>org.jmdns</groupId>
-    			<artifactId>jmdns</artifactId>
-    			<version>3.5.1</version>
-    		</dependency>
-    	</dependencies>
-    </dependencyManagement>
 </project>
