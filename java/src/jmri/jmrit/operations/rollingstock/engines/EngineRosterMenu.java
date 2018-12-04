@@ -46,36 +46,22 @@ public class EngineRosterMenu extends JMenu {
      *
      * @param pMenuName Name for the menu
      * @param pMenuType Select where the menu will be used, hence the right set
-     *                  of items to be enabled.
-     * @param pWho      The Component using this menu, used to ensure that
-     *                  dialog boxes will pop in the right place.
+     *            of items to be enabled.
+     * @param pWho The Component using this menu, used to ensure that dialog
+     *            boxes will pop in the right place.
      */
     public EngineRosterMenu(String pMenuName, int pMenuType, EnginesTableFrame pWho) {
         super(pMenuName);
 
         // create the menu
-        AbstractAction importRosterAction = new ImportRosterEngineAction(
-                Bundle.getMessage("MenuItemImportRoster"), pWho);
-        importRosterAction.setEnabled(false);
-        AbstractAction exportAction = new ExportEngineRosterAction(
-                Bundle.getMessage("MenuItemExport"), pWho);
-        exportAction.setEnabled(false);
-        AbstractAction importAction = new ImportEngineAction(Bundle.getMessage("MenuItemImport"),
-                pWho);
-        importAction.setEnabled(false);
-        AbstractAction deleteAction = new DeleteEngineRosterAction(
-                Bundle.getMessage("MenuItemDelete"), pWho);
-        deleteAction.setEnabled(false);
-        AbstractAction resetMovesAction = new ResetEngineMovesAction(
-                Bundle.getMessage("MenuItemResetMoves"), pWho);
-        resetMovesAction.setEnabled(false);
+        AbstractAction importRosterAction = new ImportRosterEngineAction(Bundle.getMessage("MenuItemImportRoster"));
+        AbstractAction exportAction = new ExportEngineRosterAction(Bundle.getMessage("MenuItemExport"));
+        AbstractAction importAction = new ImportEngineAction(Bundle.getMessage("MenuItemImport"));
+        AbstractAction deleteAction = new DeleteEngineRosterAction(Bundle.getMessage("MenuItemDelete"));
+        AbstractAction resetMovesAction = new ResetEngineMovesAction(Bundle.getMessage("MenuItemResetMoves"));
+        AbstractAction printAction = new PrintEngineRosterAction(Bundle.getMessage("MenuItemPrint"), false, pWho);
+        AbstractAction previewAction = new PrintEngineRosterAction(Bundle.getMessage("MenuItemPreview"), true, pWho);
 
-        AbstractAction printAction = new PrintEngineRosterAction(Bundle.getMessage("MenuItemPrint"),
-                 false, pWho);
-        printAction.setEnabled(false);
-        AbstractAction previewAction = new PrintEngineRosterAction(
-                Bundle.getMessage("MenuItemPreview"), true, pWho);
-        printAction.setEnabled(false);
         add(importRosterAction);
         add(importAction);
         add(exportAction);
@@ -87,18 +73,8 @@ public class EngineRosterMenu extends JMenu {
         // activate the right items
         switch (pMenuType) {
             case MAINMENU:
-                importRosterAction.setEnabled(true);
-                exportAction.setEnabled(true);
-                importAction.setEnabled(true);
-                deleteAction.setEnabled(true);
-                resetMovesAction.setEnabled(true);
-                printAction.setEnabled(true);
-                previewAction.setEnabled(true);
-                break;
             case SELECTMENU:
             case ENTRYMENU:
-                printAction.setEnabled(true);
-                previewAction.setEnabled(true);
                 break;
             default:
                 log.error("RosterMenu constructed without a valid menuType parameter: " + pMenuType);
@@ -106,7 +82,6 @@ public class EngineRosterMenu extends JMenu {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(EngineRosterMenu.class
-            .getName());
+    private final static Logger log = LoggerFactory.getLogger(EngineRosterMenu.class.getName());
 
 }

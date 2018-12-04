@@ -249,7 +249,34 @@ public class ThreadingUtil {
         return s.equals(Thread.State.BLOCKED) || s.equals(Thread.State.WAITING) || s.equals(Thread.State.TIMED_WAITING);
     }
 
-
+    /**
+     * Check that a call is on the GUI thread. Warns (once) if not.
+     * Intended to be the run-time check mechanism for {@code @InvokeOnGuiThread}
+     * <p>
+     * In this implementation, this is the same as {@link requireLayoutThread}
+     * @param logger The logger object from the calling class, usually "log"
+     */
+    static public void requireGuiThread(org.slf4j.Logger logger) {
+        if (!isGUIThread()) {
+            // fail, which can be a bit slow to do the right thing
+            Log4JUtil.warnOnce(logger, "Call not on GUI thread", new Exception("traceback"));
+        } 
+    }
+    
+    /**
+     * Check that a call is on the Layout thread. Warns (once) if not.
+     * Intended to be the run-time check mechanism for {@code @InvokeOnLayoutThread}
+     * <p>
+     * In this implementation, this is the same as {@link requireGuiThread}
+     * @param logger The logger object from the calling class, usually "log"
+     */
+    static public void requireLayoutThread(org.slf4j.Logger logger) {
+        if (!isLayoutThread()) {
+            // fail, which can be a bit slow to do the right thing
+            Log4JUtil.warnOnce(logger, "Call not on Layout thread", new Exception("traceback"));
+        } 
+    }
+    
     /**
      * Interface for use in ThreadingUtil's lambda interfaces
      */

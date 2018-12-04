@@ -108,7 +108,7 @@ public class SpeedUtil {
         return _dccAddress;            
     }
     
-    public String getAddress() {
+    protected String getAddress() {
         if (_dccAddress != null) {
             return _dccAddress.toString();
         }
@@ -639,8 +639,8 @@ public class SpeedUtil {
                 deltaThrottle *= NXFrame.INCRE_RATE;
                 numSteps++;
             }
-        } else {
-            // Start with largest throttle increment
+        } else {    // decreasing
+            // Get largest throttle increment to start
             float tempSpeed = toSpeed;
             while (tempSpeed + deltaThrottle <= fromSpeed) {
                 tempSpeed += deltaThrottle;
@@ -676,7 +676,6 @@ public class SpeedUtil {
     }
     
     /*************** dynamic calibration ***********************/
-
     long _timeAtSpeed;
     float _distanceTravelled;
     float _settingsTravelled;

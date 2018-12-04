@@ -84,8 +84,8 @@ public class Z21Reply extends AbstractMRReply {
     public String toMonitorString() {
         switch(getOpCode()){
            case 0x0010:
-               int serialNo = getElement(4) + (getElement(5) << 8) +
-                     (getElement(6) << 16) + (getElement(7) << 24);
+               int serialNo = (getElement(4)&0xff) + ((getElement(5)&0xff) << 8)
+                        + ((getElement(6)&0xff) << 16) + ((getElement(7)&0xff) << 24);
                return Bundle.getMessage("Z21ReplyStringSerialNo", serialNo);
            case 0x001A:
                int hwversion = getElement(4) + (getElement(5) << 8) +
@@ -97,6 +97,19 @@ public class Z21Reply extends AbstractMRReply {
                return Bundle.getMessage("Z21ReplyStringVersion",java.lang.Integer.toHexString(hwversion), swversion);
            case 0x0040:
                return Bundle.getMessage("Z21XpressNetTunnelReply", getXNetReply().toMonitorString());
+           case 0x0084:
+               int mainCurrent = getSystemDataMainCurrent();
+               int progCurrent = getSystemDataProgCurrent();
+               int filteredMainCurrent = getSystemDataFilteredMainCurrent();
+               int temperature = getSystemDataTemperature();
+               int supplyVolts = getSystemDataSupplyVoltage();
+               int internalVolts = getSystemDataVCCVoltage();
+               int state = getElement(16);
+               int extendedState = getElement(17);
+               // data bytes 14 and 15 (offset 18 and 19) are reserved.
+               return Bundle.getMessage("Z21SystemStateReply",mainCurrent,
+                      progCurrent,filteredMainCurrent,temperature,
+                      supplyVolts,internalVolts,state,extendedState);
            case 0x00A0:
                return Bundle.getMessage("Z21LocoNetRxReply", getLocoNetMessage().toMonitorString());
            case 0x00A1:
@@ -245,7 +258,7 @@ public class Z21Reply extends AbstractMRReply {
 
     // handle System data replies
     boolean isSystemDataChangedReply(){
-        return (getOpCode() == 0x0085);
+        return (getOpCode() == 0x0084);
     }
 
     /**

@@ -1,7 +1,19 @@
 package jmri.jmrix.can;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.Set;
+
+import javax.annotation.Nonnull;
+
 import jmri.InstanceManager;
+import jmri.profile.Profile;
+import jmri.profile.ProfileManager;
 
 /**
  * Lightweight class to denote that a system is active, and provide general
@@ -15,9 +27,11 @@ import jmri.InstanceManager;
  * @author Kevin Dickerson Copyright (C) 2012
  */
 public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
+    // This user name will be overwritten by the adapter and saved to the connection config.
+    public static String DEFAULT_USERNAME = "CAN";
 
     public CanSystemConnectionMemo() {
-        super("M", "MERG");
+        super("M", DEFAULT_USERNAME);
         register(); // registers general type
         InstanceManager.store(this, CanSystemConnectionMemo.class); // also register as specific type
     }
@@ -35,6 +49,8 @@ public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     }
 
     private jmri.jmrix.can.ConfigurationManager manager;
+
+    private final Map<String, Map<String, String>> protocolOptions = new HashMap<>();
 
     /**
      * {@inheritDoc }
@@ -118,6 +134,56 @@ public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         return manager.getActionModelResourceBundle();
     }
 
+    /**
+     * Enumerate all protocols that have options set.
+     * @return set of protocol names.
+     */
+    public Set<String> getProtocolsWithOptions() {
+        return protocolOptions.keySet();
+    }
+
+    /**
+     * Get all options we have set (saved in the connection XML) for a given protocol type.
+     * @param protocol String name of the protocol.
+     * @return map of known protocol options to values, or empty map.
+     */
+    @Nonnull
+    public Map<String, String> getProtocolAllOptions(String protocol) {
+        return protocolOptions.getOrDefault(protocol, new HashMap<>());
+    }
+
+    /**
+     * Get a single option of a single protocol, or null if not present.
+     * @param protocol name of the protocol.
+     * @param option name of the option.
+     * @return null if option has never been set; or the option value if set.
+     */
+    public synchronized String getProtocolOption(String protocol, String option) {
+        if (!protocolOptions.containsKey(protocol)) return null;
+        Map<String, String> m = getProtocolAllOptions(protocol);
+        return m.getOrDefault(option, null);
+    }
+
+    /**
+     * Sets a protocol option. This list will be persisted when the connection gets saved.
+     * @param protocol name of the protocol
+     * @param option name of the option
+     * @param value option value
+     */
+    public synchronized void setProtocolOption(String protocol, String option, String value) {
+        log.debug("Setting protocol option {} {} := {}", protocol, option, value);
+        if (value == null) return;
+        Map<String, String> m = protocolOptions.get(protocol);
+        if (m == null) {
+            m = new HashMap<>();
+            protocolOptions.put(protocol, m);
+        }
+        String oldValue = m.get(option);
+        if (value.equals(oldValue)) return;
+        m.put(option, value);
+        // @todo When the connection options are changed, we need to mark the profile as dirty.
+    }
+
     @Override
     public void dispose() {
         if (manager != null) {
@@ -126,5 +192,7 @@ public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         tm = null;
         super.dispose();
     }
+
+    private static final Logger log = LoggerFactory.getLogger(CanSystemConnectionMemo.class);
 
 }

@@ -82,7 +82,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
      *                   info.
      */
     public Ds64TabbedPanel(int boardNum, boolean readOnInit) {
-        super(boardNum, readOnInit);
+        super(boardNum, readOnInit, "DS64");
         origAccessBoardNum = boardNum;
         boardNumsEntryValue.add(boardNum);
     }

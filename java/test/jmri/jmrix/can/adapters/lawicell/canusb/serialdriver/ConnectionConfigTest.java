@@ -20,6 +20,7 @@ public class ConnectionConfigTest extends jmri.jmrix.AbstractSerialConnectionCon
 
         JUnitUtil.initDefaultUserMessagePreferences();
         cc = new ConnectionConfig();
+        cc.setManufacturer("Lawicell");
    }
 
    @After

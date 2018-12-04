@@ -10,11 +10,7 @@ import jmri.ProgListener;
 import jmri.Programmer;
 import jmri.progdebugger.ProgDebugger;
 import junit.framework.TestCase;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -66,7 +62,6 @@ public class OpsModeDelayedProgrammerFacadeTest extends TestCase {
     transient volatile boolean facProgReplied = false;
 
     // Perform tests with parameters parsed from the name of the calling method.
-    @Ignore
     synchronized void testMethod(int addr, boolean addrType) throws jmri.ProgrammerException, InterruptedException {
         String methodName = "";
         String cv = "";
@@ -120,7 +115,6 @@ public class OpsModeDelayedProgrammerFacadeTest extends TestCase {
     }
 
     // Extract test parameters from test name.
-    @Ignore
     synchronized ArrayList<String> itemsFromMethodName(int methodOffset, int groupReps) {
         StringBuilder sb = new StringBuilder();
         Pattern pattern;
@@ -149,7 +143,6 @@ public class OpsModeDelayedProgrammerFacadeTest extends TestCase {
         return retString;
     }
 
-    @Ignore
     synchronized void facProgWaitReply() throws InterruptedException {
         while (!facProgReplied) {
             wait(10);

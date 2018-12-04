@@ -700,7 +700,8 @@
         <li>John McAleely, who contributed Hornby and Bachmann
         decoder definitions</li>
 
-        <li>Greg McCartney, who provided a 
+        <li>Greg McCartney, <!-- gpmccartney -->
+        who provided a 
         <a href="http://jmri.org/xml/signals/NW-1981/index.shtml">Norfolk and Western signal definition</a>, 
         the <a href=
         "http://jmri.org/xml/signals/B&amp;O-1980/index.shtml">B&amp;O

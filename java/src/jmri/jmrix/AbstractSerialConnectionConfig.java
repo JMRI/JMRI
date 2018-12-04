@@ -506,9 +506,8 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
 
     @Override
     public void setManufacturer(String manufacturer) {
-        if (adapter != null) {
-            adapter.setManufacturer(manufacturer);
-        }
+        setInstance();
+        adapter.setManufacturer(manufacturer);
     }
 
     @Override

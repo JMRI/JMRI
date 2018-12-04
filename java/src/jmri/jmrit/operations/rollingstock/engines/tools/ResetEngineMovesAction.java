@@ -1,6 +1,5 @@
 package jmri.jmrit.operations.rollingstock.engines.tools;
 
-import java.awt.Component;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
@@ -19,7 +18,7 @@ public class ResetEngineMovesAction extends AbstractAction {
 
     EngineManager manager = InstanceManager.getDefault(EngineManager.class);
 
-    public ResetEngineMovesAction(String actionName, Component frame) {
+    public ResetEngineMovesAction(String actionName) {
         super(actionName);
     }
 

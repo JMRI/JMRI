@@ -440,6 +440,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
      * Types implemented here.
      */
     @Override
+    @Nonnull
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<>(4);
         ret.add(ProgrammingMode.OPSBYTEMODE);

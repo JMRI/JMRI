@@ -318,7 +318,14 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
         int old = _current;
         _current = v;
         // notify
-        firePropertyChange("state", old, _current);
+
+        // It is rather unpleasant that the following needs to be done in a try-catch, but exceptions have been observed
+        try {
+            firePropertyChange("state", old, _current);
+        } catch (Exception e) {
+            log.error(getDisplayName()+" got exception during fireProperTyChange("+old+","+_current+") in thread "+
+                    Thread.currentThread().getName()+" "+Thread.currentThread().getId()+": ", e);
+        }
     }
 
     /**
