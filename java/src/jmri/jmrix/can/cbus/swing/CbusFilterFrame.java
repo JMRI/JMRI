@@ -107,7 +107,7 @@ public class CbusFilterFrame extends JmriJFrame {
         listFilters.add(new CbusFilterPanel(true,this,CbusFilter.CFEVENTMIN,Bundle.getMessage("MinEvent"),false,CbusFilter.CFEVENT));
         listFilters.add(new CbusFilterPanel(true,this,CbusFilter.CFEVENTMAX,Bundle.getMessage("MaxEvent"),false,CbusFilter.CFEVENT)); 
         listFilters.add(new CbusFilterPanel(true,this,CbusFilter.CFON,Bundle.getMessage("CbusOnEvents"),false,CbusFilter.CFEVENT));
-        listFilters.add(new CbusFilterPanel(true,this,CbusFilter.CFOF,Bundle.getMessage("CbusOffEvents"),false,CbusFilter.CFEVENT));          
+        listFilters.add(new CbusFilterPanel(true,this,CbusFilter.CFOF,Bundle.getMessage("CbusOffEvents"),false,CbusFilter.CFEVENT));
         listFilters.add(new CbusFilterPanel(true,this,CbusFilter.CFSHORT,Bundle.getMessage("ShortEvents"),false,CbusFilter.CFEVENT));
         listFilters.add(new CbusFilterPanel(true,this,CbusFilter.CFLONG,Bundle.getMessage("LongEvents"),false,CbusFilter.CFEVENT));
         listFilters.add(new CbusFilterPanel(true,this,CbusFilter.CFSTD,Bundle.getMessage("StandardEvents"),false,CbusFilter.CFEVENT));
@@ -115,8 +115,8 @@ public class CbusFilterFrame extends JmriJFrame {
         listFilters.add(new CbusFilterPanel(true,this,CbusFilter.CFRESPONSE,Bundle.getMessage("ResponseEvents"),false,CbusFilter.CFEVENT));
         listFilters.add(new CbusFilterPanel(true,this,CbusFilter.CFED0,Bundle.getMessage("EVD0"),false,CbusFilter.CFEVENT));
         listFilters.add(new CbusFilterPanel(true,this,CbusFilter.CFED1,Bundle.getMessage("EVD1"),false,CbusFilter.CFEVENT));
-        listFilters.add(new CbusFilterPanel(true,this,CbusFilter.CFED2,Bundle.getMessage("EVD2"),false,CbusFilter.CFEVENT));        
-        listFilters.add(new CbusFilterPanel(true,this,CbusFilter.CFED3,Bundle.getMessage("EVD3"),false,CbusFilter.CFEVENT));        
+        listFilters.add(new CbusFilterPanel(true,this,CbusFilter.CFED2,Bundle.getMessage("EVD2"),false,CbusFilter.CFEVENT));
+        listFilters.add(new CbusFilterPanel(true,this,CbusFilter.CFED3,Bundle.getMessage("EVD3"),false,CbusFilter.CFEVENT));
         
         listFilters.add(new CbusFilterPanel(true,this,CbusFilter.CFNODE,Bundle.getMessage("CbusNodes"),true,CbusFilter.CFNODE));
         listFilters.add(new CbusFilterPanel(true,this,CbusFilter.CFNODEMIN,Bundle.getMessage("MinNode"),false,CbusFilter.CFNODE));
@@ -141,7 +141,7 @@ public class CbusFilterFrame extends JmriJFrame {
         listFilters.add(new CbusFilterPanel(true,this,CbusFilter.CFCSDSPD,Bundle.getMessage("SpeedDirection"),false,CbusFilter.CFCS));
         listFilters.add(new CbusFilterPanel(true,this,CbusFilter.CFCSFUNC,Bundle.getMessage("Functions"),false,CbusFilter.CFCS));
         listFilters.add(new CbusFilterPanel(true,this,CbusFilter.CFCSPROG,Bundle.getMessage("Programming"),false,CbusFilter.CFCS));
-        listFilters.add(new CbusFilterPanel(true,this,CbusFilter.CFCSLC,Bundle.getMessage("LayoutCommands"),false,CbusFilter.CFCS));        
+        listFilters.add(new CbusFilterPanel(true,this,CbusFilter.CFCSLC,Bundle.getMessage("LayoutCommands"),false,CbusFilter.CFCS));
         listFilters.add(new CbusFilterPanel(true,this,CbusFilter.CFCSC,Bundle.getMessage("CommandStationControl"),false,CbusFilter.CFCS));
         
         listFilters.add(new CbusFilterPanel(true,this,CbusFilter.CFNDCONFIG,Bundle.getMessage("NodeConfiguration"),true,CbusFilter.CFNDCONFIG));
