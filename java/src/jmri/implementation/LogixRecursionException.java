@@ -55,4 +55,10 @@ class LogixRecursionException extends RuntimeException {
     public void stopCollectingStack() {
         isCollectingStack = false;
     }
+
+    @Override
+    public String toString() {
+        return "Logix encountered recursive loop: " + getStackExplanation() + "\n" + super
+                .toString();
+    }
 }
