@@ -31,6 +31,7 @@ import jmri.EntryPoint;
 import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
 import jmri.Scale;
+import jmri.ScaleManager;
 import jmri.Section;
 import jmri.Sensor;
 import jmri.SignalMast;
@@ -332,7 +333,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
     private boolean _ExtraColorForAllocated = true;
     private boolean _NameInAllocatedBlock = false;
     private boolean _UseScaleMeters = false;  // "true" if scale meters, "false" for scale feet
-    private int _LayoutScale = Scale.HO;
+    private Scale _LayoutScale = ScaleManager.getScale("HO");
     private boolean _SupportVSDecoder = false;
     private int _MinThrottleInterval = 100; //default time (in ms) between consecutive throttle commands
     private int _FullRampTime = 10000; //default time (in ms) for RAMP_FAST to go from 0% to 100%
@@ -1056,7 +1057,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
      * @param allocateMethod                  How allocations will be performed.
      *                                        999 - Allocate as many section from start to finish as it can
      *                                        0 - Allocate to the next "Safe" section. If it cannot allocate all the way to
-     *                                        the next "safe" section it does not allocate any sections. It will 
+     *                                        the next "safe" section it does not allocate any sections. It will
      *                                        not allocate beyond the next safe section until it arrives there. This
      *                                        is useful for bidirectional single track running.
      *                                        Any other positive number (in reality thats 1-150 as the create transit
@@ -1065,7 +1066,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
      */
     public ActiveTrain createActiveTrain(String transitID, String trainID, int tSource, String startBlockName,
             int startBlockSectionSequenceNumber, String endBlockName, int endBlockSectionSequenceNumber,
-            boolean autoRun, String dccAddress, int priority, boolean resetWhenDone, boolean reverseAtEnd, 
+            boolean autoRun, String dccAddress, int priority, boolean resetWhenDone, boolean reverseAtEnd,
             boolean showErrorMessages, JmriJFrame frame, int allocateMethod) {
         log.debug("trainID:{}, tSource:{}, startBlockName:{}, startBlockSectionSequenceNumber:{}, endBlockName:{}, endBlockSectionSequenceNumber:{}",
                 trainID,tSource,startBlockName,startBlockSectionSequenceNumber,endBlockName,endBlockSectionSequenceNumber);
@@ -2444,11 +2445,11 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         _NameInAllocatedBlock = set;
     }
 
-    protected int getScale() {
+    protected Scale getScale() {
         return _LayoutScale;
     }
 
-    protected void setScale(int sc) {
+    protected void setScale(Scale sc) {
         _LayoutScale = sc;
     }
 
