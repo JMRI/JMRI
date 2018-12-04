@@ -343,7 +343,7 @@ public class DefaultConditional extends AbstractNamedBean
     }
 
     protected String descriptionForUser() {
-        String logixDisplayName = InstanceManager.getDefault(DefaultConditionalManager.class).getParentLogix(getSystemName()).getDisplayName();
+        String logixDisplayName = InstanceManager.getDefault(ConditionalManager.class).getParentLogix(getSystemName()).getDisplayName();
         return Bundle.getMessage("DescriptionForDefaultConditional", logixDisplayName, getDisplayName(), getSystemName());
     }
 
