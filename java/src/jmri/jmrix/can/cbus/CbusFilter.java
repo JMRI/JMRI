@@ -76,7 +76,6 @@ public class CbusFilter {
     public static final int CFNODEMAX = 44;    
 
     public static final int CFMAXCATS =45;
-    
     public static final int CFMAX_NODES = 200;
     
     /**
