@@ -240,7 +240,7 @@ public class WebAppServlet extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        return "Short description";
+        return "JMRI Web App support";
     }// </editor-fold>
 
 }
