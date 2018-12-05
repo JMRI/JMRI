@@ -30,6 +30,7 @@ public class CbusFilterFrame extends JmriJFrame {
     private CbusConsolePane _console;
     private ConfigToolPane _evCap;
     private ArrayList<CbusFilterPanel> listFilters;
+    private ArrayList<Integer> listMapped;
     private JPanel fPane;
     private JScrollPane fPaneScroll;
     private CbusFilter _filter;
@@ -83,6 +84,11 @@ public class CbusFilterFrame extends JmriJFrame {
      */
     @Override
     public void initComponents() {
+        listMapped = new ArrayList<Integer>();
+        for ( int k=0 ; (k < CbusFilter.CFMAXCATS + CbusFilter.CFMAX_NODES) ; k++){
+            listMapped.add(-1);
+        }
+        
         getContentPane().setLayout(new GridLayout(1,0));
         setTitle(title());
         listFilters = new ArrayList<CbusFilterPanel>();
@@ -94,57 +100,68 @@ public class CbusFilterFrame extends JmriJFrame {
         fPane.setLayout(new BoxLayout(fPane, BoxLayout.Y_AXIS));
         fPaneScroll = new JScrollPane();
 
-        listFilters.add(new CbusFilterPanel(this,CbusFilter.CFIN,Bundle.getMessage("Incoming"),false,0));
-        listFilters.add(new CbusFilterPanel(this,CbusFilter.CFOUT,Bundle.getMessage("Outgoing"),false,0));
+        listFilters.add(new CbusFilterPanel(true,this,CbusFilter.CFIN,Bundle.getMessage("Incoming"),false,0));
+        listFilters.add(new CbusFilterPanel(true,this,CbusFilter.CFOUT,Bundle.getMessage("Outgoing"),false,0));
         
-        listFilters.add(new CbusFilterPanel(this,CbusFilter.CFEVENT,Bundle.getMessage("CbusEvents"),true,1));
-        listFilters.add(new CbusFilterPanel(this,CbusFilter.CFON,Bundle.getMessage("CbusOnEvents"),false,1));
-        listFilters.add(new CbusFilterPanel(this,CbusFilter.CFOF,Bundle.getMessage("CbusOffEvents"),false,1));          
-        listFilters.add(new CbusFilterPanel(this,CbusFilter.CFSHORT,Bundle.getMessage("ShortEvents"),false,1));
-        listFilters.add(new CbusFilterPanel(this,CbusFilter.CFLONG,Bundle.getMessage("LongEvents"),false,1));
-        listFilters.add(new CbusFilterPanel(this,CbusFilter.CFSTD,Bundle.getMessage("StandardEvents"),false,1));
-        listFilters.add(new CbusFilterPanel(this,CbusFilter.CFREQUEST,Bundle.getMessage("RequestEvents"),false,1));
-        listFilters.add(new CbusFilterPanel(this,CbusFilter.CFRESPONSE,Bundle.getMessage("ResponseEvents"),false,1));
-        listFilters.add(new CbusFilterPanel(this,CbusFilter.CFED0,Bundle.getMessage("EVD0"),false,1));
-        listFilters.add(new CbusFilterPanel(this,CbusFilter.CFED1,Bundle.getMessage("EVD1"),false,1));
-        listFilters.add(new CbusFilterPanel(this,CbusFilter.CFED2,Bundle.getMessage("EVD2"),false,1));        
-        listFilters.add(new CbusFilterPanel(this,CbusFilter.CFED3,Bundle.getMessage("EVD3"),false,1));        
+        listFilters.add(new CbusFilterPanel(true,this,CbusFilter.CFEVENT,Bundle.getMessage("CbusEvents"),true,CbusFilter.CFEVENT));
+        listFilters.add(new CbusFilterPanel(true,this,CbusFilter.CFEVENTMIN,Bundle.getMessage("MinEvent"),false,CbusFilter.CFEVENT));
+        listFilters.add(new CbusFilterPanel(true,this,CbusFilter.CFEVENTMAX,Bundle.getMessage("MaxEvent"),false,CbusFilter.CFEVENT)); 
+        listFilters.add(new CbusFilterPanel(true,this,CbusFilter.CFON,Bundle.getMessage("CbusOnEvents"),false,CbusFilter.CFEVENT));
+        listFilters.add(new CbusFilterPanel(true,this,CbusFilter.CFOF,Bundle.getMessage("CbusOffEvents"),false,CbusFilter.CFEVENT));
+        listFilters.add(new CbusFilterPanel(true,this,CbusFilter.CFSHORT,Bundle.getMessage("ShortEvents"),false,CbusFilter.CFEVENT));
+        listFilters.add(new CbusFilterPanel(true,this,CbusFilter.CFLONG,Bundle.getMessage("LongEvents"),false,CbusFilter.CFEVENT));
+        listFilters.add(new CbusFilterPanel(true,this,CbusFilter.CFSTD,Bundle.getMessage("StandardEvents"),false,CbusFilter.CFEVENT));
+        listFilters.add(new CbusFilterPanel(true,this,CbusFilter.CFREQUEST,Bundle.getMessage("RequestEvents"),false,CbusFilter.CFEVENT));
+        listFilters.add(new CbusFilterPanel(true,this,CbusFilter.CFRESPONSE,Bundle.getMessage("ResponseEvents"),false,CbusFilter.CFEVENT));
+        listFilters.add(new CbusFilterPanel(true,this,CbusFilter.CFED0,Bundle.getMessage("EVD0"),false,CbusFilter.CFEVENT));
+        listFilters.add(new CbusFilterPanel(true,this,CbusFilter.CFED1,Bundle.getMessage("EVD1"),false,CbusFilter.CFEVENT));
+        listFilters.add(new CbusFilterPanel(true,this,CbusFilter.CFED2,Bundle.getMessage("EVD2"),false,CbusFilter.CFEVENT));
+        listFilters.add(new CbusFilterPanel(true,this,CbusFilter.CFED3,Bundle.getMessage("EVD3"),false,CbusFilter.CFEVENT));
         
-        listFilters.add(new CbusFilterPanel(this,CbusFilter.CFDATA,Bundle.getMessage("OPC_DA"),true,2));
-        listFilters.add(new CbusFilterPanel(this,CbusFilter.CFACDAT,"ACDAT",false,2)); // NOI18N
-        listFilters.add(new CbusFilterPanel(this,CbusFilter.CFDDES,"DDES",false,2)); // NOI18N
-        listFilters.add(new CbusFilterPanel(this,CbusFilter.CFRQDAT,"RQDAT",false,2)); // NOI18N
-        listFilters.add(new CbusFilterPanel(this,CbusFilter.CFARDAT,"ARDAT",false,2)); // NOI18N
-        listFilters.add(new CbusFilterPanel(this,CbusFilter.CFDDRS,"DDRS",false,2)); // NOI18N
-        listFilters.add(new CbusFilterPanel(this,CbusFilter.CFRQDDS,"RQDDS",false,2)); // NOI18N
-        listFilters.add(new CbusFilterPanel(this,CbusFilter.CFCABDAT,"Cabdata (experimental)",false,2));
+        listFilters.add(new CbusFilterPanel(true,this,CbusFilter.CFNODE,Bundle.getMessage("CbusNodes"),true,CbusFilter.CFNODE));
+        listFilters.add(new CbusFilterPanel(true,this,CbusFilter.CFNODEMIN,Bundle.getMessage("MinNode"),false,CbusFilter.CFNODE));
+        listFilters.add(new CbusFilterPanel(true,this,CbusFilter.CFNODEMAX,Bundle.getMessage("MaxNode"),false,CbusFilter.CFNODE));
         
-        listFilters.add(new CbusFilterPanel(this,CbusFilter.CFCS,Bundle.getMessage("CommandStation"),true,3));
-        listFilters.add(new CbusFilterPanel(this,CbusFilter.CFCSAQRL,Bundle.getMessage("LocoCommands"),false,3));
-        listFilters.add(new CbusFilterPanel(this,CbusFilter.CFCSKA,Bundle.getMessage("KeepAlive"),false,3));       
-        listFilters.add(new CbusFilterPanel(this,CbusFilter.CFCSDSPD,Bundle.getMessage("SpeedDirection"),false,3));
-        listFilters.add(new CbusFilterPanel(this,CbusFilter.CFCSFUNC,Bundle.getMessage("Functions"),false,3));
-        listFilters.add(new CbusFilterPanel(this,CbusFilter.CFCSPROG,Bundle.getMessage("Programming"),false,3));
-        listFilters.add(new CbusFilterPanel(this,CbusFilter.CFCSLC,Bundle.getMessage("LayoutCommands"),false,3));        
-        listFilters.add(new CbusFilterPanel(this,CbusFilter.CFCSC,Bundle.getMessage("CommandStationControl"),false,3));
+        for ( int j=0 ; ( j < CbusFilter.CFMAX_NODES ) ; j++ ){
+            listFilters.add(new CbusFilterPanel(false,this,(CbusFilter.CFMAXCATS + j),Bundle.getMessage("CbusNodes"),false,CbusFilter.CFNODE));
+        }
         
-        listFilters.add(new CbusFilterPanel(this,CbusFilter.CFNDCONFIG,Bundle.getMessage("NodeConfiguration"),true,4));
-        listFilters.add(new CbusFilterPanel(this,CbusFilter.CFNDSETUP,Bundle.getMessage("GeneralNodeSetup"),false,4));
-        listFilters.add(new CbusFilterPanel(this,CbusFilter.CFNDVAR,Bundle.getMessage("NodeVariables"),false,4));
-        listFilters.add(new CbusFilterPanel(this,CbusFilter.CFNDEV,Bundle.getMessage("NodeEvents"),false,4));
-        listFilters.add(new CbusFilterPanel(this,CbusFilter.CFNDNUM,Bundle.getMessage("NodeNumbers"),false,4));
+        listFilters.add(new CbusFilterPanel(true,this,CbusFilter.CFDATA,Bundle.getMessage("OPC_DA"),true,CbusFilter.CFDATA));
+        listFilters.add(new CbusFilterPanel(true,this,CbusFilter.CFACDAT,"ACDAT",false,CbusFilter.CFDATA)); // NOI18N
+        listFilters.add(new CbusFilterPanel(true,this,CbusFilter.CFDDES,"DDES",false,CbusFilter.CFDATA)); // NOI18N
+        listFilters.add(new CbusFilterPanel(true,this,CbusFilter.CFRQDAT,"RQDAT",false,CbusFilter.CFDATA)); // NOI18N
+        listFilters.add(new CbusFilterPanel(true,this,CbusFilter.CFARDAT,"ARDAT",false,CbusFilter.CFDATA)); // NOI18N
+        listFilters.add(new CbusFilterPanel(true,this,CbusFilter.CFDDRS,"DDRS",false,CbusFilter.CFDATA)); // NOI18N
+        listFilters.add(new CbusFilterPanel(true,this,CbusFilter.CFRQDDS,"RQDDS",false,CbusFilter.CFDATA)); // NOI18N
+        listFilters.add(new CbusFilterPanel(true,this,CbusFilter.CFCABDAT,"Cabdata (experimental)",false,CbusFilter.CFDATA));
         
-        listFilters.add(new CbusFilterPanel(this,CbusFilter.CFMISC,Bundle.getMessage("Misc"),true,5));
-        listFilters.add(new CbusFilterPanel(this,CbusFilter.CFNETWK,Bundle.getMessage("NetworkCommands"),false,5));
-        listFilters.add(new CbusFilterPanel(this,CbusFilter.CFCLOCK,Bundle.getMessage("CBUS_FCLK"),false,5));
-        listFilters.add(new CbusFilterPanel(this,CbusFilter.CFOTHER,Bundle.getMessage("Others"),false,5));
-        listFilters.add(new CbusFilterPanel(this,CbusFilter.CFUNKNOWN,Bundle.getMessage("Unknown"),false,5));
+        listFilters.add(new CbusFilterPanel(true,this,CbusFilter.CFCS,Bundle.getMessage("CommandStation"),true,CbusFilter.CFCS));
+        listFilters.add(new CbusFilterPanel(true,this,CbusFilter.CFCSAQRL,Bundle.getMessage("LocoCommands"),false,CbusFilter.CFCS));
+        listFilters.add(new CbusFilterPanel(true,this,CbusFilter.CFCSKA,Bundle.getMessage("KeepAlive"),false,CbusFilter.CFCS));       
+        listFilters.add(new CbusFilterPanel(true,this,CbusFilter.CFCSDSPD,Bundle.getMessage("SpeedDirection"),false,CbusFilter.CFCS));
+        listFilters.add(new CbusFilterPanel(true,this,CbusFilter.CFCSFUNC,Bundle.getMessage("Functions"),false,CbusFilter.CFCS));
+        listFilters.add(new CbusFilterPanel(true,this,CbusFilter.CFCSPROG,Bundle.getMessage("Programming"),false,CbusFilter.CFCS));
+        listFilters.add(new CbusFilterPanel(true,this,CbusFilter.CFCSLC,Bundle.getMessage("LayoutCommands"),false,CbusFilter.CFCS));
+        listFilters.add(new CbusFilterPanel(true,this,CbusFilter.CFCSC,Bundle.getMessage("CommandStationControl"),false,CbusFilter.CFCS));
+        
+        listFilters.add(new CbusFilterPanel(true,this,CbusFilter.CFNDCONFIG,Bundle.getMessage("NodeConfiguration"),true,CbusFilter.CFNDCONFIG));
+        listFilters.add(new CbusFilterPanel(true,this,CbusFilter.CFNDSETUP,Bundle.getMessage("GeneralNodeSetup"),false,CbusFilter.CFNDCONFIG));
+        listFilters.add(new CbusFilterPanel(true,this,CbusFilter.CFNDVAR,Bundle.getMessage("NodeVariables"),false,CbusFilter.CFNDCONFIG));
+        listFilters.add(new CbusFilterPanel(true,this,CbusFilter.CFNDEV,Bundle.getMessage("NodeEvents"),false,CbusFilter.CFNDCONFIG));
+        listFilters.add(new CbusFilterPanel(true,this,CbusFilter.CFNDNUM,Bundle.getMessage("NodeNumbers"),false,CbusFilter.CFNDCONFIG));
+        
+        listFilters.add(new CbusFilterPanel(true,this,CbusFilter.CFMISC,Bundle.getMessage("Misc"),true,CbusFilter.CFMISC));
+        listFilters.add(new CbusFilterPanel(true,this,CbusFilter.CFNETWK,Bundle.getMessage("NetworkCommands"),false,CbusFilter.CFMISC));
+        listFilters.add(new CbusFilterPanel(true,this,CbusFilter.CFCLOCK,Bundle.getMessage("CBUS_FCLK"),false,CbusFilter.CFMISC));
+        listFilters.add(new CbusFilterPanel(true,this,CbusFilter.CFOTHER,Bundle.getMessage("Others"),false,CbusFilter.CFMISC));
+        listFilters.add(new CbusFilterPanel(true,this,CbusFilter.CFUNKNOWN,Bundle.getMessage("Unknown"),false,CbusFilter.CFMISC));
         
         // Nodes
         // Node List
         
         for ( int i=0 ; (i < listFilters.size()) ; i++){
             fPane.add(listFilters.get(i));
+            listMapped.set(listFilters.get(i).getIndex(),i);
             listFilters.get(i).setToolTip(_filter.getTtip(listFilters.get(i).getIndex()));
         }
         
@@ -163,24 +180,39 @@ public class CbusFilterFrame extends JmriJFrame {
         updateListeners(Bundle.getMessage("FilterWindowActive"));
     }
 
-    protected void checkBoxChanged(int id, Boolean newselected, int category, Boolean catHead){
+    public void addNode(int nodenum, int position) {
+        log.debug("New node {} notification to position {} ",nodenum,position);
+        listFilters.get(listMapped.get(position)).setNode(nodenum,
+            listFilters.get(listMapped.get(CbusFilter.CFNODE)).getButton(),
+            listFilters.get(listMapped.get(CbusFilter.CFNODEMIN)).getVisible()
+        );
+    }
+
+    protected void checkBoxChanged ( int id, Boolean newselected, int category, Boolean catHead ){
         _filter.setFilter( id, newselected);
         if (catHead) {
-            for ( int i=0 ; (i < listFilters.size()) ; i++){
-                if ( ( listFilters.get(i).getCategory() == category) && ( !listFilters.get(i).iscatHead() ) ) {
-                    _filter.setFilter( i, newselected);
+            for ( int i=0 ; (i < listFilters.size()) ; i++ ) {
+                if ( ( listFilters.get(i).getCategory() == category ) &&
+                    ( !listFilters.get(i).iscatHead() ) &&
+                    ( listFilters.get(i).getAvailable() ) ) {
+                    _filter.setFilter((id), newselected);
                     listFilters.get(i).setPass(newselected);
                 }
             }
         }
         else if ( category > 0 ) {
+            if ( category == CbusFilter.CFNODE ) {
+                return;
+            }
             int filterId=0;
+            int listID=0;
             Boolean hasTrue = false;
             Boolean hasFalse = false;
             for ( int i=0 ; (i < listFilters.size()) ; i++){
-                if ( listFilters.get(i).getCategory() == category) {
+                if ( ( listFilters.get(i).getCategory() == category ) && ( listFilters.get(i).getAvailable() ) ) {
                     if (listFilters.get(i).iscatHead()){
-                        filterId = i;
+                        filterId = listFilters.get(i).getIndex();
+                        listID = i;
                     } else {
                         if (listFilters.get(i).getButton()){
                             hasTrue = true;
@@ -191,16 +223,16 @@ public class CbusFilterFrame extends JmriJFrame {
                 }
             }
             if ( hasTrue && hasFalse ) {
-                listFilters.get(filterId).setMixed();
+                listFilters.get(listID).setMixed();
                 _filter.setFilter( filterId, false);
             }
             
             if ( hasTrue && !hasFalse ) {
-                listFilters.get(filterId).setPass(true);
+                listFilters.get(listID).setPass(true);
                 _filter.setFilter( filterId, true);
             }
             if ( !hasTrue && hasFalse ) {
-                listFilters.get(filterId).setPass(false);
+                listFilters.get(listID).setPass(false);
                 _filter.setFilter( filterId, false);
             }
         }
@@ -209,20 +241,36 @@ public class CbusFilterFrame extends JmriJFrame {
     protected void showFiltersChanged(int id, Boolean newselected, int category){
         // log.debug("showFiltersChanged id {} newselected {} category {} ",id,newselected, category);
         for ( int i=0 ; (i < listFilters.size()) ; i++){
-            if ( listFilters.get(i).getCategory() == category ) {
-                if ( !listFilters.get(i).iscatHead()) {
-                    listFilters.get(i).visibleFilter(newselected);
-                }
+            if ( ( listFilters.get(i).getCategory() == category ) && 
+                ( !listFilters.get(i).iscatHead() ) && 
+                ( listFilters.get(i).getAvailable() ) ) {
+                listFilters.get(i).visibleFilter(newselected);
             }
         }
     }
 
     public void passIncrement(int id){
         ThreadingUtil.runOnGUIEventually( ()->{   
-            listFilters.get(id).incrementPass();
+            listFilters.get(listMapped.get(id)).incrementPass();
         });
     }
 
+    protected void minEvChanged(int value){
+        _filter.setEvMin(value);
+    }
+
+    protected void maxEvChanged(int value){
+        _filter.setEvMax(value);
+    }
+    
+    protected void minNdChanged(int value){
+        _filter.setNdMin(value);
+    }
+
+    protected void maxNdChanged(int value){
+        _filter.setNdMax(value);
+    }
+    
     /*
      * return true when to apply filter
      * return false to not filter and allow message
@@ -232,7 +280,7 @@ public class CbusFilterFrame extends JmriJFrame {
        int result = _filter.filter(m);
        if ( result > -1 ) {
             ThreadingUtil.runOnGUIEventually( ()->{   
-                listFilters.get(result).incrementFilter();
+                listFilters.get(listMapped.get(result)).incrementFilter();
             });
            return true;
        }
@@ -248,7 +296,7 @@ public class CbusFilterFrame extends JmriJFrame {
        int result = _filter.filter(r);
        if ( result > -1 ) {
             ThreadingUtil.runOnGUIEventually( ()->{   
-                listFilters.get(result).incrementFilter();
+                listFilters.get(listMapped.get(result)).incrementFilter();
             });
             return true;
        }

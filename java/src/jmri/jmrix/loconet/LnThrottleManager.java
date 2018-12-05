@@ -396,7 +396,7 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
         // Use slot to dispatch, then release
         if (t instanceof LocoNetThrottle) {
             // only dispatch if its the last throttle use
-            if (super.getThrottleUsageCount((DccLocoAddress) t.getLocoAddress()) == 1)  {
+            if (super.getThrottleUsageCount(t.getLocoAddress()) == 1)  {
                 ((LocoNetThrottle) t).dispatchThrottle(t, l);
             } else {
                 return;

@@ -289,8 +289,35 @@ public interface ThrottleManager {
      */
     public Object getThrottleInfo(LocoAddress la, String item);
 
+    /**
+     * 
+     * @param la - Loco address to test
+     * @return - true, its still required, false its not.
+     */
     public boolean addressStillRequired(LocoAddress la);
 
+    /**
+     * 
+     * @param address - Loco number to test.
+     * @param addressIsLong - true if long address.
+     * @return - true, its still required, false its not.
+     */
+    public boolean addressStillRequired(int address, boolean addressIsLong);
+    /**
+     * 
+     * @param address - Loco number to test
+     * @return - true, its still required, false its not.
+     */
+    public boolean addressStillRequired(int address);
+
+    /**
+     * 
+     * @param re - roster entry to test
+     * @return - true, its still required, false its not.
+     */
+    public boolean addressStillRequired(BasicRosterEntry re);
+
+    
     /**
      * The specified Throttle Listener has finished using a given throttle and
      * no longer requires access to it.
@@ -377,10 +404,35 @@ public interface ThrottleManager {
 
     /**
      * Get the number of Throttles sharing the throttle for a ddcaddress.
-     * 
-     * @param la - DccLocoAddress of the loco you want the throttle usage count for.
+     *
+     * @param la - LocoAddress of the loco you want the throttle usage count for.
      * @return number of throttles for this address, or 0 if throttle does not exist
      */
-    public int getThrottleUsageCount(DccLocoAddress la);
+    public int getThrottleUsageCount(LocoAddress la);
+
+    /**
+     * Get the number of Throttles sharing the throttle for a ddcaddress.
+     *
+     * @param address - number of the loco you want the throttle usage count for.
+     * @param isLongAddress - indicates whether the address is long or not.
+     * @return number of throttles for this address, or 0 if throttle does not exist
+     */
+     public int getThrottleUsageCount(int address, boolean isLongAddress);
+
+    /**
+     * Get the number of Throttles sharing the throttle for a ddcaddress.
+     *
+     * @param address - number of the loco you want the throttle usage count for.
+     * @return number of throttles for this address, or 0 if throttle does not exist
+     */
+    public int getThrottleUsageCount(int address);
+
+    /**
+     * Get the number of Throttles sharing the throttle for a ddcaddress.
+     *
+     * @param re - BasicRosterEntry of the loco you want the throttle usage count for.
+     * @return number of throttles for this address, or 0 if throttle does not exist
+     */
+    public int getThrottleUsageCount(BasicRosterEntry re);
 
 }
