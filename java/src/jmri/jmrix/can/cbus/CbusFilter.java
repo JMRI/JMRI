@@ -15,13 +15,18 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Class to implement filtering of CBUS frames.
- * Long events are not checked for a node number of 0
+ * Long event OPCs are not altered for a node number of 0
  * @author Steve Young (C) 2018
  */
 public class CbusFilter {
     private ArrayList<Boolean> filters;
     private CbusFilterFrame _filterFrame;
     private ArrayList<ArrayList<String>> tips;
+    private ArrayList<Integer> _nodes;
+    private int _evMin = 0;
+    private int _evMax = 0;
+    private int _ndMin = 0;
+    private int _ndMax = 0;
     
     public static final int CFIN = 0;
     public static final int CFOUT = 1;
@@ -63,7 +68,15 @@ public class CbusFilter {
     public static final int CFCLOCK = 37;
     public static final int CFOTHER = 38;
     public static final int CFUNKNOWN = 39;
-    public static final int CFMAXCATS =40;
+
+    public static final int CFNODE = 40;
+    public static final int CFEVENTMIN = 41;
+    public static final int CFEVENTMAX = 42;
+    public static final int CFNODEMIN = 43;
+    public static final int CFNODEMAX = 44;    
+
+    public static final int CFMAXCATS =45;
+    public static final int CFMAX_NODES = 200;
     
     /**
      * Creates a new instance of CbusFilter
@@ -126,32 +139,47 @@ public class CbusFilter {
             case CbusConstants.CBUS_RSTAT:
             case CbusConstants.CBUS_SSTAT:
             case CbusConstants.CBUS_ERR:
+                if ( filters.get(CFCS) ){ return CFCS; } else { incrementCount(CFCS); }
+                if ( filters.get(CFCSC) ){ return CFCSC; } else { incrementCount(CFCSC); }
+                break;
             case CbusConstants.CBUS_STAT:
+                if ( checknode((test.getElement(1) * 256 + test.getElement(2))) > -1 ) {
+                    return checknode((test.getElement(1) * 256 + test.getElement(2))); }
                 if ( filters.get(CFCS) ){ return CFCS; } else { incrementCount(CFCS); }
                 if ( filters.get(CFCSC) ){ return CFCSC; } else { incrementCount(CFCSC); }
                 break;
             case CbusConstants.CBUS_RQNP:
             case CbusConstants.CBUS_RQMN:
-            case CbusConstants.CBUS_NNLRN:
-            case CbusConstants.CBUS_NNULN:
-            case CbusConstants.CBUS_WRACK:
-            case CbusConstants.CBUS_BOOTM:
-            case CbusConstants.CBUS_ENUM:
-            case CbusConstants.CBUS_CMDERR:
-            case CbusConstants.CBUS_RQNPN:
-            case CbusConstants.CBUS_CANID:
-            case CbusConstants.CBUS_PARAN:
+            case CbusConstants.CBUS_NAME: 
+            case CbusConstants.CBUS_PARAMS: 
+                if ( filters.get(CFNDCONFIG) ){ return CFNDCONFIG; } else { incrementCount(CFNDCONFIG); }
+                if ( filters.get(CFNDSETUP) ){ return CFNDSETUP; } else { incrementCount(CFNDSETUP); }
+                break;            
+            case CbusConstants.CBUS_NNLRN: 
+            case CbusConstants.CBUS_NNULN: 
+            case CbusConstants.CBUS_WRACK: 
+            case CbusConstants.CBUS_BOOTM: 
+            case CbusConstants.CBUS_ENUM: 
+            case CbusConstants.CBUS_CMDERR: 
+            case CbusConstants.CBUS_RQNPN: 
+            case CbusConstants.CBUS_CANID: 
+            case CbusConstants.CBUS_PARAN: 
             case CbusConstants.CBUS_PNN:
-            case CbusConstants.CBUS_NAME:
-            case CbusConstants.CBUS_PARAMS:
+                if ( checknode((test.getElement(1) * 256 + test.getElement(2))) > -1 ) {
+                    return checknode((test.getElement(1) * 256 + test.getElement(2))); }
                 if ( filters.get(CFNDCONFIG) ){ return CFNDCONFIG; } else { incrementCount(CFNDCONFIG); }
                 if ( filters.get(CFNDSETUP) ){ return CFNDSETUP; } else { incrementCount(CFNDSETUP); }
                 break;
             case CbusConstants.CBUS_QNN:
+                if ( filters.get(CFNDCONFIG) ){ return CFNDCONFIG; } else { incrementCount(CFNDCONFIG); }
+                if ( filters.get(CFNDNUM) ){ return CFNDNUM; } else { incrementCount(CFNDNUM); }
+                break;
             case CbusConstants.CBUS_SNN:
             case CbusConstants.CBUS_RQNN:
-            case CbusConstants.CBUS_NNREL:
+            case CbusConstants.CBUS_NNREL: 
             case CbusConstants.CBUS_NNACK:
+                if ( checknode((test.getElement(1) * 256 + test.getElement(2))) > -1 ) {
+                    return checknode((test.getElement(1) * 256 + test.getElement(2))); }
                 if ( filters.get(CFNDCONFIG) ){ return CFNDCONFIG; } else { incrementCount(CFNDCONFIG); }
                 if ( filters.get(CFNDNUM) ){ return CFNDNUM; } else { incrementCount(CFNDNUM); }
                 break;
@@ -185,7 +213,7 @@ public class CbusFilter {
                 break;
             case CbusConstants.CBUS_NNCLR:
             case CbusConstants.CBUS_NNEVN:
-            case CbusConstants.CBUS_NERD:
+            case CbusConstants.CBUS_NERD: 
             case CbusConstants.CBUS_RQEVN:
             case CbusConstants.CBUS_EVNLF:
             case CbusConstants.CBUS_NENRD:
@@ -198,20 +226,28 @@ public class CbusFilter {
             case CbusConstants.CBUS_EVANS:
             case CbusConstants.CBUS_ENRSP:
             case CbusConstants.CBUS_EVLRNI:
+                if ( checknode((test.getElement(1) * 256 + test.getElement(2))) > -1 ) {
+                    return checknode((test.getElement(1) * 256 + test.getElement(2))); }
                 if ( filters.get(CFNDCONFIG) ){ return CFNDCONFIG; } else { incrementCount(CFNDCONFIG); }
                 if ( filters.get(CFNDEV) ){ return CFNDEV; } else { incrementCount(CFNDEV); }
                 break;
             case CbusConstants.CBUS_RQDAT:
+                if ( checknode((test.getElement(1) * 256 + test.getElement(2))) > -1 ) {
+                    return checknode((test.getElement(1) * 256 + test.getElement(2))); }
                 if ( filters.get(CFDATA) ){ return CFDATA; } else { incrementCount(CFDATA); }
                 if ( filters.get(CFRQDAT) ){ return CFRQDAT; } else { incrementCount(CFRQDAT); }
                 break;
             case CbusConstants.CBUS_RQDDS:
+                if ( checkeventDat((test.getElement(3) * 256 + test.getElement(4))) > -1 ) {
+                    return checkeventDat((test.getElement(3) * 256 + test.getElement(4))); }
                 if ( filters.get(CFDATA) ){ return CFDATA; } else { incrementCount(CFDATA); }
                 if ( filters.get(CFRQDDS) ){ return CFRQDDS; } else { incrementCount(CFRQDDS); }
                 break;
             case CbusConstants.CBUS_NVRD:
             case CbusConstants.CBUS_NVSET:
             case CbusConstants.CBUS_NVANS:
+                if ( checknode((test.getElement(1) * 256 + test.getElement(2))) > -1 ) {
+                    return checknode((test.getElement(1) * 256 + test.getElement(2))); }
                 if ( filters.get(CFNDCONFIG) ){ return CFNDCONFIG; } else { incrementCount(CFNDCONFIG); }
                 if ( filters.get(CFNDVAR) ){ return CFNDVAR; } else { incrementCount(CFNDVAR); }
                 break;
@@ -225,126 +261,180 @@ public class CbusFilter {
                 if ( filters.get(CFCSPROG) ){ return CFCSPROG; } else { incrementCount(CFCSPROG); }
                 break;
             case CbusConstants.CBUS_ACON:
-                if ( filters.get(CFEVENT) ){ return CFEVENT; } else { incrementCount(CFEVENT); }
+                if ( checkevent((test.getElement(3) * 256 + test.getElement(4))) > -1 ) {
+                    return checkevent((test.getElement(3) * 256 + test.getElement(4))); }
                 if ( filters.get(CFON) ){ return CFON; } else { incrementCount(CFON); }
                 if ( filters.get(CFLONG) ){ return CFLONG; } else { incrementCount(CFLONG); }
                 if ( filters.get(CFSTD) ){ return CFSTD; } else { incrementCount(CFSTD); }
                 if ( filters.get(CFED0) ){ return CFED0; } else { incrementCount(CFED0); }
+                if ( checknode((test.getElement(1) * 256 + test.getElement(2))) > -1 ) {
+                    return checknode((test.getElement(1) * 256 + test.getElement(2))); }
                 break;
             case CbusConstants.CBUS_ACOF:
-                if ( filters.get(CFEVENT) ){ return CFEVENT; } else { incrementCount(CFEVENT); }
+                if ( checkevent((test.getElement(3) * 256 + test.getElement(4))) > -1 ) {
+                    return checkevent((test.getElement(3) * 256 + test.getElement(4))); }
                 if ( filters.get(CFOF) ){ return CFOF; } else { incrementCount(CFOF); }
                 if ( filters.get(CFLONG) ){ return CFLONG; } else { incrementCount(CFLONG); }
                 if ( filters.get(CFSTD) ){ return CFSTD; } else { incrementCount(CFSTD); }
                 if ( filters.get(CFED0) ){ return CFED0; } else { incrementCount(CFED0); }
+                if ( checknode((test.getElement(1) * 256 + test.getElement(2))) > -1 ) {
+                    return checknode((test.getElement(1) * 256 + test.getElement(2))); }
                 break;
             case CbusConstants.CBUS_AREQ:
-                if ( filters.get(CFEVENT) ){ return CFEVENT; } else { incrementCount(CFEVENT); }
+                if ( checkevent((test.getElement(3) * 256 + test.getElement(4))) > -1 ) {
+                    return checkevent((test.getElement(3) * 256 + test.getElement(4))); }
                 if ( filters.get(CFLONG) ){ return CFLONG; } else { incrementCount(CFLONG); }
                 if ( filters.get(CFREQUEST) ){ return CFREQUEST; } else { incrementCount(CFREQUEST); }
+                if ( checknode((test.getElement(1) * 256 + test.getElement(2))) > -1 ) {
+                    return checknode((test.getElement(1) * 256 + test.getElement(2))); }
                 break;
             case CbusConstants.CBUS_ARON:
-                if ( filters.get(CFEVENT) ){ return CFEVENT; } else { incrementCount(CFEVENT); }
+                if ( checkevent((test.getElement(3) * 256 + test.getElement(4))) > -1 ) {
+                    return checkevent((test.getElement(3) * 256 + test.getElement(4))); }
                 if ( filters.get(CFON) ){ return CFON; } else { incrementCount(CFON); }
                 if ( filters.get(CFLONG) ){ return CFLONG; } else { incrementCount(CFLONG); }
                 if ( filters.get(CFSTD) ){ return CFSTD; } else { incrementCount(CFSTD); }
                 if ( filters.get(CFRESPONSE) ){ return CFRESPONSE; } else { incrementCount(CFRESPONSE); }
+                if ( checknode((test.getElement(1) * 256 + test.getElement(2))) > -1 ) {
+                    return checknode((test.getElement(1) * 256 + test.getElement(2))); }
                 break;
             case CbusConstants.CBUS_AROF:
-                if ( filters.get(CFEVENT) ){ return CFEVENT; } else { incrementCount(CFEVENT); }
+                if ( checkevent((test.getElement(3) * 256 + test.getElement(4))) > -1 ) {
+                    return checkevent((test.getElement(3) * 256 + test.getElement(4))); }
                 if ( filters.get(CFOF) ){ return CFOF; } else { incrementCount(CFOF); }
                 if ( filters.get(CFLONG) ){ return CFLONG; } else { incrementCount(CFLONG); }
                 if ( filters.get(CFSTD) ){ return CFSTD; } else { incrementCount(CFSTD); }
                 if ( filters.get(CFRESPONSE) ){ return CFRESPONSE; } else { incrementCount(CFRESPONSE); }
+                if ( checknode((test.getElement(1) * 256 + test.getElement(2))) > -1 ) {
+                    return checknode((test.getElement(1) * 256 + test.getElement(2))); }
                 break;
             case CbusConstants.CBUS_ASON:
-                if ( filters.get(CFEVENT) ){ return CFEVENT; } else { incrementCount(CFEVENT); }
+                if ( checkevent((test.getElement(3) * 256 + test.getElement(4))) > -1 ) {
+                    return checkevent((test.getElement(3) * 256 + test.getElement(4))); }
                 if ( filters.get(CFON) ){ return CFON; } else { incrementCount(CFON); }
                 if ( filters.get(CFSHORT) ){ return CFSHORT; } else { incrementCount(CFSHORT); }
                 if ( filters.get(CFSTD) ){ return CFSTD; } else { incrementCount(CFSTD); }
                 if ( filters.get(CFED0) ){ return CFED0; } else { incrementCount(CFED0); }
+                if ( checknode((test.getElement(1) * 256 + test.getElement(2))) > -1 ) {
+                    return checknode((test.getElement(1) * 256 + test.getElement(2))); }
                 break;
             case CbusConstants.CBUS_ASOF:
-                if ( filters.get(CFEVENT) ){ return CFEVENT; } else { incrementCount(CFEVENT); }
+                if ( checkevent((test.getElement(3) * 256 + test.getElement(4))) > -1 ) {
+                    return checkevent((test.getElement(3) * 256 + test.getElement(4))); }
                 if ( filters.get(CFOF) ){ return CFOF; } else { incrementCount(CFOF); }
                 if ( filters.get(CFSHORT) ){ return CFSHORT; } else { incrementCount(CFSHORT); }
                 if ( filters.get(CFSTD) ){ return CFSTD; } else { incrementCount(CFSTD); }
                 if ( filters.get(CFED0) ){ return CFED0; } else { incrementCount(CFED0); }
+                if ( checknode((test.getElement(1) * 256 + test.getElement(2))) > -1 ) {
+                    return checknode((test.getElement(1) * 256 + test.getElement(2))); }
                 break;
             case CbusConstants.CBUS_ASRQ:
-                if ( filters.get(CFEVENT) ){ return CFEVENT; } else { incrementCount(CFEVENT); }
+                if ( checkevent((test.getElement(3) * 256 + test.getElement(4))) > -1 ) {
+                    return checkevent((test.getElement(3) * 256 + test.getElement(4))); }
                 if ( filters.get(CFSHORT) ){ return CFSHORT; } else { incrementCount(CFSHORT); }
                 if ( filters.get(CFREQUEST) ){ return CFREQUEST; } else { incrementCount(CFREQUEST); }
+                if ( checknode((test.getElement(1) * 256 + test.getElement(2))) > -1 ) {
+                    return checknode((test.getElement(1) * 256 + test.getElement(2))); }
                 break;
             case CbusConstants.CBUS_ARSON:
-                if ( filters.get(CFEVENT) ){ return CFEVENT; } else { incrementCount(CFEVENT); }
+                if ( checkevent((test.getElement(3) * 256 + test.getElement(4))) > -1 ) {
+                    return checkevent((test.getElement(3) * 256 + test.getElement(4))); }
                 if ( filters.get(CFON) ){ return CFON; } else { incrementCount(CFON); }
                 if ( filters.get(CFSHORT) ){ return CFSHORT; } else { incrementCount(CFSHORT); }
                 if ( filters.get(CFSTD) ){ return CFSTD; } else { incrementCount(CFSTD); }
                 if ( filters.get(CFRESPONSE) ){ return CFRESPONSE; } else { incrementCount(CFRESPONSE); }
+                if ( checknode((test.getElement(1) * 256 + test.getElement(2))) > -1 ) {
+                    return checknode((test.getElement(1) * 256 + test.getElement(2))); }
                 break;
             case CbusConstants.CBUS_ARSOF:
-                if ( filters.get(CFEVENT) ){ return CFEVENT; } else { incrementCount(CFEVENT); }
+                if ( checkevent((test.getElement(3) * 256 + test.getElement(4))) > -1 ) {
+                    return checkevent((test.getElement(3) * 256 + test.getElement(4))); }
                 if ( filters.get(CFOF) ){ return CFOF; } else { incrementCount(CFOF); }
                 if ( filters.get(CFSHORT) ){ return CFSHORT; } else { incrementCount(CFSHORT); }
                 if ( filters.get(CFSTD) ){ return CFSTD; } else { incrementCount(CFSTD); }
                 if ( filters.get(CFRESPONSE) ){ return CFRESPONSE; } else { incrementCount(CFRESPONSE); }
+                if ( checknode((test.getElement(1) * 256 + test.getElement(2))) > -1 ) {
+                    return checknode((test.getElement(1) * 256 + test.getElement(2))); }
                 break;
             case CbusConstants.CBUS_ACON1:
-                if ( filters.get(CFEVENT) ){ return CFEVENT; } else { incrementCount(CFEVENT); }
+                if ( checkevent((test.getElement(3) * 256 + test.getElement(4))) > -1 ) {
+                    return checkevent((test.getElement(3) * 256 + test.getElement(4))); }
                 if ( filters.get(CFON) ){ return CFON; } else { incrementCount(CFON); }
                 if ( filters.get(CFLONG) ){ return CFLONG; } else { incrementCount(CFLONG); }
                 if ( filters.get(CFSTD) ){ return CFSTD; } else { incrementCount(CFSTD); }
                 if ( filters.get(CFED1) ){ return CFED1; } else { incrementCount(CFED1); }
+                if ( checknode((test.getElement(1) * 256 + test.getElement(2))) > -1 ) {
+                    return checknode((test.getElement(1) * 256 + test.getElement(2))); }
                 break;
             case CbusConstants.CBUS_ACOF1:
-                if ( filters.get(CFEVENT) ){ return CFEVENT; } else { incrementCount(CFEVENT); }
+                if ( checkevent((test.getElement(3) * 256 + test.getElement(4))) > -1 ) {
+                    return checkevent((test.getElement(3) * 256 + test.getElement(4))); }
                 if ( filters.get(CFOF) ){ return CFOF; } else { incrementCount(CFOF); }
                 if ( filters.get(CFLONG) ){ return CFLONG; } else { incrementCount(CFLONG); }
                 if ( filters.get(CFSTD) ){ return CFSTD; } else { incrementCount(CFSTD); }
                 if ( filters.get(CFED1) ){ return CFED1; } else { incrementCount(CFED1); }
+                if ( checknode((test.getElement(1) * 256 + test.getElement(2))) > -1 ) {
+                    return checknode((test.getElement(1) * 256 + test.getElement(2))); }
                 break;
             case CbusConstants.CBUS_ARON1:
-                if ( filters.get(CFEVENT) ){ return CFEVENT; } else { incrementCount(CFEVENT); }
+                if ( checkevent((test.getElement(3) * 256 + test.getElement(4))) > -1 ) {
+                    return checkevent((test.getElement(3) * 256 + test.getElement(4))); }
                 if ( filters.get(CFON) ){ return CFON; } else { incrementCount(CFON); }
                 if ( filters.get(CFLONG) ){ return CFLONG; } else { incrementCount(CFLONG); }
                 if ( filters.get(CFRESPONSE) ){ return CFRESPONSE; } else { incrementCount(CFRESPONSE); }
                 if ( filters.get(CFED1) ){ return CFED1; } else { incrementCount(CFED1); }
+                if ( checknode((test.getElement(1) * 256 + test.getElement(2))) > -1 ) {
+                    return checknode((test.getElement(1) * 256 + test.getElement(2))); }
                 break;
             case CbusConstants.CBUS_AROF1:
-                if ( filters.get(CFEVENT) ){ return CFEVENT; } else { incrementCount(CFEVENT); }
+                if ( checkevent((test.getElement(3) * 256 + test.getElement(4))) > -1 ) {
+                    return checkevent((test.getElement(3) * 256 + test.getElement(4))); }
                 if ( filters.get(CFOF) ){ return CFOF; } else { incrementCount(CFOF); }
                 if ( filters.get(CFLONG) ){ return CFLONG; } else { incrementCount(CFLONG); }
                 if ( filters.get(CFRESPONSE) ){ return CFRESPONSE; } else { incrementCount(CFRESPONSE); }
                 if ( filters.get(CFED1) ){ return CFED1; } else { incrementCount(CFED1); }
+                if ( checknode((test.getElement(1) * 256 + test.getElement(2))) > -1 ) {
+                    return checknode((test.getElement(1) * 256 + test.getElement(2))); }
                 break;
             case CbusConstants.CBUS_ASON1:
-                if ( filters.get(CFEVENT) ){ return CFEVENT; } else { incrementCount(CFEVENT); }
+                if ( checkevent((test.getElement(3) * 256 + test.getElement(4))) > -1 ) {
+                    return checkevent((test.getElement(3) * 256 + test.getElement(4))); }
                 if ( filters.get(CFON) ){ return CFON; } else { incrementCount(CFON); }
                 if ( filters.get(CFSHORT) ){ return CFSHORT; } else { incrementCount(CFSHORT); }
                 if ( filters.get(CFSTD) ){ return CFSTD; } else { incrementCount(CFSTD); }
                 if ( filters.get(CFED1) ){ return CFED1; } else { incrementCount(CFED1); }
+                if ( checknode((test.getElement(1) * 256 + test.getElement(2))) > -1 ) {
+                    return checknode((test.getElement(1) * 256 + test.getElement(2))); }
                 break;
             case CbusConstants.CBUS_ASOF1:
-                if ( filters.get(CFEVENT) ){ return CFEVENT; } else { incrementCount(CFEVENT); }
+                if ( checkevent((test.getElement(3) * 256 + test.getElement(4))) > -1 ) {
+                    return checkevent((test.getElement(3) * 256 + test.getElement(4))); }
                 if ( filters.get(CFOF) ){ return CFOF; } else { incrementCount(CFOF); }
                 if ( filters.get(CFSHORT) ){ return CFSHORT; } else { incrementCount(CFSHORT); }
                 if ( filters.get(CFSTD) ){ return CFSTD; } else { incrementCount(CFSTD); }
                 if ( filters.get(CFED1) ){ return CFED1; } else { incrementCount(CFED1); }
+                if ( checknode((test.getElement(1) * 256 + test.getElement(2))) > -1 ) {
+                    return checknode((test.getElement(1) * 256 + test.getElement(2))); }
                 break;
             case CbusConstants.CBUS_ARSON1:
-                if ( filters.get(CFEVENT) ){ return CFEVENT; } else { incrementCount(CFEVENT); }
+                if ( checkevent((test.getElement(3) * 256 + test.getElement(4))) > -1 ) {
+                    return checkevent((test.getElement(3) * 256 + test.getElement(4))); }
                 if ( filters.get(CFON) ){ return CFON; } else { incrementCount(CFON); }
                 if ( filters.get(CFSHORT) ){ return CFSHORT; } else { incrementCount(CFSHORT); }
                 if ( filters.get(CFRESPONSE) ){ return CFRESPONSE; } else { incrementCount(CFRESPONSE); }
                 if ( filters.get(CFED1) ){ return CFED1; } else { incrementCount(CFED1); }
+                if ( checknode((test.getElement(1) * 256 + test.getElement(2))) > -1 ) {
+                    return checknode((test.getElement(1) * 256 + test.getElement(2))); }
                 break;
             case CbusConstants.CBUS_ARSOF1:
-                if ( filters.get(CFEVENT) ){ return CFEVENT; } else { incrementCount(CFEVENT); }
+                if ( checkevent((test.getElement(3) * 256 + test.getElement(4))) > -1 ) {
+                    return checkevent((test.getElement(3) * 256 + test.getElement(4))); }
                 if ( filters.get(CFOF) ){ return CFOF; } else { incrementCount(CFOF); }
                 if ( filters.get(CFSHORT) ){ return CFSHORT; } else { incrementCount(CFSHORT); }
                 if ( filters.get(CFRESPONSE) ){ return CFRESPONSE; } else { incrementCount(CFRESPONSE); }
                 if ( filters.get(CFED1) ){ return CFED1; } else { incrementCount(CFED1); }
+                if ( checknode((test.getElement(1) * 256 + test.getElement(2))) > -1 ) {
+                    return checknode((test.getElement(1) * 256 + test.getElement(2))); }
                 break;
             case CbusConstants.CBUS_CABDAT:                
                 if ( filters.get(CFDATA) ){ return CFDATA; } else { incrementCount(CFDATA); }
@@ -355,74 +445,106 @@ public class CbusFilter {
                 if ( filters.get(CFCLOCK) ){ return CFCLOCK; } else { incrementCount(CFCLOCK); }
                 break;
             case CbusConstants.CBUS_ACON2:
-                if ( filters.get(CFEVENT) ){ return CFEVENT; } else { incrementCount(CFEVENT); }
+                if ( checkevent((test.getElement(3) * 256 + test.getElement(4))) > -1 ) {
+                    return checkevent((test.getElement(3) * 256 + test.getElement(4))); }
                 if ( filters.get(CFON) ){ return CFON; } else { incrementCount(CFON); }
                 if ( filters.get(CFLONG) ){ return CFLONG; } else { incrementCount(CFLONG); }
                 if ( filters.get(CFSTD) ){ return CFSTD; } else { incrementCount(CFSTD); }
                 if ( filters.get(CFED2) ){ return CFED2; } else { incrementCount(CFED2); }
+                if ( checknode((test.getElement(1) * 256 + test.getElement(2))) > -1 ) {
+                    return checknode((test.getElement(1) * 256 + test.getElement(2))); }
                 break;
             case CbusConstants.CBUS_ACOF2:
-                if ( filters.get(CFEVENT) ){ return CFEVENT; } else { incrementCount(CFEVENT); }
+                if ( checkevent((test.getElement(3) * 256 + test.getElement(4))) > -1 ) {
+                    return checkevent((test.getElement(3) * 256 + test.getElement(4))); }
                 if ( filters.get(CFOF) ){ return CFOF; } else { incrementCount(CFOF); }
                 if ( filters.get(CFLONG) ){ return CFLONG; } else { incrementCount(CFLONG); }
                 if ( filters.get(CFSTD) ){ return CFSTD; } else { incrementCount(CFSTD); }
                 if ( filters.get(CFED2) ){ return CFED2; } else { incrementCount(CFED2); }
+                if ( checknode((test.getElement(1) * 256 + test.getElement(2))) > -1 ) {
+                    return checknode((test.getElement(1) * 256 + test.getElement(2))); }
                 break;
             case CbusConstants.CBUS_ARON2:
-                if ( filters.get(CFEVENT) ){ return CFEVENT; } else { incrementCount(CFEVENT); }
+                if ( checkevent((test.getElement(3) * 256 + test.getElement(4))) > -1 ) {
+                    return checkevent((test.getElement(3) * 256 + test.getElement(4))); }
                 if ( filters.get(CFON) ){ return CFON; } else { incrementCount(CFON); }
                 if ( filters.get(CFLONG) ){ return CFLONG; } else { incrementCount(CFLONG); }
                 if ( filters.get(CFRESPONSE) ){ return CFRESPONSE; } else { incrementCount(CFRESPONSE); }
                 if ( filters.get(CFED2) ){ return CFED2; } else { incrementCount(CFED2); }
+                if ( checknode((test.getElement(1) * 256 + test.getElement(2))) > -1 ) {
+                    return checknode((test.getElement(1) * 256 + test.getElement(2))); }
                 break;
             case CbusConstants.CBUS_AROF2:
-                if ( filters.get(CFEVENT) ){ return CFEVENT; } else { incrementCount(CFEVENT); }
+                if ( checkevent((test.getElement(3) * 256 + test.getElement(4))) > -1 ) {
+                    return checkevent((test.getElement(3) * 256 + test.getElement(4))); }
                 if ( filters.get(CFOF) ){ return CFOF; } else { incrementCount(CFOF); }
                 if ( filters.get(CFLONG) ){ return CFLONG; } else { incrementCount(CFLONG); }
                 if ( filters.get(CFRESPONSE) ){ return CFRESPONSE; } else { incrementCount(CFRESPONSE); }
                 if ( filters.get(CFED2) ){ return CFED2; } else { incrementCount(CFED2); }
+                if ( checknode((test.getElement(1) * 256 + test.getElement(2))) > -1 ) {
+                    return checknode((test.getElement(1) * 256 + test.getElement(2))); }
                 break;
             case CbusConstants.CBUS_ACON3:
-                if ( filters.get(CFEVENT) ){ return CFEVENT; } else { incrementCount(CFEVENT); }
+                if ( checkevent((test.getElement(3) * 256 + test.getElement(4))) > -1 ) {
+                    return checkevent((test.getElement(3) * 256 + test.getElement(4))); }
                 if ( filters.get(CFON) ){ return CFON; } else { incrementCount(CFON); }
                 if ( filters.get(CFLONG) ){ return CFLONG; } else { incrementCount(CFLONG); }
                 if ( filters.get(CFSTD) ){ return CFSTD; } else { incrementCount(CFSTD); }
                 if ( filters.get(CFED3) ){ return CFED3; } else { incrementCount(CFED3); }
+                if ( checknode((test.getElement(1) * 256 + test.getElement(2))) > -1 ) {
+                    return checknode((test.getElement(1) * 256 + test.getElement(2))); }
                 break;
             case CbusConstants.CBUS_ACOF3:
-                if ( filters.get(CFEVENT) ){ return CFEVENT; } else { incrementCount(CFEVENT); }
+                if ( checkevent((test.getElement(3) * 256 + test.getElement(4))) > -1 ) {
+                    return checkevent((test.getElement(3) * 256 + test.getElement(4))); }
                 if ( filters.get(CFOF) ){ return CFOF; } else { incrementCount(CFOF); }
                 if ( filters.get(CFLONG) ){ return CFLONG; } else { incrementCount(CFLONG); }
                 if ( filters.get(CFSTD) ){ return CFSTD; } else { incrementCount(CFSTD); }
                 if ( filters.get(CFED3) ){ return CFED3; } else { incrementCount(CFED3); }
+                if ( checknode((test.getElement(1) * 256 + test.getElement(2))) > -1 ) {
+                    return checknode((test.getElement(1) * 256 + test.getElement(2))); }
                 break;
             case CbusConstants.CBUS_ARON3:
-                if ( filters.get(CFEVENT) ){ return CFEVENT; } else { incrementCount(CFEVENT); }
+                if ( checkevent((test.getElement(3) * 256 + test.getElement(4))) > -1 ) {
+                    return checkevent((test.getElement(3) * 256 + test.getElement(4))); }
                 if ( filters.get(CFON) ){ return CFON; } else { incrementCount(CFON); }
                 if ( filters.get(CFLONG) ){ return CFLONG; } else { incrementCount(CFLONG); }
                 if ( filters.get(CFRESPONSE) ){ return CFRESPONSE; } else { incrementCount(CFRESPONSE); }
                 if ( filters.get(CFED3) ){ return CFED3; } else { incrementCount(CFED3); }
+                if ( checknode((test.getElement(1) * 256 + test.getElement(2))) > -1 ) {
+                    return checknode((test.getElement(1) * 256 + test.getElement(2))); }
                 break;
             case CbusConstants.CBUS_AROF3:
-                if ( filters.get(CFEVENT) ){ return CFEVENT; } else { incrementCount(CFEVENT); }
+                if ( checkevent((test.getElement(3) * 256 + test.getElement(4))) > -1 ) {
+                    return checkevent((test.getElement(3) * 256 + test.getElement(4))); }
                 if ( filters.get(CFOF) ){ return CFOF; } else { incrementCount(CFOF); }
                 if ( filters.get(CFLONG) ){ return CFLONG; } else { incrementCount(CFLONG); }
                 if ( filters.get(CFRESPONSE) ){ return CFRESPONSE; } else { incrementCount(CFRESPONSE); }
                 if ( filters.get(CFED3) ){ return CFED3; } else { incrementCount(CFED3); }
+                if ( checknode((test.getElement(1) * 256 + test.getElement(2))) > -1 ) {
+                    return checknode((test.getElement(1) * 256 + test.getElement(2))); }
                 break;
-            case CbusConstants.CBUS_ACDAT: 
+            case CbusConstants.CBUS_ACDAT:
+                if ( checknode((test.getElement(1) * 256 + test.getElement(2))) > -1 ) {
+                    return checknode((test.getElement(1) * 256 + test.getElement(2))); }
                 if ( filters.get(CFDATA) ){ return CFDATA; } else { incrementCount(CFDATA); }
                 if ( filters.get(CFACDAT) ){ return CFACDAT; } else { incrementCount(CFACDAT); }
                 break;
-            case CbusConstants.CBUS_ARDAT: 
+            case CbusConstants.CBUS_ARDAT:
+                if ( checknode((test.getElement(1) * 256 + test.getElement(2))) > -1 ) {
+                    return checknode((test.getElement(1) * 256 + test.getElement(2))); }
                 if ( filters.get(CFDATA) ){ return CFDATA; } else { incrementCount(CFDATA); }
                 if ( filters.get(CFARDAT) ){ return CFARDAT; } else { incrementCount(CFARDAT); }
                 break;
-            case CbusConstants.CBUS_DDES: 
+            case CbusConstants.CBUS_DDES:
+                if ( checkeventDat((test.getElement(3) * 256 + test.getElement(4))) > -1 ) {
+                    return checkeventDat((test.getElement(3) * 256 + test.getElement(4))); }
                 if ( filters.get(CFDATA) ){ return CFDATA; } else { incrementCount(CFDATA); }
                 if ( filters.get(CFDDES) ){ return CFDDES; } else { incrementCount(CFDDES); }
                 break;
-            case CbusConstants.CBUS_DDRS: 
+            case CbusConstants.CBUS_DDRS:
+                if ( checkeventDat((test.getElement(3) * 256 + test.getElement(4))) > -1 ) {
+                    return checkeventDat((test.getElement(3) * 256 + test.getElement(4))); }
                 if ( filters.get(CFDATA) ){ return CFDATA; } else { incrementCount(CFDATA); }
                 if ( filters.get(CFDDRS) ){ return CFDDRS; } else { incrementCount(CFDDRS); }
                 break;
@@ -444,10 +566,57 @@ public class CbusFilter {
         return -1;
     }
     
+    private int positionInNodeList(int node){
+        for ( int i=0 ; (i < _nodes.size()) ; i++) {
+            if (_nodes.get(i)==node) {
+                return i;
+            }
+        }
+        log.error("no node in list");
+        return -1;
+    }
+    
+    private int checknode(int node) {
+        log.debug("checking node {}",node);
+        
+        if (!_nodes.contains(node)){
+            _nodes.add(node);
+            _filterFrame.addNode(node,(positionInNodeList(node)+ CFMAXCATS));
+        }
+        
+        if ( filters.get(CFNODE) && ( node > 0 ) ){ return CFNODE; } else { incrementCount(CFNODE); }
+        if (( filters.get(CFNODEMIN) ) && ( node < _ndMin)){ return CFNODEMIN; } else { incrementCount(CFNODEMIN); }
+        if (( filters.get(CFNODEMAX) ) && ( node > _ndMax)){ return CFNODEMAX; } else { incrementCount(CFNODEMAX); }
+        
+        log.debug("node order in list is {}",positionInNodeList(node) );
+        log.debug("boolean need to check is  {}",positionInNodeList(node)+ CFMAXCATS );        
+        
+        if ( filters.get(positionInNodeList(node) + CFMAXCATS) ){
+            return positionInNodeList(node)+ CFMAXCATS; } else { incrementCount(positionInNodeList(node)+ CFMAXCATS); }
+        
+        return -1;
+    }
+    
+    private int checkevent(int event) {
+        // log.debug("checking event {}",event);
+        if ( filters.get(CFEVENT) ){ return CFEVENT; } else { incrementCount(CFEVENT); }
+        if (( filters.get(CFEVENTMIN) ) && ( event < _evMin)){ return CFEVENTMIN; } else { incrementCount(CFEVENTMIN); }
+        if (( filters.get(CFEVENTMAX) ) && ( event > _evMax)){ return CFEVENTMAX; } else { incrementCount(CFEVENTMAX); }
+        return -1;
+    }
+
+    private int checkeventDat(int event) {
+        // log.debug("checking event {}",event);
+        if (( filters.get(CFEVENTMIN) ) && ( event < _evMin)){ return CFEVENTMIN; } else { incrementCount(CFEVENTMIN); }
+        if (( filters.get(CFEVENTMAX) ) && ( event > _evMax)){ return CFEVENTMAX; } else { incrementCount(CFEVENTMAX); }
+        return -1;
+    }
+    
     // initialise  values
     public void initTips(){
+        _nodes = new ArrayList<Integer>();
         filters = new ArrayList<Boolean>();
-        for ( int i=0 ; (i < CFMAXCATS) ; i++){
+        for ( int i=0 ; (i < CFMAXCATS + CFMAX_NODES) ; i++){
             filters.add(false);
         }
         tips = new ArrayList<ArrayList<String>>();
@@ -691,6 +860,9 @@ public class CbusFilter {
     }
     
     public String getTtip(int category) {
+        if ( category >= tips.size() ){
+            return null;
+        }
         List tiplist=tips.get(category);
         StringBuilder t = new StringBuilder();
         t.append("<html>");
@@ -710,7 +882,8 @@ public class CbusFilter {
     }
     
     protected void incrementCount(int filternum){
-        ThreadingUtil.runOnGUIEventually( ()->{   
+        // log.debug("increment count {}",filternum);
+        ThreadingUtil.runOnGUIEventually( ()->{
             _filterFrame.passIncrement(filternum);
         });
     }
@@ -721,5 +894,21 @@ public class CbusFilter {
         log.debug("set filter id {} {}",id,trueorfalse);
     }
 
+    public void setEvMin(int val){
+        _evMin = val;
+    }
+    
+    public void setEvMax(int val){
+        _evMax = val;
+    }
+    
+    public void setNdMin(int val){
+        _ndMin = val;
+    }
+    
+    public void setNdMax(int val){
+        _ndMax = val;
+    }
+    
     private final static Logger log = LoggerFactory.getLogger(CbusFilter.class);
 }
