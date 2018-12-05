@@ -13,6 +13,7 @@ public interface AnalogIO extends NamedBean {
      * limits of the value.
      */
     public enum AbsoluteOrRelative {
+        
         ABSOLUTE(Bundle.getMessage("AnalogIO_Absolute")),
         RELATIVE(Bundle.getMessage("AnalogIO_Relative"));
         
