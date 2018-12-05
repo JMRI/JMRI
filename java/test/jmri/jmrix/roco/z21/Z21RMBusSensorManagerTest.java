@@ -70,7 +70,7 @@ public class Z21RMBusSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
         SensorManager t = jmri.InstanceManager.sensorManagerInstance();
 
         Sensor o = t.newSensor("ZS21", "my name");
-        Assert.assertNotNull("received sensor value",(Z21RMBusSensor) o);
+        Assert.assertNotNull("received sensor value",o);
 
         // make sure loaded into tables
         Assert.assertNotNull("get by system name",t.getBySystemName("ZS21"));
