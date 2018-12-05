@@ -40,6 +40,7 @@ import org.junit.runners.Suite;
     Z21XNetOpsModeProgrammerTest.class,
     Z21LnStreamPortControllerTest.class,
     Z21LnStreamPortPacketizerTest.class,
+    Z21RMBusSensorTest.class,
 })
 public class PackageTest {
 

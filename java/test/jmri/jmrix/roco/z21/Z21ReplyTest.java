@@ -338,8 +338,15 @@ public class Z21ReplyTest extends jmri.jmrix.AbstractMessageTestBase {
           "\n\tModule 20 Contact 1 Off;Contact 2 Off;Contact 3 Off;Contact 4 Off;Contact 5 Off;Contact 6 Off;Contact 7 Off;Contact 8 Off",message.toMonitorString());
     }
 
-    // The minimal setup for log4J
-
+    @Test
+    public void checkIsRMFeedbackChangedReply(){
+        byte msg[]={(byte)0x0F,(byte)0x00,(byte)0x80,(byte)0x00,
+           (byte)0x00,(byte)0x00,(byte)0xFF,(byte)0x00,(byte)0x00,
+           (byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,
+           (byte)0x00};
+        message = new Z21Reply(msg,15);
+        Assert.assertTrue("is RMBus Feedback",message.isRMBusDataChangedReply());
+    }
 
     // The minimal setup for log4J
     @Before

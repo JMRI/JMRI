@@ -408,5 +408,11 @@ public class Z21Reply extends AbstractMRReply {
         }
         return lnr;
     }
+
+    // handle RMBus data replies
+    boolean isRMBusDataChangedReply(){
+        return (getOpCode() == 0x0080);
+    }
+
    
 }
