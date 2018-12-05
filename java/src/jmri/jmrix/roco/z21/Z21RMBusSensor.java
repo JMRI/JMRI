@@ -72,6 +72,7 @@ public class Z21RMBusSensor extends AbstractSensor implements Z21Listener {
            case 7:
                bit = 0x80;
                break;
+           default:
            // no default action, we have exhausted the possibilities.
         }
         log.debug("Created Sensor {} (Module Address {},  contact {})",
