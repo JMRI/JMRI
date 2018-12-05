@@ -2569,6 +2569,7 @@ public class LayoutTurnout extends LayoutTrack {
             }
             if (block_count == 0) {
                 jmi = popup.add(Bundle.getMessage("NoBlock"));
+                jmi.setEnabled(false);
             }
 
             // if there are any track connections
