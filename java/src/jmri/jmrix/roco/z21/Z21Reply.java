@@ -97,6 +97,26 @@ public class Z21Reply extends AbstractMRReply {
                return Bundle.getMessage("Z21ReplyStringVersion",java.lang.Integer.toHexString(hwversion), swversion);
            case 0x0040:
                return Bundle.getMessage("Z21XpressNetTunnelReply", getXNetReply().toMonitorString());
+           case 0x0080:
+               int groupIndex = getElement(4) & 0xff;
+               int offset = (groupIndex * 10) + 1;
+               String moduleStatus[]= new String[10];
+               for(int i=0;i<10;i++){
+                  moduleStatus[i]= Bundle.getMessage("RMModuleFeedbackStatus",offset + i,
+                      Bundle.getMessage("RMModuleContactStatus",1, ((getElement(i+5)&0x01)==0x01)? Bundle.getMessage("PowerStateOn") : Bundle.getMessage("PowerStateOff")),
+                      Bundle.getMessage("RMModuleContactStatus",2, ((getElement(i+5)&0x02)==0x02)? Bundle.getMessage("PowerStateOn") : Bundle.getMessage("PowerStateOff")),
+                      Bundle.getMessage("RMModuleContactStatus",3, ((getElement(i+5)&0x04)==0x04)? Bundle.getMessage("PowerStateOn") : Bundle.getMessage("PowerStateOff")),
+                      Bundle.getMessage("RMModuleContactStatus",4, ((getElement(i+5)&0x08)==0x08)? Bundle.getMessage("PowerStateOn") : Bundle.getMessage("PowerStateOff")),
+                      Bundle.getMessage("RMModuleContactStatus",5, ((getElement(i+5)&0x10)==0x10)? Bundle.getMessage("PowerStateOn") : Bundle.getMessage("PowerStateOff")),
+                      Bundle.getMessage("RMModuleContactStatus",6, ((getElement(i+5)&0x20)==0x20)? Bundle.getMessage("PowerStateOn") : Bundle.getMessage("PowerStateOff")),
+                      Bundle.getMessage("RMModuleContactStatus",7, ((getElement(i+5)&0x40)==0x40)? Bundle.getMessage("PowerStateOn") : Bundle.getMessage("PowerStateOff")),
+                      Bundle.getMessage("RMModuleContactStatus",8, ((getElement(i+5)&0x80)==0x80)? Bundle.getMessage("PowerStateOn") : Bundle.getMessage("PowerStateOff")));
+               }
+               return Bundle.getMessage("RMBusFeedbackStatus",groupIndex,
+                      moduleStatus[0],moduleStatus[1],moduleStatus[2],
+                      moduleStatus[3],moduleStatus[4],moduleStatus[5],
+                      moduleStatus[6],moduleStatus[7],moduleStatus[8],
+                      moduleStatus[9]);
            case 0x0084:
                int mainCurrent = getSystemDataMainCurrent();
                int progCurrent = getSystemDataProgCurrent();
