@@ -36,9 +36,9 @@ public class DispatcherFrameTest {
 
     @Test
     public void testParametersRead() {
-        // The Dispatcher functionality is tightly coupled to the Dispatcher 
-        // Frame.  As a result, we can currently only test seting the 
-        // options file by creating a DispatcherFrame object.  A future 
+        // The Dispatcher functionality is tightly coupled to the Dispatcher
+        // Frame.  As a result, we can currently only test seting the
+        // options file by creating a DispatcherFrame object.  A future
         // enhancement shold probably break this coupling.
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
@@ -58,7 +58,7 @@ public class DispatcherFrameTest {
         d.setShortNameInBlock(true);
         d.setExtraColorForAllocated(false);
         d.setNameInAllocatedBlock(false);
-        d.setScale(Scale.HO);
+        d.setScale(jmri.ScaleManager.getScale("HO"));
         // test all options
         Assert.assertNull("LayoutEditor", d.getLayoutEditor());
         Assert.assertFalse("UseConnectivity", d.getUseConnectivity());
@@ -73,7 +73,7 @@ public class DispatcherFrameTest {
         Assert.assertTrue("ShortNameInBlock", d.getShortNameInBlock());
         Assert.assertFalse("ExtraColorForAllocated", d.getExtraColorForAllocated());
         Assert.assertFalse("NameInAllocatedBlock", d.getNameInAllocatedBlock());
-        Assert.assertEquals("Scale", Scale.HO, d.getScale());
+        Assert.assertEquals("Scale", jmri.ScaleManager.getScale("HO"), d.getScale());
         // check changing some options
         d.setAutoTurnouts(true);
         Assert.assertTrue("New AutoTurnouts", d.getAutoTurnouts());
@@ -81,8 +81,8 @@ public class DispatcherFrameTest {
         Assert.assertTrue("New HasOccupancyDetection", d.getHasOccupancyDetection());
         d.setShortNameInBlock(false);
         Assert.assertFalse("New ShortNameInBlock", d.getShortNameInBlock());
-        d.setScale(Scale.N);
-        Assert.assertEquals("New Scale", Scale.N, d.getScale());
+        d.setScale(jmri.ScaleManager.getScale("N"));
+        Assert.assertEquals("New Scale", jmri.ScaleManager.getScale("N"), d.getScale());
 
         // Find the window by name and close it.
         (new org.netbeans.jemmy.operators.JFrameOperator(Bundle.getMessage("TitleDispatcher"))).requestClose();
@@ -97,14 +97,14 @@ public class DispatcherFrameTest {
 
         // Find new table window by name
         JFrameOperator dw = new JFrameOperator(Bundle.getMessage("TitleDispatcher"));
-       
+
         // find the add train Button
         JButtonOperator bo = new JButtonOperator(dw,Bundle.getMessage("InitiateTrain") + "...");
 
         bo.push();
 
         // pushing the button should bring up the Add Train frame
-        JFrameOperator atf = new JFrameOperator(Bundle.getMessage("AddTrainTitle")); 
+        JFrameOperator atf = new JFrameOperator(Bundle.getMessage("AddTrainTitle"));
         // now close the add train frame.
         atf.requestClose();
 
@@ -122,14 +122,14 @@ public class DispatcherFrameTest {
 
         // Find new table window by name
         JFrameOperator dw = new JFrameOperator(Bundle.getMessage("TitleDispatcher"));
-       
+
         // find the Allocate Extra SectionsButton
         JButtonOperator bo = new JButtonOperator(dw,Bundle.getMessage("AllocateExtra") + "...");
 
         bo.push();
 
         // pushing the button should bring up the Extra Sections frame
-        JFrameOperator atf = new JFrameOperator(Bundle.getMessage("ExtraTitle")); 
+        JFrameOperator atf = new JFrameOperator(Bundle.getMessage("ExtraTitle"));
         // now close the add train frame.
         atf.requestClose();
 
@@ -147,14 +147,14 @@ public class DispatcherFrameTest {
 
         // Find new table window by name
         JFrameOperator dw = new JFrameOperator(Bundle.getMessage("TitleDispatcher"));
-       
+
         // find the Cancel Restart Button
         JButtonOperator bo = new JButtonOperator(dw,Bundle.getMessage("CancelRestart") + "...");
 
         bo.push();
 
-        // we don't have an active train, so this shouldn't result in any 
-        // new windows or other results.  This part of the test just verifies 
+        // we don't have an active train, so this shouldn't result in any
+        // new windows or other results.  This part of the test just verifies
         // we don't have any exceptions.
 
         // Ask to close Dispatcher window

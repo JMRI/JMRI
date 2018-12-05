@@ -63,6 +63,7 @@ import org.junit.runners.Suite;
     NoFeedbackTurnoutOperationTest.class,
     RawTurnoutOperationTest.class,
     ScaleTest.class,
+    ScaleManagerTest.class,
     SectionManagerTest.class,
     SensorTurnoutOperationTest.class,
     TransitManagerTest.class,

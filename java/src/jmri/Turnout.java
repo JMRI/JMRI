@@ -188,6 +188,7 @@ public interface Turnout extends DigitalIO {
      * @param mode the feedback type name
      * @throws IllegalArgumentException if mode is not valid
      */
+    @InvokeOnLayoutThread
     public void setFeedbackMode(@Nonnull String mode) throws IllegalArgumentException;
 
     /**
@@ -198,6 +199,7 @@ public interface Turnout extends DigitalIO {
      * @param mode the feedback type to set
      * @throws IllegalArgumentException if mode is not valid
      */
+    @InvokeOnLayoutThread
     public void setFeedbackMode(int mode) throws IllegalArgumentException;
 
     /**
@@ -242,6 +244,7 @@ public interface Turnout extends DigitalIO {
      *
      * @param toper TurnoutOperation subclass instance
      */
+    @InvokeOnLayoutThread
     public void setTurnoutOperation(@Nullable TurnoutOperation toper);
 
     /**
@@ -319,6 +322,7 @@ public interface Turnout extends DigitalIO {
      * definition is missing in ONESENSOR and TWOSENSOR feedback, turnout state
      * is set to UNKNOWN.
      */
+    @InvokeOnLayoutThread
     public void setInitialKnownStateFromFeedback();
 
     /**
@@ -333,6 +337,7 @@ public interface Turnout extends DigitalIO {
      *
      * @param num the size of the output, currently 1 or 2
      */
+    @InvokeOnLayoutThread
     public void setNumberOutputBits(int num);
 
     /**
@@ -348,6 +353,7 @@ public interface Turnout extends DigitalIO {
      * @param num 0 for steady state or the number of time units the control
      *            pulses
      */
+    @InvokeOnLayoutThread
     public void setControlType(int num);
 
     /**
@@ -393,6 +399,7 @@ public interface Turnout extends DigitalIO {
      * @param locked         true if locking is enabled for the given type;
      *                       false otherwise
      */
+    @InvokeOnLayoutThread
     public void enableLockOperation(int turnoutLockout, boolean locked);
 
     /**
@@ -426,6 +433,7 @@ public interface Turnout extends DigitalIO {
      * @param locked         true if turnout is locked using specified lock
      *                       method; false otherwise
      */
+    @InvokeOnLayoutThread
     public void setLocked(int turnoutLockout, boolean locked);
 
     /**
@@ -440,6 +448,7 @@ public interface Turnout extends DigitalIO {
      *
      * @param reportLocked true to report; false otherwise
      */
+    @InvokeOnLayoutThread
     public void setReportLocked(boolean reportLocked);
 
     /**
@@ -471,6 +480,7 @@ public interface Turnout extends DigitalIO {
      *
      * @param state true if the outputs are binary; false otherwise
      */
+    @InvokeOnLayoutThread
     public void setBinaryOutput(boolean state);
 
     public float getDivergingLimit();
