@@ -1,7 +1,9 @@
 package jmri.implementation;
 
 import java.beans.*;
+import java.time.Duration;
 import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import javax.annotation.*;
 import jmri.InstanceManager;
@@ -180,19 +182,21 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
     protected void waitOutputInterval() {
         nextWait = InstanceManager.turnoutManagerInstance().outputIntervalEnds();
         if (nextWait != null && nextWait.isAfter(LocalTime.now())) {
-            log.debug("interval = {} ms, now() = {}, waitUntil = {}", TURNOUT_INTERVAL, (LocalTime.now().toNanoOfDay()/1000), (nextWait.toNanoOfDay()/1000));
+            log.debug("interval = {} ms, now() = {}, waitUntil = {}", TURNOUT_INTERVAL, LocalTime.now(),
+                    nextWait);
             // insert wait before sending next output command to the layout
             r = new Runnable() {
                 @Override
                 public void run() {
-                    log.debug("go to sleep...");
+                    log.debug("go to sleep for {} ms...", LocalTime.now().until(nextWait, ChronoUnit.MILLIS));
                     try {
-                        Thread.sleep(nextWait.toNanoOfDay() / 1000);
-                        nextWait = null; // reset to 0
+                        Thread.sleep(LocalTime.now().until(nextWait, ChronoUnit.MILLIS)); // should be a duration
+                        nextWait = null; // reset to 0, what if another instruction came in during sleep?
                         log.debug("back again on {}", LocalTime.now().toNanoOfDay());
                         return;
                     } catch (InterruptedException ex) {
                         log.debug("waitOutputInterval() interrupted at {}", LocalTime.now().toNanoOfDay());
+                        Thread.currentThread().interrupt();
                     }
                 }
             };

@@ -1,9 +1,11 @@
 package jmri.managers;
 
 import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import javax.annotation.Nonnull;
 
 import jmri.*;
@@ -318,14 +320,15 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
     /** {@inheritDoc} */
     public LocalTime outputIntervalEnds() {
         log.debug("outputIntervalEnds called in ProxyTurnout");
-        return LocalTime.now().plusNanos(1000); //null;
+        return LocalTime.now().plus(1100, ChronoUnit.MILLIS);
     }
 
     /** {@inheritDoc} */
     @Override
     public void resetOutputInterval() {
-        LocalTime waitUntil = LocalTime.now().plusNanos(1000); // default interval = 0 Ms
-        log.debug("Reset proxy timer; interval = {} ms, waitUntil = {}, now() = {}", 0, waitUntil, LocalTime.now().toNanoOfDay());
+        LocalTime waitUntil = LocalTime.now().plus(1100, ChronoUnit.MILLIS); // default interval = 0 Ms TODO use actual Interval from memo here
+        log.debug("Reset proxy timer; interval = {} ms, waitUntil = {}, now() = {}", 1100, waitUntil,
+                TimeUnit.MILLISECONDS.convert(LocalTime.now().toNanoOfDay(), TimeUnit.NANOSECONDS));
     }
 
     @Override

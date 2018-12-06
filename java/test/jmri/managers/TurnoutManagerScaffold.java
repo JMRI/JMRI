@@ -236,4 +236,10 @@ public class TurnoutManagerScaffold implements TurnoutManager {
         return 0;
     }
 
+    /** {@inheritDoc} */
+    public void resetOutputInterval();
+
+    /** {@inheritDoc} */
+    public LocalTime outputIntervalEnds();
+
 }

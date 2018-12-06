@@ -1,7 +1,9 @@
 package jmri.managers;
 
 import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import jmri.*;
@@ -373,14 +375,15 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
     /** {@inheritDoc} */
     public LocalTime outputIntervalEnds() {
         log.debug("outputIntervalEnds called in AbstractTurnout");
-        return LocalTime.now().plusNanos(1000); //null;
+        return LocalTime.now().plus(1100, ChronoUnit.MILLIS);
     }
 
     /** {@inheritDoc} */
     @Override
     public void resetOutputInterval() {
-        LocalTime waitUntil = LocalTime.now().plusNanos(1000); // default interval = 0 Ms
-        log.debug("Reset proxy timer; interval = {} ms, waitUntil = {}, now() = {}", 0, waitUntil, LocalTime.now().toNanoOfDay());
+        LocalTime waitUntil = LocalTime.now().plus(1100, ChronoUnit.MILLIS); // default interval = 0 Ms TODO use actual Interval from memo here
+        log.debug("Reset Abstract timer; interval = {} ms, waitUntil = {}, now() = {}", 1010, waitUntil,
+                TimeUnit.MILLISECONDS.convert(LocalTime.now().toNanoOfDay(), TimeUnit.NANOSECONDS));
     }
 
     private final static Logger log = LoggerFactory.getLogger(AbstractTurnoutManager.class);
