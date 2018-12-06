@@ -1,5 +1,6 @@
 package jmri;
 
+import java.time.LocalTime;
 import java.util.List;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
@@ -263,8 +264,23 @@ public interface TurnoutManager extends ProvidingManager<Turnout> {
     public String getDefaultClosedSpeed();
 
     /**
-     * Get the Interval (in ms) to wait between/before commands are send, configured in AdapterConfig. Experimental EBR
+     * Get the Interval (in ms) to wait between commands.
+     * Configured in AdapterConfig, stored in memo.
+     *
+     * @return default Turnout Interval in Milliseconds
      */
     public int getInterval();
+
+    /**
+     * (Re)set OutputInterval time using outputDelay.
+     */
+    public void resetOutputInterval();
+
+    /**
+     * Get end time of OutputInterval, calculated from the current time.
+     *
+     * @return end time in Milliseconds
+     */
+    public LocalTime outputIntervalEnds();
 
 }

@@ -78,7 +78,6 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
     public void setCommandedState(int s) {
         log.debug("set commanded state for LnTurnout {} on memo \"{}\", interval = {}",
                 getFullyFormattedDisplayName(), controller.getSystemConnectionMemo().getUserName(), controller.getSystemConnectionMemo().getInterval());
-        //setOutputInterval(controller.getSystemConnectionMemo().getInterval()); // why is this needed?
         super.setCommandedState(s);
     }
 

@@ -1,5 +1,6 @@
 package jmri.managers;
 
+import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -310,8 +311,21 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
 
     /** {@inheritDoc} */
     @Override
-    public int getInterval() { // Experimental EBR
+    public int getInterval() {
         return 0;
+    }
+
+    /** {@inheritDoc} */
+    public LocalTime outputIntervalEnds() {
+        log.debug("outputIntervalEnds called in ProxyTurnout");
+        return LocalTime.now().plusNanos(1000); //null;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void resetOutputInterval() {
+        LocalTime waitUntil = LocalTime.now().plusNanos(1000); // default interval = 0 Ms
+        log.debug("Reset proxy timer; interval = {} ms, waitUntil = {}, now() = {}", 0, waitUntil, LocalTime.now().toNanoOfDay());
     }
 
     @Override

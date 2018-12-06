@@ -1,5 +1,6 @@
 package jmri.jmrix.loconet;
 
+import java.time.LocalTime;
 import javax.annotation.*;
 import jmri.Turnout;
 import org.slf4j.Logger;
@@ -244,8 +245,34 @@ public class LnTurnoutManager extends jmri.managers.AbstractTurnoutManager imple
     /** {@inheritDoc} */
     @Override
     public int getInterval() {
-        log.debug("LnTurnoutMemo ={}, interval ={}", _memo.getUserName(), _memo.getInterval());
-        return _memo.getInterval();
+        if (_memo == null) {
+            log.debug("LnTurnoutMemo = NULL"); // LnMemo is null during initialization, so catch that
+            return 0;
+        } else {
+            log.debug("LnTurnoutMemo ={}, interval ={}", _memo.getUserName(), _memo.getInterval());
+            return _memo.getInterval();
+        }
+    }
+
+    /**
+     * Duration in Milliseconds of interval between separate Turnout commands.
+     * <p>
+     * Change from e.g. XNetTurnout extensions and scripts using #setOutputInterval(int)
+     */
+    private int TURNOUT_INTERVAL = getInterval() * 1000;
+    private LocalTime waitUntil;
+
+    /** {@inheritDoc} */
+    @Override
+    public void resetOutputInterval() {
+        waitUntil = LocalTime.now().plusNanos(TURNOUT_INTERVAL * 1000);
+        log.debug("Reset timer; interval = {} ms, waitUntil = {}, now() = {}", TURNOUT_INTERVAL, waitUntil, LocalTime.now().toNanoOfDay());
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public LocalTime outputIntervalEnds() {
+        return waitUntil;
     }
 
     private final static Logger log = LoggerFactory.getLogger(LnTurnoutManager.class);

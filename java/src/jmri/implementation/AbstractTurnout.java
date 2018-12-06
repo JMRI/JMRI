@@ -116,9 +116,10 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         // use a Timer to apply wait interval only when needed
         myOperator = getTurnoutOperator(); // MUST set myOperator before starting the thread
         if (myOperator == null) {
-            waitOutputInterval(); // if > 0, wait before next output command
+            log.debug("myOperator NULL");
+            waitOutputInterval();
             forwardCommandChangeToLayout(s);
-            nextWaitFor = 1000 % LocalTime.now().toNanoOfDay() + TURNOUT_INTERVAL; // reset interval
+            InstanceManager.turnoutManagerInstance().resetOutputInterval(); // reset timer for wait before next output command (if set)
             // optionally handle feedback
             if (_activeFeedbackType == DIRECT) {
                 newKnownState(s);
@@ -128,6 +129,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
                          DELAYED_FEEDBACK_INTERVAL );
             }
         } else {
+            log.debug("myOperator NOT NULL");
             myOperator.start();
         }
     }
@@ -135,8 +137,8 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
     /**
      * Duration in Milliseconds of delay for DELAYED feedback mode.
      * <p>
-     * Defined as "public non-final"
-     * so it can be changed in e.g. the jython/SetDefaultDelayedTurnoutDelay script.
+     * Defined as "public non-final" so it can be changed in e.g.
+     * the jython/SetDefaultDelayedTurnoutDelay script.
      */
     public static int DELAYED_FEEDBACK_INTERVAL = 4000;
 
@@ -169,32 +171,35 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 
     protected Thread thr;
     protected Runnable r;
-    long nextWaitFor = 0;
+    protected LocalTime nextWait;
 
     /**
-     * Before sending command to ouput, we will wait for
-     * TURNOUT_INTERVAL to put less pressure on the connection.
+     * Before sending command to ouput, wait until
+     * outputIntervalEnds() to put less pressure on the connection.
      */
     protected void waitOutputInterval() {
-        log.debug("interval = {} ms, wait = {}, now() = {}", TURNOUT_INTERVAL, nextWaitFor, 1000 % LocalTime.now().toNanoOfDay());
-        if (nextWaitFor > 1000 % LocalTime.now().toNanoOfDay()) {
+        nextWait = InstanceManager.turnoutManagerInstance().outputIntervalEnds();
+        if (nextWait != null && nextWait.isAfter(LocalTime.now())) {
+            log.debug("interval = {} ms, now() = {}, waitUntil = {}", TURNOUT_INTERVAL, (LocalTime.now().toNanoOfDay()/1000), (nextWait.toNanoOfDay()/1000));
             // insert wait before sending next output command to the layout
             r = new Runnable() {
                 @Override
                 public void run() {
                     log.debug("go to sleep...");
                     try {
-                        Thread.sleep(Math.max(0, (nextWaitFor - 1000 % LocalTime.now().toNanoOfDay())));
-                        nextWaitFor = 0;
-                        log.debug("back again on {}", 1000 % LocalTime.now().toNanoOfDay());
+                        Thread.sleep(nextWait.toNanoOfDay() / 1000);
+                        nextWait = null; // reset to 0
+                        log.debug("back again on {}", LocalTime.now().toNanoOfDay());
                         return;
                     } catch (InterruptedException ex) {
-                        nextWaitFor++;
+                        log.debug("waitOutputInterval() interrupted at {}", LocalTime.now().toNanoOfDay());
                     }
                 }
             };
             thr = new Thread(r);
             thr.start();
+        } else {
+            log.debug("nextWait NULL");
         }
     }
 

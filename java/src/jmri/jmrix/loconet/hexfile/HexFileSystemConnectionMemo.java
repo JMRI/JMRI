@@ -19,7 +19,6 @@ public class HexFileSystemConnectionMemo extends jmri.jmrix.loconet.LocoNetSyste
         if (sensorManager == null) {
             sensorManager = new jmri.jmrix.loconet.hexfile.LnSensorManager(getLnTrafficController(), getSystemPrefix());
         }
-
         return sensorManager;
     }
 

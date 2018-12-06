@@ -290,6 +290,7 @@ abstract public class SystemConnectionMemo extends Bean {
 
     private ConsistManager consistManager = null;
 
+    protected int _interval = 0;
 
     /**
      * Get the Interval (in ms) to wait between/before commands are send, configured in AdapterConfig.
@@ -299,8 +300,6 @@ abstract public class SystemConnectionMemo extends Bean {
         log.debug("Getting interval {}", _interval);
         return _interval;
     }
-
-    protected int _interval = 0;
 
     public void setInterval(int newInterval) {
         log.debug("Setting interval from {} to {}", _interval, newInterval);

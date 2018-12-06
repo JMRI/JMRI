@@ -1,9 +1,9 @@
 package jmri.managers;
 
+import java.time.LocalTime;
+import java.util.Objects;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.Objects;
-
 import jmri.*;
 import jmri.implementation.SignalSpeedMap;
 import org.slf4j.Logger;
@@ -365,13 +365,22 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
         return entryToolTip;
     }
 
-    /**
-     * Get the Turnout Interval (delay) for this connection (memo).
-     *
-     * @return default Turnout Interval in Milliseconds = 0
-     */
+    /** {@inheritDoc} */
     public int getInterval() {
         return 0;
+    }
+
+    /** {@inheritDoc} */
+    public LocalTime outputIntervalEnds() {
+        log.debug("outputIntervalEnds called in AbstractTurnout");
+        return LocalTime.now().plusNanos(1000); //null;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void resetOutputInterval() {
+        LocalTime waitUntil = LocalTime.now().plusNanos(1000); // default interval = 0 Ms
+        log.debug("Reset proxy timer; interval = {} ms, waitUntil = {}, now() = {}", 0, waitUntil, LocalTime.now().toNanoOfDay());
     }
 
     private final static Logger log = LoggerFactory.getLogger(AbstractTurnoutManager.class);
