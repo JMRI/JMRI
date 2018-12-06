@@ -75,6 +75,22 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     private Z21ReporterManager _rm = null;
 
+    /**
+     * Sensor Manager for this instance.
+     */
+    public void setSensorManager(Z21RMBusSensorManager sm){
+        _sm = sm;
+    }
+
+    public Z21RMBusSensorManager getSensorManager() {
+        if(_sm==null){
+           setSensorManager(new Z21RMBusSensorManager(this));
+        }
+        return _sm;
+    }
+
+    private Z21RMBusSensorManager _sm = null;
+
     public XNetProgrammerManager getProgrammerManager() {
         if (_xnettunnel!=null) {
             // delegate to the XPressNet tunnel.
@@ -98,6 +114,9 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
            return true;
         }
         if (type.equals(jmri.MultiMeter.class)){
+           return true;
+        }
+        if (type.equals(jmri.SensorManager.class)){
            return true;
         }
         if (_xnettunnel!=null) {
@@ -125,6 +144,9 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         }
         if(T.equals(jmri.MultiMeter.class)){
             return (T) getMultiMeter();
+        }
+        if(T.equals(jmri.SensorManager.class)){
+            return (T) getSensorManager();
         }
         if (_xnettunnel!=null && _xnettunnel.getStreamPortController().getSystemConnectionMemo().provides(T) ) {
             // delegate to the XPressNet tunnel.
@@ -168,6 +190,9 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
         // set up the Reporter Manager
         jmri.InstanceManager.setReporterManager(getReporterManager());
+
+        // set up the Sensor Manager
+        jmri.InstanceManager.setSensorManager(getSensorManager());
             
         // but make sure the Loconet memo is set (for one feedback message).
         Z21XNetProgrammerManager xpm = (Z21XNetProgrammerManager) _xnettunnel.getStreamPortController().getSystemConnectionMemo().getProgrammerManager();
