@@ -282,7 +282,7 @@ If you're developing any additional (post-4.13.6) changes that you want in the J
 
 - Change the release note to point to the just-built files (in CI or where you put them), commit, wait (or force via ["Build Now"](http://builds.jmri.org/jenkins/job/Web%20Site/job/Website%20from%20JMRI%20GitHub%20website%20repository/) update). Confirm visible on web.
 
-- Announce the file set via email to jmri-developers@lists.sf.net with a subject line 
+- Announce the file set via email to jmri@jmri-developers.groups.io with a subject line 
 
 ```
 "First 4.13.6 files available":
