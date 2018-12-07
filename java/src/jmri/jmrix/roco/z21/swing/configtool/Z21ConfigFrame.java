@@ -226,8 +226,8 @@ public class Z21ConfigFrame extends jmri.util.JmriJFrame implements Z21Listener 
             case 0x0010:
                 // the serial number is a 32 bit integer stored in little
                 // endian format starting with the 1st databyte (element 4).
-                int serialNo = zr.getElement(4) + (zr.getElement(5) << 8)
-                        + (zr.getElement(6) << 16) + (zr.getElement(7) << 24);
+                int serialNo = (zr.getElement(4)&0xff) + ((zr.getElement(5)&0xff) << 8)
+                        + ((zr.getElement(6)&0xff) << 16) + ((zr.getElement(7)&0xff) << 24);
                 cs.setSerialNumber(serialNo);
                 updateSerialNumber();
                 break;

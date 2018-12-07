@@ -79,7 +79,8 @@
       file, spend some time munging it, and then create a window to
       present it all, you might want to do all that work on a
       separate thread. At the end, when it's time to set your new
-      frame visible, you have to to that on the Swing (GUI) thread.
+      frame visible, 
+      <a href="http://web.archive.org/web/20090526170426/http://java.sun.com/developer/JDCTechTips/2003/tt1208.html">you have to to that on the Swing (GUI) thread</a>.
       Here's the code to do that:</p>
 <pre style="font-family: monospace;">
     frame = new JmriJFrame();  // frame declared as instance variable<br>
@@ -109,19 +110,33 @@
       to ease later static checking.
 
       <p>
-      If you know your method is thread safe and may be run on any thread, please mark it with
+      If you have ensured that a method is thread safe and may be run on any thread, please mark it with
       <a href="http://jmri.org/JavaDoc/doc/jmri/InvokeOnAnyThread.html">@InvokeOnAnyThread</a>
       
       <p>
       If you want to check at runtime that something is running on the intended thread:
 <pre style="font-family: monospace;">
-    if (!ThreadingUtil.isGUIThread()) Log4JUtil.warnOnce(log, "Foo() called on wrong thread");
+    ThreadingUtil.requireGuiThread(log);
+</pre>
+    or
+<pre style="font-family: monospace;">
+    ThreadingUtil.requireLayoutThread(log);
 </pre>
         That check does take a bit of time, so it should probably only be 
         done on entry to a large chunk of code, or perhaps be protected 
-        by a check of <code>log.isDebugEnabled()</code>.
+        by a check of <code>log.isDebugEnabled()</code>. If 
+        the call occurs on the wrong thread, a <code>Log4JUtil.warnOnce</code>
+        logs the first occurance with traceback info, which explains the <code>log</code>
+        parameter.
       
-  
+    In addition to the <code>@InvokeOnGuiThread</code>, <code>@InvokeOnLayoutThread</code>
+    and <code>@InvokeOnAnyThread</code> annotations mentioned here, there are
+    <code>@ThreadSafe</code>, <code>@NotThreadSafe</code>, 
+    <code>@Immutable</code>, and 
+    <code>@GuardedBy</code> annotations that are useful.
+    See the discussion on the 
+    <a href="SpotBugs.html#annotations">JMRI SpotBugs page</a>.
+
 <h3>Ending Threads</h3>
 
     This is really about interrupt() and our use of it.
@@ -135,7 +150,7 @@
         This is not an error, and shouldn't be treated as one.  If you can, 
         terminate what the code is doing and return to normal operation.
     <li>If you can't reliably terminate whatever is being done, perhaps because you're 
-        code is a low-level part, Just pass the InterruptedException up:  
+        code is a low-level part, just pass the InterruptedException up:  
         Don't <code>catch</code> it, just have your method says that it
         <code>throws InterruptedException</code>.
     <li>Sometimes you can't change the signature of your method: Perhaps it's overriding a
