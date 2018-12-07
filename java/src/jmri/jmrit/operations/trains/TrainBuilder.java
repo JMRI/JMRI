@@ -1331,11 +1331,11 @@ public class TrainBuilder extends TrainCommon {
     private int getAutoEngines() {
         double numberEngines = 1;
         int moves = 0;
-        int carLength = 40 + Car.COUPLER; // typical 40' car
+        int carLength = 40 + Car.COUPLERS; // typical 40' car
 
         // adjust if length in meters
         if (!Setup.getLengthUnit().equals(Setup.FEET)) {
-            carLength = 12 + Car.COUPLER; // typical car in meters
+            carLength = 12 + Car.COUPLERS; // typical car in meters
         }
 
         for (RouteLocation rl : _routeList) {
@@ -4870,7 +4870,7 @@ public class TrainBuilder extends TrainCommon {
                                             car.getFinalDestinationName(), car.getFinalDestinationTrackName(),
                                             k.toString(),
                                             car.getDestinationTrackName()}));
-                            k.setDestination(car.getFinalDestination(), car.getFinalDestinationTrack());
+                            k.setDestination(car.getFinalDestination(), car.getFinalDestinationTrack(), true); // force car to track
                         }
                     }
                     addLine(_buildReport, FIVE, MessageFormat.format(Bundle
