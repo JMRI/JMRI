@@ -4588,6 +4588,13 @@ public class LocoNetMessageInterpret {
          * extended slot read/write message               *
          * ************************************************
          */
+        
+        /*
+         * If its a "Special" slot use a different rountine
+         */
+        if (slot > 247 && slot < 252) {
+            return interpretExtendedSlot_StatusData(l,slot);
+        }
         int trackStatus = l.getElement(7); // track status
         int id1 =  l.getElement(19);
         int id2 = l.getElement(18);
@@ -4632,6 +4639,75 @@ public class LocoNetMessageInterpret {
                         idString(id1, id2)));
     }
 
+    private static String interpretExtendedSlot_StatusData(LocoNetMessage l, int slot) {
+        String baseInfo = "";
+        String detailInfo = "";
+       switch (slot) {
+            case 248:
+                // Identifying information
+                baseInfo = interpretExtendedSlot_StatusData_Base(l,slot);
+                break;
+            case 249:
+                // electric
+                // Identifying information
+                baseInfo = interpretExtendedSlot_StatusData_Base(l,slot);
+                detailInfo = interpretExtendedSlot_StatusData_Electric(l,slot);
+                break;
+            default:
+                baseInfo = "Still working on it";
+                detailInfo = "";
+        }
+       return Bundle.getMessage("LN_MSG_OPC_EXP_SPECIALSTATUS",
+               slot, baseInfo, detailInfo);
+    }
+    
+    private static String interpretExtendedSlot_StatusData_Base(LocoNetMessage l, int slot) {
+        String hwType = "";
+        int hwSerial;
+        double hwVersion ;
+        double swVersion ;
+        switch (l.getElement(14)) {
+            case LnConstants.RE_IPL_DIGITRAX_HOST_DCS240:
+                hwType = "DCS240";
+                break;
+            case LnConstants.RE_IPL_DIGITRAX_HOST_DCS210:
+                hwType = "DCS210";
+                break;
+            case LnConstants.RE_IPL_DIGITRAX_HOST_BXP88:
+                hwType = "BXP88";
+                break;
+            case LnConstants.RE_IPL_DIGITRAX_HOST_BXPA1:
+                hwType = "BXPA1";
+                break;
+            default:
+                hwType = "Unknown";
+        }
+        hwSerial = ((l.getElement(19) & 0x0f) * 128 ) + l.getElement(18);
+        hwVersion = ((double)(l.getElement(17) & 0x78) / 8 ) + ((double)(l.getElement(17) & 0x07) / 10 ) ;
+        swVersion = ((double)(l.getElement(16) & 0x78) / 8 ) + ((double)(l.getElement(16) & 0x07) / 10 ) ;
+        return Bundle.getMessage("LN_MSG_OPC_EXP_SPECIALSTATUS_BASE",
+                hwType,
+                hwSerial,
+                hwVersion,
+                swVersion);
+    }
+    
+    private static String interpretExtendedSlot_StatusData_Electric(LocoNetMessage l, int slot) {
+        double voltsTrack;
+        double voltsIn;
+        double ampsIn;
+        double ampsLimit;
+        voltsTrack = l.getElement(04) / 2 * 10.0 ;
+        voltsIn = l.getElement(5) / 2 * 10.0 ;
+        ampsIn = l.getElement(6)  * 10.0;
+        ampsLimit = l.getElement(7)  * 10.0;
+        return Bundle.getMessage("LN_MSG_OPC_EXP_SPECIALSTATUS_ELECTRIC",
+                voltsTrack,
+                voltsIn,
+                ampsIn,
+                ampsLimit);
+    }
+    
     private static final String ds54sensors[] = {"AuxA", "SwiA", "AuxB", "SwiB", "AuxC", "SwiC", "AuxD", "SwiD"};    // NOI18N
     private static final String ds64sensors[] = {"A1", "S1", "A2", "S2", "A3", "S3", "A4", "S4"};                    // NOI18N
     private static final String se8csensors[] = {"DS01", "DS02", "DS03", "DS04", "DS05", "DS06", "DS07", "DS08"};    // NOI18N
