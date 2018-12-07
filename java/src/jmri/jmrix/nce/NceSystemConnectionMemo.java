@@ -95,7 +95,7 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     }
 
     /**
-     * Tells which managers this class provides.
+     * {@inheritDoc}
      */
     @Override
     public boolean provides(Class<?> type) {
@@ -137,7 +137,7 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     }
 
     /**
-     * Provide manager by class
+     * {@inheritDoc}
      */
     @SuppressWarnings({"unchecked"})
     @Override
@@ -207,30 +207,14 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         throttleManager = new jmri.jmrix.nce.NceThrottleManager(this);
         InstanceManager.setThrottleManager(throttleManager);
 
-        if (getNceUsbSystem() != NceTrafficController.USB_SYSTEM_NONE) {
-            switch (getNceUsbSystem()) {
-                case NceTrafficController.USB_SYSTEM_SB5:
-                    log.debug("USB with just addressed programmer");
-                    InstanceManager.store(getProgrammerManager(), jmri.AddressedProgrammerManager.class);
-                    break;
-
-                case NceTrafficController.USB_SYSTEM_POWERCAB:
-                case NceTrafficController.USB_SYSTEM_SB3:
-                case NceTrafficController.USB_SYSTEM_POWERHOUSE:
-                case NceTrafficController.USB_SYSTEM_TWIN:
-                default:
-                    log.debug("USB with no programmer");
-                    break;
-            }
-        } else {
-            if (getProgrammerManager().isAddressedModePossible()) {
-                log.trace("store AddressedProgrammerManager");
-                InstanceManager.store(getProgrammerManager(), jmri.AddressedProgrammerManager.class);
-            }
-            if (getProgrammerManager().isGlobalProgrammerAvailable()) {
-                log.trace("store GlobalProgrammerManage");
-                InstanceManager.store(getProgrammerManager(), GlobalProgrammerManager.class);
-            }
+        // non-USB case
+        if (getProgrammerManager().isAddressedModePossible()) {
+            log.trace("store AddressedProgrammerManager");
+            InstanceManager.store(getProgrammerManager(), jmri.AddressedProgrammerManager.class);
+        }
+        if (getProgrammerManager().isGlobalProgrammerAvailable()) {
+            log.trace("store GlobalProgrammerManager");
+            InstanceManager.store(getProgrammerManager(), GlobalProgrammerManager.class);
         }
 
         clockManager = new jmri.jmrix.nce.NceClockControl(getNceTrafficController(), getSystemPrefix());
@@ -267,11 +251,17 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         return clockManager;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected ResourceBundle getActionModelResourceBundle() {
         return ResourceBundle.getBundle("jmri.jmrix.nce.NceActionListBundle");
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void dispose() {
         nceTrafficController = null;

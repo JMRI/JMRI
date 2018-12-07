@@ -2483,6 +2483,9 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
 
         if (!isFunctionMessage() || !other.isFunctionMessage())
             return false;
+        
+        if (this.getValueInt(1) != other.getValueInt(1))
+            return false;
 
         return getFuncBaseByte1(this.getFuncByte1Int()) == getFuncBaseByte1(other.getFuncByte1Int());
     }

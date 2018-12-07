@@ -759,6 +759,7 @@ public abstract class XmlFile {
         return getBuilder(Validate.None);
     }
 
+    @SuppressWarnings("deprecation") // wait for updated Xerxes before coding substitute for SAXBuilder(String, boolean)
     public static SAXBuilder getBuilder(Validate validate) {  // should really be a Verify enum
         SAXBuilder builder;
 

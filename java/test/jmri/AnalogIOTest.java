@@ -1,11 +1,7 @@
 package jmri;
 
 import jmri.implementation.AbstractNamedBean;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * Tests for the Light class
@@ -27,6 +23,11 @@ public class AnalogIOTest {
         Assert.assertTrue("AnalogIO has value -1.0", analogIO.getKnownAnalogValue() == min);
         analogIO.setCommandedAnalogValue(max);
         Assert.assertTrue("AnalogIO has value 1.0", analogIO.getKnownAnalogValue() == max);
+        
+        Assert.assertTrue("String value is Absolute",
+                "Absolute".equals(AnalogIO.AbsoluteOrRelative.ABSOLUTE.toString()));
+        Assert.assertTrue("String value is Relative",
+                "Relative".equals(AnalogIO.AbsoluteOrRelative.RELATIVE.toString()));
     }
     
     @Before
@@ -86,6 +87,11 @@ public class AnalogIOTest {
         @Override
         public float getResolution() {
             return (float) 0.1;
+        }
+
+        @Override
+        public AbsoluteOrRelative getAbsoluteOrRelative() {
+            return AbsoluteOrRelative.ABSOLUTE;
         }
     
     }

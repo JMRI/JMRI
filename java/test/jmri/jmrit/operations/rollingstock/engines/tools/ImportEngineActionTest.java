@@ -1,8 +1,6 @@
 package jmri.jmrit.operations.rollingstock.engines.tools;
 
 import java.awt.GraphicsEnvironment;
-import jmri.jmrit.operations.rollingstock.engines.EnginesTableFrame;
-import jmri.jmrit.operations.rollingstock.engines.tools.ImportEngineAction;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -19,10 +17,8 @@ public class ImportEngineActionTest {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        EnginesTableFrame etf = new EnginesTableFrame();
-        ImportEngineAction t = new ImportEngineAction("Test Action",etf);
+        ImportEngineAction t = new ImportEngineAction("Test Action");
         Assert.assertNotNull("exists",t);
-        JUnitUtil.dispose(etf);
     }
 
     // The minimal setup for log4J

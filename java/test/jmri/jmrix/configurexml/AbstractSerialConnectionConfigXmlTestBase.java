@@ -4,6 +4,8 @@ import org.junit.*;
 import org.jdom2.Element;
 import jmri.jmrix.ConnectionConfig;
 import jmri.jmrix.AbstractSerialPortController;
+import jmri.util.ThreadingUtil;
+
 import javax.swing.JPanel;
 
 /**
@@ -37,7 +39,8 @@ abstract public class AbstractSerialConnectionConfigXmlTestBase extends Abstract
         jmri.util.JUnitUtil.resetProfileManager();
         // This test requires a configure manager.
         jmri.util.JUnitUtil.initConfigureManager();
-        cc.loadDetails(new JPanel());
+        // Running this on the UI thread fixes some ConcurrentModificationExceptions errors.
+        ThreadingUtil.runOnGUI(()->{cc.loadDetails(new JPanel());});
         // load details MAY produce an error message if no ports are found.
         jmri.util.JUnitAppender.suppressErrorMessage("No usable ports returned");
         cc.setDisabled(true); // so we don't try to start the connection on load.

@@ -84,7 +84,7 @@ public abstract class RollingStock implements java.beans.PropertyChangeListener 
     public static final String ROUTE_DESTINATION_CHANGED_PROPERTY = "rolling stock route destination"; // NOI18N
 
     // the draw bar length must only be calculated once at startup
-    public static final int COUPLER = Setup.getLengthUnit().equals(Setup.FEET) ? Integer.parseInt(Bundle
+    public static final int COUPLERS = Setup.getLengthUnit().equals(Setup.FEET) ? Integer.parseInt(Bundle
             .getMessage("DrawBarLengthFeet")) : Integer.parseInt(Bundle.getMessage("DrawBarLengthMeter")); // stocks TODO catch empty/non-integer value
 
     LocationManager locationManager = InstanceManager.getDefault(LocationManager.class);
@@ -223,7 +223,7 @@ public abstract class RollingStock implements java.beans.PropertyChangeListener 
      * @return total length of the rolling stock
      */
     public int getTotalLength() {
-        return getLengthInteger() + RollingStock.COUPLER;
+        return getLengthInteger() + RollingStock.COUPLERS;
     }
 
     public void setColor(String color) {

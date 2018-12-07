@@ -261,6 +261,7 @@ public class ProgDebugger implements AddressedProgrammer {
     }
 
     @Override
+    @Nonnull
     public List<ProgrammingMode> getSupportedModes() {
         if (address >= 0) {
             // addressed programmer

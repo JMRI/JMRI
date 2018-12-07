@@ -498,7 +498,7 @@ public class TimeTableDataManager {
         Layout layout = getLayout(schedule.getLayoutId());
         ArrayList<Stop> stops = getStops(trainId, 0, true);
 
-        float smile = layout.getScaleMK();
+        double smile = layout.getScaleMK();
         int startHH = schedule.getStartHour();
         int duration = schedule.getDuration();
         int currentTime = train.getStartTime();
