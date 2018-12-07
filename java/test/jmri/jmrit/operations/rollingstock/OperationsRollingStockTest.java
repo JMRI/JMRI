@@ -154,7 +154,7 @@ public class OperationsRollingStockTest extends OperationsTestCase {
         Assert.assertEquals("Car Constant DESTINATION_CHANGED_PROPERTY", "rolling stock destination", Car.DESTINATION_CHANGED_PROPERTY);
         Assert.assertEquals("Car Constant DESTINATIONTRACK_CHANGED_PROPERTY", "rolling stock track destination", Car.DESTINATION_TRACK_CHANGED_PROPERTY);
 
-        Assert.assertEquals("Car Constant COUPLER", 4, Car.COUPLER);
+        Assert.assertEquals("Car Constant COUPLERS", 4, Car.COUPLERS);
     }
 
     // test Car location and track
