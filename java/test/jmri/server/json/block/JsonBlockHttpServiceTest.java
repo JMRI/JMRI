@@ -8,9 +8,15 @@ import jmri.Block;
 import jmri.BlockManager;
 import jmri.InstanceManager;
 import jmri.JmriException;
+import jmri.Reporter;
+import jmri.ReporterManager;
+import jmri.Sensor;
+import jmri.SensorManager;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonHttpServiceTestBase;
+import jmri.server.json.reporter.JsonReporter;
+import jmri.server.json.sensor.JsonSensor;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -43,15 +49,23 @@ public class JsonBlockHttpServiceTest extends JsonHttpServiceTestBase {
         JsonBlockHttpService service = new JsonBlockHttpService(mapper);
         BlockManager manager = InstanceManager.getDefault(BlockManager.class);
         Block block1 = manager.provideBlock("IB1");
+        Sensor sensor1 = InstanceManager.getDefault(SensorManager.class).provide("IS1");
+        Reporter reporter1 = InstanceManager.getDefault(ReporterManager.class).provide("IR1");
         JsonNode result;
         try {
+            // test block with defaults
             result = service.doGet(JsonBlock.BLOCK, "IB1", locale);
             Assert.assertNotNull(result);
             this.validate(result);
             Assert.assertEquals(JsonBlock.BLOCK, result.path(JSON.TYPE).asText());
             Assert.assertEquals("IB1", result.path(JSON.DATA).path(JSON.NAME).asText());
             Assert.assertEquals(JSON.UNKNOWN, result.path(JSON.DATA).path(JSON.STATE).asInt());
+            Assert.assertTrue(result.path(JSON.DATA).path(JSON.VALUE).isNull());
+            Assert.assertTrue(result.path(JSON.DATA).path(JsonSensor.SENSOR).isNull());
+            Assert.assertTrue(result.path(JSON.DATA).path(JsonReporter.REPORTER).isNull());
+            // set block state and value
             block1.setState(Block.OCCUPIED);
+            block1.setValue("value is not empty");
             JUnitUtil.waitFor(() -> {
                 return block1.getState() == Block.OCCUPIED;
             }, "Block to become occupied");
@@ -59,13 +73,29 @@ public class JsonBlockHttpServiceTest extends JsonHttpServiceTestBase {
             Assert.assertNotNull(result);
             this.validate(result);
             Assert.assertEquals(JSON.ACTIVE, result.path(JSON.DATA).path(JSON.STATE).asInt());
+            Assert.assertEquals("value is not empty", result.path(JSON.DATA).path(JSON.VALUE).asText());
+            // change block state
             block1.setState(Block.UNOCCUPIED);
             result = service.doGet(JsonBlock.BLOCK, "IB1", locale);
             Assert.assertNotNull(result);
             this.validate(result);
             Assert.assertEquals(JSON.INACTIVE, result.path(JSON.DATA).path(JSON.STATE).asInt());
+            // add a sensor and reporter to the block
+            block1.setSensor(sensor1.getSystemName());
+            block1.setReporter(reporter1);
+            result = service.doGet(JsonBlock.BLOCK, "IB1", locale);
+            Assert.assertEquals(sensor1.getSystemName(), result.path(JSON.DATA).path(JsonSensor.SENSOR).asText());
+            Assert.assertEquals(reporter1.getSystemName(), result.path(JSON.DATA).path(JsonReporter.REPORTER).asText());
         } catch (JsonException ex) {
             Assert.fail(ex.getMessage());
+        }
+        try {
+            // add an invalid block by using a turnout name instead of a block name
+            Assert.assertNull(manager.getBlock("IT1"));
+            service.doGet(JsonBlock.BLOCK, "IT1", locale);
+            Assert.fail("Expected exception not thrown.");
+        } catch (JsonException ex) {
+            Assert.assertEquals(404, ex.getCode());
         }
     }
 
@@ -110,6 +140,15 @@ public class JsonBlockHttpServiceTest extends JsonHttpServiceTestBase {
         } catch (JsonException ex) {
             Assert.fail(ex.getMessage());
         }
+        try {
+            // add an invalid block by using a turnout name instead of a block name
+            Assert.assertNull(manager.getBlock("IT1"));
+            JsonNode message = mapper.createObjectNode().put(JSON.NAME, "II1").put(JSON.STATE, Block.UNOCCUPIED);
+            service.doPost(JsonBlock.BLOCK, "IT1", message, locale);
+            Assert.fail("Expected exception not thrown.");
+        } catch (JsonException ex) {
+            Assert.assertEquals(404, ex.getCode());
+        }
     }
 
     @Test
@@ -126,6 +165,15 @@ public class JsonBlockHttpServiceTest extends JsonHttpServiceTestBase {
             Assert.assertNotNull(manager.getBlock("IB1"));
         } catch (JsonException ex) {
             Assert.fail(ex.getMessage());
+        }
+        try {
+            // add an invalid block by using a turnout name instead of a block name
+            Assert.assertNull(manager.getBlock("IT1"));
+            JsonNode message = mapper.createObjectNode().put(JSON.NAME, "II1").put(JSON.STATE, Block.UNOCCUPIED);
+            service.doPut(JsonBlock.BLOCK, null, message, locale); // use null for @Nonnull parameter to force failure
+            Assert.fail("Expected exception not thrown.");
+        } catch (JsonException ex) {
+            Assert.assertEquals(500, ex.getCode());
         }
     }
 
