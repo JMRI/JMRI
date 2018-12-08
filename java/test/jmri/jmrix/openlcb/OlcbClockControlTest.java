@@ -1,11 +1,13 @@
 package jmri.jmrix.openlcb;
 
+import org.jdom2.Element;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.sql.Time;
 import java.util.Calendar;
 
 import org.mockito.Mockito;
@@ -15,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import jmri.ClockControl;
 import jmri.InstanceManager;
 import jmri.Timebase;
+import jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 
@@ -236,5 +239,40 @@ public class OlcbClockControlTest {
         iface.assertSentMessage(":X195B4C4CN0101000001030223;");
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(OlcbClockControlTest.class);
+    @Test
+    public void loadAndRestartLeavesRate() throws Exception {
+        log.trace("loadandrestart start");
+        initializeWithClockSlave();
+
+        iface.sendMessage(":X195B4123N0101000001024010;");
+        assertEquals(4.0d, clock.getRate(), 0.1);
+
+        Timebase tb = InstanceManager.getDefault(Timebase.class);
+        assertEquals(4.0d, tb.getRate(), 0.1);
+
+        // Fills in setup fast clock dialog and saves it to XML.
+        tb.setMasterName(clock.getHardwareClockName());
+        tb.setCorrectHardware(false, false);
+        tb.setInternalMaster(false, false);
+        tb.setStartClockOption(Timebase.NONE);
+        Element store = new SimpleTimebaseXml().store(null);
+
+        // Simulates a new start of JMRI.
+        JUnitUtil.resetInstanceManager();
+        Timebase tb2 = InstanceManager.getDefault(Timebase.class);
+        iface.dispose();
+        iface = null;
+        initializeWithClockSlave();
+        assertEquals(1.0d, tb2.getRate(), 0.1);
+        iface.sendMessage(":X195B4123N0101000001024020;");
+        assertEquals(8.0d, tb2.getRate(), 0.1);
+
+        new SimpleTimebaseXml().load(store, new Element("foo"));
+        assertEquals(8.0d, tb2.getRate(), 0.1);
+        iface.assertNoSentMessages();
+
+        log.trace("loadandrestart end");
+    }
+
+    private final static Logger log = LoggerFactory.getLogger(OlcbClockControlTest.class);
 }
