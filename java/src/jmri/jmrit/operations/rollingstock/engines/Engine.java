@@ -252,6 +252,17 @@ public class Engine extends RollingStock {
         }
         return NONE;
     }
+    
+    /**
+     * Used to determine if engine is lead engine in a consist
+     * @return true if lead engine in a consist
+     */
+    public boolean isLead() {
+        if (getConsist() != null) {
+           return getConsist().isLead(this);
+        }
+        return false;
+    }
 
     /**
      * Used to check destination track to see if it will accept locomotive
@@ -272,7 +283,7 @@ public class Engine extends RollingStock {
     @Override
     protected void moveRollingStock(RouteLocation current, RouteLocation next) {
         if (current == getRouteLocation()) {
-            if (getConsist() == null || getConsist().isLead(this)) {
+            if (getConsist() == null || isLead()) {
                 if (getRouteLocation() != getRouteDestination() &&
                         getTrain() != null &&
                         !isBunit() &&
@@ -361,7 +372,7 @@ public class Engine extends RollingStock {
         e.setAttribute(Xml.B_UNIT, (isBunit() ? Xml.TRUE : Xml.FALSE));
         if (getConsist() != null) {
             e.setAttribute(Xml.CONSIST, getConsistName());
-            if (getConsist().isLead(this)) {
+            if (isLead()) {
                 e.setAttribute(Xml.LEAD_CONSIST, Xml.TRUE);
                 if (getConsist().getConsistNumber() > 0) {
                     e.setAttribute(Xml.CONSIST_NUM,
