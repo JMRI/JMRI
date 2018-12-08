@@ -1502,7 +1502,7 @@ public class Track {
                 return NO_FINAL_DESTINATION;
             }
             // check for car in kernel
-            if (car.getKernel() != null && car.getKernel().isLead(car)) {
+            if (car.isLead()) {
                 length = car.getKernel().getTotalLength();
             }
             if (!acceptsLoad(car.getLoadName(), car.getTypeName())) {
@@ -1514,7 +1514,7 @@ public class Track {
         // check for loco in consist
         if (Engine.class.isInstance(rs)) {
             Engine eng = (Engine) rs;
-            if (eng.getConsist() != null && eng.getConsist().isLead(eng)) {
+            if (eng.isLead()) {
                 length = eng.getConsist().getTotalLength();
             }
         }
@@ -2066,7 +2066,7 @@ public class Track {
             return OKAY;
         }
         // is car part of a kernel?
-        if (car.getKernel() != null && !car.getKernel().isLead(car)) {
+        if (car.getKernel() != null && !car.isLead()) {
             log.debug("Car ({}) is part of kernel ({}) not lead", car.toString(), car.getKernelName());
             return OKAY;
         }
