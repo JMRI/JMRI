@@ -37,10 +37,12 @@ public class ConsistTest extends OperationsTestCase {
 
         Assert.assertEquals("Consist Initial Length", 0, c1.getTotalLength());
         Assert.assertFalse("Consist Lead Engine 0", c1.isLead(e1));
+        Assert.assertFalse("Consist Lead Engine 0", e1.isLead());
 
-        c1.add(e1);
+        e1.setConsist(c1);
         Assert.assertEquals("Consist Engine 1 Length", 56 + 4, c1.getTotalLength());
         Assert.assertTrue("Consist Lead Engine 1", c1.isLead(e1));
+        Assert.assertTrue("Consist Lead Engine 1", e1.isLead());
 
         c1.add(e2);
         Assert.assertEquals("Consist Engine 2 Length", 56 + 4 + 59 + 4, c1.getTotalLength());

@@ -5,12 +5,18 @@ import java.awt.GridLayout;
 import javax.swing.BorderFactory;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.JComponent;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JToggleButton;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
 import javax.swing.plaf.basic.BasicToggleButtonUI;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
+import javax.swing.text.DefaultFormatter;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrix.can.cbus.CbusFilter;
 import jmri.util.ThreadingUtil;
 
 import org.slf4j.Logger;
@@ -31,6 +37,9 @@ public class CbusFilterPanel extends JPanel {
     private int _category;
     private JLabel fLabel;
     private JPanel evPane;
+    private Boolean _available;
+    private JSpinner spinner;
+    private String _buttonText = Bundle.getMessage("ButtonPass");
     
     private Color greenish = new Color(110, 235, 131);
     private Color redish = new Color(255, 132, 84);
@@ -43,7 +52,7 @@ public class CbusFilterPanel extends JPanel {
     /**
      * Create a new instance of CbusFilterPanel.
      */
-    public CbusFilterPanel(CbusFilterFrame filterFrame, int index, String textLabel, Boolean catHead, int category) {
+    public CbusFilterPanel(Boolean available, CbusFilterFrame filterFrame, int index, String textLabel, Boolean catHead, int category) {
         super();
         _index = index;
         _filterFrame = filterFrame;
@@ -52,6 +61,7 @@ public class CbusFilterPanel extends JPanel {
         _countPass = 0;
         _category = category;
         _catHead = catHead;
+        _available = available;
         initComponents();
     }
 
@@ -63,12 +73,11 @@ public class CbusFilterPanel extends JPanel {
         // log.debug("init components");
         
         double _iconScale = 0.25;
-        double _iconScaleb = 0.25;
         
         NamedIcon collapsed = new NamedIcon("resources/icons/decorations/ArrowStyle2.png", "resources/icons/decorations/ArrowStyle2.png");
         collapsed.scale(_iconScale,this);
         NamedIcon showing = new NamedIcon("resources/icons/decorations/ArrowStyle2.png", "resources/icons/decorations/ArrowStyle2.png");
-        showing.scale(_iconScaleb,this);
+        showing.scale(_iconScale,this);
         showing.setRotation(3, this);
 
         this.setLayout(new GridLayout(1,1,30,30)); // row, col, hgap, vgap
@@ -110,17 +119,60 @@ public class CbusFilterPanel extends JPanel {
         }
         else {
             evPane.setLayout(new GridLayout(1,2,40,10));
-            evPane.add(fLabel);
+        
+            if ( _index == CbusFilter.CFEVENTMIN ||
+                    _index == CbusFilter.CFEVENTMAX ||
+                    _index == CbusFilter.CFNODEMIN ||
+                    _index == CbusFilter.CFNODEMAX
+                ) {
+                JPanel spinnerAndButton = new JPanel();
+                spinnerAndButton.setLayout(new GridLayout(1,2,0,0));
+                spinner = new JSpinner(new SpinnerNumberModel(0, 0, 65535, 1));
+                JComponent comp = spinner.getEditor();
+                JFormattedTextField field = (JFormattedTextField) comp.getComponent(0);
+                DefaultFormatter formatter = (DefaultFormatter) field.getFormatter();
+                formatter.setCommitsOnValidEdit(true);
+                spinner.addChangeListener(new ChangeListener() {
+                    @Override
+                    public void stateChanged(ChangeEvent e) {
+                        int minmax = (Integer) spinner.getValue();
+                        if (_index == CbusFilter.CFEVENTMIN){
+                            _filterFrame.minEvChanged(minmax);
+                            _filterFrame.updateListeners(Bundle.getMessage("MinEventSet",minmax));
+                        }
+                        else if (_index == CbusFilter.CFEVENTMAX){
+                            _filterFrame.maxEvChanged(minmax);
+                            _filterFrame.updateListeners(Bundle.getMessage("MaxEventSet",minmax));
+                        }
+                        else if (_index == CbusFilter.CFNODEMIN){
+                            _filterFrame.minNdChanged(minmax);
+                            _filterFrame.updateListeners(Bundle.getMessage("MinNodeSet",minmax));
+                        }
+                        else if (_index == CbusFilter.CFNODEMAX){
+                            _filterFrame.maxNdChanged(minmax);
+                            _filterFrame.updateListeners(Bundle.getMessage("MaxNodeSet",minmax));
+                        }
+                    }
+                });
+                
+                spinnerAndButton.setBackground(Color.white);
+                spinnerAndButton.add(spinner);
+                spinnerAndButton.add(fLabel);
+                
+                evPane.add(spinnerAndButton);
+            
+            } else {
+                evPane.add(fLabel);
+            }
         }
         enableButton = new JToggleButton();
         enableButton.setUI(new BasicToggleButtonUI()); //Removes selectColor
-        enableButton.setText(Bundle.getMessage("ButtonPass"));
+        enableButton.setText( newTextString() );
         enableButton.setBackground(greenish);
         enableButton.setFocusPainted(false);
         enableButton.setToolTipText(Bundle.getMessage("ButtonPassTip"));
         evPane.add(enableButton);
         evPane.setVisible(true);
-        
         this.add(evPane);
         
         // connect actions to buttons
@@ -133,7 +185,7 @@ public class CbusFilterPanel extends JPanel {
                     StringBuilder txt = new StringBuilder();
                     txt.append(_textLabel);
                     txt.append(": ");
-                    txt.append(enableButton.getText());
+                    txt.append(_buttonText);
                     if (_catHead){
                         txt.append(" ");
                         txt.append(Bundle.getMessage("All"));
@@ -143,25 +195,29 @@ public class CbusFilterPanel extends JPanel {
             }
         });
         
-        this.setVisible( _catHead || _category==0 );
-        log.debug("completed init components");
+        this.setVisible( _available && (_catHead || _category==0) );
+        // log.debug("completed init components index {} title {}",_index,_textLabel);
     }
     
     private void resetenableButton(){
         if (enableButton.isSelected()) {
-            enableButton.setText(Bundle.getMessage("ButtonFilter"));
+            _buttonText = Bundle.getMessage("ButtonFilter");
+            enableButton.setText( newTextString() );
             enableButton.setToolTipText(Bundle.getMessage("ButtonFilterTip"));
             enableButton.setBackground(redish);
         } else {
-            enableButton.setText(Bundle.getMessage("ButtonPass"));
+            _buttonText = Bundle.getMessage("ButtonPass");
+            enableButton.setText( newTextString() );
             enableButton.setToolTipText(Bundle.getMessage("ButtonPassTip"));
             enableButton.setBackground(greenish);
         }
     }
     
     protected void setMixed() {
-        enableButton.setText(("Mixed"));
-        enableButton.setToolTipText(("ButtonMixedTip"));
+        
+        _buttonText = Bundle.getMessage("ButtonMixed");
+        enableButton.setText( newTextString() );
+        enableButton.setToolTipText(Bundle.getMessage("ButtonMixedTip"));
         enableButton.setBackground(amberish);
         enableButton.setSelected(false);
     }
@@ -184,30 +240,44 @@ public class CbusFilterPanel extends JPanel {
 
     protected void incrementFilter() {
         _countFilter++;
-        fLabel.setText(newTextString());
-        catButton.setText(newTextString());
+        enableButton.setText(newTextString());
     }
     
     protected void incrementPass() {
         _countPass++;
-        fLabel.setText(newTextString());
-        catButton.setText(newTextString());
+        enableButton.setText(newTextString());
     }
     
     private String newTextString() {
         StringBuilder t = new StringBuilder();
-        t.append("<html> ( <span style='color:green'>");
+        t.append(_buttonText);
+        t.append(" ( ");
         t.append(_countPass);
-        t.append("</span> / <span style='color:red'>");
+        t.append(" / ");
         t.append(_countFilter);
-        t.append("</span> ) ");
-        t.append(_textLabel);
-        t.append("</html>");
+        t.append(" ) ");
         return t.toString();
     }
     
     protected Boolean getButton() {
         return enableButton.isSelected();
+    }
+    
+    protected Boolean getVisible() {
+        return this.isVisible();
+    }
+
+    protected Boolean getAvailable() {
+        return _available;
+    }
+    
+    protected void setNode( int node, Boolean filter, Boolean show ) {
+        log.debug("panel {} setavailable node {} filter {} show {} ",_index,node, filter,show );
+        _available=true;
+        _textLabel=Bundle.getMessage("CbusNode") + Integer.toString(node);
+        fLabel.setText(_textLabel);
+        this.setVisible(show);
+        setPass(filter);
     }
     
     protected void setPass(Boolean trueorfalse) {

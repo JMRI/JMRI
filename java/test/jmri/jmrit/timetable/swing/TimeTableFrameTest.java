@@ -189,6 +189,7 @@ public class TimeTableFrameTest {
         Thread edit1 = createModalDialogOperatorThread(Bundle.getMessage("WarningTitle"), Bundle.getMessage("ButtonOK"), "edit1");  // NOI18N
         new JButtonOperator(_jfo, Bundle.getMessage("ButtonUpdate")).doClick();  // NOI18N
         JUnitUtil.waitFor(()->{return !(edit1.isAlive());}, "edit1 finished");  // NOI18N
+        jmri.util.JUnitAppender.assertWarnMessage("'bad fast clock' is not a valid number for fast clock");
 
         _jtxt = new JTextFieldOperator(_jfo, 1);
         _jtxt.clickMouse();
@@ -202,9 +203,15 @@ public class TimeTableFrameTest {
         JUnitUtil.waitFor(()->{return !(edit2.isAlive());}, "edit2 finished");  // NOI18N
 
         // Change scale
+        // NOTE:  This section may cause issues in the future.  The JComboBoxOperator
+        // appears to select entry 0 before selecting the specified entry.
+        // Since CUSTOM is entry zero, the custom listener is triggered which puts
+        // up dialog box.  By setting the combo box before making edit mode
+        // active (text field click), the dialog box goes away and the actual
+        // selected scale entry is shown.
+        new JComboBoxOperator(_jfo, 0).selectItem("N (160.0)");  // NOI18N
         _jtxt = new JTextFieldOperator(_jfo, 0);
         _jtxt.clickMouse();
-        new JComboBoxOperator(_jfo, 0).selectItem("N (160.0)");  // NOI18N
         new JButtonOperator(_jfo, Bundle.getMessage("ButtonUpdate")).doClick();  // NOI18N
         Assert.assertEquals(new JLabelOperator(_jfo, 6).getText(), "6.60 feet");
 
@@ -283,6 +290,17 @@ public class TimeTableFrameTest {
         textArea.clickMouse();
         textArea.setText(java.util.UUID.randomUUID().toString());  // NOI18N
         new JButtonOperator(_jfo, Bundle.getMessage("ButtonUpdate")).doClick();  // NOI18N
+
+        // Indirect layout listener veto tests
+        try {
+            jmri.ScaleManager.getScale("N").setScaleRatio(500.0);
+        } catch (java.beans.PropertyVetoException ex) {
+        }
+
+        try {
+            jmri.ScaleManager.getScale("N").setScaleRatio(150.0);
+        } catch (Exception ex) {
+        }
     }
 
     void timeRangeTests() {

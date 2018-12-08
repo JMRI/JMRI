@@ -34,6 +34,8 @@ import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import javax.annotation.Nonnull;
 import javax.servlet.http.HttpServletResponse;
@@ -57,7 +59,7 @@ public class JsonRosterHttpService extends JsonHttpService {
         switch (type) {
             case JsonRoster.ROSTER:
                 ObjectNode node = this.mapper.createObjectNode();
-                if (name != null) {
+                if (!name.isEmpty()) {
                     node.put(GROUP, name);
                 }
                 return this.getRoster(locale, node);
@@ -78,7 +80,7 @@ public class JsonRosterHttpService extends JsonHttpService {
             case JsonRoster.ROSTER:
                 break;
             case JsonRoster.ROSTER_ENTRY:
-                break;
+                return this.postRosterEntry(locale, name, data);
             case JsonRoster.ROSTER_GROUP:
                 break;
             case JsonRoster.ROSTER_GROUPS:
@@ -257,6 +259,96 @@ public class JsonRosterHttpService extends JsonHttpService {
             default:
                 throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type));
         }
+    }
+
+    /**
+     * Edit an existing roster entry.
+     *
+     * @param locale the locale of the client
+     * @param id     the roster entry id
+     * @param data   the roster entry attributes to be edited
+     * @return the roster entry as edited
+     * @throws jmri.server.json.JsonException if an error needs to be reported
+     *                                        to the user
+     */
+    public JsonNode postRosterEntry(Locale locale, String id, JsonNode data) throws JsonException {
+        RosterEntry entry;
+        try {
+            entry = Roster.getDefault().getEntryForId(id);
+        } catch (NullPointerException ex) {
+            throw new JsonException(HttpServletResponse.SC_NOT_FOUND, Bundle.getMessage(locale, "ErrorNotFound", JsonRoster.ROSTER_ENTRY, id));
+        }
+        if (data.path(JsonRoster.ATTRIBUTES).isArray()) {
+            List<String> toKeep = new ArrayList<>();
+            List<String> toRemove = new ArrayList<>();
+            data.path(JsonRoster.ATTRIBUTES).forEach((attribute) -> {
+                String name = attribute.path(NAME).asText();
+                String value = attribute.path(VALUE).isNull() ? null : attribute.path(VALUE).asText();
+                toKeep.add(name);
+                entry.putAttribute(name, value);
+            });
+            entry.getAttributes()
+                    .stream()
+                    .filter((name) -> (!toKeep.contains(name) && !name.startsWith(Roster.ROSTER_GROUP_PREFIX)))
+                    .forEachOrdered((name) -> {
+                        toRemove.add(name);
+                    });
+            toRemove.forEach((name) -> {
+                entry.deleteAttribute(name);
+            });
+        }
+        if (data.path(JsonRoster.ROSTER_GROUPS).isArray()) {
+            List<String> toKeep = new ArrayList<>();
+            List<String> toRemove = new ArrayList<>();
+            data.path(JsonRoster.ROSTER_GROUPS).forEach((attribute) -> {
+                String name = attribute.asText();
+                String value = attribute.path(VALUE).isNull() ? null : attribute.path(VALUE).asText();
+                toKeep.add(name);
+                entry.putAttribute(name, value);
+            });
+            entry.getGroups().stream().filter((name) -> (!toKeep.contains(Roster.ROSTER_GROUP_PREFIX + name))).forEachOrdered((name) -> {
+                toRemove.add(Roster.ROSTER_GROUP_PREFIX + name);
+            });
+            toRemove.forEach((name) -> {
+                entry.deleteAttribute(name);
+            });
+        }
+        if (data.path(FUNCTION_KEYS).isArray()) {
+            data.path(FUNCTION_KEYS).forEach((functionKey) -> {
+                int function = Integer.parseInt(functionKey.path(NAME).asText().substring(F.length() - 1));
+                entry.setFunctionLabel(function, functionKey.path(LABEL).isNull() ? null : functionKey.path(LABEL).asText());
+                entry.setFunctionLockable(function, functionKey.path(LOCKABLE).asBoolean());
+            });
+        }
+        if (data.path(ADDRESS).isTextual()) {
+            entry.setDccAddress(data.path(ADDRESS).asText());
+        }
+        if (data.path(ROAD).isTextual()) {
+            entry.setRoadName(data.path(ROAD).asText());
+        }
+        if (data.path(NUMBER).isTextual()) {
+            entry.setRoadNumber(data.path(NUMBER).asText());
+        }
+        if (data.path(MFG).isTextual()) {
+            entry.setMfg(data.path(MFG).asText());
+        }
+        if (data.path(MODEL).isTextual()) {
+            entry.setModel(data.path(MODEL).asText());
+        }
+        if (!data.path(COMMENT).isMissingNode()) {
+            entry.setComment(data.path(COMMENT).isTextual() ? data.path(COMMENT).asText() : null);
+        }
+        if (data.path(MAX_SPD_PCT).isInt()) {
+            entry.setMaxSpeedPCT(data.path(MAX_SPD_PCT).asInt());
+        }
+        if (!data.path(SHUNTING_FUNCTION).isMissingNode()) {
+            entry.setShuntingFunction(data.path(SHUNTING_FUNCTION).isTextual() ? data.path(SHUNTING_FUNCTION).asText() : null);
+        }
+        if (!data.path(OWNER).isMissingNode()) {
+            entry.setOwner(data.path(OWNER).isTextual() ? data.path(OWNER).asText() : null);
+        }
+        entry.updateFile();
+        return this.getRosterEntry(locale, entry);
     }
 
 }

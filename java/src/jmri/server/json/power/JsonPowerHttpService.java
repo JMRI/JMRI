@@ -81,7 +81,7 @@ public class JsonPowerHttpService extends JsonHttpService {
         int state = data.path(STATE).asInt(UNKNOWN);
         try {
             PowerManager manager = InstanceManager.getDefault(PowerManager.class);
-            if (name != null && !name.isEmpty()) {
+            if (!name.isEmpty()) {
                 for (PowerManager pm : InstanceManager.getList(PowerManager.class)) {
                     if (pm.getUserName().equals(name)) {
                         manager = pm;
