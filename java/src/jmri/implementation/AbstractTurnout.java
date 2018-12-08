@@ -191,7 +191,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
                     log.debug("go to sleep for {} ms...", LocalTime.now().until(nextWait, ChronoUnit.MILLIS));
                     try {
                         Thread.sleep(LocalTime.now().until(nextWait, ChronoUnit.MILLIS)); // should be a duration
-                        nextWait = null; // reset to 0, what if another instruction came in during sleep?
+                        nextWait = null; // reset to 0, but what if another instruction has come in during sleep?
                         log.debug("back again on {}", LocalTime.now().toNanoOfDay());
                         return;
                     } catch (InterruptedException ex) {

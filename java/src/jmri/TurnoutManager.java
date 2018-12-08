@@ -279,7 +279,7 @@ public interface TurnoutManager extends ProvidingManager<Turnout> {
     /**
      * Get end time of OutputInterval, calculated from the current time.
      *
-     * @return end time in Milliseconds
+     * @return end time in Milliseconds or null if no interval was set or timer has completed
      */
     public LocalTime outputIntervalEnds();
 
