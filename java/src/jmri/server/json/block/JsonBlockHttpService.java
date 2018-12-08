@@ -102,7 +102,7 @@ public class JsonBlockHttpService extends JsonNamedBeanHttpService {
                 if (sensor != null) {
                     block.setSensor(sensor.getSystemName());
                 } else {
-                    throw new JsonException(404, Bundle.getMessage(locale, "ObjectNotFound", JsonSensor.SENSOR, node.asText()));
+                    throw new JsonException(404, Bundle.getMessage(locale, "ErrorNotFound", JsonSensor.SENSOR, node.asText()));
                 }
             }
         }
@@ -115,7 +115,7 @@ public class JsonBlockHttpService extends JsonNamedBeanHttpService {
                 if (reporter != null) {
                     block.setReporter(reporter);
                 } else {
-                    throw new JsonException(404, Bundle.getMessage(locale, "ObjectNotFound", JsonReporter.REPORTER, node.asText()));
+                    throw new JsonException(404, Bundle.getMessage(locale, "ErrorNotFound", JsonReporter.REPORTER, node.asText()));
                 }
             }
         }

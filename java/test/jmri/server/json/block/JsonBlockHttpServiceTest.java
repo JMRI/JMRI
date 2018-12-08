@@ -137,6 +137,50 @@ public class JsonBlockHttpServiceTest extends JsonHttpServiceTestBase {
             Assert.assertEquals(Block.OCCUPIED, block1.getState());
             Assert.assertNotNull(exception);
             Assert.assertEquals(HttpServletResponse.SC_BAD_REQUEST, exception.getCode());
+            // set value
+            message = mapper.createObjectNode().put(JSON.NAME, "IB1").put(JSON.VALUE, "some value");
+            Assert.assertNull("Null block value", block1.getValue());
+            service.doPost(JsonBlock.BLOCK, "IB1", message, locale);
+            Assert.assertEquals("Non-null block value", "some value", block1.getValue());
+            // set null value
+            message = mapper.createObjectNode().put(JSON.NAME, "IB1").putNull(JSON.VALUE);
+            Assert.assertNotNull("Non-null block value", block1.getValue());
+            service.doPost(JsonBlock.BLOCK, "IB1", message, locale);
+            Assert.assertNull("Null block value", block1.getValue());
+            // set non-existing sensor
+            message = mapper.createObjectNode().put(JSON.NAME, "IB1").put(JsonSensor.SENSOR, "IS1");
+            Assert.assertNull("No sensor", block1.getSensor());
+            try {
+                service.doPost(JsonBlock.BLOCK, "IB1", message, locale);
+                Assert.fail("Expected exception not thrown");
+            } catch (JsonException ex) {
+                Assert.assertEquals("404 Not Found", 404, ex.getCode());
+            }
+            // set existing sensor
+            Sensor sensor1 = InstanceManager.getDefault(SensorManager.class).provide("IS1");
+            service.doPost(JsonBlock.BLOCK, "IB1", message, locale);
+            Assert.assertEquals("Block has sensor", sensor1, block1.getSensor());
+            // set null sensor
+            message = mapper.createObjectNode().put(JSON.NAME, "IB1").putNull(JsonSensor.SENSOR);
+            service.doPost(JsonBlock.BLOCK, "IB1", message, locale);
+            Assert.assertNull("Block has no sensor", block1.getSensor());
+            // set non-existing reporter
+            message = mapper.createObjectNode().put(JSON.NAME, "IB1").put(JsonReporter.REPORTER, "IR1");
+            Assert.assertNull("No reporter", block1.getReporter());
+            try {
+                service.doPost(JsonBlock.BLOCK, "IB1", message, locale);
+                Assert.fail("Expected exception not thrown");
+            } catch (JsonException ex) {
+                Assert.assertEquals("404 Not Found", 404, ex.getCode());
+            }
+            // set existing reporter
+            Reporter reporter1 = InstanceManager.getDefault(ReporterManager.class).provide("IR1");
+            service.doPost(JsonBlock.BLOCK, "IB1", message, locale);
+            Assert.assertEquals("Block has reporter", reporter1, block1.getReporter());
+            // set null reporter
+            message = mapper.createObjectNode().put(JSON.NAME, "IB1").putNull(JsonReporter.REPORTER);
+            service.doPost(JsonBlock.BLOCK, "IB1", message, locale);
+            Assert.assertNull("No reporter", block1.getReporter());
         } catch (JsonException ex) {
             Assert.fail(ex.getMessage());
         }
