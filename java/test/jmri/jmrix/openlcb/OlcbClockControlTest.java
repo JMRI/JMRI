@@ -4,19 +4,23 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.concurrent.Executor;
+
+import org.mockito.Mockito;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import jmri.ClockControl;
 import jmri.InstanceManager;
+import jmri.Timebase;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 
 import static org.junit.Assert.*;
 import static jmri.jmrix.openlcb.OlcbConfigurationManager.*;
+import static org.mockito.Mockito.mock;
 
 /**
  * Tests for OpenLCB clock interfacing with JMRI.
@@ -26,6 +30,24 @@ import static jmri.jmrix.openlcb.OlcbConfigurationManager.*;
 public class OlcbClockControlTest {
     OlcbTestInterface iface = null;
     ClockControl clock;
+
+    interface MockInterface {
+        void onChange(String property, Object newValue);
+    }
+
+    private class MockPropertyChangeListener implements PropertyChangeListener {
+        public MockInterface m;
+
+        public MockPropertyChangeListener() {
+            m = mock(MockInterface.class);
+        }
+
+        @Override
+        public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
+            m.onChange(propertyChangeEvent.getPropertyName(), propertyChangeEvent.getNewValue());
+        }
+    }
+
 
     @Before
     public void setUp() throws Exception {
@@ -157,6 +179,41 @@ public class OlcbClockControlTest {
         initializeWithClockMaster();
         clock.setRate(13.25);
         iface.assertSentMessage(":X195B4C4CN0101000001034035;");
+    }
+
+    @Test
+    public void rateListenerSlave() throws Exception {
+        initializeWithClockSlave();
+        Timebase tb = InstanceManager.getDefault(Timebase.class);
+        MockPropertyChangeListener ml = new MockPropertyChangeListener();
+        tb.addPropertyChangeListener(ml);
+
+        clock.setRate(13.25);
+        iface.assertSentMessage(":X195B4C4CN010100000102C035;");
+
+        Mockito.verifyNoMoreInteractions(ml.m);
+
+        iface.sendMessage(":X195B4123N0101000001024010;");
+        Mockito.verify(ml.m).onChange("rate", 4.0d);
+    }
+
+    @Test
+    public void rateListenerMaster() throws Exception {
+        initializeWithClockMaster();
+        Timebase tb = InstanceManager.getDefault(Timebase.class);
+        MockPropertyChangeListener ml = new MockPropertyChangeListener();
+        tb.addPropertyChangeListener(ml);
+
+        clock.setRate(13.25);
+        iface.assertSentMessage(":X195B4C4CN0101000001034035;");
+
+        Mockito.verify(ml.m).onChange("rate", 13.25d);
+
+        Mockito.verifyNoMoreInteractions(ml.m);
+
+        iface.sendMessage(":X195B4123N010100000103C010;");
+        iface.assertSentMessage(":X195B4C4CN0101000001034010;");
+        Mockito.verify(ml.m).onChange("rate", 4.0d);
     }
 
     @Test

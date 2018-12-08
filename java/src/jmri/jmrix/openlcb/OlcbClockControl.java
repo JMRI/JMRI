@@ -58,7 +58,7 @@ public class OlcbClockControl extends DefaultClockControl {
             jmriClock.setRun(hardwareClock.isRunning());
         } else if (property.equals(TimeProtocol.PROP_RATE_UPDATE)) {
             try {
-                jmriClock.setRate(hardwareClock.getRate());
+                jmriClock.userSetRate(hardwareClock.getRate());
             } catch (TimebaseRateException e) {
                 log.warn("Failed to set OpenLCB rate to internal clock.");
             }
@@ -126,7 +126,10 @@ public class OlcbClockControl extends DefaultClockControl {
 
     @Override
     public void setRate(double newRate) {
-        hardwareClock.requestSetRate(newRate);
+        // OpenLCB rates are 0.25 resolution, so we use half of that as minimum threshold.
+        if (Math.abs(hardwareClock.getRate() - newRate) > 0.12) {
+            hardwareClock.requestSetRate(newRate);
+        }
     }
 
     @Override
