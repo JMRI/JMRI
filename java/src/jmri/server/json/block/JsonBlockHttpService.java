@@ -14,6 +14,8 @@ import jmri.BlockManager;
 import jmri.InstanceManager;
 import jmri.Reporter;
 import jmri.ReporterManager;
+import jmri.Sensor;
+import jmri.SensorManager;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonNamedBeanHttpService;
@@ -95,21 +97,28 @@ public class JsonBlockHttpService extends JsonNamedBeanHttpService {
                 throw new JsonException(400, Bundle.getMessage(locale, "ErrorUnknownState", BLOCK, state));
         }
         if (!data.path(JsonSensor.SENSOR).isMissingNode()) {
-            if (data.path(JsonSensor.SENSOR).isNull()) {
+            JsonNode node = data.path(JsonSensor.SENSOR);
+            if (node.isNull()) {
                 block.setSensor(null);
             } else {
-                block.setSensor(data.path(JsonSensor.SENSOR).asText());
+                Sensor sensor = InstanceManager.getDefault(SensorManager.class).getBySystemName(node.asText());
+                if (sensor != null) {
+                    block.setSensor(sensor.getSystemName());
+                } else {
+                    throw new JsonException(404, Bundle.getMessage(locale, "ObjectNotFound", JsonSensor.SENSOR, node.asText()));
+                }
             }
         }
         if (!data.path(JsonReporter.REPORTER).isMissingNode()) {
-            if (data.path(JsonReporter.REPORTER).isNull()) {
+            JsonNode node = data.path(JsonReporter.REPORTER);
+            if (node.isNull()) {
                 block.setReporter(null);
             } else {
-                Reporter reporter = InstanceManager.getDefault(ReporterManager.class).getBySystemName(data.path(JsonReporter.REPORTER).asText());
+                Reporter reporter = InstanceManager.getDefault(ReporterManager.class).getBySystemName(node.asText());
                 if (reporter != null) {
                     block.setReporter(reporter);
                 } else {
-                    throw new JsonException(404, Bundle.getMessage(locale, "ObjectNotFound", JsonReporter.REPORTER, data.path(JsonReporter.REPORTER).asText()));
+                    throw new JsonException(404, Bundle.getMessage(locale, "ObjectNotFound", JsonReporter.REPORTER, node.asText()));
                 }
             }
         }
