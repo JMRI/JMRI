@@ -394,7 +394,6 @@ public class SimpleClockFrame extends JmriJFrame
      */
     void updateRate() {
         factorField.setText(threeDigits.format(clock.userGetRate()));
-        changed = true;
     }
 
     /**
