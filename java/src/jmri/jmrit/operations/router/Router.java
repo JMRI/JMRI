@@ -128,7 +128,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
             log.debug("Routing using train ({})", train.getName());
         }
         // is car part of kernel?
-        if (car.getKernel() != null && !car.getKernel().isLead(car)) {
+        if (car.getKernel() != null && !car.isLead()) {
             return false;
         }
         // note clone car has the car's "final destination" as its destination

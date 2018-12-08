@@ -1150,7 +1150,7 @@ public class TrainBuilder extends TrainCommon {
                 continue;
             }
             // don't use non lead locos in a consist
-            if (engine.getConsist() != null && !engine.getConsist().isLead(engine)) {
+            if (engine.getConsist() != null && !engine.isLead()) {
                 addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildEnginePartConsist"),
                         new Object[]{engine.toString(), engine.getConsist().getName(),
                                 engine.getConsist().getEngines().size()}));
@@ -1187,7 +1187,7 @@ public class TrainBuilder extends TrainCommon {
                     continue;
                 }
                 // engine is part of a consist
-            } else if (engine.getConsist().isLead(engine)) {
+            } else if (engine.isLead()) {
                 addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildEngineLeadConsist"),
                         new Object[]{engine.toString(), engine.getConsist().getName(),
                                 engine.getConsist().getSize()}));
@@ -1892,7 +1892,7 @@ public class TrainBuilder extends TrainCommon {
                         if (!car.isCaboose() &&
                                 !car.hasFred() &&
                                 !car.isPassenger() &&
-                                (car.getKernel() == null || car.getKernel().isLead(car))) {
+                                (car.getKernel() == null || car.isLead())) {
                             log.debug("Car {} last location id: {}", car.toString(), car.getLastLocationId());
                             Integer number = 1;
                             if (_numOfBlocks.containsKey(car.getLastLocationId())) {
@@ -1979,7 +1979,7 @@ public class TrainBuilder extends TrainCommon {
                 carCount++;
                 // use only the lead car in a kernel for building trains
                 if (car.getKernel() != null) {
-                    if (car.getKernel().isLead(car)) {
+                    if (car.isLead()) {
                         addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildCarLeadKernel"),
                                 new Object[]{car.toString(), car.getKernelName(), car.getKernel().getSize(),
                                         car.getKernel().getTotalLength(), Setup.getLengthUnit().toLowerCase()}));
@@ -1989,7 +1989,7 @@ public class TrainBuilder extends TrainCommon {
                                         car.getKernel().getTotalLength(), Setup.getLengthUnit().toLowerCase()}));
                     }
                     checkKernel(car);
-                    if (!car.getKernel().isLead(car)) {
+                    if (!car.isLead()) {
                         _carList.remove(car); // remove this car from the list
                         i--;
                         continue;
@@ -2036,7 +2036,7 @@ public class TrainBuilder extends TrainCommon {
         boolean foundLeadCar = false;
         for (Car c : car.getKernel().getCars()) {
             // check that lead car exists
-            if (c.getKernel().isLead(c) && !c.isOutOfService()) {
+            if (c.isLead() && !c.isOutOfService()) {
                 foundLeadCar = true;
             }
             // check to see that all cars have the same location and track
@@ -2989,7 +2989,7 @@ public class TrainBuilder extends TrainCommon {
                     continue;
                 }
                 // ignore non-lead cars in kernels
-                if (car.getKernel() != null && !car.getKernel().isLead(car)) {
+                if (car.getKernel() != null && !car.isLead()) {
                     continue; // ignore non-lead cars
                 }
                 // has car been assigned to another train?
@@ -4846,7 +4846,7 @@ public class TrainBuilder extends TrainCommon {
             log.debug("Car ({}) destination track ({}) has final destination track ({}) location ({})", car.toString(),
                     car.getDestinationTrackName(), car.getFinalDestinationTrackName(), car.getDestinationName()); // NOI18N
             // is the car in a kernel?
-            if (car.getKernel() != null && !car.getKernel().isLead(car)) {
+            if (car.getKernel() != null && !car.isLead()) {
                 continue;
             }
             if (car.testDestination(car.getFinalDestination(), car.getFinalDestinationTrack()).equals(Track.OKAY)) {
@@ -4861,7 +4861,7 @@ public class TrainBuilder extends TrainCommon {
                             .toString(), car.getDestinationTrackName(), car.getFinalDestinationTrackName());
                     if (car.getKernel() != null) {
                         for (Car k : car.getKernel().getCars()) {
-                            if (k.getKernel().isLead(k)) {
+                            if (k.isLead()) {
                                 continue;
                             }
                             addLine(_buildReport, FIVE, MessageFormat.format(Bundle
