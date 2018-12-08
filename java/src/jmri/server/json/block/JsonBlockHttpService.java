@@ -35,35 +35,32 @@ public class JsonBlockHttpService extends JsonNamedBeanHttpService {
 
     @Override
     public JsonNode doGet(String type, String name, Locale locale) throws JsonException {
-        ObjectNode root = mapper.createObjectNode();
         Block block = InstanceManager.getDefault(BlockManager.class).getBlock(name);
-        if (block == null) {
-            throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", BLOCK, name));
-        }
-        root.put(JSON.TYPE, BLOCK);
-        ObjectNode data = this.getNamedBean(block, name, type, locale);
-        root.set(JSON.DATA, data);
-        switch (block.getState()) {
-            case Block.UNDETECTED:
-                data.put(JSON.STATE, JSON.UNKNOWN);
-                break;
-            default:
-                data.put(JSON.STATE, block.getState());
-        }
-        if (block.getValue() == null) {
-            data.putNull(JSON.VALUE);
-        } else {
-            data.put(JSON.VALUE, block.getValue().toString());
-        }
-        if (block.getSensor() == null) {
-            data.putNull(JsonSensor.SENSOR);
-        } else {
-            data.put(JsonSensor.SENSOR, block.getSensor().getSystemName());
-        }
-        if (block.getReporter() == null) {
-            data.putNull(JsonReporter.REPORTER);
-        } else {
-            data.put(JsonReporter.REPORTER, block.getReporter().getSystemName());
+        ObjectNode root = this.getNamedBean(block, name, type, locale); // throws JsonException if block == null
+        ObjectNode data = root.with(JSON.DATA);
+        if (block != null) {
+            switch (block.getState()) {
+                case Block.UNDETECTED:
+                    data.put(JSON.STATE, JSON.UNKNOWN);
+                    break;
+                default:
+                    data.put(JSON.STATE, block.getState());
+            }
+            if (block.getValue() == null) {
+                data.putNull(JSON.VALUE);
+            } else {
+                data.put(JSON.VALUE, block.getValue().toString());
+            }
+            if (block.getSensor() == null) {
+                data.putNull(JsonSensor.SENSOR);
+            } else {
+                data.put(JsonSensor.SENSOR, block.getSensor().getSystemName());
+            }
+            if (block.getReporter() == null) {
+                data.putNull(JsonReporter.REPORTER);
+            } else {
+                data.put(JsonReporter.REPORTER, block.getReporter().getSystemName());
+            }
         }
         return root;
     }

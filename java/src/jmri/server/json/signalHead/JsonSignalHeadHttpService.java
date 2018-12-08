@@ -35,11 +35,9 @@ public class JsonSignalHeadHttpService extends JsonNamedBeanHttpService {
 
     @Override
     public JsonNode doGet(String type, String name, Locale locale) throws JsonException {
-        ObjectNode root = mapper.createObjectNode();
-        root.put(TYPE, SIGNAL_HEAD);
         SignalHead signalHead = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(name);
-        ObjectNode data = this.getNamedBean(signalHead, name, type, locale);
-        root.set(DATA, data);
+        ObjectNode root = this.getNamedBean(signalHead, name, type, locale); // throws JsonException if signalHead == null
+        ObjectNode data = root.with(DATA);
         if (signalHead != null) {
             data.put(LIT, signalHead.getLit());
             data.put(APPEARANCE, signalHead.getAppearance());
