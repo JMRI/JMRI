@@ -1,5 +1,6 @@
 package jmri.managers;
 
+import java.time.LocalTime;
 import jmri.JmriException;
 import jmri.NamedBean;
 import jmri.Turnout;
@@ -231,14 +232,17 @@ public class TurnoutManagerScaffold implements TurnoutManager {
     public void removeDataListener(ManagerDataListener e) {}
 
     /** {@inheritDoc} */
+    @Override
     public int getInterval() {
         return 0;
     }
 
     /** {@inheritDoc} */
+    @Override
     public void resetOutputInterval() {}
 
     /** {@inheritDoc} */
+    @Override
     public LocalTime outputIntervalEnds() { return null; }
 
 }
