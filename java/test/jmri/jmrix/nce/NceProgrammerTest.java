@@ -68,7 +68,6 @@ public class NceProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     private jmri.ProgListenerScaffold l;
 
     @Test
-    @Ignore("disabled for some reason in JUnit3")
     public void testWriteCvSequenceAscii() throws JmriException, Exception {
         // and do the write
         p.writeCV(10, 20, l);
@@ -88,7 +87,6 @@ public class NceProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     // you can rename these. Note that not all (int,...) tests may have a
     // String(String, ...) test defined, in which case you should create those.
     @Test
-    @Ignore("disabled for some reason in JUnit3")
     public void testWriteCvSequenceAsciiString() throws JmriException, Exception {
         // and do the write
         p.writeCV("10", 20, l);
@@ -136,7 +134,6 @@ public class NceProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     }
 
     @Test
-    @Ignore("disabled for some reason in JUnit3")
     public void testWriteRegisterSequenceAscii() throws JmriException {
         // set register mode
         p.setMode(ProgrammingMode.REGISTERMODE);
@@ -155,7 +152,6 @@ public class NceProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     }
 
     @Test
-    @Ignore("disabled for some reason in JUnit3")
     public void testWriteRegisterSequenceAsciiString() throws JmriException {
         // set register mode
         p.setMode(ProgrammingMode.REGISTERMODE);
@@ -212,7 +208,6 @@ public class NceProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     }
 
     @Test
-    @Ignore("disabled for some reason in JUnit3")
     public void testReadCvSequenceAscii() throws JmriException {
         // and do the read
         p.readCV(10, l);
@@ -233,7 +228,6 @@ public class NceProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     }
 
     @Test
-    @Ignore("disabled for some reason in JUnit3")
     public void testReadCvSequenceAsciiString() throws JmriException {
         // and do the read
         p.readCV("10", l);
@@ -275,7 +269,6 @@ public class NceProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     }
 
     @Test
-    @Ignore("disabled for some reason in JUnit3")
     public void testReadRegisterSequenceAscii() throws JmriException {
         // set register mode
         p.setMode(ProgrammingMode.REGISTERMODE);
