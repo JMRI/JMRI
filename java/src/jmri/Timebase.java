@@ -4,6 +4,7 @@ import java.beans.PropertyChangeListener;
 import java.time.Instant;
 import java.util.Date;
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * Provide access to clock capabilities in hardware or software.
@@ -119,8 +120,11 @@ public interface Timebase extends NamedBean {
 
     // methods for start up with clock stopped option
     public void setStartStopped(boolean stopped);
-
     public boolean getStartStopped();
+    // methods for start up with clock running option. If neither stopped nor running is set, the
+    // clock run state will not change at startup.
+    public void setStartRunning(boolean running);
+    public boolean getStartRunning();
 
     // methods for start up with start/stop button displayed
     public void setShowStopButton(boolean displayed);
@@ -131,6 +135,14 @@ public interface Timebase extends NamedBean {
     public void setStartSetTime(boolean set, Date time);
 
     public boolean getStartSetTime();
+
+    // What to set the rate at startup.
+    public void setStartRate(double factor);
+    public double getStartRate();
+
+    // If true, the rate at startup will be set to the value of getStartRate().
+    public void setSetRateAtStart(boolean set);
+    public boolean getSetRateAtStart();
 
     @Nonnull
     public Date getStartTime();

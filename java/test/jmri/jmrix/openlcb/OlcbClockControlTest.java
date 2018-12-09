@@ -11,6 +11,8 @@ import java.sql.Time;
 import java.util.Calendar;
 
 import org.mockito.Mockito;
+import org.openlcb.protocols.TimeBroadcastGenerator;
+import org.openlcb.protocols.TimeProtocol;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -255,6 +257,9 @@ public class OlcbClockControlTest {
         tb.setCorrectHardware(false, false);
         tb.setInternalMaster(false, false);
         tb.setStartClockOption(Timebase.NONE);
+        tb.setSetRateAtStart(false);
+        assertEquals(true, tb.getStartRunning());
+        assertEquals(false, tb.getStartStopped());
         Element store = new SimpleTimebaseXml().store(null);
 
         // Simulates a new start of JMRI.
@@ -263,15 +268,212 @@ public class OlcbClockControlTest {
         iface.dispose();
         iface = null;
         initializeWithClockSlave();
-        assertEquals(1.0d, tb2.getRate(), 0.1);
-        iface.sendMessage(":X195B4123N0101000001024020;");
-        assertEquals(8.0d, tb2.getRate(), 0.1);
+        TimeBroadcastGenerator gen = new TimeBroadcastGenerator(iface.iface, TimeProtocol
+                .ALT_CLOCK_1);
+        gen.requestStop();
+        gen.requestSetRate(2.0);
+        iface.flush();
+        assertEquals(false, tb2.getRun());
+        assertEquals(false, gen.isRunning());
+
+        iface.sendMessage(":X195B4123N010100000102F001;"); //clock is stopped
+        iface.clearSentMessages();
+        assertEquals(2.0d, tb2.getRate(), 0.1);
 
         new SimpleTimebaseXml().load(store, new Element("foo"));
-        assertEquals(8.0d, tb2.getRate(), 0.1);
-        iface.assertNoSentMessages();
+        iface.flush();
+        assertEquals(2.0d, tb2.getRate(), 0.1);
+        assertEquals(true, tb2.getRun());
+        assertEquals(true, gen.isRunning());
 
         log.trace("loadandrestart end");
+    }
+
+    @Test
+    public void loadAndRestartLeavesRunState() throws Exception {
+        log.trace("loadandrestart start");
+        initializeWithClockSlave();
+
+        iface.sendMessage(":X195B4123N0101000001024010;");
+        assertEquals(4.0d, clock.getRate(), 0.1);
+
+        Timebase tb = InstanceManager.getDefault(Timebase.class);
+        assertEquals(4.0d, tb.getRate(), 0.1);
+
+        // Fills in setup fast clock dialog and saves it to XML.
+        tb.setMasterName(clock.getHardwareClockName());
+        tb.setCorrectHardware(false, false);
+        tb.setInternalMaster(false, false);
+        tb.setStartClockOption(Timebase.NONE);
+        tb.setSetRateAtStart(false);
+        tb.setStartRunning(false);
+        tb.setStartStopped(false);
+        Element store = new SimpleTimebaseXml().store(null);
+
+        // Simulates a new start of JMRI.
+        JUnitUtil.resetInstanceManager();
+        Timebase tb2 = InstanceManager.getDefault(Timebase.class);
+        iface.dispose();
+        iface = null;
+
+        initializeWithClockSlave();
+        TimeBroadcastGenerator gen = new TimeBroadcastGenerator(iface.iface, TimeProtocol
+                .ALT_CLOCK_1);
+        gen.requestStop();
+        gen.requestSetRate(2.0);
+        iface.flush();
+
+        assertEquals(false, tb2.getRun());
+        assertEquals(2.0d, tb2.getRate(), 0.1);
+        new SimpleTimebaseXml().load(store, new Element("foo"));
+        assertEquals(2.0d, tb2.getRate(), 0.1);
+        assertEquals(false, tb2.getRun());
+        assertEquals(false, gen.isRunning());
+
+        log.trace("loadandrestart end");
+    }
+
+    private interface LoadRestartModule {
+        void setTimebaseOptions(Timebase tb);
+        void setGeneratorStateBeforeLoad(TimeBroadcastGenerator gen, Timebase tb2);
+        void checkFinalState(TimeBroadcastGenerator gen, Timebase tb2);
+    };
+
+    private void runLoadRestartTest(LoadRestartModule m) {
+        initializeWithClockSlave();
+        Timebase tb = InstanceManager.getDefault(Timebase.class);
+        tb.setMasterName(clock.getHardwareClockName());
+        tb.setCorrectHardware(false, false);
+        tb.setInternalMaster(false, false);
+        tb.setStartClockOption(Timebase.NONE);
+
+        m.setTimebaseOptions(tb);
+
+        Element store = new SimpleTimebaseXml().store(null);
+        // Simulates a new start of JMRI.
+        JUnitUtil.resetInstanceManager();
+        Timebase tb2 = InstanceManager.getDefault(Timebase.class);
+        iface.dispose();
+        iface = null;
+
+        initializeWithClockSlave();
+        TimeBroadcastGenerator gen = new TimeBroadcastGenerator(iface.iface, TimeProtocol
+                .ALT_CLOCK_1);
+        gen.requestStop();
+        gen.requestSetRate(2.0);
+
+        m.setGeneratorStateBeforeLoad(gen, tb2);
+
+        iface.flush();
+        new SimpleTimebaseXml().load(store, new Element("foo"));
+        iface.flush();
+
+        m.checkFinalState(gen, tb2);
+    }
+
+    @Test
+    public void loadAndRestartWithRunAndRate() throws Exception {
+        runLoadRestartTest(new LoadRestartModule() {
+            @Override
+            public void setTimebaseOptions(Timebase tb) {
+                tb.setStartStopped(true);
+                tb.setStartRunning(false);
+                tb.setSetRateAtStart(true);
+                tb.setStartRate(13.0);
+            }
+
+            @Override
+            public void setGeneratorStateBeforeLoad(TimeBroadcastGenerator gen, Timebase tb2) {
+                gen.requestSetRate(2.0);
+                gen.requestStart();
+            }
+
+            @Override
+            public void checkFinalState(TimeBroadcastGenerator gen, Timebase tb2) {
+                assertEquals(false, gen.isRunning());
+                assertEquals(gen.getRate(), 13.0, 0.01);
+            }
+        });
+    }
+
+    @Test
+    public void loadAndRestartWithRunAndNoRate() throws Exception {
+        runLoadRestartTest(new LoadRestartModule() {
+            @Override
+            public void setTimebaseOptions(Timebase tb) {
+                tb.setStartStopped(true);
+                tb.setStartRunning(false);
+                tb.setSetRateAtStart(false);
+                tb.setStartRate(13.0);
+            }
+
+            @Override
+            public void setGeneratorStateBeforeLoad(TimeBroadcastGenerator gen, Timebase tb2) {
+                gen.requestSetRate(2.0);
+                gen.requestStart();
+            }
+
+            @Override
+            public void checkFinalState(TimeBroadcastGenerator gen, Timebase tb2) {
+                assertEquals(false, gen.isRunning());
+                assertEquals(gen.getRate(), 2.0, 0.01);
+            }
+        });
+    }
+
+    @Test
+    public void loadAndRestartWithNoRunAndNoRate() throws Exception {
+        runLoadRestartTest(new LoadRestartModule() {
+            @Override
+            public void setTimebaseOptions(Timebase tb) {
+                tb.setStartStopped(false);
+                tb.setStartRunning(false);
+                tb.setSetRateAtStart(false);
+                tb.setStartRate(13.0);
+            }
+
+            @Override
+            public void setGeneratorStateBeforeLoad(TimeBroadcastGenerator gen, Timebase tb2) {
+                gen.requestSetRate(2.0);
+                gen.requestStop();
+                iface.flush();
+                gen.requestStart();
+                iface.flush();
+                assertEquals(true, tb2.getRun());
+                assertEquals(true, gen.isRunning());
+            }
+
+            @Override
+            public void checkFinalState(TimeBroadcastGenerator gen, Timebase tb2) {
+                assertEquals(true, gen.isRunning());
+                assertEquals(gen.getRate(), 2.0, 0.01);
+            }
+        });
+    }
+
+    @Test
+    public void loadAndRestartWithNoRunAndNoRateStopped() throws Exception {
+        runLoadRestartTest(new LoadRestartModule() {
+            @Override
+            public void setTimebaseOptions(Timebase tb) {
+                tb.setStartStopped(false);
+                tb.setStartRunning(false);
+                tb.setSetRateAtStart(false);
+                tb.setStartRate(13.0);
+            }
+
+            @Override
+            public void setGeneratorStateBeforeLoad(TimeBroadcastGenerator gen, Timebase tb2) {
+                gen.requestSetRate(2.0);
+                gen.requestStop();
+            }
+
+            @Override
+            public void checkFinalState(TimeBroadcastGenerator gen, Timebase tb2) {
+                assertEquals(false, gen.isRunning());
+                assertEquals(gen.getRate(), 2.0, 0.01);
+            }
+        });
     }
 
     private final static Logger log = LoggerFactory.getLogger(OlcbClockControlTest.class);

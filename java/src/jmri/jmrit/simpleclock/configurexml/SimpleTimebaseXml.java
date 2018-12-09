@@ -35,6 +35,7 @@ public class SimpleTimebaseXml extends jmri.configurexml.AbstractXmlAdapter {
 
         elem.setAttribute("time", clock.getStartTime().toString());
         elem.setAttribute("rate", "" + clock.userGetRate());
+        elem.setAttribute("startrate", "" + clock.getStartRate());
         elem.setAttribute("run", (!clock.getStartStopped() ? "yes" : "no"));
         elem.setAttribute("master", (clock.getInternalMaster() ? "yes" : "no"));
         if (!clock.getInternalMaster()) {
@@ -44,10 +45,12 @@ public class SimpleTimebaseXml extends jmri.configurexml.AbstractXmlAdapter {
         elem.setAttribute("correct", (clock.getCorrectHardware() ? "yes" : "no"));
         elem.setAttribute("display", (clock.use12HourDisplay() ? "yes" : "no"));
         elem.setAttribute("startstopped", (clock.getStartStopped() ? "yes" : "no"));
+        elem.setAttribute("startrunning", (clock.getStartRunning() ? "yes" : "no"));
         elem.setAttribute("startsettime", (clock.getStartSetTime() ? "yes" : "no"));
         elem.setAttribute("startclockoption", Integer.toString(
                 clock.getStartClockOption()));
         elem.setAttribute("showbutton", (clock.getShowStopButton() ? "yes" : "no"));
+        elem.setAttribute("startsetrate", (clock.getSetRateAtStart() ? "yes" : "no"));
 
         return elem;
     }
@@ -105,28 +108,63 @@ public class SimpleTimebaseXml extends jmri.configurexml.AbstractXmlAdapter {
                 clock.setShowStopButton(false);
             }
         }
-        if (shared.getAttribute("run") != null) {
-            val = shared.getAttributeValue("run");
-            if (val.equals("yes")) {
-                clock.setRun(true);
-                clock.setStartStopped(false);
-            }
-            if (val.equals("no")) {
-                clock.setRun(false);
-                clock.setStartStopped(true);
+        if ("yes".equals(shared.getAttributeValue("startrunning"))) {
+            clock.setRun(true);
+            clock.setStartStopped(false);
+            clock.setStartRunning(true);
+        } else if ("yes".equals(shared.getAttributeValue("startstopped"))) {
+            clock.setRun(false);
+            clock.setStartStopped(true);
+            clock.setStartRunning(false);
+        } else if (shared.getAttribute("startrunning") != null){
+            clock.setStartStopped(false);
+            clock.setStartRunning(false);
+        } else {
+            // legacy XML
+            if (shared.getAttribute("run") != null) {
+                val = shared.getAttributeValue("run");
+                if (val.equals("yes")) {
+                    clock.setRun(true);
+                    clock.setStartStopped(false);
+                    clock.setStartRunning(true);
+                }
+                if (val.equals("no")) {
+                    clock.setRun(false);
+                    clock.setStartStopped(true);
+                    clock.setStartRunning(false);
+                }
             }
         }
-        if (shared.getAttribute("rate") != null) {
+        if (shared.getAttribute("startsetrate") != null) {
+            val = shared.getAttributeValue("startsetrate");
+            clock.setSetRateAtStart(!val.equals("no"));
+        }
+        boolean hasRate = false;
+        if (shared.getAttribute("startrate") != null) {
+            try {
+                double r = shared.getAttribute("startrate").getDoubleValue();
+                clock.setStartRate(r);
+                hasRate = true;
+            } catch (org.jdom2.DataConversionException e2) {
+                log.error("Cannot convert start rate: " + e2);
+                result = false;
+            }
+        }
+        if (!hasRate && shared.getAttribute("rate") != null) {
             try {
                 double r = shared.getAttribute("rate").getDoubleValue();
-                try {
-                    clock.userSetRate(r);
-                } catch (jmri.TimebaseRateException e1) {
-                    log.error("Cannot restore rate: " + r + " " + e1);
-                    result = false;
-                }
+                clock.setStartRate(r);
+                hasRate = true;
             } catch (org.jdom2.DataConversionException e2) {
                 log.error("Cannot convert rate: " + e2);
+                result = false;
+            }
+        }
+        if (clock.getSetRateAtStart() && hasRate) {
+            try {
+                clock.userSetRate(clock.getStartRate());
+            } catch (jmri.TimebaseRateException e1) {
+                log.error("Cannot restore rate: " + clock.getStartRate() + " " + e1);
                 result = false;
             }
         }
