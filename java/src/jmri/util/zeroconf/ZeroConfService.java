@@ -231,7 +231,7 @@ public class ZeroConfService {
      * managed by {@link jmri.util.zeroconf.ZeroConfServiceManager}, but not in
      * public API.
      *
-     * @param key the address associated with the ServiceInfo to remove
+     * @param address the address associated with the ServiceInfo to remove
      */
     void removeServiceInfo(InetAddress address) {
         serviceInfos.remove(address);
@@ -326,7 +326,8 @@ public class ZeroConfService {
      * @return a {@link java.util.HashMap} of {@link javax.jmdns.JmDNS} objects,
      *         accessible by {@link java.net.InetAddress} keys.
      * @deprecated since 4.15.1; use
-     * {@link jmri.util.zeroconf.ZeroConfServiceManager#netServices() } instead
+     * {@link jmri.util.zeroconf.ZeroConfServiceManager#getNetServices() }
+     * instead
      */
     @Deprecated
     synchronized public static HashMap<InetAddress, JmDNS> netServices() {
