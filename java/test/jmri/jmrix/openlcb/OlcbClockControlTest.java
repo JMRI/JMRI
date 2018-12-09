@@ -337,7 +337,7 @@ public class OlcbClockControlTest {
         void setTimebaseOptions(Timebase tb);
         void setGeneratorStateBeforeLoad(TimeBroadcastGenerator gen, Timebase tb2);
         void checkFinalState(TimeBroadcastGenerator gen, Timebase tb2);
-    };
+    }
 
     private void runLoadRestartTest(LoadRestartModule m) {
         initializeWithClockSlave();
