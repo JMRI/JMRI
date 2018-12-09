@@ -5,6 +5,7 @@ import java.util.List;
 import jmri.Block;
 import jmri.InstanceManager;
 import jmri.Section;
+import jmri.Sensor;
 import jmri.Transit;
 import jmri.TransitSection;
 import jmri.jmrit.display.layoutEditor.ConnectivityUtil;
@@ -110,6 +111,10 @@ public class AutoAllocate {
                 }
                 log.debug("Allocating Train [{}] section [{}]", ar.getActiveTrainName(), ar.getSectionName());
                 Transit arTransit = ar.getActiveTrain().getTransit();
+                if (stopAllocateSensorSet(ar)) {
+                    log.debug("Skipping sensor active");
+                    continue;
+                }
                 if (ar.getActiveTrain().getAllocateMethod() == ActiveTrain.ALLOCATE_BY_SAFE_SECTIONS) {
                     log.debug("Allocating Train [{}] Using Safe Sections", ar.getActiveTrainName());
                     // if the last allocated section is safe but not occupied short cut out of here
@@ -288,6 +293,35 @@ public class AutoAllocate {
                 continue;
             }
         }
+    }
+
+    private boolean stopAllocateSensorSet(AllocationRequest ar) {
+        if (ar.getActiveTrain().getLastAllocatedSection() != null 
+                && ar.getActiveTrain().getLastAllocatedSection().getComment() != null 
+                && ar.getActiveTrain().getLastAllocatedSection().getComment().contains("#Sensor:")) {
+            String sensorNames[] = ar.getActiveTrain().getLastAllocatedSection().getComment().substring(8).split(":");
+            if (sensorNames.length < 1) {
+                log.error("Invalid #Sensor: construct");
+                return true;
+            }
+            for (String sensorName : sensorNames) {
+                Sensor sensor;
+                try {
+                    if (sensorName.length() > 0 && sensorName.startsWith("!")) {
+                        sensor = InstanceManager.sensorManagerInstance().provideSensor(sensorName.substring(1));
+                        if (sensor.getKnownState() == Sensor.INACTIVE) {
+                            return true;
+                        }
+                    } else {
+                        sensor = InstanceManager.sensorManagerInstance().provideSensor(sensorName);
+                        if (sensor.getKnownState() == Sensor.ACTIVE) {
+                            return true;
+                        }
+                    }
+                } catch (Exception ex) { log.error("Ahhh[{}]",sensorName,ex);return false;}
+            }
+        }
+        return false;
     }
 
     /**

@@ -461,6 +461,7 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
             setButtonStates(true);
             return;
         }
+        throttleState = 0;
         new Thread(new Runnable() {
             @Override
             public void run() {
