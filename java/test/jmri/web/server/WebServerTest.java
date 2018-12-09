@@ -28,46 +28,47 @@ public class WebServerTest {
     @Test
     public void testGetPort() {
         WebServer a = WebServer.getDefault();
-        Assert.assertEquals("Default Port",12080,a.getPort());
+        Assert.assertEquals("Default Port", 12080, a.getPort());
     }
 
     @Test
-    public void testURIForPreferences(){
-        Assert.assertEquals("URI for Preferences directory","/prefs/",WebServer.URIforPortablePath("preference:"));
+    public void testURIForPreferences() {
+        Assert.assertEquals("URI for Preferences directory", "/prefs/", WebServer.URIforPortablePath("preference:"));
     }
 
     @Test
-    public void testURIForProgram(){
-        Assert.assertEquals("URI for Program directory","/dist/",WebServer.URIforPortablePath("program:"));
+    public void testURIForProgram() {
+        Assert.assertEquals("URI for Program directory", "/dist/", WebServer.URIforPortablePath("program:"));
     }
 
     @Test
-    public void testURIForOther(){
-        Assert.assertNull("URI for Other directory",WebServer.URIforPortablePath("roster:"));
+    public void testURIForOther() {
+        Assert.assertNull("URI for Other directory", WebServer.URIforPortablePath("roster:"));
     }
 
     @Test
-    public void testStartAndStop() throws Exception{
+    public void testStartAndStop() throws Exception {
         WebServer a = new WebServer();
         a.start();
-        JUnitUtil.waitFor(()->{ return a.isStarted();}, "server failed to start in time");
+        JUnitUtil.waitFor(() -> {
+            return a.isStarted();
+        }, "server failed to start in time");
         a.stop();
-        JUnitUtil.waitFor(()->{ return a.isStopped();}, "server failed to stop in time");
+        JUnitUtil.waitFor(() -> {
+            return a.isStopped();
+        }, "server failed to stop in time");
     }
 
     @Before
-    public void setUp(){
+    public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
-
+        JUnitUtil.initZeroConfServiceManager();
     }
 
     @After
-    public void tearDown(){
-        jmri.util.zeroconf.ZeroConfService.stopAll();
-        JUnitUtil.waitFor(() -> {
-            return (jmri.util.zeroconf.ZeroConfService.allServices().isEmpty());
-        }, "Stopping all ZeroConf Services");
+    public void tearDown() {
+        JUnitUtil.resetZeroConfServiceManager();
         JUnitUtil.tearDown();
     }
 }

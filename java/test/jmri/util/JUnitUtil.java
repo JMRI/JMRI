@@ -67,6 +67,8 @@ import jmri.util.managers.WarrantManagerThrowExceptionScaffold;
 import jmri.util.prefs.JmriConfigurationProvider;
 import jmri.util.prefs.JmriPreferencesProvider;
 import jmri.util.prefs.JmriUserInterfaceConfigurationProvider;
+import jmri.util.zeroconf.MockZeroConfServiceManager;
+import jmri.util.zeroconf.ZeroConfServiceManager;
 import org.apache.log4j.Level;
 import org.junit.Assert;
 import org.netbeans.jemmy.FrameWaiter;
@@ -759,6 +761,34 @@ public class JUnitUtil {
 
     public static void initRouteManagerThrowException() {
         InstanceManager.setDefault(RouteManager.class, new RouteManagerThrowExceptionScaffold());
+    }
+
+    /**
+     * Initialize a {@link jmri.util.zeroconf.MockZeroConfServiceManager} after
+     * ensuring that any existing
+     * {@link jmri.util.zeroconf.ZeroConfServiceManager} (real or mocked) has
+     * stopped all services it is managing.
+     */
+    public static void initZeroConfServiceManager() {
+        resetZeroConfServiceManager();
+        InstanceManager.setDefault(ZeroConfServiceManager.class, new MockZeroConfServiceManager());
+    }
+
+    /**
+     * Ensure that any existing
+     * {@link jmri.util.zeroconf.ZeroConfServiceManager} (real or mocked) has
+     * stopped all services it is managing.
+     */
+    public static void resetZeroConfServiceManager() {
+        ZeroConfServiceManager manager = InstanceManager.containsDefault(ZeroConfServiceManager.class)
+                ? InstanceManager.getDefault(ZeroConfServiceManager.class)
+                : null;
+        if (manager != null) {
+            manager.stopAll();
+            JUnitUtil.waitFor(() -> {
+                return (manager.allServices().isEmpty());
+            }, "Stopping all ZeroConf Services");
+        }
     }
 
     /**

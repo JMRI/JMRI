@@ -194,7 +194,7 @@ public class FacelessServer implements DeviceListener, DeviceManager, ZeroConfSe
             InetAddress addr = se.getDNS().getInetAddress();
             // most addresses are Inet6Address objects,
             if (!addr.isLoopbackAddress()) {
-                log.info("Published ZeroConf service for '{}' on {}:{}", se.getService().key(), addr.getHostAddress(), port); // NOI18N
+                log.info("Published ZeroConf service for '{}' on {}:{}", se.getService().getKey(), addr.getHostAddress(), port); // NOI18N
             }
         } catch (NullPointerException ex) {
             log.error("NPE in FacelessServer.servicePublished(): {}", ex.getLocalizedMessage());

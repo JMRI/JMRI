@@ -45,12 +45,13 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase {
         super.setUp();
         JUnitUtil.resetProfileManager(new NullProfile("JsonUtilHttpServiceTest", "12345678", FileUtil.getFile("program:test")));
         JUnitUtil.initConnectionConfigManager();
+        JUnitUtil.initZeroConfServiceManager();
     }
 
     @After
     @Override
     public void tearDown() throws Exception {
-        ZeroConfService.stopAll();
+        JUnitUtil.resetZeroConfServiceManager();
         super.tearDown();
     }
 

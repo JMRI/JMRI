@@ -35,6 +35,7 @@ import jmri.jmrit.throttle.StopAllButton;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.zeroconf.ZeroConfService;
+import jmri.util.zeroconf.ZeroConfServiceManager;
 
 /**
  * UserInterface.java Create a window for WiThrottle information and
@@ -98,7 +99,7 @@ public class UserInterface extends JmriJFrame implements DeviceListener, RosterG
         //get port# directly from prefs
         int port = InstanceManager.getDefault(WiThrottlePreferences.class).getPort();
         //list the local IPv4 addresses on the UI, for manual connections
-        List<InetAddress> has = ZeroConfService.hostAddresses(); //get list of local, non-loopback addresses
+        List<InetAddress> has = InstanceManager.getDefault(ZeroConfServiceManager.class).hostAddresses(); //get list of local, non-loopback addresses
         String as = ""; //build multiline string of valid addresses
         for (InetAddress ha : has) {
             if (ha instanceof Inet4Address) { //ignore IPv6 addresses
