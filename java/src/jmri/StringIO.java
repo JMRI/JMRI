@@ -1,9 +1,11 @@
 package jmri;
 
+import javax.annotation.Nonnull;
+
 /**
  * Represent an string I/O on the layout.
  * <P>
- * A StringIO could for example being a display connected to an Arduino
+ * A StringIO could for example be a display connected to an Arduino
  * microcomputer that shows train departures of a station.
  *
  * @author Daniel Bergqvist Copyright (c) 2018
@@ -11,31 +13,33 @@ package jmri;
 public interface StringIO extends NamedBean {
 
     /**
-     * Change the commanded state, which results in the relevant command(s)
+     * Change the commanded value, which results in the relevant command(s)
      * being sent to the hardware. The exception is thrown if there are problems
      * communicating with the layout hardware.
      *
      * @param value the desired string value
-     * @throws jmri.JmriException general error when setting the state fails
+     * @throws jmri.JmriException general error when setting the value fails
      */
-    public void setCommandedStringValue(String value) throws JmriException;
+    public void setCommandedStringValue(@Nonnull String value) throws JmriException;
 
     /**
      * Query the commanded string. This is a bound parameter, so you can also
      * register a listener to be informed of changes.
      *
-     * @return the analog value
+     * @return the string value
      */
+    @Nonnull
     public String getCommandedStringValue();
 
     /**
-     * Query the known analog value. This is a bound parameter, so you can also
+     * Query the known string value. This is a bound parameter, so you can also
      * register a listener to be informed of changes. A result is always
-     * returned; if no other feedback method is available, the commanded state
+     * returned; if no other feedback method is available, the commanded value
      * will be used.
      *
-     * @return the known analog value
+     * @return the known string value
      */
+    @Nonnull
     default public String getKnownStringValue() {
         return getCommandedStringValue();
     }

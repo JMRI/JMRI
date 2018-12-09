@@ -4,7 +4,7 @@ import jmri.implementation.AbstractNamedBean;
 import org.junit.*;
 
 /**
- * Tests for the Light class
+ * Tests for the StringIO class
  *
  * @author	Daniel Bergqvist Copyright (C) 2018
  */
