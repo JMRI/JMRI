@@ -1,6 +1,6 @@
 package jmri.implementation;
 
-import org.hamcrest.Matchers;
+import static org.hamcrest.core.StringContains.containsString;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -10,7 +10,7 @@ import jmri.util.JUnitUtil;
 import static org.junit.Assert.*;
 
 /**
- * Created by bracz on 12/9/18.
+ * @author Balazs Racz (C) 2018
  */
 public class LogixRecursionExceptionTest {
     @Before
@@ -28,7 +28,7 @@ public class LogixRecursionExceptionTest {
         Object o = new Object();
         LogixRecursionException e = new LogixRecursionException(o, "asdfgh");
         assertSame(o, e.getTriggerSource());
-        assertThat(e.toString(), Matchers.containsString("asdfgh"));
+        assertThat(e.toString(), containsString("asdfgh"));
     }
 
     @Test
@@ -36,6 +36,6 @@ public class LogixRecursionExceptionTest {
         Object o = new Object();
         LogixRecursionException e = new LogixRecursionException(o, "asdfgh");
         e.prependDescription("qwer");
-        assertThat(e.toString(), Matchers.containsString("qwer"));
+        assertThat(e.toString(), containsString("qwer"));
     }
 }
