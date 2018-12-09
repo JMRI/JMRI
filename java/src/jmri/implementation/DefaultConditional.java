@@ -621,7 +621,7 @@ public class DefaultConditional extends AbstractNamedBean
         return dp;
     }
 
-    private class ActionStats {
+    private static class ActionStats {
         int actionCount = 0;
         int actionNeeded = 0;
     }
@@ -633,9 +633,6 @@ public class DefaultConditional extends AbstractNamedBean
      * Conditional
      */
     @SuppressWarnings({"deprecation", "fallthrough"})  // NOI18N
-    @SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")  // NOI18N
-    // it's unfortunate that this is such a huge method, because these annotation
-    // have to apply to more than 500 lines of code - jake
     private void takeActionIfNeeded() {
         if (log.isTraceEnabled()) {
             log.trace("takeActionIfNeeded starts for " + getSystemName());  // NOI18N
@@ -643,8 +640,6 @@ public class DefaultConditional extends AbstractNamedBean
         ActionStats stats = new ActionStats();
         stats.actionCount = 0;
         stats.actionNeeded = 0;
-        int act = 0;
-        int state = 0;
         ArrayList<String> errorList = new ArrayList<>();
         // Use a local copy of state to guarantee the entire list of actions will be fired off
         // before a state change occurs that may block their completion.
@@ -678,6 +673,9 @@ public class DefaultConditional extends AbstractNamedBean
         }
     }
 
+    @SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")  // NOI18N
+    // it's unfortunate that this is such a huge method, because these annotation
+    // have to apply to more than 500 lines of code - jake
     private void takeSingleActionIfNeeded(ActionStats stats, ArrayList<String> errorList, int
             currentState, int actionIndex, ConditionalAction action) {
         int act;
@@ -735,7 +733,7 @@ public class DefaultConditional extends AbstractNamedBean
                     break;
                 case Conditional.ACTION_RESET_DELAYED_TURNOUT:
                     action.stopTimer();
-                // fall through
+                //$FALL-THROUGH$
                 case Conditional.ACTION_DELAYED_TURNOUT:
                     if (!action.isTimerActive()) {
                         // Create a timer if one does not exist
@@ -877,7 +875,7 @@ public class DefaultConditional extends AbstractNamedBean
                     break;
                 case Conditional.ACTION_RESET_DELAYED_SENSOR:
                     action.stopTimer();
-                // fall through
+                //$FALL-THROUGH$
                 case Conditional.ACTION_DELAYED_SENSOR:
                     if (!action.isTimerActive()) {
                         // Create a timer if one does not exist
