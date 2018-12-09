@@ -72,7 +72,7 @@ public class MockZeroConfServiceManager extends ZeroConfServiceManager {
      */
     @Override
     public void publish(ZeroConfService service) {
-        if (!service.isPublished()) {
+        if (!isPublished(service)) {
             //get current preference values
             boolean useIPv4 = zeroConfPrefs.getBoolean(ZeroConfService.IPv4, true);
             boolean useIPv6 = zeroConfPrefs.getBoolean(ZeroConfService.IPv6, true);
@@ -173,7 +173,7 @@ public class MockZeroConfServiceManager extends ZeroConfServiceManager {
         log.debug("Stopping all ZeroConfServices");
         CountDownLatch zcLatch = new CountDownLatch(services.size());
         new HashMap<>(services).values().parallelStream().forEach(service -> {
-            service.stop();
+            stop(service);
             zcLatch.countDown();
         });
         try {
