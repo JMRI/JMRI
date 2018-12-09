@@ -121,8 +121,8 @@ public class AcelaTurnoutManager extends AbstractTurnoutManager {
 
     /** {@inheritDoc} */
     @Override
-    public int getInterval() {
-        return _memo.getInterval();
+    public int getOutputInterval(String systemName) {
+        return _memo.getOutputInterval();
     }
 
     /**

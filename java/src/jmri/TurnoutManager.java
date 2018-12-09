@@ -267,20 +267,24 @@ public interface TurnoutManager extends ProvidingManager<Turnout> {
      * Get the Interval (in ms) to wait between commands.
      * Configured in AdapterConfig, stored in memo.
      *
-     * @return default Turnout Interval in Milliseconds
+     * @param prefix prefix of the managers' connection
+     * @return the (Turnout) Output Interval in Milliseconds
      */
-    public int getInterval();
+    public int getOutputInterval(String systemName);
 
     /**
-     * (Re)set OutputInterval time using outputDelay.
-     */
-    public void resetOutputInterval();
-
-    /**
-     * Get end time of OutputInterval, calculated from the current time.
+     * Set the Interval (in ms) to wait between commands.
      *
+     * @param newInterval the new Output Interval in Milliseconds
+     */
+    public void setOutputInterval(int newInterval);
+
+    /**
+     * Get end time of latest OutputInterval, calculated from the current time.
+     *
+     * @param prefix prefix of the managers' connection
      * @return end time in Milliseconds or null if no interval was set or timer has completed
      */
-    public LocalTime outputIntervalEnds();
+    public LocalTime outputIntervalEnds(String systemName);
 
 }

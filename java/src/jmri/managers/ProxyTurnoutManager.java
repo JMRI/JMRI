@@ -313,22 +313,35 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
 
     /** {@inheritDoc} */
     @Override
-    public int getInterval() {
+    public int getOutputInterval(String systemName) {
+        int i = matchTentative(systemName);
+        if (i >= 0) {
+            return ((TurnoutManager) getMgr(i)).getOutputInterval(systemName);
+        }
         return 0;
     }
 
     /** {@inheritDoc} */
-    public LocalTime outputIntervalEnds() {
-        log.debug("outputIntervalEnds called in ProxyTurnout");
-        return LocalTime.now().plus(1100, ChronoUnit.MILLIS);
+    @Override
+    public void setOutputInterval(int newInterval) {
+        TURNOUT_INTERVAL = newInterval;
     }
 
     /** {@inheritDoc} */
+    private int TURNOUT_INTERVAL = 0;
+    private LocalTime waitUntil = LocalTime.now();
+
+    /** {@inheritDoc} */
     @Override
-    public void resetOutputInterval() {
-        LocalTime waitUntil = LocalTime.now().plus(1100, ChronoUnit.MILLIS); // default interval = 0 Ms TODO use actual Interval from memo here
-        log.debug("Reset proxy timer; interval = {} ms, waitUntil = {}, now() = {}", 1100, waitUntil,
-                TimeUnit.MILLISECONDS.convert(LocalTime.now().toNanoOfDay(), TimeUnit.NANOSECONDS));
+    public LocalTime outputIntervalEnds(String systemName) {
+        log.debug("outputIntervalEnds called in ProxyTurnoutManager");
+        TURNOUT_INTERVAL = getOutputInterval(systemName); // provide actual Interval from TurnoutManager
+        if (waitUntil.isAfter(LocalTime.now())) {
+            waitUntil = waitUntil.plus(TURNOUT_INTERVAL, ChronoUnit.MILLIS);
+        } else {
+            waitUntil = LocalTime.now().plus(TURNOUT_INTERVAL, ChronoUnit.MILLIS); // default interval = 0 Ms
+        }
+        return waitUntil;
     }
 
     @Override

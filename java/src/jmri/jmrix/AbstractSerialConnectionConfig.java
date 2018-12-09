@@ -152,7 +152,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         outputIntervalSpinner.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
-                adapter.getSystemConnectionMemo().setInterval((Integer) outputIntervalSpinner.getValue());
+                adapter.getSystemConnectionMemo().setOutputInterval((Integer) outputIntervalSpinner.getValue());
             }
         });
 
@@ -394,13 +394,13 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         baudBoxLabel = new JLabel(Bundle.getMessage("BaudRateLabel"));
         baudBox.setSelectedItem(adapter.getCurrentBaudRate());
 
-        // connection (memo) specific output command delay option, calls jmri.jmrix.SystemConnectionMemo#setInterval(int)
+        // connection (memo) specific output command delay option, calls jmri.jmrix.SystemConnectionMemo#setOutputInterval(int)
         outputIntervalLabel = new JLabel(Bundle.getMessage("OutputIntervalLabel"));
         outputIntervalSpinner.setToolTipText(Bundle.getMessage("OutputIntervalTooltip"));
         JTextField field = ((JSpinner.DefaultEditor) outputIntervalSpinner.getEditor()).getTextField();
         field.setColumns(6);
         outputIntervalSpinner.setMaximumSize(outputIntervalSpinner.getPreferredSize()); // set spinner JTextField width
-        outputIntervalSpinner.setValue(adapter.getSystemConnectionMemo().getInterval());
+        outputIntervalSpinner.setValue(adapter.getSystemConnectionMemo().getOutputInterval());
         outputIntervalSpinner.setEnabled(true);
 
         showAdvanced.setFont(showAdvanced.getFont().deriveFont(9f));

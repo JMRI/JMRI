@@ -368,22 +368,35 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
     }
 
     /** {@inheritDoc} */
-    public int getInterval() {
+    @Override
+    public int getOutputInterval(String systemName) {
         return 0;
     }
 
     /** {@inheritDoc} */
-    public LocalTime outputIntervalEnds() {
-        log.debug("outputIntervalEnds called in AbstractTurnout");
-        return LocalTime.now().plus(1100, ChronoUnit.MILLIS);
+    @Override
+    public void setOutputInterval(int newInterval) {
+        TURNOUT_INTERVAL = newInterval;
     }
+
+    /**
+     * Duration in Milliseconds of interval between separate Turnout commands.
+     * <p>
+     * Change from e.g. XNetTurnout extensions and scripts using #setOutputInterval(int)
+     */
+    protected int TURNOUT_INTERVAL = 0;
+    protected LocalTime waitUntil = LocalTime.now();
 
     /** {@inheritDoc} */
     @Override
-    public void resetOutputInterval() {
-        LocalTime waitUntil = LocalTime.now().plus(1100, ChronoUnit.MILLIS); // default interval = 0 Ms TODO use actual Interval from memo here
-        log.debug("Reset Abstract timer; interval = {} ms, waitUntil = {}, now() = {}", 1010, waitUntil,
-                TimeUnit.MILLISECONDS.convert(LocalTime.now().toNanoOfDay(), TimeUnit.NANOSECONDS));
+    public LocalTime outputIntervalEnds(String systemName) {
+        log.debug("outputIntervalEnds called in AbstractTurnoutManager");
+        if (waitUntil.isAfter(LocalTime.now())) {
+            waitUntil = waitUntil.plus(TURNOUT_INTERVAL, ChronoUnit.MILLIS);
+        } else {
+            waitUntil = LocalTime.now().plus(TURNOUT_INTERVAL, ChronoUnit.MILLIS); // default interval = 0 Ms
+        }
+        return waitUntil;
     }
 
     private final static Logger log = LoggerFactory.getLogger(AbstractTurnoutManager.class);

@@ -75,8 +75,8 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
 
     /** {@inheritDoc} */
     @Override
-    public int getInterval() {
-        return memo.getInterval();
+    public int getOutputInterval() {
+        return memo.getOutputInterval();
     }
 
     @Deprecated

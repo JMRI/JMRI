@@ -171,7 +171,7 @@ public class EcosTurnout extends AbstractTurnout
         if ((getFeedbackMode() != MONITORING)) {
             return;
         }
-        waitOutputInterval(); // if > 0, wait before next output command (experimental)
+        forwardChangeAtInterval(state); // if > 0, wait before next output command (experimental) needed for Ecos? EBR
         newCommandedState(state);
     }
 

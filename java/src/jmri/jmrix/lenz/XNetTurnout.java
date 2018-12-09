@@ -196,13 +196,13 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
         if (log.isDebugEnabled()) {
             log.debug("set commanded state for XNet turnout {} to {}", getSystemName(), s);
         }
-        waitOutputInterval(); // if > 0, wait before next output command (experimental)
         synchronized (this) {
             newCommandedState(s);
         }
         myOperator = getTurnoutOperator(); // MUST set myOperator before starting the thread
         if (myOperator == null) {
-            forwardCommandChangeToLayout(s);
+            forwardChangeAtInterval(s); // if > 0, wait before next output command (experimental) EBR
+            //forwardCommandChangeToLayout(s);
             synchronized (this) {
                 newKnownState(INCONSISTENT);
             }

@@ -205,8 +205,8 @@ public class SerialTurnoutManager extends AbstractTurnoutManager implements Seri
 
     /** {@inheritDoc} */
     @Override
-    public int getInterval() {
-        return _memo.getInterval();
+    public int getOutputInterval() {
+        return _memo.getOutputInterval();
     }
 
     private final static Logger log = LoggerFactory.getLogger(SerialTurnoutManager.class);

@@ -201,8 +201,8 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
 
     /** {@inheritDoc} */
     @Override
-    public int getInterval() {
-        return tc.getSystemConnectionMemo().getInterval();
+    public int getOutputInterval() {
+        return tc.getSystemConnectionMemo().getOutputInterval();
     }
 
     @Deprecated

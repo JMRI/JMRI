@@ -18,7 +18,14 @@ public class InternalTurnoutManager extends AbstractTurnoutManager {
         this.prefix = prefix;
     }
 
+    public InternalTurnoutManager(InternalSystemConnectionMemo memo) {
+        super();
+        _memo = memo;
+        this.prefix = memo.getSystemPrefix();
+    }
+
     protected String prefix = "I";
+    private InternalSystemConnectionMemo _memo;
 
     @Override
     public String getSystemPrefix() {
@@ -64,6 +71,20 @@ public class InternalTurnoutManager extends AbstractTurnoutManager {
     public String getEntryToolTip() {
         String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
         return entryToolTip;
+    }
+
+    /** {@inheritDoc}
+     * Internal turnouts don't need an OutputInterval delay
+     */
+    @Override
+    public int getOutputInterval(String prefix) {
+        return 0;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void setOutputInterval(int newInterval) {
+        // ignore
     }
 
     /**

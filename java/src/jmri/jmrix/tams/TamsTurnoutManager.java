@@ -55,8 +55,8 @@ public class TamsTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
 
     /** {@inheritDoc} */
     @Override
-    public int getInterval() {
-        return adaptermemo.getInterval();
+    public int getOutputInterval() {
+        return adaptermemo.getOutputInterval();
     }
 
     boolean noWarnDelete = false;

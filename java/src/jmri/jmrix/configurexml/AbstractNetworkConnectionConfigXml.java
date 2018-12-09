@@ -172,7 +172,7 @@ abstract public class AbstractNetworkConnectionConfigXml extends AbstractConnect
         // once all the configure processing has happened, do any
         // extra config
         int turnoutInterval = Integer.parseInt(perNode.getAttribute("turnoutInterval").getValue());
-        adapter.getSystemConnectionMemo().setInterval(turnoutInterval);
+        adapter.getSystemConnectionMemo().setOutputInterval(turnoutInterval);
         unpackElement(shared, perNode);
         return result;
     }

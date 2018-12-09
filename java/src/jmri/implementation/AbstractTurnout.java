@@ -113,15 +113,12 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
     @Override
     public void setCommandedState(int s) {
         log.debug("set commanded state for turnout {} to {}", getFullyFormattedDisplayName(),
-                (s==Turnout.CLOSED ? closedText : thrownText));
+                (s == Turnout.CLOSED ? closedText : thrownText));
         newCommandedState(s);
-        // use a Timer to apply wait interval only when needed
         myOperator = getTurnoutOperator(); // MUST set myOperator before starting the thread
         if (myOperator == null) {
             log.debug("myOperator NULL");
-            waitOutputInterval();
-            forwardCommandChangeToLayout(s);
-            InstanceManager.turnoutManagerInstance().resetOutputInterval(); // reset timer for wait before next output command (if set)
+            forwardChangeAtInterval(s); // if required by manager, apply wait interval when needed
             // optionally handle feedback
             if (_activeFeedbackType == DIRECT) {
                 newKnownState(s);
@@ -149,26 +146,16 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
      * <p>
      * Change from e.g. XNetTurnout extensions and scripts using #setOutputInterval(int)
      */
-    private int TURNOUT_INTERVAL = InstanceManager.turnoutManagerInstance().getInterval();
+    private int TURNOUT_INTERVAL = InstanceManager.turnoutManagerInstance().getOutputInterval(mSystemName);
 
     /**
      * Set the delay as configured for the connection of this Turnout.
-     * Used to insert a delay before calling {@link @setCommandedState(int)} to spread out a series of
-     * output commands, as in {@link jmri.implementation.MatrixSignalMast#updateOutputs(char[])}.
-     * Value is kept in the Memo per hardware connection, default = 0
      *
      * @param newInterval the delay in Milliseconds
      */
     public void setOutputInterval(int newInterval) {
         TURNOUT_INTERVAL = newInterval;
         log.debug("(jmri.implementation.abstractTurnout_TURNOUT_INTERVAL set to: {}", newInterval);
-    }
-
-    /**
-     * Get the delay in Milliseconds as configured for the connection of this Turnout.
-     */
-    public int getOutputInterval() {
-        return TURNOUT_INTERVAL;
     }
 
     protected Thread thr;
@@ -178,24 +165,29 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
     /**
      * Before sending command to ouput, wait until
      * outputIntervalEnds() to put less pressure on the connection.
+     * <p>
+     * Used to insert a delay before calling {@link @setCommandedState(int)} to spread out a series of
+     * output commands, as in {@link jmri.implementation.MatrixSignalMast#updateOutputs(char[])}.
+     * Value is kept in the Memo per hardware connection, default = 0
+     *
+     * @param s turnout state to forward
      */
-    protected void waitOutputInterval() {
-        nextWait = InstanceManager.turnoutManagerInstance().outputIntervalEnds();
-        if (nextWait != null && nextWait.isAfter(LocalTime.now())) {
-            log.debug("interval = {} ms, now() = {}, waitUntil = {}", TURNOUT_INTERVAL, LocalTime.now(),
-                    nextWait);
+    protected void forwardChangeAtInterval(int s) {
+        nextWait = InstanceManager.turnoutManagerInstance().outputIntervalEnds(mSystemName);
+        if (nextWait != null && nextWait.isAfter(LocalTime.now())) { // don't sleep if nextWait < now()
+            log.debug("interval = {} ms, now() = {}, waitUntil = {}", TURNOUT_INTERVAL, LocalTime.now(), nextWait);
             // insert wait before sending next output command to the layout
             r = new Runnable() {
                 @Override
                 public void run() {
                     log.debug("go to sleep for {} ms...", LocalTime.now().until(nextWait, ChronoUnit.MILLIS));
                     try {
-                        Thread.sleep(LocalTime.now().until(nextWait, ChronoUnit.MILLIS)); // should be a duration
-                        nextWait = null; // reset to 0, but what if another instruction has come in during sleep?
-                        log.debug("back again on {}", LocalTime.now().toNanoOfDay());
+                        Thread.sleep(LocalTime.now().until(nextWait, ChronoUnit.MILLIS));
+                        log.debug("back from sleep, forward on {}", LocalTime.now());
+                        forwardCommandChangeToLayout(s);
                         return;
                     } catch (InterruptedException ex) {
-                        log.debug("waitOutputInterval() interrupted at {}", LocalTime.now().toNanoOfDay());
+                        log.debug("forwardChangeAtInterval(s) interrupted at {}", LocalTime.now().toNanoOfDay());
                         Thread.currentThread().interrupt();
                     }
                 }
@@ -203,7 +195,8 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
             thr = new Thread(r);
             thr.start();
         } else {
-            log.debug("nextWait NULL");
+            log.debug("nextWait {}", (nextWait == null ? "= NULL" : "has passed"));
+            forwardCommandChangeToLayout(s);
         }
     }
 

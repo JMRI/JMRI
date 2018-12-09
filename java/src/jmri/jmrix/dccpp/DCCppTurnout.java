@@ -146,11 +146,11 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
     @Override
     public void setCommandedState(int s) {
         log.debug("set commanded state for turnout {} to {}", getSystemName(), s);
-        waitOutputInterval(); // if > 0, wait before next output command (experimental)
+
         synchronized (this) {
             newCommandedState(s);
         }
-        forwardCommandChangeToLayout(s);
+        forwardChangeAtInterval(s); // if > 0, wait before next output command (experimental)
         // Only set the known state to inconsistent if we actually expect a response
         // from the Base Station
         if (_activeFeedbackType == EXACT || _activeFeedbackType == MONITORING) {

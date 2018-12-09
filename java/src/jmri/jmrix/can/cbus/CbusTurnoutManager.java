@@ -145,8 +145,8 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
 
     /** {@inheritDoc} */
     @Override
-    public int getInterval() {
-        return memo.getInterval();
+    public int getOutputInterval() {
+        return memo.getOutputInterval();
     }
 
     private final static Logger log = LoggerFactory.getLogger(CbusTurnoutManager.class);

@@ -53,8 +53,8 @@ public class MarklinTurnoutManager extends jmri.managers.AbstractTurnoutManager 
 
     /** {@inheritDoc} */
     @Override
-    public int getInterval() {
-        return adaptermemo.getInterval();
+    public int getOutputInterval() {
+        return adaptermemo.getOutputInterval();
     }
 
     private final static Logger log = LoggerFactory.getLogger(MarklinTurnoutManager.class);

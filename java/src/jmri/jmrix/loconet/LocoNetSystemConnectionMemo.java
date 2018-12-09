@@ -455,8 +455,8 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
      * remove override once working TODO EBR
      */
     @Override
-    public int getInterval() {
-        int interval = super.getInterval();
+    public int getOutputInterval() {
+        int interval = super.getOutputInterval();
         log.debug("Getting Ln interval {}", interval);
         return interval;
     }

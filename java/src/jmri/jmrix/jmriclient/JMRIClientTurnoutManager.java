@@ -50,8 +50,8 @@ public class JMRIClientTurnoutManager extends jmri.managers.AbstractTurnoutManag
 
     /** {@inheritDoc} */
     @Override
-    public int getInterval() {
-        return memo.getInterval();
+    public int getOutputInterval() {
+        return memo.getOutputInterval();
     }
 
 }

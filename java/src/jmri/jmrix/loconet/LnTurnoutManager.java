@@ -1,8 +1,10 @@
 package jmri.jmrix.loconet;
 
 import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 import javax.annotation.*;
 import jmri.Turnout;
+import jmri.managers.AbstractTurnoutManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,7 +39,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2007
  */
-public class LnTurnoutManager extends jmri.managers.AbstractTurnoutManager implements LocoNetListener {
+public class LnTurnoutManager extends AbstractTurnoutManager implements LocoNetListener {
 
     // ctor has to register for LocoNet events
     public LnTurnoutManager(LocoNetInterface fastcontroller, LocoNetInterface throttledcontroller, LocoNetSystemConnectionMemo memo, boolean mTurnoutNoRetry) {
@@ -244,35 +246,14 @@ public class LnTurnoutManager extends jmri.managers.AbstractTurnoutManager imple
 
     /** {@inheritDoc} */
     @Override
-    public int getInterval() {
+    public int getOutputInterval(String systemName) {
         if (_memo == null) {
             log.debug("LnTurnoutMemo = NULL"); // LnMemo is null during initialization, so catch that
             return 0;
         } else {
-            log.debug("LnTurnoutMemo ={}, interval ={}", _memo.getUserName(), _memo.getInterval());
-            return _memo.getInterval();
+            log.debug("LnTurnoutMemo ={}, interval ={}", _memo.getUserName(), _memo.getOutputInterval());
+            return _memo.getOutputInterval();
         }
-    }
-
-    /**
-     * Duration in Milliseconds of interval between separate Turnout commands.
-     * <p>
-     * Change from e.g. XNetTurnout extensions and scripts using #setOutputInterval(int)
-     */
-    private int TURNOUT_INTERVAL = getInterval() * 1000;
-    private LocalTime waitUntil;
-
-    /** {@inheritDoc} */
-    @Override
-    public void resetOutputInterval() {
-        waitUntil = LocalTime.now().plusNanos(TURNOUT_INTERVAL * 1000);
-        log.debug("Reset timer; interval = {} ms, waitUntil = {}, now() = {}", TURNOUT_INTERVAL, waitUntil, LocalTime.now().toNanoOfDay());
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public LocalTime outputIntervalEnds() {
-        return waitUntil;
     }
 
     private final static Logger log = LoggerFactory.getLogger(LnTurnoutManager.class);

@@ -87,8 +87,8 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
 
     /** {@inheritDoc} */
     @Override
-    public int getInterval() {
-        return adaptermemo.getInterval();
+    public int getOutputInterval() {
+        return adaptermemo.getOutputInterval();
     }
 
     // to listen for status changes from Ecos system

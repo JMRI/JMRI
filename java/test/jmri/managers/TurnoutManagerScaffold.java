@@ -233,16 +233,16 @@ public class TurnoutManagerScaffold implements TurnoutManager {
 
     /** {@inheritDoc} */
     @Override
-    public int getInterval() {
+    public int getOutputInterval(String systemName) {
         return 0;
     }
 
     /** {@inheritDoc} */
     @Override
-    public void resetOutputInterval() {}
+    public void setOutputInterval(int newInterval) {}
 
     /** {@inheritDoc} */
     @Override
-    public LocalTime outputIntervalEnds() { return null; }
+    public LocalTime outputIntervalEnds(String systemName) { return null; }
 
 }

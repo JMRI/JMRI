@@ -54,7 +54,8 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
         // At construction, register for messages
         if (this.controller != null) {
             this.controller.addLocoNetListener(~0, this);
-            setOutputInterval(controller.getSystemConnectionMemo().getInterval()); // why is this needed?
+            setOutputInterval(controller.getSystemConnectionMemo().getOutputInterval());
+            // needed for LocoNet because in current master JMRI 4.13.5 full configuration is delayed
         } else {
             log.warn("No LocoNet connection, turnout won't update");
         }
@@ -73,13 +74,6 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
 
     LocoNetInterface controller;
     protected String _prefix = "L"; // default to "L"
-
-    @Override // Experimental EBR remove once operating
-    public void setCommandedState(int s) {
-        log.debug("set commanded state for LnTurnout {} on memo \"{}\", interval = {}",
-                getFullyFormattedDisplayName(), controller.getSystemConnectionMemo().getUserName(), controller.getSystemConnectionMemo().getInterval());
-        super.setCommandedState(s);
-    }
 
     /**
      * True when setFeedbackMode has specified the mode;

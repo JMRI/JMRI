@@ -170,8 +170,8 @@ public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
 
     /** {@inheritDoc} */
     @Override
-    public int getInterval() {
-        return tc.getSystemConnectionMemo().getInterval();
+    public int getOutputInterval() {
+        return tc.getSystemConnectionMemo().getOutputInterval();
     }
 
     @Deprecated

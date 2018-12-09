@@ -97,7 +97,7 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
     public InternalTurnoutManager getTurnoutManager() {
         if (turnoutManager == null) {
             log.debug("Create InternalTurnoutManager \"{}\" by request", getSystemPrefix());
-            turnoutManager = new InternalTurnoutManager(getSystemPrefix());
+            turnoutManager = new InternalTurnoutManager(this); // pass on this memo as well
             // special due to ProxyManager support
             InstanceManager.setTurnoutManager(turnoutManager);
         }
