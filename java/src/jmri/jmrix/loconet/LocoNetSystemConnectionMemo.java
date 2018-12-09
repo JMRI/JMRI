@@ -41,8 +41,7 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
 
         this.sm = sm; // doesn't full register, but fine for this purpose.
 
-        // self-register
-        register();
+        // self-registration is deferred until the command station type is set below
                 
         // create and register the ComponentFactory for the GUI
         InstanceManager.store(cf = new LnComponentFactory(this),
@@ -119,7 +118,7 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
 
     public DefaultProgrammerManager getProgrammerManager() {
         if (programmerManager == null) {
-            programmerManager = new LnProgrammerManager(getSlotManager(), this);
+            programmerManager = new LnProgrammerManager(this);
         }
         return programmerManager;
     }
@@ -165,6 +164,9 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
             // store as CommandStation object
             InstanceManager.store(sm, jmri.CommandStation.class);
         }
+
+        // register this SystemConnectionMemo to connect to rest of system
+        register();
     }
 
     /**

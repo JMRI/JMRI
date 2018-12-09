@@ -1,4 +1,3 @@
-/* UhlenbrockProgrammerManager.java */
 package jmri.jmrix.loconet.uhlenbrock;
 
 import jmri.jmrix.loconet.LnProgrammerManager;
