@@ -643,6 +643,7 @@ public class SimpleClockFrame extends JmriJFrame
                 clock.setStartStopped(false);
                 clock.setStartRunning(true);
                 break;
+            default:
             case START_NORUNCHANGE:
                 clock.setStartStopped(false);
                 clock.setStartRunning(false);
