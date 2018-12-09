@@ -39,6 +39,7 @@ import org.junit.runners.Suite;
         NmraConsistTest.class,
         MatrixSignalMastTest.class,
         DefaultRailComTest.class,
+        LogixRecursionExceptionTest.class,
 
         // sub-packages
         jmri.implementation.swing.PackageTest.class,
