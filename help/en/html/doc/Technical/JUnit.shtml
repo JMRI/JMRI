@@ -528,8 +528,10 @@
       means that although you can run your tests successfully on
       your own computer if they're emitting ERROR messages, but you
       won't be able to merge your code into the common repository
-      until those are handled. Eventually, those will fail on 
-      WARN messages too, so you should handle all of those.</p>
+      until those are handled. It's currently OK to emit
+      WARN-level messages during CI testing, but that will also 
+      be restricted (cause the test to fail) during tne 4.15.*
+      development series, so please suppress or handle those messages too.</p>
 
       <h3><a name="ResetInstMgr" id="ResetInstMgr">Resetting the InstanceManager</a></h3>
       If you are testing code that is going

@@ -41,8 +41,7 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
 
         this.sm = sm; // doesn't full register, but fine for this purpose.
 
-        // self-register
-        register();
+        // self-registration is deferred until the command station type is set below
                 
         // create and register the ComponentFactory for the GUI
         InstanceManager.store(cf = new LnComponentFactory(this),
@@ -118,13 +117,16 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
     protected DefaultProgrammerManager programmerManager;
 
     public DefaultProgrammerManager getProgrammerManager() {
+        System.err.println("getProgrammerManager with "+programmerManager);
         if (programmerManager == null) {
-            programmerManager = new LnProgrammerManager(getSlotManager(), this);
+            System.err.println("getProgrammerManager creates a new one");
+            programmerManager = new LnProgrammerManager(this);
         }
         return programmerManager;
     }
 
     public void setProgrammerManager(DefaultProgrammerManager p) {
+        System.err.println("setProgrammerManager "+p);
         programmerManager = p;
     }
 
@@ -146,6 +148,7 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
     public void configureCommandStation(LnCommandStationType type, boolean mTurnoutNoRetry,
                                             boolean mTurnoutExtraSpace, boolean mTranspondingAvailable) {
 
+        System.err.println("configureCommandStation "+type);
         // store arguments
         this.mTurnoutNoRetry = mTurnoutNoRetry;
         this.mTurnoutExtraSpace = mTurnoutExtraSpace;
@@ -165,6 +168,9 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
             // store as CommandStation object
             InstanceManager.store(sm, jmri.CommandStation.class);
         }
+
+        // register this SystemConnectionMemo to connect to rest of system
+        register();
     }
 
     /**

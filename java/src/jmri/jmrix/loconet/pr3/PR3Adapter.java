@@ -66,6 +66,7 @@ public class PR3Adapter extends LocoBufferAdapter {
      */
     @Override
     public void configure() {
+        System.err.println("starting configure with "+getOptionState(option2Name));
         setCommandStationType(getOptionState(option2Name));
         setTurnoutHandling(getOptionState(option3Name));
         if (commandStationType == LnCommandStationType.COMMAND_STATION_PR3_ALONE) {
@@ -112,6 +113,7 @@ public class PR3Adapter extends LocoBufferAdapter {
             this.getSystemConnectionMemo().configureCommandStation(commandStationType,
                     mTurnoutNoRetry, mTurnoutExtraSpace, mTranspondingAvailable);
 
+            System.err.println("configured to "+getSystemConnectionMemo().getSlotManager());
             this.getSystemConnectionMemo().configureManagersMS100();
 
             // start operation
