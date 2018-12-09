@@ -439,8 +439,8 @@ public class OlcbClockControlTest {
                 iface.flush();
                 gen.requestStart();
                 iface.flush();
-                assertEquals(true, tb2.getRun());
                 assertEquals(true, gen.isRunning());
+                assertEquals(true, tb2.getRun());
             }
 
             @Override
@@ -466,6 +466,9 @@ public class OlcbClockControlTest {
             public void setGeneratorStateBeforeLoad(TimeBroadcastGenerator gen, Timebase tb2) {
                 gen.requestSetRate(2.0);
                 gen.requestStop();
+                iface.flush();
+                assertEquals(false, gen.isRunning());
+                assertEquals(false, tb2.getRun());
             }
 
             @Override

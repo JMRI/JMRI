@@ -115,13 +115,11 @@ public class OlcbClockControl extends DefaultClockControl {
 
     @Override
     public void stopHardwareClock() {
-        new Exception().printStackTrace();
         hardwareClock.requestStop();
     }
 
     @Override
     public void startHardwareClock(Date now) {
-        new Exception().printStackTrace();
         hardwareClock.requestSetTime(now.getTime());
         hardwareClock.requestStart();
     }
