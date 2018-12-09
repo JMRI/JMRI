@@ -9,8 +9,6 @@ import java.util.List;
 import javax.jmdns.JmDNS;
 import javax.jmdns.ServiceInfo;
 import jmri.InstanceManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * ZeroConfService objects manage a zeroConf network service advertisement.
@@ -61,7 +59,6 @@ public class ZeroConfService {
     private ServiceInfo serviceInfo = null;
     // static data objects
     private final List<ZeroConfServiceListener> listeners = new ArrayList<>();
-    private static final Logger log = LoggerFactory.getLogger(ZeroConfService.class);
     // API constants
     public static final String IPv4 = "IPv4";
     public static final String IPv6 = "IPv6";
@@ -147,8 +144,9 @@ public class ZeroConfService {
      * {@code jmri._http.local }.
      *
      * @return The fully qualified name of the service
-     * @deprecated since 4.14; use {@link #getKey() } instead
+     * @deprecated since 4.15.1; use {@link #getKey() } instead
      */
+    @Deprecated
     public String key() {
         return getKey();
     }
@@ -170,8 +168,9 @@ public class ZeroConfService {
      *
      * @return The service name as reported by the
      *         {@link javax.jmdns.ServiceInfo} object
-     * @deprecated since 4.14; use {@link #getName() } instead
+     * @deprecated since 4.15.1; use {@link #getName() } instead
      */
+    @Deprecated
     public String name() {
         return getName();
     }
@@ -193,8 +192,9 @@ public class ZeroConfService {
      *
      * @return The service type as reported by the
      *         {@link javax.jmdns.ServiceInfo} object
-     * @deprecated since 4.14; use {@link #getType() } instead
+     * @deprecated since 4.15.1; use {@link #getType() } instead
      */
+    @Deprecated
     public String type() {
         return getType();
     }
@@ -267,8 +267,9 @@ public class ZeroConfService {
      * JmDNS service are unique per InetAddress.
      *
      * @return The getServiceInfo object.
-     * @deprecated since 4.14; use {@link #getServiceInfo() } instead
+     * @deprecated since 4.15.1; use {@link #getServiceInfo() } instead
      */
+    @Deprecated
     public ServiceInfo serviceInfo() {
         return getServiceInfo();
     }
@@ -299,9 +300,10 @@ public class ZeroConfService {
     /**
      * Stop advertising all services.
      *
-     * @deprecated since 4.14; use
+     * @deprecated since 4.15.1; use
      * {@link jmri.util.zeroconf.ZeroConfServiceManager#stopAll() } instead
      */
+    @Deprecated
     public static void stopAll() {
         InstanceManager.getDefault(ZeroConfServiceManager.class).stopAll();
     }
@@ -310,9 +312,10 @@ public class ZeroConfService {
      * A list of published ZeroConfServices
      *
      * @return Collection of ZeroConfServices
-     * @deprecated since 4.14; use
+     * @deprecated since 4.15.1; use
      * {@link jmri.util.zeroconf.ZeroConfServiceManager#allServices() } instead
      */
+    @Deprecated
     public static Collection<ZeroConfService> allServices() {
         return InstanceManager.getDefault(ZeroConfServiceManager.class).allServices();
     }
@@ -322,9 +325,10 @@ public class ZeroConfService {
      *
      * @return a {@link java.util.HashMap} of {@link javax.jmdns.JmDNS} objects,
      *         accessible by {@link java.net.InetAddress} keys.
-     * @deprecated since 4.14; use
+     * @deprecated since 4.15.1; use
      * {@link jmri.util.zeroconf.ZeroConfServiceManager#netServices() } instead
      */
+    @Deprecated
     synchronized public static HashMap<InetAddress, JmDNS> netServices() {
         return InstanceManager.getDefault(ZeroConfServiceManager.class).getNetServices();
     }
@@ -336,10 +340,11 @@ public class ZeroConfService {
      *
      * @param address The {@link java.net.InetAddress} for the host name
      * @return The hostName associated with the first interface encountered
-     * @deprecated since 4.14; use
+     * @deprecated since 4.15.1; use
      * {@link jmri.util.zeroconf.ZeroConfServiceManager#hostName(java.net.InetAddress) }
      * instead
      */
+    @Deprecated
     public static String hostName(InetAddress address) {
         return InstanceManager.getDefault(ZeroConfServiceManager.class).hostName(address);
     }
@@ -351,10 +356,11 @@ public class ZeroConfService {
      *
      * @param address The {@link java.net.InetAddress} for the FQDN
      * @return The fully qualified domain name
-     * @deprecated since 4.14; use
+     * @deprecated since 4.15.1; use
      * {@link jmri.util.zeroconf.ZeroConfServiceManager#FQDN(java.net.InetAddress) }
      * instead
      */
+    @Deprecated
     public static String FQDN(InetAddress address) {
         return InstanceManager.getDefault(ZeroConfServiceManager.class).getNetServices().get(address).getHostName();
     }
@@ -365,10 +371,11 @@ public class ZeroConfService {
      *
      * @return The non-loopback, non-link-local IP addresses on the host, of the
      *         allowed type(s)
-     * @deprecated since 4.14; use
+     * @deprecated since 4.15.1; use
      * {@link jmri.util.zeroconf.ZeroConfServiceManager#hostAddresses() }
      * instead
      */
+    @Deprecated
     public static List<InetAddress> hostAddresses() {
         return InstanceManager.getDefault(ZeroConfServiceManager.class).hostAddresses();
     }
