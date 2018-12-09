@@ -87,7 +87,11 @@ public class DefaultConditional extends AbstractNamedBean
     private boolean _triggerActionsOnChange = true;
 
     protected int _currentConditionalNesting = 0;
-    protected static final int CONDITIONAL_NESTING_LIMIT = 3;
+    // How many times a conditional needs to reentrance in order to stop the recursion as infinite.
+    protected static final int CONDITIONAL_NESTING_LIMIT = 13;
+    // When rolling back an infinite conditional loop, we will go backwards in the stack until
+    // this depth to record the documentation for the error message for the user.
+    protected static final int CONDITIONAL_NESTING_ROLLBACK = 8;
 
     public static int getIndexInTable(int[] table, int entry) {
         for (int i = 0; i < table.length; i++) {
@@ -327,10 +331,13 @@ public class DefaultConditional extends AbstractNamedBean
                 if (e.isCollectingStack()) {
                     e.prependDescription(descriptionForUser());
                 }
-                if (e.getTriggerSource() == this) {
-                    // if we threw this exception and we are catching, we have unwound one
-                    // iteration of the loop.
+                if (e.getTriggerSource() == this && _currentConditionalNesting <= CONDITIONAL_NESTING_ROLLBACK) {
+                    // we originall caught this infinite loop. By now we have unwound a sufficient
+                    // number of iterations of the loop.
                     e.stopCollectingStack();
+                    List<String> errorList = new ArrayList<String>();
+                    errorList.add(e.toString());
+                    showErrorDialog(errorList);
                 }
                 // re-throw to collect and unwind more stack frames.
                 throw e;
@@ -645,19 +652,15 @@ public class DefaultConditional extends AbstractNamedBean
         for (int i = 0; i < _actionList.size(); i++) {
             ConditionalAction action = _actionList.get(i);
             final int actionIndex = i;
-            guardRecursionStageHelper(() -> {takeSingleActionIfNeeded(stats, errorList, currentState, actionIndex, action);}, () -> { return describeAction(action); } );
-
+            guardRecursionStageHelper(
+                    () -> { takeSingleActionIfNeeded(stats, errorList, currentState, actionIndex, action); },
+                    () -> { return describeAction(action); } );
         }
         if (errorList.size() > 0) {
             for (int i = 0; i < errorList.size(); i++) {
                 log.error(getDisplayName() + " - " + errorList.get(i));
             }
-            if (!GraphicsEnvironment.isHeadless()) {
-                java.awt.Toolkit.getDefaultToolkit().beep();
-                if (!_skipErrorDialog) {
-                    new ErrorDialog(errorList, this);
-                }
-            }
+            showErrorDialog(errorList);
         }
         if (log.isDebugEnabled()) {
             log.debug("Conditional \"" + getUserName() + "\" (" + getSystemName() + " has " + _actionList.size()  // NOI18N
@@ -665,6 +668,15 @@ public class DefaultConditional extends AbstractNamedBean
                     + " actions of " + stats.actionNeeded + " actions needed on state change to " + currentState);  // NOI18N
         }
     }   // takeActionIfNeeded
+
+    private void showErrorDialog(List<String> errorList) {
+        if (!GraphicsEnvironment.isHeadless()) {
+            java.awt.Toolkit.getDefaultToolkit().beep();
+            if (!_skipErrorDialog) {
+                new ErrorDialog(errorList, this);
+            }
+        }
+    }
 
     private void takeSingleActionIfNeeded(ActionStats stats, ArrayList<String> errorList, int
             currentState, int actionIndex, ConditionalAction action) {
