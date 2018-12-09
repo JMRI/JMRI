@@ -121,11 +121,16 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         }
         if (_xnettunnel!=null) {
             // delegate to the XPressNet tunnel.
-            return _xnettunnel.getStreamPortController().getSystemConnectionMemo().provides(type);
+            if(_xnettunnel.getStreamPortController().getSystemConnectionMemo().provides(type)) {
+               return true;
+            } // don't return false here, let the following code run 
         }
         if (_loconettunnel!=null) {
             // delegate to the LocoNet tunnel.
-            return _loconettunnel.getStreamPortController().getSystemConnectionMemo().provides(type);
+            if(_loconettunnel.getStreamPortController().getSystemConnectionMemo().provides(type)) {
+               return true;
+            } // don't return false here, let the following code run
+            
         }
         return super.provides(type); // nothing, by default
     }
@@ -182,11 +187,11 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         _tc.sendz21Message(Z21Message.getLanSetBroadcastFlagsRequestMessage(
                            z21CommandStation.getZ21BroadcastFlags()),null);
 
-        // add an XpressNet Tunnel.
-        _xnettunnel = new Z21XPressNetTunnel(this);
-
         // add an LocoNet Tunnel.
         _loconettunnel = new Z21LocoNetTunnel(this);
+
+        // add an XpressNet Tunnel.
+        _xnettunnel = new Z21XPressNetTunnel(this);
 
         // set up the Reporter Manager
         jmri.InstanceManager.setReporterManager(getReporterManager());
