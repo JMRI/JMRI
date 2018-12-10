@@ -40,10 +40,9 @@
 
       <h2>CAN Adapters</h2>
       
-      <a href="../images/merg-system-connection.jpg">
-      <img align="right" src="../images/merg-system-connection.jpg" 
-      width="400" height="208"  alt="JMRI MERG Connections">
-      </a>
+
+      <img align="right" src="images/connection/merg-system-connection-400x290.png" 
+      width="400" height="290"  alt="JMRI MERG Connections">
       
       
       <p>JMRI's general approach is to support as
@@ -101,9 +100,8 @@
       
       <h3><a name="c1" id="c1">CAN via MERG CAN-RS or CAN-USB</a></h3>
       
-        <a href="../images/merg-connection-canrs-canusb-350x250.jpg"><img src="../images/merg-connection-canrs-canusb-350x250.jpg"
-      width="350" height="250" alt="JMRI MERG Connection canrd canusb canusb4 adapter" align=
-      "right"></a>
+        <img src="images/connection/merg-connection-canrs-canusb-350x250.jpg"
+      width="350" height="250" alt="JMRI MERG Connection canrd canusb canusb4 adapter" align="right">
 
         <p>Default setting shown on right hand side after the " : " </p>
       
@@ -127,9 +125,8 @@
         <p>nb, CANUSB4 - may not require drivers installing on modern operating systems.</p>
       
       <h3><a name="c2" id="c2">CAN via MERG Network Interface</a></h3>
-      <a href="../images/merg-connection-network-interface-278-358.jpg"><img src="../images/merg-connection-network-interface-278-358.jpg"
-      width="278" height="358" alt="JMRI MERG Connection network interface" align=
-      "right"></a>
+      <img src="images/connection/merg-connection-network-interface-330x353.png"
+      width="330" height="353" alt="JMRI MERG Connection network interface" align="right">
       
       
       
@@ -155,9 +152,8 @@
  
  
       <h3><a name="c3" id="c3">CAN via GridConnect adapter</a></h3>
-      <a href="../images/merg-connection-gridconnect-adapter-343x223.jpg"><img src="../images/merg-connection-gridconnect-adapter-343x223.jpg"
-      width="343" height="223" alt="JMRI MERG GridConnect Adapter" align=
-      "right"></a>
+      <img src="images/connection/merg-connection-gridconnect-adapter-300x215.png"
+      width="300" height="215" alt="JMRI MERG GridConnect Adapter" align="right">
       
         <p>Serial Port - Select the serial or USB port that your CAN interface is plugged in to.</p>
         <p>Connection Prefix : "M"</p>
@@ -182,9 +178,8 @@
       
       
       <h3><a name="c4" id="c4">CAN via GridConnect Network Interface</a></h3>
-        <a href="../images/merg-connection-gridconnect-network-interface-280x329.jpg"><img src="../images/merg-connection-gridconnect-network-interface-280x329.jpg"
-      width="200" height="235" alt="JMRI MERG GridConnect Network Interface" align=
-      "right"></a>
+        <img src="images/connection/merg-connection-gridconnect-network-interface-300x267.png"
+      width="300" height="267" alt="JMRI MERG GridConnect Network Interface" align="right">
         <p>IP Address / Host Name : ( none ) - enter an IP address for fully manual configuration.  Optional hostname for ZeroConf / mDNS configuration. </p>
         <p>TCP / UDP Port : 0 - Port address setting of the TCP connection</p>
         <p>Connection Protocol : "MERG CBUS" ( "OpenLCB", "Raw CAN" and "Test - do not use" also selectable ) </p>   
@@ -195,9 +190,8 @@
       
       
       <h3><a name="c5" id="c5">CAN via Lawicell CANUSB</a></h3>
-      <a href="../images/merg-connection-lawicell-340x358.jpg"><img src="../images/merg-connection-lawicell-340x358.jpg"
-      width="200" height="211" alt="JMRI MERG Lawicell USB Connection" align=
-      "right"></a>
+      <img src="images/connection/merg-connection-lawicell-300x200.png"
+      width="300" height="200" alt="JMRI MERG Lawicell USB Connection" align="right">
         <p>Serial Port - Select the serial or USB port that your CAN interface is plugged in to.</p>
         <p>Connection Prefix : "M"</p>
         <p>Connection Name : "MERG"</p>
@@ -220,11 +214,12 @@
       
       <h3><a name="c6" id="c6">CAN Simulation</a></h3>
       
-         <a href="../images/merg-connection-simulation-343x363.jpg"><img src="../images/merg-connection-simulation-343x363.jpg"
-      width="200" height="211" alt="JMRI MERG CAN Simulation Connection" align="right"></a>
+         <img src="images/connection/merg-connection-simulation-330x215.png"
+      width="330" height="215" alt="JMRI MERG CAN Simulation Connection" align="right">
       
       
-        <p>Known issue - Does not simulate sending DCC throttle commands, see <a href="https://github.com/JMRI/JMRI/issues/2065">https://github.com/JMRI/JMRI/issues/2065</a></p>
+        <p>Known issue - Does not simulate sending DCC throttle commands, see <a 
+        href="https://github.com/JMRI/JMRI/issues/2065">https://github.com/JMRI/JMRI/issues/2065</a></p>
       
         <p>Serial port : ( none )</p>
         <p>Connection Prefix : "M"</p>
@@ -237,9 +232,8 @@
       
       <h3><a name="c7" id="c7">Direct Serial Connection</a></h3>
       
-        <a href="../images/merg-connection-direct-serial-335x323.jpg"><img src="../images/merg-connection-direct-serial-335x323.jpg"
-      width="335" height="323" alt="JMRI MERG Direct Serial Connection RfID" align=
-      "right"></a>
+        <img src="images/connection/merg-connection-direct-serial-330x288.png"
+      width="330" height="288" alt="JMRI MERG Direct Serial Connection RfID" align="right">
       
         <p>Serial Port Select- Choose the serial or USB port that your CAN interface is plugged in to.</p>
         <p>Concentrator range Select : "A-H" , unselectable in grayed out select box</p>
