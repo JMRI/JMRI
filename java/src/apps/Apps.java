@@ -220,6 +220,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
                 });
 
         // Install configuration manager and Swing error handler
+        // Constructing the JmriConfigurationManager also loads various configuration services
         ConfigureManager cm = InstanceManager.setDefault(ConfigureManager.class, new JmriConfigurationManager());
 
         // record startup
