@@ -233,12 +233,15 @@ public class SimpleClockFrame extends JmriJFrame
         startRunBox.addItem(Bundle.getMessage("StartSelectStopped"));
         startRunBox.addItem(Bundle.getMessage("StartSelectNoChange"));
         startRunBox.setToolTipText(Bundle.getMessage("TipStartRunSelect"));
-        if (clock.getStartStopped()) {
-            startRunBox.setSelectedIndex(START_STOPPED);
-        } else if (clock.getStartRunning()) {
-            startRunBox.setSelectedIndex(START_RUNNING);
-        } else {
-            startRunBox.setSelectedIndex(START_NORUNCHANGE);
+        switch (clock.getClockInitialRunState()) {
+            case DO_STOP:
+                startRunBox.setSelectedIndex(START_STOPPED);
+                break;
+            case DO_START:
+                startRunBox.setSelectedIndex(START_RUNNING);
+                break;
+            case DO_NOTHING:
+                startRunBox.setSelectedIndex(START_NORUNCHANGE);
         }
         startRunBox.addActionListener(new ActionListener() {
             @Override
@@ -636,17 +639,14 @@ public class SimpleClockFrame extends JmriJFrame
     private void startRunBoxChanged() {
         switch (startRunBox.getSelectedIndex()) {
             case START_STOPPED:
-                clock.setStartStopped(true);
-                clock.setStartRunning(false);
+                clock.setClockInitialRunState(Timebase.ClockInitialRunState.DO_STOP);
                 break;
             case START_RUNNING:
-                clock.setStartStopped(false);
-                clock.setStartRunning(true);
+                clock.setClockInitialRunState(Timebase.ClockInitialRunState.DO_START);
                 break;
             default:
             case START_NORUNCHANGE:
-                clock.setStartStopped(false);
-                clock.setStartRunning(false);
+                clock.setClockInitialRunState(Timebase.ClockInitialRunState.DO_NOTHING);
                 break;
         }
         changed = true;

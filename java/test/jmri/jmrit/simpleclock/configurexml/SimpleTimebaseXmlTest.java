@@ -61,8 +61,7 @@ public class SimpleTimebaseXmlTest {
         Timebase tb = InstanceManager.getDefault(Timebase.class);
 
         // Checks that the new properties have values equivalent of legacy behavior.
-        assertEquals(false, tb.getStartRunning());
-        assertEquals(true, tb.getStartStopped());
+        assertEquals(Timebase.ClockInitialRunState.DO_STOP, tb.getClockInitialRunState());
         assertEquals(13.0d, tb.getStartRate(), 0.01);
         assertEquals(true, tb.getSetRateAtStart());
     }

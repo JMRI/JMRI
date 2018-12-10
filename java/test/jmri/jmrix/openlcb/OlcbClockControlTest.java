@@ -7,7 +7,6 @@ import org.junit.Test;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.sql.Time;
 import java.util.Calendar;
 
 import org.mockito.Mockito;
@@ -23,6 +22,9 @@ import jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 
+import static jmri.Timebase.ClockInitialRunState.DO_NOTHING;
+import static jmri.Timebase.ClockInitialRunState.DO_START;
+import static jmri.Timebase.ClockInitialRunState.DO_STOP;
 import static org.junit.Assert.*;
 import static jmri.jmrix.openlcb.OlcbConfigurationManager.*;
 import static org.mockito.Mockito.mock;
@@ -305,8 +307,7 @@ public class OlcbClockControlTest {
         tb.setInternalMaster(false, false);
         tb.setStartClockOption(Timebase.NONE);
         tb.setSetRateAtStart(false);
-        assertEquals(true, tb.getStartRunning());
-        assertEquals(false, tb.getStartStopped());
+        assertEquals(DO_START, tb.getClockInitialRunState());
         Element store = new SimpleTimebaseXml().store(null);
 
         // Simulates a new start of JMRI.
@@ -353,8 +354,7 @@ public class OlcbClockControlTest {
         tb.setInternalMaster(false, false);
         tb.setStartClockOption(Timebase.NONE);
         tb.setSetRateAtStart(false);
-        tb.setStartRunning(false);
-        tb.setStartStopped(false);
+        tb.setClockInitialRunState(Timebase.ClockInitialRunState.DO_NOTHING);
         Element store = new SimpleTimebaseXml().store(null);
 
         // Simulates a new start of JMRI.
@@ -419,12 +419,11 @@ public class OlcbClockControlTest {
     }
 
     @Test
-    public void loadAndRestartWithRunAndRate() throws Exception {
+    public void loadAndRestartWithStopAndRate() throws Exception {
         runLoadRestartTest(new LoadRestartModule() {
             @Override
             public void setTimebaseOptions(Timebase tb) {
-                tb.setStartStopped(true);
-                tb.setStartRunning(false);
+                tb.setClockInitialRunState(DO_STOP);
                 tb.setSetRateAtStart(true);
                 tb.setStartRate(13.0);
             }
@@ -444,12 +443,11 @@ public class OlcbClockControlTest {
     }
 
     @Test
-    public void loadAndRestartWithRunAndNoRate() throws Exception {
+    public void loadAndRestartWithStopAndNoRate() throws Exception {
         runLoadRestartTest(new LoadRestartModule() {
             @Override
             public void setTimebaseOptions(Timebase tb) {
-                tb.setStartStopped(true);
-                tb.setStartRunning(false);
+                tb.setClockInitialRunState(DO_STOP);
                 tb.setSetRateAtStart(false);
                 tb.setStartRate(13.0);
             }
@@ -473,8 +471,7 @@ public class OlcbClockControlTest {
         runLoadRestartTest(new LoadRestartModule() {
             @Override
             public void setTimebaseOptions(Timebase tb) {
-                tb.setStartStopped(false);
-                tb.setStartRunning(false);
+                tb.setClockInitialRunState(DO_NOTHING);
                 tb.setSetRateAtStart(false);
                 tb.setStartRate(13.0);
             }
@@ -503,8 +500,7 @@ public class OlcbClockControlTest {
         runLoadRestartTest(new LoadRestartModule() {
             @Override
             public void setTimebaseOptions(Timebase tb) {
-                tb.setStartStopped(false);
-                tb.setStartRunning(false);
+                tb.setClockInitialRunState(DO_NOTHING);
                 tb.setSetRateAtStart(false);
                 tb.setStartRate(13.0);
             }

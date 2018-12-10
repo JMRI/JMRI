@@ -9,6 +9,10 @@ import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static jmri.Timebase.ClockInitialRunState.DO_NOTHING;
+import static jmri.Timebase.ClockInitialRunState.DO_START;
+import static jmri.Timebase.ClockInitialRunState.DO_STOP;
+
 /**
  * Handle XML persistance of SimpleTimebase objects.
  *
@@ -36,7 +40,7 @@ public class SimpleTimebaseXml extends jmri.configurexml.AbstractXmlAdapter {
         elem.setAttribute("time", clock.getStartTime().toString());
         elem.setAttribute("rate", "" + clock.userGetRate());
         elem.setAttribute("startrate", "" + clock.getStartRate());
-        elem.setAttribute("run", (!clock.getStartStopped() ? "yes" : "no"));
+        elem.setAttribute("run", (clock.getClockInitialRunState() == DO_START ? "yes" : "no"));
         elem.setAttribute("master", (clock.getInternalMaster() ? "yes" : "no"));
         if (!clock.getInternalMaster()) {
             elem.setAttribute("mastername", clock.getMasterName());
@@ -44,8 +48,8 @@ public class SimpleTimebaseXml extends jmri.configurexml.AbstractXmlAdapter {
         elem.setAttribute("sync", (clock.getSynchronize() ? "yes" : "no"));
         elem.setAttribute("correct", (clock.getCorrectHardware() ? "yes" : "no"));
         elem.setAttribute("display", (clock.use12HourDisplay() ? "yes" : "no"));
-        elem.setAttribute("startstopped", (clock.getStartStopped() ? "yes" : "no"));
-        elem.setAttribute("startrunning", (clock.getStartRunning() ? "yes" : "no"));
+        elem.setAttribute("startstopped", (clock.getClockInitialRunState() == DO_STOP ? "yes" : "no"));
+        elem.setAttribute("startrunning", ((clock.getClockInitialRunState() == DO_START) ? "yes" : "no"));
         elem.setAttribute("startsettime", (clock.getStartSetTime() ? "yes" : "no"));
         elem.setAttribute("startclockoption", Integer.toString(
                 clock.getStartClockOption()));
@@ -110,28 +114,23 @@ public class SimpleTimebaseXml extends jmri.configurexml.AbstractXmlAdapter {
         }
         if ("yes".equals(shared.getAttributeValue("startrunning"))) {
             clock.setRun(true);
-            clock.setStartStopped(false);
-            clock.setStartRunning(true);
+            clock.setClockInitialRunState(DO_START);
         } else if ("yes".equals(shared.getAttributeValue("startstopped"))) {
             clock.setRun(false);
-            clock.setStartStopped(true);
-            clock.setStartRunning(false);
+            clock.setClockInitialRunState(DO_STOP);
         } else if (shared.getAttribute("startrunning") != null){
-            clock.setStartStopped(false);
-            clock.setStartRunning(false);
+            clock.setClockInitialRunState(DO_NOTHING);
         } else {
             // legacy XML
             if (shared.getAttribute("run") != null) {
                 val = shared.getAttributeValue("run");
                 if (val.equals("yes")) {
                     clock.setRun(true);
-                    clock.setStartStopped(false);
-                    clock.setStartRunning(true);
+                    clock.setClockInitialRunState(DO_START);
                 }
                 if (val.equals("no")) {
                     clock.setRun(false);
-                    clock.setStartStopped(true);
-                    clock.setStartRunning(false);
+                    clock.setClockInitialRunState(DO_STOP);
                 }
             }
         }

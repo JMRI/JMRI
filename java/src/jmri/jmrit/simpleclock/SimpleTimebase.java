@@ -379,29 +379,13 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
     }
 
     @Override
-    public void setStartStopped(boolean stopped) {
-        if (stopped) {
-            startRunning = false;
-        }
-        startStopped = stopped;
+    public void setClockInitialRunState(ClockInitialRunState state) {
+        initialState = state;
     }
 
     @Override
-    public boolean getStartStopped() {
-        return startStopped;
-    }
-
-    @Override
-    public void setStartRunning(boolean running) {
-        if (running) {
-            startStopped = false;
-        }
-        startRunning = running;
-    }
-
-    @Override
-    public boolean getStartRunning() {
-        return startRunning;
+    public ClockInitialRunState getClockInitialRunState() {
+        return initialState;
     }
 
     @Override
@@ -496,6 +480,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
      */
     @Override
     public void initializeHardwareClock() {
+        boolean startStopped = (initialState == ClockInitialRunState.DO_STOP);
         if (synchronizeWithHardware || correctHardware) {
             if (startStopped) {
                 // Note if there are multiple hardware clocks, this should be a loop over all hardware clocks
@@ -586,8 +571,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
     private boolean synchronizeWithHardware = false;  // true indicates need to synchronize
     private boolean correctHardware = false;    // true indicates hardware correction requested
     private boolean display12HourClock = false; // true if 12-hour clock display is requested
-    private boolean startStopped = false;    // true indicates start up with clock stopped requested
-    private boolean startRunning = true;     // true indicates start up with clock running requested
+    private ClockInitialRunState initialState = ClockInitialRunState.DO_START;    // what to do with the clock running state at startup
     private boolean startSetTime = false;    // true indicates set fast clock to specified time at
     //start up requested
     private Date startTime = new Date(); // specified time for setting fast clock at start up

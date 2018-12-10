@@ -4,7 +4,6 @@ import java.beans.PropertyChangeListener;
 import java.time.Instant;
 import java.util.Date;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 /**
  * Provide access to clock capabilities in hardware or software.
@@ -118,13 +117,21 @@ public interface Timebase extends NamedBean {
 
     public boolean use12HourDisplay();
 
-    // methods for start up with clock stopped option
-    public void setStartStopped(boolean stopped);
-    public boolean getStartStopped();
-    // methods for start up with clock running option. If neither stopped nor running is set, the
-    // clock run state will not change at startup.
-    public void setStartRunning(boolean running);
-    public boolean getStartRunning();
+    /**
+     * Defines what to do with the fast clock when JMRI starts up.
+     */
+    enum ClockInitialRunState {
+        // Changes the clock to stopped when JMRI starts.
+        DO_STOP,
+        // Changes the clock to running when JMRI starts.
+        DO_START,
+        // Does not change the clock when JMRI starts.
+        DO_NOTHING
+    }
+
+    // methods for start up with clock stopped/started/nochange option
+    public void setClockInitialRunState(ClockInitialRunState initialState);
+    public ClockInitialRunState getClockInitialRunState();
 
     // methods for start up with start/stop button displayed
     public void setShowStopButton(boolean displayed);
