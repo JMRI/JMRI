@@ -8,7 +8,7 @@ import java.awt.event.FocusEvent;
 import java.text.DecimalFormat;
 import java.util.Date;
 
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -490,7 +490,7 @@ public class SimpleClockFrame extends JmriJFrame
      * @return null if the rate could not be parsed, negative, or an unsupported fraction.
      * Otherwise the fraction value.
      */
-    @Nullable Double parseRate(String fieldEntry) {
+    @CheckForNull Double parseRate(String fieldEntry) {
         double rate = 1.0;
         try {
             char decimalSeparator = threeDigits.getDecimalFormatSymbols().getDecimalSeparator() ;
