@@ -1,5 +1,6 @@
 package jmri.jmrit.beantable;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.FlowLayout;
@@ -1420,6 +1421,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
     }
 
     @SuppressWarnings("unused")
+    @SuppressFBWarnings(value = "UPM_UNCALLED_PRIVATE_METHOD", justification="was previously marked with @SuppressWarnings, reason unknown")
     private boolean connected(Section s1, Section s2) {
         if ((s1 != null) && (s2 != null)) {
             List<EntryPoint> s1Entries = s1.getEntryPointList();
