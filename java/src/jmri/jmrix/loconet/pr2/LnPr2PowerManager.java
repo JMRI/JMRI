@@ -27,12 +27,10 @@ public class LnPr2PowerManager extends LnPowerManager {
 
     public LnPr2PowerManager(LocoNetSystemConnectionMemo memo) {
         super(memo);
-        this.sm = memo.getSlotManager();
         this.tc = memo.getLnTrafficController();
         this.memo = memo;
     }
 
-    SlotManager sm;
     LnTrafficController tc;
     LocoNetSystemConnectionMemo memo;
 
