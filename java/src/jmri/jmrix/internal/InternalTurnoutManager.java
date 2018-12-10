@@ -73,20 +73,6 @@ public class InternalTurnoutManager extends AbstractTurnoutManager {
         return entryToolTip;
     }
 
-    /** {@inheritDoc}
-     * Internal turnouts don't need an OutputInterval delay
-     */
-    @Override
-    public int getOutputInterval(String prefix) {
-        return 0;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void setOutputInterval(int newInterval) {
-        // ignore
-    }
-
     /**
      * Turnout operation support. Internal turnouts don't need retries.
      */

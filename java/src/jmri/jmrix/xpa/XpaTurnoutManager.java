@@ -42,7 +42,7 @@ public class XpaTurnoutManager extends jmri.managers.AbstractTurnoutManager {
 
     /** {@inheritDoc} */
     @Override
-    public int getOutputInterval() {
+    public int getOutputInterval(String systemName) {
         return memo.getOutputInterval();
     }
 

@@ -220,7 +220,7 @@ public class XBeeTurnoutManager extends AbstractTurnoutManager {
 
     /** {@inheritDoc} */
     @Override
-    public int getOutputInterval() {
+    public int getOutputInterval(String systemName) {
         return tc.getAdapterMemo().getOutputInterval();
     }
 

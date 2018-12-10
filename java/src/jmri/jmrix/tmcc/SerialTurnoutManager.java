@@ -205,7 +205,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager implements Seri
 
     /** {@inheritDoc} */
     @Override
-    public int getOutputInterval() {
+    public int getOutputInterval(String systemName) {
         return _memo.getOutputInterval();
     }
 

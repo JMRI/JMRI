@@ -34,7 +34,7 @@ import org.slf4j.LoggerFactory;
 public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
 
     /**
-     * Must manually register() after construction is complete
+     * Must manually register() after construction is complete.
      */
     public LocoNetSystemConnectionMemo(LnTrafficController lt, SlotManager sm) {
         super("L", "LocoNet"); // NOI18N
@@ -50,7 +50,7 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
     }
 
     /**
-     * Must manually register() after construction is complete
+     * Must manually register() after construction is complete.
      */
     public LocoNetSystemConnectionMemo() {
         this("L", "LocoNet"); // NOI18N
@@ -58,8 +58,8 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
 
     public LocoNetSystemConnectionMemo(@Nonnull String prefix, @Nonnull String name) {
         super(prefix, name); // NOI18N
-        // self-register
-        register();
+
+        // self-registration is deferred until the command station type is set below
 
         // create and register the ComponentFactory for the GUI
         InstanceManager.store(cf = new LnComponentFactory(this),
@@ -82,7 +82,7 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
     private LnMessageManager lnm = null;
 
     /**
-     * Provides access to the SlotManager for this particular connection.
+     * Provide access to the SlotManager for this particular connection.
      *
      * @return the slot manager or null if no valid slot manager is available
      */

@@ -105,7 +105,7 @@ public class NceTurnoutManager extends jmri.managers.AbstractTurnoutManager impl
 
     /** {@inheritDoc} */
     @Override
-    public int getOutputInterval() {
+    public int getOutputInterval(String systemName) {
         return tc.getAdapterMemo().getOutputInterval();
     }
 
