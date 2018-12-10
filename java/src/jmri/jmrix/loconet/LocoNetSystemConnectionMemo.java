@@ -117,16 +117,13 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
     protected DefaultProgrammerManager programmerManager;
 
     public DefaultProgrammerManager getProgrammerManager() {
-        System.err.println("getProgrammerManager with "+programmerManager);
         if (programmerManager == null) {
-            System.err.println("getProgrammerManager creates a new one");
             programmerManager = new LnProgrammerManager(this);
         }
         return programmerManager;
     }
 
     public void setProgrammerManager(DefaultProgrammerManager p) {
-        System.err.println("setProgrammerManager "+p);
         programmerManager = p;
     }
 
@@ -148,7 +145,6 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
     public void configureCommandStation(LnCommandStationType type, boolean mTurnoutNoRetry,
                                             boolean mTurnoutExtraSpace, boolean mTranspondingAvailable) {
 
-        System.err.println("configureCommandStation "+type);
         // store arguments
         this.mTurnoutNoRetry = mTurnoutNoRetry;
         this.mTurnoutExtraSpace = mTurnoutExtraSpace;

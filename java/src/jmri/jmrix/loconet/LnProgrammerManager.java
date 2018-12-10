@@ -17,7 +17,6 @@ public class LnProgrammerManager extends DefaultProgrammerManager {
     public LnProgrammerManager(LocoNetSystemConnectionMemo memo) {
         super(new LnDeferProgrammer(memo), memo);
         this.memo = memo;
-        new Exception("traceback LnProgrammerManager(memo) ctor with memo.getSlotManager() "+memo.getSlotManager()).printStackTrace();
      }
 
     /**
@@ -26,7 +25,6 @@ public class LnProgrammerManager extends DefaultProgrammerManager {
     @Deprecated // 4.13.6 Use LnProgrammerManager(LocoNetSystemConnectionMemo memo) instead
     public LnProgrammerManager(SlotManager pSlotManager, LocoNetSystemConnectionMemo memo) {
         this(memo);
-        new Exception("traceback LnProgrammerManager(slot, memo) ctor with pSlotManager "+pSlotManager).printStackTrace();
      }
 
     LocoNetSystemConnectionMemo memo;
