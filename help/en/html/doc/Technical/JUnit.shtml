@@ -502,7 +502,7 @@
 
         <li>When a test is deliberately invoking a message, it
         should then use  
-        <a href"https://github.com/JMRI/JMRI/blob/master/java/test/jmri/util/JUnitAppender.java">JUnitAppender class</a> 
+        <a href="https://github.com/JMRI/JMRI/blob/master/java/test/jmri/util/JUnitAppender.java">JUnitAppender class</a> 
         methods to check that the message was
         created. For example, if the class under test is expected
         to do<br>
