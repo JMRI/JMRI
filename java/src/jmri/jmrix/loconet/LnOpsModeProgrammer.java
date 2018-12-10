@@ -40,18 +40,6 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
         mLongAddr = pLongAddr;
         // register to listen
         memo.getLnTrafficController().addLocoNetListener(~0, this);
-        // new Exception("traceback LnOpsModeProgrammer ctor with memo.getSlotManager() "+memo.getSlotManager()).printStackTrace();
-    }
-
-    /**
-     * @deprecated 4.13.6 Use LnOpsModeProgrammer(LocoNetSystemConnectionMemo memo, int, bool) instead
-     */
-    @Deprecated // 4.13.6 Use LnOpsModeProgrammer(LocoNetSystemConnectionMemo memo, int, bool) instead
-    public LnOpsModeProgrammer(SlotManager pSlotMgr,
-            LocoNetSystemConnectionMemo memo,
-            int pAddress, boolean pLongAddr) {
-        this(memo, pAddress, pLongAddr);
-        // new Exception("traceback LnOpsModeProgrammer ctor with pSlotMgr "+pSlotMgr).printStackTrace();
     }
 
     /**
