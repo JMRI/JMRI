@@ -37,11 +37,9 @@ public class JsonSignalMastHttpService extends JsonNamedBeanHttpService {
 
     @Override
     public JsonNode doGet(String type, String name, Locale locale) throws JsonException {
-        ObjectNode root = mapper.createObjectNode();
-        root.put(TYPE, SIGNAL_MAST);
         SignalMast signalMast = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(name);
-        ObjectNode data = this.getNamedBean(signalMast, name, type, locale);
-        root.set(DATA, data);
+        ObjectNode root = this.getNamedBean(signalMast, name, type, locale);
+        ObjectNode data = root.with(DATA);
         if (signalMast != null) {
             String aspect = signalMast.getAspect();
             if (aspect == null) {
