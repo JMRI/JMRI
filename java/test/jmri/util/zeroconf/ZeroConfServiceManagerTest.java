@@ -33,34 +33,23 @@ public class ZeroConfServiceManagerTest {
 
     @Before
     public void setUp() throws Exception {
-        // get the default manager before resetting the InstanceManager
-        ZeroConfServiceManager dm = InstanceManager.containsDefault(ZeroConfServiceManager.class)
-                ? InstanceManager.getDefault(ZeroConfServiceManager.class)
-                : null;
+        JUnitUtil.resetZeroConfServiceManager();
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
-        if (dm != null) {
-            dm.stopAll();
-            JUnitUtil.waitFor(() -> {
-                return (dm.allServices().isEmpty());
-            }, "Stopping all ZeroConf Services");
-        }
-        // ensure the manager used for tests is also the default manager
-        manager = InstanceManager.getDefault(ZeroConfServiceManager.class);
+        // ensure the manager used for tests is also the default manager should
+        // some other element involved invoke the default manager
+        manager = InstanceManager.setDefault(ZeroConfServiceManager.class, new ZeroConfServiceManager());
     }
 
     @After
     public void tearDown() throws Exception {
-        manager.stopAll();
-        JUnitUtil.waitFor(() -> {
-            return (manager.allServices().isEmpty());
-        }, "Stopping all ZeroConf Services");
+        JUnitUtil.resetZeroConfServiceManager();
         manager = null;
         JUnitUtil.tearDown();
     }
 
     /**
-     * Test of create method, of class ZeroConfService.
+     * Test of create method, of class ZeroConfServiceManager.
      */
     @Test
     public void testCreate_String_int() {
@@ -70,7 +59,7 @@ public class ZeroConfServiceManagerTest {
     }
 
     /**
-     * Test of create method, of class ZeroConfService.
+     * Test of create method, of class ZeroConfServiceManager.
      */
     @Test
     public void testCreate_3args() {
@@ -81,7 +70,7 @@ public class ZeroConfServiceManagerTest {
     }
 
     /**
-     * Test of create method, of class ZeroConfService.
+     * Test of create method, of class ZeroConfServiceManager.
      */
     @Test
     public void testCreate_6args() {
@@ -93,7 +82,7 @@ public class ZeroConfServiceManagerTest {
     }
 
     /**
-     * Test of getKey method, of class ZeroConfService.
+     * Test of getKey method, of class ZeroConfServiceManager.
      */
     @Test
     public void testKey_String_String() {
@@ -101,7 +90,7 @@ public class ZeroConfServiceManagerTest {
     }
 
     /**
-     * Test of isPublished method, of class ZeroConfService.
+     * Test of isPublished method, of class ZeroConfServiceManager.
      */
     @Test
     public void testIsPublished() {
@@ -110,7 +99,7 @@ public class ZeroConfServiceManagerTest {
     }
 
     /**
-     * Test of publish method, of class ZeroConfService.
+     * Test of publish method, of class ZeroConfServiceManager.
      */
     @Test
     public void testPublish() {
@@ -126,7 +115,7 @@ public class ZeroConfServiceManagerTest {
     }
 
     /**
-     * Test of stop method, of class ZeroConfService.
+     * Test of stop method, of class ZeroConfServiceManager.
      */
     @Test
     public void testStop() {
@@ -146,7 +135,7 @@ public class ZeroConfServiceManagerTest {
     }
 
     /**
-     * Test of stopAll method, of class ZeroConfService.
+     * Test of stopAll method, of class ZeroConfServiceManager.
      */
     @Test
     public void testStopAll() {
@@ -166,7 +155,7 @@ public class ZeroConfServiceManagerTest {
     }
 
     /**
-     * Test of allServices method, of class ZeroConfService.
+     * Test of allServices method, of class ZeroConfServiceManager.
      */
     @Test
     public void testAllServices() {
