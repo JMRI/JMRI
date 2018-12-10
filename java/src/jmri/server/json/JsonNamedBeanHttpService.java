@@ -41,7 +41,7 @@ public abstract class JsonNamedBeanHttpService extends JsonHttpService {
         data.put(JSON.NAME, bean.getSystemName());
         data.put(JSON.USERNAME, bean.getUserName());
         data.put(JSON.COMMENT, bean.getComment());
-        ArrayNode properties = root.putArray(JSON.PROPERTIES);
+        ArrayNode properties = data.putArray(JSON.PROPERTIES);
         bean.getPropertyKeys().stream().forEach((key) -> {
             Object value = bean.getProperty(key);
             if (value != null) {
@@ -50,7 +50,7 @@ public abstract class JsonNamedBeanHttpService extends JsonHttpService {
                 properties.add(mapper.createObjectNode().putNull(key));
             }
         });
-        return data;
+        return root;
     }
 
     /**

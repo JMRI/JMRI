@@ -14,13 +14,19 @@ import jmri.managers.DefaultProgrammerManager;
  */
 public class LnProgrammerManager extends DefaultProgrammerManager {
 
-    public LnProgrammerManager(SlotManager pSlotManager, LocoNetSystemConnectionMemo memo) {
-        super(pSlotManager, memo);
-        mSlotManager = pSlotManager;
+    public LnProgrammerManager(LocoNetSystemConnectionMemo memo) {
+        super(new LnDeferProgrammer(memo), memo);
         this.memo = memo;
-    }
+     }
 
-    SlotManager mSlotManager;
+    /**
+     * @deprecated 4.13.6 Use LnProgrammerManager(LocoNetSystemConnectionMemo memo) instead
+     */
+    @Deprecated // 4.13.6 Use LnProgrammerManager(LocoNetSystemConnectionMemo memo) instead
+    public LnProgrammerManager(SlotManager pSlotManager, LocoNetSystemConnectionMemo memo) {
+        this(memo);
+     }
+
     LocoNetSystemConnectionMemo memo;
 
     /**
@@ -39,7 +45,7 @@ public class LnProgrammerManager extends DefaultProgrammerManager {
      */
     @Override
     public AddressedProgrammer getAddressedProgrammer(boolean pLongAddress, int pAddress) {
-        return new LnOpsModeProgrammer(mSlotManager, memo, pAddress, pLongAddress);
+        return new LnOpsModeProgrammer(memo, pAddress, pLongAddress);
     }
 
     /**

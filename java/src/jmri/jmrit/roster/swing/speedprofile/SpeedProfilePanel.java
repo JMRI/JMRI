@@ -461,32 +461,34 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
             setButtonStates(true);
             return;
         }
+        // Wait for throttle be correct and then run the profile
         throttleState = 0;
         new Thread(new Runnable() {
-            @Override
-            public void run() {
-                int count = 0;
-                int trys = 10;
-                while (throttleState == 0 && count < trys) {
-                    try {
-                        Thread.sleep(1000);
-                        log.debug("Wait");
-                    } catch (Exception ex) {
-                        log.warn("Throttle for locomotive {} could not be set up.", re.getId());
+                @Override
+                public void run() {
+                    int count = 0;
+                    int trys = 10;
+                    while (throttleState == 0 && count < trys) {
+                        try {
+                            Thread.sleep(1000);
+                            log.debug("Wait");
+                        } catch (Exception ex) {
+                            log.warn("Throttle for locomotive {} could not be set up.", re.getId());
+                            setButtonStates(true);
+                            return;
+                        }
+                        trys++;
+                    }
+                    log.debug("Run");
+                    if (throttleState != 1) {
+                        log.warn("No Throttle, Aborting");
                         setButtonStates(true);
                         return;
                     }
-                    trys++;
+                    runProfile();
                 }
-                log.debug("Run");
-                if (throttleState != 1) {
-                    log.warn("No Throttle, Aborting");
-                    setButtonStates(true);
-                    return;
-                }
-                runProfile();
-            }
-        }).start();
+            }).start();
+
     }
 
     boolean speedStepNumOK(int num, String step) {
@@ -499,7 +501,9 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
     }
 
     javax.swing.Timer overRunTimer = null;
-    private volatile int throttleState = 0;
+
+    private volatile int throttleState = 0;   // zero waiting, -1 no throttle (message already shown), 1 
+            
     @Override
     public void notifyThrottleFound(DccThrottle _throttle) {
         t = _throttle;
@@ -517,7 +521,11 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
         if (log.isDebugEnabled()) {
             log.debug("throttle address = {}", t.getLocoAddress().toString());
         }
+        throttleState = 1;
+        return;
+    }
 
+    private void runProfile() {
         int speedStepMode = t.getSpeedStepMode();
         profileIncrement = t.getSpeedIncrement();
 //        int speedStep;
@@ -647,15 +655,16 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
         JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorFailThrottleRequest"));
         log.error("Throttle request for {} failed because {}", address, reason);
         setButtonStates(true);
+        throttleState = -1;
     }
 
     @Override
     public void notifyStealThrottleRequired(jmri.LocoAddress address){
-        // this is an automatically stealing impelementation.
-        log.error("Throttle request for {} failed because {}", address, "Is already in use");
+        // profiling on stolen throttle is invalid.
+        JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorNoStealing"));
         InstanceManager.throttleManagerInstance().cancelThrottleRequest(address.getNumber(), this);
         setButtonStates(true);
-        //InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, true);
+        throttleState = -1;
     }
 
     PropertyChangeListener startListener = null;
@@ -936,6 +945,26 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
      * If we have a throttle, set speed zero and release
      */
     private void releaseThrottle() {
+        if (t != null) {
+            log.debug("t not null");
+             t.setSpeedSetting(0.0f);
+             try {
+                 Thread.sleep(250);
+             } catch (InterruptedException e) {
+                 log.warn("Wait interupted, release throttle immediatlely");
+             }
+             log.debug("releaseing[{}]", t.getLocoAddress().getNumber());
+             InstanceManager.throttleManagerInstance().releaseThrottle(t, this);
+             t = null;
+         }
+    }
+
+    /**
+     * We are canceling, release throttle, reset sensors.
+     */
+
+    void cancelButton() {
+        releaseThrottle();
         if (t != null) {
             log.debug("t not null");
              t.setSpeedSetting(0.0f);

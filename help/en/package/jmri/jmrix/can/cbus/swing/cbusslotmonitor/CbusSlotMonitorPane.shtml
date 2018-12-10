@@ -8,7 +8,7 @@
 
   <title>JMRI: MERG CBUS Console Tool</title>
   <meta name="author" content="Steve Young">
-  <meta name="keywords" content="JMRI MERG CBUS Command station slot monitor cancmd">
+  <meta name="keywords" content="JMRI MERG CBUS Command station throttle session monitor cancmd">
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
@@ -27,7 +27,6 @@
     <div id="mainContent">
      <h1>JMRI : MERG CBUS Command Station Monitor</h1>
         <p>Main Table - Monitoring train sessions.</p>
-        <p>Edit configuration options on a MERG CANCMD with v4 Firmware.</p>
         <p>Monitors JMRI track blocks to generate CAB Signalling messages.</p>
 
     <h3>Top Menu Items</h3>    
@@ -47,8 +46,9 @@
         a JMRI throttle, MERG CANCAB throttle controller, 
         or MERG CBUS connected Command Station.</p>
         
-        <p>Train Session columns : </p>
-        
+        <h3>Train Session columns : </h3>
+        <img src="../../../../../../../html/hardware/can/cbus/images/swing/command-station/cs-session-626x179.png"
+        width="626" height="179" alt="MERG CBUS Command Station Monitor Session Columns">
         <ul>
         <li>Session Number as determined by command station</li>
         <li>Loco address ID</li>
@@ -63,8 +63,9 @@
         
         </ul>
         
-    <h3>Block Tracking</h3>        
-        
+    <h3>Signal Data Columns</h3>        
+        <img src="../../../../../../../html/hardware/can/cbus/images/swing/command-station/cs-cabdata-882x175.png"
+        width="882" height="175" alt="MERG CBUS Command Station Monitor Signal Data Columns">        
         <ul>
         <li>TD Alt - Alternative Block Value to track</li>
         <li>Block - Current Block Username</li>
@@ -119,8 +120,8 @@
         track segment and selecting View Block Routing.</p>
         
         <p>As the tracking takes data from the block table, 
-        you will currently need to 
-        load the Command Station monitor after opening any panels.</p>
+        if your panel is loaded after the monitor, click on 
+        Refresh Blocks, within the Command station Options menu.</p>
         
         <p>The table will follow the block route of the train until 
         it finds the next signal.</p>
@@ -128,13 +129,16 @@
         Simple Signal Logic within JMRI is not supported.</p>
         
         
-    <h3>CAB Data / Cab Signalling</h3>        
+    <h3><a name="cabdata" id="cabdata">CAB Data / Cab Signalling</a></h3>        
         
         <p>Is currently an experimental feature to enable development 
         of potential Cabdata OPCs, ie Cab-signalling. </p>
         
-        <p>This can be disabled on a system-wide basis by selecting the top menu button,
-        or siabled by train by deselcting the check-box in the main table.</p>
+        <p>The tables contain the data required to enable this.</p>
+        
+        <p>You can disable sending the OPC either 
+        on a system-wide basis by selecting the top menu button,
+        or by train selcting the check-box in the main table train row.</p>
         
         <p>When the JMRI MERG CBUS Command Station Monitor is closed, 
         a final message will be sent to all trains indicating no data available.</p>
