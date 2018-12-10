@@ -57,7 +57,7 @@ public class ZeroConfClient {
      * Get all servers providing the specified service.
      *
      * @param service the name of service as generated using
-     *                {@link ZeroConfServiceManager#key(java.lang.String, java.lang.String) }
+     *                {@link jmri.util.zeroconf.ZeroConfServiceManager#key(java.lang.String, java.lang.String) }
      * @return A list of servers or an empty list.
      */
     @Nonnull
