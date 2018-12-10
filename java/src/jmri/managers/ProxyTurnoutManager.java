@@ -313,7 +313,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
 
     /** {@inheritDoc} */
     @Override
-    public int getOutputInterval(String systemName) {
+    public int getOutputInterval(@Nonnull String systemName) {
         int i = matchTentative(systemName);
         if (i >= 0) {
             return ((TurnoutManager) getMgr(i)).getOutputInterval(systemName);
@@ -333,7 +333,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
 
     /** {@inheritDoc} */
     @Override
-    public LocalTime outputIntervalEnds(String systemName) {
+    public LocalTime outputIntervalEnds(@Nonnull String systemName) {
         log.debug("outputIntervalEnds called in ProxyTurnoutManager");
         TURNOUT_INTERVAL = getOutputInterval(systemName); // provide actual Interval from TurnoutManager
         if (waitUntil.isAfter(LocalTime.now())) {

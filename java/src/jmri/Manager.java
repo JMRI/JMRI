@@ -532,7 +532,7 @@ public interface Manager<E extends NamedBean> {
     /**
      * @return the interval (delay) in ms between output commands for the manager.
      */
-    public static int getOutputInterval() {
+    public static int getOutputInterval(@Nonnull String SystemName) {
         return 0;
     }
 

@@ -369,7 +369,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
 
     /** {@inheritDoc} */
     @Override
-    public int getOutputInterval(String systemName) {
+    public int getOutputInterval(@Nonnull String systemName) {
         return 0;
     }
 
@@ -389,7 +389,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
 
     /** {@inheritDoc} */
     @Override
-    public LocalTime outputIntervalEnds(String systemName) {
+    public LocalTime outputIntervalEnds(@Nonnull String systemName) {
         log.debug("outputIntervalEnds called in AbstractTurnoutManager");
         if (waitUntil.isAfter(LocalTime.now())) {
             waitUntil = waitUntil.plus(TURNOUT_INTERVAL, ChronoUnit.MILLIS);

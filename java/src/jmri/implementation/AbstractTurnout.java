@@ -166,7 +166,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
      * Before sending command to ouput, wait until
      * outputIntervalEnds() to put less pressure on the connection.
      * <p>
-     * Used to insert a delay before calling {@link @setCommandedState(int)} to spread out a series of
+     * Used to insert a delay before calling {@link #setCommandedState(int)} to spread out a series of
      * output commands, as in {@link jmri.implementation.MatrixSignalMast#updateOutputs(char[])}.
      * Value is kept in the Memo per hardware connection, default = 0
      *
