@@ -18,14 +18,7 @@ public class InternalTurnoutManager extends AbstractTurnoutManager {
         this.prefix = prefix;
     }
 
-    public InternalTurnoutManager(InternalSystemConnectionMemo memo) {
-        super();
-        _memo = memo;
-        this.prefix = memo.getSystemPrefix();
-    }
-
     protected String prefix = "I";
-    private InternalSystemConnectionMemo _memo;
 
     @Override
     public String getSystemPrefix() {
