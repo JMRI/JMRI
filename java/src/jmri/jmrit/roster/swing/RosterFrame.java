@@ -1600,7 +1600,6 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         }
 
         if (opsModeProCon != null && apm != null && apm.isAddressedModePossible()) {
-            System.err.println("RosterFrame 1: mode shows possible from "+apm.getClass());
             if (ConnectionStatus.instance().isConnectionOk(opsModeProCon.getConnectionName(), opsModeProCon.getInfo())) {
                 log.debug("Ops Mode Connection online");
                 operationsModeProgrammerLabel.setText(
@@ -1620,7 +1619,6 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                 firePropertyChange("setprogops", "setEnabled", true);
             }
         } else if (apm != null && apm.isAddressedModePossible()) {
-            System.err.println("RosterFrame 2: mode shows possible from "+apm);
             if (ConnectionStatus.instance().isSystemOk(apm.getUserName())) {
                 log.debug("Ops Mode Connection online");
                 operationsModeProgrammerLabel.setText(
