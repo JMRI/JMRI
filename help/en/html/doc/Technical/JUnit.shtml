@@ -501,13 +501,16 @@
         </li>
 
         <li>When a test is deliberately invoking a message, it
-        should then use the check to see that the message was
+        should then use  
+        <a href="https://github.com/JMRI/JMRI/blob/master/java/test/jmri/util/JUnitAppender.java">JUnitAppender class</a> 
+        methods to check that the message was
         created. For example, if the class under test is expected
         to do<br>
 <pre style="font-family: monospace;">
     log.warn("Provoked message");
 </pre>
-    the invoking test case should follow that with the line:<br>
+        the invoking test case should follow the under-test calls that provoke that
+        with the line:<br>
 
 <pre style="font-family: monospace;">
     jmri.util.JUnitAppender.assertWarnMessage("Provoked message");
@@ -525,7 +528,10 @@
       means that although you can run your tests successfully on
       your own computer if they're emitting ERROR messages, but you
       won't be able to merge your code into the common repository
-      until those are handled.</p>
+      until those are handled. It's currently OK to emit
+      WARN-level messages during CI testing, but that will also 
+      be restricted (cause the test to fail) during tne 4.15.*
+      development series, so please suppress or handle those messages too.</p>
 
       <h3><a name="ResetInstMgr" id="ResetInstMgr">Resetting the InstanceManager</a></h3>
       If you are testing code that is going

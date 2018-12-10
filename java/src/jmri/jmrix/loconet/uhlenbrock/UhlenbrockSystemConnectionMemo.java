@@ -26,7 +26,7 @@ public class UhlenbrockSystemConnectionMemo extends LocoNetSystemConnectionMemo 
     @Override
     public DefaultProgrammerManager getProgrammerManager() {
         if (programmerManager == null) {
-            setProgrammerManager(new UhlenbrockProgrammerManager(getSlotManager(), this));
+            setProgrammerManager(new UhlenbrockProgrammerManager(this));
         }
         return super.getProgrammerManager();
     }
