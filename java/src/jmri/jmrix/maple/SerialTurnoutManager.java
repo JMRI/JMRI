@@ -122,7 +122,11 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     /** {@inheritDoc} */
     @Override
     public int getOutputInterval(String systemName) {
-        return _memo.getOutputInterval();
+        if (_memo != null) {
+            return _memo.getOutputInterval();
+        } else {
+            return 0;
+        }
     }
 
     /**

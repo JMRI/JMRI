@@ -106,7 +106,11 @@ public class NceTurnoutManager extends jmri.managers.AbstractTurnoutManager impl
     /** {@inheritDoc} */
     @Override
     public int getOutputInterval(String systemName) {
-        return tc.getAdapterMemo().getOutputInterval();
+        if (tc.getAdapterMemo() != null) {
+            return tc.getAdapterMemo().getOutputInterval();
+        } else {
+            return 0;
+        }
     }
 
     private final static Logger log = LoggerFactory.getLogger(NceTurnoutManager.class);

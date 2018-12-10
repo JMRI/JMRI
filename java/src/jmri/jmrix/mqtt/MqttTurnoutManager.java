@@ -38,7 +38,11 @@ public class MqttTurnoutManager extends jmri.managers.AbstractTurnoutManager {
     /** {@inheritDoc} */
     @Override
     public int getOutputInterval(String systemName) {
-        return mqttAdapter.getSystemConnectionMemo().getOutputInterval();
+        if (mqttAdapter.getSystemConnectionMemo() != null) {
+            return mqttAdapter.getSystemConnectionMemo().getOutputInterval();
+        } else {
+            return 0;
+        }
     }
 
 }
