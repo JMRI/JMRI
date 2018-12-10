@@ -222,6 +222,53 @@ public class OlcbClockControlTest {
     }
 
     @Test
+    public void rateListenerMasterRounding() throws Exception {
+        initializeWithClockMaster();
+        Timebase tb = InstanceManager.getDefault(Timebase.class);
+        MockPropertyChangeListener ml = new MockPropertyChangeListener();
+        tb.addPropertyChangeListener(ml);
+
+        clock.setRate(13.33);
+        iface.assertSentMessage(":X195B4C4CN0101000001034035;");
+
+        Mockito.verify(ml.m).onChange("rate", 13.25d);
+
+        Mockito.verifyNoMoreInteractions(ml.m);
+    }
+
+    @Test
+    public void rateListenerMasterRoundingAtZero() throws Exception {
+        initializeWithClockMaster();
+        Timebase tb = InstanceManager.getDefault(Timebase.class);
+        MockPropertyChangeListener ml = new MockPropertyChangeListener();
+        tb.addPropertyChangeListener(ml);
+
+        // A small but positive rate will be rounded up to 0.25.
+        clock.setRate(0.001);
+        iface.assertSentMessage(":X195B4C4CN0101000001034001;");
+
+        Mockito.verify(ml.m).onChange("rate", 0.25d);
+
+        Mockito.verifyNoMoreInteractions(ml.m);
+    }
+
+    @Test
+    public void rateListenerSlaveRounding() throws Exception {
+        initializeWithClockSlave();
+        Timebase tb = InstanceManager.getDefault(Timebase.class);
+        MockPropertyChangeListener ml = new MockPropertyChangeListener();
+        tb.addPropertyChangeListener(ml);
+
+        clock.setRate(13.33);
+        iface.assertSentMessage(":X195B4C4CN010100000102C035;");
+
+        Mockito.verifyNoMoreInteractions(ml.m);
+
+        iface.sendMessage(":X195B4123N0101000001024035;");
+        Mockito.verify(ml.m).onChange("rate", 13.25d);
+    }
+
+    @Test
     public void setTime() throws Exception {
         initializeWithClockSlave();
         Calendar c = Calendar.getInstance();
