@@ -55,6 +55,16 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
     }
 
     /**
+     * @deprecated 4.13.6 Use LnOpsModeProgrammer(LocoNetSystemConnectionMemo memo, int, bool) instead
+     */
+    @Deprecated // 4.13.6 Use LnOpsModeProgrammer(LocoNetSystemConnectionMemo memo, int, bool) instead
+    public LnOpsModeProgrammer(SlotManager pSlotMgr,
+            LocoNetSystemConnectionMemo memo,
+            int pAddress, boolean pLongAddr) {
+        this(memo, pAddress, pLongAddr);
+    }
+
+    /**
      * Forward a write request to an ops-mode write operation.
      */
     @Override

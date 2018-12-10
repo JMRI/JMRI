@@ -25,6 +25,7 @@ public class LnDeferProgrammer extends AbstractProgrammer {
     
     LocoNetSystemConnectionMemo memo;
     
+    @Override
     @Nonnull public List<ProgrammingMode> getSupportedModes() {
         SlotManager m = memo.getSlotManager();
         if (m!=null) {
@@ -35,6 +36,30 @@ public class LnDeferProgrammer extends AbstractProgrammer {
         }
     }
         
+    @Override
+    public boolean getCanRead() {
+        SlotManager m = memo.getSlotManager();
+        if (m!=null) {
+            return m.getCanRead();
+        } else {
+            log.warn("getCanRead() called without a SlotManager");
+            return true; // being cautious
+        }
+    }
+        
+    @Override
+    @Nonnull
+    public Programmer.WriteConfirmMode getWriteConfirmMode(String addr) {
+        SlotManager m = memo.getSlotManager();
+        if (m!=null) {
+            return m.getWriteConfirmMode(addr);
+        } else {
+            log.warn("getWriteConfirmMode() called without a SlotManager");
+            return Programmer.WriteConfirmMode.DecoderReply; // being cautious
+        }
+    }
+        
+    @Override
     protected void timeout() {
         SlotManager m = memo.getSlotManager();
         if (m!=null) {
@@ -44,6 +69,7 @@ public class LnDeferProgrammer extends AbstractProgrammer {
         }
     }
     
+    @Override
     public void writeCV(int CV, int val, ProgListener p) throws ProgrammerException {
         SlotManager m = memo.getSlotManager();
         if (m!=null) {
@@ -53,6 +79,7 @@ public class LnDeferProgrammer extends AbstractProgrammer {
         }
     }
 
+    @Override
     public void readCV(int CV, ProgListener p) throws ProgrammerException {
          SlotManager m = memo.getSlotManager();
         if (m!=null) {
@@ -62,6 +89,7 @@ public class LnDeferProgrammer extends AbstractProgrammer {
         }
    }
 
+    @Override
     public void confirmCV(String CV, int val, ProgListener p) throws ProgrammerException {
         SlotManager m = memo.getSlotManager();
         if (m!=null) {
