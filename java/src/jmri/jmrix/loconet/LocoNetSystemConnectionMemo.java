@@ -42,9 +42,8 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
 
         this.sm = sm; // doesn't full register, but fine for this purpose.
 
-        // self-register
-        register();
-
+        // self-registration is deferred until the command station type is set below
+                
         // create and register the ComponentFactory for the GUI
         InstanceManager.store(cf = new LnComponentFactory(this),
                 ComponentFactory.class);
@@ -123,7 +122,7 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
 
     public DefaultProgrammerManager getProgrammerManager() {
         if (programmerManager == null) {
-            programmerManager = new LnProgrammerManager(getSlotManager(), this);
+            programmerManager = new LnProgrammerManager(this);
         }
         return programmerManager;
     }
@@ -169,6 +168,9 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
             // store as CommandStation object
             InstanceManager.store(sm, jmri.CommandStation.class);
         }
+
+        // register this SystemConnectionMemo to connect to rest of system
+        register();
     }
 
     /**
@@ -449,16 +451,6 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
             tm.dispose();
         }
         super.dispose();
-    }
-
-    /**
-     * remove override once working TODO EBR
-     */
-    @Override
-    public int getOutputInterval() {
-        int interval = super.getOutputInterval();
-        log.debug("Getting Ln interval {}", interval);
-        return interval;
     }
 
     private final static Logger log = LoggerFactory.getLogger(LocoNetSystemConnectionMemo.class);

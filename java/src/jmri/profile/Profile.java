@@ -269,6 +269,10 @@ public class Profile implements Comparable<Profile> {
         return hash;
     }
 
+    /**
+     * {@inheritDoc}
+     * This tests for equal ID values
+     */
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {

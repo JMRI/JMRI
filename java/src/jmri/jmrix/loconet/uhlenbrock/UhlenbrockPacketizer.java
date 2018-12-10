@@ -35,7 +35,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2010
  */
-public class UhlenbrockPacketizer extends LnPacketizer implements LocoNetInterface {
+public class UhlenbrockPacketizer extends LnPacketizer {
 
     @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "Only used during system initialization")
