@@ -151,7 +151,7 @@ public class TimeTableImport {
         _layoutId = _dm.getNextId("Layout");  // NOI18N
         Layout layout = new Layout(_layoutId,
                 lineStrings[0],
-                lineStrings[6],
+                jmri.ScaleManager.getScale(lineStrings[6]),
                 clock,
                 throttles,
                 false);

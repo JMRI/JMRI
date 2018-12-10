@@ -8,6 +8,28 @@ package jmri;
 public interface AnalogIO extends NamedBean {
 
     /**
+     * Is the value an absolute value or a relative value?
+     * In both cases, AnalogIO.getMin() and AnalogIO.getMax() tells the
+     * limits of the value.
+     */
+    public enum AbsoluteOrRelative {
+        
+        ABSOLUTE(Bundle.getMessage("AnalogIO_Absolute")),
+        RELATIVE(Bundle.getMessage("AnalogIO_Relative"));
+        
+        private final String _str;
+        
+        private AbsoluteOrRelative(String str) {
+            _str = str;
+        }
+        
+        @Override
+        public String toString() {
+            return _str;
+        }
+    }
+
+    /**
      * Show whether the analog value is stable.
      * 
      * @return true if the analog value is stable
@@ -60,6 +82,11 @@ public interface AnalogIO extends NamedBean {
      * Get the resloution of this AnalogIO.
      */
     public float getResolution();
+
+    /**
+     * Is this AnalogIO absolute or relative?
+     */
+    public AbsoluteOrRelative getAbsoluteOrRelative();
 
     /**
      * Request an update from the layout soft/hardware. May not even happen, and

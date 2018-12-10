@@ -784,6 +784,7 @@ public class CarEditFrameTest extends OperationsTestCase {
         Assert.assertEquals("kernel", k, car.getKernel());
         Assert.assertEquals("order", 2, car.getBlocking());
         Assert.assertFalse(car.getKernel().isLead(car));
+        Assert.assertFalse(car.isLead());
         Assert.assertEquals("Track", "North End 2", car2.getTrackName());
 
         // now remove the kernel

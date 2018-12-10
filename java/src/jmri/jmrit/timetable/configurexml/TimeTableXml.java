@@ -50,7 +50,7 @@ public class TimeTableXml {
             Element e = new Element("layout");  // NOI18N
             e.addContent(new Element("layout_id").addContent("" + layout.getLayoutId()));  // NOI18N
             e.addContent(new Element("layout_name").addContent(layout.getLayoutName()));  // NOI18N
-            e.addContent(new Element("scale").addContent("" + layout.getScale()));  // NOI18N
+            e.addContent(new Element("scale").addContent(layout.getScale().getScaleName()));  // NOI18N
             e.addContent(new Element("fast_clock").addContent("" + layout.getFastClock()));  // NOI18N
             e.addContent(new Element("throttles").addContent("" + layout.getThrottles()));  // NOI18N
             e.addContent(new Element("metric").addContent((layout.getMetric()) ? "yes" : "no"));  // NOI18N
@@ -188,7 +188,7 @@ public class TimeTableXml {
                 Element layout_name = layout.getChild("layout_name");  // NOI18N
                 String layoutName = (layout_name == null) ? "" : layout_name.getValue();
                 Element scaleE = layout.getChild("scale");  // NOI18N
-                String scale = (scaleE == null) ? "" : scaleE.getValue();
+                jmri.Scale scale = (scaleE == null) ? jmri.ScaleManager.getScale("HO") : jmri.ScaleManager.getScale(scaleE.getValue());  // NOI18N
                 Element fast_clock = layout.getChild("fast_clock");  // NOI18N
                 int fastClock = (fast_clock == null) ? 1 : Integer.parseInt(fast_clock.getValue());
                 Element throttlesE = layout.getChild("throttles");  // NOI18N

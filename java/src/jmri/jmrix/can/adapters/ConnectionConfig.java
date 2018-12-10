@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 
+import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.ConfigurationManager;
 import jmri.jmrix.openlcb.swing.protocoloptions.ConfigPaneHelper;
 
@@ -62,15 +63,15 @@ abstract public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnecti
     }
 
     void updateUserNameField() {
-        String selection = options.get("Protocol").getItem();
-        String newUserName = "MERG";
-        if (ConfigurationManager.OPENLCB.equals(selection)) {
-            newUserName = "OpenLCB";
-        } else if (ConfigurationManager.RAWCAN.equals(selection)) {
-            newUserName = "CANraw";
-        } else if (ConfigurationManager.TEST.equals(selection)) {
-            newUserName = "CANtest";
+        if (!CanSystemConnectionMemo.DEFAULT_USERNAME.equals(adapter.getSystemConnectionMemo()
+                .getUserName())) {
+            // User name already set; do not overwrite it.
+            log.debug("Avoid overwriting user name {}.", adapter.getSystemConnectionMemo()
+                    .getUserName());
+            return;
         }
+        log.debug("New user name based on manufacturer {}", getManufacturer());
+        String newUserName = getManufacturer();
         connectionNameField.setText(newUserName);
 
         if (!adapter.getSystemConnectionMemo().setUserName(newUserName)) {
