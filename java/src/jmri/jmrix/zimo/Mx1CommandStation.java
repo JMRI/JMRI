@@ -32,7 +32,7 @@ public class Mx1CommandStation implements jmri.CommandStation {
     String userName;
     
     /**
-     * @{inheritDoc}
+     * {@inheritDoc}
      * <p>
      * This implementation always returns false, as sending
      * a packet isn't implemented for the Zimo command stations
