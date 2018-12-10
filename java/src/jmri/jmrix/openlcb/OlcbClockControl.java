@@ -15,6 +15,7 @@ import java.util.Date;
 import jmri.Timebase;
 import jmri.TimebaseRateException;
 import jmri.implementation.DefaultClockControl;
+import jmri.util.ThreadingUtil;
 
 /**
  * Implementation of the ClockControl interface for JMRI using the OpenLCB clock listener or generator.
@@ -129,7 +130,16 @@ public class OlcbClockControl extends DefaultClockControl {
         // OpenLCB rates are 0.25 resolution, so we use half of that as minimum threshold.
         if (Math.abs(hardwareClock.getRate() - newRate) > 0.12) {
             hardwareClock.requestSetRate(newRate);
+        } else {
+            // Trigger update notification that we rejected the change, but not inline.
+            ThreadingUtil.runOnLayoutDelayed(new ThreadingUtil.ThreadAction() {
+                @Override
+                public void run() {
+                    clockUpdate(TimeProtocol.PROP_RATE_UPDATE, null);
+                }
+            }, 50);
         }
+
     }
 
     @Override
