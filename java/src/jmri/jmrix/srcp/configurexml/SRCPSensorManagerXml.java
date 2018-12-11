@@ -32,8 +32,6 @@ public class SRCPSensorManagerXml extends jmri.managers.configurexml.AbstractSen
 
     @Override
     public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException {
-        // create the master object
-        SRCPSensorManager.instance();
         // load individual sensors
         return loadSensors(shared);
     }

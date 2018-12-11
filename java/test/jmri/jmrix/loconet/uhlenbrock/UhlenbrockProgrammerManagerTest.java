@@ -20,7 +20,7 @@ public class UhlenbrockProgrammerManagerTest {
         LnTrafficController lnis = new LocoNetInterfaceScaffold();
         UhlenbrockSlotManager slotmanager = new UhlenbrockSlotManager(lnis);
         UhlenbrockSystemConnectionMemo memo = new UhlenbrockSystemConnectionMemo(lnis,slotmanager);
-        UhlenbrockProgrammerManager t = new UhlenbrockProgrammerManager(slotmanager,memo);
+        UhlenbrockProgrammerManager t = new UhlenbrockProgrammerManager(memo);
         Assert.assertNotNull("exists",t);
         memo.dispose();
     }
