@@ -79,30 +79,33 @@ public class JsonPowerHttpService extends JsonHttpService {
     @Override
     public JsonNode doPost(String type, String name, JsonNode data, Locale locale) throws JsonException {
         int state = data.path(STATE).asInt(UNKNOWN);
-        try {
-            PowerManager manager = InstanceManager.getDefault(PowerManager.class);
-            if (!name.isEmpty()) {
-                for (PowerManager pm : InstanceManager.getList(PowerManager.class)) {
-                    if (pm.getUserName().equals(name)) {
-                        manager = pm;
+        if (state != UNKNOWN) {
+            try {
+                PowerManager manager = InstanceManager.getDefault(PowerManager.class);
+                if (!name.isEmpty()) {
+                    for (PowerManager pm : InstanceManager.getList(PowerManager.class)) {
+                        if (pm.getUserName().equals(name)) {
+                            manager = pm;
+                        }
                     }
                 }
+                switch (state) {
+                    case OFF:
+                        manager.setPower(PowerManager.OFF);
+                        break;
+                    case ON:
+                        manager.setPower(PowerManager.ON);
+                        break;
+                    case UNKNOWN:
+                        // quietly ignore
+                        break;
+                    default:
+                        throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(locale, "ErrorUnknownState", POWER, state));
+
+                }
+            } catch (JmriException ex) {
+                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, ex);
             }
-            switch (state) {
-                case OFF:
-                    manager.setPower(PowerManager.OFF);
-                    break;
-                case ON:
-                    manager.setPower(PowerManager.ON);
-                    break;
-                case UNKNOWN:
-                    // quietly ignore
-                    break;
-                default:
-                    throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(locale, "ErrorUnknownState", POWER, state));
-            }
-        } catch (JmriException ex) {
-            throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, ex);
         }
         return this.doGet(type, name, locale);
     }
