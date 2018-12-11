@@ -31,8 +31,6 @@ public class XpaTurnoutManagerXml extends jmri.managers.configurexml.AbstractTur
 
     @Override
     public boolean load(Element shared, Element perNode) {
-        // create the master object
-        XpaTurnoutManager.instance();
         // load individual turnouts
         return loadTurnouts(shared, perNode);
     }

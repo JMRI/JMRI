@@ -34,7 +34,7 @@
      
      
      
-      <img src="../../../../../../../html/hardware/can/images/cbus-node-config-generic-nv-691x469.png"
+      <img src="../../../../../../../html/hardware/can/cbus/images/swing/node-config/cbus-node-config-generic-nv-691x469.png"
       width="691" height="469" alt="Merg Node Configuration Tool screenshot"
       align="right">
 
@@ -89,12 +89,12 @@
         
         
     <h3><a name="events" id="events">Node Events</a></h3>
-        <img src="../../../../../../../html/hardware/can/images/cbus-node-config-ev-list-931x472.png"
+        <img src="../../../../../../../html/hardware/can/cbus/images/swing/node-config/cbus-node-config-ev-list-931x472.png"
       width="931" height="472" alt="Merg cbus Node Configuration Tool Event List">
         
       
         
-        <img src="../../../../../../../html/hardware/can/images/cbus-node-config-edit-ev-321x388.png"
+        <img src="../../../../../../../html/hardware/can/cbus/images/swing/node-config/cbus-node-config-edit-ev-321x388.png"
       width="321" height="388" alt="Merg cbus Node Configuration Tool Event Edit" align="right">
       
       <p>Click on the Edit button in the event list, or the new event button 
@@ -106,7 +106,7 @@
       <p>The hex and binary values are shown on the right hand side of each event variable.</p>
       
       <p>Click on edit or new event to save this to the node.</p>
-              <img src="../../../../../../../html/hardware/can/images/cbus-node-config-edit-ev-confirm-449x127.png"
+              <img src="../../../../../../../html/hardware/can/cbus/images/swing/node-config/cbus-node-config-edit-ev-confirm-449x127.png"
       width="449" height="127" alt="Merg cbus Node Configuration Tool Event Edit Confirm" >
       
       
@@ -126,7 +126,7 @@
         
         <p>On hearing a node number request, an allocation popup window will be displayed.</p>
         
-        <img src="../../../../../../../html/hardware/can/images/cbus-node-config-qnn_278x151.png"
+        <img src="../../../../../../../html/hardware/can/cbus/images/swing/node-config/cbus-node-config-qnn_278x151.png"
         width="278" height="151" alt="Merg CBUS Node Configuration Request Node Number">
 
         <p>Using the number spinner or keyboard, enter the numerical Node number
@@ -201,9 +201,6 @@
     <h3>JMRI Help</h3>
       
       <p>You can view this help page within JMRI by selecting Help > Window Help in the top bar of the MERG CBUS Node Configuration Tool window.</p>
-      
-      <p><a href="https://github.com/JMRI/JMRI/issues?q=is%3Aissue+is%3Aopen+merg+node+config"
-        >Known issues with the Node Config Tool on Github</a>.</p>
       
       <p><a href="../../../../../../../html/hardware/can/cbus/index.shtml">Main JMRI MERG CBUS Support page</a>.</p>
       

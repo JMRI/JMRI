@@ -133,9 +133,9 @@ public class Z21Reply extends AbstractMRReply {
            case 0x00A0:
                return Bundle.getMessage("Z21LocoNetRxReply", getLocoNetMessage().toMonitorString());
            case 0x00A1:
-               return Bundle.getMessage("Z21LocoNetTxReply", new jmri.jmrix.loconet.locomon.Llnmon().displayMessage(getLocoNetMessage()));
+               return Bundle.getMessage("Z21LocoNetTxReply", getLocoNetMessage().toMonitorString());
            case 0x00A2:
-               return Bundle.getMessage("Z21LocoNetLanReply", new jmri.jmrix.loconet.locomon.Llnmon().displayMessage(getLocoNetMessage()));
+               return Bundle.getMessage("Z21LocoNetLanReply", getLocoNetMessage().toMonitorString());
            case 0x0088:
                int entries = getNumRailComDataEntries();
                StringBuffer datastring = new StringBuffer();

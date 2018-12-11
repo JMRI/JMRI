@@ -31,8 +31,6 @@ public class DccTurnoutManagerXml extends jmri.managers.configurexml.AbstractTur
 
     @Override
     public boolean load(Element shared, Element perNode) {
-        // create the master object
-        DccTurnoutManager.instance();
         // load individual turnouts
         return loadTurnouts(shared, perNode);
     }

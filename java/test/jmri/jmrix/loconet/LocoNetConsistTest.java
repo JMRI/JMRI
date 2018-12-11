@@ -66,9 +66,9 @@ public class LocoNetConsistTest extends jmri.implementation.AbstractConsistTestB
         Assert.assertEquals("default consist type",jmri.Consist.CS_CONSIST,c.getConsistType());
     }
 
-    @Ignore("LocoNet CS consists allow any address")
     @Override
     @Test public void checkAddressAllowedBad(){
+        // LocoNet CS consists allow any valid address, so this test is empty
     }
 
     @Test public void checkAddressAllowedGoodAdvanced(){
