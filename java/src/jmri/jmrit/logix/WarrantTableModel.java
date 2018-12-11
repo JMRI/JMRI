@@ -695,7 +695,8 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
                             bean.getTrainName(), bean.getDisplayName(),
                             bean.getCurrentBlockName(),
                             Bundle.getMessage(Warrant.MODES[newMode])),
-                            myGreen, true);                    
+//                            (bean._message != null ? bean._message : Bundle.getMessage(Warrant.MODES[newMode]))),
+                            myGreen, true); 
                 } else if (oldMode != Warrant.MODE_NONE && newMode == Warrant.MODE_NONE) {
                     OBlock curBlock = bean.getCurrentBlockOrder().getBlock();
                     OBlock lastBlock = bean.getLastOrder().getBlock();

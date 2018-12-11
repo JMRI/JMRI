@@ -472,11 +472,12 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
         }
         w.deAllocate();
         msg = w.setRoute(false, null);
-        setStatusText(msg, WarrantTableModel.myGold, false);
         if (msg != null) {
             w.deAllocate();
             setStatusText(msg, Color.red, false);
             return msg;
+        } else {
+            setStatusText(msg, WarrantTableModel.myGold, false);
         }
 /*        if (w.commandsHaveTrackSpeeds()) {
             w.getSpeedUtil().getValidSpeedProfile(this);            

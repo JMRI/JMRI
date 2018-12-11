@@ -832,10 +832,8 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
      * @return error message if the call fails. null if the call succeeds
      */
     protected String setPath(String pathName, Warrant warrant) {
-        String msg = null;
         if (_warrant != null && !_warrant.equals(warrant)) {
-            msg = Bundle.getMessage("AllocatedToWarrant", _warrant.getDisplayName(), getDisplayName());
-            return msg;
+            return Bundle.getMessage("AllocatedToWarrant", _warrant.getDisplayName(), getDisplayName());
         }
         if (log.isDebugEnabled()) {
             log.debug("setPath: OBlock \"{}\", path  \"{}\" for warrant {}",
@@ -844,25 +842,27 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         pathName = pathName.trim();
         OPath path = getPathByName(pathName);
         if (path == null) {
-            msg = Bundle.getMessage("PathNotFound", pathName, getDisplayName());
-        } else {
-            // Sanity check
-            String p = warrant.getRoutePathInBlock(this);
-            if (p!=null && !pathName.equals(p)) {
-                log.warn("path \"{}\" for block \"{}\" does not agree with path \"{}\" in route of warrant \"{}\"",
-                       pathName, getDisplayName(), p, warrant.getDisplayName());
-            }
-            _pathName = pathName;
-            _warrant = warrant;
-            setState(getState() | ALLOCATED);
-            if (!_ownsTOs) {
-                msg = checkSharedTO();  // does a callback to the warrant to set up a wait             
-            }
-            if (msg == null) {
-                int lockState = Turnout.CABLOCKOUT & Turnout.PUSHBUTTONLOCKOUT;
-                path.setTurnouts(0, true, lockState, true);
-                firePropertyChange("pathState", Integer.valueOf(0), Integer.valueOf(getState()));
-            }
+            return Bundle.getMessage("PathNotFound", pathName, getDisplayName());
+        }
+        if ((getState() | ALLOCATED) == 0) {
+            return Bundle.getMessage("PathNotSet", pathName, getDisplayName());
+        }
+        // Sanity check
+        String p = warrant.getRoutePathInBlock(this);
+        if (p!=null && !pathName.equals(p)) {
+            log.warn("path \"{}\" for block \"{}\" does not agree with path \"{}\" in route of warrant \"{}\"",
+                   pathName, getDisplayName(), p, warrant.getDisplayName());
+        }
+        _pathName = pathName;
+        _warrant = warrant;
+        String msg = null;             
+        if (!_ownsTOs) {
+            msg = checkSharedTO();  // does a callback to the warrant to set up a wait             
+        }
+        if (msg == null) {
+            int lockState = Turnout.CABLOCKOUT & Turnout.PUSHBUTTONLOCKOUT;
+            path.setTurnouts(0, true, lockState, true);
+            firePropertyChange("pathState", Integer.valueOf(0), Integer.valueOf(getState()));
         }
         return msg;
     }
