@@ -130,7 +130,7 @@ public class OlcbClockControl extends DefaultClockControl {
         // OpenLCB rates are 0.25 resolution, so we use half of that as minimum threshold.
         if (Math.abs(hardwareClock.getRate() - newRate) > 0.12) {
             hardwareClock.requestSetRate(newRate);
-        } else {
+        } else if (Math.abs(hardwareClock.getRate() - newRate) > 0.0001) {
             // Trigger update notification that we rejected the change, but not inline.
             ThreadingUtil.runOnLayoutDelayed(new ThreadingUtil.ThreadAction() {
                 @Override
