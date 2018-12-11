@@ -70,6 +70,8 @@ public class LnDeferProgrammer extends AbstractProgrammer {
     }
     
     @Override
+    @Deprecated // 4.1.1
+    @SuppressWarnings("deprecation") // passing to deprecated method
     public void writeCV(int CV, int val, ProgListener p) throws ProgrammerException {
         SlotManager m = memo.getSlotManager();
         if (m!=null) {
@@ -80,6 +82,8 @@ public class LnDeferProgrammer extends AbstractProgrammer {
     }
 
     @Override
+    @Deprecated // 4.1.1
+    @SuppressWarnings("deprecation") // passing to deprecated method
     public void readCV(int CV, ProgListener p) throws ProgrammerException {
          SlotManager m = memo.getSlotManager();
         if (m!=null) {
