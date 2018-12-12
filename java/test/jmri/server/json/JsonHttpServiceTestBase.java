@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Locale;
 import jmri.InstanceManager;
+import jmri.jmris.json.JsonServerPreferences;
 import jmri.server.json.schema.JsonSchemaServiceCache;
 import jmri.util.JUnitUtil;
 import org.junit.Assert;
@@ -25,6 +26,9 @@ public class JsonHttpServiceTestBase {
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         this.mapper = new ObjectMapper();
+        // require valid inputs and outputs for tests by default
+        InstanceManager.getDefault(JsonServerPreferences.class).setValidateClientMessages(true);
+        InstanceManager.getDefault(JsonServerPreferences.class).setValidateServerMessages(true);
     }
 
     /**

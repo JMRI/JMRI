@@ -33,11 +33,9 @@ public class JsonTurnoutHttpService extends JsonNamedBeanHttpService {
 
     @Override
     public JsonNode doGet(String type, String name, Locale locale) throws JsonException {
-        ObjectNode root = mapper.createObjectNode();
-        root.put(JSON.TYPE, TURNOUT);
         Turnout turnout = InstanceManager.turnoutManagerInstance().getTurnout(name);
-        ObjectNode data = this.getNamedBean(turnout, name, type, locale); // throws JsonException if turnout == null
-        root.set(JSON.DATA, data);
+        ObjectNode root = this.getNamedBean(turnout, name, type, locale); // throws JsonException if turnout == null
+        ObjectNode data = root.with(JSON.DATA);
         if (turnout != null) {
             data.put(INVERTED, turnout.getInverted());
             switch (turnout.getKnownState()) {
