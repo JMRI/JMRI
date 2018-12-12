@@ -166,7 +166,7 @@
         <pathelement location="${libdir}/jdom.jar"/>
         <pathelement location="${libdir}/jhall.jar"/>
         <pathelement location="${libdir}/jinput.jar"/>
-        <pathelement location="${libdir}/jmdns-3.5.1.jar"/>
+        <pathelement location="${libdir}/jmdns-3.5.5.jar"/>
         <pathelement location="${libdir}/openlcb.jar"/>
         <pathelement location="${libdir}/jlfgr-1_0.jar"/>
         <pathelement location="${libdir}/joal.jar"/>
