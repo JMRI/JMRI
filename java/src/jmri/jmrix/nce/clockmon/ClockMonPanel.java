@@ -1539,6 +1539,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
     }
 
     @SuppressWarnings("unused")
+    @SuppressFBWarnings(value = "UPM_UNCALLED_PRIVATE_METHOD", justification="was previously marked with @SuppressWarnings, reason unknown")
     private void issueReadTimeRequest() {
         if (!waitingForCmdRead) {
             byte[] cmd = jmri.jmrix.nce.NceBinaryCommand.accMemoryRead(CS_CLOCK_MEM_ADDR);
@@ -1551,6 +1552,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
     }
 
     @SuppressWarnings("unused")
+    @SuppressFBWarnings(value = "UPM_UNCALLED_PRIVATE_METHOD", justification="was previously marked with @SuppressWarnings, reason unknown")
     private void issueReadRatioRequest() {
         if (!waitingForCmdRead) {
             byte[] cmd = jmri.jmrix.nce.NceBinaryCommand.accMemoryRead(CS_CLOCK_MEM_ADDR);
@@ -1563,6 +1565,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
     }
 
     @SuppressWarnings("unused")
+    @SuppressFBWarnings(value = "UPM_UNCALLED_PRIVATE_METHOD", justification="was previously marked with @SuppressWarnings, reason unknown")
     private void issueReadFormatRequest() {
         if (!waitingForCmdRead) {
             byte[] cmd = jmri.jmrix.nce.NceBinaryCommand.accMemoryRead(CS_CLOCK_MEM_ADDR);
@@ -1575,6 +1578,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
     }
 
     @SuppressWarnings("unused")
+    @SuppressFBWarnings(value = "UPM_UNCALLED_PRIVATE_METHOD", justification="was previously marked with @SuppressWarnings, reason unknown")
     private void issueReadStatusRequest() {
         if (!waitingForCmdRead) {
             byte[] cmd = jmri.jmrix.nce.NceBinaryCommand.accMemoryRead(CS_CLOCK_MEM_ADDR);

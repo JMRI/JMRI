@@ -1,5 +1,6 @@
 package jmri.jmrix.direct;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import javax.annotation.Nonnull;
 import jmri.ProgrammingMode;
 import org.slf4j.Logger;
@@ -140,6 +141,7 @@ public class Message extends jmri.jmrix.AbstractMRMessage {
     }
 
     @SuppressWarnings("unused")
+    @SuppressFBWarnings(value = "UPM_UNCALLED_PRIVATE_METHOD", justification="was previously marked with @SuppressWarnings, reason unknown")
     private static String addIntAsTwo(int val, Message m, int offset) {
         String s = "" + val;
         if (s.length() != 2) {

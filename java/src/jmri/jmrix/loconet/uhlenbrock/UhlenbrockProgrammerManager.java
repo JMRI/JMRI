@@ -14,8 +14,8 @@ import jmri.jmrix.loconet.SlotManager;
  */
 public class UhlenbrockProgrammerManager extends LnProgrammerManager {
 
-    public UhlenbrockProgrammerManager(SlotManager pSlotManager, LocoNetSystemConnectionMemo memo) {
-        super(pSlotManager, memo);
+    public UhlenbrockProgrammerManager(LocoNetSystemConnectionMemo memo) {
+        super(memo);
     }
 
     @Override
