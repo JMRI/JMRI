@@ -11,9 +11,12 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 import java.util.prefs.Preferences;
+import javax.annotation.Nonnull;
 import javax.jmdns.JmDNS;
 import javax.jmdns.JmmDNS;
 import javax.jmdns.NetworkTopologyEvent;
@@ -77,11 +80,21 @@ import org.slf4j.LoggerFactory;
  */
 public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Disposable {
 
+    public enum Protocol {
+        IPv4, IPv6, All
+    }
     // static data objects
-    protected final HashMap<String, ZeroConfService> services = new HashMap<>();
-    protected final HashMap<InetAddress, JmDNS> netServices = new HashMap<>();
-    protected final List<ZeroConfServiceListener> listeners = new ArrayList<>();
+    /**
+     * There can only be <strong>one</strong> {@link javax.jmdns.JmDNS} object
+     * per {@link java.net.InetAddress} per JVM, so this collection of JmDNS
+     * objects is static. All access <strong>must</strong> be through {@link #getDNSes()
+     * } to ensure this is populated correctly.
+     */
+    protected static final HashMap<InetAddress, JmDNS> JMDNS_SERVICES = new HashMap<>();
     private static final Logger log = LoggerFactory.getLogger(ZeroConfServiceManager.class);
+    // class data objects
+    protected final HashMap<String, ZeroConfService> services = new HashMap<>();
+    protected final List<ZeroConfServiceListener> listeners = new ArrayList<>();
     protected final NetworkListener networkListener = new NetworkListener(this);
     protected final ShutDownTask shutDownTask = new ShutDownTask(this);
 
@@ -186,7 +199,7 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
             listeners.stream().forEach((listener) -> {
                 listener.serviceQueued(new ZeroConfServiceEvent(service, null));
             });
-            for (JmDNS netService : getNetServices().values()) {
+            for (JmDNS netService : getDNSes().values()) {
                 ZeroConfServiceEvent event;
                 ServiceInfo info;
                 try {
@@ -250,7 +263,7 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
     public void stop(ZeroConfService service) {
         log.debug("Stopping ZeroConfService {}", service.getKey());
         if (services.containsKey(service.getKey())) {
-            getNetServices().values().stream().forEach((netService) -> {
+            getDNSes().values().stream().forEach((netService) -> {
                 try {
                     try {
                         log.debug("Unregistering {} from {}", service.getKey(), netService.getInetAddress());
@@ -289,8 +302,8 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
         } catch (InterruptedException ex) {
             log.warn("ZeroConfService stop threads interrupted.", ex);
         }
-        CountDownLatch nsLatch = new CountDownLatch(getNetServices().size());
-        new HashMap<>(getNetServices()).values().parallelStream().forEach((netService) -> {
+        CountDownLatch nsLatch = new CountDownLatch(getDNSes().size());
+        new HashMap<>(getDNSes()).values().parallelStream().forEach((netService) -> {
             new Thread(() -> {
                 netService.unregisterAllServices();
                 if (close) {
@@ -321,28 +334,93 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
     }
 
     /**
-     * The list of JmDNS handlers.
+     * The list of JmDNS handlers. This is package private.
      *
      * @return a {@link java.util.HashMap} of {@link javax.jmdns.JmDNS} objects,
      *         accessible by {@link java.net.InetAddress} keys.
      */
-    synchronized public HashMap<InetAddress, JmDNS> getNetServices() {
-        if (netServices.isEmpty()) {
+    synchronized HashMap<InetAddress, JmDNS> getDNSes() {
+        if (JMDNS_SERVICES.isEmpty()) {
             log.debug("JmDNS version: {}", JmDNS.VERSION);
-            try {
-                for (InetAddress address : hostAddresses()) {
-                    // explicitly pass a valid host getName, since null causes a very long lookup on some networks
-                    log.debug("Calling JmDNS.create({}, '{}')", address.getHostAddress(), address.getHostAddress());
-                    netServices.put(address, JmDNS.create(address, address.getHostAddress()));
+            allAddresses().forEach((address) -> {
+                // explicitly pass a valid host getName, since null causes a very long lookup on some networks
+                log.debug("Calling JmDNS.create({}, '{}')", address.getHostAddress(), address.getHostAddress());
+                try {
+                    JMDNS_SERVICES.put(address, JmDNS.create(address, address.getHostAddress()));
+                } catch (IOException ex) {
+                    log.warn("Unable to create JmDNS with error: {}", ex.getMessage(), ex);
                 }
-            } catch (IOException ex) {
-                log.warn("Unable to create JmDNS with error: {}", ex.getMessage(), ex);
-            }
+            });
             InstanceManager.getOptionalDefault(ShutDownManager.class).ifPresent(manager -> {
                 manager.register(shutDownTask);
             });
         }
-        return new HashMap<>(netServices);
+        return new HashMap<>(JMDNS_SERVICES);
+    }
+
+    /**
+     * Get all addresses that JmDNS instances can be created for excluding
+     * link-local and loopback addresses.
+     *
+     * @return the addresses
+     * @see #getAddresses(jmri.util.zeroconf.ZeroConfServiceManager.Protocol)
+     * @see #getAddresses(jmri.util.zeroconf.ZeroConfServiceManager.Protocol,
+     * boolean)
+     */
+    @Nonnull
+    public Set<InetAddress> getAddresses() {
+        return getAddresses(Protocol.All, false);
+    }
+
+    /**
+     * Get all addresses that JmDNS instances can be created for excluding
+     * link-local and loopback addresses.
+     *
+     * @param protocol the Internet protocol
+     * @return the addresses
+     * @see #getAddresses()
+     * @see #getAddresses(jmri.util.zeroconf.ZeroConfServiceManager.Protocol,
+     * boolean)
+     */
+    @Nonnull
+    public Set<InetAddress> getAddresses(Protocol protocol) {
+        return getAddresses(protocol, false);
+    }
+
+    /**
+     * Get all addresses of a specific IP protocol that JmDNS instances can be
+     * created for.
+     *
+     * @param protocol the IP protocol addresses to return
+     * @param loopback true to include link-local and loopback addresses; false
+     *                 otherwise
+     * @return the addresses
+     * @see #getAddresses()
+     * @see #getAddresses(jmri.util.zeroconf.ZeroConfServiceManager.Protocol)
+     */
+    @Nonnull
+    public Set<InetAddress> getAddresses(Protocol protocol, boolean loopback) {
+        Set<InetAddress> set = new HashSet<>();
+        if (protocol == Protocol.All) {
+            set.addAll(getDNSes().keySet());
+        } else {
+            getDNSes().keySet().forEach((address) -> {
+                if (protocol == Protocol.IPv4 && address instanceof Inet4Address) {
+                    set.add(address);
+                }
+                if (protocol == Protocol.IPv6 && address instanceof Inet6Address) {
+                    set.add(address);
+                }
+            });
+        }
+        if (!loopback) {
+            new HashSet<>(set).forEach((address) -> {
+                if (address.isLinkLocalAddress() || address.isLoopbackAddress()) {
+                    set.remove(address);
+                }
+            });
+        }
+        return set;
     }
 
     /**
@@ -369,50 +447,37 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
      * @return The fully qualified domain getName.
      */
     public String FQDN(InetAddress address) {
-        return getNetServices().get(address).getHostName();
+        return getDNSes().get(address).getHostName();
     }
 
     /**
-     * A list of the non-loopback, non-link-local IP addresses of the host, or
-     * null if none found. The UseIPv4 and UseIPv6 preferences are also applied.
+     * Get all IP addresses that are up on the host.
      *
-     * @return The non-loopback, non-link-local IP addresses on the host, of the
-     *         allowed getType(s).
+     * @return The IP addresses on the host
      */
-    public List<InetAddress> hostAddresses() {
-        List<InetAddress> addrList = new ArrayList<>();
-        Enumeration<NetworkInterface> IFCs = null;
-        //get current preference values
-        boolean useIPv4 = zeroConfPrefs.getBoolean(ZeroConfService.IPv4, true);
-        boolean useIPv6 = zeroConfPrefs.getBoolean(ZeroConfService.IPv6, true);
-
+    @Nonnull
+    private Set<InetAddress> allAddresses() {
+        Set<InetAddress> addresses = new HashSet<>();
         try {
-            IFCs = NetworkInterface.getNetworkInterfaces();
-        } catch (SocketException ex) {
-            log.error("Unable to get network interfaces.", ex);
-        }
-        if (IFCs != null) {
-            while (IFCs.hasMoreElements()) {
-                NetworkInterface IFC = IFCs.nextElement();
+            Enumeration<NetworkInterface> nis = NetworkInterface.getNetworkInterfaces();
+            while (nis.hasMoreElements()) {
+                NetworkInterface ni = nis.nextElement();
                 try {
-                    if (IFC.isUp()) {
-                        Enumeration<InetAddress> addresses = IFC.getInetAddresses();
-                        while (addresses.hasMoreElements()) {
-                            InetAddress address = addresses.nextElement();
-                            //add only if a valid address getType
-                            if (!address.isLoopbackAddress() && !address.isLinkLocalAddress()
-                                    && ((address instanceof Inet4Address && useIPv4)
-                                    || (address instanceof Inet6Address && useIPv6))) {
-                                addrList.add(address);
-                            }
+                    if (ni.isUp()) {
+                        Enumeration<InetAddress> niAddresses = ni.getInetAddresses();
+                        while (niAddresses.hasMoreElements()) {
+                            InetAddress address = niAddresses.nextElement();
+                            addresses.add(address);
                         }
                     }
                 } catch (SocketException ex) {
-                    log.error("Unable to read network interface {}.", IFC, ex);
+                    log.error("Unable to read network interface {}.", ni, ex);
                 }
             }
+        } catch (SocketException ex) {
+            log.error("Unable to get network interfaces.", ex);
         }
-        return addrList;
+        return addresses;
     }
 
     public void addEventListener(ZeroConfServiceListener l) {
@@ -452,26 +517,22 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
             //get current preference values
             boolean useIPv4 = manager.zeroConfPrefs.getBoolean(ZeroConfService.IPv4, true);
             boolean useIPv6 = manager.zeroConfPrefs.getBoolean(ZeroConfService.IPv6, true);
-            if (nte.getInetAddress() instanceof Inet6Address
-                    && !useIPv6) {
-                log.debug("Ignoring IPv6 address {}", nte.getInetAddress().getHostAddress());
-                return;
-            }
-            if (nte.getInetAddress() instanceof Inet4Address
-                    && !useIPv4) {
-                log.debug("Ignoring IPv4 address {}", nte.getInetAddress().getHostAddress());
-                return;
-            }
-            if (!manager.netServices.containsKey(nte.getInetAddress())) {
-                log.debug("Adding address {}", nte.getInetAddress().getHostAddress());
-                manager.netServices.put(nte.getInetAddress(), nte.getDNS());
+            InetAddress address = nte.getInetAddress();
+            if (!useIPv6 && address instanceof Inet6Address) {
+                log.debug("Ignoring IPv6 address {}", address.getHostAddress());
+            } else if (!useIPv4 && address instanceof Inet4Address) {
+                log.debug("Ignoring IPv4 address {}", address.getHostAddress());
+            } else if (!JMDNS_SERVICES.containsKey(address)) {
+                log.debug("Adding address {}", address.getHostAddress());
+                JmDNS dns = nte.getDNS();
+                JMDNS_SERVICES.put(address, dns);
                 manager.allServices().stream().forEach((service) -> {
                     try {
-                        if (!service.containsServiceInfo(nte.getDNS().getInetAddress())) {
-                            log.debug("Publishing zeroConf service for '{}' on {}", service.getKey(), nte.getInetAddress().getHostAddress());
-                            nte.getDNS().registerService(service.addServiceInfo(nte.getDNS().getInetAddress()));
+                        if (!service.containsServiceInfo(address)) {
+                            log.debug("Publishing zeroConf service for '{}' on {}", service.getKey(), address.getHostAddress());
+                            dns.registerService(service.addServiceInfo(address));
                             manager.listeners.stream().forEach((listener) -> {
-                                listener.servicePublished(new ZeroConfServiceEvent(service, nte.getDNS()));
+                                listener.servicePublished(new ZeroConfServiceEvent(service, dns));
                             });
                         }
                     } catch (IOException ex) {
@@ -479,19 +540,21 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
                     }
                 });
             } else {
-                log.debug("Address {} already known.", nte.getInetAddress().getHostAddress());
+                log.debug("Address {} already known.", address.getHostAddress());
             }
         }
 
         @Override
         public void inetAddressRemoved(NetworkTopologyEvent nte) {
-            log.debug("Removing address {}", nte.getInetAddress());
-            manager.netServices.remove(nte.getInetAddress());
-            nte.getDNS().unregisterAllServices();
+            InetAddress address = nte.getInetAddress();
+            JmDNS dns = nte.getDNS();
+            log.debug("Removing address {}", address);
+            JMDNS_SERVICES.remove(address);
+            dns.unregisterAllServices();
             manager.allServices().stream().forEach((service) -> {
-                service.removeServiceInfo(nte.getInetAddress());
+                service.removeServiceInfo(address);
                 manager.listeners.stream().forEach((listener) -> {
-                    listener.servicePublished(new ZeroConfServiceEvent(service, nte.getDNS()));
+                    listener.servicePublished(new ZeroConfServiceEvent(service, dns));
                 });
             });
         }

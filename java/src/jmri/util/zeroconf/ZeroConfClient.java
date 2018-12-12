@@ -25,13 +25,13 @@ public class ZeroConfClient {
         if (mdnsServiceListener == null) {
             mdnsServiceListener = new NetworkServiceListener(service, this);
         }
-        for (JmDNS server : InstanceManager.getDefault(ZeroConfServiceManager.class).getNetServices().values()) {
+        for (JmDNS server : InstanceManager.getDefault(ZeroConfServiceManager.class).getDNSes().values()) {
             server.addServiceListener(service, mdnsServiceListener);
         }
     }
 
     public void stopServiceListener(@Nonnull String service) {
-        for (JmDNS server : InstanceManager.getDefault(ZeroConfServiceManager.class).getNetServices().values()) {
+        for (JmDNS server : InstanceManager.getDefault(ZeroConfServiceManager.class).getDNSes().values()) {
             server.removeServiceListener(service, mdnsServiceListener);
         }
     }
@@ -44,7 +44,7 @@ public class ZeroConfClient {
      *         service.
      */
     public ServiceInfo getService(@Nonnull String service) {
-        for (JmDNS server : InstanceManager.getDefault(ZeroConfServiceManager.class).getNetServices().values()) {
+        for (JmDNS server : InstanceManager.getDefault(ZeroConfServiceManager.class).getDNSes().values()) {
             ServiceInfo[] infos = server.list(service);
             if (infos != null) {
                 return infos[0];
@@ -62,8 +62,8 @@ public class ZeroConfClient {
      */
     @Nonnull
     public List<ServiceInfo> getServices(@Nonnull String service) {
-        ArrayList<ServiceInfo> services = new ArrayList<ServiceInfo>();
-        for (JmDNS server : InstanceManager.getDefault(ZeroConfServiceManager.class).getNetServices().values()) {
+        ArrayList<ServiceInfo> services = new ArrayList<>();
+        for (JmDNS server : InstanceManager.getDefault(ZeroConfServiceManager.class).getDNSes().values()) {
             if (server.list(service) != null) {
                 services.addAll(Arrays.asList(server.list(service)));
             }
@@ -80,7 +80,7 @@ public class ZeroConfClient {
      *         on the specified host..
      */
     public ServiceInfo getServiceOnHost(@Nonnull String service, @Nonnull String hostname) {
-        for (JmDNS server : InstanceManager.getDefault(ZeroConfServiceManager.class).getNetServices().values()) {
+        for (JmDNS server : InstanceManager.getDefault(ZeroConfServiceManager.class).getDNSes().values()) {
             ServiceInfo[] infos = server.list(service);
             for (ServiceInfo info : infos) {
                 if (info.getServer().equals(hostname)) {
@@ -101,7 +101,7 @@ public class ZeroConfClient {
      *         on the specified host..
      */
     public ServiceInfo getServicebyAdName(@Nonnull String service, @Nonnull String adName) {
-        for (JmDNS server : InstanceManager.getDefault(ZeroConfServiceManager.class).getNetServices().values()) {
+        for (JmDNS server : InstanceManager.getDefault(ZeroConfServiceManager.class).getDNSes().values()) {
             ServiceInfo[] infos = server.list(service);
             for (ServiceInfo info : infos) {
                 log.debug("Found Name: {}", info.getQualifiedName());
@@ -115,8 +115,8 @@ public class ZeroConfClient {
 
     @Nonnull
     public String[] getHostList(@Nonnull String service) {
-        ArrayList<String> hostlist = new ArrayList<String>();
-        for (JmDNS server : InstanceManager.getDefault(ZeroConfServiceManager.class).getNetServices().values()) {
+        ArrayList<String> hostlist = new ArrayList<>();
+        for (JmDNS server : InstanceManager.getDefault(ZeroConfServiceManager.class).getDNSes().values()) {
             ServiceInfo[] infos = server.list(service);
             for (ServiceInfo info : infos) {
                 hostlist.add(info.getServer());

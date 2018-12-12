@@ -3,12 +3,9 @@ package jmri.util.zeroconf;
 import java.io.IOException;
 import java.net.Inet4Address;
 import java.net.Inet6Address;
-import java.net.InetAddress;
 import java.util.HashMap;
 import java.util.concurrent.CountDownLatch;
 import javax.jmdns.JmDNS;
-import jmri.InstanceManager;
-import jmri.ShutDownManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -80,7 +77,7 @@ public class MockZeroConfServiceManager extends ZeroConfServiceManager {
             listeners.stream().forEach((listener) -> {
                 listener.serviceQueued(new ZeroConfServiceEvent(service, null));
             });
-            for (JmDNS netService : getNetServices().values()) {
+            for (JmDNS netService : getDNSes().values()) {
                 ZeroConfServiceEvent event;
                 try {
                     if (netService.getInetAddress() instanceof Inet6Address && !useIPv6) {
@@ -141,7 +138,7 @@ public class MockZeroConfServiceManager extends ZeroConfServiceManager {
     public void stop(ZeroConfService service) {
         log.debug("Stopping ZeroConfService {}", service.getKey());
         if (services.containsKey(service.getKey())) {
-            getNetServices().values().stream().forEach((netService) -> {
+            getDNSes().values().stream().forEach((netService) -> {
                 try {
                     try {
                         log.debug("Unregistering {} from {}", service.getKey(), netService.getInetAddress());
@@ -181,8 +178,8 @@ public class MockZeroConfServiceManager extends ZeroConfServiceManager {
         } catch (InterruptedException ex) {
             log.warn("ZeroConfService stop threads interrupted.", ex);
         }
-        CountDownLatch nsLatch = new CountDownLatch(getNetServices().size());
-        new HashMap<>(getNetServices()).values().parallelStream().forEach((netService) -> {
+        CountDownLatch nsLatch = new CountDownLatch(getDNSes().size());
+        new HashMap<>(getDNSes()).values().parallelStream().forEach((netService) -> {
             new Thread(() -> {
                 netService.unregisterAllServices();
                 if (close) {
@@ -201,32 +198,5 @@ public class MockZeroConfServiceManager extends ZeroConfServiceManager {
             log.warn("JmDNS unregister threads interrupted.", ex);
         }
         services.clear();
-    }
-
-    /**
-     * The list of JmDNS handlers.
-     *
-     * @return a {@link java.util.HashMap} of {@link javax.jmdns.JmDNS} objects,
-     *         accessible by {@link java.net.InetAddress} keys.
-     */
-    @Override
-    synchronized public HashMap<InetAddress, JmDNS> getNetServices() {
-        if (netServices.isEmpty()) {
-            log.debug("JmDNS version: {}", JmDNS.VERSION);
-            try {
-                for (InetAddress address : hostAddresses()) {
-                    // explicitly pass a valid host getName, since null causes a very long lookup on some networks
-                    log.debug("Calling JmDNS.create({}, '{}')", address.getHostAddress(), address.getHostAddress());
-                    // IS THIS CAUSING PROBLEMS IN UNIT TESTS ON CI SERVICES?
-                    netServices.put(address, JmDNS.create(address, address.getHostAddress()));
-                }
-            } catch (IOException ex) {
-                log.warn("Unable to create JmDNS with error: {}", ex.getMessage(), ex);
-            }
-            InstanceManager.getOptionalDefault(ShutDownManager.class).ifPresent(manager -> {
-                manager.register(shutDownTask);
-            });
-        }
-        return new HashMap<>(netServices);
     }
 }

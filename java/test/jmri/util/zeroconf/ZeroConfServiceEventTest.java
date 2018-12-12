@@ -7,10 +7,10 @@ import org.junit.Test;
 import jmri.util.JUnitUtil;
 import javax.jmdns.JmDNS;
 import jmri.InstanceManager;
- 
+
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class ZeroConfServiceEventTest {
 
@@ -19,9 +19,9 @@ public class ZeroConfServiceEventTest {
     @Test
     public void testCTor() {
         ZeroConfService instance = ZeroConfService.create(HTTP, 9999);
-        JmDNS jmdns[] = InstanceManager.getDefault(ZeroConfServiceManager.class).getNetServices().values().toArray(new JmDNS[0]);
-        ZeroConfServiceEvent t = new ZeroConfServiceEvent(instance,jmdns[0]);
-        Assert.assertNotNull("exists",t);
+        JmDNS jmdns[] = InstanceManager.getDefault(ZeroConfServiceManager.class).getDNSes().values().toArray(new JmDNS[0]);
+        ZeroConfServiceEvent t = new ZeroConfServiceEvent(instance, jmdns[0]);
+        Assert.assertNotNull("exists", t);
     }
 
     @Before

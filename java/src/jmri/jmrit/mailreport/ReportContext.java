@@ -257,7 +257,7 @@ public class ReportContext {
         }
 
         Collection<ZeroConfService> services = InstanceManager.getDefault(ZeroConfServiceManager.class).allServices();
-        for (InetAddress address : InstanceManager.getDefault(ZeroConfServiceManager.class).getNetServices().keySet()) {
+        for (InetAddress address : InstanceManager.getDefault(ZeroConfServiceManager.class).getAddresses()) {
             addString("ZeroConfService host: " + InstanceManager.getDefault(ZeroConfServiceManager.class).hostName(address) + " running " + services.size() + " service(s)");
         }
         if (services.size() > 0) {

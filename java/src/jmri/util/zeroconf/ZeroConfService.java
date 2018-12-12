@@ -331,7 +331,7 @@ public class ZeroConfService {
      */
     @Deprecated
     synchronized public static HashMap<InetAddress, JmDNS> netServices() {
-        return InstanceManager.getDefault(ZeroConfServiceManager.class).getNetServices();
+        return InstanceManager.getDefault(ZeroConfServiceManager.class).getDNSes();
     }
 
     /**
@@ -363,22 +363,7 @@ public class ZeroConfService {
      */
     @Deprecated
     public static String FQDN(InetAddress address) {
-        return InstanceManager.getDefault(ZeroConfServiceManager.class).getNetServices().get(address).getHostName();
-    }
-
-    /**
-     * A list of the non-loopback, non-link-local IP addresses of the host, or
-     * null if none found. The UseIPv4 and UseIPv6 preferences are also applied.
-     *
-     * @return The non-loopback, non-link-local IP addresses on the host, of the
-     *         allowed type(s)
-     * @deprecated since 4.15.1; use
-     * {@link jmri.util.zeroconf.ZeroConfServiceManager#hostAddresses() }
-     * instead
-     */
-    @Deprecated
-    public static List<InetAddress> hostAddresses() {
-        return InstanceManager.getDefault(ZeroConfServiceManager.class).hostAddresses();
+        return InstanceManager.getDefault(ZeroConfServiceManager.class).FQDN(address);
     }
 
     public void addEventListener(ZeroConfServiceListener l) {
