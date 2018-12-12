@@ -87,8 +87,8 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
     /**
      * There can only be <strong>one</strong> {@link javax.jmdns.JmDNS} object
      * per {@link java.net.InetAddress} per JVM, so this collection of JmDNS
-     * objects is static. All access <strong>must</strong> be through {@link #getDNSes()
-     * } to ensure this is populated correctly.
+     * objects is static. All access <strong>must</strong> be through
+     * {@link #getDNSes() } to ensure this is populated correctly.
      */
     protected static final HashMap<InetAddress, JmDNS> JMDNS_SERVICES = new HashMap<>();
     private static final Logger log = LoggerFactory.getLogger(ZeroConfServiceManager.class);
@@ -199,51 +199,48 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
             listeners.stream().forEach((listener) -> {
                 listener.serviceQueued(new ZeroConfServiceEvent(service, null));
             });
-            for (JmDNS netService : getDNSes().values()) {
+            for (JmDNS dns : getDNSes().values()) {
                 ZeroConfServiceEvent event;
                 ServiceInfo info;
                 try {
-                    if (netService.getInetAddress() instanceof Inet6Address && !useIPv6) {
+                    final InetAddress address = dns.getInetAddress();
+                    if (address instanceof Inet6Address && !useIPv6) {
                         // Skip if address is IPv6 and should not be advertised on
-                        log.debug("Ignoring IPv6 address {}", netService.getInetAddress().getHostAddress());
+                        log.debug("Ignoring IPv6 address {}", address.getHostAddress());
                         continue;
                     }
-                    if (netService.getInetAddress() instanceof Inet4Address && !useIPv4) {
+                    if (address instanceof Inet4Address && !useIPv4) {
                         // Skip if address is IPv4 and should not be advertised on
-                        log.debug("Ignoring IPv4 address {}", netService.getInetAddress().getHostAddress());
+                        log.debug("Ignoring IPv4 address {}", address.getHostAddress());
                         continue;
                     }
-                    try {
-                        log.debug("Publishing ZeroConfService for '{}' on {}", service.getKey(), netService.getInetAddress().getHostAddress());
-                    } catch (IOException ex) {
-                        log.debug("Publishing ZeroConfService for '{}' with IOException {}", service.getKey(), ex.getLocalizedMessage(), ex);
-                    }
+                    log.debug("Publishing ZeroConfService for '{}' on {}", service.getKey(), address.getHostAddress());
                     // JmDNS requires a 1-to-1 mapping of getServiceInfo to InetAddress
-                    if (!service.containsServiceInfo(netService.getInetAddress())) {
+                    if (!service.containsServiceInfo(address)) {
                         try {
                             info = service.getServiceInfo();
-                            netService.registerService(info);
-                            log.debug("Register service '{}' on {} successful.", service.getKey(), netService.getInetAddress().getHostAddress());
+                            dns.registerService(info);
+                            log.debug("Register service '{}' on {} successful.", service.getKey(), address.getHostAddress());
                         } catch (IllegalStateException ex) {
                             // thrown if the reference getServiceInfo object is in use
                             try {
-                                log.debug("Initial attempt to register '{}' on {} failed.", service.getKey(), netService.getInetAddress().getHostAddress());
-                                info = service.addServiceInfo(netService.getInetAddress());
-                                log.debug("Retrying register '{}' on {}.", service.getKey(), netService.getInetAddress().getHostAddress());
-                                netService.registerService(info);
+                                log.debug("Initial attempt to register '{}' on {} failed.", service.getKey(), address.getHostAddress());
+                                info = service.addServiceInfo(address);
+                                log.debug("Retrying register '{}' on {}.", service.getKey(), address.getHostAddress());
+                                dns.registerService(info);
                             } catch (IllegalStateException ex1) {
                                 // thrown if service gets registered on interface by
                                 // the networkListener before this loop on interfaces
                                 // completes, so we only ensure a later notification
                                 // is not posted continuing to next interface in list
-                                log.debug("'{}' is already registered on {}.", service.getKey(), netService.getInetAddress().getHostAddress());
+                                log.debug("'{}' is already registered on {}.", service.getKey(), address.getHostAddress());
                                 continue;
                             }
                         }
                     } else {
-                        log.debug("skipping '{}' on {}, already in serviceInfos.", service.getKey(), netService.getInetAddress().getHostAddress());
+                        log.debug("skipping '{}' on {}, already in serviceInfos.", service.getKey(), address.getHostAddress());
                     }
-                    event = new ZeroConfServiceEvent(service, netService);
+                    event = new ZeroConfServiceEvent(service, dns);
                 } catch (IOException ex) {
                     log.error("Unable to publish service for '{}': {}", service.getKey(), ex.getMessage());
                     continue;
@@ -263,17 +260,18 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
     public void stop(ZeroConfService service) {
         log.debug("Stopping ZeroConfService {}", service.getKey());
         if (services.containsKey(service.getKey())) {
-            getDNSes().values().stream().forEach((netService) -> {
+            getDNSes().values().parallelStream().forEach((dns) -> {
                 try {
+                    final InetAddress address = dns.getInetAddress();
                     try {
-                        log.debug("Unregistering {} from {}", service.getKey(), netService.getInetAddress());
-                        netService.unregisterService(service.getServiceInfo(netService.getInetAddress()));
-                        service.removeServiceInfo(netService.getInetAddress());
+                        log.debug("Unregistering {} from {}", service.getKey(), address);
+                        dns.unregisterService(service.getServiceInfo(address));
+                        service.removeServiceInfo(address);
                         this.listeners.stream().forEach((listener) -> {
-                            listener.serviceUnpublished(new ZeroConfServiceEvent(service, netService));
+                            listener.serviceUnpublished(new ZeroConfServiceEvent(service, dns));
                         });
                     } catch (NullPointerException ex) {
-                        log.debug("{} already unregistered from {}", service.getKey(), netService.getInetAddress());
+                        log.debug("{} already unregistered from {}", service.getKey(), address);
                     }
                 } catch (IOException ex) {
                     log.error("Unable to stop ZeroConfService {}. {}", service.getKey(), ex.getLocalizedMessage());
@@ -303,12 +301,12 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
             log.warn("ZeroConfService stop threads interrupted.", ex);
         }
         CountDownLatch nsLatch = new CountDownLatch(getDNSes().size());
-        new HashMap<>(getDNSes()).values().parallelStream().forEach((netService) -> {
+        new HashMap<>(getDNSes()).values().parallelStream().forEach((dns) -> {
             new Thread(() -> {
-                netService.unregisterAllServices();
+                dns.unregisterAllServices();
                 if (close) {
                     try {
-                        netService.close();
+                        dns.close();
                     } catch (IOException ex) {
                         log.debug("jmdns.close() returned IOException: {}", ex.getMessage());
                     }
@@ -342,15 +340,34 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
     synchronized HashMap<InetAddress, JmDNS> getDNSes() {
         if (JMDNS_SERVICES.isEmpty()) {
             log.debug("JmDNS version: {}", JmDNS.VERSION);
-            allAddresses().forEach((address) -> {
-                // explicitly pass a valid host getName, since null causes a very long lookup on some networks
-                log.debug("Calling JmDNS.create({}, '{}')", address.getHostAddress(), address.getHostAddress());
-                try {
-                    JMDNS_SERVICES.put(address, JmDNS.create(address, address.getHostAddress()));
-                } catch (IOException ex) {
-                    log.warn("Unable to create JmDNS with error: {}", ex.getMessage(), ex);
+            try {
+                Enumeration<NetworkInterface> nis = NetworkInterface.getNetworkInterfaces();
+                while (nis.hasMoreElements()) {
+                    NetworkInterface ni = nis.nextElement();
+                    try {
+                        if (ni.isUp()) {
+                            Enumeration<InetAddress> niAddresses = ni.getInetAddresses();
+                            while (niAddresses.hasMoreElements()) {
+                                InetAddress address = niAddresses.nextElement();
+                                if (!address.isLinkLocalAddress()
+                                        && !address.isLoopbackAddress()) {
+                                    // explicitly pass a valid host getName, since null causes a very long lookup on some networks
+                                    log.debug("Calling JmDNS.create({}, '{}')", address.getHostAddress(), address.getHostAddress());
+                                    try {
+                                        JMDNS_SERVICES.put(address, JmDNS.create(address, address.getHostAddress()));
+                                    } catch (IOException ex) {
+                                        log.warn("Unable to create JmDNS with error: {}", ex.getMessage(), ex);
+                                    }
+                                }
+                            }
+                        }
+                    } catch (SocketException ex) {
+                        log.error("Unable to read network interface {}.", ni, ex);
+                    }
                 }
-            });
+            } catch (SocketException ex) {
+                log.error("Unable to get network interfaces.", ex);
+            }
             InstanceManager.getOptionalDefault(ShutDownManager.class).ifPresent(manager -> {
                 manager.register(shutDownTask);
             });
@@ -450,36 +467,6 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
         return getDNSes().get(address).getHostName();
     }
 
-    /**
-     * Get all IP addresses that are up on the host.
-     *
-     * @return The IP addresses on the host
-     */
-    @Nonnull
-    private Set<InetAddress> allAddresses() {
-        Set<InetAddress> addresses = new HashSet<>();
-        try {
-            Enumeration<NetworkInterface> nis = NetworkInterface.getNetworkInterfaces();
-            while (nis.hasMoreElements()) {
-                NetworkInterface ni = nis.nextElement();
-                try {
-                    if (ni.isUp()) {
-                        Enumeration<InetAddress> niAddresses = ni.getInetAddresses();
-                        while (niAddresses.hasMoreElements()) {
-                            InetAddress address = niAddresses.nextElement();
-                            addresses.add(address);
-                        }
-                    }
-                } catch (SocketException ex) {
-                    log.error("Unable to read network interface {}.", ni, ex);
-                }
-            }
-        } catch (SocketException ex) {
-            log.error("Unable to get network interfaces.", ex);
-        }
-        return addresses;
-    }
-
     public void addEventListener(ZeroConfServiceListener l) {
         this.listeners.add(l);
     }
@@ -517,7 +504,7 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
             //get current preference values
             boolean useIPv4 = manager.zeroConfPrefs.getBoolean(ZeroConfService.IPv4, true);
             boolean useIPv6 = manager.zeroConfPrefs.getBoolean(ZeroConfService.IPv6, true);
-            InetAddress address = nte.getInetAddress();
+            final InetAddress address = nte.getInetAddress();
             if (!useIPv6 && address instanceof Inet6Address) {
                 log.debug("Ignoring IPv6 address {}", address.getHostAddress());
             } else if (!useIPv4 && address instanceof Inet4Address) {
@@ -546,7 +533,7 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
 
         @Override
         public void inetAddressRemoved(NetworkTopologyEvent nte) {
-            InetAddress address = nte.getInetAddress();
+            final InetAddress address = nte.getInetAddress();
             JmDNS dns = nte.getDNS();
             log.debug("Removing address {}", address);
             JMDNS_SERVICES.remove(address);
