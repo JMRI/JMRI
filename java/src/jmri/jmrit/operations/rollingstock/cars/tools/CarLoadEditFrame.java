@@ -98,6 +98,10 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
 
         // row 4
         addItem(pLoad, replaceButton, 3, 4);
+        
+        deleteButton.setToolTipText( MessageFormat.format(Bundle.getMessage("TipDeleteAttributeName"), new Object[]{Bundle.getMessage("Load")}));
+        addButton.setToolTipText( MessageFormat.format(Bundle.getMessage("TipAddAttributeName"), new Object[]{Bundle.getMessage("Load")}));
+        replaceButton.setToolTipText( MessageFormat.format(Bundle.getMessage("TipReplaceAttributeName"), new Object[]{Bundle.getMessage("Load")}));
 
         // row 6
         JPanel pLoadType = new JPanel();

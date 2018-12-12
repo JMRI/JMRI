@@ -30,10 +30,8 @@ public class JsonMemoryHttpService extends JsonNamedBeanHttpService {
     @Override
     public JsonNode doGet(String type, String name, Locale locale) throws JsonException {
         Memory memory = InstanceManager.memoryManagerInstance().getMemory(name);
-        ObjectNode data = this.getNamedBean(memory, name, type, locale);
-        ObjectNode root = mapper.createObjectNode();
-        root.put(TYPE, MEMORY);
-        root.set(DATA, data);
+        ObjectNode root = this.getNamedBean(memory, name, type, locale);
+        ObjectNode data = root.with(DATA);
         if (memory != null) {
             if (memory.getValue() == null) {
                 data.putNull(VALUE);

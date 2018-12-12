@@ -2,6 +2,8 @@ package jmri.jmrix.lenz;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Nonnull;
+
 import jmri.ProgrammingMode;
 import jmri.jmrix.AbstractProgrammer;
 import org.slf4j.Logger;
@@ -101,6 +103,7 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
      * Types implemented here.
      */
     @Override
+    @Nonnull
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
         ret.add(ProgrammingMode.DIRECTBYTEMODE);

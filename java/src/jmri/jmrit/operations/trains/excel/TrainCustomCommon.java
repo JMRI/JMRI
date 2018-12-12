@@ -56,7 +56,7 @@ public abstract class TrainCustomCommon {
      * @param csvFile The File to add.
      *
      */
-    @SuppressFBWarnings(value = "UW_UNCOND_WAIT")
+    @SuppressFBWarnings(value = "UW_UNCOND_WAIT", justification = "FindBugs incorrectly reports not guarded by conditional control flow")
     public synchronized void addCVSFile(File csvFile) {
         // Ignore null files...
         if (csvFile == null || !excelFileExists()) {
@@ -96,7 +96,7 @@ public abstract class TrainCustomCommon {
      *
      * @return True if successful.
      */
-    @SuppressFBWarnings(value = "UW_UNCOND_WAIT")
+    @SuppressFBWarnings(value = "UW_UNCOND_WAIT", justification = "FindBugs incorrectly reports not guarded by conditional control flow")
     public synchronized boolean process() {
 
         // check to see it the Excel program is available
@@ -154,7 +154,7 @@ public abstract class TrainCustomCommon {
         return file.exists();
     }
 
-    @SuppressFBWarnings(value = "UW_UNCOND_WAIT")
+    @SuppressFBWarnings(value = "UW_UNCOND_WAIT", justification = "FindBugs incorrectly reports not guarded by conditional control flow")
     public boolean checkProcessReady() {
         if (!isProcessAlive()) {
             return true;
@@ -162,8 +162,7 @@ public abstract class TrainCustomCommon {
         if (alive) {
             log.debug("Wait time: {} seconds process ready", waitTimeSeconds);
             long loopCount = waitTimeSeconds; // number of seconds to wait
-            while (loopCount > 0 && alive) {
-                loopCount--;
+            while (loopCount-- > 0 && alive) {
                 synchronized (this) {
                     try {
                         wait(1000); // 1 sec
@@ -191,6 +190,7 @@ public abstract class TrainCustomCommon {
      *         timeout.
      * @throws InterruptedException if process thread is interrupted
      */
+    @SuppressFBWarnings(value = "UW_UNCOND_WAIT", justification = "FindBugs incorrectly reports not guarded by conditional control flow")
     public boolean waitForProcessToComplete() throws InterruptedException {
         boolean status = false;
         synchronized (process) {
@@ -204,8 +204,7 @@ public abstract class TrainCustomCommon {
             // printing can take a long time, wait to complete
             if (status && file.exists()) {
                 long loopCount = waitTimeSeconds; // number of seconds to wait
-                while (loopCount > 0) {
-                    loopCount--;
+                while (loopCount-- > 0 && file.exists()) {
                     synchronized (this) {
                         try {
                             wait(1000); // 1 sec
@@ -213,9 +212,6 @@ public abstract class TrainCustomCommon {
                             // TODO Auto-generated catch block
                             log.error("Thread unexpectedly interrupted", e);
                         }
-                    }
-                    if (!file.exists()) {
-                        break; // done printing
                     }
                 }
             }

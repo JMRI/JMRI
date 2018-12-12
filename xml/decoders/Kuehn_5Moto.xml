@@ -952,13 +952,7 @@
       </variable>
       <!-- End of function map -->
       <!-- Speed Table-->
-      <variable item="Speed Table" CV="67">
-        <speedTableVal/>
-        <label>Speed Table</label>
-        <label xml:lang="it">Tabella velocità</label>
-        <label xml:lang="de">Geschwindigkeitstabelle</label>
-        <label xml:lang="cs">Rychlostní tabulka</label>
-      </variable>      
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/revTrim.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
     </variables>

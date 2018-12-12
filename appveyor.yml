@@ -28,6 +28,7 @@ deploy: off
 
 artifacts:
   - path: instanceManagerSequence.txt
+  - path: tests.log 
 
 cache:
   - C:\Users\appveyor\.m2 -> pom.xml

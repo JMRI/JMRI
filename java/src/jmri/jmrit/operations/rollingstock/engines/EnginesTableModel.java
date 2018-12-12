@@ -358,7 +358,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
                 return eng.getTypeName();
             }
             case CONSIST_COLUMN: {
-                if (eng.getConsist() != null && eng.getConsist().isLead(eng)) {
+                if (eng.isLead()) {
                     return eng.getConsistName() + "*";
                 }
                 return eng.getConsistName();
@@ -464,7 +464,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
                     public void run() {
                         engineEditFrame = new EngineEditFrame();
                         engineEditFrame.initComponents();
-                        engineEditFrame.loadEngine(engine);
+                        engineEditFrame.load(engine);
                     }
                 });
                 break;

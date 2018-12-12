@@ -70,12 +70,7 @@ public class IdTagTableAction extends AbstractTableAction<IdTag> {
                 if (tag == null) {
                     return "?";
                 }
-                Object t = tag.getTagID();
-                if (t != null) {
-                    return t.toString();
-                } else {
-                    return "";
-                }
+                return tag.getTagID();
             }
 
             @Override

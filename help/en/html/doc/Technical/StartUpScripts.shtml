@@ -61,7 +61,7 @@
 
         <li>JMRI code reads <a href="#prop">system properties</a> that were set before JMRI started.</li>
 
-        <li>The active <a href="../../profiles.shtml">configuration
+        <li>The active <a href="../../setup/profiles.shtml">configuration
         profiles</a> are read and processed.</li>
 
         <li>The file <em>python.properties</em> is used to configure the
@@ -398,7 +398,7 @@
 
         <dd>If this option is set on the command line, the launcher
             will use profile <em>PROFILEID</em> as the <a href=
-        "/help/en/html/profiles.shtml">JMRI configuration
+        "../../setup/profiles.shtml">JMRI configuration
         profile</a> to use instead of the default one. (since JMRI 3.7.1)</dd>
 
         <dt><code>--cp:a=<em>CLASSPATH</em></code></dt>

@@ -41,15 +41,16 @@
           <choice xml:lang="ca">NMRA Digital only (ca)</choice>
           <choice xml:lang="de">Nur Digital nach NMRA</choice>
           <choice xml:lang="cs">Pouze digitál NMRA</choice>
-          <choice xml:lang="nl">Alleen digitaal naar NMRA</choice>
+          <choice xml:lang="nl">Alleen digitaal NMRA</choice>
 	  </enumChoice>
 	  <enumChoice choice="Auto. Digital/Analog detection">
             <choice>Auto. Digital/Analog detection</choice>
             <choice xml:lang="it">Convers. Analogica/Digitale auto.</choice>
             <choice xml:lang="fr">Detect. Analogique/Digital auto.</choice>
             <choice xml:lang="ca">Auto. Digital/Analog detection(ca)</choice>
-            <choice xml:lang="de">Auto. Analog-/Digitalumschaltung</choice>			
-	  </enumChoice>
+            <choice xml:lang="de">Auto. Analog-/Digitalumschaltung</choice>
+            <choice xml:lang="nl">Auto. omschakelen Analoog/Digitaal</choice>
+      </enumChoice>
 	</enumVal>
     <label>Power Source Conversion</label>
     <label xml:lang="it">Conversione Sorgente Alimentazione</label>

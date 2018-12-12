@@ -1,10 +1,8 @@
 package jmri.jmrix.dccpp.dccppovertcp.configurexml;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
+import jmri.jmrix.dccpp.dccppovertcp.ConnectionConfig;
 
 /**
  * ConnectionConfigXmlTest.java
@@ -19,12 +17,16 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractNet
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        jmri.jmrix.dccpp.DCCppSystemConnectionMemo memo = new jmri.jmrix.dccpp.DCCppSystemConnectionMemo();
+        jmri.InstanceManager.setDefault(jmri.jmrix.dccpp.DCCppSystemConnectionMemo.class, memo);
         xmlAdapter = new ConnectionConfigXml();
+        cc = new ConnectionConfig();
     }
 
     @After
     public void tearDown() {
         JUnitUtil.tearDown();
         xmlAdapter = null;
+        cc = null;
     }
 }

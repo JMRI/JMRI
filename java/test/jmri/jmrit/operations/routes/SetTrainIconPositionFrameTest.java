@@ -42,7 +42,7 @@ public class SetTrainIconPositionFrameTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeave(t.placeButton);
 
         // error dialog should appear
-        JemmyUtil.pressDialogButton(t, Bundle.getMessage("NoLocationSelected"), "OK");
+        JemmyUtil.pressDialogButton(t, Bundle.getMessage("NoLocationSelected"), Bundle.getMessage("ButtonOK"));
 
         // select location, no panel error
         t.locationBox.setSelectedIndex(1);
@@ -50,7 +50,7 @@ public class SetTrainIconPositionFrameTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeave(t.placeButton);
 
         // error dialog should appear
-        JemmyUtil.pressDialogButton(t, Bundle.getMessage("PanelNotFound"), "OK");
+        JemmyUtil.pressDialogButton(t, Bundle.getMessage("PanelNotFound"), Bundle.getMessage("ButtonOK"));
         
         // confirm train icon defaults for location and route
         Location loc = InstanceManager.getDefault(LocationManager.class).getLocationByName("North End Staging");
@@ -68,7 +68,7 @@ public class SetTrainIconPositionFrameTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeave(t.applyButton);
         
         // confirm dialog should appear
-        JemmyUtil.pressDialogButton(t, Bundle.getMessage("DoYouWantAllRoutes"), "Yes");
+        JemmyUtil.pressDialogButton(t, Bundle.getMessage("DoYouWantAllRoutes"), Bundle.getMessage("ButtonYes"));
         
         // confirm that location and routes have been modified
         Assert.assertEquals("icon position", 234, loc.getTrainIconSouth().x);
@@ -78,7 +78,7 @@ public class SetTrainIconPositionFrameTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeave(t.saveButton);
         
         // confirm dialog should appear
-        JemmyUtil.pressDialogButton(t, Bundle.getMessage("UpdateDefaults"), "Yes");
+        JemmyUtil.pressDialogButton(t, Bundle.getMessage("UpdateDefaults"), Bundle.getMessage("ButtonYes"));
         
         // confirm that location has been modified, not routes
         Assert.assertEquals("icon position", 567, loc.getTrainIconSouth().x);

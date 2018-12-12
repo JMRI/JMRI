@@ -177,15 +177,17 @@ public class JUnitUtil {
             Log4JUtil.initLogging(filename);
         }
         
-        // do not set the UncaughtExceptionHandler while unit testing
-        // individual tests can explicitely set it after calling this method
-        Thread.setDefaultUncaughtExceptionHandler(null);
+        // need to do this each time
         try {
             JUnitAppender.start();
         } catch (Throwable e) {
             System.err.println("Could not start JUnitAppender, but test continues:\n" + e);
         }
 
+        // do not set the UncaughtExceptionHandler while unit testing
+        // individual tests can explicitly set it after calling this method
+        Thread.setDefaultUncaughtExceptionHandler(null);
+        
         // silence the Jemmy GUI unit testing framework
         JUnitUtil.silenceGUITestOutput();
 
@@ -1102,6 +1104,25 @@ public class JUnitUtil {
                 System.exit(0);
             }
         }
+    }
+
+    /* GraphicsEnvironment utility methods */
+
+    public static java.awt.Container findContainer(String title) {
+        junit.extensions.jfcunit.finder.DialogFinder finder = new junit.extensions.jfcunit.finder.DialogFinder(title);
+        JUnitUtil.waitFor(() -> {
+            return (java.awt.Container) finder.find() != null;
+        }, "Found dialog + \"title\"");
+        java.awt.Container pane = (java.awt.Container) finder.find();
+        return pane;
+    }
+
+    public static javax.swing.AbstractButton pressButton(jmri.util.SwingTestCase clazz, java.awt.Container frame, String text) {
+        junit.extensions.jfcunit.finder.AbstractButtonFinder buttonFinder = new junit.extensions.jfcunit.finder.AbstractButtonFinder(text);
+        javax.swing.AbstractButton button = (javax.swing.AbstractButton) buttonFinder.find(frame, 0);
+        Assert.assertNotNull(text + " Button not found", button);
+        clazz.getHelper().enterClickAndLeave(new junit.extensions.jfcunit.eventdata.MouseEventData(clazz, button));
+        return button;
     }
 
     private final static Logger log = LoggerFactory.getLogger(JUnitUtil.class);

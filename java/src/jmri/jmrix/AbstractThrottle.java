@@ -1415,6 +1415,10 @@ abstract public class AbstractThrottle implements DccThrottle {
         stopClock();
         String currentDurationString = re.getAttribute("OperatingDuration");
         long currentDuration = 0;
+        if (currentDurationString == null) {
+            currentDurationString = "0";
+            log.info("operating duration for {} starts as zero", getLocoAddress());
+        }
         try {
             currentDuration = Long.parseLong(currentDurationString);
         } catch (NumberFormatException e) {

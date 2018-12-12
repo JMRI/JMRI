@@ -364,25 +364,23 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
         // build menu
         JMenuBar menuBar = new JMenuBar();
         JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
+        // first 5 menu items will also close when the edit train window closes
         toolMenu.add(new TrainEditBuildOptionsAction(Bundle.getMessage("MenuItemBuildOptions"), this));
         toolMenu.add(new TrainLoadOptionsAction(Bundle.getMessage("MenuItemLoadOptions"), this));
         toolMenu.add(new TrainRoadOptionsAction(Bundle.getMessage("MenuItemRoadOptions"), this));
         toolMenu.add(new TrainManifestOptionAction(Bundle.getMessage("MenuItemOptions"), this));
-        if (_train != null) {
-            toolMenu.add(new TrainCopyAction(Bundle.getMessage("TitleTrainCopy"), _train));
-        }
         toolMenu.add(new TrainScriptAction(Bundle.getMessage("MenuItemScripts"), this));
+        
+        toolMenu.add(new TrainCopyAction(Bundle.getMessage("TitleTrainCopy"), _train));
         toolMenu.add(new TrainByCarTypeAction(Bundle.getMessage("MenuItemShowCarTypes"), _train));
-        if (_train != null) {
-            toolMenu.add(new TrainConductorAction(Bundle.getMessage("TitleTrainConductor"), _train));
-        }
+        toolMenu.add(new TrainConductorAction(Bundle.getMessage("TitleTrainConductor"), _train));
         toolMenu.addSeparator();
         toolMenu.add(new PrintTrainAction(Bundle.getMessage("MenuItemPrint"), false, this));
         toolMenu.add(new PrintTrainAction(Bundle.getMessage("MenuItemPreview"), true, this));
-        toolMenu.add(new PrintTrainManifestAction(Bundle.getMessage("MenuItemPrintManifest"), false, this));
-        toolMenu.add(new PrintTrainManifestAction(Bundle.getMessage("MenuItemPreviewManifest"), true, this));
-        toolMenu.add(new PrintTrainBuildReportAction(Bundle.getMessage("MenuItemPrintBuildReport"), false, this));
-        toolMenu.add(new PrintTrainBuildReportAction(Bundle.getMessage("MenuItemPreviewBuildReport"), true, this));
+        toolMenu.add(new PrintTrainManifestAction(Bundle.getMessage("MenuItemPrintManifest"), false, _train));
+        toolMenu.add(new PrintTrainManifestAction(Bundle.getMessage("MenuItemPreviewManifest"), true, _train));
+        toolMenu.add(new PrintTrainBuildReportAction(Bundle.getMessage("MenuItemPrintBuildReport"), false, _train));
+        toolMenu.add(new PrintTrainBuildReportAction(Bundle.getMessage("MenuItemPreviewBuildReport"), true, _train));
         toolMenu.add(new PrintSavedTrainManifestAction(Bundle.getMessage("MenuItemPrintSavedManifest"), false, _train));
         toolMenu.add(new PrintSavedTrainManifestAction(Bundle.getMessage("MenuItemPreviewSavedManifest"), true, _train));
 
@@ -568,7 +566,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
         }
         if (!OperationsXml.checkFileName(trainName)) { // NOI18N
             log.error("Train name must not contain reserved characters");
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("TrainNameResChar") + NEW_LINE
+            JOptionPane.showMessageDialog(this, Bundle.getMessage("NameResChar") + NEW_LINE
                     + Bundle.getMessage("ReservedChar"), MessageFormat.format(Bundle.getMessage("CanNot"),
                             new Object[]{s}), JOptionPane.ERROR_MESSAGE);
             return false;

@@ -4,11 +4,7 @@ import jmri.Sensor;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TestTrafficController;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * Tests for the jmri.jmrix.can.cbus.CbusSensorManager class.
@@ -52,9 +48,9 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
     }
 
     @Override
-    @Ignore
+    @Ignore("ignoring this test due to the system name format, needs to be properly coded")
     @Test
-    public void testUpperLower() { // ignoring this test due to the system name format, needs to be properly coded
+    public void testUpperLower() {
     }
 
     @Override

@@ -1,13 +1,13 @@
 package jmri.server.json.roster;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import java.util.Locale;
+import com.fasterxml.jackson.databind.JsonNode;
 import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
+import jmri.server.json.JsonHttpServiceTestBase;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -16,28 +16,26 @@ import org.junit.Test;
 
 /**
  *
- * @author Randall Wood (C) 2016
+ * @author Randall Wood Copyright 2016, 2018
  */
-public class JsonRosterHttpServiceTest {
+public class JsonRosterHttpServiceTest extends JsonHttpServiceTestBase {
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
     private final static String TEST_GROUP1 = "testGroup1";
     private final static String TEST_ENTRY1 = "testEntry1";
-    private final Locale locale = Locale.ENGLISH;
     // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(JsonRosterHttpServiceTest.class);
 
     @Before
+    @Override
     public void setUp() throws Exception {
-        JUnitUtil.setUp();
-
-        JUnitUtil.resetProfileManager();
+        super.setUp();
         JUnitUtil.initConfigureManager();
         InstanceManager.setDefault(Roster.class, new Roster("java/test/jmri/server/json/roster/data/roster.xml"));
     }
 
     @After
+    @Override
     public void tearDown() throws Exception {
-        JUnitUtil.tearDown();
+        super.tearDown();
     }
 
     /**
@@ -50,10 +48,10 @@ public class JsonRosterHttpServiceTest {
      */
     @Test
     public void testDoGet() throws Exception {
-        JsonRosterHttpService instance = new JsonRosterHttpService(this.objectMapper);
+        JsonRosterHttpService instance = new JsonRosterHttpService(this.mapper);
         // call with valid first argument
-        Assert.assertEquals(Roster.getDefault().numEntries(), instance.doGet(JsonRoster.ROSTER, null, locale).size());
-        Assert.assertEquals(2, instance.doGet(JsonRoster.ROSTER, null, locale).size());
+        Assert.assertEquals(Roster.getDefault().numEntries(), instance.doGet(JsonRoster.ROSTER, "", locale).size());
+        Assert.assertEquals(2, instance.doGet(JsonRoster.ROSTER, "", locale).size());
         // call with invalid first argument
         JsonException exception = null;
         try {
@@ -72,17 +70,18 @@ public class JsonRosterHttpServiceTest {
      */
     @Test
     public void testDoPost() throws Exception {
-        JsonRosterHttpService instance = new JsonRosterHttpService(this.objectMapper);
+        JsonRosterHttpService instance = new JsonRosterHttpService(this.mapper);
         JsonException exception = null;
         try {
-            instance.doPost(JsonRoster.ROSTER, null, null, locale);
+            instance.doPost(JsonRoster.ROSTER, "", this.mapper.createObjectNode(), locale);
         } catch (JsonException ex) {
             exception = ex;
         }
         Assert.assertNotNull(exception);
         Assert.assertEquals(HttpServletResponse.SC_METHOD_NOT_ALLOWED, exception.getCode());
+        // rewrite following to provide meaningful test
         try {
-            instance.doPost(TEST_GROUP1, null, null, locale);
+            instance.doPost(TEST_GROUP1, "", this.mapper.createObjectNode(), locale);
         } catch (JsonException ex) {
             exception = ex;
         }
@@ -100,9 +99,9 @@ public class JsonRosterHttpServiceTest {
      */
     @Test
     public void testDoGetList() throws Exception {
-        JsonRosterHttpService instance = new JsonRosterHttpService(this.objectMapper);
+        JsonRosterHttpService instance = new JsonRosterHttpService(this.mapper);
         // call with valid first argument
-        Assert.assertEquals(Roster.getDefault().numEntries(), instance.doGet(JsonRoster.ROSTER, null, locale).size());
+        Assert.assertEquals(Roster.getDefault().numEntries(), instance.doGet(JsonRoster.ROSTER, "", locale).size());
         // call with invalid first argument
         JsonException exception = null;
         try {
@@ -122,16 +121,16 @@ public class JsonRosterHttpServiceTest {
      */
     @Test
     public void testGetRoster() throws JsonException {
-        JsonRosterHttpService instance = new JsonRosterHttpService(this.objectMapper);
+        JsonRosterHttpService instance = new JsonRosterHttpService(this.mapper);
         // no group name - check only size - it should contain all entries in Roster
         Assert.assertEquals(Roster.getDefault().numEntries(),
-                (instance.getRoster(locale, this.objectMapper.createObjectNode())).size());
+                (instance.getRoster(locale, this.mapper.createObjectNode())).size());
         // existant group name - check only size - it should contain all entries in named RosterGroup
         Assert.assertEquals(Roster.getDefault().numGroupEntries(TEST_GROUP1),
-                (instance.getRoster(locale, this.objectMapper.createObjectNode().put(JSON.GROUP, TEST_GROUP1))).size());
+                (instance.getRoster(locale, this.mapper.createObjectNode().put(JSON.GROUP, TEST_GROUP1))).size());
         // non-existant group name - check only size - it should be empty
         Assert.assertEquals(0,
-                (instance.getRoster(locale, this.objectMapper.createObjectNode().put(JSON.GROUP, TEST_ENTRY1))).size());
+                (instance.getRoster(locale, this.mapper.createObjectNode().put(JSON.GROUP, TEST_ENTRY1))).size());
     }
 
     /**
@@ -141,7 +140,7 @@ public class JsonRosterHttpServiceTest {
      */
     @Test
     public void testGetRosterEntry_Locale_String() throws Exception {
-        JsonRosterHttpService instance = new JsonRosterHttpService(this.objectMapper);
+        JsonRosterHttpService instance = new JsonRosterHttpService(this.mapper);
         // existant entry
         Assert.assertEquals(TEST_ENTRY1, instance.getRosterEntry(locale, TEST_ENTRY1).path(JSON.DATA).path(JSON.NAME).asText());
         // non-existant entry
@@ -165,7 +164,7 @@ public class JsonRosterHttpServiceTest {
     public void testGetRosterEntry_Locale_RosterEntry() throws JsonException {
         RosterEntry entry = Roster.getDefault().getEntryForId(TEST_ENTRY1);
         Assert.assertNotNull(entry);
-        JsonRosterHttpService instance = new JsonRosterHttpService(this.objectMapper);
+        JsonRosterHttpService instance = new JsonRosterHttpService(this.mapper);
         Assert.assertEquals(TEST_ENTRY1, instance.getRosterEntry(locale, entry).path(JSON.DATA).path(JSON.NAME).asText());
     }
 
@@ -176,20 +175,32 @@ public class JsonRosterHttpServiceTest {
      */
     @Test
     public void testGetRosterGroups() throws Exception {
-        JsonRosterHttpService instance = new JsonRosterHttpService(this.objectMapper);
+        JsonRosterHttpService instance = new JsonRosterHttpService(this.mapper);
         Assert.assertEquals(Roster.getDefault().getRosterGroups().size() + 1, instance.getRosterGroups(locale).size());
     }
 
     /**
      * Test of getRosterGroup method, of class JsonRosterHttpService.
      *
-     * @throws java.lang.Exception
+     * @throws JsonException if unexpected exception occurs
      */
     @Test
-    public void testGetRosterGroup() throws Exception {
-        JsonRosterHttpService instance = new JsonRosterHttpService(this.objectMapper);
+    public void testGetRosterGroup() throws JsonException {
+        JsonRosterHttpService instance = new JsonRosterHttpService(this.mapper);
+        // test valid existing group
+        JsonNode result = instance.getRosterGroup(locale, TEST_GROUP1);
+        this.validate(result);
         Assert.assertEquals(Roster.getDefault().getEntriesInGroup(TEST_GROUP1).size(),
-                instance.getRosterGroup(locale, TEST_GROUP1).path(JSON.DATA).path(JSON.LENGTH).asInt());
+                result.path(JSON.DATA).path(JSON.LENGTH).asInt());
+        // test non-existant group
+        try {
+            instance.getRosterGroup(locale, "non-existant-group");
+            Assert.fail("Expected exception not thrown");
+        } catch (JsonException ex) {
+            this.validate(ex.getJsonMessage());
+            Assert.assertEquals("Error code is HTTP \"not found\"", 404, ex.getCode());
+            Assert.assertEquals("Error message is \"not found\"", "Object type rosterGroup named non-existant-group not found.", ex.getMessage());
+        }
     }
 
 }

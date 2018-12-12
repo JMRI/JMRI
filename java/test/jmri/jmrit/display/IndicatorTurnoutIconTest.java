@@ -4,11 +4,7 @@ import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
 import jmri.jmrit.display.panelEditor.PanelEditor;
 import jmri.util.JUnitUtil;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * IndicatorTurnoutIconTest.java

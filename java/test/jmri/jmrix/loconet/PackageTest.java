@@ -30,6 +30,7 @@ import org.junit.runners.Suite;
         LnSensorAddressTest.class,
         LnSensorManagerTest.class,
         LnCommandStationTypeTest.class,
+        LnDeferProgrammerTest.class,
         BundleTest.class,
         jmri.jmrix.loconet.pr3.PackageTest.class,
         jmri.jmrix.loconet.hexfile.PackageTest.class,

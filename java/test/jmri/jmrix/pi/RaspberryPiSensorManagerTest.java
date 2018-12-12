@@ -4,15 +4,11 @@ import com.pi4j.io.gpio.GpioFactory;
 import com.pi4j.io.gpio.GpioProvider;
 import jmri.Sensor;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.*;
 
 
 /**
- * <P>
+ * <p>
  * Tests for RaspberryPiSensorManager
  * </P><p>
  * This is somehow not reseting the GPIO support, so each reference to a "pin"

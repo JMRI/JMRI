@@ -1720,10 +1720,7 @@
       </variable>
       <!-- CV 64 left out (Adressing in Motorola-format)-->
       <xi:include href="http://jmri.org/xml/decoders/nmra/fwdTrim.xml"/>
-      <variable item="Speed Table" CV="67">
-        <speedTableVal/>
-        <label>Speed Table</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/revTrim.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
       <variable CV="112" default="12" item="Sound Option 7">

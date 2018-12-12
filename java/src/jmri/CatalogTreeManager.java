@@ -1,7 +1,6 @@
 package jmri;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import java.util.List;
 
 /**
  * Locate a CatalogTree object representing some specific information.

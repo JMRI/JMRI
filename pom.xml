@@ -6,7 +6,7 @@
     <name>JMRI</name>
     <groupId>org.jmri</groupId>
     <artifactId>jmri</artifactId>
-    <version>4.13.4-SNAPSHOT</version>
+    <version>4.15.1-SNAPSHOT</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <release.build_user>${user.name}</release.build_user>
@@ -18,10 +18,11 @@
         dependency source) -->
         <cucumber.version>2.0.1</cucumber.version>
         <jetty.version>9.4.7.v20170914</jetty.version>
+        <jemmy.version>22-00c9f753cd0a</jemmy.version> <!-- this is a custom version, see lib/README.md -->
         <slf4j.version>1.7.25</slf4j.version>
         <jackson.version>2.8.11</jackson.version>
         <jogamp.version>2.3.2</jogamp.version>
-        <openlcb.version>0.7.18</openlcb.version>
+        <openlcb.version>0.7.22</openlcb.version>
         <netbeans.version>RELEASE82</netbeans.version>
         <!-- test environment -->
         <jmri.path.program>${basedir}</jmri.path.program>
@@ -651,6 +652,19 @@
                     </reportSet>
                 </reportSets>
             </plugin>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.7.9</version>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <!-- select non-aggregate reports -->
+                            <report>report</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
         </plugins>
     </reporting>
 
@@ -984,8 +998,8 @@
         -->
         <dependency>
             <groupId>org.netbeans.external</groupId>
-            <artifactId>jemmy-2.3.1.1</artifactId>
-            <version>RELEASE802</version>
+            <artifactId>jemmy</artifactId>
+            <version>${jemmy.version}</version>
             <scope>test</scope>
         </dependency>
         <!--
@@ -1022,6 +1036,18 @@
              <groupId>com.alexandriasoftware.swing</groupId>
              <artifactId>jsplitbutton</artifactId>
              <version>1.3.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>5.1.3.RELEASE</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>5.1.3.RELEASE</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
@@ -1062,14 +1088,4 @@
             <url>file://${project.basedir}/lib</url>
         </repository>
     </repositories>
-
-    <dependencyManagement>
-    	<dependencies>
-    		<dependency>
-    			<groupId>org.jmdns</groupId>
-    			<artifactId>jmdns</artifactId>
-    			<version>3.5.1</version>
-    		</dependency>
-    	</dependencies>
-    </dependencyManagement>
 </project>

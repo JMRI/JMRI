@@ -2,6 +2,8 @@ package jmri.jmrix.can.cbus;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Nonnull;
+
 import jmri.ProgrammingMode;
 import jmri.jmrix.AbstractProgrammer;
 import jmri.jmrix.can.CanListener;
@@ -29,6 +31,7 @@ public class CbusDccProgrammer extends AbstractProgrammer implements CanListener
      * Types implemented here.
      */
     @Override
+    @Nonnull
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
         ret.add(ProgrammingMode.PAGEMODE);
@@ -126,21 +129,14 @@ public class CbusDccProgrammer extends AbstractProgrammer implements CanListener
     synchronized public void reply(CanReply m) {
         if (progState == NOTPROGRAMMING) {
             // we get the complete set of replies now, so ignore these
-            if (log.isDebugEnabled()) {
-                log.debug("reply in NOTPROGRAMMING state");
-            }
             return;
         } else if (progState == COMMANDSENT) {
-            if (log.isDebugEnabled()) {
-                log.debug("reply in COMMANDSENT state");
-            }
+            log.debug("reply in COMMANDSENT state");
             // operation done, capture result, then have to leave programming mode
             // check for errors
             if ((m.getElement(0) == CbusConstants.CBUS_SSTAT)
-                    && (m.getElement(2) == CbusConstants.SSTAT_NO_ACK)) {
-                if (log.isDebugEnabled()) {
-                    log.debug("handle error reply " + m);
-                }
+                && (m.getElement(2) == CbusConstants.SSTAT_NO_ACK)) {
+                log.warn("handle error reply " + m);
                 // perhaps no loco present? Fail back to end of programming
                 //controller().sendCanMessage(CbusMessage.getExitProgMode(), this);
                 stopTimer();

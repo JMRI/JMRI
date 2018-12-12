@@ -22,6 +22,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import jmri.InstanceManager;
@@ -103,17 +104,17 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
 
     CheckedTextField hardwareAddressTextField = new CheckedTextField(20);
     // initially allow any 20 char string, updated by prefixBox selection
-    JTextField userName = new JTextField(40);
+    JTextField userNameField = new JTextField(40);
     JComboBox<String> prefixBox = new JComboBox<>();
     SpinnerNumberModel rangeSpinner = new SpinnerNumberModel(1, 1, 100, 1); // maximum 100 items
-    JSpinner numberToAdd = new JSpinner(rangeSpinner);
-    JCheckBox range = new JCheckBox(Bundle.getMessage("AddRangeBox"));
+    JSpinner numberToAddSpinner = new JSpinner(rangeSpinner);
+    JCheckBox rangeBox = new JCheckBox(Bundle.getMessage("AddRangeBox"));
     JLabel hwAddressLabel = new JLabel(Bundle.getMessage("LabelHardwareAddress"));
     JLabel userNameLabel = new JLabel(Bundle.getMessage("LabelUserName"));
     String systemSelectionCombo = this.getClass().getName() + ".SystemSelected";
     JButton addButton;
     PropertyChangeListener colorChangeListener;
-    JLabel statusBar = new JLabel(Bundle.getMessage("HardwareAddStatusEnter"), JLabel.LEADING);
+    JLabel statusBarLabel = new JLabel(Bundle.getMessage("HardwareAddStatusEnter"), JLabel.LEADING);
     jmri.UserPreferencesManager p;
     String connectionChoice = "";
 
@@ -169,7 +170,7 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
             } else {
                 prefixBox.addItem(ConnectionNameFromSystemName.getConnectionName(InstanceManager.sensorManagerInstance().getSystemPrefix()));
             }
-            userName.setName("userName"); // NOI18N
+            userNameField.setName("userName"); // NOI18N
             prefixBox.setName("prefixBox"); // NOI18N
             addButton = new JButton(Bundle.getMessage("ButtonCreate"));
             addButton.addActionListener(createListener);
@@ -189,8 +190,8 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
             };
             hardwareAddressTextField.addPropertyChangeListener(colorChangeListener);
             // create panel
-            addFrame.add(new AddNewHardwareDevicePanel(hardwareAddressTextField, userName, prefixBox,
-                    numberToAdd, range, addButton, cancelListener, rangeListener, statusBar));
+            addFrame.add(new AddNewHardwareDevicePanel(hardwareAddressTextField, userNameField, prefixBox,
+                    numberToAddSpinner, rangeBox, addButton, cancelListener, rangeListener, statusBarLabel));
             // tooltip for hwAddressTextField will be assigned later by canAddRange()
             canAddRange(null);
         }
@@ -198,9 +199,9 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
         hardwareAddressTextField.setBackground(Color.yellow);
         addButton.setEnabled(false); // start as disabled (false) until a valid entry is typed in
         addButton.setName("createButton"); // for GUI test NOI18N
-        // reset statusBar text
-        statusBar.setText(Bundle.getMessage("HardwareAddStatusEnter"));
-        statusBar.setForeground(Color.gray);
+        // reset statusBarLabel text
+        statusBarLabel.setText(Bundle.getMessage("HardwareAddStatusEnter"));
+        statusBarLabel.setForeground(Color.gray);
 
         addFrame.pack();
         addFrame.setVisible(true);
@@ -222,8 +223,8 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
 
         int numberOfSensors = 1;
 
-        if (range.isSelected()) {
-            numberOfSensors = (Integer) numberToAdd.getValue();
+        if (rangeBox.isSelected()) {
+            numberOfSensors = (Integer) numberToAddSpinner.getValue();
         }
         if (numberOfSensors >= 65) { // limited by JSpinnerModel to 100
             if (JOptionPane.showConfirmDialog(addFrame,
@@ -235,11 +236,12 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
         }
         String sensorPrefix = ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem());
         String sName = null;
+        String uName = userNameField.getText().trim();
         String curAddress = hardwareAddressTextField.getText().trim();
         // initial check for empty entry
         if (curAddress.length() < 1) {
-            statusBar.setText(Bundle.getMessage("WarningEmptyHardwareAddress"));
-            statusBar.setForeground(Color.red);
+            statusBarLabel.setText(Bundle.getMessage("WarningEmptyHardwareAddress"));
+            statusBarLabel.setForeground(Color.red);
             hardwareAddressTextField.setBackground(Color.red);
             return;
         } else {
@@ -255,15 +257,15 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
             } catch (jmri.JmriException ex) {
                 InstanceManager.getDefault(jmri.UserPreferencesManager.class).
                         showErrorMessage(Bundle.getMessage("ErrorTitle"), Bundle.getMessage("ErrorDuplicateUserName", curAddress), "" + ex, "", true, false);
-                // directly add to statusBar (but never called?)
-                statusBar.setText(Bundle.getMessage("ErrorConvertHW", curAddress));
-                statusBar.setForeground(Color.red);
+                // directly add to statusBarLabel (but never called?)
+                statusBarLabel.setText(Bundle.getMessage("ErrorConvertHW", curAddress));
+                statusBarLabel.setForeground(Color.red);
                 return;
             }
             if (curAddress == null) {
                 log.debug("Error converting HW or getNextValidAddress");
                 errorMessage = (Bundle.getMessage("WarningInvalidEntry"));
-                statusBar.setForeground(Color.red);
+                statusBarLabel.setForeground(Color.red);
                 // The next address returned an error, therefore we stop this attempt and go to the next address.
                 break;
             }
@@ -276,43 +278,47 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
             } catch (IllegalArgumentException ex) {
                 // user input no good
                 handleCreateException(sName);
-                // Show error message in statusBar
+                // Show error message in statusBarLabel
                 errorMessage = Bundle.getMessage("WarningInvalidEntry");
-                statusBar.setText(errorMessage);
-                statusBar.setForeground(Color.gray);
+                statusBarLabel.setText(errorMessage);
+                statusBarLabel.setForeground(Color.gray);
                 return;   // return without creating
             }
 
-            String user = userName.getText().trim();
-            if ((x != 0) && !user.isEmpty()) {
-                user = userName.getText() + ":" + x; // add :x to user name starting with 2nd item
-            }
-            if (!user.isEmpty() && (InstanceManager.sensorManagerInstance().getByUserName(user) == null)) {
-                s.setUserName(user);
-            } else if (!user.isEmpty() && InstanceManager.sensorManagerInstance().getByUserName(user) != null && !p.getPreferenceState(getClassName(), "duplicateUserName")) {
-                InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                        showErrorMessage(Bundle.getMessage("ErrorTitle"), Bundle.getMessage("ErrorDuplicateUserName", user), getClassName(), "duplicateUserName", false, true);
+            if (!uName.isEmpty()) {
+                if (InstanceManager.sensorManagerInstance().getByUserName(uName) == null) {
+                    s.setUserName(uName);
+                } else {
+                    InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+                            showErrorMessage(Bundle.getMessage("ErrorTitle"),
+                                    Bundle.getMessage("ErrorDuplicateUserName", uName),
+                                    getClassName(), "duplicateUserName", false, true);
+                }
             }
 
-            // add first and last names to statusMessage user feedback string
+            // add first and last names to statusMessage uName feedback string
+            // only mention first and last of rangeBox added
             if (x == 0 || x == numberOfSensors - 1) {
-                statusMessage = statusMessage + " " + sName + " (" + user + ")";
+                statusMessage = statusMessage + " " + sName + " (" + uName + ")";
             }
             if (x == numberOfSensors - 2) {
                 statusMessage = statusMessage + " " + Bundle.getMessage("ItemCreateUpTo") + " ";
             }
-            // only mention first and last of range added
 
-            // end of for loop creating range of Sensors
+            // bump user name
+            if (!uName.isEmpty()) {
+                uName = nextName(uName);
+            }
+            // end of for loop creating rangeBox of Sensors
         }
 
         // provide feedback to user
         if (errorMessage == null) {
-            statusBar.setText(statusMessage);
-            statusBar.setForeground(Color.gray);
+            statusBarLabel.setText(statusMessage);
+            statusBarLabel.setForeground(Color.gray);
         } else {
-            statusBar.setText(errorMessage);
-            // statusBar.setForeground(Color.red); // handled when errorMassage is set to differentiate urgency
+            statusBarLabel.setText(errorMessage);
+            // statusBarLabel.setForeground(Color.red); // handled when errorMassage is set to differentiate urgency
         }
 
         p.setComboBoxLastSelection(systemSelectionCombo, (String) prefixBox.getSelectedItem());
@@ -325,24 +331,25 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
     private String addEntryToolTip;
 
     /**
-     * Activate Add a range option if manager accepts adding more than 1 Sensor
-     * and set a manager specific tooltip on the AddNewHardwareDevice pane.
+     * Activate Add a rangeBox option if manager accepts adding more than 1
+     * Sensor and set a manager specific tooltip on the AddNewHardwareDevice
+     * pane.
      */
     private void canAddRange(ActionEvent e) {
-        range.setEnabled(false);
-        range.setSelected(false);
+        rangeBox.setEnabled(false);
+        rangeBox.setSelected(false);
         connectionChoice = (String) prefixBox.getSelectedItem(); // store in Field for CheckedTextField
         if (connectionChoice == null) {
             // Tab All or first time opening, default tooltip
             connectionChoice = "TBD";
         }
-        if (senManager.getClass().getName().contains("ProxySensorManager")) {
-            jmri.managers.ProxySensorManager proxy = (jmri.managers.ProxySensorManager) senManager;
+        if (InstanceManager.sensorManagerInstance().getClass().getName().contains("ProxySensorManager")) {            
+            jmri.managers.ProxySensorManager proxy = (jmri.managers.ProxySensorManager) InstanceManager.sensorManagerInstance();
             List<Manager<Sensor>> managerList = proxy.getDisplayOrderManagerList();
             String systemPrefix = ConnectionNameFromSystemName.getPrefixFromName(connectionChoice);
             for (Manager<Sensor> mgr : managerList) {
                 if (mgr.getSystemPrefix().equals(systemPrefix)) {
-                    range.setEnabled( ((SensorManager)mgr).allowMultipleAdditions(systemPrefix));
+                    rangeBox.setEnabled(((SensorManager) mgr).allowMultipleAdditions(systemPrefix));
                     // get tooltip from ProxySensorManager
                     addEntryToolTip = mgr.getEntryToolTip();
                     log.debug("S add box enabled1");
@@ -350,11 +357,13 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
                 }
             }
         } else if (senManager.allowMultipleAdditions(ConnectionNameFromSystemName.getPrefixFromName(connectionChoice))) {
-            range.setEnabled(true);
+            rangeBox.setEnabled(true);
             log.debug("S add box enabled2");
             // get tooltip from sensor manager
             addEntryToolTip = senManager.getEntryToolTip();
-            log.debug("SensorManager tip");
+        }
+        else {
+            log.warn("Unable to set tooltip or Range Allowed Box");
         }
         // show hwAddressTextField field tooltip in the Add Sensor pane that matches system connection selected from combobox
         hardwareAddressTextField.setToolTipText("<html>"
@@ -372,39 +381,43 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
     }
 
     protected void setDefaultDebounce(JFrame _who) {
-        JTextField activeField = new JTextField(String.valueOf(senManager.getDefaultSensorDebounceGoingActive()), 4);
-        JTextField inActiveField = new JTextField(String.valueOf(senManager.getDefaultSensorDebounceGoingInActive()), 4);
+        SpinnerNumberModel activeSpinnerModel = new SpinnerNumberModel((Long)senManager.getDefaultSensorDebounceGoingActive(), (Long)0L, Sensor.MAX_DEBOUNCE, (Long)1L); // MAX_DEBOUNCE is a Long; casts are to force needed signature
+        JSpinner activeSpinner = new JSpinner(activeSpinnerModel);
+        activeSpinner.setPreferredSize(new JTextField(Long.toString(Sensor.MAX_DEBOUNCE).length()+1).getPreferredSize());
+        SpinnerNumberModel inActiveSpinnerModel = new SpinnerNumberModel((Long)senManager.getDefaultSensorDebounceGoingInActive(), (Long)0L, Sensor.MAX_DEBOUNCE, (Long)1L); // MAX_DEBOUNCE is a Long; casts are to force needed signature
+        JSpinner inActiveSpinner = new JSpinner(inActiveSpinnerModel);
+        inActiveSpinner.setPreferredSize(new JTextField(Long.toString(Sensor.MAX_DEBOUNCE).length()+1).getPreferredSize());
+
+        JPanel input = new JPanel(); // panel to hold formatted input for dialog
+        input.setLayout(new BoxLayout(input, BoxLayout.Y_AXIS));
+
+        JTextArea message = new JTextArea(Bundle.getMessage("SensorGlobalDebounceMessageBox")); // multi line
+        message.setEditable(false);
+        message.setOpaque(false);
+        input.add(message);
 
         JPanel active = new JPanel();
         active.add(new JLabel(Bundle.getMessage("SensorActiveTimer")));
-        active.add(activeField);
+        active.add(activeSpinner);
+        input.add(active);
 
         JPanel inActive = new JPanel();
         inActive.add(new JLabel(Bundle.getMessage("SensorInactiveTimer")));
-        inActive.add(inActiveField);
+        inActive.add(inActiveSpinner);
+        input.add(inActive);
 
         int retval = JOptionPane.showOptionDialog(_who,
-                Bundle.getMessage("SensorGlobalDebounceMessageBox"), Bundle.getMessage("SensorGlobalDebounceMessageTitle"),
+                input, Bundle.getMessage("SensorGlobalDebounceMessageTitle"),
                 0, JOptionPane.INFORMATION_MESSAGE, null,
-                new Object[]{Bundle.getMessage("ButtonCancel"), Bundle.getMessage("ButtonOK"), active, inActive}, null);
-        if (retval != 1) {
+                new Object[]{Bundle.getMessage("ButtonOK"), Bundle.getMessage("ButtonCancel")}, null);
+        log.debug("dialog retval={}", retval);
+        if (retval != 0) {
             return;
         }
 
-        //We will allow the sensor manager to handle checking if the values have changed
-        try {
-            long goingActive = Long.parseLong(activeField.getText());
-            senManager.setDefaultSensorDebounceGoingActive(goingActive);
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(_who, Bundle.getMessage("SensorDebounceActError") + "\n\"" + activeField.getText() + "\"", "Input Error", JOptionPane.ERROR_MESSAGE);
-        }
-
-        try {
-            long goingInActive = Long.parseLong(inActiveField.getText());
-            senManager.setDefaultSensorDebounceGoingInActive(goingInActive);
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(_who, Bundle.getMessage("SensorDebounceActError") + "\n\"" + inActiveField.getText() + "\"", "Input Error", JOptionPane.ERROR_MESSAGE);
-        }
+        // Allow the sensor manager to handle checking if the values have changed
+        senManager.setDefaultSensorDebounceGoingActive((Long) activeSpinner.getValue());
+        senManager.setDefaultSensorDebounceGoingInActive((Long) inActiveSpinner.getValue());
         m.fireTableDataChanged();
     }
 
@@ -424,11 +437,18 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
             default:
                 stateCombo.setSelectedItem(Bundle.getMessage("BeanStateUnknown"));
         }
+
+        JPanel input = new JPanel(); // panel to hold formatted input for dialog
+        input.add(new JLabel(Bundle.getMessage("SensorInitialStateMessageBox")));
+        JPanel stateBoxPane = new JPanel();
+        stateBoxPane.add(stateCombo);
+        input.add(stateBoxPane);
+
         int retval = JOptionPane.showOptionDialog(_who,
-                Bundle.getMessage("SensorInitialStateMessageBox"), Bundle.getMessage("InitialSensorState"),
+                input, Bundle.getMessage("InitialSensorState"),
                 0, JOptionPane.INFORMATION_MESSAGE, null,
-                new Object[]{Bundle.getMessage("ButtonCancel"), Bundle.getMessage("ButtonOK"), stateCombo}, null);
-        if (retval != 1) {
+                new Object[]{Bundle.getMessage("ButtonOK"), Bundle.getMessage("ButtonCancel")}, null);
+        if (retval != 0) {
             return;
         }
         int defaultState = jmri.Sensor.UNKNOWN;
@@ -442,7 +462,6 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
         }
 
         jmri.jmrix.internal.InternalSensorManager.setDefaultStateForNewSensors(defaultState);
-
     }
 
     /**

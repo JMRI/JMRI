@@ -205,21 +205,8 @@ public class LnPowerManager
             msg.setOpCode(LnConstants.OPC_RQ_SL_DATA);
             msg.setElement(1, 0);
             msg.setElement(2, 0);
-            while (true) {
-                try {
-                    tc.sendLocoNetMessage(msg);
-                    break;
-                } catch (NullPointerException npe) {
-                    // sleep(500) or (750) mSec infrequently causes NPE upon sending first msg via tc, so repeat
-                    log.debug("init of LnPowerManager delayed");
-                    try {
-                        Thread.sleep(10); // wait 1 cycle for tc to init
-                    } catch (InterruptedException e) {
-                        Thread.currentThread().interrupt(); // retain if needed later
-                        return; // and stop work
-                    }
-                }
-            }
+
+            tc.sendLocoNetMessage(msg);
             log.debug("LnTrackStatusUpdate sent");
         }
     }

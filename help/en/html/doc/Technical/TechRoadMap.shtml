@@ -35,7 +35,7 @@
       for JMRI's future develpoment, including changes to our use
       of Java technologies. It is maintained and updated through
       continuing discussion on the <a href=
-      "http://sourceforge.net/mailarchive/forum.php?forum_name=jmri-developers">
+      "https://jmri-developers.groups.io/g/jmri/topics">
       jmri-developers mailing list</a>.
 
       <p>There's also a <a href="TechRoadMapOlder.shtml">page
@@ -267,7 +267,7 @@
       <a href="https://blogs.oracle.com/java-platform-group/a-quick-summary-on-the-new-java-se-subscription">align their Java and the OpenJDK at that point</a>.
       Because some people will
       need to have that on their computers for other purposes, 
-      we intend to ebsure JMRI can build and run on Oracle Java 8 through 11
+      we intend to ensure JMRI can build and run on Oracle Java 8 through 11
       and OpenJDK version 11
       by using 
       <a href="http://jmri.tagadab.com/jenkins/job/Development/job/VersionChecks/">Jenkins</a>

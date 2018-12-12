@@ -57,7 +57,7 @@ public class TrackLoadEditFrameTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeave(tlef.saveTrackButton);
         
         // error dialog window show appear
-        JemmyUtil.pressDialogButton(tlef, Bundle.getMessage("ErrorNoLoads"), "OK");
+        JemmyUtil.pressDialogButton(tlef, Bundle.getMessage("ErrorNoLoads"), Bundle.getMessage("ButtonOK"));
         
         // now add a load "Flat & E"
         JemmyUtil.enterClickAndLeave(tlef.addLoadButton);

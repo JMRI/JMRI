@@ -134,6 +134,9 @@ public class EngineSoundEvent extends SoundEvent implements PropertyChangeListen
         super.propertyChange(event);
         if (event.getPropertyName().equals("SpeedSetting")) {
             ((EngineSound) parent.getSound("ENGINE")).handleSpeedChange((Float) event.getNewValue(), engine_pane);
+        } else if (event.getPropertyName().equals("IsForward")) {
+            ((EngineSound) parent.getSound("ENGINE")).changeLocoDirection((Boolean) event.getNewValue() ? 1 : -1);
+            log.debug("is forward: {}", event.getNewValue());
         } else if (event.getPropertyName().startsWith("F")) {
             String ev = event.getPropertyName();
             boolean val = (Boolean) event.getNewValue();

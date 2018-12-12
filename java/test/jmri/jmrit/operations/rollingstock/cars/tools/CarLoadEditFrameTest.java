@@ -50,7 +50,7 @@ public class CarLoadEditFrameTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeave(f.addButton);
         
         // error dialog window should appear
-        JemmyUtil.pressDialogButton(Bundle.getMessage("canNotUseLoadName"), "OK");
+        JemmyUtil.pressDialogButton(Bundle.getMessage("canNotUseLoadName"), Bundle.getMessage("ButtonOK"));
 
         CarLoads cl = InstanceManager.getDefault(CarLoads.class);
         Assert.assertFalse("exists", cl.containsName("Boxcar", "A" + CarLoad.SPLIT_CHAR + "B"));
@@ -77,7 +77,7 @@ public class CarLoadEditFrameTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeave(f.addButton);
         
         // error dialog window should appear
-        JemmyUtil.pressDialogButton(Bundle.getMessage("canNotUseLoadName"), "OK");
+        JemmyUtil.pressDialogButton(Bundle.getMessage("canNotUseLoadName"), Bundle.getMessage("ButtonOK"));
 
         CarLoads cl = InstanceManager.getDefault(CarLoads.class);
         Assert.assertFalse("exists", cl.containsName(sb.toString()));
@@ -100,7 +100,7 @@ public class CarLoadEditFrameTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeave(f.replaceButton);
         
         // dialog window should appear
-        JemmyUtil.pressDialogButton(Bundle.getMessage("replaceAll"), "Yes");
+        JemmyUtil.pressDialogButton(Bundle.getMessage("replaceAll"), Bundle.getMessage("ButtonYes"));
         
         Assert.assertFalse("exists", cl.containsName("Boxcar", "Test Load"));
         Assert.assertTrue("exists", cl.containsName("Boxcar", "Replace Load"));
@@ -125,7 +125,7 @@ public class CarLoadEditFrameTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeave(f.replaceButton);
         
         // dialog window should appear
-        JemmyUtil.pressDialogButton(Bundle.getMessage("replaceAll"), "Yes");
+        JemmyUtil.pressDialogButton(Bundle.getMessage("replaceAll"), Bundle.getMessage("ButtonYes"));
         
         Assert.assertFalse("exists", cl.containsName("Boxcar", "E"));
         Assert.assertTrue("exists", cl.containsName("Boxcar", "Replace E"));
@@ -194,7 +194,7 @@ public class CarLoadEditFrameTest extends OperationsTestCase {
         
         // error dialog window should appear
         JemmyUtil.pressDialogButton(MessageFormat.format(Bundle
-                .getMessage("canNotDelete"), new Object[]{Bundle.getMessage("Load")}), "OK");
+                .getMessage("canNotDelete"), new Object[]{Bundle.getMessage("Load")}), Bundle.getMessage("ButtonOK"));
         
         CarLoads cl = InstanceManager.getDefault(CarLoads.class);
         Assert.assertTrue("exists", cl.containsName("Boxcar", "L"));

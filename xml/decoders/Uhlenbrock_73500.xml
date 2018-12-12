@@ -195,16 +195,9 @@
         <decVal/>
         <label>Page Register</label>
       </variable>
-      <variable item="Speed Table" CV="67">
-        <speedTableVal/>
-        <label>Speed Table</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
     </variables>
-    <resets>
-      <factReset label="Reset All CVs" CV="59" default="1">
-         <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
-      </factReset>
-    </resets>
+    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/factReset.xml"/>
   </decoder>
   <pane>
     <column>

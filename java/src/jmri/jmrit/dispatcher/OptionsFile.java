@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
 import jmri.Scale;
+import jmri.ScaleManager;
 import jmri.jmrit.display.PanelMenu;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.util.FileUtil;
@@ -184,11 +185,7 @@ public class OptionsFile extends jmri.jmrit.XmlFile implements InstanceManagerAu
                     }
                     if (options.getAttribute("layoutscale") != null) {
                         String s = (options.getAttribute("layoutscale")).getValue();
-                        for (int i = 1; i <= Scale.NUM_SCALES; i++) {
-                            if (Scale.getShortScaleID(i).equals(s)) {
-                                dispatcher.setScale(i);
-                            }
-                        }
+                        dispatcher.setScale(ScaleManager.getScale(s));
                     }
                     if (options.getAttribute("usescalemeters") != null) {
                         dispatcher.setUseScaleMeters(true);
@@ -201,6 +198,9 @@ public class OptionsFile extends jmri.jmrit.XmlFile implements InstanceManagerAu
                         if (options.getAttribute("userosterentryinblock").getValue().equals("yes")) {
                             dispatcher.setRosterEntryInBlock(true);
                         }
+                    }
+                    if (options.getAttribute("stoppingspeedname") != null) {
+                        dispatcher.setStoppingSpeedName((options.getAttribute("stoppingspeedname")).getValue());
                     }
                 }
             }
@@ -248,9 +248,10 @@ public class OptionsFile extends jmri.jmrit.XmlFile implements InstanceManagerAu
         options.setAttribute("extracolorforallocated", "" + (dispatcher.getExtraColorForAllocated() ? "yes" : "no"));
         options.setAttribute("nameinallocatedblock", "" + (dispatcher.getNameInAllocatedBlock() ? "yes" : "no"));
         options.setAttribute("supportvsdecoder", "" + (dispatcher.getSupportVSDecoder() ? "yes" : "no"));
-        options.setAttribute("layoutscale", Scale.getShortScaleID(dispatcher.getScale()));
+        options.setAttribute("layoutscale", dispatcher.getScale().getScaleName());
         options.setAttribute("usescalemeters", "" + (dispatcher.getUseScaleMeters() ? "yes" : "no"));
         options.setAttribute("userosterentryinblock", "" + (dispatcher.getRosterEntryInBlock() ? "yes" : "no"));
+        options.setAttribute("stoppingspeedname", dispatcher.getStoppingSpeedName());
         if (dispatcher.getSignalType() == 0x00) {
             options.setAttribute("usesignaltype", "signalhead");
         } else {

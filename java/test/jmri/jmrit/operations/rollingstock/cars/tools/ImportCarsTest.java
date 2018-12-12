@@ -3,7 +3,6 @@ package jmri.jmrit.operations.rollingstock.cars.tools;
 import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.util.List;
-import java.util.regex.Pattern;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.OperationsXml;
@@ -20,16 +19,16 @@ import org.netbeans.jemmy.operators.JFileChooserOperator;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class ImportCarsTest extends OperationsTestCase {
 
     @Test
     public void testCTor() {
         ImportCars t = new ImportCars();
-        Assert.assertNotNull("exists",t);
+        Assert.assertNotNull("exists", t);
     }
-    
+
     @Test
     public void testReadFile() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -59,7 +58,13 @@ public class ImportCarsTest extends OperationsTestCase {
             return export.getState().equals(Thread.State.WAITING);
         }, "wait for prompt");
 
-        JemmyUtil.pressDialogButton(Bundle.getMessage("ExportComplete"), "OK");
+        JemmyUtil.pressDialogButton(Bundle.getMessage("ExportComplete"), Bundle.getMessage("ButtonOK"));
+        
+        try {
+            export.join();
+        } catch (InterruptedException e) {
+            // do nothing
+        }
 
         java.io.File file = new java.io.File(ExportCars.defaultOperationsFilename());
         Assert.assertTrue("Confirm file creation", file.exists());
@@ -67,27 +72,38 @@ public class ImportCarsTest extends OperationsTestCase {
         // delete all cars
         emanager.deleteAll();
         Assert.assertEquals("cars", 0, emanager.getNumEntries());
-        
+
         // do import
-        
+
         Thread mb = new ImportCars();
         mb.setName("Test Import Cars"); // NOI18N
         mb.start();
-        
+
+        jmri.util.JUnitUtil.waitFor(() -> {
+            return mb.getState().equals(Thread.State.WAITING);
+        }, "wait for file chooser");
+
         // opens file chooser path "operations" "JUnitTest"
         JFileChooserOperator fco = new JFileChooserOperator();
-        String[] path = OperationsXml.getOperationsDirectoryName().split(Pattern.quote(File.separator));  
-        fco.chooseFile(path[0]);
-        fco.chooseFile(path[1]);
-        fco.chooseFile(ExportCars.getOperationsFileName());
-        
-        // import complete 
-        JemmyUtil.pressDialogButton(Bundle.getMessage("SuccessfulImport"), "OK");
-        
-        // confirm import successful
-        Assert.assertEquals("cars", 9, emanager.getNumEntries());    
-    }
+        String path = OperationsXml.getOperationsDirectoryName();
+        fco.chooseFile(path + File.separator + ExportCars.getOperationsFileName());
 
+        jmri.util.JUnitUtil.waitFor(() -> {
+            return mb.getState().equals(Thread.State.WAITING);
+        }, "wait for dialog");
+
+        // import complete 
+        JemmyUtil.pressDialogButton(Bundle.getMessage("SuccessfulImport"), Bundle.getMessage("ButtonOK"));
+
+        try {
+            mb.join();
+        } catch (InterruptedException e) {
+            // do nothing
+        }
+
+        // confirm import successful
+        Assert.assertEquals("cars", 9, emanager.getNumEntries());
+    }
 
     // The minimal setup for log4J
     @Override

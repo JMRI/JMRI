@@ -255,6 +255,10 @@ public class Z21Message extends AbstractMRMessage {
                return Bundle.getMessage("Z21MessageXpressNetTunnelRequest",new Z21XNetMessage(this).toMonitorString());
            case 0x00A2:
                return Bundle.getMessage("Z21LocoNetLanMessage", getLocoNetMessage().toMonitorString());
+           case 0x0081:
+               return Bundle.getMessage("Z21RMBusGetDataRequest", getElement(4));
+           case 0x0082:
+               return Bundle.getMessage("Z21RMBusProgramModuleRequest", getElement(4));
            case 0x0089:
                return Bundle.getMessage("Z21_RAILCOM_GETDATA");
            default:
@@ -286,7 +290,41 @@ public class Z21Message extends AbstractMRMessage {
         }
         return lnr;
     }
-   
+
+    /**
+     * @param group the RM Bus group number to request.
+     * @return z21 message for LAN_RMBUS_GETDATA 
+     */
+    public static Z21Message getLanRMBusGetDataRequestMessage(int group){
+        if(group!=0 && group!=1){
+           throw new IllegalArgumentException("RMBus Group not 0 or 1");
+        }
+        Z21Message retval = new Z21Message(5);
+        retval.setElement(0, 0x04);
+        retval.setElement(1, 0x00);
+        retval.setElement(2, 0x81);
+        retval.setElement(3, 0x00);
+        retval.setElement(4, (group & 0xff));
+        return retval;
+    }
+
+    /**
+     * @param address the RM Bus address to write.
+     * @return z21 message for LAN_RMBUS_PROGRAMMODULE
+     */
+    public static Z21Message getLanRMBusProgramModuleMessage(int address){
+        if(address>20){
+           throw new IllegalArgumentException("RMBus Address > 20");
+        }
+        Z21Message retval = new Z21Message(5);
+        retval.setElement(0, 0x05);
+        retval.setElement(1, 0x00);
+        retval.setElement(2, 0x82);
+        retval.setElement(3, 0x00);
+        retval.setElement(4, (address & 0xff));
+        return retval;
+    }
+
     private final static Logger log = LoggerFactory.getLogger(Z21Message.class);
 
 }

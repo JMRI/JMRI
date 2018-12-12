@@ -3,6 +3,7 @@ package jmri.jmrix.dcc4pc.serialdriver.configurexml;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Before;
+import jmri.jmrix.dcc4pc.serialdriver.ConnectionConfig;
 
 /**
  * ConnectionConfigXmlTest.java
@@ -18,12 +19,14 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSer
     public void setUp() {
         JUnitUtil.setUp();
         xmlAdapter = new ConnectionConfigXml();
+        cc = new ConnectionConfig();
     }
 
     @After
     public void tearDown() {
         JUnitUtil.tearDown();
         xmlAdapter = null;
+        cc = null;
     }
 
 }

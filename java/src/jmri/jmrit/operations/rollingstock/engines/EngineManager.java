@@ -67,7 +67,7 @@ public class EngineManager extends RollingStockManager<Engine> implements Instan
      *
      * @return new engine or existing engine
      */
-    public Engine newEngine(String engineRoad, String engineNumber) {
+    public Engine newRS(String engineRoad, String engineNumber) {
         Engine engine = getByRoadAndNumber(engineRoad, engineNumber);
         if (engine == null) {
             engine = new Engine(engineRoad, engineNumber);

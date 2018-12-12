@@ -23,6 +23,7 @@ public class RaspberryPiConnectionConfigXmlTest extends jmri.jmrix.configurexml.
     public void tearDown() {
         JUnitUtil.tearDown();
         xmlAdapter = null;
+        cc = null;
     }
 
     @Test

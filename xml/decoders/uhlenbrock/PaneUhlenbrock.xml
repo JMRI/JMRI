@@ -82,9 +82,16 @@
     </column>
     <column>
       <separator/>
+      <label>
+        <text> </text>
+      </label>
       <display item="Outputs monitoring off 1" format="checkbox"/>
       <display item="Outputs monitoring off 2" format="checkbox"/>
       <display item="Outputs monitoring off 3" format="checkbox"/>
+      <display item="Cv51 bit2"/>
+      <display item="Cv51 bit7"/>
+      <display item="Cv51 bit3" format="checkbox"/>
+      <display item="Cv51 bit6" format="checkbox"/>
     <label>
       <text> </text>
     </label>

@@ -3,7 +3,7 @@ package jmri.jmrit.operations.automation;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.automation.actions.ActionCodes;
-import jmri.jmrit.operations.automation.actions.ActivateTimetableAction;
+import jmri.jmrit.operations.automation.actions.ActivateTrainScheduleAction;
 import jmri.jmrit.operations.automation.actions.BuildTrainAction;
 import jmri.jmrit.operations.automation.actions.GotoAction;
 import jmri.jmrit.operations.automation.actions.RunAutomationAction;
@@ -11,8 +11,8 @@ import jmri.jmrit.operations.automation.actions.WaitTrainAction;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.trains.Train;
-import jmri.jmrit.operations.trains.timetable.TrainSchedule;
-import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
+import jmri.jmrit.operations.trains.schedules.TrainSchedule;
+import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -27,21 +27,24 @@ public class AutomationItemTest extends OperationsTestCase {
         Assert.assertEquals("test id", "TestId", automationItem.getId());
         Assert.assertEquals("test id", "TestId", automationItem.toString());
         Assert.assertEquals(ActionCodes.NO_ACTION, automationItem.getActionCode());
-        Assert.assertEquals("Do Nothing", automationItem.getAction().getName());
-        Assert.assertEquals("Do Nothing", automationItem.getActionByCode(0x0000).getName()); // there isn't a code 0x0000 action
+        Assert.assertEquals("Do Nothing", automationItem.getAction().getName());      
         Assert.assertEquals("Do Nothing", automationItem.getActionName());
         Assert.assertEquals("", automationItem.getMessage());
         Assert.assertEquals("", automationItem.getMessageFail());
         Assert.assertEquals(0, automationItem.getSequenceId());
         Assert.assertEquals("", automationItem.getStatus());
         Assert.assertEquals("", automationItem.getTrainScheduleId());
-        Assert.assertEquals("Number of actions", 29, automationItem.getActionComboBox().getItemCount());
-        Assert.assertEquals("Number of actions", 29, automationItem.getActionList().size());
+        
         Assert.assertEquals(null, automationItem.getAutomationToRun());
         Assert.assertEquals(null, automationItem.getGotoAutomationItem());
         Assert.assertEquals(null, automationItem.getRouteLocation());
         Assert.assertEquals(null, automationItem.getTrain());
         Assert.assertEquals(null, automationItem.getTrainSchedule());
+        
+        // static tests
+        Assert.assertEquals("Do Nothing", AutomationItem.getActionByCode(0x0000).getName()); // there isn't a code 0x0000 action
+        Assert.assertEquals("Number of actions", 29, AutomationItem.getActionComboBox().getItemCount());
+        Assert.assertEquals("Number of actions", 29, AutomationItem.getActionList().size());
     }
 
     @Test
@@ -142,7 +145,7 @@ public class AutomationItemTest extends OperationsTestCase {
         automationItem.setTrainSchedule(trainSchedule);
 
         Assert.assertEquals("Do nothing action can't have a train schedule assignment", null, automationItem.getTrainSchedule());
-        automationItem.setAction(new ActivateTimetableAction());
+        automationItem.setAction(new ActivateTrainScheduleAction());
         Assert.assertEquals(trainSchedule, automationItem.getTrainSchedule());
 
         automationItem.setTrainSchedule(null);

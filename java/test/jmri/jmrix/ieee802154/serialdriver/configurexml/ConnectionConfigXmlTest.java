@@ -1,10 +1,8 @@
 package jmri.jmrix.ieee802154.serialdriver.configurexml;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
+import jmri.jmrix.ieee802154.serialdriver.ConnectionConfig;
 
 /**
  * ConnectionConfigXmlTest.java
@@ -20,11 +18,26 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSer
     public void setUp() {
         JUnitUtil.setUp();
         xmlAdapter = new ConnectionConfigXml();
+        cc = new ConnectionConfig();
     }
 
     @After
     public void tearDown() {
         JUnitUtil.tearDown();
         xmlAdapter = null;
+        cc = null;
     }
+
+    @Test
+    @Override
+    @Ignore("requires a traffic controller to pass")
+    public void storeTest(){
+    }
+
+    @Test(timeout=5000)
+    @Override
+    @Ignore("requires a traffic controller to pass")
+    public void loadTest() throws jmri.configurexml.JmriConfigureXmlException {
+    }
+
 }

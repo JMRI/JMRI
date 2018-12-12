@@ -1434,7 +1434,7 @@ public class TrainCommon {
         } else if (attribute.equals(Setup.KERNEL)) {
             return " " + padAndTruncateString(car.getKernelName(), carManager.getKernelMaxNameLength());
         } else if (attribute.equals(Setup.KERNEL_SIZE)) {
-            if (car.getKernel() != null && car.getKernel().isLead(car)) {
+            if (car.isLead()) {
                 return " " + padAndTruncateString(Integer.toString(car.getKernel().getSize()), 2);
             } else {
                 return "   "; // assumes that kernel size is 99 or less

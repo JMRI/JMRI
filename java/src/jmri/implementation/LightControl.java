@@ -65,6 +65,54 @@ public class LightControl {
     protected int _timeOnDuration = 0;          // duration (milliseconds) if TIMED_ON_CONTROL
     private String _controlSensor2Name = ""; // second controlling sensor if TWO_SENSOR_CONTROL
 
+    @Override
+    public boolean equals(Object o) {
+        if (o == null) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof LightControl)) {
+            return false;
+        }
+        LightControl that = (LightControl) o;
+        if (that._controlType != this._controlType) return false;
+        
+        switch(_controlType) {
+            case Light.NO_CONTROL : 
+                return true;
+            case Light.SENSOR_CONTROL : 
+                if (! that._controlSensorName.equals(this._controlSensorName)) return false;
+                if (that._controlSensorSense != this._controlSensorSense) return false;
+                return true;
+            case Light.FAST_CLOCK_CONTROL : 
+                if (that._fastClockOnHour != this._fastClockOnHour) return false;
+                if (that._fastClockOnMin != this._fastClockOnMin) return false;
+                if (that._fastClockOffHour != this._fastClockOffHour) return false;
+                if (that._fastClockOffMin != this._fastClockOffMin) return false;
+                return true;
+            case Light.TURNOUT_STATUS_CONTROL : 
+                if (! that._controlTurnoutName.equals(this._controlTurnoutName)) return false;
+                if (that._turnoutState != this._turnoutState) return false;
+                return true;
+            case Light.TIMED_ON_CONTROL : 
+                if (! that._timedSensorName.equals(this._timedSensorName)) return false;
+                if (that._timeOnDuration != this._timeOnDuration) return false;
+                return true;
+            case Light.TWO_SENSOR_CONTROL : 
+                if (! that._controlSensorName.equals(this._controlSensorName)) return false;
+                if (that._controlSensorSense != this._controlSensorSense) return false;
+                if (! that._controlSensor2Name.equals(this._controlSensor2Name)) return false;
+                return true;
+        }
+        return true;
+    }
+    
+    @Override
+    public int hashCode() {
+        // matches with equals() by contract
+        return _controlType;
+    }
+
     /*
      * Accessor methods
      */

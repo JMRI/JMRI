@@ -1801,10 +1801,7 @@
         <label>Track Voltage Reference</label>
         <comment>160=16v track volts, appears to be percentage in reality, 100=normal, values 1-255 are legal. Alters top speed better than CV5</comment>
       </variable>
-      <variable item="Speed Table" CV="67">
-        <speedTableVal/>
-        <label>Speed Table</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
       <variable item="ZIMO Course influence F-L" CV="96" tooltip="selected speed between F L (MX9 and/or HLU) from version 52, see CV59, 60">
         <decVal/>
         <label>ZIMO Course influence F-L</label>
