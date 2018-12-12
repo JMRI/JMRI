@@ -27,7 +27,7 @@ public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
     protected String prefix = null;
 
     /**
-     * Return the system letter for XpressNet.
+     * Return the system prefix for XpressNet.
      */
     @Override
     public String getSystemPrefix() {
