@@ -11,17 +11,20 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * IdentifyDecoderTest.java
+ * IdentifyDecoderTest.java.
  * <p>
- * Description:	tests for the jmrit.roster.IdentifyDecoder class
+ * Description: tests for the jmrit.roster.IdentifyDecoder class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
 public class IdentifyDecoderTest {
 
     static int cvRead = -1;
     private ProgDebugger p;
 
+    /**
+     * Test standard decoder without productID.
+     */
     @Test
     public void testIdentifyStandard() {
         // create our test object
@@ -53,9 +56,13 @@ public class IdentifyDecoderTest {
         Assert.assertEquals("running after 2 ", false, i.isRunning());
         Assert.assertEquals("found mfg ID ", 0x12, i.mfgID);
         Assert.assertEquals("found model ID ", 123, i.modelID);
+        Assert.assertEquals("found product ID ", -1, i.productID);
 
     }
 
+    /**
+     * Test Harman decoder with productID in CV112 and CV113.
+     */
     @Test
     public void testIdentifyHarman() {
         // create our test object
@@ -102,6 +109,9 @@ public class IdentifyDecoderTest {
 
     }
 
+    /**
+     * Test Tsunami2 decoder with productID in CV253 and CV256.
+     */
     @Test
     public void testIdentifyTsu2() {
         // create our test object
@@ -148,8 +158,12 @@ public class IdentifyDecoderTest {
 
     }
 
+    /**
+     * Test Hornby decoder with CV159 = 143, productIDlow in CV159 and
+     * productIDhigh in CV153.
+     */
     @Test
-    public void testIdentifyHornby1() { // CV159 == 143, hence productIDlow in CV159 and productIDhigh in CV153
+    public void testIdentifyHornby1() {
         // create our test object
         IdentifyDecoder i = new IdentifyDecoder(p) {
             @Override
@@ -193,8 +207,11 @@ public class IdentifyDecoderTest {
         Assert.assertEquals("found product ID ", (2 * 256) + 143, i.productID);
     }
 
+    /**
+     * Test Hornby decoder with CV159 &lt; 143, hence productID in CV159.
+     */
     @Test
-    public void testIdentifyHornby2() { // CV159 < 143, hence productID in CV159
+    public void testIdentifyHornby2() {
         // create our test object
         IdentifyDecoder i = new IdentifyDecoder(p) {
             @Override
@@ -233,8 +250,11 @@ public class IdentifyDecoderTest {
         Assert.assertEquals("found product ID ", 142, i.productID);
     }
 
+    /**
+     * Test Hornby decoder with CV159 &gt; 143, hence productID in CV159.
+     */
     @Test
-    public void testIdentifyHornby3() { // CV159 > 143, hence productID in CV159
+    public void testIdentifyHornby3() {
         // create our test object
         IdentifyDecoder i = new IdentifyDecoder(p) {
             @Override
@@ -276,7 +296,6 @@ public class IdentifyDecoderTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        // initialize the system
         p = new ProgDebugger() {
             @Override
             public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
@@ -288,6 +307,9 @@ public class IdentifyDecoderTest {
         InstanceManager.store(dpm, GlobalProgrammerManager.class);
     }
 
+    /**
+     * Tear down the system.
+     */
     @After
     public void tearDown() {
         p = null;

@@ -22,23 +22,23 @@ public abstract class AbstractIdentify implements jmri.ProgListener {
 
     static final int RETRY_COUNT = 2;
 
-    abstract public boolean test1();  // no argument to start
+    public abstract boolean test1();  // no argument to start
 
-    abstract public boolean test2(int value);
+    public abstract boolean test2(int value);
 
-    abstract public boolean test3(int value);
+    public abstract boolean test3(int value);
 
-    abstract public boolean test4(int value);
+    public abstract boolean test4(int value);
 
-    abstract public boolean test5(int value);
+    public abstract boolean test5(int value);
 
-    abstract public boolean test6(int value);
+    public abstract boolean test6(int value);
 
-    abstract public boolean test7(int value);
+    public abstract boolean test7(int value);
 
-    abstract public boolean test8(int value);
+    public abstract boolean test8(int value);
 
-    abstract public boolean test9(int value);
+    public abstract boolean test9(int value);
 
     protected AbstractIdentify(Programmer p) {
         this.programmer = p;
@@ -52,7 +52,7 @@ public abstract class AbstractIdentify implements jmri.ProgListener {
      *
      * @param status the new status
      */
-    abstract protected void statusUpdate(String status);
+    protected abstract void statusUpdate(String status);
 
     /**
      * Start the identification state machine.
@@ -93,6 +93,9 @@ public abstract class AbstractIdentify implements jmri.ProgListener {
      * Internal method to handle the programmer callbacks, e.g. when a CV read
      * request terminates. Each will reduce (if possible) the list of consistent
      * decoders, and starts the next step.
+     *
+     * @param value  the value returned
+     * @param status the status reported
      */
     @Override
     public void programmingOpReply(int value, int status) {
@@ -207,9 +210,9 @@ public abstract class AbstractIdentify implements jmri.ProgListener {
     }
 
     /**
-     * Abstract routine to notify of errors
+     * Abstract routine to notify of errors.
      */
-    abstract protected void error();
+    protected abstract void error();
 
     /**
      * To check if running now.
@@ -221,13 +224,13 @@ public abstract class AbstractIdentify implements jmri.ProgListener {
     }
 
     /**
-     * State of the internal sequence
+     * State of the internal sequence.
      */
     int state = 0;
     int retry = 0;
 
     /**
-     * Access a single CV for the next step.
+     * Read a single CV for the next step.
      *
      * @param cv the CV to read
      */
@@ -243,6 +246,13 @@ public abstract class AbstractIdentify implements jmri.ProgListener {
         }
     }
 
+    /**
+     * Write a single CV for the next step.
+     *
+     * @param cv    the CV to write
+     * @param value to write to the CV
+     *
+     */
     protected void writeCV(String cv, int value) {
         if (programmer == null) {
             statusUpdate("No programmer connected");

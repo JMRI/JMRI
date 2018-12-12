@@ -27,9 +27,9 @@ import org.slf4j.LoggerFactory;
  * <li>ESU: (mfgID == 151, modelID == 255) use RailCom&reg; Product ID CVs;
  * write {@literal 0=>CV31}, write {@literal 255=>CV32}, then CVs 261 (lowest)
  * to 264 (highest) are a four byte ID</li>
- * <li>DIY: (mfgID == 13) CV47 is the highest byte, CV48 is high byte, CV49 is 
- * low byte, CV50 is the lowest byte; (CV47 == 1) is reserved for 
- * the Czech Republic</li>
+ * <li>DIY: (mfgID == 13) CV47 is the highest byte, CV48 is high byte, CV49 is
+ * low byte, CV50 is the lowest byte; (CV47 == 1) is reserved for the Czech
+ * Republic</li>
  * </ul>
  *
  * TODO:
@@ -43,7 +43,7 @@ import org.slf4j.LoggerFactory;
  * @see jmri.jmrit.symbolicprog.CombinedLocoSelPane
  * @see jmri.jmrit.symbolicprog.NewLocoSelPane
  */
-abstract public class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
+public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
 
     public IdentifyDecoder(jmri.Programmer programmer) {
         super(programmer);
@@ -168,12 +168,10 @@ abstract public class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
         } else if (mfgID == 48) {  // Hornby
             productIDhigh = value;
             productID = (productIDhigh << 8) | productIDlow;
-            log.info("Decoder returns mfgID:" + mfgID + ";modelID:" + modelID + ";productID:" + productID);
             return true;
         } else if (mfgID == 141 && (modelID == 70 || modelID == 71)) {  // SoundTraxx
             productIDlow = value;
             productID = (productIDhigh << 8) | productIDlow;
-            log.info("Decoder returns mfgID:" + mfgID + ";modelID:" + modelID + ";productID:" + productID);
             return true;
         } else if (mfgID == 98) {  // Harman
             productIDlow = value;
@@ -227,8 +225,8 @@ abstract public class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
             readCV("263");
             return false;
         } else if (mfgID == 13) {  // DIY
-            productIDlowest = value;            
-            productID = (((((productIDhighest << 8) | productIDhigh) << 8) | productIDlow) << 8) | productIDlowest ;
+            productIDlowest = value;
+            productID = (((((productIDhighest << 8) | productIDhigh) << 8) | productIDlow) << 8) | productIDlowest;
             return true;
         }
         log.error("unexpected step 7 reached with value: " + value);
@@ -255,7 +253,6 @@ abstract public class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
     public boolean test9(int value) {
         if (mfgID == 151) {  // ESU
             productID = productID + (value * 256 * 256 * 256);
-            log.info("Decoder returns mfgID:" + mfgID + ";modelID:" + modelID + ";productID:" + productID);
             return true;
         }
         log.error("unexpected step 9 reached with value: " + value);
@@ -267,6 +264,7 @@ abstract public class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
         message(s);
         if (s.equals("Done")) {
             done(mfgID, modelID, productID);
+            log.info("Decoder returns mfgID:" + mfgID + ";modelID:" + modelID + ";productID:" + productID);
         } else if (log.isDebugEnabled()) {
             log.debug("received status: " + s);
         }
@@ -279,14 +277,14 @@ abstract public class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
      * @param modelID   identified model identity
      * @param productID identified product identity
      */
-    abstract protected void done(int mfgID, int modelID, int productID);
+    protected abstract void done(int mfgID, int modelID, int productID);
 
     /**
      * Provide a user-readable message about progress.
      *
      * @param m the message to provide
      */
-    abstract protected void message(String m);
+    protected abstract void message(String m);
 
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(IdentifyDecoder.class);
