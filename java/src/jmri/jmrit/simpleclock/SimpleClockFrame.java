@@ -1,8 +1,14 @@
 package jmri.jmrit.simpleclock;
 
 import java.awt.Container;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.text.DecimalFormat;
 import java.util.Date;
+
+import javax.annotation.CheckForNull;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -11,7 +17,6 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -43,16 +48,21 @@ public class SimpleClockFrame extends JmriJFrame
 
     protected JComboBox<String> timeSourceBox = null;
     protected JComboBox<String> clockStartBox = null;
+    protected JComboBox<String> startRunBox = null;
+    // These are the indexes into the start run box.
+    private final static int START_STOPPED = 0;
+    private final static int START_RUNNING = 1;
+    private final static int START_NORUNCHANGE = 2;
 
     protected JCheckBox synchronizeCheckBox = null;
     protected JCheckBox correctCheckBox = null;
     protected JCheckBox displayCheckBox = null;
-    protected JCheckBox showStartupCheckBox = null;
-    protected JCheckBox startStoppedCheckBox = null;
     protected JCheckBox startSetTimeCheckBox = null;
+    protected JCheckBox startSetRateCheckBox = null;
     protected JCheckBox displayStartStopButton = null;
 
     protected JTextField factorField = new JTextField(5);
+    protected JTextField startFactorField = new JTextField(5);
     protected JTextField hoursField = new JTextField(2);
     protected JTextField minutesField = new JTextField(2);
     protected JTextField startHoursField = new JTextField(2);
@@ -214,20 +224,33 @@ public class SimpleClockFrame extends JmriJFrame
         contentPane.add(panel2);
 
         // Set up startup options panel
-        JPanel panel6 = new JPanel();
-        panel6.setLayout(new BoxLayout(panel6, BoxLayout.Y_AXIS));
+        JPanel startupOptionsPane = new JPanel();
+        startupOptionsPane.setLayout(new BoxLayout(startupOptionsPane, BoxLayout.Y_AXIS));
         JPanel panel61 = new JPanel();
-        startStoppedCheckBox = new JCheckBox(Bundle.getMessage("StartStopped"));
-        startStoppedCheckBox.setToolTipText(Bundle.getMessage("TipStartStopped"));
-        startStoppedCheckBox.setSelected(clock.getStartStopped());
-        startStoppedCheckBox.addActionListener(new java.awt.event.ActionListener() {
+        panel61.add(new JLabel(Bundle.getMessage("StartBoxLabel") + " "));
+        startRunBox = new JComboBox<>();
+        startRunBox.addItem(Bundle.getMessage("StartSelectRunning"));
+        startRunBox.addItem(Bundle.getMessage("StartSelectStopped"));
+        startRunBox.addItem(Bundle.getMessage("StartSelectNoChange"));
+        startRunBox.setToolTipText(Bundle.getMessage("TipStartRunSelect"));
+        switch (clock.getClockInitialRunState()) {
+            case DO_STOP:
+                startRunBox.setSelectedIndex(START_STOPPED);
+                break;
+            case DO_START:
+                startRunBox.setSelectedIndex(START_RUNNING);
+                break;
+            case DO_NOTHING:
+                startRunBox.setSelectedIndex(START_NORUNCHANGE);
+        }
+        startRunBox.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                startStoppedChanged();
+            public void actionPerformed(ActionEvent actionEvent) {
+                startRunBoxChanged();
             }
         });
-        panel61.add(startStoppedCheckBox);
-        panel6.add(panel61);
+        panel61.add(startRunBox);
+        startupOptionsPane.add(panel61);
 
         JPanel panel62 = new JPanel();
         startSetTimeCheckBox = new JCheckBox(Bundle.getMessage("StartSetTime"));
@@ -256,7 +279,41 @@ public class SimpleClockFrame extends JmriJFrame
             }
         });
         panel62.add(setStartTimeButton);
-        panel6.add(panel62);
+        startupOptionsPane.add(panel62);
+
+        JPanel panelStartSetRate = new JPanel();
+        startSetRateCheckBox = new JCheckBox(Bundle.getMessage("StartSetSpeedUpFactor") + " ");
+        startSetRateCheckBox.setToolTipText(Bundle.getMessage("TipStartSetRate"));
+        startSetRateCheckBox.setSelected(clock.getSetRateAtStart());
+        startSetRateCheckBox.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                startSetRateChanged();
+            }
+        });
+        panelStartSetRate.add(startSetRateCheckBox);
+        panelStartSetRate.add(startFactorField);
+        startFactorField.setText(threeDigits.format(clock.getStartRate()));
+        startFactorField.setToolTipText(Bundle.getMessage("TipFactorField"));
+        startFactorField.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                startFactorFieldChanged();
+            }
+        });
+        startFactorField.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent focusEvent) {
+                if (!focusEvent.isTemporary()) {
+                    startFactorFieldChanged();
+                }
+                super.focusLost(focusEvent);
+            }
+        });
+        panelStartSetRate.add(new JLabel(":1 "));
+        startupOptionsPane.add(panelStartSetRate);
+
+
         JPanel panel63 = new JPanel();
         panel63.add(new JLabel(Bundle.getMessage("StartClock") + " "));
         clockStartBox = new JComboBox<String>();
@@ -284,7 +341,7 @@ public class SimpleClockFrame extends JmriJFrame
                 setClockStartChanged();
             }
         });
-        panel6.add(panel63);
+        startupOptionsPane.add(panel63);
         JPanel panel64 = new JPanel();
         displayStartStopButton= new JCheckBox(Bundle.getMessage("DisplayOnOff"));
         displayStartStopButton.setSelected(clock.getShowStopButton());
@@ -295,13 +352,13 @@ public class SimpleClockFrame extends JmriJFrame
             }
         });
         panel64.add(displayStartStopButton);
-        panel6.add(panel64);
+        startupOptionsPane.add(panel64);
 
         Border panel6Border = BorderFactory.createEtchedBorder();
         Border panel6Titled = BorderFactory.createTitledBorder(panel6Border,
                 Bundle.getMessage("BoxLabelStartUp"));
-        panel6.setBorder(panel6Titled);
-        contentPane.add(panel6);
+        startupOptionsPane.setBorder(panel6Titled);
+        contentPane.add(startupOptionsPane);
 
         // Set up clock information panel
         JPanel panel3 = new JPanel();
@@ -389,12 +446,25 @@ public class SimpleClockFrame extends JmriJFrame
         return;
     }
 
+    private void startFactorFieldChanged() {
+        Double v = parseRate(startFactorField.getText());
+        if (v != null && !v.equals(clock.getStartRate())) {
+            clock.setStartRate(v);
+            changed = true;
+        }
+        startFactorField.setText(threeDigits.format(clock.getStartRate()));
+    }
+
+    private void startSetRateChanged() {
+        clock.setSetRateAtStart(startSetRateCheckBox.isSelected());
+        changed = true;
+    }
+
     /**
      * Adjust to rate changes.
      */
     void updateRate() {
         factorField.setText(threeDigits.format(clock.userGetRate()));
-        changed = true;
     }
 
     /**
@@ -415,40 +485,52 @@ public class SimpleClockFrame extends JmriJFrame
     }
 
     /**
-     * Handle Set Rate button
+     * Converts a user-entered rate to a double, possibly throwing up warning dialogs.
+     * @param fieldEntry value from text field where the user entered a rate.
+     * @return null if the rate could not be parsed, negative, or an unsupported fraction.
+     * Otherwise the fraction value.
      */
-    public void setRateButtonActionPerformed() {
+    @CheckForNull Double parseRate(String fieldEntry) {
         double rate = 1.0;
         try {
-            String factorFieldText = factorField.getText() ;
             char decimalSeparator = threeDigits.getDecimalFormatSymbols().getDecimalSeparator() ;
             if (decimalSeparator != '.') {
-                factorFieldText = factorFieldText.replace(decimalSeparator, '.') ;
+                fieldEntry = fieldEntry.replace(decimalSeparator, '.') ;
             }
-            rate = Double.valueOf(factorFieldText).doubleValue();
+            rate = Double.valueOf(fieldEntry);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, (Bundle.getMessage("ParseRateError") + "\n" + e),
                     Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-            log.error("Exception when parsing Rate Field: " + e);
-            return;
+            log.error("Exception when parsing user-entered rate: " + e);
+            return null;
         }
         if (rate < 0.0) {
             JOptionPane.showMessageDialog(this, Bundle.getMessage("NegativeRateError"),
                     Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-            factorField.setText(threeDigits.format(clock.userGetRate()));
-            return;
+            return null;
         }
         if (InstanceManager.getDefault(jmri.ClockControl.class).requiresIntegerRate()) {
             double frac = rate - (int) rate;
             if (frac > 0.001) {
                 JOptionPane.showMessageDialog(this, Bundle.getMessage("NonIntegerError"),
                         Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-                factorField.setText(threeDigits.format(clock.userGetRate()));
-                return;
+                return null;
             }
         }
+        return rate;
+    }
+
+    /**
+     * Handle Set Rate button
+     */
+    public void setRateButtonActionPerformed() {
+        Double parsedRate = parseRate(factorField.getText());
+        if (parsedRate == null) {
+            factorField.setText(threeDigits.format(clock.userGetRate()));
+            return;
+        }
         try {
-            clock.userSetRate(rate);
+            clock.userSetRate(parsedRate);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, (Bundle.getMessage("SetRateError") + "\n" + e),
                     Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
@@ -552,10 +634,21 @@ public class SimpleClockFrame extends JmriJFrame
     }
 
     /**
-     * Handle start stopped check box change
+     * Handle start run combo box change
      */
-    private void startStoppedChanged() {
-        clock.setStartStopped(startStoppedCheckBox.isSelected());
+    private void startRunBoxChanged() {
+        switch (startRunBox.getSelectedIndex()) {
+            case START_STOPPED:
+                clock.setClockInitialRunState(Timebase.ClockInitialRunState.DO_STOP);
+                break;
+            case START_RUNNING:
+                clock.setClockInitialRunState(Timebase.ClockInitialRunState.DO_START);
+                break;
+            default:
+            case START_NORUNCHANGE:
+                clock.setClockInitialRunState(Timebase.ClockInitialRunState.DO_NOTHING);
+                break;
+        }
         changed = true;
     }
 
