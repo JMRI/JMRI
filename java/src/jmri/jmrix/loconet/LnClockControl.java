@@ -42,7 +42,7 @@ import org.slf4j.LoggerFactory;
  * @author Dave Duchamp Copyright (C) 2007
  * @author Bob Jacobsen, Alex Shepherd
  */
-public class LnClockControl extends DefaultClockControl implements SlotListener {
+public class LnClockControl extends DefaultClockControl implements SlotListener, LocoNetListener {
 
 
     /**
@@ -71,6 +71,8 @@ public class LnClockControl extends DefaultClockControl implements SlotListener 
         this.tc = tc;
         this.pm = pm;
         
+        tc.addLocoNetListener( ~0, this);
+
         // listen for updated slot contents
         if (sm != null) {
             sm.addSlotListener(this);
@@ -89,6 +91,19 @@ public class LnClockControl extends DefaultClockControl implements SlotListener 
         };
         clock.addMinuteChangeListener(minuteChangeListener);
     }
+
+    @Override
+    public void message(LocoNetMessage msg) {
+        // is it a time request
+        if (msg.getOpCode() == LnConstants.OPC_RQ_SL_DATA && msg.getElement(1) ==  0x7B && msg.getElement(2) == 0x00) {
+                sendMasterMsg();
+        } else if (msg.getOpCode() == LnConstants.OPC_PANEL_QUERY && msg.getElement(1) == 0x00 ) {
+            sendMasterMsg();
+        }
+        
+    }
+
+    
 
     final SlotManager sm;
     final LnTrafficController tc;
@@ -234,33 +249,7 @@ public class LnClockControl extends DefaultClockControl implements SlotListener 
      */
     @SuppressWarnings("deprecation")
     public void newMinute() {
-        // ignore if waiting on Loconet clock read
-        if (!inSyncWithInternalFastClock) {
-            return;
-        }
-        if (correctFastClock || synchronizeWithInternalClock) {
-            // get time from the internal clock
-            Date now = clock.getTime();
-            // skip the correction if minutes is 0 because Logic Rail Clock displays incorrectly
-            //  if a correction is sent at zero minutes.
-            if (now.getMinutes() != 0) {
-                // Set the Fast Clock Day to the current Day of the month 1-31
-                curDays = now.getDate();
-                // Update current time
-                curHours = now.getHours();
-                curMinutes = now.getMinutes();
-                long millis = now.getTime();
-                // How many ms are we into the fast minute as we want to sync the
-                // Fast Clock Master Frac_Mins to the right 65.535 ms tick
-                long elapsedMS = millis % MSECPERMINUTE;
-                double frac_min = elapsedMS / (double) MSECPERMINUTE;
-                curFractionalMinutes = (int) CORRECTION - (int) (CORRECTION * frac_min);
-                requestSetClock();
-            }
-        } else if (setInternal && !correctFastClock && !synchronizeWithInternalClock) {
-            inSyncWithInternalFastClock = false;
-            initiateRead();
-        }
+        sendMasterMsg();
     }
 
     boolean nextRequestIsUpdate = false;
@@ -275,7 +264,7 @@ public class LnClockControl extends DefaultClockControl implements SlotListener 
     @Override
     public void notifyChangedSlot(LocoNetSlot s) {
         // only watch the clock slot
-        if (s.getSlot() != LnConstants.FC_SLOT) {
+        if (s.getSlot() != 999) {
             return;
         }
         if (nextRequestIsUpdate) {
@@ -335,7 +324,7 @@ public class LnClockControl extends DefaultClockControl implements SlotListener 
         if (setInternal || synchronizeWithInternalClock || correctFastClock) {
             // read slot.
             nextRequestIsUpdate = true;
-            sm.sendReadSlot(LnConstants.FC_SLOT);
+//            sm.sendReadSlot(LnConstants.FC_SLOT);
         }
     }
      /**
@@ -366,10 +355,61 @@ public class LnClockControl extends DefaultClockControl implements SlotListener 
             if (power) s.setTrackStatus(s.getTrackStatus() | LnConstants.GTRK_POWER);
             
             // and write
-            tc.sendLocoNetMessage(s.writeSlot());
+//            LocoNetMessage msg = s.writeSlot();
+            // change to send read...
+//            msg.setOpCode(LnConstants.OPC_SL_RD_DATA);
+//            tc.sendLocoNetMessage(s.writeSlot());
         }
     }
 
+    private void sendMasterMsg() {
+        // set the time            // get time from the internal clock
+        Date now = clock.getTime();
+        // skip the correction if minutes is 0 because Logic Rail Clock displays incorrectly
+        //  if a correction is sent at zero minutes.
+        //if (now.getMinutes() != 0) {
+            // Set the Fast Clock Day to the current Day of the month 1-31
+            curDays = now.getDate();
+            // Update current time
+            curHours = now.getHours();
+            curMinutes = now.getMinutes();
+            long millis = now.getTime();
+            // How many ms are we into the fast minute as we want to sync the
+            // Fast Clock Master Frac_Mins to the right 65.535 ms tick
+            long elapsedMS = millis % MSECPERMINUTE;
+            double frac_min = elapsedMS / (double) MSECPERMINUTE;
+            curFractionalMinutes = (int) CORRECTION - (int) (CORRECTION * frac_min);
+        //}
+            // we are allowed to send commands to the fast clock
+            LocoNetSlot s = sm.slot(LnConstants.FC_SLOT);
+            
+            // load time
+            s.setFcDays(curDays);
+            s.setFcHours(curHours);
+            s.setFcMinutes(curMinutes);
+            s.setFcRate(curRate);
+            s.setFcFracMins(curFractionalMinutes);
+            
+            // set other content
+            //     power (GTRK_POWER, 0x01 bit in byte 7)
+            boolean power = true;
+            if (pm != null) {
+                power = (pm.getPower() == PowerManager.ON);
+            } else {
+                jmri.util.Log4JUtil.warnOnce(log, "Can't access power manager for fast clock");
+            }
+            s.setTrackStatus(s.getTrackStatus() &  (~LnConstants.GTRK_POWER) );
+            if (power) s.setTrackStatus(s.getTrackStatus() | LnConstants.GTRK_POWER);
+            
+            // and write
+            LocoNetMessage msg = s.writeSlot();
+            // change to send read...
+            msg.setOpCode(LnConstants.OPC_SL_RD_DATA);
+            tc.sendLocoNetMessage(msg);
+            log.info("Sent");
+
+
+    }
     public void dispose() {
         // Drop LocoNet connection
         if (sm != null) {
