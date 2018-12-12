@@ -19,7 +19,10 @@ import org.slf4j.LoggerFactory;
  * ID</li>
  * <li>Harman: (mfgID = 98) CV112 is high byte, CV113 is low byte of ID</li>
  * <li>Hornby: (mfgID == 48) CV159 is usually ID. If (CV159 == 143), CV159 is
- * low byte of ID and CV158 is high byte of ID</li>
+ * low byte of ID and CV158 is high byte of ID. C159 is not present in some
+ * models, in which case no "productID" can be determined. (This code uses
+ * {@link #setOptionalCv(boolean flag) setOptionalCv()} and
+ * {@link #isOptionalCv() isOptionalCv()} as documented below.)</li>
  * <li>TCS: (mfgID == 153) CV249 is ID</li>
  * <li>Zimo: (mfgID == 145) CV250 is ID</li>
  * <li>SoundTraxx: (mfgID == 141, modelID == 70 or 71) CV253 is high byte, CV256
@@ -31,7 +34,29 @@ import org.slf4j.LoggerFactory;
  * low byte, CV50 is the lowest byte; (CV47 == 1) is reserved for the Czech
  * Republic</li>
  * </ul>
- *
+ * <dl>
+ * <dt>Optional CVs:</dt>
+ * <dd>
+ * Some decoders have CVs that may or may not be present. In this case:
+ * <ul>
+ * <li>Call {@link #setOptionalCv(boolean flag) setOptionalCv(true)} prior to
+ * the {@link #readCV(String cv) readCV(cv)} call.</li>
+ * <li>At the next step, check the returned value of
+ * {@link #isOptionalCv() isOptionalCv()}. If it is still {@code true}, the CV
+ * read failed (despite retries) and the contents of the {@code value} field are
+ * undefined. You can either:<br>
+ * <ul>
+ * <li>{@code return true} to indicate the Identify process has completed
+ * successfully without using the failed CV.</li>
+ * <li>Set up an alternate CV read/write procedure and {@code return false} to
+ * continue. Don't forget to call
+ * {@link #setOptionalCv(boolean flag) setOptionalCv(false)} if the next CV read
+ * is not intended to be optional.</li>
+ * </ul>
+ * </ul>
+ * </dd>
+ * </dl>
+ * <p>
  * TODO:
  * <br>The RailCom&reg; Product ID is a 32 bit unsigned value. {@code productID}
  * is currently {@code int} with -1 signifying a null value. Potential for value
@@ -86,7 +111,8 @@ public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
             readCV("249");
             return false;
         } else if (mfgID == 48) {  // Hornby
-            statusUpdate("Read decoder ID CV 159");
+            statusUpdate("Read optional decoder ID CV 159");
+            setOptionalCv(true);
             readCV("159");
             return false;
         } else if (mfgID == 145) {  // Zimo
@@ -123,6 +149,9 @@ public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
             productID = value;
             return true;
         } else if (mfgID == 48) {  // Hornby
+            if (isOptionalCv()) {
+                return true;
+            }
             if (value == 143) {
                 productIDlow = value;
                 statusUpdate("Read Product ID High Byte");

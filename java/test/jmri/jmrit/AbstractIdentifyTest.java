@@ -118,6 +118,19 @@ public class AbstractIdentifyTest extends TestCase {
 
     }
 
+    public void testOptionalCv() {
+        // walk through just 4 steps
+        AITest a = new AITest(new jmri.ProgrammerScaffold(ProgrammingMode.DIRECTMODE));
+
+        a.setOptionalCv(true);
+        Assert.assertEquals("Test setOptionalCv(true)", a.isOptionalCv(), true);
+        a.setOptionalCv(false);
+        Assert.assertEquals("Test setOptionalCv(true)", a.isOptionalCv(), false);
+        a.setOptionalCv(true);
+        Assert.assertEquals("Test setOptionalCv(true)", a.isOptionalCv(), true);
+
+    }
+
     // internal class for testing
     class AITest extends AbstractIdentify {
 
