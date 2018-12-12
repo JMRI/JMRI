@@ -340,6 +340,8 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
     synchronized HashMap<InetAddress, JmDNS> getDNSes() {
         if (JMDNS_SERVICES.isEmpty()) {
             log.debug("JmDNS version: {}", JmDNS.VERSION);
+            boolean allowLoopback = zeroConfPrefs.getBoolean(ZeroConfService.LOOPBACK, false);
+            boolean allowLinkLocal = zeroConfPrefs.getBoolean(ZeroConfService.LINKLOCAL, false);
             try {
                 Enumeration<NetworkInterface> nis = NetworkInterface.getNetworkInterfaces();
                 while (nis.hasMoreElements()) {
@@ -349,8 +351,8 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
                             Enumeration<InetAddress> niAddresses = ni.getInetAddresses();
                             while (niAddresses.hasMoreElements()) {
                                 InetAddress address = niAddresses.nextElement();
-                                if (!address.isLinkLocalAddress()
-                                        && !address.isLoopbackAddress()) {
+                                if ((allowLinkLocal || !address.isLinkLocalAddress())
+                                        && (allowLoopback || !address.isLoopbackAddress())) {
                                     // explicitly pass a valid host getName, since null causes a very long lookup on some networks
                                     log.debug("Calling JmDNS.create({}, '{}')", address.getHostAddress(), address.getHostAddress());
                                     try {

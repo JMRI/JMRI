@@ -62,6 +62,8 @@ public class ZeroConfService {
     // API constants
     public static final String IPv4 = "IPv4";
     public static final String IPv6 = "IPv6";
+    public static final String LOOPBACK = "loopback";
+    public static final String LINKLOCAL = "linklocal";
 
     /**
      * Create a ZeroConfService with the minimal required settings. This method
