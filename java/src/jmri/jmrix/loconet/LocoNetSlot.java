@@ -1128,6 +1128,14 @@ public class LocoNetSlot {
     }
 
     /**
+     * Set the throttle ID in the slot
+     * @param throttleId full id 
+     */
+    public void setThrottleId(int throttleId) {
+        id = throttleId;
+    }
+    
+    /**
      * Update the status mode bits in STAT1 (D5, D4)
      *
      * @param status New values for STAT1 (D5, D4)
@@ -1405,6 +1413,37 @@ public class LocoNetSlot {
      * @param status is the new track status value.
      */
     public void setTrackStatus(int status) { trk = status; }
+
+    /**
+     * Return the clock control value from the slot.  Only valid for fast-clock slot.
+     * <p>
+     * This method logs an error if invoked for a slot other than the fast-clock slot.
+     * <p>
+     * @return "CLK_CNTRL" value currently in fast-clock slot. (D6 1 = valid, D6 0 = ignore)
+     */
+    public int getFcCntrl() {
+        // TODO: consider throwing a LocoNetException if issued for a slot other
+        // than the "fast clock slot".
+        if (getSlot() != LnConstants.FC_SLOT) {
+            log.error("getFcCntrl invalid for slot " + getSlot());
+        }
+        return snd;
+    }
+
+    /**
+     * For fast-clock slot, set "CLK_CNTRL" value.
+     * This method logs an error if invoked for a slot other than the fast-clock slot.
+     * <p>
+     * @param val is the new "CLK_CNTRL" value . (D6 1 = valid, D6 0 = ignore)
+     */
+    public void setFcCntrl(int val) {
+        // TODO: consider throwing a LocoNetException if issued for a slot other
+        // than the "fast clock slot".
+        if (getSlot() != LnConstants.FC_SLOT) {
+            log.error("setFcCntrl invalid for slot " + getSlot());
+        }
+        snd = val;
+    }
 
     /**
      * Return the days value from the slot.  Only valid for fast-clock slot.
