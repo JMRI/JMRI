@@ -54,6 +54,7 @@ public class CarManager extends RollingStockManager<Car> implements InstanceMana
      * @param number car number
      * @return new car or existing Car
      */
+    @Override
     public Car newRS(String road, String number) {
         Car car = getByRoadAndNumber(road, number);
         if (car == null) {
@@ -415,7 +416,7 @@ public class CarManager extends RollingStockManager<Car> implements InstanceMana
         int lastCarsIndex = 0; // incremented each time a car is added to the end of the list
         for (Car rs : byDestination) {
             Car car = rs;
-            if (car.getKernel() != null && !car.getKernel().isLead(car)) {
+            if (car.getKernel() != null && !car.isLead()) {
                 continue; // not the lead car, skip for now.
             }
             if (!car.isCaboose() && !car.hasFred() && !car.isPassenger()) {
@@ -464,7 +465,7 @@ public class CarManager extends RollingStockManager<Car> implements InstanceMana
                 lastCarsIndex++;
             }
             // group the cars in the kernel together
-            if (car.getKernel() != null && car.getKernel().isLead(car)) {
+            if (car.isLead()) {
                 int index = out.indexOf(car);
                 int numberOfCars = 1; // already added the lead car to the list
                 for (Car kcar : car.getKernel().getCars()) {

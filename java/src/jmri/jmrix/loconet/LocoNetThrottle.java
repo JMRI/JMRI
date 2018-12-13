@@ -798,24 +798,16 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
      */
     public void dispatchThrottle(DccThrottle t, ThrottleListener l) {
         log.debug("dispatchThrottle - throttle {}", t.getLocoAddress());
-        // set status to common
+        // set status to common & dispatch slot
+        // needs to be done one after another with no delay.
         if (t instanceof LocoNetThrottle){
             LocoNetThrottle lnt = (LocoNetThrottle) t;
             LocoNetSlot tSlot = lnt.getLocoNetSlot();
             if (tSlot.slotStatus() != LnConstants.LOCO_COMMON) {
-                log.debug("dispatchThrottle is writing slot {} status to {}",
-                        tSlot,
-                        LnConstants.LOCO_COMMON);
-                network.sendLocoNetMessage(
-                        tSlot.writeStatus(LnConstants.LOCO_COMMON));
+                network.sendLocoNetMessage(tSlot.writeStatus(LnConstants.LOCO_COMMON));
             }
-
-            jmri.util.ThreadingUtil.runOnLayoutDelayed( ()-> {
-                // and dispatch to slot 0
-                    log.debug("dispatchThrottle is dispatching slot {}", tSlot);
-                    network.sendLocoNetMessage(tSlot.dispatchSlot());
-                },
-                32);
+            log.debug("dispatchThrottle is dispatching slot {}", tSlot);
+                network.sendLocoNetMessage(tSlot.dispatchSlot());
         }
     }
 

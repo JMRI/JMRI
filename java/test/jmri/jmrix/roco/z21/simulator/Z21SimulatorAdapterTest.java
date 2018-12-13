@@ -106,6 +106,18 @@ public class Z21SimulatorAdapterTest {
 
     }
 
+    // verify there is a railComm manager
+    @Test
+    public void testAddressedProgrammerManager() {
+        Assert.assertTrue(a.getSystemConnectionMemo().provides(jmri.AddressedProgrammerManager.class));
+    }
+
+    // verify there is a Reporter manager
+    @Test
+    public void testReporterManager() {
+        Assert.assertTrue(a.getSystemConnectionMemo().provides(jmri.ReporterManager.class));
+    }
+
     // The minimal setup for log4J
     @BeforeClass
     static public void setUp() {
@@ -125,8 +137,8 @@ public class Z21SimulatorAdapterTest {
     @AfterClass
     static public void tearDown() {
         a.getSystemConnectionMemo().getTrafficController().terminateThreads();
-        a.dispose();
         a.terminateThread();
+        a.dispose();
         JUnitUtil.tearDown();
     }
 

@@ -103,6 +103,7 @@ public abstract class AbstractProgrammerFacade implements Programmer {
     }
 
     @Override
+    @Nonnull
     public List<ProgrammingMode> getSupportedModes() {
         return prog.getSupportedModes();
     }

@@ -50,7 +50,7 @@ import jmri.Turnout;
 import jmri.implementation.DefaultConditionalAction;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
-import jmri.util.SystemNameComparator;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -2466,16 +2466,32 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
      * Sorts RouteElement
      */
     public static class RouteElementComparator implements java.util.Comparator<RouteElement> {
-
+        // RouteElement objects aren't really NamedBeans, as they don't inherit
+        // so we have to create our own comparator object here.  This assumes they
+        // the do have a named-bean-like system name format.
         RouteElementComparator() {
         }
 
-        private SystemNameComparator sc = new SystemNameComparator();
-        
-        @Override 
-        public int compare(RouteElement o1, RouteElement o2) {
-            return sc.compare(o1.getSysName(), o2.getSysName());
+        static jmri.util.AlphanumComparator ac = new jmri.util.AlphanumComparator();
+    
+        @Override
+        public int compare(RouteElement e1, RouteElement e2) {
+            String s1 = e1.getSysName();
+            String s2 = e2.getSysName();
+            
+            int p1len = Manager.getSystemPrefixLength(s1);
+            int p2len = Manager.getSystemPrefixLength(s2);
+
+            int comp = ac.compare(s1.substring(0, p1len), s2.substring(0, p2len));
+            if (comp != 0) return comp;
+
+            char c1 = s1.charAt(p1len);
+            char c2 = s2.charAt(p2len);
+           
+            if (c1 == c2) return ac.compare(s1.substring(p1len+1), s2.substring(p2len+1));
+            else return (c1 > c2) ? +1 : -1 ;
         }
+        
     }
 
     /**

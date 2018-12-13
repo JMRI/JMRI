@@ -1,15 +1,9 @@
 package jmri.jmrit.operations.rollingstock.engines.tools;
 
 import java.awt.GraphicsEnvironment;
-import jmri.InstanceManager;
+import java.text.MessageFormat;
 import jmri.jmrit.operations.OperationsTestCase;
-import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.Track;
-import jmri.jmrit.operations.rollingstock.cars.CarOwners;
-import jmri.jmrit.operations.rollingstock.cars.CarRoads;
-import jmri.jmrit.operations.rollingstock.engines.Engine;
-import jmri.jmrit.operations.rollingstock.engines.EngineManager;
+import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
 import org.junit.After;
@@ -21,7 +15,7 @@ import org.junit.Test;
 /**
  * Tests for the Operations Engines GUI class
  *
- * @author	Dan Boudreau Copyright (C) 2010
+ * @author Dan Boudreau Copyright (C) 2010
  *
  */
 public class EngineAttributeEditFrameTest extends OperationsTestCase {
@@ -29,6 +23,8 @@ public class EngineAttributeEditFrameTest extends OperationsTestCase {
     @Test
     public void testEngineAttributeEditFrameModel() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        JUnitOperationsUtil.initOperationsData();
         EngineAttributeEditFrame f = new EngineAttributeEditFrame();
         f.initComponents(EngineAttributeEditFrame.MODEL);
         // confirm that the right number of models were loaded
@@ -57,19 +53,239 @@ public class EngineAttributeEditFrameTest extends OperationsTestCase {
     }
 
     @Test
-    public void testEngineAttributeEditFrame2() {
+    public void testEngineAttributeEditFrameLength() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         EngineAttributeEditFrame f = new EngineAttributeEditFrame();
         f.initComponents(EngineAttributeEditFrame.LENGTH);
+        // confirm that the right number of default lengths were loaded
+        Assert.assertEquals(29, f.comboBox.getItemCount());
+        // now add a new length
+        f.addTextBox.setText("12");
+        JemmyUtil.enterClickAndLeave(f.addButton);
+        // new length should appear at start of list
+        Assert.assertEquals("new length name", "12", f.comboBox.getItemAt(0));
+
+        // test replace
+        f.comboBox.setSelectedItem("12");
+        f.addTextBox.setText("13");
+        // push replace button
+        JemmyUtil.enterClickAndLeave(f.replaceButton);
+        // need to also push the "Yes" button in the dialog window
+        JemmyUtil.pressDialogButton(f, Bundle.getMessage("replaceAll"), Bundle.getMessage("ButtonYes"));
+        // did the replace work?
+        Assert.assertEquals("replaced 12 with 13", "13", f.comboBox.getItemAt(0));
+
+        JemmyUtil.enterClickAndLeave(f.deleteButton);
+        Assert.assertEquals("1st number after delete", "32", f.comboBox.getItemAt(0));
+
         JUnitUtil.dispose(f);
+    }
+
+    @Test
+    public void testEngineAttributeEditFrameLengthInches() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        EngineAttributeEditFrame f = new EngineAttributeEditFrame();
+        f.initComponents(EngineAttributeEditFrame.LENGTH);
+        // confirm that the right number of default lengths were loaded
+        Assert.assertEquals(29, f.comboBox.getItemCount());
+        // now add a new length in inches
+        f.addTextBox.setText("10" + "\"");
+        JemmyUtil.enterClickAndLeave(f.addButton);
+        // new length should appear at start of list
+        Assert.assertEquals("new length name", "72", f.comboBox.getItemAt(0));
+
+        // test replace
+        f.comboBox.setSelectedItem("72");
+        f.addTextBox.setText("73");
+        // push replace button
+        JemmyUtil.enterClickAndLeave(f.replaceButton);
+        // need to also push the "Yes" button in the dialog window
+        JemmyUtil.pressDialogButton(f, Bundle.getMessage("replaceAll"), Bundle.getMessage("ButtonYes"));
+        // did the replace work?
+        Assert.assertEquals("replaced 72 with 73", "73", f.comboBox.getItemAt(0));
+
+        JemmyUtil.enterClickAndLeave(f.deleteButton);
+        Assert.assertEquals("1st number after delete", "32", f.comboBox.getItemAt(0));
+
+        // now try error condition
+        f.addTextBox.setText("A" + "\"");
+        // should cause error dialog to appear
+        JemmyUtil.enterClickAndLeave(f.addButton);
+
+        JemmyUtil.pressDialogButton(Bundle.getMessage("ErrorEngineLength"), Bundle.getMessage("ButtonOK"));
+
+        JUnitUtil.dispose(f);
+    }
+
+    @Test
+    public void testEngineAttributeEditFrameLengthCm() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        EngineAttributeEditFrame f = new EngineAttributeEditFrame();
+        f.initComponents(EngineAttributeEditFrame.LENGTH);
+        // confirm that the right number of default lengths were loaded
+        Assert.assertEquals(29, f.comboBox.getItemCount());
+        // now add a new length in centimeters
+        f.addTextBox.setText("10" + "cm");
+        JemmyUtil.enterClickAndLeave(f.addButton);
+        // new length should appear at start of list
+        Assert.assertEquals("new length name", "8", f.comboBox.getItemAt(0));
+
+        JemmyUtil.enterClickAndLeave(f.deleteButton);
+        Assert.assertEquals("1st number after delete", "32", f.comboBox.getItemAt(0));
+
+        // now try error condition
+        f.addTextBox.setText("A" + "cm");
+        // should cause error dialog to appear
+        JemmyUtil.enterClickAndLeave(f.addButton);
+
+        JemmyUtil.pressDialogButton(Bundle.getMessage("ErrorEngineLength"), Bundle.getMessage("ButtonOK"));
+
+        JUnitUtil.dispose(f);
+    }
+
+    @Test
+    public void testEngineAttributeEditFrameLengthErrors() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        EngineAttributeEditFrame f = new EngineAttributeEditFrame();
+        f.initComponents(EngineAttributeEditFrame.LENGTH);
+        // confirm that the right number of default lengths were loaded
+        Assert.assertEquals(29, f.comboBox.getItemCount());
+        // now add a bogus length
+        f.addTextBox.setText("A");
+        JemmyUtil.enterClickAndLeave(f.addButton);
+
+        jmri.util.JUnitAppender.assertErrorMessage("length not an integer");
+        Assert.assertEquals("1st number before bogus add", "32", f.comboBox.getItemAt(0));
+
+        // check for the value "A" 
+        for (int i = 0; i < f.comboBox.getItemCount(); i++) {
+            Assert.assertNotEquals("check for A", "A", f.comboBox.getItemAt(i));
+        }
+
+        // now add a negative length
+        f.addTextBox.setText("-1");
+        JemmyUtil.enterClickAndLeave(f.addButton);
+
+        jmri.util.JUnitAppender.assertErrorMessage("engine length has to be a positive number");
+        Assert.assertEquals("1st number before bogus add", "32", f.comboBox.getItemAt(0));
+
+        // check for the value "-1" 
+        for (int i = 0; i < f.comboBox.getItemCount(); i++) {
+            Assert.assertNotEquals("check for -1", "-1", f.comboBox.getItemAt(i));
+        }
+
+        // now add a length that is too long
+        f.addTextBox.setText("10000");
+
+        // should cause error dialog to appear
+        JemmyUtil.enterClickAndLeave(f.addButton);
+
+        JemmyUtil.pressDialogButton(MessageFormat.format(Bundle
+                .getMessage("canNotAdd"), new Object[]{Bundle.getMessage("Length")}), Bundle.getMessage("ButtonOK"));
+
+        Assert.assertEquals("1st number before bogus add", "32", f.comboBox.getItemAt(0));
+
+        JUnitUtil.dispose(f);
+    }
+
+    @Test
+    public void testEngineAttributeEditFrameType() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        EngineAttributeEditFrame f = new EngineAttributeEditFrame();
+        f.initComponents(EngineAttributeEditFrame.TYPE);
+        // confirm that the right number of default lengths were loaded
+        Assert.assertEquals(10, f.comboBox.getItemCount());
+        Assert.assertEquals("1st type", "Electric", f.comboBox.getItemAt(0));
+        // now add a new type
+        f.addTextBox.setText("ABC-TEST_TEST_TEST");
+        JemmyUtil.enterClickAndLeave(f.addButton);
+        // new type should appear at start of list
+        Assert.assertEquals("new type name", "ABC-TEST_TEST_TEST", f.comboBox.getItemAt(0));
+
+        // test replace
+        f.comboBox.setSelectedItem("ABC-TEST_TEST_TEST");
+        f.addTextBox.setText("ABCDEF-TEST");
+        // push replace button
+        JemmyUtil.enterClickAndLeave(f.replaceButton);
+        // need to also push the "Yes" button in the dialog window
+        JemmyUtil.pressDialogButton(f, Bundle.getMessage("replaceAll"), Bundle.getMessage("ButtonYes"));
+        // did the replace work?
+        Assert.assertEquals("replaced ABC-TEST", "ABCDEF-TEST", f.comboBox.getItemAt(0));
+
+        JemmyUtil.enterClickAndLeave(f.deleteButton);
+        Assert.assertEquals("1st type after delete", "Electric", f.comboBox.getItemAt(0));
+
+        // enter a type name that is too long
+        f.addTextBox.setText("ABCDEFGHIJKLM-TEST");
+        // should cause error dialog to appear
+        JemmyUtil.enterClickAndLeave(f.addButton);
+
+        JemmyUtil.pressDialogButton(
+                MessageFormat.format(Bundle.getMessage("canNotAdd"), new Object[]{Bundle.getMessage("Type")}),
+                Bundle.getMessage("ButtonOK"));
+
+        JUnitUtil.dispose(f);
+    }
+
+    @Test
+    public void testEngineAttributeEditFrameRoad() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        EngineAttributeEditFrame f = new EngineAttributeEditFrame();
+        f.initComponents(EngineAttributeEditFrame.ROAD);
+        // confirm that the right number of default lengths were loaded
+        Assert.assertEquals(133, f.comboBox.getItemCount());
+        Assert.assertEquals("1st road", "AA", f.comboBox.getItemAt(0));
+        // now add a new road
+        f.addTextBox.setText("ABC-TEST");
+        JemmyUtil.enterClickAndLeave(f.addButton);
+        // new road should appear at start of list
+        Assert.assertEquals("new road name", "ABC-TEST", f.comboBox.getItemAt(0));
+
+        // test replace
+        f.comboBox.setSelectedItem("ABC-TEST");
+        f.addTextBox.setText("ABCDEF-TEST");
+        // push replace button
+        JemmyUtil.enterClickAndLeave(f.replaceButton);
+        // need to also push the "Yes" button in the dialog window
+        JemmyUtil.pressDialogButton(f, Bundle.getMessage("replaceAll"), Bundle.getMessage("ButtonYes"));
+        // did the replace work?
+        Assert.assertEquals("replaced ABC-TEST", "ABCDEF-TEST", f.comboBox.getItemAt(0));
+
+        JemmyUtil.enterClickAndLeave(f.deleteButton);
+        Assert.assertEquals("1st road after delete", "AA", f.comboBox.getItemAt(0));
+
+        // enter a road name that is too long
+        f.addTextBox.setText("ABCDEFGHIJKLM-TEST");
+        // should cause error dialog to appear
+        JemmyUtil.enterClickAndLeave(f.replaceButton);
+
+        JemmyUtil.pressDialogButton(
+                MessageFormat.format(Bundle.getMessage("canNotReplace"), new Object[]{Bundle.getMessage("Road")}),
+                Bundle.getMessage("ButtonOK"));
+
+        // enter a road name that has a reserved character
+        f.addTextBox.setText("A.B");
+        // should cause error dialog to appear
+        JemmyUtil.enterClickAndLeave(f.replaceButton);
+
+        JemmyUtil.pressDialogButton(
+                MessageFormat.format(Bundle.getMessage("canNotReplace"), new Object[]{Bundle.getMessage("Road")}),
+                Bundle.getMessage("ButtonOK"));
+
+        JUnitUtil.dispose(f);
+    }
+
+    @Test
+    public void testEngineAttributeEditFrame2() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        EngineAttributeEditFrame f = new EngineAttributeEditFrame();
         f = new EngineAttributeEditFrame();
         f.initComponents(EngineAttributeEditFrame.OWNER);
         JUnitUtil.dispose(f);
         f = new EngineAttributeEditFrame();
-        f.initComponents(EngineAttributeEditFrame.ROAD);
+        f.initComponents(EngineAttributeEditFrame.CONSIST);
         JUnitUtil.dispose(f);
-        f = new EngineAttributeEditFrame();
-        f.initComponents(EngineAttributeEditFrame.TYPE);
+
         JUnitUtil.dispose(f);
     }
 
@@ -77,90 +293,6 @@ public class EngineAttributeEditFrameTest extends OperationsTestCase {
     @Before
     public void setUp() {
         super.setUp();
-
-        loadEngines();
-    }
-
-    private void loadEngines() {
-
-        // add Owner1 and Owner2
-        CarOwners co = InstanceManager.getDefault(CarOwners.class);
-        co.addName("Owner1");
-        co.addName("Owner2");
-        // add road names
-        CarRoads cr = InstanceManager.getDefault(CarRoads.class);
-        cr.addName("NH");
-        cr.addName("UP");
-        cr.addName("AA");
-        cr.addName("SP");
-        // add locations
-        LocationManager lManager = InstanceManager.getDefault(LocationManager.class);
-        Location westford = lManager.newLocation("Westford");
-        Track westfordYard = westford.addTrack("Yard", Track.YARD);
-        westfordYard.setLength(300);
-        Track westfordSiding = westford.addTrack("Siding", Track.SPUR);
-        westfordSiding.setLength(300);
-        Track westfordAble = westford.addTrack("Able", Track.SPUR);
-        westfordAble.setLength(300);
-        Location boxford = lManager.newLocation("Boxford");
-        Track boxfordYard = boxford.addTrack("Yard", Track.YARD);
-        boxfordYard.setLength(300);
-        Track boxfordJacobson = boxford.addTrack("Jacobson", Track.SPUR);
-        boxfordJacobson.setLength(300);
-        Track boxfordHood = boxford.addTrack("Hood", Track.SPUR);
-        boxfordHood.setLength(300);
-
-        EngineManager eManager = InstanceManager.getDefault(EngineManager.class);
-        // add 5 Engines to table
-        Engine e1 = eManager.newRS("NH", "1");
-        e1.setModel("RS1");
-        e1.setBuilt("2009");
-        e1.setMoves(55);
-        e1.setOwner("Owner2");
-        jmri.InstanceManager.getDefault(jmri.IdTagManager.class).provideIdTag("RFID 3");
-        e1.setRfid("RFID 3");
-        e1.setWeightTons("Tons of Weight");
-        e1.setComment("Test Engine NH 1 Comment");
-        Assert.assertEquals("e1 location", Track.OKAY, e1.setLocation(westford, westfordYard));
-        Assert.assertEquals("e1 destination", Track.OKAY, e1.setDestination(boxford, boxfordJacobson));
-
-        Engine e2 = eManager.newRS("UP", "2");
-        e2.setModel("FT");
-        e2.setBuilt("2004");
-        e2.setMoves(50);
-        e2.setOwner("AT");
-        jmri.InstanceManager.getDefault(jmri.IdTagManager.class).provideIdTag("RFID 2");
-        e2.setRfid("RFID 2");
-
-        Engine e3 = eManager.newRS("AA", "3");
-        e3.setModel("SW8");
-        e3.setBuilt("2006");
-        e3.setMoves(40);
-        e3.setOwner("AB");
-        jmri.InstanceManager.getDefault(jmri.IdTagManager.class).provideIdTag("RFID 5");
-        e3.setRfid("RFID 5");
-        Assert.assertEquals("e3 location", Track.OKAY, e3.setLocation(boxford, boxfordHood));
-        Assert.assertEquals("e3 destination", Track.OKAY, e3.setDestination(boxford, boxfordYard));
-
-        Engine e4 = eManager.newRS("SP", "2");
-        e4.setModel("GP35");
-        e4.setBuilt("1990");
-        e4.setMoves(30);
-        e4.setOwner("AAA");
-        jmri.InstanceManager.getDefault(jmri.IdTagManager.class).provideIdTag("RFID 4");
-        e4.setRfid("RFID 4");
-        Assert.assertEquals("e4 location", Track.OKAY, e4.setLocation(westford, westfordSiding));
-        Assert.assertEquals("e4 destination", Track.OKAY, e4.setDestination(boxford, boxfordHood));
-
-        Engine e5 = eManager.newRS("NH", "5");
-        e5.setModel("SW1200");
-        e5.setBuilt("1956");
-        e5.setMoves(25);
-        e5.setOwner("DAB");
-        jmri.InstanceManager.getDefault(jmri.IdTagManager.class).provideIdTag("RFID 1");
-        e5.setRfid("RFID 1");
-        Assert.assertEquals("e5 location", Track.OKAY, e5.setLocation(westford, westfordAble));
-        Assert.assertEquals("e5 destination", Track.OKAY, e5.setDestination(westford, westfordAble));
     }
 
     @Override

@@ -8,7 +8,10 @@ import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
+
+import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.jmrix.loconet.LnPortController;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,7 +34,7 @@ public class LnHexFilePort extends LnPortController implements Runnable, jmri.jm
     volatile BufferedReader sFile = null;
 
     public LnHexFilePort() {
-        this(new LocoNetSystemConnectionMemo());
+        this(new HexFileSystemConnectionMemo());
     }
 
     public LnHexFilePort(LocoNetSystemConnectionMemo memo) {

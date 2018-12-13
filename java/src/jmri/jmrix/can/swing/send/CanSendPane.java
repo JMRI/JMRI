@@ -111,7 +111,7 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel implements CanLis
             numbercheckboxpane.add(new JLabel(Integer.toString(i + 1)+" ",SwingConstants.RIGHT));
             mUseField[i] = new JCheckBox();
             mPacketField[i] = new JTextField(14);
-            numberSpinner[i] = new JSpinner(new SpinnerNumberModel(500, 1, 1000000, 1));
+            numberSpinner[i] = new JSpinner(new SpinnerNumberModel(1500, 1, 1000000, 1));
             numbercheckboxpane.add(mUseField[i]);
             pane2.add(numbercheckboxpane);
             pane2.add(mPacketField[i]);
@@ -139,8 +139,13 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel implements CanLis
     JCheckBox mUseField[] = new JCheckBox[MAXSEQUENCE];
     JSpinner numberSpinner[] =  new JSpinner[MAXSEQUENCE];
     JToggleButton mRunButton = new JToggleButton(Bundle.getMessage("ButtonStart"));
-    static final Color[] filterColors = {Color.RED, Color.GREEN, Color.CYAN, Color.YELLOW};
-    
+    static final Color[] filterColors = {
+        new Color(110, 235, 131), // green ish as will have black text on top
+        new Color(68, 235, 255), // cyan ish
+        new Color(228, 255, 26), // yellow ish
+        new Color(255, 132, 84) // orange ish
+    };
+        
     @Override
     public void initComponents(CanSystemConnectionMemo memo) {
         super.initComponents(memo);

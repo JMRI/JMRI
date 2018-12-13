@@ -57,7 +57,7 @@ import org.slf4j.LoggerFactory;
  * and throttle semaphore message was provided by B. Milhaupt, used with
  * permission.
  *
- * @author Bob Jacobsen Copyright 2001, 2002, 2003
+ * @author Bob Jacobsen Copyright 2001, 2002, 2003, 2018
  * @author B. Milhaupt Copyright 2015, 2016, 2018
  * @author Randall Wood Copyright 2016
  * <p>
@@ -92,10 +92,10 @@ public class Llnmon {
      * }, {@link #setLocoNetSensorManager(jmri.SensorManager) }, and {@link #setLocoNetTurnoutManager(jmri.TurnoutManager)
      * } may need to be called manually to set the correct device managers.
      * <p>
-     * @deprecated since 4.5.6; use
-     * {@link #Llnmon(jmri.jmrix.loconet.LocoNetSystemConnectionMemo)} or
-     * {@link #Llnmon(jmri.TurnoutManager, jmri.SensorManager, jmri.ReporterManager)}
-     * instead.
+     * @deprecated since 4.5.6 and then even more in 4.13.5; use the 
+     * {@link LocoNetMessage#toMonitorString(String)} (preferred) or
+     * {@link LocoNetMessage#toMonitorString()}
+     * for each individual LocoNet message instead of creating a formatter.
      */
     @Deprecated
     public Llnmon() {

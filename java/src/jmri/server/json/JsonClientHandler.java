@@ -18,7 +18,10 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.ServiceLoader;
 import javax.servlet.http.HttpServletResponse;
+import jmri.InstanceManager;
 import jmri.JmriException;
+import jmri.jmris.json.JsonServerPreferences;
+import jmri.server.json.schema.JsonSchemaServiceCache;
 import jmri.spi.JsonServiceFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,6 +36,8 @@ public class JsonClientHandler {
     public static final String HELLO_MSG = "{\"" + JSON.TYPE + "\":\"" + JSON.HELLO + "\"}";
     private final JsonConnection connection;
     private final HashMap<String, HashSet<JsonSocketService<?>>> services = new HashMap<>();
+    private final JsonServerPreferences preferences = InstanceManager.getDefault(JsonServerPreferences.class);
+    private final JsonSchemaServiceCache schemas = InstanceManager.getDefault(JsonSchemaServiceCache.class);
     private static final Logger log = LoggerFactory.getLogger(JsonClientHandler.class);
 
     public JsonClientHandler(JsonConnection connection) {
@@ -124,6 +129,9 @@ public class JsonClientHandler {
             String method = root.path(METHOD).asText(GET);
             String type = root.path(TYPE).asText();
             JsonNode data = root.path(DATA);
+            if (preferences.getValidateClientMessages()) {
+                this.schemas.validateMessage(root, false, this.connection.getLocale());
+            }
             if ((root.path(TYPE).isMissingNode() || type.equals(LIST))
                     && root.path(LIST).isValueNode()) {
                 type = root.path(LIST).asText();

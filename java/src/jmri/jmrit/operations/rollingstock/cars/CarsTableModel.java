@@ -560,7 +560,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
                 return car.getTypeName() + car.getTypeExtensions();
             }
             case KERNEL_COLUMN: {
-                if (car.getKernel() != null && car.getKernel().isLead(car)) {
+                if (car.isLead()) {
                     return car.getKernelName() + "*";
                 }
                 return car.getKernelName();

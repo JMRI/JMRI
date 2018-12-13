@@ -296,36 +296,36 @@ public class OperationsPoolTest extends OperationsTestCase {
 
         // now place cars and see if track lengths adjust correctly
         Assert.assertEquals("Place c1", Track.OKAY, c1.setLocation(l, t1));
-        Assert.assertEquals("track length", 40 + Car.COUPLER, t1.getLength());
-        Assert.assertEquals("track length", 100 - (40 + Car.COUPLER), t3.getLength());
+        Assert.assertEquals("track length", 40 + Car.COUPLERS, t1.getLength());
+        Assert.assertEquals("track length", 100 - (40 + Car.COUPLERS), t3.getLength());
         Assert.assertEquals("track length", 0, t7.getLength());
 
         Assert.assertEquals("Place c2", Track.OKAY, c2.setLocation(l, t7));
-        Assert.assertEquals("track length", 40 + Car.COUPLER, t1.getLength());
-        Assert.assertEquals("track length", 25 + Car.COUPLER, t7.getLength());
-        Assert.assertEquals("track length", 100 - (40 + Car.COUPLER) - (25 + Car.COUPLER), t3.getLength());
+        Assert.assertEquals("track length", 40 + Car.COUPLERS, t1.getLength());
+        Assert.assertEquals("track length", 25 + Car.COUPLERS, t7.getLength());
+        Assert.assertEquals("track length", 100 - (40 + Car.COUPLERS) - (25 + Car.COUPLERS), t3.getLength());
 
         // not able to place c3, not enough available track length
         String status = c3.setLocation(l, t1);
         // Assert.assertEquals("Place c3", Track.LENGTH + " "+(32+Car.COUPLER)+" " +
         // Setup.getLengthUnit().toLowerCase(), c3.setLocation(l, t1));
         Assert.assertTrue("Length issue", status.startsWith(Track.LENGTH));
-        Assert.assertEquals("track length", 40 + Car.COUPLER + 100 - (40 + Car.COUPLER) - (25 + Car.COUPLER), t1
+        Assert.assertEquals("track length", 40 + Car.COUPLERS + 100 - (40 + Car.COUPLERS) - (25 + Car.COUPLERS), t1
                 .getLength());
-        Assert.assertEquals("track length", 25 + Car.COUPLER, t7.getLength());
+        Assert.assertEquals("track length", 25 + Car.COUPLERS, t7.getLength());
         Assert.assertEquals("track length", 0, t3.getLength());
 
         // now test the minimum track length pool feature
         // tracks t2 t4 t5 and t6 in the same pool
         Assert.assertEquals("Place c1", Track.OKAY, c1.setLocation(l, t2));
-        Assert.assertEquals("track length", 40 + Car.COUPLER, t2.getLength());
-        Assert.assertEquals("track length", 200 - (40 + Car.COUPLER), t5.getLength());
+        Assert.assertEquals("track length", 40 + Car.COUPLERS, t2.getLength());
+        Assert.assertEquals("track length", 200 - (40 + Car.COUPLERS), t5.getLength());
         Assert.assertEquals("track length", 0, t4.getLength());
         Assert.assertEquals("track length", 0, t6.getLength());
 
         Assert.assertEquals("Place c2", Track.OKAY, c2.setLocation(l, t2));
-        Assert.assertEquals("track length", 40 + Car.COUPLER + 25 + Car.COUPLER, t2.getLength());
-        Assert.assertEquals("track length", 200 - (40 + Car.COUPLER + 25 + Car.COUPLER), t5.getLength());
+        Assert.assertEquals("track length", 40 + Car.COUPLERS + 25 + Car.COUPLERS, t2.getLength());
+        Assert.assertEquals("track length", 200 - (40 + Car.COUPLERS + 25 + Car.COUPLERS), t5.getLength());
         Assert.assertEquals("track length", 0, t4.getLength());
         Assert.assertEquals("track length", 0, t6.getLength());
 
@@ -343,10 +343,10 @@ public class OperationsPoolTest extends OperationsTestCase {
         t6.setLength(50);
 
         Assert.assertEquals("Place c3", Track.OKAY, c3.setLocation(l, t2));
-        Assert.assertEquals("track length", 40 + Car.COUPLER + 25 + Car.COUPLER + 32 + Car.COUPLER, t2.getLength());
+        Assert.assertEquals("track length", 40 + Car.COUPLERS + 25 + Car.COUPLERS + 32 + Car.COUPLERS, t2.getLength());
         Assert.assertEquals("track length", 100, t5.getLength()); // minimum track length
         Assert.assertEquals("track length", 0, t4.getLength());
-        Assert.assertEquals("track length", 150 - (40 + Car.COUPLER + 25 + Car.COUPLER + 32 + Car.COUPLER), t6
+        Assert.assertEquals("track length", 150 - (40 + Car.COUPLERS + 25 + Car.COUPLERS + 32 + Car.COUPLERS), t6
                 .getLength());
 
         // now move the cars on t2 to t4 to test the minimum for t2
@@ -354,11 +354,11 @@ public class OperationsPoolTest extends OperationsTestCase {
         // to see if car's track was part of pool
 
         Assert.assertEquals("Place c1", Track.OKAY, c1.setLocation(l, t4));
-        Assert.assertEquals("track length", 25 + Car.COUPLER + 32 + Car.COUPLER, t2.getLength());
+        Assert.assertEquals("track length", 25 + Car.COUPLERS + 32 + Car.COUPLERS, t2.getLength());
         Assert.assertEquals("track length", 100, t5.getLength()); // minimum track length
-        Assert.assertEquals("track length", 40 + Car.COUPLER, t4.getLength());
+        Assert.assertEquals("track length", 40 + Car.COUPLERS, t4.getLength());
         // 250 feet total track length in pool, 100 minimum
-        Assert.assertEquals("track length", (250 - 100) - (40 + Car.COUPLER + 25 + Car.COUPLER + 32 + Car.COUPLER), t6
+        Assert.assertEquals("track length", (250 - 100) - (40 + Car.COUPLERS + 25 + Car.COUPLERS + 32 + Car.COUPLERS), t6
                 .getLength());
 
         c2.setLocation(null, null);
@@ -367,9 +367,9 @@ public class OperationsPoolTest extends OperationsTestCase {
         Assert.assertEquals("Place c2", Track.OKAY, c2.setLocation(l, t4));
         Assert.assertEquals("track length", 50, t2.getLength()); // minimum track length
         Assert.assertEquals("track length", 100, t5.getLength()); // minimum track length
-        Assert.assertEquals("track length", 25 + Car.COUPLER + 40 + Car.COUPLER, t4.getLength());
+        Assert.assertEquals("track length", 25 + Car.COUPLERS + 40 + Car.COUPLERS, t4.getLength());
         // 250 feet total track length in pool, 150 minimum
-        Assert.assertEquals("track length", (250 - 150) - (40 + Car.COUPLER + 25 + Car.COUPLER), t6.getLength());
+        Assert.assertEquals("track length", (250 - 150) - (40 + Car.COUPLERS + 25 + Car.COUPLERS), t6.getLength());
     }
 
     @Override

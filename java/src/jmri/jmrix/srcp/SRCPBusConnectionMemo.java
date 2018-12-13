@@ -1,5 +1,6 @@
 package jmri.jmrix.srcp;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.ResourceBundle;
 import jmri.ClockControl;
 import jmri.GlobalProgrammerManager;
@@ -58,6 +59,7 @@ public class SRCPBusConnectionMemo extends jmri.jmrix.SystemConnectionMemo imple
      * Configure the common managers for Internal connections. This puts the
      * common manager config in one place.
      */
+    @SuppressFBWarnings(value = "UW_UNCOND_WAIT", justification="false postive, guarded by while statement")
     public void configureManagers() {
         while(!configured){
            // wait for the managers to be configured.

@@ -276,7 +276,7 @@ public class TrainCsvCommon extends TrainCommon {
             engineConsistName = ESC + engineConsistName + ESC;
         }
         String engineIsLead = "";
-        if (engine.getConsist() != null && engine.getConsist().isLead(engine)) {
+        if (engine.isLead()) {
             engineIsLead = "Lead loco"; // NOI18N
         }
         addLine(fileOut,
