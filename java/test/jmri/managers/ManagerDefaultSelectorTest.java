@@ -1,13 +1,19 @@
 package jmri.managers;
 
 import jmri.PowerManager;
-import jmri.jmrix.internal.*;
-import jmri.jmrix.loconet.*;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
+import jmri.jmrix.loconet.LnCommandStationType;
+import jmri.jmrix.loconet.LnTrafficController;
+import jmri.jmrix.loconet.LocoNetInterfaceScaffold;
+import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.util.JUnitUtil;
 import jmri.util.prefs.InitializationException;
-import org.junit.*;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Test simple functioning of ManagerDefaultSelector
@@ -60,7 +66,7 @@ public class ManagerDefaultSelectorTest {
         // create a test loconet connection
         LnTrafficController lnis = new LocoNetInterfaceScaffold();
         LocoNetSystemConnectionMemo loconet = new LocoNetSystemConnectionMemo(lnis, null);
-        loconet.configureCommandStation(LnCommandStationType.COMMAND_STATION_DCS100, false, false, false);
+        loconet.configureCommandStation(LnCommandStationType.COMMAND_STATION_DCS100, false, false, false,false);
         return loconet;
     }
     
