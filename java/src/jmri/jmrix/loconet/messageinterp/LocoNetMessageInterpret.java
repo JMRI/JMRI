@@ -4588,9 +4588,8 @@ public class LocoNetMessageInterpret {
          * extended slot read/write message               *
          * ************************************************
          */
-        
         /*
-         * If its a "Special" slot use a different rountine
+         * If its a "Special" slot (Stats etc) use a different routine
          */
         if (slot > 247 && slot < 252) {
             return interpretExtendedSlot_StatusData(l,slot);
@@ -4673,7 +4672,7 @@ public class LocoNetMessageInterpret {
        return Bundle.getMessage("LN_MSG_OPC_EXP_SPECIALSTATUS",
                slot, baseInfo, detailInfo);
     }
-    
+
     private static String interpretExtendedSlot_StatusData_Base(LocoNetMessage l, int slot) {
         String hwType = "";
         int hwSerial;
@@ -4698,7 +4697,7 @@ public class LocoNetMessageInterpret {
                 hwType,
                 hwSerial);
     }
-    
+
     private static String interpretExtendedSlot_StatusData_Base_Detail(LocoNetMessage l, int slot) {
         double hwVersion ;
         double swVersion ;
@@ -4729,7 +4728,7 @@ public class LocoNetMessageInterpret {
                 hwVersion,
                 swVersion);
     }
-    
+
     private static String interpretExtendedSlot_StatusData_Electric(LocoNetMessage l, int slot) {
         double voltsTrack;
         double voltsIn;
