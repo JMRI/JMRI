@@ -382,15 +382,14 @@ Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.4.13.6+R49e7a86.dmg](https://github.com/JMRI/JMRI/releases/download/v4.13.6/JMRI.4.13.6+R49e7a86.dmg) | 1c551c99825aa45331454bde7f600a861b2cc16c5687ca576234c4eac75cac79
-[JMRI.4.13.6+R49e7a86.exe](https://github.com/JMRI/JMRI/releases/download/v4.13.6/JMRI.4.13.6+R49e7a86.exe) | c218a2f0d910a530867c079ceaf90f1534d523cd71f142b3e8174ab0f51ff0da
-[JMRI.4.13.6+R49e7a86.tgz](https://github.com/JMRI/JMRI/releases/download/v4.13.6/JMRI.4.13.6+R49e7a86.tgz) | 9d577470a8f32e7f8ee365a959f1d910dce06fb4ee9914a9a27f1b1389f87abe
-
+[JMRI.4.13.6+Rcb07def.dmg](https://github.com/JMRI/JMRI/releases/download/v4.13.6/JMRI.4.13.6+Rcb07def.dmg) | 6deb881792c4cf03a3088196a2d19f9d303999d2aa31e0e913a61fd4312f5f13
+[JMRI.4.13.6+Rcb07def.exe](https://github.com/JMRI/JMRI/releases/download/v4.13.6/JMRI.4.13.6+Rcb07def.exe) | 21ebcac7d872f02a353f482e954b0d2ecec0df0a3eac3fdc20bd2f168fa4ebaa
+[JMRI.4.13.6+Rcb07def.tgz](https://github.com/JMRI/JMRI/releases/download/v4.13.6/JMRI.4.13.6+Rcb07def.tgz) | dfc165645ffc13b2b5f88b2c29a4510ec70204244a5a84b77a0e4425806ae38a
 ```
 
 - Attach files by selecting them or dragging them in. Make sure that the Linux one is .tgz, not .tar.
 
-- [ ] it's slow to upload from a typical home connection, so wish we had a way to cross-load them from Jenkins
+- [ ] it's slow to upload from a typical home connection,; we wish we had a way to cross-load them from Jenkins
 
 Note there's a little progress bar that has to go across & "Uploading your release now..." has to complete before you publish; make sure all four files (three installers plus properties) are there.
     
@@ -432,7 +431,7 @@ If there are any changes in other files, do both of:
 ====================================================================================
 ## Update GitHub Status items
 
-- Create the [next GitHub Issue](https://github.com/JMRI/JMRI/issues) to hold discussion with conventional title "Create Test Release 4.13.7". Add the next release milestone (created above) to it. Typical text (get the date from the [milestone page](https://github.com/JMRI/JMRI/milestones)); for later releases in the series copy specific text from the milestone page:
+- Create the [next GitHub Issue](https://github.com/JMRI/JMRI/issues) to hold discussion with conventional title "Create Test Release 4.15.1". Add the next release milestone (created above) to it. Typical text (get the date from the [milestone page](https://github.com/JMRI/JMRI/milestones)); for later releases in the series copy specific text from the milestone page:
 ```
 This is the next release in the 4.14 cycle. It's intended to be released around (July 12) from HEAD of master.
 ```

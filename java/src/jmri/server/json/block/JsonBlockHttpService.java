@@ -14,6 +14,8 @@ import jmri.BlockManager;
 import jmri.InstanceManager;
 import jmri.Reporter;
 import jmri.ReporterManager;
+import jmri.Sensor;
+import jmri.SensorManager;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonNamedBeanHttpService;
@@ -33,35 +35,32 @@ public class JsonBlockHttpService extends JsonNamedBeanHttpService {
 
     @Override
     public JsonNode doGet(String type, String name, Locale locale) throws JsonException {
-        ObjectNode root = mapper.createObjectNode();
         Block block = InstanceManager.getDefault(BlockManager.class).getBlock(name);
-        if (block == null) {
-            throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", BLOCK, name));
-        }
-        root.put(JSON.TYPE, BLOCK);
-        ObjectNode data = this.getNamedBean(block, name, type, locale);
-        root.set(JSON.DATA, data);
-        switch (block.getState()) {
-            case Block.UNDETECTED:
-                data.put(JSON.STATE, JSON.UNKNOWN);
-                break;
-            default:
-                data.put(JSON.STATE, block.getState());
-        }
-        if (block.getValue() == null) {
-            data.putNull(JSON.VALUE);
-        } else {
-            data.put(JSON.VALUE, block.getValue().toString());
-        }
-        if (block.getSensor() == null) {
-            data.putNull(JsonSensor.SENSOR);
-        } else {
-            data.put(JsonSensor.SENSOR, block.getSensor().getSystemName());
-        }
-        if (block.getReporter() == null) {
-            data.putNull(JsonReporter.REPORTER);
-        } else {
-            data.put(JsonReporter.REPORTER, block.getReporter().getSystemName());
+        ObjectNode root = this.getNamedBean(block, name, type, locale); // throws JsonException if block == null
+        ObjectNode data = root.with(JSON.DATA);
+        if (block != null) {
+            switch (block.getState()) {
+                case Block.UNDETECTED:
+                    data.put(JSON.STATE, JSON.UNKNOWN);
+                    break;
+                default:
+                    data.put(JSON.STATE, block.getState());
+            }
+            if (block.getValue() == null) {
+                data.putNull(JSON.VALUE);
+            } else {
+                data.put(JSON.VALUE, block.getValue().toString());
+            }
+            if (block.getSensor() == null) {
+                data.putNull(JsonSensor.SENSOR);
+            } else {
+                data.put(JsonSensor.SENSOR, block.getSensor().getSystemName());
+            }
+            if (block.getReporter() == null) {
+                data.putNull(JsonReporter.REPORTER);
+            } else {
+                data.put(JsonReporter.REPORTER, block.getReporter().getSystemName());
+            }
         }
         return root;
     }
@@ -95,21 +94,28 @@ public class JsonBlockHttpService extends JsonNamedBeanHttpService {
                 throw new JsonException(400, Bundle.getMessage(locale, "ErrorUnknownState", BLOCK, state));
         }
         if (!data.path(JsonSensor.SENSOR).isMissingNode()) {
-            if (data.path(JsonSensor.SENSOR).isNull()) {
+            JsonNode node = data.path(JsonSensor.SENSOR);
+            if (node.isNull()) {
                 block.setSensor(null);
             } else {
-                block.setSensor(data.path(JsonSensor.SENSOR).asText());
+                Sensor sensor = InstanceManager.getDefault(SensorManager.class).getBySystemName(node.asText());
+                if (sensor != null) {
+                    block.setSensor(sensor.getSystemName());
+                } else {
+                    throw new JsonException(404, Bundle.getMessage(locale, "ErrorNotFound", JsonSensor.SENSOR, node.asText()));
+                }
             }
         }
         if (!data.path(JsonReporter.REPORTER).isMissingNode()) {
-            if (data.path(JsonReporter.REPORTER).isNull()) {
+            JsonNode node = data.path(JsonReporter.REPORTER);
+            if (node.isNull()) {
                 block.setReporter(null);
             } else {
-                Reporter reporter = InstanceManager.getDefault(ReporterManager.class).getBySystemName(data.path(JsonReporter.REPORTER).asText());
+                Reporter reporter = InstanceManager.getDefault(ReporterManager.class).getBySystemName(node.asText());
                 if (reporter != null) {
                     block.setReporter(reporter);
                 } else {
-                    throw new JsonException(404, Bundle.getMessage(locale, "ObjectNotFound", JsonReporter.REPORTER, data.path(JsonReporter.REPORTER).asText()));
+                    throw new JsonException(404, Bundle.getMessage(locale, "ErrorNotFound", JsonReporter.REPORTER, node.asText()));
                 }
             }
         }
