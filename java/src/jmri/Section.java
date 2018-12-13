@@ -1,5 +1,6 @@
 package jmri;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
@@ -597,7 +598,7 @@ public class Section extends AbstractNamedBean {
      * @param scale  the scale; one of {@link jmri.Scale}
      * @return the scale length
      */
-    public float getLengthF(boolean meters, int scale) {
+    public float getLengthF(boolean meters, Scale scale) {
         if (initializationNeeded) {
             initializeBlocks();
         }
@@ -605,14 +606,14 @@ public class Section extends AbstractNamedBean {
         for (Block block : mBlockEntries) {
             length = length + block.getLengthMm();
         }
-        length = length / (float) (Scale.getScaleFactor(scale));
+        length = length / (float) (scale.getScaleFactor());
         if (meters) {
             return (length * 0.001f);
         }
         return (length * 0.00328084f);
     }
 
-    public int getLengthI(boolean meters, int scale) {
+    public int getLengthI(boolean meters, Scale scale) {
         return ((int) ((getLengthF(meters, scale) + 0.5f)));
     }
 
@@ -2359,6 +2360,7 @@ public class Section extends AbstractNamedBean {
     }
 
     @SuppressWarnings("unused") // not used now, preserved for later use
+    @SuppressFBWarnings(value = "UPM_UNCALLED_PRIVATE_METHOD", justification="was previously marked with @SuppressWarnings, reason unknown")
     private List<EntryPoint> getListOfForwardBlockEntryPoints(Block b) {
         if (initializationNeeded) {
             initializeBlocks();

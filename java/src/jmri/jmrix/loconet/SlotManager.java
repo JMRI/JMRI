@@ -574,9 +574,11 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
                 break;
 
             case LnConstants.OPC_MOVE_SLOTS:  // No follow on for some moves
-                i = m.getElement(1);
-                return i;
-
+                if (m.getElement(1) != 0) {
+                    i = m.getElement(1);
+                    return i;
+                }
+                break;
             case LnConstants.OPC_EXP_SEND_FUNCTION_OR_SPEED_AND_DIR:
             case LnConstants.OPC_EXP_SLOT_MOVE:
                 i = ( (m.getElement(1) & 0x03 ) *128) + m.getElement(2);

@@ -416,6 +416,11 @@ public class LayoutTurnout extends LayoutTrack {
 
     @Nonnull
     public String getBlockName() {
+        if ((blockName == null) || (blockName.isEmpty())) {
+            if (getLayoutBlock() != null) {
+                blockName = getLayoutBlock().getId();
+            }
+        }
         return ((blockName == null) ? "" : blockName);
     }
 
@@ -1674,7 +1679,9 @@ public class LayoutTurnout extends LayoutTrack {
     }
 
     /**
-     * Check each connection point and update the block value for very short track segments.
+     * Check each connection point and update the block value for very short
+     * track segments.
+     *
      * @since 4.11.6
      */
     void setTrackSegmentBlocks() {
@@ -1688,16 +1695,20 @@ public class LayoutTurnout extends LayoutTrack {
 
     /**
      * Update the block for a track segment that provides a short connection
-     * between a turnout and another object, normally another turnout.
-     * These are hard to see and are frequently missed.
+     * between a turnout and another object, normally another turnout. These are
+     * hard to see and are frequently missed.
      * <p>
      * Skip block changes if signal heads, masts or sensors have been assigned.
-     * Only track segments with a length less than the turnout circle radius will be changed.
+     * Only track segments with a length less than the turnout circle radius
+     * will be changed.
+     *
      * @since 4.11.6
-     * @param pointType The point type which indicates which turnout connection.
-     * @param isAutomatic True for the automatically generated track segment created
-     * by the drag-n-drop process.  False for existing connections which require
-     * a track segment length calculation.
+     * @param pointType   The point type which indicates which turnout
+     *                    connection.
+     * @param isAutomatic True for the automatically generated track segment
+     *                    created by the drag-n-drop process. False for existing
+     *                    connections which require a track segment length
+     *                    calculation.
      */
     void setTrackSegmentBlock(int pointType, boolean isAutomatic) {
         TrackSegment trkSeg;
@@ -1707,20 +1718,38 @@ public class LayoutTurnout extends LayoutTrack {
         switch (pointType) {
             case TURNOUT_A:
             case SLIP_A:
-                if (signalA1HeadNamed != null) return;
-                if (signalA2HeadNamed != null) return;
-                if (signalA3HeadNamed != null) return;
-                if (getSignalAMast() != null) return;
-                if (getSensorA() != null) return;
+                if (signalA1HeadNamed != null) {
+                    return;
+                }
+                if (signalA2HeadNamed != null) {
+                    return;
+                }
+                if (signalA3HeadNamed != null) {
+                    return;
+                }
+                if (getSignalAMast() != null) {
+                    return;
+                }
+                if (getSensorA() != null) {
+                    return;
+                }
                 trkSeg = (TrackSegment) connectA;
                 pointCoord = getCoordsA();
                 break;
             case TURNOUT_B:
             case SLIP_B:
-                if (signalB1HeadNamed != null) return;
-                if (signalB2HeadNamed != null) return;
-                if (getSignalBMast() != null) return;
-                if (getSensorB() != null) return;
+                if (signalB1HeadNamed != null) {
+                    return;
+                }
+                if (signalB2HeadNamed != null) {
+                    return;
+                }
+                if (getSignalBMast() != null) {
+                    return;
+                }
+                if (getSensorB() != null) {
+                    return;
+                }
                 trkSeg = (TrackSegment) connectB;
                 pointCoord = getCoordsB();
                 if (xOver) {
@@ -1729,10 +1758,18 @@ public class LayoutTurnout extends LayoutTrack {
                 break;
             case TURNOUT_C:
             case SLIP_C:
-                if (signalC1HeadNamed != null) return;
-                if (signalC2HeadNamed != null) return;
-                if (getSignalCMast() != null) return;
-                if (getSensorC() != null) return;
+                if (signalC1HeadNamed != null) {
+                    return;
+                }
+                if (signalC2HeadNamed != null) {
+                    return;
+                }
+                if (getSignalCMast() != null) {
+                    return;
+                }
+                if (getSensorC() != null) {
+                    return;
+                }
                 trkSeg = (TrackSegment) connectC;
                 pointCoord = getCoordsC();
                 if (xOver) {
@@ -1741,10 +1778,18 @@ public class LayoutTurnout extends LayoutTrack {
                 break;
             case TURNOUT_D:
             case SLIP_D:
-                if (signalD1HeadNamed != null) return;
-                if (signalD2HeadNamed != null) return;
-                if (getSignalDMast() != null) return;
-                if (getSensorD() != null) return;
+                if (signalD1HeadNamed != null) {
+                    return;
+                }
+                if (signalD2HeadNamed != null) {
+                    return;
+                }
+                if (getSignalDMast() != null) {
+                    return;
+                }
+                if (getSensorD() != null) {
+                    return;
+                }
                 trkSeg = (TrackSegment) connectD;
                 pointCoord = getCoordsD();
                 if (xOver) {
@@ -2495,10 +2540,10 @@ public class LayoutTurnout extends LayoutTrack {
             }
             jmi.setEnabled(false);
 
-            if (getBlockName().isEmpty()) {
-                jmi = popup.add(Bundle.getMessage("NoBlock"));
-            } else {
+            int block_count = 0;
+            if (getLayoutBlock() != null) {
                 jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameBlock")) + getLayoutBlock().getDisplayName());
+                block_count++;  // bump block count
             }
             jmi.setEnabled(false);
 
@@ -2509,15 +2554,22 @@ public class LayoutTurnout extends LayoutTrack {
                 if (getLayoutBlockB() != null) {
                     jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("Block_ID", "B")) + getLayoutBlockB().getDisplayName());
                     jmi.setEnabled(false);
+                    block_count++;  // bump block count
                 }
                 if (getLayoutBlockC() != null) {
                     jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("Block_ID", "C")) + getLayoutBlockC().getDisplayName());
                     jmi.setEnabled(false);
+                    block_count++;  // bump block count
                 }
                 if (getLayoutBlockD() != null) {
                     jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("Block_ID", "D")) + getLayoutBlockD().getDisplayName());
                     jmi.setEnabled(false);
+                    block_count++;  // bump block count
                 }
+            }
+            if (block_count == 0) {
+                jmi = popup.add(Bundle.getMessage("NoBlock"));
+                jmi.setEnabled(false);
             }
 
             // if there are any track connections
