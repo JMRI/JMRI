@@ -1,5 +1,6 @@
 package jmri.jmrix.sprog;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.ProgrammingMode;
 import jmri.jmrix.sprog.SprogConstants.SprogState;
 import org.slf4j.Logger;
@@ -554,6 +555,7 @@ public class SprogMessage extends jmri.jmrix.AbstractMRMessage {
 
     // [AC] 11/09/2002
     @SuppressWarnings("unused")
+    @SuppressFBWarnings(value = "UPM_UNCALLED_PRIVATE_METHOD", justification="was previously marked with @SuppressWarnings, reason unknown")
     private static String addIntAsTwo(int val, SprogMessage m, int offset) {
         String s = "" + val;
         if (s.length() != 2) {

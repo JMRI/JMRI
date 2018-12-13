@@ -24,7 +24,6 @@ import org.slf4j.LoggerFactory;
  */
 public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener {
 
-    SlotManager mSlotMgr;
     LocoNetSystemConnectionMemo memo;
     int mAddress;
     boolean mLongAddr;
@@ -34,10 +33,8 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
     private javax.swing.Timer bdOpSwAccessTimer = null;
 
 
-    public LnOpsModeProgrammer(SlotManager pSlotMgr,
-            LocoNetSystemConnectionMemo memo,
+    public LnOpsModeProgrammer(LocoNetSystemConnectionMemo memo,
             int pAddress, boolean pLongAddr) {
-        mSlotMgr = pSlotMgr;
         this.memo = memo;
         mAddress = pAddress;
         mLongAddr = pLongAddr;
@@ -46,18 +43,28 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
     }
 
     /**
+     * @deprecated 4.13.6 Use LnOpsModeProgrammer(LocoNetSystemConnectionMemo memo, int, bool) instead
+     */
+    @Deprecated // 4.13.6 Use LnOpsModeProgrammer(LocoNetSystemConnectionMemo memo, int, bool) instead
+    public LnOpsModeProgrammer(SlotManager pSlotMgr,
+            LocoNetSystemConnectionMemo memo,
+            int pAddress, boolean pLongAddr) {
+        this(memo, pAddress, pLongAddr);
+    }
+
+    /**
      * Forward a write request to an ops-mode write operation.
      */
     @Override
     @Deprecated // 4.1.1
     public void writeCV(int CV, int val, ProgListener p) throws ProgrammerException {
-        mSlotMgr.writeCVOpsMode(CV, val, p, mAddress, mLongAddr);
+        memo.getSlotManager().writeCVOpsMode(CV, val, p, mAddress, mLongAddr);
     }
 
     @Override
     @Deprecated // 4.1.1
     public void readCV(int CV, ProgListener p) throws ProgrammerException {
-        mSlotMgr.readCVOpsMode(CV, p, mAddress, mLongAddr);
+        memo.getSlotManager().readCVOpsMode(CV, p, mAddress, mLongAddr);
     }
 
     @Override
@@ -66,8 +73,8 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
         // Check mode
         LocoNetMessage m;
         if (getMode().equals(LnProgrammerManager.LOCONETCSOPSWMODE)) {
-            mSlotMgr.setMode(LnProgrammerManager.LOCONETCSOPSWMODE);
-            mSlotMgr.writeCV(CV, val, pL); // deal with this via service-mode programmer
+            memo.getSlotManager().setMode(LnProgrammerManager.LOCONETCSOPSWMODE);
+            memo.getSlotManager().writeCV(CV, val, pL); // deal with this via service-mode programmer
         } else if (getMode().equals(LnProgrammerManager.LOCONETBDOPSWMODE)) {
             /**
              * CV format is e.g. "113.12" where the first part defines the
@@ -150,8 +157,8 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
         String[] parts;
         LocoNetMessage m;
         if (getMode().equals(LnProgrammerManager.LOCONETCSOPSWMODE)) {
-            mSlotMgr.setMode(LnProgrammerManager.LOCONETCSOPSWMODE);
-            mSlotMgr.readCV(CV, pL); // deal with this via service-mode programmer
+            memo.getSlotManager().setMode(LnProgrammerManager.LOCONETCSOPSWMODE);
+            memo.getSlotManager().readCV(CV, pL); // deal with this via service-mode programmer
         } else if (getMode().equals(LnProgrammerManager.LOCONETBDOPSWMODE)) {
             /**
              * CV format is e.g. "113.12" where the first part defines the
@@ -234,8 +241,8 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
         p = null;
         // Check mode
         if (getMode().equals(LnProgrammerManager.LOCONETCSOPSWMODE)) {
-            mSlotMgr.setMode(LnProgrammerManager.LOCONETCSOPSWMODE);
-            mSlotMgr.readCV(CV, pL); // deal with this via service-mode programmer
+            memo.getSlotManager().setMode(LnProgrammerManager.LOCONETCSOPSWMODE);
+            memo.getSlotManager().readCV(CV, pL); // deal with this via service-mode programmer
         } else if (getMode().equals(LnProgrammerManager.LOCONETBDOPSWMODE)) {
             readCV(CV, pL);
         }
@@ -245,7 +252,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
             notifyProgListenerEnd(pL, 0, ProgListener.UnknownError);
         } else {
             // DCC ops mode
-            mSlotMgr.confirmCVOpsMode(CV, val, pL, mAddress, mLongAddr);
+            memo.getSlotManager().confirmCVOpsMode(CV, val, pL, mAddress, mLongAddr);
         }
     }
 
@@ -501,7 +508,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
      */
     @Override
     public boolean getCanRead() {
-        if (getMode().equals(ProgrammingMode.OPSBYTEMODE)) return mSlotMgr.getTranspondingAvailable(); // only way can be false
+        if (getMode().equals(ProgrammingMode.OPSBYTEMODE)) return memo.getSlotManager().getTranspondingAvailable(); // only way can be false
         return true;
      }
 
@@ -522,7 +529,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
 
     @Override
     public String decodeErrorCode(int i) {
-        return mSlotMgr.decodeErrorCode(i);
+        return memo.getSlotManager().decodeErrorCode(i);
     }
 
     @Override

@@ -2,7 +2,7 @@ package jmri;
 
 import java.beans.PropertyVetoException;
 import javax.annotation.Nonnull;
-import jmri.beans.*;
+import jmri.beans.ConstrainedBean;
 
 /**
  * Define the characteristics of a layout scale.  A scale has four properties.
@@ -38,7 +38,7 @@ public class Scale extends ConstrainedBean {
         super();
     }
 
-    public Scale(@Nonnull String name, @Nonnull double ratio, String userName) {
+    public Scale(@Nonnull String name, double ratio, String userName) {
         super();
         _name = name;
         _userName = (userName == null) ? name : userName;
@@ -105,7 +105,7 @@ public class Scale extends ConstrainedBean {
      * @throws IllegalArgumentException The new ratio is less than 1.
      * @throws PropertyVetoException The ratio change was vetoed.
      */
-    public void setScaleRatio(@Nonnull double newRatio) throws IllegalArgumentException, PropertyVetoException {
+    public void setScaleRatio(double newRatio) throws IllegalArgumentException, PropertyVetoException {
         if (newRatio < 1.0) {
             throw new IllegalArgumentException("The scale ratio is less than 1");  // NOI18N
         }

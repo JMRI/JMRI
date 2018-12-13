@@ -63,6 +63,7 @@
     "web/app/app/websocket.js"
   ],
   "translations":[
+    "web/app/app/locale-*.json",
     "web/app/app/navigation-*.json"
   ]
 }

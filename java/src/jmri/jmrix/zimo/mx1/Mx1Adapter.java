@@ -118,20 +118,21 @@ public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPo
      */
     @Override
     public void configure() {
-        Mx1CommandStation cs = new Mx1CommandStation();
-        this.getSystemConnectionMemo().setCommandStation(cs);
+        Mx1CommandStation cs = new Mx1CommandStation(getSystemConnectionMemo().getSystemPrefix(), getSystemConnectionMemo().getUserName());
+        getSystemConnectionMemo().setCommandStation(cs);
         // connect to a packetizing traffic controller
         Mx1Packetizer packets = new Mx1Packetizer(cs, Mx1Packetizer.ASCII);
         packets.connectPort(this);
 
-        this.getSystemConnectionMemo().setMx1TrafficController(packets);
-        this.getSystemConnectionMemo().configureManagers();
+        getSystemConnectionMemo().setMx1TrafficController(packets);
+        getSystemConnectionMemo().configureManagers();
 
         // start operation
         packets.startThreads();
     }
 
-// base class methods for the ZimoPortController interface
+    // base class methods for the ZimoPortController interface
+    
     @Override
     public DataInputStream getInputStream() {
         if (!opened) {

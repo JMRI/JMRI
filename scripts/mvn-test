@@ -1,0 +1,27 @@
+#!/bin/bash
+#
+# Run the Travis CI maven-based tests locally
+# 
+# You should run "ant clean" first, but that's not included here.
+#
+
+# be verbose and exit on any non-zero exit code
+# see https://docs.travis-ci.com/user/customizing-the-build/#Implementing-Complex-Build-Steps
+set -ev
+
+# set defaults if not already set
+PRINT_SUMMARY=${PRINT_SUMMARY:-true}
+RUN_ORDER=${RUN_ORDER:-filesystem}
+HEADLESS=${HEADLESS:-false}
+
+export MAVEN_OPTS=-Xmx1536m
+PRINT_SUMMARY=${PRINT_SUMMARY:-true}
+RUN_ORDER=${RUN_ORDER:-filesystem}
+HEADLESS=${HEADLESS:-false}
+
+    mvn verify -U -P travis-coverage --batch-mode \
+        -Dsurefire.printSummary=${PRINT_SUMMARY} \
+        -Dsurefire.runOrder=${RUN_ORDER} \
+        -Dant.jvm.args="-Djava.awt.headless=${HEADLESS}" \
+        -Djava.awt.headless=${HEADLESS} \
+        -Dcucumber.options="--tags 'not @Ignore'"
