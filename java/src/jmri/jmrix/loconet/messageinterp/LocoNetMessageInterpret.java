@@ -2475,7 +2475,7 @@ public class LocoNetMessageInterpret {
     }
 
     private static String interpretOpcRqSlData(LocoNetMessage l) {
-        int slot = l.getElement(1) + 128 * l.getElement(2);
+        int slot = l.getElement(1) + 128 * (l.getElement(2) & 0x07);
 
         switch (slot) {
             // Slots > 120 are all special, but these are the only ones we know to decode.
@@ -4645,7 +4645,9 @@ public class LocoNetMessageInterpret {
        switch (slot) {
             case 248:
                 // Identifying information
-                baseInfo = interpretExtendedSlot_StatusData_Base(l,slot);
+                baseInfo = interpretExtendedSlot_StatusData_Base_Detail(l,slot);
+                // Flags
+                detailInfo = interpretExtendedSlot_StatusData_Flags(l,slot);
                 break;
             case 249:
                 // electric
@@ -4653,9 +4655,20 @@ public class LocoNetMessageInterpret {
                 baseInfo = interpretExtendedSlot_StatusData_Base(l,slot);
                 detailInfo = interpretExtendedSlot_StatusData_Electric(l,slot);
                 break;
+            case 251:
+                // Loconet stats
+                // Identifying information
+                baseInfo = interpretExtendedSlot_StatusData_Base(l,slot);
+                detailInfo = interpretExtendedSlot_StatusData_LocoNet(l,slot);
+                break;
+            case 250:
+                // Identifying information
+                baseInfo = interpretExtendedSlot_StatusData_Base(l,slot);
+                // Slots info
+                detailInfo = interpretExtendedSlot_StatusData_Slots(l,slot);
+                break;
             default:
                 baseInfo = "Still working on it";
-                detailInfo = "";
         }
        return Bundle.getMessage("LN_MSG_OPC_EXP_SPECIALSTATUS",
                slot, baseInfo, detailInfo);
@@ -4664,8 +4677,33 @@ public class LocoNetMessageInterpret {
     private static String interpretExtendedSlot_StatusData_Base(LocoNetMessage l, int slot) {
         String hwType = "";
         int hwSerial;
+        switch (l.getElement(16)) {
+            case LnConstants.RE_IPL_DIGITRAX_HOST_DCS240:
+                hwType = "DCS240";
+                break;
+            case LnConstants.RE_IPL_DIGITRAX_HOST_DCS210:
+                hwType = "DCS210";
+                break;
+            case LnConstants.RE_IPL_DIGITRAX_HOST_BXP88:
+                hwType = "BXP88";
+                break;
+            case LnConstants.RE_IPL_DIGITRAX_HOST_BXPA1:
+                hwType = "BXPA1";
+                break;
+            default:
+                hwType = "Unknown";
+        }
+        hwSerial = ((l.getElement(19) & 0x0f) * 128 ) + l.getElement(18);
+        return Bundle.getMessage("LN_MSG_OPC_EXP_SPECIALSTATUS_BASE",
+                hwType,
+                hwSerial);
+    }
+    
+    private static String interpretExtendedSlot_StatusData_Base_Detail(LocoNetMessage l, int slot) {
         double hwVersion ;
         double swVersion ;
+        int hwSerial;
+        String hwType;
         switch (l.getElement(14)) {
             case LnConstants.RE_IPL_DIGITRAX_HOST_DCS240:
                 hwType = "DCS240";
@@ -4685,7 +4723,7 @@ public class LocoNetMessageInterpret {
         hwSerial = ((l.getElement(19) & 0x0f) * 128 ) + l.getElement(18);
         hwVersion = ((double)(l.getElement(17) & 0x78) / 8 ) + ((double)(l.getElement(17) & 0x07) / 10 ) ;
         swVersion = ((double)(l.getElement(16) & 0x78) / 8 ) + ((double)(l.getElement(16) & 0x07) / 10 ) ;
-        return Bundle.getMessage("LN_MSG_OPC_EXP_SPECIALSTATUS_BASE",
+        return Bundle.getMessage("LN_MSG_OPC_EXP_SPECIALSTATUS_BASEDETAIL",
                 hwType,
                 hwSerial,
                 hwVersion,
@@ -4697,17 +4735,50 @@ public class LocoNetMessageInterpret {
         double voltsIn;
         double ampsIn;
         double ampsLimit;
-        voltsTrack = l.getElement(04) / 2 * 10.0 ;
-        voltsIn = l.getElement(5) / 2 * 10.0 ;
-        ampsIn = l.getElement(6)  * 10.0;
-        ampsLimit = l.getElement(7)  * 10.0;
+        double  voltsRsLoaded;
+        double  voltsRsUnLoaded;
+        voltsTrack = ((double)l.getElement(4)) * 2 / 10 ;
+        voltsIn = ((double)l.getElement(5)) * 2 / 10;
+        ampsIn = ((double)l.getElement(6)) / 10;
+        ampsLimit = ((double)l.getElement(7)) / 10;
+        voltsRsLoaded = ((double)l.getElement(12)) * 2 / 10;
+        voltsRsUnLoaded = ((double)l.getElement(10)) * 2 / 10;
         return Bundle.getMessage("LN_MSG_OPC_EXP_SPECIALSTATUS_ELECTRIC",
                 voltsTrack,
                 voltsIn,
                 ampsIn,
-                ampsLimit);
+                ampsLimit,
+                voltsRsLoaded,
+                voltsRsUnLoaded);
     }
-    
+
+    private static String interpretExtendedSlot_StatusData_LocoNet(LocoNetMessage l, int slot) {
+        double msgTotal;
+        double msgErrors;
+        msgTotal = (l.getElement(4) + ( l.getElement(5) * 128)) ;
+        msgErrors = (l.getElement(6) + ( l.getElement(7) * 128)) ;
+        return Bundle.getMessage("LN_MSG_OPC_EXP_SPECIALSTATUS_LOCONET",
+                msgTotal,
+                msgErrors);
+    }
+
+    private static String interpretExtendedSlot_StatusData_Flags(LocoNetMessage l, int slot) {
+        return Bundle.getMessage("LN_MSG_OPC_EXP_SPECIALSTATUS_FLAGS");
+    }
+
+    private static String interpretExtendedSlot_StatusData_Slots(LocoNetMessage l, int slot) {
+        double msgInUse;
+        double msgIdle;
+        double msgFree;
+        msgInUse = (l.getElement(4) + ( l.getElement(5) * 128)) ;
+        msgIdle = (l.getElement(6) + ( l.getElement(7) * 128)) ;
+        msgFree = (l.getElement(8) + ( l.getElement(9) * 128)) ;
+        return Bundle.getMessage("LN_MSG_OPC_EXP_SPECIALSTATUS_SLOTS",
+                msgInUse,
+                msgIdle,
+                msgFree);
+    }
+
     private static final String ds54sensors[] = {"AuxA", "SwiA", "AuxB", "SwiB", "AuxC", "SwiC", "AuxD", "SwiD"};    // NOI18N
     private static final String ds64sensors[] = {"A1", "S1", "A2", "S2", "A3", "S3", "A4", "S4"};                    // NOI18N
     private static final String se8csensors[] = {"DS01", "DS02", "DS03", "DS04", "DS05", "DS06", "DS07", "DS08"};    // NOI18N
