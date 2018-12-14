@@ -29,11 +29,12 @@ public class ProfileUtils {
     /**
      * Get the preferences needed by a class for a given configuration profile.
      *
-     * @param project The configuration profile.
+     * @param project The configuration profile. If null, the preferences apply
+     *                to all profiles on this computer.
      * @param clazz   The class requesting preferences.
      * @param shared  True if the preferences are for all nodes (computers) this
      *                profile may run on, false if the preferences are only for
-     *                this node.
+     *                this node. Ignored if the value of project is null.
      * @return The preferences.
      */
     public static Preferences getPreferences(Profile project, Class<?> clazz, boolean shared) {
@@ -53,7 +54,7 @@ public class ProfileUtils {
 
     /**
      * Get the local cache directory for the given profile.
-     *
+     * <p>
      * This cache is outside the profile for which the cache exists to prevent
      * the possibility that different JMRI installations have different contents
      * that would invalidate the cache if copied from one computer to another.
