@@ -96,6 +96,7 @@ public class UserInterface extends JmriJFrame implements DeviceListener, RosterG
         //get port# directly from prefs
         int port = InstanceManager.getDefault(WiThrottlePreferences.class).getPort();
         //list IPv4 addresses on the UI, for manual connections
+        //TODO: use some mechanism that is not tied to zeroconf networking
         String as = ""; //build multiline string of valid addresses
         for (InetAddress ha : InstanceManager.getDefault(ZeroConfServiceManager.class).getAddresses(ZeroConfServiceManager.Protocol.IPv4)) {
             this.portLabel.setText(ha.getHostName());

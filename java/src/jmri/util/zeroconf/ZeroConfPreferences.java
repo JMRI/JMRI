@@ -68,11 +68,12 @@ public class ZeroConfPreferences extends PreferencesBean {
 
     public ZeroConfPreferences(Profile profile) {
         super(profile);
+        Preferences localPreferences = ProfileUtils.getPreferences(profile, this.getClass(), false);
         Preferences sharedPreferences = ProfileUtils.getPreferences(profile, this.getClass(), true);
-        this.useIPv4 = sharedPreferences.getBoolean(USE_IP_V4, sharedPreferences.getBoolean(IPv4, true));
-        this.useIPv6 = sharedPreferences.getBoolean(USE_IP_V6, sharedPreferences.getBoolean(IPv6, true));
-        this.useLoopback = sharedPreferences.getBoolean(USE_LOOPBACK, false);
-        this.useLinkLocal = sharedPreferences.getBoolean(USE_LINK_LOCAL, false);
+        this.useIPv4 = localPreferences.getBoolean(USE_IP_V4, sharedPreferences.getBoolean(IPv4, true));
+        this.useIPv6 = localPreferences.getBoolean(USE_IP_V6, sharedPreferences.getBoolean(IPv6, true));
+        this.useLoopback = localPreferences.getBoolean(USE_LOOPBACK, false);
+        this.useLinkLocal = localPreferences.getBoolean(USE_LINK_LOCAL, false);
     }
 
     public boolean isUseIPv4() {
@@ -120,21 +121,22 @@ public class ZeroConfPreferences extends PreferencesBean {
     }
 
     public void savePreferences(Profile profile) {
-        Preferences sharedPreferences = ProfileUtils.getPreferences(profile, this.getClass(), true);
-        sharedPreferences.putBoolean(USE_IP_V4, useIPv4);
-        sharedPreferences.putBoolean(USE_IP_V6, useIPv6);
-        sharedPreferences.putBoolean(USE_LOOPBACK, useLoopback);
-        sharedPreferences.putBoolean(USE_LINK_LOCAL, useLinkLocal);
+        Preferences localPreferences = ProfileUtils.getPreferences(profile, this.getClass(), false);
+        localPreferences.putBoolean(USE_IP_V4, useIPv4);
+        localPreferences.putBoolean(USE_IP_V6, useIPv6);
+        localPreferences.putBoolean(USE_LOOPBACK, useLoopback);
+        localPreferences.putBoolean(USE_LINK_LOCAL, useLinkLocal);
         try {
+            localPreferences.sync();
+        } catch (BackingStoreException ex) {
+            log.error("Unable to save preferences", ex);
+        }
+        try {
+            Preferences sharedPreferences = ProfileUtils.getPreferences(profile, this.getClass(), true);
             sharedPreferences.remove(IPv4);
             sharedPreferences.remove(IPv6);
         } catch (IllegalStateException ex) {
             log.error("Unable to remove no-longer-use preferences", ex);
-        }
-        try {
-            sharedPreferences.sync();
-        } catch (BackingStoreException ex) {
-            log.error("Unable to save preferences", ex);
         }
     }
 
