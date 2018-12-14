@@ -375,4 +375,12 @@ public class ZeroConfService {
     public void removeEventListener(ZeroConfServiceListener l) {
         this.listeners.remove(l);
     }
+    
+    /**
+     * Get a list of the listeners for this service.
+     * @return 
+     */
+    public List<ZeroConfServiceListener> getListeners() {
+        return new ArrayList<>(listeners);
+    }
 }

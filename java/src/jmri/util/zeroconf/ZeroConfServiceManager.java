@@ -6,13 +6,11 @@ import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 import java.util.prefs.Preferences;
@@ -94,7 +92,6 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
     private static final Logger log = LoggerFactory.getLogger(ZeroConfServiceManager.class);
     // class data objects
     protected final HashMap<String, ZeroConfService> services = new HashMap<>();
-    protected final List<ZeroConfServiceListener> listeners = new ArrayList<>();
     protected final NetworkListener networkListener = new NetworkListener(this);
     protected final ShutDownTask shutDownTask = new ShutDownTask(this);
 
@@ -196,7 +193,7 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
             boolean useIPv4 = zeroConfPrefs.getBoolean(ZeroConfService.IPv4, true);
             boolean useIPv6 = zeroConfPrefs.getBoolean(ZeroConfService.IPv6, true);
             services.put(service.getKey(), service);
-            listeners.stream().forEach((listener) -> {
+            service.getListeners().stream().forEach((listener) -> {
                 listener.serviceQueued(new ZeroConfServiceEvent(service, null));
             });
             for (JmDNS dns : getDNSes().values()) {
@@ -245,7 +242,7 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
                     log.error("Unable to publish service for '{}': {}", service.getKey(), ex.getMessage());
                     continue;
                 }
-                this.listeners.stream().forEach((listener) -> {
+                service.getListeners().stream().forEach((listener) -> {
                     listener.servicePublished(event);
                 });
             }
@@ -267,7 +264,7 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
                         log.debug("Unregistering {} from {}", service.getKey(), address);
                         dns.unregisterService(service.getServiceInfo(address));
                         service.removeServiceInfo(address);
-                        this.listeners.stream().forEach((listener) -> {
+                        service.getListeners().stream().forEach((listener) -> {
                             listener.serviceUnpublished(new ZeroConfServiceEvent(service, dns));
                         });
                     } catch (NullPointerException ex) {
@@ -351,8 +348,8 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
                             Enumeration<InetAddress> niAddresses = ni.getInetAddresses();
                             while (niAddresses.hasMoreElements()) {
                                 InetAddress address = niAddresses.nextElement();
-                                if ((allowLinkLocal || !address.isLinkLocalAddress())
-                                        && (allowLoopback || !address.isLoopbackAddress())) {
+                                if ((useLinkLocal || !address.isLinkLocalAddress())
+                                        && (useLoopback || !address.isLoopbackAddress())) {
                                     // explicitly pass a valid host getName, since null causes a very long lookup on some networks
                                     log.debug("Calling JmDNS.create({}, '{}')", address.getHostAddress(), address.getHostAddress());
                                     try {
@@ -469,14 +466,6 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
         return getDNSes().get(address).getHostName();
     }
 
-    public void addEventListener(ZeroConfServiceListener l) {
-        this.listeners.add(l);
-    }
-
-    public void removeEventListener(ZeroConfServiceListener l) {
-        this.listeners.remove(l);
-    }
-
     public Preferences getPreferences() {
         return zeroConfPrefs;
     }
@@ -520,7 +509,7 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
                         if (!service.containsServiceInfo(address)) {
                             log.debug("Publishing zeroConf service for '{}' on {}", service.getKey(), address.getHostAddress());
                             dns.registerService(service.addServiceInfo(address));
-                            manager.listeners.stream().forEach((listener) -> {
+                            service.getListeners().stream().forEach((listener) -> {
                                 listener.servicePublished(new ZeroConfServiceEvent(service, dns));
                             });
                         }
@@ -542,7 +531,7 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
             dns.unregisterAllServices();
             manager.allServices().stream().forEach((service) -> {
                 service.removeServiceInfo(address);
-                manager.listeners.stream().forEach((listener) -> {
+                service.getListeners().stream().forEach((listener) -> {
                     listener.servicePublished(new ZeroConfServiceEvent(service, dns));
                 });
             });
