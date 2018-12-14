@@ -71,21 +71,19 @@ public class MockZeroConfServiceManager extends ZeroConfServiceManager {
     public void publish(ZeroConfService service) {
         if (!isPublished(service)) {
             //get current preference values
-            boolean useIPv4 = preferences.getBoolean(ZeroConfService.IPv4, true);
-            boolean useIPv6 = preferences.getBoolean(ZeroConfService.IPv6, true);
             services.put(service.getKey(), service);
-            listeners.stream().forEach((listener) -> {
+            service.getListeners().stream().forEach((listener) -> {
                 listener.serviceQueued(new ZeroConfServiceEvent(service, null));
             });
             for (JmDNS netService : getDNSes().values()) {
                 ZeroConfServiceEvent event;
                 try {
-                    if (netService.getInetAddress() instanceof Inet6Address && !useIPv6) {
+                    if (netService.getInetAddress() instanceof Inet6Address && !preferences.isUseIPv6()) {
                         // Skip if address is IPv6 and should not be advertised on
                         log.debug("Ignoring IPv6 address {}", netService.getInetAddress().getHostAddress());
                         continue;
                     }
-                    if (netService.getInetAddress() instanceof Inet4Address && !useIPv4) {
+                    if (netService.getInetAddress() instanceof Inet4Address && !preferences.isUseIPv4()) {
                         // Skip if address is IPv4 and should not be advertised on
                         log.debug("Ignoring IPv4 address {}", netService.getInetAddress().getHostAddress());
                         continue;
@@ -122,7 +120,7 @@ public class MockZeroConfServiceManager extends ZeroConfServiceManager {
                     log.error("Unable to publish service for '{}': {}", service.getKey(), ex.getMessage());
                     continue;
                 }
-                this.listeners.stream().forEach((listener) -> {
+                service.getListeners().stream().forEach((listener) -> {
                     listener.servicePublished(event);
                 });
             }
@@ -144,7 +142,7 @@ public class MockZeroConfServiceManager extends ZeroConfServiceManager {
                         log.debug("Unregistering {} from {}", service.getKey(), netService.getInetAddress());
                         netService.unregisterService(service.getServiceInfo(netService.getInetAddress()));
                         service.removeServiceInfo(netService.getInetAddress());
-                        this.listeners.stream().forEach((listener) -> {
+                        service.getListeners().stream().forEach((listener) -> {
                             listener.serviceUnpublished(new ZeroConfServiceEvent(service, netService));
                         });
                     } catch (NullPointerException ex) {
