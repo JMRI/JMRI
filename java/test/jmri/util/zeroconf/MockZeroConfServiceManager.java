@@ -71,8 +71,8 @@ public class MockZeroConfServiceManager extends ZeroConfServiceManager {
     public void publish(ZeroConfService service) {
         if (!isPublished(service)) {
             //get current preference values
-            boolean useIPv4 = zeroConfPrefs.getBoolean(ZeroConfService.IPv4, true);
-            boolean useIPv6 = zeroConfPrefs.getBoolean(ZeroConfService.IPv6, true);
+            boolean useIPv4 = preferences.getBoolean(ZeroConfService.IPv4, true);
+            boolean useIPv6 = preferences.getBoolean(ZeroConfService.IPv6, true);
             services.put(service.getKey(), service);
             listeners.stream().forEach((listener) -> {
                 listener.serviceQueued(new ZeroConfServiceEvent(service, null));

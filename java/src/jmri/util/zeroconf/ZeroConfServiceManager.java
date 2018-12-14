@@ -13,7 +13,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.CountDownLatch;
-import java.util.prefs.Preferences;
 import javax.annotation.Nonnull;
 import javax.jmdns.JmDNS;
 import javax.jmdns.JmmDNS;
@@ -26,7 +25,6 @@ import jmri.InstanceManagerAutoDefault;
 import jmri.ShutDownManager;
 import jmri.implementation.QuietShutDownTask;
 import jmri.profile.ProfileManager;
-import jmri.profile.ProfileUtils;
 import jmri.util.node.NodeIdentity;
 import jmri.web.server.WebServerPreferences;
 import org.slf4j.Logger;
@@ -95,9 +93,7 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
     protected final NetworkListener networkListener = new NetworkListener(this);
     protected final ShutDownTask shutDownTask = new ShutDownTask(this);
 
-    protected final Preferences zeroConfPrefs = ProfileUtils.getPreferences(ProfileManager.getDefault().getActiveProfile(),
-            ZeroConfServiceManager.class,
-            false);
+    protected final ZeroConfPreferences preferences = new ZeroConfPreferences(ProfileManager.getDefault().getActiveProfile());
 
     /**
      * Create a ZeroConfService with the minimal required settings. This method
@@ -190,8 +186,6 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
     public void publish(ZeroConfService service) {
         if (!isPublished(service)) {
             //get current preference values
-            boolean useIPv4 = zeroConfPrefs.getBoolean(ZeroConfService.IPv4, true);
-            boolean useIPv6 = zeroConfPrefs.getBoolean(ZeroConfService.IPv6, true);
             services.put(service.getKey(), service);
             service.getListeners().stream().forEach((listener) -> {
                 listener.serviceQueued(new ZeroConfServiceEvent(service, null));
@@ -201,12 +195,12 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
                 ServiceInfo info;
                 try {
                     final InetAddress address = dns.getInetAddress();
-                    if (address instanceof Inet6Address && !useIPv6) {
+                    if (address instanceof Inet6Address && !preferences.isUseIPv6()) {
                         // Skip if address is IPv6 and should not be advertised on
                         log.debug("Ignoring IPv6 address {}", address.getHostAddress());
                         continue;
                     }
-                    if (address instanceof Inet4Address && !useIPv4) {
+                    if (address instanceof Inet4Address && !preferences.isUseIPv4()) {
                         // Skip if address is IPv4 and should not be advertised on
                         log.debug("Ignoring IPv4 address {}", address.getHostAddress());
                         continue;
@@ -337,8 +331,6 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
     synchronized HashMap<InetAddress, JmDNS> getDNSes() {
         if (JMDNS_SERVICES.isEmpty()) {
             log.debug("JmDNS version: {}", JmDNS.VERSION);
-            boolean allowLoopback = zeroConfPrefs.getBoolean(ZeroConfService.LOOPBACK, false);
-            boolean allowLinkLocal = zeroConfPrefs.getBoolean(ZeroConfService.LINKLOCAL, false);
             try {
                 Enumeration<NetworkInterface> nis = NetworkInterface.getNetworkInterfaces();
                 while (nis.hasMoreElements()) {
@@ -348,8 +340,8 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
                             Enumeration<InetAddress> niAddresses = ni.getInetAddresses();
                             while (niAddresses.hasMoreElements()) {
                                 InetAddress address = niAddresses.nextElement();
-                                if ((useLinkLocal || !address.isLinkLocalAddress())
-                                        && (useLoopback || !address.isLoopbackAddress())) {
+                                if ((preferences.isUseLinkLocal() || !address.isLinkLocalAddress())
+                                        && (preferences.isUseLoopback() || !address.isLoopbackAddress())) {
                                     // explicitly pass a valid host getName, since null causes a very long lookup on some networks
                                     log.debug("Calling JmDNS.create({}, '{}')", address.getHostAddress(), address.getHostAddress());
                                     try {
@@ -466,8 +458,8 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
         return getDNSes().get(address).getHostName();
     }
 
-    public Preferences getPreferences() {
-        return zeroConfPrefs;
+    public ZeroConfPreferences getPreferences() {
+        return preferences;
     }
 
     public boolean isPublished(ZeroConfService service) {
@@ -493,12 +485,10 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
         @Override
         public void inetAddressAdded(NetworkTopologyEvent nte) {
             //get current preference values
-            boolean useIPv4 = manager.zeroConfPrefs.getBoolean(ZeroConfService.IPv4, true);
-            boolean useIPv6 = manager.zeroConfPrefs.getBoolean(ZeroConfService.IPv6, true);
             final InetAddress address = nte.getInetAddress();
-            if (!useIPv6 && address instanceof Inet6Address) {
+            if (!manager.preferences.isUseIPv6() && address instanceof Inet6Address) {
                 log.debug("Ignoring IPv6 address {}", address.getHostAddress());
-            } else if (!useIPv4 && address instanceof Inet4Address) {
+            } else if (!manager.preferences.isUseIPv4() && address instanceof Inet4Address) {
                 log.debug("Ignoring IPv4 address {}", address.getHostAddress());
             } else if (!JMDNS_SERVICES.containsKey(address)) {
                 log.debug("Adding address {}", address.getHostAddress());
