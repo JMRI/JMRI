@@ -182,11 +182,11 @@ public class MultiIndexProgrammerFacade extends AbstractProgrammerFacade impleme
 
             // non-indexed operation
             state = ProgState.PROGRAMMING;
-            prog.writeCV(CV, val, this);
+            prog.writeCV(_cv, val, this);
         } else if (useCachePiSi()) {
             // indexed operation with set values is same as non-indexed operation
             state = ProgState.PROGRAMMING;
-            prog.writeCV(CV, val, this);
+            prog.writeCV(_cv, val, this);
         } else {
             lastValuePI = valuePI;  // after check in 'if' statement
             lastValueSI = valueSI;
@@ -232,11 +232,11 @@ public class MultiIndexProgrammerFacade extends AbstractProgrammerFacade impleme
 
             // non-indexed operation
             state = ProgState.PROGRAMMING;
-            prog.confirmCV(CV, val, this);
+            prog.confirmCV(_cv, val, this);
         } else if (useCachePiSi()) {
             // indexed operation with set values is same as non-indexed operation
             state = ProgState.PROGRAMMING;
-            prog.confirmCV(CV, val, this);
+            prog.confirmCV(_cv, val, this);
         } else {
             lastValuePI = valuePI;  // after check in 'if' statement
             lastValueSI = valueSI;
