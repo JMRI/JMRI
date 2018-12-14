@@ -29,10 +29,12 @@ public class ClientRxHandlerTest {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
+
         LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo();
-        // provide a memo in order to later use InstanceManager.getDefault()
+        // ensure memo exists in order to later use InstanceManager.getDefault()
         lnis = new LocoNetInterfaceScaffold(memo);
-        // memo.setLnTrafficController(lnis);
+        memo.setLnTrafficController(lnis);
+        memo.configureCommandStation(jmri.jmrix.loconet.LnCommandStationType.COMMAND_STATION_DCS100, true, false, true);
     }
 
     @After
