@@ -103,12 +103,6 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
         Assert.assertTrue(t.getCommandedState() == jmri.Turnout.THROWN);
     }
 
-    @Test
-    @Override
-    @Ignore("requires work for LocoNet turnouts")
-    public void testDirectFeedback() throws jmri.JmriException {
-    }
-
     // LnTurnout test for incoming status message
     @Test
     public void testLnTurnoutStatusMsg() {

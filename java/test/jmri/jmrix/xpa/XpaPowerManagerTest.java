@@ -1,9 +1,6 @@
 package jmri.jmrix.xpa;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * Description:	tests for the jmri.jmrix.xpa.XpaPowerManager class

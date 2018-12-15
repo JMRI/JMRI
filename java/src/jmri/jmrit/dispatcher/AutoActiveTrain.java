@@ -1435,7 +1435,7 @@ public class AutoActiveTrain implements ThrottleListener {
         if (b == null) {
             return (0);
         }
-        float fLength = b.getLengthMm() / (float) (jmri.Scale.getScaleFactor(InstanceManager.getDefault(DispatcherFrame.class).getScale()));
+        float fLength = b.getLengthMm() / (float) InstanceManager.getDefault(DispatcherFrame.class).getScale().getScaleFactor();
         if (InstanceManager.getDefault(DispatcherFrame.class).getUseScaleMeters()) {
             return (int) (fLength * 0.001f);
         }

@@ -1,11 +1,7 @@
 package jmri.jmrix.dccpp.dccppovertcp;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
-import org.junit.Rule;
+import org.junit.*;
 import jmri.util.junit.rules.RetryRule;
 
 /**

@@ -81,6 +81,9 @@ public class OlcbSensor extends AbstractSensor {
     void finishLoad() {
         int flags = PC_DEFAULT_FLAGS;
         flags = OlcbUtils.overridePCFlagsFromProperties(this, flags);
+        log.debug("Sensor Flags: default {} overridden {} listen bit {}", PC_DEFAULT_FLAGS, flags,
+                    BitProducerConsumer.LISTEN_EVENT_IDENTIFIED);
+        disposePc();
         if (addrInactive == null) {
             pc = new BitProducerConsumer(iface, addrActive.toEventID(), BitProducerConsumer.nullEvent, flags);
 
@@ -140,12 +143,14 @@ public class OlcbSensor extends AbstractSensor {
     }
 
     /**
-     * Request an update on status by sending CBUS message.
-     * <p>
-     * There is no known way to do this, so the request is just ignored.
+     * Request an update on status by sending an OpenLCB message.
      */
     @Override
     public void requestUpdateFromLayout() {
+        if (pc != null) {
+            pc.resetToDefault();
+            pc.sendQuery();
+        }
     }
 
     /**
@@ -260,10 +265,20 @@ public class OlcbSensor extends AbstractSensor {
 
     @Override
     public void dispose() {
-        if (sensorListener != null) sensorListener.release();
-        if (pc != null) pc.release();
+        disposePc();
         if (timer!=null) timer.cancel();
         super.dispose();
+    }
+
+    private void disposePc() {
+        if (sensorListener != null) {
+            sensorListener.release();
+            sensorListener = null;
+        }
+        if (pc != null) {
+            pc.release();
+            pc = null;
+        }
     }
 
     /**

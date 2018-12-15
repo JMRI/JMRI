@@ -9,11 +9,7 @@ import com.digi.xbee.api.exceptions.XBeeException;
 import com.digi.xbee.api.exceptions.InterfaceNotOpenException;
 import com.digi.xbee.api.exceptions.TimeoutException;
 import jmri.Sensor;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * XBeeSensorManagerTest.java

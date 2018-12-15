@@ -35,7 +35,7 @@ public class OptionsMenuTest {
         Assert.assertEquals("Short Train Name in Block", true, d.getShortNameInBlock());
         Assert.assertEquals("Extra Colour for allocate", false, d.getExtraColorForAllocated());
         Assert.assertEquals("Name In Allocated Block", false, d.getNameInAllocatedBlock());
-        Assert.assertEquals("Layout Scale", 7, d.getScale());
+        Assert.assertEquals("Layout Scale", "G", d.getScale().getScaleName());
         Assert.assertEquals("Use Metres", true, d.getUseScaleMeters());
         JUnitUtil.dispose(d);
     }

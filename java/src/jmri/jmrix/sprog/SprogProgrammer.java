@@ -1,6 +1,8 @@
 package jmri.jmrix.sprog;
 
 import java.util.*;
+import javax.annotation.Nonnull;
+
 import jmri.*;
 import jmri.jmrix.AbstractProgrammer;
 import org.slf4j.Logger;
@@ -24,6 +26,7 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
      * Implemented Types.
      */
     @Override
+    @Nonnull
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
         ret.add(ProgrammingMode.DIRECTBITMODE);

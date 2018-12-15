@@ -11,6 +11,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import javax.annotation.CheckReturnValue;
 import javax.swing.ComboBoxEditor;
 import javax.swing.DefaultListSelectionModel;
@@ -524,9 +525,9 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
 
                 if (found) {    //if we found it there then...
                     //walk the namedBeanList...
-                    List<NamedBean> namedBeanList = uDaManager.getNamedBeanList();
+                    Set<NamedBean> namedBeanSet = uDaManager.getNamedBeanSet();
 
-                    for (NamedBean namedBean : namedBeanList) {
+                    for (NamedBean namedBean : namedBeanSet) {
                         //checking to see if it matches "<sname> - <uname>" or "<uname> - <sname>"
                         String uname = namedBean.getUserName();
                         String sname = namedBean.getSystemName();
@@ -756,7 +757,7 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
             _enableRenderer = new EnabledComboBoxRenderer();
             setRenderer(_enableRenderer);
             ListSelectionModel lsm = _enableRenderer.getEnabledItems();
-            lsm.addSelectionInterval(0, _manager.getNamedBeanList().size());
+            lsm.addSelectionInterval(0, _manager.getNamedBeanSet().size());
         }
         return _enableRenderer;
     }
