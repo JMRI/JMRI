@@ -30,7 +30,7 @@
   </signalmasts>
   <signalgroups class="jmri.managers.configurexml.DefaultSignalGroupManagerXml">
     <signalgroup signalMast="virtmast1">
-      <systemName>R12</systemName>
+      <systemName>IF12</systemName>
       <userName>mygroup</userName>
       <aspect valid="Clear" />
       <aspect valid="Approach" />
