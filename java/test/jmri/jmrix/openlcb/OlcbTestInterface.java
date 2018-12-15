@@ -106,7 +106,16 @@ public class OlcbTestInterface {
      * Asserts that no message was sent to the bus.
      */
     public void assertNoSentMessages() {
+        flush();
         Assert.assertNull(tc.rcvMessage);
+    }
+
+    /**
+     * Resets the traffic controller to forget about sent messages.
+     */
+    public void clearSentMessages() {
+        flush();
+        tc.rcvMessage = null;
     }
 
     /**
