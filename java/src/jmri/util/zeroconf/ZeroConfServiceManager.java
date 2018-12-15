@@ -205,6 +205,16 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
                         log.debug("Ignoring IPv4 address {}", address.getHostAddress());
                         continue;
                     }
+                    if (address.isLinkLocalAddress() && !preferences.isUseLinkLocal()) {
+                        // Skip if address is LinkLocal and should not be advertised on
+                        log.debug("Ignoring link-local address {}", address.getHostAddress());
+                        continue;
+                    }
+                    if (address.isLoopbackAddress() && !preferences.isUseLoopback()) {
+                        // Skip if address is loopback and should not be advertised on
+                        log.debug("Ignoring loopback address {}", address.getHostAddress());
+                        continue;
+                    }
                     log.debug("Publishing ZeroConfService for '{}' on {}", service.getKey(), address.getHostAddress());
                     // JmDNS requires a 1-to-1 mapping of getServiceInfo to InetAddress
                     if (!service.containsServiceInfo(address)) {
@@ -340,15 +350,12 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
                             Enumeration<InetAddress> niAddresses = ni.getInetAddresses();
                             while (niAddresses.hasMoreElements()) {
                                 InetAddress address = niAddresses.nextElement();
-                                if ((preferences.isUseLinkLocal() || !address.isLinkLocalAddress())
-                                        && (preferences.isUseLoopback() || !address.isLoopbackAddress())) {
-                                    // explicitly pass a valid host getName, since null causes a very long lookup on some networks
-                                    log.debug("Calling JmDNS.create({}, '{}')", address.getHostAddress(), address.getHostAddress());
-                                    try {
-                                        JMDNS_SERVICES.put(address, JmDNS.create(address, address.getHostAddress()));
-                                    } catch (IOException ex) {
-                                        log.warn("Unable to create JmDNS with error: {}", ex.getMessage(), ex);
-                                    }
+                                // explicitly pass a valid host getName, since null causes a very long lookup on some networks
+                                log.debug("Calling JmDNS.create({}, '{}')", address.getHostAddress(), address.getHostAddress());
+                                try {
+                                    JMDNS_SERVICES.put(address, JmDNS.create(address, address.getHostAddress()));
+                                } catch (IOException ex) {
+                                    log.warn("Unable to create JmDNS with error: {}", ex.getMessage(), ex);
                                 }
                             }
                         }
@@ -368,62 +375,63 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
 
     /**
      * Get all addresses that JmDNS instances can be created for excluding
-     * link-local and loopback addresses.
+     * loopback addresses.
      *
      * @return the addresses
      * @see #getAddresses(jmri.util.zeroconf.ZeroConfServiceManager.Protocol)
      * @see #getAddresses(jmri.util.zeroconf.ZeroConfServiceManager.Protocol,
-     * boolean)
+     * boolean, boolean)
      */
     @Nonnull
     public Set<InetAddress> getAddresses() {
-        return getAddresses(Protocol.All, false);
+        return getAddresses(Protocol.All);
     }
 
     /**
      * Get all addresses that JmDNS instances can be created for excluding
-     * link-local and loopback addresses.
+     * loopback addresses.
      *
      * @param protocol the Internet protocol
      * @return the addresses
      * @see #getAddresses()
      * @see #getAddresses(jmri.util.zeroconf.ZeroConfServiceManager.Protocol,
-     * boolean)
+     * boolean, boolean)
      */
     @Nonnull
     public Set<InetAddress> getAddresses(Protocol protocol) {
-        return getAddresses(protocol, false);
+        return getAddresses(protocol, true, false);
     }
 
     /**
      * Get all addresses of a specific IP protocol that JmDNS instances can be
      * created for.
      *
-     * @param protocol the IP protocol addresses to return
-     * @param loopback true to include link-local and loopback addresses; false
-     *                 otherwise
+     * @param protocol     the IP protocol addresses to return
+     * @param useLinkLocal true to include link-local addresses; false otherwise
+     * @param useLoopback  true to include loopback addresses; false otherwise
      * @return the addresses
      * @see #getAddresses()
      * @see #getAddresses(jmri.util.zeroconf.ZeroConfServiceManager.Protocol)
      */
     @Nonnull
-    public Set<InetAddress> getAddresses(Protocol protocol, boolean loopback) {
+    public Set<InetAddress> getAddresses(Protocol protocol, boolean useLinkLocal, boolean useLoopback) {
         Set<InetAddress> set = new HashSet<>();
         if (protocol == Protocol.All) {
             set.addAll(getDNSes().keySet());
         } else {
             getDNSes().keySet().forEach((address) -> {
-                if (protocol == Protocol.IPv4 && address instanceof Inet4Address) {
+                if (address instanceof Inet4Address && protocol == Protocol.IPv4) {
                     set.add(address);
                 }
-                if (protocol == Protocol.IPv6 && address instanceof Inet6Address) {
+                if (address instanceof Inet6Address && protocol == Protocol.IPv6) {
                     set.add(address);
                 }
             });
         }
-        if (!loopback) {
+        if (!useLinkLocal || !useLoopback) {
             new HashSet<>(set).forEach((address) -> {
-                if (address.isLinkLocalAddress() || address.isLoopbackAddress()) {
+                if ((!address.isLinkLocalAddress() || useLinkLocal)
+                        && (!address.isLoopbackAddress() || useLoopback)) {
                     set.remove(address);
                 }
             });
@@ -486,10 +494,14 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
         public void inetAddressAdded(NetworkTopologyEvent nte) {
             //get current preference values
             final InetAddress address = nte.getInetAddress();
-            if (!manager.preferences.isUseIPv6() && address instanceof Inet6Address) {
+            if (address instanceof Inet6Address && !manager.preferences.isUseIPv6()) {
                 log.debug("Ignoring IPv6 address {}", address.getHostAddress());
-            } else if (!manager.preferences.isUseIPv4() && address instanceof Inet4Address) {
+            } else if (address instanceof Inet4Address && !manager.preferences.isUseIPv4()) {
                 log.debug("Ignoring IPv4 address {}", address.getHostAddress());
+            } else if (address.isLinkLocalAddress() && !manager.preferences.isUseLinkLocal()) {
+                log.debug("Ignoring link-local address {}", address.getHostAddress());
+            } else if (address.isLoopbackAddress() && !manager.preferences.isUseLoopback()) {
+                log.debug("Ignoring loopback address {}", address.getHostAddress());
             } else if (!JMDNS_SERVICES.containsKey(address)) {
                 log.debug("Adding address {}", address.getHostAddress());
                 JmDNS dns = nte.getDNS();
