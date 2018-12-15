@@ -141,11 +141,7 @@ public class DefaultSignalGroupManagerXml
 
             String sys = getSystemName(e);
 
-            m = sgm.newSignalGroup(sys);
-
-            if (getUserName(e) != null) {
-                m.setUserName(getUserName(e));
-            }
+            m = sgm.provideSignalGroup(sys, getUserName(e));
 
             //loadCommon(m, e); // would store comment, now a separate element
             loadComment(m, e);
