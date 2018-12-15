@@ -398,10 +398,6 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         return null;
     }
 
-    protected OBlock getSharedBlockForPath(String pathName) {
-        List<HashMap<OBlock, List<OPath>>> blockList = _sharedTO.get(pathName);
-        return null;
-    }
     /**
      * Another block sharing a turnout with this block queries whether turnout
      * is in use.
@@ -839,6 +835,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
      * @param warrant  warrant the block is allocated to
      * @return error message if the call fails. null if the call succeeds
      */
+    @SuppressFBWarnings(value="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification="reference to OPath is not null when used")
     protected String setPath(String pathName, Warrant warrant) {
         if (_warrant != null && !_warrant.equals(warrant)) {
             return Bundle.getMessage("AllocatedToWarrant", _warrant.getDisplayName(), getDisplayName());
