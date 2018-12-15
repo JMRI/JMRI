@@ -829,13 +829,13 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
      * indeed allocated to the warrant, If the block is unwarranted then the
      * block is allocated to the calling warrant. A logix conditional may also
      * call this method with a null warrant parameter for manual logix control.
-     * However, if the block is under a warrant the call will be rejected.
+     * If the block is under a different warrant the call will be rejected.
      *
      * @param pathName name of the path
      * @param warrant  warrant the block is allocated to
      * @return error message if the call fails. null if the call succeeds
      */
-    @SuppressFBWarnings(value="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification="reference to OPath is not null when used")
+    @SuppressFBWarnings(value="NP_NULL_ON_SOME_PATH_EXCEPTION", justification="reference to OPath is not null when used")
     protected String setPath(String pathName, Warrant warrant) {
         if (_warrant != null && !_warrant.equals(warrant)) {
             return Bundle.getMessage("AllocatedToWarrant", _warrant.getDisplayName(), getDisplayName());
