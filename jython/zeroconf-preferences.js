@@ -21,10 +21,10 @@ var BoxLayout = Java.type("javax.swing.BoxLayout");
 var preferences = InstanceManager.getDefault(ZeroConfServiceManager.class).getPreferences();
 
 // Build dialog
-var useIPv4 = new JCheckBox("IPv4", preferences.isUseIPv4);
-var useIPv6 = new JCheckBox("IPv6", preferences.isUseIPv6);
-var useLinkLocal = new JCheckBox("Link Local", preferences.isUseLinkLocal);
-var useLoopback = new JCheckBox("Loopback", preferences.isUseLoopback);
+var useIPv4 = new JCheckBox("IPv4", preferences.isUseIPv4());
+var useIPv6 = new JCheckBox("IPv6", preferences.isUseIPv6());
+var useLinkLocal = new JCheckBox("Link Local", preferences.isUseLinkLocal());
+var useLoopback = new JCheckBox("Loopback", preferences.isUseLoopback());
 var panel = new JPanel();
 panel.layout = new BoxLayout(panel, BoxLayout.PAGE_AXIS);
 panel.add(new JLabel("<html>Zeroconf service advertisements will<br>be for the following Internet Protocol versions and interface types:</html>"));
