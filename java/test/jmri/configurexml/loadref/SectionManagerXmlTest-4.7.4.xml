@@ -724,71 +724,51 @@
   <filehistory>
     <operation>
       <type>Load OK</type>
-      <date>Thu Aug 10 17:19:28 PDT 2017</date>
-      <filename>/Applications/JMRI/Sources/geowar1/java/test/jmri/configurexml/load/SectionManagerXmlTest.xml</filename>
+      <date>Thu Aug 10 17:52:13 PDT 2017</date>
+      <filename>/Applications/JMRI/Sources/geowar1/java/test/jmri/configurexml/load/SectionManagerXmlTest-4.7.4.xml</filename>
       <filehistory>
         <operation>
-          <type>app</type>
-          <date>Fri Jun 17 22:25:15 PDT 2016</date>
-          <filename>JMRI program</filename>
+          <type>Load OK</type>
+          <date>Thu Aug 10 16:36:14 PDT 2017</date>
+          <filename>/Applications/JMRI/Sources/geowar1/java/test/jmri/configurexml/load/SectionManagerXmlTest-4.7.4.xml</filename>
         </operation>
         <operation>
           <type>Load OK</type>
-          <date>Fri Jun 17 22:25:15 PDT 2016</date>
-          <filename>/Users/jake/Library/Preferences/JMRI/LocoNet_Simulator/UserPrefsProfileConfig.xml</filename>
-        </operation>
-        <operation>
-          <type>Load OK</type>
-          <date>Fri Jun 17 22:25:16 PDT 2016</date>
-          <filename>/Users/jake/Library/Preferences/JMRI/LocoNet_Simulator/ProfileConfig.xml</filename>
-        </operation>
-        <operation>
-          <type>Load OK</type>
-          <date>Fri Jun 17 22:25:37 PDT 2016</date>
-          <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/configurexml/load/SectionManagerXmlTest.xml</filename>
+          <date>Thu Aug 10 16:36:14 PDT 2017</date>
+          <filename>/Applications/JMRI/Sources/geowar1/java/test/jmri/configurexml/load/SectionManagerXmlTest-4.7.4.xml</filename>
         </operation>
         <operation>
           <type>Store</type>
-          <date>Fri Jun 17 22:25:46 PDT 2016</date>
+          <date>Thu Aug 10 16:36:14 PDT 2017</date>
           <filename />
         </operation>
       </filehistory>
     </operation>
     <operation>
       <type>Load OK</type>
-      <date>Thu Aug 10 17:19:29 PDT 2017</date>
-      <filename>/Applications/JMRI/Sources/geowar1/java/test/jmri/configurexml/load/SectionManagerXmlTest.xml</filename>
+      <date>Thu Aug 10 17:52:13 PDT 2017</date>
+      <filename>/Applications/JMRI/Sources/geowar1/java/test/jmri/configurexml/load/SectionManagerXmlTest-4.7.4.xml</filename>
       <filehistory>
         <operation>
-          <type>app</type>
-          <date>Fri Jun 17 22:25:15 PDT 2016</date>
-          <filename>JMRI program</filename>
+          <type>Load OK</type>
+          <date>Thu Aug 10 16:36:14 PDT 2017</date>
+          <filename>/Applications/JMRI/Sources/geowar1/java/test/jmri/configurexml/load/SectionManagerXmlTest-4.7.4.xml</filename>
         </operation>
         <operation>
           <type>Load OK</type>
-          <date>Fri Jun 17 22:25:15 PDT 2016</date>
-          <filename>/Users/jake/Library/Preferences/JMRI/LocoNet_Simulator/UserPrefsProfileConfig.xml</filename>
-        </operation>
-        <operation>
-          <type>Load OK</type>
-          <date>Fri Jun 17 22:25:16 PDT 2016</date>
-          <filename>/Users/jake/Library/Preferences/JMRI/LocoNet_Simulator/ProfileConfig.xml</filename>
-        </operation>
-        <operation>
-          <type>Load OK</type>
-          <date>Fri Jun 17 22:25:37 PDT 2016</date>
-          <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/configurexml/load/SectionManagerXmlTest.xml</filename>
+          <date>Thu Aug 10 16:36:14 PDT 2017</date>
+          <filename>/Applications/JMRI/Sources/geowar1/java/test/jmri/configurexml/load/SectionManagerXmlTest-4.7.4.xml</filename>
         </operation>
         <operation>
           <type>Store</type>
-          <date>Fri Jun 17 22:25:46 PDT 2016</date>
+          <date>Thu Aug 10 16:36:14 PDT 2017</date>
           <filename />
         </operation>
       </filehistory>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Thu Aug 10 17:19:29 PDT 2017</date>
+      <date>Thu Aug 10 17:52:13 PDT 2017</date>
       <filename />
     </operation>
   </filehistory>
