@@ -235,8 +235,6 @@
       </dl>
         </div>
         
-        
-        
     <h2><a name="filter" id="filter">Filter</a></h2>
         <div>
         
@@ -262,7 +260,6 @@
         ( You could identify these by filtering short events, passing long events, 
         and then filter by node number less than 1 ).</p>
 
-
         <p>
         When a filter is changed between pass and filter, this is displayed in the console log.</p>
 
@@ -271,7 +268,6 @@
         <h3>Filter Categories</h3>
         <img src="../../../../../../../html/hardware/can/cbus/images/swing/filter/events-426x413.png"
         width="426" height="413" align="right" alt="MERG CBUS Event Filter">
-
         
         <ul>
         <li>Incoming</li>
