@@ -1039,13 +1039,6 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         ThrottleRamp() {
            setName("Ramp(" + _warrant.getTrainName() +")");
         }
-/*
-        ThrottleRamp(String type, int endBlockIdx, boolean useIndex) {
-            _endSpeedType = type;
-            _endBlockIdx = endBlockIdx;
-            _useIndex = useIndex;
-            setName("Ramp(" + _warrant.getTrainName() +")");
-        }*/
 
         synchronized void quit() {
             stop = true;
@@ -1121,7 +1114,8 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                             }
                         }
                         _endSpeed = _speedUtil.modifySpeed(scriptSpeed, _endSpeedType, _isForward);
-                        log.info("normalSpeed= {}, scriptSpeed= {} speedType= {} endSpeed= {}", _normalSpeed,scriptSpeed, _endSpeedType, _endSpeed);
+                        // is scriptSpeed simply _normalSpeed? thus eliminate above.
+                        log.info("normalSpeed= {}, scriptSpeed= {} speedType= {} endSpeed= {}", _normalSpeed, scriptSpeed, _endSpeedType, _endSpeed);
                         // However, the ramp up will take time and script may have other speed commands while
                         // ramping up. So 'scriptSpeed' may not be actual script speed when ramp up distance
                         // is traveled.  Adjust '_endSpeed' to match that 'scriptSpeed'.
@@ -1137,6 +1131,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                             if (hasSpeed) {
                                 scriptDist += _speedUtil.getDistanceTraveled(scriptSpeed, _endSpeedType, scriptTime, _isForward);
                                 if (scriptDist >= rampDist) {   // up ramp will be complete within this distance
+                                    advanceToCommandIndex(idx); // don't let script set speeds up to here
                                     break;
                                 }
                             }
@@ -1245,16 +1240,19 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                             int blockOrderIdx = _warrant.getCurrentOrderIndex();
                             while (idx < _commands.size()) {
                                 ts = _commands.get(idx);
-                                OBlock blk = (OBlock)ts.getNamedBeanHandle().getBean();
-                                blkName = blk.getDisplayName();
-//                                log.debug("atEndBlk= {}, endBlkName= \"{}\", blkName= \"{}\"",atEndBlk, endBlkName, blkName);
-                                if (atEndBlk || blockOrderIdx <= _warrant.getIndexOfBlock(blk, blockOrderIdx)) {
-                                    if (!endBlkName.equals(blkName)) {
-                                        advanceToCommandIndex(idx);
-                                        break; // script just past stopping block
+                                NamedBean bean = ts.getNamedBeanHandle().getBean();
+                                if (bean instanceof OBlock) {
+                                    OBlock blk = (OBlock)bean;
+                                    blkName = blk.getDisplayName();
+//                                  log.debug("atEndBlk= {}, endBlkName= \"{}\", blkName= \"{}\"",atEndBlk, endBlkName, blkName);
+                                    if (atEndBlk || blockOrderIdx <= _warrant.getIndexOfBlock(blk, blockOrderIdx)) {
+                                        if (!endBlkName.equals(blkName)) {
+                                            advanceToCommandIndex(idx);
+                                            break; // script just past stopping block
+                                        }
+                                    } else {
+                                        atEndBlk = (endBlkName.equals(blkName));    // are we there yet?
                                     }
-                                } else {
-                                    atEndBlk = (endBlkName.equals(blkName));    // are we there yet?
                                 }
                                 idx++;
                                 if (ts.getCommand().toUpperCase().equals("SPEED")) {

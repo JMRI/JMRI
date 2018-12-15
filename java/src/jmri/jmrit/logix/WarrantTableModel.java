@@ -720,9 +720,19 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
                     if (halt) {
                         _frame.setStatusText(Bundle.getMessage("RampHalt",
                                 bean.getTrainName(), bean.getCurrentBlockName()), myGreen, true);
-                    } else  {
-                        String s = (bean.isWaitingForSignal() ? Bundle.getMessage("Signal") : 
-                                (bean.isWaitingForClear() ? Bundle.getMessage("Occupancy"):Bundle.getMessage("Halt")));
+                    } else {
+                        String s;
+                        if (bean.isWaitingForSignal()) {
+                            s = Bundle.getMessage("Signal");
+                        } else if (bean.isWaitingForWarrant()) {
+                            Warrant w = bean.getBlockingWarrant();
+                            String name = (w != null ? w.getDisplayName() : "???");
+                            s = Bundle.getMessage("WarrantWait", name);
+                        } else if (bean.isWaitingForClear()) {
+                            s = Bundle.getMessage("Occupancy");
+                        } else {
+                            s = Bundle.getMessage("Halt");
+                        }
                         _frame.setStatusText(Bundle.getMessage("RampWaitForClear", 
                                 bean.getTrainName(), bean.getCurrentBlockName(), s), myGreen, true);
                     }
