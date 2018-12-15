@@ -430,8 +430,8 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
         }
         if (!useLinkLocal || !useLoopback) {
             new HashSet<>(set).forEach((address) -> {
-                if ((!address.isLinkLocalAddress() || useLinkLocal)
-                        && (!address.isLoopbackAddress() || useLoopback)) {
+                if ((address.isLinkLocalAddress() && !useLinkLocal)
+                        || (address.isLoopbackAddress() && !useLoopback)) {
                     set.remove(address);
                 }
             });
@@ -562,7 +562,7 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
                 JmmDNS.Factory.getInstance().removeNetworkTopologyListener(manager.networkListener);
                 log.debug("Removed network topology listener in {} milliseconds", new Date().getTime() - start.getTime());
                 this.isComplete = true;
-            }).start();
+            }, "ZeroConfServiceManager ShutDownTask").start();
             return true;
         }
 
