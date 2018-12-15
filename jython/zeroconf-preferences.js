@@ -32,7 +32,7 @@ panel.add(useIPv4);
 panel.add(useIPv6);
 panel.add(useLinkLocal);
 panel.add(useLoopback);
-panel.add(new JLabel("<html>Note that this is a per computer,<br>per profile setting.</html>"));
+panel.add(new JLabel("<html>Note that this is a per-computer setting,<br>and applies to all profiles used on this computer.</html>"));
 // Present preferences
 if (JOptionPane.OK_OPTION === JOptionPane.showConfirmDialog(
         null,

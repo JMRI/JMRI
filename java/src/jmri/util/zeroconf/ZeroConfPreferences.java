@@ -9,18 +9,24 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Preferences manager for ZeroConf networking. Note that this immediately sets
- * the preference when changed, although that change may not take effect until
- * after JMRI restarts.
+ * Preferences manager for ZeroConf networking.
+ * <p>
+ * <strong>NOTE:</strong> preferences are immediately changed and stored when
+ * set, although not all code that reads these preferences responds to changes
+ * in the preferences immediately.
+ * <p>
+ * <strong>NOTE:</strong> these preferences apply to all JMRI applications and
+ * all profiles on the computer on which they are set.
  *
  * @author Randall Wood (C) 2018
  */
 public class ZeroConfPreferences extends PreferencesBean {
 
-    private boolean useIPv4;
-    private boolean useIPv6;
-    private boolean useLoopback;
-    private boolean useLinkLocal;
+    // Setting and default values
+    private boolean useIPv4 = true;
+    private boolean useIPv6 = true;
+    private boolean useLoopback = false;
+    private boolean useLinkLocal = true;
     // API constants
     /**
      * Deprecated name in profile.properties.
@@ -68,12 +74,15 @@ public class ZeroConfPreferences extends PreferencesBean {
 
     public ZeroConfPreferences(Profile profile) {
         super(profile);
-        Preferences localPreferences = ProfileUtils.getPreferences(profile, this.getClass(), false);
+        Preferences localPreferences = ProfileUtils.getPreferences(null, this.getClass(), false);
+        Preferences privatePreferences = ProfileUtils.getPreferences(profile, this.getClass(), false);
         Preferences sharedPreferences = ProfileUtils.getPreferences(profile, this.getClass(), true);
-        this.useIPv4 = localPreferences.getBoolean(USE_IP_V4, sharedPreferences.getBoolean(IPv4, true));
-        this.useIPv6 = localPreferences.getBoolean(USE_IP_V6, sharedPreferences.getBoolean(IPv6, true));
-        this.useLoopback = localPreferences.getBoolean(USE_LOOPBACK, false);
-        this.useLinkLocal = localPreferences.getBoolean(USE_LINK_LOCAL, false);
+        // read IPv4/IPv6 preferences from all-profile local, then per-profile local, then per-profile shared
+        // using first preference setting encountered, defaulting to true
+        this.useIPv4 = localPreferences.getBoolean(USE_IP_V4, privatePreferences.getBoolean(IPv4, sharedPreferences.getBoolean(IPv4, this.useIPv4)));
+        this.useIPv6 = localPreferences.getBoolean(USE_IP_V6, privatePreferences.getBoolean(IPv6, sharedPreferences.getBoolean(IPv6, this.useIPv6)));
+        this.useLinkLocal = localPreferences.getBoolean(USE_LINK_LOCAL, this.useLinkLocal);
+        this.useLoopback = localPreferences.getBoolean(USE_LOOPBACK, this.useLoopback);
     }
 
     public boolean isUseIPv4() {
@@ -84,7 +93,7 @@ public class ZeroConfPreferences extends PreferencesBean {
         boolean old = this.useIPv4;
         this.useIPv4 = useIPv4;
         savePreferences(getProfile());
-        firePropertyChange(IPv4, old, useIPv4);
+        firePropertyChange(USE_IP_V4, old, useIPv4);
     }
 
     public boolean isUseIPv6() {
@@ -95,7 +104,7 @@ public class ZeroConfPreferences extends PreferencesBean {
         boolean old = this.useIPv6;
         this.useIPv6 = useIPv6;
         savePreferences(getProfile());
-        firePropertyChange(IPv6, old, useIPv6);
+        firePropertyChange(USE_IP_V6, old, useIPv6);
     }
 
     public boolean isUseLoopback() {
@@ -121,20 +130,26 @@ public class ZeroConfPreferences extends PreferencesBean {
     }
 
     public void savePreferences(Profile profile) {
-        Preferences localPreferences = ProfileUtils.getPreferences(profile, this.getClass(), false);
+        Preferences localPreferences = ProfileUtils.getPreferences(null, this.getClass(), false);
         localPreferences.putBoolean(USE_IP_V4, useIPv4);
         localPreferences.putBoolean(USE_IP_V6, useIPv6);
-        localPreferences.putBoolean(USE_LOOPBACK, useLoopback);
         localPreferences.putBoolean(USE_LINK_LOCAL, useLinkLocal);
+        localPreferences.putBoolean(USE_LOOPBACK, useLoopback);
         try {
             localPreferences.sync();
         } catch (BackingStoreException ex) {
             log.error("Unable to save preferences", ex);
         }
+        // remove errant preferences elsewhere
         try {
+            localPreferences.remove(IPv4);
+            localPreferences.remove(IPv6);
             Preferences sharedPreferences = ProfileUtils.getPreferences(profile, this.getClass(), true);
             sharedPreferences.remove(IPv4);
             sharedPreferences.remove(IPv6);
+            Preferences privatePreferences = ProfileUtils.getPreferences(profile, this.getClass(), false);
+            privatePreferences.remove(IPv4);
+            privatePreferences.remove(IPv6);
         } catch (IllegalStateException ex) {
             log.error("Unable to remove no-longer-use preferences", ex);
         }
