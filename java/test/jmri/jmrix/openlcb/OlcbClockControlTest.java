@@ -524,7 +524,7 @@ public class OlcbClockControlTest {
 
     @Test(timeout=1000)
     public void thisTestDidNotKillJemmy() throws Exception {
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
     }
 
     private final static Logger log = LoggerFactory.getLogger(OlcbClockControlTest.class);
