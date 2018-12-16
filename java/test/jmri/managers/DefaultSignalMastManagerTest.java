@@ -29,13 +29,13 @@ public class DefaultSignalMastManagerTest {
         public MastA(String systemName) {
             super(systemName);
         }
-    };
+    }
 
     public static class MastB extends AbstractSignalMast {
         public MastB(String systemName) {
             super(systemName);
         }
-    };
+    }
 
     @Test
     public void testProvideCustomMast() throws Exception {
