@@ -835,7 +835,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
      * @param warrant  warrant the block is allocated to
      * @return error message if the call fails. null if the call succeeds
      */
-    @SuppressFBWarnings(value="NP_NULL_ON_SOME_PATH", justification="reference to OPath is not null when used")
+//    @SuppressFBWarnings(value="NP_NULL_ON_SOME_PATH", justification="reference to OPath is not null when used")
     protected String setPath(String pathName, Warrant warrant) {
         if (_warrant != null && !_warrant.equals(warrant)) {
             return Bundle.getMessage("AllocatedToWarrant", _warrant.getDisplayName(), getDisplayName());
@@ -867,7 +867,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
             // If shared block owned by another warrant a callback to the warrant sets up a wait
             msg = checkSharedTO();             
         }
-        if (msg == null) {  // _warrant has precedence - OK to throw
+        if (msg == null && path !=null) {  // _warrant has precedence - OK to throw
             int lockState = Turnout.CABLOCKOUT & Turnout.PUSHBUTTONLOCKOUT;
             path.setTurnouts(0, true, lockState, true);
             firePropertyChange("pathState", Integer.valueOf(0), Integer.valueOf(getState()));
