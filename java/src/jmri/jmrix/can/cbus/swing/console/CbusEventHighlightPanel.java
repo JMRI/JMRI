@@ -2,15 +2,12 @@ package jmri.jmrix.can.cbus.swing.console;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import javax.swing.JToggleButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.text.DefaultFormatter;
@@ -25,6 +22,7 @@ public class CbusEventHighlightPanel extends JPanel {
     
     private int _index;
     private CbusEventHighlightFrame _highlightFrame;
+    private Boolean _isActive;
     
     protected JCheckBox evEnButton = new JCheckBox();
     protected JCheckBox nnEnButton = new JCheckBox();
@@ -32,18 +30,11 @@ public class CbusEventHighlightPanel extends JPanel {
     protected JSpinner nodenumberspinner = new JSpinner(new SpinnerNumberModel(0,0, 65535, 1));
 
     // Buttons to select event type
-    protected JRadioButton onButton = new JRadioButton();
-    protected JRadioButton offButton = new JRadioButton();
-    protected JRadioButton eitherButton = new JRadioButton();
-    protected ButtonGroup eventGroup = new ButtonGroup();
+    protected JCheckBox onButton = new JCheckBox();
+    protected JCheckBox offButton = new JCheckBox();
     
-    protected JRadioButton inButton = new JRadioButton();
-    protected JRadioButton outButton = new JRadioButton();
-    protected JRadioButton eitherDirectionButton = new JRadioButton();
-    protected ButtonGroup directionGroup = new ButtonGroup();
-    // Buttons to enable/disable filters
-    protected JToggleButton enableButton = new JToggleButton();
-   // protected JButton disableButton = new JButton();
+    protected JCheckBox inButton = new JCheckBox();
+    protected JCheckBox outButton = new JCheckBox();
 
     /**
      * Create a new instance of CbusEventHighlightPanel.
@@ -59,6 +50,7 @@ public class CbusEventHighlightPanel extends JPanel {
     }
 
     public void initComponents(int index) {
+        _isActive = false;
         // Panels will be added across
         this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 
@@ -116,26 +108,15 @@ public class CbusEventHighlightPanel extends JPanel {
                 BorderFactory.createEtchedBorder(), Bundle.getMessage("EventTypeTitle")));
 
         // define contents
-        onButton.setText(Bundle.getMessage("InitialStateOn"));
+        onButton.setText(Bundle.getMessage("CbusEventOn"));
         onButton.setVisible(true);
         onButton.setToolTipText(Bundle.getMessage("OnEventsTooltip"));
         eventPane.add(onButton);
 
-        offButton.setText(Bundle.getMessage("InitialStateOff"));
+        offButton.setText(Bundle.getMessage("CbusEventOff"));
         offButton.setVisible(true);
         offButton.setToolTipText(Bundle.getMessage("OffEventsTooltip"));
         eventPane.add(offButton);
-
-        eitherButton.setText(Bundle.getMessage("ButtonEither"));
-        eitherButton.setVisible(true);
-        eitherButton.setSelected(true);
-        eitherButton.setToolTipText(Bundle.getMessage("AllEventsTooltip"));
-        eventPane.add(eitherButton);
-
-        // Add to group to make one-hot
-        eventGroup.add(onButton);
-        eventGroup.add(offButton);
-        eventGroup.add(eitherButton);
 
         this.add(eventPane);
 
@@ -156,28 +137,12 @@ public class CbusEventHighlightPanel extends JPanel {
         outButton.setToolTipText(Bundle.getMessage("OutEventsTooltip"));
         directionPane.add(outButton);
 
-        eitherDirectionButton.setText(Bundle.getMessage("ButtonEither"));
-        eitherDirectionButton.setVisible(true);
-        eitherDirectionButton.setSelected(true);
-        eitherDirectionButton.setToolTipText(Bundle.getMessage("InOrOutEventsToolTip"));
-        directionPane.add(eitherDirectionButton);
-
-        directionGroup.add(inButton);
-        directionGroup.add(outButton);
-        directionGroup.add(eitherDirectionButton);
-
         this.add(directionPane);
-
-        enableButton.setText(Bundle.getMessage("ButtonApply"));
-        enableButton.setVisible(true);
-        enableButton.setToolTipText(Bundle.getMessage("TooltipApply"));
-        this.add(enableButton);
-
         
         eventnumberspinner.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
-                if (enableButton.isSelected() && evEnButton.isSelected()) {
+                if ( evEnButton.isSelected() ) {
                     setoptions();
                 }
             }
@@ -186,7 +151,7 @@ public class CbusEventHighlightPanel extends JPanel {
         nodenumberspinner.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
-                if (enableButton.isSelected() && nnEnButton.isSelected()) {
+                if ( nnEnButton.isSelected() ) {
                     setoptions();
                 }
             }
@@ -196,9 +161,7 @@ public class CbusEventHighlightPanel extends JPanel {
         nnEnButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
-                if (enableButton.isSelected()) {
-                    setoptions();
-                }
+                setoptions();
             }
         });
         
@@ -206,9 +169,7 @@ public class CbusEventHighlightPanel extends JPanel {
         evEnButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
-                if (enableButton.isSelected()) {
-                    setoptions();
-                }
+                setoptions();
             }
         });
 
@@ -216,9 +177,7 @@ public class CbusEventHighlightPanel extends JPanel {
         onButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
-                if (enableButton.isSelected()) {
-                    setoptions();
-                }
+                setoptions();
             }
         });
         
@@ -226,19 +185,7 @@ public class CbusEventHighlightPanel extends JPanel {
         offButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
-                if (enableButton.isSelected()) {
-                    setoptions();
-                }
-            }
-        });
-        
-        // update if already active
-        eitherButton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                if (enableButton.isSelected()) {
-                    setoptions();
-                }
+                setoptions();
             }
         });
         
@@ -246,9 +193,7 @@ public class CbusEventHighlightPanel extends JPanel {
         inButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
-                if (enableButton.isSelected()) {
-                    setoptions();
-                }
+                setoptions();
             }
         });
         
@@ -256,46 +201,18 @@ public class CbusEventHighlightPanel extends JPanel {
         outButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
-                if (enableButton.isSelected()) {
-                    setoptions();
-                }
+                setoptions();
             }
         });
-        
-        // update if already active
-        eitherDirectionButton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                if (enableButton.isSelected()) {
-                    setoptions();
-                }
-            }
-        });        
-        
-        // connect actions to buttons
-        enableButton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                if (enableButton.isSelected()) {
-                    setoptions();
-                    enableButton.setText(Bundle.getMessage("ButtonDisable"));
-                    enableButton.setToolTipText(Bundle.getMessage("TooltipDisable"));
-                } else {
-                    _highlightFrame.disable(_index);
-                    enableButton.setText(Bundle.getMessage("ButtonApply"));
-                    enableButton.setToolTipText(Bundle.getMessage("TooltipApply"));
-                }
-            }
-        });
+
     }
         
     public void setoptions(){    
         
         int nn = 0;
         int ev = 0;
-        int ty = CbusConstants.EVENT_EITHER;
-        int dr = CbusConstants.EVENT_EITHER_DIR;
-
+        int ty = CbusConstants.EVENT_NEITHER;
+        int dr = CbusConstants.EVENT_DIR_UNSET;
         if (nnEnButton.isSelected()) {
             nn = (Integer) nodenumberspinner.getValue();
         }
@@ -304,21 +221,35 @@ public class CbusEventHighlightPanel extends JPanel {
             ev = (Integer) eventnumberspinner.getValue();
         }
 
-        if (onButton.isSelected()) {
+        if ( onButton.isSelected() ) {
             ty = CbusConstants.EVENT_ON;
         }
-        if (offButton.isSelected()) {
+        if ( offButton.isSelected() ) {
             ty = CbusConstants.EVENT_OFF;
         }
         
-        if (inButton.isSelected()) {
-            dr = CbusConstants.EVENT_IN;
+        if ( onButton.isSelected() && offButton.isSelected() ) {
+            ty = CbusConstants.EVENT_EITHER;
         }
-        if (outButton.isSelected()) {
-            dr = CbusConstants.EVENT_OUT;
-        }        
-
-        _highlightFrame.enable(_index, nn, nnEnButton.isSelected(), ev, evEnButton.isSelected(), ty, dr);
         
+        if ( inButton.isSelected()) {
+            dr = dr + CbusConstants.EVENT_DIR_IN;
+        }
+        if ( outButton.isSelected()) {
+            dr = dr + CbusConstants.EVENT_DIR_OUT;
+        }
+        
+        if (( dr > 0 ) && ( _isActive ) && ( ty !=CbusConstants.EVENT_NEITHER ) ) {
+            _highlightFrame.enable(_index, nn, nnEnButton.isSelected(), ev, evEnButton.isSelected(), ty, dr);
+        }
+        if (( dr > 0 ) && ( !_isActive ) && ( ty !=CbusConstants.EVENT_NEITHER ) ) {
+            _highlightFrame.enable(_index, nn, nnEnButton.isSelected(), ev, evEnButton.isSelected(), ty, dr);
+            _isActive=true;
+        }        
+        
+        if ( ( ( dr == 0 ) || ( ty == CbusConstants.EVENT_NEITHER ) ) && ( _isActive ) ) {
+            _highlightFrame.disable(_index);
+            _isActive=false;
+        }
     }
 }

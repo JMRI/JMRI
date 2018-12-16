@@ -1073,9 +1073,9 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
         } else {
             sb.append(Bundle.getMessage("CbusEventOnOrOff"));
         }
-        if (dr == CbusConstants.EVENT_IN) {
+        if (dr == CbusConstants.EVENT_DIR_IN) {
             sb.append(Bundle.getMessage("InEventsTooltip"));
-        } else if (dr == CbusConstants.EVENT_OUT) {
+        } else if (dr == CbusConstants.EVENT_DIR_OUT) {
             sb.append(Bundle.getMessage("OutEventsTooltip"));
         } else {
             sb.append(Bundle.getMessage("InOrOutEventsToolTip"));
@@ -1256,64 +1256,51 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
             dccCountField.setText(Integer.toString(++_dcc));
         }
         
-        String canid="";
-        if (canidCheckBox.isSelected()) {
-            canid=Bundle.getMessage("CanID") + ": " + CbusMessage.getId(m) + " ";
+        StringBuilder output = new StringBuilder();
+        
+        if (showarrowsCheckBox.isSelected()) {
+            output.append(Bundle.getMessage("CBUS_OUT") + " ");
         }
 
-        String arrows="";
-        if (showarrowsCheckBox.isSelected()) {
-            arrows=Bundle.getMessage("CBUS_OUT") + " ";
+        if (canidCheckBox.isSelected()) {
+            output.append(Bundle.getMessage("CanID") + ": " + CbusMessage.getId(m) + " ");
         }
         
-        String opctxt="";
-        if (showOpcCheckBox.isSelected()) {
-            opctxt=decodeopc(m, m.isExtended(), m.getHeader())+ " ";
+        if (showRtrCheckBox.isSelected()) {
+            if (m.isRtr()) { 
+                output.append(Bundle.getMessage("IsRtrFrame") + " ");
+            } else { 
+                output.append(Bundle.getMessage("IsNotRtrFrame") + " ");
+            }
         }
+        
+        if (showOpcCheckBox.isSelected()) {
+            output.append(decodeopc(m, m.isExtended(), m.getHeader())+ " ");
+        }
+        
+        output.append(decode(m, m.isExtended(), m.getHeader()) + " ");
 
-        String xopc="";
         if (showOpcExtraCheckBox.isSelected()) {
             if (!m.isExtended()) {
                 String cbusopc = "CTIP_" + decodeopc(m, m.isExtended(), m.getHeader());
-                xopc = Bundle.getMessage(cbusopc)+ " ";
+                output.append(Bundle.getMessage(cbusopc)+ " ");
             }
         }
         
-        
-        String addr="";
         if (showAddressCheckBox.isSelected()) {
-            addr = " [" + CbusMessage.toAddress(m) + "] ";
+            output.append(" [" + CbusMessage.toAddress(m) + "] ");
         }
         
-        String can="";
         if (showCanCheckBox.isSelected()) {
-            can = m.toString() + " ";
+            output.append( m.toString() + " ");
         }   
         
-        
-        String rtr="";
-        if (showRtrCheckBox.isSelected()) {
-            // rtr=" " + Bundle.getMessage("CBUS_OUT");
-            if (m.isRtr()) { 
-                rtr=Bundle.getMessage("IsRtrFrame") + " ";
-            } else { 
-                rtr=Bundle.getMessage("IsNotRtrFrame") + " ";
-            }
-        }
-    
+        output.append("\n");
+
         nextLine( Bundle.getMessage("EventSent") + ": " + m.toString() + "\n",
-                arrows +
-                canid + 
-                rtr + 
-                opctxt + 
-                decode(m, m.isExtended(), m.getHeader()) + " " +
-                xopc + 
-                addr + 
-                can + "\n",
-                
+                output.toString() ,
                 Bundle.getMessage("DynPriTitle") + ": " + CbusMessage.getPri(m) / 4 + " " + 
                 Bundle.getMessage("MinPriTitle") + ": " + (CbusMessage.getPri(m) & 3),
-                
                 (_highlightFrame != null) ? _highlightFrame.highlight(m) : -1);
                 
         
@@ -1352,61 +1339,47 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
             dccCountField.setText(Integer.toString(++_dcc));
         }
         
-        String canid="";
-        if (canidCheckBox.isSelected()) {
-            canid=Bundle.getMessage("CanID") + ": " + CbusMessage.getId(r) + " ";
-        }
+        StringBuilder output = new StringBuilder();
         
-        String arrows="";
         if (showarrowsCheckBox.isSelected()) {
-            arrows=Bundle.getMessage("CBUS_IN") + " ";
+            output.append(Bundle.getMessage("CBUS_IN") + " ");
+        }
+
+        if (canidCheckBox.isSelected()) {
+            output.append(Bundle.getMessage("CanID") + ": " + CbusMessage.getId(r) + " ");
         }        
-        
 
-        String opctxt="";
-        if (showOpcCheckBox.isSelected()) {
-            opctxt=decodeopc(r, r.isExtended(), r.getHeader())+ " ";
-        }
-
-        String xopc="";
-        if (showOpcExtraCheckBox.isSelected()) {
-            String cbusopc = "CTIP_" + decodeopc(r, r.isExtended(), r.getHeader());
-            xopc = Bundle.getMessage(cbusopc)+ " ";
-        }
-
-        String addr="";
-        if (showAddressCheckBox.isSelected()) {
-            addr = " [" + CbusMessage.toAddress(r) + "] ";
-        }
-        
-        String can="";
-        if (showCanCheckBox.isSelected()) {
-            can = r.toString() + " ";
-        }           
-        
-        
-        
-        String rtr="";
         if (showRtrCheckBox.isSelected()) {
-            // rtr=" " + Bundle.getMessage("CBUS_OUT");
             if (r.isRtr()) { 
-                rtr=Bundle.getMessage("IsRtrFrame");
+                output.append(Bundle.getMessage("IsRtrFrame"));
             } else { 
-                rtr=Bundle.getMessage("IsNotRtrFrame");
+                output.append(Bundle.getMessage("IsNotRtrFrame"));
             }
         }
+
+        if (showOpcCheckBox.isSelected()) {
+            output.append(decodeopc(r, r.isExtended(), r.getHeader())+ " ");
+        }
         
+        output.append(decode(r, r.isExtended(), r.getHeader()) + " ");
+
+        if (showOpcExtraCheckBox.isSelected()) {
+            String cbusopc = "CTIP_" + decodeopc(r, r.isExtended(), r.getHeader());
+            output.append(Bundle.getMessage(cbusopc)+ " ");
+        }
+
+        if (showAddressCheckBox.isSelected()) {
+            output.append(" [" + CbusMessage.toAddress(r) + "] ");
+        }
+        
+        if (showCanCheckBox.isSelected()) {
+            output.append(r.toString() + " ");
+        }
+        
+        output.append("\n");
         
         nextLine( Bundle.getMessage("EventReceived") + ": " + r.toString() + "\n",
-                arrows + 
-                canid + 
-                rtr + 
-                opctxt + 
-                decode(r, r.isExtended(), r.getHeader()) + " " +
-                xopc +
-                addr + 
-                can +
-                "\n",
+                output.toString(),
                 Bundle.getMessage("DynPriTitle") + ": " + CbusMessage.getPri(r) / 4 + " " + 
                 Bundle.getMessage("MinPriTitle") + ": " + (CbusMessage.getPri(r) & 3),
                 (_highlightFrame != null) ? _highlightFrame.highlight(r) : -1);
