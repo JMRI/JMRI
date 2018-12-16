@@ -503,11 +503,14 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
                 e.getPropertyName().equals(EngineManager.CONSISTLISTLENGTH_CHANGED_PROPERTY)) {
             updateList();
             fireTableDataChanged();
-        } // Engine lengths are based on model, so multiple changes
+        } 
+        // Engine length, type, and HP are based on model, so multiple changes
         else if (e.getPropertyName().equals(Engine.LENGTH_CHANGED_PROPERTY) ||
-                e.getPropertyName().equals(Engine.TYPE_CHANGED_PROPERTY)) {
+                e.getPropertyName().equals(Engine.TYPE_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(Engine.HP_CHANGED_PROPERTY)) {
             fireTableDataChanged();
-        } // must be a engine change
+        } 
+        // must be a engine change
         else if (e.getSource().getClass().equals(Engine.class)) {
             Engine engine = (Engine) e.getSource();
             int row = engineList.indexOf(engine);
