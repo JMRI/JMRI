@@ -21,7 +21,7 @@ public class TimeTableFrameTest {
     JButtonOperator _jbtn = null;
 
     @Test
-    public void testCreatEmtpy() {
+    public void testCreatEmpty() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         TimeTableFrame f = new TimeTableFrame();
         Assert.assertNotNull(f);
@@ -298,7 +298,7 @@ public class TimeTableFrameTest {
         }
 
         try {
-            jmri.ScaleManager.getScale("N").setScaleRatio(150.0);
+            jmri.ScaleManager.getScale("UK-N").setScaleRatio(150.0);
         } catch (Exception ex) {
         }
     }
