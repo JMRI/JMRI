@@ -1037,9 +1037,14 @@
             if you want to intermix Swing and test operations you can 
             synchronize the threads by calling 
 <pre style="font-family: monospace;">
-        new org.netbeans.jemmy.QueueTool().waitEmpty(20);
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
 </pre>
-            on the test thread. The argument (in this example 20) is
+            on the test thread. 
+            <p>
+            In some rare cases, you need to wait for the Swing
+            queue to stay empty for a non-zero interval.
+            In that case, use <code>waitEmpty(20)</code>.
+            where the argument (in this example 20) is
             how many milliseconds the queue has to remain empty before 
             proceeding.  We're not sure what the best value is; see
             <a href="https://github.com/JMRI/JMRI/issues/5321">Issue #5321</a> for some background discussion.
