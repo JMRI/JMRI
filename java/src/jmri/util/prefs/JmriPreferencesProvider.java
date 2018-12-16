@@ -38,6 +38,9 @@ import jmri.util.node.NodeIdentity;
  * is the identity returned by {@link jmri.util.node.NodeIdentity#identity()}).
  * An example of such a preference would be a file location.</li>
  * </ul>
+ * <p>
+ * Non-profile specific configuration that applies to all profiles is stored in
+ * the file <code>settings:preferences/preferences.properties</code>.
  *
  * @author Randall Wood 2015
  */

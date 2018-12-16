@@ -19,8 +19,10 @@ public class ProfileUtils {
     /**
      * Get the XMl configuration container for a given configuration profile.
      *
-     * @param project The configuration profile.
-     * @return An XML configuration container, possibly empty.
+     * @param project The project to get the configuration container for, or
+     *                null to get a configuration container that can apply to
+     *                all projects on this computer
+     * @return An XML configuration container, possibly empty
      */
     public static AuxiliaryConfiguration getAuxiliaryConfiguration(Profile project) {
         return JmriConfigurationProvider.getConfiguration(project);
@@ -29,13 +31,14 @@ public class ProfileUtils {
     /**
      * Get the preferences needed by a class for a given configuration profile.
      *
-     * @param project The configuration profile. If null, the preferences apply
-     *                to all profiles on this computer.
-     * @param clazz   The class requesting preferences.
+     * @param project The project to get the configuration for, or null to get a
+     *                preferences object that can apply to all projects on this
+     *                computer
+     * @param clazz   The class requesting preferences
      * @param shared  True if the preferences are for all nodes (computers) this
-     *                profile may run on, false if the preferences are only for
-     *                this node. Ignored if the value of project is null.
-     * @return The preferences.
+     *                project may run on, false if the preferences are only for
+     *                this node; ignored if the value of project is null
+     * @return The preferences
      */
     public static Preferences getPreferences(Profile project, Class<?> clazz, boolean shared) {
         return JmriPreferencesProvider.getPreferences(project, clazz, shared);
@@ -45,8 +48,10 @@ public class ProfileUtils {
      * Get the XMl configuration container for a given configuration profile's
      * user interface state.
      *
-     * @param project the configuration profile
-     * @return an XML configuration container, possibly empty
+     * @param project The project to get the configuration container for, or
+     *                null to get a configuration container that can apply to
+     *                all projects on this computer
+     * @return An XML configuration container, possibly empty
      */
     public static AuxiliaryConfiguration getUserInterfaceConfiguration(Profile project) {
         return JmriUserInterfaceConfigurationProvider.getConfiguration(project);
