@@ -12,8 +12,8 @@ import org.junit.Assert;
  * Test the AbstractIdentify class. Since that's an abstract base class, we
  * define a local subclass here for the tests.
  *
- * @author	Bob Jacobsen Copyright 2001
-  */
+ * @author Bob Jacobsen Copyright 2001
+ */
 public class AbstractIdentifyTest extends TestCase {
 
     public void testFullSequence() {
@@ -118,9 +118,25 @@ public class AbstractIdentifyTest extends TestCase {
 
     }
 
+    public void testOptionalCv() {
+        // walk through just 4 steps
+        AITest a = new AITest(new jmri.ProgrammerScaffold(ProgrammingMode.DIRECTMODE));
+
+        a.setOptionalCv(true);
+        Assert.assertEquals("Test setOptionalCv(true)", a.isOptionalCv(), true);
+        a.setOptionalCv(false);
+        Assert.assertEquals("Test setOptionalCv(true)", a.isOptionalCv(), false);
+        a.setOptionalCv(true);
+        Assert.assertEquals("Test setOptionalCv(true)", a.isOptionalCv(), true);
+
+    }
+
     // internal class for testing
     class AITest extends AbstractIdentify {
-        public AITest(Programmer p) { super(p);}
+
+        public AITest(Programmer p) {
+            super(p);
+        }
 
         @Override
         public boolean test1() {
@@ -226,5 +242,5 @@ public class AbstractIdentifyTest extends TestCase {
         JUnitUtil.tearDown();
     }
 
-	// private final static Logger log = LoggerFactory.getLogger(AbstractIdentifyTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(AbstractIdentifyTest.class);
 }
