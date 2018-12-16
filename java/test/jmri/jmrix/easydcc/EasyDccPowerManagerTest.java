@@ -88,13 +88,12 @@ public class EasyDccPowerManagerTest extends AbstractPowerManagerTestBase {
     // state readback by sending messages & getting a reply
     @Override
     @Test
-    @Ignore("no unsolicited messages, so skip test")
     public void testStateOn() throws JmriException {
     }
 
     @Override
     @Test
-    @Ignore("no unsolicited messages, so skip test")
+    // no unsolicited messages, so suppress test
     public void testStateOff() throws JmriException {
     }
 

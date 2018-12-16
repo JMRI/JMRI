@@ -42,13 +42,11 @@ public class DCCppReplyTest extends jmri.jmrix.AbstractMessageTestBase {
 
     // check get service mode CV Number response code.
     @Test
-    @Ignore("Method is not implemented")
     public void testGetServiceModeCVNumber() {
     }
 
     // check get service mode CV Value response code.
     @Test
-    @Ignore("Method is not implemented")
     public void testGetServiceModeCVValue() {
     }
     

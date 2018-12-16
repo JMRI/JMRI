@@ -60,91 +60,91 @@ public class RocoXNetThrottleTest extends jmri.jmrix.lenz.XNetThrottleTest {
 
     // Test the initilization sequence.
     @Override
-    @Ignore("parent class method creates a new throttle")
+    // empty override because parent class method creates a new throttle
     @Test(timeout=1000)
     public void testInitSequenceNormalUnitSpeedStep128() throws Exception {
     }
 
     @Override
-    @Ignore("parent class method creates a new throttle")
+    // empty override because parent class method creates a new throttle
     @Test(timeout=1000)
     public void initSequenceNormalUnitSpeedStep14() throws Exception {
     }
 
     @Override
-    @Ignore("parent class method creates a new throttle")
+    // empty override because parent class method creates a new throttle
     @Test(timeout=1000)
     public void initSequenceMUAddress28SpeedStep() throws Exception {
     }
 
     @Override
-    @Ignore("parent class method creates a new throttle")
+    // empty override because parent class method creates a new throttle
     @Test(timeout=1000)
     public void initSequenceMuedUnitSpeedStep128() throws Exception {
     }
 
     @Override
-    @Ignore("parent class method creates a new throttle")
+    // empty override because parent class method creates a new throttle
     @Test(timeout=1000)
     public void initSequenceDHUnitSpeedStep27() throws Exception {
     }
 
     @Override
-    @Ignore("only one software version for Roco")
+    // empty override because only one software version for Roco
     @Test(timeout=1000)
     public void testSendFunctionGroup5v35() throws Exception {
     }
 
     @Override
-    @Ignore("only one software version for Roco")
+    // empty override because only one software version for Roco
     @Test(timeout=1000)
     public void testSendFunctionGroup4v35() {
     }
 
     @Override
-    @Ignore("not supported by Roco")
+    // empty override because not supported by Roco
     @Test(timeout=1000)
     public void testSendMomentaryFunctionGroup1() {
     } 
 
     @Override
-    @Ignore("not supported by Roco")
+    // empty override because not supported by Roco
     @Test(timeout=1000)
     public void testSendMomentaryFunctionGroup2() {
     } 
 
     @Override
-    @Ignore("not supported by Roco")
+    // empty override because not supported by Roco
     @Test(timeout=1000)
     public void testSendMomentaryFunctionGroup3() {
     } 
 
     @Override
-    @Ignore("not supported by Roco")
+    // empty override because not supported by Roco
     @Test(timeout=1000)
     public void testSendMomentaryFunctionGroup4() {
     } 
 
     @Override
-    @Ignore("not supported by Roco")
+    // empty override because not supported by Roco
     @Test(timeout=1000)
     public void testSendMomentaryFunctionGroup5() {
     } 
 
     @Override
-    @Ignore("not supported by Roco")
+    // empty override because not supported by Roco
     @Test(timeout=1000)
     public void testSendFunctionHighMomentaryStatusRequest() throws Exception {
     } 
 
     @Override
-    @Ignore("never sent by Roco throttle support")
+    // empty override because not supported by Roco
     @Test(timeout=1000)
     public void testSendFunctionStatusInformationRequest() {
     } 
 
     @Override
-    @Ignore("never sent by Roco throttle support")
+    // empty override because not supported by Roco
     @Test(timeout=1000)
     public void testSendFunctionHighStatusInformationRequest() {
     } 
