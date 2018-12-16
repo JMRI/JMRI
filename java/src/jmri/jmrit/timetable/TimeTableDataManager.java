@@ -434,7 +434,7 @@ public class TimeTableDataManager {
             }
         }
         if (sort) {
-            Collections.sort(list, (o1, o2) -> o1.getSeqSort().compareTo(o2.getSeqSort()));
+            Collections.sort(list, (o1, o2) -> Integer.compare(o1.getSeq(), o2.getSeq()));
         }
         return list;
     }
