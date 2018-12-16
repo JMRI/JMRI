@@ -11,6 +11,7 @@ import java.net.InetAddress;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.Set;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.ImageIcon;
@@ -97,10 +98,16 @@ public class UserInterface extends JmriJFrame implements DeviceListener, RosterG
         int port = InstanceManager.getDefault(WiThrottlePreferences.class).getPort();
         //list IPv4 addresses on the UI, for manual connections
         //TODO: use some mechanism that is not tied to zeroconf networking
-        String as = ""; //build multiline string of valid addresses
-        for (InetAddress ha : InstanceManager.getDefault(ZeroConfServiceManager.class).getAddresses(ZeroConfServiceManager.Protocol.IPv4)) {
+        StringBuilder as = new StringBuilder(); //build multiline string of valid addresses
+        ZeroConfServiceManager manager = InstanceManager.getDefault(ZeroConfServiceManager.class);
+        Set<InetAddress> addresses = manager.getAddresses(ZeroConfServiceManager.Protocol.IPv4, false, false);
+        if (addresses.isEmpty()) {
+            // include IPv6 and link-local addresses if no non-link-local IPv4 addresses are available
+            addresses = manager.getAddresses(ZeroConfServiceManager.Protocol.All, true, false);
+        }
+        for (InetAddress ha : addresses) {
             this.portLabel.setText(ha.getHostName());
-            as += ha.getHostAddress() + ":" + port + "<br />";
+            as.append(ha.getHostAddress()).append(":").append(port).append("<br/>");
         }
         this.manualPortLabel.setText("<html>" + as + "</html>"); // NOI18N
     }

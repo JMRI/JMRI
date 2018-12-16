@@ -350,8 +350,8 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
                             Enumeration<InetAddress> niAddresses = ni.getInetAddresses();
                             while (niAddresses.hasMoreElements()) {
                                 InetAddress address = niAddresses.nextElement();
-                                // explicitly pass a valid host getName, since null causes a very long lookup on some networks
                                 log.debug("Calling JmDNS.create({}, '{}')", address.getHostAddress(), address.getHostAddress());
+                                // explicitly pass a valid host name, since null causes a very long lookup on some networks
                                 try {
                                     JMDNS_SERVICES.put(address, JmDNS.create(address, address.getHostAddress()));
                                 } catch (IOException ex) {
