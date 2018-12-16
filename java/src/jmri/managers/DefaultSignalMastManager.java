@@ -1,13 +1,18 @@
 package jmri.managers;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
+
+import jmri.JmriException;
 import jmri.Manager;
 import jmri.SignalMast;
 import jmri.SignalMastManager;
 import jmri.implementation.SignalMastRepeater;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.annotation.Nonnull;
 
 /**
  * Default implementation of a SignalMastManager.
@@ -78,6 +83,30 @@ public class DefaultSignalMastManager extends AbstractManager<SignalMast>
             m = new jmri.implementation.SignalHeadSignalMast(name);
             register(m);
         }
+        return m;
+    }
+
+    @Nonnull
+    @Override
+    public SignalMast provideCustomSignalMast(@Nonnull String systemName, Class<? extends
+            SignalMast> mastClass) throws JmriException {
+        SignalMast m = getBySystemName(systemName);
+        if (m != null) {
+            if (!mastClass.isInstance(m)) {
+                throw new JmriException("Could not create signal mast " + systemName + ", because" +
+                        " the system name is already used by a different kind of mast. Expected "
+                        + mastClass.getSimpleName() + ", actual " + m.getClass().getSimpleName()
+                        + ".");
+            }
+            return m;
+        }
+        try {
+            m = mastClass.getConstructor(String.class).newInstance(systemName);
+        } catch (NoSuchMethodException | InstantiationException | IllegalAccessException |
+                InvocationTargetException e) {
+            throw new JmriException(e);
+        }
+        register(m);
         return m;
     }
 
