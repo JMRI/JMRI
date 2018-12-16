@@ -27,7 +27,6 @@ public class RaspberryPiConnectionConfigXmlTest extends jmri.jmrix.configurexml.
     }
 
     @Test
-    @Ignore("needs mock pi setup")
     public void getInstanceTest() {
     }
 

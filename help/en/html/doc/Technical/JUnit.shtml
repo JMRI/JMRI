@@ -1173,7 +1173,7 @@
         <a href=
         "http://junit.sourceforge.net/javadoc/org/junit/Ignore.html">
         Ignore</a> - mark a test to be unconditionally ignored. For
-        example, a test that isn't fully implemented yet can be marked to be ignored:<br>
+        example, a test that is failing because it's not fully implemented can be marked to be ignored:<br>
 <pre style="font-family: monospace;">
         @Ignore("not done yet")
         @Test
@@ -1181,12 +1181,19 @@
             // some code that compiles but doesn't run
         }
 </pre><br>
-        You should provide the reason for ignoring this test in the <code>@Ignore</code> argument. 
+        <ul>
+        <li>You should provide the reason for ignoring this test in the <code>@Ignore</code> argument. 
         <code>@Ignore</code> without an argument
         will compile, but Jenkins will mark it as an error.
         In general, we'd rather have working tests rather than ignored ones, so
         we track the number that have been ignored in a Jenkins job, see the image 
-        to the right.        
+        to the right.
+        <li>Don't use <code>@Ignore</code> to suppress a part-class (i.e. abstract base)
+        test that will never be relevant, as <code>@Ignore</code> means
+        that there's a problem that should eventually be fixed.  
+        Instead, just provide an empty body for the test with a 
+        comment as to why the test isn't relevant.
+        </ul>
       </ul>
 
       <p><a href=
