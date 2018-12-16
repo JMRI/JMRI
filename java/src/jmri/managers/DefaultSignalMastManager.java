@@ -127,6 +127,33 @@ public class DefaultSignalMastManager extends AbstractManager<SignalMast>
 
     ArrayList<SignalMastRepeater> repeaterList = new ArrayList<SignalMastRepeater>();
 
+    /**
+     * Creates or retrieves a signal mast repeater.
+     * @param master the mast for the master of the repeater.
+     * @param slave the mast for the slave of the repeater.
+     * @return newly created (and registered) or existing signal mast repeater.
+     * @throws JmriException if the repeater already exists but the other direction.
+     */
+    public @Nonnull SignalMastRepeater provideRepeater(@Nonnull SignalMast master, @Nonnull SignalMast
+            slave) throws JmriException {
+        SignalMastRepeater rp = null;
+        for (SignalMastRepeater currentRepeater : repeaterList) {
+            if (currentRepeater.getMasterMast() == master && currentRepeater.getSlaveMast() == slave) {
+                rp = currentRepeater;
+            } else if (currentRepeater.getMasterMast() == slave
+                    && currentRepeater.getSlaveMast() == master) {
+                log.error("Signal repeater {}:{} already exists the wrong way", master, slave);
+                throw new jmri.JmriException("Signal mast repeater already exists the wrong way");
+            }
+        }
+        if (rp == null) {
+            rp = new SignalMastRepeater(master, slave);
+            repeaterList.add(rp);
+        }
+        firePropertyChange("repeaterlength", null, null);
+        return rp;
+    }
+
     public void addRepeater(SignalMastRepeater rp) throws jmri.JmriException {
         for (SignalMastRepeater rpeat : repeaterList) {
             if (rpeat.getMasterMast() == rp.getMasterMast()

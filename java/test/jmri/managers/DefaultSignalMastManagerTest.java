@@ -3,6 +3,7 @@ package jmri.managers;
 import jmri.JmriException;
 import jmri.SignalMast;
 import jmri.implementation.AbstractSignalMast;
+import jmri.implementation.SignalMastRepeater;
 import jmri.implementation.VirtualSignalMast;
 import jmri.util.JUnitUtil;
 
@@ -38,26 +39,26 @@ public class DefaultSignalMastManagerTest {
 
     @Test
     public void testProvideCustomMast() throws Exception {
-        DefaultSignalMastManager t = new DefaultSignalMastManager();
+        DefaultSignalMastManager mgr = new DefaultSignalMastManager();
 
-        SignalMast ma = t.provideCustomSignalMast("IM333", MastA.class);
-        SignalMast mb = t.provideCustomSignalMast("IM444", MastB.class);
+        SignalMast ma = mgr.provideCustomSignalMast("IM333", MastA.class);
+        SignalMast mb = mgr.provideCustomSignalMast("IM444", MastB.class);
 
         Assert.assertTrue(ma instanceof MastA);
         Assert.assertTrue(mb instanceof MastB);
 
-        SignalMast maa = t.provideCustomSignalMast("IM333", MastA.class);
+        SignalMast maa = mgr.provideCustomSignalMast("IM333", MastA.class);
         Assert.assertSame(ma, maa);
-        SignalMast mbb = t.provideCustomSignalMast("IM444", MastB.class);
+        SignalMast mbb = mgr.provideCustomSignalMast("IM444", MastB.class);
         Assert.assertSame(mb, mbb);
 
-        SignalMast mac = t.provideCustomSignalMast("IM300", MastA.class);
+        SignalMast mac = mgr.provideCustomSignalMast("IM300", MastA.class);
         Assert.assertNotSame(ma, mac);
-        SignalMast mbc = t.provideCustomSignalMast("IM400", MastB.class);
+        SignalMast mbc = mgr.provideCustomSignalMast("IM400", MastB.class);
         Assert.assertNotSame(mb, mbc);
 
         try {
-            t.provideCustomSignalMast("IM300", MastB.class);
+            mgr.provideCustomSignalMast("IM300", MastB.class);
             Assert.fail("provideCustomSignalMast Should have thrown exception.");
         } catch (JmriException e) {
             String s = e.toString();
@@ -66,6 +67,36 @@ public class DefaultSignalMastManagerTest {
             Assert.assertThat(s, containsString("MastA"));
             Assert.assertThat(s, containsString("MastB"));
         }
+    }
+
+    @Test
+    public void testProvideRepeater() throws Exception {
+        DefaultSignalMastManager mgr = new DefaultSignalMastManager();
+
+        SignalMast m1 = mgr.provideCustomSignalMast("IM331", MastA.class);
+        SignalMast m2 = mgr.provideCustomSignalMast("IM332", MastA.class);
+        SignalMast m3 = mgr.provideCustomSignalMast("IM333", MastA.class);
+
+        SignalMastRepeater rpx = mgr.provideRepeater(m1, m2);
+        Assert.assertSame(m1, rpx.getMasterMast());
+        Assert.assertSame(m2, rpx.getSlaveMast());
+        SignalMastRepeater rpy = mgr.provideRepeater(m1, m3);
+        Assert.assertSame(m1, rpy.getMasterMast());
+        Assert.assertSame(m3, rpy.getSlaveMast());
+
+        Assert.assertNotSame(rpx, rpy);
+        Assert.assertSame(rpx, mgr.provideRepeater(m1, m2));
+        Assert.assertSame(rpy, mgr.provideRepeater(m1, m3));
+
+        try {
+            mgr.provideRepeater(m2, m1);
+            Assert.fail("provideRepeater Should have thrown exception.");
+        } catch (JmriException e) {
+            String s = e.toString();
+
+            Assert.assertThat(s, containsString("repeater already exists the wrong way"));
+        }
+        jmri.util.JUnitAppender.assertErrorMessage("Signal repeater IM332:IM331 already exists the wrong way");
     }
 
     // The minimal setup for log4J
