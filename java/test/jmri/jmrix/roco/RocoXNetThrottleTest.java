@@ -124,6 +124,7 @@ public class RocoXNetThrottleTest extends jmri.jmrix.lenz.XNetThrottleTest {
 
     @Override
     @NotApplicable("not supported by Roco")
+    @Ignore("not supported by Roco")
     @Test(timeout=1000)
     public void testSendMomentaryFunctionGroup3() {
     } 
