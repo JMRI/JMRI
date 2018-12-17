@@ -73,6 +73,10 @@ public class JsonRosterSocketServiceTest {
             Assert.assertEquals(3, entry.getPropertyChangeListeners().length);
         });
 
+        // wait for the initial Bean update notifications to drain from the queue. These generate
+        // output messages that we then throw away.
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
+
         // list the groups in a JSON message for assertions
         this.connection.sendMessage((JsonNode) null);
         instance.onMessage(JsonRoster.ROSTER_GROUPS, this.connection.getObjectMapper().createObjectNode(), JSON.GET, Locale.ENGLISH);
