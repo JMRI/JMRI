@@ -120,7 +120,7 @@ public class JsonRosterSocketServiceTest {
         Assert.assertEquals("instance is listening to RosterEntry", 3, re.getPropertyChangeListeners().length);
         re.putAttribute(Roster.ROSTER_GROUP_PREFIX + "attribute", "yes");
                 JUnitUtil.waitFor(() -> {
-            return this.connection.getMessages().size() == 1;
+            return this.connection.getMessages().size() >= 1;
         }, "Expected message not sent");
         Assert.assertEquals("One message sent", 1, this.connection.getMessages().size());
         Assert.assertEquals("Message contains rosterEntry", JsonRoster.ROSTER_ENTRY, this.connection.getMessage().path(JSON.TYPE).asText());
@@ -133,7 +133,7 @@ public class JsonRosterSocketServiceTest {
         re.putAttribute(Roster.ROSTER_GROUP_PREFIX + "NewRosterGroup", "yes"); // add new group to roster entry
         // wait for all expected messages to be sent before testing messages are as expected
         JUnitUtil.waitFor(() -> {
-            return this.connection.getMessages().size() == 3;
+            return this.connection.getMessages().size() >= 3;
         }, "Three expected messages not sent");
         // Sent updated rosterEntry, rosterGroup, array of rosterGroup
         ArrayNode messages = this.connection.getMessages();
@@ -149,7 +149,7 @@ public class JsonRosterSocketServiceTest {
         re.deleteAttribute(Roster.ROSTER_GROUP_PREFIX + "NewRosterGroup"); // remove group from roster entry
         // wait for all expected messages to be sent before testing messages are as expected
         JUnitUtil.waitFor(() -> {
-            return this.connection.getMessages().size() == 3;
+            return this.connection.getMessages().size() >= 3;
         }, "Three expected messages not sent");
         // Sent updated rosterEntry, rosterGroup, array of rosterGroup
         messages = this.connection.getMessages();
