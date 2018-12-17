@@ -520,7 +520,13 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
             } catch (ParseException ex2) {
                 // then try with a specific format to handle e.g. "Apr 1, 2016 9:13:36 AM"
                 DateFormat customFmt = new SimpleDateFormat ("MMM dd, yyyy hh:mm:ss a");
-                setDateModified(customFmt.parse(date));
+                try {
+                    setDateModified(customFmt.parse(date));
+                } catch (ParseException ex3) {
+                    // then try with a specific format to handle e.g. "01-Oct-2016 9:13:36"
+                    customFmt = new SimpleDateFormat ("dd-MMM-yyyy hh:mm:ss");
+                    setDateModified(customFmt.parse(date));
+                }
             }
         } catch (IllegalArgumentException ex2) {
             // warn that there's perhaps something wrong with the classpath

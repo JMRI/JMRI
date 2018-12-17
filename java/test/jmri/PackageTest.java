@@ -25,6 +25,7 @@ import org.junit.runners.Suite;
     SectionTest.class,
     SignalGroupTest.class,
     SignalMastLogicTest.class,
+    StringIOTest.class,
     TransitTest.class,
     TransitSectionTest.class,
     TransitSectionActionTest.class,

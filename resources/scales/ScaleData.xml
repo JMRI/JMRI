@@ -42,18 +42,18 @@
       <scale_ratio>120.0</scale_ratio>
     </scale>
     <scale>
-      <scale_name>UK_N</scale_name>
-      <user_name>UK_N</user_name>
+      <scale_name>UK-N</scale_name>
+      <user_name>UK-N</user_name>
       <scale_ratio>148.0</scale_ratio>
     </scale>
     <scale>
-      <scale_name>UK_O</scale_name>
-      <user_name>UK_O</user_name>
+      <scale_name>UK-O</scale_name>
+      <user_name>UK-O</user_name>
       <scale_ratio>43.5</scale_ratio>
     </scale>
     <scale>
-      <scale_name>UK_OO</scale_name>
-      <user_name>UK_OO</user_name>
+      <scale_name>UK-OO</scale_name>
+      <user_name>UK-OO</user_name>
       <scale_ratio>76.2</scale_ratio>
     </scale>
     <scale>

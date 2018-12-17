@@ -40,6 +40,7 @@
       <xs:attribute name="class" type="classType" use="required"/>
       <xs:attribute name="time" type="xs:string"/>
       <xs:attribute name="rate" type="xs:float"/>
+      <xs:attribute name="startrate" type="xs:float"/>
       <xs:attribute name="run" type="yesNoType"/>
       <xs:attribute name="master" type="yesNoType"/>
       <xs:attribute name="mastername" type="xs:string"/>
@@ -48,7 +49,9 @@
       <xs:attribute name="display" type="yesNoType"/>
       <xs:attribute name="showbutton" type="yesNoType"/>
       <xs:attribute name="startstopped" type="yesNoType"/>
+      <xs:attribute name="startrunning" type="yesNoType"/>
       <xs:attribute name="startsettime" type="yesNoType"/>
+      <xs:attribute name="startsetrate" type="yesNoType"/>
       <xs:attribute name="startclockoption" type="xs:nonNegativeInteger"/>
     </xs:complexType>
 
