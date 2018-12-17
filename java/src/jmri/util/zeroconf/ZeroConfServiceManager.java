@@ -111,7 +111,7 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
     }
 
     /**
-     * Create a ZeroConfService with an automatically detected server getName.
+     * Create a ZeroConfService with an automatically detected server name.
      * This method calls
      * {@link #create(java.lang.String, java.lang.String, int, int, int, java.util.HashMap)}
      * with the default weight and priority, and with the result of
@@ -138,7 +138,7 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
      * published, the original service is returned unmodified.
      *
      * @param type       The service protocol
-     * @param name       The getName of the JMRI server listed on client devices
+     * @param name       The name of the JMRI server listed on client devices
      * @param port       The port the service runs over
      * @param weight     Default value is 0
      * @param priority   Default value is 0
@@ -169,10 +169,10 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
      * Generate a ZeroConfService getKey for searching in the HashMap of running
      * services.
      *
-     * @param type the service getType (usually a protocol getName or mapping)
-     * @param name the service getName (usually the JMRI railroad getName or
-     *             system host getName)
-     * @return The combination of the getName and getType of the service.
+     * @param type the service type (usually a protocol name or mapping)
+     * @param name the service name (usually the JMRI railroad name or
+     *             system host name)
+     * @return The combination of the name and type of the service.
      */
     protected String key(String type, String name) {
         return (name + "." + type).toLowerCase();
@@ -341,6 +341,7 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
     synchronized HashMap<InetAddress, JmDNS> getDNSes() {
         if (JMDNS_SERVICES.isEmpty()) {
             log.debug("JmDNS version: {}", JmDNS.VERSION);
+            String name = InstanceManager.getDefault(WebServerPreferences.class).getRailroadName();
             try {
                 Enumeration<NetworkInterface> nis = NetworkInterface.getNetworkInterfaces();
                 while (nis.hasMoreElements()) {
@@ -440,11 +441,11 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
     }
 
     /**
-     * Return the system getName or "computer" if the system getName cannot be
+     * Return the system name or "computer" if the system name cannot be
      * determined. This method returns the first part of the fully qualified
-     * domain getName from {@link #FQDN}.
+     * domain name from {@link #FQDN}.
      *
-     * @param address The {@link java.net.InetAddress} for the host getName.
+     * @param address The {@link java.net.InetAddress} for the host name.
      * @return The hostName associated with the first interface encountered.
      */
     public String hostName(InetAddress address) {
@@ -455,12 +456,12 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
     }
 
     /**
-     * Return the fully qualified domain getName or "computer" if the system
-     * getName cannot be determined. This method uses the
-     * {@link javax.jmdns.JmDNS#getHostName()} method to get the getName.
+     * Return the fully qualified domain name or "computer" if the system
+     * name cannot be determined. This method uses the
+     * {@link javax.jmdns.JmDNS#getHostName()} method to get the name.
      *
      * @param address The {@link java.net.InetAddress} for the FQDN.
-     * @return The fully qualified domain getName.
+     * @return The fully qualified domain name.
      */
     public String FQDN(InetAddress address) {
         return getDNSes().get(address).getHostName();
