@@ -327,9 +327,7 @@ public class ZeroConfService {
      *
      * @return a {@link java.util.HashMap} of {@link javax.jmdns.JmDNS} objects,
      *         accessible by {@link java.net.InetAddress} keys.
-     * @deprecated since 4.15.1; use
-     * {@link jmri.util.zeroconf.ZeroConfServiceManager#getNetServices() }
-     * instead
+     * @deprecated since 4.15.1 without public replacement
      */
     @Deprecated
     synchronized public static HashMap<InetAddress, JmDNS> netServices() {
@@ -378,7 +376,7 @@ public class ZeroConfService {
     
     /**
      * Get a list of the listeners for this service.
-     * @return 
+     * @return the listeners or an empty list if none
      */
     public List<ZeroConfServiceListener> getListeners() {
         return new ArrayList<>(listeners);

@@ -38,8 +38,8 @@ public abstract class AbstractStringIO extends AbstractNamedBean implements Stri
      * The string [u]must not[/u] be longer than the value of getMaximumLength()
      * unless that value is zero. Some microcomputers have little memory and
      * it's very important that this method is never called with too long strings.
-     * @param value
-     * @throws JmriException 
+     * @param value the string to send
+     * @throws JmriException when unable to send value
      */
     abstract protected void sendStringToLayout(String value) throws JmriException;
 
