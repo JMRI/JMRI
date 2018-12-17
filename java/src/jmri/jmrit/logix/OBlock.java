@@ -858,7 +858,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
             }
         }
         if (msg != null) {
-            log.error(msg);
+            log.warn(msg);
             return msg;
         }
         _pathName = pathName;
