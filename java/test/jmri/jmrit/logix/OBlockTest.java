@@ -145,7 +145,7 @@ public class OBlockTest {
         Assert.assertEquals("Allocate oos", Bundle.getMessage("BlockOutOfService", b.getDisplayName()), b.allocate(w2));
         Assert.assertEquals("state not allocated, dark", OBlock.UNDETECTED|OBlock.OUT_OF_SERVICE, b.getState());
         
-        jmri.util.JUnitAppender.assertErrorMessage("Path \"PathName\" not found in block \"c\"."); 
+        jmri.util.JUnitAppender.assertWarnMessage("Path \"PathName\" not found in block \"c\"."); 
         tearDown();
     }
     
