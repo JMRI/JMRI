@@ -5,6 +5,7 @@ import jmri.jmrix.lenz.XNetReply;
 import jmri.jmrix.lenz.XNetSystemConnectionMemo;
 import jmri.jmrix.lenz.XNetThrottle;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.NotApplicable;
 import org.junit.*;
 
 /**
@@ -63,30 +64,35 @@ public class RocoXNetThrottleTest extends jmri.jmrix.lenz.XNetThrottleTest {
     @Ignore("parent class method creates a new throttle")
     @Test(timeout=1000)
     public void testInitSequenceNormalUnitSpeedStep128() throws Exception {
+       Assert.fail("This test needs implemented");
     }
 
     @Override
     @Ignore("parent class method creates a new throttle")
     @Test(timeout=1000)
     public void initSequenceNormalUnitSpeedStep14() throws Exception {
+       Assert.fail("This test needs implemented");
     }
 
     @Override
     @Ignore("parent class method creates a new throttle")
     @Test(timeout=1000)
     public void initSequenceMUAddress28SpeedStep() throws Exception {
+       Assert.fail("This test needs implemented");
     }
 
     @Override
     @Ignore("parent class method creates a new throttle")
     @Test(timeout=1000)
     public void initSequenceMuedUnitSpeedStep128() throws Exception {
+       Assert.fail("This test needs implemented");
     }
 
     @Override
     @Ignore("parent class method creates a new throttle")
     @Test(timeout=1000)
     public void initSequenceDHUnitSpeedStep27() throws Exception {
+       Assert.fail("This test needs implemented");
     }
 
     @Override
@@ -96,54 +102,62 @@ public class RocoXNetThrottleTest extends jmri.jmrix.lenz.XNetThrottleTest {
     }
 
     @Override
+    @NotApplicable("only one software version for Roco")
     @Ignore("only one software version for Roco")
     @Test(timeout=1000)
     public void testSendFunctionGroup4v35() {
     }
 
     @Override
+    @NotApplicable("not supported by Roco")
     @Ignore("not supported by Roco")
     @Test(timeout=1000)
     public void testSendMomentaryFunctionGroup1() {
     } 
 
     @Override
+    @NotApplicable("not supported by Roco")
     @Ignore("not supported by Roco")
     @Test(timeout=1000)
     public void testSendMomentaryFunctionGroup2() {
     } 
 
     @Override
-    @Ignore("not supported by Roco")
+    @NotApplicable("not supported by Roco")
     @Test(timeout=1000)
     public void testSendMomentaryFunctionGroup3() {
     } 
 
     @Override
+    @NotApplicable("not supported by Roco")
     @Ignore("not supported by Roco")
     @Test(timeout=1000)
     public void testSendMomentaryFunctionGroup4() {
     } 
 
     @Override
+    @NotApplicable("not supported by Roco")
     @Ignore("not supported by Roco")
     @Test(timeout=1000)
     public void testSendMomentaryFunctionGroup5() {
     } 
 
     @Override
+    @NotApplicable("not supported by Roco")
     @Ignore("not supported by Roco")
     @Test(timeout=1000)
     public void testSendFunctionHighMomentaryStatusRequest() throws Exception {
     } 
 
     @Override
+    @NotApplicable("never sent by Roco throttle support")
     @Ignore("never sent by Roco throttle support")
     @Test(timeout=1000)
     public void testSendFunctionStatusInformationRequest() {
     } 
 
     @Override
+    @NotApplicable("never sent by Roco throttle support")
     @Ignore("never sent by Roco throttle support")
     @Test(timeout=1000)
     public void testSendFunctionHighStatusInformationRequest() {
