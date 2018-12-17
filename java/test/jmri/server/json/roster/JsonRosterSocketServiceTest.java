@@ -72,6 +72,7 @@ public class JsonRosterSocketServiceTest {
         Roster.getDefault().getEntriesInGroup(Roster.ALLENTRIES).stream().forEach((entry) -> {
             Assert.assertEquals(3, entry.getPropertyChangeListeners().length);
         });
+
         // list the groups in a JSON message for assertions
         this.connection.sendMessage((JsonNode) null);
         instance.onMessage(JsonRoster.ROSTER_GROUPS, this.connection.getObjectMapper().createObjectNode(), JSON.GET, Locale.ENGLISH);
@@ -82,6 +83,7 @@ public class JsonRosterSocketServiceTest {
         Assert.assertEquals("Two groups exist", 2, message.size());
         Assert.assertTrue("Contains group TestGroup1", message.findValuesAsText(JSON.NAME).contains("testGroup1"));
         Assert.assertTrue("Contains group AllEntries", message.findValuesAsText(JSON.NAME).contains(Roster.allEntries(Locale.ENGLISH)));
+
         // add a roster group and verify message sent by listener
         this.connection.sendMessage((JsonNode) null);
         Roster.getDefault().addRosterGroup("NewRosterGroup");
@@ -92,6 +94,7 @@ public class JsonRosterSocketServiceTest {
         Assert.assertTrue("Contains group TestGroup1", message.findValuesAsText(JSON.NAME).contains("testGroup1"));
         Assert.assertTrue("Contains group AllEntries", message.findValuesAsText(JSON.NAME).contains(Roster.allEntries(Locale.ENGLISH)));
         Assert.assertTrue("Contains group NewRosterGroup", message.findValuesAsText(JSON.NAME).contains("NewRosterGroup"));
+
         // rename a roster group and verify message sent by listener
         this.connection.sendMessage((JsonNode) null);
         Roster.getDefault().getRosterGroups().get("NewRosterGroup").setName("AgedRosterGroup");
@@ -103,6 +106,7 @@ public class JsonRosterSocketServiceTest {
         Assert.assertTrue("Contains group AllEntries", message.findValuesAsText(JSON.NAME).contains(Roster.allEntries(Locale.ENGLISH)));
         Assert.assertTrue("Contains group AgedRosterGroup", message.findValuesAsText(JSON.NAME).contains("AgedRosterGroup"));
         Assert.assertFalse("Contains group NewRosterGroup", message.findValuesAsText(JSON.NAME).contains("NewRosterGroup"));
+
         // remove a roster group and verify message sent by listener
         this.connection.sendMessage((JsonNode) null);
         Roster.getDefault().removeRosterGroup(Roster.getDefault().getRosterGroups().get("AgedRosterGroup"));
@@ -114,6 +118,7 @@ public class JsonRosterSocketServiceTest {
         Assert.assertTrue("Contains group AllEntries", message.findValuesAsText(JSON.NAME).contains(Roster.allEntries(Locale.ENGLISH)));
         Assert.assertFalse("Contains group NewRosterGroup", message.findValuesAsText(JSON.NAME).contains("AgedRosterGroup"));
         Assert.assertFalse("Contains group NewRosterGroup", message.findValuesAsText(JSON.NAME).contains("NewRosterGroup"));
+
         // Set unknown roster group directly as attribute of RosterEntry
         this.connection.sendMessage((JsonNode) null);
         RosterEntry re = Roster.getDefault().getEntryForId("testEntry1");
@@ -124,6 +129,7 @@ public class JsonRosterSocketServiceTest {
         }, "Expected message not sent");
         Assert.assertEquals("One message sent", 1, this.connection.getMessages().size());
         Assert.assertEquals("Message contains rosterEntry", JsonRoster.ROSTER_ENTRY, this.connection.getMessage().path(JSON.TYPE).asText());
+
         // Set known roster group directly as attribute of RosterEntry
         Roster.getDefault().addRosterGroup("NewRosterGroup");
         JUnitUtil.waitFor(() -> {
@@ -144,6 +150,7 @@ public class JsonRosterSocketServiceTest {
         Assert.assertArrayEquals("Objects are 1 rosterEntry and 4 rosterGroup",
                 new String[]{JsonRoster.ROSTER_ENTRY, JsonRoster.ROSTER_GROUP, JsonRoster.ROSTER_GROUP, JsonRoster.ROSTER_GROUP, JsonRoster.ROSTER_GROUP},
                 values.toArray(new String[5]));
+
         // Remove known roster group directly as attribute of RosterEntry
         this.connection.sendMessage((JsonNode) null); // clear out messages
         re.deleteAttribute(Roster.ROSTER_GROUP_PREFIX + "NewRosterGroup"); // remove group from roster entry
