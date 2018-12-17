@@ -55,6 +55,8 @@
 
   <tocitem text="MRC " target="html.hardware.mrc.index"/>
 
+  <tocitem text="MQTT " target="html.hardware.mqtt.index"/>
+
   <tocitem text="NCE " target="html.hardware.nce.NCE"/>
 
   <tocitem text="OakTree Systems " target="html.hardware.oaktree.OakTree"/>
