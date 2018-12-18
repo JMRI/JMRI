@@ -663,7 +663,6 @@ public final class InstanceManager {
      */
     @Deprecated
     static public void setCommandStation(CommandStation p) {
-        jmri.util.Log4JUtil.warnOnce(log, "setCommandStation is deprecated, please replace this call", new Exception("traceback"));
         store(p, CommandStation.class);
     }
 

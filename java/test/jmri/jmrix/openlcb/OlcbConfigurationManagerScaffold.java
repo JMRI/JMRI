@@ -1,7 +1,6 @@
 package jmri.jmrix.openlcb;
 
-import jmri.GlobalProgrammerManager;
-import jmri.InstanceManager;
+import jmri.*;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficController;
 import jmri.util.ThreadingUtil;
@@ -51,7 +50,7 @@ public class OlcbConfigurationManagerScaffold extends jmri.jmrix.openlcb.OlcbCon
                 getThrottleManager());
 
         if (getProgrammerManager().isAddressedModePossible()) {
-            InstanceManager.setAddressedProgrammerManager(getProgrammerManager());
+            InstanceManager.store(getProgrammerManager(), AddressedProgrammerManager.class);
         }
         if (getProgrammerManager().isGlobalProgrammerAvailable()) {
             jmri.InstanceManager.store(getProgrammerManager(), GlobalProgrammerManager.class);

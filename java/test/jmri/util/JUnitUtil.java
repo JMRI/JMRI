@@ -281,6 +281,13 @@ public class JUnitUtil {
         
         // Optionally, check that no threads were left running (could be controlled by environment var?)
         // checkThreads(false);  // true means stop on 1st extra thread
+        
+        // Optionally, print whatever is on the Swing queue to see what's keeping things alive
+        //Object entry = java.awt.Toolkit.getDefaultToolkit().getSystemEventQueue().peekEvent();
+        //if (entry != null) System.err.println("entry: "+entry);
+        
+        // Optionally, check that the Swing queue is idle
+        //new org.netbeans.jemmy.QueueTool().waitEmpty(250);
 
     }
 
@@ -652,7 +659,7 @@ public class JUnitUtil {
 
     public static void initInternalSignalHeadManager() {
         SignalHeadManager m = new AbstractSignalHeadManager();
-        InstanceManager.setSignalHeadManager(m);
+        InstanceManager.setDefault(SignalHeadManager.class, m);
         if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
             InstanceManager.getDefault(ConfigureManager.class).registerConfig(m, jmri.Manager.SIGNALHEADS);
         }
