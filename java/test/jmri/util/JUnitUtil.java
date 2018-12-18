@@ -12,6 +12,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import javax.annotation.Nonnull;
+import jmri.AddressedProgrammerManager;
 import jmri.ConditionalManager;
 import jmri.ConfigureManager;
 import jmri.GlobalProgrammerManager;
@@ -700,7 +701,7 @@ public class JUnitUtil {
 
     public static void initDebugProgrammerManager() {
         DebugProgrammerManager m = new DebugProgrammerManager();
-        InstanceManager.setAddressedProgrammerManager(m);
+        InstanceManager.store(m, AddressedProgrammerManager.class);
         InstanceManager.store(m, GlobalProgrammerManager.class);
     }
 
