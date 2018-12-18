@@ -55,6 +55,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
+import javax.swing.MenuElement;
 import javax.swing.MenuSelectionManager;
 import javax.swing.plaf.basic.BasicCheckBoxMenuItemUI;
 import javax.swing.plaf.ComponentUI;
@@ -141,7 +142,6 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel implements
 
 
     public void init() {
-        
         evJmMenu.add(stlrUpdateItem);
         stlrUpdateItem.addActionListener(new ActionListener() {
             @Override
@@ -264,7 +264,7 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel implements
         for (int i = 0; i < tcm.getColumnCount(); i++) {
             int colnumber=i;
             String colName = eventTable.getColumnName(colnumber);
-            JCheckBoxMenuItem showcol = new JCheckBoxMenuItem(colName);
+            StayOpenCBItem showcol = new StayOpenCBItem(colName);
             colMenuList.add(showcol);
             showcol.setToolTipText(CbusEventTableDataModel.columnToolTips[i]);
             
@@ -298,27 +298,25 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel implements
                 evStatMenu.add(showcol); // count columns
             }
             else if (
-            colnumber==CbusEventTableDataModel.STATUS_REQUEST_BUTTON_COLUMN ||
-            colnumber==CbusEventTableDataModel.FEEDBACKREQUIRED_COLUMN ||
-            colnumber==CbusEventTableDataModel.LASTFEEDBACK_COLUMN ||
-            colnumber==CbusEventTableDataModel.FEEDBACKOUTSTANDING_COLUMN ||
-            colnumber==CbusEventTableDataModel.FEEDBACKTIMEOUT_COLUMN ||
-            colnumber==CbusEventTableDataModel.FEEDBACKEVENT_COLUMN ||
-            colnumber==CbusEventTableDataModel.FEEDBACKNODE_COLUMN
+                colnumber==CbusEventTableDataModel.STATUS_REQUEST_BUTTON_COLUMN ||
+                colnumber==CbusEventTableDataModel.FEEDBACKREQUIRED_COLUMN ||
+                colnumber==CbusEventTableDataModel.LASTFEEDBACK_COLUMN ||
+                colnumber==CbusEventTableDataModel.FEEDBACKOUTSTANDING_COLUMN ||
+                colnumber==CbusEventTableDataModel.FEEDBACKTIMEOUT_COLUMN ||
+                colnumber==CbusEventTableDataModel.FEEDBACKEVENT_COLUMN ||
+                colnumber==CbusEventTableDataModel.FEEDBACKNODE_COLUMN
             ){ 
                 evFbMenu.add(showcol); // feedback columns
             }
             else if (
-            colnumber==CbusEventTableDataModel.STLR_ON_COLUMN ||
-            colnumber==CbusEventTableDataModel.STLR_OFF_COLUMN
+                colnumber==CbusEventTableDataModel.STLR_ON_COLUMN ||
+                colnumber==CbusEventTableDataModel.STLR_OFF_COLUMN
             ){
                 evJmMenu.add(showcol);
             }
             else {
                 log.warn("No menuitem defined for {}",colnumber);
             }
-            
-            showcol.setUI(new StayOpenCheckBoxMenuItemUI());
             
             showcol.addActionListener(new ActionListener() {
                 @Override
@@ -547,7 +545,6 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel implements
         });
 
         
-        
         JMenuItem mnItemOpenFile = new JMenuItem(Bundle.getMessage("ImportMenuMergFcu147")); //  FCU 
         mnItemOpenFile.setToolTipText("Tested FCU v 1.4.7.42 - v 1.4.7.45"); // NOT I18N
         mnItemOpenFile.addActionListener(new ActionListener() {
@@ -576,7 +573,6 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel implements
                 eventModel.printTable(writer); // close() is taken care of in printTable()
             }
         });
-        
         
         JMenuItem previewItem = new JMenuItem(rb.getString("PreviewTable"));
 
@@ -842,13 +838,32 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel implements
         }
     }
     
-    public static class StayOpenCheckBoxMenuItemUI extends BasicCheckBoxMenuItemUI {
-        @Override
-        protected void doClick(MenuSelectionManager msm) {
-            menuItem.doClick(0);
+
+    /**
+     * Checkbox item which does not appear to close the menu pane when clicked
+     */  
+    public static class StayOpenCBItem extends JCheckBoxMenuItem {
+    
+        private MenuElement[] path;
+        {
+            getModel().addChangeListener(new ChangeListener() {
+                @Override
+                public void stateChanged(ChangeEvent e) {
+                    if (getModel().isArmed() && isShowing()) {
+                        path = MenuSelectionManager.defaultManager().getSelectedPath();
+                    }
+                }
+            });
         }
-        public static ComponentUI createUI(JComponent c) {
-            return new StayOpenCheckBoxMenuItemUI();
+    
+        public StayOpenCBItem(String text) {
+            super(text);
+        }
+    
+        @Override
+        public void doClick(int pressTime) {
+            super.doClick(pressTime);
+            MenuSelectionManager.defaultManager().setSelectedPath(path);
         }
     }
     

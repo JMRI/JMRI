@@ -48,8 +48,8 @@ public class CbusEventHighlighter {
                 && (_type != CbusMessage.getEventType(m))) {
             return false;
         }
-        if ((_dir != CbusConstants.EVENT_EITHER_DIR)
-                && (_dir != CbusConstants.EVENT_OUT)) {
+        if ((_dir != CbusConstants.EVENT_DIR_EITHER )
+                && (_dir != CbusConstants.EVENT_DIR_OUT )) {
             // log.debug("does not match event dir {}",_dir);
             return false;
         }
@@ -72,8 +72,8 @@ public class CbusEventHighlighter {
                 && (_type != CbusMessage.getEventType(r))) {
             return false;
         }
-        if ((_dir != CbusConstants.EVENT_EITHER_DIR)
-                && (_dir != CbusConstants.EVENT_IN)) {
+        if ((_dir != CbusConstants.EVENT_DIR_EITHER)
+                && (_dir != CbusConstants.EVENT_DIR_IN)) {
             // log.debug("does not match event dir {}",_dir);
             return false;
         }

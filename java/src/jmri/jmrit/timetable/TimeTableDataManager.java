@@ -371,7 +371,7 @@ public class TimeTableDataManager {
             }
         }
         if (sort) {
-            Collections.sort(list, (o1, o2) -> o1.getDistanceString().compareTo(o2.getDistanceString()));
+            Collections.sort(list, (o1, o2) -> Double.compare(o1.getDistance(), o2.getDistance()));
         }
         return list;
     }
@@ -434,7 +434,7 @@ public class TimeTableDataManager {
             }
         }
         if (sort) {
-            Collections.sort(list, (o1, o2) -> o1.getSeqSort().compareTo(o2.getSeqSort()));
+            Collections.sort(list, (o1, o2) -> Integer.compare(o1.getSeq(), o2.getSeq()));
         }
         return list;
     }
