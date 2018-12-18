@@ -1155,7 +1155,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      */
     @Override
     public void readCV(String cvNum, jmri.ProgListener p) throws jmri.ProgrammerException {
-        log.debug("readCV(string): cvNum={}", cvNum);
+        log.debug("readCV(string): cvNum={} mode={}", cvNum, getMode());
         if (getMode().equals(csOpSwProgrammingMode)) {
             log.debug("cvOpSw mode!");
             //handle Command Station OpSw programming here
