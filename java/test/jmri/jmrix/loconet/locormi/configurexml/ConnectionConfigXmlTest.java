@@ -1,6 +1,7 @@
 package jmri.jmrix.loconet.locormi.configurexml;
 
 import jmri.util.JUnitUtil;
+import jmri.util.JUnitAppender;
 import org.junit.*;
 import jmri.jmrix.loconet.locormi.ConnectionConfig;
 
@@ -32,14 +33,17 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSer
 
     @Test
     @Override
-    @Ignore("generates error message when run")
     public void getInstanceTest() {
+       super.getInstanceTest();
+       JUnitAppender.assertErrorMessage("unexpected call to getInstance");
     }
 
     @Test(timeout=5000)
     @Override
-    @Ignore("generates error message when run")
     public void loadTest() throws jmri.configurexml.JmriConfigureXmlException {
+       super.loadTest();
+       JUnitAppender.assertErrorMessageStartsWith("Exception while trying to connect: java.rmi.ConnectException: Connection refused to host: 127.0.0.1;");
+       JUnitAppender.suppressErrorMessage("Error opening connection to");
     }
 
 }
