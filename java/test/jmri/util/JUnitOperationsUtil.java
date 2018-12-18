@@ -39,7 +39,6 @@ import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineLengths;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
-import jmri.jmrit.operations.rollingstock.engines.EngineModels;
 import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
@@ -117,7 +116,7 @@ public class JUnitOperationsUtil {
         // dispose of the manager first, because otherwise
         // the models go away.
         InstanceManager.getDefault(EngineManager.class).dispose();
-        InstanceManager.getDefault(EngineModels.class).dispose();
+//        InstanceManager.getDefault(EngineModels.class).dispose();
         InstanceManager.getDefault(EngineLengths.class).dispose();
 
         // there can be test concurrency issues if auto save is on

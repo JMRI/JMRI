@@ -11,7 +11,6 @@ import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.ThreadingUtil;
 import jmri.util.swing.JemmyUtil;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
@@ -500,12 +499,6 @@ public class TrainEditFrameTest extends OperationsTestCase {
     public void setUp() {
         super.setUp();
         JUnitOperationsUtil.loadTrains();
-    }
-
-    @Override
-    @After
-    public void tearDown() {
-        super.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(TrainEditFrameTest.class);

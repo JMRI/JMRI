@@ -9,9 +9,7 @@ import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.setup.Setup;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -51,19 +49,6 @@ public class RollingStockLoggerTest extends OperationsTestCase {
         File dir = new File(InstanceManager.getDefault(RollingStockLogger.class).getDirectoryName());
         Assert.assertTrue("directory exists", dir.exists());
         Assert.assertTrue("file exists", file.exists());
-    }
-
-    // The minimal setup for log4J
-    @Override
-    @Before
-    public void setUp() {
-        super.setUp();
-    }
-
-    @Override
-    @After
-    public void tearDown() {
-        super.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(RollingStockLoggerTest.class);

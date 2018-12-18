@@ -6,10 +6,8 @@ import jmri.jmrit.operations.OperationsTestCase;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.JemmyUtil;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
 import org.junit.Test;
 
 public class AutomationCopyFrameTest extends OperationsTestCase {
@@ -88,19 +86,5 @@ public class AutomationCopyFrameTest extends OperationsTestCase {
 
         JUnitUtil.dispose(editAutomationFrame);
         JUnitUtil.dispose(copyFrame);
-    }
-
-    // Ensure minimal setup for log4J
-    @Override
-    @Before
-    public void setUp() {
-        super.setUp();
-    }
-
-    // The minimal setup for log4J
-    @Override
-    @After
-    public void tearDown() {
-        super.tearDown();
     }
 }

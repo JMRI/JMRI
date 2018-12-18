@@ -3,14 +3,10 @@ package jmri.jmrit.operations.trains.schedules;
 import java.awt.GraphicsEnvironment;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
-import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
-import jmri.jmrit.operations.trains.schedules.TrainsScheduleEditFrame;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -50,20 +46,7 @@ public class TrainsScheduleEditFrameTest extends OperationsTestCase {
 
         JUnitUtil.dispose(f);
     }
-
-    // The minimal setup for log4J
-    @Override
-    @Before
-    public void setUp() {
-        super.setUp();
-    }
-
-    @Override
-    @After
-    public void tearDown() {
-        super.tearDown();
-    }
-
+    
     // private final static Logger log = LoggerFactory.getLogger(TrainsScheduleEditFrameTest.class);
 
 }
