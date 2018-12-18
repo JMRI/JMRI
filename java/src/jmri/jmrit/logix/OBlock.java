@@ -846,11 +846,9 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         if (path == null) {
             msg = Bundle.getMessage("PathNotFound", pathName, getDisplayName());
         }
-        if (msg == null && (getState() | ALLOCATED) == 0) {
+        if (msg == null && ((getState() & OBlock.ALLOCATED) == 0)) {
             msg = Bundle.getMessage("PathNotSet", pathName, getDisplayName());
-        }
-        // Sanity check
-        if (msg == null) {
+        } else if (msg == null) {  // Sanity check
             String p = warrant.getRoutePathInBlock(this);
             if (p!=null && !pathName.equals(p)) {
                 msg = "path \""+pathName+"\" for block \""+getDisplayName()+"\" does not agree with path \""+

@@ -83,11 +83,14 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
     protected OBlock _stoppingBlock; // Block occupied by rogue train or halted
     private NamedBean _protectSignal; // Signal stopping train movement
     private int _idxProtectSignal;
+    // Crossovers typically have both switches controlled by one TO, although each switch is in a different block
+    // At the origin and destination of warrants, TO's shared between warrants may set conflicting paths
+    private OBlock _myShareBlock;   // block belonging to this warrant
+    private OBlock _otherShareBlock;   // block belonging to another warrant
+
     private boolean _waitForSignal; // train may not move until false
     private boolean _waitForBlock; // train may not move until false
     private boolean _waitForWarrant;
-//    private OBlock _stopWarrantBlock; // Block held by another warrant
-    private final ShareTOPair _shareTOPair = new ShareTOPair(); // Block in another warrant that controls a turnout in this block
     protected String _message; // last message returned from an action
 
     // Throttle modes
@@ -125,15 +128,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
     static final int BEG = 1;
     static final int MID = 2;
     static final int END = 3;
-
-    // Crossovers typically have both switches controlled by one TO, although each switch is in a different block
-    // At the origin and destination of warrants, TO's shared between warrants may set conflicting paths
-    class ShareTOPair {
-        OBlock myBlock;   // block belonging to this warrant
-        OBlock otherBlock;   // block belonging to another warrant
-        ShareTOPair() {
-        }
-    }
 
     /**
      * Create an object with no route defined. The list of BlockOrders is the
@@ -515,8 +509,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         if (_stoppingBlock != null && !this.equals(_stoppingBlock.getWarrant())) {
             return _stoppingBlock.getWarrant();
         }
-        if (_shareTOPair.otherBlock != null) {
-            return _shareTOPair.otherBlock.getWarrant();
+        if (_otherShareBlock != null) {
+            return _otherShareBlock.getWarrant();
         }
         return null;
     }
@@ -736,9 +730,10 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             _stoppingBlock.removePropertyChangeListener(this);
             _stoppingBlock = null;
         }
-        if (_shareTOPair.otherBlock != null) {
-            _shareTOPair.otherBlock.removePropertyChangeListener(this);
-            _shareTOPair.otherBlock = null;
+        if (_otherShareBlock != null) {
+            _otherShareBlock.removePropertyChangeListener(this);
+            _otherShareBlock = null;
+            _myShareBlock = null;
         }
         if (_student != null) {
             _student.dispose(); // releases throttle
@@ -1484,7 +1479,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                 if ((((Number) evt.getNewValue()).intValue() & OBlock.UNOCCUPIED) != 0) {
                     clearStopWarrantBlock();
                 }*/
-            } else if (_shareTOPair.otherBlock != null && _shareTOPair.otherBlock == evt.getSource()) {
+            } else if (_otherShareBlock != null && _otherShareBlock == evt.getSource()) {
                 if ((((Number) evt.getNewValue()).intValue() & OBlock.UNOCCUPIED) != 0) {
                     clearShareTOBlock();
                 }
@@ -1655,17 +1650,17 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
      * allocated.
      */
     private void clearShareTOBlock() {
-        if (_shareTOPair.otherBlock == null) {
+        if (_otherShareBlock == null) {
             return;
         }
-        _shareTOPair.otherBlock.removePropertyChangeListener(this);
-        String msg = _orders.get(getIndexOfBlock(_shareTOPair.myBlock, _idxCurrentOrder)).setPath(this);
+        _otherShareBlock.removePropertyChangeListener(this);
+        String msg = _orders.get(getIndexOfBlock(_myShareBlock, _idxCurrentOrder)).setPath(this);
         if (log.isDebugEnabled()) {
-            log.debug("_shareTOBlock= \"{}\" Cleared. {}",
-                    _shareTOPair.otherBlock.getDisplayName(), (msg==null?"":"msg"));
+            log.debug("_otherShareBlock= \"{}\" Cleared. {}",
+                    _otherShareBlock.getDisplayName(), (msg==null?"":"msg"));
         }
-        _shareTOPair.otherBlock = null;
-        _shareTOPair.myBlock = null;
+        _otherShareBlock = null;
+        _myShareBlock = null;
         if (_waitForWarrant) {
             _waitForWarrant = false;
             restoreRunning();
@@ -1682,21 +1677,21 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
      * @param myBlock block in this warrant sharing a TO with 'block'
      */
     protected void setShareTOBlock(OBlock block, OBlock myBlock) {
-        OBlock prevBlk = _shareTOPair.otherBlock;
-        if (_shareTOPair.myBlock != null) {
-            if (myBlock.equals(_shareTOPair.myBlock)) {
+        OBlock prevBlk = _otherShareBlock;
+        if (_myShareBlock != null) {
+            if (_myShareBlock.equals(myBlock)) {
                 return;
             }
             int idxBlock = getIndexOfBlock(myBlock, _idxCurrentOrder);
-            int idxStop = getIndexOfBlock(_shareTOPair.myBlock, _idxCurrentOrder);
+            int idxStop = getIndexOfBlock(_myShareBlock, _idxCurrentOrder);
             if (idxStop < idxBlock && idxStop >= 0) {
                 return;
             }
-            _shareTOPair.otherBlock.removePropertyChangeListener(this);
+            _otherShareBlock.removePropertyChangeListener(this);
         }
-        _shareTOPair.myBlock = myBlock;
-        _shareTOPair.otherBlock = block;
-        _shareTOPair.otherBlock.addPropertyChangeListener(this);
+        _myShareBlock = myBlock;
+        _otherShareBlock = block;
+        _otherShareBlock.addPropertyChangeListener(this);
         if (log.isDebugEnabled()) {
             String msg = "Warrant \"{}\" sets _shareTOBlock= \"{}\" owned by warrant \"{}\"";
             if (prevBlk != null) {
