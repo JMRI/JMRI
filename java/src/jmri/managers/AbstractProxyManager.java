@@ -488,11 +488,14 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
     }
 
     private ArrayList<String> addedOrderList = null;
+    
     protected void updateOrderList() {
         if (addedOrderList == null) return; // only maintain if requested
         addedOrderList.clear();
         for (Manager<E> m : mgrs) {
-            addedOrderList.addAll(m.getSystemNameAddedOrderList());
+            @SuppressWarnings("deprecation") // getSystemNameAddedOrderList() call needed until deprecated code removed
+            List<String> t = m.getSystemNameAddedOrderList();
+            addedOrderList.addAll(t);
         }
     }
 

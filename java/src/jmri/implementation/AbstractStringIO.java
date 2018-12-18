@@ -16,7 +16,7 @@ public abstract class AbstractStringIO extends AbstractNamedBean implements Stri
 
     /**
      * Abstract constructor for new StringIO with system name
-     * 
+     *
      * @param systemName StringIO system name
      */
     public AbstractStringIO(String systemName) {
@@ -86,7 +86,7 @@ public abstract class AbstractStringIO extends AbstractNamedBean implements Stri
      * accept too long strings.
      * On the other hand, if the StringIO is used to send a command, a too
      * long string is an error.
-     * 
+     *
      * @return true if long strings should be cut
      */
     abstract protected boolean cutLongStrings();
