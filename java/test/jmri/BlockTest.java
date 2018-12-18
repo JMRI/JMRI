@@ -282,14 +282,14 @@ public class BlockTest {
 
     @Test
     public void testReporterAdd() {
-        ReporterManager rm = jmri.InstanceManager.reporterManagerInstance();
+        ReporterManager rm = jmri.InstanceManager.getDefault(ReporterManager.class);
         Block b = new Block("SystemName");
         b.setReporter(rm.provideReporter("IR22"));
     }
 
     @Test
     public void testReporterInvokeAll() {
-        ReporterManager rm = jmri.InstanceManager.reporterManagerInstance();
+        ReporterManager rm = jmri.InstanceManager.getDefault(ReporterManager.class);
         count = 0;
         Block b = new Block("SystemName") {
             @Override
@@ -306,7 +306,7 @@ public class BlockTest {
 
     @Test
     public void testReporterInvokeCurrent() {
-        ReporterManager rm = jmri.InstanceManager.reporterManagerInstance();
+        ReporterManager rm = jmri.InstanceManager.getDefault(ReporterManager.class);
         count = 0;
         Block b = new Block("SystemName") {
             @Override
@@ -328,7 +328,7 @@ public class BlockTest {
 
     @Test
     public void testReporterInvokeLast() {
-        ReporterManager rm = jmri.InstanceManager.reporterManagerInstance();
+        ReporterManager rm = jmri.InstanceManager.getDefault(ReporterManager.class);
         count = 0;
         Block b = new Block("SystemName") {
             @Override

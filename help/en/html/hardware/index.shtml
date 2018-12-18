@@ -375,6 +375,18 @@
             "modbus/index.shtml">Modbus networks</a></p>
           </dd>
 
+
+          <dt class="im"><img src=
+          "http://mqtt.org/new/wp-content/uploads/2012/02/mqtt-inside.png" 
+          alt="MQTT logo" height="60" width="60"></dt>
+
+          <dt><a href="mqtt/index.shtml">MQTT</a></dt>
+
+          <dd>
+            <p class="dl">Configure: <a href=
+            "mqtt/index.shtml">MQTT networks</a></p>
+          </dd>
+
           <dt class="im"><a href="http://www.modelrectifier.com">
             <img src="http://www.modelrectifier.com/v/vspfiles/templates/modelRecRes/images/template/desktop/client-logo.png" alt="MRC logo" height="43" width="103">
           </a></dt>
@@ -560,6 +572,13 @@
             <p class="dl">Configure connection to <a href=
             "tams/index.shtml">TAMS</a> Master Control command
             station.</p>
+          </dd>
+
+          <dt><a href="secsi/index.shtml">TracTronics SECSI</a></dt>
+
+          <dd>
+            <p class="dl">Configure: <a href=
+            "secsi/index.shtml">TracTronics SECSI connections</a></p>
           </dd>
 
           <dt class="im"><a href=

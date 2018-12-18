@@ -15,10 +15,13 @@ import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JScrollPane;
@@ -26,6 +29,8 @@ import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JToggleButton;
+import javax.swing.MenuElement;
+import javax.swing.MenuSelectionManager;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
@@ -110,7 +115,7 @@ public class CbusSlotMonitorPane extends jmri.jmrix.can.swing.CanPanel {
         for (int i = 0; i < slotTable.getColumnCount(); i++) {
             int colnumber=i;
             String colName = slotTable.getColumnName(colnumber);
-            JCheckBoxMenuItem showcol = new JCheckBoxMenuItem(colName);
+            StayOpenCBItem showcol = new StayOpenCBItem(colName);
             colMenuList.add(showcol);
             if (colnumber<10) {
                 colMenu.add(showcol); // session columnds
@@ -203,6 +208,7 @@ public class CbusSlotMonitorPane extends jmri.jmrix.can.swing.CanPanel {
         toppanelcontainer.add(new LargePowerManagerButton(true));
         
         masterSendCabDataButton= new JToggleButton(Bundle.getMessage("SigDataOn"));
+        masterSendCabDataButton.setSelected(false);
         masterSendCabDataButton.setIcon(new NamedIcon("resources/icons/throttles/power_green.png", "resources/icons/throttles/power_green.png"));
         
         masterSendCabDataButton.addActionListener (new ActionListener () {
@@ -314,6 +320,14 @@ public class CbusSlotMonitorPane extends jmri.jmrix.can.swing.CanPanel {
     public List<JMenu> getMenus() {
         List<JMenu> menuList = new ArrayList<JMenu>();
         
+        JMenuItem resetBlocks = new JMenuItem(Bundle.getMessage("ResetBlocks"));
+        resetBlocks.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                slotModel.initblocks();
+            }
+        });        
+        
         JCheckBoxMenuItem autorevblock = new JCheckBoxMenuItem(Bundle.getMessage("MAutoRev"));
         autorevblock.setSelected(true);
         autorevblock.setToolTipText(Bundle.getMessage("MAutoRevTip"));
@@ -324,6 +338,7 @@ public class CbusSlotMonitorPane extends jmri.jmrix.can.swing.CanPanel {
             }
         });
         
+        cabsigMenu.add(resetBlocks);
         cabsigMenu.add(cabsigSpeedMenu);
         cabsigMenu.add(autorevblock);
         
@@ -341,6 +356,34 @@ public class CbusSlotMonitorPane extends jmri.jmrix.can.swing.CanPanel {
         menuList.add(cabSigColMenu);
         menuList.add(cabsigMenu);
         return menuList;
+    }
+
+    /**
+     * Checkbox item which does not appear to close the menu pane when clicked
+     */  
+    public static class StayOpenCBItem extends JCheckBoxMenuItem {
+    
+        private MenuElement[] path;
+        {
+            getModel().addChangeListener(new ChangeListener() {
+                @Override
+                public void stateChanged(ChangeEvent e) {
+                    if (getModel().isArmed() && isShowing()) {
+                        path = MenuSelectionManager.defaultManager().getSelectedPath();
+                    }
+                }
+            });
+        }
+    
+        public StayOpenCBItem(String text) {
+            super(text);
+        }
+    
+        @Override
+        public void doClick(int pressTime) {
+            super.doClick(pressTime);
+            MenuSelectionManager.defaultManager().setSelectedPath(path);
+        }
     }
     
 
