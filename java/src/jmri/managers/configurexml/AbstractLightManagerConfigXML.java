@@ -40,6 +40,7 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
         setStoreElementClass(lights);
         LightManager tm = (LightManager) o;
         if (tm != null) {
+            @SuppressWarnings("deprecation") // getSystemNameAddedOrderList() call needed until deprecated code removed
             java.util.Iterator<String> iter
                     = tm.getSystemNameAddedOrderList().iterator();
 
