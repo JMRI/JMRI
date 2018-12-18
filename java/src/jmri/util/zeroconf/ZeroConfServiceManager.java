@@ -219,7 +219,7 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
                     // JmDNS requires a 1-to-1 mapping of getServiceInfo to InetAddress
                     if (!service.containsServiceInfo(address)) {
                         try {
-                            info = service.getServiceInfo();
+                            info = service.addServiceInfo(address);
                             dns.registerService(info);
                             log.debug("Register service '{}' on {} successful.", service.getKey(), address.getHostAddress());
                         } catch (IllegalStateException ex) {
@@ -341,7 +341,13 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
     synchronized HashMap<InetAddress, JmDNS> getDNSes() {
         if (JMDNS_SERVICES.isEmpty()) {
             log.debug("JmDNS version: {}", JmDNS.VERSION);
-            String name = InstanceManager.getDefault(WebServerPreferences.class).getRailroadName();
+            String name = InstanceManager.getDefault(WebServerPreferences.class).getRailroadName().toLowerCase();
+            // truncate since hostnames are limited to 63 characters
+            if (name.length() > 63) {
+                name = name.substring(0, 63);
+            }
+            // replace characters that would be escaped with dashes
+            name = name.replaceAll("[ _]", "-");
             try {
                 Enumeration<NetworkInterface> nis = NetworkInterface.getNetworkInterfaces();
                 while (nis.hasMoreElements()) {
@@ -351,10 +357,10 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
                             Enumeration<InetAddress> niAddresses = ni.getInetAddresses();
                             while (niAddresses.hasMoreElements()) {
                                 InetAddress address = niAddresses.nextElement();
-                                log.debug("Calling JmDNS.create({}, '{}')", address.getHostAddress(), address.getHostAddress());
                                 // explicitly pass a valid host name, since null causes a very long lookup on some networks
+                                log.debug("Calling JmDNS.create({}, '{}')", address.getHostAddress(), name);
                                 try {
-                                    JMDNS_SERVICES.put(address, JmDNS.create(address, address.getHostAddress()));
+                                    JMDNS_SERVICES.put(address, JmDNS.create(address, name));
                                 } catch (IOException ex) {
                                     log.warn("Unable to create JmDNS with error: {}", ex.getMessage(), ex);
                                 }
