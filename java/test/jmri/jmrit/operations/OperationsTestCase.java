@@ -24,15 +24,16 @@ public class OperationsTestCase {
 
         // Set things up outside of operations
         JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetProfileManager();
+        
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initDebugThrottleManager();
         JUnitUtil.initIdTagManager();
         JUnitUtil.initShutDownManager();
-        JUnitUtil.resetProfileManager();
 
-        JUnitOperationsUtil.resetOperationsManager();
+        JUnitOperationsUtil.setupOperationsTests();
     }
     
     private final boolean testThreadRunning = false;
