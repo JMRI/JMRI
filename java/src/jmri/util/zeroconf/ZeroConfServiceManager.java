@@ -111,8 +111,8 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
     }
 
     /**
-     * Create a ZeroConfService with an automatically detected server name.
-     * This method calls
+     * Create a ZeroConfService with an automatically detected server name. This
+     * method calls
      * {@link #create(java.lang.String, java.lang.String, int, int, int, java.util.HashMap)}
      * with the default weight and priority, and with the result of
      * {@link jmri.web.server.WebServerPreferences#getRailroadName()}
@@ -170,8 +170,8 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
      * services.
      *
      * @param type the service type (usually a protocol name or mapping)
-     * @param name the service name (usually the JMRI railroad name or
-     *             system host name)
+     * @param name the service name (usually the JMRI railroad name or system
+     *             host name)
      * @return The combination of the name and type of the service.
      */
     protected String key(String type, String name) {
@@ -462,8 +462,8 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
     }
 
     /**
-     * Return the fully qualified domain name or "computer" if the system
-     * name cannot be determined. This method uses the
+     * Return the fully qualified domain name or "computer" if the system name
+     * cannot be determined. This method uses the
      * {@link javax.jmdns.JmDNS#getHostName()} method to get the name.
      *
      * @param address The {@link java.net.InetAddress} for the FQDN.
@@ -483,10 +483,20 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
 
     @Override
     public void dispose() {
-        stopAll(true);
+        dispose(this);
         InstanceManager.getOptionalDefault(ShutDownManager.class).ifPresent(manager -> {
             manager.deregister(shutDownTask);
         });
+    }
+
+    private static void dispose(ZeroConfServiceManager manager) {
+        Date start = new Date();
+        JmmDNS.Factory.getInstance().removeNetworkTopologyListener(manager.networkListener);
+        log.debug("Removed network topology listener in {} milliseconds", new Date().getTime() - start.getTime());
+        start = new Date();
+        log.debug("Starting to stop services...");
+        manager.stopAll(true);
+        log.debug("Stopped all services in {} milliseconds", new Date().getTime() - start.getTime());
     }
 
     protected static class NetworkListener implements NetworkTopologyListener {
@@ -561,13 +571,7 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
         @Override
         public boolean execute() {
             new Thread(() -> {
-                Date start = new Date();
-                log.debug("Starting to stop services...");
-                manager.stopAll(true);
-                log.debug("Stopped all services in {} milliseconds", new Date().getTime() - start.getTime());
-                start = new Date();
-                JmmDNS.Factory.getInstance().removeNetworkTopologyListener(manager.networkListener);
-                log.debug("Removed network topology listener in {} milliseconds", new Date().getTime() - start.getTime());
+                dispose(manager);
                 this.isComplete = true;
             }, "ZeroConfServiceManager ShutDownTask").start();
             return true;
