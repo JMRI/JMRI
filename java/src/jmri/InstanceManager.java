@@ -568,6 +568,7 @@ public final class InstanceManager {
      */
     @Deprecated
     static public BlockManager blockManagerInstance() {
+        jmri.util.Log4JUtil.warnOnce(log, "blockManagerInstance is deprecated, please replace this call", new Exception("traceback"));
         return getDefault(BlockManager.class);
     }
 
@@ -579,6 +580,7 @@ public final class InstanceManager {
      */
     @Deprecated
     static public PowerManager powerManagerInstance() {
+        jmri.util.Log4JUtil.warnOnce(log, "powerManagerInstance is deprecated, please replace this call", new Exception("traceback"));
         return getDefault(PowerManager.class);
     }
 
@@ -590,6 +592,7 @@ public final class InstanceManager {
      */
     @Deprecated
     static public ReporterManager reporterManagerInstance() {
+        jmri.util.Log4JUtil.warnOnce(log, "reporterManagerInstance is deprecated, please replace this call", new Exception("traceback"));
         return getDefault(ReporterManager.class);
     }
 
@@ -601,6 +604,7 @@ public final class InstanceManager {
      */
     @Deprecated
     static public RouteManager routeManagerInstance() {
+        jmri.util.Log4JUtil.warnOnce(log, "routeManagerInstance is deprecated, please replace this call", new Exception("traceback"));
         return getDefault(RouteManager.class);
     }
 
@@ -612,6 +616,7 @@ public final class InstanceManager {
      */
     @Deprecated
     static public SectionManager sectionManagerInstance() {
+        jmri.util.Log4JUtil.warnOnce(log, "sectionManagerInstance is deprecated, please replace this call", new Exception("traceback"));
         return getDefault(SectionManager.class);
     }
 
@@ -647,6 +652,7 @@ public final class InstanceManager {
      */
     @Deprecated
     static public void setSignalHeadManager(SignalHeadManager p) {
+        jmri.util.Log4JUtil.warnOnce(log, "setSignalHeadManager is deprecated, please replace this call", new Exception("traceback"));
         setDefault(SignalHeadManager.class, p);
     }
 
@@ -667,7 +673,7 @@ public final class InstanceManager {
      */
     @Deprecated
     static public void setConfigureManager(ConfigureManager p) {
-        log.debug(" setConfigureManager");
+        jmri.util.Log4JUtil.warnOnce(log, "setConfigureManager is deprecated, please replace this call", new Exception("traceback"));
         setDefault(ConfigureManager.class, p);
     }
 
@@ -678,6 +684,7 @@ public final class InstanceManager {
      */
     @Deprecated
     static public void setConsistManager(ConsistManager p) {
+        jmri.util.Log4JUtil.warnOnce(log, "setConsistManager is deprecated, please replace this call", new Exception("traceback"));
         store(p, ConsistManager.class);
     }
 
@@ -703,6 +710,7 @@ public final class InstanceManager {
      */
     @Deprecated
     static public void setAddressedProgrammerManager(AddressedProgrammerManager p) {
+        jmri.util.Log4JUtil.warnOnce(log, "setAddressedProgrammerManager is deprecated, please replace this call", new Exception("traceback"));
         store(p, AddressedProgrammerManager.class);
     }
 
