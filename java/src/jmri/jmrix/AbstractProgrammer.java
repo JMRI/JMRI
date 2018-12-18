@@ -104,13 +104,15 @@ public abstract class AbstractProgrammer implements Programmer {
     /** {@inheritDoc} */
     @Override
     @SuppressWarnings("deprecation") // this is a migration call, to be removed when writeCV(int, int, ProgListener) is removed
+                                     // so that the underlying subclass has to implement
     public void writeCV(String CV, int val, ProgListener p) throws ProgrammerException {
         writeCV(Integer.parseInt(CV), val, p);
     }
 
     /** {@inheritDoc} */
     @Override
-    @SuppressWarnings("deprecation") // this is a migration call, to be removed when readCV(int, ProgListener) is removed
+    @SuppressWarnings("deprecation") // this is a migration call, to be removed when readCV(int, int, ProgListener) is removed
+                                     // so that the underlying subclass has to implement
     public void readCV(String CV, ProgListener p) throws ProgrammerException {
         readCV(Integer.parseInt(CV), p);
     }

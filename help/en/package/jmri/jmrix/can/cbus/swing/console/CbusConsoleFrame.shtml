@@ -8,7 +8,7 @@
 
   <title>JMRI: MERG CBUS Console Tool</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content="JMRI MERG CBUS help monitor console log event long short">
+  <meta name="keywords" content="JMRI MERG CBUS help monitor console log logging event long short">
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
@@ -235,8 +235,6 @@
       </dl>
         </div>
         
-        
-        
     <h2><a name="filter" id="filter">Filter</a></h2>
         <div>
         
@@ -262,7 +260,6 @@
         ( You could identify these by filtering short events, passing long events, 
         and then filter by node number less than 1 ).</p>
 
-
         <p>
         When a filter is changed between pass and filter, this is displayed in the console log.</p>
 
@@ -271,7 +268,6 @@
         <h3>Filter Categories</h3>
         <img src="../../../../../../../html/hardware/can/cbus/images/swing/filter/events-426x413.png"
         width="426" height="413" align="right" alt="MERG CBUS Event Filter">
-
         
         <ul>
         <li>Incoming</li>
@@ -345,14 +341,14 @@
         
     <h2><a name="highlighter" id="highlighter">Event Highlighter</a></h2>        
         <div>
-        <img src="../../../../../../../html/hardware/can/cbus/images/swing/highlighter/merg-cbus-highlighter-688x374.png"
-        width="688" height="374" alt="MERG CBUS Event Highlighter">  
+        <img src="../../../../../../../html/hardware/can/cbus/images/swing/highlighter/merg-cbus-highlighter-460x337.png"
+        width="460" height="337" alt="MERG CBUS Event Highlighter">  
         
         <p>This window can be accessed from the Display options at top of the main console.</p>
         
         <p>It can highlight a specific node or event CBUS message, both on and off options.</p>
         
-        <p>Toggle each highlighter off and on by the Apply / Disable button.</p>
+        <p>You will need at least 1 type ( or / off ) and 1 direction ( in / out ) to activate the highlight.</p>
         
         <img src="../../../../../../../html/hardware/can/cbus/images/swing/highlighter/merg-cbus-console-highlighter-output-616x146.png"
         width="616" height="146" alt="MERG CBUS Event Highlighter Output"> 

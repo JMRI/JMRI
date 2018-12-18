@@ -3,6 +3,8 @@ package jmri.jmrix.configurexml;
 import org.junit.*;
 import org.jdom2.Element;
 import jmri.jmrix.ConnectionConfig;
+import jmri.util.ThreadingUtil;
+
 import javax.swing.JPanel;
 
 /**
@@ -39,8 +41,11 @@ abstract public class AbstractConnectionConfigXmlTestBase extends jmri.configure
         jmri.util.JUnitUtil.resetProfileManager();
         // This test requires a configure manager.
         jmri.util.JUnitUtil.initConfigureManager();
-        cc.loadDetails(new JPanel());
-        cc.setDisabled(true); // so we don't try to start the connection on load.
+        // Running this on the UI thread fixes some ConcurrentModificationExceptions errors.
+        ThreadingUtil.runOnGUI(()-> {
+                    cc.loadDetails(new JPanel());
+                    cc.setDisabled(true); // so we don't try to start the connection on load.
+                });
         Element e = xmlAdapter.store(cc);
         try {
            //load what we just produced.

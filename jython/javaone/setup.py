@@ -50,7 +50,7 @@ execfile(fileprefix+"signalstop.py")
 execfile(fileprefix+"memorytracker.py")
 
 # power on to start setting sensors
-jmri.InstanceManager.powerManagerInstance().setPower(jmri.PowerManager.ON)
+jmri.InstanceManager.getDefault(jmri.PowerManager).setPower(jmri.PowerManager.ON)
 
 # open scripting windows & position
 a = jmri.jmrit.jython.InputWindowAction("")
