@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  * This implementation implements the "SENT" feedback, where LocoNet messages
  * originating on the layout can change both KnownState and CommandedState. We
  * change both because we consider a LocoNet message to reflect how the turnout
- * should be, even if it's a readback status message. E.g. if you use a DS54
+ * should be, even if its a readback status message. E.g. if you use a DS54
  * local input to change the state, resulting in a status message, we still
  * consider that to be a commanded state change.
  * <p>
@@ -40,8 +40,7 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
     public LnTurnout(String prefix, int number, LocoNetInterface controller) throws IllegalArgumentException {
         // a human-readable turnout number must be specified!
         super(prefix + "T" + number);  // can't use prefix here, as still in construction
-        _prefix = prefix;
-        log.debug("new turnout {}", number);
+        log.debug("new turnout " + number);
         if (number < NmraPacket.accIdLowLimit || number > NmraPacket.accIdAltHighLimit) {
             throw new IllegalArgumentException("Turnout value: " + number // NOI18N
                     + " not in the range " + NmraPacket.accIdLowLimit + " to " // NOI18N
@@ -71,7 +70,6 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
     }
 
     LocoNetInterface controller;
-    protected String _prefix = "L"; // default to "L"
 
     /**
      * True when setFeedbackMode has specified the mode;
@@ -205,7 +203,7 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
                 public void run() {
                     noConsistencyTimersRunning--;
                     if (!isConsistentState() && noConsistencyTimersRunning == 0) {
-                        log.debug("LnTurnout resending command for turnout {}", _number);
+                        log.debug("LnTurnout resending command for turnout " + _number);
                         forwardCommandChangeToLayout(getCommandedState());
                     }
                 }
@@ -261,6 +259,7 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
                 }
                 return;
             }
+
             case LnConstants.OPC_SW_REP: {
                 /* page 9 of Loconet PE */
 
@@ -369,6 +368,7 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
                 }
                 return;
             }
+
             default:
                 return;
         }
@@ -377,7 +377,7 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
     @Override
     protected void turnoutPushbuttonLockout(boolean _pushButtonLockout) {
         if (log.isDebugEnabled()) {
-            log.debug("Send command to {} Pushbutton {}T{}", (_pushButtonLockout ? "Lock" : "Unlock"), _prefix, _number);
+            log.debug("Send command to " + (_pushButtonLockout ? "Lock" : "Unlock") + " Pushbutton LT" + _number);
         }
     }
 
@@ -427,7 +427,7 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
     }
 
     static final int METERINTERVAL = 100;  // msec wait before closed
-    static java.util.Timer meterTimer = new java.util.Timer("LocoNet Turnout Meter Timer", true);
+    static java.util.Timer meterTimer = new java.util.Timer("LocoNet Turnout Meter Timer",true);
     private java.util.TimerTask meterTask = null;
 
     static final int CONSISTENCYTIMER = 3000; // msec wait for command to take effect
