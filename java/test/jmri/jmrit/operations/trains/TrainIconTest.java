@@ -1,15 +1,20 @@
 package jmri.jmrit.operations.trains;
 
-import java.awt.GraphicsEnvironment;
 import java.awt.Color;
+import java.awt.GraphicsEnvironment;
+import jmri.jmrit.operations.OperationsTestCase;
 import jmri.util.JUnitUtil;
-import org.junit.*;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class TrainIconTest {
+public class TrainIconTest extends OperationsTestCase {
         
     private jmri.jmrit.display.EditorScaffold editor = null;
     private TrainIcon trainicon = null;
@@ -65,16 +70,17 @@ public class TrainIconTest {
 
 
     // The minimal setup for log4J
+    @Override
     @Before
     public void setUp() {
-        JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
+        super.setUp();
         if(!GraphicsEnvironment.isHeadless()){
            editor = new jmri.jmrit.display.EditorScaffold();
            trainicon = editor.addTrainIcon("TestName");
         }
     }
 
+    @Override
     @After
     public void tearDown() {
         if(editor!=null){
@@ -82,7 +88,7 @@ public class TrainIconTest {
         }
         editor = null;
         trainicon = null;
-        JUnitUtil.tearDown();
+        super.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(TrainIconTest.class);

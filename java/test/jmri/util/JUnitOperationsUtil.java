@@ -24,22 +24,15 @@ import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.locations.schedules.Schedule;
 import jmri.jmrit.operations.locations.schedules.ScheduleItem;
 import jmri.jmrit.operations.locations.schedules.ScheduleManager;
-import jmri.jmrit.operations.rollingstock.RollingStockLogger;
 import jmri.jmrit.operations.rollingstock.cars.Car;
-import jmri.jmrit.operations.rollingstock.cars.CarColors;
-import jmri.jmrit.operations.rollingstock.cars.CarLengths;
-import jmri.jmrit.operations.rollingstock.cars.CarLoads;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
 import jmri.jmrit.operations.rollingstock.cars.CarOwners;
-import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.engines.Consist;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
-import jmri.jmrit.operations.rollingstock.engines.EngineLengths;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
-import jmri.jmrit.operations.rollingstock.engines.EngineModels;
 import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
@@ -67,10 +60,10 @@ public class JUnitOperationsUtil {
     private final static int DIRECTION_ALL = Location.EAST + Location.WEST + Location.NORTH + Location.SOUTH;
 
     /**
-     * Reset the OperationsManager and set the files location for operations
-     * file used during tests.
+     * Setup the operations test file names and test locations.
+     * 
      */
-    public static void resetOperationsManager() {
+    public static void setupOperationsTests() {
 
         //shut down the AutoSave thread if it is running.
         Setup.setAutoSaveEnabled(false);
@@ -97,28 +90,6 @@ public class JUnitOperationsUtil {
         FileUtil.delete(file);
         // create an empty operations directory
         FileUtil.createDirectory(file);
-
-        // the following .dispose() calls are likely not needed
-        // since new instances of these managers are recreated for each test
-        InstanceManager.getDefault(TrainManager.class).dispose();
-        InstanceManager.getDefault(AutomationManager.class).dispose();
-        InstanceManager.getDefault(LocationManager.class).dispose();
-        InstanceManager.getDefault(RouteManager.class).dispose();
-        InstanceManager.getDefault(ScheduleManager.class).dispose();
-        InstanceManager.getDefault(CarTypes.class).dispose();
-        InstanceManager.getDefault(CarColors.class).dispose();
-        InstanceManager.getDefault(CarLengths.class).dispose();
-        InstanceManager.getDefault(CarLoads.class).dispose();
-        InstanceManager.getDefault(CarRoads.class).dispose();
-        InstanceManager.getDefault(CarManager.class).dispose();
-
-        InstanceManager.getDefault(RollingStockLogger.class).dispose();
-
-        // dispose of the manager first, because otherwise
-        // the models go away.
-        InstanceManager.getDefault(EngineManager.class).dispose();
-        InstanceManager.getDefault(EngineModels.class).dispose();
-        InstanceManager.getDefault(EngineLengths.class).dispose();
 
         // there can be test concurrency issues if auto save is on
         Assert.assertFalse("Confirm disabled", Setup.isAutoSaveEnabled());

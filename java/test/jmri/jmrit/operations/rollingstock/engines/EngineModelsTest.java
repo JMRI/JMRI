@@ -2,9 +2,7 @@ package jmri.jmrit.operations.rollingstock.engines;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -254,19 +252,4 @@ public class EngineModelsTest extends OperationsTestCase {
         Assert.assertEquals("EngineModels Default Length U28B", "60", InstanceManager.getDefault(EngineModels.class).getModelLength("U28B"));
         Assert.assertEquals("EngineModels Default Type U28B", "Diesel", InstanceManager.getDefault(EngineModels.class).getModelType("U28B"));
     }
-
-    // from here down is testing infrastructure
-    // Ensure minimal setup for log4J
-    @Override
-    @Before
-    public void setUp() {
-        super.setUp();
-    }
-
-    @Override
-    @After
-    public void tearDown() {
-        super.tearDown();
-    }
-
 }
