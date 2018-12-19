@@ -1,7 +1,9 @@
 package jmri.jmrix.loconet.locormi.configurexml;
 
+import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
 import jmri.util.JUnitAppender;
+import jmri.util.junit.annotations.ToDo;
 import org.junit.*;
 import jmri.jmrix.loconet.locormi.ConnectionConfig;
 
@@ -40,7 +42,9 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSer
 
     @Test(timeout=5000)
     @Override
+    @ToDo("this really should work in a headless environment.  Calling load causes a frame to be created")
     public void loadTest() throws jmri.configurexml.JmriConfigureXmlException {
+       Assume.assumeFalse(GraphicsEnvironment.isHeadless());
        super.loadTest();
        JUnitAppender.assertErrorMessageStartsWith("Exception while trying to connect: java.rmi.ConnectException: Connection refused to host: 127.0.0.1;");
        JUnitAppender.suppressErrorMessage("Error opening connection to");
