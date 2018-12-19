@@ -43,7 +43,6 @@ public class LnTurnoutManager extends AbstractTurnoutManager implements LocoNetL
     public LnTurnoutManager(LocoNetInterface fastcontroller, LocoNetInterface throttledcontroller, LocoNetSystemConnectionMemo memo, boolean mTurnoutNoRetry) {
         this.fastcontroller = fastcontroller;
         this.throttledcontroller = throttledcontroller;
-        _memo = memo;
         this.prefix = memo.getSystemPrefix();
         this.mTurnoutNoRetry = mTurnoutNoRetry;
 
@@ -62,7 +61,6 @@ public class LnTurnoutManager extends AbstractTurnoutManager implements LocoNetL
     LocoNetInterface fastcontroller;
     LocoNetInterface throttledcontroller;
     boolean mTurnoutNoRetry;
-    private LocoNetSystemConnectionMemo _memo;
     private String prefix;
 
     @Override
