@@ -18,7 +18,7 @@ public class LnPortControllerTest extends jmri.jmrix.AbstractSerialPortControlle
     public void setUp(){
        JUnitUtil.setUp();
        memo = new LocoNetSystemConnectionMemo();
-       new LocoNetInterfaceScaffold(memo);
+       new LocoNetInterfaceScaffold();
        apc = new LnPortController(memo){
             @Override
             public boolean status(){

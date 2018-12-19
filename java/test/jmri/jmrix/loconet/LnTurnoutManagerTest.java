@@ -23,6 +23,8 @@ public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBa
         return "LT" + i;
     }
 
+    LocoNetInterfaceScaffold lnis;
+
     @Test
     @Override
     public void testMisses() {
@@ -122,19 +124,15 @@ public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBa
 
     }
 
-    LocoNetInterfaceScaffold lnis;
-    LocoNetSystemConnectionMemo memo;
-
     @Override
     @Before
     public void setUp(){
         jmri.util.JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
         // prepare an interface, register
-        memo = new LocoNetSystemConnectionMemo("L", "LocoNet");
-        lnis = new LocoNetInterfaceScaffold(memo);
+        lnis = new LocoNetInterfaceScaffold();
         // create and register the manager object
-        l = new LnTurnoutManager(lnis, lnis, memo.getSystemPrefix(), false);
+        l = new LnTurnoutManager(lnis, lnis, "L", false);
         jmri.InstanceManager.setTurnoutManager(l);
     }
 

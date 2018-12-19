@@ -7,7 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Tests for the LnTurnoutManagerXml class
+ * LnTurnoutManagerXmlTest.java
+ *
+ * Description: tests for the LnTurnoutManagerXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
@@ -15,7 +17,7 @@ public class LnTurnoutManagerXmlTest {
 
     @Test
     public void testCtor(){
-      Assert.assertNotNull("LnTurnoutManagerXml constructor", new LnTurnoutManagerXml());
+      Assert.assertNotNull("LnTurnoutManagerXml constructor",new LnTurnoutManagerXml());
     }
 
     // The minimal setup for log4J

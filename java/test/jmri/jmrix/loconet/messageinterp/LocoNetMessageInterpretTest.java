@@ -1,4 +1,16 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package jmri.jmrix.loconet.messageinterp;
+
+import jmri.util.JUnitUtil;
+import jmri.util.StringUtil;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 import jmri.jmrix.loconet.LnReporter;
 import jmri.jmrix.loconet.LnReporterManager;
@@ -6,13 +18,6 @@ import jmri.jmrix.loconet.LnSensorManager;
 import jmri.jmrix.loconet.LnTurnout;
 import jmri.jmrix.loconet.LnTurnoutManager;
 import jmri.jmrix.loconet.LocoNetMessage;
-import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
-import jmri.util.JUnitUtil;
-import jmri.util.StringUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  *
@@ -23,9 +28,8 @@ public class LocoNetMessageInterpretTest {
     @Test
     public void testTransponding() {
         LocoNetMessage l;
-        LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo("L", "LocoNet");
-        jmri.jmrix.loconet.LocoNetInterfaceScaffold lnis = new jmri.jmrix.loconet.LocoNetInterfaceScaffold(memo);
-        LnReporterManager lnrm = new LnReporterManager(lnis, memo.getSystemPrefix());
+        jmri.jmrix.loconet.LocoNetInterfaceScaffold lnis = new jmri.jmrix.loconet.LocoNetInterfaceScaffold();
+        LnReporterManager lnrm = new LnReporterManager(lnis, "L");
 
         jmri.InstanceManager.setReporterManager(lnrm);
 
@@ -3346,9 +3350,8 @@ public class LocoNetMessageInterpretTest {
     @Test
     public void testBasicTurnoutControlMessages() {
         LocoNetMessage l;
-        LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo("L", "LocoNet");
-        jmri.jmrix.loconet.LocoNetInterfaceScaffold lnis = new jmri.jmrix.loconet.LocoNetInterfaceScaffold(memo);
-        LnTurnoutManager lntm = new LnTurnoutManager(lnis, lnis, memo, false);
+        jmri.jmrix.loconet.LocoNetInterfaceScaffold lnis = new jmri.jmrix.loconet.LocoNetInterfaceScaffold();
+        LnTurnoutManager lntm = new LnTurnoutManager(lnis, lnis, "L", false);
 
         jmri.InstanceManager.setTurnoutManager(lntm);
 
@@ -5745,9 +5748,8 @@ public class LocoNetMessageInterpretTest {
     @Test
     public void testSwichMessages() {
         LocoNetMessage l;
-        LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo("L", "LocoNet");
-        jmri.jmrix.loconet.LocoNetInterfaceScaffold lnis = new jmri.jmrix.loconet.LocoNetInterfaceScaffold(memo);
-        LnTurnoutManager lntm = new LnTurnoutManager(lnis, lnis, memo.getSystemPrefix(), false);
+        jmri.jmrix.loconet.LocoNetInterfaceScaffold lnis = new jmri.jmrix.loconet.LocoNetInterfaceScaffold();
+        LnTurnoutManager lntm = new LnTurnoutManager(lnis, lnis, "L", false);
 
         jmri.InstanceManager.setTurnoutManager(lntm);
 
