@@ -46,7 +46,7 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSer
     public void loadTest() throws jmri.configurexml.JmriConfigureXmlException {
        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
        super.loadTest();
-       JUnitAppender.assertErrorMessageStartsWith("Exception while trying to connect: java.rmi.ConnectException: Connection refused to host: 127.0.0.1;");
+       JUnitAppender.assertErrorMessageStartsWith("Exception while trying to connect: java.rmi.ConnectException: Connection refused to host:");
        JUnitAppender.suppressErrorMessage("Error opening connection to");
     }
 
