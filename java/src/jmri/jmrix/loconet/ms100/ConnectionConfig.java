@@ -1,7 +1,7 @@
 package jmri.jmrix.loconet.ms100;
 
 /**
- * Definition of objects to handle configuring a LocoBuffer layout connection
+ * Definition of objects to handle configuring an LocoBuffer layout connection
  * via an LocoNet MS100Adapter object.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003

@@ -75,7 +75,7 @@ public class DCCppOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implem
         try {
             this.wait(250);
         } catch (java.lang.InterruptedException ie) {
-            log.debug("Interrupted Durring Delay");
+            log.debug("Interupted Durring Delay");
         }
         progState = DCCppProgrammer.NOTPROGRAMMING;
         stopTimer();
@@ -136,7 +136,7 @@ public class DCCppOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implem
                 try {
                     this.wait(250);
                 } catch (java.lang.InterruptedException ie) {
-                    log.debug("Interrupted Durring Delay");
+                    log.debug("Interupted Durring Delay");
                 }
                 progState = DCCppProgrammer.NOTPROGRAMMING;
                 stopTimer();

@@ -62,7 +62,7 @@ public class LIUSBServerXNetPacketizer extends XNetPacketizer {
                             }
                         } catch (InterruptedException e) {
                             Thread.currentThread().interrupt(); // retain if needed later
-                            log.error("retry wait interrupted");
+                            log.error("retry wait interupted");
                         }
                     } else {
                         log.warn("sendMessage: port not ready for data sending: {}", m.toString());

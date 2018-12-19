@@ -155,7 +155,7 @@ public class ProxyReporterManager extends AbstractProxyManager<Reporter> impleme
     }
 
     /**
-     * {@inheritDoc}
+     * Provide a connection system agnostic tooltip for the Add new item beantable pane.
      */
     @Override
     public String getEntryToolTip() {

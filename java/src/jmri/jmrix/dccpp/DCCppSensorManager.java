@@ -238,7 +238,7 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
     }
 
     /**
-     * {@inheritDoc}
+     * Provide a manager-specific tooltip for the Add new item beantable pane.
      */
     @Override
     public String getEntryToolTip() {

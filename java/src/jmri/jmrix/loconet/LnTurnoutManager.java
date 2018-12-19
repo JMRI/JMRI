@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
  *   from JMRI. (This might be a problem if more than one computer is executing
  *   this algorithm)
  *   <li>By sending the message as fast as we can, we tie up the LocoNet during
- *   the recovery. This is a mixed bag; delaying can cause messages to get out
+ *   the the recovery. This is a mixed bag; delaying can cause messages to get out
  *   of sequence on the rails. But not delaying takes up a lot of LocoNet
  *   bandwidth.
  * </ul>
@@ -236,7 +236,7 @@ public class LnTurnoutManager extends AbstractTurnoutManager implements LocoNetL
     }
 
     /**
-     * {@inheritDoc}
+     * Provide a manager-specific tooltip for the Add new item beantable pane.
      */
     @Override
     public String getEntryToolTip() {

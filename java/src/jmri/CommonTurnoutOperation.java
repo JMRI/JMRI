@@ -1,10 +1,11 @@
 package jmri;
 
+import java.util.ResourceBundle;
 import jmri.implementation.AbstractTurnout;
 
 /**
- * Specialization of TurnoutOperation to contain
- * common properties and methods for concrete subclasses.
+ * CommonTurnoutOperation  - specialization of TurnoutOperation to contain
+ * common properties and methods for concrete subclasses
  *
  * @author John Harper
  */
@@ -25,6 +26,8 @@ public abstract class CommonTurnoutOperation extends TurnoutOperation {
     static public final int minMaxTries = 1;
     static public final int maxMaxTries = 10;
 
+    static protected final ResourceBundle rb = ResourceBundle.getBundle("jmri.NamedBeanBundle");
+
     public CommonTurnoutOperation(String n, int i, int mt) {
         super(n);
         interval = getDefaultInterval();
@@ -34,7 +37,7 @@ public abstract class CommonTurnoutOperation extends TurnoutOperation {
     }
 
     /**
-     * Get a TurnoutOperator instance for this operation.
+     * get a TurnoutOperator instance for this operation
      *
      * @return the operator
      */
@@ -64,7 +67,7 @@ public abstract class CommonTurnoutOperation extends TurnoutOperation {
     }
 
     /**
-     * Set new value for interval. Do nothing if not in range.
+     * set new value for interval. do nothing if not in range.
      *
      * @param newInterval new retry interval time
      */
@@ -75,7 +78,7 @@ public abstract class CommonTurnoutOperation extends TurnoutOperation {
     }
 
     /**
-     * Set new value for MaxTries. Do nothing if not in range.
+     * set new value for MaxTries. do nothing if not in range.
      *
      * @param newMaxTries new maximum number of retries
      */
@@ -84,5 +87,4 @@ public abstract class CommonTurnoutOperation extends TurnoutOperation {
             maxTries = newMaxTries;
         }
     }
-
 }

@@ -6,11 +6,11 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Implement turnout manager for NCE systems.
- * <p>
+ * <P>
  * System names are "NTnnn", where nnn is the turnout number without padding.
  *
  * @author Bob Jacobsen Copyright (C) 2001
- */
+  */
 public class NceTurnoutManager extends jmri.managers.AbstractTurnoutManager implements NceListener {
 
     public NceTurnoutManager(NceTrafficController tc, String prefix) {
@@ -95,7 +95,7 @@ public class NceTurnoutManager extends jmri.managers.AbstractTurnoutManager impl
     }
 
     /**
-     * {@inheritDoc}
+     * Provide a manager-specific tooltip for the Add new item beantable pane.
      */
     @Override
     public String getEntryToolTip() {

@@ -58,7 +58,7 @@ public class InternalTurnoutManager extends AbstractTurnoutManager {
     }
 
     /**
-     * {@inheritDoc}
+     * Provide a manager-specific tooltip for the Add new item beantable pane.
      */
     @Override
     public String getEntryToolTip() {
@@ -73,5 +73,4 @@ public class InternalTurnoutManager extends AbstractTurnoutManager {
     public String[] getValidOperationTypes() {
         return new String[]{"NoFeedback"};
     }
-
 }

@@ -142,7 +142,7 @@ abstract public class SerialSensorManager extends jmri.managers.AbstractSensorMa
     }
 
     /**
-     * {@inheritDoc}
+     * Provide a manager-specific tooltip for the Add new item beantable pane.
      */
     @Override
     public String getEntryToolTip() {

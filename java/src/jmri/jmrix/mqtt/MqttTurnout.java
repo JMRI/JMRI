@@ -6,13 +6,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implementation of the Turnout interface for MQTT layouts.
+ * MQTT implementation of the Turnout interface.
+ * <p>
+ * Description: extend jmri.AbstractTurnout for MQTT layouts
  *
- * @author Lionel Jeanson Copyright (c) 2017
+ * @author Lionel Jeanson Copyright: Copyright (c) 2017
  */
 public class MqttTurnout extends AbstractTurnout implements MqttEventListener {
 
-    private MqttAdapter mqttAdapter;
+    private final MqttAdapter mqttAdapter;
     private final String mysubTopic;
     private final int _number;   // turnout number
 
@@ -45,7 +47,7 @@ public class MqttTurnout extends AbstractTurnout implements MqttEventListener {
             // first look for the double case, which we can't handle
             if ((s & Turnout.THROWN) != 0) {
                 // this is the disaster case!
-                log.error("Cannot command both CLOSED and THROWN {}", s);
+                LOG.error("Cannot command both CLOSED and THROWN " + s);
                 return;
             } else {
                 // send a CLOSED command
@@ -59,7 +61,9 @@ public class MqttTurnout extends AbstractTurnout implements MqttEventListener {
 
     @Override
     protected void turnoutPushbuttonLockout(boolean _pushButtonLockout) {
-        log.debug("Send command to {} Pushbutton BT{}", (_pushButtonLockout ? "Lock" : "Unlock"), _number);
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("Send command to " + (_pushButtonLockout ? "Lock" : "Unlock") + " Pushbutton BT" + _number);
+        }
     }
 
     private void sendMessage(String c) {
@@ -69,7 +73,7 @@ public class MqttTurnout extends AbstractTurnout implements MqttEventListener {
     @Override
     public void notifyMqttMessage(String topic, String message) {
         if (!topic.endsWith(mysubTopic)) {
-            log.error("Got a message whose topic ({}) wasn't for me ({})", topic, mysubTopic);
+            LOG.error("Got a message whose topic (" + topic + ") wasn't for me (" + mysubTopic + ")");
             return;
         }
         switch (message) {
@@ -80,11 +84,10 @@ public class MqttTurnout extends AbstractTurnout implements MqttEventListener {
                 newKnownState(THROWN);
                 break;
             default:
-                log.warn("Unknow state : {} (topic : {})", message, topic);
+                LOG.warn("Unknow state : " + message + " (topic : " + topic + ")");
                 break;
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MqttTurnout.class);
-
+    private final static Logger LOG = LoggerFactory.getLogger(MqttTurnout.class);
 }

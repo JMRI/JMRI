@@ -99,9 +99,6 @@ public class LnReporterManager extends jmri.managers.AbstractReporterManager imp
         return (getBitFromSystemName(systemName) != 0) ? NameValidity.VALID : NameValidity.INVALID;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public String getEntryToolTip() {
         return Bundle.getMessage("AddInputEntryToolTip");

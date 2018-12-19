@@ -273,13 +273,13 @@ public class EcosTurnout extends AbstractTurnout
             }
 
             if (setState == 99) {
-                // log.debug("Invalid selection old state " + getKnownState() + " " + getCommandedState());
+                //System.out.println("Invalid selection old state " + getKnownState() + " " + getCommandedState());
                 if (closed) {
                     setCommandedState(THROWN);
                 } else {
                     setCommandedState(CLOSED);
                 }
-                // log.debug("After - " + getKnownState() + " " + getCommandedState() + " " + "Is consistant " + isConsistentState());
+                //System.out.println("After - " + getKnownState() + " " + getCommandedState() + " " + "Is consistant " + isConsistentState());
             } else {
 
                 EcosMessage m = new EcosMessage("request(" + objectNumber + ", control)");
@@ -334,7 +334,7 @@ public class EcosTurnout extends AbstractTurnout
             int end = msg.indexOf("]");
             if (start > 0 && end > 0) {
                 String val = msg.substring(start + 6, end);
-                // log.debug("Extended - " + extended + " " + objectNumber);
+                //System.out.println("Extended - " + extended + " " + objectNumber);
                 if (extended == 0) {
                     if (val.equals("0")) {
                         newstate = CLOSED;

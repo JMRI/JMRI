@@ -19,7 +19,7 @@ public class RawTurnoutOperation extends CommonTurnoutOperation {
             | Turnout.ONESENSOR | Turnout.TWOSENSOR;
 
     /*
-     * Default values and constraints.
+     * Default values and constraints
      */
     static public final int defaultInterval = 300;
     static public final int defaultMaxTries = 1;
@@ -30,13 +30,13 @@ public class RawTurnoutOperation extends CommonTurnoutOperation {
     }
 
     /**
-     * Constructor with default values - this creates the "defining instance" of
-     * the operation type hence it cannot be deleted.
+     * constructor with default values - this creates the "defining instance" of
+     * the operation type hence it cannot be deleted
      */
     public RawTurnoutOperation() { this("Raw", defaultInterval, defaultMaxTries); }
 
     /**
-     * Return clone with different name.
+     * return clone with different name
      */
     @Override
     public TurnoutOperation makeCopy(String n) {
@@ -62,7 +62,7 @@ public class RawTurnoutOperation extends CommonTurnoutOperation {
     }
 
     /**
-     * Get a TurnoutOperator instance for this operation.
+     * get a TurnoutOperator instance for this operation
      *
      * @return the operator
      */
@@ -70,5 +70,4 @@ public class RawTurnoutOperation extends CommonTurnoutOperation {
     public TurnoutOperator getOperator(AbstractTurnout t) {
         return new RawTurnoutOperator(t, interval, maxTries);
     }
-
 }

@@ -491,7 +491,7 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     /**
-     * {@inheritDoc}
+     * Provide a manager-specific tooltip for the Add new item beantable pane.
      */
     @Override
     public String getEntryToolTip() {

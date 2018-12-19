@@ -6,7 +6,7 @@ import jmri.jmrix.SystemConnectionMemo;
 
 /**
  *
- * @author Lionel Jeanson
+ * @author lionel
  */
 public class MqttSystemConnectionMemo extends SystemConnectionMemo {
 
@@ -76,5 +76,6 @@ public class MqttSystemConnectionMemo extends SystemConnectionMemo {
     void setMqttAdapter(MqttAdapter ma) {
         mqttAdapter = ma;
     }
+
 
 }

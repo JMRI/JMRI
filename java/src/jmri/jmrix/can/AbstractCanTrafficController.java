@@ -112,7 +112,7 @@ abstract public class AbstractCanTrafficController
                             }
                         } catch (InterruptedException e) {
                             Thread.currentThread().interrupt(); // retain if needed later
-                            log.error("retry wait interrupted");
+                            log.error("retry wait interupted");
                         }
                     } else {
                         log.warn("sendMessage: port not ready for data sending: " + Arrays.toString(msg));

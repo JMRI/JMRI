@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package jmri.jmrix.mqtt;
 
 import jmri.jmrix.ConnectionTypeList;
@@ -5,7 +10,7 @@ import org.openide.util.lookup.ServiceProvider;
 
 /**
  *
- * @author Lionel Jeanson
+ * @author lionel
  */
 @ServiceProvider(service = ConnectionTypeList.class)
 public class MqttConnectionTypeList implements jmri.jmrix.ConnectionTypeList {

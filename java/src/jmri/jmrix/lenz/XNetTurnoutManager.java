@@ -27,7 +27,7 @@ public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
     protected String prefix = null;
 
     /**
-     * Return the system prefix for XpressNet.
+     * Return the system letter for XpressNet.
      */
     @Override
     public String getSystemPrefix() {
@@ -160,7 +160,7 @@ public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
     }
 
     /**
-     * {@inheritDoc}
+     * Provide a manager-specific tooltip for the Add new item beantable pane.
      */
     @Override
     public String getEntryToolTip() {

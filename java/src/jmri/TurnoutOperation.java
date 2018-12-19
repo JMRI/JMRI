@@ -58,35 +58,31 @@ import jmri.implementation.AbstractTurnout;
  * <b>Extensibility</b>
  * <p>
  * To write a new type of operation:
- * <ol>
- *  <li>Create the xxxTurnoutOperation class</li>
- *  <li>Create the xxxTurnoutOperator class, including the logic for what
- *  you're trying to do</li>
- *  <li>Create the xxxTurnoutOperationConfig class - the
- *  CommonTurnoutOperationConfig class can be used as a reference</li>
- *  <li>Create the xxxTurnoutOperationXml class - again the Common... class can
- *  be used as a reference</li>
- *  <li>Add the prefix to the class name (e.g. "Tortoise") to the list
- *  AbstractTurnoutManager.validOperationTypes, otherwise it will not be
- *  instantiated at startup and hence will not be available</li>
- * </ol>
+ * <p>
+ * 1. Create the xxxTurnoutOperation class 2. Create the xxxTurnoutOperator
+ * class, including the logic for what you're trying to do 3. Create the
+ * xxxTurnoutOperationConfig class - the CommonTurnoutOperationConfig class can
+ * be used as a reference 4. Create the xxxTurnoutOperationXml class - again the
+ * Common... class can be used as a reference 5. Add the prefix to the class
+ * name (e.g. "Tortoise") to the list
+ * AbstractTurnoutManager.validOperationTypes, otherwise it will not be
+ * instantiated at startup and hence will not be available
  * <p>
  * To change the behavior for a particular system type:
  * <p>
  * There are some functions which can be overridden in the system-specific
  * subclasses to change default behaviour if desired. These mechanisms are
  * orthogonal to the operation subclasses.
- * <ol>
- *  <li>Override AbstractTurnoutManager.getValidOperationTypes to change the
- *  operation types allowed for this system</li>
- *  <li>Override AbstractTurnout.getFeedbackModeForOperation to map
- *  system-specific feedback modes into modes that the general classes know
- *  about</li>
- *  <li>Override AbstractTurnout.getTurnoutOperator if you want to do
- *  something <i>really</i> different</li>
- * </ol>
+ * <p>
+ * 1. Override AbstractTurnoutManager.getValidOperationTypes to change the
+ * operation types allowed for this system. 2. Override
+ * AbstractTurnout.getFeedbackModeForOperation to map system-specific feedback
+ * modes into modes that the general classes know about. 3. Override
+ * AbstractTurnout.getTurnoutOperator if you want to do something <i>really</i>
+ * different.
  *
  * @author John Harper Copyright 2005
+ *
  */
 public abstract class TurnoutOperation implements Comparable<Object> {
 
@@ -100,8 +96,8 @@ public abstract class TurnoutOperation implements Comparable<Object> {
     }
 
     /**
-     * Factory to make a copy of an operation identical in all respects except
-     * the name.
+     * factory to make a copy of an operation identical in all respects except
+     * the name
      *
      * @param n name for new copy
      * @return TurnoutOperation of same concrete class as this
@@ -109,8 +105,8 @@ public abstract class TurnoutOperation implements Comparable<Object> {
     public abstract TurnoutOperation makeCopy(@Nonnull String n);
 
     /**
-     * Set feedback modes - part of construction but done separately for
-     * ordering problems.
+     * set feedback modes - part of construction but done separately for
+     * ordering problems
      *
      * @param fm valid feedback modes for this class
      */
@@ -119,7 +115,7 @@ public abstract class TurnoutOperation implements Comparable<Object> {
     }
 
     /**
-     * Get the descriptive name of the operation.
+     * get the descriptive name of the operation
      *
      * @return name
      */
@@ -128,7 +124,7 @@ public abstract class TurnoutOperation implements Comparable<Object> {
     }
 
     /**
-     * Ordering by name so operations can be sorted on name.
+     * Ordering by name so operations can be sorted on name
      *
      * @param other other TurnoutOperation object
      * @return usual compareTo return values
@@ -139,7 +135,7 @@ public abstract class TurnoutOperation implements Comparable<Object> {
     }
 
     /**
-     * The identity of an operation is its name.
+     * The identity of an operation is its name
      */
     @Override
     public boolean equals(Object ro) {
@@ -164,7 +160,7 @@ public abstract class TurnoutOperation implements Comparable<Object> {
     public abstract boolean equivalentTo(TurnoutOperation other);
 
     /**
-     * Rename an operation.
+     * rename an operation
      *
      * @param newName new name to use for rename attempt
      * @return true if the name was changed to the new value - otherwise name
@@ -184,7 +180,7 @@ public abstract class TurnoutOperation implements Comparable<Object> {
     }
 
     /**
-     * Get the definitive operation for this parameter variation.
+     * get the definitive operation for this parameter variation
      *
      * @return definitive operation
      */
@@ -218,8 +214,9 @@ public abstract class TurnoutOperation implements Comparable<Object> {
     public abstract TurnoutOperator getOperator(@Nonnull AbstractTurnout t);
 
     /**
-     * Delete all knowledge of this operation. Reset any turnouts using it to
-     * the default.
+     * delete all knowledge of this operation. Reset any turnouts using it to
+     * the default
+     *
      */
     public void dispose() {
         if (!isDefinitive()) {
@@ -234,7 +231,7 @@ public abstract class TurnoutOperation implements Comparable<Object> {
     }
 
     /**
-     * See if operation is in use (needed by the UI).
+     * see if operation is in use (needed by the UI)
      *
      * @return true iff any turnouts are using it
      */
@@ -296,5 +293,4 @@ public abstract class TurnoutOperation implements Comparable<Object> {
     public boolean matchFeedbackMode(int mode) {
         return (mode & feedbackModes) != 0;
     }
-
 }

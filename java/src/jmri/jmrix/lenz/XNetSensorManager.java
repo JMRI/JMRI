@@ -203,7 +203,7 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
     }
 
     /**
-     * {@inheritDoc}
+     * Provide a manager-specific tooltip for the Add new item beantable pane.
      */
     @Override
     public String getEntryToolTip() {

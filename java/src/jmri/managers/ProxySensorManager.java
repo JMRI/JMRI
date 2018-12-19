@@ -167,7 +167,7 @@ public class ProxySensorManager extends AbstractProxyManager<Sensor>
     }
 
     /**
-     * {@inheritDoc}
+     * Provide a connection system agnostic tooltip for the Add new item beantable pane.
      */
     @Override
     public String getEntryToolTip() {

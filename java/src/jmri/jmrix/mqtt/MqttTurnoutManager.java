@@ -4,15 +4,14 @@ import jmri.Turnout;
 
 /**
  * Implement turnout manager for MQTT systems
- * <p>
- * System names are "MTnnn", where nnn is the turnout number without padding,
- * prefix M is user configurable.
+ * <P>
+ * System names are "MTnnn", where nnn is the turnout number without padding.
  *
- * @author Lionel Jeanson Copyright (c) 2017
+ * @author Lionel Jeanson Copyright: Copyright (c) 2017
  */
 public class MqttTurnoutManager extends jmri.managers.AbstractTurnoutManager {
-    private MqttAdapter mqttAdapter;
-    private String systemPrefix;
+    private final MqttAdapter mqttAdapter;
+    private final String systemPrefix;
 
     MqttTurnoutManager(MqttAdapter ma, String p) {
         super();

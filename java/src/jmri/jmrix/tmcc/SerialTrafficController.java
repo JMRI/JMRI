@@ -255,7 +255,7 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
                                 }
                             } catch (InterruptedException e) {
                                 Thread.currentThread().interrupt(); // retain if needed later
-                                log.error("char send wait interrupted");
+                                log.error("char send wait interupted");
                             }
                         }
                         break;
@@ -267,7 +267,7 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
                                 xmtRunnable.wait(m.getTimeout());
                             }
                         } catch (InterruptedException e) {
-                            log.error("retry wait interrupted");
+                            log.error("retry wait interupted");
                         }
                     } else {
                         log.warn("sendMessage: port not ready for data sending: {}", java.util.Arrays.toString(msg));

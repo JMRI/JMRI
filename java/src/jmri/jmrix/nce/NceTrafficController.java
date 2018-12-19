@@ -13,11 +13,11 @@ import org.slf4j.LoggerFactory;
 /**
  * Converts Stream-based I/O to/from NCE messages. The "NceInterface" side
  * sends/receives message objects.
- * <p>
+ * <P>
  * The connection to a NcePortController is via a pair of *Streams, which then
  * carry sequences of characters for transmission. Note that this processing is
  * handled in an independent thread.
- * <p>
+ * <P>
  * This handles the state transitions, based on the necessary state in each
  * message.
  *
@@ -509,20 +509,6 @@ public class NceTrafficController extends AbstractMRTrafficController implements
         return NceMessage.getExitProgMode(this);
     }
 
-    /**
-     *
-     * @param adaptermemo the SystemConnectionMemo to associate with this TrafficController
-     * @deprecated Since 4.13.5 duplicate of setAdapterMemo
-     */
-    @Deprecated
-    public void setSystemConnectionMemo(NceSystemConnectionMemo adaptermemo) {
-        memo = adaptermemo;
-    }
-
-    /**
-     *
-     * @param adaptermemo the SystemConnectionMemo to associate with this TrafficController
-     */
     public void setAdapterMemo(NceSystemConnectionMemo adaptermemo) {
         memo = adaptermemo;
     }
@@ -624,22 +610,27 @@ public class NceTrafficController extends AbstractMRTrafficController implements
         }
     }
 
+    public void setSystemConnectionMemo(NceSystemConnectionMemo memo) {
+        adaptermemo = memo;
+    }
+
+    NceSystemConnectionMemo adaptermemo;
+
     @Override
     public String getUserName() {
-        if (memo == null) {
+        if (adaptermemo == null) {
             return "NCE";
         }
-        return memo.getUserName();
+        return adaptermemo.getUserName();
     }
 
     @Override
     public String getSystemPrefix() {
-        if (memo == null) {
+        if (adaptermemo == null) {
             return "N";
         }
-        return memo.getSystemPrefix();
+        return adaptermemo.getSystemPrefix();
     }
 
     private final static Logger log = LoggerFactory.getLogger(NceTrafficController.class);
-
 }

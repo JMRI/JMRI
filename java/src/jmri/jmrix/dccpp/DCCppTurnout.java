@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Extends jmri.AbstractTurnout for DCCpp layouts
  * <p>
- * Turnouts on DCC++ are controlled (as of V1.5 Firmware)
+ * Turnouts on DCC++ are controlled (as of V1.5 Firmware) are controlled
  * with unidirectional Stationary Decoder commands, or with bidirectional
  * (predefined) Turnout commands, or with bidirectional (predefined) Output
  * commands.
@@ -52,8 +52,8 @@ import org.slf4j.LoggerFactory;
  * </ul>
  *
  * @author Bob Jacobsen Copyright (C) 2001
- * @author Paul Bender Copyright (C) 2003-2010
- * @author Mark Underwood Copyright (C) 2015
+ * @author      Paul Bender Copyright (C) 2003-2010
+ * @author      Mark Underwood Copyright (C) 2015
  *
  * Based on lenz.XNetTurnout by Bob Jacobsen and Paul Bender
  */
@@ -74,7 +74,7 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
     //@SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC")
     //protected int _mClosed = jmri.Turnout.CLOSED;
 
-    protected String _prefix = "DCCPP"; // default
+    protected String _prefix = "DCCPP";
     protected DCCppTrafficController tc = null;
 
     public DCCppTurnout(String prefix, int pNumber, DCCppTrafficController controller) {  // a human-readable turnout number must be specified!
@@ -169,7 +169,7 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
     synchronized protected void forwardCommandChangeToLayout(int s) {
         DCCppMessage msg;
         if (s != CLOSED && s != THROWN) {
-            log.warn("Turnout {}: state {} not forwarded to layout.", mNumber, s);
+            log.warn("Turnout " + mNumber + ": state " + s + " not forwarded to layout.");
             return;
         }
         // newstate = TRUE if s == THROWN ...
@@ -212,7 +212,7 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
     @Override
     protected void turnoutPushbuttonLockout(boolean _pushButtonLockout) {
         if (log.isDebugEnabled()) {
-            log.debug("Send command to {} Pushbutton {}T{}", (_pushButtonLockout ? "Lock" : "Unlock"), _prefix, mNumber);
+            log.debug("Send command to " + (_pushButtonLockout ? "Lock" : "Unlock") + " Pushbutton " + _prefix + "T" + mNumber);
         }
     }
     
@@ -256,12 +256,15 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
         internalState = oldState;
     }
 
+
     /*
      *  Handle an incoming message from the DCC++
      */
     @Override
     synchronized public void message(DCCppReply l) {
-        log.debug("received message: {}", l);
+        if (log.isDebugEnabled()) {
+            log.debug("received message: " + l);
+        }
 
         switch (getFeedbackMode()) {
         case EXACT:
@@ -285,7 +288,7 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
     @Override
     public void notifyTimeout(DCCppMessage msg) {
         if (log.isDebugEnabled()) {
-            log.debug("Notified of timeout on message {}", msg.toString());
+            log.debug("Notified of timeout on message" + msg.toString());
         }
     }
 
@@ -297,19 +300,23 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
      *  station to stop sending information to the stationary decoder
      *  when the either a feedback message or an "OK" message is received.
      *
-     *  @param l a {@link DCCppReply} message
+     *  @param l an {@link DCCppReply} message
+     *
      */
     synchronized private void handleMonitoringModeFeedback(DCCppReply l) {
-        log.debug("Handle Message for turnout {} in MONITORING feedback mode ", mNumber);
+        if (log.isDebugEnabled()) {
+            log.debug("Handle Message for turnout "
+                      + mNumber + " in MONITORING feedback mode ");
+        }
         if (l.isTurnoutReply() && (l.getTOIDInt() == mNumber)) {
            if (l.getTOIsThrown()) {
-               log.debug("Turnout is Thrown. Inverted = {}", (getInverted() ? "True" : "False"));
+               log.debug("Turnout is Thrown. Inverted = " + (getInverted() ? "True" : "False"));
                synchronized (this) {
                    newCommandedState(getInverted() ? CLOSED : THROWN);
                    newKnownState(getCommandedState());
                }
            } else if (l.getTOIsClosed()) {
-               log.debug("Turnout is Closed. Inverted = {}", (getInverted() ? "True" : "False"));
+               log.debug("Turnout is Closed. Inverted = " + (getInverted() ? "True" : "False"));
                synchronized (this) {
                    newCommandedState(getInverted() ? THROWN : CLOSED);
                    newKnownState(getCommandedState());
@@ -325,16 +332,19 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
            Note for Outputs (EXACT mode), LOW is THROWN, HIGH is CLOSED
            As defined in DCC++ Base Station SerialCommand.cpp
         */
-        log.debug("Handle Message for turnout {} in EXACT feedback mode ", mNumber);
+        if (log.isDebugEnabled()) {
+            log.debug("Handle Message for turnout "
+                      + mNumber + " in EXACT feedback mode ");
+        }
         if (l.isOutputCmdReply() && (l.getOutputNumInt() == mNumber)) {
            if (l.getOutputIsLow()) {
-               log.debug("Turnout is Thrown. Inverted = {}", (getInverted() ? "True" : "False"));
+               log.debug("Turnout is Thrown. Inverted = " + (getInverted() ? "True" : "False"));
                synchronized (this) {
                    newCommandedState(getInverted() ? CLOSED : THROWN);
                    newKnownState(getCommandedState());
                }
            } else if (l.getOutputIsHigh()) {
-               log.debug("Turnout is Closed. Inverted = {}", (getInverted() ? "True" : "False"));
+               log.debug("Turnout is Closed. Inverted = " + (getInverted() ? "True" : "False"));
                synchronized (this) {
                    newCommandedState(getInverted() ? THROWN : CLOSED);
                    newKnownState(getCommandedState());
@@ -369,11 +379,13 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
          */
         @Override
         public void propertyChange(java.beans.PropertyChangeEvent event) {
-            log.debug("propertyChange called");
+            if (log.isDebugEnabled()) {
+                log.debug("propertyChange called");
+            }
             // If we're using DIRECT feedback mode, we don't care what we see here
             if (_turnout.getFeedbackMode() != DIRECT) {
                 if (log.isDebugEnabled()) {
-                    log.debug("propertyChange Not Direct Mode property: {} old value {} new value {}", event.getPropertyName(), event.getOldValue(), event.getNewValue());
+                    log.debug("propertyChange Not Direct Mode property: " + event.getPropertyName() + " old value " + event.getOldValue() + " new value " + event.getNewValue());
                 }
                 if (event.getPropertyName().equals("KnownState")) {
                     // Check to see if this is a change in the status 
@@ -381,13 +393,15 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
                     // status we triggered.
                     int oldKnownState = ((Integer) event.getOldValue()).intValue();
                     int curKnownState = ((Integer) event.getNewValue()).intValue();
-                    log.debug("propertyChange KnownState - old value {} new value {}", oldKnownState, curKnownState);
+                    if (log.isDebugEnabled()) {
+                        log.debug("propertyChange KnownState - old value " + oldKnownState + " new value " + curKnownState);
+                    }
                     if (curKnownState != INCONSISTENT
                         && _turnout.getCommandedState() == oldKnownState) {
                         // This was triggered by feedback on the layout, change 
                         // the commanded state to reflect the new Known State
                         if (log.isDebugEnabled()) {
-                            log.debug("propertyChange CommandedState: {}", _turnout.getCommandedState());
+                            log.debug("propertyChange CommandedState: " + _turnout.getCommandedState());
                         }
                         _turnout.newCommandedState(curKnownState);
                     } else {
@@ -397,7 +411,7 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
                         // an off message
                         if (oldKnownState == INCONSISTENT) {
                             if (log.isDebugEnabled()) {
-                                log.debug("propertyChange CommandedState: {}", _turnout.getCommandedState());
+                                log.debug("propertyChange CommandedState: " + _turnout.getCommandedState());
                             }
                         }
                     }

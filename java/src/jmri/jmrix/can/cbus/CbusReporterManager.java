@@ -98,7 +98,9 @@ public class CbusReporterManager extends AbstractReporterManager implements
     }
 
     /**
-     * {@inheritDoc}
+     * Provide a manager-specific tool tip for the Add new item beantable pane.
+     *
+     * @return the tool tip
      */
     @Override
     public String getEntryToolTip() {
