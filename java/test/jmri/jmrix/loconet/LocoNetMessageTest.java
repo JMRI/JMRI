@@ -27,7 +27,7 @@ import org.junit.Test;
  * not extend to uses in other software products. If you wish to use this code,
  * algorithm or these message formats outside of JMRI, please contact Digitrax
  * Inc for separate permission.
- * <p>
+ *
  * @author	Bob Jacobsen
  * @author B. Milhaupt Copyright (C) 2018
  *
@@ -48,7 +48,6 @@ public class LocoNetMessageTest {
 
         new LocoNetMessage(-1);
         jmri.util.JUnitAppender.assertErrorMessage("LocoNetMessage does not allow object creation if length is less than 2.");
-
     }
 
     @Test
@@ -65,8 +64,6 @@ public class LocoNetMessageTest {
         byte[] t1 = new byte[]{(byte) 0x81};
         new LocoNetMessage(t1);
         jmri.util.JUnitAppender.assertErrorMessage("Cannot create a LocoNet message of length shorter than two.");
-
-
     }
 
     @Test
@@ -104,7 +101,6 @@ public class LocoNetMessageTest {
                 new int[]{1, 2, 3, 4, 5, 6, 7, 8}, 63);
         checkPeerXfr(m4, 0x1050, 0x1051,
                 new int[]{1, 2, 3, 4, 5, 6, 7, 8}, 63);
-
     }
 
     @Test
@@ -112,7 +108,6 @@ public class LocoNetMessageTest {
         LocoNetMessage m = new LocoNetMessage();
         jmri.util.JUnitAppender.assertErrorMessage("LocoNetMessage does not allow a constructor with no argument");
         Assert.assertEquals("expect 0-length LocoNetMessage object", 0, m.getNumDataElements());
-
     }
 
     @Test
@@ -144,7 +139,6 @@ public class LocoNetMessageTest {
         m = new LocoNetMessage("81 7e");
         jmri.util.JUnitAppender.assertErrorMessage("LocoNetMessage does not allow a constructor with a 'String' argument");
         Assert.assertEquals("expect 0-length LocoNetMessage object", 0, m.getNumDataElements());
-
     }
 
     // use the makePeerXfr calls, already tested to check the decoding
@@ -324,10 +318,12 @@ public class LocoNetMessageTest {
         m = new LocoNetMessage(new int[] {0xb2, 0x1E, 0x47, 0x00});
 
         jmri.jmrix.loconet.LocoNetInterfaceScaffold lnis = new jmri.jmrix.loconet.LocoNetInterfaceScaffold();
-        LnTurnoutManager lntm = new LnTurnoutManager(lnis, lnis, "L", false);
-        LnTurnoutManager lntm2 = new LnTurnoutManager(lnis, lnis, "L2", false);
-        LnSensorManager lnsm = new LnSensorManager(lnis, "L");
-        LnSensorManager lnsm2 = new LnSensorManager(lnis, "L2");
+        LocoNetSystemConnectionMemo memo1 = new LocoNetSystemConnectionMemo("L", "LocoNet");
+        LocoNetSystemConnectionMemo memo2 = new LocoNetSystemConnectionMemo("L2", "LocoNet2");
+        LnTurnoutManager lntm = new LnTurnoutManager(lnis, lnis, memo1.getSystemPrefix(), false);
+        LnTurnoutManager lntm2 = new LnTurnoutManager(lnis, lnis, memo2.getSystemPrefix(), false);
+        LnSensorManager lnsm = new LnSensorManager(lnis, memo1.getSystemPrefix());
+        LnSensorManager lnsm2 = new LnSensorManager(lnis, memo2.getSystemPrefix());
 
         jmri.InstanceManager.setTurnoutManager(lntm);
         jmri.InstanceManager.setTurnoutManager(lntm2);
@@ -353,9 +349,6 @@ public class LocoNetMessageTest {
         Assert.assertEquals("Sensor L2S1853 (brightly) is Low.  (BDL16 # 116, DS13; DS54/DS64 # 232, AuxC/A3).\n", m.toMonitorString("L2"));
 
         lntm.dispose();
-
-
-
     }
 
     @Test
@@ -566,8 +559,6 @@ public class LocoNetMessageTest {
         m = new LocoNetMessage(d);
         m.setParity();
         Assert.assertEquals("byte 5 expected", 0x26, m.getElement(5));
-
-
     }
 
     @Test

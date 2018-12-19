@@ -17,10 +17,10 @@ public class LocoNetSystemConnectionMemoTest extends jmri.jmrix.SystemConnection
     @Before
     public void setUp(){
        JUnitUtil.setUp();
-       LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
        memo = new LocoNetSystemConnectionMemo();
+       LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold(memo);
        memo.setLnTrafficController(lnis);
-       lnis.setSystemConnectionMemo(memo);
+       lnis.setSystemConnectionMemo(memo); // redundant but tests a method
        memo.configureCommandStation(LnCommandStationType.COMMAND_STATION_DCS100,false,false,false);
        memo.configureManagers();
        scm = memo;
