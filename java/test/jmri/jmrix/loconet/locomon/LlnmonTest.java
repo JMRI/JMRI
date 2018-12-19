@@ -6,6 +6,7 @@ import jmri.jmrix.loconet.LnSensorManager;
 import jmri.jmrix.loconet.LnTurnout;
 import jmri.jmrix.loconet.LnTurnoutManager;
 import jmri.jmrix.loconet.LocoNetMessage;
+import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -15,7 +16,7 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.loconet.locomon.Llnmon class.
  *
  * @author	Bob Jacobsen Copyright (C) 2002, 2007
- * @author      B. Milhaupt  Copyright (C) 2015, 2018
+ * @author  B. Milhaupt  Copyright (C) 2015, 2018
  */
 public class LlnmonTest extends TestCase {
 
@@ -6527,11 +6528,11 @@ public class LlnmonTest extends TestCase {
     protected void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.initReporterManager();
-
-        jmri.jmrix.loconet.LocoNetInterfaceScaffold lnis = new jmri.jmrix.loconet.LocoNetInterfaceScaffold();
-        lntm = new LnTurnoutManager(lnis, lnis, "L", false);
-        lnsm = new LnSensorManager(lnis, "L");
-        lnrm = new LnReporterManager(lnis, "L");
+        LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo("L", "LocoNet");
+        jmri.jmrix.loconet.LocoNetInterfaceScaffold lnis = new jmri.jmrix.loconet.LocoNetInterfaceScaffold(memo);
+        lntm = new LnTurnoutManager(lnis, lnis, memo.getSystemPrefix(), false);
+        lnsm = new LnSensorManager(lnis, memo.getSystemPrefix());
+        lnrm = new LnReporterManager(lnis, memo.getSystemPrefix());
         f = new Llnmon(lntm, lnsm, lnrm);
         jmri.InstanceManager.setTurnoutManager(lntm);
         jmri.InstanceManager.setSensorManager(lnsm);

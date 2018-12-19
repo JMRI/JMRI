@@ -173,7 +173,7 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
 
     /**
      * Load the adapter with an appropriate object
-     * <i>unless</I> its already been set.
+     * <i>unless</I> it's already been set.
      */
     abstract protected void setInstance();
 

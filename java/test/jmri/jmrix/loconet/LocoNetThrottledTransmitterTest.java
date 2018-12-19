@@ -62,7 +62,7 @@ public class LocoNetThrottledTransmitterTest {
 
     @Test
     public void testSendOneImmediate() {
-        LocoNetInterfaceScaffold s = new LocoNetInterfaceScaffold();
+        LocoNetInterfaceScaffold s = new LocoNetInterfaceScaffold(memo);
         LocoNetThrottledTransmitter q = new LocoNetThrottledTransmitter(s, false);
 
         LocoNetMessage m1;
@@ -84,7 +84,7 @@ public class LocoNetThrottledTransmitterTest {
 
     @Test
     public void testSendOneNowOneLater() {
-        LocoNetInterfaceScaffold s = new LocoNetInterfaceScaffold();
+        LocoNetInterfaceScaffold s = new LocoNetInterfaceScaffold(memo);
         LocoNetThrottledTransmitter q = new LocoNetThrottledTransmitter(s, false);
 
         LocoNetMessage m1 = new LocoNetMessage(2);
@@ -113,7 +113,7 @@ public class LocoNetThrottledTransmitterTest {
 
     @Test
     public void testAfterTimeNewMessageSentImmediately() {
-        LocoNetInterfaceScaffold s = new LocoNetInterfaceScaffold();
+        LocoNetInterfaceScaffold s = new LocoNetInterfaceScaffold(memo);
         LocoNetThrottledTransmitter q = new LocoNetThrottledTransmitter(s, false);
 
         LocoNetMessage m1 = new LocoNetMessage(2);
@@ -139,14 +139,18 @@ public class LocoNetThrottledTransmitterTest {
         JUnitUtil.waitFor(()->{return !q.running;}, "stopped");
     }
 
+    LocoNetSystemConnectionMemo memo;
+
     // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        memo = new LocoNetSystemConnectionMemo();
     }
 
     @After
     public void tearDown() {
+        memo = null;
         JUnitUtil.tearDown();
     }
 

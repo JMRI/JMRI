@@ -16,7 +16,7 @@ import purejavacomm.SerialPortEventListener;
  * <p>
  * This is complicated by the lack of multiple inheritance. SerialPortAdapter is
  * an Interface, and its implementing classes also inherit from various
- * PortController types. But we want some common behaviours for those, so we put
+ * PortController types. But we want some common behaviors for those, so we put
  * them here.
  *
  * @see jmri.jmrix.SerialPortAdapter
@@ -361,12 +361,12 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         try {
             thread.join();
         } catch (InterruptedException e) {
-            log.error("Unable to join to the reconnection thread " + e.getMessage());
+            log.error("Unable to join to the reconnection thread ", e.getMessage());
         }
         if (!opened) {
             log.error("Failed to re-establish connectivity");
         } else {
-            log.info("Reconnected to " + getCurrentPortName());
+            log.info("Reconnected to {}", getCurrentPortName());
             resetupConnection();
         }
     }
@@ -394,7 +394,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
                 safeSleep(reconnectinterval, "Waiting");
                 count++;
                 try {
-                    log.error("Retrying Connection attempt " + secondCount + "-" + count);
+                    log.error("Retrying Connection attempt {}-{}", secondCount, count);
                     Enumeration<CommPortIdentifier> portIDs = CommPortIdentifier.getPortIdentifiers();
                     while (portIDs.hasMoreElements()) {
                         CommPortIdentifier id = portIDs.nextElement();
@@ -402,7 +402,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
                         if (id.getPortType() != CommPortIdentifier.PORT_PARALLEL) // accumulate the names in a vector
                         {
                             if (id.getName().equals(mPort)) {
-                                log.info(mPort + " port has reappeared as being valid, trying to reconnect");
+                                log.info("{} port has reappeared as being valid, trying to reconnect", mPort);
                                 openPort(mPort, "jmri");
                             }
                         }
@@ -411,8 +411,8 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
                 }
                 reply = !opened;
                 if (count >= retryAttempts) {
-                    log.error("Unable to reconnect after " + count + " Attempts, increasing duration of retries");
-                    //retrying but with twice the retry interval.
+                    log.error("Unable to reconnect after {} attempts, increasing duration of retries", count);
+                    // retrying but with twice the retry interval.
                     reconnectinterval = reconnectinterval * 2;
                     count = 0;
                     secondCount++;
@@ -425,7 +425,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
             if (!opened) {
                 log.error("Failed to re-establish connectivity");
             } else {
-                log.error("Reconnected to " + getCurrentPortName());
+                log.error("Reconnected to {}", getCurrentPortName());
                 resetupConnection();
             }
         }

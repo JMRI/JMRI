@@ -39,7 +39,7 @@ public class HexFileFrame extends JmriJFrame {
 
     /**
      * Because this creates a FileChooser, this should be invoked on the
-     * GUI frame
+     * GUI frame.
      */
     @InvokeOnGuiThread
     public HexFileFrame() {

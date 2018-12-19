@@ -10,7 +10,7 @@ import org.junit.Test;
  * Tests for the jmri.jmrix.nce.NceTurnout class
  *
  * @author	Bob Jacobsen
-  */
+ */
 public class NceTurnoutTest extends AbstractTurnoutTestBase {
 
     private NceTrafficControlScaffold tcis = null;

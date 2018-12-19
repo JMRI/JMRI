@@ -1142,8 +1142,8 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        lnis = new LocoNetInterfaceScaffold();
         memo = new LocoNetSystemConnectionMemo();
+        lnis = new LocoNetInterfaceScaffold(memo);
         memo.setLnTrafficController(lnis);
         memo.configureCommandStation(LnCommandStationType.COMMAND_STATION_DCS100, false, false, false);
         memo.configureManagers();
