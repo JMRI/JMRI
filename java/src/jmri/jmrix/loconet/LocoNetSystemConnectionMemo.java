@@ -1,6 +1,7 @@
 package jmri.jmrix.loconet;
 
 import java.util.ResourceBundle;
+import javax.annotation.Nonnull;
 import jmri.AddressedProgrammerManager;
 import jmri.ClockControl;
 import jmri.CommandStation;
@@ -33,7 +34,7 @@ import org.slf4j.LoggerFactory;
 public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
 
     /**
-     * Must manually register() after construction is complete
+     * Must manually register() after construction is complete.
      */
     public LocoNetSystemConnectionMemo(LnTrafficController lt, SlotManager sm) {
         super("L", "LocoNet"); // NOI18N
@@ -49,33 +50,37 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
     }
 
     /**
-     * Must manually register() after construction is complete
+     * Must manually register() after construction is complete.
      */
     public LocoNetSystemConnectionMemo() {
-        super("L", "LocoNet"); // NOI18N
+        this("L", "LocoNet"); // NOI18N
+    }
+
+    public LocoNetSystemConnectionMemo(@Nonnull String prefix, @Nonnull String name) {
+        super(prefix, name); // NOI18N
 
         // create and register the ComponentFactory for the GUI
         InstanceManager.store(cf = new LnComponentFactory(this),
                 ComponentFactory.class);
     }
 
-    /** 
+    /**
      * Do both the default parent
-     * {@link SystemConnectionMemo} registration, 
+     * {@link SystemConnectionMemo} registration,
      * and register this specific type.
      */
     public void register() {
         super.register(); // registers general type
         InstanceManager.store(this, LocoNetSystemConnectionMemo.class); // also register as specific type
     }
-    
+
     ComponentFactory cf = null;
     private LnTrafficController lt;
     private SlotManager sm;
     private LnMessageManager lnm = null;
 
     /**
-     * Provides access to the SlotManager for this particular connection.
+     * Provide access to the SlotManager for this particular connection.
      *
      * @return the slot manager or null if no valid slot manager is available
      */
@@ -137,7 +142,7 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
      * @param mTurnoutExtraSpace Is the user configuration set for extra time
      *                           between turnout operations?
      * @param mTranspondingAvailable    Is the layout configured to provide
-     *                                  transopnding reports
+     *                                  transponding reports
      */
     public void configureCommandStation(LnCommandStationType type, boolean mTurnoutNoRetry,
                                             boolean mTurnoutExtraSpace, boolean mTranspondingAvailable) {
