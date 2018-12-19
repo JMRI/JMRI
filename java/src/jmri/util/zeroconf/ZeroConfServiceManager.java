@@ -341,7 +341,8 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
     synchronized HashMap<InetAddress, JmDNS> getDNSes() {
         if (JMDNS_SERVICES.isEmpty()) {
             log.debug("JmDNS version: {}", JmDNS.VERSION);
-            String name = InstanceManager.getDefault(WebServerPreferences.class).getRailroadName().toLowerCase();
+            String name = NodeIdentity.identity().toLowerCase();
+            // make a DNS safe node identity, see #6323
             // truncate since hostnames are limited to 63 characters
             if (name.length() > 63) {
                 name = name.substring(0, 63);
