@@ -34,7 +34,7 @@ public class MultipartMessageTest {
         jmri.util.JUnitUtil.waitFor(() -> {
             return server.isStarted();
         }, "Server Failed to Start in time");
-        jmri.util.JUnitOperationsUtil.resetOperationsManager();
+        jmri.util.JUnitOperationsUtil.setupOperationsTests();
     }
 
     @After

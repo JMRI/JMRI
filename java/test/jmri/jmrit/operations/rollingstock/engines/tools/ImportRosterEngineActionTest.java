@@ -14,10 +14,8 @@ import jmri.jmrit.roster.RosterEntry;
 import jmri.util.FileUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -112,19 +110,6 @@ public class ImportRosterEngineActionTest extends OperationsTestCase {
         
         Engine e = InstanceManager.getDefault(EngineManager.class).getByRoadAndNumber("SP", "123");
         Assert.assertNotNull(e);
-    }
-
-    // The minimal setup for log4J
-    @Override
-    @Before
-    public void setUp() {
-        super.setUp();
-    }
-
-    @Override
-    @After
-    public void tearDown() {
-        super.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(ImportRosterEngineActionTest.class);
