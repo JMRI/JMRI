@@ -4,8 +4,8 @@ import java.lang.annotation.*;
 import org.junit.Ignore;
 
 /**
- * Annotation denoting that an overriden test needs work to be functional.
- * for a particular class under test.  This should be used with {@link Ignore}.
+ * Annotation for test denoting work that needs to be done to a specific test.  
+ * to be fully functional.  This annotation may be used with {@link Ignore}.
  * <p>
  *
  * @author Paul Bender Copyright 2018
