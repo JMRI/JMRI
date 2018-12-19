@@ -341,14 +341,12 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
     synchronized HashMap<InetAddress, JmDNS> getDNSes() {
         if (JMDNS_SERVICES.isEmpty()) {
             log.debug("JmDNS version: {}", JmDNS.VERSION);
-            String name = NodeIdentity.identity().toLowerCase();
-            // make a DNS safe node identity, see #6323
+            String name = NodeIdentity.identity();
+            // make a DNS safe node identity
             // truncate since hostnames are limited to 63 characters
             if (name.length() > 63) {
-                name = name.substring(0, 63);
+                name = name.substring(0, 63).toLowerCase();
             }
-            // replace characters that would be escaped with dashes
-            name = name.replaceAll("[ _]", "-");
             try {
                 Enumeration<NetworkInterface> nis = NetworkInterface.getNetworkInterfaces();
                 while (nis.hasMoreElements()) {
