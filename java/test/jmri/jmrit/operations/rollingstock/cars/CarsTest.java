@@ -4,9 +4,7 @@ import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -277,19 +275,5 @@ public class CarsTest extends OperationsTestCase {
         Assert.assertEquals("destination c4", Track.OKAY, c4.setDestination(l2, l2t1));
         Assert.assertEquals("destination c5", Track.OKAY, c5.setDestination(l1, l1t1));
         Assert.assertEquals("destination c6", Track.OKAY, c6.setDestination(l1, l1t2));
-    }
-
-    // from here down is testing infrastructure
-    // Ensure minimal setup for log4J
-    @Override
-    @Before
-    public void setUp() {
-        super.setUp();
-    }
-
-    @Override
-    @After
-    public void tearDown() {
-        super.tearDown();
     }
 }

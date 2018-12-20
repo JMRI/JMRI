@@ -1,17 +1,14 @@
 package jmri.jmrit.operations.setup;
 
-import jmri.util.JUnitOperationsUtil;
-import jmri.util.JUnitUtil;
-import org.junit.After;
+import jmri.jmrit.operations.OperationsTestCase;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class PrintOptionPanelTest {
+public class PrintOptionPanelTest extends OperationsTestCase {
 
     @Test
     public void testCTor() {
@@ -40,19 +37,6 @@ public class PrintOptionPanelTest {
         Assert.assertFalse(p.departureTimeCheckBox.isSelected());
         Assert.assertTrue(p.trackSummaryCheckBox.isSelected());
         Assert.assertTrue(p.routeLocationCheckBox.isSelected());
-    }
-
-
-    // The minimal setup for log4J
-    @Before
-    public void setUp() {
-        JUnitUtil.setUp();
-        JUnitOperationsUtil.resetOperationsManager();
-    }
-
-    @After
-    public void tearDown() {
-        JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(PrintOptionPanelTest.class);

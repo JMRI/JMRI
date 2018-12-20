@@ -10,10 +10,8 @@ import jmri.jmrit.operations.locations.TrackEditFrame;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -26,6 +24,7 @@ public class ChangeTrackFrameTest extends OperationsTestCase {
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
+        JUnitOperationsUtil.initOperationsData();
         LocationManager lmanager = InstanceManager.getDefault(LocationManager.class);
         Location loc = lmanager.getLocationByName("North Industries");
         Assert.assertNotNull("exists", loc);
@@ -46,6 +45,7 @@ public class ChangeTrackFrameTest extends OperationsTestCase {
     public void testFrameButtons() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
+        JUnitOperationsUtil.initOperationsData();
         LocationManager lmanager = InstanceManager.getDefault(LocationManager.class);
         Location loc = lmanager.getLocationByName("North Industries");
         Assert.assertNotNull("exists", loc);
@@ -72,21 +72,5 @@ public class ChangeTrackFrameTest extends OperationsTestCase {
         JUnitUtil.dispose(tef);
     }
 
-    // The minimal setup for log4J
-    @Override
-    @Before
-    public void setUp() {
-        super.setUp();
-
-        JUnitOperationsUtil.initOperationsData();
-    }
-
-    @Override
-    @After
-    public void tearDown() {
-        super.tearDown();
-    }
-
     // private final static Logger log = LoggerFactory.getLogger(ChangeTrackFrameTest.class);
-
 }
