@@ -1,6 +1,7 @@
 package jmri.jmrit.beantable;
 
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.*;
 import org.junit.*;
 
 /**
@@ -21,7 +22,8 @@ public class AudioTableActionTest extends AbstractTableActionBase {
 
     @Test
     @Override
-    @Ignore("Audio table will only be init if an audio manageris available")
+    @Ignore("Audio table will only be init if an audio manager is available")
+    @ToDo("Complete Test Initialization, then remove overriden test so parent class can execute")
     public void testGetTableDataModel(){
     }
 

@@ -4,6 +4,7 @@ import jmri.Sensor;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TestTrafficController;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.*;
 import org.junit.*;
 
 /**
@@ -49,6 +50,7 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
 
     @Override
     @Ignore("ignoring this test due to the system name format, needs to be properly coded")
+    @ToDo("Fix system name format")
     @Test
     public void testUpperLower() {
     }
