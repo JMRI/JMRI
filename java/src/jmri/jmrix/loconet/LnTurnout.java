@@ -70,7 +70,7 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
     }
 
     LocoNetInterface controller;
-    
+
     /**
      * True when setFeedbackMode has specified the mode;
      * false when the mode is just left over from initialization.
@@ -259,7 +259,7 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
                 }
                 return;
             }
-            
+
             case LnConstants.OPC_SW_REP: {
                 /* page 9 of Loconet PE */
 

@@ -58,6 +58,7 @@ public class XNetSystemConnectionMemo extends SystemConnectionMemo {
     public XNetTrafficController getXNetTrafficController() {
         return xt;
     }
+
     private XNetTrafficController xt;
 
     public void setXNetTrafficController(XNetTrafficController xt) {

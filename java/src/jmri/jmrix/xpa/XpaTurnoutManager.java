@@ -7,7 +7,7 @@ import jmri.Turnout;
  * systems.
  * <p>
  * System names are "PTnnn", where nnn is the turnout number without padding.
- * <p>
+ *
  * @author	Paul Bender Copyright (C) 2004,2016
  */
 public class XpaTurnoutManager extends jmri.managers.AbstractTurnoutManager {
@@ -30,7 +30,7 @@ public class XpaTurnoutManager extends jmri.managers.AbstractTurnoutManager {
     @Override
     public Turnout createNewTurnout(String systemName, String userName) {
         int addr = Integer.parseInt(systemName.substring(prefix.length() + 1));
-        Turnout t = new XpaTurnout(addr,memo);
+        Turnout t = new XpaTurnout(addr, memo);
         t.setUserName(userName);
         return t;
     }
