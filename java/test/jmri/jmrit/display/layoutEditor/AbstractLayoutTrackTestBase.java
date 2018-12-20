@@ -27,5 +27,4 @@ public class AbstractLayoutTrackTestBase {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractLayoutTrackTestBase.class);
 }
