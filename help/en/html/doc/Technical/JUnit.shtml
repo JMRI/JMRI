@@ -929,7 +929,6 @@
         In general, we'd rather have working tests rather than ignored ones, so
         we track the number that have been ignored in a Jenkins job, see the image 
         to the right.
-        <p>
         <li>On the other hand, sometimes a test super class (i.e. some abstract base)
         requires implementation of a test method that's not applicable to this 
         particular concrete test  
