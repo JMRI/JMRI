@@ -4,6 +4,8 @@ import jmri.JmriException;
 import jmri.NamedBean;
 import jmri.StringIO;
 
+import javax.annotation.Nonnull;
+
 /**
  * Base implementation of the StringIO interface.
  *
@@ -19,7 +21,7 @@ public abstract class AbstractStringIO extends AbstractNamedBean implements Stri
      * 
      * @param systemName StringIO system name
      */
-    public AbstractStringIO(String systemName) {
+    public AbstractStringIO(@Nonnull String systemName) {
         super(systemName);
     }
 
@@ -29,7 +31,7 @@ public abstract class AbstractStringIO extends AbstractNamedBean implements Stri
      * @param systemName StringIO system name
      * @param userName   StringIO user name
      */
-    public AbstractStringIO(String systemName, String userName) {
+    public AbstractStringIO(@Nonnull String systemName, String userName) {
         super(systemName, userName);
     }
 
@@ -38,15 +40,17 @@ public abstract class AbstractStringIO extends AbstractNamedBean implements Stri
      * The string [u]must not[/u] be longer than the value of getMaximumLength()
      * unless that value is zero. Some microcomputers have little memory and
      * it's very important that this method is never called with too long strings.
-     * @throws JmriException 
+     * 
+     * @param value the desired string value
+     * @throws jmri.JmriException general error when setting the value fails
      */
-    abstract protected void sendStringToLayout(String value) throws JmriException;
+    abstract protected void sendStringToLayout(@Nonnull String value) throws JmriException;
 
     /**
      * Set the string of this StringIO.
      * Called from the implementation class when the layout updates this StringIO.
      */
-    protected void setString(String newValue) {
+    protected void setString(@Nonnull String newValue) {
         Object _old = this._knownString;
         this._knownString = newValue;
         firePropertyChange("State", _old, _knownString); //NOI18N
@@ -54,7 +58,7 @@ public abstract class AbstractStringIO extends AbstractNamedBean implements Stri
 
     /** {@inheritDoc} */
     @Override
-    public void setCommandedStringValue(String value) throws JmriException {
+    public void setCommandedStringValue(@Nonnull String value) throws JmriException {
         int maxLength = getMaximumLength();
         if ((maxLength > 0) && (value.length() > maxLength)) {
             if (cutLongStrings()) {
@@ -69,6 +73,7 @@ public abstract class AbstractStringIO extends AbstractNamedBean implements Stri
 
     /** {@inheritDoc} */
     @Override
+    @Nonnull
     public String getCommandedStringValue() {
         return _commandedString;
     }
@@ -105,12 +110,14 @@ public abstract class AbstractStringIO extends AbstractNamedBean implements Stri
 
     /** {@inheritDoc} */
     @Override
+    @Nonnull
     public String getBeanType() {
         return Bundle.getMessage("BeanNameStringIO");
     }
 
     /** {@inheritDoc} */
     @Override
+    @Nonnull
     public String toString() {
         return this.getClass().getName() + " (" + this.getSystemName() + ")"; //NOI18N
     }
