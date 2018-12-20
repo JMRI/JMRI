@@ -3,7 +3,7 @@ package jmri.jmrix.nce;
 import jmri.DccLocoAddress;
 import jmri.util.JUnitUtil;
 import jmri.util.JUnitAppender;
-import jmri.util.junit.annotations.ToDo;
+import jmri.util.junit.annotations.*;
 import org.junit.*;
 
 /**

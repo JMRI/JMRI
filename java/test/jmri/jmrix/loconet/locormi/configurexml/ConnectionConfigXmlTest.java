@@ -3,7 +3,7 @@ package jmri.jmrix.loconet.locormi.configurexml;
 import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
 import jmri.util.JUnitAppender;
-import jmri.util.junit.annotations.ToDo;
+import jmri.util.junit.annotations.*;
 import org.junit.*;
 import jmri.jmrix.loconet.locormi.ConnectionConfig;
 

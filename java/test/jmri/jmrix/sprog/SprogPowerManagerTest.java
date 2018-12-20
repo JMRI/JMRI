@@ -1,6 +1,7 @@
 package jmri.jmrix.sprog;
 
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.*;
 import org.junit.*;
 
 /**
@@ -70,13 +71,13 @@ public class SprogPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBa
 
     @Test
     @Override
-    @Ignore("unsolicited state changes are currently ignored")
+    @NotApplicable("unsolicited state changes are currently ignored")
     public void testStateOn(){
     }
 
     @Test
     @Override
-    @Ignore("unsolicited state changes are currently ignored")
+    @NotApplicable("unsolicited state changes are currently ignored")
     public void testStateOff(){
     }
 

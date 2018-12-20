@@ -42,6 +42,8 @@ public abstract class AbstractSensorMgrTestBase extends AbstractManagerTestBase<
     // test creation - real work is in the setup() routine
     @Test
     public void testCreate() {
+       Assert.assertNotNull("Sensor Manager Exists",l);
+       Assert.assertTrue("Sensor correct type",l instanceof SensorManager );
     }
 
     @Test
