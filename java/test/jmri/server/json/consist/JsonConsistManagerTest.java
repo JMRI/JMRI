@@ -25,7 +25,7 @@ public class JsonConsistManagerTest extends jmri.implementation.AbstractConsistM
     }
 
     @Override
-    @Test(expected=java.lang.IllegalArgumentException.class)
+    @Test
     @NotApplicable("JSonConsistManager currently never throws an exception.")
     public void testGetConsistLocoAddress(){
     }
