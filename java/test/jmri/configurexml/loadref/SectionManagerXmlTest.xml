@@ -302,18 +302,6 @@
       <systemName>IB1</systemName>
       <userName>blocknorthwest</userName>
     </block>
-    <block systemName="IB10">
-      <systemName>IB10</systemName>
-      <userName>blocksouthwest</userName>
-    </block>
-    <block systemName="IB11">
-      <systemName>IB11</systemName>
-      <userName>blockwest</userName>
-    </block>
-    <block systemName="IB12">
-      <systemName>IB12</systemName>
-      <userName>blockwestsiding</userName>
-    </block>
     <block systemName="IB2">
       <systemName>IB2</systemName>
       <userName>blocknorth</userName>
@@ -346,6 +334,18 @@
       <systemName>IB9</systemName>
       <userName>blocksouthsiding</userName>
     </block>
+    <block systemName="IB10">
+      <systemName>IB10</systemName>
+      <userName>blocksouthwest</userName>
+    </block>
+    <block systemName="IB11">
+      <systemName>IB11</systemName>
+      <userName>blockwest</userName>
+    </block>
+    <block systemName="IB12">
+      <systemName>IB12</systemName>
+      <userName>blockwestsiding</userName>
+    </block>
     <block systemName="IB1" length="0.0" curve="0">
       <systemName>IB1</systemName>
       <userName>blocknorthwest</userName>
@@ -367,64 +367,6 @@
         </beansetting>
       </path>
       <path todir="32" fromdir="16" block="IB12">
-        <beansetting setting="4">
-          <turnout systemName="IT8" />
-        </beansetting>
-      </path>
-    </block>
-    <block systemName="IB10" length="0.0" curve="0">
-      <systemName>IB10</systemName>
-      <userName>blocksouthwest</userName>
-      <permissive>no</permissive>
-      <occupancysensor>blocksouthwestoccupied</occupancysensor>
-      <path todir="64" fromdir="128" block="IB8">
-        <beansetting setting="2">
-          <turnout systemName="IT6" />
-        </beansetting>
-      </path>
-      <path todir="64" fromdir="128" block="IB9">
-        <beansetting setting="4">
-          <turnout systemName="IT6" />
-        </beansetting>
-      </path>
-      <path todir="16" fromdir="32" block="IB11">
-        <beansetting setting="2">
-          <turnout systemName="IT7" />
-        </beansetting>
-      </path>
-      <path todir="16" fromdir="32" block="IB12">
-        <beansetting setting="4">
-          <turnout systemName="IT7" />
-        </beansetting>
-      </path>
-    </block>
-    <block systemName="IB11" length="0.0" curve="0">
-      <systemName>IB11</systemName>
-      <userName>blockwest</userName>
-      <permissive>no</permissive>
-      <occupancysensor>blockwestoccupied</occupancysensor>
-      <path todir="32" fromdir="16" block="IB10">
-        <beansetting setting="2">
-          <turnout systemName="IT7" />
-        </beansetting>
-      </path>
-      <path todir="16" fromdir="32" block="IB1">
-        <beansetting setting="2">
-          <turnout systemName="IT8" />
-        </beansetting>
-      </path>
-    </block>
-    <block systemName="IB12" length="0.0" curve="0">
-      <systemName>IB12</systemName>
-      <userName>blockwestsiding</userName>
-      <permissive>no</permissive>
-      <occupancysensor>blockwestsidingoccupied</occupancysensor>
-      <path todir="32" fromdir="16" block="IB10">
-        <beansetting setting="4">
-          <turnout systemName="IT7" />
-        </beansetting>
-      </path>
-      <path todir="16" fromdir="32" block="IB1">
         <beansetting setting="4">
           <turnout systemName="IT8" />
         </beansetting>
@@ -578,6 +520,64 @@
         </beansetting>
       </path>
     </block>
+    <block systemName="IB10" length="0.0" curve="0">
+      <systemName>IB10</systemName>
+      <userName>blocksouthwest</userName>
+      <permissive>no</permissive>
+      <occupancysensor>blocksouthwestoccupied</occupancysensor>
+      <path todir="64" fromdir="128" block="IB8">
+        <beansetting setting="2">
+          <turnout systemName="IT6" />
+        </beansetting>
+      </path>
+      <path todir="64" fromdir="128" block="IB9">
+        <beansetting setting="4">
+          <turnout systemName="IT6" />
+        </beansetting>
+      </path>
+      <path todir="16" fromdir="32" block="IB11">
+        <beansetting setting="2">
+          <turnout systemName="IT7" />
+        </beansetting>
+      </path>
+      <path todir="16" fromdir="32" block="IB12">
+        <beansetting setting="4">
+          <turnout systemName="IT7" />
+        </beansetting>
+      </path>
+    </block>
+    <block systemName="IB11" length="0.0" curve="0">
+      <systemName>IB11</systemName>
+      <userName>blockwest</userName>
+      <permissive>no</permissive>
+      <occupancysensor>blockwestoccupied</occupancysensor>
+      <path todir="32" fromdir="16" block="IB10">
+        <beansetting setting="2">
+          <turnout systemName="IT7" />
+        </beansetting>
+      </path>
+      <path todir="16" fromdir="32" block="IB1">
+        <beansetting setting="2">
+          <turnout systemName="IT8" />
+        </beansetting>
+      </path>
+    </block>
+    <block systemName="IB12" length="0.0" curve="0">
+      <systemName>IB12</systemName>
+      <userName>blockwestsiding</userName>
+      <permissive>no</permissive>
+      <occupancysensor>blockwestsidingoccupied</occupancysensor>
+      <path todir="32" fromdir="16" block="IB10">
+        <beansetting setting="4">
+          <turnout systemName="IT7" />
+        </beansetting>
+      </path>
+      <path todir="16" fromdir="32" block="IB1">
+        <beansetting setting="4">
+          <turnout systemName="IT8" />
+        </beansetting>
+      </path>
+    </block>
   </blocks>
   <oblocks class="jmri.jmrit.logix.configurexml.OBlockManagerXml" />
   <sections class="jmri.configurexml.SectionManagerXml">
@@ -678,42 +678,42 @@
     <transit systemName="IZ:AUTO:0001" userName="gocw1">
       <systemName>IZ:AUTO:0001</systemName>
       <userName>gocw1</userName>
-      <transitsection sectionname="IY:AUTO:0003" sequence="1" direction="4" alternate="no" />
-      <transitsection sectionname="IY:AUTO:0004" sequence="2" direction="4" alternate="no" />
-      <transitsection sectionname="IY:AUTO:0005" sequence="3" direction="4" alternate="no" />
-      <transitsection sectionname="IY:AUTO:0006" sequence="3" direction="4" alternate="yes" />
-      <transitsection sectionname="IY:AUTO:0007" sequence="4" direction="4" alternate="no" />
-      <transitsection sectionname="IY:AUTO:0008" sequence="5" direction="4" alternate="no" />
-      <transitsection sectionname="IY:AUTO:0009" sequence="5" direction="4" alternate="yes" />
-      <transitsection sectionname="IY:AUTO:0010" sequence="6" direction="4" alternate="no" />
-      <transitsection sectionname="IY:AUTO:0012" sequence="7" direction="4" alternate="no" />
+      <transitsection sectionname="IY:AUTO:0003" sequence="1" direction="4" alternate="no" safe="no" />
+      <transitsection sectionname="IY:AUTO:0004" sequence="2" direction="4" alternate="no" safe="no" />
+      <transitsection sectionname="IY:AUTO:0005" sequence="3" direction="4" alternate="no" safe="no" />
+      <transitsection sectionname="IY:AUTO:0006" sequence="3" direction="4" alternate="yes" safe="no" />
+      <transitsection sectionname="IY:AUTO:0007" sequence="4" direction="4" alternate="no" safe="no" />
+      <transitsection sectionname="IY:AUTO:0008" sequence="5" direction="4" alternate="no" safe="no" />
+      <transitsection sectionname="IY:AUTO:0009" sequence="5" direction="4" alternate="yes" safe="no" />
+      <transitsection sectionname="IY:AUTO:0010" sequence="6" direction="4" alternate="no" safe="no" />
+      <transitsection sectionname="IY:AUTO:0012" sequence="7" direction="4" alternate="no" safe="no" />
     </transit>
     <transit systemName="IZ:AUTO:0002" userName="gocw2">
       <systemName>IZ:AUTO:0002</systemName>
       <userName>gocw2</userName>
-      <transitsection sectionname="IY:AUTO:0012" sequence="1" direction="4" alternate="no" />
-      <transitsection sectionname="IY:AUTO:0001" sequence="2" direction="4" alternate="no" />
-      <transitsection sectionname="IY:AUTO:0003" sequence="3" direction="4" alternate="no" />
+      <transitsection sectionname="IY:AUTO:0012" sequence="1" direction="4" alternate="no" safe="no" />
+      <transitsection sectionname="IY:AUTO:0001" sequence="2" direction="4" alternate="no" safe="no" />
+      <transitsection sectionname="IY:AUTO:0003" sequence="3" direction="4" alternate="no" safe="no" />
     </transit>
     <transit systemName="IZ:AUTO:0003" userName="goccw1">
       <systemName>IZ:AUTO:0003</systemName>
       <userName>goccw1</userName>
-      <transitsection sectionname="IY:AUTO:0009" sequence="1" direction="8" alternate="no" />
-      <transitsection sectionname="IY:AUTO:0007" sequence="2" direction="8" alternate="no" />
-      <transitsection sectionname="IY:AUTO:0005" sequence="3" direction="8" alternate="no" />
-      <transitsection sectionname="IY:AUTO:0006" sequence="3" direction="8" alternate="yes" />
-      <transitsection sectionname="IY:AUTO:0004" sequence="4" direction="8" alternate="no" />
-      <transitsection sectionname="IY:AUTO:0002" sequence="5" direction="8" alternate="no" />
-      <transitsection sectionname="IY:AUTO:0003" sequence="5" direction="8" alternate="yes" />
-      <transitsection sectionname="IY:AUTO:0001" sequence="6" direction="8" alternate="no" />
-      <transitsection sectionname="IY:AUTO:0011" sequence="7" direction="8" alternate="no" />
+      <transitsection sectionname="IY:AUTO:0009" sequence="1" direction="8" alternate="no" safe="no" />
+      <transitsection sectionname="IY:AUTO:0007" sequence="2" direction="8" alternate="no" safe="no" />
+      <transitsection sectionname="IY:AUTO:0005" sequence="3" direction="8" alternate="no" safe="no" />
+      <transitsection sectionname="IY:AUTO:0006" sequence="3" direction="8" alternate="yes" safe="no" />
+      <transitsection sectionname="IY:AUTO:0004" sequence="4" direction="8" alternate="no" safe="no" />
+      <transitsection sectionname="IY:AUTO:0002" sequence="5" direction="8" alternate="no" safe="no" />
+      <transitsection sectionname="IY:AUTO:0003" sequence="5" direction="8" alternate="yes" safe="no" />
+      <transitsection sectionname="IY:AUTO:0001" sequence="6" direction="8" alternate="no" safe="no" />
+      <transitsection sectionname="IY:AUTO:0011" sequence="7" direction="8" alternate="no" safe="no" />
     </transit>
     <transit systemName="IZ:AUTO:0004" userName="goccw2">
       <systemName>IZ:AUTO:0004</systemName>
       <userName>goccw2</userName>
-      <transitsection sectionname="IY:AUTO:0011" sequence="1" direction="8" alternate="no" />
-      <transitsection sectionname="IY:AUTO:0010" sequence="2" direction="8" alternate="no" />
-      <transitsection sectionname="IY:AUTO:0009" sequence="3" direction="8" alternate="no" />
+      <transitsection sectionname="IY:AUTO:0011" sequence="1" direction="8" alternate="no" safe="no" />
+      <transitsection sectionname="IY:AUTO:0010" sequence="2" direction="8" alternate="no" safe="no" />
+      <transitsection sectionname="IY:AUTO:0009" sequence="3" direction="8" alternate="no" safe="no" />
     </transit>
   </transits>
   <warrants class="jmri.jmrit.logix.configurexml.WarrantManagerXml" />

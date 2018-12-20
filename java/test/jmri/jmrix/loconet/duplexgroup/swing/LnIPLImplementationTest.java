@@ -1489,7 +1489,7 @@ public class LnIPLImplementationTest {
                     equivSn,
                     (long)LnIPLImplementation.extractIplIdentitySlaveSerialNumber(msg));
         }
- 
+
     }
     @Test
     public void testConnectMethod() {
@@ -1558,7 +1558,7 @@ public class LnIPLImplementationTest {
         propChangeReportFlag = false;
         propChangeQueryFlag = false;
         Assert.assertNull("extracting slave device from GPON message", LnIPLImplementation.extractInterpretedIplSlaveDevice(m));
-        
+
 
 
 
@@ -1611,7 +1611,7 @@ public class LnIPLImplementationTest {
 
         iplImplementation = new LnIPLImplementation(memo);
 
-        
+
     }
 
     @After

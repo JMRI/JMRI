@@ -24,7 +24,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Abstract base class for common implementation of the ConnectionConfig
+ * Abstract base class for common implementation of the ConnectionConfig.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
  */
@@ -216,11 +216,11 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
     @Override
     public void updateAdapter() {
         if (adapter.getMdnsConfigure()) {
-            // set the hostname if it is not blank.
+            // set the hostname if it is not blank
             if (!(hostNameField.getText().equals(""))) {
                 adapter.setHostName(hostNameField.getText());
             }
-            // set the advertisement name if it is not blank.
+            // set the advertisement name if it is not blank
             if (!(adNameField.getText().equals(""))) {
                 adapter.setAdvertisementName(adNameField.getText());
             }

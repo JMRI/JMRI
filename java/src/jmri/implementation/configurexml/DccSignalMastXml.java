@@ -2,6 +2,7 @@ package jmri.implementation.configurexml;
 
 import java.util.List;
 import jmri.InstanceManager;
+import jmri.JmriException;
 import jmri.SignalAppearanceMap;
 import jmri.implementation.DccSignalMast;
 import org.jdom2.Element;
@@ -73,7 +74,13 @@ public class DccSignalMastXml
     public boolean load(Element shared, Element perNode) {
         DccSignalMast m;
         String sys = getSystemName(shared);
-        m = new jmri.implementation.DccSignalMast(sys);
+        try {
+            m = (DccSignalMast) InstanceManager.getDefault(jmri.SignalMastManager.class)
+                    .provideCustomSignalMast(sys, DccSignalMast.class);
+        } catch (JmriException e) {
+            log.error("Failed to load DccSignalMast {}: {}", sys, e);
+            return false;
+        }
 
         if (getUserName(shared) != null) {
             m.setUserName(getUserName(shared));
@@ -117,10 +124,7 @@ public class DccSignalMastXml
             }
         }
 
-        InstanceManager.getDefault(jmri.SignalMastManager.class)
-                .register(m);
         return true;
-
     }
 
     @Override

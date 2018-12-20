@@ -6,7 +6,6 @@ import jmri.jmrit.operations.OperationsTestCase;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
@@ -85,12 +84,6 @@ public class SetTrainIconRouteFrameTest extends OperationsTestCase {
         super.setUp();
  
         JUnitOperationsUtil.initOperationsData();
-    }
-
-    @Override
-    @After
-    public void tearDown() {
-        super.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(SetTrainIconRouteFrameTest.class);

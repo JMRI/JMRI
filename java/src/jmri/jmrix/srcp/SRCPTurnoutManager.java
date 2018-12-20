@@ -6,8 +6,8 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Implement turnout manager for SRCP systems
- * <P>
- * System names are "DTnnn", where nnn is the turnout number without padding.
+ * <p>
+ * System names are "DiTnnn", where nnn is the turnout number without padding.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2008
  */

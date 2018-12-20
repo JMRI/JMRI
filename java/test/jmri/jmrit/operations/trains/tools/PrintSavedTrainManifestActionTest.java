@@ -8,10 +8,8 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.JUnitOperationsUtil;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
 import org.junit.Test;
 import org.netbeans.jemmy.operators.JFileChooserOperator;
 
@@ -64,19 +62,7 @@ public class PrintSavedTrainManifestActionTest extends OperationsTestCase {
         String text = fco.getPathCombo().getSelectedItem().toString();
         Assert.assertTrue(text.contains("manifestsBackups"));
         Assert.assertTrue(text.contains("STF"));
-    }
-
-    // The minimal setup for log4J
-    @Override
-    @Before
-    public void setUp() {
-        super.setUp();
-    }
-
-    @Override
-    @After
-    public void tearDown() {
-        super.tearDown();
+        fco.cancelSelection();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(PrintSavedTrainManifestActionTest.class);

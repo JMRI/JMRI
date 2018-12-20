@@ -9,7 +9,6 @@ import jmri.jmrit.operations.locations.schedules.ScheduleItem;
 import jmri.jmrit.operations.locations.schedules.ScheduleManager;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -381,11 +380,5 @@ public class XmlTest extends OperationsTestCase {
     public void setUp() {
         super.setUp();
         InstanceManager.getDefault(jmri.jmrit.operations.rollingstock.cars.CarTypes.class).addName("Boxcar");
-    }
-
-    @Override
-    @After
-    public void tearDown() {
-        super.tearDown();
     }
 }
