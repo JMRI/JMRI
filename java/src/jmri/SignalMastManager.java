@@ -56,6 +56,20 @@ public interface SignalMastManager extends Manager<SignalMast> {
      */
     @Nonnull public SignalMast provideSignalMast(@Nonnull String name);
 
+    /**
+     * Retrieve or create a new signal mast with a given system name. If a new object is created,
+     * it is also registered in this manager.
+     * @param systemName the system name by which to look up the mast, or to create anew.
+     * @param mastClass specific signal mast class. Must have a single-argument string
+     *                  constructor to crete it by system name.
+     * @return a registered signal mast (might be newly created),
+     * @throws JmriException if a signal mast with the given system name is already registered
+     * but it is not of the correct class, or an internal error happens during construction.
+     */
+    @Nonnull public SignalMast provideCustomSignalMast(@Nonnull String systemName,
+                                                       Class<? extends SignalMast> mastClass)
+            throws JmriException;
+
     @Nonnull public SignalMast provideSignalMast(@Nonnull String prefix, // nominally IF$shsm
             @Nonnull String signalSystem,
             @Nonnull String mastName,

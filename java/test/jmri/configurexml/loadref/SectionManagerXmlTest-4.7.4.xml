@@ -287,7 +287,7 @@
       <systemName>IM:AUTO:0012</systemName>
       <userName>blockwestsidingmemory</userName>
     </memory>
-    <memory value="10:26 PM">
+    <memory value="10:25 PM">
       <systemName>IMCURRENTTIME</systemName>
     </memory>
     <memory value="1.0">
@@ -674,27 +674,101 @@
       <entrypoint fromblock="IB1" toblock="IB12" direction="8" fixed="no" fromblockdirection="South" />
     </section>
   </sections>
+  <transits class="jmri.configurexml.TransitManagerXml">
+    <transit systemName="IZ:AUTO:0001" userName="gocw1">
+      <systemName>IZ:AUTO:0001</systemName>
+      <userName>gocw1</userName>
+      <transitsection sectionname="IY:AUTO:0003" sequence="1" direction="4" alternate="no" safe="no" />
+      <transitsection sectionname="IY:AUTO:0004" sequence="2" direction="4" alternate="no" safe="no" />
+      <transitsection sectionname="IY:AUTO:0005" sequence="3" direction="4" alternate="no" safe="no" />
+      <transitsection sectionname="IY:AUTO:0006" sequence="3" direction="4" alternate="yes" safe="no" />
+      <transitsection sectionname="IY:AUTO:0007" sequence="4" direction="4" alternate="no" safe="no" />
+      <transitsection sectionname="IY:AUTO:0008" sequence="5" direction="4" alternate="no" safe="no" />
+      <transitsection sectionname="IY:AUTO:0009" sequence="5" direction="4" alternate="yes" safe="no" />
+      <transitsection sectionname="IY:AUTO:0010" sequence="6" direction="4" alternate="no" safe="no" />
+      <transitsection sectionname="IY:AUTO:0012" sequence="7" direction="4" alternate="no" safe="no" />
+    </transit>
+    <transit systemName="IZ:AUTO:0002" userName="gocw2">
+      <systemName>IZ:AUTO:0002</systemName>
+      <userName>gocw2</userName>
+      <transitsection sectionname="IY:AUTO:0012" sequence="1" direction="4" alternate="no" safe="no" />
+      <transitsection sectionname="IY:AUTO:0001" sequence="2" direction="4" alternate="no" safe="no" />
+      <transitsection sectionname="IY:AUTO:0003" sequence="3" direction="4" alternate="no" safe="no" />
+    </transit>
+    <transit systemName="IZ:AUTO:0003" userName="goccw1">
+      <systemName>IZ:AUTO:0003</systemName>
+      <userName>goccw1</userName>
+      <transitsection sectionname="IY:AUTO:0009" sequence="1" direction="8" alternate="no" safe="no" />
+      <transitsection sectionname="IY:AUTO:0007" sequence="2" direction="8" alternate="no" safe="no" />
+      <transitsection sectionname="IY:AUTO:0005" sequence="3" direction="8" alternate="no" safe="no" />
+      <transitsection sectionname="IY:AUTO:0006" sequence="3" direction="8" alternate="yes" safe="no" />
+      <transitsection sectionname="IY:AUTO:0004" sequence="4" direction="8" alternate="no" safe="no" />
+      <transitsection sectionname="IY:AUTO:0002" sequence="5" direction="8" alternate="no" safe="no" />
+      <transitsection sectionname="IY:AUTO:0003" sequence="5" direction="8" alternate="yes" safe="no" />
+      <transitsection sectionname="IY:AUTO:0001" sequence="6" direction="8" alternate="no" safe="no" />
+      <transitsection sectionname="IY:AUTO:0011" sequence="7" direction="8" alternate="no" safe="no" />
+    </transit>
+    <transit systemName="IZ:AUTO:0004" userName="goccw2">
+      <systemName>IZ:AUTO:0004</systemName>
+      <userName>goccw2</userName>
+      <transitsection sectionname="IY:AUTO:0011" sequence="1" direction="8" alternate="no" safe="no" />
+      <transitsection sectionname="IY:AUTO:0010" sequence="2" direction="8" alternate="no" safe="no" />
+      <transitsection sectionname="IY:AUTO:0009" sequence="3" direction="8" alternate="no" safe="no" />
+    </transit>
+  </transits>
   <warrants class="jmri.jmrit.logix.configurexml.WarrantManagerXml" />
   <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
     <logicDelay>500</logicDelay>
   </signalmastlogics>
-  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Fri Jun 17 22:26:06 PDT 2016" rate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startsettime="no" startclockoption="0" showbutton="no" />
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Fri Jun 17 22:25:15 PDT 2016" rate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startsettime="no" startclockoption="0" showbutton="no" />
   <filehistory>
     <operation>
       <type>Load OK</type>
-      <date>Thu Aug 10 17:26:25 PDT 2017</date>
-      <filename>/Applications/JMRI/Sources/geowar1/java/test/jmri/configurexml/load/BlockManagerXmlTest-4.7.4.xml</filename>
-      <filehistory />
+      <date>Thu Aug 10 17:52:13 PDT 2017</date>
+      <filename>/Applications/JMRI/Sources/geowar1/java/test/jmri/configurexml/load/SectionManagerXmlTest-4.7.4.xml</filename>
+      <filehistory>
+        <operation>
+          <type>Load OK</type>
+          <date>Thu Aug 10 16:36:14 PDT 2017</date>
+          <filename>/Applications/JMRI/Sources/geowar1/java/test/jmri/configurexml/load/SectionManagerXmlTest-4.7.4.xml</filename>
+        </operation>
+        <operation>
+          <type>Load OK</type>
+          <date>Thu Aug 10 16:36:14 PDT 2017</date>
+          <filename>/Applications/JMRI/Sources/geowar1/java/test/jmri/configurexml/load/SectionManagerXmlTest-4.7.4.xml</filename>
+        </operation>
+        <operation>
+          <type>Store</type>
+          <date>Thu Aug 10 16:36:14 PDT 2017</date>
+          <filename />
+        </operation>
+      </filehistory>
     </operation>
     <operation>
       <type>Load OK</type>
-      <date>Thu Aug 10 17:26:25 PDT 2017</date>
-      <filename>/Applications/JMRI/Sources/geowar1/java/test/jmri/configurexml/load/BlockManagerXmlTest-4.7.4.xml</filename>
-      <filehistory />
+      <date>Thu Aug 10 17:52:13 PDT 2017</date>
+      <filename>/Applications/JMRI/Sources/geowar1/java/test/jmri/configurexml/load/SectionManagerXmlTest-4.7.4.xml</filename>
+      <filehistory>
+        <operation>
+          <type>Load OK</type>
+          <date>Thu Aug 10 16:36:14 PDT 2017</date>
+          <filename>/Applications/JMRI/Sources/geowar1/java/test/jmri/configurexml/load/SectionManagerXmlTest-4.7.4.xml</filename>
+        </operation>
+        <operation>
+          <type>Load OK</type>
+          <date>Thu Aug 10 16:36:14 PDT 2017</date>
+          <filename>/Applications/JMRI/Sources/geowar1/java/test/jmri/configurexml/load/SectionManagerXmlTest-4.7.4.xml</filename>
+        </operation>
+        <operation>
+          <type>Store</type>
+          <date>Thu Aug 10 16:36:14 PDT 2017</date>
+          <filename />
+        </operation>
+      </filehistory>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Thu Aug 10 17:26:25 PDT 2017</date>
+      <date>Thu Aug 10 17:52:13 PDT 2017</date>
       <filename />
     </operation>
   </filehistory>
