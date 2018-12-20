@@ -42,7 +42,8 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSer
 
     @Test(timeout=5000)
     @Override
-    @ToDo("this really should work in a headless environment.  Calling load causes a frame to be created")
+    @Ignore("appears to leak state, causing issues with subsequent tests")
+    @ToDo("this really should work in a headless environment.  Calling load causes a frame to be created.  The frame is left visible if the connection fails.")
     public void loadTest() throws jmri.configurexml.JmriConfigureXmlException {
        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
        super.loadTest();
