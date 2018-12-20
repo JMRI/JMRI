@@ -310,8 +310,11 @@
                     <argLine>@{argLine} -Djava.security.manager -Djava.security.policy=${basedir}/lib/security.policy</argLine>
                     <useSystemClassLoader>true</useSystemClassLoader>
                     <useManifestOnlyJar>false</useManifestOnlyJar>
+                    <!-- forkCount causes tests to run in parallel JVMs.  The C says to fork the number times the number of cores available. -->
                     <forkCount>2.5C</forkCount>
+                    <!-- setting re-use forks to false causes a timeout on CI servers, please do not uncomment.
                     <reuseForks>false</reuseForks>
+                    -->
                     <dependencies>
                         <dependency>
                             <groupId>org.apache.maven.surefire</groupId>
