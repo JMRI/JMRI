@@ -133,17 +133,24 @@ public class OBlockTest {
         Assert.assertEquals("state allocated & dark", OBlock.ALLOCATED|OBlock.UNDETECTED, b.getState());
         Assert.assertEquals("Allocate w2", Bundle.getMessage("AllocatedToWarrant", w1.getDisplayName(), b.getDisplayName()), b.allocate(w2));
         
-        Assert.assertEquals("path not set", Bundle.getMessage("PathNotFound", "PathName", b.getDisplayName()), b.setPath("PathName", w1));
+        Assert.assertEquals("path not found", Bundle.getMessage("PathNotFound", "PathName", b.getDisplayName()), b.setPath("PathName", w1));
         OPath path1 = new OPath(b, "path1");
         b.addPath(path1);
         Assert.assertNull("path set", b.setPath("path1", w1));
         Assert.assertFalse("Allocated to w2", b.isAllocatedTo(w2));
         Assert.assertTrue("Allocated to w1", b.isAllocatedTo(w1));
-        Assert.assertNull("DeAllocate w1", b.deAllocate(null));
+        Assert.assertNull("DeAllocate null", b.deAllocate(null));
 
         b.setOutOfService(true);
         Assert.assertEquals("Allocate oos", Bundle.getMessage("BlockOutOfService", b.getDisplayName()), b.allocate(w2));
         Assert.assertEquals("state not allocated, dark", OBlock.UNDETECTED|OBlock.OUT_OF_SERVICE, b.getState());
+        
+        b.setOutOfService(false);
+        Assert.assertNull("DeAllocate w1", b.deAllocate(w1));
+        Assert.assertEquals("path not set", Bundle.getMessage("PathNotSet", "path1", b.getDisplayName()), b.setPath("path1", w1));
+        
+        jmri.util.JUnitAppender.assertWarnMessage("Path \"PathName\" not found in block \"c\"."); 
+        jmri.util.JUnitAppender.assertWarnMessage("Path \"path1\" not set in block \"c\". Block not allocated."); 
         tearDown();
     }
     
