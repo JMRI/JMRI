@@ -2,6 +2,7 @@ package jmri.jmrit.display;
 
 import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.*;
 import org.junit.*;
 
 /**
@@ -30,7 +31,9 @@ public class PositionableJComponentTest extends PositionableTestBase {
     @Test
     @Override
     @Ignore("PositionableJComponent does not support rotate")
+    @ToDo("implement rotate in PositionableJComponent, then remove overriden test so parent class test can execute")
     public void testGetAndSetRotationDegrees(){
+       Assert.fail("Should support rotation but doesn't"); 
     }
 
     @Override

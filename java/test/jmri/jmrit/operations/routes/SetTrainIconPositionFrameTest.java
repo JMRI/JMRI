@@ -8,10 +8,8 @@ import jmri.jmrit.operations.locations.LocationManager;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
 import org.junit.Test;
 import org.netbeans.jemmy.operators.JSpinnerOperator;
 
@@ -85,20 +83,6 @@ public class SetTrainIconPositionFrameTest extends OperationsTestCase {
         Assert.assertEquals("icon position", 234, rl.getTrainIconX());
         
         JUnitUtil.dispose(t);
-    }
-
-    // The minimal setup for log4J
-    @Override
-    @Before
-    public void setUp() {
-        super.setUp();
-
-    }
-
-    @Override
-    @After
-    public void tearDown() {
-        super.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(SetTrainIconPositionFrameTest.class);

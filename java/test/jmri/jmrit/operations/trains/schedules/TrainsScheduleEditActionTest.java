@@ -1,33 +1,19 @@
 package jmri.jmrit.operations.trains.schedules;
 
-import jmri.jmrit.operations.trains.schedules.TrainsScheduleEditAction;
-import jmri.util.JUnitUtil;
-import org.junit.After;
+import jmri.jmrit.operations.OperationsTestCase;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
-public class TrainsScheduleEditActionTest {
+public class TrainsScheduleEditActionTest extends OperationsTestCase {
 
     @Test
     public void testCTor() {
         TrainsScheduleEditAction t = new TrainsScheduleEditAction();
-        Assert.assertNotNull("exists",t);
-    }
-
-    // The minimal setup for log4J
-    @Before
-    public void setUp() {
-        JUnitUtil.setUp();
-    }
-
-    @After
-    public void tearDown() {
-        JUnitUtil.tearDown();
+        Assert.assertNotNull("exists", t);
     }
 
     // private final static Logger log = LoggerFactory.getLogger(TrainsScheduleEditActionTest.class);

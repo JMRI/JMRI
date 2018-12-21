@@ -9265,7 +9265,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      * @param inBlock the block
      * @return true if block was highlighted
      */
-    @SuppressWarnings("unchecked") // Annotate the List<Block> l assignment 
+    @SuppressWarnings("unchecked") // Annotate the List<Block> l assignment
                                    // First, make JmriBeanComboBox generic on <E extends NamedBean> (and manager) to fix this.
     public boolean highlightBlock(@Nullable Block inBlock) {
         boolean result = false; //assume failure (pessimist!)
@@ -10147,7 +10147,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             @Nonnull MouseEvent event) {
         ToolTip tip = selection.getToolTip();
         tip.setLocation(selection.getX() + selection.getWidth() / 2, selection.getY() + selection.getHeight());
-        tip.setText(selection.getNameString());
+        if (tip.getText() == null || tip.getText().isEmpty()) {
+            tip.setText(selection.getNameString());
+        }
         setToolTip(tip);
     }
 

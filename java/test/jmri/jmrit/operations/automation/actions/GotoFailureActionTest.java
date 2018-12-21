@@ -6,9 +6,7 @@ import jmri.jmrit.operations.automation.Automation;
 import jmri.jmrit.operations.automation.AutomationItem;
 import jmri.jmrit.operations.automation.AutomationManager;
 import jmri.util.JUnitUtil;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -110,19 +108,6 @@ public class GotoFailureActionTest extends OperationsTestCase {
         Assert.assertEquals("current automation item", automationItem4, automation.getCurrentAutomationItem());
         Assert.assertEquals("last automation item", automationItem3, automation.getLastAutomationItem());
 
-    }
-
-    // The minimal setup for log4J
-    @Override
-    @Before
-    public void setUp() {
-        super.setUp();
-    }
-
-    @Override
-    @After
-    public void tearDown() {
-        super.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(GotoFailureActionTest.class);

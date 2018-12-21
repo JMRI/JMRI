@@ -1,21 +1,19 @@
 package jmri.jmrit.operations.automation.actions;
 
 import jmri.InstanceManager;
+import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.automation.AutomationItem;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.JUnitOperationsUtil;
-import jmri.util.JUnitUtil;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class SelectTrainActionTest {
+public class SelectTrainActionTest extends OperationsTestCase {
 
     @Test
     public void testCTor() {
@@ -63,16 +61,6 @@ public class SelectTrainActionTest {
         action.doAction();       
         Assert.assertTrue(train1.isBuildEnabled());
         Assert.assertTrue(automationItem.isActionSuccessful());
-    }
-
-    // The minimal setup for log4J
-    @Before
-    public void setUp() {
-        JUnitUtil.setUp();    }
-
-    @After
-    public void tearDown() {
-        JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(SelectTrainActionTest.class);

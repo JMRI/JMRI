@@ -6,7 +6,6 @@ import jmri.jmrit.operations.OperationsTestCase;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -172,11 +171,5 @@ public class YardEditFrameTest extends OperationsTestCase {
         l = lManager.getLocationByName("Test Loc C");
         
         JUnitOperationsUtil.loadTrain(l);
-    }
-
-    @Override
-    @After
-    public void tearDown() {
-        super.tearDown();
     }
 }

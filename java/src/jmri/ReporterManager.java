@@ -163,7 +163,7 @@ public interface ReporterManager extends ProvidingManager<Reporter> {
     public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix);
 
     /**
-     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     * {@inheritDoc}
      */
     @Override
     public String getEntryToolTip();

@@ -9,10 +9,8 @@ import jmri.jmrit.operations.locations.Track;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -24,6 +22,8 @@ public class TrackLoadEditFrameTest extends OperationsTestCase {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        
+        JUnitOperationsUtil.initOperationsData();
         TrackLoadEditFrame t = new TrackLoadEditFrame();
         Assert.assertNotNull("exists",t);
         
@@ -40,6 +40,8 @@ public class TrackLoadEditFrameTest extends OperationsTestCase {
     @Test
     public void testFrameButtons() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        
+        JUnitOperationsUtil.initOperationsData();
         TrackLoadEditFrame tlef = new TrackLoadEditFrame();
         Assert.assertNotNull("exists",tlef);
         
@@ -70,21 +72,6 @@ public class TrackLoadEditFrameTest extends OperationsTestCase {
         Assert.assertFalse(track.acceptsLoadName("E"));
         
         JUnitUtil.dispose(tlef);
-    }
-
-    // The minimal setup for log4J
-    @Override
-    @Before
-    public void setUp() {
-        super.setUp();
-        
-        JUnitOperationsUtil.initOperationsData();
-    }
-
-    @Override
-    @After
-    public void tearDown() {
-        super.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(TrackLoadEditFrameTest.class);

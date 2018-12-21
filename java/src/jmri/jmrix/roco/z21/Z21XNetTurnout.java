@@ -132,7 +132,7 @@ public class Z21XNetTurnout extends XNetTurnout implements XNetListener {
           }
           
         } else {
-          super.message(l); // the the XpressNetTurnoutManager code
+          super.message(l); // the XpressNetTurnoutManager code
                             // handle any other replies.
         }
     }

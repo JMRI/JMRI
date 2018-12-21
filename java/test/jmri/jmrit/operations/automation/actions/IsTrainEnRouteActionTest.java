@@ -7,9 +7,7 @@ import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.JUnitOperationsUtil;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -117,19 +115,6 @@ public class IsTrainEnRouteActionTest extends OperationsTestCase {
         action.doAction();
         // train has departed the route location
         Assert.assertFalse(automationItem.isActionSuccessful());
-    }
-
-    // The minimal setup for log4J
-    @Override
-    @Before
-    public void setUp() {
-        super.setUp();
-    }
-
-    @Override
-    @After
-    public void tearDown() {
-        super.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(IsTrainEnRouteActionTest.class);
