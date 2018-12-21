@@ -2,6 +2,7 @@ package jmri.jmrix.rfid;
 
 import jmri.Reporter;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.*;
 import org.junit.*;
 
 /**
@@ -23,61 +24,61 @@ public class RfidReporterManagerTest extends jmri.managers.AbstractReporterMgrTe
 
     @Test
     @Override
-    @Ignore("Abstract Class under test, test does not apply")
+    @NotApplicable("Abstract Class under test, test does not apply")
     public void testSingleObject(){
     }
 
     @Test
     @Override
-    @Ignore("Abstract Class under test, test does not apply")
+    @NotApplicable("Abstract Class under test, test does not apply")
     public void testProvideName() {
     }
 
     @Test
     @Override
-    @Ignore("Abstract Class under test, test does not apply")
+    @NotApplicable("Abstract Class under test, test does not apply")
     public void testDefaultSystemName(){
     }
 
     @Test
     @Override
-    @Ignore("Abstract Class under test, test does not apply")
+    @NotApplicable("Abstract Class under test, test does not apply")
     public void testReporterProvideReporter(){
     }
 
     @Test
     @Override
-    @Ignore("Abstract Class under test, test does not apply")
+    @NotApplicable("Abstract Class under test, test does not apply")
     public void testReporterGetByDisplayName(){
     }
 
     @Test
     @Override
-    @Ignore("Abstract Class under test, test does not apply")
+    @NotApplicable("Abstract Class under test, test does not apply")
     public void testReporterGetBySystemName(){
     }
 
     @Test
     @Override
-    @Ignore("Abstract Class under test, test does not apply")
+    @NotApplicable("Abstract Class under test, test does not apply")
     public void testReporterGetByUserName(){
     }
 
     @Test
     @Override
-    @Ignore("Abstract Class under test, test does not apply")
+    @NotApplicable("Abstract Class under test, test does not apply")
     public void testRename(){
     }
 
     @Test
     @Override
-    @Ignore("Abstract Class under test, test does not apply")
+    @NotApplicable("Abstract Class under test, test does not apply")
     public void testUpperLower(){
     }
 
     @Override
     @Test
-    @Ignore("Not supported by this manager at this time")
+    @NotApplicable("Abstract Class under test, test does not apply")
     public void testReporterProvideByNumber() {
     }
 

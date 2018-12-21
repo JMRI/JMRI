@@ -1,6 +1,7 @@
 package jmri.jmrix.rfid.merg.concentrator;
 
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.*;
 import org.junit.*;
 
 /**
@@ -31,7 +32,7 @@ public class ConcentratorReporterManagerTest extends jmri.managers.AbstractRepor
 
     @Override
     @Test
-    @Ignore("Not supported by this manager at this time")
+    @NotApplicable("Not supported by this manager at this time")
     public void testReporterProvideByNumber() {
     }
 

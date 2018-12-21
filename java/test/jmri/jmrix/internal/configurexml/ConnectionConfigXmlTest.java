@@ -32,6 +32,7 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSim
     @Override
     @Ignore("occasionally causing ConncurrentModificationSetting while disabling connection")
     public void loadTest() throws jmri.configurexml.JmriConfigureXmlException {
+       Assert.fail("test needs more setup");
     }
 }
 

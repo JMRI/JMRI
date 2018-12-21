@@ -2,6 +2,7 @@ package jmri.jmrix.nce;
 
 import jmri.JmriException;
 import jmri.jmrix.AbstractPowerManagerTestBase;
+import jmri.util.junit.annotations.*;
 import org.junit.*;
 
 /**
@@ -93,13 +94,13 @@ public class NcePowerManagerTest extends AbstractPowerManagerTestBase {
     // state readback by sending messages & getting a reply
     @Override
     @Test
-    @Ignore("no unsolicted message, so do not run test")
+    @NotApplicable("no unsolicted message, so do not run test")
     public void testStateOn() throws JmriException {
     }
 
     @Override
     @Test
-    @Ignore("no unsolicted message, so do not run test")
+    @NotApplicable("no unsolicted message, so do not run test")
     public void testStateOff() throws JmriException {
     }
 
