@@ -43,7 +43,6 @@ public class PanelProTest extends apps.LaunchJmriAppBase {
     }
 
     @Test
-    // @Ignore("Unreliable and causing too many false failures")
     public void testLaunchTmcc() throws IOException {
         runOne("TMCC_Simulator", "PanelPro", "PanelPro version");
     }

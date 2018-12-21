@@ -3,6 +3,7 @@ package jmri.jmrix.can.cbus;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.*;
 import org.junit.*;
 
 /**
@@ -14,6 +15,7 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
     @Test
     @Override
     @Ignore("test requires further setup")
+    @ToDo("finish test setup and remove this overriden test so that  the parent class test can run")
     public void testGetThrottleInfo() {
     }
 

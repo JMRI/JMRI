@@ -102,7 +102,7 @@ public class JsonUtilSocketServiceTest {
      *                             these tests occurs
      */
     @Test
-    @Ignore // See Issue #5642
+    @Ignore("See Issue #5642")
     public void testOnList() throws Exception {
         Locale locale = Locale.ENGLISH;
         ObjectMapper mapper = new ObjectMapper();

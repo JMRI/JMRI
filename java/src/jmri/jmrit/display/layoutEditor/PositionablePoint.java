@@ -87,7 +87,7 @@ public class PositionablePoint extends LayoutTrack {
 
     private NamedBeanHandle<SignalMast> eastBoundSignalMastNamed = null;
     private NamedBeanHandle<SignalMast> westBoundSignalMastNamed = null;
-    /* We use a namedbeanhandle for the the sensors, even though we only store the name here,
+    /* We use a namedbeanhandle for the sensors, even though we only store the name here,
                      this is so that we can keep up with moves and changes of userNames */
     private NamedBeanHandle<Sensor> eastBoundSensorNamed = null;
     private NamedBeanHandle<Sensor> westBoundSensorNamed = null;

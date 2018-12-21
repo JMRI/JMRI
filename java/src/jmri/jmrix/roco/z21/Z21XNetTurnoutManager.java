@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
 public class Z21XNetTurnoutManager extends XNetTurnoutManager implements XNetListener {
 
     public Z21XNetTurnoutManager(XNetTrafficController controller, String prefix) {
-        super(controller,prefix);
+        super(controller, prefix);
     }
 
     // XNet-specific methods
@@ -72,6 +72,7 @@ public class Z21XNetTurnoutManager extends XNetTurnoutManager implements XNetLis
            t.message(l);
         }
     }
+
     private final static Logger log = LoggerFactory.getLogger(Z21XNetTurnoutManager.class);
 
 }

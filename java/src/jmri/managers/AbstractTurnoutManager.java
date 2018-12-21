@@ -74,7 +74,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
     /** {@inheritDoc} */
     @Override
     public Turnout newTurnout(@Nonnull String systemName, @Nullable String userName) {
-        Objects.requireNonNull(systemName, "SystemName cannot be null. UserName was "+ ((userName == null) ? "null" : userName));  // NOI18N
+        Objects.requireNonNull(systemName, "SystemName cannot be null. UserName was " + ((userName == null) ? "null" : userName));  // NOI18N
 
         // add normalize? see AbstractSensor
         log.debug("newTurnout: {};{}",systemName, userName);

@@ -21,8 +21,12 @@ public class OperationsTestCase {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-
-        // Set things up outside of operations
+        reset();
+        JUnitOperationsUtil.setupOperationsTests();
+    }
+    
+    // Set things up outside of operations
+    public void reset() {
         JUnitUtil.resetInstanceManager();
         JUnitUtil.resetProfileManager();
         
@@ -32,15 +36,13 @@ public class OperationsTestCase {
         JUnitUtil.initDebugThrottleManager();
         JUnitUtil.initIdTagManager();
         JUnitUtil.initShutDownManager();
-
-        JUnitOperationsUtil.setupOperationsTests();
     }
     
-    private final boolean testThreadRunning = false;
+    private final boolean checkEventQueueEmpty = false;
 
     @After
     public void tearDown() {
-        if (testThreadRunning) {
+        if (checkEventQueueEmpty) {
             final Semaphore sem = new Semaphore(0);
             new Thread(new Runnable() {
                 @Override
@@ -51,8 +53,8 @@ public class OperationsTestCase {
             }).start();
             try {
                 if (!sem.tryAcquire(2000, TimeUnit.MILLISECONDS)) {
-                    System.err.println("Jemmy exit wait failed for test " + this.getClass().getName());
-                    Assert.fail("Jemmy is not empty after this test");
+                    System.err.println("Check event queue empty failed for test " + this.getClass().getName());
+                    Assert.fail("Event queue is not empty after this test");
                 }
             } catch (InterruptedException e) {
                 // ignore.
