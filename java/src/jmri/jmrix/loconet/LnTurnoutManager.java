@@ -40,10 +40,10 @@ import org.slf4j.LoggerFactory;
 public class LnTurnoutManager extends AbstractTurnoutManager implements LocoNetListener {
 
     // ctor has to register for LocoNet events
-    public LnTurnoutManager(LocoNetInterface fastcontroller, LocoNetInterface throttledcontroller, LocoNetSystemConnectionMemo memo, boolean mTurnoutNoRetry) {
+    public LnTurnoutManager(LocoNetInterface fastcontroller, LocoNetInterface throttledcontroller, String prefix, boolean mTurnoutNoRetry) {
         this.fastcontroller = fastcontroller;
         this.throttledcontroller = throttledcontroller;
-        this.prefix = memo.getSystemPrefix();
+        this.prefix = prefix;
         this.mTurnoutNoRetry = mTurnoutNoRetry;
 
         if (fastcontroller != null) {
@@ -51,11 +51,6 @@ public class LnTurnoutManager extends AbstractTurnoutManager implements LocoNetL
         } else {
             log.error("No layout connection, turnout manager can't function");
         }
-    }
-
-    public LnTurnoutManager(LocoNetInterface fastcontroller, LocoNetInterface throttledcontroller, String prefix, boolean mTurnoutNoRetry) {
-        this(fastcontroller, throttledcontroller, ((LnTrafficController) fastcontroller).getSystemConnectionMemo(), mTurnoutNoRetry);
-        this.prefix = prefix;
     }
 
     LocoNetInterface fastcontroller;

@@ -320,10 +320,10 @@ public class LocoNetMessageTest {
         jmri.jmrix.loconet.LocoNetInterfaceScaffold lnis = new jmri.jmrix.loconet.LocoNetInterfaceScaffold();
         LocoNetSystemConnectionMemo memo1 = new LocoNetSystemConnectionMemo("L", "LocoNet");
         LocoNetSystemConnectionMemo memo2 = new LocoNetSystemConnectionMemo("L2", "LocoNet2");
-        LnTurnoutManager lntm = new LnTurnoutManager(lnis, lnis, memo1.getSystemPrefix(), false);
-        LnTurnoutManager lntm2 = new LnTurnoutManager(lnis, lnis, memo2.getSystemPrefix(), false);
-        LnSensorManager lnsm = new LnSensorManager(lnis, memo1.getSystemPrefix());
-        LnSensorManager lnsm2 = new LnSensorManager(lnis, memo2.getSystemPrefix());
+        LnTurnoutManager lntm = new LnTurnoutManager(lnis, lnis, "L", false);
+        LnTurnoutManager lntm2 = new LnTurnoutManager(lnis, lnis, "L2", false);
+        LnSensorManager lnsm = new LnSensorManager(lnis, "L");
+        LnSensorManager lnsm2 = new LnSensorManager(lnis, "L2");
 
         jmri.InstanceManager.setTurnoutManager(lntm);
         jmri.InstanceManager.setTurnoutManager(lntm2);
