@@ -49,7 +49,7 @@ public class XBeeIOStreamTest {
    }
 
    @Test
-   @Ignore("data send occurs, but tearDown closes the pipes to quickly")
+   @Ignore("data send occurs, but tearDown closes the pipes too quickly")
    public void checkSend() throws java.io.IOException {
        a.configure(); // start the send and receive threads.
        a.getOutputStream().writeChars("Hello World");

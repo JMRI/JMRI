@@ -1,6 +1,7 @@
 package jmri.jmrix.dccpp;
 
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.*;
 import org.junit.*;
 
 /**
@@ -42,13 +43,13 @@ public class DCCppReplyTest extends jmri.jmrix.AbstractMessageTestBase {
 
     // check get service mode CV Number response code.
     @Test
-    @Ignore("Method is not implemented")
+    @NotApplicable("Method under test is not implemented for DCC++")
     public void testGetServiceModeCVNumber() {
     }
 
     // check get service mode CV Value response code.
     @Test
-    @Ignore("Method is not implemented")
+    @NotApplicable("Method under test is not implemented for DCC++")
     public void testGetServiceModeCVValue() {
     }
     

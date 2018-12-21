@@ -5,8 +5,7 @@ import jmri.jmrix.lenz.XNetReply;
 import jmri.jmrix.lenz.XNetSystemConnectionMemo;
 import jmri.jmrix.lenz.XNetThrottle;
 import jmri.util.JUnitUtil;
-import jmri.util.junit.annotations.NotApplicable;
-import jmri.util.junit.annotations.ToDo;
+import jmri.util.junit.annotations.*;
 import org.junit.*;
 
 /**

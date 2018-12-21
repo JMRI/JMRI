@@ -386,7 +386,7 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase {
      *
      * @throws jmri.server.json.JsonException if unable to read profiles
      */
-    @Ignore // See Issue #5642
+    @Ignore("See Issue #5642")
     @Test
     public void testGetConfigProfiles() throws JsonException {
         JsonUtilHttpService instance = new JsonUtilHttpService(mapper);
