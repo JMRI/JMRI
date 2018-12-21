@@ -1259,7 +1259,7 @@ public class PositionablePoint extends LayoutTrack {
             linkPointsBox.setEnabled(false);
             return;
         }
-        int ourDir = getConnect1Dir();
+
         linkPointsBox.setEnabled(true);
         LayoutEditor le = editorCombo.getItemAt(editorCombo.getSelectedIndex()).item();
         for (PositionablePoint p : le.getPositionablePoints()) {
