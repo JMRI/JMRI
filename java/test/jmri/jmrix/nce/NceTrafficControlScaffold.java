@@ -63,6 +63,15 @@ public class NceTrafficControlScaffold extends NceTrafficController {
         return cmdListeners.size();
     }
 
+    /**
+     * Get the port name for this connection from the TrafficController.
+     *
+     * @return the name of the port
+     */
+    public String getPortName() {
+        return jmri.jmrix.JmrixConfigPane.NONE_SELECTED; 
+    }
+
     private final static Logger log = LoggerFactory.getLogger(NceTrafficControlScaffold.class);
 
 }
