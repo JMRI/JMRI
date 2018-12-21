@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  *
- * @author lionel
+ * @author Lionel Jeanson
  */
 public class MqttConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig {
 
@@ -41,5 +41,6 @@ public class MqttConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionCo
         return(MqttConnectionTypeList.GENMAN);
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(MqttConnectionConfig.class);    
+    // private final static Logger log = LoggerFactory.getLogger(MqttConnectionConfig.class);
+
 }

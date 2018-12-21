@@ -11,7 +11,6 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
@@ -349,11 +348,5 @@ public class CarsTableFrameTest extends OperationsTestCase {
         ct.addName(Bundle.getMessage("Caboose"));
         ct.addName("Tank Food");
         ct.addName("Coilcar");
-    }
-
-    @Override
-    @After
-    public void tearDown() {
-        super.tearDown();
     }
 }

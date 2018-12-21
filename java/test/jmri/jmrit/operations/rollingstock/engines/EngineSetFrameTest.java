@@ -9,7 +9,6 @@ import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.CarOwners;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.util.JUnitUtil;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
@@ -124,11 +123,5 @@ public class EngineSetFrameTest extends OperationsTestCase {
         e5.setRfid("RFID 1");
         Assert.assertEquals("e5 location", Track.OKAY, e5.setLocation(westford, westfordAble));
         Assert.assertEquals("e5 destination", Track.OKAY, e5.setDestination(westford, westfordAble));
-    }
-
-    @Override
-    @After
-    public void tearDown() {
-        super.tearDown();
     }
 }

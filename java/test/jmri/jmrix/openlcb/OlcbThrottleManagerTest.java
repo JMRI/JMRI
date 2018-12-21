@@ -1,6 +1,7 @@
 package jmri.jmrix.openlcb;
 
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.*;
 import org.junit.*;
 import jmri.jmrix.can.TestTrafficController;
 
@@ -18,6 +19,7 @@ public class OlcbThrottleManagerTest extends jmri.managers.AbstractThrottleManag
     @Test
     @Override
     @Ignore("test requires further setup")
+    @ToDo("finish test setup and remove this overriden test so that the parent class test can run")
     public void testGetThrottleInfo() {
     }
 

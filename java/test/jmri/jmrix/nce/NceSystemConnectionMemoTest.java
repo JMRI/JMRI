@@ -1,9 +1,7 @@
 package jmri.jmrix.nce;
 
 import jmri.GlobalProgrammerManager;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * JUnit tests for the NceSystemConnectionMemo class

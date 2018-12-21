@@ -100,7 +100,7 @@
       <userName>Test Memory Access 4</userName>
     </memory>
     <memory>
-      <systemName>IM </systemName>
+      <systemName>IM</systemName>
     </memory>
   </memories>
   <signalmasts class="jmri.managers.configurexml.DefaultSignalMastManagerXml" />

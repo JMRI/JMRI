@@ -80,7 +80,7 @@ public class DCCppProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     }
 
     @Test
-    @Ignore("test is commented out")
+    @Ignore("test body is commented out")
     public void testWriteRegisterSequence() throws JmriException {
         /*
         // infrastructure objects
