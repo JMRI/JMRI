@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Implement a Turnout via Tams communications.
- * <P>
+ * <p>
  * This object doesn't listen to the Tams communications. This is because it
  * should be the only object that is sending messages for this turnout; more
  * than one Turnout object pointing to a single device is not allowed.

@@ -188,7 +188,7 @@ public interface Logix extends NamedBean {
      * return information that can be used to test for inconsistency in
      * suppressing triggering of a calculation among multiple occurances of the
      * same state variable. Caller provides an ArrayList of the variables to
-     * check and and empty Array list to return the counts for triggering or
+     * check and an empty Array list to return the counts for triggering or
      * suppressing calculation. The first index is a count that the
      * correspondeing variable triggers calculation and second is a count that
      * the correspondeing variable suppresses Calculation. Note this method must

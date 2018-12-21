@@ -7,8 +7,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Implement turnout manager for Tams systems. Reworked to support binary
  * commands and polling of command station.
- *
- * Based on work by Bob Jacobsen and Kevin Dickerson
+ * <p>
+ * Based on work by Bob Jacobsen and Kevin Dickerson.
  *
  * @author  Jan Boen
  */

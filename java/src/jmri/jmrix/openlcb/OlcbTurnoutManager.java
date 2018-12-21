@@ -169,5 +169,3 @@ public class OlcbTurnoutManager extends AbstractTurnoutManager {
     }
 
 }
-
-

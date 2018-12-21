@@ -10,8 +10,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Implement turnout manager for CMRI serial systems
- * <P>
- * System names are "CTnnn", where nnn is the turnout number without padding.
+ * <p>
+ * System names are "CiTnnn", where nnn is the turnout number without padding,
+ * prefix Ci is user configurable.
  *
  * @author Bob Jacobsen Copyright (C) 2003
  */

@@ -26,7 +26,7 @@ public interface XNetPortController extends jmri.jmrix.PortAdapter {
     public void setOutputBufferEmpty(boolean s);
 
     /**
-     * Indiciate the command station is currently providing a timeslot to this
+     * Indicate the command station is currently providing a timeslot to this
      * port controller. 
      *
      * @return true if the command station is currently providing a timeslot.

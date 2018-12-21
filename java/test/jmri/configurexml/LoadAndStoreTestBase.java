@@ -168,7 +168,6 @@ public class LoadAndStoreTestBase {
                     String imcurrenttime = "<systemName>IMCURRENTTIME</systemName>";
                     if (next1.contains(imcurrenttime) && next2.contains(imcurrenttime)) {
                         match = true;
-                        break;
                     }
                 }
             }

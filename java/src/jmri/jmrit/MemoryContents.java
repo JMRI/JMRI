@@ -486,7 +486,7 @@ public class MemoryContents {
                         throw new MemoryFileRecordLengthException(message);
                     }
 
-                    // verify the checksum now that we know the the RECTYP.
+                    // verify the checksum now that we know the RECTYP.
                     // Do this by calculating the checksum of all characters on 
                     //line (except the ':' record mark), which should result in 
                     // a computed checksum value of 0

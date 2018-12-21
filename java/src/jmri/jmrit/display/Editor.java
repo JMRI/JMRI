@@ -264,6 +264,9 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 
     public NamedIcon loadFailed(String msg, String url) {
         log.debug("loadFailed _ignore= {} {}", _ignore, msg);
+        if (_urlMap == null) {
+            _urlMap = new HashMap<>();
+        }
         String goodUrl = _urlMap.get(url);
         if (goodUrl != null) {
             return NamedIcon.getIconByName(goodUrl);
@@ -286,7 +289,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         return _newIcon;
     }
 
-    class UrlErrorDialog extends JDialog {
+    public class UrlErrorDialog extends JDialog {
 
         JTextField _urlField;
         CatalogPanel _catalog;

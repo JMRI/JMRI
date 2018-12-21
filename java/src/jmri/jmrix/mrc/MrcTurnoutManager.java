@@ -4,12 +4,11 @@ import jmri.Turnout;
 
 /**
  * New MRC Turnout Manager
- * <P>
+ * <p>
  * System names are "PTnnn", where nnn is the turnout number without padding.
  *
  * @author Paul Bender Copyright (C) 2004
  * @author Martin Wade Copyright (C) 2014
- * 
  */
 public class MrcTurnoutManager extends jmri.managers.AbstractTurnoutManager {
 
