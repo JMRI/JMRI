@@ -1,6 +1,8 @@
 package jmri.jmrit.display.layoutEditor;
 
 import static java.lang.Float.POSITIVE_INFINITY;
+import static jmri.jmrit.display.layoutEditor.LayoutTrack.NONE;
+import static jmri.jmrit.display.layoutEditor.LayoutTrack.POS_POINT;
 import static jmri.jmrit.display.layoutEditor.LayoutTrack.TRACK;
 
 import java.awt.BorderLayout;
