@@ -113,7 +113,7 @@ abstract public class SystemConnectionMemo extends Bean {
      * <p>
      * This was previously fixed at configuration time.
      *
-     * @return User name
+     * @return User name of the connection
      */
     public String getUserName() {
         return userName;

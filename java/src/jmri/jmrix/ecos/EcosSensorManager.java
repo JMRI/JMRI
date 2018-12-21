@@ -32,6 +32,7 @@ public class EcosSensorManager extends jmri.managers.AbstractSensorManager
         EcosMessage m = new EcosMessage("queryObjects(26, ports)");
         tc.sendEcosMessage(m, this);
     }
+
     EcosSystemConnectionMemo memo;
     EcosTrafficController tc;
     //The hash table simply holds the object number against the EcosSensor ref.
@@ -211,7 +212,6 @@ public class EcosSensorManager extends jmri.managers.AbstractSensorManager
          view each individual sensor*/
         EcosMessage m = new EcosMessage("queryObjects(26, ports)");
         tc.sendEcosMessage(m, this);
-
     }
 
     private final static Logger log = LoggerFactory.getLogger(EcosSensorManager.class);

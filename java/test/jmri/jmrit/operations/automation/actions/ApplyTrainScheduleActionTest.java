@@ -8,9 +8,7 @@ import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.schedules.TrainSchedule;
 import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
 import jmri.util.JUnitOperationsUtil;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -81,18 +79,6 @@ public class ApplyTrainScheduleActionTest extends OperationsTestCase {
         action.doAction();
         Assert.assertFalse(train1.isBuildEnabled());
         Assert.assertTrue(train2.isBuildEnabled());
-    }
-
-    // The minimal setup for log4J
-    @Override
-    @Before
-    public void setUp() {
-        super.setUp();    }
-
-    @Override
-    @After
-    public void tearDown() {
-        super.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(ApplyTrainScheduleActionTest.class);

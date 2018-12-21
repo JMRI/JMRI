@@ -5,10 +5,8 @@ import jmri.jmrit.operations.OperationsTestCase;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
 import org.junit.Test;
 import org.netbeans.jemmy.operators.JFrameOperator;
 
@@ -35,6 +33,7 @@ public class LocationsTableFrameTest extends OperationsTestCase {
     public void testTableCreationFrame() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
+        JUnitOperationsUtil.loadFiveLocations();
         LocationsTableFrame f = new LocationsTableFrame();
 
         // should be 5 rows
@@ -62,6 +61,7 @@ public class LocationsTableFrameTest extends OperationsTestCase {
     public void testLocationsEditFrame() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
+        JUnitOperationsUtil.loadFiveLocations();
         LocationsTableFrame f = new LocationsTableFrame();
 
         // create edit location frame
@@ -112,20 +112,5 @@ public class LocationsTableFrameTest extends OperationsTestCase {
         jfof.close();
 
         Assert.assertNull(JmriJFrame.getFrame(Bundle.getMessage("AddLocation")));
-    }
-
-    // Ensure minimal setup for log4J
-    @Override
-    @Before
-    public void setUp() {
-        super.setUp();
-
-        JUnitOperationsUtil.loadFiveLocations();
-    }
-
-    @Override
-    @After
-    public void tearDown() {
-        super.tearDown();
     }
 }

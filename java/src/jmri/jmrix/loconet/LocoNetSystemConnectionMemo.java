@@ -59,16 +59,16 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
                 ComponentFactory.class);
     }
 
-    /** 
+    /**
      * Do both the default parent
-     * {@link SystemConnectionMemo} registration, 
+     * {@link SystemConnectionMemo} registration,
      * and register this specific type.
      */
     public void register() {
         super.register(); // registers general type
         InstanceManager.store(this, LocoNetSystemConnectionMemo.class); // also register as specific type
     }
-    
+
     ComponentFactory cf = null;
     private LnTrafficController lt;
     private SlotManager sm;

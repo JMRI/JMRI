@@ -4,10 +4,11 @@ import jmri.Turnout;
 
 /**
  * Implement turnout manager for MQTT systems
- * <P>
- * System names are "MTnnn", where nnn is the turnout number without padding.
+ * <p>
+ * System names are "MiTnnn", where nnn is the turnout number without padding,
+ * prefix Mi is user configurable.
  *
- * @author Lionel Jeanson Copyright: Copyright (c) 2017
+ * @author Lionel Jeanson Copyright (c) 2017
  */
 public class MqttTurnoutManager extends jmri.managers.AbstractTurnoutManager {
     private final MqttAdapter mqttAdapter;
@@ -27,7 +28,7 @@ public class MqttTurnoutManager extends jmri.managers.AbstractTurnoutManager {
     @Override
     public Turnout createNewTurnout(String systemName, String userName) {
         Turnout t;
-        int addr = Integer.parseInt(systemName.substring(2));
+        int addr = Integer.parseInt(systemName.substring(systemPrefix.length() + 1));
         t = new MqttTurnout(mqttAdapter, addr);
         t.setUserName(userName);
 
@@ -35,5 +36,6 @@ public class MqttTurnoutManager extends jmri.managers.AbstractTurnoutManager {
     }
 
     static volatile MqttTurnoutManager _instance = null;
+
 }
 

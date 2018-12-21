@@ -1,6 +1,7 @@
 package jmri.jmrix.lenz.liusbserver.configurexml;
 
 import jmri.util.JUnitUtil;
+import jmri.util.JUnitAppender;
 import org.junit.*;
 import org.jdom2.Element;
 import jmri.jmrix.lenz.liusbserver.ConnectionConfig;
@@ -32,8 +33,11 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractNet
     }
 
     @Test
-    @Ignore("generates error message when run")
     public void getInstanceTest() {
+       super.getInstanceTest();
+       JUnitAppender.assertErrorMessageStartsWith("error opening network connection:");
+       JUnitAppender.assertErrorMessageStartsWith("init (pipe)");
+       JUnitAppender.assertErrorMessageStartsWith("Error connecting or configuring port.");
     }
 
     /**

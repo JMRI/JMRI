@@ -8,7 +8,6 @@ import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -172,12 +171,5 @@ public class InterchangeEditFrameTest extends OperationsTestCase {
         
         JUnitOperationsUtil.loadTrain(l);
        
-    }
-
-    // The minimal setup for log4J
-    @Override
-    @After
-    public void tearDown() {
-        super.tearDown();
     }
 }
