@@ -4,8 +4,9 @@ import apps.AppsBase;
 import apps.gui3.EditConnectionPreferencesDialog;
 import apps.gui3.TabbedPreferencesAction;
 import java.awt.GraphicsEnvironment;
-import java.io.File;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -14,14 +15,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.ServiceLoader;
 import java.util.concurrent.atomic.AtomicBoolean;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
+import javax.swing.Action;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
-import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
+import javax.swing.KeyStroke;
+import javax.swing.TransferHandler;
 import jmri.Application;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
@@ -29,12 +31,13 @@ import jmri.JmriException;
 import jmri.configurexml.ConfigXmlManager;
 import jmri.configurexml.swing.DialogErrorHandler;
 import jmri.jmrit.XmlFile;
-import jmri.profile.AddProfileDialog;
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.profile.ProfileManagerDialog;
 import jmri.spi.PreferencesManager;
+import jmri.util.com.sun.TransferActionListener;
 import jmri.util.FileUtil;
+import jmri.util.SystemType;
 import jmri.util.prefs.HasConnectionButUnableToConnectException;
 import jmri.util.prefs.InitializationException;
 import org.slf4j.Logger;
@@ -233,6 +236,25 @@ public class JmriConfigurationManager implements ConfigureManager {
                                 Bundle.getMessage("ErrorDialogButtonChangeProfile"),
                                 Bundle.getMessage("ErrorDialogButtonEditConnections")
                             };
+                            
+                            if (list instanceof JList) {
+                                JPopupMenu popUpMenu = new JPopupMenu();
+                                TransferActionListener actionListener = new TransferActionListener();
+                                JMenuItem menuItem = new JMenuItem(Bundle.getMessage("MenuItemCopy"));
+                                menuItem.setActionCommand((String) TransferHandler.getCopyAction().getValue(Action.NAME));
+                                menuItem.addActionListener(actionListener);
+                                if (SystemType.isMacOSX()) {
+                                    menuItem.setAccelerator(
+                                            KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.META_MASK));
+                                } else {
+                                    menuItem.setAccelerator(
+                                            KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.CTRL_MASK));
+                                }
+                                menuItem.setMnemonic(KeyEvent.VK_C);
+                                popUpMenu.add(menuItem);
+                                
+                                ((JList) list).setComponentPopupMenu(popUpMenu);
+                            }
                             
                             JOptionPane pane = new JOptionPane(
                                     new Object[] {
