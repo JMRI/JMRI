@@ -110,7 +110,7 @@ public class AutoAllocate {
                     log.error("error in allocation request list - AllocationRequest is null");
                     continue;
                 }
-                // Check to see if there is a sensor temporarily block allocation blocking allocation 
+                // Check to see if there is a sensor temporarily block allocation blocking allocation
                 log.debug("Allocating Train [{}] section [{}]", ar.getActiveTrainName(), ar.getSectionName());
                 if (ar.getActiveTrain().getLastAllocatedSection() != null) {
                     //do stuff associated with the last allocated section
@@ -403,7 +403,7 @@ public class AutoAllocate {
     /**
      * Check whether it is nessassary to pause/stop further allocation because a
      * specified sensor is active.
-     * 
+     *
      * @param lastAllocatedTransitSection
      * @return true stop allocating, false dont
      */

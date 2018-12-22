@@ -2722,7 +2722,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             return;
         }
     }
-    
+
     private void updateSensorList() {
         Set<Sensor> nameSet = jmri.InstanceManager.sensorManagerInstance().getNamedBeanSet();
         String[] displayList = new String[nameSet.size()];

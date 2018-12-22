@@ -76,9 +76,9 @@ public class LoadAtStartUpTest {
                 smm.getSignalMast("East End Throat").getAspect().equals("Stop"));
         float speed = (float) m.getThrottleInfo(addr, "SpeedSetting");
         Assert.assertEquals(0.15, speed, 0.01);
-        
+
         sm.getSensor("Occ West Platform Switch").setState(Sensor.ACTIVE);
-        
+
         JUnitUtil.waitFor(()->{return smm.getSignalMast("West End Div").getAspect().equals("Stop");},"Signal Just passed stop");
         Assert.assertTrue("2 West End Div Signal Stop", smm.getSignalMast("West End Div").getAspect().equals("Stop"));
         Assert.assertTrue("2 West To South  Green", smm.getSignalMast("West To South").getAspect().equals("Clear"));
@@ -114,7 +114,7 @@ public class LoadAtStartUpTest {
 
         sm.getSensor("Occ West Block").setState(Sensor.INACTIVE);
         sm.getSensor("Occ East Block").setState(Sensor.ACTIVE);
-        
+
         JUnitUtil.waitFor(()->{return smm.getSignalMast("South To East").getAspect().equals("Stop");},"Signal Just passed south to east now stop");
         Assert.assertTrue("5 West End Div Signal Green", smm.getSignalMast("West End Div").getAspect().equals("Stop"));
         Assert.assertTrue("5 West To South  Red", smm.getSignalMast("West To South").getAspect().equals("Stop"));
@@ -153,7 +153,7 @@ public class LoadAtStartUpTest {
         Assert.assertTrue("8 East End Throat Signal Red",
                 smm.getSignalMast("East End Throat").getAspect().equals("Stop"));
         speed = (float) m.getThrottleInfo(addr, "SpeedSetting");
-        Assert.assertEquals(0.15, speed, 0.01); 
+        Assert.assertEquals(0.15, speed, 0.01);
 
         sm.getSensor("Occ East Block").setState(Sensor.INACTIVE);
         sm.getSensor("Occ East Platform Switch").setState(Sensor.INACTIVE);
@@ -163,6 +163,8 @@ public class LoadAtStartUpTest {
         Assert.assertTrue("9 South To East Signal Red", smm.getSignalMast("South To East").getAspect().equals("Stop"));
         Assert.assertTrue("9 East End Throat Signal Red",
                 smm.getSignalMast("East End Throat").getAspect().equals("Stop"));
+        
+        // train slows to stop
         JUnitUtil.waitFor(()->{return (float) m.getThrottleInfo(addr, "SpeedSetting") == 0.0 ;},"Signal Just passed east end throat now stop");
 
         // cancel (terminate) the train.
