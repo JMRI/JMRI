@@ -1297,7 +1297,7 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
         
         output.append("\n");
 
-        nextLine( Bundle.getMessage("EventSent") + ": " + m.toString() + "\n",
+        nextLine( Bundle.getMessage("EventSent") + ": " + m.toMonitorString() + "\n",
                 output.toString() ,
                 Bundle.getMessage("DynPriTitle") + ": " + CbusMessage.getPri(m) / 4 + " " + 
                 Bundle.getMessage("MinPriTitle") + ": " + (CbusMessage.getPri(m) & 3),
@@ -1378,7 +1378,7 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
         
         output.append("\n");
         
-        nextLine( Bundle.getMessage("EventReceived") + ": " + r.toString() + "\n",
+        nextLine( Bundle.getMessage("EventReceived") + ": " + r.toMonitorString() + "\n",
                 output.toString(),
                 Bundle.getMessage("DynPriTitle") + ": " + CbusMessage.getPri(r) / 4 + " " + 
                 Bundle.getMessage("MinPriTitle") + ": " + (CbusMessage.getPri(r) & 3),
