@@ -222,43 +222,57 @@ public class JmriConfigurationManager implements ConfigureManager {
                         List<String> errorList = errors;
                         
                         if (isUnableToConnect.get()) {
-                            //if (errors.size() > 1) { // will be added in ErrorDialog
-                            //    errorList.add(0, Bundle.getMessage("InitExMessageListHeader"));
-                            //}
                             errorList.add(" "); // blank line below errors
                             errorList.add(Bundle.getMessage("InitExMessageLogs"));
                             
-                            ErrorDialog dialog = new ErrorDialog(errorList);
+                            Object[] options = new Object[] {
+                                Bundle.getMessage("ErrorDialogButtonExitProgram"),
+                                Bundle.getMessage("ErrorDialogButtonRestartProgram"),
+                                Bundle.getMessage("ErrorDialogButtonNewProfile"),
+                                Bundle.getMessage("ErrorDialogButtonEditConnections")
+                            };
                             
-                            switch (dialog.result) {
-                                case NEW_PROFILE:
-                                    AddProfileDialog apd = new AddProfileDialog(null, true, false);
-                                    apd.setLocationRelativeTo(null);
-                                    apd.setVisible(true);
+                            JOptionPane pane = new JOptionPane(
+                                    new Object[] {
+                                        (list instanceof JList) ? Bundle.getMessage("InitExMessageListHeader") : null,
+                                        list,
+                                        "<html><br></html>", // Add a visual break between list of errors and notes // NOI18N
+                                        Bundle.getMessage("InitExMessageLogs"), // NOI18N
+                                        Bundle.getMessage("InitExMessagePrefs"), // NOI18N
+                                    },
+                                    JOptionPane.ERROR_MESSAGE,
+                                    JOptionPane.DEFAULT_OPTION,
+                                    null,
+                                    options
+                            );
+                            
+                            JDialog dialog = pane.createDialog(null, Bundle.getMessage("InitExMessageTitle", Application.getApplicationName())); // NOI18N
+                            dialog.setVisible(true);
+                            Object selectedValue = pane.getValue();
+                            
+                            if (Bundle.getMessage("ErrorDialogButtonNewProfile").equals(selectedValue)) {
+                                AddProfileDialog apd = new AddProfileDialog(null, true, false);
+                                apd.setLocationRelativeTo(null);
+                                apd.setVisible(true);
+                                // Restart program
+                                AppsBase.handleRestart();
+                                
+                            } else if (Bundle.getMessage("ErrorDialogButtonEditConnections").equals(selectedValue)) {
+                               if (EditConnectionPreferencesDialog.showDialog()) {
                                     // Restart program
                                     AppsBase.handleRestart();
-                                    break;
-                                    
-                                case EDIT_CONNECTIONS:
-                                   if (EditConnectionPreferencesDialog.showDialog()) {
-                                        // Restart program
-                                        AppsBase.handleRestart();
-                                        break;
-                                    } else {
-                                        // Quit program
-                                        AppsBase.handleQuit();
-                                        break;
-                                    }
-                                    
-                                case RESTART_PROGRAM:
-                                    // Restart program
-                                    AppsBase.handleRestart();
-                                    break;
-                                    
-                                case EXIT_PROGRAM:
-                                default:
-                                    // Exit program
+                                } else {
+                                    // Quit program
                                     AppsBase.handleQuit();
+                                }
+
+                            } else if (Bundle.getMessage("ErrorDialogButtonRestartProgram").equals(selectedValue)) {
+                                // Restart program
+                                AppsBase.handleRestart();
+
+                            } else {
+                                // Exit program
+                                AppsBase.handleQuit();
                             }
                         }
                         
@@ -351,89 +365,4 @@ public class JmriConfigurationManager implements ConfigureManager {
         return legacy.getValidate();
     }
 
-
-
-    private static final class ErrorDialog extends JDialog {
-        
-        enum Result {
-            EXIT_PROGRAM,
-            RESTART_PROGRAM,
-            NEW_PROFILE,
-            EDIT_CONNECTIONS,
-        }
-        
-        
-        Result result = Result.EXIT_PROGRAM;
-
-        ErrorDialog(List<String> list) {
-            super();
-            setTitle(Bundle.getMessage("ErrorDialogTitle"));
-            setModal(true);
-            JPanel contentPanel = new JPanel();
-            contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
-            JPanel panel = new JPanel();
-            panel.add(new JLabel(Bundle.getMessage("InitExMessageListHeader")));
-            contentPanel.add(panel);
-
-            JPanel marginPanel = new JPanel();
-            marginPanel.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
-            marginPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(5,5,5,5));
-            contentPanel.add(marginPanel);
-            JPanel borderPanel = new JPanel();
-            borderPanel.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
-            borderPanel.setBorder(javax.swing.BorderFactory.createLineBorder(java.awt.Color.black));
-            marginPanel.add(borderPanel);
-            panel = new JPanel();
-            panel.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
-            panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-            panel.setBorder(javax.swing.BorderFactory.createEmptyBorder(5,5,5,5));
-            for (String s : list) {
-                // Remove html
-                s = s.replaceAll("\\<html\\>.*\\<\\/html\\>", "");
-                JLabel label = new JLabel(s);
-                label.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
-                panel.add(label);
-            }
-            borderPanel.add(panel);
-
-            panel = new JPanel();
-            JButton button = new JButton(Bundle.getMessage("ErrorDialogButtonExitProgram"));
-            button.addActionListener((ActionEvent a) -> {
-                result = Result.EXIT_PROGRAM;
-                dispose();
-            });
-            panel.add(button);
-            
-            button = new JButton(Bundle.getMessage("ErrorDialogButtonRestartProgram"));
-            button.addActionListener((ActionEvent a) -> {
-                result = Result.RESTART_PROGRAM;
-                dispose();
-            });
-            panel.add(button);
-            
-            button = new JButton(Bundle.getMessage("ErrorDialogButtonNewProfile"));
-            button.addActionListener((ActionEvent a) -> {
-                result = Result.NEW_PROFILE;
-                dispose();
-            });
-            panel.add(button);
-            
-            button = new JButton(Bundle.getMessage("ErrorDialogButtonEditConnections"));
-            button.addActionListener((ActionEvent a) -> {
-                result = Result.EDIT_CONNECTIONS;
-                dispose();
-            });
-            panel.add(button);
-            
-            contentPanel.add(panel);
-            
-            setContentPane(contentPanel);
-            pack();
-            
-            // Center dialog on screen
-            setLocationRelativeTo(null);
-            setVisible(true);
-        }
-    }
-    
 }
