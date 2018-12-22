@@ -115,12 +115,9 @@ public class CbusDummyCS {
     
     int getExistingSession( int rcvdIntAddr, Boolean rcvdIsLong ) {
         for ( int i=0 ; (i < _csSessions.size()) ; i++) {
-            
-            Boolean isLongTest = _csSessions.get(i).getisLong();
-            
             if ( 
                 ( _csSessions.get(i).getrcvdIntAddr() == rcvdIntAddr ) &&
-                ( isLongTest == rcvdIsLong )  && 
+                ( _csSessions.get(i).getisLong().equals(rcvdIsLong) )  && 
                 ( _csSessions.get(i).getIsDispatched() == false ) 
             ) {
                 return _csSessions.get(i).getSessionNum();
