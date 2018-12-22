@@ -4,7 +4,11 @@ import apps.AppsBase;
 import apps.gui3.EditConnectionPreferencesDialog;
 import apps.gui3.TabbedPreferencesAction;
 import java.awt.GraphicsEnvironment;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
@@ -24,6 +28,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.KeyStroke;
 import javax.swing.TransferHandler;
+import javax.swing.event.ListSelectionEvent;
 import jmri.Application;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
@@ -239,21 +244,40 @@ public class JmriConfigurationManager implements ConfigureManager {
                             
                             if (list instanceof JList) {
                                 JPopupMenu popUpMenu = new JPopupMenu();
-                                TransferActionListener actionListener = new TransferActionListener();
-                                JMenuItem menuItem = new JMenuItem(Bundle.getMessage("MenuItemCopy"));
-                                menuItem.setActionCommand((String) TransferHandler.getCopyAction().getValue(Action.NAME));
-                                menuItem.addActionListener(actionListener);
+                                JMenuItem copyMenuItem = new JMenuItem(Bundle.getMessage("MenuItemCopy"));
+                                TransferActionListener copyActionListener = new TransferActionListener();
+                                copyMenuItem.setActionCommand((String) TransferHandler.getCopyAction().getValue(Action.NAME));
+                                copyMenuItem.addActionListener(copyActionListener);
                                 if (SystemType.isMacOSX()) {
-                                    menuItem.setAccelerator(
+                                    copyMenuItem.setAccelerator(
                                             KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.META_MASK));
                                 } else {
-                                    menuItem.setAccelerator(
+                                    copyMenuItem.setAccelerator(
                                             KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.CTRL_MASK));
                                 }
-                                menuItem.setMnemonic(KeyEvent.VK_C);
-                                popUpMenu.add(menuItem);
+                                copyMenuItem.setMnemonic(KeyEvent.VK_C);
+                                copyMenuItem.setEnabled(((JList)list).getSelectedIndex() != -1);
+                                popUpMenu.add(copyMenuItem);
+                                
+                                JMenuItem copyAllMenuItem = new JMenuItem(Bundle.getMessage("MenuItemCopyAll"));
+                                ActionListener copyAllActionListener = (ActionEvent e) -> {
+                                    StringBuilder text = new StringBuilder();
+                                    for (int i=0; i < ((JList)list).getModel().getSize(); i++) {
+                                        text.append(((JList)list).getModel().getElementAt(i).toString());
+                                        text.append(System.getProperty("line.separator")); // NOI18N
+                                    }
+                                    Clipboard systemClipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+                                    systemClipboard.setContents(new StringSelection(text.toString()), null);
+                                };
+                                copyAllMenuItem.setActionCommand("copyAll"); // NOI18N
+                                copyAllMenuItem.addActionListener(copyAllActionListener);
+                                popUpMenu.add(copyAllMenuItem);
                                 
                                 ((JList) list).setComponentPopupMenu(popUpMenu);
+                                
+                                ((JList) list).addListSelectionListener((ListSelectionEvent e) -> {
+                                    copyMenuItem.setEnabled(((JList)e.getSource()).getSelectedIndex() != -1);
+                                });
                             }
                             
                             JOptionPane pane = new JOptionPane(
