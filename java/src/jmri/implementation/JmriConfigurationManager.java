@@ -231,8 +231,8 @@ public class JmriConfigurationManager implements ConfigureManager {
                             errorList.add(Bundle.getMessage("InitExMessageLogs"));
                             
                             Object[] options = new Object[] {
-                                Bundle.getMessage("ErrorDialogButtonExitProgram"),
-                                Bundle.getMessage("ErrorDialogButtonRestartProgram"),
+                                Bundle.getMessage("ErrorDialogButtonQuitProgram", Application.getApplicationName()),
+                                Bundle.getMessage("ErrorDialogButtonRestartProgram", Application.getApplicationName()),
                                 Bundle.getMessage("ErrorDialogButtonChangeProfile"),
                                 Bundle.getMessage("ErrorDialogButtonEditConnections")
                             };
@@ -262,7 +262,7 @@ public class JmriConfigurationManager implements ConfigureManager {
                                         list,
                                         "<html><br></html>", // Add a visual break between list of errors and notes // NOI18N
                                         Bundle.getMessage("InitExMessageLogs"), // NOI18N
-                                        Bundle.getMessage("InitExMessagePrefs"), // NOI18N
+                                        Bundle.getMessage("ErrorDialogConnectLayout"), // NOI18N
                                     },
                                     JOptionPane.ERROR_MESSAGE,
                                     JOptionPane.DEFAULT_OPTION,
@@ -299,7 +299,7 @@ public class JmriConfigurationManager implements ConfigureManager {
                                     AppsBase.handleQuit();
                                 }
 
-                            } else if (Bundle.getMessage("ErrorDialogButtonRestartProgram").equals(selectedValue)) {
+                            } else if (Bundle.getMessage("ErrorDialogButtonRestartProgram", Application.getApplicationName()).equals(selectedValue)) {
                                 // Restart program
                                 AppsBase.handleRestart();
 
