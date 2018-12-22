@@ -11,6 +11,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
@@ -28,7 +29,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Abstract base class for common implementation of the ConnectionConfig.
+ * Abstract base class for common implementation of the NetworkConnectionConfig.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
  */
@@ -269,9 +270,10 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
     protected JTextField serviceTypeField = new JTextField(15);
     protected JLabel serviceTypeFieldLabel;
 
-    protected SpinnerNumberModel intervalSpinner = new SpinnerNumberModel(0,0,10000,1); // 10 sec max seems long enough
+    protected SpinnerNumberModel intervalSpinner = new SpinnerNumberModel(0, 0, 10000, 1); // 10 sec max seems long enough
     protected JSpinner outputIntervalSpinner = new JSpinner();
     protected JLabel outputIntervalLabel;
+    protected JButton outputIntervalReset = new JButton(Bundle.getMessage("ButtonReset"));
 
     protected NetworkPortAdapter adapter = null;
 
@@ -360,6 +362,9 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
         outputIntervalSpinner.setMaximumSize(outputIntervalSpinner.getPreferredSize()); // set spinner JTextField width
         outputIntervalSpinner.setValue(adapter.getSystemConnectionMemo().getOutputInterval());
         outputIntervalSpinner.setEnabled(true);
+        outputIntervalReset.addActionListener((ActionEvent event) -> {
+            outputIntervalSpinner.setValue(0);
+        });
 
         showAutoConfig.setFont(showAutoConfig.getFont().deriveFont(9f));
         showAutoConfig.setForeground(Color.blue);
@@ -472,9 +477,12 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
             cR.gridy = i;
             cL.gridy = i;
             gbLayout.setConstraints(outputIntervalLabel, cL);
-            gbLayout.setConstraints(outputIntervalSpinner, cR);
             _details.add(outputIntervalLabel);
-            _details.add(outputIntervalSpinner);
+            JPanel intervalPanel = new JPanel();
+            gbLayout.setConstraints(intervalPanel, cR);
+            intervalPanel.add(outputIntervalSpinner);
+            intervalPanel.add(outputIntervalReset);
+            _details.add(intervalPanel);
             i++;
         }
         cL.gridwidth = 2;

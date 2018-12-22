@@ -17,6 +17,7 @@ import java.util.Enumeration;
 import java.util.Map.Entry;
 import java.util.ResourceBundle;
 import java.util.Vector;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -37,7 +38,7 @@ import org.slf4j.LoggerFactory;
 import purejavacomm.CommPortIdentifier;
 
 /**
- * Abstract base class for common implementation of the ConnectionConfig.
+ * Abstract base class for common implementation of the SerialConnectionConfig.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
  */
@@ -190,9 +191,10 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
     protected JLabel baudBoxLabel;
     protected String[] baudList;
 
-    protected SpinnerNumberModel intervalSpinner = new SpinnerNumberModel(0,0,10000,1); // 10 sec max seems long enough
+    protected SpinnerNumberModel intervalSpinner = new SpinnerNumberModel(0, 0, 10000, 1); // 10 sec max seems long enough
     protected JSpinner outputIntervalSpinner = new JSpinner();
     protected JLabel outputIntervalLabel;
+    private JButton outputIntervalReset = new JButton(Bundle.getMessage("ButtonReset"));
 
     protected jmri.jmrix.SerialPortAdapter adapter = null;
 
@@ -402,6 +404,9 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         outputIntervalSpinner.setMaximumSize(outputIntervalSpinner.getPreferredSize()); // set spinner JTextField width
         outputIntervalSpinner.setValue(adapter.getSystemConnectionMemo().getOutputInterval());
         outputIntervalSpinner.setEnabled(true);
+        outputIntervalReset.addActionListener((ActionEvent event) -> {
+            outputIntervalSpinner.setValue(0);
+        });
 
         showAdvanced.setFont(showAdvanced.getFont().deriveFont(9f));
         showAdvanced.setForeground(Color.blue);
@@ -484,9 +489,12 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
             cR.gridy = i;
             cL.gridy = i;
             gbLayout.setConstraints(outputIntervalLabel, cL);
-            gbLayout.setConstraints(outputIntervalSpinner, cR);
             _details.add(outputIntervalLabel);
-            _details.add(outputIntervalSpinner);
+            JPanel intervalPanel = new JPanel();
+            gbLayout.setConstraints(intervalPanel, cR);
+            intervalPanel.add(outputIntervalSpinner);
+            intervalPanel.add(outputIntervalReset);
+            _details.add(intervalPanel);
             i++;
 
         }
