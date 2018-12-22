@@ -18,8 +18,8 @@ public class LnTrafficRouterTest {
         LocoNetInterfaceScaffold upstream = new LocoNetInterfaceScaffold();
 
         // create object
-        LnTrafficRouter router = new LnTrafficRouter();
-        router.setSystemConnectionMemo(memo);
+        LnTrafficRouter router = new LnTrafficRouter(); // deprecated, but
+        router.setSystemConnectionMemo(memo); // tests another method
         memo.setLnTrafficController(router);
 
         Assert.assertEquals("router is tc", memo.getLnTrafficController(), router);
@@ -43,8 +43,7 @@ public class LnTrafficRouterTest {
     @Test
     public void testReceiveAndForward() {
         // create object
-        LnTrafficRouter router = new LnTrafficRouter();
-        router.setSystemConnectionMemo(memo);
+        LnTrafficRouter router = new LnTrafficRouter(memo);
         memo.setLnTrafficController(router);
         Assert.assertEquals("router is tc", memo.getLnTrafficController(), router);
 
@@ -72,8 +71,7 @@ public class LnTrafficRouterTest {
         upstream.setSystemConnectionMemo(memo);
 
         // create object
-        LnTrafficRouter router = new LnTrafficRouter();
-        router.setSystemConnectionMemo(memo);
+        LnTrafficRouter router = new LnTrafficRouter(memo);
         memo.setLnTrafficController(router);
         Assert.assertEquals("router is tc", memo.getLnTrafficController(), router);
 
