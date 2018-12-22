@@ -2705,6 +2705,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
         }
 
         @Override
+        @SuppressWarnings("unchecked")
         public void setValueAt(Object value, int row, int col) {
             if (col == ACTION_COLUMN) {
                 addEditActionsPressed(row);
