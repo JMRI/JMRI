@@ -1,4 +1,4 @@
-package jmri.jmrix.can.cbus.swing;
+package jmri.jmrix.can.cbus.swing.simulator;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -7,16 +7,7 @@ import org.slf4j.LoggerFactory;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-    jmri.jmrix.can.cbus.swing.CbusMenuTest.class,
-    jmri.jmrix.can.cbus.swing.CbusComponentFactoryTest.class,
-    jmri.jmrix.can.cbus.swing.eventtable.PackageTest.class,
-    jmri.jmrix.can.cbus.swing.nodeconfig.PackageTest.class,
-    jmri.jmrix.can.cbus.swing.console.PackageTest.class,
-    jmri.jmrix.can.cbus.swing.configtool.PackageTest.class,
-    jmri.jmrix.can.cbus.swing.cbusslotmonitor.PackageTest.class,
-    jmri.jmrix.can.cbus.swing.simulator.PackageTest.class,
-    jmri.jmrix.can.cbus.swing.CbusFilterFrameTest.class,
-    jmri.jmrix.can.cbus.swing.CbusFilterPanelTest.class,
+    SimulatorPaneTest.class,
     BundleTest.class
 })
 
