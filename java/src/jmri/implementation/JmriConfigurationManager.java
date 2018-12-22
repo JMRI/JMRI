@@ -6,6 +6,7 @@ import apps.gui3.TabbedPreferencesAction;
 import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.awt.event.ActionEvent;
+import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -31,6 +32,7 @@ import jmri.jmrit.XmlFile;
 import jmri.profile.AddProfileDialog;
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
+import jmri.profile.ProfileManagerDialog;
 import jmri.spi.PreferencesManager;
 import jmri.util.FileUtil;
 import jmri.util.prefs.HasConnectionButUnableToConnectException;
@@ -228,7 +230,7 @@ public class JmriConfigurationManager implements ConfigureManager {
                             Object[] options = new Object[] {
                                 Bundle.getMessage("ErrorDialogButtonExitProgram"),
                                 Bundle.getMessage("ErrorDialogButtonRestartProgram"),
-                                Bundle.getMessage("ErrorDialogButtonNewProfile"),
+                                Bundle.getMessage("ErrorDialogButtonChangeProfile"),
                                 Bundle.getMessage("ErrorDialogButtonEditConnections")
                             };
                             
@@ -250,10 +252,19 @@ public class JmriConfigurationManager implements ConfigureManager {
                             dialog.setVisible(true);
                             Object selectedValue = pane.getValue();
                             
-                            if (Bundle.getMessage("ErrorDialogButtonNewProfile").equals(selectedValue)) {
-                                AddProfileDialog apd = new AddProfileDialog(null, true, false);
-                                apd.setLocationRelativeTo(null);
-                                apd.setVisible(true);
+                            if (Bundle.getMessage("ErrorDialogButtonChangeProfile").equals(selectedValue)) {
+                                ProfileManager manager = ProfileManager.getDefault();
+                                Profile last = manager.getActiveProfile();
+                                ProfileManagerDialog pmd = new ProfileManagerDialog(null, true, true);
+                                pmd.setLocationRelativeTo(null);
+                                pmd.setVisible(true);
+                                if (last == null || !last.equals(manager.getActiveProfile())) {
+                                    try {
+                                        manager.saveActiveProfile();
+                                    } catch (IOException e) {
+                                        log.error("Cannot save profile", e);
+                                    }
+                                }
                                 // Restart program
                                 AppsBase.handleRestart();
                                 
