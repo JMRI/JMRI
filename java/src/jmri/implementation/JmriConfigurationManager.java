@@ -267,7 +267,7 @@ public class JmriConfigurationManager implements ConfigureManager {
         return this.legacy.load(url, registerDeferred);
         // return true; // always return true once legacy support is dropped
     }
-    
+
     /**
      * Show a dialog with options Quit, Restart, Change profile, Edit connections
      * @param errors the list of error messages
