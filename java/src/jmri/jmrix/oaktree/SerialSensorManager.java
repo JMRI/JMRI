@@ -7,7 +7,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Manage the system-specific Sensor implementation.
  * <p>
- * System names are "OSnnnn", where nnnn is the sensor number without padding.
+ * System names are "OSnnn", where O is the user configurable system prefix,
+ * nnn is the sensor number without padding.
  * <p>
  * Sensors are numbered from 1.
  *

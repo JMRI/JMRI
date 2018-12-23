@@ -9,11 +9,12 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Manage the C/MRI serial-specific Sensor implementation.
- * <P>
- * System names are "CSnnnn", where nnnn is the sensor number without padding.
- * <P>
+ * <p>
+ * System names are "CSnnnn", where C is the user-configurable system prefix,
+ * nnnn is the sensor number without padding.
+ * <p>
  * Sensors are numbered from 1.
- * <P>
+ * <p>
  * This is a SerialListener to handle the replies to poll messages. Those are
  * forwarded to the specific SerialNode object corresponding to their origin for
  * processing of the data.
