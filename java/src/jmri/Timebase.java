@@ -117,10 +117,21 @@ public interface Timebase extends NamedBean {
 
     public boolean use12HourDisplay();
 
-    // methods for start up with clock stopped option
-    public void setStartStopped(boolean stopped);
+    /**
+     * Defines what to do with the fast clock when JMRI starts up.
+     */
+    enum ClockInitialRunState {
+        // Changes the clock to stopped when JMRI starts.
+        DO_STOP,
+        // Changes the clock to running when JMRI starts.
+        DO_START,
+        // Does not change the clock when JMRI starts.
+        DO_NOTHING
+    }
 
-    public boolean getStartStopped();
+    // methods for start up with clock stopped/started/nochange option
+    public void setClockInitialRunState(ClockInitialRunState initialState);
+    public ClockInitialRunState getClockInitialRunState();
 
     // methods for start up with start/stop button displayed
     public void setShowStopButton(boolean displayed);
@@ -131,6 +142,14 @@ public interface Timebase extends NamedBean {
     public void setStartSetTime(boolean set, Date time);
 
     public boolean getStartSetTime();
+
+    // What to set the rate at startup.
+    public void setStartRate(double factor);
+    public double getStartRate();
+
+    // If true, the rate at startup will be set to the value of getStartRate().
+    public void setSetRateAtStart(boolean set);
+    public boolean getSetRateAtStart();
 
     @Nonnull
     public Date getStartTime();
