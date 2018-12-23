@@ -436,11 +436,11 @@ If there are any changes in other files, do both of:
 This is the next release in the 4.14 cycle. It's intended to be released around (July 12) from HEAD of master.
 ```
 
-- Confirm that the tag for the current release (v4.15.1 for release 4.15.1) is in place via the [tags page](https://github.com/JMRI/JMRI/tags), then manually delete the current release branch (release-4.15.1) via the [GitHub branches page](https://github.com/JMRI/JMRI/branches).
+- Confirm that the tag for the current release (v4.15.1 for release 4.15.1) is in place via the [tags page](https://github.com/JMRI/JMRI/tags), then manually delete the current release branch (release-4.15.1) via the [GitHub branches page](https://github.com/JMRI/JMRI/branches).  (N.B. We are experimenting with having the `release*` branches protected, in which case you may have to go to Setting; Branches; then edit the Release* branch name to ReleaseX* to disable the protection before removing the branch.  If you do that, remember to replace the protection!)
 
 - Go to the GitHub PR and Issues [labels list](https://github.com/JMRI/JMRI/labels) and remove any "afterNextTestRelease" (and "afterNextProductionRelease" if appropriate) labels from done items
 
-- If this is a production release, update the "Downloads" badge in the JMRI/JMRI README.md file and commit back.
+- If this is a production release, update the "Downloads" badge in the JMRI/JMRI README.md file in the JMRI and website repositories and commit back.
 
 ====================================================================================
 ## Branches for preparation of Production Releases
