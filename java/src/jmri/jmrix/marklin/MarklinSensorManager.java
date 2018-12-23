@@ -11,8 +11,9 @@ import org.slf4j.LoggerFactory;
  * Implement sensor manager for Marklin systems. The Manager handles all the
  * state changes.
  * <p>
- * System names are "USnnn:yy", where nnn is the Marklin Object Number for a
- * given s88 Bus Module and yy is the port on that module.
+ * System names are "USnnn:yy", where U is the user configurable system prefix,
+ * nnn is the Marklin Object Number for a given s88 Bus Module and
+ * yy is the port on that module.
  *
  * @author Kevin Dickerson Copyright (C) 2009
  */

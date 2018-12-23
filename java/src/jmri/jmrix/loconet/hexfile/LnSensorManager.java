@@ -11,8 +11,11 @@ import org.slf4j.LoggerFactory;
 
 @SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "This is ineffect the same as its super class")
 /**
- * Manage the LocoNet-specific Sensor implementation.
- * System names are "LSnnn", where nnn is the sensor number without padding.
+ * Manage the LocoNet-specific Sensor implementation via a LocoNet
+ * hexfile emulator.
+ * <p>
+ * System names are "LSnnn", where L is the user-configurable system prefix,
+ * nnn is the sensor number without padding.
  *
  * @author Kevin Dickerson Copyright (C) 2001
  */

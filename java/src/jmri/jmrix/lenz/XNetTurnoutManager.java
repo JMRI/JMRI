@@ -7,7 +7,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Implement turnout manager for Lenz (XpresssNet) connections.
  * <p>
- * System names are "XTnnn", where nnn is the turnout number without padding.
+ * System names are "XTnnn", where X is the user configurable system prefix,
+ * nnn is the turnout number without padding.
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Paul Bender Copyright (C) 2003-2010
