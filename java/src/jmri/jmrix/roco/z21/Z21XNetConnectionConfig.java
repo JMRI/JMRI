@@ -25,7 +25,7 @@ public class Z21XNetConnectionConfig extends jmri.jmrix.AbstractStreamConnection
     }
 
     /**
-     * Ctor for a functional Swing object with no prexisting adapter
+     * Ctor for a functional Swing object with no preexisting adapter
      */
     public Z21XNetConnectionConfig() {
         super();

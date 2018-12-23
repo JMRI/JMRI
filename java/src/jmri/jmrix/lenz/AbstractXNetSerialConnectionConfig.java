@@ -16,7 +16,7 @@ abstract public class AbstractXNetSerialConnectionConfig extends jmri.jmrix.Abst
     }
 
     /**
-     * Ctor for a functional Swing object with no prexisting adapter
+     * Ctor for a functional Swing object with no preexisting adapter
      */
     public AbstractXNetSerialConnectionConfig() {
         super();

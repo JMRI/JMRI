@@ -25,7 +25,7 @@ public class Z21SimulatorConnectionConfig extends jmri.jmrix.roco.z21.Connection
     }
 
     /**
-     * Ctor for a functional Swing object with no prexisting adapter.
+     * Ctor for a functional Swing object with no preexisting adapter.
      */
     public Z21SimulatorConnectionConfig() {
         super();
