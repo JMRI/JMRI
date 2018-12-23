@@ -132,15 +132,16 @@
       
         <p>Methods using this option include :</p>
         <ul>
-        <li>PiCAP</li>
+        <li>CANPiCAP - The canpi service has to be active to accept connections.</li>
         <li>CANether</li>
         <li>CBUS Server</li> 
         </ul>  
-
+        
  
-        <p>IP Address / Host Name : ( none ) - enter an IP address for fully manual configuration.  Optional hostname for ZeroConf / mDNS configuration. 
+        <p>IP Address / Host Name : ( none ) - enter an IP address for fully manual configuration.
         <br>
-        "localhost" can be used on some systems if running on the same machine as a CBUS Server.
+        Optional hostname for ZeroConf / mDNS configuration does <strong> NOT </strong> currently work, use IP or localhost. 
+        <br> "localhost" can be used on most systems if the CAN server is running on the same machine.
         </p>
         <p>TCP / UDP Port : 5550 - Port address setting of the TCP connection</p>
         <p>Connection Protocol : "MERG CBUS" ( "OpenLCB", "Raw CAN" and "Test - do not use" also selectable ) </p>   
@@ -218,8 +219,10 @@
       width="330" height="215" alt="JMRI MERG CAN Simulation Connection" align="right">
       
       
-        <p>Known issue - Does not simulate sending DCC throttle commands, see <a 
-        href="https://github.com/JMRI/JMRI/issues/2065">https://github.com/JMRI/JMRI/issues/2065</a></p>
+        <p>A simulated Command Station is started for this connection,
+        see <a href="../../../../package/jmri/jmrix/can/cbus/swing/simulator/SimulatorPane.shtml"
+        >CBUS Simulation Tools</a>.</p>
+        <p>Defaults to CAN ID 120</p>
       
         <p>Serial port : ( none )</p>
         <p>Connection Prefix : "M"</p>

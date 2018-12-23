@@ -1263,8 +1263,10 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
     
     private void processestop(boolean messagein){
         addToLog(1,"Command station acknowledges estop");
-        estopTimer.stop();
-        estopTimer=null;
+        if ( estopTimer != null ) {
+            estopTimer.stop();
+            estopTimer=null;
+        }
     }
     
     private void processrton(boolean messagein){
@@ -1292,14 +1294,18 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
     }
     
     private void processton(boolean messagein){
-        powerTimer.stop();
-        powerTimer=null;
+        if ( powerTimer != null ) {
+            powerTimer.stop();
+            powerTimer=null;
+        }
         log.debug("Track on confirmed from command station.");
     }
 
     private void processtof(boolean messagein){
-        powerTimer.stop();
-        powerTimer=null;
+        if ( powerTimer != null ) {
+            powerTimer.stop();
+            powerTimer=null;
+        }
         log.debug("Track off confirmed from command station.");
     }
     
