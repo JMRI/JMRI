@@ -937,18 +937,6 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      return _showCoordinates;
      }
      */
-    /**
-     * Control whether target panel shows a menu
-     *
-     * @param state true for controlling.
-     * @deprecated 3.9.5
-     * @see #setPanelMenuVisible(boolean)
-     */
-    @Deprecated
-    public void setPanelMenu(boolean state) {
-        _targetFrame.getJMenuBar().setVisible(state);
-        validate();
-    }
 
     /**
      * Hide or show menus on the target panel.

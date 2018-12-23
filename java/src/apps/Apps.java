@@ -961,21 +961,6 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         splash(show, false);
     }
 
-    /**
-     * Invoke the standard Log4J logging initialization.
-     * <p>
-     * No longer used in JMRI. ({@link #splash} calls the initialization
-     * directly. Left as a deprecated method because other code, such as CATS,
-     * is still using in in JMRI 3.7 and perhaps 3.8
-     *
-     * @deprecated Since 3.7.2, use @{link jmri.util.Log4JUtil#initLogging}
-     * directly.
-     */
-    @Deprecated
-    static protected void initLog4J() {
-        jmri.util.Log4JUtil.initLogging();
-    }
-
     static protected void splash(boolean show, boolean debug) {
         Log4JUtil.initLogging();
         if (debugListener == null && debug) {
@@ -1182,23 +1167,6 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         } catch (IllegalArgumentException | IllegalAccessException ex) {
             log.warn("Unable to set application name", ex);
         }
-    }
-
-    /**
-     * Set, log and return some startup information.
-     * <p>
-     * This method needs to be refactored, but it's in use (2/2014) by CATS so
-     * can't easily be changed right away.
-     *
-     * @param name Program/application name as known by the user
-     * @return The output of {@link Log4JUtil#startupInfo(java.lang.String)}
-     * @deprecated Since 3.7.1, use {@link #setStartupInfo(java.lang.String) }
-     * plus {@link Log4JUtil#startupInfo(java.lang.String) }
-     */
-    @Deprecated
-    protected static String startupInfo(String name) {
-        setStartupInfo(name);
-        return Log4JUtil.startupInfo(name);
     }
 
     /**

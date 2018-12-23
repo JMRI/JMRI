@@ -646,17 +646,6 @@ public final class InstanceManager {
     }
 
     /**
-     * @param p signal head manager to make default
-     * @deprecated Since 3.7.4, use
-     * {@link #setDefault(java.lang.Class, java.lang.Object)} directly.
-     */
-    @Deprecated
-    static public void setSignalHeadManager(SignalHeadManager p) {
-        jmri.util.Log4JUtil.warnOnce(log, "setSignalHeadManager is deprecated, please replace this call", new Exception("traceback"));
-        setDefault(SignalHeadManager.class, p);
-    }
-
-    /**
      * @param p CommandStation to make default
      * @deprecated Since 4.9.5, use
      * {@link #store(java.lang.Object,java.lang.Class)} directly.
@@ -664,17 +653,6 @@ public final class InstanceManager {
     @Deprecated
     static public void setCommandStation(CommandStation p) {
         store(p, CommandStation.class);
-    }
-
-    /**
-     * @param p configure manager to make default
-     * @deprecated Since 3.7.4, use
-     * {@link #setDefault(java.lang.Class, java.lang.Object)} directly.
-     */
-    @Deprecated
-    static public void setConfigureManager(ConfigureManager p) {
-        jmri.util.Log4JUtil.warnOnce(log, "setConfigureManager is deprecated, please replace this call", new Exception("traceback"));
-        setDefault(ConfigureManager.class, p);
     }
 
     /**
