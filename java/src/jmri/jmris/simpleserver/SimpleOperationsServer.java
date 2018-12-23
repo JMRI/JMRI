@@ -85,7 +85,7 @@ public class SimpleOperationsServer extends AbstractOperationsServer {
     public static final String TRAINCABOOSE = "TRAINCABOOSE";
 
     /**
-     * Requests/returns the the train's status. The train's name is required.
+     * Requests/returns the train's status. The train's name is required.
      */
     public static final String TRAINSTATUS = "TRAINSTATUS";
 
@@ -204,7 +204,7 @@ public class SimpleOperationsServer extends AbstractOperationsServer {
      * the tag and value and stuffed into an Attribute. The Attribute is then
      * added to the resulting ArrayList.
      * <p>
-     * The leading OPERATIONS String is NOT included. If the the first String is
+     * The leading OPERATIONS String is NOT included. If the first String is
      * not OPERATIONS, an empty ArrayList is returned.
      *
      * @param message is the String received

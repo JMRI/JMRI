@@ -6,10 +6,8 @@ import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -79,19 +77,6 @@ public class SetupExcelProgramManifestFrameTest extends OperationsTestCase {
         Assert.assertEquals("", "Test File Name", InstanceManager.getDefault(TrainCustomManifest.class).getFileName());
 
         JUnitUtil.dispose(f);
-    }
-
-    // The minimal setup for log4J
-    @Override
-    @Before
-    public void setUp() {
-        super.setUp();
-    }
-
-    @Override
-    @After
-    public void tearDown() {
-        super.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(SetupExcelProgramManifestFrameTest.class);

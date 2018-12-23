@@ -785,7 +785,12 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             cs.setText(" ");
             return;
         }
-        ConnectionStatus.instance().addConnection(conn.name(), conn.getInfo());
+        
+        log.debug("conn.name() is {} ",conn.name()); // eg CAN via MERG Network Interface
+        log.debug("conn.getConnectionName() is {} ",conn.getConnectionName()); // eg MERG2
+        log.debug("conn.getManufacturer() is {} ",conn.getManufacturer()); // eg MERG
+        
+        ConnectionStatus.instance().addConnection(conn.getConnectionName(), conn.getInfo());
         cs.setFont(pane.getFont());
         updateLine(conn, cs);
         pane.add(cs);
@@ -799,7 +804,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         if (name == null) {
             name = conn.getManufacturer();
         }
-        if (ConnectionStatus.instance().isConnectionOk(null, conn.getInfo())) {
+        if (ConnectionStatus.instance().isConnectionOk(name, conn.getInfo())) {
             cs.setForeground(Color.black);
             String cf = Bundle.getMessage("ConnectionSucceeded", name, conn.name(), conn.getInfo());
             cs.setText(cf);

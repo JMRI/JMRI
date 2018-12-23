@@ -31,9 +31,9 @@ import org.slf4j.LoggerFactory;
  *
  * <img src="doc-files/AbstractMRTrafficController-StateDiagram.png" alt="UML State diagram">
  * 
- * <P>
+ * <p>
  * The key methods for the basic operation are:
- * <UL>
+ * <ul>
  * <li>If needed for formatting outbound messages, {@link #addHeaderToOutput(byte[], AbstractMRMessage)} and {@link #addTrailerToOutput(byte[], int, AbstractMRMessage)}
  * <li> {@link #newReply()} creates an empty reply message (of the proper concrete type) to fill with incoming data
  * <li>The {@link #endOfMessage(AbstractMRReply) } method is used to parse incoming messages. If it needs
@@ -697,7 +697,7 @@ abstract public class AbstractMRTrafficController {
                             }
                         } catch (InterruptedException e) {
                             Thread.currentThread().interrupt(); // retain if needed later
-                            log.error("retry wait interupted");
+                            log.error("retry wait interrupted");
                         }
                     } else {
                         log.warn("sendMessage: port not ready for data sending: {}", Arrays.toString(msg));

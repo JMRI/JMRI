@@ -126,7 +126,7 @@ public class SprogHexFile extends jmri.util.JmriJFrame {
     @SuppressFBWarnings(value = "DLS_DEAD_LOCAL_STORE")
     // False positive
     public int read() {
-        // Make space for the the maximum size record to be read
+        // Make space for the maximum size record to be read
         int record[] = new int[MAX_LEN];
         do {
             record = readLine();
@@ -153,7 +153,7 @@ public class SprogHexFile extends jmri.util.JmriJFrame {
      * @return int[] the array of bytes read from the file
      */
     public int[] readLine() {
-        // Make space for the the maximum size record to be read
+        // Make space for the maximum size record to be read
         int record[] = new int[MAX_LEN];
         int checksum = 0;
         // Read ":"

@@ -94,7 +94,6 @@ public class EngineModels extends RollingStockAttribute {
         _engineWeightHashTable.clear();
         _engineBunitHashTable.clear();
         super.dispose();
-        loadDefaults();
     }
 
     @Override

@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Implement light manager for Grapevine serial systems.
  * <p>
- * System names are "GxLnnn", where Gx is the (multichar) system connection prefix,
+ * System names are "GLnnn", where G is the (multichar) system connection prefix,
  * nnn is the bit number without padding.
  * <p>
  * Based in part on SerialTurnoutManager.java
@@ -104,7 +104,7 @@ public class SerialLightManager extends AbstractLightManager {
     }
 
     /**
-     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     * {@inheritDoc}
      */
     @Override
     public String getEntryToolTip() {

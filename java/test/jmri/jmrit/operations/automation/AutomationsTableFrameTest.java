@@ -5,10 +5,8 @@ import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
 import org.junit.Test;
 
 public class AutomationsTableFrameTest extends OperationsTestCase {
@@ -35,21 +33,5 @@ public class AutomationsTableFrameTest extends OperationsTestCase {
 
         JUnitUtil.dispose(addAutomationFrame);
         JUnitUtil.dispose(f);
-    }
-
-    // Ensure minimal setup for log4J
-    @Override
-    @Before
-    public void setUp() {
-        super.setUp();
-    }
-
-    // The minimal setup for log4J
-    @Override
-    @After
-    public void tearDown() {
-        // jmri.util.JUnitUtil.tearDown();
-
-        super.tearDown();
     }
 }

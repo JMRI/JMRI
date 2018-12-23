@@ -8,7 +8,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Manage the Z21 RMBus specific Sensor implementation.
  * <p>
- * System names are "XSnnn", where nnn is the sensor number without padding.
+ * System names are "XSnnn", where X is the user-configurable system prefix,
+ * nnn is the sensor number without padding.
  *
  * @author Paul Bender Copyright (C) 2003-2010
  * @navassoc 1 - * jmri.jmrix.lenz.Z21RMBusSensor

@@ -1,7 +1,5 @@
 package jmri.jmrit.operations;
 
-import jmri.util.JUnitUtil;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,7 +9,7 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017
  */
-public class CommonConductorYardmasterPanelTest {
+public class CommonConductorYardmasterPanelTest extends OperationsTestCase {
 
     protected CommonConductorYardmasterPanel p = null;
 
@@ -20,19 +18,15 @@ public class CommonConductorYardmasterPanelTest {
         Assert.assertNotNull("exists", p);
     }
 
+    @Override
     @Before
     public void setUp() {
-        JUnitUtil.setUp();
+        super.setUp();
         p = new CommonConductorYardmasterPanel() {
             @Override
             public void update() {
             }
         };
-    }
-
-    @After
-    public void tearDown() {
-        JUnitUtil.tearDown();
     }
 
 }

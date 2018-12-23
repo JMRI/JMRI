@@ -16,10 +16,8 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -869,18 +867,5 @@ public class EngineEditFrameTest extends OperationsTestCase {
         Assert.assertEquals("consist name", "TEST_CONSIST", e1.getConsistName());
 
         JUnitUtil.dispose(f);
-    }
-
-
-    @Override
-    @Before
-    public void setUp() {
-        super.setUp();
-    }
-
-    @Override
-    @After
-    public void tearDown() {
-        super.tearDown();
     }
 }

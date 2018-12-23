@@ -3,9 +3,7 @@ package jmri.jmrit.operations.rollingstock.engines;
 import java.util.ArrayList;
 import java.util.List;
 import jmri.jmrit.operations.OperationsTestCase;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -139,19 +137,6 @@ public class ConsistTest extends OperationsTestCase {
         Assert.assertTrue("Consist new Lead is Engine 1 after3", cnew.isLead(e1));
         Assert.assertFalse("Consist new Lead is not Engine 2 after3", cnew.isLead(e2));
         Assert.assertFalse("Consist new Lead is not Engine 3 after3", cnew.isLead(e3));
-    }
-
-    // The minimal setup for log4J
-    @Override
-    @Before
-    public void setUp() {
-        super.setUp();
-    }
-
-    @Override
-    @After
-    public void tearDown() {
-        super.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(ConsistTest.class);

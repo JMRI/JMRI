@@ -789,7 +789,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
 
     /**
      * This subClass, keeps track of which loco address have been requested and
-     * by whom, it primarily uses a increment count to keep track of all the the
+     * by whom, it primarily uses a increment count to keep track of all the
      * Addresses in use as not all external code will have been refactored over
      * to use the new disposeThrottle.
      */
