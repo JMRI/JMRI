@@ -272,7 +272,7 @@ public class JmriConfigurationManager implements ConfigureManager {
      */
     private void handleConnectionError(List<String> errors, Object list) {
         List<String> errorList = errors;
-        
+
         errorList.add(" "); // blank line below errors
         errorList.add(Bundle.getMessage("InitExMessageLogs"));
 
