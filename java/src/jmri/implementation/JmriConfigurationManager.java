@@ -229,108 +229,9 @@ public class JmriConfigurationManager implements ConfigureManager {
                             list = new JList<>(errors.toArray(new String[errors.size()]));
                         }
                         
-                        List<String> errorList = errors;
-                        
                         if (isUnableToConnect.get()) {
-                            errorList.add(" "); // blank line below errors
-                            errorList.add(Bundle.getMessage("InitExMessageLogs"));
-                            
-                            Object[] options = new Object[] {
-                                Bundle.getMessage("ErrorDialogButtonQuitProgram", Application.getApplicationName()),
-                                Bundle.getMessage("ErrorDialogButtonRestartProgram", Application.getApplicationName()),
-                                Bundle.getMessage("ErrorDialogButtonChangeProfile"),
-                                Bundle.getMessage("ErrorDialogButtonEditConnections")
-                            };
-                            
-                            if (list instanceof JList) {
-                                JPopupMenu popUpMenu = new JPopupMenu();
-                                JMenuItem copyMenuItem = new JMenuItem(Bundle.getMessage("MenuItemCopy"));
-                                TransferActionListener copyActionListener = new TransferActionListener();
-                                copyMenuItem.setActionCommand((String) TransferHandler.getCopyAction().getValue(Action.NAME));
-                                copyMenuItem.addActionListener(copyActionListener);
-                                if (SystemType.isMacOSX()) {
-                                    copyMenuItem.setAccelerator(
-                                            KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.META_MASK));
-                                } else {
-                                    copyMenuItem.setAccelerator(
-                                            KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.CTRL_MASK));
-                                }
-                                copyMenuItem.setMnemonic(KeyEvent.VK_C);
-                                copyMenuItem.setEnabled(((JList)list).getSelectedIndex() != -1);
-                                popUpMenu.add(copyMenuItem);
-                                
-                                JMenuItem copyAllMenuItem = new JMenuItem(Bundle.getMessage("MenuItemCopyAll"));
-                                ActionListener copyAllActionListener = (ActionEvent e) -> {
-                                    StringBuilder text = new StringBuilder();
-                                    for (int i=0; i < ((JList)list).getModel().getSize(); i++) {
-                                        text.append(((JList)list).getModel().getElementAt(i).toString());
-                                        text.append(System.getProperty("line.separator")); // NOI18N
-                                    }
-                                    Clipboard systemClipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-                                    systemClipboard.setContents(new StringSelection(text.toString()), null);
-                                };
-                                copyAllMenuItem.setActionCommand("copyAll"); // NOI18N
-                                copyAllMenuItem.addActionListener(copyAllActionListener);
-                                popUpMenu.add(copyAllMenuItem);
-                                
-                                ((JList) list).setComponentPopupMenu(popUpMenu);
-                                
-                                ((JList) list).addListSelectionListener((ListSelectionEvent e) -> {
-                                    copyMenuItem.setEnabled(((JList)e.getSource()).getSelectedIndex() != -1);
-                                });
-                            }
-                            
-                            JOptionPane pane = new JOptionPane(
-                                    new Object[] {
-                                        (list instanceof JList) ? Bundle.getMessage("InitExMessageListHeader") : null,
-                                        list,
-                                        "<html><br></html>", // Add a visual break between list of errors and notes // NOI18N
-                                        Bundle.getMessage("InitExMessageLogs"), // NOI18N
-                                        Bundle.getMessage("ErrorDialogConnectLayout"), // NOI18N
-                                    },
-                                    JOptionPane.ERROR_MESSAGE,
-                                    JOptionPane.DEFAULT_OPTION,
-                                    null,
-                                    options
-                            );
-                            
-                            JDialog dialog = pane.createDialog(null, Bundle.getMessage("InitExMessageTitle", Application.getApplicationName())); // NOI18N
-                            dialog.setVisible(true);
-                            Object selectedValue = pane.getValue();
-                            
-                            if (Bundle.getMessage("ErrorDialogButtonChangeProfile").equals(selectedValue)) {
-                                ProfileManager manager = ProfileManager.getDefault();
-                                Profile last = manager.getActiveProfile();
-                                ProfileManagerDialog pmd = new ProfileManagerDialog(null, true, true);
-                                pmd.setLocationRelativeTo(null);
-                                pmd.setVisible(true);
-                                if (last == null || !last.equals(manager.getActiveProfile())) {
-                                    try {
-                                        manager.saveActiveProfile();
-                                    } catch (IOException e) {
-                                        log.error("Cannot save profile", e);
-                                    }
-                                }
-                                // Restart program
-                                AppsBase.handleRestart();
-                                
-                            } else if (Bundle.getMessage("ErrorDialogButtonEditConnections").equals(selectedValue)) {
-                               if (EditConnectionPreferencesDialog.showDialog()) {
-                                    // Restart program
-                                    AppsBase.handleRestart();
-                                } else {
-                                    // Quit program
-                                    AppsBase.handleQuit();
-                                }
-
-                            } else if (Bundle.getMessage("ErrorDialogButtonRestartProgram", Application.getApplicationName()).equals(selectedValue)) {
-                                // Restart program
-                                AppsBase.handleRestart();
-
-                            } else {
-                                // Exit program
-                                AppsBase.handleQuit();
-                            }
+                            // This method never returns
+                            handleConnectionError(errors, list);
                         }
                         
                         JOptionPane.showMessageDialog(null,
@@ -362,6 +263,115 @@ public class JmriConfigurationManager implements ConfigureManager {
 
         return this.legacy.load(url, registerDeferred);
         // return true; // always return true once legacy support is dropped
+    }
+    
+    /**
+     * Show a dialog with options Quit, Restart, Change profile, Edit connections
+     * @param errors the list of error messages
+     * @param list A JList or a String with error message(s)
+     */
+    private void handleConnectionError(List<String> errors, Object list) {
+        List<String> errorList = errors;
+        
+        errorList.add(" "); // blank line below errors
+        errorList.add(Bundle.getMessage("InitExMessageLogs"));
+
+        Object[] options = new Object[] {
+            Bundle.getMessage("ErrorDialogButtonQuitProgram", Application.getApplicationName()),
+            Bundle.getMessage("ErrorDialogButtonRestartProgram", Application.getApplicationName()),
+            Bundle.getMessage("ErrorDialogButtonChangeProfile"),
+            Bundle.getMessage("ErrorDialogButtonEditConnections")
+        };
+
+        if (list instanceof JList) {
+            JPopupMenu popUpMenu = new JPopupMenu();
+            JMenuItem copyMenuItem = new JMenuItem(Bundle.getMessage("MenuItemCopy"));
+            TransferActionListener copyActionListener = new TransferActionListener();
+            copyMenuItem.setActionCommand((String) TransferHandler.getCopyAction().getValue(Action.NAME));
+            copyMenuItem.addActionListener(copyActionListener);
+            if (SystemType.isMacOSX()) {
+                copyMenuItem.setAccelerator(
+                        KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.META_MASK));
+            } else {
+                copyMenuItem.setAccelerator(
+                        KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.CTRL_MASK));
+            }
+            copyMenuItem.setMnemonic(KeyEvent.VK_C);
+            copyMenuItem.setEnabled(((JList)list).getSelectedIndex() != -1);
+            popUpMenu.add(copyMenuItem);
+
+            JMenuItem copyAllMenuItem = new JMenuItem(Bundle.getMessage("MenuItemCopyAll"));
+            ActionListener copyAllActionListener = (ActionEvent e) -> {
+                StringBuilder text = new StringBuilder();
+                for (int i=0; i < ((JList)list).getModel().getSize(); i++) {
+                    text.append(((JList)list).getModel().getElementAt(i).toString());
+                    text.append(System.getProperty("line.separator")); // NOI18N
+                }
+                Clipboard systemClipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+                systemClipboard.setContents(new StringSelection(text.toString()), null);
+            };
+            copyAllMenuItem.setActionCommand("copyAll"); // NOI18N
+            copyAllMenuItem.addActionListener(copyAllActionListener);
+            popUpMenu.add(copyAllMenuItem);
+
+            ((JList) list).setComponentPopupMenu(popUpMenu);
+
+            ((JList) list).addListSelectionListener((ListSelectionEvent e) -> {
+                copyMenuItem.setEnabled(((JList)e.getSource()).getSelectedIndex() != -1);
+            });
+        }
+
+        JOptionPane pane = new JOptionPane(
+                new Object[] {
+                    (list instanceof JList) ? Bundle.getMessage("InitExMessageListHeader") : null,
+                    list,
+                    "<html><br></html>", // Add a visual break between list of errors and notes // NOI18N
+                    Bundle.getMessage("InitExMessageLogs"), // NOI18N
+                    Bundle.getMessage("ErrorDialogConnectLayout"), // NOI18N
+                },
+                JOptionPane.ERROR_MESSAGE,
+                JOptionPane.DEFAULT_OPTION,
+                null,
+                options
+        );
+
+        JDialog dialog = pane.createDialog(null, Bundle.getMessage("InitExMessageTitle", Application.getApplicationName())); // NOI18N
+        dialog.setVisible(true);
+        Object selectedValue = pane.getValue();
+
+        if (Bundle.getMessage("ErrorDialogButtonChangeProfile").equals(selectedValue)) {
+            ProfileManager manager = ProfileManager.getDefault();
+            Profile last = manager.getActiveProfile();
+            ProfileManagerDialog pmd = new ProfileManagerDialog(null, true, true);
+            pmd.setLocationRelativeTo(null);
+            pmd.setVisible(true);
+            if (last == null || !last.equals(manager.getActiveProfile())) {
+                try {
+                    manager.saveActiveProfile();
+                } catch (IOException e) {
+                    log.error("Cannot save profile", e);
+                }
+            }
+            // Restart program
+            AppsBase.handleRestart();
+
+        } else if (Bundle.getMessage("ErrorDialogButtonEditConnections").equals(selectedValue)) {
+           if (EditConnectionPreferencesDialog.showDialog()) {
+                // Restart program
+                AppsBase.handleRestart();
+            } else {
+                // Quit program
+                AppsBase.handleQuit();
+            }
+
+        } else if (Bundle.getMessage("ErrorDialogButtonRestartProgram", Application.getApplicationName()).equals(selectedValue)) {
+            // Restart program
+            AppsBase.handleRestart();
+
+        } else {
+            // Exit program
+            AppsBase.handleQuit();
+        }
     }
 
     @Override
