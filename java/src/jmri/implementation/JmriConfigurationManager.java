@@ -3,6 +3,9 @@ package jmri.implementation;
 import apps.AppsBase;
 import apps.gui3.EditConnectionPreferencesDialog;
 import apps.gui3.TabbedPreferencesAction;
+import com.alexandriasoftware.swing.JSplitButton;
+import com.alexandriasoftware.swing.action.ButtonClickedActionListener;
+import com.alexandriasoftware.swing.action.SplitButtonClickedActionListener;
 import java.awt.GraphicsEnvironment;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
@@ -276,15 +279,34 @@ public class JmriConfigurationManager implements ConfigureManager {
         errorList.add(" "); // blank line below errors
         errorList.add(Bundle.getMessage("InitExMessageLogs"));
 
+        JSplitButton splitButton = new JSplitButton(Bundle.getMessage("ErrorDialogButtonRestartProgram", Application.getApplicationName()));
+        splitButton.addButtonClickedActionListener(new ButtonClickedActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Restart program
+                AppsBase.handleRestart();
+            }
+        });
+
+        JPopupMenu splitButtonPopupMenu = new JPopupMenu();
+        JMenuItem shutdownItem = new JMenuItem(Bundle.getMessage("ErrorDialogButtonQuitProgram", Application.getApplicationName()));
+        ActionListener actionListener = (ActionEvent e) -> {
+                // Exit program
+                AppsBase.handleQuit();
+        };
+        shutdownItem.addActionListener(actionListener);
+        splitButtonPopupMenu.add(shutdownItem);
+
+        splitButton.setPopupMenu(splitButtonPopupMenu);
+
         Object[] options = new Object[] {
-            Bundle.getMessage("ErrorDialogButtonQuitProgram", Application.getApplicationName()),
-            Bundle.getMessage("ErrorDialogButtonRestartProgram", Application.getApplicationName()),
+            splitButton,
             Bundle.getMessage("ErrorDialogButtonChangeProfile"),
             Bundle.getMessage("ErrorDialogButtonEditConnections")
         };
 
         if (list instanceof JList) {
-            JPopupMenu popUpMenu = new JPopupMenu();
+            JPopupMenu popupMenu = new JPopupMenu();
             JMenuItem copyMenuItem = new JMenuItem(Bundle.getMessage("MenuItemCopy"));
             TransferActionListener copyActionListener = new TransferActionListener();
             copyMenuItem.setActionCommand((String) TransferHandler.getCopyAction().getValue(Action.NAME));
@@ -298,7 +320,7 @@ public class JmriConfigurationManager implements ConfigureManager {
             }
             copyMenuItem.setMnemonic(KeyEvent.VK_C);
             copyMenuItem.setEnabled(((JList)list).getSelectedIndex() != -1);
-            popUpMenu.add(copyMenuItem);
+            popupMenu.add(copyMenuItem);
 
             JMenuItem copyAllMenuItem = new JMenuItem(Bundle.getMessage("MenuItemCopyAll"));
             ActionListener copyAllActionListener = (ActionEvent e) -> {
@@ -312,9 +334,9 @@ public class JmriConfigurationManager implements ConfigureManager {
             };
             copyAllMenuItem.setActionCommand("copyAll"); // NOI18N
             copyAllMenuItem.addActionListener(copyAllActionListener);
-            popUpMenu.add(copyAllMenuItem);
+            popupMenu.add(copyAllMenuItem);
 
-            ((JList) list).setComponentPopupMenu(popUpMenu);
+            ((JList) list).setComponentPopupMenu(popupMenu);
 
             ((JList) list).addListSelectionListener((ListSelectionEvent e) -> {
                 copyMenuItem.setEnabled(((JList)e.getSource()).getSelectedIndex() != -1);
@@ -363,10 +385,6 @@ public class JmriConfigurationManager implements ConfigureManager {
                 // Quit program
                 AppsBase.handleQuit();
             }
-
-        } else if (Bundle.getMessage("ErrorDialogButtonRestartProgram", Application.getApplicationName()).equals(selectedValue)) {
-            // Restart program
-            AppsBase.handleRestart();
 
         } else {
             // Exit program
