@@ -279,23 +279,20 @@ public class JmriConfigurationManager implements ConfigureManager {
         errorList.add(" "); // blank line below errors
         errorList.add(Bundle.getMessage("InitExMessageLogs"));
 
-        JSplitButton splitButton = new JSplitButton(Bundle.getMessage("ErrorDialogButtonRestartProgram", Application.getApplicationName()));
-        splitButton.addButtonClickedActionListener(new ButtonClickedActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Restart program
-                AppsBase.handleRestart();
-            }
+        JSplitButton splitButton = new JSplitButton(Bundle.getMessage("ErrorDialogButtonQuitProgram", Application.getApplicationName()));
+        splitButton.addButtonClickedActionListener((ActionEvent e) -> {
+            // Exit program
+            AppsBase.handleQuit();
         });
 
         JPopupMenu splitButtonPopupMenu = new JPopupMenu();
-        JMenuItem shutdownItem = new JMenuItem(Bundle.getMessage("ErrorDialogButtonQuitProgram", Application.getApplicationName()));
+        JMenuItem restartItem = new JMenuItem(Bundle.getMessage("ErrorDialogButtonRestartProgram", Application.getApplicationName()));
         ActionListener actionListener = (ActionEvent e) -> {
-                // Exit program
-                AppsBase.handleQuit();
+            // Restart program
+            AppsBase.handleRestart();
         };
-        shutdownItem.addActionListener(actionListener);
-        splitButtonPopupMenu.add(shutdownItem);
+        restartItem.addActionListener(actionListener);
+        splitButtonPopupMenu.add(restartItem);
 
         splitButton.setPopupMenu(splitButtonPopupMenu);
 
