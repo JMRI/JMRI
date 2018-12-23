@@ -14,7 +14,6 @@ import jmri.managers.DefaultProgrammerManager;
  *
  * @author	Kevin Dickerson Copyright (C) 2012
  * @author	Bob Jacobsen Copyright (C) 2010
- *
  */
 public class Mx1SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
@@ -56,7 +55,7 @@ public class Mx1SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     jmri.jmrix.swing.ComponentFactory cf = null;
 
     /**
-     * Provides access to the TrafficController for this particular connection.
+     * Provide access to the TrafficController for this particular connection.
      *
      * @return the associated traffic controller
      */
@@ -219,4 +218,5 @@ public class Mx1SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         }
         super.dispose();
     }
+
 }

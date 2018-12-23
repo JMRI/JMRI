@@ -8,7 +8,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Implement light manager for LocoNet systems.
  * <p>
- * System names are "LiLnnnnn", where nnnnn is the bit number without padding.
+ * System names are "LLnnnnn", where the first L is the user configurable
+ * system prefix, nnnnn is the bit number without padding.
  * <p>
  * Based in part on SerialLightManager.java
  *
