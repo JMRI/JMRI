@@ -8,7 +8,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Implement turnout manager for Acela systems
  * <p>
- * System names are "ATnnn", where nnn is the bit number without padding.
+ * System names are "ATnnn", where A is the user configurable system prefix,
+ * nnn is the bit number without padding.
  *
  * @author Dave Duchamp Copyright (C) 2004
  * @author Bob Coleman Copyright (C) 2008 Based on CMRI serial example, modified

@@ -7,7 +7,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Implement turnout manager for NCE systems.
  * <p>
- * System names are "NiTnnn", where nnn is the turnout number without padding.
+ * System names are "NTnnn", where N is the (multichar) system connection prefix,
+ * T is the Turnout type identifier, nnn is the turnout number without padding.
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
