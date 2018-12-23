@@ -5,9 +5,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implement turnout manager - Specific to Hornby Elite
- * <P>
- * System names are "XTnnn", where nnn is the turnout number without padding.
+ * Implement XNet turnout manager - Specific to Hornby Elite
+ * <p>
+ * System names are "XTnnn", where X is the user-configurable system prefix,
+ * nnn is the turnout number without padding.
  *
  * @author Paul Bender Copyright (C) 2008
  */

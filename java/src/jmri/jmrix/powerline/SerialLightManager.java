@@ -6,15 +6,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implement light manager for powerline serial systems
- * <P>
- * System names are "PLnnn", where nnn is the bit number without padding.
+ * Implement light manager for Powerline serial systems.
+ * <p>
+ * System names are "PLnnn", where P is the user configurable system prefix,
+ * nnn is the bit number without padding.
  *
  * @author Dave Duchamp Copyright (C) 2004
  * @author Bob Jacobsen Copyright (C) 2006, 2007, 2008 Converted to multiple
  * connection
  * @author Ken Cameron Copyright (C) 2011
-  */
+ */
 abstract public class SerialLightManager extends AbstractLightManager {
 
     SerialTrafficController tc = null;

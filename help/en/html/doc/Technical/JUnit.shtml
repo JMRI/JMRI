@@ -86,6 +86,7 @@
                 <li><a href="#RetryRule">RetryRule</a>
                 </ul>
             </li>
+            <li><a href="#control">Controlling JUnit4 Tests</a></li>
 
           </ul>
         </li>
@@ -234,26 +235,26 @@
 
       <ul>
         <li><a href=
-        "http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/jacoco/">
+        "http://builds.jmri.org/jenkins/job/Development/job/JaCoCo/jacoco/">
         A plot of coverage as a whole</a>. Click on the graph to
         see a</li>
 
         <li><a href=
-        "http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/lastBuild/jacoco/">
+        "http://builds.jmri.org/jenkins/job/Development/job/JaCoCo/lastBuild/jacoco/">
         summary by Java package</a>. Click on a package to see
         a</li>
 
         <li><a href=
-        "http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/lastBuild/jacoco/jmri.jmrit.blockboss/">
+        "http://builds.jmri.org/jenkins/job/Development/job/JaCoCo/lastBuild/jacoco/jmri.jmrit.blockboss/">
         summary by file</a> (e.g. class). Click on a class to see
         a</li>
 
         <li><a href=
-        "http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/lastBuild/jacoco/jmri.jmrit.blockboss/BlockBossLogic/">
+        "http://builds.jmri.org/jenkins/job/Development/job/JaCoCo/lastBuild/jacoco/jmri.jmrit.blockboss/BlockBossLogic/">
         summary by method</a>. Click on a method to see</li>
 
         <li><a href=
-        "http://jmri.tagadab.com/jenkins/job/Development/job/JaCoCo/lastBuild/jacoco/jmri.jmrit.blockboss/BlockBossLogic/defineIO()/">
+        "http://builds.jmri.org/jenkins/job/Development/job/JaCoCo/lastBuild/jacoco/jmri.jmrit.blockboss/BlockBossLogic/defineIO()/">
         how each part of the code was covered</a> (may require
         scrolling down).</li>
       </ul>
@@ -856,6 +857,10 @@
 </pre>   
       will put a 2 second (2,000 milliseconds) timeout on that test. If you use
       both the rule and the option, the option will control the behavior.
+      For a bit more info, see the
+      <a href=
+        "https://github.com/junit-team/junit4/wiki/Timeout-for-tests">
+        JUnit4 Timeouts for Tests page</a>.
       
       <h4>
       <a name="RetryRule" id="RetryRule">RetryRule - run test several times</a></h4>
@@ -880,6 +885,67 @@
 </pre>   
       to your test class.  This will modify how JUnit4 
       handles errors during all of the tests in that class.
+
+    <h3><a id="control" name="control"></a>Tools for Controlling JUnit4 tests</H3>
+      <ul>
+
+        <li><a href=
+        "https://github.com/junit-team/junit4/wiki/Categories">Categories</a>
+        - useful ones in our case could be headless/not headless,
+        hardware specific (loco buffer attached, NCE PowerPro
+        attached, etc)</li>
+
+        <li><a href=
+        "http://junit.sourceforge.net/javadoc/org/junit/Assume.html">
+        Assumptions</a> - to conditionally ignore a test. For
+        example, a test that would fail in a headless environment
+        can be ignored in headless mode if the first line of the
+        test method is:<br>
+        <code>Assume.assumeFalse(GraphicsEnvironment.isHeadless());</code></li>
+        
+        <li>
+        <a href="http://builds.jmri.org/jenkins/job/Development/job/Ignored%20Test%20Scan/lastBuild/testReport/">
+                    <img src="http://builds.jmri.org/jenkins/job/Development/job/Ignored%20Test%20Scan/warnings7/trendGraph/png?url=PRIORITY" align="right">
+                </a>        
+        <a href="http://junit.sourceforge.net/javadoc/org/junit/Ignore.html">Ignore</a> - 
+        mark a test to be unconditionally ignored. For
+        example, a test that fails because it isn't fully implemented yet can be marked to be ignored:<br>
+<pre style="font-family: monospace;">
+        @org.junit.Ignore("not done yet")
+        @jmri.util.junit.annotations.ToDo("Need to create some mock Framistat Objects")
+        @Test
+        public void notDoneYet() {
+            // some code that compiles but doesn't run
+        }
+</pre><br>
+        You should provide the reason for ignoring this test in the <code>@Ignore</code> argument. 
+        <code>@Ignore</code> without an argument
+        will compile, but Jenkins will mark it as an error.
+        <p>Also note the 
+        <a href="http://jmri.org/JavaDoc/doc/jmri/util/junit/annotations/ToDo.html">@jmri.util.junit.annotations.ToDo annotation</a>
+        which indicates that this needs work and provides some more information 
+        about what needs to be done.
+        <p>
+        In general, we'd rather have working tests rather than ignored ones, so
+        we track the number that have been ignored in a Jenkins job, see the image 
+        to the right.
+        <li>On the other hand, sometimes a test super class (i.e. some abstract base)
+        requires implementation of a test method that's not applicable to this 
+        particular concrete test  
+        class.  It might, for example, test a feature or message that's not 
+        applicable for a specific system's hardware.  In that case, you 
+        provide a null body to do nothing, and mark the test as not applicable
+        with the 
+        <a href="http://jmri.org/JavaDoc/doc/jmri/util/junit/annotations/NotApplicable.html">@jmri.util.junit.annotations.NotApplicable</a>
+        annotation like this:
+<pre style="font-family: monospace;">
+        @Override
+        @jmri.util.junit.annotations.NotApplicable("System X doesn't use Framistat Objects")
+        @Test
+        public void testFramistatUsage() {}
+</pre><br>
+        
+      </ul>
 
 
       <h2><a id="testSwingCode" name="testSwingCode"></a>Testing
@@ -1126,80 +1192,21 @@
       JUnit4</a></h2>
       
       JUnit4 is a significant upgrade of the JUnit
-      tool. It brings new capabilities, but also changes how
-      tests are structured. As of this writing (Summer 2016), we're
-      still supporting the existing test structures described
-      above, while also using new capabilities in some new and
-      migrated tests.
-
-      <p>How, when and even if to migrate previously-existing test
-      cases is a question that's still to be discussed and
-      resolved.</p>
+      tool from our previous JUnit3 standard. 
+      It brings new capabilities, but also changes how
+      tests are structured. As of this writing (Fall 2018), we're
+      committed to migrating all our tests to JUnit4, though the 
+      work is being done on a time-available basis (i.e. slowly).
 
       <p>The rest of this section discusses some aspects of moving
       to and using JUnit4.</p>
-
-      <p>We may want to consider:</p>
-
-      <ul>
-        <li>using <a href="http://wiki.netbeans.org/Jemmy">Jemmy</a> for
-        UI tests instead of JFCUnit, since Jemmy can be used by
-        Junit 4 tests, while JFCUnit requires extending Junit 3
-        TestCase class.</li>
-
-        <li><a href=
-        "https://github.com/junit-team/junit4/wiki/Ignoring-tests">Ignoring
-        Tests</a> - marking a test as not to be run because the
-        test itself is broken</li>
-
-        <li><a href=
-        "https://github.com/junit-team/junit4/wiki/Timeout-for-tests">
-        Timeouts for Tests</a> - failing a test because it takes
-        too long</li>
-
-        <li><a href=
-        "https://github.com/junit-team/junit4/wiki/Categories">Categories</a>
-        - useful ones in our case could be headless/not headless,
-        hardware specific (loco buffer attached, NCE PowerPro
-        attached, etc)</li>
-
-        <li><a href=
-        "http://junit.sourceforge.net/javadoc/org/junit/Assume.html">
-        Assumptions</a> - to conditionally ignore a test. For
-        example, a test that would fail in a headless environment
-        can be ignored in headless mode if the first line of the
-        test method is:<br>
-        <code>Assume.assumeFalse(GraphicsEnvironment.isHeadless());</code></li>
-        
-        <li>
-        <a href="http://jmri.tagadab.com/jenkins/job/Development/job/Ignored%20Test%20Scan/lastBuild/testReport/">
-                    <img src="http://jmri.tagadab.com/jenkins/job/Development/job/Ignored%20Test%20Scan/warnings7/trendGraph/png?url=PRIORITY" align="right">
-                </a>        
-        <a href=
-        "http://junit.sourceforge.net/javadoc/org/junit/Ignore.html">
-        Ignore</a> - mark a test to be unconditionally ignored. For
-        example, a test that isn't fully implemented yet can be marked to be ignored:<br>
-<pre style="font-family: monospace;">
-        @Ignore("not done yet")
-        @Test
-        public void notDoneYet() {
-            // some code that compiles but doesn't run
-        }
-</pre><br>
-        You should provide the reason for ignoring this test in the <code>@Ignore</code> argument. 
-        <code>@Ignore</code> without an argument
-        will compile, but Jenkins will mark it as an error.
-        In general, we'd rather have working tests rather than ignored ones, so
-        we track the number that have been ignored in a Jenkins job, see the image 
-        to the right.        
-      </ul>
 
       <p><a href=
       "https://github.com/JMRI/JMRI/blob/master/java/test/jmri/server/json/roster/JsonRosterHttpServiceTest.java">
       Example of JUnit4 test</a> and <a href=
       "https://github.com/JMRI/JMRI/blob/master/java/test/jmri/server/json/roster/PackageTest.java">
       corresponding PackageTest.java file</a>; note lack of main()
-      procedure and other traditional boilerplate code. These files
+      procedure and other previously-present boilerplate code. These files
       are the result of this <a href=
       "https://github.com/JMRI/JMRI/pull/1725/files#diff-3">commit
       that migrated a test package to JUnit4</a></p>

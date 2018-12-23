@@ -8,7 +8,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Implement light manager for XpressNet systems.
  * <p>
- * System names are "XLnnnnn", where nnnnn is the bit number without padding.
+ * System names are "XLnnn", where X is the user configurable system prefix,
+ * nnn is the bit number without padding.
  * <p>
  * Based in part on SerialLightManager.java
  *

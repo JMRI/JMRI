@@ -8,7 +8,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Manage the specific Sensor implementation.
  * <p>
- * System names are "KiSnnnn", where nnnn is the sensor number without padding.
+ * System names are "KSnnnn", where K is the user configurable system prefix,
+ * nnnn is the sensor number without padding.
  * <p>
  * Sensors are numbered from 1.
  * <p>

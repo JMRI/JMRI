@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
  * Implement sensor manager for ECoS systems. The Manager handles all the state
  * changes.
  * <p>
- * System names are "USnnn:yy", where nnn is the ECoS Object Number for a given
+ * System names are "USnnn:yy", Dcc4PcBoardManager nnn is the ECoS Object Number for a given
  * s88 Bus Module and yy is the port on that module.
  *
  * @author Kevin Dickerson Copyright (C) 2009

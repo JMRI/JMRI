@@ -57,6 +57,8 @@ public class TrafficControllerTest extends AbstractCanTrafficControllerTest {
            public AbstractMRMessage encodeForHardware(CanMessage m) { return null; }
 
            @Override
+           public void sendCanReply(CanReply r, CanListener l) {}
+           @Override
            public void sendCanMessage(CanMessage m, CanListener l) {}
            @Override
            public void addCanListener(CanListener l) {}

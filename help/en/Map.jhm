@@ -300,6 +300,8 @@
 
 <mapID target="package.jmri.jmrix.can.cbus.swing.console.CbusConsoleFrame_opc" url="package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml#opc"/>
 
+<mapID target="package.jmri.jmrix.can.cbus.swing.simulator.SimulatorPane" url="package/jmri/jmrix/can/cbus/swing/simulator/SimulatorPane.shtml"/>
+
 <mapID target="html.hardware.nce.Wangrow_connecting" url="html/hardware/nce/Wangrow.shtml#connecting"/>
 
 <mapID target="package.jmri.jmrit.beantable.ConditionalAddEdit_action" url="package/jmri/jmrit/beantable/ConditionalAddEdit.shtml#action"/>
@@ -2118,6 +2120,8 @@
 
 <mapID target="manual.DecoderPro3.Programmer_SingleCV" url="manual/DecoderPro3/Programmer_SingleCV.shtml"/>
 
+<mapID target="package.jmri.jmrix.can.cbus.swing.simulator.SimulatorPane_direction" url="package/jmri/jmrix/can/cbus/swing/simulator/SimulatorPane.shtml#direction"/>
+
 <mapID target="package.jmri.jmrit.operations.Operations_MakeDepartureTrackAvailable" url="package/jmri/jmrit/operations/Operations.shtml#MakeDepartureTrackAvailable"/>
 
 <mapID target="package.jmri.jmrit.display.LayoutEditor_filemenu" url="package/jmri/jmrit/display/LayoutEditor.shtml#filemenu"/>
@@ -2214,6 +2218,8 @@
 
 <mapID target="html.hardware.cmri.CMRI_L627" url="html/hardware/cmri/CMRI.shtml#L627"/>
 
+<mapID target="package.jmri.jmrix.can.cbus.swing.simulator.SimulatorPane_cs" url="package/jmri/jmrix/can/cbus/swing/simulator/SimulatorPane.shtml#cs"/>
+
 <mapID target="html.hardware.cmri.CMRI_L626" url="html/hardware/cmri/CMRI.shtml#L626"/>
 
 <mapID target="html.hardware.cmri.CMRI_L625" url="html/hardware/cmri/CMRI.shtml#L625"/>
@@ -2248,6 +2254,8 @@
 
 <mapID target="html.hardware.ecos.index_connecting" url="html/hardware/ecos/index.shtml#connecting"/>
 
+<mapID target="package.jmri.jmrix.can.cbus.swing.simulator.SimulatorPane_opc" url="package/jmri/jmrix/can/cbus/swing/simulator/SimulatorPane.shtml#opc"/>
+
 <mapID target="package.jmri.jmrit.display.LayoutEditor_toolbar" url="package/jmri/jmrit/display/LayoutEditor.shtml#toolbar"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_SwitchListOptions" url="package/jmri/jmrit/operations/Operations.shtml#SwitchListOptions"/>
@@ -2275,6 +2283,8 @@
 <mapID target="html.hardware.XPressNet.index_tools" url="html/hardware/XPressNet/index.shtml#tools"/>
 
 <mapID target="html.web.XMLIO" url="html/web/XMLIO.shtml"/>
+
+<mapID target="package.jmri.jmrix.can.cbus.swing.simulator.SimulatorPane_ev" url="package/jmri/jmrix/can/cbus/swing/simulator/SimulatorPane.shtml#ev"/>
 
 <mapID target="html.hardware.acela.Names_documentation" url="html/hardware/acela/Names.shtml#documentation"/>
 
