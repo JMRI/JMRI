@@ -1,9 +1,7 @@
 package jmri.jmrit.operations.locations.schedules;
 
 import jmri.jmrit.operations.OperationsTestCase;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -61,19 +59,5 @@ public class ScheduleItemTest extends OperationsTestCase {
 
         ltsi.setCount(222);
         Assert.assertEquals("Location ScheduleItem set Count", 222, ltsi.getCount());
-    }
-
-    // Ensure minimal setup for log4J
- 
-    @Override
-    @Before
-    public void setUp() {
-        super.setUp();
-    }
-
-    @Override
-    @After
-    public void tearDown() {
-        super.tearDown();
     }
 }

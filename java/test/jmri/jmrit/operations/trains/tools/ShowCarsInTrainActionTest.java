@@ -8,10 +8,8 @@ import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JmriJFrame;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -58,19 +56,6 @@ public class ShowCarsInTrainActionTest extends OperationsTestCase {
         // confirm window is showing
         JmriJFrame frame = JmriJFrame.getFrame(Bundle.getMessage("TitleShowCarsInTrain")+ " (" + train1.getName() + ")");
         Assert.assertNotNull("exists", frame);
-    }
-
-    // The minimal setup for log4J
-    @Override
-    @Before
-    public void setUp() {
-        super.setUp();
-    }
-
-    @Override
-    @After
-    public void tearDown() {
-        super.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(ShowCarsInTrainActionTest.class);

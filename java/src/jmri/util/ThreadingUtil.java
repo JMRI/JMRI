@@ -70,7 +70,7 @@ public class ThreadingUtil {
      * }, 1000); 
      * }
      *
-     * @param ta    What to run, usually as a lambda expression
+     * @param ta    what to run, usually as a lambda expression
      * @param delay interval in milliseconds
      * @return reference to timer object handling delay so you can cancel if desired; note that operation may have already taken place.
      */

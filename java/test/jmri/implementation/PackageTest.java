@@ -11,6 +11,7 @@ import org.junit.runners.Suite;
         // implementations
         AbstractAudioTest.class,
         AbstractSensorTest.class,
+        AbstractStringIOTest.class,
         AccessoryOpsModeProgrammerFacadeTest.class,
         OpsModeDelayedProgrammerFacadeTest.class,
         AddressedHighCvProgrammerFacadeTest.class,

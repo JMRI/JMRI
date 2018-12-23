@@ -1,6 +1,7 @@
 package jmri.jmrix.cmri.serial.networkdriver.configurexml;
 
 import jmri.util.JUnitUtil;
+import jmri.util.JUnitAppender;
 import org.junit.*;
 import jmri.jmrix.cmri.serial.networkdriver.ConnectionConfig;
 
@@ -37,7 +38,9 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractNet
     }
 
     @Test
-    @Ignore("generates error message when run")
     public void getInstanceTest() {
+        super.getInstanceTest();
+        JUnitAppender.assertErrorMessage("getInputStream called before load(), stream not available");
+        JUnitAppender.assertErrorMessage("Failed to start up communications. Error was java.lang.NullPointerException");
     }
 }

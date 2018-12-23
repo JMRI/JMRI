@@ -8,7 +8,7 @@ import javax.annotation.Nonnull;
 import jmri.Light;
 
 /**
- * Abstract class providing partial implementation of the the Light interface.
+ * Abstract class providing partial implementation of the Light interface.
  * <p>
  * Light objects require a number of instance variables. Since Light objects are
  * created using the standard JMRI systemName/userName concept, accessor
@@ -149,9 +149,7 @@ public abstract class AbstractLight extends AbstractNamedBean
      */
     @Override
     public void setTargetIntensity(double intensity) {
-        if (log.isDebugEnabled()) {
-            log.debug("setTargetIntensity " + intensity);
-        }
+        log.debug("setTargetIntensity {}", intensity);
         if (intensity < 0.0 || intensity > 1.0) {
             throw new IllegalArgumentException("Target intensity value " + intensity + " not in legal range");
         }
@@ -404,9 +402,7 @@ public abstract class AbstractLight extends AbstractNamedBean
      */
     @Override
     public void setState(int newState) {
-        if (log.isDebugEnabled()) {
-            log.debug("setState " + newState + " was " + mState);
-        }
+        log.debug("setState {} was {}", newState, mState);
         //int oldState = mState;
         if (newState != ON && newState != OFF) {
             throw new IllegalArgumentException("cannot set state value " + newState);

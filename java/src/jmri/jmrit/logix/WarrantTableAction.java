@@ -22,7 +22,12 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import jmri.*;
+import jmri.BeanSetting;
+import jmri.InstanceManager;
+import jmri.InvokeOnGuiThread;
+import jmri.NamedBean;
+import jmri.Path;
+import jmri.ShutDownTask;
 import jmri.implementation.swing.SwingShutDownTask;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,7 +56,7 @@ public class WarrantTableAction extends AbstractAction {
 
     static int STRUT_SIZE = 10;
     static JMenu _warrantMenu;
-    private static final HashMap<String, Warrant> _warrantMap = new HashMap<String, Warrant>();
+    private static final HashMap<String, Warrant> _warrantMap = new HashMap<>();
     
     private static JTextArea _textArea;
     private static boolean _hasErrors = false;
@@ -175,6 +180,11 @@ public class WarrantTableAction extends AbstractAction {
                 updateWarrantMenu();
             });
         } else {
+            mi = new JMenuItem(Bundle.getMessage("flushLog"));
+            mi.addActionListener((ActionEvent e) -> {
+                OpSessionLog.flush();
+            });
+            _warrantMenu.add(mi);
             mi = new JMenuItem(Bundle.getMessage("stopLog"));
             mi.addActionListener((ActionEvent e) -> {
                 OpSessionLog.close();

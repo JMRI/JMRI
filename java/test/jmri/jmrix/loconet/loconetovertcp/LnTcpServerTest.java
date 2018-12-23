@@ -27,8 +27,9 @@ public class LnTcpServerTest {
         JUnitUtil.resetProfileManager();
         LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo();
         // ensure memo exists in order to later use InstanceManager.getDefault()
-        new LocoNetInterfaceScaffold(memo);  // does this register? or is it now redundant?
-        // memo.setLnTrafficController(lnis);
+        LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold(memo);
+        memo.setLnTrafficController(lnis);
+        memo.configureCommandStation(jmri.jmrix.loconet.LnCommandStationType.COMMAND_STATION_DCS100, true, false, true);
     }
 
     @After

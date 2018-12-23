@@ -98,7 +98,7 @@ abstract public class SerialLightManager extends AbstractLightManager {
     }
 
     /**
-     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     * {@inheritDoc}
      */
     @Override
     public String getEntryToolTip() {
@@ -107,7 +107,7 @@ abstract public class SerialLightManager extends AbstractLightManager {
     }
 
     /**
-     * Returns 'true' to indicate this system can support variable lights
+     * @return 'true' to indicate this system can support variable lights
      */
     @Override
     public boolean supportsVariableLights(String systemName) {

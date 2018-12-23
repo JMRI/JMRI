@@ -13,9 +13,7 @@ import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.schedules.TrainSchedule;
 import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 public class AutomationItemTest extends OperationsTestCase {
@@ -153,17 +151,5 @@ public class AutomationItemTest extends OperationsTestCase {
 
         automationItem.setOther(trainSchedule);
         Assert.assertEquals(trainSchedule, automationItem.getTrainSchedule());
-    }
-
-    @Override
-    @Before
-    public void setUp() {
-        super.setUp();
-    }
-
-    @Override
-    @After
-    public void tearDown() {
-        super.tearDown();
     }
 }

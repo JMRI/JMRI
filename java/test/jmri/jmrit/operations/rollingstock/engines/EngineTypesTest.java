@@ -1,9 +1,7 @@
 package jmri.jmrit.operations.rollingstock.engines;
 
 import jmri.jmrit.operations.OperationsTestCase;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -60,20 +58,4 @@ public class EngineTypesTest extends OperationsTestCase {
         et1.deleteName("TESTENGINETYPENAME3");
         Assert.assertEquals("EngineTypes delete Name3", false, et1.containsName("TESTENGINETYPENAME3"));
     }
-
-    // from here down is testing infrastructure
-    // Ensure minimal setup for log4J
-    @Override
-    @Before
-    public void setUp() {
-        super.setUp();
-    }
-
-    @Override
-    @After
-    public void tearDown() {
-       super.tearDown();
-    }
-
-
 }

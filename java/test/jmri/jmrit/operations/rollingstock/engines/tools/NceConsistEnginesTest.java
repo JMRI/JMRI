@@ -1,17 +1,14 @@
 package jmri.jmrit.operations.rollingstock.engines.tools;
 
-import jmri.jmrit.operations.rollingstock.engines.tools.NceConsistEngines;
-import jmri.util.JUnitUtil;
-import org.junit.After;
+import jmri.jmrit.operations.OperationsTestCase;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
  *
  * @author	Bob Coleman Copyright (C) 2008, 2009
  */
-public class NceConsistEnginesTest {
+public class NceConsistEnginesTest extends OperationsTestCase {
 
     @Test
     public void testCTor(){
@@ -19,16 +16,4 @@ public class NceConsistEnginesTest {
        jmri.jmrix.nce.NceTrafficController tc = new jmri.jmrix.nce.NceTrafficControlScaffold();
        Assert.assertNotNull("NceConsistEngines exists",new NceConsistEngines(tc));
     }
-
-    @Before
-    public void setUp() {
-        JUnitUtil.setUp();
-    }
-
-    @After
-    public void tearDown() {
-       JUnitUtil.tearDown();
-    }
-
-
 }

@@ -3,9 +3,7 @@ package jmri.jmrit.operations.rollingstock.cars;
 import javax.swing.JComboBox;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -51,19 +49,5 @@ public class CarRoadsTest extends OperationsTestCase {
         Assert.assertFalse("Car Roads Delete New4", cr1.containsName("Road New4"));
         cr1.deleteName("Road New1");
         Assert.assertFalse("Car Roads Delete New1", cr1.containsName("Road New1"));
-    }
-
-    // from here down is testing infrastructure
-    // Ensure minimal setup for log4J
-    @Override
-    @Before
-    public void setUp() {
-        super.setUp();
-    }
-
-    @Override
-    @After
-    public void tearDown() {
-        super.tearDown();
     }
 }

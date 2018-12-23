@@ -146,7 +146,7 @@ public class JLogoutputFrame {
         JTextPaneAppender result = new JTextPaneAppender(myLayout, "Debug", myFilters.toArray(new Filter[0]), aTextPane);
 
         // TODO: This a simple approach to add the new appender to all yet known Loggers. 
-        // If Loggers are created dynamically later on or the the additivity flag of
+        // If Loggers are created dynamically later on or the additivity flag of
         // a logger changes, these Loggers probably wouldn't log to this appender. Solution is to
         // override the DefaultLoggerFactory and the Logger's setAdditivity().
         // Better solution is: Derivation of HierarchyEventListener (see mail on log4j user list "logging relative to webapp context path in tomcat" from Mi 19.03.2008 12:04)

@@ -7,10 +7,8 @@ import jmri.jmrit.operations.rollingstock.engines.EnginesTableFrame;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -47,19 +45,6 @@ public class PrintEngineRosterActionTest extends OperationsTestCase {
         
         JUnitUtil.dispose(printPreviewFrame);
         JUnitUtil.dispose(ctf);
-    }
-
-    // The minimal setup for log4J
-    @Override
-    @Before
-    public void setUp() {
-        super.setUp();
-    }
-
-    @Override
-    @After
-    public void tearDown() {
-        super.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(PrintEngineRosterActionTest.class);

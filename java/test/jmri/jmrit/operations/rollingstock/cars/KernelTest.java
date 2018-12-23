@@ -1,9 +1,7 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
 import jmri.jmrit.operations.OperationsTestCase;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -140,19 +138,5 @@ public class KernelTest extends OperationsTestCase {
         Assert.assertTrue("Kernel new Lead is Car 1 after3", knew.isLead(c1));
         Assert.assertFalse("Kernel new Lead is not Car 2 after3", knew.isLead(c2));
         Assert.assertFalse("Kernel new Lead is not Car 3 after3", knew.isLead(c3));
-    }
-
-    // from here down is testing infrastructure
-    // Ensure minimal setup for log4J
-    @Override
-    @Before
-    public void setUp() {
-        super.setUp();
-    }
-
-    @Override
-    @After
-    public void tearDown() {
-       super.tearDown();
     }
 }

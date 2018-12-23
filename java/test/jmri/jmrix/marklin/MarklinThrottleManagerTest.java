@@ -1,6 +1,7 @@
 package jmri.jmrix.marklin;
 
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.*;
 import org.junit.*;
 
 /**
@@ -12,6 +13,7 @@ public class MarklinThrottleManagerTest extends jmri.managers.AbstractThrottleMa
     @Test
     @Override
     @Ignore("test requires further setup")
+    @ToDo("finish test setup, then remove overriden test so that test in parent class can run.")
     public void testGetThrottleInfo() {
     }
 

@@ -85,10 +85,6 @@ public class Stop {
         _seq = newSeq;
     }
 
-    public String getSeqSort() {
-        return String.format("%03d", _seq);  // NOI18N
-    }
-
     public int getDuration() {
         return _duration;
     }
