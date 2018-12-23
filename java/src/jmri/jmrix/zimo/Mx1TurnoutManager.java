@@ -3,12 +3,12 @@ package jmri.jmrix.zimo;
 import jmri.Turnout;
 
 /**
- * New Mx1 Turnout Manager
- * <P>
- * System names are "ZTnnn", where nnn is the turnout number without padding.
+ * Implement turnout manager for Mx1 Turnouts.
+ * <p>
+ * System names are "ZTnnn", where Z is the user configurable system prefix,
+ * nnn is the turnout number without padding.
  *
  * @author	Kevin Dickerson (C) 2014
- * 
  */
 public class Mx1TurnoutManager extends jmri.managers.AbstractTurnoutManager {
 

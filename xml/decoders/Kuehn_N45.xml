@@ -14,6 +14,8 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
     <version author="ronald@wirkuhns.de" version="1" lastUpdated="2016/04/10"/>
+    <version author="Alain Le Marchand" version="2" lastUpdated="2018/12/203"/>
+    <!-- Version 2 - Clarify CV55 name and tooltip + added Reset (Alain Le Marchand) -->
     <decoder>
     <family name="NMRA-DCC/Motorola" mfg="Kuehn Ing.">
     <model model="N45" numOuts="6" numFns="14" maxMotorCurrent="0.8 A" maxTotalCurrent="0.8 A">
@@ -706,20 +708,20 @@
       <tooltip xml:lang="de">P-Parameter</tooltip>
       <tooltip xml:lang="cs">Úprava regulace EMF složky P</tooltip>
     </variable>
-    <variable CV="55" default="00" item="Global lighting option 2">
+    <variable CV="55" default="0" item="Global lighting option 2">
     <decVal min="00" max="99"/>
-      <label>Cycle Time Effects</label>
-      <label xml:lang="it">Effetti Ciclici</label>
-      <label xml:lang="de">Zykluszeit der Effekte/ Dimmwert</label>
-      <label xml:lang="cs">Doba periody efektů</label>
-      <tooltip>Controls Cycle Time of Effects (for CV49/52): 0=0.5s, 9=4.5s</tooltip>
+      <label>Cycle Time Effects / Dimmer</label>
+      <label xml:lang="it">Effetti Ciclici / Riduzione luce</label>
+      <label xml:lang="de">Zykluszeit der Effekte / Dimmwert</label>
+      <label xml:lang="cs">Doba periody efektů/snížení výstupu</label>
+      <tooltip>&lt;html&gt;Controls Cycle Time of Effects and Dimming value (for CV49/52).&lt;br&gt;Decimal number = Cycle time: 0=0.5s, 9=4.5s&lt;br&gt;Unit number = Dimming: 0=full on, 9=lowest&lt;br&gt;e.g. 64 = cycle 3s (decimal value 6), dimmer value= 4 (unit value =4)&lt;br&gt;&lt;/html&gt;</tooltip>
       <tooltip xml:lang="it">Controlla ciclo di effetti:(per CV 49/52): 0=0.5s, 9=4.5s</tooltip>
-      <tooltip xml:lang="de">&lt;html&gt;Hier können Sie die Zykluszeit der Effekte und den Dimmwert für die Auslösung mit F-Taste oder Geschwindigkeit festlegen.&lt;br&gt;Zehnerstelle = Zykluszeit der Effekte&lt;br&gt;Einerstelle = Dimmwert&lt;br&gt;&lt;/html&gt;</tooltip>
+      <tooltip xml:lang="de">&lt;html&gt;Hier können Sie die Zykluszeit der Effekte und den Dimmwert für die Auslösung mit F-Taste oder Geschwindigkeit festlegen.&lt;br&gt;Zehnerstelle = Zykluszeit der Effekte (0x-9x)&lt;br&gt;Einerstelle = Dimmwert (x0-x9)&lt;br&gt;&lt;/html&gt;</tooltip>
       <tooltip xml:lang="cs">Řízení doby periody efektů (pro CV49 - CV52): 0 = 0,5 s, 9 = 4,5 s</tooltip>
-       <comment>Cycle Time Effects/Output Reduction</comment>
-       <comment xml:lang="it">Effetti ciclici / Riduzione uscita</comment>
-       <comment xml:lang="de">Zykluszeit der Effekte/ Dimmwert</comment>
-       <comment xml:lang="cs">Doba periody efektů/snížení výstupu</comment>
+      <comment>Cycle Time Effects/Output Reduction</comment>
+      <comment xml:lang="it">Effetti ciclici / Riduzione uscita</comment>
+      <comment xml:lang="de">Zykluszeit der Effekte/ Dimmwert</comment>
+      <comment xml:lang="cs">Doba periody efektů/snížení výstupu</comment>
     </variable>
     <variable CV="56" mask="XXXXXXXV" default="0" item="Motor Option 1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -997,6 +999,12 @@
       <tooltip xml:lang="cs">Podverze dekodéru</tooltip>
     </variable>
     </variables>
+    <resets>
+      <factReset label="Reset All CVs" CV="8" default="8">
+        <label xml:lang="de">Reset - Grundeinstellung des Decoders wiederherstellen</label>
+        <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
+      </factReset>
+    </resets>
     </decoder>
     <xi:include href="http://jmri.org/xml/decoders/kuehn/PaneABC.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/kuehn/PaneAdvanced.xml"/>
