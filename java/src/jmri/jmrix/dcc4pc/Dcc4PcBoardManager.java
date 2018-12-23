@@ -7,11 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implement SensorManager for Dcc4Pc systems. The Manager handles all the
- * state changes.
- * <P>
- * System names are "DPnn:yy", where nnn is the board id and yy is the port on
- * that board.
+ * Implement BoardManager for Dcc4Pc systems.
  *
  * @author Kevin Dickerson Copyright (C) 2009
  */

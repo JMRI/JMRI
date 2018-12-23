@@ -5,8 +5,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Manage the LocoNet-specific Reporter implementation. System names are
- * "LRnnn", where nnn is the Reporter number without padding.
+ * Manage the LocoNet-specific Reporter implementation.
+ * <p>
+ * System names are "LRnnn", where L is the user configurable system prefix,
+ * nnn is the Reporter number without padding.
  * <p>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
  * and used with permission as part of the JMRI project. That permission does
