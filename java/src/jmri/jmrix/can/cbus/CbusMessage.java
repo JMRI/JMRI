@@ -161,7 +161,7 @@ public class CbusMessage {
      * Set the CAN ID within a CanMessage Header
      *
      * @param m CanMessage
-     * @param id 
+     * @param id CAN ID
      */
     public static void setId(CanMessage m, int id) {
         if (m.isExtended()) {
@@ -267,7 +267,7 @@ public class CbusMessage {
     /**
      * Get the priority from within the CanReply Header
      *
-     * @param m CanReply
+     * @param r CanReply
      * @return Priority of the outgoing message
      */
     public static int getPri(CanReply r) {
@@ -281,7 +281,7 @@ public class CbusMessage {
     /**
      * Get the Op Code from the CanReply
      *
-     * @param m CanReply
+     * @param r CanReply
      * @return OPC of the message
      */
     public static int getOpcode(CanReply r) {
@@ -291,7 +291,7 @@ public class CbusMessage {
     /**
      * Get the Data Length from the CanReply
      *
-     * @param m CanReply
+     * @param r CanReply
      * @return the message data length
      */
     public static int getDataLength(CanReply r) {
@@ -301,7 +301,7 @@ public class CbusMessage {
     /**
      * Get the Node Number from the CanReply
      *
-     * @param m CanReply
+     * @param r CanReply
      * @return the node number
      */
     public static int getNodeNumber(CanReply r) {
@@ -315,7 +315,7 @@ public class CbusMessage {
     /**
      * Get the Event Number from the CanReply
      *
-     * @param m CanReply
+     * @param r CanReply
      * @return the message event ( device ) number
      */
     public static int getEvent(CanReply r) {
@@ -329,7 +329,7 @@ public class CbusMessage {
     /**
      * Get the Event Type ( on or off ) from the CanReply
      *
-     * @param m CanReply
+     * @param r CanReply
      * @return 0 or 1
      */
     public static int getEventType(CanReply r) {
@@ -345,7 +345,7 @@ public class CbusMessage {
      *
      * Adheres to cbus spec, ie on off responses to an AREQ are events
      *
-     * @param m CanReply
+     * @param r CanReply
      */
     public static boolean isEvent(CanReply r) {
         if ( CbusOpCodes.isEvent(r.getElement(0))) {
@@ -358,7 +358,7 @@ public class CbusMessage {
     /**
      * Tests if CanReply is a short event
      *
-     * @param m CanReply
+     * @param r CanReply
      */
     public static boolean isShort(CanReply r) {
         if ( CbusOpCodes.isShortEvent(r.getElement(0))) {
@@ -371,8 +371,8 @@ public class CbusMessage {
     /**
      * Set the CAN ID within a CanReply Header
      *
-     * @param m CanReply
-     * @param id 
+     * @param r CanReply
+     * @param id CAN ID
      */
     public static void setId(CanReply r, int id) {
         if (r.isExtended()) {
@@ -393,7 +393,7 @@ public class CbusMessage {
     /**
      * Set the priority within a CanReply Header
      *
-     * @param m CanReply
+     * @param r CanReply
      * @param pri Priority
      */
     public static void setPri(CanReply r, int pri) {
