@@ -250,7 +250,7 @@ public class TransitManager extends AbstractManager<Transit> implements Property
      */
     @Deprecated
     static public TransitManager instance() {
-        jmri.util.Log4JUtil.warnOnce(log, "instance is deprecated, please replace this call", new Exception("traceback"));        
+        jmri.util.Log4JUtil.deprecationWarning(log, "instance");        
         return InstanceManager.getDefault(TransitManager.class);
     }
 

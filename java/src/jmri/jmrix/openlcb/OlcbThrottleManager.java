@@ -27,7 +27,7 @@ public class OlcbThrottleManager extends AbstractThrottleManager {
     @Deprecated
     public OlcbThrottleManager(jmri.jmrix.SystemConnectionMemo memo, OlcbConfigurationManager mgr) {
         this(memo);
-        jmri.util.Log4JUtil.warnOnce(log, "LnOpsModeProgrammer is deprecated, please replace this call", new Exception("traceback"));
+        jmri.util.Log4JUtil.deprecationWarning(log, "OlcbThrottleManager(..)");        
     }
 
     /**

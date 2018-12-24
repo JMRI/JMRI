@@ -84,7 +84,7 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
      */
     @Deprecated
     public static synchronized TrainManager instance() {
-        jmri.util.Log4JUtil.warnOnce(log, "instance is deprecated, please replace this call", new Exception("traceback"));        
+        jmri.util.Log4JUtil.deprecationWarning(log, "instance");        
         return InstanceManager.getDefault(TrainManager.class);
     }
 

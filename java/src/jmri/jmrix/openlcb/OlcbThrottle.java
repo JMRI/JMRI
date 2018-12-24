@@ -28,7 +28,7 @@ public class OlcbThrottle extends AbstractThrottle {
     @Deprecated
     public OlcbThrottle(DccLocoAddress address, SystemConnectionMemo memo, OlcbConfigurationManager mgr) {
            this(address,memo);
-        jmri.util.Log4JUtil.warnOnce(log, "OlcbThrottle is deprecated, please replace this call", new Exception("traceback"));
+        jmri.util.Log4JUtil.deprecationWarning(log, "OlcbThrottle(..)");        
     }
 
     /**
