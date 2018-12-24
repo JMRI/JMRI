@@ -364,7 +364,7 @@ public class OlcbThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Override
     @Before
     public void setUp() {
-        instance = new OlcbThrottle(new DccLocoAddress(100,true),m,ocm);
+        instance = new OlcbThrottle(new DccLocoAddress(100,true), m);
     }
 
     @Override

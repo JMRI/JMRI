@@ -27,7 +27,7 @@ public class OlcbThrottleManagerTest extends jmri.managers.AbstractThrottleManag
     @Override
     @Before
     public void setUp() {
-        tm = new OlcbThrottleManager(m,ocm);
+        tm = new OlcbThrottleManager(m);
     }
 
     @After
