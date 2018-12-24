@@ -53,6 +53,7 @@ public class NameFile extends XmlFile {
      */
     @Deprecated
     public synchronized static NameFile instance() {
+        jmri.util.Log4JUtil.warnOnce(log, "instance is deprecated, please replace this call", new Exception("traceback"));        
         return InstanceManager.getDefault(NameFile.class);
     }
 

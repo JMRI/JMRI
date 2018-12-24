@@ -2650,6 +2650,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     @Deprecated
     public void dispose(boolean clear) {
         log.debug("Editor delete and dispose done. clear= {}", clear);
+        jmri.util.Log4JUtil.warnOnce(log, "dispose(boolean clear) is deprecated, please replace this call", new Exception("traceback"));
         dispose();
     }
 

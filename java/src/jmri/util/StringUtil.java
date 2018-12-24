@@ -287,6 +287,7 @@ public class StringUtil {
     @Nonnull
     @Deprecated
     static public String[] split(@Nonnull String input, @Nonnull String divider) {
+        jmri.util.Log4JUtil.warnOnce(log, "split is deprecated, please replace this call", new Exception("traceback"));        
         int size = 0;
         String temp = input;
 
@@ -442,6 +443,7 @@ public class StringUtil {
     @Nonnull
     @Deprecated
     static public String escapeString(@Nonnull String s) throws UnsupportedEncodingException {
+        jmri.util.Log4JUtil.warnOnce(log, "escapeString is deprecated, please replace this call", new Exception("traceback"));        
         return URLEncoder.encode(s, StandardCharsets.UTF_8.toString());
     }
 
@@ -461,6 +463,7 @@ public class StringUtil {
     @Nonnull
     @Deprecated
     static public String unescapeString(@Nonnull String s) throws UnsupportedEncodingException {
+        jmri.util.Log4JUtil.warnOnce(log, "unescapeString is deprecated, please replace this call", new Exception("traceback"));        
         return URLDecoder.decode(s, StandardCharsets.UTF_8.toString());
     }
 
@@ -554,4 +557,5 @@ public class StringUtil {
         }
     }
 
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(StringUtil.class);
 }

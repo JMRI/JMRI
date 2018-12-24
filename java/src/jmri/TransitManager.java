@@ -250,6 +250,7 @@ public class TransitManager extends AbstractManager<Transit> implements Property
      */
     @Deprecated
     static public TransitManager instance() {
+        jmri.util.Log4JUtil.warnOnce(log, "instance is deprecated, please replace this call", new Exception("traceback"));        
         return InstanceManager.getDefault(TransitManager.class);
     }
 
@@ -257,4 +258,6 @@ public class TransitManager extends AbstractManager<Transit> implements Property
     public String getBeanTypeHandled() {
         return Bundle.getMessage("BeanNameTransit");
     }
+
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TransitManager.class);
 }
