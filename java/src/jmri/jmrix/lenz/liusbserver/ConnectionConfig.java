@@ -21,9 +21,6 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
      */
     public ConnectionConfig(jmri.jmrix.NetworkPortAdapter p) {
         super(p);
-//        additionalItems.add(bcastPortFieldLabel);
-//        additionalItems.add(bcastPortField);
-//        bcastPortFieldLabel.setLabelFor(bcastPortField);
     }
 
     /**
@@ -58,10 +55,6 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
         portField.setText(String.valueOf(LIUSBServerAdapter.COMMUNICATION_TCP_PORT));
         portField.setEnabled(false); // we can't change this now.
         options.get(adapter.getOption1Name()).getComponent().setEnabled(false); // we can't change this now.
-        bcastPortField.setEnabled(false); // we can't change this now.
     }
-
-    protected JLabel bcastPortFieldLabel = new JLabel(Bundle.getMessage("BroadcastPortLabel"));
-    protected JTextField bcastPortField = new JTextField(String.valueOf(LIUSBServerAdapter.BROADCAST_TCP_PORT));
 
 }
