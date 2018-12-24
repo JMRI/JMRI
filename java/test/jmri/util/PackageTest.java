@@ -67,7 +67,6 @@ import org.junit.runners.Suite;
         PhysicalLocationTest.class,
         PortNameMapperTest.class,
         ResizableImagePanelTest.class,
-        RuntimeUtilTest.class,
         SerialUtilTest.class,
         SocketUtilTest.class,
         SystemNameComparatorTest.class,
