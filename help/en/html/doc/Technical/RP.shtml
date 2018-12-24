@@ -155,6 +155,7 @@
       the <a href="Logging.shtml">logger reference</a> at the
       bottom of each file.</p>
 
+      <a id="deprecating" name="deprecating"></a>
       <h2>Deprecating Code</h2>
       As development proceeds, sometimes
       old ways of doing things have to be replaced by new ways. In
@@ -185,11 +186,20 @@
         <li>Once JMRI itself is clean (enough), start generating warnings for users
             (especially scripting users) by adding:
 <pre style="font-family: monospace;">
-            jmri.util.Log4JUtil.warnOnce(log, "Deprecated doStuff() method called. You should replace this with with a call to doBetterStuff()");
+            jmri.util.Log4JUtil.deprecationWarning(log, "doStuff()");
 </pre>
+            This will put a warning in the log if that method 
+            is used during normal operation.
+            <p>
+            If you have tests for that method (you should!) you need to
+            modify the direct tests of the deprecated method; see
+            the 
+            <a href="JUNit.shtml#deprecationWarning">instructions on the JUnit page</a>.
+
         <li>Wait an appropriate length of time; the more visible the class or method,
             the longer to wait.  Things that were in scripts should wait at least two
             production releases.
+            
         <li>Remove the deprecated methods and their tests.
         </ul>
         

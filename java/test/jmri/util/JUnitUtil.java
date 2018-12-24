@@ -181,6 +181,13 @@ public class JUnitUtil {
         // need to do this each time
         try {
             JUnitAppender.start();
+            
+            // reset warn _only_ once logic to make tests repeatable
+            Log4JUtil.restartWarnOnce();
+            // ensure logging of deprecated method calls;
+            // individual tests can turn off as needed
+            Log4JUtil.setDeprecatedLogging(true);
+            
         } catch (Throwable e) {
             System.err.println("Could not start JUnitAppender, but test continues:\n" + e);
         }
