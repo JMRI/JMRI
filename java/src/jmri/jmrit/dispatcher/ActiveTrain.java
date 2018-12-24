@@ -206,7 +206,6 @@ public class ActiveTrain {
     private int mRestartDelay = 0;
     private NamedBeanHandle<jmri.Sensor> mStartSensor = null; // A Sensor that when changes state to active will trigger the trains start.
     private NamedBeanHandle<jmri.Sensor> mRestartSensor = null; // A Sensor that when changes state to active will trigger the trains start.
-    private final NamedBeanHandle<jmri.Sensor> mRestartAllocationSensor = null; // A Sensor that when changes state to active will trigger restart allocation
     private int mTrainType = LOCAL_FREIGHT;
     private boolean terminateWhenFinished = false;
 

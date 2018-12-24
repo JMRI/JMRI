@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import jmri.Block;
 import jmri.InstanceManager;
-import jmri.NamedBeanHandle;
 import jmri.Section;
 import jmri.Sensor;
 import jmri.Transit;
@@ -412,7 +411,6 @@ public class AutoAllocate {
         if (lastAllocatedTransitSection.getStopAllocatingSensor() != null &&
                 !lastAllocatedTransitSection.getStopAllocatingSensor().equals("")) {
             String sensorName = lastAllocatedTransitSection.getStopAllocatingSensor();
-            NamedBeanHandle<Sensor> sensorBean;
             Sensor sensor;
             try {
                 sensor = InstanceManager.sensorManagerInstance().provideSensor(sensorName);
