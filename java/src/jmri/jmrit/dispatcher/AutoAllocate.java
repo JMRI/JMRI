@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import jmri.Block;
 import jmri.InstanceManager;
+import jmri.NamedBeanHandle;
 import jmri.Section;
 import jmri.Sensor;
 import jmri.Transit;
@@ -118,7 +119,7 @@ public class AutoAllocate {
                     TransitSection arCurrentTransitSection =
                             arTransit.getTransitSectionFromSectionAndSeq(ar.getActiveTrain().getLastAllocatedSection(),
                                     ar.getActiveTrain().getLastAllocatedSectionSeqNumber());
-                    if (stopAllocateSensorSet(arCurrentTransitSection)) {
+                    if (stopAllocateSensorSet(ar.getActiveTrain(),arCurrentTransitSection)) {
                         log.debug("Skipping sensor active");
                         continue;
                     }
@@ -407,15 +408,17 @@ public class AutoAllocate {
      * @param lastAllocatedTransitSection
      * @return true stop allocating, false dont
      */
-    private boolean stopAllocateSensorSet(TransitSection lastAllocatedTransitSection) {
+    private boolean stopAllocateSensorSet(ActiveTrain at, TransitSection lastAllocatedTransitSection) {
         if (lastAllocatedTransitSection.getStopAllocatingSensor() != null &&
-                lastAllocatedTransitSection.getStopAllocatingSensor() != "") {
+                !lastAllocatedTransitSection.getStopAllocatingSensor().equals("")) {
             String sensorName = lastAllocatedTransitSection.getStopAllocatingSensor();
+            NamedBeanHandle<Sensor> sensorBean;
             Sensor sensor;
             try {
                 sensor = InstanceManager.sensorManagerInstance().provideSensor(sensorName);
                 if (sensor.getKnownState() == Sensor.ACTIVE) {
                     log.debug("Sensor[{}] InActive", sensor.getUserName());
+                    at.initializeRestartAllocationSensor(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(sensorName, sensor));
                     return true;
                 }
             } catch (NumberFormatException ex) {
