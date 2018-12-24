@@ -123,7 +123,7 @@ public class TransitSection {
     private final ArrayList<TransitSectionAction> mTransitSectionActionList = new ArrayList<>();
     private boolean mAlternate = false;
     private boolean mSafe = false;
-    private String mStopAllocatingSensorName = null;
+    private String mStopAllocatingSensorName = "";
 
     // temporary variables and method for delayed initialization of Section
     private String tSectionName = "";

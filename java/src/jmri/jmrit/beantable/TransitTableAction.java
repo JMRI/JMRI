@@ -296,6 +296,23 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             protected String getBeanType() {
                 return "Transit";
             }
+
+            @Override
+            public void configureTable(JTable table) {
+                jmri.InstanceManager.sensorManagerInstance().addPropertyChangeListener(this);
+                super.configureTable(table);
+            }
+
+            @Override
+            public void propertyChange(java.beans.PropertyChangeEvent e) {
+                if (e.getSource() instanceof jmri.SensorManager) {
+                    if (e.getPropertyName().equals("DisplayListName") || e.getPropertyName().equals("length")) {
+                        updateSensorList();
+                    }
+                }
+                super.propertyChange(e);
+            }
+
         };
     }
 
@@ -366,6 +383,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
     JCheckBox _autoSystemName = new JCheckBox(Bundle.getMessage("LabelAutoSysName"));
     jmri.UserPreferencesManager pref;
     String systemNameAuto = this.getClass().getName() + ".AutoSystemName";
+
 
     /**
      * Responds to the Add... button and the Edit buttons in Transit Table.
@@ -714,7 +732,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             action[i] = null;
             alternate[i] = false;
             safe[i] = false;
-            sensorStopAllocation[i] = null;
+            sensorStopAllocation[i] = "";
         }
         curSection = null;
         curSectionDirection = 0;
@@ -833,7 +851,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             sequence[0] = 1;
             alternate[0] = false;
             safe[0] = addAsSafe.isSelected();
-            sensorStopAllocation[0] = null;
+            sensorStopAllocation[0] = "";
             action[0] = new ArrayList<>();
             if (curSequenceNum == 2) {
                 prevSectionDirection = direction[0];
@@ -1226,7 +1244,11 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
         sequence[index] = sequence[index - 1];
         alternate[index] = true;
         safe[index] = addAsSafe.isSelected();
-        //sensorStopAllocation[index] = cba;
+        if (stopAllocatingSensorBox.getSelectedIndex() < 0) {
+            sensorStopAllocation[index] = "";
+        } else {
+            sensorStopAllocation[index] = (String) stopAllocatingSensorBox.getSelectedItem();
+        }
         action[index] = new ArrayList<>();
         initializeSectionCombos();
         updateSeqNum();
@@ -2577,6 +2599,11 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
                 // a new NamedBean is available in the manager
                 fireTableDataChanged();
             }
+            if (e.getSource() instanceof jmri.SensorManager) {
+                if (e.getPropertyName().equals("DisplayListName")) {
+                    updateSensorList();
+                }
+            }
         }
 
         @Override
@@ -2714,10 +2741,10 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
                 safe[row] = val; // use checkbox to show Safe
             } else if (col == STOPALLOCATING_SENSOR) {
                 JComboBox<String> cb = (JComboBox<String>) value;
-                if (cb.getSelectedIndex() > 0) {
-                    sensorStopAllocation[row] = (String) cb.getSelectedItem();
-                } else {
+                if (cb.getSelectedIndex() < 0) {
                     sensorStopAllocation[row] = "";
+                } else {
+                    sensorStopAllocation[row] = (String) cb.getSelectedItem();
                 }
              }
             return;
