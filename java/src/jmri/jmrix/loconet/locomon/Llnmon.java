@@ -100,6 +100,7 @@ public class Llnmon {
     @Deprecated
     public Llnmon() {
         this("L");
+        jmri.util.Log4JUtil.warnOnce(log, "Llnmon is deprecated, please replace this call", new Exception("traceback"));
     }
 
     /**
@@ -137,6 +138,7 @@ public class Llnmon {
             @Nonnull SensorManager sensorManager, 
             @Nonnull ReporterManager reporterManager) {
         this(turnoutManager.getSystemPrefix());
+        jmri.util.Log4JUtil.warnOnce(log, "Llnmon is deprecated, please replace this call", new Exception("traceback"));
         this.setLocoNetSensorManager(sensorManager); // a hack to set the sensor prefix
         this.setLocoNetReporterManager(reporterManager);  // a hack to set the reporter prefix
     }
@@ -154,6 +156,7 @@ public class Llnmon {
      */
     @Deprecated
     public Llnmon(@Nonnull String prefix) {
+        jmri.util.Log4JUtil.warnOnce(log, "Llnmon is deprecated, please replace this call", new Exception("traceback"));
         turnoutPrefix = prefix+"T";
         sensorPrefix = prefix+"S";
         reporterPrefix = prefix+"R";
@@ -1227,6 +1230,7 @@ public class Llnmon {
      */
     @Deprecated
     public final void setLocoNetTurnoutManager(@Nonnull TurnoutManager turnoutManager) {
+        jmri.util.Log4JUtil.warnOnce(log, "Llnmon is deprecated, please replace this call", new Exception("traceback"));
         turnoutPrefix = turnoutManager.getSystemPrefix()+"T";
     }
 
@@ -1243,6 +1247,7 @@ public class Llnmon {
      */
     @Deprecated
     public final void setLocoNetSensorManager(@Nonnull SensorManager sensorManager) {
+        jmri.util.Log4JUtil.warnOnce(log, "Llnmon is deprecated, please replace this call", new Exception("traceback"));
         sensorPrefix = sensorManager.getSystemPrefix()+"S";
     }
 
@@ -1259,6 +1264,7 @@ public class Llnmon {
      */
     @Deprecated
     public final void setLocoNetReporterManager(@Nonnull ReporterManager reporterManager) {
+        jmri.util.Log4JUtil.warnOnce(log, "Llnmon is deprecated, please replace this call", new Exception("traceback"));
         reporterPrefix = reporterManager.getSystemPrefix()+"R";
     }
 
