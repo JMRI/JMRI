@@ -21,6 +21,16 @@
     <div id="mainContent">
       <h1>Adding/Editing Sensors</h1>
 
+      <div class="toc">
+        <ul>
+          <li><a href="#addsensor">Add a Sensor</a></li>
+          <li><a href="#editsensor">Edit a Sensor</a></li>
+          <li><a href="#hardwaresensor">Hardware specific Sensor</a> properties</li>
+        </ul>
+      </div>
+
+      <a name="addsensor" id="addsensor"></a>
+      <h2>Add a new Sensor</h2>
       <p>When adding a Sensor, from the "System connection:" drop down
       list select the hardware connection this Sensor is
       attached to.</p><img src="images/AddSensor.png" alt="Add Sensor">
@@ -31,7 +41,7 @@
       wish to describe the Sensor.<br>
       Finish by clicking the "OK" button.</p>
 
-      <h2>Creating A Number of Sensors</h2>
+      <h3>Creating A Number of Sensors</h3>
 
       <p>It is also possible to create a number of Sensors in one
       go.<br>
@@ -43,10 +53,60 @@
       up or down to set the number of Sensors you wish to add.
       Clicking "OK" will then create that
       number of sequential Sensors in the table.<br>
-      If a User Name has been
-      entered, a number will be added to the end of the name to
-        keep each Sensor User Name unique.</p>
+      If a User Name has been entered, a number will be added to
+      the end of the name to keep each Sensor User Name unique.</p>
 
+      <a name="editsensor" id="editsensor"></a>
+      <h2>Edit a Sensor</h2>
+
+      <p>Clicking on [Edit] in any line of the Sensor Table opens the
+      Edit Sensor pane to edit the following:</p>
+
+      <div class="toc">
+        <ul>
+          <li><a href="#basic">Basic</a></li>
+          <li><a href="#debounce">Debounce Delays</a></li>
+          <li><a href="#pullup">Pull-Up/Down</a></li>
+          <li><a href="#usage">Usage</a></li>
+          <li><a href="#properties">Properties</a></li>
+        </ul>
+      </div>
+
+      <a name="basic" id="basic"></a>
+      <h3>Basic</h3>
+      <p>This tab lets you see and change basic information about the Sensor
+      as entered on its creation:</p>
+      <ul>
+        <li>User Name</li>
+        <li>a Comment on the sensor (free text to keep a note)</li>
+        <li>a checkbox to use this Sensor as Inverted (Inactive will be
+        interpreted as Active and vice versa)</li>
+      </ul>
+
+      <a href="images/SensorEditDelaysTab.png"><img
+              src="images/SensorEditDelaysTab.png" height="248" width="515"
+              align="right" alt="Sensor Edit Debounce Delays pane"></a>
+
+      <a name="debounce" id="debounce"></a>
+      <h3>Debounce Delays</h3>
+      <p>This tab lets you see and change Sensor specific values for
+      the <a href="SensorTable.shtml#Debounce">Sensor Debounce Delay</a>.</p>
+
+      <a name="pullup" id="pullup"></a>
+      <h3>Pull-Up/-Down</h3>
+      <p>This tab lets you set whether your hardware has a puul-up or
+      pull-down resistor installed over the Sensor input.</p>
+
+      </ul><a name="usage" id="usage"></a>
+      <h3>Usage</h3>
+      <p>This is an information field, showing where you have the
+      Sensor displayed on a Panel.</p>
+
+      <a name="properties" id="properties"></a>
+      <h3>Properties</h3>
+      <p>Custom properties, only advised for advanced users.</p>
+
+      <a name="hardwaresensor" id="hardwaresensor"></a>
       <h2>Hardware Specific Information</h2>
 
       <p>Please refer to our
