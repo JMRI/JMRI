@@ -7,7 +7,8 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Manage the LocoNet-specific Sensor implementation.
- * System names are "LiSnnn", where nnn is the sensor number without padding.
+ * System names are "LSnnn", where L is the user configurable system prefix,
+ * nnn is the sensor number without padding.
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */

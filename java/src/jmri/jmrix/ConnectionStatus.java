@@ -43,9 +43,7 @@ public class ConnectionStatus {
             // create and load
             _instance = new ConnectionStatus();
         }
-        if (log.isDebugEnabled()) {
-            log.debug("ConnectionStatus returns instance " + _instance);
-        }
+        //    log.debug("ConnectionStatus returns instance " + _instance);
         return _instance;
     }
 
@@ -57,7 +55,7 @@ public class ConnectionStatus {
      * @param portName   the port name
      */
     public synchronized void addConnection(String systemName, @Nonnull String portName) {
-        log.debug("add connection to monitor {} {}", systemName, portName);
+        log.debug("addConnection systemName {} portName {}", systemName, portName);
         ConnectionKey newKey = new ConnectionKey(systemName, portName);
         if (!portStatus.containsKey(newKey)) {
             portStatus.put(newKey, CONNECTION_UNKNOWN);
@@ -75,11 +73,12 @@ public class ConnectionStatus {
      *                   ConnectionStatus.UNKNOWN.
      */
     public synchronized void setConnectionState(String systemName, @Nonnull String portName, @Nonnull String state) {
-        log.debug("set {} connection status: {}", portName, state);
+        log.debug("setConnectionState systemName: {} portName: {} state: {}",systemName, portName, state);
         ConnectionKey newKey = new ConnectionKey(systemName, portName);
         if (!portStatus.containsKey(newKey)) {
             portStatus.put(newKey, state);
             firePropertyChange("add", null, portName);
+            log.debug("New Connection added: {} ",newKey);
         } else {
             firePropertyChange("change", portStatus.put(newKey, state), portName);
         }
@@ -95,6 +94,7 @@ public class ConnectionStatus {
      */
     @Deprecated
     public synchronized String getConnectionState(@Nonnull String portName) {
+        log.debug("Deprecated getConnectionState portName: {} ",portName);
         ConnectionKey newKey = new ConnectionKey(null, portName);
         if (portStatus.containsKey(newKey)) {
             return getConnectionState(null, portName);
@@ -120,6 +120,7 @@ public class ConnectionStatus {
      * @return the status
      */
     public synchronized String getSystemState(@Nonnull String systemName) {
+        log.debug("getSystemState systemName: {} ",systemName);
         // we have to see if there is a key that has systemName as the port value.
         for (ConnectionKey c : portStatus.keySet()) {
             if (c.getSystemName() == null ? systemName == null : c.getSystemName().equals(systemName)) {
@@ -141,12 +142,15 @@ public class ConnectionStatus {
      * @return the status
      */
     public synchronized String getConnectionState(String systemName, @Nonnull String portName) {
+        log.debug("144 getConnectionState systemName: {} portName: {}", systemName, portName);
         String stateText = CONNECTION_UNKNOWN;
         ConnectionKey newKey = new ConnectionKey(systemName, portName);
         if (portStatus.containsKey(newKey)) {
             stateText = portStatus.get(newKey);
+            log.debug("connection found : {}",stateText);
+        } else {
+            log.debug("connection systemName {} portName {} not found, {}",systemName,portName,stateText);
         }
-        log.debug("get connection status: {} {}", portName, stateText);
         return stateText;
     }
 
