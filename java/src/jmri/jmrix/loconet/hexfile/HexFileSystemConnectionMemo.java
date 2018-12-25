@@ -1,8 +1,7 @@
 package jmri.jmrix.loconet.hexfile;
 
 /**
- * Lightweight class to denote that a system is active, and provide general
- * information.
+ * Lightweight class to denote that a system is "active" via a LocoNet hexfile emulator.
  * <p>
  * Objects of specific subtypes are registered in the instance manager to
  * activate their particular system.

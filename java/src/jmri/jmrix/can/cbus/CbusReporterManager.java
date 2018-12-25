@@ -13,17 +13,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Manage the CBUS-specific Reporter implementation.
  * <p>
- * System names are "MRnnn", where nnn is the reporter number without padding.
- * <hr>
- * This file is part of JMRI.
- * <P>
- * JMRI is free software; you can redistribute it and/or modify it under the
- * terms of version 2 of the GNU General Public License as published by the Free
- * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * System names are "MRnnn", where M is the user-configurable system prefix,
+ * nnn is the reporter number without padding.
  *
  * @author Mark Riddoch Copyright (C) 2015
  */
