@@ -201,12 +201,20 @@ public class WarrantTest {
         }, "Train starts to move after 2nd command");
         jmri.util.JUnitUtil.releaseThread(this, 100); // What should we specifically waitFor?
 
+        // confirm one message logged
+        System.err.println("log 0");
+        //Assert.assertTrue(jmri.util.JUnitAppender.verifyNoBacklog());
+        jmri.util.JUnitAppender.assertWarnMessage("Path NorthToWest in block North has length zero. Cannot run NXWarrants or ramp speeds through blocks with zero length.");
+        System.err.println("log 1");
+
         jmri.util.ThreadingUtil.runOnLayout( ()->{
             try {
                 sWest.setState(Sensor.ACTIVE);
             } catch (jmri.JmriException e) { Assert.fail("Unexpected Exception: "+e); }
         });
+        System.err.println("log 2");
         jmri.util.JUnitUtil.releaseThread(this, 100); // What should we specifically waitFor?
+        System.err.println("log 3");
 
         jmri.util.ThreadingUtil.runOnLayout( ()->{
             try {
@@ -218,8 +226,6 @@ public class WarrantTest {
         // wait for done
         jmri.util.JUnitUtil.waitFor(()->{return warrant.getRunningMessage().equals("Idle");}, "warrant not done");
         
-        // confirm one message logged
-        // jmri.util.JUnitAppender.assertWarnMessage("Block West does not have a length for path SouthToNorth");
     }
     
     
