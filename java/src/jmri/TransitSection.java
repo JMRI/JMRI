@@ -103,7 +103,7 @@ public class TransitSection {
      *                  primary or has no alternates
      * @param safe      true if this is a safe section. When dispatcher by safe sections
      *                  a train is dispatched safe section to safe section with all intervening sections available.
-     * @param stopAllocatingSensor If this sensor is present, valid, and Active allocation will stop until
+     * @param stopAllocatingSensorName If this sensor is present, valid, and Active allocation will stop until
      *                  it is no longer Active.
      */
     public TransitSection(String secName, int seq, int direction, boolean alt, boolean safe, String stopAllocatingSensorName) {
