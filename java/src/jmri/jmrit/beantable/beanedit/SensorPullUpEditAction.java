@@ -8,7 +8,7 @@ import jmri.NamedBean;
 import jmri.Sensor;
 
 /**
- * Provide an edit panel for the sensor pull up/pull down configuration.
+ * Provides an edit panel for the sensor pull up/pull down configuration.
  * This is designed so that it can be re-used in other panels. This is based
  * on the SensorDebounceEditAction class.
  *

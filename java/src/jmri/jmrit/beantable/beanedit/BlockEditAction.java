@@ -25,7 +25,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Provide an edit panel for a Block object.
+ * Provides an edit panel for a Block object.
  *
  * @author Kevin Dickerson Copyright (C) 2011
  */
