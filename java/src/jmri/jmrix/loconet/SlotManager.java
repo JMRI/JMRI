@@ -817,6 +817,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         ret.add(ProgrammingMode.REGISTERMODE);
         ret.add(ProgrammingMode.ADDRESSMODE);
         ret.add(csOpSwProgrammingMode);
+        ret.add(ProgrammingMode.DIRECTBITMODE);
 
         return ret;
     }
@@ -1009,6 +1010,8 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         } else if (getMode().equals(ProgrammingMode.REGISTERMODE)
                 || getMode().equals(ProgrammingMode.ADDRESSMODE)) {
             pcmd = pcmd | 0x10;
+        } else if (getMode().equals(ProgrammingMode.DIRECTBITMODE)) {
+            pcmd = pcmd | 0x08;
         } else {
             throw new jmri.ProgrammerException("mode not supported"); // NOI18N
         }
@@ -1102,6 +1105,8 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
             pcmd = pcmd | 0x20;
         } else if (getMode().equals(ProgrammingMode.DIRECTBYTEMODE)) {
             pcmd = pcmd | 0x28;
+        } else if (getMode().equals(ProgrammingMode.DIRECTBITMODE)) {
+            pcmd = pcmd | 0x08;
         } else if (getMode().equals(ProgrammingMode.REGISTERMODE)
                 || getMode().equals(ProgrammingMode.ADDRESSMODE)) {
             pcmd = pcmd | 0x10;
@@ -1218,6 +1223,8 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
             pcmd = pcmd | 0x20;
         } else if (getMode().equals(ProgrammingMode.DIRECTBYTEMODE)) {
             pcmd = pcmd | 0x28;
+        } else if (getMode().equals(ProgrammingMode.DIRECTBITMODE)) {
+            pcmd = pcmd | 0x08;
         } else if (getMode().equals(ProgrammingMode.REGISTERMODE)
                 || getMode().equals(ProgrammingMode.ADDRESSMODE)) {
             pcmd = pcmd | 0x10;

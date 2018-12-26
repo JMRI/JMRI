@@ -761,12 +761,13 @@ public class SlotManagerTest {
     @Test
     public void testGetProgrammingModes() {
         List<ProgrammingMode> l = slotmanager.getSupportedModes();
-        Assert.assertEquals("programming mode list length ok", 5, l.size());
+        Assert.assertEquals("programming mode list length ok", 6, l.size());
         Assert.assertEquals("programming mode 0", ProgrammingMode.PAGEMODE, l.get(0));
         Assert.assertEquals("programming mode 1", ProgrammingMode.DIRECTBYTEMODE, l.get(1));
         Assert.assertEquals("programming mode 2", ProgrammingMode.REGISTERMODE, l.get(2));
         Assert.assertEquals("programming mode 3", ProgrammingMode.ADDRESSMODE, l.get(3));
         Assert.assertEquals("programming mode 4", "LOCONETCSOPSWMODE", l.get(4).getStandardName());
+        Assert.assertEquals("programming mode 5", ProgrammingMode.DIRECTBITMODE, l.get(5));
     }
 
     @Test
