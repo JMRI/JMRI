@@ -549,7 +549,7 @@
             test method using 
             <code>Log4JUtil.setDeprecatedLogging(false)</code>
             before invoking the deprecated method. (You can also
-            do an <code>assertWanr</code> for all the messages emitted,
+            do an <code>JUnitAppender.assertWarn</code> for all the messages emitted,
             but it's easier to just turn them off.)  
 
       </ol>
