@@ -62,13 +62,16 @@ public class TransitSection {
      *                  primary or has no alternates
      * @param safe      true if this is a safe section. When dispatcher by safe sections
      *                  a train is dispatched safe section to safe section with all intervening sections available.
+     * @param stopAllocatingSensorName If this sensor is present, valid, and Active allocation will stop until
+     *                  it is no longer Active.
      */
-    public TransitSection(jmri.Section s, int seq, int direction, boolean alt, boolean safe) {
+    public TransitSection(jmri.Section s, int seq, int direction, boolean alt, boolean safe, String stopAllocatingSensorName) {
         mSection = s;
         mSequence = seq;
         mDirection = direction;
         mAlternate = alt;
         mSafe = safe;
+        mStopAllocatingSensorName = stopAllocatingSensorName;
     }
 
     /**
@@ -100,13 +103,16 @@ public class TransitSection {
      *                  primary or has no alternates
      * @param safe      true if this is a safe section. When dispatcher by safe sections
      *                  a train is dispatched safe section to safe section with all intervening sections available.
+     * @param stopAllocatingSensorName If this sensor is present, valid, and Active allocation will stop until
+     *                  it is no longer Active.
      */
-    public TransitSection(String secName, int seq, int direction, boolean alt, boolean safe) {
+    public TransitSection(String secName, int seq, int direction, boolean alt, boolean safe, String stopAllocatingSensorName) {
         tSectionName = secName;
         mSequence = seq;
         mDirection = direction;
         mAlternate = alt;
         mSafe = safe;
+        mStopAllocatingSensorName = stopAllocatingSensorName;
         needsInitialization = true;
     }
 
@@ -117,6 +123,7 @@ public class TransitSection {
     private final ArrayList<TransitSectionAction> mTransitSectionActionList = new ArrayList<>();
     private boolean mAlternate = false;
     private boolean mSafe = false;
+    private String mStopAllocatingSensorName = "";
 
     // temporary variables and method for delayed initialization of Section
     private String tSectionName = "";
@@ -197,6 +204,15 @@ public class TransitSection {
     public void setSafe(boolean safe) {
         mSafe = safe;
     }
+
+    public String getStopAllocatingSensor() {
+        return mStopAllocatingSensorName;
+    }
+
+    public void setStopAllocatingSensor(String stopAllocatingSensor ) {
+        mStopAllocatingSensorName = stopAllocatingSensor;
+    }
+
 
     /**
      * Get a list of the actions for this TransitSection
