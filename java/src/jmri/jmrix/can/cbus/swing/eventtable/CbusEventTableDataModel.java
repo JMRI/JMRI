@@ -9,8 +9,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -18,9 +16,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.text.BadLocationException;
 import javax.swing.Timer;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -43,11 +39,13 @@ import jmri.jmrix.can.cbus.CbusMessage;
 import jmri.jmrix.can.cbus.CbusOpCodes;
 import jmri.jmrix.can.cbus.CbusSensor;
 import jmri.jmrix.can.cbus.CbusTurnout;
+import jmri.jmrix.can.cbus.swing.TextAreaFIFO;
 import jmri.jmrix.can.TrafficController;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -1757,42 +1755,6 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
 
     protected TextAreaFIFO tablefeedback(){
         return tablefeedback;
-    }    
-    
-    /**
-     * Keeps the message log windows to a reasonable length
-     * https://community.oracle.com/thread/1373400
-     */
-    protected static class TextAreaFIFO extends JTextArea implements DocumentListener {
-        private int maxLines;
-    
-        public TextAreaFIFO(int lines) {
-            maxLines = lines;
-            getDocument().addDocumentListener( this );
-        }
-    
-        public void insertUpdate(DocumentEvent e) {
-            javax.swing.SwingUtilities.invokeLater( new Runnable() {
-                public void run() {
-                    removeLines();
-                }
-            });
-        }
-        public void removeUpdate(DocumentEvent e) {}
-        public void changedUpdate(DocumentEvent e) {}
-        public void removeLines()
-        {
-            javax.swing.text.Element root = getDocument().getDefaultRootElement();
-            while (root.getElementCount() > maxLines) {
-                javax.swing.text.Element firstLine = root.getElement(0);
-                try {
-                    getDocument().remove(0, firstLine.getEndOffset());
-                } catch(BadLocationException ble) {
-                    System.out.println(ble);
-                }
-            }
-        setCaretPosition( getDocument().getLength() );
-        }
     }
     
     /**

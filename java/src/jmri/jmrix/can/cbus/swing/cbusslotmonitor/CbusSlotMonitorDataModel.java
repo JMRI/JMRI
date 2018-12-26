@@ -12,15 +12,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTable;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.Element;
 import javax.swing.Timer;
 import jmri.Block;
 import jmri.BlockManager;
@@ -35,6 +30,7 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.CbusConstants;
 import jmri.jmrix.can.cbus.CbusMessage;
 import jmri.jmrix.can.cbus.CbusOpCodes;
+import jmri.jmrix.can.cbus.swing.TextAreaFIFO;
 import jmri.jmrix.can.TrafficController;
 import jmri.Path;
 import jmri.SignalMast;
@@ -43,7 +39,6 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Table data model for display of Cbus Command Station Sessions and various Tools
- * Created with Notepad++
  *
  * @author Steve Young (c) 2018
  * @see CbusSlotMonitorPane
@@ -1743,43 +1738,6 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
         tablefeedback.append( "\n"+cbustext);
     }
 
-
-    /**
-     * Keeps the message log windows to a reasonable length
-     * https://community.oracle.com/thread/1373400
-     */
-    private static class TextAreaFIFO extends JTextArea implements DocumentListener {
-        private int maxLines;
-    
-        public TextAreaFIFO(int lines) {
-            maxLines = lines;
-            getDocument().addDocumentListener( this );
-        }
-    
-        public void insertUpdate(DocumentEvent e) {
-            javax.swing.SwingUtilities.invokeLater( new Runnable() {
-                public void run() {
-                    removeLines();
-                }
-            });
-        }
-        public void removeUpdate(DocumentEvent e) {}
-        public void changedUpdate(DocumentEvent e) {}
-        public void removeLines()
-        {
-            Element root = getDocument().getDefaultRootElement();
-            while (root.getElementCount() > maxLines) {
-                Element firstLine = root.getElement(0);
-                try {
-                    getDocument().remove(0, firstLine.getEndOffset());
-                } catch(BadLocationException ble) {
-                    System.out.println(ble);
-                }
-            }
-        setCaretPosition( getDocument().getLength() );
-        }
-    }
-    
     static class Notify implements Runnable {
         public int _row;
         javax.swing.table.AbstractTableModel _model;
@@ -1813,6 +1771,5 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
             tc.removeCanListener(this);
         }
     }
-
     private final static Logger log = LoggerFactory.getLogger(CbusSlotMonitorDataModel.class);
 }
