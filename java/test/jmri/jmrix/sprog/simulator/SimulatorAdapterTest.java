@@ -20,7 +20,7 @@ public class SimulatorAdapterTest {
        Assert.assertNotNull(a);
 
        // clean up
-       ((SprogSystemConnectionMemo)a.getSystemConnectionMemo()).getSprogTrafficController().dispose();
+       a.getSystemConnectionMemo().getSprogTrafficController().dispose();
    }
 
     // The minimal setup for log4J
