@@ -97,7 +97,7 @@
       <p>This tab lets you set whether your hardware has a puul-up or
       pull-down resistor installed over the Sensor input.</p>
 
-      </ul><a name="usage" id="usage"></a>
+      <a name="usage" id="usage"></a>
       <h3>Usage</h3>
       <p>This is an information field, showing where you have the
       Sensor displayed on a Panel.</p>
@@ -348,6 +348,7 @@
 
       <p>Back to the <a href="SensorTable.shtml">Sensor Table help
       page</a>.</p>
+
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

@@ -79,10 +79,11 @@
             <li><a href="#L429">Unique Output Bits</a></li>
           </ul>
         </li>
-        <li><a href="#L001">Forming a JMRI System Name For a C/MRI Bit</a></li>
+        <li><a href="#L001">Forming a JMRI System Name for a C/MRI Bit</a>
           <ul>
             <li><a href="#L447">Alternate Numbering Scheme for C/MRI System Names</a></li>
           </ul>
+        </li>
         <li><a href="#L459">Creating a Sensor Input</a></li>
         <li><a href="#L484">Creating a Turnout Output</a></li>
         <li><a href="#L519">Turnout Control Options</a></li>
