@@ -149,6 +149,11 @@ We roll some general code maintenance items into the release process.
         grep -lr '\t' jython/ | grep '\.py'
 ```
 
+- Check for code that's using native Java Timers; see jmri.util.TimerUtil for background (requires that the code has been built):
+```
+        grep -rl 'java.util.Timer\x01' target/
+```
+
 - Run "ant alltest"; make sure they all pass; fix problems and commit back
 
 - Run "ant decoderpro"; check for no startup errors, right version, help index present and working OK. Fix problems and commit back.
