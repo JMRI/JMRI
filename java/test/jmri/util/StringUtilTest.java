@@ -232,6 +232,7 @@ public class StringUtilTest {
 
     @Test
     public void testSplit1() {
+        Log4JUtil.setDeprecatedLogging(false); // testing deprecated method
         String input = "abc.cdf";
         String[] result = jmri.util.StringUtil.split(input, ".");
         Assert.assertEquals("length", 2, result.length);
@@ -241,6 +242,7 @@ public class StringUtilTest {
 
     @Test
     public void testSplit2() {
+        Log4JUtil.setDeprecatedLogging(false); // testing deprecated method
         String input = "abcxcdf";
         String[] result = jmri.util.StringUtil.split(input, ".");
         Assert.assertEquals("length", 1, result.length);
@@ -249,6 +251,7 @@ public class StringUtilTest {
 
     @Test
     public void testSplit3() {
+        Log4JUtil.setDeprecatedLogging(false); // testing deprecated method
         String input = "abc.cdf.";
         String[] result = jmri.util.StringUtil.split(input, ".");
         Assert.assertEquals("length", 3, result.length);

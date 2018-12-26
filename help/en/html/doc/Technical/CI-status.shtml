@@ -19,11 +19,11 @@
 		<table>
 		<tr><td align="right">
 		<a href="http://builds.jmri.org/jenkins/job/Development/">Development</a>:</td><td>
-		<a href='http://builds.jmri.org/jenkins/job/Development/job/Builds/'><img src='http://builds.jmri.org/jenkins/buildStatus/icon?job=Development/SpotBugs'></a>
-		<a href='http://builds.jmri.org/jenkins/job/Development/job/Deprecations/'><img src='http://builds.jmri.org/jenkins/buildStatus/icon?job=Development/SpotBugs'></a>
+		<a href='http://builds.jmri.org/jenkins/job/Development/job/Builds/'><img src='http://builds.jmri.org/jenkins/buildStatus/icon?job=Development/Builds'></a>
+		<a href='http://builds.jmri.org/jenkins/job/Development/job/Deprecations/'><img src='http://builds.jmri.org/jenkins/buildStatus/icon?job=Development/Deprecations'></a>
         <a href='http://builds.jmri.org/jenkins/job/Development/job/HTML%20Scan/'><img src='http://builds.jmri.org/jenkins/buildStatus/icon?job=Development/HTML%20Scan'></a>
-		<a href='http://builds.jmri.org/jenkins/job/Development/job/JaCoCo/'><img src='http://builds.jmri.org/jenkins/buildStatus/icon?job=Development/SpotBugs'></a>
-		<a href='http://builds.jmri.org/jenkins/job/Development/job/Packages/'><img src='http://builds.jmri.org/jenkins/buildStatus/icon?job=Development/SpotBugs'></a>
+		<a href='http://builds.jmri.org/jenkins/job/Development/job/JaCoCo/'><img src='http://builds.jmri.org/jenkins/buildStatus/icon?job=Development/JaCoCo'></a>
+		<a href='http://builds.jmri.org/jenkins/job/Development/job/Packages/'><img src='http://builds.jmri.org/jenkins/buildStatus/icon?job=Development/Packages'></a>
         <a href='http://builds.jmri.org/jenkins/job/Development/job/Separate_Tests/'><img src='http://builds.jmri.org/jenkins/buildStatus/icon?job=Development/Separate_Tests'></a>
 		<a href='http://builds.jmri.org/jenkins/job/Development/job/SpotBugs/'><img src='http://builds.jmri.org/jenkins/buildStatus/icon?job=Development/SpotBugs'></a>
 		</td></tr><tr><td align="right">
