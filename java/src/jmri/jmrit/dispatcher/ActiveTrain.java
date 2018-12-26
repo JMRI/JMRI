@@ -176,7 +176,7 @@ public class ActiveTrain {
     private boolean mTransitReversed = false;  // true if Transit is running in reverse
     private boolean mAllocationReversed = false;  // true if allocating Sections in reverse
     private AutoActiveTrain mAutoActiveTrain = null;
-    private List<AllocatedSection> mAllocatedSections = new ArrayList<AllocatedSection>();
+    private final List<AllocatedSection> mAllocatedSections = new ArrayList<>();
     private jmri.Section mLastAllocatedSection = null;
     private int mLastAllocatedSectionSeqNumber = 0;
     private jmri.Section mSecondAllocatedSection = null;
@@ -440,6 +440,7 @@ public class ActiveTrain {
 
     private java.beans.PropertyChangeListener delaySensorListener = null;
     private java.beans.PropertyChangeListener restartSensorListener = null;
+    private java.beans.PropertyChangeListener restartAllocationSensorListener = null;
 
     public void initializeDelaySensor() {
         if (mStartSensor == null) {
@@ -498,6 +499,28 @@ public class ActiveTrain {
             };
         }
         getRestartSensor().addPropertyChangeListener(restartSensorListener);
+    }
+
+    public void initializeRestartAllocationSensor(NamedBeanHandle<jmri.Sensor> restartAllocationSensor) {
+        if (restartAllocationSensor == null) {
+            log.error("Call to initialise delay on restart allocation sensor, but none specified");
+            return;
+        }
+        if (restartAllocationSensorListener == null) {
+            restartAllocationSensorListener = new java.beans.PropertyChangeListener() {
+                @Override
+                public void propertyChange(java.beans.PropertyChangeEvent e) {
+                    if (e.getPropertyName().equals("KnownState")) {
+                        if (((Integer) e.getNewValue()).intValue() == jmri.Sensor.INACTIVE) {
+                            restartAllocationSensor.getBean().removePropertyChangeListener(restartAllocationSensorListener);
+                            restartAllocationSensorListener = null;
+                            InstanceManager.getDefault(DispatcherFrame.class).forceScanOfAllocation();
+                        }
+                    }
+                }
+            };
+        }
+        restartAllocationSensor.getBean().addPropertyChangeListener(restartAllocationSensorListener);
     }
 
     public void setTrainType(int type) {
@@ -695,7 +718,7 @@ public class ActiveTrain {
     public void allocateAFresh() {
         setStatus(WAITING);
         setTransitReversed(false);
-        List<AllocatedSection> sectionsToRelease = new ArrayList<AllocatedSection>();
+        List<AllocatedSection> sectionsToRelease = new ArrayList<>();
         for (AllocatedSection as : InstanceManager.getDefault(DispatcherFrame.class).getAllocatedSectionsList()) {
             if (as.getActiveTrain() == this) {
                 sectionsToRelease.add(as);

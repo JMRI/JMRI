@@ -80,6 +80,7 @@ public class TransitManagerXml extends jmri.managers.configurexml.AbstractNamedB
                             tsElem.setAttribute("direction", Integer.toString(ts.getDirection()));
                             tsElem.setAttribute("alternate", "" + (ts.isAlternate() ? "yes" : "no"));
                             tsElem.setAttribute("safe", "" + (ts.isSafe() ? "yes" : "no"));
+                            tsElem.setAttribute("stopallocatingsensor", ts.getStopAllocatingSensor());
                             // save child transitsectionaction entries if any
                             ArrayList<TransitSectionAction> tsaList = ts.getTransitSectionActionList();
                             if (tsaList.size() > 0) {
@@ -193,7 +194,16 @@ public class TransitManagerXml extends jmri.managers.configurexml.AbstractNamedB
                             safe = true;
                         }
                     }
-                    TransitSection ts = new TransitSection(sectionName, seq, dir, alt, safe);
+                    String stopAllocatingSensor = "";
+                    if (elem.getAttribute("stopallocatingsensor") != null) {  // may not exist
+                        stopAllocatingSensor = elem.getAttribute("stopallocatingsensor").getValue();
+                        if (stopAllocatingSensor.equals("null")) {
+                            log.warn("When loading configuration - missing Section in Transit " + sysName);
+                            stopAllocatingSensor = "";
+                        }
+                    }
+
+                    TransitSection ts = new TransitSection(sectionName, seq, dir, alt, safe, stopAllocatingSensor );
                     x.addTransitSection(ts);
                     // load transitsectionaction children, if any
                     List<Element> transitTransitSectionActionList = transitTransitSectionList.get(n).
