@@ -670,7 +670,7 @@ MTAL341&lt;;&gt;s1
         <li>Current speed step mode</li>
       </ul>
 
-      <p>For all except the function lables, see the appropriate
+      <p>For all except the function labels, see the appropriate
       throttle commands, such as 'V' below, for details.</p>
 
       <p>The function labels are an array of strings, with ]\[ used
