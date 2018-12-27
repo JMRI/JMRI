@@ -429,6 +429,7 @@ public class JsonServlet extends WebSocketServlet {
     public void sendError(HttpServletResponse response, int code, String message) throws IOException {
         response.setStatus(code);
         response.getWriter().write(message);
+        jmri.util.Log4JUtil.deprecationWarning(log, "sendError");        
     }
 
     /**

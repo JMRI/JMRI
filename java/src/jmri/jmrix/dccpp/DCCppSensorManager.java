@@ -9,7 +9,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Implement Sensor Manager for DCC++ systems.
  * <p>
- * System names are "DxppSnnn", where Dx is the system prefix and nnn is the sensor number without padding.
+ * System names are "DSnnn", where D is the user configurable system prefix,
+ * nnn is the sensor number without padding.
  *
  * @author Paul Bender Copyright (C) 2003-2010
  * @author Mark Underwood Copyright (C) 2015
@@ -238,7 +239,7 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
     }
 
     /**
-     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     * {@inheritDoc}
      */
     @Override
     public String getEntryToolTip() {

@@ -144,7 +144,7 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
             highPriorityQueue.put(m);
             highPriorityListeners.put(reply);
         } catch (java.lang.InterruptedException ie) {
-            log.error("Interupted while adding High Priority Message to Queue");
+            log.error("Interrupted while adding High Priority Message to Queue");
         }
     }
 
@@ -157,7 +157,7 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
                 return highPriorityQueue.take();
             }
         } catch (java.lang.InterruptedException ie) {
-            log.error("Interupted while removing High Priority Message from Queue");
+            log.error("Interrupted while removing High Priority Message from Queue");
         }
         return null;
     }
@@ -171,7 +171,7 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
                 return highPriorityListeners.take();
             }
         } catch (java.lang.InterruptedException ie) {
-            log.error("Interupted while removing High Priority Message Listener from Queue");
+            log.error("Interrupted while removing High Priority Message Listener from Queue");
         }
         return null;
     }

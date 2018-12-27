@@ -9,15 +9,15 @@ import org.slf4j.LoggerFactory;
 /**
  * Implement turnout manager for TMCC serial systems.
  * <p>
- * System names are "TTnnn", where nnn is the turnout number without padding.
- * T prefix is user configurable.
+ * System names are "TTnnn", where T is the user configurable system prefix,
+ * nnn is the turnout number without padding.
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2006
  */
 public class SerialTurnoutManager extends AbstractTurnoutManager implements SerialListener {
 
     TmccSystemConnectionMemo _memo = null;
-    private String prefix = "T";
+    private String prefix = "T"; // default
     private SerialTrafficController trafficController = null;
 
     public SerialTurnoutManager() {
@@ -195,7 +195,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager implements Seri
     }
 
     /**
-     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     * {@inheritDoc}
      */
     @Override
     public String getEntryToolTip() {

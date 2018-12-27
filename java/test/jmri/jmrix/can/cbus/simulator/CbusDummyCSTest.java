@@ -1,5 +1,6 @@
-package jmri.util;
+package jmri.jmrix.can.cbus.simulator;
 
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -9,11 +10,11 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class RuntimeUtilTest {
+public class CbusDummyCSTest {
 
     @Test
     public void testCTor() {
-        RuntimeUtil t = new RuntimeUtil();
+        CbusDummyCS t = new CbusDummyCS(0,null);
         Assert.assertNotNull("exists",t);
     }
 
@@ -28,6 +29,6 @@ public class RuntimeUtilTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(RuntimeUtilTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(CbusDummyCSTest.class);
 
 }
