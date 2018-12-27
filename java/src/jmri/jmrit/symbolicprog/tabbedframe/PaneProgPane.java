@@ -2074,7 +2074,7 @@ public class PaneProgPane extends javax.swing.JPanel
     protected void makeLabel(Element e, JPanel c, GridBagLayout g, GridBagConstraints cs) {
         String text = LocaleSelector.getAttribute(e, "text");
         if (text == null || text.equals("")) {
-            text = LocaleSelector.getAttribute(e, "label"); // label subelement deprecated 3.7.5
+            text = LocaleSelector.getAttribute(e, "label"); // label subelement not since 3.7.5
         }
         final JLabel l = new JLabel(text);
         l.setAlignmentX(1.0f);

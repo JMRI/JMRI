@@ -339,12 +339,6 @@ public class SRCPTrafficController extends AbstractMRTrafficController
     }
 
     @Override
-    @SuppressWarnings("deprecation")
-    public String name() {
-        return this.getName();
-    }
-
-    @Override
     public String getName() {
         return SRCPTrafficController.class.getName();
     }
