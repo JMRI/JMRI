@@ -190,6 +190,13 @@ public class CbusMessage {
         }
     }
 
+    /**
+     * Returns string form of a CanMessage ( a Can Frame sent by JMRI )
+     * Short / Long events converted to Sensor / Turnout / Light hardware address
+     * message priority not indicated
+     * @param  m Can Frame Message
+     * @return String of hardware address form
+     */
     public static String toAddress(CanMessage m) {
         if (m.getElement(0) == CbusConstants.CBUS_ACON) {
             // + form
@@ -205,6 +212,9 @@ public class CbusMessage {
             return "-" + (m.getElement(3) * 256 + m.getElement(4));
         } else {
             // hex form
+            if(m.toString().contains("[")){
+                return "X" + m.toString().replaceAll("\\s*\\[[^\\]]*\\]\\s*", "");
+            }
             return "x" + m.toString().replaceAll(" ", "");
         }
     }
@@ -377,7 +387,14 @@ public class CbusMessage {
             r.setHeader((update & ~0x780) | (pri << 7));
         }
     }
-
+    
+    /**
+     * Returns string form of a CanReply ( a Can Frame received by JMRI )
+     * Short / Long events converted to Sensor / Turnout / Light hardware address
+     * message priority not indicated
+     * @param  r Can Frame Reply
+     * @return String of hardware address form
+     */ 
     public static String toAddress(CanReply r) {
         if (r.getElement(0) == CbusConstants.CBUS_ACON) {
             // + form
@@ -393,6 +410,9 @@ public class CbusMessage {
             return "-" + (r.getElement(3) * 256 + r.getElement(4));
         } else {
             // hex form
+            if(r.toString().contains("[")){
+                return "X" + r.toString().replaceAll("\\s*\\[[^\\]]*\\]\\s*", "");
+            }
             return "x" + r.toString().replaceAll(" ", "");
         }
     }

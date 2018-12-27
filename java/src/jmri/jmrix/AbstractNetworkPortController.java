@@ -52,7 +52,7 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
             socketConn.setSoTimeout(getConnectionTimeout());
             opened = true;
         } catch (IOException e) {
-            log.error("error opening network connection: ", e);
+            log.error("Error opening network connection: {}", e.getMessage()); // nothing to help user in full exception
             if (m_port != 0) {
                 ConnectionStatus.instance().setConnectionState(
                         getUserName(), m_HostName + ":" + m_port, ConnectionStatus.CONNECTION_DOWN);
@@ -304,7 +304,7 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
             return;
         }
         ReconnectWait thread = new ReconnectWait();
-        thread.setName("Connection Recovery " + getHostName());
+        thread.setName("Connection Recovery " + getCurrentPortName() );
         thread.start();
         try {
             thread.join();
@@ -359,7 +359,7 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
                     }
                     connect();
                 } catch (IOException ex) {
-                    log.error("restart failed", ex);
+                    log.trace("restart failed", ex); // main warning to log.error done within connect();
                     // if returned on exception stops thread and connection attempts
                 }
                 

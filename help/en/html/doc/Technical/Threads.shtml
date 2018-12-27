@@ -126,8 +126,7 @@
         done on entry to a large chunk of code, or perhaps be protected 
         by a check of <code>log.isDebugEnabled()</code>. If 
         the call occurs on the wrong thread, a <code>Log4JUtil.warnOnce</code>
-        logs the first occurance with traceback info, which explains the <code>log</code>
-        parameter.
+        logs the first occurance with traceback info.
       
     In addition to the <code>@InvokeOnGuiThread</code>, <code>@InvokeOnLayoutThread</code>
     and <code>@InvokeOnAnyThread</code> annotations mentioned here, there are

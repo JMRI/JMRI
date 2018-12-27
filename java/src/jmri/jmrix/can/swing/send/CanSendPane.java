@@ -16,7 +16,6 @@ import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
-import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
@@ -39,7 +38,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2008
  */
-public class CanSendPane extends jmri.jmrix.can.swing.CanPanel implements CanListener {
+public class CanSendPane extends jmri.jmrix.can.swing.CanPanel {
 
     // member declarations
     JLabel jLabel1 = new JLabel();
@@ -150,7 +149,6 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel implements CanLis
     public void initComponents(CanSystemConnectionMemo memo) {
         super.initComponents(memo);
         tc = memo.getTrafficController();
-        tc.addCanListener(this);
     }
 
     @Override
@@ -168,11 +166,11 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel implements CanLis
 
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
          try {
-            CanMessage m = createPacket(packetTextField.getText());
+            CanMessage m = createPacket(packetTextField.getText().replaceAll("\\s",""));
             if (cbusPriorityCheckbox.isSelected()) {
                 CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
             }
-            tc.sendCanMessage(m, this);        
+            tc.sendCanMessage(m, null);        
             log.debug("sendButtonActionPerformed: " + m);
         } catch (StringIndexOutOfBoundsException ex) {
             JOptionPane.showMessageDialog(null, 
@@ -282,13 +280,13 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel implements CanLis
             
             try {
                 // make the packet
-                CanMessage m = createPacket(mPacketField[mNextSequenceElement].getText());
+                CanMessage m = createPacket(mPacketField[mNextSequenceElement].getText().replaceAll("\\s",""));
                 if (cbusPriorityCheckbox.isSelected()) {
                     CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
                 }
                 
                 // send it
-                tc.sendCanMessage(m, this);
+                tc.sendCanMessage(m, null);
                 startSequenceDelay();
             } catch (StringIndexOutOfBoundsException ex) {
                 JOptionPane.showMessageDialog(null, 
@@ -350,20 +348,6 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel implements CanLis
             }
         }
         return m;
-    }
-
-    /**
-     * Don't pay attention to messages
-     */
-    @Override
-    public void message(CanMessage m) {
-    }
-
-    /**
-     * Don't pay attention to replies
-     */
-    @Override
-    public void reply(CanReply m) {
     }
 
     /**

@@ -62,14 +62,6 @@ public class Station {
     }
 
     /**
-     * Create a zero padded string for sorting by distance.
-     * @return a zero padded 6 character string
-     */
-    public String getDistanceString() {
-        return String.format("%06d", (int) Math.round(_distance * 10));  // NOI18N
-    }
-
-    /**
      * Set a new distance.
      * @param newDistance The value to be used.
      * @throws IllegalArgumentException (DISTANCE_LT_0) if the value is less than 0.0.

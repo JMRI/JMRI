@@ -7,10 +7,8 @@ import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.JemmyUtil;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -30,6 +28,8 @@ public class TrainsTableFrameTest extends OperationsTestCase {
     @Test
     public void testTrainsTableFrame() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        
+        JUnitOperationsUtil.loadTrains();
         TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
 
         TrainsTableFrame f = new TrainsTableFrame();
@@ -79,21 +79,6 @@ public class TrainsTableFrameTest extends OperationsTestCase {
         JUnitUtil.dispose(tsle);
         JUnitUtil.dispose(f);
     }
-
-
-    // The minimal setup for log4J
-    @Override
-    @Before
-    public void setUp() {
-        super.setUp();
-        JUnitOperationsUtil.loadTrains();
-    }
-    
-     @Override
-     @After
-     public void tearDown() {
-         super.tearDown();
-     }
 
     // private final static Logger log = LoggerFactory.getLogger(TrainsTableFrameTest.class);
 

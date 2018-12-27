@@ -10,10 +10,8 @@ import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -25,6 +23,8 @@ public class TrackRoadEditFrameTest extends OperationsTestCase {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        
+        JUnitOperationsUtil.initOperationsData();
         TrackRoadEditFrame t = new TrackRoadEditFrame();
         Assert.assertNotNull("exists", t);
 
@@ -41,6 +41,8 @@ public class TrackRoadEditFrameTest extends OperationsTestCase {
     @Test
     public void testFrameButtons() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        
+        JUnitOperationsUtil.initOperationsData();
         TrackRoadEditFrame tlef = new TrackRoadEditFrame();
         Assert.assertNotNull("exists", tlef);
 
@@ -73,21 +75,6 @@ public class TrackRoadEditFrameTest extends OperationsTestCase {
         }
 
         JUnitUtil.dispose(tlef);
-    }
-
-    // The minimal setup for log4J
-    @Override
-    @Before
-    public void setUp() {
-        super.setUp();
-
-        JUnitOperationsUtil.initOperationsData();
-    }
-
-    @Override
-    @After
-    public void tearDown() {
-        super.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(TrackRoadEditFrameTest.class);

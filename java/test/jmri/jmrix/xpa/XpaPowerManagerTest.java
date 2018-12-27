@@ -1,6 +1,7 @@
 package jmri.jmrix.xpa;
 
 import org.junit.*;
+import jmri.util.junit.annotations.NotApplicable;
 
 /**
  * Description:	tests for the jmri.jmrix.xpa.XpaPowerManager class
@@ -66,13 +67,13 @@ public class XpaPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTestBase
 
     @Test
     @Override
-    @Ignore("unsolicited state changes are currently ignored")
+    @NotApplicable("no unsolicited changes")
     public void testStateOn() {
     }
 
     @Test
     @Override
-    @Ignore("unsolicited state changes are currently ignored")
+    @NotApplicable("no unsolicited changes")
     public void testStateOff() {
     }
 

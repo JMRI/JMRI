@@ -476,14 +476,6 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
     }
 
     /**
-     * @deprecated since 4.5.1
-     */
-    @Deprecated
-    protected final void addToActionModel() {
-        // StartupActionModelUtil populates itself, so do nothing
-    }
-
-    /**
      * Prepare the JPanel to contain buttons in the startup GUI. Since it's
      * possible to add buttons via the preferences, this space may have
      * additional buttons appended to it later. The default implementation here
@@ -785,7 +777,12 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             cs.setText(" ");
             return;
         }
-        ConnectionStatus.instance().addConnection(conn.name(), conn.getInfo());
+        
+        log.debug("conn.name() is {} ",conn.name()); // eg CAN via MERG Network Interface
+        log.debug("conn.getConnectionName() is {} ",conn.getConnectionName()); // eg MERG2
+        log.debug("conn.getManufacturer() is {} ",conn.getManufacturer()); // eg MERG
+        
+        ConnectionStatus.instance().addConnection(conn.getConnectionName(), conn.getInfo());
         cs.setFont(pane.getFont());
         updateLine(conn, cs);
         pane.add(cs);
@@ -799,7 +796,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         if (name == null) {
             name = conn.getManufacturer();
         }
-        if (ConnectionStatus.instance().isConnectionOk(null, conn.getInfo())) {
+        if (ConnectionStatus.instance().isConnectionOk(name, conn.getInfo())) {
             cs.setForeground(Color.black);
             String cf = Bundle.getMessage("ConnectionSucceeded", name, conn.name(), conn.getInfo());
             cs.setText(cf);
@@ -954,21 +951,6 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
 
     static protected void splash(boolean show) {
         splash(show, false);
-    }
-
-    /**
-     * Invoke the standard Log4J logging initialization.
-     * <p>
-     * No longer used in JMRI. ({@link #splash} calls the initialization
-     * directly. Left as a deprecated method because other code, such as CATS,
-     * is still using in in JMRI 3.7 and perhaps 3.8
-     *
-     * @deprecated Since 3.7.2, use @{link jmri.util.Log4JUtil#initLogging}
-     * directly.
-     */
-    @Deprecated
-    static protected void initLog4J() {
-        jmri.util.Log4JUtil.initLogging();
     }
 
     static protected void splash(boolean show, boolean debug) {
@@ -1177,23 +1159,6 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         } catch (IllegalArgumentException | IllegalAccessException ex) {
             log.warn("Unable to set application name", ex);
         }
-    }
-
-    /**
-     * Set, log and return some startup information.
-     * <p>
-     * This method needs to be refactored, but it's in use (2/2014) by CATS so
-     * can't easily be changed right away.
-     *
-     * @param name Program/application name as known by the user
-     * @return The output of {@link Log4JUtil#startupInfo(java.lang.String)}
-     * @deprecated Since 3.7.1, use {@link #setStartupInfo(java.lang.String) }
-     * plus {@link Log4JUtil#startupInfo(java.lang.String) }
-     */
-    @Deprecated
-    protected static String startupInfo(String name) {
-        setStartupInfo(name);
-        return Log4JUtil.startupInfo(name);
     }
 
     /**

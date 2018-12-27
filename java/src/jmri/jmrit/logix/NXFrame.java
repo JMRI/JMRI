@@ -388,8 +388,8 @@ public class NXFrame extends WarrantRoute {
     }
     
     private void updateAutoRunPanel() {
-        _startDist = _orders.get(0).getBlock().getLengthMm() / 2;
-        _stopDist = _orders.get(_orders.size()-1).getBlock().getLengthMm() / 2;
+        _startDist = getPathLength(_orders.get(0)) / 2;
+        _stopDist = getPathLength(_orders.get(_orders.size()-1)) / 2;
         NumberFormat formatter = NumberFormat.getNumberInstance(); 
         if (_originUnits.getText().equals("In")) {
             float num = Math.round(_startDist * 100 / 25.4f);
@@ -465,7 +465,8 @@ public class NXFrame extends WarrantRoute {
         warrant.setBlockOrders(_orders);
         warrant.setTrainName(getTrainName());
         warrant.setNoRamp(_noRamp.isSelected());
-        _speedUtil.setDistanceTravelled(_startDist);
+        // position distance from start of path
+        _speedUtil.setDistanceTravelled(getPathLength(_orders.get(0)) - _startDist);
         warrant.setSpeedUtil(_speedUtil);   // transfer SpeedUtil to warrant
         if (log.isDebugEnabled()) log.debug("Warrant {). Route and loco set.", warrant.getDisplayName());
         int mode;
@@ -591,23 +592,27 @@ public class NXFrame extends WarrantRoute {
         }
         if (_originUnits.getText().equals("In")){
             oDist *= 25.4f;
-            if (oDist >= 0 && oDist <= len) {
+            if (oDist > 0 && oDist < len) {
                 _startDist = oDist;
             } else {
-                if (oDist > len) {
-                    float num = Math.round(len * 100 / 25.4f);
+                if (oDist >= len) {
+                    float num = Math.round((len-1) * 100 / 25.4f);
                     _originDist.setText(formatter.format(num / 100f));
+                }else if (oDist <= 0) {
+                    _originDist.setText(formatter.format(0.1f));
                 }
                 return lengthError(bo.getPathName(), bo.getBlock().getDisplayName(), len, oDist, true);            
             }
         } else {
             oDist *= 10f;
-            if (oDist >= 0 && oDist <= len) {
+            if (oDist > 0 && oDist < len) {
                 _startDist = oDist;
             } else {
-                if (oDist > len) {
-                    float num = Math.round(len * 100);
+                if (oDist >= len) {
+                    float num = Math.round((len-1) * 100);
                     _originDist.setText(formatter.format(num / 1000f));
+                } else if (oDist <= 0) {
+                    _originDist.setText(formatter.format(.1));
                 }
                 return lengthError(bo.getPathName(), bo.getBlock().getDisplayName(), len, oDist, false);            
             }

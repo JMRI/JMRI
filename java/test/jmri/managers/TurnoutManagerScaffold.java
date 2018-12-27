@@ -20,7 +20,7 @@ import jmri.TurnoutManager;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
  * @author	Bob Jacobsen Copyright (C) 2008
-  */
+ */
 public class TurnoutManagerScaffold implements TurnoutManager {
 
     @Override
@@ -50,7 +50,6 @@ public class TurnoutManagerScaffold implements TurnoutManager {
 
     @Override
     public int getObjectCount() { return -1;}    
-
 
     @Override
     public java.util.List<String> getSystemNameList() {

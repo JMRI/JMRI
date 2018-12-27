@@ -24,10 +24,10 @@ class LnMessageClientPollThread extends Thread {
             Object[] lnMessages = null;
             while (!Thread.interrupted()) {
                 if (parent.lnMessageBuffer == null) {
-                    // no work to do 
+                    // no work to do
                     return;
                 }
-                
+
                 lnMessages = parent.lnMessageBuffer.getMessages(parent.pollTimeout);
 
                 if (lnMessages != null) {

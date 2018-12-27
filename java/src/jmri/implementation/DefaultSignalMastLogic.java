@@ -145,7 +145,8 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
     @Override
     public void setDestinationMast(SignalMast dest) {
         if (destList.containsKey(dest)) {
-            log.warn("Destination mast '{}' was already defined in SML with this source mast", dest.getDisplayName());
+            // if already present, not a change
+            log.debug("Destination mast '{}' was already defined in SML with this source mast", dest.getDisplayName());
             return;
         }
         int oldSize = destList.size();

@@ -1,33 +1,19 @@
 package jmri.jmrit.operations.rollingstock.cars.tools;
 
-import jmri.jmrit.operations.rollingstock.cars.tools.ShowCheckboxesCarsTableAction;
-import jmri.util.JUnitUtil;
-import org.junit.After;
+import jmri.jmrit.operations.OperationsTestCase;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class ShowCheckboxesCarsTableActionTest {
+public class ShowCheckboxesCarsTableActionTest extends OperationsTestCase {
 
     @Test
     public void testCTor() {
         ShowCheckboxesCarsTableAction t = new ShowCheckboxesCarsTableAction("Test");
         Assert.assertNotNull("exists",t);
-    }
-
-    // The minimal setup for log4J
-    @Before
-    public void setUp() {
-        JUnitUtil.setUp();
-    }
-
-    @After
-    public void tearDown() {
-        JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(ShowCheckboxesCarsTableActionTest.class);

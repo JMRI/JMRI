@@ -1,5 +1,6 @@
 package jmri.jmrix.sprog.simulator;
 
+import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -17,6 +18,9 @@ public class SimulatorAdapterTest {
    public void ConstructorTest(){
        SimulatorAdapter a = new SimulatorAdapter();
        Assert.assertNotNull(a);
+
+       // clean up
+       a.getSystemConnectionMemo().getSprogTrafficController().dispose();
    }
 
     // The minimal setup for log4J

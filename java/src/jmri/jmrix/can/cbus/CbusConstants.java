@@ -218,13 +218,15 @@ public final class CbusConstants {
     public static final int EVENT_ON = 0;
     public static final int EVENT_OFF = 1;
     public static final int EVENT_EITHER = 2;
+    public static final int EVENT_NEITHER = 3;
     
     /**
      * Event directions
      */
-    public static final int EVENT_OUT = 0;
-    public static final int EVENT_IN = 1;
-    public static final int EVENT_EITHER_DIR = 2;
+    public static final int EVENT_DIR_UNSET = 0;
+    public static final int EVENT_DIR_IN = 1;
+    public static final int EVENT_DIR_OUT = 2;
+    public static final int EVENT_DIR_EITHER = 3;
 
     /**
      * CBUS Priorities

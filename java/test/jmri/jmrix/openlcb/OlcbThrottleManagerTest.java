@@ -1,6 +1,7 @@
 package jmri.jmrix.openlcb;
 
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.*;
 import org.junit.*;
 import jmri.jmrix.can.TestTrafficController;
 
@@ -13,11 +14,11 @@ import jmri.jmrix.can.TestTrafficController;
 public class OlcbThrottleManagerTest extends jmri.managers.AbstractThrottleManagerTestBase {
 
     private static OlcbSystemConnectionMemo m;
-    private static OlcbConfigurationManagerScaffold ocm;
 
     @Test
     @Override
     @Ignore("test requires further setup")
+    @ToDo("finish test setup and remove this overriden test so that the parent class test can run")
     public void testGetThrottleInfo() {
     }
 
@@ -25,7 +26,7 @@ public class OlcbThrottleManagerTest extends jmri.managers.AbstractThrottleManag
     @Override
     @Before
     public void setUp() {
-        tm = new OlcbThrottleManager(m,ocm);
+        tm = new OlcbThrottleManager(m);
     }
 
     @After
@@ -39,7 +40,6 @@ public class OlcbThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         m = new jmri.jmrix.openlcb.OlcbSystemConnectionMemo();
         TestTrafficController tc = new TestTrafficController();
         m.setTrafficController(tc);
-        ocm = new OlcbConfigurationManagerScaffold(m);
     }
 
     @AfterClass
@@ -48,7 +48,6 @@ public class OlcbThrottleManagerTest extends jmri.managers.AbstractThrottleManag
            m.getInterface().dispose();
         }
         m = null;
-        ocm = null;
         JUnitUtil.tearDown();
     }
 }

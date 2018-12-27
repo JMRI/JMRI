@@ -2,6 +2,7 @@ package jmri.implementation.configurexml;
 
 import java.util.List;
 import jmri.InstanceManager;
+import jmri.JmriException;
 import jmri.SignalAppearanceMap;
 import jmri.implementation.MatrixSignalMast;
 import org.jdom2.Element;
@@ -103,11 +104,13 @@ public class MatrixSignalMastXml
         MatrixSignalMast m;
         String sys = getSystemName(shared);
         try {
-        m = new jmri.implementation.MatrixSignalMast(sys);
-        } catch (Exception e) {
-            log.error("An error occurred while trying to create the signal '" + sys + "' " + e.toString());
+            m = (MatrixSignalMast) InstanceManager.getDefault(jmri.SignalMastManager.class)
+                    .provideCustomSignalMast(sys, MatrixSignalMast.class);
+        } catch (JmriException e) {
+            log.error("Failed to load MatrixSignalMast {}: {}", sys, e);
             return false;
         }
+
         if (getUserName(shared) != null) {
             m.setUserName(getUserName(shared));
         }
@@ -153,7 +156,6 @@ public class MatrixSignalMastXml
                 m.setAspectDisabled(asp.getText());
             }
         }
-        InstanceManager.getDefault(jmri.SignalMastManager.class).register(m);
         return true;
     }
 

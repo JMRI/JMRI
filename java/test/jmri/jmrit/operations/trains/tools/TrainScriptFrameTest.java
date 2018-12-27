@@ -8,10 +8,8 @@ import jmri.jmrit.operations.trains.TrainEditFrame;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -24,6 +22,8 @@ public class TrainScriptFrameTest extends OperationsTestCase {
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         
+        JUnitOperationsUtil.initOperationsData();
+        
         TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
         Train train = tmanager.getTrainByName("STF");
         
@@ -31,22 +31,9 @@ public class TrainScriptFrameTest extends OperationsTestCase {
         TrainEditFrame tef = new TrainEditFrame(train);
         Assert.assertNotNull("exists",t);
         t.initComponents(tef);
+        
         JUnitUtil.dispose(t);
-    }
-
-    // The minimal setup for log4J
-    @Override
-    @Before
-    public void setUp() {
-        super.setUp();
- 
-        JUnitOperationsUtil.initOperationsData();
-    }
-
-    @Override
-    @After
-    public void tearDown() {
-        super.tearDown();
+        JUnitUtil.dispose(tef);
     }
 
     // private final static Logger log = LoggerFactory.getLogger(TrainScriptFrameTest.class);

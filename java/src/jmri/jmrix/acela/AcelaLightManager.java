@@ -8,7 +8,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Implement light manager for Acela systems.
  * <p>
- * System names are "ALnnn", where nnn is the bit number without padding.
+ * System names are "ALnnn", where A is the user configurable system prefix,
+ * nnn is the bit number without padding.
  * <p>
  * Based in part on AcelaTurnoutManager.java
  *

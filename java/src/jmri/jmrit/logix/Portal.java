@@ -504,7 +504,7 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
             speed = "Restricted";
         }
         if (log.isDebugEnabled()) {
-            log.debug("Signal \"{}\" has speed notch= {} from appearance \"{}\".",
+            log.debug("SignalHead \"{}\" has speed notch= {} from appearance \"{}\".",
                     signal.getDisplayName(), speed, signal.getAppearanceName(appearance));
         }
         return speed;
@@ -622,6 +622,22 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
     public String getDescription() {
         return Bundle.getMessage("PortalDescription",
                 getUserName(), getFromBlockName(), getToBlockName());
+    }
+
+    @Override
+    // note that this doesn't properly implement the 
+    // contract in {@link NamedBean.toString()}, 
+    // which means things like tables and persistance 
+    // might not behave properly.
+    public String toString() {
+        StringBuilder sb = new StringBuilder("Portal \"");
+        sb.append(getUserName());
+        sb.append("\" from block \"");
+        sb.append(getFromBlockName());
+        sb.append("\" to block \"");
+        sb.append(getToBlockName());
+        sb.append("\"");
+        return sb.toString();
     }
 
     @Override
