@@ -1,18 +1,21 @@
 package jmri.jmrix.openlcb;
 
-import java.util.Timer;
+import java.util.TimerTask;
+import javax.annotation.CheckReturnValue;
+import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
+
 import jmri.NamedBean;
 import jmri.Sensor;
 import jmri.implementation.AbstractSensor;
+
 import org.openlcb.OlcbInterface;
 import org.openlcb.implementations.BitProducerConsumer;
 import org.openlcb.implementations.EventTable;
 import org.openlcb.implementations.VersionedValueListener;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import javax.annotation.Nonnull;
-import javax.annotation.CheckReturnValue;
 
 /**
  * Extend jmri.AbstractSensor for OpenLCB controls.
@@ -22,7 +25,6 @@ import javax.annotation.CheckReturnValue;
 public class OlcbSensor extends AbstractSensor {
 
     static int ON_TIME = 500; // time that sensor is active after being tripped
-    Timer timer = null;
 
     OlcbAddress addrActive;    // go to active state
     OlcbAddress addrInactive;  // go to inactive state
@@ -37,6 +39,8 @@ public class OlcbSensor extends AbstractSensor {
     private static final int PC_DEFAULT_FLAGS = BitProducerConsumer.DEFAULT_FLAGS &
             (~BitProducerConsumer.LISTEN_INVALID_STATE);
 
+    private TimerTask timerTask;
+    
     public OlcbSensor(String prefix, String address, OlcbInterface iface) {
         super(prefix + "S" + address);
         this.iface = iface;
@@ -87,7 +91,6 @@ public class OlcbSensor extends AbstractSensor {
         if (addrInactive == null) {
             pc = new BitProducerConsumer(iface, addrActive.toEventID(), BitProducerConsumer.nullEvent, flags);
 
-            timer = new Timer("OLCB Sensor Timer",true);
             sensorListener = new VersionedValueListener<Boolean>(pc.getValue()) {
                 @Override
                 public void update(Boolean value) {
@@ -181,16 +184,20 @@ public class OlcbSensor extends AbstractSensor {
      * specified
      */
     void setTimeout() {
-        timer.schedule(new java.util.TimerTask() {
+        timerTask = new java.util.TimerTask() {
             @Override
             public void run() {
-                try {
-                    setKnownState(Sensor.INACTIVE);
-                } catch (jmri.JmriException e) {
-                    log.error("error setting momentary sensor INACTIVE", e);
-                }
+                timerTask = null;
+                jmri.util.ThreadingUtil.runOnGUI(() -> {
+                    try {
+                        setKnownState(Sensor.INACTIVE);
+                    } catch (jmri.JmriException e) {
+                        log.error("error setting momentary sensor INACTIVE", e);
+                    }
+                });
             }
-        }, ON_TIME);
+        };
+        jmri.util.TimerUtil.schedule(timerTask, ON_TIME);
     }
 
     /**
@@ -266,7 +273,7 @@ public class OlcbSensor extends AbstractSensor {
     @Override
     public void dispose() {
         disposePc();
-        if (timer!=null) timer.cancel();
+        if (timerTask!=null) timerTask.cancel();
         super.dispose();
     }
 
