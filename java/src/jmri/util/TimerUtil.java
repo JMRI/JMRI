@@ -133,7 +133,7 @@ final public class TimerUtil {
     }
    
    
-    static Timer commonTimer = new Timer("JMRI Common Timer", true);
+    final static Timer commonTimer = new Timer("JMRI Common Timer", true);
     
     // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TimerUtil.class);
 }
