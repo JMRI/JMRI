@@ -165,6 +165,9 @@ public class JsonServlet extends WebSocketServlet {
                                 }
                                 reply = array;
                                 break;
+                            case 1:
+                                reply = array.get(0);
+                                break;
                             default:
                                 reply = array;
                                 break;
