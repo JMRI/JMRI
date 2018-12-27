@@ -1,5 +1,6 @@
 package jmri.jmrix.sprog.sprogCS;
 
+import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -18,6 +19,9 @@ public class SprogCSSerialDriverAdapterTest {
    public void ConstructorTest(){
        SprogCSSerialDriverAdapter a = new SprogCSSerialDriverAdapter();
        Assert.assertNotNull(a);
+
+       // clean up
+       a.getSystemConnectionMemo().getSprogTrafficController().dispose();
    }
 
     // The minimal setup for log4J
