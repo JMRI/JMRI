@@ -282,7 +282,7 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
         if (time == sensorDebounceGoingInActive) {
             return;
         }
-        sensorDebounceGoingInActive = timer;
+        sensorDebounceGoingInActive = time;
         Enumeration<String> en = _tsys.keys();
         while (en.hasMoreElements()) {
             Sensor sen = _tsys.get(en.nextElement());
