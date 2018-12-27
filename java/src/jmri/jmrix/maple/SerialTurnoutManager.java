@@ -8,7 +8,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Implement turnout manager for serial systems
  * <p>
- * System names are "KiTnnn", where nnn is the turnout number without padding.
+ * System names are "KTnnn", where K is the user configurable system prefix,
+ * nnn is the turnout number without padding.
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2008
  */

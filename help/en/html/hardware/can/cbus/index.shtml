@@ -145,7 +145,10 @@
 
         <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/configtool/ConfigToolFrame.shtml"
         >Event Capture Tool</a> - Capture MERG CBUS events
+        </li>
 
+        <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/simulator/SimulatorPane.shtml"
+        >Network Item simulation</a> - Simulates Cbus Command stations and responds to event requests
         </li>
 
       </ul>

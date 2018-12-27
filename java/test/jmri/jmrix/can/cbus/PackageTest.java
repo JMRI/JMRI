@@ -12,6 +12,7 @@ import org.junit.runners.Suite;
         jmri.jmrix.can.cbus.CbusSensorTest.class,
         jmri.jmrix.can.cbus.configurexml.PackageTest.class,
         jmri.jmrix.can.cbus.swing.PackageTest.class,
+        jmri.jmrix.can.cbus.simulator.PackageTest.class,
         CbusReporterManagerTest.class,
         CbusConstantsTest.class,
         CbusEventHighlighterTest.class,

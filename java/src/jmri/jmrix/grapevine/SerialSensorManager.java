@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Manage the system-specific Sensor implementation.
  * <p>
- * System names are "GiSnnnn", where Gi is the (multichar) system connection prefix,
+ * System names are "GSnnnn", where G is the (multichar) system connection prefix,
  * nnnn is the sensor number without padding.
  * <p>
  * Sensors are numbered from 1.

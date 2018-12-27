@@ -50,6 +50,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
             LocoNetSystemConnectionMemo memo,
             int pAddress, boolean pLongAddr) {
         this(memo, pAddress, pLongAddr);
+        jmri.util.Log4JUtil.deprecationWarning(log, "LnOpsModeProgrammer(..)");        
     }
 
     /**

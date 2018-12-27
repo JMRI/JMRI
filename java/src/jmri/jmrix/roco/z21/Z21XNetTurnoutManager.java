@@ -9,9 +9,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implement turnout manager.
+ * Implement z21 turnout manager.
  * <p>
- * System names are "XTnnn", where nnn is the turnout number without padding.
+ * System names are "XTnnn", where X is the user-configurable system prefix,
+ * nnn is the turnout number without padding.
  *
  * @author	Paul Bender Copyright (C) 2016 
  */

@@ -11,8 +11,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Manage the CBUS-specific Sensor implementation.
- *
- * System names are "MSnnn", where nnn is the sensor number without padding.
+ * <p>
+ * System names are "MSnnn", where M is the user-configurable system prefix,
+ * nnn is the sensor number without padding.
  *
  * @author Bob Jacobsen Copyright (C) 2008
  */
