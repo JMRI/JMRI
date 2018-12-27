@@ -8,7 +8,6 @@ import static jmri.server.json.JSON.DATA;
 import static jmri.server.json.JSON.LIT;
 import static jmri.server.json.JSON.STATE;
 import static jmri.server.json.JSON.TOKEN_HELD;
-import static jmri.server.json.JSON.TYPE;
 import static jmri.server.json.signalMast.JsonSignalMast.SIGNAL_MAST;
 import static jmri.server.json.signalMast.JsonSignalMast.SIGNAL_MASTS;
 

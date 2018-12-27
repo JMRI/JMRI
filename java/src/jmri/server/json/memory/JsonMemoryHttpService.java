@@ -1,7 +1,6 @@
 package jmri.server.json.memory;
 
 import static jmri.server.json.JSON.DATA;
-import static jmri.server.json.JSON.TYPE;
 import static jmri.server.json.JSON.VALUE;
 import static jmri.server.json.memory.JsonMemory.MEMORIES;
 import static jmri.server.json.memory.JsonMemory.MEMORY;
