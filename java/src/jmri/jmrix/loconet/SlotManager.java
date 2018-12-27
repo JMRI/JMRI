@@ -567,9 +567,17 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * @return True if status byte indicates acceptance of the command, else false.
      */
     protected boolean checkLackTaskAccepted(int Byte2) {
-        if (Byte2 == 1 // task accepted
-                || Byte2 == 0x23 || Byte2 == 0x2B || Byte2 == 0x6B || Byte2 == 0x0b // added as DCS51 fix
-                || Byte2 == 0x7F) {
+        if (Byte2 == 1 // task accepted, without specific acknowledgement of access type (DCS240, DCS210, DCS100, DB150...)  (From LocoNet PE 1.0 spec p. 13)
+                || Byte2 == 0x23 // Paged-mode byte read task accepted (DCS51, ...)
+                || Byte2 == 0x63 // Paged-mode byte write task accepted (DCS51, ...)
+                || Byte2 == 0x2B // Direct mode byte read task accepted (DCS51, ...)
+                || Byte2 == 0x6B // Direct mode byte write task accepted (DCS51, ...)
+                || Byte2 == 0x13 // Register-mode byte read task accepted (DCS51, ...)
+                || Byte2 == 0x53 // Register-mode byte write task accepted (DCS51, ...)
+                || Byte2 == 0x0b // Direct mode bit read task accepted (DCS51, ...)
+                || Byte2 == 0x4b // Direct mode bit write task accepted (DCS51, ...)
+                || Byte2 == 0x7F) // ?? funciton not implemented and do not expect a reply?? (From LocoNet PE 1.0 spec p. 13)
+        {
             return true;
         } else {
             return false;
@@ -814,10 +822,10 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         List<ProgrammingMode> ret = new ArrayList<>();
         ret.add(ProgrammingMode.PAGEMODE);
         ret.add(ProgrammingMode.DIRECTBYTEMODE);
+        ret.add(ProgrammingMode.DIRECTBITMODE);
         ret.add(ProgrammingMode.REGISTERMODE);
         ret.add(ProgrammingMode.ADDRESSMODE);
         ret.add(csOpSwProgrammingMode);
-        ret.add(ProgrammingMode.DIRECTBITMODE);
 
         return ret;
     }
