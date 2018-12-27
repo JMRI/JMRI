@@ -2,6 +2,7 @@ package jmri.web.servlet.json;
 
 import static jmri.server.json.JSON.DATA;
 import static jmri.server.json.JSON.NAME;
+import static jmri.server.json.JSON.NODE;
 import static jmri.server.json.JSON.RAILROAD;
 import static jmri.server.json.JSON.STATE;
 import static jmri.server.json.JSON.VALUE;
@@ -169,7 +170,8 @@ public class JsonServlet extends WebSocketServlet {
                                 break;
                             case 1:
                                 //for singleton types only, strip off the array
-                                if (type.equals(POWER) || type.equals(RAILROAD) || type.equals(TIME)) {
+                                if (type.equals(POWER) || type.equals(RAILROAD) 
+                                        || type.equals(TIME) || type.equals(NODE)) {
                                     reply = array.get(0);
                                 } else {
                                     reply = array;
