@@ -47,6 +47,7 @@ public class CanReplyTest extends CanMRCommonTestBase {
     }
 
     @Test
+    @SuppressWarnings("unlikely-arg-type") // Both CanReply and CanMessage are CanFrame with custom equals
     public void testEqualsMessage() {
         CanReply m1 = new CanReply();
         m1.setExtended(true);
@@ -86,6 +87,20 @@ public class CanReplyTest extends CanMRCommonTestBase {
         Assert.assertTrue("equals copy", m1.equals(new CanReply(m1)));
         Assert.assertTrue("equals same", m1.equals(m2));
         Assert.assertTrue("not equals diff Ext", !m1.equals(m3));
+    }
+
+    @Test
+    @SuppressWarnings("unlikely-arg-type") // Both CanReply and CanMessage are CanFrame with custom equals
+    public void testReplyFromMessage() {
+        CanMessage m = new CanMessage(0x555);
+        m.setNumDataElements(2);
+        m.setElement(0, 0x01);
+        m.setElement(1, 0x82);
+        
+        CanReply r = new CanReply(m);
+        Assert.assertTrue("Header 0x555", r.getHeader() == 0x555);
+        Assert.assertTrue("2 Elements", r.getNumDataElements() == 2);
+        Assert.assertTrue("equals same", r.equals(m));
     }
 
     @Test
