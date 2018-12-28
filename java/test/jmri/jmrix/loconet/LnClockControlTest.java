@@ -1,9 +1,7 @@
 package jmri.jmrix.loconet;
 
 import java.util.Date;
-
 import jmri.util.JUnitUtil;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -54,8 +52,10 @@ public class LnClockControlTest {
         
         // expect two messages
         Assert.assertEquals("sent", 2, lnis.outbound.size());
-        Assert.assertEquals("message 1", "EF 0E 7B 01 7B 78 43 07 68 01 00 00 00 00", lnis.outbound.get(0).toString());
-        Assert.assertEquals("message 2", "BB 7B 00 00", lnis.outbound.get(1).toString());     
+        // set CS
+        Assert.assertEquals("message 1", "EF 0E 7B 01 7B 78 43 07 68 01 00 4C 03 00", lnis.outbound.get(0).toString());
+        // rest of string varies 
+        Assert.assertEquals("message 2", "E7 0E 7B 01", lnis.outbound.get(1).toString().substring(0, 11));     
     }
     
     @Test
@@ -65,7 +65,7 @@ public class LnClockControlTest {
         SlotManager slotmanager = new SlotManager(lnis);
         LocoNetSystemConnectionMemo c = new LocoNetSystemConnectionMemo(lnis, slotmanager);
 
-        // allow actual write
+        // allow actual write - this sets us to master
         jmri.InstanceManager.getDefault(jmri.Timebase.class).setSynchronize(true, false);
 
         // set power manager to OFF
@@ -81,8 +81,9 @@ public class LnClockControlTest {
         
         // expect two messages
         Assert.assertEquals("sent", 2, lnis.outbound.size());
-        Assert.assertEquals("message 1", "EF 0E 7B 01 7B 78 43 06 68 01 00 00 00 00", lnis.outbound.get(0).toString());
-        Assert.assertEquals("message 2", "BB 7B 00 00", lnis.outbound.get(1).toString());     
+        Assert.assertEquals("message 1", "EF 0E 7B 01 7B 78 43 06 68 01 00 4C 03 00", lnis.outbound.get(0).toString());
+        // rest of string varies 
+        Assert.assertEquals("message 2", "E7 0E 7B 01", lnis.outbound.get(1).toString().substring(0,11));     
     }
 
     @Before
