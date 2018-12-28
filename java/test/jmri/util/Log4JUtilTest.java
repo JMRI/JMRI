@@ -13,8 +13,8 @@ public class Log4JUtilTest {
 
     @Test
     public void testLog4JWarnMessage() {
-        log.warn("WARN message");
-        jmri.util.JUnitAppender.assertWarnMessage("WARN message");
+        log.warn("WARN message succeeds");
+        jmri.util.JUnitAppender.assertWarnMessage("WARN message succeeds");
 
         log.debug("DEBUG message"); // should be suppressed see tests.lcf
 
@@ -28,14 +28,26 @@ public class Log4JUtilTest {
         jmri.util.JUnitAppender.assertWarnMessage("WARN message");
         Assert.assertTrue(jmri.util.JUnitAppender.verifyNoBacklog());
         
-        Logger log2 = LoggerFactory.getLogger("Log4JUtilTest-extra-logger");
+        Logger log2 = LoggerFactory.getLogger("Log4JUtilTest-extra-logger"); // same message, different logger
         Assert.assertTrue(Log4JUtil.warnOnce(log2, "WARN message"));
         Assert.assertFalse(Log4JUtil.warnOnce(log2, "WARN message"));
         jmri.util.JUnitAppender.assertWarnMessage("WARN message");
         Assert.assertTrue(jmri.util.JUnitAppender.verifyNoBacklog());
 
-        Assert.assertTrue(Log4JUtil.warnOnce(log, "WARN message 2")); // different string
+        Assert.assertTrue(Log4JUtil.warnOnce(log, "WARN message 2")); // same logger, different message
         jmri.util.JUnitAppender.assertWarnMessage("WARN message 2");        
+        Assert.assertFalse(Log4JUtil.warnOnce(log, "WARN message 2")); // same logger, different message
+        Assert.assertTrue(jmri.util.JUnitAppender.verifyNoBacklog());
+   }
+
+    @Test
+    public void testWarnOnceReset() {
+        Assert.assertTrue(Log4JUtil.warnOnce(log, "WARN message check")); // string has to be same until further notice
+        Log4JUtil.restartWarnOnce();
+        Assert.assertTrue(Log4JUtil.warnOnce(log, "WARN message check"));
+        jmri.util.JUnitAppender.assertWarnMessage("WARN message check");
+        jmri.util.JUnitAppender.assertWarnMessage("WARN message check");
+        Assert.assertTrue(jmri.util.JUnitAppender.verifyNoBacklog());
     }
 
     @Test
@@ -45,6 +57,40 @@ public class Log4JUtilTest {
         Assert.assertTrue(jmri.util.JUnitAppender.verifyNoBacklog());
     }
     
+    // The following two tests are _identical_.  We run them twice to make
+    // sure that two separate tests are properly detecting deprecation messages
+    @Test
+    public void testDeprecatedWarning1() {
+
+        // on by default
+        Log4JUtil.deprecationWarning(log, "method 1");
+        Log4JUtil.deprecationWarning(log, "method 1");
+        jmri.util.JUnitAppender.assertWarnMessage("method 1 is deprecated, please remove references to it");
+        Assert.assertTrue(jmri.util.JUnitAppender.verifyNoBacklog());
+
+        // logging turned off 
+        Log4JUtil.setDeprecatedLogging(true);
+        Log4JUtil.deprecationWarning(log, "method 1");
+        Log4JUtil.deprecationWarning(log, "method 1");
+        Assert.assertTrue(jmri.util.JUnitAppender.verifyNoBacklog());
+    }
+    @Test
+    public void testDeprecatedWarning2() {
+
+        // on by default
+        Log4JUtil.deprecationWarning(log, "method 1");
+        Log4JUtil.deprecationWarning(log, "method 1");
+        jmri.util.JUnitAppender.assertWarnMessage("method 1 is deprecated, please remove references to it");
+        Assert.assertTrue(jmri.util.JUnitAppender.verifyNoBacklog());
+
+        // logging turned off 
+        Log4JUtil.setDeprecatedLogging(true);
+        Log4JUtil.deprecationWarning(log, "method 1");
+        Log4JUtil.deprecationWarning(log, "method 1");
+        Assert.assertTrue(jmri.util.JUnitAppender.verifyNoBacklog());
+    }
+
+
     @Test
     public void testSendJavaUtilLogInfoMessage() {
         // test that java.util.logging is getting to Log4J
