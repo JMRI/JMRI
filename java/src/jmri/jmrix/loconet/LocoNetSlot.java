@@ -943,6 +943,24 @@ public class LocoNetSlot {
     }
 
     /**
+     * Set the throttle ID in the slot
+     *
+     * @param throttleId full id
+     */
+    public void setThrottleId(int throttleId) {
+        id = throttleId;
+    }
+
+    /**
+     * Get the throttle ID in the slot
+     *
+     *@return the Id of the Throttle
+     */
+    public int getThrottleId() {
+        return id;
+    }
+
+    /**
      * Update the status mode bits in STAT1 (D5, D4)
      *
      * @param status New values for STAT1 (D5, D4)
@@ -1084,6 +1102,38 @@ public class LocoNetSlot {
             SlotListener client = v.get(i);
             client.notifyChangedSlot(this);
         }
+    }
+
+    /**
+     * For fast-clock slot, set a "CLK_CNTRL" bit On. This method logs an error
+     * if invoked for a slot other than the fast-clock slot.
+     * <p>
+     *
+     * @param val is the new "CLK_CNTRL" bit value to turn On
+     */
+    public void setFcCntrlBitOn(int val) {
+        // TODO: consider throwing a LocoNetException if issued for a slot other
+        // than the "fast clock slot".
+        if (getSlot() != LnConstants.FC_SLOT) {
+            log.error("setFcCntrl invalid for slot " + getSlot());
+        }
+        snd |= val;
+    }
+
+    /**
+     * For fast-clock slot, set a "CLK_CNTRL" bit Off. This method logs an error
+     * if invoked for a slot other than the fast-clock slot.
+     * <p>
+     *
+     * @param val is the new "CLK_CNTRL" bit value to turn Off
+     */
+    public void setFcCntrlBitOff(int val) {
+        // TODO: consider throwing a LocoNetException if issued for a slot other
+        // than the "fast clock slot".
+        if (getSlot() != LnConstants.FC_SLOT) {
+            log.error("setFcCntrl invalid for slot " + getSlot());
+        }
+        snd &= ~val;
     }
 
     /**

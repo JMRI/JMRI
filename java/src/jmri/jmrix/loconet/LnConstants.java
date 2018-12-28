@@ -261,7 +261,10 @@ public final class LnConstants {
     /** Fast clock is in this slot                           */
     public final static int FC_SLOT = 0x7b;
 
-     /** This slot communicates with the programming track   */
+    /** Fast CLock valid **/
+    public final static int FC_VALID = 0X40;
+
+    /** This slot communicates with the programming track   */
     public final static int PRG_SLOT = 0x7c;
 
     /** This slot holds extended configuration bits for some command stations */
