@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!--Written by JMRI version 4.15.1ish+jake+20181223T1954Z+Rc0e5db9076 on Sun Dec 23 13:55:55 CST 2018-->
-  <decoderIndex version="920">
+  <!--Written by JMRI version 4.15.2ish+jake+20181227T1604Z+R6c9a33f5d6 on Thu Dec 27 08:04:59 PST 2018-->
+  <decoderIndex version="922">
     <mfgList nmraListDate="2015-03-06" updated="2015-03-25" lastadd="107,124,126,128,134">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -8203,6 +8203,11 @@
           <output name="Headlight" label="Wh" maxcurrent="0.1A" />
           <output name="Rear Light" label="Ye" maxcurrent="0.1A" />
           <output name="Aux" label="Gr" maxcurrent="0.1A" />
+        </model>
+      </family>
+      <family name="Hornby TTS Accessory Sound Decoder" mfg="Hornby" comment="" file="HornbyTTS_NonLoco.xml">
+        <model model="Hornby TTS Vent Van" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="2">
+          <versionCV lowVersionID="2" highVersionID="120" />
         </model>
       </family>
       <family name="Ditch Light Decoder" mfg="Kato" lowVersionID="49" highVersionID="51" file="Kato_Ditch.xml">

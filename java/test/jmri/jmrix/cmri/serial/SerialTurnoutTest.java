@@ -42,6 +42,9 @@ public class SerialTurnoutTest extends AbstractTurnoutTestBase {
     @After
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
+        if (tcis != null) tcis.terminateThreads();
+        tcis = null;
+        memo = null;
     }
 
     int startingNumListeners; // number at creation, before tests start allocating them.

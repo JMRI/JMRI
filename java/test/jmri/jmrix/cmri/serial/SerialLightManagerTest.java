@@ -35,6 +35,9 @@ public class SerialLightManagerTest {
     @After
     public void tearDown() {
         JUnitUtil.tearDown();
+        if (tcis != null) tcis.terminateThreads();
+        tcis = null;
+        memo = null;
     }
 
 }

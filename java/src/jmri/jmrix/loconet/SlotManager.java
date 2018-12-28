@@ -1619,6 +1619,13 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         return adaptermemo;
     }
 
+    /**
+     * Dispose of this by stopped it's ongoing actions
+     */
+    public void dispose() {
+        if (staleSlotCheckTimer != null) staleSlotCheckTimer.stop();
+    }
+
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(SlotManager.class);
 
