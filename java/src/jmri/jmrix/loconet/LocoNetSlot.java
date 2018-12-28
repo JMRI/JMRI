@@ -1431,20 +1431,34 @@ public class LocoNetSlot {
     }
 
     /**
-     * For fast-clock slot, set "CLK_CNTRL" value.
+     * For fast-clock slot, set a "CLK_CNTRL" bit On.
      * This method logs an error if invoked for a slot other than the fast-clock slot.
      * <p>
-     * @param val is the new "CLK_CNTRL" value . (D6 1 = valid, D6 0 = ignore)
+     * @param val is the new "CLK_CNTRL" bit value to turn On
      */
-    public void setFcCntrl(int val) {
+    public void setFcCntrlBitOn(int val) {
         // TODO: consider throwing a LocoNetException if issued for a slot other
         // than the "fast clock slot".
         if (getSlot() != LnConstants.FC_SLOT) {
             log.error("setFcCntrl invalid for slot " + getSlot());
         }
-        snd = val;
+        snd |= val;
     }
 
+    /**
+     * For fast-clock slot, set a "CLK_CNTRL" bit Off.
+     * This method logs an error if invoked for a slot other than the fast-clock slot.
+     * <p>
+     * @param val is the new "CLK_CNTRL" bit value to turn Off
+     */
+    public void setFcCntrlBitOff(int val) {
+        // TODO: consider throwing a LocoNetException if issued for a slot other
+        // than the "fast clock slot".
+        if (getSlot() != LnConstants.FC_SLOT) {
+            log.error("setFcCntrl invalid for slot " + getSlot());
+        }
+        snd &= ~val;
+    }
     /**
      * Return the days value from the slot.  Only valid for fast-clock slot.
      * <p>
