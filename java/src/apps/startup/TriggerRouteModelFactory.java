@@ -8,8 +8,6 @@ import jmri.InstanceManager;
 import jmri.Route;
 import jmri.RouteManager;
 import org.openide.util.lookup.ServiceProvider;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Factory to create {@link apps.startup.TriggerRouteModel} objects.
@@ -18,8 +16,6 @@ import org.slf4j.LoggerFactory;
  */
 @ServiceProvider(service = StartupModelFactory.class)
 public class TriggerRouteModelFactory implements StartupModelFactory {
-
-    private final static Logger log = LoggerFactory.getLogger(TriggerRouteModelFactory.class);
 
     @Override
     public Class<? extends StartupModel> getModelClass() {
@@ -70,4 +66,7 @@ public class TriggerRouteModelFactory implements StartupModelFactory {
     public void initialize() {
         // nothing to do
     }
+
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TriggerRouteModelFactory.class);
+
 }
