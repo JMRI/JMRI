@@ -35,6 +35,9 @@ public class CMRIComponentFactoryTest {
     @After
     public void tearDown() {
         JUnitUtil.tearDown();
+        if (tcis != null) tcis.terminateThreads();
+        tcis = null;
+        memo = null;
     }
 
     // private final static Logger log = LoggerFactory.getLogger(CMRIComponentFactoryTest.class);

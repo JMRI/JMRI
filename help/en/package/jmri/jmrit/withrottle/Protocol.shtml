@@ -670,7 +670,7 @@ MTAL341&lt;;&gt;s1
         <li>Current speed step mode</li>
       </ul>
 
-      <p>For all except the function lables, see the appropriate
+      <p>For all except the function labels, see the appropriate
       throttle commands, such as 'V' below, for details.</p>
 
       <p>The function labels are an array of strings, with ]\[ used
@@ -847,6 +847,10 @@ MTA*&lt;;&gt;F012
       <pre class="code">
 MTA*&lt;;&gt;V30
 </pre>
+
+      <p>If the value received from the WiThrottle server is negative (e.g., during the
+         initialization information when an address is selected), that indicates the
+         address is in Emergency Stop mode.</p>
 
     <h3>'S' Steal Locomotive</h3>
 

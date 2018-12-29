@@ -28,7 +28,7 @@ public class DCCppEthernetAdapter extends DCCppNetworkPortController {
     // send a message to both
     // ports to keep the ports 
     // open
-    private static final int keepAliveTimeoutValue = 30000; // Interval 
+    private static final long keepAliveTimeoutValue = 30000; // Interval 
     // to send a message
     // Must be < 60s.
     
@@ -110,7 +110,7 @@ public class DCCppEthernetAdapter extends DCCppNetworkPortController {
         } else {
             keepAliveTimer.cancel();
         }
-        new java.util.Timer("DCC++ Keepalive Timer").schedule(keepAliveTimer,keepAliveTimeoutValue,keepAliveTimeoutValue);
+        jmri.util.TimerUtil.schedule(keepAliveTimer, keepAliveTimeoutValue, keepAliveTimeoutValue);
     }
     
     private boolean mDNSConfigure = false;
