@@ -9,9 +9,7 @@ import jmri.jmrit.operations.automation.AutomationItem;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.excel.TrainCustomSwitchList;
 import jmri.util.JUnitOperationsUtil;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -105,18 +103,6 @@ public class RunSwitchListActionTest extends OperationsTestCase {
 
         // confirm file exists
         Assert.assertTrue(InstanceManager.getDefault(TrainCustomSwitchList.class).excelFileExists());
-    }
-
-    // The minimal setup for log4J
-    @Override
-    @Before
-    public void setUp() {
-        super.setUp();    }
-
-    @Override
-    @After
-    public void tearDown() {
-        super.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(RunSwitchListActionTest.class);

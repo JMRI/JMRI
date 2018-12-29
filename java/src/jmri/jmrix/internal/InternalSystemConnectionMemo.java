@@ -22,14 +22,25 @@ import jmri.InstanceManager;
  */
 public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo implements jmri.InstanceManagerAutoDefault {
 
-    public InternalSystemConnectionMemo() {
-        super("I", "Internal"); // TODO I18N
+    public InternalSystemConnectionMemo(boolean defaultInstanceType) {
+        super("I", "Internal");
         InstanceManager.store(this, InternalSystemConnectionMemo.class); // also register as specific type
         register();
+        this. defaultInstanceType = defaultInstanceType;
+    }
+    
+    // invoked by i.e. InstanceManager via the InstanceManagerAutoDefault
+    // mechanism, this creates a partial system
+    public InternalSystemConnectionMemo() {
+        this(true);
     }
 
     boolean configured = false;
-
+    
+    // if true, this is the default Internal instance, which 
+    // only provides a subset of types
+    boolean defaultInstanceType = false;
+    
     /**
      * Configure the common managers for Internal connections. This puts the
      * common manager config in one place.
@@ -43,25 +54,24 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
         configured = true;
     }
 
-    private InternalConsistManager consistManager;
-    private InternalLightManager lightManager;
     private InternalSensorManager sensorManager;
+    private InternalLightManager lightManager;
     private InternalReporterManager reporterManager;
     private InternalTurnoutManager turnoutManager;
-    private jmri.jmrix.debugthrottle.DebugThrottleManager throttleManager;
-    private jmri.managers.DefaultPowerManager powerManager;
-    private jmri.progdebugger.DebugProgrammerManager programManager;
-    
 
-    @Override
-    public InternalConsistManager getConsistManager() {
-        if (consistManager == null) {
-            log.debug("Create InternalConsistManager by request");
-            consistManager = new InternalConsistManager();
+    private jmri.managers.DefaultPowerManager powerManager;
+    private InternalConsistManager consistManager;
+    private jmri.jmrix.debugthrottle.DebugThrottleManager throttleManager;
+    private jmri.progdebugger.DebugProgrammerManager programManager;
+
+    public InternalSensorManager getSensorManager() {
+        if (sensorManager == null) {
+            log.debug("Create InternalSensorManager \"{}\" by request", getSystemPrefix());
+            sensorManager = new InternalSensorManager(getSystemPrefix());
             // special due to ProxyManager support
-            InstanceManager.store(consistManager,jmri.ConsistManager.class);
+            InstanceManager.setSensorManager(sensorManager);
         }
-        return consistManager;
+        return sensorManager;
     }
 
     public InternalLightManager getLightManager() {
@@ -72,16 +82,6 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
             InstanceManager.setLightManager(lightManager);
         }
         return lightManager;
-    }
-
-    public InternalSensorManager getSensorManager() {
-        if (sensorManager == null) {
-            log.debug("Create InternalSensorManager \"{}\" by request", getSystemPrefix());
-            sensorManager = new InternalSensorManager(getSystemPrefix());
-            // special due to ProxyManager support
-            InstanceManager.setSensorManager(sensorManager);
-        }
-        return sensorManager;
     }
 
     public InternalReporterManager getReporterManager() {
@@ -104,16 +104,6 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
         return turnoutManager;
     }
 
-    public jmri.jmrix.debugthrottle.DebugThrottleManager getThrottleManager() {
-        if (throttleManager == null) {
-            log.debug("Create DebugThrottleManager by request");
-            // Install a debug throttle manager
-            throttleManager = new jmri.jmrix.debugthrottle.DebugThrottleManager(this);
-            jmri.InstanceManager.setThrottleManager(throttleManager);
-        }
-        return throttleManager;
-    }
-
     public jmri.managers.DefaultPowerManager getPowerManager() {
         if (powerManager == null) {
             log.debug("Create DefaultPowerManager by request");
@@ -123,7 +113,31 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
         return powerManager;
     }
 
+    @Override
+    public InternalConsistManager getConsistManager() {
+        if (defaultInstanceType) { return null; }
+        if (consistManager == null) {
+            log.debug("Create InternalConsistManager by request");
+            consistManager = new InternalConsistManager();
+            // special due to ProxyManager support
+            InstanceManager.store(consistManager,jmri.ConsistManager.class);
+        }
+        return consistManager;
+    }
+
+    public jmri.jmrix.debugthrottle.DebugThrottleManager getThrottleManager() {
+        if (defaultInstanceType) { return null; }
+        if (throttleManager == null) {
+            log.debug("Create DebugThrottleManager by request");
+            // Install a debug throttle manager
+            throttleManager = new jmri.jmrix.debugthrottle.DebugThrottleManager(this);
+            jmri.InstanceManager.setThrottleManager(throttleManager);
+        }
+        return throttleManager;
+    }
+
     public jmri.progdebugger.DebugProgrammerManager getProgrammerManager() {
+        if (defaultInstanceType) { return null; }
         if (programManager == null) {
             log.debug("Create DebugProgrammerManager by request");
             // Install a debug programmer
@@ -142,19 +156,6 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
 
         if (!configured) configureManagers();
 
-        if (type.equals(jmri.GlobalProgrammerManager.class)) {
-            return getProgrammerManager().isGlobalProgrammerAvailable();
-        }
-        if (type.equals(jmri.AddressedProgrammerManager.class)) {
-            return getProgrammerManager().isAddressedModePossible();
-        }
-
-        if (type.equals(jmri.ThrottleManager.class)) {
-            return true;
-        }
-        if (type.equals(jmri.PowerManager.class)) {
-            return true;
-        }
         if (type.equals(jmri.SensorManager.class)) {
             return true;
         }
@@ -167,9 +168,28 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
         if (type.equals(jmri.TurnoutManager.class)) {
             return true;
         }
-        if (type.equals(jmri.ConsistManager.class)) {
-            return true;
+
+
+        if (!defaultInstanceType) {
+            if (type.equals(jmri.PowerManager.class)) {
+                return true;
+            }
+            
+            if (type.equals(jmri.GlobalProgrammerManager.class)) {
+                return getProgrammerManager().isGlobalProgrammerAvailable();
+            }
+            if (type.equals(jmri.AddressedProgrammerManager.class)) {
+                return getProgrammerManager().isAddressedModePossible();
+            }
+
+            if (type.equals(jmri.ThrottleManager.class)) {
+                return true;
+            }
+            if (type.equals(jmri.ConsistManager.class)) {
+                return true;
+            }
         }
+                
         return super.provides(type);
     }
 
@@ -182,24 +202,11 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
 
         if (!configured) configureManagers();
 
-        if (T.equals(jmri.GlobalProgrammerManager.class)) {
-            return (T) getProgrammerManager();
-        }
-        if (T.equals(jmri.AddressedProgrammerManager.class)) {
-            return (T) getProgrammerManager();
-        }
-
-        if (T.equals(jmri.ThrottleManager.class)) {
-            return (T) getThrottleManager();
-        }
-        if (T.equals(jmri.PowerManager.class)) {
-            return (T) getPowerManager();
+        if (T.equals(jmri.SensorManager.class)) {
+            return (T) getSensorManager();
         }
         if (T.equals(jmri.LightManager.class)) {
             return (T) getLightManager();
-        }
-        if (T.equals(jmri.SensorManager.class)) {
-            return (T) getSensorManager();
         }
         if (T.equals(jmri.ReporterManager.class)) {
             return (T) getReporterManager();
@@ -207,9 +214,27 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
         if (T.equals(jmri.TurnoutManager.class)) {
             return (T) getTurnoutManager();
         }
-        if (T.equals(jmri.ConsistManager.class)) {
-            return (T) getConsistManager();
+
+        if (!defaultInstanceType) {
+            if (T.equals(jmri.PowerManager.class)) {
+                return (T) getPowerManager();
+            }
+            
+            if (T.equals(jmri.GlobalProgrammerManager.class)) {
+                return (T) getProgrammerManager();
+            }
+            if (T.equals(jmri.AddressedProgrammerManager.class)) {
+                return (T) getProgrammerManager();
+            }
+
+            if (T.equals(jmri.ThrottleManager.class)) {
+                return (T) getThrottleManager();
+            }
+            if (T.equals(jmri.ConsistManager.class)) {
+                return (T) getConsistManager();
+            }
         }
+
         return super.get(T);
     }
 

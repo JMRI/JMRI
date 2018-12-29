@@ -2,8 +2,7 @@ package jmri.implementation;
 
 import java.beans.*;
 import java.util.Arrays;
-import javax.annotation.*
-;
+import javax.annotation.*;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.NamedBeanHandle;
@@ -83,6 +82,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
      * <p>
      * This is used when a new commanded state
      * is noticed from another command.
+     *
      * @param s new state
      */
     protected void newCommandedState(int s) {
@@ -101,7 +101,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 
     /**
      * Public access to changing turnout state. Sets the commanded state and, if
-     * appropriate starts a TurnoutOperator to do its thing. If there is no
+     * appropriate, starts a TurnoutOperator to do its thing. If there is no
      * TurnoutOperator (not required or nothing suitable) then just tell the
      * layout and hope for the best.
      *
@@ -110,7 +110,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
     @Override
     public void setCommandedState(int s) {
         log.debug("set commanded state for turnout {} to {}", getFullyFormattedDisplayName(),
-                (s==Turnout.CLOSED ? closedText : thrownText));
+                (s == Turnout.CLOSED ? closedText : thrownText));
         newCommandedState(s);
         myOperator = getTurnoutOperator(); // MUST set myOperator before starting the thread
         if (myOperator == null) {
@@ -129,10 +129,10 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
     }
 
     /**
-     * Define duration of delay for DELAYED feedback mode.
+     * Duration in Milliseconds of delay for DELAYED feedback mode.
      * <p>
-     * Defined as "public non-final"
-     * so it can be changed in e.g. the jython/SetDefaultDelayedTurnoutDelay script.
+     * Defined as "public non-final" so it can be changed in e.g.
+     * the jython/SetDefaultDelayedTurnoutDelay script.
      */
     public static int DELAYED_FEEDBACK_INTERVAL = 4000;
 
@@ -158,8 +158,8 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
      * going to THROWN or CLOSED, because there may be others listening to
      * network state.
      * <p>
-     * This method is intended for general use, e.g. for users to set the KnownState,
-     * so it doesn't appear in the Turnout interface.
+     * This method is not intended for general use, e.g. for users to set the 
+     * KnownState, so it doesn't appear in the Turnout interface.
      *
      * @param s New state value
      */
@@ -170,6 +170,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
             firePropertyChange("KnownState", Integer.valueOf(oldState),
                     Integer.valueOf(_knownState));
         }
+        _knownState = s;
         // if known state has moved to Thrown or Closed,
         // set the commanded state to match
         if ((_knownState == THROWN && _commandedState != THROWN)
@@ -359,7 +360,6 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
             } else if (state == CLOSED) {
                 newKnownState(THROWN);
             }
-
         }
     }
 
@@ -544,7 +544,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
     }
 
     /*
-     * Support for turnout automation (see TurnoutOperation and related classes)
+     * Support for turnout automation (see TurnoutOperation and related classes).
      */
     protected TurnoutOperator myOperator;
 
@@ -600,7 +600,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
      * the corresponding operator. Override this function if you want another way
      * to choose the operation.
      *
-     * @return newly-instantiated TurnoutOPerator, or null if nothing suitable
+     * @return newly-instantiated TurnoutOperator, or null if nothing suitable
      */
     protected TurnoutOperator getTurnoutOperator() {
         TurnoutOperator to = null;

@@ -108,6 +108,9 @@ public class SerialSensorTest extends jmri.implementation.AbstractSensorTestBase
     @After
     public void tearDown() {
         JUnitUtil.tearDown();
+        if (tcis != null) tcis.terminateThreads();
+        tcis = null;
+        memo = null;
     }
 
 }

@@ -61,7 +61,7 @@ public class WebAppServlet extends HttpServlet {
      * @throws IOException      if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        log.debug("App contextPath: {}, pathInfo: {}, pathTranslated: {}", request.getContextPath(), request.getPathInfo(), request.getPathTranslated());
+        log.debug("App contextPath: {}, pathInfo: {}", request.getContextPath(), request.getPathInfo());
         response.setHeader("Connection", "Keep-Alive"); // NOI18N
         switch (request.getContextPath()) {
             case "/app": // NOI18N
@@ -240,7 +240,7 @@ public class WebAppServlet extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        return "Short description";
+        return "JMRI Web App support";
     }// </editor-fold>
 
 }

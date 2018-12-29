@@ -289,7 +289,6 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
                     int feet = (int) (inches * Setup.getScaleRatio() / 12);
                     addItem = Integer.toString(feet);
                 } catch (NumberFormatException e) {
-                    log.error("can not convert from inches to feet");
                     JOptionPane.showMessageDialog(this, Bundle.getMessage("CanNotConvertFeet"), Bundle
                             .getMessage("ErrorCarLength"), JOptionPane.ERROR_MESSAGE);
                     return;
@@ -302,7 +301,6 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
                     int meter = (int) (cm * Setup.getScaleRatio() / 100);
                     addItem = Integer.toString(meter);
                 } catch (NumberFormatException e) {
-                    log.error("Can not convert from cm to meters");
                     JOptionPane.showMessageDialog(this, Bundle.getMessage("CanNotConvertMeter"), Bundle
                             .getMessage("ErrorCarLength"), JOptionPane.ERROR_MESSAGE);
                     return;

@@ -53,21 +53,78 @@ public class Log4JUtil {
      */
     // Goal is to be lightweight and fast; this will only be used in a few places,
     // and only those should appear in data structure.
-    static public boolean warnOnce(@Nonnull Logger log, @Nonnull String msg, Object... args) {
+    static public boolean warnOnce(@Nonnull Logger logger, @Nonnull String msg, Object... args) {
         // the  Map<String, Boolean> is just being checked for existence; it's never False
-        Map<String, Boolean> loggerMap = warnedOnce.get(log);
-        if (loggerMap == null) {
+        Map<String, Boolean> loggerMap = warnedOnce.get(logger);
+        if (loggerMap == null) {  // if it exists, there was a prior warning given
             loggerMap = new HashMap<>();
-            warnedOnce.put(log, loggerMap);
+            warnedOnce.put(logger, loggerMap);
         } else {
             if (Boolean.TRUE.equals(loggerMap.get(msg))) return false;
         }
+        warnOnceHasWarned = true;
         loggerMap.put(msg, Boolean.TRUE);
-        log.warn(msg, args);
+        logger.warn(msg, args);
         return true;
     }
     static private Map<Logger, Map<String, Boolean>> warnedOnce = new HashMap<>();
+    static private boolean warnOnceHasWarned = false;
     
+    /**
+     * Restart the "once" part of {@link warnOnce} so that the 
+     * nextInvocation will log, even if it already has.
+     * <p>
+     * Should only be used by test code. We denote this
+     * by marking it deprecated, but we don't intend to remove it.
+     * @deprecated - do not remove
+     */
+    @Deprecated // do not remove
+    static public void restartWarnOnce() {
+        // be a bit more efficient
+        if (warnOnceHasWarned) {
+            warnedOnce = new HashMap<>();
+            warnOnceHasWarned = false;
+        }
+    }
+    
+    /**
+     * Warn that a deprecated method has been invoked.
+     * Can also be used to warn of some deprecated condition, i.e.
+     * obsolete-format input data.
+     * <p>
+     * Thie logging is turned off by default during testing to
+     * simplify updating tests when warnings are added.
+     */
+     static public void deprecationWarning(@Nonnull Logger logger, @Nonnull String methodName) {
+        if (logDeprecations) {
+            warnOnce(logger, "{} is deprecated, please remove references to it", methodName, new Exception("traceback"));
+        }
+     }
+     
+    static private boolean logDeprecations = true;
+    
+    /**
+     * Control logging of deprecation warnings.
+     * <p> 
+     * Should only be used by test code. We denote this
+     * by marking it deprecated, but we don't intend to remove it.
+     * (Might have to if we start removing deprecated references from test code)
+     * @deprecated - do not remove
+     */
+    @Deprecated // do not remove
+    public static void setDeprecatedLogging(boolean log) {logDeprecations = log;}
+
+    /**
+     * Determine whether deprecation warnings are logged.
+     * <p> 
+     * Should only be used by test code. We denote this
+     * by marking it deprecated, but we don't intend to remove it.
+     * (Might have to if we start removing deprecated references from test code)
+     * @deprecated - do not remove
+     */
+    @Deprecated // do not remove
+    public static boolean getDeprecatedLogging() { return logDeprecations;}
+     
     /**
      * Initialize logging from a default control file.
      * <p>
@@ -114,7 +171,7 @@ public class Log4JUtil {
         }
         // Initialise JMRI System Console
         // Need to do this before initialising log4j so that the new
-        // stdout and stderr streams are set-up and usable by the ConsoleAppender
+        // stdout and stderr streams are set up and usable by the ConsoleAppender
         SystemConsole.create();
         log4JSetUp = true;
 

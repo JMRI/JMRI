@@ -2,6 +2,8 @@ package jmri.jmrix.dcc4pc;
 
 import java.beans.PropertyChangeListener;
 import java.util.List;
+import javax.annotation.Nonnull;
+
 import jmri.AddressedProgrammer;
 import jmri.AddressedProgrammerManager;
 import jmri.ProgListener;
@@ -95,6 +97,7 @@ public class Dcc4PcOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer imple
      * Types implemented here.
      */
     @Override
+    @Nonnull
     public List<ProgrammingMode> getSupportedModes() {
         return defaultProgrammer.getSupportedModes();
     }

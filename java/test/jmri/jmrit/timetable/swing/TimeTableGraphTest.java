@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.GraphicsEnvironment;
 import jmri.jmrit.timetable.*;
 import jmri.util.JmriJFrame;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 
@@ -35,6 +36,9 @@ public class TimeTableGraphTest {
         Assert.assertNotNull(gf);
 
         gf.dispose();
+        
+        JUnitAppender.suppressWarnMessage("No scale found, defaulting to HO");
+        
     }
     @Before
     public void setUp() {
@@ -46,6 +50,6 @@ public class TimeTableGraphTest {
 
     @After
     public void tearDown() {
-        jmri.util.JUnitUtil.tearDown();
+        JUnitUtil.tearDown();
     }
 }

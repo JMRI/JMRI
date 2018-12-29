@@ -47,7 +47,7 @@
       
         <h3>Event Conventions</h3>
           <div>
-<h4>Short Event Suggestions</h4>
+        <h4>Short Event Suggestions</h4>
             <p>Suggestion from Mike Bolton :</p>
             
             <p>His club has adopted the convention of 1 to 9999 for turnouts 
@@ -117,12 +117,11 @@
         <p>JMRI can store cross-session information such as Memory Variables and 
         Block Values ( Train Describer value )</p>      
         
-        <p>When JMRI loads a panel, and the Track Power is sent On, block values from 
+        <p>When JMRI loads a panel, and the Track Power is on, block values from 
         the previous session are loaded if the block is active.</p>
         
         <p>It may make sense to set Track Power to Off on JMRI Startup and when a panel loads, 
         switching the track power on after the panel has fully loaded.</p>
-        
       
       <h4><a name="automatic" id="automatic">Sensors - JMRI Automatic Creation</a></h4>
 
@@ -418,8 +417,8 @@
       
       <p>These particular event Opscodes use a Hex string 4 digits long, split into High then Low :</p>
       
-      <img src="../images/merg-add-turnout-hex-620x173.jpg" align="right" 
-      alt="merg cbus add new turnout hexadecimal hex" width="620" height="173">
+      <img src="images/web/merg-add-turnout-hex-620x147.png" align="right" 
+      alt="merg cbus add new turnout hexadecimal hex" width="620" height="147">
       
       <table border="1">
       <tr>
@@ -487,7 +486,7 @@
       </tr>
       </table>
       
-      <img src="../images/merg-cbus-server-649x416.jpg"
+      <img src="images/web/merg-cbus-server-400x256.png"
       width="400" height="256" alt="merg cbus server" align="right">
       
       <p>Ensure you use the right opscode, eg if you include Nodes for a FiLM address, use ACON instead of ASON.</p>

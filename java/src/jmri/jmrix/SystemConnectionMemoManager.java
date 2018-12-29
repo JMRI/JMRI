@@ -5,8 +5,6 @@ import javax.annotation.Nonnull;
 import jmri.InstanceManager;
 import jmri.beans.Bean;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Manager for SystemConnectionMemos. Manages SystemConnectionMemos and
@@ -29,7 +27,6 @@ public class SystemConnectionMemoManager extends Bean {
      * event has the removed connection as the old value and a null new value.
      */
     public final static String CONNECTION_REMOVED = "ConnectionRemoved";
-    private final static Logger log = LoggerFactory.getLogger(SystemConnectionMemoManager.class);
 
     /**
      * Register a SystemConnectionMemo in the InstanceManager.
@@ -53,12 +50,14 @@ public class SystemConnectionMemoManager extends Bean {
             // just add on end
             InstanceManager.store(memo, SystemConnectionMemo.class);
         }
+        log.trace("fire CONNECTION_ADDED for {}", memo);
         this.firePropertyChange(CONNECTION_ADDED, null, memo);
     }
 
     public void deregister(SystemConnectionMemo memo) {
         // removeFromActionList();
         InstanceManager.deregister(memo, SystemConnectionMemo.class);
+        log.trace("fire CONNECTION_REMOVED for {}", memo);
         firePropertyChange(CONNECTION_REMOVED, memo, null);
     }
 
@@ -121,4 +120,5 @@ public class SystemConnectionMemoManager extends Bean {
         });
     }
 
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SystemConnectionMemoManager.class);
 }

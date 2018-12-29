@@ -9,6 +9,7 @@ import org.junit.runners.Suite;
     OlcbSensorManagerXmlTest.class,
     OlcbSignalMastXmlTest.class,
     OlcbTurnoutManagerXmlTest.class,
+    ProtocolOptionsPersistenceTest.class,
     SchemaTest.class,
     LoadAndStoreTest.class
 })

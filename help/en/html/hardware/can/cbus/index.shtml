@@ -86,9 +86,8 @@
         </ul>
       
     <h3>JMRI MERG CBUS Tools Support Pages</h3>
-      <img src=
-      "../images/MERG_Menu.png" alt="MERG menu" align="right"
-      height="134" width="188">
+      <img src="images/swing/merg-menu-206x145.png" alt="MERG menu" align="right"
+      width="206" height="145">
 
       <ul>
         <li><a href=
@@ -99,6 +98,8 @@
             >Logging to a File</a></li>
             <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml#stats"
             >Statistics</a></li>
+            <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml#filter"
+            >Filter</a></li>
             <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml#highlighter"
             >Event Highlighter</a></li>
             </ul>
@@ -126,7 +127,11 @@
         <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/nodeconfig/NodeConfigToolPane.shtml#events">Node Events</a></li>
         <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/nodeconfig/NodeConfigToolPane.shtml#nodenumber">Node Numbers</a></li>
         </ul>
+        </li>
         
+        <li>
+        <a href="../../../../package/jmri/jmrix/can/cbus/swing/cbusslotmonitor/CbusSlotMonitorPane.shtml">
+        Command Station Monitor</a> - Loco session monitoring and Command Station Tools.
         </li>
         
         <li><a href="../../../../package/jmri/jmrix/can/swing/send/CanSendFrame.shtml"
@@ -140,14 +145,10 @@
 
         <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/configtool/ConfigToolFrame.shtml"
         >Event Capture Tool</a> - Capture MERG CBUS events
+        </li>
 
-            <ul>
-                <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/configtool/ConfigToolFrame.shtml#examinemultipleevents"
-                >Examine Multiple Events</a>, <a href=
-                "../../../../package/jmri/jmrix/can/cbus/swing/configtool/ConfigToolFrame.shtml#capturenextevent"
-                >Capture the Next event</a></li>
-            </ul>
-
+        <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/simulator/SimulatorPane.shtml"
+        >Network Item simulation</a> - Simulates Cbus Command stations and responds to event requests
         </li>
 
       </ul>
@@ -156,7 +157,8 @@
       <div>
       <h3>Typical first-time Connection Steps</h3>
       <ul>
-      <li>Many Modern Operating Systems do not require device drivers to be installed when connecting a MERG CANUSB4 to a computer.
+      <li>Many Modern Operating Systems do not require device drivers to be installed 
+      when connecting a MERG CANUSB4 to a computer.
       <br>Plug in, and check that no major error messages appear. </li>
       <li>Install JMRI</li>
       <li><a href="Details.shtml">Connection Preferences</a> - Select MERG connection, 
@@ -216,18 +218,23 @@
             
             <li>The <a 
             href="../../../tools/signaling/SignalMasts.shtml">JMRI Signal Mast</a> 
-            mapping is checked and the relevant MERG CBUS event is sent to change that on the layout ( <b>producer</b> ) </li>
-            <li>This event is received by a LED ( or servo ) module which changes a physical on-layout signal ( <b>consumer</b> ) </li>
-            <li>This event is also received by a LED module which changes a signal on a mimic panel ( <b>consumer</b> )</li>
+            mapping is checked and the relevant MERG CBUS event is sent to change 
+            that on the layout ( <b>producer</b> ) </li>
+            <li>This event is received by a LED ( or servo ) module which changes 
+            a physical on-layout signal ( <b>consumer</b> ) </li>
+            <li>This event is also received by a LED module which changes a signal 
+            on a mimic panel ( <b>consumer</b> )</li>
             
             <li>A train, controlled by (  <a href="../../../../package/jmri/jmrit/dispatcher/Dispatcher.shtml"
             >JMRI DispatcherPro</a> for a <a href="../../../../package/jmri/jmrit/display/LayoutEditor.shtml"
             >JMRI Layout Editor</a> Panel ) or ( 
             <a href="../../../../package/jmri/jmrit/logix/Warrant.shtml">JMRI Warrants</a> for a <a 
             href="../../../../package/jmri/jmrit/display/ControlPanelEditor.shtml"
-            >JMRI Control Panel Editor</a> panel ),<br> sees that the signal ahead has cleared and can increase its speed.
+            >JMRI Control Panel Editor</a> panel ),<br> sees that the signal ahead 
+            has cleared and can increase its speed.
             
-            <br>DCC commands are generated from JMRI and sent over MERG CBUS using special events ( <b>producer</b> ) </li>
+            <br>DCC commands are generated from JMRI and sent over MERG CBUS using 
+            special events ( <b>producer</b> ) </li>
 
             <li>These MERG CBUS events are received by a MERG CANCMD ( <b>consumer</b> ), 
             which then sends the actual DCC command out to the track or boosters.
@@ -248,7 +255,8 @@
             <li>You can start small and think big, 
             adding more modules as your time and experience allows.
 
-            <br>Many people use MERG CBUS and JMRI purely for displaying turnout positions, adding things like track occupancy, on-layout signals, mimic panels etc. at a later date.
+            <br>Many people use MERG CBUS and JMRI purely for displaying turnout positions, 
+            adding things like track occupancy, on-layout signals, mimic panels etc. at a later date.
             
             
             <br>If you anticipate adding track occupancy, 
@@ -266,13 +274,15 @@
       
       <p>Events can be long ( FLiM ) events, eg <code>-N2E7</code> for node 2 event 7 off.</p>
       
-      <p>JMRI, being both a <b>consumer</b> and <b>producer</b> of events, can send and receive on any node number and any event.</p>
+      <p>JMRI, being both a <b>consumer</b> and <b>producer</b> of events, 
+      can send and receive on any node number and any event.</p>
       
       </div>
       
-    <h3>Adding events to JMRI</h3>
+   <h3>Adding events to JMRI</h3>
     <div>
-      <img src="../images/merg-cbus-add-light-short-400x292.png" align="right" alt="merg cbus add light" width="400" height="292">
+      <img src="images/web/merg-cbus-add-light-short-400x292.png" align="right"
+      alt="merg cbus add light" width="400" height="292">
     
       <p>MERG CBUS events are stored as </p>
       <ul>
@@ -293,11 +303,11 @@
 
       <br>When the table loads, click on " Add... " button at bottom left to create an item.</p>
       
-    <img src="../images/merg-cbus-add-sensor-short-781x187.png" alt="merg cbus add sensor" width="646" height="155">
+    <img src="images/web/merg-cbus-add-sensor-short-781x187.png" alt="merg cbus add sensor" width="646" height="155">
     
       <p>For most short events, you just need to enter the number. Here's a few examples : </p>
       
-      <img src="../images/merg-cbus-turnout-long-400x118.png" alt="merg cbus add turnout" width="400" height="118" align="right">
+      <img src="images/web/merg-cbus-turnout-long-400x118.png" alt="merg cbus add turnout" width="400" height="118" align="right">
       
       <table border="1">
         <tbody>
@@ -342,8 +352,8 @@
         </tr>
         </tbody></table>
         
-        <img src="../images/merg-add-sensor-invalid-622x245.jpg" align="right" 
-        alt="merg cbus add new invalid name" width="400" height="156">
+        <img src="images/web/merg-add-sensor-invalid-400x124.png" align="right" 
+        alt="merg cbus add new invalid name" width="400" height="124">
     
         <p>You will need to enter the Hardware Address in a JMRI recognised format to create the event.
         <br>If the create button is grayed out, check your hardware naming format.</p>
@@ -364,9 +374,9 @@
         </div>
         
       <h2><a name="dcc" id="dcc">DCC over MERG CBUS</a></h2>
-      
-        <img src="../images/merg-jmri-preferences-defaults-800x409.jpg"
-        width="500" height="251" alt="JMRI MERG CONNECTION DCC DEFAULT PREFERENCES" align=
+      <div>
+        <img src="images/connection/merg-jmri-cbus-preferences-defaults-500x215.png"
+        width="500" height="215" alt="JMRI MERG CONNECTION DCC DEFAULT PREFERENCES" align=
         "right">
       
         <p>DCC is not a requirement for MERG CBUS or JMRI. Many DC layouts use 
@@ -381,7 +391,7 @@
         <p><a href="../../../../html/tools/consisttool/ConsistTool.shtml" 
         title="JMRI Consisting">JMRI Consisting</a> 
         : Advanced Decoder Consisting ( Decoder Assisted Consist) is currently unsupported,
-        hence this is set to Internal.
+        hence this is set to Internal.</p>
         
         <p>Primary Address Consists are supported however.</p>
       
@@ -399,6 +409,9 @@
 
         <p>Events do not need to be set up to connect a MERG DCC Command Station CANCMD.</p>
         
+        <img src="images/web/merg-dcc-decoders-355x398.png"
+        width="355" height="398" alt="JMRI MERG DCC Decoders" align= "right">
+        
         <p>DCC Accessory Decoders can be controlled over MERG CBUS and a CANCMD by creating turnouts with explicit RDCCx Opscode commands, 
         see <a href="Names.shtml#hex">MERG CBUS hex event naming</a>.
         <br>
@@ -406,11 +419,16 @@
         
       <h3>Programming Train CV's</h3>
     
+    
+
+    
         <p>Program train CV's using DecoderPro</p>
         
         <p>CANCMD fully supports DCC CV programming.</p>
+        
+        <p>There are definitions within DecoderPro for the MERG CANACC5 .</p>
 
-
+    </div>
     <h2><a id="signalling" name="signalling">Signalling</a></h2>
       <div>
       <p>There are multiple ways to interface 
@@ -432,7 +450,7 @@
       
       <h3>Sending JMRI Controlled Signal Logic to your layout</h3>
       
-        <img src="../images/signal-mast-turnout-contolled-540x613.jpg"
+        <img src="images/web/signal-mast-turnout-contolled-400x454.png"
         width="400" height="454" alt="JMRI signal mast turnout controlled" align= "right">
       
       
@@ -526,6 +544,13 @@
 
         <li>Please ask for help by other <a href="https://groups.io/g/jmriusers/">JMRI Users at Groups.io</a>, 
         or if a MERG member on the very active MERG members forum.
+        </li>
+        
+        <li>For extra logging while debugging, locate and edit the default.lcf file 
+        in the root of the JMRI install, see the pattern at the end of the file.
+        <br> General MERG CBUS logging - log4j.category.jmri.jmrix.can.cbus=DEBUG
+        <br> Connection logging - log4j.category.jmri.jmrix.can.adapters.gridconnect=DEBUG
+        <br>The extra logging will appear in the JMRI console, also the JMRI error logs.
         </li>
         
         <li><a href="https://github.com/JMRI/JMRI/issues?q=is%3Aissue+is%3Aopen+merg"

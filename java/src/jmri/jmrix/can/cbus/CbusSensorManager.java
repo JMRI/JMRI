@@ -11,8 +11,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Manage the CBUS-specific Sensor implementation.
- *
- * System names are "MSnnn", where nnn is the sensor number without padding.
+ * <p>
+ * System names are "MSnnn", where M is the user-configurable system prefix,
+ * nnn is the sensor number without padding.
  *
  * @author Bob Jacobsen Copyright (C) 2008
  */
@@ -121,10 +122,9 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager imple
     void validateSystemNameFormat(String address) throws IllegalArgumentException {
         CbusAddress a = new CbusAddress(address);
         CbusAddress[] v = a.split();
-        if (v == null) {
-            throw new IllegalArgumentException("Did not find usable hardware address: " + address + " for a valid Cbus sensor address");
-        }
         switch (v.length) {
+            case 0:
+                throw new IllegalArgumentException("Did not find usable hardware address: " + address + " for a valid Cbus sensor address");
             case 1:
                 int unsigned = 0;
                 try {
@@ -144,7 +144,7 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager imple
     }
 
     /**
-     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     * {@inheritDoc}
      */
     @Override
     public String getEntryToolTip() {

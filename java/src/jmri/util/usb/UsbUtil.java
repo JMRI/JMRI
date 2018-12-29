@@ -131,7 +131,7 @@ public final class UsbUtil {
      * device topology.
      * <p>
      * The location is a series of USB ports separated by colons (:) starting
-     * from the the root hub (a virtual hub maintained by the operating system),
+     * from the root hub (a virtual hub maintained by the operating system),
      * represented as {@code USB} in the location, passing through hubs (which
      * may be virtual or physical), to the port the requested device is plugged
      * into.

@@ -527,9 +527,11 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
                 break;
 
             case LnConstants.OPC_MOVE_SLOTS:  // No follow on for some moves
-                i = m.getElement(1);
-                return i;
-
+                if (m.getElement(1) != 0) {
+                    i = m.getElement(1);
+                    return i;
+                }
+                break;
             default:
                 // nothing here for us
                 return i;
@@ -807,6 +809,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      */
 
     @Override
+    @Nonnull
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<>();
         ret.add(ProgrammingMode.PAGEMODE);
@@ -1152,7 +1155,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      */
     @Override
     public void readCV(String cvNum, jmri.ProgListener p) throws jmri.ProgrammerException {
-        log.debug("readCV(string): cvNum={}", cvNum);
+        log.debug("readCV(string): cvNum={} mode={}", cvNum, getMode());
         if (getMode().equals(csOpSwProgrammingMode)) {
             log.debug("cvOpSw mode!");
             //handle Command Station OpSw programming here
@@ -1533,6 +1536,13 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      */
     public LocoNetSystemConnectionMemo getSystemConnectionMemo() {
         return adaptermemo;
+    }
+
+    /**
+     * Dispose of this by stopped it's ongoing actions
+     */
+    public void dispose() {
+        if (staleSlotCheckTimer != null) staleSlotCheckTimer.stop();
     }
 
     // initialize logging

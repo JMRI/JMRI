@@ -129,12 +129,25 @@ public class DefaultSignalGroupManager extends AbstractManager<SignalGroup>
 
     /**
      * {@inheritDoc}
+     * @deprecated 4.15.2 use newSignaGroupWithUserName
+     */
+    @Nonnull
+    @Override
+    @Deprecated //  4.15.2 use newSignaGroupWithUserName
+    public SignalGroup newSignalGroup(@Nonnull String userName) {
+        jmri.util.Log4JUtil.deprecationWarning(log, "newSignalGroup");
+        return newSignaGroupWithUserName(userName);
+    }
+    
+    /**
+     * {@inheritDoc}
      *
      * Keep autostring in line with {@link #provideSignalGroup(String, String)},
      * {@link #getSystemPrefix()} and {@link #typeLetter()}
      */
+    @Nonnull
     @Override
-    public SignalGroup newSignalGroup(String userName) {
+    public SignalGroup newSignaGroupWithUserName(String userName) {
         int nextAutoGroupRef = lastAutoGroupRef + 1;
         StringBuilder b = new StringBuilder("IG:AUTO:");
         String nextNumber = paddedNumber.format(nextAutoGroupRef);

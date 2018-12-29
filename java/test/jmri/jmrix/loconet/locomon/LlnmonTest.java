@@ -6,7 +6,7 @@ import jmri.jmrix.loconet.LnSensorManager;
 import jmri.jmrix.loconet.LnTurnout;
 import jmri.jmrix.loconet.LnTurnoutManager;
 import jmri.jmrix.loconet.LocoNetMessage;
-import jmri.util.JUnitUtil;
+import jmri.util.*;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -428,7 +428,6 @@ public class LlnmonTest extends TestCase {
     }
 
     public void testALM() {
-
         LocoNetMessage l;
 
         l = new LocoNetMessage(new int[] {0xEE, 0x10, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00});
@@ -6532,7 +6531,10 @@ public class LlnmonTest extends TestCase {
         lntm = new LnTurnoutManager(lnis, lnis, "L", false);
         lnsm = new LnSensorManager(lnis, "L");
         lnrm = new LnReporterManager(lnis, "L");
+
+        Log4JUtil.setDeprecatedLogging(false); // testing deprecated method
         f = new Llnmon(lntm, lnsm, lnrm);
+        
         jmri.InstanceManager.setTurnoutManager(lntm);
         jmri.InstanceManager.setSensorManager(lnsm);
         jmri.InstanceManager.setReporterManager(lnrm);

@@ -40,6 +40,7 @@ public interface Sensor extends DigitalIO {
     
     /** {@inheritDoc} */
     @Override
+    @InvokeOnLayoutThread
     default public void setCommandedState(int s) {
         try {
             setState(s);
@@ -62,6 +63,7 @@ public interface Sensor extends DigitalIO {
      * @param newState the state to set
      * @throws jmri.JmriException if unable to set the state
      */
+    @InvokeOnLayoutThread
     public void setKnownState(int newState) throws jmri.JmriException;
 
     /**
@@ -74,6 +76,7 @@ public interface Sensor extends DigitalIO {
      *
      * @param inverted true if the sensor should be inverted; false otherwise
      */
+    @InvokeOnLayoutThread
     public void setInverted(boolean inverted);
 
     /**
@@ -243,6 +246,7 @@ public interface Sensor extends DigitalIO {
      *
      * @param r PullResistance value to use.
      */
+    @InvokeOnLayoutThread
     public void setPullResistance(PullResistance r);
 
     /**

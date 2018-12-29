@@ -9,10 +9,14 @@ import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static jmri.Timebase.ClockInitialRunState.DO_NOTHING;
+import static jmri.Timebase.ClockInitialRunState.DO_START;
+import static jmri.Timebase.ClockInitialRunState.DO_STOP;
+
 /**
  * Handle XML persistance of SimpleTimebase objects.
  *
- * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008, 2017
+ * @author Bob Jacobsen Copyright (c) 2003, 2008, 2017
  */
 public class SimpleTimebaseXml extends jmri.configurexml.AbstractXmlAdapter {
 
@@ -21,7 +25,7 @@ public class SimpleTimebaseXml extends jmri.configurexml.AbstractXmlAdapter {
 
     /**
      * Default implementation for storing the contents of a SimpleTimebase.
-     * <P>
+     *
      * @param o Object to start process, but not actually used
      * @return Element containing the complete info
      */
@@ -35,7 +39,8 @@ public class SimpleTimebaseXml extends jmri.configurexml.AbstractXmlAdapter {
 
         elem.setAttribute("time", clock.getStartTime().toString());
         elem.setAttribute("rate", "" + clock.userGetRate());
-        elem.setAttribute("run", (!clock.getStartStopped() ? "yes" : "no"));
+        elem.setAttribute("startrate", "" + clock.getStartRate());
+        elem.setAttribute("run", (clock.getClockInitialRunState() == DO_START ? "yes" : "no"));
         elem.setAttribute("master", (clock.getInternalMaster() ? "yes" : "no"));
         if (!clock.getInternalMaster()) {
             elem.setAttribute("mastername", clock.getMasterName());
@@ -43,11 +48,13 @@ public class SimpleTimebaseXml extends jmri.configurexml.AbstractXmlAdapter {
         elem.setAttribute("sync", (clock.getSynchronize() ? "yes" : "no"));
         elem.setAttribute("correct", (clock.getCorrectHardware() ? "yes" : "no"));
         elem.setAttribute("display", (clock.use12HourDisplay() ? "yes" : "no"));
-        elem.setAttribute("startstopped", (clock.getStartStopped() ? "yes" : "no"));
+        elem.setAttribute("startstopped", (clock.getClockInitialRunState() == DO_STOP ? "yes" : "no"));
+        elem.setAttribute("startrunning", ((clock.getClockInitialRunState() == DO_START) ? "yes" : "no"));
         elem.setAttribute("startsettime", (clock.getStartSetTime() ? "yes" : "no"));
         elem.setAttribute("startclockoption", Integer.toString(
                 clock.getStartClockOption()));
         elem.setAttribute("showbutton", (clock.getShowStopButton() ? "yes" : "no"));
+        elem.setAttribute("startsetrate", (clock.getSetRateAtStart() ? "yes" : "no"));
 
         return elem;
     }
@@ -105,28 +112,58 @@ public class SimpleTimebaseXml extends jmri.configurexml.AbstractXmlAdapter {
                 clock.setShowStopButton(false);
             }
         }
-        if (shared.getAttribute("run") != null) {
-            val = shared.getAttributeValue("run");
-            if (val.equals("yes")) {
-                clock.setRun(true);
-                clock.setStartStopped(false);
-            }
-            if (val.equals("no")) {
-                clock.setRun(false);
-                clock.setStartStopped(true);
+        if ("yes".equals(shared.getAttributeValue("startrunning"))) {
+            clock.setRun(true);
+            clock.setClockInitialRunState(DO_START);
+        } else if ("yes".equals(shared.getAttributeValue("startstopped"))) {
+            clock.setRun(false);
+            clock.setClockInitialRunState(DO_STOP);
+        } else if (shared.getAttribute("startrunning") != null){
+            clock.setClockInitialRunState(DO_NOTHING);
+        } else {
+            // legacy XML
+            if (shared.getAttribute("run") != null) {
+                val = shared.getAttributeValue("run");
+                if (val.equals("yes")) {
+                    clock.setRun(true);
+                    clock.setClockInitialRunState(DO_START);
+                }
+                if (val.equals("no")) {
+                    clock.setRun(false);
+                    clock.setClockInitialRunState(DO_STOP);
+                }
             }
         }
-        if (shared.getAttribute("rate") != null) {
+        if (shared.getAttribute("startsetrate") != null) {
+            val = shared.getAttributeValue("startsetrate");
+            clock.setSetRateAtStart(!val.equals("no"));
+        }
+        boolean hasRate = false;
+        if (shared.getAttribute("startrate") != null) {
+            try {
+                double r = shared.getAttribute("startrate").getDoubleValue();
+                clock.setStartRate(r);
+                hasRate = true;
+            } catch (org.jdom2.DataConversionException e2) {
+                log.error("Cannot convert start rate: " + e2);
+                result = false;
+            }
+        }
+        if (!hasRate && shared.getAttribute("rate") != null) {
             try {
                 double r = shared.getAttribute("rate").getDoubleValue();
-                try {
-                    clock.userSetRate(r);
-                } catch (jmri.TimebaseRateException e1) {
-                    log.error("Cannot restore rate: " + r + " " + e1);
-                    result = false;
-                }
+                clock.setStartRate(r);
+                hasRate = true;
             } catch (org.jdom2.DataConversionException e2) {
                 log.error("Cannot convert rate: " + e2);
+                result = false;
+            }
+        }
+        if (clock.getSetRateAtStart() && hasRate) {
+            try {
+                clock.userSetRate(clock.getStartRate());
+            } catch (jmri.TimebaseRateException e1) {
+                log.error("Cannot restore rate: " + clock.getStartRate() + " " + e1);
                 result = false;
             }
         }

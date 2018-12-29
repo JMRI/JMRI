@@ -1,6 +1,7 @@
 package jmri.jmrix.pi.configurexml;
 
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.*;
 import org.junit.*;
 
 /**
@@ -28,7 +29,9 @@ public class RaspberryPiConnectionConfigXmlTest extends jmri.jmrix.configurexml.
 
     @Test
     @Ignore("needs mock pi setup")
+    @ToDo("provide mock raspberry pi implementation so code can be tested using parent class test")
     public void getInstanceTest() {
+        Assert.fail("test needs more setup");
     }
 
 }

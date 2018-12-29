@@ -14,11 +14,14 @@ import org.slf4j.LoggerFactory;
  * @author Brett Hoffman Copyright (C) 2011
  */
 public class MultiThrottleController extends ThrottleController {
+    
+    protected boolean isStealAddress;
 
     public MultiThrottleController(char id, String key, ThrottleControllerListener tcl, ControllerInterface ci) {
         super(id, tcl, ci);
         log.debug("New MT controller");
         locoKey = key;
+        isStealAddress = false;
     }
 
     /**
@@ -238,6 +241,10 @@ public class MultiThrottleController extends ThrottleController {
         }
     }
 
+    /**
+     * Send a message to a device that steal is needed. This message can be sent 
+     * back to JMRI verbatim to complete a steal.
+     */
     public void sendStealAddress() {
         StringBuilder message = new StringBuilder(buildPacketWithChar('S'));
         message.append(locoKey);
@@ -247,23 +254,24 @@ public class MultiThrottleController extends ThrottleController {
     }
 
     /**
-     * Send a steal required message to the connected device prior to disposing
-     * of this MTC
+     * Callback of a request for an address that is in use.
+     * Will initiate a steal only if this MTC is flagged to do so.
+     * Otherwise, it will remove the request for the address.
      *
      * @param address of DCC locomotive involved in the steal
      */
     @Override
     public void notifyStealThrottleRequired(LocoAddress address) {
-        sendStealAddress();
-        notifyFailedThrottleRequest(address, "Steal Required");
-    }
-
-    public void requestStealAddress(String action) {
-        log.debug("requestStealAddress: {}", action);
-        int addr = Integer.parseInt(action.substring(1));
-        boolean isLong;
-        isLong = (action.charAt(0) == 'L');
-        InstanceManager.throttleManagerInstance().stealThrottleRequest(addr, isLong, this, true);
+        if (isStealAddress) {
+            //  Address is now staged in ThrottleManager and has been requested as a steal
+            //  Complete the process
+            InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, true);
+            isStealAddress = false;
+        } else {
+            //  Address has not been requested as a steal yet
+            sendStealAddress();
+            notifyFailedThrottleRequest(address, "Steal Required");
+        }
     }
 
     private final static Logger log = LoggerFactory.getLogger(MultiThrottleController.class);

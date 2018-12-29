@@ -6,10 +6,8 @@ import jmri.jmrit.operations.OperationsTestCase;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -79,17 +77,5 @@ public class CarSetFrameTest extends OperationsTestCase {
         Assert.assertFalse("Location unknown", c3.isLocationUnknown());
 
         JUnitUtil.dispose(f);
-    }
-
-    @Override
-    @After
-    public void setUp() {
-        super.setUp();
-    }
-
-    @Override
-    @Before
-    public void tearDown() {
-        super.tearDown();
     }
 }

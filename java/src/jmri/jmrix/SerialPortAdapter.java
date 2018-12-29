@@ -5,7 +5,7 @@ import org.slf4j.Logger;
 import purejavacomm.PortInUseException;
 
 /**
- * Enable basic set-up of a serial interface for a jmrix implementation.
+ * Enable basic setup of a serial interface for a jmrix implementation.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003, 2008
  * @see jmri.jmrix.SerialConfigException

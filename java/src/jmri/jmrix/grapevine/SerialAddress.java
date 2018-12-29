@@ -11,15 +11,15 @@ import org.slf4j.LoggerFactory;
  * <p>
  * Multiple address formats are supported:
  * <ul>
- * <li>Gitnnnxxx where: Gi is the (multichar) system connection prefix,
+ * <li>Gtnnnxxx where: G is the (multichar) system connection prefix,
  * t is the type code: 'T' for turnouts, 'S' for sensors, 'H' for signal
  * heads and 'L' for lights;
  * nnn is the node address (0-127); xxx is a bit number of the input or
  * output bit (001-999)</li>
- * <li>Gitnnnxxx = (node address x 1000) + bit number.<br>
+ * <li>Gtnnnxxx = (node address x 1000) + bit number.<br>
  * Examples: GT2 (node address 0, bit 2), G1S1003 (node address 1, bit 3),
  * GL11234 (node address 11, bit234)</li>
- * <li>Gitnnnaxxxx where: t is the type code, 'T' for turnouts, 'S' for
+ * <li>Gtnnnaxxxx where: t is the type code, 'T' for turnouts, 'S' for
  * sensors, 'H' for signal heads and 'L' for lights; nnn is the node address of the
  * input or output bit (0-127); xxxx is a bit number of the input or output bit
  * (1-2048); a is a subtype-specific letter:
@@ -327,7 +327,7 @@ public class SerialAddress {
         // check format
         Matcher m2 = p.matcher(systemName.substring(prefix.length()));
         if (!m2.matches()) {
-            // here if cannot parse specifically (only accepts GxTnnn or GxTnnnB
+            // here if cannot parse specifically (only accepts GTnnn or GTnnnB
             log.debug("invalid system name format: {} for type {}", systemName, type);
             return NameValidity.INVALID;
         }
