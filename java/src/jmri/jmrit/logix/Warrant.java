@@ -1472,10 +1472,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                         
                     }
                 }
-/*            } else if (_stopWarrantBlock != null && _stopWarrantBlock == evt.getSource()) {
-                if ((((Number) evt.getNewValue()).intValue() & OBlock.UNOCCUPIED) != 0) {
-                    clearStopWarrantBlock();
-                }*/
             } else if (_otherShareBlock != null && _otherShareBlock == evt.getSource()) {
                 if ((((Number) evt.getNewValue()).intValue() & OBlock.UNOCCUPIED) != 0) {
                     clearShareTOBlock();
@@ -2301,9 +2297,11 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             }
         }
 
-        if (_waitForSignal || _waitForBlock || _waitForWarrant) {
-            log.info ("Found \"{}\" speed change of type \"{}\" needed to enter block \"{}\".",
-                    (_waitForSignal?"Signal":(_waitForWarrant?"Warrant":"Block")), speedType, block.getDisplayName());
+        if (log.isDebugEnabled()) {
+            if (_waitForSignal || _waitForBlock || _waitForWarrant) {
+                log.debug ("Found \"{}\" speed change of type \"{}\" needed to enter block \"{}\".",
+                        (_waitForSignal?"Signal":(_waitForWarrant?"Warrant":"Block")), speedType, block.getDisplayName());
+            }
         }
         return speedType;
     }
