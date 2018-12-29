@@ -10,9 +10,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * <p>
- * Tests for RaspberryPiTurnoutManager
- * </P>
+ * Tests for RaspberryPiTurnoutManager.
+ *
  * @author Paul Bender Copyright (C) 2016
  */
 public class RaspberryPiTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
@@ -90,6 +89,15 @@ public class RaspberryPiTurnoutManagerTest extends jmri.managers.AbstractTurnout
         Assert.assertEquals("no old object", null, l.getByUserName("before"));
     }
 
+    @Test
+    @Override
+    public void testSetAndGetOutputInterval() {
+        Turnout t1 = l.newTurnout(getSystemName(17), "mine");
+        Assert.assertEquals("default outputInterval", 0, l.getOutputInterval(t1.getSystemName())); // only the prefix of t1 is used to find the manager
+        l.setOutputInterval(50);
+        Assert.assertEquals("new outputInterval from manager", 50, l.getOutputInterval(t1.getSystemName())); // only the prefix of t1 is used to find manager, interval is not stored in AbstractTurnoutManager
+    }
+
     @Override
     protected int getNumToTest1() {
         return 19;
@@ -99,8 +107,6 @@ public class RaspberryPiTurnoutManagerTest extends jmri.managers.AbstractTurnout
     protected int getNumToTest2() {
         return 5;
     }
-
-
 
     // The minimal setup for log4J
     @Override
@@ -119,6 +125,5 @@ public class RaspberryPiTurnoutManagerTest extends jmri.managers.AbstractTurnout
         JUnitUtil.resetInstanceManager();
         JUnitUtil.tearDown();
     }
-
 
 }

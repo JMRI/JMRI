@@ -4,7 +4,7 @@ import jmri.Turnout;
 
 /**
  * Implement turnout manager.
- * <P>
+ * <p>
  * System names are "PTnnn", where nnn is the turnout number without padding.
  *
  * @author   Paul Bender Copyright (C) 2015
@@ -24,11 +24,13 @@ public class RaspberryPiTurnoutManager extends jmri.managers.AbstractTurnoutMana
      * This was previously called the "System letter"
      */
     @Override
-    public String getSystemPrefix(){ return prefix; }
+    public String getSystemPrefix() {
+        return prefix;
+    }
 
     @Override
     public Turnout createNewTurnout(String systemName, String userName) {
-        Turnout t = new RaspberryPiTurnout(systemName,userName);
+        Turnout t = new RaspberryPiTurnout(systemName, userName);
         return t;
     }
 

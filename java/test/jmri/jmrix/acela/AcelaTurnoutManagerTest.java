@@ -40,22 +40,30 @@ public class AcelaTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTes
 
         Turnout o = t.newTurnout("AT11", "my name");
 
-        if (log.isDebugEnabled()) {
-            log.debug("received turnout value " + o);
-        }
+        log.debug("received turnout value {}", o);
         Assert.assertTrue(null != (AcelaTurnout) o);
 
         // make sure loaded into tables
         if (log.isDebugEnabled()) {
-            log.debug("by system name: " + t.getBySystemName("AT11"));
+            log.debug("by system name: {}", t.getBySystemName("AT11"));
         }
         if (log.isDebugEnabled()) {
-            log.debug("by user name:   " + t.getByUserName("my name"));
+            log.debug("by user name:   {}", t.getByUserName("my name"));
         }
 
         Assert.assertTrue(null != t.getBySystemName("AT11"));
         Assert.assertTrue(null != t.getByUserName("my name"));
 
+    }
+
+    @Test
+    @Override
+    public void testSetAndGetOutputInterval() { // AcelaTurnoutManager has direct access to Memo
+        Assert.assertEquals("default outputInterval", 0, l.getOutputInterval("AT21")); // only the prefix is used to find the manager
+        memo.setOutputInterval(30);
+        Assert.assertEquals("new outputInterval in memo", 30, memo.getOutputInterval()); // direct set & get
+        memo.setOutputInterval(40);
+        Assert.assertEquals("new outputInterval from manager", 40, l.getOutputInterval("AT21")); // test method in manager
     }
 
     AcelaNode a0, a1, a2, a3;
@@ -65,7 +73,7 @@ public class AcelaTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTes
     @Before
     public void setUp() {
         JUnitUtil.setUp();
- 
+
         tcis = new AcelaTrafficControlScaffold();
         memo = new AcelaSystemConnectionMemo(tcis);
 

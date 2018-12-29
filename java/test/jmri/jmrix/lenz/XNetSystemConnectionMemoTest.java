@@ -39,7 +39,7 @@ public class XNetSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMem
         // so we need to do this ourselves.
         t.setXNetTrafficController(tc);
         Assert.assertNotNull(t.getXNetTrafficController());
-        // and while we're doing that, we should also set the SystemMemo 
+        // and while we're doing that, we should also set the SystemConnectionMemo
         // parameter in the traffic controller.
         Assert.assertNotNull(t.getXNetTrafficController().getSystemConnectionMemo());
     }

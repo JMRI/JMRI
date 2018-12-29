@@ -12,7 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Tests for the jmri.jmrix.loconet.LnTurnoutManager class
+ * Tests for the jmri.jmrix.loconet.LnTurnoutManager class.
  *
  * @author	Bob Jacobsen Copyright 2005
  */
@@ -104,22 +104,31 @@ public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBa
         // ask for a Turnout, and check type
         Turnout o = l.newTurnout("LT21", "my name");
 
-        if (log.isDebugEnabled()) {
-            log.debug("received turnout value " + o);
-        }
+        log.debug("received turnout value {}", o);
         Assert.assertTrue(null != (LnTurnout) o);
 
         // make sure loaded into tables
         if (log.isDebugEnabled()) {
-            log.debug("by system name: " + l.getBySystemName("LT21"));
+            log.debug("by system name: {}", l.getBySystemName("LT21"));
         }
         if (log.isDebugEnabled()) {
-            log.debug("by user name:   " + l.getByUserName("my name"));
+            log.debug("by user name:   {}", l.getByUserName("my name"));
         }
 
         Assert.assertTrue(null != l.getBySystemName("LT21"));
         Assert.assertTrue(null != l.getByUserName("my name"));
+    }
 
+    @Test
+    @Override
+    public void testSetAndGetOutputInterval() { // LnTurnoutManager has no direct access to Memo, ask TC
+        Assert.assertEquals("default outputInterval", 0, l.getOutputInterval("LT22")); // only the prefix is used to find the manager
+        memo.setOutputInterval(20);
+        Assert.assertEquals("new outputInterval in memo", 20, memo.getOutputInterval()); // direct set & get
+        lnis.getSystemConnectionMemo().setOutputInterval(30);
+        Assert.assertEquals("new outputInterval via tc", 30, lnis.getSystemConnectionMemo().getOutputInterval()); // set & get via tc
+        lnis.getSystemConnectionMemo().setOutputInterval(40);
+        Assert.assertEquals("new outputInterval from manager", 40, l.getOutputInterval("LT22")); // test method in manager
     }
 
     LocoNetInterfaceScaffold lnis;

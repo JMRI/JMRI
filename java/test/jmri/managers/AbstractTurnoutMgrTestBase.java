@@ -127,6 +127,14 @@ public abstract class AbstractTurnoutMgrTestBase extends AbstractManagerTestBase
         Assert.assertEquals("no old object", null, l.getByUserName("before"));
     }
 
+    @Test
+    public void testSetAndGetOutputInterval() {
+        Turnout t1 = l.newTurnout(getSystemName(getNumToTest1()), "mine");
+        Assert.assertEquals("default outputInterval", 0, l.getOutputInterval(t1.getSystemName())); // only the prefix of t1 is used to find the manager
+        l.setOutputInterval(50);
+        Assert.assertEquals("new outputInterval from manager", 0, l.getOutputInterval(t1.getSystemName())); // only the prefix of t1 is used to find manager, interval is not stored in AbstractTurnoutManager
+    }
+
     /**
      * Number of turnout to test. Made a separate method so it can be overridden
      * in subclasses that do or don't support various numbers

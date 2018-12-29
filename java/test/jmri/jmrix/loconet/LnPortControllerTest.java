@@ -3,6 +3,8 @@ package jmri.jmrix.loconet;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Assert;
+import org.junit.Test;
 
 /**
  * JUnit tests for the LnPortController class.
@@ -12,6 +14,13 @@ import org.junit.Before;
 public class LnPortControllerTest extends jmri.jmrix.AbstractSerialPortControllerTestBase {
 
     private LocoNetSystemConnectionMemo memo;
+
+    @Test
+    @Override
+    public void testGetAndSetOutputInterval() {
+        ((LnPortController) apc).getSystemConnectionMemo().setOutputInterval(50);
+        Assert.assertEquals("Output Interval after set", 50, ((LnPortController) apc).getSystemConnectionMemo().getOutputInterval());
+    }
 
     @Override
     @Before

@@ -12,10 +12,10 @@ import junit.framework.TestSuite;
 import org.junit.Assert;
 
 /**
- * Test the ProxyTurnoutManager
+ * Tests the ProxyTurnoutManager.
  *
  * @author	Bob Jacobsen 2003, 2006, 2008, 2014, 2018
-  */
+ */
 public class ProxyTurnoutManagerTest extends TestCase {
 
     public String getSystemName(int i) {
@@ -140,6 +140,13 @@ public class ProxyTurnoutManagerTest extends TestCase {
 
         Turnout l4 = l.getTurnout("JLuser 1");
         Assert.assertNull(l4);
+    }
+
+    public void testOutputInterval() {
+        Assert.assertEquals("default outputInterval", 0, l.getOutputInterval("JT1")); // JT1 need not exist, only the prefix is used to find manager
+        l.setOutputInterval(50);
+        Assert.assertEquals("Proxy outputInterval", 50, l.getOutputInterval("JT1")); // stored in proxyTurnoutManager
+        Assert.assertEquals("Internal outputInterval", 50, l.getOutputInterval("IT1")); // stored in InternalTurnoutManager
     }
 
     public void testInstanceManagerIntegration() {

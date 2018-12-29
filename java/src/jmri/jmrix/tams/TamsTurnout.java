@@ -116,7 +116,7 @@ public class TamsTurnout extends AbstractTurnout
             log.debug("Returning");
             return;
         }
-        forwardChangeAtInterval(state); // if > 0, wait before next output command (experimental) needed for Tams? EBR
+        forwardChangeAtInterval(state); // if > 0, wait before next output command. Needed for Tams?
         log.debug("Setting to state " + state);
         newCommandedState(state);
     }

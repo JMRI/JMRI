@@ -30,6 +30,13 @@ public class InternalTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgr
 
     }
 
+    @Test
+    public void testOutputInterval() {
+        Assert.assertEquals(0, l.getOutputInterval("IT1")); // IT1 need not exist, only the prefix is used to find manager
+        l.setOutputInterval(50);
+        Assert.assertEquals(0, l.getOutputInterval("IT1")); // IT1 need not exist, only the prefix is used to find manager, interval not stored in InternalTurnoutManager
+    }
+
     // from here down is testing infrastructure
     // The minimal setup for log4J
     @Override

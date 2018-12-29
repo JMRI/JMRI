@@ -37,7 +37,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
     public AcelaTrafficController() {
         super();
 
-        // entirely poll driven, so reduce interval
+        // entirely poll driven, so reduce Polling interval
         mWaitBeforePoll = 25;  // default = 25
         setAllowUnexpectedReply(true);
 
@@ -151,6 +151,30 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
     public void setReallyReadyToPoll(boolean newstate) {
         log.debug("setting really ready to poll (nodes): " + newstate);
         reallyReadyToPoll = newstate;
+    }
+
+    /**
+     * Reference to the system connection memo.
+     */
+    AcelaSystemConnectionMemo mMemo = null;
+
+    /**
+     * Get access to the system connection memo associated with this traffic
+     * controller.
+     *
+     * @return associated systemConnectionMemo object
+     */
+    public AcelaSystemConnectionMemo getSystemConnectionMemo() {
+        return (mMemo);
+    }
+
+    /**
+     * Set the system connection memo associated with this traffic controller.
+     *
+     * @param m associated systemConnectionMemo object
+     */
+    public void setSystemConnectionMemo(AcelaSystemConnectionMemo m) {
+        mMemo = m;
     }
 
     /**

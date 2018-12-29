@@ -86,7 +86,16 @@ public class XNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
 
         Assert.assertTrue(null != t.getBySystemName("XT21"));
         Assert.assertTrue(null != t.getByUserName("my name"));
+    }
 
+    @Test
+    @Override
+    public void testSetAndGetOutputInterval() { // XNetTurnoutManager has no direct access to Memo, ask TC
+        Assert.assertEquals("default outputInterval", 0, l.getOutputInterval("XT21")); // only the prefix is used to find the manager
+        lnis.getSystemConnectionMemo().setOutputInterval(30);
+        Assert.assertEquals("new outputInterval in memo", 30, lnis.getSystemConnectionMemo().getOutputInterval()); // direct set & get
+        lnis.getSystemConnectionMemo().setOutputInterval(40);
+        Assert.assertEquals("new outputInterval from manager", 40, l.getOutputInterval("XT21")); // test method in manager
     }
 
     @Test
@@ -112,8 +121,10 @@ public class XNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
         JUnitUtil.setUp();
         // prepare an interface, register
         lnis = new XNetInterfaceScaffold(new LenzCommandStation());
+        XNetSystemConnectionMemo m = new XNetSystemConnectionMemo(lnis);
+        lnis.setSystemConnectionMemo(m); // attach memo
         // create and register the manager object
-        l = new XNetTurnoutManager(lnis, "X");
+        l = new XNetTurnoutManager(lnis, m.getSystemPrefix());
         jmri.InstanceManager.setTurnoutManager(l);
     }
 

@@ -3,14 +3,22 @@ package jmri.jmrix.acela;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Assert;
+import org.junit.Test;
 
 /**
- * JUnit tests for the AcelaPortController class
- * <p>
+ * JUnit tests for the AcelaPortController class.
  *
  * @author      Paul Bender Copyright (C) 2016
  */
 public class AcelaPortControllerTest extends jmri.jmrix.AbstractSerialPortControllerTestBase {
+
+    @Test
+    @Override
+    public void testGetAndSetOutputInterval() {
+        ((AcelaPortController) apc).getSystemConnectionMemo().setOutputInterval(49);
+        Assert.assertEquals("Output Interval after set", 49, ((AcelaPortController) apc).getSystemConnectionMemo().getOutputInterval());
+    }
 
     @Override
     @Before

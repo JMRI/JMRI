@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implement turnout manager for Acela systems
+ * Implement turnout manager for Acela systems.
  * <p>
  * System names are "ATnnn", where nnn is the bit number without padding.
  *

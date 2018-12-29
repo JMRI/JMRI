@@ -201,7 +201,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
         }
         myOperator = getTurnoutOperator(); // MUST set myOperator before starting the thread
         if (myOperator == null) {
-            forwardChangeAtInterval(s); // if > 0, wait before next output command (experimental) EBR
+            forwardChangeAtInterval(s); // if > 0, wait before next output command
             synchronized (this) {
                 newKnownState(INCONSISTENT);
             }

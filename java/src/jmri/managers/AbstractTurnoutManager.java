@@ -370,7 +370,8 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
     /** {@inheritDoc} */
     @Override
     public int getOutputInterval(@Nonnull String systemName) {
-        return 0;
+        // systemName argument not used, needed to override, used in ProxyTurnoutManager
+        return TURNOUT_INTERVAL;
     }
 
     /** {@inheritDoc} */
