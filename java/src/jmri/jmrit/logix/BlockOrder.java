@@ -18,6 +18,7 @@ public class BlockOrder {
     private String _pathName;  // path the train is to take in the block
     private String _entryName; // Name of entry Portal
     private String _exitName;  // Name of exit Portal
+    private float _tempPathLen; // hold user's input for this session
 
     public BlockOrder(OBlock block) {
         _block = block;
@@ -103,6 +104,7 @@ public class BlockOrder {
      */
     protected void setPathName(String path) {
         _pathName = path;
+        _tempPathLen =0.0f;
     }
 
     public String getPathName() {
@@ -122,6 +124,14 @@ public class BlockOrder {
             }
         }
         return msg;
+    }
+    
+    protected void setTempPathLen(float len) {
+        _tempPathLen = len;
+    }
+
+    protected float getTempPathLen() {
+        return _tempPathLen;
     }
 
     protected void setBlock(OBlock block) {
