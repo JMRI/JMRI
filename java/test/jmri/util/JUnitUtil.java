@@ -12,29 +12,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import javax.annotation.Nonnull;
-import jmri.AddressedProgrammerManager;
-import jmri.ConditionalManager;
-import jmri.ConfigureManager;
-import jmri.GlobalProgrammerManager;
-import jmri.InstanceManager;
-import jmri.JmriException;
-import jmri.LightManager;
-import jmri.LogixManager;
-import jmri.MemoryManager;
-import jmri.NamedBean;
-import jmri.PowerManager;
-import jmri.PowerManagerScaffold;
-import jmri.ReporterManager;
-import jmri.RouteManager;
-import jmri.SensorManager;
-import jmri.ShutDownManager;
-import jmri.ShutDownTask;
-import jmri.SignalHeadManager;
-import jmri.SignalMastLogicManager;
-import jmri.SignalMastManager;
-import jmri.TurnoutManager;
-import jmri.TurnoutOperationManager;
-import jmri.UserPreferencesManager;
+import jmri.*;
 import jmri.implementation.JmriConfigurationManager;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.logix.OBlockManager;
@@ -154,6 +132,13 @@ public class JUnitUtil {
      */
     static boolean checkSequenceDumpsStack =    Boolean.getBoolean("jmri.util.JUnitUtil.checkSequenceDumpsStack"); // false unless set true
 
+    /**
+     * Check for any threads left behind after a test calls {@link tearDown}.
+     * <p>
+     * Set from the jmri.util.JUnitUtil.checkRemnantThreads environment variable.
+     */
+    static boolean checkRemnantThreads =    Boolean.getBoolean("jmri.util.JUnitUtil.checkRemnantThreads"); // false unless set true
+
     static private int threadCount = 0;
     
     static private boolean didSetUp = false;
@@ -181,6 +166,13 @@ public class JUnitUtil {
         // need to do this each time
         try {
             JUnitAppender.start();
+            
+            // reset warn _only_ once logic to make tests repeatable
+            Log4JUtil.restartWarnOnce();
+            // ensure logging of deprecated method calls;
+            // individual tests can turn off as needed
+            Log4JUtil.setDeprecatedLogging(true);
+            
         } catch (Throwable e) {
             System.err.println("Could not start JUnitAppender, but test continues:\n" + e);
         }
@@ -280,8 +272,10 @@ public class JUnitUtil {
         JUnitAppender.resetUnexpectedMessageFlags(severity);
         Assert.assertFalse("Unexpected "+severity+" or higher messages emitted", unexpectedMessageSeen);
         
-        // Optionally, check that no threads were left running (could be controlled by environment var?)
-        // checkThreads(false);  // true means stop on 1st extra thread
+        // Optionally, check that no threads were left running (controlled by jmri.util.JUnitUtil.checkRemnantThreads environment var)
+        if (checkRemnantThreads) {
+            checkThreads();
+        }
         
         // Optionally, print whatever is on the Swing queue to see what's keeping things alive
         //Object entry = java.awt.Toolkit.getDefaultToolkit().getSystemEventQueue().peekEvent();
@@ -1070,14 +1064,14 @@ public class JUnitUtil {
      * providing a traceback if any new ones are still around.
      * <p>
      * First implementation is rather simplistic.
-     * @param stop If true, this stop execution after the 1st new thread is found
      */
-    static void checkThreads(boolean stop) {
+    static void checkThreads() {
         // now check for extra threads
         threadCount = 0;
         Thread.getAllStackTraces().keySet().forEach((t) -> 
             {
                 if (threadsSeen.contains(t)) return;
+                if (t.getState() == Thread.State.TERMINATED) return; // going away, just not cleaned up yet
                 String name = t.getName();
                 if (! (threadNames.contains(name)
                      || name.startsWith("RMI TCP Accept")
@@ -1093,25 +1087,21 @@ public class JUnitUtil {
                         )
                     )) {  
                     
+                        // if still running, wait to see if being terminated
+                        
                         threadCount++;
                         threadsSeen.add(t);
-                        System.out.println("New thread \""+t.getName()+"\" group \""+ (t.getThreadGroup()!=null ? t.getThreadGroup().getName() : "(null)")+"\"");
-                    
+                        
                         // for anonymous threads, show the traceback in hopes of finding what it is
                         if (name.startsWith("Thread-")) {
-                            for (StackTraceElement e : Thread.getAllStackTraces().get(t)) {
-                                if (! e.toString().startsWith("java")) System.out.println("    "+e);
-                            }
+                            Exception ex = new Exception("traceback");
+                            ex.setStackTrace(Thread.getAllStackTraces().get(t));
+                            log.warn("Found remnant thread \"{}\" in group \"{}\" after {}", t.getName(), t.getThreadGroup().getName(), getTestClassName(), ex);
+                        } else {
+                            log.warn("Found remnant thread \"{}\" in group \"{}\" after {}", t.getName(), t.getThreadGroup().getName(), getTestClassName());
                         }
                 }
             });
-        if (threadCount > 0) {
-            //Thread.getAllStackTraces().keySet().forEach((t) -> System.err.println("  thread "+t+" "+t.getName()));
-            if (stop) {
-                new Exception("Stopping by request on 1st extra thread").printStackTrace();
-                System.exit(0);
-            }
-        }
     }
 
     /* GraphicsEnvironment utility methods */

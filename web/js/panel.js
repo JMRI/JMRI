@@ -451,7 +451,8 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 }
                                 break;
                             case "fastclock" :
-                                $widget['name'] = 'IMCURRENTTIME';
+                                jmri.getMemory("IMRATEFACTOR"); //enable updates for fast clock rate                               
+                                $widget['name'] = 'IMCURRENTTIME';  // already defined in JMRI
                                 $widget.jsonType = 'memory';
                                 $widget.styles['width'] = "166px";  //hard-coded to match original size of clock image
                                 $widget.styles['height'] = "166px";
@@ -464,6 +465,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 if (typeof $widget["systemName"] == "undefined")
                                     $widget["systemName"] = $widget.name;
                                 jmri.getMemory($widget["systemName"]);
+
                                 break;
                             case "memoryicon" :
                                 $widget['name'] = $widget.memory; //normalize name
@@ -2521,16 +2523,19 @@ $(document).ready(function() {
         // include name of panel in page title. Will be updated to userName later
         setTitle(panelName);
 
-        // Add a widget to retrieve current fastclock rate
-        // this is a widget so special logic for retrieving this information
-        // is not required
+        // Add a widget to retrieve fastclock rate
         $widget = new Array();
         $widget.jsonType = "memory";
         $widget['name'] = "IMRATEFACTOR";  // already defined in JMRI
         $widget['id'] = $widget['name'];
         $widget['safeName'] = $widget['name'];
+        $widget['systemName'] = $widget['name'];       
         $widget['state'] = "1.0";
         $gWidgets[$widget.id] = $widget;
+        if (!($widget.systemName in whereUsed)) {  //set where-used for this new memory
+            whereUsed[$widget.systemName] = new Array();
+        }
+        whereUsed[$widget.systemName][whereUsed[$widget.systemName].length] = $widget.id;        
 
         // request actual xml of panel, and process it on return
         // uses setTimeout simply to not block other JavaScript since

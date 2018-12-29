@@ -404,13 +404,13 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
                         //puts the command station into service mode.
                         log.error("Communications port dropped", ex);
                     }
-                }
+                }   
             };
         }
         else {
            keepAliveTimer.cancel();
         }
-        new java.util.Timer("LIUSB Keepalive Timer").schedule(keepAliveTimer,keepAliveTimeoutValue,keepAliveTimeoutValue);
+        jmri.util.TimerUtil.schedule(keepAliveTimer,keepAliveTimeoutValue,keepAliveTimeoutValue);
     }
 
     private final static Logger log = LoggerFactory.getLogger(LIUSBServerAdapter.class);
