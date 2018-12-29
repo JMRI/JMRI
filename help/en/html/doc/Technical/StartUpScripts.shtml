@@ -162,7 +162,10 @@
             <dd>If true, makes jmri.util.JUnitUtil.checkSetUpTearDownSequence more verbose by also
                 including the current stack trace along with the traces of the most recent setUp and 
                 tearDown calls.</dd>
-      </dl>
+         <dt>jmri.util.JUnitUtil.checkRemnantThreads</dt>
+            <dd>If true, checks for any threads that have not yet been terminated during 
+                the test tearDown processing. If found, the context is logged as a warning.</dd>
+     </dl>
 
       <h2 id="Linux">Linux</h2>
 

@@ -84,6 +84,7 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
      */
     @Deprecated
     public static synchronized TrainManager instance() {
+        jmri.util.Log4JUtil.deprecationWarning(log, "instance");        
         return InstanceManager.getDefault(TrainManager.class);
     }
 
@@ -185,13 +186,17 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
      * Sets the selected schedule id
      *
      * @param id Selected schedule id
+     * @deprecated at or before 4.13.7
      */
-    @Deprecated
+    @Deprecated  // at or before 4.13.7
     public void setTrainSecheduleActiveId(String id) {
         InstanceManager.getDefault(TrainScheduleManager.class).setTrainScheduleActiveId(id);
     }
 
-    @Deprecated
+    /**
+     * @deprecated at or before 4.13.7
+     */
+    @Deprecated // at or before 4.13.7
     public String getTrainScheduleActiveId() {
         return InstanceManager.getDefault(TrainScheduleManager.class).getTrainScheduleActiveId();
     }

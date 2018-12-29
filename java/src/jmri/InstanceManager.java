@@ -568,7 +568,7 @@ public final class InstanceManager {
      */
     @Deprecated
     static public BlockManager blockManagerInstance() {
-        jmri.util.Log4JUtil.warnOnce(log, "blockManagerInstance is deprecated, please replace this call", new Exception("traceback"));
+        jmri.util.Log4JUtil.deprecationWarning(log, "blockManagerInstance");        
         return getDefault(BlockManager.class);
     }
 
@@ -580,7 +580,7 @@ public final class InstanceManager {
      */
     @Deprecated
     static public PowerManager powerManagerInstance() {
-        jmri.util.Log4JUtil.warnOnce(log, "powerManagerInstance is deprecated, please replace this call", new Exception("traceback"));
+        jmri.util.Log4JUtil.deprecationWarning(log, "powerManagerInstance");        
         return getDefault(PowerManager.class);
     }
 
@@ -592,7 +592,7 @@ public final class InstanceManager {
      */
     @Deprecated
     static public ReporterManager reporterManagerInstance() {
-        jmri.util.Log4JUtil.warnOnce(log, "reporterManagerInstance is deprecated, please replace this call", new Exception("traceback"));
+        jmri.util.Log4JUtil.deprecationWarning(log, "reporterManagerInstance");        
         return getDefault(ReporterManager.class);
     }
 
@@ -604,7 +604,7 @@ public final class InstanceManager {
      */
     @Deprecated
     static public RouteManager routeManagerInstance() {
-        jmri.util.Log4JUtil.warnOnce(log, "routeManagerInstance is deprecated, please replace this call", new Exception("traceback"));
+        jmri.util.Log4JUtil.deprecationWarning(log, "routeManagerInstance");        
         return getDefault(RouteManager.class);
     }
 
@@ -616,7 +616,7 @@ public final class InstanceManager {
      */
     @Deprecated
     static public SectionManager sectionManagerInstance() {
-        jmri.util.Log4JUtil.warnOnce(log, "sectionManagerInstance is deprecated, please replace this call", new Exception("traceback"));
+        jmri.util.Log4JUtil.deprecationWarning(log, "sectionManagerInstance");        
         return getDefault(SectionManager.class);
     }
 
@@ -646,17 +646,6 @@ public final class InstanceManager {
     }
 
     /**
-     * @param p signal head manager to make default
-     * @deprecated Since 3.7.4, use
-     * {@link #setDefault(java.lang.Class, java.lang.Object)} directly.
-     */
-    @Deprecated
-    static public void setSignalHeadManager(SignalHeadManager p) {
-        jmri.util.Log4JUtil.warnOnce(log, "setSignalHeadManager is deprecated, please replace this call", new Exception("traceback"));
-        setDefault(SignalHeadManager.class, p);
-    }
-
-    /**
      * @param p CommandStation to make default
      * @deprecated Since 4.9.5, use
      * {@link #store(java.lang.Object,java.lang.Class)} directly.
@@ -667,24 +656,13 @@ public final class InstanceManager {
     }
 
     /**
-     * @param p configure manager to make default
-     * @deprecated Since 3.7.4, use
-     * {@link #setDefault(java.lang.Class, java.lang.Object)} directly.
-     */
-    @Deprecated
-    static public void setConfigureManager(ConfigureManager p) {
-        jmri.util.Log4JUtil.warnOnce(log, "setConfigureManager is deprecated, please replace this call", new Exception("traceback"));
-        setDefault(ConfigureManager.class, p);
-    }
-
-    /**
      * @param p consist manager to make store
      * @deprecated Since 4.11.4, use
      * {@link #store(java.lang.Object, java.lang.Class)} directly.
      */
     @Deprecated
     static public void setConsistManager(ConsistManager p) {
-        jmri.util.Log4JUtil.warnOnce(log, "setConsistManager is deprecated, please replace this call", new Exception("traceback"));
+        jmri.util.Log4JUtil.deprecationWarning(log, "setConsistManager");        
         store(p, ConsistManager.class);
     }
 
@@ -710,7 +688,7 @@ public final class InstanceManager {
      */
     @Deprecated
     static public void setAddressedProgrammerManager(AddressedProgrammerManager p) {
-        jmri.util.Log4JUtil.warnOnce(log, "setAddressedProgrammerManager is deprecated, please replace this call", new Exception("traceback"));
+        jmri.util.Log4JUtil.deprecationWarning(log, "setAddressedProgrammerManager");        
         store(p, AddressedProgrammerManager.class);
     }
 

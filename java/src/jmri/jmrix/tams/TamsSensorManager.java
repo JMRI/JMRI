@@ -10,9 +10,10 @@ import org.slf4j.LoggerFactory;
 /**
  * Implement sensor manager for Tams systems. The Manager handles all the state\
  * changes Requires v1.4.7 or higher of TAMS software to work correctly
- * <P>
- * System names are "TMSnnn:yy", where nnn is the Tams Object Number for a given
- * S88 Bus Module and yy is the port on that module.
+ * <p>
+ * System names are "TSnnn:yy", where T is the user configurable system prefix,
+ * nnn is the Tams Object Number for a given S88 Bus Module and
+ * yy is the port on that module.
  *
  * @author Kevin Dickerson Copyright (C) 2009
  * @author Jan Boen and Sergiu Costan

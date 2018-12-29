@@ -6,7 +6,8 @@ import jmri.Turnout;
  * Implement turnout manager for Xpa+Modem connections to XpressNet Based
  * systems.
  * <p>
- * System names are "PTnnn", where nnn is the turnout number without padding.
+ * System names are "PTnnn", where P is the user configurable system prefix,
+ * nnn is the turnout number without padding.
  *
  * @author	Paul Bender Copyright (C) 2004,2016
  */
@@ -44,15 +45,6 @@ public class XpaTurnoutManager extends jmri.managers.AbstractTurnoutManager {
     @Override
     public int getOutputInterval(String systemName) {
         return memo.getOutputInterval();
-    }
-
-    /**
-     * @return null
-     * @deprecated since 4.3.6
-     */
-    @Deprecated
-    synchronized static public XpaTurnoutManager instance() {
-        return null;
     }
 
 }

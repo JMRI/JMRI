@@ -5,8 +5,8 @@ import jmri.Turnout;
 /**
  * Implement turnout manager for MQTT systems
  * <p>
- * System names are "MiTnnn", where nnn is the turnout number without padding,
- * prefix Mi is user configurable.
+ * System names are "MTnnn", where M is the user configurable system prefix,
+ * nnn is the turnout number without padding.
  *
  * @author Lionel Jeanson Copyright (c) 2017
  */

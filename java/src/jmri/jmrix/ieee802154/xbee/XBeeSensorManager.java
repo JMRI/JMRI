@@ -17,8 +17,12 @@ import org.slf4j.LoggerFactory;
 /**
  * Manage the XBee specific Sensor implementation.
  *
- * System names are "ZSnnn", where nnn is the sensor number without padding.
- * Or "ZSstring:pin", where string is a node address and pin is the io pin used.
+ * System names are formatted as one of:
+ * <ul>
+ *   <li>"ZSnnn", where nnn is the sensor number without padding</li>
+ *   <li>"ZSstring:pin", where string is a node address and pin is the io pin used.</li>
+ * </ul>
+ * Z is the user-configurable system prefix.
  *
  * @author Paul Bender Copyright (C) 2003-2016
  */

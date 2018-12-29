@@ -5,7 +5,7 @@ import jmri.ThrottleManager;
 import jmri.jmrix.AbstractThrottleManager;
 
 /**
- * XPA implementation of a ThrottleManager
+ * XPA implementation of a ThrottleManager.
  *
  * @author Paul Bender Copyright (C) 2004
  */
@@ -72,8 +72,8 @@ public class XpaThrottleManager extends AbstractThrottleManager implements Throt
         return true;
     }
 
-    /*
-     * Local method for deciding short/long address
+    /**
+     * Local method for deciding short/long address.
      */
     static boolean isLongAddress(int num) {
         return (num >= 100);

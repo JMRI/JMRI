@@ -8,9 +8,10 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Manage the NCE-specific Sensor implementation.
- * <P>
- * System names are "NSnnn", where nnn is the sensor number without padding.
- * <P>
+ * <p>
+ * System names are "NSnnn", where N is the user configurable system prefix,
+ * nnn is the sensor number without padding.
+ * <p>
  * This class is responsible for generating polling messages for the
  * NceTrafficController, see nextAiuPoll()
  *

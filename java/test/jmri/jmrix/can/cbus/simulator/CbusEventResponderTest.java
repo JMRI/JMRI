@@ -1,4 +1,4 @@
-package jmri.jmrix;
+package jmri.jmrix.can.cbus.simulator;
 
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -10,11 +10,11 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class DCCManufacturerListTest {
+public class CbusEventResponderTest {
 
     @Test
     public void testCTor() {
-        DCCManufacturerList t = new DCCManufacturerList();
+        CbusEventResponder t = new CbusEventResponder(0,null);
         Assert.assertNotNull("exists",t);
     }
 
@@ -29,6 +29,6 @@ public class DCCManufacturerListTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(DCCManufacturerListTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(CbusEventResponderTest.class);
 
 }

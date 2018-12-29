@@ -2,11 +2,14 @@ package jmri.web.servlet.json;
 
 import static jmri.server.json.JSON.DATA;
 import static jmri.server.json.JSON.NAME;
+import static jmri.server.json.JSON.NODE;
+import static jmri.server.json.JSON.RAILROAD;
 import static jmri.server.json.JSON.STATE;
 import static jmri.server.json.JSON.VALUE;
 import static jmri.server.json.JsonException.CODE;
 import static jmri.server.json.operations.JsonOperations.LOCATION;
 import static jmri.server.json.power.JsonPowerServiceFactory.POWER;
+import static jmri.server.json.time.JsonTimeServiceFactory.TIME;
 import static jmri.web.servlet.ServletUtil.APPLICATION_JSON;
 import static jmri.web.servlet.ServletUtil.UTF8;
 import static jmri.web.servlet.ServletUtil.UTF8_APPLICATION_JSON;
@@ -164,6 +167,15 @@ public class JsonServlet extends WebSocketServlet {
                                     throw exception;
                                 }
                                 reply = array;
+                                break;
+                            case 1:
+                                //for singleton types only, strip off the array
+                                if (type.equals(POWER) || type.equals(RAILROAD) 
+                                        || type.equals(TIME) || type.equals(NODE)) {
+                                    reply = array.get(0);
+                                } else {
+                                    reply = array;
+                                }   
                                 break;
                             default:
                                 reply = array;
@@ -429,6 +441,7 @@ public class JsonServlet extends WebSocketServlet {
     public void sendError(HttpServletResponse response, int code, String message) throws IOException {
         response.setStatus(code);
         response.getWriter().write(message);
+        jmri.util.Log4JUtil.deprecationWarning(log, "sendError");        
     }
 
     /**

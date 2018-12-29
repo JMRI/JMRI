@@ -6,12 +6,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implement turnout manager for Oak Tree systems
+ * Implement turnout manager for Oak Tree systems.
  * <p>
- * System names are "OTnnn", where nnn is the turnout number without padding.
+ * System names are "OTnnn", where O is the user configurable system prefix,
+ * nnn is the turnout number without padding.
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2006
-  */
+ */
 public class SerialTurnoutManager extends AbstractTurnoutManager {
 
     OakTreeSystemConnectionMemo _memo = null;

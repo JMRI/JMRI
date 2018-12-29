@@ -9,11 +9,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implement simulator for Powerline serial systems
- * <P>
- * System names are "PLnnn", where nnn is the bit number without padding.
- * <P>
- * This is based on the NCE simulator.
+ * Implement simulator for Powerline serial systems.
+ * <p>
+ * System names are "PLnnn", where P is the user-configurable system prefix,
+ * nnn is the bit number without padding.
+ * <p>
+ * Based on the NCE simulator.
  *
  * @author Dave Duchamp Copyright (C) 2004
  * @author Bob Jacobsen Copyright (C) 2006, 2007, 2008 Converted to multiple connection
