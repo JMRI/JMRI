@@ -369,7 +369,7 @@ public class LnClockControl extends DefaultClockControl implements SlotListener,
     @Override
     public void notifyChangedSlot(LocoNetSlot s) {
         // only watch the clock slot and ignore our own messages
-        if (s.getSlot() != LnConstants.FC_SLOT || s.getThrottleId() == clockThrottleId) {
+        if (s.getSlot() != LnConstants.FC_SLOT || s.getThrottleIdentity() == clockThrottleId) {
             return;
         }
         // only pay attention if we are a LocoNet clock client
@@ -440,7 +440,7 @@ public class LnClockControl extends DefaultClockControl implements SlotListener,
             }
             s.setTrackStatus(s.getTrackStatus() &  (~LnConstants.GTRK_POWER) );
             if (power) s.setTrackStatus(s.getTrackStatus() | LnConstants.GTRK_POWER);
-            s.setThrottleId(clockThrottleId);
+            s.setThrottleIdentity(clockThrottleId);
             // and write
             tc.sendLocoNetMessage(s.writeSlot());
         }
@@ -480,7 +480,7 @@ public class LnClockControl extends DefaultClockControl implements SlotListener,
         s.setFcMinutes(curMinutes);
         s.setFcRate(curRate);
         s.setFcFracMins(curFractionalMinutes);
-        s.setThrottleId(clockThrottleId);
+        s.setThrottleIdentity(clockThrottleId);
         if (setValid) {
             s.setFcCntrlBitOn(LnConstants.FC_VALID); // valid time
         } else {

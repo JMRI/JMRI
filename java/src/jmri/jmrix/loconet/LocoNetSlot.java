@@ -947,7 +947,7 @@ public class LocoNetSlot {
      *
      * @param throttleId full id
      */
-    public void setThrottleId(int throttleId) {
+    public void setThrottleIdentity(int throttleId) {
         id = throttleId;
     }
 
@@ -956,7 +956,7 @@ public class LocoNetSlot {
      *
      *@return the Id of the Throttle
      */
-    public int getThrottleId() {
+    public int getThrottleIdentity() {
         return id;
     }
 
