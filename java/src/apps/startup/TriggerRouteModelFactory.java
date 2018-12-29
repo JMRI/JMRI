@@ -45,15 +45,10 @@ public class TriggerRouteModelFactory implements StartupModelFactory {
     public void editModel(StartupModel model, Component parent) {
         if (this.getModelClass().isInstance(model)) {
             ArrayList<String> userNames = new ArrayList<>();
-            InstanceManager.getDefault(RouteManager.class).getSystemNameList().stream().forEach((systemName) -> {
-                Route r = InstanceManager.getDefault(RouteManager.class).getBySystemName(systemName);
-                if (r != null) {
-                    String userName = r.getUserName();
-                    if (userName != null && !userName.isEmpty()) {
-                        userNames.add(userName);
-                    }
-                } else {
-                    log.error("Failed to get route {}", systemName);
+            InstanceManager.getDefault(RouteManager.class).getNamedBeanSet().stream().forEach((r) -> {
+                String userName = r.getUserName();
+                if (userName != null && !userName.isEmpty()) {
+                    userNames.add(userName);
                 }
             });
             userNames.sort(null);
