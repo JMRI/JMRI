@@ -27,6 +27,7 @@ public class CanReplyTest extends CanMRCommonTestBase {
     }
 
     @Test
+    @SuppressWarnings("unlikely-arg-type") // Both CanReply and CanMessage are CanFrame with custom equals
     public void testEqualsOp() {
         CanReply m1 = new CanReply();
         m1.setExtended(true);

@@ -11,8 +11,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+// import org.slf4j.Logger;
+// import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -45,7 +45,7 @@ public class CbusLightTest extends jmri.implementation.AbstractLightTestBase {
     @Test
     public void testNullEvent() {
         try {
-            CbusLight t = new CbusLight("ML",null,tcis);
+            t = new CbusLight("ML",null,tcis);
             Assert.fail("Should have thrown an exception");
         } catch (NullPointerException e) {
             Assert.assertTrue(true);
@@ -55,66 +55,66 @@ public class CbusLightTest extends jmri.implementation.AbstractLightTestBase {
 
     @Test
     public void testCTorShortEventSingle() {
-        CbusLight t = new CbusLight("ML","+7",tcis);
+        t = new CbusLight("ML","+7",tcis);
         Assert.assertNotNull("exists",t);
     }
     
     @Test
     public void testCTorShortEventDouble() {
-        CbusLight t = new CbusLight("ML","+1;-1",tcis);
+        t = new CbusLight("ML","+1;-1",tcis);
         Assert.assertNotNull("exists",t);
     }
     
     
     @Test
     public void testLongEventSingleNoN() {
-        CbusLight t = new CbusLight("ML","+654e321",tcis);
+        t = new CbusLight("ML","+654e321",tcis);
         Assert.assertNotNull("exists",t);
     }    
 
 
     @Test
     public void testLongEventDoubleNoN() {
-        CbusLight t = new CbusLight("ML","-654e321;+123e456",tcis);
+        t = new CbusLight("ML","-654e321;+123e456",tcis);
         Assert.assertNotNull("exists",t);
     }    
     
     
     @Test
     public void testCTorLongEventSingle() {
-        CbusLight t = new CbusLight("ML","+n654e321",tcis);
+        t = new CbusLight("ML","+n654e321",tcis);
         Assert.assertNotNull("exists",t);
     }    
     
     @Test
     public void testCTorLongEventDouble() {
-        CbusLight t = new CbusLight("ML","+N299E17;-N123E456",tcis);
+        t = new CbusLight("ML","+N299E17;-N123E456",tcis);
         Assert.assertNotNull("exists",t);
     }
     
     @Test
     public void testCTorHexEventJustOpsCode() {
-        CbusLight t = new CbusLight("ML","X04;X05",tcis);
+        t = new CbusLight("ML","X04;X05",tcis);
         Assert.assertNotNull("exists",t);
     }
 
     @Test
     public void testCTorHexEventOneByte() {
-        CbusLight t = new CbusLight("ML","X2301;X30FF",tcis);
+        t = new CbusLight("ML","X2301;X30FF",tcis);
         Assert.assertNotNull("exists",t);
     }
     
     
     @Test
     public void testCTorHexEventTwoByte() {
-        CbusLight t = new CbusLight("ML","X410001;X56FFFF",tcis);
+        t = new CbusLight("ML","X410001;X56FFFF",tcis);
         Assert.assertNotNull("exists",t);
     }
 
     
     @Test
     public void testCTorHexEventThreeByte() {
-        CbusLight t = new CbusLight("ML","X6000010001;X72FFFFFF",tcis);
+        t = new CbusLight("ML","X6000010001;X72FFFFFF",tcis);
         Assert.assertNotNull("exists",t);
     }    
     
@@ -122,89 +122,136 @@ public class CbusLightTest extends jmri.implementation.AbstractLightTestBase {
     
     @Test
     public void testCTorHexEventFourByte() {
-        CbusLight t = new CbusLight("ML","X9000010001;X91FFFFFFFF",tcis);
+        t = new CbusLight("ML","X9000010001;X91FFFFFFFF",tcis);
         Assert.assertNotNull("exists",t);
     }
 
 
     @Test
     public void testCTorHexEventFiveByte() {
-        CbusLight t = new CbusLight("ML","XB00D60010001;XB1FFFAAFFFFF",tcis);
+        t = new CbusLight("ML","XB00D60010001;XB1FFFAAFFFFF",tcis);
         Assert.assertNotNull("exists",t);
     }
 
 
     @Test
     public void testCTorHexEventSixByte() {
-        CbusLight t = new CbusLight("ML","XD00D0060010001;XD1FFFAAAFFFFFE",tcis);
+        t = new CbusLight("ML","XD00D0060010001;XD1FFFAAAFFFFFE",tcis);
         Assert.assertNotNull("exists",t);
     }
     
     
     @Test
     public void testCTorHexEventSevenByte() {
-        CbusLight t = new CbusLight("ML","XF00D0A0600100601;XF1FFFFAAFAFFFFFE",tcis);
+        t = new CbusLight("ML","XF00D0A0600100601;XF1FFFFAAFAFFFFFE",tcis);
         Assert.assertNotNull("exists",t);
     }
 
 
     @Test
     public void threePartFail() {
-        CbusLight t = new CbusLight("ML","+7;-5;+11",tcis);
+        t = new CbusLight("ML","+7;-5;+11",tcis);
         JUnitAppender.assertErrorMessageStartsWith("Can't parse CbusSensor system name");
     }
 
     @Test
     public void badSysNameErrorLog() {
         
-        CbusLight t = new CbusLight("ML","+7;-5;+11",tcis);
+        t = new CbusLight("ML","+7;-5;+11",tcis);
         JUnitAppender.assertErrorMessageStartsWith("Can't parse CbusSensor system name");
-        
-        CbusLight t2 = new CbusLight("ML","X;+N15E6",tcis);
-        JUnitAppender.assertErrorMessageStartsWith("Did not find usable sys");        
-        
-        CbusLight t3 = new CbusLight("ML","XA;+N15E6",tcis);
-        JUnitAppender.assertErrorMessageStartsWith("Did not find usable sys");        
-        
-        CbusLight t4 = new CbusLight("ML","XABC;+N15E6",tcis);
-        JUnitAppender.assertErrorMessageStartsWith("Did not find usable sys");        
-        
-        CbusLight t5 = new CbusLight("ML","XABCDE;+N15E6",tcis);
-        JUnitAppender.assertErrorMessageStartsWith("Did not find usable sys");        
-        
-        CbusLight t6 = new CbusLight("ML","XABCDEF0;+N15E6",tcis);
-        JUnitAppender.assertErrorMessageStartsWith("Did not find usable sys");        
-        
-        CbusLight t7 = new CbusLight("ML","XABCDEF",tcis);
-        JUnitAppender.assertErrorMessageStartsWith("can't make 2nd event from");        
-        
-        CbusLight t8 = new CbusLight("ML",";XABCDEF",tcis);
-        JUnitAppender.assertErrorMessageStartsWith("Did not find usable sys");
+    }
 
-        CbusLight t9 = new CbusLight("ML","XABCDEF;",tcis);
+    @Test
+    public void badSysNameErrorLog2() {        
+        t = new CbusLight("ML","X;+N15E6",tcis);
+        JUnitAppender.assertErrorMessageStartsWith("Did not find usable sys");        
+    }
+    
+    @Test
+    public void badSysNameErrorLog3() {
+        t = new CbusLight("ML","XA;+N15E6",tcis);
         JUnitAppender.assertErrorMessageStartsWith("Did not find usable sys");
+        
+    }
+        
+    @Test
+    public void badSysNameErrorLog4() {        
+        
+        t = new CbusLight("ML","XABC;+N15E6",tcis);
+        JUnitAppender.assertErrorMessageStartsWith("Did not find usable sys");
+    }
+    
+    @Test
+    public void badSysNameErrorLog5() {        
+        t = new CbusLight("ML","XABCDE;+N15E6",tcis);
+        JUnitAppender.assertErrorMessageStartsWith("Did not find usable sys");        
+    }
+        
+    @Test
+    public void badSysNameErrorLog6() {        
+        
+        t = new CbusLight("ML","XABCDEF0;+N15E6",tcis);
+        JUnitAppender.assertErrorMessageStartsWith("Did not find usable sys");        
+    }
 
-        CbusLight t10 = new CbusLight("ML",";",tcis);
+    @Test
+    public void badSysNameErrorLog7() {
+        t = new CbusLight("ML","XABCDEF",tcis);
+        JUnitAppender.assertErrorMessageStartsWith("can't make 2nd event from");
+    }
+        
+    @Test
+    public void badSysNameErrorLog8() {
+        t = new CbusLight("ML",";XABCDEF",tcis);
         JUnitAppender.assertErrorMessageStartsWith("Did not find usable sys");
+    }
 
-        CbusLight t11 = new CbusLight("ML",";+N15E6",tcis);
+    @Test
+    public void badSysNameErrorLog9() {
+        t = new CbusLight("ML","XABCDEF;",tcis);
         JUnitAppender.assertErrorMessageStartsWith("Did not find usable sys");
+    }
 
-        CbusLight t12 = new CbusLight("ML","++N156E77",tcis);
+    @Test
+    public void badSysNameErrorLog10() {
+        t = new CbusLight("ML",";",tcis);
         JUnitAppender.assertErrorMessageStartsWith("Did not find usable sys");
-        
-        CbusLight t13 = new CbusLight("ML","--N156E77",tcis);
+    }
+
+    @Test
+    public void badSysNameErrorLog11() {
+        t = new CbusLight("ML",";+N15E6",tcis);
         JUnitAppender.assertErrorMessageStartsWith("Did not find usable sys");
-        
-        CbusLight t14 = new CbusLight("ML","N156E+77",tcis);
+    }
+
+    @Test
+    public void badSysNameErrorLog12() {
+        t = new CbusLight("ML","++N156E77",tcis);
         JUnitAppender.assertErrorMessageStartsWith("Did not find usable sys");
+    }
         
-        CbusLight t15 = new CbusLight("ML","N156+E77",tcis);
+    @Test
+    public void badSysNameErrorLog13() {
+        t = new CbusLight("ML","--N156E77",tcis);
         JUnitAppender.assertErrorMessageStartsWith("Did not find usable sys");
+    }
         
-        CbusLight t16 = new CbusLight("ML","XLKJK;XLKJK",tcis);
+    @Test
+    public void badSysNameErrorLog14() {
+        t = new CbusLight("ML","N156E+77",tcis);
         JUnitAppender.assertErrorMessageStartsWith("Did not find usable sys");
+    }
         
+    @Test
+    public void badSysNameErrorLog15() {
+        t = new CbusLight("ML","N156+E77",tcis);
+        JUnitAppender.assertErrorMessageStartsWith("Did not find usable sys");
+    }
+        
+    @Test
+    public void badSysNameErrorLog16() {
+        t = new CbusLight("ML","XLKJK;XLKJK",tcis);
+        JUnitAppender.assertErrorMessageStartsWith("Did not find usable sys");
     }
 
     @Test
@@ -363,6 +410,5 @@ public class CbusLightTest extends jmri.implementation.AbstractLightTestBase {
         tcis=null;
     }
 
-     private final static Logger log = LoggerFactory.getLogger(CbusLightTest.class);
-
+    // private final static Logger log = LoggerFactory.getLogger(CbusLightTest.class);
 }

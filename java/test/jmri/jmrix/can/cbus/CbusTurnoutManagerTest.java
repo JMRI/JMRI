@@ -163,15 +163,16 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
     public void testBadCbusTurnoutAddressesPt2() {
         
         try {
-            Turnout t2 = l.provideTurnout(";+N15E62");
+            l.provideTurnout(";+N15E62");
             Assert.fail("; Should have thrown an exception");
+            
         } catch (Exception e) {
             JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: Did not find");
             Assert.assertTrue(true);
         }
 
         try {
-            Turnout t23 = l.provideTurnout("T+N156E77;+N123E456");
+            l.provideTurnout("T+N156E77;+N123E456");
             Assert.fail("S Should have thrown an exception");
         } catch (Exception e) {
             JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: Did not find");

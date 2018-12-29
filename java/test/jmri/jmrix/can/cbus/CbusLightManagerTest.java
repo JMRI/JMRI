@@ -28,7 +28,7 @@ public class CbusLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
     @Test
     public void testctor(){
         // create and register the manager object
-        l = new CbusLightManager(memo);;
+        l = new CbusLightManager(memo);
         Assert.assertNotNull(l);
     }
 
