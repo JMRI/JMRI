@@ -38,6 +38,7 @@ public class LnDeferProgrammer implements Programmer {
 
     /** {@inheritDoc} */
     @Override
+    @Deprecated // 4.1.1
     public void writeCV(int CV, int val, ProgListener p) throws ProgrammerException {
         SlotManager m = memo.getSlotManager();
         if (m!=null) {
@@ -60,6 +61,7 @@ public class LnDeferProgrammer implements Programmer {
 
     /** {@inheritDoc} */
     @Override
+    @Deprecated // 4.1.1
     public void readCV(int CV, ProgListener p) throws ProgrammerException {
         SlotManager m = memo.getSlotManager();
         if (m!=null) {
@@ -82,6 +84,7 @@ public class LnDeferProgrammer implements Programmer {
 
     /** {@inheritDoc} */
     @Override
+    @Deprecated // 4.1.1
     public void confirmCV(int CV, int val, ProgListener p) throws ProgrammerException {
         SlotManager m = memo.getSlotManager();
         if (m!=null) {
