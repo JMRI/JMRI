@@ -38,13 +38,13 @@ import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.swing.configtool.ConfigToolPane;
 import jmri.jmrix.can.cbus.swing.CbusFilterFrame;
-import jmri.jmrix.can.cbus.swing.TextAreaFIFO;
 import jmri.jmrix.can.TrafficController;
 import jmri.jmrix.can.cbus.CbusConstants;
 import jmri.jmrix.can.cbus.CbusMessage;
 import jmri.jmrix.can.cbus.CbusOpCodes;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.TextAreaFIFO;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -213,6 +213,8 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
      */
     @Override
     public void dispose() {
+        monTextPaneCan.dispose();
+        monTextPaneCbus.dispose();
         if (tc != null) {
             tc.removeCanListener(this);
         }

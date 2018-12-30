@@ -1,4 +1,4 @@
-package jmri.jmrix.can.cbus.swing;
+package jmri.util.swing;
 
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -16,14 +16,11 @@ import org.junit.Test;
  */
 public class TextAreaFIFOTest {
 
-    //  public int getLineCount( TextAreaFIFO t ) {
-    //      log.warn("returning {}",t.getDocument().getDefaultRootElement().getElementCount());
-    //  return t.getDocument().getDefaultRootElement().getElementCount();
-    //  }
+    // String newLine = System.getProperty("line.separator");
     
     @Test
     public void testCTor() {
-        TextAreaFIFO t = new TextAreaFIFO(1);
+        TextAreaFIFO t = new TextAreaFIFO(2);
         Assert.assertNotNull("exists",t);
     }
 

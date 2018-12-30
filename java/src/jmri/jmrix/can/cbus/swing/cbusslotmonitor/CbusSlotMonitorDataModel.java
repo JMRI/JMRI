@@ -20,6 +20,7 @@ import javax.swing.Timer;
 import jmri.Block;
 import jmri.BlockManager;
 import jmri.InstanceManager;
+import jmri.util.swing.TextAreaFIFO;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.roster.RosterEntry;
@@ -30,7 +31,6 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.CbusConstants;
 import jmri.jmrix.can.cbus.CbusMessage;
 import jmri.jmrix.can.cbus.CbusOpCodes;
-import jmri.jmrix.can.cbus.swing.TextAreaFIFO;
 import jmri.jmrix.can.TrafficController;
 import jmri.Path;
 import jmri.SignalMast;
@@ -1764,6 +1764,8 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
                 curmastarr.get(i).removePropertyChangeListener(_cconSignalMastListener);
             }
         }
+        
+        tablefeedback.dispose();
 
         masterSendCabDataButton(false); // send data off message to cabs
         

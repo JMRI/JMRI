@@ -47,9 +47,9 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.CbusConstants;
 import jmri.jmrix.can.cbus.CbusMessage;
 import jmri.jmrix.can.cbus.CbusOpCodes;
-import jmri.jmrix.can.cbus.swing.TextAreaFIFO;
 import jmri.jmrix.can.TrafficController;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.TextAreaFIFO;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -1821,7 +1821,6 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
     
     @Override
     public void message(CanMessage m) {
-        reply( new CanReply(m)); // pass outgoing messages to be processed in case sim. being used
     }
 
     public static class HighlightJPanelsChildMouseListeners implements MouseListener{
@@ -1858,6 +1857,7 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
         if (tc != null) {
             tc.removeCanListener(this);
         }
+        tablefeedback.dispose();
     }
     
     /**
