@@ -9,8 +9,6 @@ import jmri.NmraPacket;
 import jmri.ProgListener;
 import jmri.ProgrammerException;
 import jmri.ProgrammingMode;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Provide an Ops Mode Programmer via a wrapper what works with the NCE command
@@ -35,12 +33,14 @@ public class NceOpsModeProgrammer extends NceProgrammer implements AddressedProg
         setMode(ProgrammingMode.OPSBYTEMODE);
     }
 
-    /**
+    /** 
+     * {@inheritDoc}
+     *
      * Forward a write request to an ops-mode write operation
      */
     @Override
-    @Deprecated // 4.1.1
-    public synchronized void writeCV(int CV, int val, ProgListener p) throws ProgrammerException {
+    public synchronized void writeCV(String CVname, int val, ProgListener p) throws ProgrammerException {
+        final int CV = Integer.parseInt(CVname);
         if (log.isDebugEnabled()) {
             log.debug("write CV=" + CV + " val=" + val);
         }
@@ -81,9 +81,12 @@ public class NceOpsModeProgrammer extends NceProgrammer implements AddressedProg
         tc.sendNceMessage(msg, this);
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
-    @Deprecated // 4.1.1
-    public synchronized void readCV(int CV, ProgListener p) throws ProgrammerException {
+    public synchronized void readCV(String CVname, ProgListener p) throws ProgrammerException {
+        final int CV = Integer.parseInt(CVname);
         if (log.isDebugEnabled()) {
             log.debug("read CV=" + CV);
         }
@@ -91,6 +94,9 @@ public class NceOpsModeProgrammer extends NceProgrammer implements AddressedProg
         throw new ProgrammerException();
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public synchronized void confirmCV(String CV, int val, ProgListener p) throws ProgrammerException {
         if (log.isDebugEnabled()) {
@@ -100,7 +106,11 @@ public class NceOpsModeProgrammer extends NceProgrammer implements AddressedProg
         throw new ProgrammerException();
     }
 
-    // add 200mSec between commands, so NCE command station queue doesn't get overrun
+    /** 
+     * {@inheritDoc}
+     *
+     *  add 200mSec between commands, so NCE command station queue doesn't get overrun
+     */
     @Override
     protected void notifyProgListenerEnd(int value, int status) {
         if (log.isDebugEnabled()) {
@@ -114,7 +124,9 @@ public class NceOpsModeProgrammer extends NceProgrammer implements AddressedProg
         super.notifyProgListenerEnd(value, status);
     }
 
-    /**
+    /** 
+     * {@inheritDoc}
+     *
      * Types implemented here.
      */
     @Override
@@ -125,7 +137,9 @@ public class NceOpsModeProgrammer extends NceProgrammer implements AddressedProg
         return ret;
     }
 
-    /**
+    /** 
+     * {@inheritDoc}
+     *
      * Can this ops-mode programmer read back values? For now, no, but maybe
      * later.
      *
@@ -136,7 +150,9 @@ public class NceOpsModeProgrammer extends NceProgrammer implements AddressedProg
         return false;
     }
 
-    /**
+    /** 
+     * {@inheritDoc}
+     *
      * Ops-mode programming doesn't put the command station in programming mode,
      * so we don't have to send an exit-programming command at end. Therefore,
      * this routine does nothing except to replace the parent routine that does
@@ -146,22 +162,31 @@ public class NceOpsModeProgrammer extends NceProgrammer implements AddressedProg
     void cleanup() {
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public boolean getLongAddress() {
         return mLongAddr;
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public int getAddressNumber() {
         return mAddress;
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public String getAddress() {
         return "" + getAddressNumber() + " " + getLongAddress();
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(NceOpsModeProgrammer.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NceOpsModeProgrammer.class);
 
 }

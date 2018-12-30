@@ -548,7 +548,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      * @param s the string to parse into a date
      * @deprecated since 4.7.1; not for removal, but to make access protected
      */
-    @Deprecated
+    @Deprecated // 4.7.1
     public void setDateUpdated(String s) {
         String old = _dateUpdated;
         _dateUpdated = s;
@@ -1316,8 +1316,6 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      */
     public void changeDateUpdated() {
         // used to create formatted string of now using defaults
-        // java.text.DateFormat df = java.text.DateFormat.getDateTimeInstance();
-        // setDateUpdated(df.format(new java.util.Date()));
         this.setDateModified(new Date());
     }
 

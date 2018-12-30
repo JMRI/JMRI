@@ -41,12 +41,14 @@ public class MrcOpsModeProgrammer extends MrcProgrammer implements jmri.Addresse
     int addressLo = 0x00;
     int addressHi = 0x00;
 
-    /**
+    /** 
+     * {@inheritDoc}
+     *
      * Forward a write request to an ops-mode write operation
      */
     @Override
-    @Deprecated // 4.1.1
-    public synchronized void writeCV(int CV, int val, ProgListener p) throws ProgrammerException {
+    public synchronized void writeCV(String CVname, int val, ProgListener p) throws ProgrammerException {
+        final int CV = Integer.parseInt(CVname);
         log.debug("write CV={} val={}", CV, val); //IN18N
         MrcMessage msg = MrcMessage.getPOM(addressLo, addressHi, CV, val);
 
@@ -62,14 +64,20 @@ public class MrcOpsModeProgrammer extends MrcProgrammer implements jmri.Addresse
         tc.sendMrcMessage(msg);
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
-    @Deprecated // 4.1.1
-    public synchronized void readCV(int CV, ProgListener p) throws ProgrammerException {
+    public synchronized void readCV(String CVname, ProgListener p) throws ProgrammerException {
+        final int CV = Integer.parseInt(CVname);
         log.debug("read CV={}", CV);
         log.error("readCV not available in this protocol"); //IN18N
         throw new ProgrammerException();
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public synchronized void confirmCV(String CV, int val, ProgListener p) throws ProgrammerException {
         log.debug("confirm CV={}", CV);
@@ -77,6 +85,9 @@ public class MrcOpsModeProgrammer extends MrcProgrammer implements jmri.Addresse
         throw new ProgrammerException();
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     // add 200mSec between commands, so MRC command station queue doesn't get overrun
     @Override
     protected void notifyProgListenerEnd(int value, int status) {
@@ -89,7 +100,9 @@ public class MrcOpsModeProgrammer extends MrcProgrammer implements jmri.Addresse
         super.notifyProgListenerEnd(value, status);
     }
 
-    /**
+    /** 
+     * {@inheritDoc}
+     *
      * Types implemented here.
      */
     @Override
@@ -100,7 +113,9 @@ public class MrcOpsModeProgrammer extends MrcProgrammer implements jmri.Addresse
         return ret;
     }
 
-    /**
+    /** 
+     * {@inheritDoc}
+     *
      * Can this ops-mode programmer read back values? For now, no, but maybe
      * later.
      *
@@ -111,22 +126,33 @@ public class MrcOpsModeProgrammer extends MrcProgrammer implements jmri.Addresse
         return false;
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public boolean getLongAddress() {
         return mLongAddr;
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public int getAddressNumber() {
         return mAddress;
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public String getAddress() {
         return "" + getAddressNumber() + " " + getLongAddress();
     }
 
-    /**
+    /** 
+     * {@inheritDoc}
+     *
      * Ops-mode programming doesn't put the command station in programming mode,
      * so we don't have to send an exit-programming command at end. Therefore,
      * this routine does nothing except to replace the parent routine that does
