@@ -43,7 +43,7 @@ public class CbusProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
 
     @Test
     public void testWriteSequence() throws jmri.ProgrammerException {
-        p.writeCV(4, 5, testListener);
+        p.writeCV("4", 5, testListener);
 
         Assert.assertEquals("listeners", 0, tc.numListeners());
         Assert.assertEquals("sent count", 1, tc.outbound.size());
@@ -58,7 +58,7 @@ public class CbusProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
 
     @Test
     public void testReadSequence() throws jmri.ProgrammerException {
-        p.readCV(4, testListener);
+        p.readCV("4", testListener);
 
         Assert.assertEquals("listeners", 0, tc.numListeners());
         Assert.assertEquals("sent count", 1, tc.outbound.size());
