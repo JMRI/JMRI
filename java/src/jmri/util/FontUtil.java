@@ -103,4 +103,5 @@ public class FontUtil {
 
         return f.deriveFont(size);
     }
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(FontUtil.class);
 }

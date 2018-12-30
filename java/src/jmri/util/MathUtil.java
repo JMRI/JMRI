@@ -1175,4 +1175,5 @@ public final class MathUtil {
         return drawBezier(g2, p, 0.0);
     }
     private static boolean bezier1st = false;
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MathUtil.class);
 }
