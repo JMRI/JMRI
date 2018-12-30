@@ -65,7 +65,7 @@ public class SprogOpsModeProgrammer extends SprogProgrammer implements Addressed
      */
     @Override
     synchronized public void readCV(String CVname, ProgListener p) throws ProgrammerException {
-        final int CV = Integer.parseInt(CVname);
+        // final int CV = Integer.parseInt(CVname);
         log.error("readCV not available in this protocol");
         throw new ProgrammerException();
     }
