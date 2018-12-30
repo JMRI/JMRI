@@ -4,6 +4,7 @@ import jmri.implementation.AbstractLight;
 import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
+import jmri.jmrix.can.cbus.CbusConstants;
 import jmri.jmrix.can.cbus.CbusMessage;
 import jmri.jmrix.can.TrafficController;
 import org.slf4j.Logger;
@@ -85,6 +86,21 @@ public class CbusLight extends AbstractLight
         }
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public void requestUpdateFromLayout() {
+        CanMessage m;
+        m = addrOn.makeMessage(tc.getCanid());
+        int opc = CbusMessage.getOpcode(m);
+        if (CbusOpCodes.isShortEvent(opc)) {
+            m.setOpCode(CbusConstants.CBUS_ASRQ);
+        }
+        else {
+            m.setOpCode(CbusConstants.CBUS_AREQ);
+        }
+        tc.sendCanMessage(m, this);
+    }
+    
     @Override
     public void message(CanMessage f) {
         if (addrOn.match(f)) {

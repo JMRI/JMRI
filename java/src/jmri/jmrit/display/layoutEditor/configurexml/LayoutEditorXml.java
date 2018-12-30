@@ -512,6 +512,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         for (Element item : shared.getChildren()) {
             // get the class, hence the adapter object to do loading
             String adapterName = item.getAttribute("class").getValue();
+            adapterName = jmri.configurexml.ConfigXmlManager.currentClassName(adapterName);
 
             if (log.isDebugEnabled()) {
                 String id = "<null>";

@@ -18,7 +18,7 @@ import java.net.SocketException;
  * @deprecated since 4.7.1; use methods of {@link java.net.Socket} or
  * {@link java.net.ServerSocket} directly
  */
-@Deprecated
+@Deprecated // 4.7.1
 public class SocketUtil {
 
     /**
@@ -29,7 +29,7 @@ public class SocketUtil {
      * @deprecated since 4.7.1; use
      * {@link java.net.Socket#getRemoteSocketAddress()} instead
      */
-    @Deprecated
+    @Deprecated // 4.7.1
     static public String getRemoteSocketAddress(Socket socket) {
         return socket.getRemoteSocketAddress().toString();
     }
@@ -43,7 +43,7 @@ public class SocketUtil {
      * @deprecated since 4.7.1; use
      * {@link java.net.ServerSocket#setReuseAddress(boolean)} instead
      */
-    @Deprecated
+    @Deprecated // 4.7.1
     static public void setReuseAddress(ServerSocket socket, boolean on) {
         try {
             socket.setReuseAddress(on);

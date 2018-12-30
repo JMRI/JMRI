@@ -136,6 +136,7 @@ public class LearnWarrantTest {
 
         // wait for done
         final String name =  w.getDisplayName();
+        warrant.getRunModeMessage(); //throw away one read to help waitFor
         jmri.util.JUnitUtil.waitFor(()->{return warrant.getRunModeMessage().equals(Bundle.getMessage("NotRunning",name));}, "warrant not done");
          
 //        JUnitUtil.waitFor(() -> {
@@ -163,6 +164,7 @@ public class LearnWarrantTest {
         jfo2.requestClose();
         ControlPanelEditor panel = (ControlPanelEditor)jmri.util.JmriJFrame.getFrame("LearnWarrantTest");
         panel.dispose();    // disposing this way allows test to be rerun (i.e. reload panel file) multiple times
+//        jmri.util.JUnitAppender.assertWarnMessage("Path NorthToWest in block North has length zero. Cannot run NXWarrants or ramp speeds through blocks with zero length."); 
     }
 
     private void pressButton(WindowOperator frame, String text) {
