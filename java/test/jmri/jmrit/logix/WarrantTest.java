@@ -179,7 +179,7 @@ public class WarrantTest {
         warrant.getSpeedUtil().setDccAddress("999(L)");
         msg = warrant.setRoute(false, orders);
         Assert.assertNull("setRoute - "+msg, msg);
-        msg =  warrant.checkStartBlock(Warrant.MODE_RUN);
+        msg =  warrant.checkStartBlock();
         Assert.assertNull("checkStartBlock - "+msg, msg);
         msg = warrant.checkRoute();
         Assert.assertNull("checkRoute - "+msg, msg);

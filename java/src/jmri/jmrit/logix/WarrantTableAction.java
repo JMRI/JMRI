@@ -494,16 +494,8 @@ public class WarrantTableAction extends AbstractAction {
                     OBlock myBlock = (OBlock) myPath.getBlock();
                     int state = set.getSetting();
                     OBlock block = (OBlock) path.getBlock();
-//                  String note = "WARNING: ";
                     if (myState != state) {
                         ret = myBlock.addSharedTurnout(myPath, block, path);
-                        /*                       _textArea.append(note+Bundle.getMessage("sharedTurnout", myPath.getName(), myBlock.getDisplayName(),
-                             myTO.getDisplayName(), (myState==jmri.Turnout.CLOSED ? "Closed":"Thrown"),
-                             path.getName(), block.getDisplayName(), to.getDisplayName(),
-                             (state==jmri.Turnout.CLOSED ? "Closed":"Thrown")));
-                      _textArea.append("\n");
-                    } else {
-                        note = "Note: "; */
                     }
                 }
             }
