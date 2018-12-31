@@ -1078,7 +1078,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
             // No Control Turnout was entered
             g.setControlTurnout("");
         }
-        // set Delay information
+        // set route specific Delay information, see jmri.implementation.DefaultRoute#SetRouteThread()
         int addDelay = (Integer) timeDelay.getValue(); // from a JSpinner with 0 set as minimum
         g.setRouteCommandDelay(addDelay);
 

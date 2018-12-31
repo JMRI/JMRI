@@ -374,16 +374,16 @@ public class MatrixSignalMast extends AbstractSignalMast {
             log.debug("Empty char[] received");
         } else {
             for (int i = 0; i < outputsToBeans.size(); i++) {
-                // log.debug("Setting bits[1] = {} for output #{}", bits[i], i);
+                log.debug("Setting bits[1] = {} for output #{}", bits[i], i);
                 Turnout t = getOutputBean(i + 1);
                 if (t != null) {
                     t.setBinaryOutput(true); // prevent feedback etc.
                 }
                 if (bits[i] == '1' && t != null && t.getCommandedState() != Turnout.CLOSED) {
                     // no need to set a state already set
-                    t.setCommandedState(Turnout.CLOSED);
+                    t.setCommandedStateAtInterval(Turnout.CLOSED); // delayed on specific connection by its turnoutManager
                 } else if (bits[i] == '0' && t != null && t.getCommandedState() != Turnout.THROWN) {
-                    t.setCommandedState(Turnout.THROWN);
+                    t.setCommandedStateAtInterval(Turnout.THROWN); // delayed on specific connection by its turnoutManager
                 } else if (bits[i] == 'n' || bits[i] == 'u') {
                     // let pass, extra chars up to 6 are not defined
                 } else {

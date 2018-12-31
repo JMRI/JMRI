@@ -171,7 +171,7 @@ public class EcosTurnout extends AbstractTurnout
         if ((getFeedbackMode() != MONITORING)) {
             return;
         }
-        forwardChangeAtInterval(state); // if > 0, wait before next output command. needed for Ecos?
+        forwardCommandChangeToLayout(state);
         newCommandedState(state);
     }
 

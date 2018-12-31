@@ -118,7 +118,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         myOperator = getTurnoutOperator(); // MUST set myOperator before starting the thread
         if (myOperator == null) {
             log.debug("myOperator NULL");
-            forwardChangeAtInterval(s); // if required by manager, apply wait interval when needed
+            forwardCommandChangeToLayout(s);
             // optionally handle feedback
             if (_activeFeedbackType == DIRECT) {
                 newKnownState(s);
@@ -144,7 +144,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
     /**
      * Duration in Milliseconds of interval between separate Turnout commands.
      * <p>
-     * Change from e.g. XNetTurnout extensions and scripts using #setOutputInterval(int)
+     * Change from e.g. XNetTurnout extensions and scripts using {@link #setOutputInterval(int)}
      */
     private int TURNOUT_INTERVAL = InstanceManager.turnoutManagerInstance().getOutputInterval(mSystemName);
 
@@ -162,41 +162,33 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
     protected Runnable r;
     protected LocalTime nextWait;
 
-    /**
-     * Before sending command to ouput, wait until
-     * outputIntervalEnds() to put less pressure on the connection.
-     * <p>
-     * Used to insert a delay before calling {@link #setCommandedState(int)} to spread out a series of
-     * output commands, as in {@link jmri.implementation.MatrixSignalMast#updateOutputs(char[])}.
-     * Value is kept in the Memo per hardware connection, default = 0
-     *
-     * @param s turnout state to forward
-     */
-    protected void forwardChangeAtInterval(int s) {
+    /** {@inheritDoc} */
+    @Override
+    public void setCommandedStateAtInterval(int s) {
         nextWait = InstanceManager.turnoutManagerInstance().outputIntervalEnds(mSystemName);
-        if (nextWait != null && nextWait.isAfter(LocalTime.now())) { // don't sleep if nextWait < now()
+        if (TURNOUT_INTERVAL > 0 && nextWait != null && nextWait.isAfter(LocalTime.now())) { // don't sleep if nextWait =< now()
             log.debug("interval = {} ms, now() = {}, waitUntil = {}", TURNOUT_INTERVAL, LocalTime.now(), nextWait);
             // insert wait before sending next output command to the layout
             r = new Runnable() {
                 @Override
                 public void run() {
-                    log.debug("go to sleep for {} ms...", LocalTime.now().until(nextWait, ChronoUnit.MILLIS));
+                    log.debug("go to sleep for {} ms...", Math.max(0L, LocalTime.now().until(nextWait, ChronoUnit.MILLIS)));
                     try {
-                        Thread.sleep(LocalTime.now().until(nextWait, ChronoUnit.MILLIS));
+                        Thread.sleep(Math.max(0L, LocalTime.now().until(nextWait, ChronoUnit.MILLIS))); // nextWait might have passed in the meantime
                         log.debug("back from sleep, forward on {}", LocalTime.now());
-                        forwardCommandChangeToLayout(s);
+                        setCommandedState(s);
                         return;
                     } catch (InterruptedException ex) {
-                        log.debug("forwardChangeAtInterval(s) interrupted at {}", LocalTime.now().toNanoOfDay());
-                        Thread.currentThread().interrupt();
+                        log.debug("setCommandedStateAtInterval(s) interrupted at {}", LocalTime.now());
+                        Thread.currentThread().interrupt(); // retain if needed later
                     }
                 }
             };
             thr = new Thread(r);
             thr.start();
         } else {
-            log.debug("nextWait {}", (nextWait == null ? "= NULL" : "has passed"));
-            forwardCommandChangeToLayout(s);
+            log.debug("nextWait {}", (nextWait == null ? "= NULL" : "N/A"));
+            setCommandedState(s);
         }
     }
 

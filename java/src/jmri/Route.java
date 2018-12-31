@@ -14,7 +14,7 @@ package jmri;
  * invoked by one or more Sensors (up to the maximum allowed).
  * <p>
  * A route can be enabled or not. By default it is enabled, and will act when
- * it's specified input conditions become satisfied. When not enabled (the
+ * its specified input conditions become satisfied. When not enabled (the
  * enabled parameter is false), the route will not act even if the specified
  * input conditions are satisfied. When the route transitions from disabled to
  * enabled, it may act, depending on the conditions: Edge triggered conditions
@@ -30,7 +30,6 @@ package jmri;
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
  *
  * @author Dave Duchamp Copyright (C) 2004
  * @author Bob Jacobsen Copyright (C) 2007

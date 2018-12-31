@@ -992,7 +992,6 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
 
         checkTurnoutAlignment();
         // register for updates to the Output Turnouts
-
     }
 
     /**
@@ -1266,15 +1265,15 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
                 final int toState = state;
                 final Turnout setTurnout = t;
                 ThreadingUtil.runOnLayoutEventually(() -> {   // eventually, even though we have timing here, should be soon
-                    setTurnout.setCommandedState(toState);
-                });         
+                    setTurnout.setCommandedStateAtInterval(toState); // delayed on specific connection by its turnoutManager
+                });
                 try {
-                    Thread.sleep(250 + delay);
+                    Thread.sleep(delay); // only the Route specific user defined delay is applied here, needed? TODO decide to remove, also in GUI
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt(); // retain if needed later
                 }
             }
-            //set route not busy
+            // set route not busy
             r.setRouteBusy(false);
         }
 
@@ -1282,4 +1281,5 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
 
         private final static Logger log = LoggerFactory.getLogger(SetRouteThread.class);
     }
+
 }

@@ -11,7 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Tests for the MatrixSignalMast implementation
+ * Tests for the MatrixSignalMast implementation.
  *
  * @author	Egbert Broerse Copyright (C) 2016
  */
@@ -166,4 +166,5 @@ public class MatrixSignalMastTest {
     }
 
     private final static Logger log = LoggerFactory.getLogger(MatrixSignalMastTest.class);
+
 }

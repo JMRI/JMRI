@@ -370,7 +370,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
     /** {@inheritDoc} */
     @Override
     public int getOutputInterval(@Nonnull String systemName) {
-        // systemName argument not used, needed to override, used in ProxyTurnoutManager
+        // systemName argument not used here, needed to override, argument is used in ProxyTurnoutManager
         return TURNOUT_INTERVAL;
     }
 
@@ -383,10 +383,10 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
     /**
      * Duration in Milliseconds of interval between separate Turnout commands.
      * <p>
-     * Change from e.g. XNetTurnout extensions and scripts using #setOutputInterval(int)
+     * Change from e.g. XNetTurnout extensions and scripts using {@link #setOutputInterval(int)}
      */
-    protected int TURNOUT_INTERVAL = 0;
-    protected LocalTime waitUntil = LocalTime.now();
+    private int TURNOUT_INTERVAL = 0;
+    private LocalTime waitUntil = LocalTime.now();
 
     /** {@inheritDoc} */
     @Override

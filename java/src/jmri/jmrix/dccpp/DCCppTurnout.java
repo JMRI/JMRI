@@ -150,7 +150,7 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
         synchronized (this) {
             newCommandedState(s);
         }
-        forwardChangeAtInterval(s); // if > 0, wait before next output command (experimental)
+        forwardCommandChangeToLayout(s);
         // Only set the known state to inconsistent if we actually expect a response
         // from the Base Station
         if (_activeFeedbackType == EXACT || _activeFeedbackType == MONITORING) {

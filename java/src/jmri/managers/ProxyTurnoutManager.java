@@ -327,7 +327,11 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
         TURNOUT_INTERVAL = newInterval;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * Duration in Milliseconds of interval between separate Turnout commands.
+     * <p>
+     * Change from e.g. XNetTurnout extensions and scripts using {@link #setOutputInterval(int)}
+     */
     private int TURNOUT_INTERVAL = 0;
     private LocalTime waitUntil = LocalTime.now();
 
