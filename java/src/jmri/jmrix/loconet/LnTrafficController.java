@@ -119,7 +119,7 @@ public abstract class LnTrafficController implements LocoNetInterface {
      * <p>
      * The object can't be used after this.
      */
-    public void dispose() {};
+    public void dispose() {}
 
     /**
      * Monitor the number of LocoNet messages received across the interface.
