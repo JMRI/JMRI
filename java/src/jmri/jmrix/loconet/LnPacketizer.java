@@ -487,15 +487,20 @@ public class LnPacketizer extends LnTrafficController {
     /**
      * End threads, intended for testing only
      */
-    public void dispose() throws InterruptedException {
+    public void dispose() {
         if (xmtThread != null) {
             xmtThread.stop(); // interrupt not sufficient?
-            xmtThread.join();
+            try {
+                xmtThread.join();
+            } catch (InterruptedException e) { log.warn("unexpected InterruptedException", e);}
         }
         if (rcvThread != null) {
             rcvThread.interrupt();
-            rcvThread.join();
-        }   
+            try {
+                rcvThread.join();
+            } catch (InterruptedException e) { log.warn("unexpected InterruptedException", e);}
+        }
+        super.dispose();
     }
     private final static Logger log = LoggerFactory.getLogger(LnPacketizer.class);
 

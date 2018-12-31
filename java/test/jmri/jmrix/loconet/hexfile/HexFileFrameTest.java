@@ -33,10 +33,11 @@ public class HexFileFrameTest {
             f.dispose();
        });
             
-        ((LnPacketizer)p.getSystemConnectionMemo().getLnTrafficController())
-            .dispose();
+        p.getSystemConnectionMemo().dispose();
         p.dispose();
-    }
+        f.sourceThread.stop();
+        f.sourceThread.join();
+ }   
 
     // The minimal setup for log4J
     @Before
