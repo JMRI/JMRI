@@ -12,7 +12,6 @@ install:
 # following need to be done after PATH is set
   - java -version
   - javac -version
-  - ant -version
   - mvn -version
 build: off
 
