@@ -1051,10 +1051,12 @@ public class JUnitUtil {
         "RMI TCP Accept",
         "TimerQueue",
         "Java Sound Event Dispatcher",
-        "Aqua L&F",                         // macOS only
+        "Aqua L&F",                         // macOS
         "AppKit Thread",
         "JMRI Common Timer",
-        "BluecoveAsynchronousShutdownThread" // from LocoNet BlueTooth implementation
+        "BluecoveAsynchronousShutdownThread", // from LocoNet BlueTooth implementation
+        "Keep-Alive-Timer",                 // from "system" group
+        "process reaper"                    // observed in macOS JRE
     }));
     static List<Thread> threadsSeen = new ArrayList<>();
 
@@ -1094,7 +1096,7 @@ public class JUnitUtil {
                         
                         // for anonymous threads, show the traceback in hopes of finding what it is
                         if (name.startsWith("Thread-")) {
-                            Exception ex = new Exception("traceback");
+                            Exception ex = new Exception("traceback of numbered thread");
                             ex.setStackTrace(Thread.getAllStackTraces().get(t));
                             log.warn("Found remnant thread \"{}\" in group \"{}\" after {}", t.getName(), t.getThreadGroup().getName(), getTestClassName(), ex);
                         } else {
