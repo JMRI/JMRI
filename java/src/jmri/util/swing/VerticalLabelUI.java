@@ -180,7 +180,7 @@ public class VerticalLabelUI extends BasicLabelUI {
      * @return default VerticalLabelUI instance
      * @deprecated since 4.9.5; construct a new VerticalLabelUI object instead
      */
-    @Deprecated
+    @Deprecated // 4.9.5
     public static ComponentUI createUI(JComponent component) {
         return verticalLabelUI;
     }

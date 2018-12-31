@@ -41,7 +41,7 @@ public class OffsetHighCvProgrammerFacadeTest extends TestCase {
         Assert.assertEquals("target written", 12, dp.getCvVal(4));
         Assert.assertTrue("index not written", !dp.hasBeenWritten(7));
 
-        p.readCV(4, l);
+        p.readCV("4", l);
         waitReply();
         Assert.assertEquals("read back", 12, readValue);
     }

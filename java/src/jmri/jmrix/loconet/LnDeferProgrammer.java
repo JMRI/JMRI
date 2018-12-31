@@ -38,17 +38,6 @@ public class LnDeferProgrammer implements Programmer {
 
     /** {@inheritDoc} */
     @Override
-    public void writeCV(int CV, int val, ProgListener p) throws ProgrammerException {
-        SlotManager m = memo.getSlotManager();
-        if (m!=null) {
-            m.writeCV(CV, val, p);
-        } else {
-            log.warn("writeCV called without a SlotManager");
-        }
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public void readCV(String CV, ProgListener p) throws ProgrammerException {
         SlotManager m = memo.getSlotManager();
         if (m!=null) {
@@ -60,29 +49,7 @@ public class LnDeferProgrammer implements Programmer {
 
     /** {@inheritDoc} */
     @Override
-    public void readCV(int CV, ProgListener p) throws ProgrammerException {
-        SlotManager m = memo.getSlotManager();
-        if (m!=null) {
-            m.readCV(CV, p);
-        } else {
-            log.warn("readCV called without a SlotManager");
-        }
-   }
-
-    /** {@inheritDoc} */
-    @Override
     public void confirmCV(String CV, int val, ProgListener p) throws ProgrammerException {
-        SlotManager m = memo.getSlotManager();
-        if (m!=null) {
-            m.confirmCV(CV, val, p);
-        } else {
-            log.warn("confirmCV called without a SlotManager");
-        }
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void confirmCV(int CV, int val, ProgListener p) throws ProgrammerException {
         SlotManager m = memo.getSlotManager();
         if (m!=null) {
             m.confirmCV(CV, val, p);
