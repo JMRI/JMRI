@@ -30,7 +30,7 @@ public interface MultiMeter extends PropertyChangeProvider {
      * @param c the current
      * @deprecated since 4.7.1; use {@link #setCurrent(float)} instead
      */
-    @Deprecated
+    @Deprecated // 4.7.1
     public void updateCurrent(float c);
 
     public float getCurrent();
@@ -48,7 +48,7 @@ public interface MultiMeter extends PropertyChangeProvider {
      * @param v the voltage
      * @deprecated since 4.7.1; use {@link #setVoltage(float)} instead
      */
-    @Deprecated
+    @Deprecated // 4.7.1
     public void updateVoltage(float v);
 
     public float getVoltage();
@@ -69,7 +69,7 @@ public interface MultiMeter extends PropertyChangeProvider {
      * {@link #addPropertyChangeListener(java.lang.String, java.beans.PropertyChangeListener)}
      * with {@link #CURRENT} as the first parameter
      */
-    @Deprecated
+    @Deprecated // 4.7.1
     public void addDataUpdateListener(PropertyChangeListener l);
 
     /**
@@ -80,7 +80,7 @@ public interface MultiMeter extends PropertyChangeProvider {
      * {@link #removePropertyChangeListener(java.lang.String, java.beans.PropertyChangeListener)}
      * with {@link #CURRENT} as the first parameter
      */
-    @Deprecated
+    @Deprecated // 4.7.1
     public void removeDataUpdateListener(PropertyChangeListener l);
 
     /**
@@ -91,7 +91,7 @@ public interface MultiMeter extends PropertyChangeProvider {
      * {@link #getPropertyChangeListeners(java.lang.String)} with
      * {@link #CURRENT} as the parameter
      */
-    @Deprecated
+    @Deprecated // 4.7.1
     public PropertyChangeListener[] getDataUpdateListeners();
 
     /**

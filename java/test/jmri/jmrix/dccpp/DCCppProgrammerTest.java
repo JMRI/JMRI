@@ -58,7 +58,7 @@ public class DCCppProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     @Test
     public void testWriteCvSequence() throws JmriException {
         // and do the write
-        p.writeCV(29, 34, l);
+        p.writeCV("29", 34, l);
         // check "prog mode" message sent
         Assert.assertEquals("mode message sent", 1, t.outbound.size());
         Assert.assertEquals("write message contents", "W 29 34 0 87", t.outbound.elementAt(0).toString());
@@ -97,7 +97,7 @@ public class DCCppProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
         p.setMode(ProgrammingMode.REGISTERMODE);
 
         // and do the write
-        p.writeCV(29, 12, l);
+        p.writeCV("29", 12, l);
         // check "prog mode" message sent
         Assert.assertEquals("read message sent", 1, t.outbound.size());
         Assert.assertEquals("write message contents", "23 12 05 0C 38", t.outbound.elementAt(0).toString());
@@ -150,7 +150,7 @@ public class DCCppProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
         };
 
         // and do the read
-        p.readCV(29, l);
+        p.readCV("29", l);
         // check "prog mode" message sent
         Assert.assertEquals("mode message sent", 1, t.outbound.size());
         Assert.assertEquals("read message contents", "R 29 0 82", t.outbound.elementAt(0).toString());
@@ -191,7 +191,7 @@ public class DCCppProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
         p.setMode(ProgrammingMode.REGISTERMODE);
 
         // and do the read
-        p.readCV(29, l);
+        p.readCV("29", l);
         // check "prog mode" message sent
         Assert.assertEquals("mode message sent", 1, t.outbound.size());
         Assert.assertEquals("read message contents", "22 11 05 36", t.outbound.elementAt(0).toString());
@@ -245,7 +245,7 @@ public class DCCppProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
         };
 
         // and do the write
-        p.writeCV(300, 34, l);
+        p.writeCV("300", 34, l);
         // check "prog mode" message sent
         Assert.assertEquals("mode message sent", 1, t.outbound.size());
         Assert.assertEquals("write message contents", "W 300 34 0 87", t.outbound.elementAt(0).toString());
@@ -283,7 +283,7 @@ public class DCCppProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
         };
 
         // and do the read
-        p.readCV(300, l);
+        p.readCV("300", l);
         // check "prog mode" message sent
         Assert.assertEquals("mode message sent", 1, t.outbound.size());
         Assert.assertEquals("read message contents", "R 300 0 82", t.outbound.elementAt(0).toString());

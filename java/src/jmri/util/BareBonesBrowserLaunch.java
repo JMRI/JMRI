@@ -10,7 +10,7 @@ import javax.swing.JOptionPane;
  * @deprecated since 4.5.2. Use {@link java.awt.Desktop#browse(java.net.URI)}
  * instead.
  */
-@Deprecated
+@Deprecated  // 4.5.2
 public class BareBonesBrowserLaunch {
 
     private static final String errMsg = "Error attempting to launch web browser";
