@@ -33,10 +33,8 @@ public class HexFileFrameTest {
             f.dispose();
        });
             
-        ((LnPacketizer)
-                ((LocoNetSystemConnectionMemo)p.getSystemConnectionMemo())
-                    .getLnTrafficController()
-            ).dispose();
+        ((LnPacketizer)p.getSystemConnectionMemo().getLnTrafficController())
+            .dispose();
         p.dispose();
     }
 
