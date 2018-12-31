@@ -95,8 +95,7 @@ public class LnPacketizer extends LnTrafficController {
      */
     @Override
     public void sendLocoNetMessage(LocoNetMessage m) {
-        
-        log.warn("debugging RcvHandler sendLocoNetMessage", new Exception("debug traceback"));
+
         // update statistics
         transmittedMsgCount++;
 
