@@ -74,7 +74,7 @@ public class LnCommandStationTypeTest {
         Assert.assertTrue(LnCommandStationType.COMMAND_STATION_DCS050.getSupportsServiceModeReadback());
         Assert.assertTrue(LnCommandStationType.COMMAND_STATION_DCS051.getSupportsServiceModeProgrammingBitMode());
         Assert.assertTrue(LnCommandStationType.COMMAND_STATION_DCS100.getSupportsServiceModeProgrammingBitMode());
-        Assert.assertFalse(LnCommandStationType.COMMAND_STATION_DB150.getSupportsServiceModeProgrammingBitMode());
+        Assert.assertTrue(LnCommandStationType.COMMAND_STATION_DB150.getSupportsServiceModeProgrammingBitMode());
         Assert.assertTrue(LnCommandStationType.COMMAND_STATION_DCS200.getSupportsServiceModeProgrammingBitMode());
         Assert.assertTrue(LnCommandStationType.COMMAND_STATION_DCS210.getSupportsServiceModeProgrammingBitMode());
         Assert.assertTrue(LnCommandStationType.COMMAND_STATION_DCS240.getSupportsServiceModeProgrammingBitMode());

@@ -312,6 +312,7 @@ public class LnDeferProgrammerTest {
                 stoppedTimer = true;
             }
         };
+        slotmanager.setCommandStationType(LnCommandStationType.COMMAND_STATION_DCS100);
 
         status = -999;
         value = -999;
