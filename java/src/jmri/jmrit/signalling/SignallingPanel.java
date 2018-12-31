@@ -1131,7 +1131,7 @@ public class SignallingPanel extends JmriPanel {
      * @param select the item (mast) in the comboBox to set as the selected
      *               item; null for no selection
      */
-    @Deprecated
+    @Deprecated // 4.7.1
     void signalMastCombo(JComboBox<String> box, SignalMast select) {
         box.removeAllItems();
         List<String> nameList = smm.getSystemNameList();
@@ -2097,24 +2097,12 @@ public class SignallingPanel extends JmriPanel {
             protected JComboBox<String> getEditorBox(int row) {
                 return getAspectEditorBox(row);
             }
-
         }
 
         // Methods to display STATE_COLUMN (aspect) ComboBox in the Signal Mast Manual Table
         // Derived from the SignalMastJTable class (deprecated since 4.5.5):
         // All row values are in terms of the Model, not the Table as displayed.
-        /**
-         * Clear the old aspect comboboxes and force them to be rebuilt
-         *
-         * @param row Index of the signal mast (in TableDataModel) to be rebuilt
-         *            in the Hashtables
-         */
-        public void clearAspectVector(int row) {
-            boxMap.remove(this.getValueAt(row, SNAME_COLUMN));
-            editorMap.remove(this.getValueAt(row, SNAME_COLUMN));
-        }
 
-        // Hashtables for Editors; none used for Renderers
         /**
          * Provide a JComboBox element to display inside the JPanel CellEditor.
          * When not yet present, create, store and return a new one.
@@ -2131,6 +2119,8 @@ public class SignallingPanel extends JmriPanel {
             }
             return editCombo;
         }
+
+        // Hashtables for Editors; none used for Renderers
         Hashtable<Object, JComboBox<String>> editorMap = new Hashtable<Object, JComboBox<String>>();
 
         /**
@@ -2156,6 +2146,7 @@ public class SignallingPanel extends JmriPanel {
         Hashtable<Object, Vector<String>> boxMap = new Hashtable<Object, Vector<String>>();
 
         // end of methods to display STATE_COLUMN (Aspect) ComboBox
+        
         /**
          * Create a compact control Signal Mast table.
          *
@@ -2164,7 +2155,7 @@ public class SignallingPanel extends JmriPanel {
          * @param model the selected SignalMastModel
          * @return JTable contaning interface to configure a signal mast
          */
-        @Deprecated
+        @Deprecated // 4.5.7
         protected JTable makeJTable(SignalMastModel model) {
             return new JTable(model) {
 
@@ -2180,7 +2171,7 @@ public class SignallingPanel extends JmriPanel {
                 /**
                  * @deprecated since 4.5.7
                  */
-                @Deprecated
+                @Deprecated // 4.5.7
                 @Override
                 public TableCellEditor getCellEditor(int row, int column) {
                     if (column == STATE_COLUMN) {
@@ -2193,7 +2184,7 @@ public class SignallingPanel extends JmriPanel {
                 /**
                  * @deprecated since 4.5.7
                  */
-                @Deprecated
+                @Deprecated // 4.5.7
                 TableCellRenderer getRenderer(int row) {
                     TableCellRenderer retval = rendererMap.get(getModel().getValueAt(row, SNAME_COLUMN));
                     if (retval == null) {
@@ -2208,7 +2199,7 @@ public class SignallingPanel extends JmriPanel {
                 /**
                  * @deprecated since 4.5.7
                  */
-                @Deprecated
+                @Deprecated // 4.5.7
                 TableCellEditor getEditor(int row) {
                     TableCellEditor retval = editorMap.get(getModel().getValueAt(row, SNAME_COLUMN));
                     if (retval == null) {
@@ -2223,7 +2214,7 @@ public class SignallingPanel extends JmriPanel {
                 /**
                  * @deprecated since 4.5.7
                  */
-                @Deprecated
+                @Deprecated // 4.5.7
                 Vector<String> getAspectVector(int row) {
                     Vector<String> retval = boxMap.get(getModel().getValueAt(row, SNAME_COLUMN));
                     if (retval == null) {
@@ -2470,7 +2461,7 @@ public class SignallingPanel extends JmriPanel {
      * @deprecated since 4.7.1, use
      * {@link SignalMastModel#getAspectEditorBox(int)}
      */
-    @Deprecated
+    @Deprecated // 4.7.1
     public static class MyComboBoxEditor extends DefaultCellEditor {
 
         public MyComboBoxEditor(Vector<String> items) {
@@ -2485,7 +2476,7 @@ public class SignallingPanel extends JmriPanel {
      * @deprecated since 4.7.1, use
      * {@link SignalMastModel#getAspectEditorBox(int)}
      */
-    @Deprecated
+    @Deprecated // 4.7.1
     public static class MyComboBoxRenderer extends JComboBox<String> implements TableCellRenderer {
 
         public MyComboBoxRenderer(Vector<String> items) {

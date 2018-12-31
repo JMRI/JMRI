@@ -1,5 +1,6 @@
 package jmri.jmrix.sprog.pi.pisprogonecs;
 
+import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -18,7 +19,10 @@ public class PiSprogOneCSSerialDriverAdapterTest {
    public void ConstructorTest(){
        PiSprogOneCSSerialDriverAdapter a = new PiSprogOneCSSerialDriverAdapter();
        Assert.assertNotNull(a);
-   }
+ 
+       // clean up
+       a.getSystemConnectionMemo().getSprogTrafficController().dispose();
+  }
 
     // The minimal setup for log4J
     @Before

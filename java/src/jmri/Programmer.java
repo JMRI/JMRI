@@ -50,31 +50,6 @@ public interface Programmer {
      * Perform a CV write in the system-specific manner, and using the specified
      * programming mode.
      * <P>
-     * Handles the legacy DCC case of a single-number address space.
-     * <P>
-     * Note that this returns before the write is complete; you have to provide
-     * a ProgListener to hear about completion. For simplicity, expect the return to be on the 
-     * <a href="http://jmri.org/help/en/html/doc/Technical/Threads.shtml">GUI thread</a>.
-     * <p>
-     * Exceptions will only be
-     * thrown at the start, not during the actual programming sequence. A
-     * typical exception would be due to an invalid mode (though that should be
-     * prevented earlier)
-     *
-     * @param CV  the CV to write
-     * @param val the value to write
-     * @param p   the listener that will be notified of the write
-     * @throws jmri.ProgrammerException if unable to communicate
-     * @deprecated As of 4.1.1, use #writeCV(java.lang.String, int,
-     * jmri.ProgListener)
-     */
-    @Deprecated // 4.1.1
-    public void writeCV(int CV, int val, ProgListener p) throws ProgrammerException;
-
-    /**
-     * Perform a CV write in the system-specific manner, and using the specified
-     * programming mode.
-     * <P>
      * Handles a general address space through a String address. Each programmer
      * defines the acceptable formats.
      * <P>
@@ -98,30 +73,6 @@ public interface Programmer {
      * Perform a CV read in the system-specific manner, and using the specified
      * programming mode.
      * <P>
-     * Handles the legacy DCC case of a single-number address space.
-     * <P>
-     * Note that this returns before the write is complete; you have to provide
-     * a ProgListener to hear about completion. For simplicity, expect the return to be on the 
-     * <a href="http://jmri.org/help/en/html/doc/Technical/Threads.shtml">GUI thread</a>.
-     * <p>
-     * Exceptions will only be
-     * thrown at the start, not during the actual programming sequence. A
-     * typical exception would be due to an invalid mode (though that should be
-     * prevented earlier)
-     *
-     * @param CV the CV to read
-     * @param p  the listener that will be notified of the read
-     * @throws jmri.ProgrammerException if unable to communicate
-     * @deprecated As of 4.1.1, use #readCV(java.lang.String, int,
-     * jmri.ProgListener)
-     */
-    @Deprecated // 4.1.1
-    public void readCV(int CV, ProgListener p) throws ProgrammerException;
-
-    /**
-     * Perform a CV read in the system-specific manner, and using the specified
-     * programming mode.
-     * <P>
      * Handles a general address space through a String address. Each programmer
      * defines the acceptable formats.
      * <P>
@@ -139,31 +90,6 @@ public interface Programmer {
      * @throws jmri.ProgrammerException if unable to communicate
      */
     public void readCV(String CV, ProgListener p) throws ProgrammerException;
-
-    /**
-     * Confirm the value of a CV using the specified programming mode. On some
-     * systems, this is faster than a read.
-     * <P>
-     * Handles the legacy DCC case of a single-number address space.
-     * <P>
-     * Note that this returns before the write is complete; you have to provide
-     * a ProgListener to hear about completion. For simplicity, expect the return to be on the 
-     * <a href="http://jmri.org/help/en/html/doc/Technical/Threads.shtml">GUI thread</a>.
-     * <p>
-     * Exceptions will only be
-     * thrown at the start, not during the actual programming sequence. A
-     * typical exception would be due to an invalid mode (though that should be
-     * prevented earlier)
-     *
-     * @param CV  the CV to confirm
-     * @param val the value to confirm
-     * @param p   the listener that will be notified of the confirmation
-     * @throws jmri.ProgrammerException if unable to communicate
-     * @deprecated As of 4.1.1, use #confirmCV(java.lang.String, int,
-     * jmri.ProgListener)
-     */
-    @Deprecated // 4.1.1
-    public void confirmCV(int CV, int val, ProgListener p) throws ProgrammerException;
 
     /**
      * Confirm the value of a CV using the specified programming mode. On some
@@ -282,7 +208,7 @@ public interface Programmer {
      * the specified progListener is not null.
      *
      * @param p listener to notify
-     * @param value result value or CV
+     * @param value result value
      * @param status code from jmri.ProgListener 
      */
     default public void notifyProgListenerEnd(ProgListener p, int value, int status) {

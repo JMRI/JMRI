@@ -1,5 +1,6 @@
 package jmri.jmrix.sprog.sprogCS;
 
+import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -24,6 +25,15 @@ public class ConnectionConfigTest extends jmri.jmrix.AbstractSerialConnectionCon
 
    @After
    public void tearDown(){
+        if (cc != null) {
+            if (cc.getAdapter() != null) {
+                if (cc.getAdapter().getSystemConnectionMemo() != null) {
+                    if (((SprogSystemConnectionMemo)cc.getAdapter().getSystemConnectionMemo()).getSprogTrafficController() != null) {
+                        ((SprogSystemConnectionMemo)cc.getAdapter().getSystemConnectionMemo()).getSprogTrafficController().dispose();
+                    }
+                }
+            }
+        }
         cc=null;
         JUnitUtil.tearDown();
    }

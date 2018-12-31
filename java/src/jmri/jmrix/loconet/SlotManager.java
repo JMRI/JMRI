@@ -944,15 +944,16 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     /**
      * Write a CV via Ops Mode programming.
      *
-     * @param CV CV number
+     * @param CVname CV number
      * @param val value to write to the CV
      * @param p programmer
      * @param addr address of decoder
      * @param longAddr true if the address is a long address
      * @throws jmri.ProgrammerException if an unsupported programming mode is exercised
      */
-    public void writeCVOpsMode(int CV, int val, jmri.ProgListener p,
+    public void writeCVOpsMode(String CVname, int val, jmri.ProgListener p,
             int addr, boolean longAddr) throws jmri.ProgrammerException {
+        final int CV = Integer.parseInt(CVname);
         lopsa = addr & 0x7f;
         hopsa = (addr / 128) & 0x7f;
         mServiceMode = false;
@@ -1033,7 +1034,6 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * @param p programmer
      * @throws jmri.ProgrammerException if an unsupported programming mode is exercised
      */
-    @Override
     @Deprecated // 4.1.1
     public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
 
@@ -1240,13 +1240,14 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     /**
      * Invoked by LnOpsModeProgrammer to start an ops-mode read operation.
      *
-     * @param CV       Which CV to read
+     * @param CVname       Which CV to read
      * @param p        Who to notify on complete
      * @param addr     Address of the locomotive
      * @param longAddr true if a long address, false if short address
      * @throws jmri.ProgrammerException if an unsupported programming mode is exercised
      */
-    public void readCVOpsMode(int CV, jmri.ProgListener p, int addr, boolean longAddr) throws jmri.ProgrammerException {
+    public void readCVOpsMode(String CVname, jmri.ProgListener p, int addr, boolean longAddr) throws jmri.ProgrammerException {
+        final int CV = Integer.parseInt(CVname);
         lopsa = addr & 0x7f;
         hopsa = (addr / 128) & 0x7f;
         mServiceMode = false;
@@ -1260,7 +1261,6 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * @param p programmer
      * @throws jmri.ProgrammerException if an unsupported programming mode is exercised
      */
-    @Override
     @Deprecated // 4.1.1
     public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
         readCV(Integer.toString(CV), p);
@@ -1574,6 +1574,13 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      */
     public LocoNetSystemConnectionMemo getSystemConnectionMemo() {
         return adaptermemo;
+    }
+
+    /**
+     * Dispose of this by stopped it's ongoing actions
+     */
+    public void dispose() {
+        if (staleSlotCheckTimer != null) staleSlotCheckTimer.stop();
     }
 
     // initialize logging

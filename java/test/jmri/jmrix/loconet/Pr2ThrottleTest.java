@@ -390,27 +390,6 @@ public class Pr2ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     public void testSendFunctionGroup5() {
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Test
-    @Override
-    public void testRelease_0args() {
-        instance.release();
-        jmri.util.JUnitAppender.assertWarnMessage("Release called without knowing the original throttle listener");
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Test
-    @Override
-    public void testDispatch_0args() {
-        instance.dispatch();
-        jmri.util.JUnitAppender.assertWarnMessage("dispatch called without knowing the original throttle listener");
-    }
-
-
     // The minimal setup for log4J
     @Before
     @Override

@@ -201,20 +201,6 @@ public abstract class XmlFile {
     }
 
     /**
-     * While the various Deprecated methods are present, this provides a warning
-     * against their continued use. JMRI itself stopped using these with JMRI
-     * 4.7.2
-     */
-    protected static void warnDeprecated() {
-        if (warned) {
-            return;
-        }
-        log.warn("Deprecated XmlFile method was used, validation may be ignored; only mentioning once");
-        warned = true;
-    }
-    static protected boolean warned = false;
-
-    /**
      * @deprecated 4.7.2 use setVerifySchema, setVerifyDTD methods
      * @param verify true if the XML document should be validated (but this is
      *               now ignored)
@@ -223,9 +209,9 @@ public abstract class XmlFile {
      * @throws org.jdom2.JDOMException if the XML document is invalid
      * @throws java.io.IOException     if the input cannot be read
      */
-    @Deprecated
+    @Deprecated // 4.7.2
     protected Element getRoot(boolean verify, InputStream stream) throws JDOMException, IOException {
-        warnDeprecated();
+        jmri.util.Log4JUtil.deprecationWarning(log, "getRoot"); 
         return getRoot(stream);
     }
 
@@ -246,9 +232,9 @@ public abstract class XmlFile {
      * @since 3.1.5
      * @deprecated 4.7.2 use setVerifySchema, setVerifyDTD methods
      */
-    @Deprecated
+    @Deprecated // 4.7.2
     protected Element getRoot(boolean verifySchema, boolean verifyDTD, InputStreamReader reader) throws JDOMException, IOException {
-        warnDeprecated();
+        jmri.util.Log4JUtil.deprecationWarning(log, "getRoot"); 
         log.trace("getRoot from reader with encoding {}", reader.getEncoding());
 
         SAXBuilder builder = getBuilder(getValidate());  // argument controls validation
@@ -267,9 +253,9 @@ public abstract class XmlFile {
      * @throws org.jdom2.JDOMException if the XML document is invalid
      * @throws java.io.IOException     if the input cannot be read
      */
-    @Deprecated
+    @Deprecated // 4.7.2
     protected Element getRoot(boolean verify, InputStreamReader reader) throws JDOMException, IOException {
-        warnDeprecated();
+        jmri.util.Log4JUtil.deprecationWarning(log, "getRoot"); 
         return getRoot(verify, verify, reader);
     }
 
@@ -750,9 +736,9 @@ public abstract class XmlFile {
      * @return a SAX builder pre-configured to (not) validate XML
      * @deprecated 4.7.2
      */
-    @Deprecated
+    @Deprecated // 4.7.2
     public static SAXBuilder getBuilder(boolean verify) {
-        warnDeprecated();
+        jmri.util.Log4JUtil.deprecationWarning(log, "getBuilder"); 
         if (verify) {
             return getBuilder(Validate.CheckDtdThenSchema);
         }

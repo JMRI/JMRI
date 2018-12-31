@@ -183,19 +183,6 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
     }
 
     /**
-     * Locate the single instance of Roster, loading it if need be.
-     *
-     * Calls {@link #getDefault() } to provide the single instance.
-     *
-     * @deprecated 4.5.1
-     * @return The valid Roster object
-     */
-    @Deprecated
-    public static synchronized Roster instance() {
-        return Roster.getDefault();
-    }
-
-    /**
      * Get the default Roster instance, creating it as required.
      *
      * @return The default Roster object

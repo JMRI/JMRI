@@ -12,7 +12,7 @@ import java.util.Hashtable;
  * @param <V> value class
  * @deprecated since 4.7.2; use {@link java.util.LinkedHashMap} instead.
  */
-@Deprecated // to be removed
+@Deprecated // since 4.7.2
 public class OrderedHashtable<K, V> extends Hashtable<K, V> {
 
     @Override

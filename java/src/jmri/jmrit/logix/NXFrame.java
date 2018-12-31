@@ -678,16 +678,20 @@ public class NXFrame extends WarrantRoute {
     private float getPathLength(BlockOrder bo) {
         float len = bo.getPath().getLengthMm();
         if (len <= 0) {
-            String sLen = JOptionPane.showInputDialog(this, 
-                    Bundle.getMessage("zeroPathLength", bo.getPathName(), bo.getBlock().getDisplayName())
-                    + Bundle.getMessage("getPathLength", bo.getPathName(), bo.getBlock().getDisplayName()),
-                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
-            try {
-                len = NumberFormat.getNumberInstance().parse(sLen).floatValue();                    
-            } catch (java.text.ParseException  pe) {
-                len = -1.0f;
-            } catch (java.lang.NullPointerException  npe) {
-                len = -1.0f;
+            len = bo.getTempPathLen();
+            if ( len <= 0) {
+                String sLen = JOptionPane.showInputDialog(this, 
+                        Bundle.getMessage("zeroPathLength", bo.getPathName(), bo.getBlock().getDisplayName())
+                        + Bundle.getMessage("getPathLength", bo.getPathName(), bo.getBlock().getDisplayName()),
+                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                try {
+                    len = NumberFormat.getNumberInstance().parse(sLen).floatValue();                    
+                } catch (java.text.ParseException  pe) {
+                    len = -1.0f;
+                } catch (java.lang.NullPointerException  npe) {
+                    len = -1.0f;
+                }
+                bo.setTempPathLen(len);
             }
         }
        return len;

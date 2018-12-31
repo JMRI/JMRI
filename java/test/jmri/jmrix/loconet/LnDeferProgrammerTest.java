@@ -29,21 +29,6 @@ public class LnDeferProgrammerTest {
 
     @Test
     public void testReadCVPaged() throws jmri.ProgrammerException {
-        int CV1 = 12;
-        ProgListener p2 = null;
-        slotmanager.setMode(ProgrammingMode.PAGEMODE);
-        slotmanager.readCV(CV1, p2);
-        Assert.assertEquals("read message",
-                "EF 0E 7C 23 00 00 00 00 00 0B 00 7F 7F 00",
-                lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
-    }
-
-    // Test names ending with "String" are for the new writeCV(String, ...)
-    // etc methods.  If you remove the older writeCV(int, ...) tests,
-    // you can rename these. Note that not all (int,...) tests may have a
-    // String(String, ...) test defined, in which case you should create those.
-    @Test
-    public void testReadCVPagedString() throws jmri.ProgrammerException {
         String CV1 = "12";
         ProgListener p2 = null;
         slotmanager.setMode(ProgrammingMode.PAGEMODE);
@@ -55,17 +40,6 @@ public class LnDeferProgrammerTest {
 
     @Test
     public void testReadCVRegister() throws jmri.ProgrammerException {
-        int CV1 = 2;
-        ProgListener p2 = null;
-        slotmanager.setMode(ProgrammingMode.REGISTERMODE);
-        slotmanager.readCV(CV1, p2);
-        Assert.assertEquals("read message",
-                "EF 0E 7C 13 00 00 00 00 00 01 00 7F 7F 00",
-                lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
-    }
-
-    @Test
-    public void testReadCVRegisterString() throws jmri.ProgrammerException {
         String CV1 = "2";
         ProgListener p2 = null;
         slotmanager.setMode(ProgrammingMode.REGISTERMODE);
@@ -77,41 +51,6 @@ public class LnDeferProgrammerTest {
 
     @Test
     public void testReadCVDirect() throws jmri.ProgrammerException {
-        log.debug(".... start testReadCVDirect ...");
-        int CV1 = 29;
-        slotmanager.setMode(ProgrammingMode.DIRECTBYTEMODE);
-        slotmanager.readCV(CV1, lstn);
-        Assert.assertEquals("read message",
-                "EF 0E 7C 2B 00 00 00 00 00 1C 00 7F 7F 00",
-                lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
-        Assert.assertEquals("one message sent", 1, lnis.outbound.size());
-        Assert.assertEquals("initial status", -999, status);
-
-        // LACK received back (DCS240 sequence)
-        log.debug("send LACK back");
-        startedShortTimer = false;
-        startedLongTimer = false;
-
-        slotmanager.message(new LocoNetMessage(new int[]{0xB4, 0x6F, 0x01, 0x25}));
-        JUnitUtil.waitFor(()->{return startedLongTimer;},"startedLongTimer not set");
-        Assert.assertEquals("post-LACK status", -999, status);
-        Assert.assertTrue("started long timer", startedLongTimer);
-        Assert.assertFalse("didn't start short timer", startedShortTimer);
-
-        // read received back (DCS240 sequence)
-        value = 0;
-        log.debug("send E7 reply back");
-        slotmanager.message(new LocoNetMessage(new int[]{0xE7, 0x0E, 0x7C, 0x2B, 0x00, 0x00, 0x02, 0x47, 0x00, 0x1C, 0x23, 0x7F, 0x7F, 0x3B}));
-        JUnitUtil.waitFor(()->{return value == 35;},"value == 35 not set");
-        log.debug("checking..");
-        Assert.assertEquals("reply status", 0, status);
-        Assert.assertEquals("reply value", 35, value);
-
-        log.debug(".... end testReadCVDirect ...");
-    }
-
-    @Test
-    public void testReadCVDirectString() throws jmri.ProgrammerException {
         log.debug(".... start testReadCVDirect ...");
         String CV1 = "29";
         slotmanager.setMode(ProgrammingMode.DIRECTBYTEMODE);
@@ -147,7 +86,7 @@ public class LnDeferProgrammerTest {
 
     @Test
     public void testReadCVOpsModeLong() throws jmri.ProgrammerException {
-        int CV1 = 12;
+        String CV1 = "12";
         ProgListener p2 = null;
         slotmanager.readCVOpsMode(CV1, p2, 4 * 128 + 0x23, true);
         Assert.assertEquals("read message",
@@ -157,7 +96,7 @@ public class LnDeferProgrammerTest {
 
     @Test
     public void testReadCVOpsModeShort() throws jmri.ProgrammerException {
-        int CV1 = 12;
+        String CV1 = "12";
         ProgListener p2 = null;
         slotmanager.readCVOpsMode(CV1, p2, 22, false);
         Assert.assertEquals("read message",
@@ -167,7 +106,7 @@ public class LnDeferProgrammerTest {
 
     @Test
     public void testWriteCVPaged() throws jmri.ProgrammerException {
-        int CV1 = 12;
+        String CV1 = "12";
         int val2 = 34;
         ProgListener p3 = null;
         slotmanager.setMode(ProgrammingMode.PAGEMODE);
@@ -191,18 +130,6 @@ public class LnDeferProgrammerTest {
 
     @Test
     public void testWriteCVRegister() throws jmri.ProgrammerException {
-        int CV1 = 2;
-        int val2 = 34;
-        ProgListener p3 = null;
-        slotmanager.setMode(ProgrammingMode.REGISTERMODE);
-        slotmanager.writeCV(CV1, val2, p3);
-        Assert.assertEquals("write message",
-                "EF 0E 7C 53 00 00 00 00 00 01 22 7F 7F 00",
-                lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
-    }
-
-    @Test
-    public void testWriteCVRegisterString() throws jmri.ProgrammerException {
         String CV1 = "2";
         int val2 = 34;
         ProgListener p3 = null;
@@ -215,18 +142,6 @@ public class LnDeferProgrammerTest {
 
     @Test
     public void testWriteCVDirect() throws jmri.ProgrammerException {
-        int CV1 = 12;
-        int val2 = 34;
-        ProgListener p3 = null;
-        slotmanager.setMode(ProgrammingMode.DIRECTBYTEMODE);
-        slotmanager.writeCV(CV1, val2, p3);
-        Assert.assertEquals("write message",
-                "EF 0E 7C 6B 00 00 00 00 00 0B 22 7F 7F 00",
-                lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
-    }
-
-    @Test
-    public void testWriteCVDirectString() throws jmri.ProgrammerException {
         String CV1 = "12";
         int val2 = 34;
         ProgListener p3 = null;

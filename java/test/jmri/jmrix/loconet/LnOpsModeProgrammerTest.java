@@ -44,7 +44,7 @@ public class LnOpsModeProgrammerTest extends jmri.AddressedProgrammerTestBase{
         // allow transponding
         sm.setTranspondingAvailable(true);
         
-        lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 1, true);
+        lnopsmodeprogrammer = new LnOpsModeProgrammer(memo, 1, true);
 
         Assert.assertEquals("ops mode can read with transponding", true,
                 lnopsmodeprogrammer.getCanRead());
@@ -106,7 +106,7 @@ public class LnOpsModeProgrammerTest extends jmri.AddressedProgrammerTestBase{
 
     @Test
      public void testSOps16001Read() throws ProgrammerException {
-        LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 16001, true);
+        LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(memo, 16001, true);
 
         lnopsmodeprogrammer.readCV("2",pl);
 
@@ -147,7 +147,7 @@ public class LnOpsModeProgrammerTest extends jmri.AddressedProgrammerTestBase{
 
      @Test
      public void testBoardRead0() throws ProgrammerException {
-        lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 4, true);
+        lnopsmodeprogrammer = new LnOpsModeProgrammer(memo, 4, true);
 
         lnopsmodeprogrammer.setMode(LnProgrammerManager.LOCONETBDOPSWMODE);
         lnopsmodeprogrammer.readCV("113.6",pl);
@@ -182,7 +182,7 @@ public class LnOpsModeProgrammerTest extends jmri.AddressedProgrammerTestBase{
 
      @Test
      public void testBoardRead1() throws ProgrammerException {
-        lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 4, true);
+        lnopsmodeprogrammer = new LnOpsModeProgrammer(memo, 4, true);
 
         lnopsmodeprogrammer.setMode(LnProgrammerManager.LOCONETBDOPSWMODE);
         lnopsmodeprogrammer.readCV("113.6",pl);
@@ -217,7 +217,7 @@ public class LnOpsModeProgrammerTest extends jmri.AddressedProgrammerTestBase{
 
      @Test
      public void testBoardReadTimeout() throws ProgrammerException {
-        lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 4, true);
+        lnopsmodeprogrammer = new LnOpsModeProgrammer(memo, 4, true);
 
         lnopsmodeprogrammer.setMode(LnProgrammerManager.LOCONETBDOPSWMODE);
         lnopsmodeprogrammer.readCV("113.6",pl);
@@ -235,7 +235,7 @@ public class LnOpsModeProgrammerTest extends jmri.AddressedProgrammerTestBase{
 
      @Test
      public void testBoardWrite() throws ProgrammerException {
-        lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 4, true);
+        lnopsmodeprogrammer = new LnOpsModeProgrammer(memo, 4, true);
 
         int testVal = 1;
 
@@ -270,7 +270,7 @@ public class LnOpsModeProgrammerTest extends jmri.AddressedProgrammerTestBase{
 
      @Test
      public void testBoardWriteTimeout() throws ProgrammerException {
-        lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 4, true);
+        lnopsmodeprogrammer = new LnOpsModeProgrammer(memo, 4, true);
 
         int testVal = 1;
 
@@ -290,7 +290,7 @@ public class LnOpsModeProgrammerTest extends jmri.AddressedProgrammerTestBase{
 
      @Test
      public void testSv1ARead() throws ProgrammerException {
-        lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 1, true);
+        lnopsmodeprogrammer = new LnOpsModeProgrammer(memo, 1, true);
 
         lnopsmodeprogrammer.setMode(LnProgrammerManager.LOCONETSV1MODE);
         lnopsmodeprogrammer.readCV("83",pl);
@@ -402,7 +402,7 @@ public class LnOpsModeProgrammerTest extends jmri.AddressedProgrammerTestBase{
         // allow transponding
         sm.setTranspondingAvailable(true);
 
-        LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 4, true);
+        LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(memo, 4, true);
 
         lnopsmodeprogrammer.setMode(ProgrammingMode.OPSBYTEMODE);
         lnopsmodeprogrammer.readCV("12", pl);
@@ -436,7 +436,7 @@ public class LnOpsModeProgrammerTest extends jmri.AddressedProgrammerTestBase{
         // allow transponding
         sm.setTranspondingAvailable(false);
 
-        LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 4, true);
+        LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(memo, 4, true);
 
         lnopsmodeprogrammer.setMode(LnProgrammerManager.LOCONETOPSBOARD);
         lnopsmodeprogrammer.readCV("12", pl);
@@ -475,7 +475,7 @@ public class LnOpsModeProgrammerTest extends jmri.AddressedProgrammerTestBase{
         sm = new SlotManager(lnis);
         memo = new LocoNetSystemConnectionMemo(lnis, sm);
         pl = new ProgListenerScaffold();
-        programmer = lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 1, true);
+        programmer = lnopsmodeprogrammer = new LnOpsModeProgrammer(memo, 1, true);
     }
 
     @After
