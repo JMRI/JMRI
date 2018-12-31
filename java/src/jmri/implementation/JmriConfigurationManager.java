@@ -233,21 +233,20 @@ public class JmriConfigurationManager implements ConfigureManager {
                         }
                         
                         if (isUnableToConnect.get()) {
-                            // This method never returns
                             handleConnectionError(errors, list);
+                        } else {
+                            JOptionPane.showMessageDialog(null,
+                                    new Object[]{
+                                        (list instanceof JList) ? Bundle.getMessage("InitExMessageListHeader") : null,
+                                        list,
+                                        "<html><br></html>", // Add a visual break between list of errors and notes // NOI18N
+                                        Bundle.getMessage("InitExMessageLogs"), // NOI18N
+                                        Bundle.getMessage("InitExMessagePrefs"), // NOI18N
+                                    },
+                                    Bundle.getMessage("InitExMessageTitle", Application.getApplicationName()), // NOI18N
+                                    JOptionPane.ERROR_MESSAGE);
+                            (new TabbedPreferencesAction()).actionPerformed();
                         }
-                        
-                        JOptionPane.showMessageDialog(null,
-                                new Object[]{
-                                    (list instanceof JList) ? Bundle.getMessage("InitExMessageListHeader") : null,
-                                    list,
-                                    "<html><br></html>", // Add a visual break between list of errors and notes // NOI18N
-                                    Bundle.getMessage("InitExMessageLogs"), // NOI18N
-                                    Bundle.getMessage("InitExMessagePrefs"), // NOI18N
-                                },
-                                Bundle.getMessage("InitExMessageTitle", Application.getApplicationName()), // NOI18N
-                                JOptionPane.ERROR_MESSAGE);
-                        (new TabbedPreferencesAction()).actionPerformed();
                     }
                 }
                 if (url != null && (new File(url.toURI())).getName().equals("ProfileConfig.xml")) { // NOI18N
@@ -279,26 +278,9 @@ public class JmriConfigurationManager implements ConfigureManager {
         errorList.add(" "); // blank line below errors
         errorList.add(Bundle.getMessage("InitExMessageLogs"));
 
-        JSplitButton splitButton = new JSplitButton(Bundle.getMessage("ErrorDialogButtonQuitProgram", Application.getApplicationName()));
-        splitButton.addButtonClickedActionListener((ActionEvent e) -> {
-            // Exit program
-            AppsBase.handleQuit();
-        });
-
-        JPopupMenu splitButtonPopupMenu = new JPopupMenu();
-        JMenuItem restartItem = new JMenuItem(Bundle.getMessage("ErrorDialogButtonRestartProgram", Application.getApplicationName()));
-        ActionListener actionListener = (ActionEvent e) -> {
-            // Restart program
-            AppsBase.handleRestart();
-        };
-        restartItem.addActionListener(actionListener);
-        splitButtonPopupMenu.add(restartItem);
-
-        splitButton.setPopupMenu(splitButtonPopupMenu);
-
         Object[] options = new Object[] {
-            splitButton,
-            Bundle.getMessage("ErrorDialogButtonChangeProfile"),
+            Bundle.getMessage("ErrorDialogButtonQuitProgram", Application.getApplicationName()),
+            Bundle.getMessage("ErrorDialogButtonContinue"),
             Bundle.getMessage("ErrorDialogButtonEditConnections")
         };
 
@@ -358,21 +340,12 @@ public class JmriConfigurationManager implements ConfigureManager {
         dialog.setVisible(true);
         Object selectedValue = pane.getValue();
 
-        if (Bundle.getMessage("ErrorDialogButtonChangeProfile").equals(selectedValue)) {
-            ProfileManager manager = ProfileManager.getDefault();
-            Profile last = manager.getActiveProfile();
-            ProfileManagerDialog pmd = new ProfileManagerDialog(null, true, true);
-            pmd.setLocationRelativeTo(null);
-            pmd.setVisible(true);
-            if (last == null || !last.equals(manager.getActiveProfile())) {
-                try {
-                    manager.saveActiveProfile();
-                } catch (IOException e) {
-                    log.error("Cannot save profile", e);
-                }
-            }
-            // Restart program
-            AppsBase.handleRestart();
+        if (Bundle.getMessage("ErrorDialogButtonQuitProgram", Application.getApplicationName()).equals(selectedValue)) {
+            // Exit program
+            AppsBase.handleQuit();
+
+        } else if (Bundle.getMessage("ErrorDialogButtonContinue").equals(selectedValue)) {
+            // Do nothing. Let the program continue
 
         } else if (Bundle.getMessage("ErrorDialogButtonEditConnections").equals(selectedValue)) {
            if (EditConnectionPreferencesDialog.showDialog()) {
