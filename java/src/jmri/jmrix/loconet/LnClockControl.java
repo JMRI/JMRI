@@ -367,34 +367,36 @@ public class LnClockControl extends DefaultClockControl implements SlotListener,
     @SuppressWarnings("deprecation")
     @Override
     public void notifyChangedSlot(LocoNetSlot s) {
-        // only watch the clock slot
+        // only watch the clock slot and ignore our own messages
         if (s.getSlot() != LnConstants.FC_SLOT) {
+//        if (s.getSlot() != LnConstants.FC_SLOT || s.getThrottleId() == clockThrottleId) {
             return;
         }
         // only pay attention if we are a LocoNet clock client
         // we currently do not allow our master parameters to be 
         // updated over LocoNet
         //TODO: optionally allow update to clock over LocoNet
-        if (useInternal) {
-            log.debug("Ignore Slot Update setInternal[{}] synchronizeWithInternalClock[{}] ",useInternal,synchronizeWithInternalClock);
-            return;
-        }
+        //if (useInternal) {
+        //    log.debug("Ignore Slot Update setInternal[{}] synchronizeWithInternalClock[{}] ",useInternal,synchronizeWithInternalClock);
+        //    return;
+        //}
         log.debug("FC slot update");
         // update current clock variables from the new slot contents
-        curDays = s.getFcDays();
-        curHours = s.getFcHours();
-        curMinutes = s.getFcMinutes();
-        int temRate = s.getFcRate();
-        setRate(curRate);
-        try {
-            clock.userSetRate(temRate);
-        } catch (jmri.TimebaseRateException e) {
-            if (!timebaseErrorReported) {
-                timebaseErrorReported = true;
-                log.warn("Time base exception on setting rate from LocoNet");
+        int curDays = s.getFcDays();
+        int curHours = s.getFcHours();
+        int curMinutes = s.getFcMinutes();
+        if (curRate != s.getFcRate()) {
+            try {
+                clock.userSetRate(s.getFcRate());
+                setRate(s.getFcRate());
+            } catch (jmri.TimebaseRateException e) {
+                if (!timebaseErrorReported) {
+                    timebaseErrorReported = true;
+                    log.warn("Time base exception on setting rate from LocoNet");
+                }
             }
         }
-        curFractionalMinutes = s.getFcFracMins();
+        long curFractionalMinutes = s.getFcFracMins();
         // we calculate a new msec value for a specific hour/minute
         // in the current day, then set that.
         Date tem = clock.getTime();
@@ -405,8 +407,10 @@ public class LnClockControl extends DefaultClockControl implements SlotListener,
         // set the internal time base to the LocoNet clock
         // Work out how far through the current fast minute we are
         // and add that on to the time.
-        nNumMSec += (long) (((CORRECTION - curFractionalMinutes) / CORRECTION * MSECPERMINUTE));
-        clock.setTime(new Date(nNumMSec));
+        long tmpcor = (long) (((CORRECTION - curFractionalMinutes) / CORRECTION * MSECPERMINUTE));
+        nNumMSec += tmpcor;
+        log.info("nNumMSec[{}]",nNumMSec);
+        // clock.setTime(new Date(nNumMSec));
         // re-trigger timeout
         setClientTimer();
     }
@@ -436,7 +440,7 @@ public class LnClockControl extends DefaultClockControl implements SlotListener,
         //}
         // we are allowed to send commands to the fast clock
         LocoNetSlot s = sm.slot(LnConstants.FC_SLOT);
-
+log.debug("curDays[{}]curHours[{}]curMinutes[{}]curRate[{}]curFractionalMinutes[{}]Millis[{}]", curDays, curHours, curMinutes,curRate , curFractionalMinutes,millis);
         // load time
         s.setFcDays(curDays);
         s.setFcHours(curHours);
