@@ -312,6 +312,8 @@
 
  <indexitem text="MRC " target="html.hardware.mrc.index"/>
 
+ <indexitem text="MQTT " target="html.hardware.mqtt.index"/>
+
  <indexitem text="Multi-Decoder Control " target="package.jmri.jmrit.dualdecoder.DualDecoderSelectFrame"/>
 
  <indexitem text="Naming JMRI Objects " target="html.doc.Technical.Names"/>

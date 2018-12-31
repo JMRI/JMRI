@@ -1,6 +1,7 @@
 package jmri.server.json.consist;
 
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.*;
 import org.junit.*;
 
 /**
@@ -9,32 +10,36 @@ import org.junit.*;
  */
 public class JsonConsistManagerTest extends jmri.implementation.AbstractConsistManagerTestBase {
 
-    @Ignore("The JsonConsistManager does not conform to the letter of the Javadoc here.  It returns null when the consist cannot be created.")
     @Test
+    @Ignore("The JsonConsistManager does not conform to the letter of the Javadoc here.  It returns null when the consist cannot be created.")
+    @ToDo("implement test or modify JsonConsistManager to conform.  Remove overriden test if JsonConsistManager is modified")
     @Override
     public void testGetConsist(){
     }
 
-    @Ignore("Ignore delete test until get is fixed.")
     @Test
+    @Ignore("Ignore delete test until get is fixed.")
+    @ToDo("remove overriden test once JsonConsistManager GetConsist method is fixed")
     @Override
     public void testDelConsist(){
     }
 
     @Override
-    @Test(expected=java.lang.IllegalArgumentException.class)
-    @Ignore("JSonConsistManager does not throw an exception.")
+    @Test
+    @NotApplicable("JSonConsistManager currently never throws an exception.")
     public void testGetConsistLocoAddress(){
     }
 
-    @Ignore("Test fails if cm has no manager")
     @Test
+    @Ignore("Test fails if cm has no manager")
+    @ToDo("fix test initialization for test in parent class, then remove overriden test")
     @Override
     public void testConsists() {
     }
 
-    @Ignore("Test fails if cm has no manager")
     @Test
+    @Ignore("Test fails if cm has no manager")
+    @ToDo("fix test initialization for test in parent class, then remove overriden test")
     @Override
     public void testDecodeErrorCode() {
     }

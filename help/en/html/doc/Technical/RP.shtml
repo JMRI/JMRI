@@ -155,6 +155,7 @@
       the <a href="Logging.shtml">logger reference</a> at the
       bottom of each file.</p>
 
+      <a id="deprecating" name="deprecating"></a>
       <h2>Deprecating Code</h2>
       As development proceeds, sometimes
       old ways of doing things have to be replaced by new ways. In
@@ -167,14 +168,34 @@
       discover that it will eventually go away. The sequence is then:
       <ul>
         <li>Write the new methods.
-        <li>Mark the old methods with @deprecated and @Deprecated (see below).
+        <li>Mark the old methods with @deprecated and @Deprecated. The 
+            associated comment should tell people where to find the replacement (see below).
             <p>Note that if you mark an interface or super-class (i.e. abstract) 
                 class or method
                 as deprecated, you should also mark all implementations of it as
                 deprecated.  That way, they won't themselves show as deprecations to fix,
                 but code that uses them will.
-        <li>Over time, remove all JMRI uses of these deprecated classes and/or methods
+
+        <li>Start generating warnings for users
+            (especially scripting users) by adding:
+<pre style="font-family: monospace;">
+            jmri.util.Log4JUtil.deprecationWarning(log, "myMethod()");
+</pre>
+            to the start of each method.
+            This will put a warning in the log if that method 
+            is used during normal operation.
+            <p>
+            If you have tests for that method (you should!) you may need to
+            modify the direct tests of the deprecated method; see
+            the 
+            <a href="JUNit.shtml#deprecationWarning">instructions on the JUnit page</a>.
+
+        <a href="http://builds.jmri.org/jenkins/job/Development/job/Deprecations/lastBuild/warnings4Result/">
+            <img src="http://builds.jmri.org/jenkins/job/Development/job/Deprecations/warnings4/trendGraph/png?url=PRIORITY" align="right" width="250" height="100">
+        </a>
+        <li>As soon as you can, remove all JMRI uses of these deprecated classes and/or methods
             until the deprecations report is clean. 
+            (Until you do this, warnings will be showing up in the logs)
             You can either compile locally
             with <code>ci-compile-deprecations</code> to check this, or look at the
             <a href="http://jmri.tagadab.com/jenkins/job/Development/job/Deprecations/lastBuild/warnings4Result/">Jenkins CI report</a>
@@ -182,14 +203,10 @@
             Don't forget to also migrate the 
             Jython sample scripts! 
 
-        <li>Once JMRI itself is clean (enough), start generating warnings for users
-            (especially scripting users) by adding:
-<pre style="font-family: monospace;">
-            jmri.util.Log4JUtil.warnOnce(log, "Deprecated doStuff() method called. You should replace this with with a call to doBetterStuff()");
-</pre>
         <li>Wait an appropriate length of time; the more visible the class or method,
             the longer to wait.  Things that were in scripts should wait at least two
             production releases.
+            
         <li>Remove the deprecated methods and their tests.
         </ul>
         
@@ -207,7 +224,7 @@
 <pre style="font-family: monospace;">
 /**
  * (Other Javadoc comments)
- * @deprecated 2.7.8 Use {@ link #foo()} instead
+ * @deprecated As of 2.7.8, use {@ link #foo()} instead
  */
 @Deprecated // 2.7.8
 </pre>
@@ -218,7 +235,6 @@
         <a href="TechRoadMap.shtml">release roadmap</a>
         for background)
         
-
       <p>You may want to work with the deprecation checks "on"
       during compilation. To do that, change this line of
       build.xml:</p>

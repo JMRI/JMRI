@@ -6,11 +6,14 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
@@ -133,11 +136,18 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
         makeSensor = new MakeNamedBean("LabelEventActive", "LabelEventInactive") {
             @Override
             void create(String name) {
-                if (memo != null) {
-                    ((jmri.SensorManager) memo.get(jmri.SensorManager.class)).provideSensor("MS" + name);
-                    // provideSensor does not yet add the conn prefix + S
-                } else {
-                    InstanceManager.sensorManagerInstance().provideSensor("MS" + name); // S for Sensor
+                try {
+                    if (memo != null) {
+                        ((jmri.SensorManager) memo.get(jmri.SensorManager.class)).provideSensor("MS" + name);
+                        // provideSensor does not yet add the conn prefix + S
+                    } else {
+                        InstanceManager.sensorManagerInstance().provideSensor("MS" + name); // S for Sensor
+                    }
+                }
+                catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, 
+                        (ex.getMessage()), Bundle.getMessage("WarningTitle"),
+                        JOptionPane.ERROR_MESSAGE);
                 }
             }
         };
@@ -148,11 +158,18 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
         makeTurnout = new MakeNamedBean("LabelEventThrown", "LabelEventClosed") {
             @Override
             void create(String name) {
-                if (memo != null) {
-                    ((jmri.TurnoutManager) memo.get(jmri.TurnoutManager.class)).provideTurnout(name); 
-                    // auto adds the conn. prefix + T
-                } else {
-                    InstanceManager.turnoutManagerInstance().provideTurnout("MT" + name); // T for Turnout
+                try {
+                    if (memo != null) {
+                        ((jmri.TurnoutManager) memo.get(jmri.TurnoutManager.class)).provideTurnout(name); 
+                        // auto adds the conn. prefix + T
+                    } else {
+                        InstanceManager.turnoutManagerInstance().provideTurnout("MT" + name); // T for Turnout
+                    }
+                }
+                catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, 
+                        (ex.getMessage()), Bundle.getMessage("WarningTitle"),
+                        JOptionPane.ERROR_MESSAGE);
                 }
             }
         };
@@ -164,11 +181,18 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
         makeLight = new MakeNamedBean("LabelEventLightOn", "LabelEventLightOff") {
             @Override
             void create(String name) {
-                if (memo != null) {
-                    ((jmri.LightManager) memo.get(jmri.LightManager.class)).provideLight("ML" + name);
-                    // provideLight does not yet add a custom conn prefix + L
-                } else {
-                    InstanceManager.lightManagerInstance().provideLight("ML" + name); // L for Light
+                try {
+                    if (memo != null) {
+                        ((jmri.LightManager) memo.get(jmri.LightManager.class)).provideLight("ML" + name);
+                        // provideLight does not yet add a custom conn prefix + L
+                    } else {
+                        InstanceManager.lightManagerInstance().provideLight("ML" + name); // L for Light
+                    }
+                }
+                catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, 
+                        (ex.getMessage()), Bundle.getMessage("WarningTitle"),
+                        JOptionPane.ERROR_MESSAGE);
                 }
             }
         };
@@ -475,7 +499,7 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
     /**
      * Class to handle recording and presenting one event.
      */
-    class CbusEventRecorder extends JPanel implements CanListener {
+    class CbusEventRecorder extends JPanel implements CanListener, FocusListener {
 
         CbusEventRecorder() {
             super();
@@ -484,9 +508,10 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
             add(capture);
 
             event.setEditable(false);
-            // event.setDragEnabled(true);
+            event.setDragEnabled(true);
             event.setBackground(Color.WHITE);
             capture.setSelected(true);
+            event.addFocusListener(this);
         }
 
         JCheckBox capture = new JCheckBox(Bundle.getMessage("MsgCaptureNext"));
@@ -523,6 +548,17 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
                 }
             }
         }
+
+        @Override
+        public void focusGained(FocusEvent fe) {
+            JTextField txt = (JTextField)fe.getComponent();
+            txt.selectAll();
+        }
+
+        @Override
+        public void focusLost(FocusEvent e) {
+        }
+
     }
 
     /**

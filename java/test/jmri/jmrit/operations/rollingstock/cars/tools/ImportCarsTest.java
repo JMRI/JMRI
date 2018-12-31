@@ -10,10 +10,8 @@ import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.swing.JemmyUtil;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
 import org.junit.Test;
 import org.netbeans.jemmy.operators.JFileChooserOperator;
 
@@ -75,24 +73,16 @@ public class ImportCarsTest extends OperationsTestCase {
 
         // do import
 
-        Thread mb = new ImportCars();
+        Thread mb = new ImportCars(){
+            protected File getFile() {
+                // replace JFileChooser with fixed file to avoid threading issues
+                return new File(OperationsXml.getFileLocation()+OperationsXml.getOperationsDirectoryName() + File.separator + ExportCars.getOperationsFileName());
+            }
+        };
         mb.setName("Test Import Cars"); // NOI18N
         mb.start();
 
-        jmri.util.JUnitUtil.waitFor(() -> {
-            return mb.getState().equals(Thread.State.WAITING);
-        }, "wait for file chooser");
-
-        // opens file chooser path "operations" "JUnitTest"
-        JFileChooserOperator fco = new JFileChooserOperator();
-        String path = OperationsXml.getOperationsDirectoryName();
-        fco.chooseFile(path + File.separator + ExportCars.getOperationsFileName());
-
-        jmri.util.JUnitUtil.waitFor(() -> {
-            return mb.getState().equals(Thread.State.WAITING);
-        }, "wait for dialog");
-
-        // import complete 
+        // wait for import complete and acknowledge
         JemmyUtil.pressDialogButton(Bundle.getMessage("SuccessfulImport"), Bundle.getMessage("ButtonOK"));
 
         try {
@@ -103,19 +93,6 @@ public class ImportCarsTest extends OperationsTestCase {
 
         // confirm import successful
         Assert.assertEquals("cars", 9, emanager.getNumEntries());
-    }
-
-    // The minimal setup for log4J
-    @Override
-    @Before
-    public void setUp() {
-        super.setUp();
-    }
-
-    @Override
-    @After
-    public void tearDown() {
-        super.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(ImportCarsTest.class);

@@ -46,7 +46,7 @@ public class InstanceManagerTest {
     public void testDefaultProgrammerManagers() {
         DebugProgrammerManager m = new DebugProgrammerManager();
 
-        InstanceManager.setAddressedProgrammerManager(m);
+        InstanceManager.store(m, AddressedProgrammerManager.class);
         InstanceManager.store(m, GlobalProgrammerManager.class);
 
         Assert.assertTrue("global programmer manager was set", InstanceManager.getDefault(GlobalProgrammerManager.class) == m);
@@ -58,9 +58,9 @@ public class InstanceManagerTest {
         DebugProgrammerManager m1 = new DebugProgrammerManager();
         DebugProgrammerManager m2 = new DebugProgrammerManager();
 
-        InstanceManager.setAddressedProgrammerManager(m1);
+        InstanceManager.store(m1, AddressedProgrammerManager.class);
         InstanceManager.store(m1, GlobalProgrammerManager.class);
-        InstanceManager.setAddressedProgrammerManager(m2);
+        InstanceManager.store(m2, AddressedProgrammerManager.class);
         InstanceManager.store(m2, GlobalProgrammerManager.class);
 
         Assert.assertTrue("2nd global programmer manager is default", InstanceManager.getDefault(GlobalProgrammerManager.class) == m2);

@@ -104,65 +104,6 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
     private String boardTypeName;
 
     /**
-     * Constructor which assumes the board ID number is 1, and does not
-     * automatically read device OpSw values upon creation.
-     *
-     * @deprecated
-     */
-    @Deprecated
-    protected AbstractBoardProgPanel() {
-        this(1, false);
-    }
-
-    /**
-     * Constructor which assumes the board ID number is 1.
-     *
-     * @param readOnInit true to read OpSw values of board ID number 1 upon panel creation
-     * @deprecated
-     */
-    @Deprecated
-    protected AbstractBoardProgPanel(boolean readOnInit) {
-        this(1, readOnInit);
-    }
-
-    /**
-     * Constructor where invoking code specifies the initial board ID number and
-     * also whether the tool automatically reads device OpSw values upon creation.
-     *
-     * @param boardNum - default board ID number upon panel creation
-     * @param readOnInit - true to read OpSw values of board 1 upon panel creation
-     * @deprecated
-     */
-    @Deprecated
-    protected AbstractBoardProgPanel(int boardNum, boolean readOnInit) {
-        super();
-        boardTypeName = Bundle.getMessage("AbstractBoardProgPanel_GenericDeviceString");
-
-        // basic formatting: Create pane to hold contents
-        // within a scroll box
-        contents.setLayout(new BoxLayout(contents, BoxLayout.Y_AXIS));
-        JScrollPane scroll = new JScrollPane(contents);
-        add(scroll);
-
-        // and prep for display
-        addrField.setText(Integer.toString(boardNum));
-        this.readOnInit = readOnInit;
-    }
-
-    /**
-     *
-     * Constructor which allows the caller to pass in the board ID number.
-     * Device OpSws will not be read upon creation.
-     *
-     * @param boardNum - default board ID number upon panel creation
-     * @deprecated
-     */
-    @Deprecated
-    protected AbstractBoardProgPanel(int boardNum) {
-        this(boardNum, false);
-    }
-
-    /**
      * Constructor which accepts a "board type" string.
      * The board number defaults to 1, and the board will not
      * be automatically read.

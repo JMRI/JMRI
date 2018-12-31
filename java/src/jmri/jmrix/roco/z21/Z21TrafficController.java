@@ -154,9 +154,9 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
                     } catch (InterruptedException e) {
                         Thread.currentThread().interrupt(); // retain if needed later
                         if(!threadStopRequest) {
-                           log.error("retry wait interupted");
+                           log.error("retry wait interrupted");
                         } else {
-                           log.error("retry wait interupted during thread stop");
+                           log.error("retry wait interrupted during thread stop");
                         }
                     }
                 } else {

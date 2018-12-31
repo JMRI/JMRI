@@ -3,9 +3,7 @@ package jmri.jmrit.operations.rollingstock.cars;
 import javax.swing.JComboBox;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -47,18 +45,5 @@ public class CarColorsTest extends OperationsTestCase {
         Assert.assertFalse("Car Color Delete Ugly Brown", cc1.containsName("Ugly Brown"));
         cc1.deleteName("BoxCar Red");
         Assert.assertFalse("Car Color Delete BoxCar Red", cc1.containsName("BoxCar Red"));
-    }
-
-    @Override
-    @Before
-    public void setUp() {
-        super.setUp();
-    }
-
-    // The minimal setup for log4J
-    @Override
-    @After
-    public void tearDown() {
-        super.tearDown();
     }
 }

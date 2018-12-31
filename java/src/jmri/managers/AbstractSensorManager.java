@@ -262,32 +262,32 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
 
     /** {@inheritDoc} */
     @Override
-    public void setDefaultSensorDebounceGoingActive(long timer) {
-        if (timer == sensorDebounceGoingActive) {
+    public void setDefaultSensorDebounceGoingActive(long time) {
+        if (time == sensorDebounceGoingActive) {
             return;
         }
-        sensorDebounceGoingActive = timer;
+        sensorDebounceGoingActive = time;
         Enumeration<String> en = _tsys.keys();
         while (en.hasMoreElements()) {
             Sensor sen = _tsys.get(en.nextElement());
             if (sen.getUseDefaultTimerSettings()) {
-                sen.setSensorDebounceGoingActiveTimer(timer);
+                sen.setSensorDebounceGoingActiveTimer(time);
             }
         }
     }
 
     /** {@inheritDoc} */
     @Override
-    public void setDefaultSensorDebounceGoingInActive(long timer) {
-        if (timer == sensorDebounceGoingInActive) {
+    public void setDefaultSensorDebounceGoingInActive(long time) {
+        if (time == sensorDebounceGoingInActive) {
             return;
         }
-        sensorDebounceGoingInActive = timer;
+        sensorDebounceGoingInActive = time;
         Enumeration<String> en = _tsys.keys();
         while (en.hasMoreElements()) {
             Sensor sen = _tsys.get(en.nextElement());
             if (sen.getUseDefaultTimerSettings()) {
-                sen.setSensorDebounceGoingInActiveTimer(timer);
+                sen.setSensorDebounceGoingInActiveTimer(time);
             }
         }
     }

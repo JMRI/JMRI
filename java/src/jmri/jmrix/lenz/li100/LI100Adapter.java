@@ -52,7 +52,7 @@ public class LI100Adapter extends XNetSerialPortController implements jmri.jmrix
             try {
                 setSerialPort();
             } catch (UnsupportedCommOperationException e) {
-                log.error("Cannot set serial parameters on port " + portName + ": " + e.getMessage());
+                log.error("Cannot set serial parameters on port {}: {}", portName, e.getMessage());
                 return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();
             }
 
@@ -63,7 +63,7 @@ public class LI100Adapter extends XNetSerialPortController implements jmri.jmrix
                         activeSerialPort.getReceiveTimeout(),
                         activeSerialPort.isReceiveTimeoutEnabled());
             } catch (UnsupportedCommOperationException et) {
-                log.info("failed to set serial timeout: " + et);
+                log.info("failed to set serial timeout: ", et);
             }
 
             // get and save stream
@@ -86,8 +86,8 @@ public class LI100Adapter extends XNetSerialPortController implements jmri.jmrix
             }
             if (log.isDebugEnabled()) {
                 // report additional status
-                log.debug(" port flow control shows " // NOI18N
-                        + (activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? "hardware flow control" : "no flow control")); // NOI18N
+                log.debug(" port flow control shows {}", // NOI18N
+                        (activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? "hardware flow control" : "no flow control")); // NOI18N
 
                 // log events
                 setPortEventLogging(activeSerialPort);
@@ -144,7 +144,7 @@ public class LI100Adapter extends XNetSerialPortController implements jmri.jmrix
         try {
             return new DataOutputStream(activeSerialPort.getOutputStream());
         } catch (java.io.IOException e) {
-            log.error("getOutputStream exception: " + e.getMessage());
+            log.error("getOutputStream exception: {}", e.getMessage());
         }
         return null;
     }
@@ -174,7 +174,7 @@ public class LI100Adapter extends XNetSerialPortController implements jmri.jmrix
                 SerialPort.PARITY_NONE);
 
         // find and configure flow control
-        int flow = SerialPort.FLOWCONTROL_RTSCTS_OUT; // default, but also deftaul for getOptionState(option1Name)
+        int flow = SerialPort.FLOWCONTROL_RTSCTS_OUT; // default, but also default for getOptionState(option1Name)
         if (!getOptionState(option1Name).equals(validOption1[0])) {
             flow = 0;
         }

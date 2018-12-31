@@ -12,19 +12,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTable;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.Element;
 import javax.swing.Timer;
 import jmri.Block;
 import jmri.BlockManager;
 import jmri.InstanceManager;
+import jmri.util.swing.TextAreaFIFO;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.roster.RosterEntry;
@@ -43,7 +39,6 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Table data model for display of Cbus Command Station Sessions and various Tools
- * Created with Notepad++
  *
  * @author Steve Young (c) 2018
  * @see CbusSlotMonitorPane
@@ -708,10 +703,13 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
         for (int i = 0; i < getRowCount(); i++) {
             String altd = alttdarr.get(i);
             String locoidstr = locoidarr.get(i).toString();
+            log.debug("getrowfromstringval checking alttd {} and locoid {}",altd,locoidstr);
             if (Objects.equals(blockval,altd)) {
+                log.debug("returning alt td val");
                 return i;
             }
             if (Objects.equals(blockval,locoidstr)) {
+                log.debug("returning loco id val");
                 return i;
             }
         }
@@ -1260,8 +1258,10 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
     
     private void processestop(boolean messagein){
         addToLog(1,"Command station acknowledges estop");
-        estopTimer.stop();
-        estopTimer=null;
+        if ( estopTimer != null ) {
+            estopTimer.stop();
+            estopTimer=null;
+        }
     }
     
     private void processrton(boolean messagein){
@@ -1289,14 +1289,18 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
     }
     
     private void processton(boolean messagein){
-        powerTimer.stop();
-        powerTimer=null;
+        if ( powerTimer != null ) {
+            powerTimer.stop();
+            powerTimer=null;
+        }
         log.debug("Track on confirmed from command station.");
     }
 
     private void processtof(boolean messagein){
-        powerTimer.stop();
-        powerTimer=null;
+        if ( powerTimer != null ) {
+            powerTimer.stop();
+            powerTimer=null;
+        }
         log.debug("Track off confirmed from command station.");
     }
     
@@ -1331,7 +1335,7 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
     }
     
     // Adds changelistener to blocks
-    private void initblocks(){
+    protected void initblocks(){
         mBlockList=null;
         mBlockList = new ArrayList<>();
         BlockManager bmgr = jmri.InstanceManager.getDefault(jmri.BlockManager.class);
@@ -1346,6 +1350,12 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
             b.addPropertyChangeListener(listener);
             mBlockListeners.add(listener);
             i++;
+        }
+        if (i==0) {
+            log.debug(Bundle.getMessage("NoBlocks"));
+            addToLog(1,Bundle.getMessage("NoBlocks"));
+        } else {
+            addToLog(0,Bundle.getMessage("BlocksFound",i));
         }
     }
     
@@ -1489,14 +1499,15 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
     // returns block for a given row
     // loops through blocklist, compares each block value to row loco id + alternative td
     private Block findblockforrow(int row) {
-        // log.warn("total blocks {} ",(mBlockList.size()) );
+        log.debug("total blocks {} ",(mBlockList.size()) );
         for (Block tb : mBlockList) {
             Object val = tb.getValue();
             if ( val != null ) {
                 String strval = val.toString();
-                int testrow = getrowfromstringval(strval); // checks loco id and alt td
+                log.debug("checking block value {}",strval);
+                int testrow = getrowfromstringval(strval); // checks loco id AND alt td
                 if (testrow==row){
-                    // log.warn("Block found {} ",tb.getUserName());
+                    log.debug("Block found {} ",tb.getUserName());
                     return tb;
                 }
             }
@@ -1727,43 +1738,6 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
         tablefeedback.append( "\n"+cbustext);
     }
 
-
-    /**
-     * Keeps the message log windows to a reasonable length
-     * https://community.oracle.com/thread/1373400
-     */
-    private static class TextAreaFIFO extends JTextArea implements DocumentListener {
-        private int maxLines;
-    
-        public TextAreaFIFO(int lines) {
-            maxLines = lines;
-            getDocument().addDocumentListener( this );
-        }
-    
-        public void insertUpdate(DocumentEvent e) {
-            javax.swing.SwingUtilities.invokeLater( new Runnable() {
-                public void run() {
-                    removeLines();
-                }
-            });
-        }
-        public void removeUpdate(DocumentEvent e) {}
-        public void changedUpdate(DocumentEvent e) {}
-        public void removeLines()
-        {
-            Element root = getDocument().getDefaultRootElement();
-            while (root.getElementCount() > maxLines) {
-                Element firstLine = root.getElement(0);
-                try {
-                    getDocument().remove(0, firstLine.getEndOffset());
-                } catch(BadLocationException ble) {
-                    System.out.println(ble);
-                }
-            }
-        setCaretPosition( getDocument().getLength() );
-        }
-    }
-    
     static class Notify implements Runnable {
         public int _row;
         javax.swing.table.AbstractTableModel _model;
@@ -1790,6 +1764,8 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
                 curmastarr.get(i).removePropertyChangeListener(_cconSignalMastListener);
             }
         }
+        
+        tablefeedback.dispose();
 
         masterSendCabDataButton(false); // send data off message to cabs
         
@@ -1797,6 +1773,5 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
             tc.removeCanListener(this);
         }
     }
-
     private final static Logger log = LoggerFactory.getLogger(CbusSlotMonitorDataModel.class);
 }

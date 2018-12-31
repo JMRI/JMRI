@@ -101,6 +101,9 @@ public class SerialLightTest {
     @After
     public void tearDown() {
         JUnitUtil.tearDown();
+        if (tcis != null) tcis.terminateThreads();
+        tcis = null;
+        memo = null;
     }
 
 }

@@ -54,24 +54,21 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
     public LocoNetSystemConnectionMemo() {
         super("L", "LocoNet"); // NOI18N
 
-        // self-register
-        register();
-
         // create and register the ComponentFactory for the GUI
         InstanceManager.store(cf = new LnComponentFactory(this),
                 ComponentFactory.class);
     }
 
-    /** 
+    /**
      * Do both the default parent
-     * {@link SystemConnectionMemo} registration, 
+     * {@link SystemConnectionMemo} registration,
      * and register this specific type.
      */
     public void register() {
         super.register(); // registers general type
         InstanceManager.store(this, LocoNetSystemConnectionMemo.class); // also register as specific type
     }
-    
+
     ComponentFactory cf = null;
     private LnTrafficController lt;
     private SlotManager sm;
@@ -213,6 +210,7 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
         if (type.equals(CommandStation.class)) {
             return true;
         }
+
         return super.provides(type);
     }
 
@@ -445,6 +443,9 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
         }
         if (tm != null){
             tm.dispose();
+        }
+        if (sm != null){
+            sm.dispose();
         }
         super.dispose();
     }

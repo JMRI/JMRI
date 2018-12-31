@@ -7,7 +7,8 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Manage the LocoNet-specific Turnout implementation.
- * System names are "LiTnnn", where nnn is the turnout number without padding.
+ * System names are "LTnnn", where L is the user configurable system prefix,
+ * nnn is the turnout number without padding.
  * <p>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
  * and used with permission as part of the JMRI project. That permission does

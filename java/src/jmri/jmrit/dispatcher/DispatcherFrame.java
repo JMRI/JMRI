@@ -139,7 +139,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                         try {
                             Thread.sleep(500);
                         } catch (InterruptedException e) {
-                            log.warn("Sleep Interupted in loading trains, likely being stopped", e);
+                            log.warn("Sleep Interrupted in loading trains, likely being stopped", e);
                         }
                     }
                 }

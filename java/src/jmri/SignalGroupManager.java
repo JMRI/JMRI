@@ -37,12 +37,26 @@ public interface SignalGroupManager extends Manager<SignalGroup> {
      * User GUI, to allow the auto generation of systemNames, where the user can
      * optionally supply a username.
      *
-     * @param sys user name for the new group
+     * @param userName User name for the new group
      * @return null if a Group with the same userName already exists or if there
      *         is trouble creating a new Group
      */
     @Nonnull
-    public SignalGroup newSignalGroup(@Nonnull String sys);
+    public SignalGroup newSignaGroupWithUserName(@Nonnull String userName);
+    
+    /**
+     * Create a new Signal group if the group does not exist. Intended for use with
+     * User GUI, to allow the auto generation of systemNames, where the user can
+     * optionally supply a username.
+     *
+     * @param userName User name for the new group
+     * @return null if a Group with the same userName already exists or if there
+     *         is trouble creating a new Group
+     * @deprecated 4.15.2 use newSignaGroupWithUserName
+     */
+    @Nonnull
+    @Deprecated //  4.15.2 use newSignaGroupWithUserName
+    public SignalGroup newSignalGroup(@Nonnull String userName);
 
     /**
      * Create a new SignalGroup if the group does not exist.
