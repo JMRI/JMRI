@@ -994,15 +994,6 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
 
             }
         } else {
-            // TODO: un-comment the following and protect appropriately if we
-            // add a feature to differentiate between programming of LocoNet-connected
-            // versus Service-mode-programmer-track-connected decoders.
-            // The OperationNotSupported message would apply to service-mode-
-            // programmer-track-connected decoders only.
-//            if (!getCommandStationType().getCanRead()) {
-//                notifyProgListenerEnd(p, 1, ProgListener.OperationNotSupported);
-//            }
-
             lopsa = 0;
             hopsa = 0;
             mServiceMode = true;
