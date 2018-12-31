@@ -264,7 +264,6 @@ public class Log4JUtil {
      * If you then pass it to 
      * Log4J for logging, it'll take up less space.
      * @param t The Throwable to truncate and return
-     * @param len The number of stack trace entries to keep.
      * @return The original object with truncated stack trace
      */
     public  @Nonnull static <T extends Throwable> T shortenStacktrace(@Nonnull T t) {
@@ -285,7 +284,7 @@ public class Log4JUtil {
      * Log4J for logging, it'll take up less space.
      * @param t The Throwable to truncate and return
      * @param len The number of stack trace entries to keep.
-     * @return THe original object with truncated stack trace
+     * @return The original object with truncated stack trace
      */
     public  @Nonnull static <T extends Throwable> T shortenStacktrace(@Nonnull T t, int len) {
         StackTraceElement[]	originalTrace = t.getStackTrace();
