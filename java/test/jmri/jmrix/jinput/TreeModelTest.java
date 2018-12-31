@@ -26,11 +26,14 @@ public class TreeModelTest {
         try {
             Assert.assertNotNull("exists", TreeModel.instance());
         } catch (Throwable e) {
-            if (e instanceof ClassNotFoundException) {
+            log.warn("TreeModelTest caught "+e);
+            if (e instanceof UnsatisfiedLinkError) {
+                log.info("TreeModel.instance threw UnsatisfiedLinkError, which means we can't test on this platform");
+                return;
+            } else if (e instanceof ClassNotFoundException) {
                 log.info("TreeModel.instance threw ClassNotFoundException, which means we can't test on this platform");
                 return;
             } else {
-                log.error("instance threw", e);
                 Assert.fail("instance threw "+e);
             }
         }
