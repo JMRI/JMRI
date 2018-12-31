@@ -45,6 +45,8 @@
       <p>You can enter the packet's data contents as hexadecimal
       numbers, for example "83 7C".</p>
       
+      <p>Any spaces in the packets will be removed before sending.</p>
+      
       <p>If you want to specify header
       contents, precede the packet data with the header in "( )"
       characters or "[ ]" characters for a standard or extended

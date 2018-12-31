@@ -7,9 +7,6 @@ import jmri.ProgListener;
 import jmri.Programmer;
 import jmri.ProgrammingMode;
 import jmri.jmrix.AbstractProgrammer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 
 /**
  * Programmer support for DCC++.
@@ -51,8 +48,8 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
         setMode(ProgrammingMode.DIRECTBYTEMODE);
     }
 
-    /**
-     * Types implemented here.
+    /** 
+     * {@inheritDoc}
      */
     @Override
     public List<ProgrammingMode> getSupportedModes() {
@@ -64,7 +61,9 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
         return ret;
     }
 
-    /**
+    /** 
+     * {@inheritDoc}
+     *
      * Can we read from a specific CV in the specified mode? Answer may not be
      * correct if the command station type and version sent by the command
      * station mimics one of the known command stations.
@@ -84,7 +83,9 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
         }
     }
 
-    /**
+    /** 
+     * {@inheritDoc}
+     *
      * Can we write to a specific CV in the specified mode? Answer may not be
      * correct if the command station type and version sent by the command
      * station mimics one of the known command stations.
@@ -105,8 +106,8 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
         }
     }
 
-    /**
-     * 
+    /** 
+     * {@inheritDoc}
      */
     @Nonnull
     @Override
@@ -123,9 +124,12 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
 
     // programming interface
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
-    @Deprecated // 4.1.1
-    synchronized public void writeCV(int CV, int val, ProgListener p) throws jmri.ProgrammerException {
+    synchronized public void writeCV(String CVname, int val, ProgListener p) throws jmri.ProgrammerException {
+        final int CV = Integer.parseInt(CVname);
         if (log.isDebugEnabled()) {
             log.debug("writeCV " + CV + " listens " + p);
         }
@@ -157,14 +161,20 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
      //}
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     synchronized public void confirmCV(String CV, int val, ProgListener p) throws jmri.ProgrammerException {
         readCV(CV, p);
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
-    @Deprecated // 4.1.1
-    synchronized public void readCV(int CV, ProgListener p) throws jmri.ProgrammerException {
+    synchronized public void readCV(String CVname, ProgListener p) throws jmri.ProgrammerException {
+        final int CV = Integer.parseInt(CVname);
         if (log.isDebugEnabled()) {
             log.debug("readCV " + CV + " listens " + p);
         }
@@ -217,20 +227,23 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
         }
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     synchronized public void message(DCCppReply m) {
- if (progState == NOTPROGRAMMING) {
-     return;
- }
- if (m.getElement(0) == DCCppConstants.PROGRAM_REPLY) {
+         if (progState == NOTPROGRAMMING) {
+             return;
+         }
+         if (m.getElement(0) == DCCppConstants.PROGRAM_REPLY) {
             if (log.isDebugEnabled()) {
                 log.debug("reply in REQUESTSENT state");
             }
-     log.debug("DCC++ Programming Reply value = {}", m.getCVString());
-     // CALLBACKNUM = mt.group(1)
-     // CALLBACKSUB = mt.group(2)
-     _val = m.getReadValueInt();
-     progState = NOTPROGRAMMING;
+             log.debug("DCC++ Programming Reply value = {}", m.getCVString());
+             // CALLBACKNUM = mt.group(1)
+             // CALLBACKSUB = mt.group(2)
+             _val = m.getReadValueInt();
+             progState = NOTPROGRAMMING;
             if (_val == -1) {
                 log.debug("Reporting NoAck");
                 notifyProgListenerEnd(_val, ProgListener.NoAck);
@@ -238,10 +251,12 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
                 log.debug("Reporting OK");
                 notifyProgListenerEnd(_val, ProgListener.OK);
             }
- }
+        }
     }
 
-    // listen for the messages to the LI100/LI101
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     synchronized public void message(DCCppMessage l) {
     }
@@ -262,8 +277,8 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
         return (progState != NOTPROGRAMMING);
     }
 
-    /**
-     * Internal routine to handle a timeout
+    /** 
+     * {@inheritDoc}
      */
     @Override
     synchronized protected void timeout() {
@@ -300,6 +315,6 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
         return _controller;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DCCppProgrammer.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DCCppProgrammer.class);
 
 }

@@ -7,7 +7,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Manage the Acela-specific Sensor implementation.
  * <p>
- * System names are "ASnnnn", where nnnn is the sensor number without padding.
+ * System names are "ASnnnn", where A is the user configurable system prefix,
+ * nnnn is the sensor number without padding.
  * <p>
  * Sensors are numbered from 0.
  * <p>

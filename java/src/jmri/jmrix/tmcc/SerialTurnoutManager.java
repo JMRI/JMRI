@@ -9,8 +9,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Implement turnout manager for TMCC serial systems.
  * <p>
- * System names are "TiTnnn", where nnn is the turnout number without padding.
- * Ti prefix is user configurable.
+ * System names are "TTnnn", where T is the user configurable system prefix,
+ * nnn is the turnout number without padding.
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2006
  */

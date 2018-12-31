@@ -1,6 +1,7 @@
 package jmri.jmrix.dccpp;
 
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.*;
 import org.junit.*;
 
 /**
@@ -42,13 +43,13 @@ public class DCCppReplyTest extends jmri.jmrix.AbstractMessageTestBase {
 
     // check get service mode CV Number response code.
     @Test
-    @Ignore("Method is not implemented")
+    @NotApplicable("Method under test is not implemented for DCC++")
     public void testGetServiceModeCVNumber() {
     }
 
     // check get service mode CV Value response code.
     @Test
-    @Ignore("Method is not implemented")
+    @NotApplicable("Method under test is not implemented for DCC++")
     public void testGetServiceModeCVValue() {
     }
     
@@ -95,14 +96,40 @@ public class DCCppReplyTest extends jmri.jmrix.AbstractMessageTestBase {
     @Test
     public void testNamedCurrentReply() {
         DCCppReply l = DCCppReply.parseDCCppReply("a MAIN 0");
+        Assert.assertTrue(l.isCurrentReply());
         Assert.assertTrue(l.isNamedCurrentReply());
         Assert.assertEquals('a', l.getOpCodeChar());
         Assert.assertEquals("0", l.getCurrentString());
 
         l = DCCppReply.parseDCCppReply("a MAIN 100");
+        Assert.assertTrue(l.isCurrentReply());
         Assert.assertTrue(l.isNamedCurrentReply());
         Assert.assertEquals('a', l.getOpCodeChar());
         Assert.assertEquals("100", l.getCurrentString());
+
+        l = DCCppReply.parseDCCppReply("aMAIN0");
+        Assert.assertTrue(l.isCurrentReply());
+        Assert.assertTrue(l.isNamedCurrentReply());
+        Assert.assertEquals('a', l.getOpCodeChar());
+        Assert.assertEquals("0", l.getCurrentString());
+
+        l = DCCppReply.parseDCCppReply("aMAIN41");
+        Assert.assertTrue(l.isCurrentReply());
+        Assert.assertTrue(l.isNamedCurrentReply());
+        Assert.assertEquals('a', l.getOpCodeChar());
+        Assert.assertEquals("41", l.getCurrentString());
+
+        l = DCCppReply.parseDCCppReply("a41");
+        Assert.assertTrue(l.isCurrentReply());
+        Assert.assertFalse(l.isNamedCurrentReply());
+        Assert.assertEquals('a', l.getOpCodeChar());
+        Assert.assertEquals("41", l.getCurrentString());
+
+        l = DCCppReply.parseDCCppReply("a 41");
+        Assert.assertTrue(l.isCurrentReply());
+        Assert.assertFalse(l.isNamedCurrentReply());
+        Assert.assertEquals('a', l.getOpCodeChar());
+        Assert.assertEquals("41", l.getCurrentString());
     }
 
     // The minimal setup for log4J

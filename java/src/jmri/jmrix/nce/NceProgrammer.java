@@ -6,8 +6,6 @@ import javax.annotation.Nonnull;
 
 import jmri.ProgrammingMode;
 import jmri.jmrix.AbstractProgrammer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Convert the jmri.Programmer interface into commands for the NCE power house.
@@ -31,8 +29,10 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
         }
     }
 
-    /**
-     * Programming modes available depend on settings
+    /** 
+     * {@inheritDoc}
+     *
+     * NCE programming modes available depend on settings
      */
     @Override
     @Nonnull
@@ -76,6 +76,9 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
         return ret;
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public boolean getCanRead() {
         return !(tc != null && tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_POWERCAB
@@ -83,6 +86,9 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
                 && tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_NONE);
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public boolean getCanWrite(String cv) {
         return getCanWrite(Integer.parseInt(cv));
@@ -109,10 +115,12 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
     int _val; // remember the value being read/written for confirmative reply
     int _cv; // remember the cv being read/written
 
-    // programming interface
+    /** 
+     * {@inheritDoc}
+     */
     @Override
-    @Deprecated // 4.1.1
-    public synchronized void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
+    public synchronized void writeCV(String CVname, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
+        final int CV = Integer.parseInt(CVname);
         if (log.isDebugEnabled()) {
             log.debug("writeCV " + CV + " listens " + p);
         }
@@ -139,14 +147,20 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
         }
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public void confirmCV(String CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         readCV(CV, p);
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
-    @Deprecated // 4.1.1
-    public synchronized void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
+    public synchronized void readCV(String CVname, jmri.ProgListener p) throws jmri.ProgrammerException {
+        final int CV = Integer.parseInt(CVname);
         if (log.isDebugEnabled()) {
             log.debug("readCV " + CV + " listens " + p);
         }
@@ -209,11 +223,17 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
         }
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public void message(NceMessage m) {
         log.error("message received unexpectedly: " + m.toString());
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public synchronized void reply(NceReply m) {
         if (progState == NOTPROGRAMMING) {
@@ -261,7 +281,9 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
         }
     }
 
-    /**
+    /** 
+     * {@inheritDoc}
+     *
      * Internal routine to handle a timeout
      */
     @Override
@@ -295,6 +317,6 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
         notifyProgListenerEnd(temp, value, status);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NceProgrammer.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NceProgrammer.class);
 
 }

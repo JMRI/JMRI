@@ -20,8 +20,6 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import javax.swing.SwingUtilities;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
@@ -30,6 +28,7 @@ import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
 import jmri.util.FileUtil;
 import jmri.util.swing.JmriPanel;
+import jmri.util.swing.TextAreaFIFO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -66,6 +65,7 @@ public abstract class AbstractMonPane extends JmriPanel {
         pm.setSimplePreferenceState(alwaysOnTopCheck, alwaysOnTopCheckBox.isSelected());
         pm.setSimplePreferenceState(autoScrollCheck, !autoScrollCheckBox.isSelected());
         pm.setProperty(filterFieldCheck, filterFieldCheck, filterField.getText());
+        monTextPane.dispose();
         super.dispose();
     }
     // you'll also have to add the message(Foo) members to handle info to be logged.
@@ -75,7 +75,7 @@ public abstract class AbstractMonPane extends JmriPanel {
     protected JButton clearButton = new JButton();
     protected JToggleButton freezeButton = new JToggleButton();
     protected JScrollPane jScrollPane1 = new JScrollPane();
-    protected JTextArea monTextPane = new JTextArea();
+    protected TextAreaFIFO monTextPane = new TextAreaFIFO(MAX_LINES);
     protected JButton startLogButton = new JButton();
     protected JButton stopLogButton = new JButton();
     protected JCheckBox rawCheckBox = new JCheckBox();
@@ -110,36 +110,12 @@ public abstract class AbstractMonPane extends JmriPanel {
     /**
      * Do default configuration of a data pane
      *
-     * @param textPane a JTextArea into which the data pane will be placed
+     * @param textPane a TextAreaFIFO into which the data pane will be placed
      */
-    protected void configureDataPane(JTextArea textPane) {
+    protected void configureDataPane(TextAreaFIFO textPane) {
         textPane.setVisible(true);
         textPane.setToolTipText(Bundle.getMessage("TooltipMonTextPane")); // NOI18N
         textPane.setEditable(false);
-
-        // Add document listener to scroll to end when modified if required
-        textPane.getDocument().addDocumentListener(new DocumentListener() {
-
-            // References to the JTextArea and JCheckBox
-            // of this instantiation
-            JTextArea ta = textPane;
-            JCheckBox chk = autoScrollCheckBox;
-
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                doAutoScroll(ta, chk.isSelected());
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                doAutoScroll(ta, chk.isSelected());
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                doAutoScroll(ta, chk.isSelected());
-            }
-        });
     }
 
     /**
@@ -296,6 +272,7 @@ public abstract class AbstractMonPane extends JmriPanel {
         autoScrollCheckBox.setVisible(true);
         autoScrollCheckBox.setToolTipText(Bundle.getMessage("TooltipAutoScroll")); // NOI18N
         autoScrollCheckBox.setSelected(!pm.getSimplePreferenceState(autoScrollCheck));
+        monTextPane.setAutoScroll(!pm.getSimplePreferenceState(autoScrollCheck));
 
         openFileChooserButton.setText(Bundle.getMessage("ButtonChooseLogFile")); // NOI18N
         openFileChooserButton.setVisible(true);
@@ -361,7 +338,7 @@ public abstract class AbstractMonPane extends JmriPanel {
         });
 
         autoScrollCheckBox.addActionListener((ActionEvent e) -> {
-            doAutoScroll(monTextPane, autoScrollCheckBox.isSelected());
+            monTextPane.setAutoScroll(autoScrollCheckBox.isSelected());
         });
 
         // set file chooser to a default
@@ -495,15 +472,6 @@ public abstract class AbstractMonPane extends JmriPanel {
         SwingUtilities.invokeLater(() -> {
             synchronized (AbstractMonPane.this) {
                 monTextPane.append(linesBuffer.toString());
-                int LineCount = monTextPane.getLineCount();
-                if (LineCount > MAX_LINES) {
-                    LineCount -= MAX_LINES;
-                    try {
-                        int offset = monTextPane.getLineStartOffset(LineCount);
-                        monTextPane.getDocument().remove(0, offset);
-                    } catch (BadLocationException ex) {
-                    }
-                }
                 linesBuffer.setLength(0);
             }
         });
@@ -658,23 +626,6 @@ public abstract class AbstractMonPane extends JmriPanel {
 
     public synchronized void setFilterText(String text) {
         filterField.setText(text);
-    }
-
-    /**
-     * Method to position caret at end of JTextArea ta when scroll true.
-     *
-     * @param ta     Reference to JTextArea
-     * @param scroll True to move to end
-     */
-    private void doAutoScroll(final JTextArea ta, final boolean scroll) {
-        SwingUtilities.invokeLater(() -> {
-            int len = ta.getText().length();
-            if (scroll) {
-                ta.setCaretPosition(len);
-            } else if (ta.getCaretPosition() == len && len > 0) {
-                ta.setCaretPosition(len - 1);
-            }
-        });
     }
 
     private volatile PrintStream logStream = null;

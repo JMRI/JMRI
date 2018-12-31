@@ -215,32 +215,6 @@ public class StringUtil {
     }
 
     /**
-     * This is a lexagraphic sort; lower case goes to the end. Identical entries
-     * are retained, so the output length is the same as the input length.
-     *
-     * @param values the Strings to sort.
-     * @deprecated since 4.5.6; use
-     * {@link java.util.Arrays#sort(java.lang.Object[])} instead.
-     */
-    @Deprecated
-    static public void sort(@Nonnull String[] values) {
-        Arrays.sort(values);
-    }
-
-    /**
-     * This is a case-blind sort. Identical entries are retained, so the output
-     * length is the same as the input length.
-     *
-     * @param values the Objects to sort
-     * @deprecated since 4.5.6; use
-     * {@link java.util.Arrays#sort(java.lang.Object[])} instead.
-     */
-    @Deprecated
-    static public void sort(@Nonnull Object[] values) {
-        Arrays.sort(values);
-    }
-
-    /**
      * This is a case-independent lexagraphic sort. Identical entries are
      * retained, so the output length is the same as the input length.
      *
@@ -268,59 +242,6 @@ public class StringUtil {
                 }
             }
         }
-    }
-
-    /**
-     * Split a string into an array of Strings, at a particular divider. This is
-     * similar to the new String.split method, except that this does not provide
-     * regular expression handling; the divider string is just a string.
-     *
-     * @param input   String to split
-     * @param divider Where to divide the input; this does not appear in output
-     * @return an array of Strings
-     * @deprecated since 4.5.6; use
-     *      {@link java.lang.String#split(java.lang.String)} instead, but note
-     *      that takes a regex, not just a character; 
-     *      you have to use "\\." to split at each period.
-     */
-    @CheckReturnValue
-    @Nonnull
-    @Deprecated
-    static public String[] split(@Nonnull String input, @Nonnull String divider) {
-        int size = 0;
-        String temp = input;
-
-        // count entries
-        while (temp.length() > 0) {
-            size++;
-            int index = temp.indexOf(divider);
-            if (index < 0) {
-                break;    // break not found
-            }
-            temp = temp.substring(index + divider.length());
-            if (temp.length() == 0) {  // found at end
-                size++;
-                break;
-            }
-        }
-
-        String[] result = new String[size];
-
-        // find entries
-        temp = input;
-        size = 0;
-        while (temp.length() > 0) {
-            int index = temp.indexOf(divider);
-            if (index < 0) {
-                break;    // done with all but last
-            }
-            result[size] = temp.substring(0, index);
-            temp = temp.substring(index + divider.length());
-            size++;
-        }
-        result[size] = temp;
-
-        return result;
     }
 
     /**
@@ -440,8 +361,9 @@ public class StringUtil {
      */
     @CheckReturnValue
     @Nonnull
-    @Deprecated
+    @Deprecated // since 4.9.1
     static public String escapeString(@Nonnull String s) throws UnsupportedEncodingException {
+        jmri.util.Log4JUtil.deprecationWarning(log, "escapeString");        
         return URLEncoder.encode(s, StandardCharsets.UTF_8.toString());
     }
 
@@ -459,8 +381,9 @@ public class StringUtil {
      */
     @CheckReturnValue
     @Nonnull
-    @Deprecated
+    @Deprecated // since 4.9.1
     static public String unescapeString(@Nonnull String s) throws UnsupportedEncodingException {
+        jmri.util.Log4JUtil.deprecationWarning(log, "unescapeString");        
         return URLDecoder.decode(s, StandardCharsets.UTF_8.toString());
     }
 
@@ -554,4 +477,5 @@ public class StringUtil {
         }
     }
 
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(StringUtil.class);
 }

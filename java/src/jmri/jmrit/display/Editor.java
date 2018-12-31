@@ -937,18 +937,6 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      return _showCoordinates;
      }
      */
-    /**
-     * Control whether target panel shows a menu
-     *
-     * @param state true for controlling.
-     * @deprecated 3.9.5
-     * @see #setPanelMenuVisible(boolean)
-     */
-    @Deprecated
-    public void setPanelMenu(boolean state) {
-        _targetFrame.getJMenuBar().setVisible(state);
-        validate();
-    }
 
     /**
      * Hide or show menus on the target panel.
@@ -2659,9 +2647,10 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      *              for future use
      * @deprecated since 4.11.5. use {@link #dispose()} instead.
      */
-    @Deprecated
+    @Deprecated // 4.11.5
     public void dispose(boolean clear) {
         log.debug("Editor delete and dispose done. clear= {}", clear);
+        jmri.util.Log4JUtil.deprecationWarning(log, "dispose(boolean )");        
         dispose();
     }
 

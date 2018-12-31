@@ -3,9 +3,10 @@ package jmri.jmrix.pi;
 import jmri.Turnout;
 
 /**
- * Implement turnout manager.
- * <P>
- * System names are "PTnnn", where nnn is the turnout number without padding.
+ * Implement Pi turnout manager.
+ * <p>
+ * System names are "PTnnn", where P is the user configurable system prefix,
+ * nnn is the turnout number without padding.
  *
  * @author   Paul Bender Copyright (C) 2015
  */

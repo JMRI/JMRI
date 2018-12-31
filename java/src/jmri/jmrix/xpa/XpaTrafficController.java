@@ -205,19 +205,6 @@ public class XpaTrafficController implements XpaInterface, Runnable {
         controller = null;
     }
 
-    /**
-     * Static function returning the XpaTrafficController instance to use.
-     *
-     * @return The registered XpaTrafficController instance for general use, if
-     *         need be creating one.
-     * @deprecated since 4.3.6
-     */
-    @Deprecated
-    static public XpaTrafficController instance() {
-        log.error("Deprecated instance method called");
-        return null;
-    }
-
     // data members to hold the streams
     DataInputStream istream = null;
     OutputStream ostream = null;

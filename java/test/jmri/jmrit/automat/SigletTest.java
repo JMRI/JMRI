@@ -39,6 +39,7 @@ public class SigletTest {
         is1.setState(Sensor.ACTIVE);
         
         JUnitUtil.waitFor( ()->{ return output; }, "setOutput run again"); 
+        t.stop();
     }
 
 
@@ -58,6 +59,7 @@ public class SigletTest {
         t.start();
 
         jmri.util.JUnitAppender.assertErrorMessage("Siglet start invoked (without a name), but no inputs provided"); 
+        t.stop();
     }
 
     @Test
@@ -79,6 +81,7 @@ public class SigletTest {
         t.start();
 
         jmri.util.JUnitAppender.assertErrorMessage("Siglet start invoked for \"foo\", but no inputs provided"); 
+        t.stop();
     }
 
     // The minimal setup for log4J

@@ -24,8 +24,6 @@ import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
@@ -36,14 +34,11 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JSplitPane;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
-import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultFormatter;
-import javax.swing.text.Element;
 import javax.swing.Timer;
 import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
@@ -54,6 +49,7 @@ import jmri.jmrix.can.cbus.CbusMessage;
 import jmri.jmrix.can.cbus.CbusOpCodes;
 import jmri.jmrix.can.TrafficController;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.TextAreaFIFO;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -309,19 +305,6 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
         
         tablefeedback.append(Bundle.getMessage("NodeConfigStartup"));
         
-        /*  Uncomment to start node search on startup
-        Timer onStartup = new Timer(250, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                searchfornodes();
-                onStartup.stop();
-                onStartup=null;
-            }
-        });
-        onStartup.setRepeats(false);
-        onStartup.start();
-        
-        */
     }
     
     private void checkWriteButtonDirty(){
@@ -1874,42 +1857,7 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
         if (tc != null) {
             tc.removeCanListener(this);
         }
-    }
-
-    /**
-     * Keeps the message log windows to a reasonable length
-     * https://community.oracle.com/thread/1373400
-     */
-    private static class TextAreaFIFO extends JTextArea implements DocumentListener {
-        private int maxLines;
-    
-        public TextAreaFIFO(int lines) {
-            maxLines = lines;
-            getDocument().addDocumentListener( this );
-        }
-    
-        public void insertUpdate(DocumentEvent e) {
-            javax.swing.SwingUtilities.invokeLater( new Runnable() {
-                public void run() {
-                    removeLines();
-                }
-            });
-        }
-        public void removeUpdate(DocumentEvent e) {}
-        public void changedUpdate(DocumentEvent e) {}
-        public void removeLines()
-        {
-            Element root = getDocument().getDefaultRootElement();
-            while (root.getElementCount() > maxLines) {
-                Element firstLine = root.getElement(0);
-                try {
-                    getDocument().remove(0, firstLine.getEndOffset());
-                } catch(BadLocationException ble) {
-                    System.out.println(ble);
-                }
-            }
-        setCaretPosition( getDocument().getLength() );
-        }
+        tablefeedback.dispose();
     }
     
     /**

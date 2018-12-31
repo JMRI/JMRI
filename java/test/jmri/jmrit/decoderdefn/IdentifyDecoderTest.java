@@ -364,6 +364,10 @@ public class IdentifyDecoderTest {
         Assert.assertEquals("found mfg ID ", 48, i.mfgID);
         Assert.assertEquals("found model ID ", 88, i.modelID);
         Assert.assertEquals("found product ID ", -1, i.productID);
+        
+        jmri.util.JUnitAppender.assertWarnMessage("error 2 readng CV 7, trying Paged mode");
+        jmri.util.JUnitAppender.assertWarnMessage("Restoring Direct mode");
+        jmri.util.JUnitAppender.assertWarnMessage("CV 159 is optional. Will assume not present...");
     }
 
     /**
@@ -374,8 +378,8 @@ public class IdentifyDecoderTest {
         JUnitUtil.setUp();
         p = new ProgDebugger() {
             @Override
-            public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
-                cvRead = CV;
+            public void readCV(String CV, jmri.ProgListener p) throws jmri.ProgrammerException {
+                cvRead = Integer.parseInt(CV);
             }
         };
         p.setMode(ProgrammingMode.DIRECTMODE);
