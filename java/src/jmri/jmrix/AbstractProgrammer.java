@@ -66,6 +66,9 @@ public abstract class AbstractProgrammer implements Programmer {
         if ((code & ProgListener.CommError) != 0) {
             sbuf.append(Bundle.getMessage("CommError") + " ");
         }
+        if ((code & ProgListener.OperationNotSupported) != 0) {
+            sbuf.append(Bundle.getMessage("OperationNotSupported") + " ");
+        }
 
         // remove trailing separators
         if (sbuf.length() > 2) {

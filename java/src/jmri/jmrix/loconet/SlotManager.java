@@ -822,7 +822,9 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         List<ProgrammingMode> ret = new ArrayList<>();
         ret.add(ProgrammingMode.PAGEMODE);
         ret.add(ProgrammingMode.DIRECTBYTEMODE);
-        ret.add(ProgrammingMode.DIRECTBITMODE);
+        if (getCommandStationType().getSupportsServiceModeProgrammingBitMode()) {
+            ret.add(ProgrammingMode.DIRECTBITMODE);
+        }
         ret.add(ProgrammingMode.REGISTERMODE);
         ret.add(ProgrammingMode.ADDRESSMODE);
         ret.add(csOpSwProgrammingMode);
@@ -986,12 +988,40 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
             } else {
                 log.warn("rejecting the cs opsw access account unsupported CV name format");
                 // unsupported format in "cv" name. Signal an error
-                notifyProgListenerEnd(p, 1, ProgListener.SequenceError);
+                notifyProgListenerEnd(p, 1, ProgListener.OperationNotSupported);
                 return;
 
             }
         } else {
-            writeCV(Integer.parseInt(cvNum), val, p);
+            // TODO: un-comment the following and protect appropriately if we
+            // add a feature to differentiate between programming of LocoNet-connected
+            // versus Service-mode-programmer-track-connected decoders.
+            // The OperationNotSupported message would apply to service-mode-
+            // programmer-track-connected decoders only.
+//            if (!getCommandStationType().getCanRead()) {
+//                notifyProgListenerEnd(p, 1, ProgListener.OperationNotSupported);
+//            }
+
+            lopsa = 0;
+            hopsa = 0;
+            mServiceMode = true;
+            // parse the programming command
+            int pcmd = 0x43;       // LPE imples 0x40, but 0x43 is observed
+            if (getMode().equals(ProgrammingMode.PAGEMODE)) {
+                pcmd = pcmd | 0x20;
+            } else if (getMode().equals(ProgrammingMode.DIRECTBYTEMODE)) {
+                pcmd = pcmd | 0x28;
+            } else if (getMode().equals(ProgrammingMode.REGISTERMODE)
+                    || getMode().equals(ProgrammingMode.ADDRESSMODE)) {
+                pcmd = pcmd | 0x10;
+            } else if (getMode().equals(ProgrammingMode.DIRECTBITMODE)) {
+                pcmd = pcmd | 0x08;
+            } else {
+                throw new jmri.ProgrammerException("mode not supported"); // NOI18N
+            }
+
+            doWrite(Integer.parseInt(cvNum), val, p, pcmd);
+
         }
     }
 
@@ -1006,25 +1036,8 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     @Override
     @Deprecated // 4.1.1
     public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
-        lopsa = 0;
-        hopsa = 0;
-        mServiceMode = true;
-        // parse the programming command
-        int pcmd = 0x43;       // LPE imples 0x40, but 0x43 is observed
-        if (getMode().equals(ProgrammingMode.PAGEMODE)) {
-            pcmd = pcmd | 0x20;
-        } else if (getMode().equals(ProgrammingMode.DIRECTBYTEMODE)) {
-            pcmd = pcmd | 0x28;
-        } else if (getMode().equals(ProgrammingMode.REGISTERMODE)
-                || getMode().equals(ProgrammingMode.ADDRESSMODE)) {
-            pcmd = pcmd | 0x10;
-        } else if (getMode().equals(ProgrammingMode.DIRECTBITMODE)) {
-            pcmd = pcmd | 0x08;
-        } else {
-            throw new jmri.ProgrammerException("mode not supported"); // NOI18N
-        }
 
-        doWrite(CV, val, p, pcmd);
+        writeCV(Integer.toString(CV), val, p);
     }
 
     /**
@@ -1102,7 +1115,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
             } else {
                 log.warn("rejecting the cs opsw access account unsupported CV name format");
                 // unsupported format in "cv" name.  Signal an error.
-                notifyProgListenerEnd(p, 1, ProgListener.SequenceError);
+                notifyProgListenerEnd(p, 1, ProgListener.OperationNotSupported);
                 return;
             }
         }
@@ -1160,7 +1173,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     CsOpSwAccess csOpSwAccessor;
 
     /**
-     * Read a CV via the OpsMode programmer.
+     * Read a CV via the Service-mode programmer.
      *
      * @param cvNum a String containing the CV number
      * @param p programmer
@@ -1187,12 +1200,40 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
             } else {
                 log.warn("rejecting the cs opsw access account unsupported CV name format");
                 // unsupported format in "cv" name.  Signal an error.
-                notifyProgListenerEnd(p, 1, ProgListener.SequenceError);
+                notifyProgListenerEnd(p, 1, ProgListener.OperationNotSupported);
                 return;
 
             }
         } else {
-            readCV(Integer.parseInt(cvNum), p);
+            int CV = Integer.parseInt(cvNum);
+            lopsa = 0;
+            hopsa = 0;
+            mServiceMode = true;
+            // TODO: un-comment the following and protect appropriately if we
+            // add a feature to differentiate between programming of LocoNet-connected
+            // versus Service-mode-programmer-track-connected decoders.
+            // The OperationNotSupported message would apply to service-mode-
+            // programmer-track-connected decoders only.
+//            if (!getCommandStationType().getCanRead()) {
+//                notifyProgListenerEnd(p, 1, ProgListener.OperationNotSupported);
+//            }
+
+            // parse the programming command
+            int pcmd = 0x03;       // LPE imples 0x00, but 0x03 is observed
+            if (getMode().equals(ProgrammingMode.PAGEMODE)) {
+                pcmd = pcmd | 0x20;
+            } else if (getMode().equals(ProgrammingMode.DIRECTBYTEMODE)) {
+                pcmd = pcmd | 0x28;
+            } else if (getMode().equals(ProgrammingMode.DIRECTBITMODE)) {
+                pcmd = pcmd | 0x08;
+            } else if (getMode().equals(ProgrammingMode.REGISTERMODE)
+                    || getMode().equals(ProgrammingMode.ADDRESSMODE)) {
+                pcmd = pcmd | 0x10;
+            } else {
+                throw new jmri.ProgrammerException("mode not supported"); // NOI18N
+            }
+
+            doRead(CV, p, pcmd);
         }
     }
 
@@ -1213,7 +1254,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     }
 
     /**
-     * Read a CV via the OpsMode programmer.
+     * Read a CV via the Service-mode programmer.
      *
      * @param CV the CV number
      * @param p programmer
@@ -1222,25 +1263,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     @Override
     @Deprecated // 4.1.1
     public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
-        lopsa = 0;
-        hopsa = 0;
-        mServiceMode = true;
-        // parse the programming command
-        int pcmd = 0x03;       // LPE imples 0x00, but 0x03 is observed
-        if (getMode().equals(ProgrammingMode.PAGEMODE)) {
-            pcmd = pcmd | 0x20;
-        } else if (getMode().equals(ProgrammingMode.DIRECTBYTEMODE)) {
-            pcmd = pcmd | 0x28;
-        } else if (getMode().equals(ProgrammingMode.DIRECTBITMODE)) {
-            pcmd = pcmd | 0x08;
-        } else if (getMode().equals(ProgrammingMode.REGISTERMODE)
-                || getMode().equals(ProgrammingMode.ADDRESSMODE)) {
-            pcmd = pcmd | 0x10;
-        } else {
-            throw new jmri.ProgrammerException("mode not supported"); // NOI18N
-        }
-
-        doRead(CV, p, pcmd);
+        readCV(Integer.toString(CV), p);
     }
 
 

@@ -1787,7 +1787,12 @@ public class LocoNetMessageInterpret {
                         return Bundle.getMessage("LN_MSG_LONG_ACK_WR_SL_FAIL");
                     case 0x01:
                         return Bundle.getMessage("LN_MSG_LONG_ACK_WR_SL_OK");
+                    case 0x0b:
+                    case 0x4b:
+                    case 0x13:
+                    case 0x53:
                     case 0x23:
+                    case 0x63:
                     case 0x2b:
                     case 0x6B:
                         return Bundle.getMessage("LN_MSG_LONG_ACK_WR_SL_PROG_DCS51_OK");

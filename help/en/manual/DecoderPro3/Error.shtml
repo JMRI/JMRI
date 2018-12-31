@@ -193,6 +193,22 @@
           preferences. Check that. If that's correct and it's still
           happening, ask for help on the JMRI users list.</p>
         </dd>
+
+        <dt><strong>312 - Operation Not Supported Error</strong></dt>
+
+        <dd>
+          <p>The requested programming operation is not supported by
+              the hardware.</p>
+
+          <p>If you receive this error message, check that you have specified
+              the correct command station in your configuration profile's
+              connection.  If the command station is correctly selected, use
+              a different programming mode.  If you are attempting to program
+              Digitrax command station OpSw settings when this message appears,
+              it may indicate a corrupted command station "decoder" definition
+              file.</p>
+        </dd>
+
       </dl>
       <hr>
 

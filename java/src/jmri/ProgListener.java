@@ -105,5 +105,11 @@ public interface ProgListener extends java.util.EventListener {
      * station and the PC during programming
      */
     public final int CommError = 0x400;
+
+    /**
+     * Constant denoting that the hardware does not support this programming 
+     * operation
+     */
+    public final int OperationNotSupported = 0x800;
 }
 

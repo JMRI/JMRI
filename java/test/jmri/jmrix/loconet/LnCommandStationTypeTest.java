@@ -51,6 +51,48 @@ public class LnCommandStationTypeTest {
         Assert.assertFalse(LnCommandStationType.COMMAND_STATION_MM.getImplementsIdle());
         }
 
+    @Test
+    public void testBitModeAndReadback() {
+        Assert.assertTrue(LnCommandStationType.COMMAND_STATION_DCS050.getSupportsServiceModeProgrammingBitMode());
+        Assert.assertTrue(LnCommandStationType.COMMAND_STATION_DCS051.getSupportsServiceModeProgrammingBitMode());
+        Assert.assertTrue(LnCommandStationType.COMMAND_STATION_DCS100.getSupportsServiceModeProgrammingBitMode());
+        Assert.assertTrue(LnCommandStationType.COMMAND_STATION_DB150.getSupportsServiceModeProgrammingBitMode());
+        Assert.assertTrue(LnCommandStationType.COMMAND_STATION_DCS200.getSupportsServiceModeProgrammingBitMode());
+        Assert.assertTrue(LnCommandStationType.COMMAND_STATION_DCS210.getSupportsServiceModeProgrammingBitMode());
+        Assert.assertTrue(LnCommandStationType.COMMAND_STATION_DCS240.getSupportsServiceModeProgrammingBitMode());
+        Assert.assertTrue(LnCommandStationType.COMMAND_STATION_PR2_ALONE.getSupportsServiceModeProgrammingBitMode());
+        Assert.assertTrue(LnCommandStationType.COMMAND_STATION_PR3_ALONE.getSupportsServiceModeProgrammingBitMode());
+        Assert.assertFalse(LnCommandStationType.COMMAND_STATION_STANDALONE.getSupportsServiceModeProgrammingBitMode());
+
+        // the following command station types are _assumed_ by to support "Bit-mode
+        // CV programming.  This assumption needs to be verified with respect to real hardware.
+        Assert.assertTrue(LnCommandStationType.COMMAND_STATION_IBX_TYPE_1.getSupportsServiceModeProgrammingBitMode());
+        Assert.assertTrue(LnCommandStationType.COMMAND_STATION_IBX_TYPE_2.getSupportsServiceModeProgrammingBitMode());
+        Assert.assertTrue(LnCommandStationType.COMMAND_STATION_LBPS.getSupportsServiceModeProgrammingBitMode());
+        Assert.assertTrue(LnCommandStationType.COMMAND_STATION_MM.getSupportsServiceModeProgrammingBitMode());
+
+        Assert.assertTrue(LnCommandStationType.COMMAND_STATION_DCS050.getSupportsServiceModeReadback());
+        Assert.assertTrue(LnCommandStationType.COMMAND_STATION_DCS051.getSupportsServiceModeProgrammingBitMode());
+        Assert.assertTrue(LnCommandStationType.COMMAND_STATION_DCS100.getSupportsServiceModeProgrammingBitMode());
+        Assert.assertFalse(LnCommandStationType.COMMAND_STATION_DB150.getSupportsServiceModeProgrammingBitMode());
+        Assert.assertTrue(LnCommandStationType.COMMAND_STATION_DCS200.getSupportsServiceModeProgrammingBitMode());
+        Assert.assertTrue(LnCommandStationType.COMMAND_STATION_DCS210.getSupportsServiceModeProgrammingBitMode());
+        Assert.assertTrue(LnCommandStationType.COMMAND_STATION_DCS240.getSupportsServiceModeProgrammingBitMode());
+        Assert.assertTrue(LnCommandStationType.COMMAND_STATION_PR2_ALONE.getSupportsServiceModeProgrammingBitMode());
+        Assert.assertTrue(LnCommandStationType.COMMAND_STATION_PR3_ALONE.getSupportsServiceModeProgrammingBitMode());
+        Assert.assertFalse(LnCommandStationType.COMMAND_STATION_STANDALONE.getSupportsServiceModeProgrammingBitMode());
+
+        // the following command station types are _assumed_ by to support "Bit-mode
+        // CV programming.  This assumption needs to be verified with respect to real hardware.
+        Assert.assertTrue(LnCommandStationType.COMMAND_STATION_IBX_TYPE_1.getSupportsServiceModeProgrammingBitMode());
+        Assert.assertTrue(LnCommandStationType.COMMAND_STATION_IBX_TYPE_2.getSupportsServiceModeProgrammingBitMode());
+        Assert.assertTrue(LnCommandStationType.COMMAND_STATION_LBPS.getSupportsServiceModeProgrammingBitMode());
+        Assert.assertTrue(LnCommandStationType.COMMAND_STATION_MM.getSupportsServiceModeProgrammingBitMode());
+
+    }
+
+
+
     // The minimal setup for log4J
     @Before
     public void setUp() {
