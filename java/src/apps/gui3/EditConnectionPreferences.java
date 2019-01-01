@@ -135,10 +135,7 @@ public class EditConnectionPreferences extends AppConfigBase {
         getTabbedPreferences().preferencesArray.stream().forEach((preferences) -> {
             detailpanel.add(preferences.getPanel(), preferences.getPrefItem());
         });
-        JPanel panel = new JPanel();
-        panel.add(new JButton("Test"));
-        detailpanel.add(panel, "DANIEL");
-        
+
         updateJList();
         add(buttonpanel);
         add(new JSeparator(JSeparator.VERTICAL));
