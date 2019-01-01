@@ -1,0 +1,836 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2018 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <enumChoice value="0">
+    <choice>Always ON</choice>
+    <choice xml:lang="de">Immer AN</choice>
+    <choice xml:lang="fr">Toujours ON</choice>
+  </enumChoice>
+
+  <enumChoice value="1">
+    <choice>Only Forward</choice>
+    <choice xml:lang="de">Nur Vorwärts</choice>
+    <choice xml:lang="fr">Seul. En Avant</choice>
+  </enumChoice>
+  <enumChoice value="2">
+    <choice>Only Backward</choice>
+    <choice xml:lang="de">Nur Rückwärts</choice>
+    <choice xml:lang="fr">Seul. En Arrière</choice>
+  </enumChoice>
+
+  <enumChoice value="3">
+    <choice>Only Stopped</choice>
+    <choice xml:lang="de">Nur im Stand</choice>
+    <choice xml:lang="fr">Seul. à l'Arrêt</choice>
+  </enumChoice>
+  <enumChoice value="4"> <!-- 1+3 -->
+    <choice>Only Forward+Stopped</choice>
+    <choice xml:lang="de">Nur Vorwärts+Stand</choice>
+    <choice xml:lang="fr">Seul. En Avant+Arrêt</choice>
+  </enumChoice>
+  <enumChoice value="5"> <!-- 2+3 -->
+    <choice>Only Backward+Stopped</choice>
+    <choice xml:lang="de">Nur Rückwärts+Stand</choice>
+    <choice xml:lang="fr">Seul. En Arrière+Arrêt</choice>
+  </enumChoice>
+
+  <enumChoice value="6">
+    <choice>Only Driving</choice>
+    <choice xml:lang="de">Nur bei Fahrt</choice>
+    <choice xml:lang="fr">Seul. en Marche</choice>
+  </enumChoice>
+  <enumChoice value="7"> <!-- 1+6 -->
+    <choice>Only Forward+Driving</choice>
+    <choice xml:lang="de">Nur Vorwärts+Fahrt</choice>
+    <choice xml:lang="fr">Seul. En Avant+Marche</choice>
+  </enumChoice>
+  <enumChoice value="8"> <!-- 2+6 -->
+    <choice>Only Backward+Driving</choice>
+    <choice xml:lang="de">Nur Rückwärts+Fahrt</choice>
+    <choice xml:lang="fr">Seul. En Arrière+Marche</choice>
+  </enumChoice>
+
+  <enumChoice value="9">
+    <choice>Only F0 OFF</choice>
+    <choice xml:lang="de">Nur F0 AUS</choice>
+    <choice xml:lang="fr">Seul. F0 OFF</choice>
+  </enumChoice>
+  <enumChoice value="10"> <!-- 1+9 -->
+    <choice>Only Forward+F0 OFF</choice>
+    <choice xml:lang="de">Nur Vorwärts+F0 AUS</choice>
+    <choice xml:lang="fr">Seul. En Avant+F0 OFF</choice>
+  </enumChoice>
+  <enumChoice value="11"> <!-- 2+9 -->
+    <choice>Only Backward+F0 OFF</choice>
+    <choice xml:lang="de">Nur Rückwärts+F0 AUS</choice>
+    <choice xml:lang="fr">Seul. En Arrière+F0 OFF</choice>
+  </enumChoice>
+  <enumChoice value="12"> <!-- 3+9 -->
+    <choice>Only Stopped+F0 OFF</choice>
+    <choice xml:lang="de">Nur Stand+F0 AUS</choice>
+    <choice xml:lang="fr">Seul. Arrêt+F0 OFF</choice>
+  </enumChoice>
+  <enumChoice value="13"> <!-- 1+3+9 -->
+    <choice>Only Forward+Stopped+F0 OFF</choice>
+    <choice xml:lang="de">Nur Vorwärts+Stand+F0 AUS</choice>
+    <choice xml:lang="fr">Seul. Avant+Arrêt+F0 OFF</choice>
+  </enumChoice>
+  <enumChoice value="14"> <!-- 2+3+9 -->
+    <choice>Only Backward+Stopped+F0 OFF</choice>
+    <choice xml:lang="de">Nur Rückwärts+Stand+F0 AUS</choice>
+    <choice xml:lang="fr">Seul. Arrière+Arrêt+F0 OFF</choice>
+  </enumChoice>
+  <enumChoice value="15"> <!-- 6+9 -->
+    <choice>Only Driving+F0 OFF</choice>
+    <choice xml:lang="de">Nur Fahrt+F0 AUS</choice>
+    <choice xml:lang="fr">Seul. Marche+F0 OFF</choice>
+  </enumChoice>
+  <enumChoice value="16"> <!-- 1+6+9 -->
+    <choice>Only Forward+Driving+F0 OFF</choice>
+    <choice xml:lang="de">Nur Vorwärts+Fahrt+F0 AUS</choice>
+    <choice xml:lang="fr">Seul. Avant+Marche+F0 OFF</choice>
+  </enumChoice>
+  <enumChoice value="17"> <!-- 2+6+9 -->
+    <choice>Only Backward+Driving+F0 OFF</choice>
+    <choice xml:lang="de">Nur Rückwärts+Fahrt+F0 AUS</choice>
+    <choice xml:lang="fr">Seul. Arrière+Marche+F0 OFF</choice>
+  </enumChoice>
+
+  <enumChoice value="18">
+    <choice>Only F0 ON</choice>
+    <choice xml:lang="de">Nur F0 AN</choice>
+    <choice xml:lang="fr">Seul. F0 ON</choice>
+  </enumChoice>
+  <enumChoice value="19"> <!-- 1+18 -->
+    <choice>Only Forward+F0 ON</choice>
+    <choice xml:lang="de">Nur Vorwärts+F0 AN</choice>
+    <choice xml:lang="fr">Seul. En Avant+F0 ON</choice>
+  </enumChoice>
+  <enumChoice value="20"> <!-- 2+18 -->
+    <choice>Only Backward+F0 ON</choice>
+    <choice xml:lang="de">Nur Rückwärts+F0 AN</choice>
+    <choice xml:lang="fr">Seul. En Arrière+F0 ON</choice>
+  </enumChoice>
+  <enumChoice value="21"> <!-- 3+18 -->
+    <choice>Only Stopped+F0 ON</choice>
+    <choice xml:lang="de">Nur Stand+F0 AN</choice>
+    <choice xml:lang="fr">Seul. Arrêt+F0 ON</choice>
+  </enumChoice>
+  <enumChoice value="22"> <!-- 1+3+18 -->
+    <choice>Only Forward+Stopped+F0 ON</choice>
+    <choice xml:lang="de">Nur Vorwärts+Stand+F0 AN</choice>
+    <choice xml:lang="fr">Seul. Avant+Arrêt+F0 ON</choice>
+  </enumChoice>
+  <enumChoice value="23"> <!-- 2+3+18 -->
+    <choice>Only Backward+Stopped+F0 ON</choice>
+    <choice xml:lang="de">Nur Rückwärts+Stand+F0 AN</choice>
+    <choice xml:lang="fr">Seul. Arrière+Arrêt+F0 ON</choice>
+  </enumChoice>
+  <enumChoice value="24"> <!-- 6+18 -->
+    <choice>Only Driving+F0 ON</choice>
+    <choice xml:lang="de">Nur Fahrt+F0 AN</choice>
+    <choice xml:lang="fr">Seul. Marche+F0 ON</choice>
+  </enumChoice>
+  <enumChoice value="25"> <!-- 1+6+18 -->
+    <choice>Only Forward+Driving+F0 ON</choice>
+    <choice xml:lang="de">Nur Vorwärts+Fahrt+F0 AN</choice>
+    <choice xml:lang="fr">Seul. Avant+Marche+F0 ON</choice>
+  </enumChoice>
+  <enumChoice value="26"> <!-- 2+6+18 -->
+    <choice>Only Backward+Driving+F0 ON</choice>
+    <choice xml:lang="de">Nur Rückwärts+Fahrt+F0 AN</choice>
+    <choice xml:lang="fr">Seul. Arrière+Marche+F0 ON</choice>
+  </enumChoice>
+
+  <enumChoice value="27">
+    <choice>Not shunting</choice>
+    <choice xml:lang="de">Nicht Rangiergang</choice>
+    <choice xml:lang="fr">Pas mode Manoeuvre</choice>
+  </enumChoice>
+  <enumChoice value="28"> <!-- 1+27 -->
+    <choice>Forward+Not Shunting</choice>
+    <choice xml:lang="de">Vorwärts+Nicht Rangierg</choice>
+    <choice xml:lang="fr">Avant+Pas Manoeuvre</choice>
+  </enumChoice>
+  <enumChoice value="29"> <!-- 2+27 -->
+    <choice>Backward+Not Shunting</choice>
+    <choice xml:lang="de">Rückwärts+Nicht Rangierg</choice>
+    <choice xml:lang="fr">Arrière+Pas Manoeuvre</choice>
+  </enumChoice>
+  <enumChoice value="30"> <!-- 3+27 -->
+    <choice>Stopped+Not Shunting</choice>
+    <choice xml:lang="de">Im Stand+Nicht Rangierg</choice>
+    <choice xml:lang="fr">à l'Arrêt+Pas Manoeuvre</choice>
+  </enumChoice>
+  <enumChoice value="31"> <!-- 1+3+27 -->
+    <choice>Forward+Stopped+Not Shunting</choice>
+    <choice xml:lang="de">Vorwärts+Stand+Nicht Rangierg</choice>
+    <choice xml:lang="fr">En Avant+Arrêt+Pas Manoeuvre</choice>
+  </enumChoice>
+  <enumChoice value="32"> <!-- 2+3+27 -->
+    <choice>Backward+Stopped+Not Shunting</choice>
+    <choice xml:lang="de">Rückwärts+Stand+Nicht Rangierg</choice>
+    <choice xml:lang="fr">Arrière+Arrêt+Pas Manoeuvre</choice>
+  </enumChoice>
+  <enumChoice value="33"> <!-- 6+27 -->
+    <choice>Driving+Not Shunting</choice>
+    <choice xml:lang="de">Bei Fahrt+Nicht Rangierg</choice>
+    <choice xml:lang="fr">En Marche+Pas Manoeuvre</choice>
+  </enumChoice>
+  <enumChoice value="34"> <!-- 1+6+27 -->
+    <choice>Forward+Driving+Not Shunting</choice>
+    <choice xml:lang="de">Vorwärts+Fahrt+Nicht Rangierg</choice>
+    <choice xml:lang="fr">Avant+Marche+Pas Manoeuvre</choice>
+  </enumChoice>
+  <enumChoice value="35"> <!-- 2+6+27 -->
+    <choice>Backward+Driving+Not Shunting</choice>
+    <choice xml:lang="de">Rückwärts+Fahrt+Nicht Rangierg</choice>
+    <choice xml:lang="fr">Arrière+Marche+Pas Manoeuvre</choice>
+  </enumChoice>
+  <enumChoice value="36"> <!-- 9+27 -->
+    <choice>F0 OFF+Not Shunting</choice>
+    <choice xml:lang="de">F0 AUS+Nicht Rangierg</choice>
+    <choice xml:lang="fr">F0 OFF+Pas Manoeuvre</choice>
+  </enumChoice>
+  <enumChoice value="37"> <!-- 1+9+27 -->
+    <choice>Forward+F0 OFF+Not Shunting</choice>
+    <choice xml:lang="de">Vorwärts+F0 AUS+Nicht Rangierg</choice>
+    <choice xml:lang="fr">Avant+F0 OFF+Pas Manoeuvre</choice>
+  </enumChoice>
+  <enumChoice value="38"> <!-- 2+9+27 -->
+    <choice>Backward+F0 OFF+Not Shunting</choice>
+    <choice xml:lang="de">Rückwärts+F0 AUS+Nicht Rangierg</choice>
+    <choice xml:lang="fr">En Arrière+F0 OFF+Pas Manoeuvre</choice>
+  </enumChoice>
+  <enumChoice value="39"> <!-- 3+9+27 -->
+    <choice>Stopped+F0 OFF+Not Shunting</choice>
+    <choice xml:lang="de">Stand+F0 AUS+Nicht Rangierg</choice>
+    <choice xml:lang="fr">Arrêt+F0 OFF+Pas Manoeuvre</choice>
+  </enumChoice>
+  <enumChoice value="40"> <!-- 1+3+9+27 -->
+    <choice>Forward+Stopped+F0 OFF+Not Shunting</choice>
+    <choice xml:lang="de">Vorwärts+Stand+F0 AUS+Nicht Rangierg</choice>
+    <choice xml:lang="fr">En Avant+Arrêt+F0 OFF+Pas Manoeuvre</choice>
+  </enumChoice>
+  <enumChoice value="41"> <!-- 2+3+9+27 -->
+    <choice>Backward+Stopped+F0 OFF+Not Shunting</choice>
+    <choice xml:lang="de">Rückwärts+Stand+F0 AUS+Nicht Rangierg</choice>
+    <choice xml:lang="fr">En Arrière+Arrêt+F0 OFF+Pas Manoeuvre</choice>
+  </enumChoice>
+  <enumChoice value="42"> <!-- 6+9+27 -->
+    <choice>Driving+F0 OFF+Not Shunting</choice>
+    <choice xml:lang="de">Fahrt+F0 AUS+Nicht Rangierg</choice>
+    <choice xml:lang="fr">En Marche+F0 OFF+Pas Manoeuvre</choice>
+  </enumChoice>
+  <enumChoice value="43"> <!-- 1+6+9+27 -->
+    <choice>Forward+Driving+F0 OFF+Not Shunting</choice>
+    <choice xml:lang="de">Vorwärts+Fahrt+F0 AUS+Nicht Rangierg</choice>
+    <choice xml:lang="fr">En Avant+Marche+F0 OFF+Pas Manoeuvre</choice>
+  </enumChoice>
+  <enumChoice value="44"> <!-- 2+6+9+27 -->
+    <choice>Backward+Driving+F0 OFF+Not Shunting</choice>
+    <choice xml:lang="de">Rückwärts+Fahrt+F0 AUS+Nicht Rangierg</choice>
+    <choice xml:lang="fr">En Arrière+Marche+F0 OFF+Pas Manoeuvre</choice>
+  </enumChoice>
+  <enumChoice value="45"> <!-- 18+27 -->
+    <choice>F0 ON+Not Shunting</choice>
+    <choice xml:lang="de">F0 AN+Nicht Rangierg</choice>
+    <choice xml:lang="fr">F0 ON+Pas Manoeuvre</choice>
+  </enumChoice>
+  <enumChoice value="46"> <!-- 1+18+27 -->
+    <choice>Forward+F0 ON+Not Shunting</choice>
+    <choice xml:lang="de">Vorwärts+F0 AN+Nicht Rangierg</choice>
+    <choice xml:lang="fr">Avant+F0 ON+Pas Manoeuvre</choice>
+  </enumChoice>
+  <enumChoice value="47"> <!-- 2+18+27 -->
+    <choice>Backward+F0 ON+Not Shunting</choice>
+    <choice xml:lang="de">Rückwärts+F0 AN+Nicht Rangierg</choice>
+    <choice xml:lang="fr">En Arrière+F0 ON+Pas Manoeuvre</choice>
+  </enumChoice>
+  <enumChoice value="48"> <!-- 3+18+27 -->
+    <choice>Stopped+F0 ON+Not Shunting</choice>
+    <choice xml:lang="de">Stand+F0 AN+Nicht Rangierg</choice>
+    <choice xml:lang="fr">A Arrêt+F0 ON+Pas Manoeuvre</choice>
+  </enumChoice>
+  <enumChoice value="49"> <!-- 1+3+18+27 -->
+    <choice>Forward+Stopped+F0 ON+Not Shunting</choice>
+    <choice xml:lang="de">Vorwärts+Stand+F0 AN+Nicht Rangierg</choice>
+    <choice xml:lang="fr">En Avant+Arrêt+F0 ON+Pas Manoeuvre</choice>
+  </enumChoice>
+  <enumChoice value="50"> <!-- 2+3+18 -->
+    <choice>Backward+Stopped+F0 ON+Not Shunting</choice>
+    <choice xml:lang="de">Rückwärts+Stand+F0 AN+Nicht Rangierg</choice>
+    <choice xml:lang="fr">En Arrière+Arrêt+F0 ON+Pas Manoeuvre</choice>
+  </enumChoice>
+  <enumChoice value="51"> <!-- 6+18+27 -->
+    <choice>Driving+F0 ON+Not Shunting</choice>
+    <choice xml:lang="de">Fahrt+F0 AN+Nicht Rangierg</choice>
+    <choice xml:lang="fr">En Marche+F0 ON+Pas Manoeuvre</choice>
+  </enumChoice>
+  <enumChoice value="52"> <!-- 1+6+18+27 -->
+    <choice>Forward+Driving+F0 ON+Not Shunting</choice>
+    <choice xml:lang="de">Vorwärts+Fahrt+F0 AN+Nicht Rangierg</choice>
+    <choice xml:lang="fr">En Avant+Marche+F0 ON+Pas Manoeuvre</choice>
+  </enumChoice>
+  <enumChoice value="53"> <!-- 2+6+18+27 -->
+    <choice>Backward+Driving+F0 ON+Not Shunting</choice>
+    <choice xml:lang="de">Rückwärts+Fahrt+F0 AN+Nicht Rangierg</choice>
+    <choice xml:lang="fr">En Arrière+Marche+F0 ON+Pas Manoeuvre</choice>
+  </enumChoice>
+
+  <enumChoice value="54">
+    <choice>Only shunting</choice>
+    <choice xml:lang="de">Nur Rangiergang</choice>
+    <choice xml:lang="fr">Seul. mode Manoeuvre</choice>
+  </enumChoice>
+  <enumChoice value="55"> <!-- 1+54 -->
+    <choice>Forward+Shunting</choice>
+    <choice xml:lang="de">Vorwärts+Rangiergang</choice>
+    <choice xml:lang="fr">Avant+Manoeuvre</choice>
+  </enumChoice>
+  <enumChoice value="56"> <!-- 2+54 -->
+    <choice>Backward+Shunting</choice>
+    <choice xml:lang="de">Rückwärts+Rangiergang</choice>
+    <choice xml:lang="fr">Arrière+Manoeuvre</choice>
+  </enumChoice>
+  <enumChoice value="57"> <!-- 3+54 -->
+    <choice>Stopped+Shunting</choice>
+    <choice xml:lang="de">Im Stand+Rangiergang</choice>
+    <choice xml:lang="fr">à l'Arrêt+Manoeuvre</choice>
+  </enumChoice>
+  <enumChoice value="58"> <!-- 1+3+54 -->
+    <choice>Forward+Stopped+Shunting</choice>
+    <choice xml:lang="de">Vorwärts+Stand+Rangiergang</choice>
+    <choice xml:lang="fr">En Avant+Arrêt+Manoeuvre</choice>
+  </enumChoice>
+  <enumChoice value="59"> <!-- 2+3+54 -->
+    <choice>Backward+Stopped+Shunting</choice>
+    <choice xml:lang="de">Rückwärts+Stand+Rangiergang</choice>
+    <choice xml:lang="fr">Arrière+Arrêt+Manoeuvre</choice>
+  </enumChoice>
+  <enumChoice value="60"> <!-- 6+54 -->
+    <choice>Driving+Shunting</choice>
+    <choice xml:lang="de">Bei Fahrt+Rangiergang</choice>
+    <choice xml:lang="fr">En Marche+Manoeuvre</choice>
+  </enumChoice>
+  <enumChoice value="61"> <!-- 1+6+54 -->
+    <choice>Forward+Driving+Shunting</choice>
+    <choice xml:lang="de">Vorwärts+Fahrt+Rangiergang</choice>
+    <choice xml:lang="fr">Avant+Marche+Manoeuvre</choice>
+  </enumChoice>
+  <enumChoice value="62"> <!-- 2+6+54 -->
+    <choice>Backward+Driving+Shunting</choice>
+    <choice xml:lang="de">Rückwärts+Fahrt+Rangiergang</choice>
+    <choice xml:lang="fr">Arrière+Marche+Manoeuvre</choice>
+  </enumChoice>
+  <enumChoice value="63"> <!-- 9+54 -->
+    <choice>F0 OFF+Shunting</choice>
+    <choice xml:lang="de">F0 AUS+Rangiergang</choice>
+    <choice xml:lang="fr">F0 OFF+Manoeuvre</choice>
+  </enumChoice>
+  <enumChoice value="64"> <!-- 1+9+54 -->
+    <choice>Forward+F0 OFF+Shunting</choice>
+    <choice xml:lang="de">Vorwärts+F0 AUS+Rangiergang</choice>
+    <choice xml:lang="fr">Avant+F0 OFF+Manoeuvre</choice>
+  </enumChoice>
+  <enumChoice value="65"> <!-- 2+9+54 -->
+    <choice>Backward+F0 OFF+Shunting</choice>
+    <choice xml:lang="de">Rückwärts+F0 AUS+Rangiergang</choice>
+    <choice xml:lang="fr">En Arrière+F0 OFF+Manoeuvre</choice>
+  </enumChoice>
+  <enumChoice value="66"> <!-- 3+9+54 -->
+    <choice>Stopped+F0 OFF+Shunting</choice>
+    <choice xml:lang="de">Stand+F0 AUS+Rangiergang</choice>
+    <choice xml:lang="fr">Arrêt+F0 OFF+Manoeuvre</choice>
+  </enumChoice>
+  <enumChoice value="67"> <!-- 1+3+9+54 -->
+    <choice>Forward+Stopped+F0 OFF+Shunting</choice>
+    <choice xml:lang="de">Vorwärts+Stand+F0 AUS+Rangiergang</choice>
+    <choice xml:lang="fr">En Avant+Arrêt+F0 OFF+Manoeuvre</choice>
+  </enumChoice>
+  <enumChoice value="68"> <!-- 2+3+9+54 -->
+    <choice>Backward+Stopped+F0 OFF+Shunting</choice>
+    <choice xml:lang="de">Rückwärts+Stand+F0 AUS+Rangiergang</choice>
+    <choice xml:lang="fr">En Arrière+Arrêt+F0 OFF+Manoeuvre</choice>
+  </enumChoice>
+  <enumChoice value="69"> <!-- 6+9+54 -->
+    <choice>Driving+F0 OFF+Shunting</choice>
+    <choice xml:lang="de">Fahrt+F0 AUS+Rangiergang</choice>
+    <choice xml:lang="fr">En Marche+F0 OFF+Manoeuvre</choice>
+  </enumChoice>
+  <enumChoice value="70"> <!-- 1+6+9+54 -->
+    <choice>Forward+Driving+F0 OFF+Shunting</choice>
+    <choice xml:lang="de">Vorwärts+Fahrt+F0 AUS+Rangiergang</choice>
+    <choice xml:lang="fr">En Avant+Marche+F0 OFF+Manoeuvre</choice>
+  </enumChoice>
+  <enumChoice value="71"> <!-- 2+6+9+54 -->
+    <choice>Backward+Driving+F0 OFF+Shunting</choice>
+    <choice xml:lang="de">Rückwärts+Fahrt+F0 AUS+Rangiergang</choice>
+    <choice xml:lang="fr">En Arrière+Marche+F0 OFF+Manoeuvre</choice>
+  </enumChoice>
+  <enumChoice value="72"> <!-- 18+54 -->
+    <choice>F0 ON+Shunting</choice>
+    <choice xml:lang="de">F0 AN+Rangiergang</choice>
+    <choice xml:lang="fr">F0 ON+Manoeuvre</choice>
+  </enumChoice>
+  <enumChoice value="73"> <!-- 1+18+54 -->
+    <choice>Forward+F0 ON+Shunting</choice>
+    <choice xml:lang="de">Vorwärts+F0 AN+Rangiergang</choice>
+    <choice xml:lang="fr">Avant+F0 ON+Manoeuvre</choice>
+  </enumChoice>
+  <enumChoice value="74"> <!-- 2+18+54 -->
+    <choice>Backward+F0 ON+Shunting</choice>
+    <choice xml:lang="de">Rückwärts+F0 AN+Rangiergang</choice>
+    <choice xml:lang="fr">En Arrière+F0 ON+Manoeuvre</choice>
+  </enumChoice>
+  <enumChoice value="75"> <!-- 3+18+54 -->
+    <choice>Stopped+F0 ON+Shunting</choice>
+    <choice xml:lang="de">Stand+F0 AN+Rangiergang</choice>
+    <choice xml:lang="fr">A Arrêt+F0 ON+Manoeuvre</choice>
+  </enumChoice>
+  <enumChoice value="76"> <!-- 1+3+18+54 -->
+    <choice>Forward+Stopped+F0 ON+Shunting</choice>
+    <choice xml:lang="de">Vorwärts+Stand+F0 AN+Rangiergang</choice>
+    <choice xml:lang="fr">En Avant+Arrêt+F0 ON+Manoeuvre</choice>
+  </enumChoice>
+  <enumChoice value="77"> <!-- 2+3+18 -->
+    <choice>Backward+Stopped+F0 ON+Shunting</choice>
+    <choice xml:lang="de">Rückwärts+Stand+F0 AN+Rangiergang</choice>
+    <choice xml:lang="fr">En Arrière+Arrêt+F0 ON+Manoeuvre</choice>
+  </enumChoice>
+  <enumChoice value="78"> <!-- 6+18+54 -->
+    <choice>Driving+F0 ON+Shunting</choice>
+    <choice xml:lang="de">Fahrt+F0 AN+Rangiergang</choice>
+    <choice xml:lang="fr">En Marche+F0 ON+Manoeuvre</choice>
+  </enumChoice>
+  <enumChoice value="79"> <!-- 1+6+18+54 -->
+    <choice>Forward+Driving+F0 ON+Shunting</choice>
+    <choice xml:lang="de">Vorwärts+Fahrt+F0 AN+Rangiergang</choice>
+    <choice xml:lang="fr">En Avant+Marche+F0 ON+Manoeuvre</choice>
+  </enumChoice>
+  <enumChoice value="80"> <!-- 2+6+18+54 -->
+    <choice>Backward+Driving+F0 ON+Shunting</choice>
+    <choice xml:lang="de">Rückwärts+Fahrt+F0 AN+Rangiergang</choice>
+    <choice xml:lang="fr">En Arrière+Marche+F0 ON+Manoeuvre</choice>
+  </enumChoice>
+
+  <enumChoice value="81">
+    <choice>Shunt. ignore dir.</choice>
+    <choice xml:lang="de">Rangierg. Richt. ignor.</choice>
+    <choice xml:lang="fr">Manoeuvre ignore dir.</choice>
+  </enumChoice>
+	<enumChoice value="82"> <!-- 1+81 -->
+    <choice>Forward+Shunt. ign. dir</choice>
+    <choice xml:lang="de">Vorwärts+Rangierg. Richt. ign</choice>
+    <choice xml:lang="fr">Avant+Manoeuv. ign. dir</choice>
+  </enumChoice>
+  <enumChoice value="83"> <!-- 2+81 -->
+    <choice>Backward+Shunt. ign. dir</choice>
+    <choice xml:lang="de">Rückwärts+Rangierg. Richt. ign</choice>
+    <choice xml:lang="fr">Arrière+Manoeuv. ign. dir</choice>
+  </enumChoice>
+  <enumChoice value="84"> <!-- 3+81 -->
+    <choice>Stopped+Shunt. ign. dir</choice>
+    <choice xml:lang="de">Im Stand+Rangierg. Richt. ign</choice>
+    <choice xml:lang="fr">à l'Arrêt+Manoeuv. ign. dir</choice>
+  </enumChoice>
+  <enumChoice value="85"> <!-- 1+3+81 -->
+    <choice>Forward+Stopped+Shunt. ign. dir</choice>
+    <choice xml:lang="de">Vorwärts+Stand+Rangierg. Richt. ign</choice>
+    <choice xml:lang="fr">En Avant+Arrêt+Manoeuv. ign. dir</choice>
+  </enumChoice>
+  <enumChoice value="86"> <!-- 2+3+81 -->
+    <choice>Backward+Stopped+Shunt. ign. dir</choice>
+    <choice xml:lang="de">Rückwärts+Stand+Rangierg. Richt. ign</choice>
+    <choice xml:lang="fr">Arrière+Arrêt+Manoeuv. ign. dir</choice>
+  </enumChoice>
+  <enumChoice value="87"> <!-- 6+81 -->
+    <choice>Driving+Shunt. ign. dir</choice>
+    <choice xml:lang="de">Bei Fahrt+Rangierg. Richt. ign</choice>
+    <choice xml:lang="fr">En Marche+Manoeuv. ign. dir</choice>
+  </enumChoice>
+  <enumChoice value="88"> <!-- 1+6+81 -->
+    <choice>Forward+Driving+Shunt. ign. dir</choice>
+    <choice xml:lang="de">Vorwärts+Fahrt+Rangierg. Richt. ign</choice>
+    <choice xml:lang="fr">Avant+Marche+Manoeuv. ign. dir</choice>
+  </enumChoice>
+  <enumChoice value="89"> <!-- 2+6+81 -->
+    <choice>Backward+Driving+Shunt. ign. dir</choice>
+    <choice xml:lang="de">Rückwärts+Fahrt+Rangierg. Richt. ign</choice>
+    <choice xml:lang="fr">Arrière+Marche+Manoeuv. ign. dir</choice>
+  </enumChoice>
+  <enumChoice value="90"> <!-- 9+81 -->
+    <choice>F0 OFF+Shunt. ign. dir</choice>
+    <choice xml:lang="de">F0 AUS+Rangierg. Richt. ign</choice>
+    <choice xml:lang="fr">F0 OFF+Manoeuv. ign. dir</choice>
+  </enumChoice>
+  <enumChoice value="91"> <!-- 1+9+81 -->
+    <choice>Forward+F0 OFF+Shunt. ign. dir</choice>
+    <choice xml:lang="de">Vorwärts+F0 AUS+Rangierg. Richt. ign</choice>
+    <choice xml:lang="fr">Avant+F0 OFF+Manoeuv. ign. dir</choice>
+  </enumChoice>
+  <enumChoice value="92"> <!-- 2+9+81 -->
+    <choice>Backward+F0 OFF+Shunt. ign. dir</choice>
+    <choice xml:lang="de">Rückwärts+F0 AUS+Rangierg. Richt. ign</choice>
+    <choice xml:lang="fr">En Arrière+F0 OFF+Manoeuv. ign. dir</choice>
+  </enumChoice>
+  <enumChoice value="93"> <!-- 3+9+81 -->
+    <choice>Stopped+F0 OFF+Shunt. ign. dir</choice>
+    <choice xml:lang="de">Stand+F0 AUS+Rangierg. Richt. ign</choice>
+    <choice xml:lang="fr">Arrêt+F0 OFF+Manoeuv. ign. dir</choice>
+  </enumChoice>
+  <enumChoice value="94"> <!-- 1+3+9+81 -->
+    <choice>Forward+Stopped+F0 OFF+Shunt. ign. dir</choice>
+    <choice xml:lang="de">Vorwärts+Stand+F0 AUS+Rangierg. Richt. ign</choice>
+    <choice xml:lang="fr">En Avant+Arrêt+F0 OFF+Manoeuv. ign. dir</choice>
+  </enumChoice>
+  <enumChoice value="95"> <!-- 2+3+9+81 -->
+    <choice>Backward+Stopped+F0 OFF+Shunt. ign. dir</choice>
+    <choice xml:lang="de">Rückwärts+Stand+F0 AUS+Rangierg. Richt. ign</choice>
+    <choice xml:lang="fr">En Arrière+Arrêt+F0 OFF+Manoeuv. ign. dir</choice>
+  </enumChoice>
+  <enumChoice value="96"> <!-- 6+9+81 -->
+    <choice>Driving+F0 OFF+Shunt. ign. dir</choice>
+    <choice xml:lang="de">Fahrt+F0 AUS+Rangierg. Richt. ign</choice>
+    <choice xml:lang="fr">En Marche+F0 OFF+Manoeuv. ign. dir</choice>
+  </enumChoice>
+  <enumChoice value="97"> <!-- 1+6+9+81 -->
+    <choice>Forward+Driving+F0 OFF+Shunt. ign. dir</choice>
+    <choice xml:lang="de">Vorwärts+Fahrt+F0 AUS+Rangierg. Richt. ign</choice>
+    <choice xml:lang="fr">En Avant+Marche+F0 OFF+Manoeuv. ign. dir</choice>
+  </enumChoice>
+  <enumChoice value="98"> <!-- 2+6+9+81 -->
+    <choice>Backward+Driving+F0 OFF+Shunt. ign. dir</choice>
+    <choice xml:lang="de">Rückwärts+Fahrt+F0 AUS+Rangierg. Richt. ign</choice>
+    <choice xml:lang="fr">En Arrière+Marche+F0 OFF+Manoeuv. ign. dir</choice>
+  </enumChoice>
+  <enumChoice value="99"> <!-- 18+81 -->
+    <choice>F0 ON+Shunt. ign. dir</choice>
+    <choice xml:lang="de">F0 AN+Rangierg. Richt. ign</choice>
+    <choice xml:lang="fr">F0 ON+Manoeuv. ign. dir</choice>
+  </enumChoice>
+  <enumChoice value="100"> <!-- 1+18+81 -->
+    <choice>Forward+F0 ON+Shunt. ign. dir</choice>
+    <choice xml:lang="de">Vorwärts+F0 AN+Rangierg. Richt. ign</choice>
+    <choice xml:lang="fr">Avant+F0 ON+Manoeuv. ign. dir</choice>
+  </enumChoice>
+  <enumChoice value="101"> <!-- 2+18+81 -->
+    <choice>Backward+F0 ON+Shunt. ign. dir</choice>
+    <choice xml:lang="de">Rückwärts+F0 AN+Rangierg. Richt. ign</choice>
+    <choice xml:lang="fr">En Arrière+F0 ON+Manoeuv. ign. dir</choice>
+  </enumChoice>
+  <enumChoice value="102"> <!-- 3+18+81 -->
+    <choice>Stopped+F0 ON+Shunt. ign. dir</choice>
+    <choice xml:lang="de">Stand+F0 AN+Rangierg. Richt. ign</choice>
+    <choice xml:lang="fr">A Arrêt+F0 ON+Manoeuv. ign. dir</choice>
+  </enumChoice>
+  <enumChoice value="103"> <!-- 1+3+18+81 -->
+    <choice>Forward+Stopped+F0 ON+Shunt. ign. dir</choice>
+    <choice xml:lang="de">Vorwärts+Stand+F0 AN+Rangierg. Richt. ign</choice>
+    <choice xml:lang="fr">En Avant+Arrêt+F0 ON+Manoeuv. ign. dir</choice>
+  </enumChoice>
+  <enumChoice value="104"> <!-- 2+3+18 -->
+    <choice>Backward+Stopped+F0 ON+Shunt. ign. dir</choice>
+    <choice xml:lang="de">Rückwärts+Stand+F0 AN+Rangierg. Richt. ign</choice>
+    <choice xml:lang="fr">En Arrière+Arrêt+F0 ON+Manoeuv. ign. dir</choice>
+  </enumChoice>
+  <enumChoice value="105"> <!-- 6+18+81 -->
+    <choice>Driving+F0 ON+Shunt. ign. dir</choice>
+    <choice xml:lang="de">Fahrt+F0 AN+Rangierg. Richt. ign</choice>
+    <choice xml:lang="fr">En Marche+F0 ON+Manoeuv. ign. dir</choice>
+  </enumChoice>
+  <enumChoice value="106"> <!-- 1+6+18+81 -->
+    <choice>Forward+Driving+F0 ON+Shunt. ign. dir</choice>
+    <choice xml:lang="de">Vorwärts+Fahrt+F0 AN+Rangierg. Richt. ign</choice>
+    <choice xml:lang="fr">En Avant+Marche+F0 ON+Manoeuv. ign. dir</choice>
+  </enumChoice>
+  <enumChoice value="107"> <!-- 2+6+18+81 -->
+    <choice>Backward+Driving+F0 ON+Shunt. ign. dir</choice>
+    <choice xml:lang="de">Rückwärts+Fahrt+F0 AN+Rangierg. Richt. ign</choice>
+    <choice xml:lang="fr">En Arrière+Marche+F0 ON+Manoeuv. ign. dir</choice>
+  </enumChoice>
+
+  <enumChoice value="108">
+    <choice>Shunt. ignore drive</choice>
+    <choice xml:lang="de">Rangierg. Fahrt ignor.</choice>
+    <choice xml:lang="fr">Manoeuvre ignore mouv.</choice>
+  </enumChoice>
+	<enumChoice value="109"> <!-- 1+108 -->
+    <choice>Forward+Shunt. ign. drive</choice>
+    <choice xml:lang="de">Vorwärts+Rangierg. Fahft ign</choice>
+    <choice xml:lang="fr">Avant+Manoeuv. ign. mouv</choice>
+  </enumChoice>
+  <enumChoice value="110"> <!-- 2+108 -->
+    <choice>Backward+Shunt. ign. drive</choice>
+    <choice xml:lang="de">Rückwärts+Rangierg. Fahft ign</choice>
+    <choice xml:lang="fr">Arrière+Manoeuv. ign. mouv</choice>
+  </enumChoice>
+  <enumChoice value="111"> <!-- 3+108 -->
+    <choice>Stopped+Shunt. ign. drive</choice>
+    <choice xml:lang="de">Im Stand+Rangierg. Fahft ign</choice>
+    <choice xml:lang="fr">à l'Arrêt+Manoeuv. ign. mouv</choice>
+  </enumChoice>
+  <enumChoice value="112"> <!-- 1+3+108 -->
+    <choice>Forward+Stopped+Shunt. ign. drive</choice>
+    <choice xml:lang="de">Vorwärts+Stand+Rangierg. Fahft ign</choice>
+    <choice xml:lang="fr">En Avant+Arrêt+Manoeuv. ign. mouv</choice>
+  </enumChoice>
+  <enumChoice value="113"> <!-- 2+3+108 -->
+    <choice>Backward+Stopped+Shunt. ign. drive</choice>
+    <choice xml:lang="de">Rückwärts+Stand+Rangierg. Fahft ign</choice>
+    <choice xml:lang="fr">Arrière+Arrêt+Manoeuv. ign. mouv</choice>
+  </enumChoice>
+  <enumChoice value="114"> <!-- 6+108 -->
+    <choice>Driving+Shunt. ign. drive</choice>
+    <choice xml:lang="de">Bei Fahrt+Rangierg. Fahft ign</choice>
+    <choice xml:lang="fr">En Marche+Manoeuv. ign. mouv</choice>
+  </enumChoice>
+  <enumChoice value="115"> <!-- 1+6+108 -->
+    <choice>Forward+Driving+Shunt. ign. drive</choice>
+    <choice xml:lang="de">Vorwärts+Fahrt+Rangierg. Fahft ign</choice>
+    <choice xml:lang="fr">Avant+Marche+Manoeuv. ign. mouv</choice>
+  </enumChoice>
+  <enumChoice value="116"> <!-- 2+6+108 -->
+    <choice>Backward+Driving+Shunt. ign. drive</choice>
+    <choice xml:lang="de">Rückwärts+Fahrt+Rangierg. Fahft ign</choice>
+    <choice xml:lang="fr">Arrière+Marche+Manoeuv. ign. mouv</choice>
+  </enumChoice>
+  <enumChoice value="117"> <!-- 9+108 -->
+    <choice>F0 OFF+Shunt. ign. drive</choice>
+    <choice xml:lang="de">F0 AUS+Rangierg. Fahft ign</choice>
+    <choice xml:lang="fr">F0 OFF+Manoeuv. ign. mouv</choice>
+  </enumChoice>
+  <enumChoice value="118"> <!-- 1+9+108 -->
+    <choice>Forward+F0 OFF+Shunt. ign. drive</choice>
+    <choice xml:lang="de">Vorwärts+F0 AUS+Rangierg. Fahft ign</choice>
+    <choice xml:lang="fr">Avant+F0 OFF+Manoeuv. ign. mouv</choice>
+  </enumChoice>
+  <enumChoice value="119"> <!-- 2+9+108 -->
+    <choice>Backward+F0 OFF+Shunt. ign. drive</choice>
+    <choice xml:lang="de">Rückwärts+F0 AUS+Rangierg. Fahft ign</choice>
+    <choice xml:lang="fr">En Arrière+F0 OFF+Manoeuv. ign. mouv</choice>
+  </enumChoice>
+  <enumChoice value="120"> <!-- 3+9+108 -->
+    <choice>Stopped+F0 OFF+Shunt. ign. drive</choice>
+    <choice xml:lang="de">Stand+F0 AUS+Rangierg. Fahft ign</choice>
+    <choice xml:lang="fr">Arrêt+F0 OFF+Manoeuv. ign. mouv</choice>
+  </enumChoice>
+  <enumChoice value="121"> <!-- 1+3+9+108 -->
+    <choice>Forward+Stopped+F0 OFF+Shunt. ign. drive</choice>
+    <choice xml:lang="de">Vorwärts+Stand+F0 AUS+Rangierg. Fahft ign</choice>
+    <choice xml:lang="fr">En Avant+Arrêt+F0 OFF+Manoeuv. ign. mouv</choice>
+  </enumChoice>
+  <enumChoice value="122"> <!-- 2+3+9+108 -->
+    <choice>Backward+Stopped+F0 OFF+Shunt. ign. drive</choice>
+    <choice xml:lang="de">Rückwärts+Stand+F0 AUS+Rangierg. Fahft ign</choice>
+    <choice xml:lang="fr">En Arrière+Arrêt+F0 OFF+Manoeuv. ign. mouv</choice>
+  </enumChoice>
+  <enumChoice value="123"> <!-- 6+9+108 -->
+    <choice>Driving+F0 OFF+Shunt. ign. drive</choice>
+    <choice xml:lang="de">Fahrt+F0 AUS+Rangierg. Fahft ign</choice>
+    <choice xml:lang="fr">En Marche+F0 OFF+Manoeuv. ign. mouv</choice>
+  </enumChoice>
+  <enumChoice value="124"> <!-- 1+6+9+108 -->
+    <choice>Forward+Driving+F0 OFF+Shunt. ign. drive</choice>
+    <choice xml:lang="de">Vorwärts+Fahrt+F0 AUS+Rangierg. Fahft ign</choice>
+    <choice xml:lang="fr">En Avant+Marche+F0 OFF+Manoeuv. ign. mouv</choice>
+  </enumChoice>
+  <enumChoice value="125"> <!-- 2+6+9+108 -->
+    <choice>Backward+Driving+F0 OFF+Shunt. ign. drive</choice>
+    <choice xml:lang="de">Rückwärts+Fahrt+F0 AUS+Rangierg. Fahft ign</choice>
+    <choice xml:lang="fr">En Arrière+Marche+F0 OFF+Manoeuv. ign. mouv</choice>
+  </enumChoice>
+  <enumChoice value="126"> <!-- 18+108 -->
+    <choice>F0 ON+Shunt. ign. drive</choice>
+    <choice xml:lang="de">F0 AN+Rangierg. Fahft ign</choice>
+    <choice xml:lang="fr">F0 ON+Manoeuv. ign. mouv</choice>
+  </enumChoice>
+  <enumChoice value="127"> <!-- 1+18+108 -->
+    <choice>Forward+F0 ON+Shunt. ign. drive</choice>
+    <choice xml:lang="de">Vorwärts+F0 AN+Rangierg. Fahft ign</choice>
+    <choice xml:lang="fr">Avant+F0 ON+Manoeuv. ign. mouv</choice>
+  </enumChoice>
+  <enumChoice value="128"> <!-- 2+18+108 -->
+    <choice>Backward+F0 ON+Shunt. ign. drive</choice>
+    <choice xml:lang="de">Rückwärts+F0 AN+Rangierg. Fahft ign</choice>
+    <choice xml:lang="fr">En Arrière+F0 ON+Manoeuv. ign. mouv</choice>
+  </enumChoice>
+  <enumChoice value="129"> <!-- 3+18+108 -->
+    <choice>Stopped+F0 ON+Shunt. ign. drive</choice>
+    <choice xml:lang="de">Stand+F0 AN+Rangierg. Fahft ign</choice>
+    <choice xml:lang="fr">A Arrêt+F0 ON+Manoeuv. ign. mouv</choice>
+  </enumChoice>
+  <enumChoice value="130"> <!-- 1+3+18+108 -->
+    <choice>Forward+Stopped+F0 ON+Shunt. ign. drive</choice>
+    <choice xml:lang="de">Vorwärts+Stand+F0 AN+Rangierg. Fahft ign</choice>
+    <choice xml:lang="fr">En Avant+Arrêt+F0 ON+Manoeuv. ign. mouv</choice>
+  </enumChoice>
+  <enumChoice value="131"> <!-- 2+3+18 -->
+    <choice>Backward+Stopped+F0 ON+Shunt. ign. drive</choice>
+    <choice xml:lang="de">Rückwärts+Stand+F0 AN+Rangierg. Fahft ign</choice>
+    <choice xml:lang="fr">En Arrière+Arrêt+F0 ON+Manoeuv. ign. mouv</choice>
+  </enumChoice>
+  <enumChoice value="132"> <!-- 6+18+108 -->
+    <choice>Driving+F0 ON+Shunt. ign. drive</choice>
+    <choice xml:lang="de">Fahrt+F0 AN+Rangierg. Fahft ign</choice>
+    <choice xml:lang="fr">En Marche+F0 ON+Manoeuv. ign. mouv</choice>
+  </enumChoice>
+  <enumChoice value="133"> <!-- 1+6+18+108 -->
+    <choice>Forward+Driving+F0 ON+Shunt. ign. drive</choice>
+    <choice xml:lang="de">Vorwärts+Fahrt+F0 AN+Rangierg. Fahft ign</choice>
+    <choice xml:lang="fr">En Avant+Marche+F0 ON+Manoeuv. ign. mouv</choice>
+  </enumChoice>
+  <enumChoice value="134"> <!-- 2+6+18+108 -->
+    <choice>Backward+Driving+F0 ON+Shunt. ign. drive</choice>
+    <choice xml:lang="de">Rückwärts+Fahrt+F0 AN+Rangierg. Fahft ign</choice>
+    <choice xml:lang="fr">En Arrière+Marche+F0 ON+Manoeuv. ign. mouv</choice>
+  </enumChoice>
+
+  <enumChoice value="135">
+    <choice>Shunt. ignore dir+drive</choice>
+    <choice xml:lang="de">Rangierg. Richt.+Fahrt ignor.</choice>
+    <choice xml:lang="fr">Manoeuvre ignore dir.+mouv.</choice>
+  </enumChoice>
+	<enumChoice value="136"> <!-- 1+135 -->
+    <choice>Forward+Shunt. ign. dir+drive</choice>
+    <choice xml:lang="de">Vorwärts+Rangierg. Richt.+Fahrt ign.</choice>
+    <choice xml:lang="fr">Avant+Manoeuv. ign. dir+mouv</choice>
+  </enumChoice>
+  <enumChoice value="137"> <!-- 2+135 -->
+    <choice>Backward+Shunt. ign. dir+drive</choice>
+    <choice xml:lang="de">Rückwärts+Rangierg. Richt.+Fahrt ign.</choice>
+    <choice xml:lang="fr">Arrière+Manoeuv. ign. dir+mouv</choice>
+  </enumChoice>
+  <enumChoice value="138"> <!-- 3+135 -->
+    <choice>Stopped+Shunt. ign. dir+drive</choice>
+    <choice xml:lang="de">Im Stand+Rangierg. Richt.+Fahrt ign.</choice>
+    <choice xml:lang="fr">à l'Arrêt+Manoeuv. ign. dir+mouv</choice>
+  </enumChoice>
+  <enumChoice value="139"> <!-- 1+3+135 -->
+    <choice>Forward+Stopped+Shunt. ign. dir+drive</choice>
+    <choice xml:lang="de">Vorwärts+Stand+Rangierg. Richt.+Fahrt ign.</choice>
+    <choice xml:lang="fr">En Avant+Arrêt+Manoeuv. ign. dir+mouv</choice>
+  </enumChoice>
+  <enumChoice value="140"> <!-- 2+3+135 -->
+    <choice>Backward+Stopped+Shunt. ign. dir+drive</choice>
+    <choice xml:lang="de">Rückwärts+Stand+Rangierg. Richt.+Fahrt ign.</choice>
+    <choice xml:lang="fr">Arrière+Arrêt+Manoeuv. ign. dir+mouv</choice>
+  </enumChoice>
+  <enumChoice value="141"> <!-- 6+135 -->
+    <choice>Driving+Shunt. ign. dir+drive</choice>
+    <choice xml:lang="de">Bei Fahrt+Rangierg. Richt.+Fahrt ign.</choice>
+    <choice xml:lang="fr">En Marche+Manoeuv. ign. dir+mouv</choice>
+  </enumChoice>
+  <enumChoice value="142"> <!-- 1+6+135 -->
+    <choice>Forward+Driving+Shunt. ign. dir+drive</choice>
+    <choice xml:lang="de">Vorwärts+Fahrt+Rangierg. Richt.+Fahrt ign.</choice>
+    <choice xml:lang="fr">Avant+Marche+Manoeuv. ign. dir+mouv</choice>
+  </enumChoice>
+  <enumChoice value="143"> <!-- 2+6+135 -->
+    <choice>Backward+Driving+Shunt. ign. dir+drive</choice>
+    <choice xml:lang="de">Rückwärts+Fahrt+Rangierg. Richt.+Fahrt ign.</choice>
+    <choice xml:lang="fr">Arrière+Marche+Manoeuv. ign. dir+mouv</choice>
+  </enumChoice>
+  <enumChoice value="144"> <!-- 9+135 -->
+    <choice>F0 OFF+Shunt. ign. dir+drive</choice>
+    <choice xml:lang="de">F0 AUS+Rangierg. Richt.+Fahrt ign.</choice>
+    <choice xml:lang="fr">F0 OFF+Manoeuv. ign. dir+mouv</choice>
+  </enumChoice>
+  <enumChoice value="145"> <!-- 1+9+135 -->
+    <choice>Forward+F0 OFF+Shunt. ign. dir+drive</choice>
+    <choice xml:lang="de">Vorwärts+F0 AUS+Rangierg. Richt.+Fahrt ign.</choice>
+    <choice xml:lang="fr">Avant+F0 OFF+Manoeuv. ign. dir+mouv</choice>
+  </enumChoice>
+  <enumChoice value="146"> <!-- 2+9+135 -->
+    <choice>Backward+F0 OFF+Shunt. ign. dir+drive</choice>
+    <choice xml:lang="de">Rückwärts+F0 AUS+Rangierg. Richt.+Fahrt ign.</choice>
+    <choice xml:lang="fr">En Arrière+F0 OFF+Manoeuv. ign. dir+mouv</choice>
+  </enumChoice>
+  <enumChoice value="147"> <!-- 3+9+135 -->
+    <choice>Stopped+F0 OFF+Shunt. ign. dir+drive</choice>
+    <choice xml:lang="de">Stand+F0 AUS+Rangierg. Richt.+Fahrt ign.</choice>
+    <choice xml:lang="fr">Arrêt+F0 OFF+Manoeuv. ign. dir+mouv</choice>
+  </enumChoice>
+  <enumChoice value="148"> <!-- 1+3+9+135 -->
+    <choice>Forward+Stopped+F0 OFF+Shunt. ign. dir+drive</choice>
+    <choice xml:lang="de">Vorwärts+Stand+F0 AUS+Rangierg. Richt.+Fahrt ign.</choice>
+    <choice xml:lang="fr">En Avant+Arrêt+F0 OFF+Manoeuv. ign. dir+mouv</choice>
+  </enumChoice>
+  <enumChoice value="149"> <!-- 2+3+9+135 -->
+    <choice>Backward+Stopped+F0 OFF+Shunt. ign. dir+drive</choice>
+    <choice xml:lang="de">Rückwärts+Stand+F0 AUS+Rangierg. Richt.+Fahrt ign.</choice>
+    <choice xml:lang="fr">En Arrière+Arrêt+F0 OFF+Manoeuv. ign. dir+mouv</choice>
+  </enumChoice>
+  <enumChoice value="150"> <!-- 6+9+135 -->
+    <choice>Driving+F0 OFF+Shunt. ign. dir+drive</choice>
+    <choice xml:lang="de">Fahrt+F0 AUS+Rangierg. Richt.+Fahrt ign.</choice>
+    <choice xml:lang="fr">En Marche+F0 OFF+Manoeuv. ign. dir+mouv</choice>
+  </enumChoice>
+  <enumChoice value="151"> <!-- 1+6+9+135 -->
+    <choice>Forward+Driving+F0 OFF+Shunt. ign. dir+drive</choice>
+    <choice xml:lang="de">Vorwärts+Fahrt+F0 AUS+Rangierg. Richt.+Fahrt ign.</choice>
+    <choice xml:lang="fr">En Avant+Marche+F0 OFF+Manoeuv. ign. dir+mouv</choice>
+  </enumChoice>
+  <enumChoice value="152"> <!-- 2+6+9+135 -->
+    <choice>Backward+Driving+F0 OFF+Shunt. ign. dir+drive</choice>
+    <choice xml:lang="de">Rückwärts+Fahrt+F0 AUS+Rangierg. Richt.+Fahrt ign.</choice>
+    <choice xml:lang="fr">En Arrière+Marche+F0 OFF+Manoeuv. ign. dir+mouv</choice>
+  </enumChoice>
+  <enumChoice value="153"> <!-- 18+135 -->
+    <choice>F0 ON+Shunt. ign. dir+drive</choice>
+    <choice xml:lang="de">F0 AN+Rangierg. Richt.+Fahrt ign.</choice>
+    <choice xml:lang="fr">F0 ON+Manoeuv. ign. dir+mouv</choice>
+  </enumChoice>
+  <enumChoice value="154"> <!-- 1+18+135 -->
+    <choice>Forward+F0 ON+Shunt. ign. dir+drive</choice>
+    <choice xml:lang="de">Vorwärts+F0 AN+Rangierg. Richt.+Fahrt ign.</choice>
+    <choice xml:lang="fr">Avant+F0 ON+Manoeuv. ign. dir+mouv</choice>
+  </enumChoice>
+  <enumChoice value="155"> <!-- 2+18+135 -->
+    <choice>Backward+F0 ON+Shunt. ign. dir+drive</choice>
+    <choice xml:lang="de">Rückwärts+F0 AN+Rangierg. Richt.+Fahrt ign.</choice>
+    <choice xml:lang="fr">En Arrière+F0 ON+Manoeuv. ign. dir+mouv</choice>
+  </enumChoice>
+  <enumChoice value="156"> <!-- 3+18+135 -->
+    <choice>Stopped+F0 ON+Shunt. ign. dir+drive</choice>
+    <choice xml:lang="de">Stand+F0 AN+Rangierg. Richt.+Fahrt ign.</choice>
+    <choice xml:lang="fr">A Arrêt+F0 ON+Manoeuv. ign. dir+mouv</choice>
+  </enumChoice>
+  <enumChoice value="157"> <!-- 1+3+18+135 -->
+    <choice>Forward+Stopped+F0 ON+Shunt. ign. dir+drive</choice>
+    <choice xml:lang="de">Vorwärts+Stand+F0 AN+Rangierg. Richt.+Fahrt ign.</choice>
+    <choice xml:lang="fr">En Avant+Arrêt+F0 ON+Manoeuv. ign. dir+mouv</choice>
+  </enumChoice>
+  <enumChoice value="158"> <!-- 2+3+18 -->
+    <choice>Backward+Stopped+F0 ON+Shunt. ign. dir+drive</choice>
+    <choice xml:lang="de">Rückwärts+Stand+F0 AN+Rangierg. Richt.+Fahrt ign.</choice>
+    <choice xml:lang="fr">En Arrière+Arrêt+F0 ON+Manoeuv. ign. dir+mouv</choice>
+  </enumChoice>
+  <enumChoice value="159"> <!-- 6+18+135 -->
+    <choice>Driving+F0 ON+Shunt. ign. dir+drive</choice>
+    <choice xml:lang="de">Fahrt+F0 AN+Rangierg. Richt.+Fahrt ign.</choice>
+    <choice xml:lang="fr">En Marche+F0 ON+Manoeuv. ign. dir+mouv</choice>
+  </enumChoice>
+  <enumChoice value="160"> <!-- 1+6+18+135 -->
+    <choice>Forward+Driving+F0 ON+Shunt. ign. dir+drive</choice>
+    <choice xml:lang="de">Vorwärts+Fahrt+F0 AN+Rangierg. Richt.+Fahrt ign.</choice>
+    <choice xml:lang="fr">En Avant+Marche+F0 ON+Manoeuv. ign. dir+mouv</choice>
+  </enumChoice>
+  <enumChoice value="161"> <!-- 2+6+18+135 -->
+    <choice>Backward+Driving+F0 ON+Shunt. ign. dir+drive</choice>
+    <choice xml:lang="de">Rückwärts+Fahrt+F0 AN+Rangierg. Richt.+Fahrt ign.</choice>
+    <choice xml:lang="fr">En Arrière+Marche+F0 ON+Manoeuv. ign. dir+mouv</choice>
+  </enumChoice>
+
+	</enumVal>
