@@ -501,8 +501,8 @@ public interface Turnout extends DigitalIO {
      * <p>
      * Used to insert a delay before calling {@link #setCommandedState(int)} to spread out a series of
      * output commands, as in {@link jmri.implementation.MatrixSignalMast#updateOutputs(char[])} and
-     * {@link jmri.implementation.DefaultRoute.SetRouteThread}.
-     * Value is kept in the Memo per hardware connection, default = 0
+     * {@link jmri.implementation.DefaultRoute} class SetRouteThread#run().
+     * Interval value is kept in the Memo per hardware connection, default = 0
      *
      * @param s turnout state to forward
      */

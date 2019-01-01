@@ -7,6 +7,7 @@ import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import jmri.NamedBeanHandle;
 import jmri.Turnout;
+import jmri.util.ThreadingUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,6 +38,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
      *  Match to MAXMATRIXBITS in {@link jmri.jmrit.beantable.signalmast.AddSignalMastPanel}.
      */
     protected int mastBitNum = 6;
+    protected int mDelay = 0;
 
     static String errorChars = "nnnnnn";
     char[] errorBits = errorChars.toCharArray();
@@ -84,6 +86,8 @@ public class MatrixSignalMast extends AbstractSignalMast {
 
         configureSignalSystemDefinition(system); // (checks for system) in AbstractSignalMast
         configureAspectTable(system, mast); // (create -default- appmapping in var "map") in AbstractSignalMast
+
+        mDelay = getMatrixMastCommandDelay();
     }
 
     private HashMap<String, char[]> aspectToOutput = new HashMap<String, char[]>(16); // "Clear" - 01001 char[] pairs
@@ -222,6 +226,12 @@ public class MatrixSignalMast extends AbstractSignalMast {
         }
     }
 
+    /**
+     *  Fetch output as Turnout from outputsToBeans hashmap.
+     *
+     *  @param colnum int index (1 up to 6) for the column of the desired output
+     *  @return Turnout object connected to configured output
+     */
     @CheckForNull public Turnout getOutputBean(int colnum) { // as bean
         String key = "output" + Integer.toString(colnum);
         if (colnum > 0 && colnum <= outputsToBeans.size()) {
@@ -232,11 +242,11 @@ public class MatrixSignalMast extends AbstractSignalMast {
     }
 
     /**
-     *  Fetch output from outputsToBeans hashmap
-     *  used in AddSignalMastMast panel line 427.
+     *  Fetch output from outputsToBeans hashmap.
+     *  Used?
      *
      *  @param colnum int index (1 up to 6) for the column of the desired output
-     *  @return NamedBeanHandle to the configured turnout output
+     *  @return NamedBeanHandle to the configured output
      */
     @CheckForNull public NamedBeanHandle<Turnout> getOutputHandle(int colnum) {
         String key = "output" + Integer.toString(colnum);
@@ -370,6 +380,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
      *  Length of array should match the number of outputs defined
      */
     public void updateOutputs(char[] bits) {
+        int newState;
         if (bits == null){
             log.debug("Empty char[] received");
         } else {
@@ -381,14 +392,29 @@ public class MatrixSignalMast extends AbstractSignalMast {
                 }
                 if (bits[i] == '1' && t != null && t.getCommandedState() != Turnout.CLOSED) {
                     // no need to set a state already set
-                    t.setCommandedStateAtInterval(Turnout.CLOSED); // delayed on specific connection by its turnoutManager
+                    newState = Turnout.CLOSED;
                 } else if (bits[i] == '0' && t != null && t.getCommandedState() != Turnout.THROWN) {
-                    t.setCommandedStateAtInterval(Turnout.THROWN); // delayed on specific connection by its turnoutManager
+                    newState = Turnout.THROWN;
                 } else if (bits[i] == 'n' || bits[i] == 'u') {
                     // let pass, extra chars up to 6 are not defined
+                    newState = -1;
                 } else {
                     // invalid char or state is already set
+                    newState = -2;
                     log.debug("Element {} not converted to state for output #{}", bits[i], i);
+                }
+                // wait mast specific delay before sending a valid state change
+                if (newState >= 0) {
+                    final int toState = newState;
+                    final Turnout setTurnout = t;
+                    ThreadingUtil.runOnLayoutEventually(() -> {   // eventually, even though we have timing here, should be soon
+                        setTurnout.setCommandedStateAtInterval(toState); // delayed on specific connection by its turnoutManager
+                    });
+                    try {
+                        Thread.sleep(mDelay); // only the Mast specific user defined delay is applied here
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt(); // retain if needed later
+                    }
                 }
             }
         }
@@ -496,6 +522,30 @@ public class MatrixSignalMast extends AbstractSignalMast {
             disabledAspects.add(aspect);
             firePropertyChange("aspectDisabled", null, aspect);
         }
+    }
+
+    /**
+     * Set the delay between issuing Matrix Output commands to the outputs on this specific mast.
+     * Delay be extended by a connection specific Output Delay set in the connection config.
+     *
+     * @see jmri.implementation.configurexml.MatrixSignalMastXml#load(org.jdom2.Element, org.jdom2.Element)
+     * @param delay the new delay in milliseconds
+     */
+    public void setMatrixMastCommandDelay(int delay) {
+        if (delay >= 0) {
+            mDelay = delay;
+        }
+    }
+
+    /**
+     * Get the delay between issuing Matrix Output commands to the outputs on this specific mast.
+     * Delay be extended by a connection specific Output Delay set in the connection config.
+     *
+     * @see jmri.implementation.configurexml.MatrixSignalMastXml#load(org.jdom2.Element, org.jdom2.Element)
+     * @return the delay in milliseconds
+     */
+    public int getMatrixMastCommandDelay() {
+        return mDelay;
     }
 
     @Override

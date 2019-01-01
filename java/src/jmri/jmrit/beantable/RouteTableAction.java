@@ -751,11 +751,11 @@ public class RouteTableAction extends AbstractTableAction<Route> {
             cTurnoutStateBox.setToolTipText(Bundle.getMessage("TooltipTurnoutCondition"));
             p34.add(cTurnoutStateBox);
             p3.add(p34);
-            // add added delay
+            // add additional route-specific delay
             JPanel p36 = new JPanel();
             p36.add(new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("LabelTurnoutDelay"))));
             timeDelay.setModel(new SpinnerNumberModel(0, 0, 1000, 1));
-//            timeDelay.setValue(0); // reset from possible previous use
+            // timeDelay.setValue(0); // reset from possible previous use
             timeDelay.setPreferredSize(new JTextField(5).getPreferredSize());
             p36.add(timeDelay);
             timeDelay.setToolTipText(Bundle.getMessage("TooltipTurnoutDelay"));
@@ -1238,7 +1238,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
 
         setTurnoutModeBox(g.getLockControlTurnoutState(), cLockTurnoutStateBox);
 
-        // set up additional Delay
+        // set up additional route specific Delay
         timeDelay.setValue(g.getRouteCommandDelay());
         // begin with showing all Turnouts
         // set up buttons and notes

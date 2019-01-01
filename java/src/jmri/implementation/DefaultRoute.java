@@ -1268,7 +1268,7 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
                     setTurnout.setCommandedStateAtInterval(toState); // delayed on specific connection by its turnoutManager
                 });
                 try {
-                    Thread.sleep(delay); // only the Route specific user defined delay is applied here, needed? TODO decide to remove, also in GUI
+                    Thread.sleep(delay); // only the Route specific user defined delay is applied here
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt(); // retain if needed later
                 }

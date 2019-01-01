@@ -77,6 +77,7 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
     char[] emptyBits = emptyChars.toCharArray();
     JLabel bitNumLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("MatrixBitsLabel")));
     JComboBox<String> columnChoice = new JComboBox<>(choiceArray());
+    JSpinner timeDelay = new JSpinner();
 
     LinkedHashMap<String, MatrixAspectPanel> matrixAspect = new LinkedHashMap<>(NOTIONAL_ASPECT_COUNT); // LinkedHT type keeps things sorted // only used once, see updateMatrixAspectPanel()
 
@@ -224,7 +225,9 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
         // repeat in order to set MAXMATRIXBITS > 6
         
         allowUnLit.setSelected(currentMast.allowUnLit());
- 
+        // set up additional route specific Delay
+        timeDelay.setValue(currentMast.getMatrixMastCommandDelay());
+
         log.trace("setMast {} end", mast);
     }
 
@@ -329,7 +332,11 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
         prefs.setComboBoxLastSelection(matrixBitNumSelectionCombo, (String) columnChoice.getSelectedItem()); // store bitNum pref
         
         currentMast.setAllowUnLit(allowUnLit.isSelected());
-        
+
+        // set MatrixMast specific Delay information, see jmri.implementation.MatrixSignalMast
+        int addDelay = (Integer) timeDelay.getValue(); // from a JSpinner with 0 set as minimum
+        currentMast.setMatrixMastCommandDelay(addDelay);
+
         return true;
     }
 
@@ -481,6 +488,19 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
         matrixCopyPanel.add(new JLabel(Bundle.getMessage("MatrixMastCopyAspectBits") + ":"));
         matrixCopyPanel.add(copyFromMastSelection());
         matrixMastPanel.add(matrixCopyPanel);
+
+        // add additional MatrixMast-specific delay
+        JPanel delayPanel = new JPanel();
+        delayPanel.add(new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("LabelTurnoutDelay"))));
+        timeDelay.setModel(new SpinnerNumberModel(0, 0, 1000, 1));
+        // timeDelay.setValue(0); // reset from possible previous use
+        timeDelay.setPreferredSize(new JTextField(5).getPreferredSize());
+        delayPanel.add(timeDelay);
+        timeDelay.setToolTipText(Bundle.getMessage("TooltipTurnoutDelay"));
+        delayPanel.add(new JLabel(Bundle.getMessage("LabelMilliseconds")));
+        // // set up additional route specific Delay
+        // timeDelay.setValue(currentMast.getRouteCommandDelay());
+        matrixMastPanel.add(delayPanel);
 
         matrixMastPanel.setLayout(new jmri.util.javaworld.GridLayout2(0, 1)); // 0 means enough
         matrixMastPanel.revalidate();
