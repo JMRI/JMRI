@@ -45,7 +45,7 @@ public class Z21CanReporter extends jmri.implementation.AbstractRailComReporter 
               } catch (NumberFormatException ex) {
                  // didn't parse as a decimal, check to see if network ID 
                  // was used instead.
-                 networkID = (Integer.parseInt(systemName.substring(start,seperator,16)));
+                 networkID = (Integer.parseInt(systemName.substring(start,seperator),16));
                  
               }
               port = (Integer.parseInt(systemName.substring(seperator + 1)));
