@@ -97,7 +97,7 @@ public class Log4JUtil {
      */
      static public void deprecationWarning(@Nonnull Logger logger, @Nonnull String methodName) {
         if (logDeprecations) {
-            warnOnce(logger, "{} is deprecated, please remove references to it", methodName, new Exception("traceback"));
+            warnOnce(logger, "{} is deprecated, please remove references to it", methodName, shortenStacktrace(new Exception("traceback")));
         }
      }
      
