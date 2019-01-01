@@ -352,6 +352,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     /** {@inheritDoc} */
     @Override
     @Deprecated  // will be removed when Manager method is removed due to @Override
+                 // Only used in ConfigureXML
     public List<String> getSystemNameAddedOrderList() {
         //jmri.util.Log4JUtil.deprecationWarning(log, "getSystemNameAddedOrderList");
         return Collections.unmodifiableList(_originalOrderList);
