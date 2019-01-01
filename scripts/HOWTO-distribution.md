@@ -149,6 +149,11 @@ We roll some general code maintenance items into the release process.
         grep -lr '\t' jython/ | grep '\.py'
 ```
 
+- Check for code that's using native Java Timers; see jmri.util.TimerUtil for background (requires that the code has been built):
+```
+        grep -rl 'java.util.Timer\x01' target/
+```
+
 - Run "ant alltest"; make sure they all pass; fix problems and commit back
 
 - Run "ant decoderpro"; check for no startup errors, right version, help index present and working OK. Fix problems and commit back.
@@ -431,9 +436,9 @@ If there are any changes in other files, do both of:
 ====================================================================================
 ## Update GitHub Status items
 
-- Create the [next GitHub Issue](https://github.com/JMRI/JMRI/issues) to hold discussion with conventional title "Create Test Release 4.15.1". Add the next release milestone (created above) to it. Typical text (get the date from the [milestone page](https://github.com/JMRI/JMRI/milestones)); for later releases in the series copy specific text from the milestone page:
+- Create the [next GitHub Issue](https://github.com/JMRI/JMRI/issues) to hold discussion with conventional title "Create Test Release 4.15.2". Add the next release milestone (created above) to it. Typical text (get the date from the [milestone page](https://github.com/JMRI/JMRI/milestones)); for later releases in the series copy specific text from the milestone page:
 ```
-This is the next release in the 4.14 cycle. It's intended to be released around (July 12) from HEAD of master.
+This is the next release in the 4.16 cycle. It's intended to be released around (July 12) from HEAD of master.
 ```
 
 - Confirm that the tag for the current release (v4.15.1 for release 4.15.1) is in place via the [tags page](https://github.com/JMRI/JMRI/tags), then manually delete the current release branch (release-4.15.1) via the [GitHub branches page](https://github.com/JMRI/JMRI/branches).  (N.B. We are experimenting with having the `release*` branches protected, in which case you may have to go to Setting; Branches; then edit the Release* branch name to ReleaseX* to disable the protection before removing the branch.  If you do that, remember to replace the protection!)
@@ -484,7 +489,7 @@ git push github
     
 Test version 4.15.1 of JMRI/DecoderPro is available for download.
 
-This is the next in a series of test releases that will culminate in a production release, hopefully in December 2018.
+This is the next in a series of test releases that will culminate in a production release, hopefully in early Summer 2019.
 
 - Alt: There have been a lot of updates in this version, so it should be considered experimental.
 - Alt: We're getting close to the end of the development series, so we'd appreciate feedback on whether or not this release works for your layout.

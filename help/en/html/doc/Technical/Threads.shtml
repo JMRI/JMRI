@@ -126,8 +126,7 @@
         done on entry to a large chunk of code, or perhaps be protected 
         by a check of <code>log.isDebugEnabled()</code>. If 
         the call occurs on the wrong thread, a <code>Log4JUtil.warnOnce</code>
-        logs the first occurance with traceback info, which explains the <code>log</code>
-        parameter.
+        logs the first occurance with traceback info.
       
     In addition to the <code>@InvokeOnGuiThread</code>, <code>@InvokeOnLayoutThread</code>
     and <code>@InvokeOnAnyThread</code> annotations mentioned here, there are
@@ -137,6 +136,7 @@
     See the discussion on the 
     <a href="SpotBugs.html#annotations">JMRI SpotBugs page</a>.
 
+<a id="ending" name="ending"></a>
 <h3>Ending Threads</h3>
 
     This is really about interrupt() and our use of it.
@@ -171,6 +171,27 @@
     For more background, please read 
     <a href="https://www.ibm.com/developerworks/library/j-jtp05236/index.html">this article</a>.
 
+<a id="timer" name="timer"></a>
+<h3>Timed Events</h3> 
+    The <a href="http://jmri.org/JavaDoc/doc/jmri/util/ThreadingUtil.html">jmri.util.ThreadingUtil</a>
+    class provides the
+    <a href="http://jmri.org/JavaDoc/doc/jmri/util/ThreadingUtil.html#runOnGUIDelayed-jmri.util.ThreadingUtil.ThreadAction-int-">runOnGUIDelayed</a>
+    and
+    <a href="http://jmri.org/JavaDoc/doc/jmri/util/ThreadingUtil.html#runOnLayoutDelayed-jmri.util.ThreadingUtil.ThreadAction-int-">runOnLayoutDelayed</a>
+    methods to make it easy to run some code after a delay.
+    In general, you should use these whenever possible instead of explicit 
+    javax.swing.Timer or java.util.Timer objects.
+    <p>
+    We recommend you not use the java.util.Timer class directly because of significant issues:
+    <ul>
+        <li>Each Timer object creates and keeps its own thread, which is very hard to end.
+            This can cause significant memory use if not handled carefully.
+        <li>The requested operation is run on the Timer's own thread, which isn't the layout or GUI thread.
+    </ul>
+    
+   The <a href="http://jmri.org/JavaDoc/doc/jmri/util/TimerUtil.html">jmri.util.TimerUtil</a>
+   can help with the first of these.
+    
 <h3>Other Items of Interest</h3>    
 
     <p>

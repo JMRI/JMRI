@@ -105,7 +105,7 @@ public class LIUSBEthernetAdapter extends XNetNetworkPortController {
         } else {
             keepAliveTimer.cancel();
         }
-        new java.util.Timer("LIUSB Ethernet Keepalive timer").schedule(keepAliveTimer, keepAliveTimeoutValue, keepAliveTimeoutValue);
+        jmri.util.TimerUtil.schedule(keepAliveTimer, keepAliveTimeoutValue, keepAliveTimeoutValue);
     }
 
     private boolean mDNSConfigure = false;

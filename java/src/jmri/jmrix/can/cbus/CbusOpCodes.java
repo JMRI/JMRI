@@ -7,6 +7,9 @@ import java.util.Map;
 import java.util.Set;
 import jmri.jmrix.AbstractMessage;
 
+// import org.slf4j.Logger;
+// import org.slf4j.LoggerFactory;
+
 /**
  * Methods to decode CBUS opcodes
  *
@@ -40,14 +43,16 @@ public class CbusOpCodes {
 
         int idx = 1;
         for (int i = 0; i < fields.length; i++) {
-            if (fields[i].startsWith("%")) {
-                // replace with bytes from the message
+            if (fields[i].startsWith("%")) { // replace with bytes from the message
                 value = 0;
                 bytes = Integer.parseInt(fields[i].substring(1, 2));
                 for (; bytes > 0; bytes--) {
                     value = value * 256 + msg.getElement(idx++);
                 }
                 fields[i] = String.valueOf(value);
+            }
+            else if (fields[i].startsWith("^2")) { // replace with loco id from 2 bytes
+                fields[i] = locoFromBytes(msg.getElement(idx++), msg.getElement(idx++) );
             }
             // concatenat to the result
             buf.append(fields[i]);
@@ -56,15 +61,14 @@ public class CbusOpCodes {
         // extra info for ERR opc
         if (opc==CbusConstants.CBUS_ERR) {
             // elements 1 & 2 depend on element 3
-            int rcvdIntAddr = (msg.getElement(1) & 0x3f) * 256 + msg.getElement(2);
             switch (msg.getElement(3)) {
                 case 1:
                     buf.append(Bundle.getMessage("ERR_LOCO_STACK_FULL"));
-                    buf.append(rcvdIntAddr);
+                    buf.append(locoFromBytes(msg.getElement(1),msg.getElement(2)));
                     break;
                 case 2:
                     buf.append(Bundle.getMessage("ERR_LOCO_ADDRESS_TAKEN"));
-                    buf.append(rcvdIntAddr);
+                    buf.append(locoFromBytes(msg.getElement(1),msg.getElement(2)));
                     break;
                 case 3:
                     buf.append(Bundle.getMessage("ERR_SESSION_NOT_PRESENT"));
@@ -83,7 +87,7 @@ public class CbusOpCodes {
                     break;
                 case 7:
                     buf.append(Bundle.getMessage("ERR_INVALID_REQUEST"));
-                    buf.append(rcvdIntAddr);
+                    buf.append(locoFromBytes(msg.getElement(1),msg.getElement(2)));
                     break;
                 case 8:
                     buf.append(Bundle.getMessage("ERR_SESSION_CANCELLED"));
@@ -101,6 +105,16 @@ public class CbusOpCodes {
             }
         }
         return buf.toString();
+    }
+    
+    public static String locoFromBytes(int byteA, int byteB ) {
+        String shortLong = "S";
+        // boolean rcvdIsLong = (byteA & 0xc0) != 0;
+        if ((byteA & 0xc0) != 0) {
+            shortLong = "L";
+        }
+        // int rcvdIntAddr = ((byteA & 0x3f) * 256 + byteB );
+        return ((byteA & 0x3f) * 256 + byteB ) + " " + shortLong;
     }
 
     /**
@@ -163,7 +177,7 @@ public class CbusOpCodes {
 
         // Opcodes with 2 data
         result.put(CbusConstants.CBUS_RLOC, Bundle.getMessage("CBUS_RLOC") + " " + 
-        Bundle.getMessage("OPC_AD") + ":,%2"); // NOI18N
+        Bundle.getMessage("OPC_AD") + ": ,^2"); // NOI18N
         result.put(CbusConstants.CBUS_QCON, Bundle.getMessage("CBUS_QCON") + " " + 
         Bundle.getMessage("OPC_AD") + ":,%2"); // NOI18N
         result.put(CbusConstants.CBUS_SNN, Bundle.getMessage("CBUS_SNN") + " " + 
@@ -223,7 +237,7 @@ public class CbusOpCodes {
         Bundle.getMessage("OPC_FN") + ":,%1"); // NOI18N
         
         result.put(CbusConstants.CBUS_GLOC, Bundle.getMessage("CBUS_GLOC") + " " + 
-        Bundle.getMessage("OPC_AD") + ":,%2, " + Bundle.getMessage("OPC_FL") + ":,%1"); // NOI18N
+        Bundle.getMessage("OPC_AD") + ": ,^2, " + Bundle.getMessage("OPC_FL") + ":,%1"); // NOI18N
         
         result.put(CbusConstants.CBUS_ERR, Bundle.getMessage("CBUS_ERR") + " "); // NOI18N
         
@@ -383,7 +397,7 @@ public class CbusOpCodes {
         " 1:,%1, 2:,%1, 3:,%1, 4:,%1, 5:,%1"); // NOI18N
         
         result.put(CbusConstants.CBUS_WCVOA, Bundle.getMessage("CBUS_WCVOA") + " " + 
-        Bundle.getMessage("OPC_AD") + ":,%2, " + Bundle.getMessage("OPC_CV") + ":,%2, " + 
+        Bundle.getMessage("OPC_AD") + ": ,^2, " + Bundle.getMessage("OPC_CV") + ":,%2, " + 
         Bundle.getMessage("OPC_MD") + ":,%1, " + Bundle.getMessage("OPC_DA") + ":,%1"); // NOI18N
         
         result.put(CbusConstants.CBUS_FCLK, Bundle.getMessage("CBUS_FCLK") + " " + 
@@ -440,7 +454,7 @@ public class CbusOpCodes {
         " 1:,%1, 2:,%1, 3:,%1, 4:,%1, 5:,%1, 6:,%1"); // NOI18N
         
         result.put(CbusConstants.CBUS_PLOC, Bundle.getMessage("CBUS_PLOC") + " " + 
-        Bundle.getMessage("OPC_SN") + ":,%1, " + Bundle.getMessage("OPC_AD") + ":,%2, " + 
+        Bundle.getMessage("OPC_SN") + ":,%1, " + Bundle.getMessage("OPC_AD") + ": ,^2, " + 
         Bundle.getMessage("OPC_SE") + ":,%1, " + Bundle.getMessage("OPC_F1") + ":,%1, " + 
         Bundle.getMessage("OPC_F2") + ":,%1, " + Bundle.getMessage("OPC_F3") + ":,%1"); // NOI18N
         
@@ -514,9 +528,6 @@ public class CbusOpCodes {
 
         return Collections.unmodifiableMap(result);
     }
-
-    
-    
     
     /**
      * Return a string representation of a decoded CBUS Message
@@ -697,7 +708,6 @@ public class CbusOpCodes {
     }
     
     
-    
     /**
      * Set of CBUS event opcodes
      */
@@ -714,9 +724,9 @@ public class CbusOpCodes {
     }
 
     /*
-     * Populate hashset with list of short opcodes
+     * Populate hashset with list of event opcodes
      * Defined in the CBUS Dev manual as accessory commands.
-     * includes fast clock as per dev manual
+     * excludes fast clock
      */
     private static Set<Integer> createEventOPC() {
         Set<Integer> result = new HashSet<>();
@@ -743,7 +753,6 @@ public class CbusOpCodes {
         result.add(CbusConstants.CBUS_ARSON1);
         result.add(CbusConstants.CBUS_ARSOF1);
         
-        result.add(CbusConstants.CBUS_FCLK);
         result.add(CbusConstants.CBUS_ACON2);
         result.add(CbusConstants.CBUS_ACOF2);
         result.add(CbusConstants.CBUS_ARON2);
@@ -904,8 +913,6 @@ public class CbusOpCodes {
         return Collections.unmodifiableSet(result);
     }
 
-    
-    
     /**
      * Set of CBUS ON event opcodes
      */
@@ -953,8 +960,6 @@ public class CbusOpCodes {
         return Collections.unmodifiableSet(result);
     }
     
-
-
     /**
      * Set of CBUS event request opcodes
      */
@@ -982,9 +987,6 @@ public class CbusOpCodes {
         return Collections.unmodifiableSet(result);
     }
 
-    
-
-    
     /**
      * Set of CBUS short event opcodes
      */
@@ -1545,5 +1547,6 @@ public class CbusOpCodes {
         result.put(65535, "Reserved, used by all CABS");
         return Collections.unmodifiableMap(result);
     }
-    
+
+    // private final static Logger log = LoggerFactory.getLogger(CbusOpCodes.class);
 }

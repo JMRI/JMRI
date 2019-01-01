@@ -118,7 +118,7 @@ public interface XmlAdapter {
      * {@link #handleException(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.Exception)}
      * instead
      */
-    @Deprecated
+    @Deprecated // 4.7.2
     public default void creationErrorEncountered(
             String description,
             String systemName,

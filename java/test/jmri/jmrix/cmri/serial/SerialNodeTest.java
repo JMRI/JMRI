@@ -377,6 +377,7 @@ public class SerialNodeTest extends TestCase {
     @Override
     protected void tearDown() {
         JUnitUtil.tearDown();
+        if (stcs != null) stcs.terminateThreads();
         stcs = null;
         memo = null;
     }

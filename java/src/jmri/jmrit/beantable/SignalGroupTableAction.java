@@ -916,7 +916,7 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
         if (_autoSystemName.isSelected() && !inEditMode) {
             // create new Signal Group with auto system name
             log.debug("SignalGroupTableAction checkNamesOK new autogroup");
-            g = InstanceManager.getDefault(jmri.SignalGroupManager.class).newSignalGroup(uName);
+            g = InstanceManager.getDefault(jmri.SignalGroupManager.class).newSignaGroupWithUserName(uName);
         } else {
             if (sName.length() == 0) { // show warning in status bar
                 status1.setText(Bundle.getMessage("AddBeanStatusEnter"));
