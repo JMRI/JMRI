@@ -40,7 +40,14 @@ public class Z21CanReporter extends jmri.implementation.AbstractRailComReporter 
         int seperator = systemName.indexOf(":");
         int start = _memo.getSystemPrefix().length() + 1;
            try {
-              moduleAddress = (Integer.parseInt(systemName.substring(start,seperator)));
+              try{
+                 moduleAddress = (Integer.parseInt(systemName.substring(start,seperator)));
+              } catch (NumberFormatException ex) {
+                 // didn't parse as a decimal, check to see if network ID 
+                 // was used instead.
+                 networkID = (Integer.parseInt(systemName.substring(start,seperator,16)));
+                 
+              }
               port = (Integer.parseInt(systemName.substring(seperator + 1)));
            } catch (NumberFormatException ex) {
               log.debug("Unable to convert " + systemName + " into the cab and input format of nn:xx");
@@ -73,7 +80,7 @@ public class Z21CanReporter extends jmri.implementation.AbstractRailComReporter 
          if(msg.isCanDetectorMessage()){
             int netID = ( msg.getElement(4)&0xFF) + ((msg.getElement(5)&0xFF) << 8);
             int address = ( msg.getElement(6)&0xFF) + ((msg.getElement(7)&0xFF) << 8);
-            if(address != moduleAddress ) {
+            if((address != moduleAddress) && (netID != networkID)) {
                 return; // not our messge.
             }
             int msgPort = ( msg.getElement(8) & 0xFF);
