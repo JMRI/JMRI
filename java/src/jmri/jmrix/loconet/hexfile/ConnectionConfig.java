@@ -26,7 +26,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConf
 
     @Override
     public String name() {
-        return "LocoNet Simulator"; // NOI18N
+        return Bundle.getMessage("TitleLocoNetSimulator");
     }
 
     @Override
