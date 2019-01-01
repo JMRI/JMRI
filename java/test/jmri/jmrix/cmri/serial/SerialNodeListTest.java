@@ -45,6 +45,7 @@ public class SerialNodeListTest {
     @After
     public void tearDown() {
         JUnitUtil.tearDown();
+        if (stcs != null) stcs.terminateThreads();
         stcs = null;
         memo = null;
     }

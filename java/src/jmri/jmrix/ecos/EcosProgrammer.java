@@ -7,8 +7,6 @@ import javax.annotation.Nonnull;
 import jmri.ProgrammingMode;
 import jmri.jmrix.AbstractProgrammer;
 import jmri.jmrix.ecos.utilities.GetEcosObjectNumber;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Implements the jmri.Programmer interface via commands for the ECoS
@@ -27,7 +25,9 @@ public class EcosProgrammer extends AbstractProgrammer implements EcosListener {
     String readCommand  = "mode[readdccdirect]";
     String writeCommand = "mode[writedccdirect]";
     
-    /**
+    /** 
+     * {@inheritDoc}
+     *
      * @return list of programming modes implemented for ECoS
      */
     @Override
@@ -49,9 +49,12 @@ public class EcosProgrammer extends AbstractProgrammer implements EcosListener {
 
     // programming interface
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
-    @Deprecated // 4.1.1
-    synchronized public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
+    synchronized public void writeCV(String CVname, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
+        final int CV = Integer.parseInt(CVname);
         if (log.isDebugEnabled()) {
             log.debug("writeCV " + CV + " listens " + p);
         }
@@ -72,14 +75,20 @@ public class EcosProgrammer extends AbstractProgrammer implements EcosListener {
         tc.sendEcosMessage(m, this);
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     synchronized public void confirmCV(String CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         readCV(CV, p);
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
-    @Deprecated // 4.1.1
-    synchronized public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
+    synchronized public void readCV(String CVname, jmri.ProgListener p) throws jmri.ProgrammerException {
+        final int CV = Integer.parseInt(CVname);
         if (log.isDebugEnabled()) {
             log.debug("readCV " + CV + " listens " + p);
         }
@@ -116,11 +125,17 @@ public class EcosProgrammer extends AbstractProgrammer implements EcosListener {
         }
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public void message(EcosMessage m) {
         log.info("message: "+m);
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     synchronized public void reply(EcosReply reply) {
         log.info("reply: "+reply);
@@ -201,7 +216,9 @@ public class EcosProgrammer extends AbstractProgrammer implements EcosListener {
         }
     }
 
-    /**
+    /** 
+     * {@inheritDoc}
+     *
      * Internal routine to handle a timeout.
      */
     @Override
@@ -234,6 +251,6 @@ public class EcosProgrammer extends AbstractProgrammer implements EcosListener {
         notifyProgListenerEnd(temp,value,status);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EcosProgrammer.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(EcosProgrammer.class);
 
 }

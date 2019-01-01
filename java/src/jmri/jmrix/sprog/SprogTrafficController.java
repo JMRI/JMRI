@@ -66,6 +66,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
         tcThread.setName("SPROG TC thread");
         tcThread.setPriority(Thread.MAX_PRIORITY-1);
         tcThread.setDaemon(true);
+        log.debug("starting TC thread from {} in group {}", this, tcThread.getThreadGroup(), jmri.util.Log4JUtil.shortenStacktrace(new Exception("traceback"),6));
         tcThread.start();
     }
 
@@ -288,6 +289,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
                 }
             } catch (InterruptedException e) {
                 log.debug("waitingForReply interrupted");
+                return;
             }
             if (!replyAvailable) {
                 // Timed out

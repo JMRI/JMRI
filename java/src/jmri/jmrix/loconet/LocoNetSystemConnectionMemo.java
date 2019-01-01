@@ -210,6 +210,7 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
         if (type.equals(CommandStation.class)) {
             return true;
         }
+
         return super.provides(type);
     }
 
@@ -442,6 +443,9 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
         }
         if (tm != null){
             tm.dispose();
+        }
+        if (sm != null){
+            sm.dispose();
         }
         super.dispose();
     }

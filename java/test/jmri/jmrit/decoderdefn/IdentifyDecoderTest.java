@@ -378,8 +378,8 @@ public class IdentifyDecoderTest {
         JUnitUtil.setUp();
         p = new ProgDebugger() {
             @Override
-            public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
-                cvRead = CV;
+            public void readCV(String CV, jmri.ProgListener p) throws jmri.ProgrammerException {
+                cvRead = Integer.parseInt(CV);
             }
         };
         p.setMode(ProgrammingMode.DIRECTMODE);

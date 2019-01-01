@@ -933,15 +933,16 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     /**
      * Write a CV via Ops Mode programming.
      *
-     * @param CV CV number
+     * @param CVname CV number
      * @param val value to write to the CV
      * @param p programmer
      * @param addr address of decoder
      * @param longAddr true if the address is a long address
      * @throws jmri.ProgrammerException if an unsupported programming mode is exercised
      */
-    public void writeCVOpsMode(int CV, int val, jmri.ProgListener p,
+    public void writeCVOpsMode(String CVname, int val, jmri.ProgListener p,
             int addr, boolean longAddr) throws jmri.ProgrammerException {
+        final int CV = Integer.parseInt(CVname);
         lopsa = addr & 0x7f;
         hopsa = (addr / 128) & 0x7f;
         mServiceMode = false;
@@ -982,38 +983,27 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
 
             }
         } else {
-            writeCV(Integer.parseInt(cvNum), val, p);
-        }
-    }
+            // regular CV case
+            int CV = Integer.parseInt(cvNum);
+            
+            lopsa = 0;
+            hopsa = 0;
+            mServiceMode = true;
+            // parse the programming command
+            int pcmd = 0x43;       // LPE imples 0x40, but 0x43 is observed
+            if (getMode().equals(ProgrammingMode.PAGEMODE)) {
+                pcmd = pcmd | 0x20;
+            } else if (getMode().equals(ProgrammingMode.DIRECTBYTEMODE)) {
+                pcmd = pcmd | 0x28;
+            } else if (getMode().equals(ProgrammingMode.REGISTERMODE)
+                    || getMode().equals(ProgrammingMode.ADDRESSMODE)) {
+                pcmd = pcmd | 0x10;
+            } else {
+                throw new jmri.ProgrammerException("mode not supported"); // NOI18N
+            }
 
-    /**
-     * Write a CV via the Service Mode programmer.
-     *
-     * @param CV CV number
-     * @param val value to write to the CV
-     * @param p programmer
-     * @throws jmri.ProgrammerException if an unsupported programming mode is exercised
-     */
-    @Override
-    @Deprecated // 4.1.1
-    public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
-        lopsa = 0;
-        hopsa = 0;
-        mServiceMode = true;
-        // parse the programming command
-        int pcmd = 0x43;       // LPE imples 0x40, but 0x43 is observed
-        if (getMode().equals(ProgrammingMode.PAGEMODE)) {
-            pcmd = pcmd | 0x20;
-        } else if (getMode().equals(ProgrammingMode.DIRECTBYTEMODE)) {
-            pcmd = pcmd | 0x28;
-        } else if (getMode().equals(ProgrammingMode.REGISTERMODE)
-                || getMode().equals(ProgrammingMode.ADDRESSMODE)) {
-            pcmd = pcmd | 0x10;
-        } else {
-            throw new jmri.ProgrammerException("mode not supported"); // NOI18N
+            doWrite(CV, val, p, pcmd);   
         }
-
-        doWrite(CV, val, p, pcmd);
     }
 
     /**
@@ -1179,55 +1169,46 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
 
             }
         } else {
-            readCV(Integer.parseInt(cvNum), p);
+            // regular integer address for DCC form
+            int CV = Integer.parseInt(cvNum);
+
+            lopsa = 0;
+            hopsa = 0;
+            mServiceMode = true;
+            // parse the programming command
+            int pcmd = 0x03;       // LPE imples 0x00, but 0x03 is observed
+            if (getMode().equals(ProgrammingMode.PAGEMODE)) {
+                pcmd = pcmd | 0x20;
+            } else if (getMode().equals(ProgrammingMode.DIRECTBYTEMODE)) {
+                pcmd = pcmd | 0x28;
+            } else if (getMode().equals(ProgrammingMode.REGISTERMODE)
+                    || getMode().equals(ProgrammingMode.ADDRESSMODE)) {
+                pcmd = pcmd | 0x10;
+            } else {
+                throw new jmri.ProgrammerException("mode not supported"); // NOI18N
+            }
+
+            doRead(CV, p, pcmd);
+
         }
     }
 
     /**
      * Invoked by LnOpsModeProgrammer to start an ops-mode read operation.
      *
-     * @param CV       Which CV to read
+     * @param CVname       Which CV to read
      * @param p        Who to notify on complete
      * @param addr     Address of the locomotive
      * @param longAddr true if a long address, false if short address
      * @throws jmri.ProgrammerException if an unsupported programming mode is exercised
      */
-    public void readCVOpsMode(int CV, jmri.ProgListener p, int addr, boolean longAddr) throws jmri.ProgrammerException {
+    public void readCVOpsMode(String CVname, jmri.ProgListener p, int addr, boolean longAddr) throws jmri.ProgrammerException {
+        final int CV = Integer.parseInt(CVname);
         lopsa = addr & 0x7f;
         hopsa = (addr / 128) & 0x7f;
         mServiceMode = false;
         doRead(CV, p, 0x2F);  // although LPE implies 0x2C, 0x2F is observed
     }
-
-    /**
-     * Read a CV via the OpsMode programmer.
-     *
-     * @param CV the CV number
-     * @param p programmer
-     * @throws jmri.ProgrammerException if an unsupported programming mode is exercised
-     */
-    @Override
-    @Deprecated // 4.1.1
-    public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
-        lopsa = 0;
-        hopsa = 0;
-        mServiceMode = true;
-        // parse the programming command
-        int pcmd = 0x03;       // LPE imples 0x00, but 0x03 is observed
-        if (getMode().equals(ProgrammingMode.PAGEMODE)) {
-            pcmd = pcmd | 0x20;
-        } else if (getMode().equals(ProgrammingMode.DIRECTBYTEMODE)) {
-            pcmd = pcmd | 0x28;
-        } else if (getMode().equals(ProgrammingMode.REGISTERMODE)
-                || getMode().equals(ProgrammingMode.ADDRESSMODE)) {
-            pcmd = pcmd | 0x10;
-        } else {
-            throw new jmri.ProgrammerException("mode not supported"); // NOI18N
-        }
-
-        doRead(CV, p, pcmd);
-    }
-
 
     /**
      * Perform a CV Read.
@@ -1536,6 +1517,13 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      */
     public LocoNetSystemConnectionMemo getSystemConnectionMemo() {
         return adaptermemo;
+    }
+
+    /**
+     * Dispose of this by stopped it's ongoing actions
+     */
+    public void dispose() {
+        if (staleSlotCheckTimer != null) staleSlotCheckTimer.stop();
     }
 
     // initialize logging

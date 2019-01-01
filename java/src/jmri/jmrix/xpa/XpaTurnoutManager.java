@@ -41,13 +41,4 @@ public class XpaTurnoutManager extends jmri.managers.AbstractTurnoutManager {
         return true;
     }
 
-    /**
-     * @return null
-     * @deprecated since 4.3.6
-     */
-    @Deprecated
-    synchronized static public XpaTurnoutManager instance() {
-        return null;
-    }
-
 }

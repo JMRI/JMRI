@@ -40,7 +40,9 @@ public class Mx1Programmer extends AbstractProgrammer implements Mx1Listener {
             this.tc.addMx1Listener(~0, this);
     }
 
-    /**
+    /** 
+     * {@inheritDoc}
+     *
      * Types implemented here.
      */
     @Override
@@ -60,10 +62,12 @@ public class Mx1Programmer extends AbstractProgrammer implements Mx1Listener {
     int _val;	// remember the value being read/written for confirmative reply
     int _cv;	// remember the cv being read/written
 
-    // programming interface
+    /** 
+     * {@inheritDoc}
+     */
     @Override
-    @Deprecated // 4.1.1
-    synchronized public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
+    synchronized public void writeCV(String CVname, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
+        final int CV = Integer.parseInt(CVname);
         if (log.isDebugEnabled()) {
             log.debug("writeCV " + CV + " listens " + p);
         }
@@ -89,14 +93,20 @@ public class Mx1Programmer extends AbstractProgrammer implements Mx1Listener {
         }
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public void confirmCV(String CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         readCV(CV, p);
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
-    @Deprecated // 4.1.1
-    synchronized public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
+    synchronized public void readCV(String CVname, jmri.ProgListener p) throws jmri.ProgrammerException {
+        final int CV = Integer.parseInt(CVname);
         if (log.isDebugEnabled()) {
             log.debug("readCV " + CV + " listens " + p);
         }
@@ -137,6 +147,9 @@ public class Mx1Programmer extends AbstractProgrammer implements Mx1Listener {
         }
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     synchronized public void message(Mx1Message m) {
         if (progState == NOTPROGRAMMING) {
@@ -193,7 +206,9 @@ public class Mx1Programmer extends AbstractProgrammer implements Mx1Listener {
         }
     }
 
-    /**
+    /** 
+     * {@inheritDoc}
+     *
      * Internal routine to handle a timeout
      */
     @Override
