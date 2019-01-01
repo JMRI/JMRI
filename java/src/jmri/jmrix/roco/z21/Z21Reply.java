@@ -1,6 +1,7 @@
 package jmri.jmrix.roco.z21;
 
 import jmri.jmrix.AbstractMRReply;
+import jmri.DccLocoAddress;
 
 /**
  * Class for replies in the z21/Z21 protocol.
@@ -140,7 +141,7 @@ public class Z21Reply extends AbstractMRReply {
                int entries = getNumRailComDataEntries();
                StringBuffer datastring = new StringBuffer();
                for(int i = 0; i < entries ; i++) {
-                   jmri.DccLocoAddress address = getRailComLocoAddress(i);
+                   DccLocoAddress address = getRailComLocoAddress(i);
                    int rcvCount = getRailComRcvCount(i);
                    int errorCount = getRailComErrCount(i);
                    int speed = getRailComSpeed(i);
@@ -270,10 +271,10 @@ public class Z21Reply extends AbstractMRReply {
      * @param n the entry to get the address from.
      * @return the locomotive address for the specified entry.
      */
-    jmri.DccLocoAddress getRailComLocoAddress(int n){
+    DccLocoAddress getRailComLocoAddress(int n){
          int offset = 4+(n*13);
          int address = ((0xff&getElement(offset+1))<<8)+(0xff&(getElement(offset)));
-         return new jmri.DccLocoAddress(address,address>=100);
+         return new DccLocoAddress(address,address>=100);
     }
 
     /**
@@ -499,8 +500,7 @@ public class Z21Reply extends AbstractMRReply {
         if(addressValue==0) {
            addressString="end of list";
         } else {
-           int locoAddress = (0x3FFF&addressValue);
-           addressString = "" + (new jmri.DccLocoAddress(locoAddress,locoAddress>=100)).toString();
+           addressString = "" + (getCanDetectorLocoAddress(addressValue)).toString();
            int direction = (0xC000&addressValue);
            switch (direction) {
               case 0x8000:
@@ -514,6 +514,20 @@ public class Z21Reply extends AbstractMRReply {
           }
        }
        return addressString;
+   }
+
+    // address value is the 16 bits of the two bytes containing the
+    // address.  The most significan two bits represent the direction.
+    DccLocoAddress getCanDetectorLocoAddress(int addressValue) {
+        //if(!isCanDetectorMessage()) {
+        //   return null;
+        //}
+        if(addressValue==0) {
+           return null;
+        } else {
+           int locoAddress = (0x3FFF&addressValue);
+           return new DccLocoAddress(locoAddress,locoAddress>=100);
+        }
    }
 
 }

@@ -35,6 +35,8 @@ public class Z21ReporterManager extends jmri.managers.AbstractReporterManager im
         // make sure we are going to get railcom data from the command station
         // set the broadcast flags so we get messages we may want to hear
         _memo.getRocoZ21CommandStation().setRailComMessagesFlag(true);
+        _memo.getRocoZ21CommandStation().setRailComAutomaticFlag(true);
+        _memo.getRocoZ21CommandStation().setCanDetectorFlag(true);
         // and forward the flags to the command station.
         _memo.getTrafficController().sendz21Message(Z21Message.getLanSetBroadcastFlagsRequestMessage(
               _memo.getRocoZ21CommandStation().getZ21BroadcastFlags()),null);
@@ -51,8 +53,15 @@ public class Z21ReporterManager extends jmri.managers.AbstractReporterManager im
     @Override
     public Reporter createNewReporter(String systemName, String userName){
         if(!systemName.matches(getSystemPrefix() + typeLetter() + "[" + 1 + "]")) {
-            log.warn("Invalid Reporter name: " + systemName + " - only one reporter supported ");
-            throw new IllegalArgumentException("Invalid Reporter name: " + systemName + " - only one reporter supported ");
+           int bitNum = Z21CanBusAddress.getBitFromSystemName(systemName, getSystemPrefix());
+           if(bitNum!=-1) {
+              Reporter r = new Z21CanReporter(systemName,userName,_memo);
+              register(r);
+              return r;
+           } else {
+              log.warn("Invalid Reporter name: {} " + systemName);
+              throw new IllegalArgumentException("Invalid Reporter name: " + systemName);
+           }
         }
         // Create and register the reporter
         Reporter r = new Z21Reporter(systemName,userName,_memo);
@@ -76,17 +85,30 @@ public class Z21ReporterManager extends jmri.managers.AbstractReporterManager im
      */
     @Override
     public void reply(Z21Reply msg){
-         // for incoming messages all the reporter cares about is
-         // LAN_RAILCOM_DATACHANGED messages.
+         // LAN_RAILCOM_DATACHANGED messages are related to the built in
+         // reporter.
          if(msg.isRailComDataChangedMessage()){
             log.debug("Received RailComDatachanged message");
-            Z21Reporter r = (Z21Reporter) getBySystemName(getSystemPrefix()+typeLetter()+1); // there is only one turnout.
+            Z21Reporter r = (Z21Reporter) getBySystemName(getSystemPrefix()+typeLetter()+1); // there is only one built in reporter.
            if ( null == r ) {
               log.debug("Creating reporter {}",getSystemPrefix()+typeLetter()+1);
               // need to create a new one, and send the message on 
               // to the newly created object.
               ((Z21Reporter)provideReporter(getSystemPrefix()+typeLetter()+1)).reply(msg);
            }
+         // LAN_CAN_DETECTOR message are related to CAN reporters.
+         } else if(msg.isCanDetectorMessage()){
+            int netID = ( msg.getElement(4)&0xFF) + ((msg.getElement(5)&0xFF) << 8);
+            int msgPort = ( msg.getElement(8) & 0xFF);
+            int address = ( msg.getElement(6)&0xFF) + ((msg.getElement(7)&0xFF) << 8);
+            String sysName = getSystemPrefix()+typeLetter()+address+":"+msgPort;
+            Z21CanReporter r = (Z21CanReporter) getBySystemName(sysName);
+            if ( null == r ) {
+               log.debug("Creating reporter {}",sysName);
+               // need to create a new one, and send the message on 
+               // to the newly created object.
+               ((Z21CanReporter)provideReporter(sysName)).reply(msg);
+            }
          }
     }
 
