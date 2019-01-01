@@ -41,10 +41,12 @@ public class LI100XNetProgrammer extends XNetProgrammer implements XNetListener 
         super(tc);
     }
 
-    // programming interface
+    /** 
+     * {@inheritDoc}
+     */
     @Override
-    @Deprecated // 4.1.1
-    synchronized public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
+    synchronized public void writeCV(String CVname, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
+        final int CV = Integer.parseInt(CVname);
         log.debug("writeCV {} listens {}", CV, p);
         useProgrammer(p);
         _progRead = false;
@@ -80,14 +82,20 @@ public class LI100XNetProgrammer extends XNetProgrammer implements XNetListener 
         }
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     synchronized public void confirmCV(String CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         readCV(CV, p);
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
-    @Deprecated // 4.1.1
-    synchronized public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
+    synchronized public void readCV(String CVname, jmri.ProgListener p) throws jmri.ProgrammerException {
+        final int CV = Integer.parseInt(CVname);
         log.debug("readCV {} listens {}", CV, p);
 
         if (!getCanRead()) {
@@ -128,6 +136,9 @@ public class LI100XNetProgrammer extends XNetProgrammer implements XNetListener 
         }
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     synchronized public void message(XNetReply m) {
         if (m.getElement(0) == XNetConstants.CS_INFO
@@ -365,13 +376,17 @@ public class LI100XNetProgrammer extends XNetProgrammer implements XNetListener 
         }
     }
 
-    // listen for the messages to the LI100/LI101
-    @Override
+    /** 
+     * {@inheritDoc}
+     *
+     * listen for the messages to the LI100/LI101
+     */
+     @Override
     synchronized public void message(XNetMessage l) {
     }
 
-    /**
-     * Internal routine to handle a timeout
+    /** 
+     * {@inheritDoc}
      */
     @Override
     synchronized protected void timeout() {
@@ -395,6 +410,6 @@ public class LI100XNetProgrammer extends XNetProgrammer implements XNetListener 
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LI100XNetProgrammer.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LI100XNetProgrammer.class);
 
 }

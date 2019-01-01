@@ -9,8 +9,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -18,21 +16,13 @@ import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.text.BadLocationException;
 import javax.swing.Timer;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.util.ArrayList;
 import java.util.Date;
 import jmri.InstanceManager;
-import jmri.util.FileUtil;
-import java.util.List;
-import jmri.util.table.ButtonEditor;
-import jmri.util.table.ButtonRenderer;
-import jmri.util.davidflanagan.HardcopyWriter;
-import jmri.util.xml.XMLUtil;
 import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
@@ -44,10 +34,18 @@ import jmri.jmrix.can.cbus.CbusOpCodes;
 import jmri.jmrix.can.cbus.CbusSensor;
 import jmri.jmrix.can.cbus.CbusTurnout;
 import jmri.jmrix.can.TrafficController;
+import jmri.util.FileUtil;
+import java.util.List;
+import jmri.util.table.ButtonEditor;
+import jmri.util.table.ButtonRenderer;
+import jmri.util.davidflanagan.HardcopyWriter;
+import jmri.util.swing.TextAreaFIFO;
+import jmri.util.xml.XMLUtil;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -1446,7 +1444,7 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
     public void dispose() {
         // eventTable.removeAllElements();
         // eventTable = null;
-        
+        tablefeedback.dispose();
         if (tc != null) {
             tc.removeCanListener(this);
         }
@@ -1658,27 +1656,23 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
 
         // print rows
         for (int i = 0; i < this.getRowCount(); i++) {
-            p.print(canidarr.get(i));
-            p.print(",");
             p.print(eventarr.get(i));
             p.print(",");
             p.print(nodearr.get(i));
             p.print(",");
-            p.print(typearr.get(i));
-            p.print(",");
-            p.print(latesttimestamparr.get(i)); // Date format
-            
-            p.print(",");
-            
-            if (namearr.get(i) == null) {
-                p.print("");
-            } else {
+            if (namearr.get(i) != null) {
                 p.print('"' + namearr.get(i) + '"');
+            }            
+            p.print(",");
+            if (nodenamearr.get(i) != null) {
+                p.print('"' + nodenamearr.get(i) + '"');
             }
             p.print(",");
-            if (commentarr.get(i) == null) {
-                p.print("");
-            } else {
+            if (latesttimestamparr.get(i) != null) {
+               p.print(latesttimestamparr.get(i)); // Date format
+            }
+            p.print(",");
+            if (commentarr.get(i) != null) {
                 p.print('"'+ commentarr.get(i) + '"');
             }
             p.println("");
@@ -1757,42 +1751,6 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
 
     protected TextAreaFIFO tablefeedback(){
         return tablefeedback;
-    }    
-    
-    /**
-     * Keeps the message log windows to a reasonable length
-     * https://community.oracle.com/thread/1373400
-     */
-    protected static class TextAreaFIFO extends JTextArea implements DocumentListener {
-        private int maxLines;
-    
-        public TextAreaFIFO(int lines) {
-            maxLines = lines;
-            getDocument().addDocumentListener( this );
-        }
-    
-        public void insertUpdate(DocumentEvent e) {
-            javax.swing.SwingUtilities.invokeLater( new Runnable() {
-                public void run() {
-                    removeLines();
-                }
-            });
-        }
-        public void removeUpdate(DocumentEvent e) {}
-        public void changedUpdate(DocumentEvent e) {}
-        public void removeLines()
-        {
-            javax.swing.text.Element root = getDocument().getDefaultRootElement();
-            while (root.getElementCount() > maxLines) {
-                javax.swing.text.Element firstLine = root.getElement(0);
-                try {
-                    getDocument().remove(0, firstLine.getEndOffset());
-                } catch(BadLocationException ble) {
-                    System.out.println(ble);
-                }
-            }
-        setCaretPosition( getDocument().getLength() );
-        }
     }
     
     /**

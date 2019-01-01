@@ -62,6 +62,7 @@ public class CanMessageTest extends CanMRCommonTestBase {
     }
 
     @Test
+    @SuppressWarnings("unlikely-arg-type") // Both CanReply and CanMessage are CanFrame with custom equals
     public void testEqualsData() {
         CanMessage m1 = new CanMessage(0x12);
         m1.setNumDataElements(2);
@@ -77,11 +78,18 @@ public class CanMessageTest extends CanMRCommonTestBase {
         m3.setNumDataElements(2);
         m3.setElement(0, 0x01);
         m3.setElement(1, 0x82);
+        
+        CanMessage m4 = new CanMessage(0x12);
+        m4.setNumDataElements(1);
+        m4.setElement(0, 0x07);        
 
         Assert.assertTrue("equals self", m1.equals(m1));
         Assert.assertTrue("equals copy", m1.equals(new CanMessage(m1)));
         Assert.assertTrue("equals same", m1.equals(m2));
         Assert.assertTrue("not equals diff Ext", !m1.equals(m3));
+        Assert.assertTrue("not equals null", !m1.equals(null));
+        Assert.assertTrue("not equals string value", !m1.equals("[12] 81 12"));
+        Assert.assertTrue("not equals diff ele length", !m1.equals(m4));
     }
 
     @Test

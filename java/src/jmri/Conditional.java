@@ -43,7 +43,7 @@ public interface Conditional extends NamedBean {
     /**
      * @deprecated since 4.7.1; use {@link jmri.NamedBean#UNKNOWN} instead
      */
-    @Deprecated
+    @Deprecated // 4.7.1
     public static final int UNKNOWN = NamedBean.UNKNOWN;
     public static final int FALSE = 0x02;
     public static final int TRUE = 0x04;
@@ -91,17 +91,17 @@ public interface Conditional extends NamedBean {
     /**
      * @deprecated since 4.13.4; It is not stored in the XML file since 4.13.4.
      */
-    @Deprecated
+    @Deprecated // 4.7.1
     public static final int OPERATOR_NOT = 2;
     /**
      * @deprecated since 4.13.4; It is not stored in the XML file since 4.13.4.
      */
-    @Deprecated
+    @Deprecated // 4.7.1
     public static final int OPERATOR_AND_NOT = 3;
     /**
      * @deprecated since 4.13.4; It is not stored in the XML file since 4.13.4.
      */
-    @Deprecated
+    @Deprecated // 4.7.1
     public static final int OPERATOR_OR_NOT = 6;
     
     // state variable types

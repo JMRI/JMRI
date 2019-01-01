@@ -296,7 +296,7 @@ public class JUnitUtil {
      * @param self currently ignored
      * @deprecated 4.9.1 Use the various waitFor routines instead
      */
-    @Deprecated
+    @Deprecated // 4.9.1 Use the various waitFor routines instead
     public static void releaseThread(Object self) {
         releaseThread(self, DEFAULT_RELEASETHREAD_DELAY);
     }
@@ -311,7 +311,7 @@ public class JUnitUtil {
      * @param delay milliseconds to wait
      * @deprecated 4.9.1 Use the various waitFor routines instead
      */
-    @Deprecated
+    @Deprecated // 4.9.1 Use the various waitFor routines instead
     public static void releaseThread(Object self, int delay) {
         if (javax.swing.SwingUtilities.isEventDispatchThread()) {
             log.error("Cannot use releaseThread on Swing thread", new Exception());

@@ -32,7 +32,7 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
      * Create XNet sensor using fixed connection prefix
      * @deprecated JMRI Since 4.9.5
      */
-    @Deprecated
+    @Deprecated // 4.9.5
     public XNetSensor(String systemName, String userName, XNetTrafficController controller) {
         super(systemName, userName);
         tc = controller;
@@ -43,7 +43,7 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
      * Create XNet sensor using fixed connection prefix
      * @deprecated JMRI Since 4.9.5
      */
-    @Deprecated
+    @Deprecated // 4.9.5
     public XNetSensor(String systemName, XNetTrafficController controller) {
         super(systemName);
         tc = controller;
