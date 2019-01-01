@@ -101,7 +101,7 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
         Assert.assertEquals("index 1", 1, lastEvent0);
 
         // add an item
-        Sensor s3 = l.newSensor("IS3", "Sensor 3");
+        l.newSensor("IS3", "Sensor 3");
 
         // property listener should have been immediately invoked
         Assert.assertEquals("propertyListenerCount", 3, propertyListenerCount);
@@ -223,7 +223,7 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
 
     @Test
     public void testUnmodifiable() {
-        Sensor s1 = l.provideSensor("IS1");
+        l.provideSensor("IS1");
         l.provideSensor("IS2");
         
         List<String> nameList = l.getSystemNameList();
