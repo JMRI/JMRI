@@ -7,10 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import javax.annotation.Nonnull;
 import jmri.*;
 import jmri.implementation.JmriConfigurationManager;
@@ -1037,7 +1034,7 @@ public class JUnitUtil {
         return null;
     }
 
-    static List<String> threadNames = new ArrayList<>(Arrays.asList(new String[]{
+    static SortedSet<String> threadNames = new TreeSet<>(Arrays.asList(new String[]{
         // names we know about from normal running
         "main",
         "Java2D Disposer",
@@ -1046,7 +1043,7 @@ public class JUnitUtil {
         "GC Daemon",
         "Finalizer",
         "Reference Handler",
-        "Signal Dispatcher",
+        "Signal Dispatcher",                // POSIX signals in JRE
         "Java2D Queue Flusher",
         "Time-limited test",
         "WindowMonitor-DispatchThread",
@@ -1054,8 +1051,12 @@ public class JUnitUtil {
         "RMI TCP Accept",
         "TimerQueue",
         "Java Sound Event Dispatcher",
-        "Aqua L&F",
-        "AppKit Thread"
+        "Aqua L&F",                         // macOS
+        "AppKit Thread",
+        "JMRI Common Timer",
+        "BluecoveAsynchronousShutdownThread", // from LocoNet BlueTooth implementation
+        "Keep-Alive-Timer",                 // from "system" group
+        "process reaper"                    // observed in macOS JRE
     }));
     static List<Thread> threadsSeen = new ArrayList<>();
 
@@ -1080,7 +1081,8 @@ public class JUnitUtil {
                      || name.startsWith("Image Fetcher ")
                      || name.startsWith("JmDNS(")
                      || name.startsWith("SocketListener(")
-                     || (name.startsWith("Timer-") && 
+                     || name.startsWith("SocketListener(")
+                     || (name.startsWith("SwingWorker-pool-1-thread-") && 
                             ( t.getThreadGroup() != null && 
                                 (t.getThreadGroup().getName().contains("FailOnTimeoutGroup") || t.getThreadGroup().getName().contains("main") )
                             ) 
@@ -1094,7 +1096,7 @@ public class JUnitUtil {
                         
                         // for anonymous threads, show the traceback in hopes of finding what it is
                         if (name.startsWith("Thread-")) {
-                            Exception ex = new Exception("traceback");
+                            Exception ex = new Exception("traceback of numbered thread");
                             ex.setStackTrace(Thread.getAllStackTraces().get(t));
                             log.warn("Found remnant thread \"{}\" in group \"{}\" after {}", t.getName(), t.getThreadGroup().getName(), getTestClassName(), ex);
                         } else {
