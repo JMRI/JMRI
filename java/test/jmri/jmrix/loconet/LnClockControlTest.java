@@ -18,15 +18,20 @@ public class LnClockControlTest {
         LnTrafficController lnis = new LocoNetInterfaceScaffold();
         SlotManager slotmanager = new SlotManager(lnis);
         LocoNetSystemConnectionMemo c = new LocoNetSystemConnectionMemo(lnis, slotmanager);
+
         LnClockControl t = new LnClockControl(c);
         Assert.assertNotNull("exists",t);
+        
+        c.dispose();
     }
-
+    
     @Test
     public void testCtorTwoArg() {
         LnTrafficController lnis = new LocoNetInterfaceScaffold();
         SlotManager slotmanager = new SlotManager(lnis);
+ 
         LnClockControl t = new LnClockControl(slotmanager,lnis);
+ 
         Assert.assertNotNull("exists",t);
     }
 
@@ -54,6 +59,8 @@ public class LnClockControlTest {
         Assert.assertEquals("sent", 1, lnis.outbound.size());
         // set CS
         Assert.assertEquals("message 1", "EF 0E 7B 01 7F 7F 43 07 68 01 00 4C 03 00", lnis.outbound.get(0).toString());
+        
+        c.dispose();
     }
     
     @Test
@@ -80,6 +87,8 @@ public class LnClockControlTest {
         // expect one messages 
         Assert.assertEquals("sent", 1, lnis.outbound.size());
         Assert.assertEquals("message 1", "EF 0E 7B 01 7F 7F 43 06 68 01 00 4C 03 00", lnis.outbound.get(0).toString());
+        
+        c.dispose();
     }
 
     @Before

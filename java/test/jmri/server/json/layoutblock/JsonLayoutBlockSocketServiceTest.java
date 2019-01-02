@@ -132,7 +132,7 @@ public class JsonLayoutBlockSocketServiceTest {
         Assert.assertEquals("LayoutBlock1 has 2 listeners", 2, lb1.getPropertyChangeListeners().length);
         JsonNode message = connection.getMessage();
         Assert.assertTrue("Message is an array", message.isArray());
-        Assert.assertEquals("All LayoutBlocks are listed", manager.getNamedBeanList().size(), message.size());
+        Assert.assertEquals("All LayoutBlocks are listed", manager.getNamedBeanSet().size(), message.size());
     }
 
     /**
