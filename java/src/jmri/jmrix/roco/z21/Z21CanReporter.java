@@ -19,8 +19,8 @@ public class Z21CanReporter extends jmri.implementation.AbstractRailComReporter 
 
     private Z21SystemConnectionMemo _memo = null;
 
-    private int networkID; // CAN network ID associated with this reporter's module.
-    private int moduleAddress; // User assigned address associated with this reporter's module.
+    private int networkID=0; // CAN network ID associated with this reporter's module.
+    private int moduleAddress=-1; // User assigned address associated with this reporter's module.
     private int port; // module port (0-7) associated with this reporter.
 
     /**  
@@ -61,7 +61,10 @@ public class Z21CanReporter extends jmri.implementation.AbstractRailComReporter 
      *     request an update from the layout.
      */
     private void requestUpdateFromLayout(){
-       //_memo.getTrafficController().sendz21Message(Z21Message.getLanRailComGetDataRequestMessage(),this);
+       if(networkID==0){
+          return; // no networkID has been set yet.
+       }
+       _memo.getTrafficController().sendz21Message(Z21Message.getLanCanDetector(networkID),this);
     }
 
     // the Z21 Listener interface
