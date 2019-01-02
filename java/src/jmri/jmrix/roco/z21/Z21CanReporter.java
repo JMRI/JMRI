@@ -101,6 +101,17 @@ public class Z21CanReporter extends jmri.implementation.AbstractRailComReporter 
                      // see if there is a tag for this address.
                      RailCom tag = InstanceManager.getDefault(RailComManager.class).provideIdTag("" + l.getNumber());
                      tag.setAddressType(l.isLongAddress()?RailCom.LONG_ADDRESS:RailCom.SHORT_ADDRESS);
+                     int direction = (0xC000&value1);
+                     switch (direction) {
+                        case 0x8000:
+                           tag.setOrientation(RailCom.ORIENTA);
+                           break;
+                        case 0xC000:
+                           tag.setOrientation(RailCom.ORIENTB);
+                           break;
+                        default:
+                           tag.setOrientation(0);
+                     }
                      notify(tag);
                      if( value2 != 0 ) { // again, 0 is end of list or no railcom address available.
                         // get the second locomotive address from the message.
@@ -110,6 +121,17 @@ public class Z21CanReporter extends jmri.implementation.AbstractRailComReporter 
                            // see if there is a tag for this address.
                            RailCom tag2 = InstanceManager.getDefault(RailComManager.class).provideIdTag("" + l2.getNumber());
                            tag2.setAddressType(l2.isLongAddress()?RailCom.LONG_ADDRESS:RailCom.SHORT_ADDRESS);
+                           direction = (0xC000&value2);
+                           switch (direction) {
+                             case 0x8000:
+                                 tag2.setOrientation(RailCom.ORIENTA);
+                                 break;
+                             case 0xC000:
+                                 tag2.setOrientation(RailCom.ORIENTB);
+                                 break;
+                              default:
+                                 tag2.setOrientation(0);
+                           }
                            notify(tag2);
                         }
                      }
