@@ -28,6 +28,7 @@ import javax.swing.text.DefaultFormatter;
 import javax.swing.Timer;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.CbusCommandStation;
+import jmri.jmrix.can.cbus.CbusOpCodes;
 import jmri.jmrix.can.cbus.simulator.CbusSimulator;
 
 import org.slf4j.Logger;
@@ -48,6 +49,7 @@ public class SimulatorPane extends jmri.jmrix.can.swing.CanPanel {
 
     private JPanel p1;
     private JPanel _csPanes;
+    private JPanel _ndPanes;
     private JPanel _evPanes;
     private Timer _initTimer;
     
@@ -160,21 +162,26 @@ public class SimulatorPane extends jmri.jmrix.can.swing.CanPanel {
         
         _csPanes = new JPanel();
         _evPanes = new JPanel();
+        _ndPanes = new JPanel();
         _csPanes.setLayout(new BoxLayout(_csPanes, BoxLayout.Y_AXIS));
         _evPanes.setLayout(new BoxLayout(_evPanes, BoxLayout.Y_AXIS));
+        _ndPanes.setLayout(new BoxLayout(_ndPanes, BoxLayout.Y_AXIS));
 
         directionOptions.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("DirSettings")));
         _csPanes.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("CmndStations")));
         _evPanes.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("ResponseEvents")));
+        _ndPanes.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("CbusNodes")));
         
         for ( int i=0 ; ( i < _sim.getNumCS() ) ; i++ ) {
-            CsPane thispane = new CsPane(i,1);
+            CsPane thispane = new CsPane(i,1); // id , type
             _csPanes.add(thispane);
-
             thispane.setVisible(true);
         }
+
+        NdPane thispanend = new NdPane(1,0); // id , type
+        _ndPanes.add(thispanend);
         
-        EvResponderPane thispane = new EvResponderPane(0,1);
+        EvResponderPane thispane = new EvResponderPane(0,1); // id , mode
         _evPanes.add(thispane);
 
         thispane.setVisible(true);
@@ -183,6 +190,7 @@ public class SimulatorPane extends jmri.jmrix.can.swing.CanPanel {
         p1.add(directionOptions);
         p1.add(_csPanes);
         p1.add(_evPanes);
+        p1.add(_ndPanes);
         
         mainScroll = new JScrollPane (p1);
         this.add(mainScroll);
@@ -220,9 +228,20 @@ public class SimulatorPane extends jmri.jmrix.can.swing.CanPanel {
                 revalidate();
             }
         });
-        
+
+        JMenuItem newNd = new JMenuItem(Bundle.getMessage("CbusNode"));
+        newNd.addActionListener ( new ActionListener () {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                NdPane thispanend = new NdPane(_sim.getNewNdID(0),0);
+                _ndPanes.add(thispanend);
+                revalidate();
+            }
+        });
+
         addMenu.add(newCs);
         addMenu.add(newEv);
+        addMenu.add(newNd);
         menuList.add(addMenu);
         
         return menuList;
@@ -265,7 +284,7 @@ public class SimulatorPane extends jmri.jmrix.can.swing.CanPanel {
             
             updateSessionTotal();
             
-            _sim._csNodes.get(_id).setPane(this);
+            _sim.getCSFromId(_id).setPane(this);
             tooltips = new ArrayList<String>();
             String getSelected="";
             
@@ -288,7 +307,7 @@ public class SimulatorPane extends jmri.jmrix.can.swing.CanPanel {
                         String option = CbusSimulator.csTypes.get(i);
                         if (option.equals(chosen)) {
                             log.debug("chosen {} {}",i,chosen);
-                            _sim._csNodes.get(_id).setDummyType(i);
+                            _sim.getCSFromId(_id).setDummyType(i);
                         }
                     }
                 }
@@ -321,6 +340,109 @@ public class SimulatorPane extends jmri.jmrix.can.swing.CanPanel {
         public void setNumSessions(int num){
             _numSessions=num;
             updateSessionTotal();
+        }
+        
+        public int getId(){
+            return _id;
+        }
+        
+    }
+
+    public class NdPane extends JPanel {
+        
+        private JComboBox<String> _selectNd;
+        private int _id;
+        private int _type;
+        private int _nn;
+        private JPanel _singleNd;
+        private JButton _resetNd;
+        private JLabel _sessionText;
+        private ArrayList<String> tooltips;
+        
+        public NdPane(int id, int type ) {
+            super();
+            
+            _id = id;
+            _type = type;
+            _nn = 0;
+            _singleNd = new JPanel();
+            _sessionText = new JLabel();
+            
+            _selectNd = new JComboBox<String>();
+            _selectNd.setEditable(false);
+            
+            ComboboxToolTipRenderer renderer = new ComboboxToolTipRenderer();
+            _selectNd.setRenderer(renderer);
+            
+            log.debug("id {} sim {}",_id,_sim);
+            _sim.getNodeFromId(_id).setPane(this);
+            
+            tooltips = new ArrayList<String>();
+            String getSelected="";
+            
+            for (int i = 0; i < CbusSimulator.ndTypes.size(); i++) {
+                int intoption = CbusSimulator.ndTypes.get(i);
+                String option = CbusOpCodes.getModuleType(165,intoption);
+                _selectNd.addItem(option);
+                tooltips.add(CbusOpCodes.getModuleTypeExtra(165,intoption));
+                if ( intoption == _type ){
+                    getSelected = option;
+                }
+            }
+            
+            _selectNd.setSelectedItem(getSelected);
+            _selectNd.addActionListener (new ActionListener () {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    String chosen = (String)_selectNd.getSelectedItem();
+                    
+                    for (int i = 0; i < CbusSimulator.ndTypes.size(); i++) {
+                        int intoption = CbusSimulator.ndTypes.get(i);
+                        String option = CbusOpCodes.getModuleType(165,intoption);
+                        if (option.equals(chosen)) {
+                            log.debug("chosen {} {}",i,chosen);
+                            _sim.getNodeFromId(_id).setDummyType(intoption);
+                            _type = intoption;
+                        }
+                    }
+                    updateNode();
+                }
+            });
+
+            renderer.setTooltips(tooltips);
+            
+            _resetNd = new JButton("FLiM");
+            
+            _singleNd.add(_selectNd);
+            
+            _singleNd.add(_sessionText);
+            _singleNd.add(_resetNd);
+
+            _singleNd.setBorder(BorderFactory.createEtchedBorder());
+            _ndPanes.add(_singleNd);
+            
+            _resetNd.addActionListener (new ActionListener () {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    _sim.resetNd(_id);
+                }
+            });
+            
+            updateNode();
+        }
+        
+        private void updateNode(){
+            if ( _type>0 ) { 
+                _resetNd.setEnabled(true); 
+            } else {
+                _resetNd.setEnabled(false); 
+            }
+           _sessionText.setText("<html> <h2> " + _nn + " </h2> </html>");
+        }
+        
+        public void setNodeNum(int num){
+            _nn=num;
+            updateNode();
         }
         
         public int getId(){
@@ -374,7 +496,7 @@ public class SimulatorPane extends jmri.jmrix.can.swing.CanPanel {
                         String option = CbusSimulator.evModes.get(i);
                         if (option.equals(chosen)) {
                             log.debug("chosen {} {}",i,chosen);
-                            _sim._evResponseArr.get(_id).setMode(i);
+                            _sim.getEvRFromId(_id).setMode(i);
                         }
                     }
                 }
@@ -392,7 +514,7 @@ public class SimulatorPane extends jmri.jmrix.can.swing.CanPanel {
                 public void stateChanged(ChangeEvent e) {
                     int minmax = (Integer) _spinner.getValue();
                     log.debug("value {}",minmax);
-                    _sim._evResponseArr.get(_id).setNode(minmax);
+                    _sim.getEvRFromId(_id).setNode(minmax);
                 }
             });
             _spinner.setToolTipText(Bundle.getMessage("simNodeSelect"));
@@ -431,7 +553,7 @@ public class SimulatorPane extends jmri.jmrix.can.swing.CanPanel {
 
     @Override
     public void dispose() {
-
+        super.dispose();
     }
 
     /**

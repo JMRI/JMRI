@@ -15,18 +15,24 @@ import org.slf4j.LoggerFactory;
 public class CbusEventResponder {
     
     private CbusSimulator _sim;
-    int _node;
-    int _mode;
-    int _networkDelay;
+    private int _simId;
+    private int _node;
+    private int _mode;
+    private int _networkDelay;
     
-    public CbusEventResponder( int mode, CbusSimulator sim ){
+    public CbusEventResponder( int mode, CbusSimulator sim, int simId ){
         _sim = sim;
+        _simId = simId;
         _mode = mode;
         _node = -1;
         _networkDelay = CbusSimulator.DEFAULT_DELAY;
         if ( _sim != null ) {
             log.info("Simulated Event Responses: {}",CbusSimulator.evModes.get(_mode) );
         }
+    }
+
+    protected int getSimId(){
+        return _simId;
     }
     
     public void setMode(int mode){
