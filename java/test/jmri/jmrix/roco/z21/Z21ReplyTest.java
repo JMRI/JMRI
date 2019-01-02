@@ -163,21 +163,21 @@ public class Z21ReplyTest extends jmri.jmrix.AbstractMessageTestBase {
     public void railComSpeed(){
         byte msg[]={(byte)0x11,(byte)0x00,(byte)0x88,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x05,(byte)0x06,(byte)0x07,(byte)0x08};
         message = new Z21Reply(msg,17);
-        Assert.assertEquals("RailCom Speed",8,message.getRailComSpeed(0));
+        Assert.assertEquals("RailCom Speed",6,message.getRailComSpeed(0));
     }
 
     @Test
     public void railComOptions(){
         byte msg[]={(byte)0x11,(byte)0x00,(byte)0x88,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x05,(byte)0x06,(byte)0x07,(byte)0x08};
         message = new Z21Reply(msg,17);
-        Assert.assertEquals("RailCom Options",7,message.getRailComOptions(0));
+        Assert.assertEquals("RailCom Options",5,message.getRailComOptions(0));
     }
 
     @Test
     public void railComQos(){
         byte msg[]={(byte)0x11,(byte)0x00,(byte)0x88,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x05,(byte)0x06,(byte)0x07,(byte)0x08};
         message = new Z21Reply(msg,17);
-        Assert.assertEquals("RailCom Qos",8,message.getRailComQos(0));
+        Assert.assertEquals("RailCom Qos",7,message.getRailComQos(0));
     }
 
     //Test System Data related methods.

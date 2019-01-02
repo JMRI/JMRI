@@ -276,7 +276,7 @@ public class Z21Reply extends AbstractMRReply {
      * @return the locomotive address for the specified entry.
      */
     DccLocoAddress getRailComLocoAddress(int n){
-         int offset = 4+(n*13);
+         int offset = 4+(n*13);  // +4 to get past header
          int address = ((0xff&getElement(offset+1))<<8)+(0xff&(getElement(offset)));
          return new DccLocoAddress(address,address>=100);
     }
@@ -288,7 +288,7 @@ public class Z21Reply extends AbstractMRReply {
      * @return the receive counter for the specified entry.
      */
     int getRailComRcvCount(int n){
-         int offset = 6+(n*13); // +2 to get past the address.
+         int offset = 6+(n*13); // +6 to get header and address.
          int rcvcount = ((0xff&getElement(offset+3))<<24) +
                        ((0xff&(getElement(offset+2))<<16) + 
                        ((0xff&getElement(offset+1))<<8) + 
@@ -303,7 +303,7 @@ public class Z21Reply extends AbstractMRReply {
      * @return the error counter for the specified entry.
      */
     int getRailComErrCount(int n){
-         int offset = 10+(n*13); // +8 to get past the address and rcv count.
+         int offset = 10+(n*13); // +10 to get past header, address,and rcv count.
          int errorcount = ((0xff&getElement(offset+1))<<8) + 
                        (0xff&(getElement(offset)));
          return errorcount;
@@ -318,7 +318,8 @@ public class Z21Reply extends AbstractMRReply {
     int getRailComSpeed(int n){
          int options = getRailComOptions(n);
          if(((options & 0x01) == 0x01) || ((options & 0x02) == 0x02)) { 
-            int offset = 16+(n*13); //+10 to get past the address and counters.
+            int offset = 14+(n*13); //+14 to get past the options, 
+                                    // and everything before the options.
             return (0xff&(getElement(offset)));
          } else {
             return 0;
@@ -332,7 +333,8 @@ public class Z21Reply extends AbstractMRReply {
      * @return the options for the specified entry.
      */
     int getRailComOptions(int n){
-         int offset = 15+(n*13); //+10 to get past the address,counter,speed.
+         int offset = 13+(n*13); //+13 to get past the header, address, rcv 
+                                 // counter, and reserved byte.
          return (0xff&(getElement(offset)));
     }
 
@@ -344,7 +346,8 @@ public class Z21Reply extends AbstractMRReply {
      */
     int getRailComQos(int n){
          if((getRailComOptions(n) & 0x04) == 0x04 ) { 
-            int offset = 17+(n*13); //+10 to get past the other data.
+            int offset = 15+(n*13); //+15 to get past the speed, 
+                                    // and everything before the speed.
             return (0xff&(getElement(offset)));
          } else {
             return 0; // if the QOS bit isn't set, there is no QOS attribute.
