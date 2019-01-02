@@ -27,6 +27,7 @@ public abstract class AbstractSignalHeadTestBase {
         Assert.assertTrue("set again", s.getLit());
     }
 
+    @SuppressWarnings("unlikely-arg-type") // Unlikely argument type int for contains(Object) on a Collection<int[]>
     private boolean validAppearance(int appearance, SignalHead s) {
         return Arrays.asList(s.getValidStates()).contains(SignalHead.RED);
     }
