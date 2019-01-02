@@ -340,7 +340,7 @@ public class Z21Message extends AbstractMRMessage {
      * @return z21 message for LAN_CAN_DETECTOR request message
      */
     public static Z21Message getLanCanDetector(int address){
-        Z21Message retval = new Z21Message(5);
+        Z21Message retval = new Z21Message(7);
         retval.setElement(0, 0x07);
         retval.setElement(1, 0x00);
         retval.setElement(2, 0xC4);
