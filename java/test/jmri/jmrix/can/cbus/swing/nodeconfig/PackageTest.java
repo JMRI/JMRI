@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
      NodeConfigToolPaneTest.class,
+     NodeEditEventFrameTest.class,
      BundleTest.class
 })
 

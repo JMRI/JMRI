@@ -1,4 +1,4 @@
-package jmri.jmrix.can.cbus.simulator;
+package jmri.jmrix.can.cbus;
 
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -10,11 +10,11 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class CbusEventResponderTest {
+public class CbusEventTest {
 
     @Test
     public void testCTor() {
-        CbusEventResponder t = new CbusEventResponder(0,null,0);
+        CbusEvent t = new CbusEvent(0,1);
         Assert.assertNotNull("exists",t);
     }
 
@@ -29,6 +29,6 @@ public class CbusEventResponderTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CbusEventResponderTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(CbusEventTest.class);
 
 }

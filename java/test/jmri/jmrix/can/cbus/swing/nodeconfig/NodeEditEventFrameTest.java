@@ -9,17 +9,17 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Test simple functioning of NodeConfigToolPane
+ * Test simple functioning of NodeEditEventFrame
  *
  * @author	Paul Bender Copyright (C) 2016
  */
-public class NodeConfigToolPaneTest {
+public class NodeEditEventFrameTest {
 
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        NodeConfigToolPane pane = new NodeConfigToolPane();
-        Assert.assertNotNull("exists", pane);
+        NodeEditEventFrame t = new NodeEditEventFrame(null,null);
+        Assert.assertNotNull("exists",t);
     }
 
     @Before
@@ -28,7 +28,9 @@ public class NodeConfigToolPaneTest {
     }
 
     @After
-    public void tearDown() {        JUnitUtil.tearDown();    }
+    public void tearDown() {
+        JUnitUtil.tearDown();
+    }
 
 
 }

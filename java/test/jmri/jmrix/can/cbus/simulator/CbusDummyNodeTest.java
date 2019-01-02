@@ -10,11 +10,11 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class CbusEventResponderTest {
+public class CbusDummyNodeTest {
 
     @Test
     public void testCTor() {
-        CbusEventResponder t = new CbusEventResponder(0,null,0);
+        CbusDummyNode t = new CbusDummyNode(0,null,0);
         Assert.assertNotNull("exists",t);
     }
 
@@ -29,6 +29,6 @@ public class CbusEventResponderTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CbusEventResponderTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(CbusDummyNodeTest.class);
 
 }
