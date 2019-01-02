@@ -66,6 +66,7 @@ public class ClockMonPane extends LnPanel implements SlotListener {
         minutes.setPreferredSize(spacer.getPreferredSize());
         panel1.add(new JLabel("."));
         panel1.add(frac_mins);
+        frac_mins.setPreferredSize(spacer.getPreferredSize());
         add(panel1);
 
         JPanel panel2 = new JPanel();
@@ -137,7 +138,7 @@ public class ClockMonPane extends LnPanel implements SlotListener {
     JTextField rate = new JTextField(4);
 
     JButton readButton = new JButton(Bundle.getMessage("ButtonRead"));
-    final static JTextField spacer = new JTextField("123");
+    final static JTextField spacer = new JTextField("1234");
 
     /**
      * Nested class to create one of these using old-style defaults

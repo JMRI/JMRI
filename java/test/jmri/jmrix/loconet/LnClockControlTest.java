@@ -50,12 +50,10 @@ public class LnClockControlTest {
         Date testDate = new Date(2018, 12, 1);  // deprecated, but OK for test
         t.initializeHardwareClock(1.0, testDate, false);
         
-        // expect two messages
-        Assert.assertEquals("sent", 2, lnis.outbound.size());
+        // expect one messages
+        Assert.assertEquals("sent", 1, lnis.outbound.size());
         // set CS
-        Assert.assertEquals("message 1", "EF 0E 7B 01 7B 78 43 07 68 01 00 4C 03 00", lnis.outbound.get(0).toString());
-        // rest of string varies 
-        Assert.assertEquals("message 2", "E7 0E 7B 01", lnis.outbound.get(1).toString().substring(0, 11));     
+        Assert.assertEquals("message 1", "EF 0E 7B 01 7F 7F 43 07 68 01 00 4C 03 00", lnis.outbound.get(0).toString());
     }
     
     @Test
@@ -79,11 +77,9 @@ public class LnClockControlTest {
         Date testDate = new Date(2018, 12, 1);  // deprecated, but OK for test
         t.initializeHardwareClock(1.0, testDate, false);
         
-        // expect two messages
-        Assert.assertEquals("sent", 2, lnis.outbound.size());
-        Assert.assertEquals("message 1", "EF 0E 7B 01 7B 78 43 06 68 01 00 4C 03 00", lnis.outbound.get(0).toString());
-        // rest of string varies 
-        Assert.assertEquals("message 2", "E7 0E 7B 01", lnis.outbound.get(1).toString().substring(0,11));     
+        // expect one messages 
+        Assert.assertEquals("sent", 1, lnis.outbound.size());
+        Assert.assertEquals("message 1", "EF 0E 7B 01 7F 7F 43 06 68 01 00 4C 03 00", lnis.outbound.get(0).toString());
     }
 
     @Before
