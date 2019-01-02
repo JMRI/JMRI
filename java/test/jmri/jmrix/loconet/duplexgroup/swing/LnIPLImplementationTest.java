@@ -1609,6 +1609,8 @@ public class LnIPLImplementationTest {
     }
 
     @After
-    public void tearDown() {        JUnitUtil.tearDown();    }
-
+    public void tearDown() {
+        memo.dispose();
+        JUnitUtil.tearDown();
+    }
 }

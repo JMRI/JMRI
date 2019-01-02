@@ -11,7 +11,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  * @deprecated since 4.9.4; not used in JMRI; use
  * {@link jmri.util.swing.ResizableImagePanel} instead
  */
-@Deprecated
+@Deprecated // 4.9.4
 @SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "Deprecated package for same class in different package.")
 public class ResizableImagePanel extends jmri.util.swing.ResizableImagePanel {
 }

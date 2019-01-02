@@ -89,7 +89,7 @@ public class MaintenanceTest {
     }
    
     @Test
-    public void testDeviceReportPressed(){
+    public void testDeviceReportPressed() throws InterruptedException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Thread t = new Thread(() -> {
             // constructor for jdo will wait until the dialog is visible
@@ -101,10 +101,11 @@ public class MaintenanceTest {
         ThreadingUtil.runOnGUI(() -> {
             Maintenance.deviceReportPressed("IS1",new jmri.util.JmriJFrame("DeviceReportParent"));
         });
+        t.join(); // only proceed when all done
     }
 
     @Test
-    public void testFindOrphansPressed(){
+    public void testFindOrphansPressed() throws InterruptedException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Thread t = new Thread(() -> {
             // constructor for jdo will wait until the dialog is visible
@@ -116,10 +117,11 @@ public class MaintenanceTest {
         ThreadingUtil.runOnGUI(() -> {
             Maintenance.findOrphansPressed(new jmri.util.JmriJFrame("FindOrphansParent"));
         });
+        t.join(); // only proceed when all done
     }
 
     //@Test
-    public void testFindEmptyPressed(){
+    public void testFindEmptyPressed() throws InterruptedException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Thread t = new Thread(() -> {
             // constructor for jdo will wait until the dialog is visible
@@ -131,6 +133,7 @@ public class MaintenanceTest {
         ThreadingUtil.runOnGUI(() -> {
             Maintenance.findEmptyPressed(new jmri.util.JmriJFrame("FindEmptyParent"));
         });
+        t.join(); // only proceed when all done
     }
 
 
