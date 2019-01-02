@@ -45,10 +45,19 @@ public class Z21CanBusAddress {
                   systemName.charAt(prefix.length())=='r' ) && 
                   curAddress.contains(":")) {
                //Address format passed is in the form of encoderAddress:input
+               int encoderAddress;
                int seperator = curAddress.indexOf(":");
-               int encoderAddress = Integer.parseInt(curAddress.substring(0, seperator));
+               try {
+                  encoderAddress = Integer.parseInt(curAddress.substring(0, seperator));
+               } catch (NumberFormatException ex) {
+                   // didn't parse as a decimal, check to see if network ID 
+                   // was used instead.
+                   encoderAddress = Integer.parseInt(curAddress.substring(0,seperator),16);
+               }
                int input = Integer.parseInt(curAddress.substring(seperator + 1));
-               num = ((encoderAddress) * 8) + input;
+               // since we aren't supporting bit number, just return the contact
+               // since we know now the module address is valid.
+               num = input;
             } else {
                log.warn("system name {} is in the wrong format.  Should be mm:pp.",systemName);
                return (-1);

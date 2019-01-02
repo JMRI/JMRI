@@ -88,27 +88,54 @@ public class Z21CanReporter extends jmri.implementation.AbstractRailComReporter 
                 return; // not our messge.
             }
             int type = ( msg.getElement(9) & 0xFF);
-            int value1 = (msg.getElement(10)&0xFF) + ((msg.getElement(11)&0xFF) << 8);
-            int value2 = (msg.getElement(12)&0xFF) + ((msg.getElement(13)&0xFF) << 8);
-            // get the first locomotive address from the message.
-            DccLocoAddress l = msg.getCanDetectorLocoAddress(value1);
-            if(l!=null) {
-               // see if there is a tag for this address.
-               RailCom tag = InstanceManager.getDefault(RailComManager.class).provideIdTag("" + l.getNumber());
-               tag.setAddressType(l.isLongAddress()?RailCom.LONG_ADDRESS:RailCom.SHORT_ADDRESS);
-               notify(tag);
-               // get the second locomotive address from the message.
-               DccLocoAddress l2 = msg.getCanDetectorLocoAddress(value2);
-               if(l2!=null) {
-                  // see if there is a tag for this address.
-                  RailCom tag2 = InstanceManager.getDefault(RailComManager.class).provideIdTag("" + l2.getNumber());
-                  tag2.setAddressType(l2.isLongAddress()?RailCom.LONG_ADDRESS:RailCom.SHORT_ADDRESS);
-                  notify(tag2);
+            log.debug("reporter message type {}",type);
+            if (type >= 0x11 && type <= 0x1f) {
+               int value1 = (msg.getElement(10)&0xFF) + ((msg.getElement(11)&0xFF) << 8);
+               int value2 = (msg.getElement(12)&0xFF) + ((msg.getElement(13)&0xFF) << 8);
+               log.debug("value 1: {}; value 2: {}",value1,value2);
+               if (value1 != 0 ) { // 0 represents end of list or no railcom address.
+                  // get the first locomotive address from the message.
+                  DccLocoAddress l = msg.getCanDetectorLocoAddress(value1);
+                  if(l!=null) {
+                     log.debug("reporting tag for address 1 {}",l);
+                     // see if there is a tag for this address.
+                     RailCom tag = InstanceManager.getDefault(RailComManager.class).provideIdTag("" + l.getNumber());
+                     tag.setAddressType(l.isLongAddress()?RailCom.LONG_ADDRESS:RailCom.SHORT_ADDRESS);
+                     notify(tag);
+                     if( value2 != 0 ) { // again, 0 is end of list or no railcom address available.
+                        // get the second locomotive address from the message.
+                        DccLocoAddress l2 = msg.getCanDetectorLocoAddress(value2);
+                        if(l2!=null) {
+                           log.debug("reporting tag for address 2 {}",l2);
+                           // see if there is a tag for this address.
+                           RailCom tag2 = InstanceManager.getDefault(RailComManager.class).provideIdTag("" + l2.getNumber());
+                           tag2.setAddressType(l2.isLongAddress()?RailCom.LONG_ADDRESS:RailCom.SHORT_ADDRESS);
+                           notify(tag2);
+                        }
+                     }
+                  }
+                }
+             } else if( type == 0x01 ) {
+                // status message, not a railcom value, so no report.
+                int value1 = (msg.getElement(10)&0xFF) + ((msg.getElement(11)&0xFF) << 8);
+                if(value1 == 0x0000) {
+                   log.debug("Free without tension");
+                   notify(null); // clear the current report if no tags.
+                } else if(value1 == 0x0001) {
+                   log.debug("Free with tension");
+                } else if(value1 == 0x1000) {
+                   log.debug("Busy without tension");
+                } else if(value1 == 0x1100) {
+                   log.debug("Busy with tension");
+                } else if(value1 == 0x1201) {
+                   log.debug("Busy Overload 1");
+                } else if(value1 == 0x1202) {
+                   log.debug("Busy Overload 2");
+                } else if(value1 == 0x1203) {
+                   log.debug("Busy Overload 3");
                 }
              } else {
-                // todo: check which address in the list this is. only
-                // say no report if the first entry is the last entry.
-                notify(null); // clear the current report if no tags.
+                //notify(null); // clear the current report if no tags.
              }
          }
     }

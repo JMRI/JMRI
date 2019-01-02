@@ -104,10 +104,15 @@ public class Z21ReporterManager extends jmri.managers.AbstractReporterManager im
             String sysName = getSystemPrefix()+typeLetter()+address+":"+msgPort;
             Z21CanReporter r = (Z21CanReporter) getBySystemName(sysName);
             if ( null == r ) {
-               log.debug("Creating reporter {}",sysName);
-               // need to create a new one, and send the message on 
-               // to the newly created object.
-               ((Z21CanReporter)provideReporter(sysName)).reply(msg);
+               // try with the module's CAN network ID
+               sysName = getSystemPrefix()+typeLetter()+String.format("%4x",netID)+":"+msgPort;
+               r = (Z21CanReporter) getBySystemName(sysName);
+               if (null == r) {
+                  log.debug("Creating reporter {}",sysName);
+                  // need to create a new one, and send the message on 
+                  // to the newly created object.
+                  ((Z21CanReporter)provideReporter(sysName)).reply(msg);
+               }
             }
          }
     }
