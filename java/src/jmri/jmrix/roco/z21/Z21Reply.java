@@ -1,5 +1,6 @@
 package jmri.jmrix.roco.z21;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.jmrix.AbstractMRReply;
 import jmri.DccLocoAddress;
 
@@ -82,6 +83,8 @@ public class Z21Reply extends AbstractMRReply {
         return 0;
     }
 
+    @SuppressWarnings("fallthrough")
+    @SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")
     public String toMonitorString() {
         switch(getOpCode()){
            case 0x0010:
@@ -189,20 +192,20 @@ public class Z21Reply extends AbstractMRReply {
                            default:
                                 value1String = "<unknown>";
                          }
-                    case 0x11: //$FALL-THROUGH$
-                    case 0x12: //$FALL-THROUGH$
-                    case 0x13: //$FALL-THROUGH$
-                    case 0x14: //$FALL-THROUGH$
-                    case 0x15: //$FALL-THROUGH$
-                    case 0x16: //$FALL-THROUGH$
-                    case 0x17: //$FALL-THROUGH$
-                    case 0x18: //$FALL-THROUGH$
-                    case 0x19: //$FALL-THROUGH$
-                    case 0x1A: //$FALL-THROUGH$
-                    case 0x1B: //$FALL-THROUGH$
-                    case 0x1C: //$FALL-THROUGH$
-                    case 0x1D: //$FALL-THROUGH$
-                    case 0x1E: //$FALL-THROUGH$
+                    case 0x11: 
+                    case 0x12: 
+                    case 0x13: 
+                    case 0x14: 
+                    case 0x15: 
+                    case 0x16: 
+                    case 0x17: 
+                    case 0x18: 
+                    case 0x19: 
+                    case 0x1A: 
+                    case 0x1B: 
+                    case 0x1C: 
+                    case 0x1D: 
+                    case 0x1E: 
                     case 0x1F:
                          typeString = "Occupancy Info";
                          value1String = getCanDetectorLocoAddressString(value1);
