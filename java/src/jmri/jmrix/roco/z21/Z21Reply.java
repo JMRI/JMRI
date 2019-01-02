@@ -192,6 +192,7 @@ public class Z21Reply extends AbstractMRReply {
                            default:
                                 value1String = "<unknown>";
                          }
+                         break;
                     case 0x11: 
                     case 0x12: 
                     case 0x13: 
