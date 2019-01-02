@@ -355,9 +355,9 @@ public class LocoNetMessageTest {
         Assert.assertEquals("Sensor L2S1853 (brightly) is Low.  (BDL16 # 116, DS13; DS54/DS64 # 232, AuxC/A3).\n", m.toMonitorString("L2"));
 
         lntm.dispose();
-
-
-
+        lntm2.dispose();
+        lnsm.dispose();
+        lnsm2.dispose();
     }
 
     @Test
