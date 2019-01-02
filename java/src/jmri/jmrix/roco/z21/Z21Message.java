@@ -336,7 +336,7 @@ public class Z21Message extends AbstractMRMessage {
     }
 
     /**
-     * @param CAN NetworkID of the module to request data from.
+     * @param address CAN NetworkID of the module to request data from.
      * @return z21 message for LAN_CAN_DETECTOR request message
      */
     public static Z21Message getLanCanDetector(int address){
