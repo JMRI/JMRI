@@ -189,34 +189,20 @@ public class Z21Reply extends AbstractMRReply {
                            default:
                                 value1String = "<unknown>";
                          }
-                    case 0x11:
-                      //$FALL-THROUGH$
-                    case 0x12:
-                      //$FALL-THROUGH$
-                    case 0x13:
-                      //$FALL-THROUGH$
-                    case 0x14:
-                      //$FALL-THROUGH$
-                    case 0x15:
-                      //$FALL-THROUGH$
-                    case 0x16:
-                      //$FALL-THROUGH$
-                    case 0x17:
-                      //$FALL-THROUGH$
-                    case 0x18:
-                      //$FALL-THROUGH$
-                    case 0x19:
-                      //$FALL-THROUGH$
-                    case 0x1A:
-                      //$FALL-THROUGH$
-                    case 0x1B:
-                      //$FALL-THROUGH$
-                    case 0x1C:
-                      //$FALL-THROUGH$
-                    case 0x1D:
-                      //$FALL-THROUGH$
-                    case 0x1E:
-                      //$FALL-THROUGH$
+                    case 0x11: //$FALL-THROUGH$
+                    case 0x12: //$FALL-THROUGH$
+                    case 0x13: //$FALL-THROUGH$
+                    case 0x14: //$FALL-THROUGH$
+                    case 0x15: //$FALL-THROUGH$
+                    case 0x16: //$FALL-THROUGH$
+                    case 0x17: //$FALL-THROUGH$
+                    case 0x18: //$FALL-THROUGH$
+                    case 0x19: //$FALL-THROUGH$
+                    case 0x1A: //$FALL-THROUGH$
+                    case 0x1B: //$FALL-THROUGH$
+                    case 0x1C: //$FALL-THROUGH$
+                    case 0x1D: //$FALL-THROUGH$
+                    case 0x1E: //$FALL-THROUGH$
                     case 0x1F:
                          typeString = "Occupancy Info";
                          value1String = getCanDetectorLocoAddressString(value1);

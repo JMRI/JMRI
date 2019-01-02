@@ -54,6 +54,7 @@ public class Z21CanBusAddress {
                    // was used instead.
                    encoderAddress = Integer.parseInt(curAddress.substring(0,seperator),16);
                }
+               log.debug("found module address {}",encoderAddress);
                int input = Integer.parseInt(curAddress.substring(seperator + 1));
                // since we aren't supporting bit number, just return the contact
                // since we know now the module address is valid.
