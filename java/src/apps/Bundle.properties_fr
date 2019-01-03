@@ -1,0 +1,4 @@
+# apps/configurexml/Bundle.properties
+
+#Error when an action requires a connection, but its not available
+PerformActionModel.NonexistantConnection=Impossible de r\u00e9aliser l'action, la connexion "{0}" n'existe pas.
