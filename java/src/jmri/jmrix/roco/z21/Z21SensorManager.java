@@ -6,35 +6,40 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Manage the Z21 RMBus specific Sensor implementation.
+ * Manage the Z21Specific Sensor implementation.
  * <p>
- * System names are "XSnnn", where X is the user-configurable system prefix,
- * nnn is the sensor number without padding.
+ * for RM Bus sensors, System names are "ZSnnn", where Z is the 
+ * user-configurable system prefix and nnn is the sensor number without padding.
+ * <p>
+ * for CAN Bus sensors, System names are "ZSmm:pp" where Z is the 
+ * user-configurable system prefix, mm is the CAN bus module id and pp is 
+ * the contact number.
  *
- * @author Paul Bender Copyright (C) 2003-2010
+ * @author Paul Bender Copyright (C) 2003-2018
  * @navassoc 1 - * jmri.jmrix.lenz.Z21RMBusSensor
+ * @navassoc 1 - * jmri.jmrix.lenz.Z21CanSensor
  */
-public class Z21RMBusSensorManager extends jmri.managers.AbstractSensorManager implements Z21Listener {
+public class Z21SensorManager extends jmri.managers.AbstractSensorManager implements Z21Listener {
 
     // ctor has to register for Z21 events
-    public Z21RMBusSensorManager(Z21SystemConnectionMemo memo) {
+    public Z21SensorManager(Z21SystemConnectionMemo memo) {
         _memo = memo;
+        // register for messages
         _memo.getTrafficController().addz21Listener(this);
-        // make sure we are going to get RMBus data from the command station
+        // make sure we are going to get can detector and RMBus data from 
+        // the command station
         // set the broadcast flags so we get messages we may want to hear
+        _memo.getRocoZ21CommandStation().setCanDetectorFlag(true);
         _memo.getRocoZ21CommandStation().setRMBusMessagesFlag(true);
         // and forward the flags to the command station.
         _memo.getTrafficController().sendz21Message(Z21Message.getLanSetBroadcastFlagsRequestMessage(
               _memo.getRocoZ21CommandStation().getZ21BroadcastFlags()),null);
-        // And then send a message requesting an update from the hardware.
-        // This is required because the RailCom data currently requires polling.
-        _memo.getTrafficController().sendz21Message(Z21Message.getLanRailComGetDataRequestMessage(),this);
     }
 
     protected Z21SystemConnectionMemo _memo = null;
 
     /**
-     * Return the system letter for XpressNet.
+     * Return the system letter for Z21.
      */
     @Override
     public String getSystemPrefix() {
@@ -48,7 +53,7 @@ public class Z21RMBusSensorManager extends jmri.managers.AbstractSensorManager i
         super.dispose();
     }
 
-    // XpressNet specific methods
+    // Z21 specific methods
 
     /**
      * Create a new Sensor based on the system name.
@@ -59,23 +64,64 @@ public class Z21RMBusSensorManager extends jmri.managers.AbstractSensorManager i
      */
     @Override
     public Sensor createNewSensor(String systemName, String userName) {
-        // check if the output bit is available
-        int bitNum = Z21RMBusAddress.getBitFromSystemName(systemName, getSystemPrefix());
-        if (bitNum == -1) {
-            return (null);
-        }
-        // create the new Sensor object
-        return new Z21RMBusSensor(systemName, userName, 
+        if(systemName.contains(":")) {
+           Sensor s = null; 
+           // check for CAN format.
+           int bitNum = Z21CanBusAddress.getBitFromSystemName(systemName, getSystemPrefix());
+           if(bitNum!=-1) {
+               return new Z21CanSensor(systemName,userName,_memo);
+           } else {
+               log.warn("Invalid Sensor name: {} " + systemName);
+               throw new IllegalArgumentException("Invalid Sensor name: " + systemName);
+           }
+        } else {
+           // check if the output bit is available
+           int bitNum = Z21RMBusAddress.getBitFromSystemName(systemName, getSystemPrefix());
+           if(bitNum!=-1) {
+              // create the new RMBus Sensor object
+              return new Z21RMBusSensor(systemName, userName, 
                    _memo.getTrafficController(), getSystemPrefix());
-    }
-
-    @Override
-    public void reply(Z21Reply l) {
-        log.debug("received message: {}", l);
+           } else {
+               log.warn("Invalid Sensor name: {} " + systemName);
+               throw new IllegalArgumentException("Invalid Sensor name: " + systemName);
+           }
+       }
     }
 
     /**
-     * Listen for the messages to the Z21.
+     * {inheritDoc}
+     */
+    @Override
+    public void reply(Z21Reply msg) {
+       log.debug("received message: {}", msg);
+       // LAN_CAN_DETECTOR message are related to CAN reporters/sensors.
+       if(msg.isCanDetectorMessage()){
+         int type = ( msg.getElement(9) & 0xFF);
+         log.debug("Sensor message type {}",type);
+         if (type == 0x01 ) {
+            log.debug("Received LAN_CAN_DETECTOR message");
+            int netID = ( msg.getElement(4)&0xFF) + ((msg.getElement(5)&0xFF) << 8);
+            int msgPort = ( msg.getElement(8) & 0xFF);
+            int address = ( msg.getElement(6)&0xFF) + ((msg.getElement(7)&0xFF) << 8);
+            String sysName = getSystemPrefix()+typeLetter()+address+":"+msgPort;
+            Z21CanSensor r = (Z21CanSensor) getBySystemName(sysName);
+            if ( null == r ) {
+               // try with the module's CAN network ID
+               sysName = getSystemPrefix()+typeLetter()+String.format("%4x",netID)+":"+msgPort;
+               r = (Z21CanSensor) getBySystemName(sysName);
+               if (null == r) {
+                  log.debug("Creating reporter {}",sysName);
+                  // need to create a new one, and send the message on 
+                  // to the newly created object.
+                  ((Z21CanSensor)provideSensor(sysName)).reply(msg);
+               }
+            }
+         }
+      }
+    }
+
+    /**
+     * {inheritDoc}
      */
     @Override
     public void message(Z21Message l) {
@@ -88,7 +134,11 @@ public class Z21RMBusSensorManager extends jmri.managers.AbstractSensorManager i
      * @return VALID if system name has a valid format, else return INVALID
      */
     public NameValidity validSystemNameFormat(String systemName) {
-        return (Z21RMBusAddress.validSystemNameFormat(systemName, 'S', getSystemPrefix()));
+        if ( Z21RMBusAddress.validSystemNameFormat(systemName, 'S', getSystemPrefix()) == NameValidity.VALID ) {
+           return (Z21RMBusAddress.validSystemNameFormat(systemName, 'S', getSystemPrefix()));
+        } else {
+           return (Z21CanBusAddress.validSystemNameFormat(systemName, 'S', getSystemPrefix()));
+        }
     }
 
     @Override
@@ -108,8 +158,15 @@ public class Z21RMBusSensorManager extends jmri.managers.AbstractSensorManager i
                 encoderAddress = Integer.parseInt(curAddress.substring(0, seperator));
                 input = Integer.parseInt(curAddress.substring(seperator + 1));
             } catch (NumberFormatException ex) {
-                log.error("Unable to convert {} into the cab and input format of nn:xx", curAddress);
-                throw new JmriException("Hardware Address passed should be a number");
+               // system name may include hex values for CAN sensors.
+               try {
+                   encoderAddress = Integer.parseInt(curAddress.substring(0, seperator),16);
+                   input = Integer.parseInt(curAddress.substring(seperator + 1));
+                   return getSystemPrefix()+typeLetter()+String.format("%4x",encoderAddress)+":"+input;
+               } catch (NumberFormatException ex1) {
+                   log.error("Unable to convert {} into the cab and input format of nn:xx", curAddress);
+                   throw new JmriException("Hardware Address passed should be a number");
+               }
             }
             iName = ((encoderAddress - 1) * 8) + input;
         } else {
@@ -121,7 +178,7 @@ public class Z21RMBusSensorManager extends jmri.managers.AbstractSensorManager i
                 throw new JmriException("Hardware Address passed should be a number");
             }
         }
-        return prefix + typeLetter() + iName;
+        return getSystemPrefix()+typeLetter()+iName;
     }
 
     int iName; // must synchronize to avoid race conditions.
@@ -169,6 +226,6 @@ public class Z21RMBusSensorManager extends jmri.managers.AbstractSensorManager i
         return entryToolTip;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Z21RMBusSensorManager.class);
+    private final static Logger log = LoggerFactory.getLogger(Z21SensorManager.class);
 
 }

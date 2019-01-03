@@ -7,10 +7,10 @@ import org.slf4j.LoggerFactory;
 /**
  * Utility Class supporting parsing and testing of addresses for Z21 CanBus  
  * <P>
- * One address format is supported: 
+ * One address format is supported for Reporters and Sensors: 
  * <ul>
  * <li>
- * ZRmm:pp where mm is the module address and pp is the contact pin number (1-8).
+ * Ztmm:pp where t is either R or S, mm is the module address and pp is the contact pin number (1-8).
  * </li>
  * </ul>
  *
@@ -36,13 +36,15 @@ public class Z21CanBusAddress {
             log.error("invalid character in header field of Z21 Can Bus system name: {}", systemName);
             return (-1);
         }
-        // name must be in the ZRmm:pp format (Z is user 
+        // name must be in the Ztmm:pp format (Z is user 
         // configurable)
         int num = 0;
         try {
             String curAddress = systemName.substring(prefix.length() + 1);
             if( ( systemName.charAt(prefix.length())=='R' ||
-                  systemName.charAt(prefix.length())=='r' ) && 
+                  systemName.charAt(prefix.length())=='r' || 
+                   systemName.charAt(prefix.length())=='S' ||
+                  systemName.charAt(prefix.length())=='s' ) && 
                   curAddress.contains(":")) {
                //Address format passed is in the form of encoderAddress:input
                int encoderAddress;
@@ -107,6 +109,16 @@ public class Z21CanBusAddress {
             r = jmri.InstanceManager.reporterManagerInstance().getBySystemName(systemName);
             if (r != null) {
                 return r.getUserName();
+            } else {
+                return ("");
+            }
+        } 
+        // check for a Sensor 
+        if (systemName.charAt(prefix.length() + 1) == 'S') {
+            jmri.Sensor s = null;
+            s = jmri.InstanceManager.sensorManagerInstance().getBySystemName(systemName);
+            if (s != null) {
+                return s.getUserName();
             } else {
                 return ("");
             }
