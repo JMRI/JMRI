@@ -165,7 +165,7 @@ public class Z21Reply extends AbstractMRReply {
                String value1String = "";
                String value2String = "";
                switch(type){
-                    case 0x001:
+                    case 0x01:
                          typeString = "Input Status";
                          switch(value1){
                            case 0x0000:

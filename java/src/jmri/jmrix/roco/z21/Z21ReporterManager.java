@@ -31,6 +31,7 @@ public class Z21ReporterManager extends jmri.managers.AbstractReporterManager im
               InstanceManager.setDefault(RailComManager.class,
                                      new jmri.managers.DefaultRailComManager());
         }
+        // register for messages
         _memo.getTrafficController().addz21Listener(this);
         // make sure we are going to get railcom data from the command station
         // set the broadcast flags so we get messages we may want to hear
@@ -98,21 +99,25 @@ public class Z21ReporterManager extends jmri.managers.AbstractReporterManager im
            }
          // LAN_CAN_DETECTOR message are related to CAN reporters.
          } else if(msg.isCanDetectorMessage()){
-            log.debug("Received LAN_CAN_DETECTOR message");
-            int netID = ( msg.getElement(4)&0xFF) + ((msg.getElement(5)&0xFF) << 8);
-            int msgPort = ( msg.getElement(8) & 0xFF);
-            int address = ( msg.getElement(6)&0xFF) + ((msg.getElement(7)&0xFF) << 8);
-            String sysName = getSystemPrefix()+typeLetter()+address+":"+msgPort;
-            Z21CanReporter r = (Z21CanReporter) getBySystemName(sysName);
-            if ( null == r ) {
-               // try with the module's CAN network ID
-               sysName = getSystemPrefix()+typeLetter()+String.format("%4x",netID)+":"+msgPort;
-               r = (Z21CanReporter) getBySystemName(sysName);
-               if (null == r) {
-                  log.debug("Creating reporter {}",sysName);
-                  // need to create a new one, and send the message on 
-                  // to the newly created object.
-                  ((Z21CanReporter)provideReporter(sysName)).reply(msg);
+            int type = ( msg.getElement(9) & 0xFF);
+            log.debug("reporter message type {}",type);
+            if (type >= 0x11 && type <= 0x1f) {
+               log.debug("Received LAN_CAN_DETECTOR message");
+               int netID = ( msg.getElement(4)&0xFF) + ((msg.getElement(5)&0xFF) << 8);
+               int msgPort = ( msg.getElement(8) & 0xFF);
+               int address = ( msg.getElement(6)&0xFF) + ((msg.getElement(7)&0xFF) << 8);
+               String sysName = getSystemPrefix()+typeLetter()+address+":"+msgPort;
+               Z21CanReporter r = (Z21CanReporter) getBySystemName(sysName);
+               if ( null == r ) {
+                  // try with the module's CAN network ID
+                  sysName = getSystemPrefix()+typeLetter()+String.format("%4x",netID)+":"+msgPort;
+                  r = (Z21CanReporter) getBySystemName(sysName);
+                  if (null == r) {
+                     log.debug("Creating reporter {}",sysName);
+                     // need to create a new one, and send the message on 
+                     // to the newly created object.
+                     ((Z21CanReporter)provideReporter(sysName)).reply(msg);
+                  }
                }
             }
          }
