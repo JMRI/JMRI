@@ -117,6 +117,11 @@ public class Z21SensorManager extends jmri.managers.AbstractSensorManager implem
                }
             }
          }
+      } else if( msg.isRMBusDataChangedReply()) {
+          log.debug("Received RM Bus Data Changed message");
+          // we could create sensors here automatically, but the 
+          // feed response contains data for 80 sensors, with no way
+          // to tell which of the 80 are actually connected.
       }
     }
 
