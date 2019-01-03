@@ -403,8 +403,8 @@ public class MatrixSignalMast extends AbstractSignalMast {
                     newState = -2;
                     log.debug("Element {} not converted to state for output #{}", bits[i], i);
                 }
-                // wait mast specific delay before sending a valid state change
-                if (newState >= 0) {
+                // wait mast specific delay before sending each (valid) state change to a (valid) output
+                if (newState >= 0 && t != null) {
                     final int toState = newState;
                     final Turnout setTurnout = t;
                     ThreadingUtil.runOnLayoutEventually(() -> {   // eventually, even though we have timing here, should be soon
