@@ -48,12 +48,14 @@ public class DCCppOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implem
         tc.addDCCppListener(DCCppInterface.COMMINFO | DCCppInterface.CS_INFO, this);
     }
 
-    /**
+    /** 
+     * {@inheritDoc}
+     *
      * Send an ops-mode write request to the DCC++.
      */
     @Override
-    @Deprecated // 4.1.1
-    synchronized public void writeCV(int CV, int val, ProgListener p) throws ProgrammerException {
+    synchronized public void writeCV(String CVname, int val, ProgListener p) throws ProgrammerException {
+        final int CV = Integer.parseInt(CVname);
         DCCppMessage msg = DCCppMessage.makeWriteOpsModeCVMsg(mAddress, CV, val);
         tc.sendDCCppMessage(msg, this);
         /* we need to save the programer and value so we can send messages 
@@ -75,16 +77,19 @@ public class DCCppOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implem
         try {
             this.wait(250);
         } catch (java.lang.InterruptedException ie) {
-            log.debug("Interupted Durring Delay");
+            log.debug("Interrupted During Delay");
         }
         progState = DCCppProgrammer.NOTPROGRAMMING;
         stopTimer();
         notifyProgListenerEnd(progListener,value,ProgListener.OK);
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
-    @Deprecated // 4.1.1
-    synchronized public void readCV(int CV, ProgListener p) throws ProgrammerException {
+    synchronized public void readCV(String CVname, ProgListener p) throws ProgrammerException {
+        final int CV = Integer.parseInt(CVname);
         //DCCppMessage msg = DCCppMessage.getVerifyOpsModeCVMsg(mAddressHigh, mAddressLow, CV, value);
         //tc.sendDCCppMessage(msg, this);
         /* We can trigger a read to an LRC120, but the information is not
@@ -92,6 +97,9 @@ public class DCCppOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implem
         notifyProgListenerEnd(p,CV,ProgListener.NotImplemented);
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public void confirmCV(String CV, int val, ProgListener p) throws ProgrammerException {
         //DCCppMessage msg = DCCppMessage.getVerifyOpsModeCVMsg(mAddressHigh, mAddressLow, CV, val);
@@ -101,7 +109,9 @@ public class DCCppOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implem
         notifyProgListenerEnd(p,val,ProgListener.NotImplemented);
     }
 
-    /**
+    /** 
+     * {@inheritDoc}
+     *
      * Types implemented here.
      */
     @Override
@@ -113,7 +123,9 @@ public class DCCppOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implem
         return ret;
     }
 
-    /*
+    /** 
+     * {@inheritDoc}
+     *
      * This method is leftover from the initial implementation based on
      * XPressNet.  This always sends a NotImplemented message to the progammer
      * listener, regardless of the reply.  Does the DCC++ command station 
@@ -136,7 +148,7 @@ public class DCCppOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implem
                 try {
                     this.wait(250);
                 } catch (java.lang.InterruptedException ie) {
-                    log.debug("Interupted Durring Delay");
+                    log.debug("Interrupted During Delay");
                 }
                 progState = DCCppProgrammer.NOTPROGRAMMING;
                 stopTimer();
@@ -147,27 +159,40 @@ public class DCCppOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implem
         }
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public boolean getLongAddress() {
         return true;
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public int getAddressNumber() {
         return mAddress;
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public String getAddress() {
         return "" + getAddressNumber() + " " + getLongAddress();
     }
 
-    // listen for the messages to the LI100/LI101
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public synchronized void message(DCCppMessage l) {
     }
 
-    // Handle a timeout notification
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public void notifyTimeout(DCCppMessage msg) {
         if (log.isDebugEnabled()) {
@@ -175,6 +200,9 @@ public class DCCppOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implem
         }
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     synchronized protected void timeout() {
         progState = DCCppProgrammer.NOTPROGRAMMING;

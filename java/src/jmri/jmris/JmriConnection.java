@@ -55,10 +55,10 @@ public class JmriConnection {
     }
 
     /**
-     * @deprecated see {@link #getSession() }
+     * @deprecated see {@link #getSession() }  probably in 4.9
      * @return the WebSocket session
      */
-    @Deprecated
+    @Deprecated // probably in 4.9
     public Session getWebSocketConnection() {
         return this.getSession();
     }

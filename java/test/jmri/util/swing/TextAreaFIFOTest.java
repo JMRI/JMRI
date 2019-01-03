@@ -1,4 +1,4 @@
-package jmri.jmrix;
+package jmri.util.swing;
 
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -6,15 +6,21 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+// import org.slf4j.Logger;
+// import org.slf4j.LoggerFactory;
+
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2018
+ * @author Steve Young Copyright (C) 2018
  */
-public class DCCManufacturerListTest {
+public class TextAreaFIFOTest {
 
+    // String newLine = System.getProperty("line.separator");
+    
     @Test
     public void testCTor() {
-        DCCManufacturerList t = new DCCManufacturerList();
+        TextAreaFIFO t = new TextAreaFIFO(2);
         Assert.assertNotNull("exists",t);
     }
 
@@ -29,6 +35,6 @@ public class DCCManufacturerListTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(DCCManufacturerListTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(TextAreaFIFOTest.class);
 
 }

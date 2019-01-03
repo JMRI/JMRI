@@ -32,7 +32,7 @@ public class Z21XNetProgrammerTest extends jmri.jmrix.lenz.XNetProgrammerTest {
     @Test
     public void testWriteCvSequence() throws JmriException {
         // and do the write
-        p.writeCV(29, 34, l);
+        p.writeCV("29", 34, l);
         // check "prog mode" message sent
         Assert.assertEquals("mode message sent", 1, t.outbound.size());
         Assert.assertEquals("write message contents", "24 12 00 1C 22 08", t.outbound.elementAt(0).toString());
@@ -61,7 +61,7 @@ public class Z21XNetProgrammerTest extends jmri.jmrix.lenz.XNetProgrammerTest {
     @Test
     public void testReadCvSequence() throws JmriException {
         // and do the read
-        p.readCV(29, l);
+        p.readCV("29", l);
         // check "prog mode" message sent
         Assert.assertEquals("mode message sent", 1, t.outbound.size());
         Assert.assertEquals("read message contents", "23 11 00 1C 2E", t.outbound.elementAt(0).toString());
@@ -94,7 +94,7 @@ public class Z21XNetProgrammerTest extends jmri.jmrix.lenz.XNetProgrammerTest {
     @Test
     public void testWriteHighCvSequence() throws JmriException {
         // and do the write
-        p.writeCV(300, 34, l);
+        p.writeCV("300", 34, l);
         // check "prog mode" message sent
         Assert.assertEquals("mode message sent", 1, t.outbound.size());
         Assert.assertEquals("write message contents", "24 12 01 2B 22 3E", t.outbound.elementAt(0).toString());
@@ -126,7 +126,7 @@ public class Z21XNetProgrammerTest extends jmri.jmrix.lenz.XNetProgrammerTest {
     @Test
     public void testReadHighCvSequence() throws JmriException {
         // and do the read
-        p.readCV(300, l);
+        p.readCV("300", l);
         // check "prog mode" message sent
         Assert.assertEquals("mode message sent", 1, t.outbound.size());
         Assert.assertEquals("read message contents", "23 11 01 2B 18", t.outbound.elementAt(0).toString());

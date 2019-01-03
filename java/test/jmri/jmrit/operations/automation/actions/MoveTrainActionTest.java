@@ -6,9 +6,7 @@ import jmri.jmrit.operations.automation.AutomationItem;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.JUnitOperationsUtil;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -115,18 +113,6 @@ public class MoveTrainActionTest extends OperationsTestCase {
         action.doAction();       
         Assert.assertTrue(train1.isTrainEnRoute());
         Assert.assertTrue(automationItem.isActionSuccessful());
-    }
-
-    // The minimal setup for log4J
-    @Override
-    @Before
-    public void setUp() {
-        super.setUp();    }
-
-    @Override
-    @After
-    public void tearDown() {
-        super.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(MoveTrainActionTest.class);

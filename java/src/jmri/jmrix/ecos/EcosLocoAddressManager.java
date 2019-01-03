@@ -83,7 +83,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager<NamedB
     @Override
     @Deprecated  // will be removed when Manager method is removed due to @Override
     public String[] getSystemNameArray() {
-        jmri.util.Log4JUtil.warnOnce(log, "Manager#getSystemNameArray() is deprecated");
+        jmri.util.Log4JUtil.deprecationWarning(log, "getSystemNameArray");        
         return new String[0];
     }
 

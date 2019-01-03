@@ -1,6 +1,7 @@
 package jmri.jmrix.ieee802154.serialdriver.configurexml;
 
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.*;
 import org.junit.*;
 import jmri.jmrix.ieee802154.serialdriver.ConnectionConfig;
 
@@ -31,12 +32,14 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSer
     @Test
     @Override
     @Ignore("requires a traffic controller to pass")
+    @ToDo("parent class test fails, needs further setup or re-implmentation")
     public void storeTest(){
     }
 
     @Test(timeout=5000)
     @Override
     @Ignore("requires a traffic controller to pass")
+    @ToDo("parent class test fails, needs further setup or re-implmentation")
     public void loadTest() throws jmri.configurexml.JmriConfigureXmlException {
     }
 

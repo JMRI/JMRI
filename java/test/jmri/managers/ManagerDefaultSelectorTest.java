@@ -112,6 +112,8 @@ public class ManagerDefaultSelectorTest {
         // loconet gone, auto internal is by itself, so OK
         Assert.assertTrue(mds.isPreferencesValid(profile));
         
+        loconet.dispose();
+        
     }
 
     @Test
@@ -167,6 +169,8 @@ public class ManagerDefaultSelectorTest {
 
         // loconet gone, auto internal is by itself, so OK
         Assert.assertTrue(mds.isPreferencesValid(profile));
+        
+        loconet.dispose();
     }
 
     @Test
@@ -219,6 +223,9 @@ public class ManagerDefaultSelectorTest {
 
         // loconet and loconet2 gone, auto internal is by itself, so OK
         Assert.assertTrue(mds.isPreferencesValid(profile));
+        
+        loconet.dispose();
+        loconet2.dispose();
     }
     
     @Test

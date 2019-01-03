@@ -114,15 +114,15 @@ public class ProfileManager extends Bean {
 
     /**
      * Get the {@link Profile} that is currently in use.
+     * <p>
+     * Note that this returning null is not an error condition, and
+     * should not be treated as such, since there are times when the
+     * user interacts with a JMRI application that there should be no
+     * active profile.
      *
      * @return the in use Profile or null if there is no Profile in use
      */
     public Profile getActiveProfile() {
-        // can be null if user deletes directory
-        // DBoudreau 10/24/2018
-//        if (activeProfile == null) {
-//            throw new NullPointerException("activeProfile is null");
-//        }
         return activeProfile;
     }
 

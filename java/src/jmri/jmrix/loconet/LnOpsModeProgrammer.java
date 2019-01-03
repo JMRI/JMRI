@@ -11,8 +11,6 @@ import jmri.ProgListener;
 import jmri.Programmer;
 import jmri.ProgrammerException;
 import jmri.ProgrammingMode;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Provide an Ops Mode Programmer via a wrapper that works with the LocoNet
@@ -50,23 +48,12 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
             LocoNetSystemConnectionMemo memo,
             int pAddress, boolean pLongAddr) {
         this(memo, pAddress, pLongAddr);
+        jmri.util.Log4JUtil.deprecationWarning(log, "LnOpsModeProgrammer(..)");        
     }
 
-    /**
-     * Forward a write request to an ops-mode write operation.
+    /** 
+     * {@inheritDoc}
      */
-    @Override
-    @Deprecated // 4.1.1
-    public void writeCV(int CV, int val, ProgListener p) throws ProgrammerException {
-        memo.getSlotManager().writeCVOpsMode(CV, val, p, mAddress, mLongAddr);
-    }
-
-    @Override
-    @Deprecated // 4.1.1
-    public void readCV(int CV, ProgListener p) throws ProgrammerException {
-        memo.getSlotManager().readCVOpsMode(CV, p, mAddress, mLongAddr);
-    }
-
     @Override
     public void writeCV(String CV, int val, ProgListener pL) throws ProgrammerException {
         p = null;
@@ -146,10 +133,13 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
             memo.getLnTrafficController().sendLocoNetMessage(m);
         } else {
             // DCC ops mode
-            writeCV(Integer.parseInt(CV), val, pL);
+            memo.getSlotManager().writeCVOpsMode(CV, val, pL, mAddress, mLongAddr);
         }
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public void readCV(String CV, ProgListener pL) throws ProgrammerException {
         this.p = null;
@@ -226,16 +216,13 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
             memo.getLnTrafficController().sendLocoNetMessage(m);
         } else {
             // DCC ops mode
-            readCV(Integer.parseInt(CV), pL);
+            memo.getSlotManager().readCVOpsMode(CV, pL, mAddress, mLongAddr);
         }
     }
 
-    @Override
-    @Deprecated // 4.1.1
-    public final void confirmCV(int CV, int val, ProgListener p) throws ProgrammerException {
-        confirmCV(""+CV, val, p);
-    }
-
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public void confirmCV(String CV, int val, ProgListener pL) throws ProgrammerException {
         p = null;
@@ -256,9 +243,11 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
         }
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public void message(LocoNetMessage m) {
-
         log.debug("LocoNet message received: {}", m);
         if (getMode().equals(LnProgrammerManager.LOCONETBDOPSWMODE)) {
 
@@ -428,6 +417,9 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
     // handle mode
     protected ProgrammingMode mode = ProgrammingMode.OPSBYTEMODE;
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public final void setMode(ProgrammingMode m) {
         if (getSupportedModes().contains(m)) {
@@ -438,13 +430,16 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
         }
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public final ProgrammingMode getMode() {
         return mode;
     }
 
-    /**
-     * Types implemented here.
+    /** 
+     * {@inheritDoc}
      */
     @Override
     @Nonnull
@@ -459,7 +454,9 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
         return ret;
     }
 
-    /**
+    /** 
+     * {@inheritDoc}
+     *
      * Confirmation mode by programming mode; not that this doesn't
      * yet know whether BDL168 hardware is present to allow DecoderReply
      * to function; that should be a preference eventually. See also DCS240...
@@ -481,16 +478,17 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
      */
     private final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
 
-    /**
-     * Add a PropertyChangeListener to the listener list.
-     *
-     * @param listener The PropertyChangeListener to be added
+    /** 
+     * {@inheritDoc}
      */
     @Override
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         propertyChangeSupport.addPropertyChangeListener(listener);
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public void removePropertyChangeListener(PropertyChangeListener listener) {
         propertyChangeSupport.removePropertyChangeListener(listener);
@@ -500,7 +498,9 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
         propertyChangeSupport.firePropertyChange(key, oldValue, value);
     }
 
-    /**
+    /** 
+     * {@inheritDoc}
+     *
      * Can this ops-mode programmer read back values? Yes, if transponding
      * hardware is present and regular ops mode, or if in any other mode.
      *
@@ -512,36 +512,57 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
         return true;
      }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public boolean getCanRead(String addr) {
         return getCanRead();
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public boolean getCanWrite() {
         return true;
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public boolean getCanWrite(String addr) {
         return getCanWrite() && Integer.parseInt(addr) <= 1024;
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public String decodeErrorCode(int i) {
         return memo.getSlotManager().decodeErrorCode(i);
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public boolean getLongAddress() {
         return mLongAddr;
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public int getAddressNumber() {
         return mAddress;
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public String getAddress() {
         return "" + getAddressNumber() + " " + getLongAddress();
@@ -560,6 +581,6 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(LnOpsModeProgrammer.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LnOpsModeProgrammer.class);
 
 }

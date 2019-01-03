@@ -15,7 +15,7 @@ import java.awt.Font;
  * @author Bob Jacobsen Copyright 2003
  * @deprecated since 4.7.1; use methods in {@link java.awt.Font}
  */
-@Deprecated
+@Deprecated // 4.7.1
 public class FontUtil {
 
     /**
@@ -24,8 +24,9 @@ public class FontUtil {
      * @return true
      * @deprecated since 4.7.1 without replacement
      */
-    @Deprecated
+    @Deprecated // 4.7.1
     static public boolean canRestyle() {
+        jmri.util.Log4JUtil.deprecationWarning(log, "canRestyle");        
         return true;
     }
 
@@ -33,6 +34,7 @@ public class FontUtil {
     static boolean skip = false;
 
     static void init() {
+        jmri.util.Log4JUtil.deprecationWarning(log, "init");        
         doInit = false;
         // see if on a Mac Classic system where shouldnt even try
         if (SystemType.getOSName().equals("Mac OS")) {
@@ -50,8 +52,9 @@ public class FontUtil {
      * @deprecated since 4.7.1; use {@link java.awt.Font#deriveFont(int)}
      * instead
      */
-    @Deprecated
+    @Deprecated // 4.7.1
     static public Font deriveFont(Font f, int style) {
+        jmri.util.Log4JUtil.deprecationWarning(log, "deriveFont");        
         if (doInit) {
             init();
         }
@@ -70,8 +73,9 @@ public class FontUtil {
      * @return true
      * @deprecated since 4.7.1 without replacement
      */
-    @Deprecated
+    @Deprecated // 4.7.1
     static public boolean canResize() {
+        jmri.util.Log4JUtil.deprecationWarning(log, "canResize");        
         return true;
     }
 
@@ -85,8 +89,9 @@ public class FontUtil {
      * @deprecated since 4.7.1; use {@link java.awt.Font#deriveFont(float)}
      * instead
      */
-    @Deprecated
+    @Deprecated // 4.7.1
     static public Font deriveFont(Font f, float size) {
+        jmri.util.Log4JUtil.deprecationWarning(log, "deriveFont");        
         if (doInit) {
             init();
         }
@@ -98,4 +103,5 @@ public class FontUtil {
 
         return f.deriveFont(size);
     }
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(FontUtil.class);
 }

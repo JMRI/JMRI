@@ -520,7 +520,13 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
             } catch (ParseException ex2) {
                 // then try with a specific format to handle e.g. "Apr 1, 2016 9:13:36 AM"
                 DateFormat customFmt = new SimpleDateFormat ("MMM dd, yyyy hh:mm:ss a");
-                setDateModified(customFmt.parse(date));
+                try {
+                    setDateModified(customFmt.parse(date));
+                } catch (ParseException ex3) {
+                    // then try with a specific format to handle e.g. "01-Oct-2016 9:13:36"
+                    customFmt = new SimpleDateFormat ("dd-MMM-yyyy hh:mm:ss");
+                    setDateModified(customFmt.parse(date));
+                }
             }
         } catch (IllegalArgumentException ex2) {
             // warn that there's perhaps something wrong with the classpath
@@ -542,7 +548,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      * @param s the string to parse into a date
      * @deprecated since 4.7.1; not for removal, but to make access protected
      */
-    @Deprecated
+    @Deprecated // 4.7.1
     public void setDateUpdated(String s) {
         String old = _dateUpdated;
         _dateUpdated = s;
@@ -1310,8 +1316,6 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      */
     public void changeDateUpdated() {
         // used to create formatted string of now using defaults
-        // java.text.DateFormat df = java.text.DateFormat.getDateTimeInstance();
-        // setDateUpdated(df.format(new java.util.Date()));
         this.setDateModified(new Date());
     }
 

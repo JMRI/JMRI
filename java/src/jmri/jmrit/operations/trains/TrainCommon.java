@@ -2032,7 +2032,7 @@ public class TrainCommon {
     }
 
     /**
-     * Checks to see if the the string fits on the page.
+     * Checks to see if the string fits on the page.
      *
      * @return false if string length is longer than page width.
      */
