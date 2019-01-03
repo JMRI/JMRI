@@ -13,9 +13,13 @@ import org.junit.Test;
 public class ClientRxHandlerTest {
     
     @Test
-    public void testCTor() {
+    public void testCTor() throws InterruptedException {
         ClientRxHandler t = new ClientRxHandler("127.0.0.1",new java.net.Socket());
         Assert.assertNotNull("exists",t);
+        
+        // clean up started thread
+        t.interrupt();
+        t.join();
     }
     
     // The minimal setup for log4J
