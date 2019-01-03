@@ -30,28 +30,21 @@ public class Z21CanSensorTest extends jmri.implementation.AbstractSensorTestBase
 
     // Z21CanSensor test for incoming status message
     @Test
-    @Ignore("not right messages yet")
     public void testZ21CanSensorStatusMsg() {
 
         // Verify this was created in UNKNOWN state
         Assert.assertTrue(t.getKnownState() == jmri.Sensor.UNKNOWN);
 
         // notify the Sensor that somebody else changed it...
-        byte msg[]={(byte)0x0F,(byte)0x00,(byte)0x80,(byte)0x00,
-           (byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,
-           (byte)0x00,(byte)0x02,(byte)0x00,(byte)0x00,(byte)0x00,
-           (byte)0x00};
-        Z21Reply m = new Z21Reply(msg,15);
-        ((Z21CanSensor)t).reply(m); 
+        byte msg[]={(byte)0x0E,(byte)0x00,(byte)0xC4,(byte)0x00,(byte)0xcd,(byte)0xab,(byte)0x01,(byte)0x00,(byte)0x01,(byte)0x01,(byte)0x00,(byte)0x11,(byte)0x00,(byte)0x00};
+        Z21Reply reply = new Z21Reply(msg,14);
+        ((Z21CanSensor)t).reply(reply); 
         jmri.util.JUnitUtil.waitFor(()->{return t.getState() == t.getRawState();}, "raw state = state");
         Assert.assertEquals("Known state after activate ", jmri.Sensor.ACTIVE, t.getKnownState());
         
-        byte msg2[]={(byte)0x0F,(byte)0x00,(byte)0x80,(byte)0x00,
-           (byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,
-           (byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,
-           (byte)0x00};
-        m = new Z21Reply(msg2,15);
-        ((Z21CanSensor)t).reply(m);
+        byte msg2[]={(byte)0x0E,(byte)0x00,(byte)0xC4,(byte)0x00,(byte)0xcd,(byte)0xab,(byte)0x01,(byte)0x00,(byte)0x01,(byte)0x01,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00};
+        reply = new Z21Reply(msg2,14);
+        ((Z21CanSensor)t).reply(reply);
 
         Assert.assertEquals("Known state after inactivate ", jmri.Sensor.INACTIVE, t.getKnownState());
 

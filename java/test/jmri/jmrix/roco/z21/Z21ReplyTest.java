@@ -356,10 +356,17 @@ public class Z21ReplyTest extends jmri.jmrix.AbstractMessageTestBase {
     }
 
    @Test
-   public void testMonitorStringCanDetectorReply(){
+   public void testMonitorStringCanDetectorRailComReply(){
        byte msg[]={(byte)0x0E,(byte)0x00,(byte)0xC4,(byte)0x00,(byte)0xcd,(byte)0xab,(byte)0x01,(byte)0x00,(byte)0x01,(byte)0x11,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00};
        Z21Reply reply = new Z21Reply(msg,14);
        Assert.assertEquals("Z21 CAN Detetector Reply: NetworkID=abcd Address=1 Port=1 Type=Occupancy Info Value1=1(S) direction unknown Value2=end of list",reply.toMonitorString());
+    }
+
+   @Test
+   public void testMonitorStringCanDetectorStatusReply(){
+       byte msg[]={(byte)0x0E,(byte)0x00,(byte)0xC4,(byte)0x00,(byte)0xcd,(byte)0xab,(byte)0x01,(byte)0x00,(byte)0x01,(byte)0x01,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00};
+       Z21Reply reply = new Z21Reply(msg,14);
+       Assert.assertEquals("Z21 CAN Detetector Reply: NetworkID=abcd Address=1 Port=1 Type=Input Status Value1=Free, without tension Value2=",reply.toMonitorString());
     }
 
     // The minimal setup for log4J
