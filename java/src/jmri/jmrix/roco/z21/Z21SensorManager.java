@@ -65,7 +65,6 @@ public class Z21SensorManager extends jmri.managers.AbstractSensorManager implem
     @Override
     public Sensor createNewSensor(String systemName, String userName) {
         if(systemName.contains(":")) {
-           Sensor s = null; 
            // check for CAN format.
            int bitNum = Z21CanBusAddress.getBitFromSystemName(systemName, getSystemPrefix());
            if(bitNum!=-1) {

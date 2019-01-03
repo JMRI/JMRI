@@ -56,16 +56,10 @@ public class Z21CanReporter extends jmri.implementation.AbstractRailComReporter 
         // request an update from the layout.
         //requestUpdateFromLayout();  // leave commented out for now, causing 
                                       // loop that needs investigation.
-    }
-
-    /**
-     *     request an update from the layout.
-     */
-    private void requestUpdateFromLayout(){
-       if(networkID==0){
-          return; // no networkID has been set yet.
-       }
-       _memo.getTrafficController().sendz21Message(Z21Message.getLanCanDetector(networkID),this);
+    //    if(networkID!=0){
+    // leave commented out for now, causing loop that needs investigation.
+    //       _memo.getTrafficController().sendz21Message(Z21Message.getLanCanDetector(networkID),this);
+    //    }
     }
 
     // the Z21 Listener interface
