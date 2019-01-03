@@ -98,6 +98,7 @@ public class Z21ReporterManager extends jmri.managers.AbstractReporterManager im
            }
          // LAN_CAN_DETECTOR message are related to CAN reporters.
          } else if(msg.isCanDetectorMessage()){
+            log.debug("Received LAN_CAN_DETECTOR message");
             int netID = ( msg.getElement(4)&0xFF) + ((msg.getElement(5)&0xFF) << 8);
             int msgPort = ( msg.getElement(8) & 0xFF);
             int address = ( msg.getElement(6)&0xFF) + ((msg.getElement(7)&0xFF) << 8);

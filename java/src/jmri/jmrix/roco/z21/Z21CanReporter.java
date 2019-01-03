@@ -54,7 +54,7 @@ public class Z21CanReporter extends jmri.implementation.AbstractRailComReporter 
               throw new IllegalArgumentException("requires mm:pp format address.");
            }
         // request an update from the layout.
-       requestUpdateFromLayout();
+        requestUpdateFromLayout();
     }
 
     /**

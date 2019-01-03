@@ -43,6 +43,7 @@ import org.junit.runners.Suite;
     Z21RMBusSensorTest.class,
     Z21RMBusSensorManagerTest.class,
     Z21CanReporterTest.class,
+    Z21ReporterManagerCanTest.class,
 })
 public class PackageTest {
 
