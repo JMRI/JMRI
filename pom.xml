@@ -310,8 +310,9 @@
                     <argLine>@{argLine} -Djava.security.manager -Djava.security.policy=${basedir}/lib/security.policy</argLine>
                     <useSystemClassLoader>true</useSystemClassLoader>
                     <useManifestOnlyJar>false</useManifestOnlyJar>
+                    <!-- forkCount causes tests to run in forked JVMs.  The following the number with C says to fork the number multiplird by the number of cores available. -->
                     <forkCount>1</forkCount>
-                    <!-- uncomment to force each test into new context (DO NOT attempt on CI servers)
+                    <!-- setting re-use forks to false causes a timeout on CI servers, please do not uncomment.
                     <reuseForks>false</reuseForks>
                     -->
                     <dependencies>

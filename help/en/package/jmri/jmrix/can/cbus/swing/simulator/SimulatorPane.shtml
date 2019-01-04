@@ -25,10 +25,11 @@
     <div id="mainContent">
      <h1>JMRI: MERG CBUS Network Simulation Tool</h1>
       
-      <ul class="nav">
+      <ul class="snav">
       <li><a href="#direction">Direction</a></li>
       <li><a href="#cs">Command stations</a></li>
       <li><a href="#ev">Response Events</a></li>
+      <li><a href="#nodes">Nodes</a></li>
       <li><a href="#opc">OPCs</a></li>
       </ul>
       
@@ -84,7 +85,25 @@
         <li> -1 : No filter</li>
         <li> 0 : Just short events</li>
         <li> >0 : Only responds to requests for a particular node</li>
-        </ul>        
+        </ul>
+
+
+     <h2><a name="nodes" id="nodes" >Nodes</a></h2>
+        <p>No nodes are silulated by default.</p>
+        <p>When selecting a node, in enters in SLiM mode, you'll need to 
+        press the FLiM button to introduce it to the network.</p>
+        <p>When selecting a new node ( or disabling by selecting SLiM ),
+        any existing events or node variables will be reset.</p>
+        <p>Simulated nodes currently provide node admin operations,
+        however do not support actual incoming or outgoing events.</p>
+        
+        <p>Current simulated nodes include : </p>
+        <ul>
+        <li>SLiM ( simulation disabled )</li>
+        <li>CANPAN</li>
+        </ul>
+
+
 
       <h3><a name="opc" id="opc">Supported Operation Codes</a></h3>
 
@@ -108,6 +127,23 @@
         <li>ASRQ - Sent when user clicks status button, node number 0</li>      
         <li>AREQ - Sent when user clicks status button, node number > 0</li>
         </ul>
+        
+        <p>Node Simulation</p>
+        
+        <ul>
+        <li>RQNP - Setup Mode only</li>
+        <li>SNN - Setup Mode Only</li>
+        <li>QNN</li>
+        <li>NNLRN</li>
+        <li>NNULN</li>
+        <li>NVRD</li>
+        <li>NVSET</li>
+        <li>RQEVN</li>
+        <li>NERD</li>
+        <li>REVAL</li>
+        <li>EVLRN - Learn Mode only</li>
+        <li>EVULN - Learn Mode only</li>
+        </ul>
 
         <h4>Sent by Simulator ( as inbound to other JMRI applications, and to external network) </h4>
 
@@ -128,8 +164,24 @@
         <li>ARSON</li>
         <li>ARSOF</li>
         </ul>
+
+
+        <p>Sent in Node Simulations</p>
+
+        <ul>
+        <li>NNACK</li>
+        <li>RQNN</li>
+        <li>WRACK</li>
+        <li>NVANS</li>
+        <li>PARAN</li>
+        <li>PNN  </li>
+        <li>PARAMS</li>
+        <li>NEVAL</li>
+        <li>ENRSP</li>
+        <li>NUMEV</li>
         
-        
+        </ul>
+
     <h3>JMRI Help</h3>
       
       <p>You can view this help page within JMRI by selecting Help > Window Help in the top bar of the MERG CBUS Event Capture window.</p>

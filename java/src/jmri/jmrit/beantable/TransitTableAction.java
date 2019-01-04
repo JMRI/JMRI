@@ -392,7 +392,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
     protected void addPressed(ActionEvent e) {
         editMode = false;
         duplicateMode = false;
-        if ((sectionManager.getSystemNameList().size()) > 0) {
+        if ((sectionManager.getNamedBeanSet().size()) > 0) {
             addEditPressed();
         } else {
             JOptionPane.showMessageDialog(null, rbx

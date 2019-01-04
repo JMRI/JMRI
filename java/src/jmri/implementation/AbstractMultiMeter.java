@@ -30,6 +30,9 @@ abstract public class AbstractMultiMeter extends Bean implements MultiMeter {
            intervalTask.cancel();
            intervalTask = null;
         }
+        if(sleepInterval <0){
+           return; // don't start or restart the timer.
+        }
         intervalTask = new UpdateTask();
         // At some point this will be dynamic intervals...
         log.debug("Starting Meter Timer");

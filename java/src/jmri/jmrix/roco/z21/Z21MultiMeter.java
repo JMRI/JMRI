@@ -15,8 +15,7 @@ public class Z21MultiMeter extends jmri.implementation.AbstractMultiMeter implem
     private Z21SystemConnectionMemo _memo = null;
 
     public Z21MultiMeter(Z21SystemConnectionMemo memo) {
-        super(0); // no timer, hardware automatically sends 
-                  // updates when changes detected.
+        super(-1); // no timer, since we already poll for this information. 
         _memo = memo;
         tc = _memo.getTrafficController();
 
@@ -49,7 +48,7 @@ public class Z21MultiMeter extends jmri.implementation.AbstractMultiMeter implem
     public void reply(Z21Reply r) {
         log.debug("Z21MultiMeter received reply: {}", r.toString());
         if (r.isSystemDataChangedReply()) {
-            setCurrent(r.getSystemDataMainCurrent() * 1.0f);
+            setCurrent(r.getSystemDataMainCurrent() / 3000.0f);
             setVoltage(r.getSystemDataVCCVoltage() * 1.0f);
         }
 
