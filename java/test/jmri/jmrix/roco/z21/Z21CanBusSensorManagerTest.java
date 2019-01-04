@@ -6,39 +6,59 @@ import jmri.util.JUnitUtil;
 import org.junit.*;
 
 /**
- * Tests for the jmri.jmrix.roco.z21.Z21SensorManager class for RMBus sensors.
+ * Tests for the jmri.jmrix.roco.z21.Z21SensorManager class for CanBus sensors.
  *
  * @author	Paul Bender Copyright (c) 2018,2019
  */
-public class Z21RMBusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
+public class Z21CanBusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 
     private Z21InterfaceScaffold znis;
 
     @Override
     public String getSystemName(int i) {
-        return "ZS" + i;
+        return "ZSABCD:" + i;
     }
 
     @Test
-    public void testZ21RMBusCTor() {
+    @Override
+    public void testDefaultSystemName() {
+        // create
+        Sensor t = l.provideSensor("ZSABCD:5");
+        // check
+        Assert.assertTrue("real object returned ", t != null);
+        Assert.assertEquals("system name correct ", t,l.getBySystemName(getSystemName(5)));
+    }
+
+    @Test
+    @Override
+    public void testProvideName() {
+        // create
+        Sensor t = l.provide("ZSABCD:5");
+        // check
+        Assert.assertTrue("real object returned ", t != null);
+        Assert.assertEquals("system name correct ", t,l.getBySystemName(getSystemName(5)));
+    }
+
+    @Test
+    public void testZ21CanBusCTor() {
         Assert.assertNotNull(l);
     }
 
     @Test
     public void testByAddress() {
         // sample sensor object
-        Sensor t = l.newSensor("ZS22", "test");
+        Sensor t = l.newSensor("ZSABCD:3", "test");
 
         // test get
         Assert.assertTrue(t == l.getByUserName("test"));
-        Assert.assertTrue(t == l.getBySystemName("ZS22"));
+        Assert.assertTrue(t == l.getBySystemName("ZSABCD:3"));
     }
 
     @Test
     @Override
     public void testMisses() {
         // sample turnout object
-        Sensor s = l.newSensor("ZS22", "test");
+        Sensor s = l.newSensor("ZSABCD:2", "test");
         Assert.assertNotNull("exists", s);
 
         // try to get nonexistant turnouts
@@ -47,19 +67,15 @@ public class Z21RMBusSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
     }
 
     @Test
-    @Ignore("tests creation in response to feedback; not currently implemented")
-    public void testZ21RMBusMessages() {
-        // send messages for feedbak encoder 22
+    public void testZ21CanBusMessages() {
+        // send messages for feedbak encoder abcd:1
         // notify the Z21 that somebody else changed it...
-        byte msg[]={(byte)0x0F,(byte)0x00,(byte)0x80,(byte)0x00,
-           (byte)0x00,(byte)0x00,(byte)0x00,(byte)0x20,(byte)0x00,
-           (byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00,
-           (byte)0x00};
-        Z21Reply m = new Z21Reply(msg,15);
-        znis.sendTestMessage(m);
+        byte msg[]={(byte)0x0E,(byte)0x00,(byte)0xC4,(byte)0x00,(byte)0xcd,(byte)0xab,(byte)0x01,(byte)0x00,(byte)0x01,(byte)0x01,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00};
+        Z21Reply reply = new Z21Reply(msg,14);
+        znis.sendTestMessage(reply);
 
         // see if sensor exists
-        Assert.assertTrue(null != l.getBySystemName("ZS22"));
+        Assert.assertTrue(null != l.getBySystemName("ZSABCD:1"));
     }
 
     @Test
@@ -69,11 +85,11 @@ public class Z21RMBusSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
         // ask for a Sensor, and check type
         SensorManager t = jmri.InstanceManager.sensorManagerInstance();
 
-        Sensor o = t.newSensor("ZS21", "my name");
+        Sensor o = t.newSensor("ZSABCD:1", "my name");
         Assert.assertNotNull("received sensor value",o);
 
         // make sure loaded into tables
-        Assert.assertNotNull("get by system name",t.getBySystemName("ZS21"));
+        Assert.assertNotNull("get by system name",t.getBySystemName("ZSABCD:1"));
         Assert.assertNotNull("get by user name",t.getByUserName("my name"));
     }
 
