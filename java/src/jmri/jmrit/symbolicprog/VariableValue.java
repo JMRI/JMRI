@@ -397,8 +397,11 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
     }
     private boolean _busy = false;
 
-    // tool to handle masking, updating
-    protected int maskVal(String maskString) {
+    /**
+     * Convert a String mask like XXXVVVXX
+     * to an int like 0b00011100
+     */
+    protected int maskValAsInt(String maskString) {
         // convert String mask to int
         int mask = 0;
         for (int i = 0; i < maskString.length(); i++) {
@@ -438,7 +441,7 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
      * @return int new value for the CV
      */
     protected int newValue(int oldCv, int newVal, String maskString) {
-        int mask = maskVal(maskString);
+        int mask = maskValAsInt(maskString);
         int offset = offsetVal(maskString);
         return (oldCv & ~mask) + ((newVal << offset) & mask);
     }

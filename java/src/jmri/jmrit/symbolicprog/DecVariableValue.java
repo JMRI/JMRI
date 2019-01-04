@@ -395,7 +395,7 @@ public class DecVariableValue extends VariableValue
         } else if (e.getPropertyName().equals("Value")) {
             // update value of Variable
             CvValue cv = _cvMap.get(getCvNum());
-            int newVal = (cv.getValue() & maskVal(getMask())) >>> offsetVal(getMask());
+            int newVal = (cv.getValue() & maskValAsInt(getMask())) >>> offsetVal(getMask());
             setValue(newVal);  // check for duplicate done inside setVal
         }
     }
