@@ -60,7 +60,7 @@ public class ManagerDefaultSelectorTest {
         // create a test loconet connection
         LnTrafficController lnis = new LocoNetInterfaceScaffold();
         LocoNetSystemConnectionMemo loconet = new LocoNetSystemConnectionMemo(lnis, null);
-        loconet.configureCommandStation(LnCommandStationType.COMMAND_STATION_DCS100, false, false, false);
+        loconet.configureCommandStation(LnCommandStationType.COMMAND_STATION_DCS100, false, false, false, false);
         return loconet;
     }
     

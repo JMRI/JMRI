@@ -1126,13 +1126,23 @@ public class LocoNetSlot {
         id = (newID & 0x17F);
         return writeSlot();
     }
-
+    
     /**
      * Set the throttle ID in the slot
-     * @param throttleId full id 
+     *
+     * @param throttleId full id
      */
-    public void setThrottleId(int throttleId) {
+    public void setThrottleIdentity(int throttleId) {
         id = throttleId;
+    }
+
+    /**
+     * Get the throttle ID in the slot
+     *
+     *@return the Id of the Throttle
+     */
+    public int getThrottleIdentity() {
+        return id;
     }
     
     /**
@@ -1395,6 +1405,38 @@ public class LocoNetSlot {
     }
 
     /**
+     * For fast-clock slot, set a "CLK_CNTRL" bit On. This method logs an error
+     * if invoked for a slot other than the fast-clock slot.
+     * <p>
+     *
+     * @param val is the new "CLK_CNTRL" bit value to turn On
+     */
+    public void setFcCntrlBitOn(int val) {
+        // TODO: consider throwing a LocoNetException if issued for a slot other
+        // than the "fast clock slot".
+        if (getSlot() != LnConstants.FC_SLOT) {
+            log.error("setFcCntrl invalid for slot " + getSlot());
+        }
+        snd |= val;
+    }
+
+    /**
+     * For fast-clock slot, set a "CLK_CNTRL" bit Off. This method logs an error
+     * if invoked for a slot other than the fast-clock slot.
+     * <p>
+     *
+     * @param val is the new "CLK_CNTRL" bit value to turn Off
+     */
+    public void setFcCntrlBitOff(int val) {
+        // TODO: consider throwing a LocoNetException if issued for a slot other
+        // than the "fast clock slot".
+        if (getSlot() != LnConstants.FC_SLOT) {
+            log.error("setFcCntrl invalid for slot " + getSlot());
+        }
+        snd &= ~val;
+    }
+
+    /**
      * Get the track status byte (location 7)
      * <p>
      * Note that the &lt;TRK&gt; byte is not accurate on some command stations.
@@ -1430,35 +1472,6 @@ public class LocoNetSlot {
         return snd;
     }
 
-    /**
-     * For fast-clock slot, set a "CLK_CNTRL" bit On.
-     * This method logs an error if invoked for a slot other than the fast-clock slot.
-     * <p>
-     * @param val is the new "CLK_CNTRL" bit value to turn On
-     */
-    public void setFcCntrlBitOn(int val) {
-        // TODO: consider throwing a LocoNetException if issued for a slot other
-        // than the "fast clock slot".
-        if (getSlot() != LnConstants.FC_SLOT) {
-            log.error("setFcCntrl invalid for slot " + getSlot());
-        }
-        snd |= val;
-    }
-
-    /**
-     * For fast-clock slot, set a "CLK_CNTRL" bit Off.
-     * This method logs an error if invoked for a slot other than the fast-clock slot.
-     * <p>
-     * @param val is the new "CLK_CNTRL" bit value to turn Off
-     */
-    public void setFcCntrlBitOff(int val) {
-        // TODO: consider throwing a LocoNetException if issued for a slot other
-        // than the "fast clock slot".
-        if (getSlot() != LnConstants.FC_SLOT) {
-            log.error("setFcCntrl invalid for slot " + getSlot());
-        }
-        snd &= ~val;
-    }
     /**
      * Return the days value from the slot.  Only valid for fast-clock slot.
      * <p>
