@@ -411,12 +411,19 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
                     mask = mask | 1;
                 }
             } catch (StringIndexOutOfBoundsException e) {
-                log.error("mask /" + maskString + "/ could not be handled for variable " + label());
+                log.error("mask \"{}\" could not be handled for variable ", label());
             }
         }
         return mask;
     }
 
+    /**
+     * Is this a bit mask (i.e. XVVVXXXX form) vice radix mask (small integer)?
+     */
+    protected boolean isBitMask(String mask) {
+         return mask.isEmpty() || mask.startsWith("X") || mask.startsWith("V");
+    }
+    
     /**
      * Find number of places to shift a value left to align it with a mask. For
      * example, a mask of "XXVVVXXX" means that the value 5 needs to be shifted
@@ -436,8 +443,13 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
     /**
      * Get the current value from the CV, using the mask as needed
      */
-    protected int getValueInCV(int Cv, String maskString) {
-        return (Cv & maskValAsInt(maskString)) >>> offsetVal(maskString);
+    protected int getValueInCV(int Cv, String maskString, int maxVal) {
+        if (isBitMask(maskString)) {
+            return (Cv & maskValAsInt(maskString)) >>> offsetVal(maskString);
+        } else {
+            int radix = Integer.parseInt(maskString);
+            return (Cv/radix) % maxVal;
+        }
     }
     /**
      *
@@ -446,10 +458,17 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
      * @param maskString The bit mask for this variable in character form
      * @return int new value for the CV
      */
-    protected int setValueInCV(int oldCv, int newVal, String maskString) {
-        int mask = maskValAsInt(maskString);
-        int offset = offsetVal(maskString);
-        return (oldCv & ~mask) + ((newVal << offset) & mask);
+    protected int setValueInCV(int oldCv, int newVal, String maskString, int maxVal) {
+        if (isBitMask(maskString)) {
+            int mask = maskValAsInt(maskString);
+            int offset = offsetVal(maskString);
+            return (oldCv & ~mask) + ((newVal << offset) & mask);
+        } else {
+            int radix = Integer.parseInt(maskString);
+            int lowPart = oldCv % radix;
+            int highPart = (oldCv / (radix * maxVal))*(radix * maxVal);
+            return highPart+newVal*radix+lowPart;
+        }
     }
 
     /**

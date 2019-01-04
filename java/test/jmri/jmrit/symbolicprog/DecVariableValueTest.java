@@ -43,6 +43,38 @@ public class DecVariableValueTest extends AbstractVariableValueTestBase {
     }
 
     // end of abstract members
+    
+    // test the handling of offset (base) masks
+    public void testBaseMasks() {
+        HashMap<String, CvValue> v = createCvMap();
+        CvValue cv = new CvValue("81", p);
+        cv.setValue(0);
+        v.put("81", cv);
+        // create a variable pointed at CV 81, check name
+        VariableValue variable = makeVar("label", "comment", "", false, false, false, false, "81", "9", 0, 3, v, null, null);
+        checkValue(variable, "value object initially contains ", "0");
+
+        // pretend you've edited the value & manually notify
+        setValue(variable, "2");
+        // check variable value
+        checkValue(variable, "value object contains ", "2");
+        // see if the CV was updated
+        Assert.assertEquals("cv value", 18, cv.getValue());
+        
+        // now check that other parts are maintained
+        cv.setValue(3+2*9+81);
+        // check variable value
+        checkValue(variable, "value object contains ", "2");
+        // see if the CV was updated
+        Assert.assertEquals("cv value", 3+2*9+81, cv.getValue());
+
+        // and try setting another value
+        setValue(variable, "1");
+        checkValue(variable, "value object contains ", "1");
+        Assert.assertEquals("cv value", 3+9+81, cv.getValue());
+                       
+    }
+    
     // from here down is testing infrastructure
     public DecVariableValueTest(String s) {
         super(s);
