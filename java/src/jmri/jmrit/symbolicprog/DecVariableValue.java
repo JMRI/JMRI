@@ -129,7 +129,7 @@ public class DecVariableValue extends VariableValue
         } catch (java.lang.NumberFormatException ex) {
             newVal = 0;
         }
-        int newCv = newValue(oldCv, newVal, getMask());
+        int newCv = setValueInCV(oldCv, newVal, getMask());
         if (oldCv != newCv) {
             cv.setValue(newCv);
         }
@@ -395,7 +395,7 @@ public class DecVariableValue extends VariableValue
         } else if (e.getPropertyName().equals("Value")) {
             // update value of Variable
             CvValue cv = _cvMap.get(getCvNum());
-            int newVal = (cv.getValue() & maskValAsInt(getMask())) >>> offsetVal(getMask());
+            int newVal = getValueInCV(cv.getValue(), getMask());
             setValue(newVal);  // check for duplicate done inside setVal
         }
     }

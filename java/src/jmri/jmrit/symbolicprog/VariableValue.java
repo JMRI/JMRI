@@ -434,13 +434,19 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
     }
 
     /**
+     * Get the current value from the CV, using the mask as needed
+     */
+    protected int getValueInCV(int Cv, String maskString) {
+        return (Cv & maskValAsInt(maskString)) >>> offsetVal(maskString);
+    }
+    /**
      *
      * @param oldCv      Value of the CV before this update is applied
      * @param newVal     Value for this variable (e.g. not the CV value)
      * @param maskString The bit mask for this variable in character form
      * @return int new value for the CV
      */
-    protected int newValue(int oldCv, int newVal, String maskString) {
+    protected int setValueInCV(int oldCv, int newVal, String maskString) {
         int mask = maskValAsInt(maskString);
         int offset = offsetVal(maskString);
         return (oldCv & ~mask) + ((newVal << offset) & mask);
