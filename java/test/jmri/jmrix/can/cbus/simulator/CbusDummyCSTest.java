@@ -14,7 +14,7 @@ public class CbusDummyCSTest {
 
     @Test
     public void testCTor() {
-        CbusDummyCS t = new CbusDummyCS(0,null);
+        CbusDummyCS t = new CbusDummyCS(0,null,0);
         Assert.assertNotNull("exists",t);
     }
 

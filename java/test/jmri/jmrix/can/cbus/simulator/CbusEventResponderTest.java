@@ -14,7 +14,7 @@ public class CbusEventResponderTest {
 
     @Test
     public void testCTor() {
-        CbusEventResponder t = new CbusEventResponder(0,null);
+        CbusEventResponder t = new CbusEventResponder(0,null,0);
         Assert.assertNotNull("exists",t);
     }
 
