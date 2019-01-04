@@ -169,24 +169,25 @@ public class Z21Reply extends AbstractMRReply {
                          typeString = "Input Status";
                          switch(value1){
                            case 0x0000:
-                                value1String = "Free, with tension";
+                                value1String = Bundle.getMessage("Z21_CAN_INPUT_STATUS_FREE_WITHOUT");
                                 break;
                            case 0x0100:
-                                value1String = "Free, without tension";
+                                value1String = Bundle.getMessage("Z21_CAN_INPUT_STATUS_FREE_WITH");
                                 break;
                            case 0x1000:
-                                value1String = "Busy, with tension";
+                                value1String = Bundle.getMessage("Z21_CAN_INPUT_STATUS_BUSY_WITHOUT");
                                 break;
                            case 0x1100:
-                                value1String = "Busy, without tension";
+                                value1String = Bundle.getMessage("Z21_CAN_INPUT_STATUS_BUSY_WITH");
                                 break;
                            case 0x1201:
-                                value1String = "Busy, Overload 1";
+                                value1String = Bundle.getMessage("Z21_CAN_INPUT_STATUS_OVERLOAD_1");
                                 break;
                            case 0x1202:
-                                value1String = "Busy, Overload 2";
+                                value1String = Bundle.getMessage("Z21_CAN_INPUT_STATUS_OVERLOAD_2");
                                 break;
                            case 0x1203:
+                                value1String = Bundle.getMessage("Z21_CAN_INPUT_STATUS_OVERLOAD_3");
                                 value1String = "Busy, Overload 3";
                                 break;
                            default:
