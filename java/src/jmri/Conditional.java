@@ -89,6 +89,39 @@ public interface Conditional extends NamedBean {
     public static final int FALSE = 0x02;
     public static final int TRUE = 0x04;
 
+    public enum AntecedentOperator {
+        ALL_AND(Conditional.ALL_AND, rbx.getString("LogicAND")),
+        ALL_OR(Conditional.ALL_OR, rbx.getString("LogicOR")),
+        MIXED(Conditional.MIXED, rbx.getString("LogicMixed"));
+
+        private final int _value;
+        private final String _string;
+
+        private AntecedentOperator(int value, String string) {
+            _value = value;
+            _string = string;
+        }
+
+        public int getIntValue() {
+            return _value;
+        }
+
+        public static AntecedentOperator getOperatorFromIntValue(int value) {
+            for (AntecedentOperator antecedentOperators : AntecedentOperator.values()) {
+                if (antecedentOperators.getIntValue() == value) {
+                    return antecedentOperators;
+                }
+            }
+
+            throw new IllegalArgumentException("ItemType is unknown");
+        }
+
+        @Override
+        public String toString() {
+            return _string;
+        }
+    }
+
     // logic operators used in antecedent
     static final int ALL_AND = 0x01;
     static final int ALL_OR = 0x02;
@@ -144,6 +177,284 @@ public interface Conditional extends NamedBean {
      */
     @Deprecated // 4.7.1
     public static final int OPERATOR_OR_NOT = 6;
+
+    // state variable and action items used by logix.
+    enum ItemType {
+        NONE(TYPE_NONE, IsStateVar.IS_STATE_VAR, "ItemTypeNone"),        // There is no ITEM_TYPE_NONE so use TYPE_NONE instead
+        SENSOR(ITEM_TYPE_SENSOR, IsStateVar.IS_STATE_VAR, "ItemTypeSensor"),
+        TURNOUT(ITEM_TYPE_TURNOUT, IsStateVar.IS_STATE_VAR, "ItemTypeTurnout"),
+        LIGHT(ITEM_TYPE_LIGHT, IsStateVar.IS_STATE_VAR, "ItemTypeLight"),
+        SIGNALHEAD(ITEM_TYPE_SIGNALHEAD, IsStateVar.IS_STATE_VAR, "ItemTypeSignalHead"),
+        SIGNALMAST(ITEM_TYPE_SIGNALMAST, IsStateVar.IS_STATE_VAR, "ItemTypeSignalMast"),
+        MEMORY(ITEM_TYPE_MEMORY, IsStateVar.IS_STATE_VAR, "ItemTypeMemory"),
+        CONDITIONAL(ITEM_TYPE_CONDITIONAL, IsStateVar.IS_STATE_VAR, "ItemTypeConditional"),  // used only by ConditionalVariable
+        LOGIX(ITEM_TYPE_LOGIX, IsStateVar.IS_STATE_VAR, "ItemTypeLogix"),                    // used only by ConditionalAction
+        WARRANT(ITEM_TYPE_WARRANT, IsStateVar.IS_STATE_VAR, "ItemTypeWarrant"),
+        CLOCK(ITEM_TYPE_CLOCK, IsStateVar.IS_STATE_VAR, "ItemTypeClock"),
+        OBLOCK(ITEM_TYPE_OBLOCK, IsStateVar.IS_STATE_VAR, "ItemTypeOBlock"),
+        ENTRYEXIT(ITEM_TYPE_ENTRYEXIT, IsStateVar.IS_STATE_VAR, "ItemTypeEntryExit"),
+
+        AUDIO(ITEM_TYPE_AUDIO, IsStateVar.IS_NOT_STATE_VAR, "ItemTypeAudio"),
+        SCRIPT(ITEM_TYPE_SCRIPT, IsStateVar.IS_NOT_STATE_VAR, "ItemTypeScript"),
+        OTHER(ITEM_TYPE_OTHER, IsStateVar.IS_NOT_STATE_VAR, "ItemTypeOther");
+
+        private final int _type;
+        private IsStateVar _isStateVar;
+        private final String _bundleKey;
+
+        private static final List<ItemType> stateVarList;
+
+        static
+        {
+            stateVarList = new ArrayList<>();
+
+            for (ItemType itemType : ItemType.values()) {
+                if (itemType._isStateVar == IsStateVar.IS_STATE_VAR) {
+                    stateVarList.add(itemType);
+                }
+            }
+        }
+
+        private ItemType(int type, IsStateVar isStateVar, String bundleKey) {
+            _type = type;
+            _isStateVar = isStateVar;
+            _bundleKey = bundleKey;
+        }
+
+        public static List<ItemType> getStateVarList() {
+            return stateVarList;
+        }
+
+        public int getIntValue() {
+            return _type;
+        }
+
+        public static ItemType getOperatorFromIntValue(int itemTypeInt) {
+            for (ItemType itemType : ItemType.values()) {
+                if (itemType.getIntValue() == itemTypeInt) {
+                    return itemType;
+                }
+            }
+
+            throw new IllegalArgumentException("ItemType is unknown");
+        }
+
+        @Override
+        public String toString() {
+            return Bundle.getMessage(_bundleKey);
+        }
+
+        // This enum is only used within the outer enum ItemType.
+        private enum IsStateVar {
+            IS_STATE_VAR,
+            IS_NOT_STATE_VAR
+        }
+    }
+
+    // items
+    enum Type {
+        ERROR(TYPE_ERROR, ItemType.NONE, "", ""), // NOI18N
+        NONE(TYPE_NONE, ItemType.NONE, "", ""), // NOI18N
+        SENSOR_ACTIVE(TYPE_SENSOR_ACTIVE, ItemType.SENSOR, Bundle.getMessage("SensorStateActive"), rbx.getString("TypeSensorActive")), // NOI18N
+        SENSOR_INACTIVE(TYPE_SENSOR_INACTIVE, ItemType.SENSOR, Bundle.getMessage("SensorStateInactive"), rbx.getString("TypeSensorInactive")), // NOI18N
+        TURNOUT_THROWN(TYPE_TURNOUT_THROWN, ItemType.TURNOUT, Bundle.getMessage("TurnoutStateThrown"), rbx.getString("TypeTurnoutThrown")), // NOI18N
+        TURNOUT_CLOSED(TYPE_TURNOUT_CLOSED, ItemType.TURNOUT, Bundle.getMessage("TurnoutStateClosed"), rbx.getString("TypeTurnoutClosed")), // NOI18N
+        CONDITIONAL_TRUE(TYPE_CONDITIONAL_TRUE, ItemType.CONDITIONAL, Bundle.getMessage("True"), rbx.getString("TypeConditionalTrue")), // NOI18N
+        CONDITIONAL_FALSE(TYPE_CONDITIONAL_FALSE, ItemType.CONDITIONAL, Bundle.getMessage("False"), rbx.getString("TypeConditionalFalse")), // NOI18N
+        LIGHT_ON(TYPE_LIGHT_ON, ItemType.LIGHT, rbx.getString("LightOn"), rbx.getString("TypeLightOn")), // NOI18N
+        LIGHT_OFF(TYPE_LIGHT_OFF, ItemType.LIGHT, rbx.getString("LightOff"), rbx.getString("TypeLightOff")), // NOI18N
+        MEMORY_EQUALS(TYPE_MEMORY_EQUALS, ItemType.MEMORY, rbx.getString("StateMemoryEquals"), rbx.getString("TypeMemoryEquals")), // NOI18N
+        MEMORY_COMPARE(TYPE_MEMORY_COMPARE, ItemType.MEMORY, rbx.getString("StateMemoryCompare"), rbx.getString("TypeMemoryCompare")), // NOI18N
+        MEMORY_EQUALS_INSENSITIVE(TYPE_MEMORY_EQUALS_INSENSITIVE, ItemType.MEMORY, rbx.getString("StateMemoryEqualsInsensitive"), rbx.getString("TypeMemoryEqualsInsensitive")), // NOI18N
+        MEMORY_COMPARE_INSENSITIVE(TYPE_MEMORY_COMPARE_INSENSITIVE, ItemType.MEMORY, rbx.getString("StateMemoryCompareInsensitive"), rbx.getString("TypeMemoryCompareInsensitive")), // NOI18N
+        FAST_CLOCK_RANGE(TYPE_FAST_CLOCK_RANGE, ItemType.CLOCK, rbx.getString("TypeFastClockRange"), rbx.getString("TypeFastClockRange")), // NOI18N
+
+        // Note the set signalHeadAppearanceSet below which holds those SignalHead types that are appearances.
+        SIGNAL_HEAD_RED(TYPE_SIGNAL_HEAD_RED, ItemType.SIGNALHEAD, Bundle.getMessage("SignalHeadStateRed"), Bundle.getMessage("SignalHeadStateRed")), // NOI18N
+        SIGNAL_HEAD_YELLOW(TYPE_SIGNAL_HEAD_YELLOW, ItemType.SIGNALHEAD, Bundle.getMessage("SignalHeadStateYellow"), Bundle.getMessage("SignalHeadStateYellow")), // NOI18N
+        SIGNAL_HEAD_GREEN(TYPE_SIGNAL_HEAD_GREEN, ItemType.SIGNALHEAD, Bundle.getMessage("SignalHeadStateGreen"), Bundle.getMessage("SignalHeadStateGreen")), // NOI18N
+        SIGNAL_HEAD_DARK(TYPE_SIGNAL_HEAD_DARK, ItemType.SIGNALHEAD, Bundle.getMessage("SignalHeadStateDark"), Bundle.getMessage("SignalHeadStateDark")), // NOI18N
+        SIGNAL_HEAD_FLASHRED(TYPE_SIGNAL_HEAD_FLASHRED, ItemType.SIGNALHEAD, Bundle.getMessage("SignalHeadStateFlashingRed"), Bundle.getMessage("SignalHeadStateFlashingRed")), // NOI18N
+        SIGNAL_HEAD_FLASHYELLOW(TYPE_SIGNAL_HEAD_FLASHYELLOW, ItemType.SIGNALHEAD, Bundle.getMessage("SignalHeadStateFlashingYellow"), Bundle.getMessage("SignalHeadStateFlashingYellow")), // NOI18N
+        SIGNAL_HEAD_FLASHGREEN(TYPE_SIGNAL_HEAD_FLASHGREEN, ItemType.SIGNALHEAD, Bundle.getMessage("SignalHeadStateFlashingGreen"), Bundle.getMessage("SignalHeadStateFlashingGreen")), // NOI18N
+        SIGNAL_HEAD_LIT(TYPE_SIGNAL_HEAD_LIT, ItemType.SIGNALHEAD, Bundle.getMessage("SignalHeadStateLit"), Bundle.getMessage("SignalHeadStateLit")), // NOI18N
+        SIGNAL_HEAD_HELD(TYPE_SIGNAL_HEAD_HELD, ItemType.SIGNALHEAD, Bundle.getMessage("SignalHeadStateHeld"), Bundle.getMessage("SignalHeadStateHeld")), // NOI18N
+        SIGNAL_HEAD_LUNAR(TYPE_SIGNAL_HEAD_LUNAR, ItemType.SIGNALHEAD, Bundle.getMessage("SignalHeadStateLunar"), Bundle.getMessage("SignalHeadStateLunar")), // NOI18N
+        SIGNAL_HEAD_FLASHLUNAR(TYPE_SIGNAL_HEAD_FLASHLUNAR, ItemType.SIGNALHEAD, Bundle.getMessage("SignalHeadStateFlashingLunar"), Bundle.getMessage("SignalHeadStateFlashingLunar")), // NOI18N
+        // Warrant variables
+        ROUTE_FREE(TYPE_ROUTE_FREE, ItemType.WARRANT, rbx.getString("StateRouteFree"), rbx.getString("TypeWarrantRouteFree")), // NOI18N
+        ROUTE_OCCUPIED(TYPE_ROUTE_OCCUPIED, ItemType.WARRANT, rbx.getString("stateRouteOccupied"), rbx.getString("TypeWarrantRouteOccupied")), // NOI18N
+        ROUTE_ALLOCATED(TYPE_ROUTE_ALLOCATED, ItemType.WARRANT, rbx.getString("StateRouteReserved"), rbx.getString("TypeWarrantRouteAllocated")), // NOI18N
+        ROUTE_SET(TYPE_ROUTE_SET, ItemType.WARRANT, rbx.getString("StateRouteIsSet"), rbx.getString("TypeRouteIsSet")), // NOI18N
+        TRAIN_RUNNING(TYPE_TRAIN_RUNNING, ItemType.WARRANT, rbx.getString("StateTrainRunning"), rbx.getString("TypeTrainRunning")), // NOI18N
+        SIGNAL_MAST_ASPECT_EQUALS(TYPE_SIGNAL_MAST_ASPECT_EQUALS, ItemType.SIGNALMAST, rbx.getString("TypeSignalMastAspectEquals"), rbx.getString("TypeSignalMastAspectEquals")), // NOI18N
+        SIGNAL_MAST_LIT(TYPE_SIGNAL_MAST_LIT, ItemType.SIGNALMAST, Bundle.getMessage("SignalMastStateLit"), Bundle.getMessage("SignalMastStateLit")), // NOI18N
+        SIGNAL_MAST_HELD(TYPE_SIGNAL_MAST_HELD, ItemType.SIGNALMAST, Bundle.getMessage("SignalMastStateHeld"), Bundle.getMessage("SignalMastStateHeld")), // NOI18N
+        SIGNAL_HEAD_APPEARANCE_EQUALS(TYPE_SIGNAL_HEAD_APPEARANCE_EQUALS, ItemType.SIGNALHEAD, rbx.getString("TypeSignalHeadAspectEquals"), rbx.getString("TypeSignalHeadAspectEquals")), // NOI18N
+        BLOCK_STATUS_EQUALS(TYPE_BLOCK_STATUS_EQUALS, ItemType.OBLOCK, "", ""), // NOI18N
+        //Entry Exit Rules
+        ENTRYEXIT_ACTIVE(TYPE_ENTRYEXIT_ACTIVE, ItemType.ENTRYEXIT, rbx.getString("TypeEntryExitActive"), rbx.getString("TypeEntryExitActive")), // NOI18N
+        ENTRYEXIT_INACTIVE(TYPE_ENTRYEXIT_INACTIVE, ItemType.ENTRYEXIT, rbx.getString("TypeEntryExitInactive"), rbx.getString("TypeEntryExitInactive")), // NOI18N
+        // OBlock
+        OBLOCK_UNOCCUPIED(TYPE_OBLOCK_UNOCCUPIED, ItemType.OBLOCK, rbxWarrant.getString("unoccupied"), rbxWarrant.getString("unoccupied")), // NOI18N
+        OBLOCK_OCCUPIED(TYPE_OBLOCK_OCCUPIED, ItemType.OBLOCK, rbxWarrant.getString("occupied"), rbxWarrant.getString("occupied")), // NOI18N
+        OBLOCK_ALLOCATED(TYPE_OBLOCK_ALLOCATED, ItemType.OBLOCK, rbxWarrant.getString("allocated"), rbxWarrant.getString("allocated")), // NOI18N
+        OBLOCK_RUNNING(TYPE_OBLOCK_RUNNING, ItemType.OBLOCK, rbxWarrant.getString("running"), rbxWarrant.getString("running")), // NOI18N
+        OBLOCK_OUT_OF_SERVICE(TYPE_OBLOCK_OUT_OF_SERVICE, ItemType.OBLOCK, rbxWarrant.getString("outOfService"), rbxWarrant.getString("outOfService")), // NOI18N
+        OBLOCK_DARK(TYPE_OBLOCK_DARK, ItemType.OBLOCK, rbxWarrant.getString("dark"), rbxWarrant.getString("dark")), // NOI18N
+        OBLOCK_POWER_ERROR(TYPE_OBLOCK_POWER_ERROR, ItemType.OBLOCK, rbxWarrant.getString("powerError"), rbxWarrant.getString("powerError")), // NOI18N
+        // This is used by ConditionalListEdit and ConditionalTreeEdit
+        XXXXXXX(TYPE_XXXXXXX, ItemType.NONE, "XXXXXXX", "XXXXXXX"); // NOI18N
+
+        private final int _item;
+        private final ItemType _itemType;
+        private final String _string;
+        private final String _testTypeString;
+
+        private static final List<Type> sensorItemsList;
+        private static final List<Type> turnoutItemsList;
+        private static final List<Type> conditionalItemsList;
+        private static final List<Type> lightItemsList;
+        private static final List<Type> warrantItemsList;
+        private static final List<Type> memoryItemsList;
+        private static final List<Type> entryExitItemsList;
+        private static final List<Type> signalHeadStateMachineItemsList;
+        private static final List<Type> signalMastItemsList;
+        private static final List<Type> oblockItemsList;
+
+        private static final Set<Type> signalHeadAppearanceSet;
+
+
+        static
+        {
+            Type[] typeArray1 = {SENSOR_ACTIVE, SENSOR_INACTIVE};
+            sensorItemsList = Collections.unmodifiableList(Arrays.asList(typeArray1));
+
+            Type[] typeArray2 = {TURNOUT_THROWN, TURNOUT_CLOSED};
+            turnoutItemsList = Collections.unmodifiableList(Arrays.asList(typeArray2));
+
+            Type[] typeArray3 = {CONDITIONAL_TRUE, CONDITIONAL_FALSE};
+            conditionalItemsList = Collections.unmodifiableList(Arrays.asList(typeArray3));
+
+            Type[] typeArray4 = {LIGHT_ON, LIGHT_OFF};
+            lightItemsList = Collections.unmodifiableList(Arrays.asList(typeArray4));
+
+            Type[] typeArray5 = {ROUTE_FREE, ROUTE_SET, ROUTE_ALLOCATED, ROUTE_OCCUPIED, TRAIN_RUNNING};
+            warrantItemsList = Collections.unmodifiableList(Arrays.asList(typeArray5));
+
+            Type[] typeArray6 = {MEMORY_EQUALS, MEMORY_EQUALS_INSENSITIVE,
+                MEMORY_COMPARE, MEMORY_COMPARE_INSENSITIVE};
+            memoryItemsList = Collections.unmodifiableList(Arrays.asList(typeArray6));
+
+            Type[] typeArray7 = {ENTRYEXIT_ACTIVE, ENTRYEXIT_INACTIVE};
+            entryExitItemsList = Collections.unmodifiableList(Arrays.asList(typeArray7));
+
+            Type[] typeArray8 = {NONE, SIGNAL_HEAD_APPEARANCE_EQUALS, SIGNAL_HEAD_LIT, SIGNAL_HEAD_HELD};
+            signalHeadStateMachineItemsList = Collections.unmodifiableList(Arrays.asList(typeArray8));
+
+            Type[] typeArray9 = {SIGNAL_HEAD_RED, SIGNAL_HEAD_YELLOW, SIGNAL_HEAD_GREEN,
+                SIGNAL_HEAD_DARK, SIGNAL_HEAD_FLASHRED, SIGNAL_HEAD_FLASHYELLOW,
+                SIGNAL_HEAD_FLASHGREEN, SIGNAL_HEAD_LUNAR, SIGNAL_HEAD_FLASHLUNAR,
+            };
+            signalHeadAppearanceSet = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(typeArray9)));
+
+            Type[] typeArray10 = {NONE, SIGNAL_MAST_ASPECT_EQUALS, SIGNAL_MAST_LIT, SIGNAL_MAST_HELD};
+            signalMastItemsList = Collections.unmodifiableList(Arrays.asList(typeArray10));
+
+            Type[] typeArray11 = {OBLOCK_UNOCCUPIED, OBLOCK_OCCUPIED, OBLOCK_ALLOCATED,
+                OBLOCK_RUNNING, OBLOCK_OUT_OF_SERVICE, OBLOCK_DARK, OBLOCK_POWER_ERROR};
+            oblockItemsList = Collections.unmodifiableList(Arrays.asList(typeArray11));
+        }
+
+        private Type(int state, ItemType itemType, String string, String testTypeString) {
+            _item = state;
+            _itemType = itemType;
+            _string = string;
+            _testTypeString = testTypeString;
+        }
+
+        public ItemType getItemType() {
+            return _itemType;
+        }
+
+        public int getIntValue() {
+            return _item;
+        }
+
+        public static List<Type> getSensorItems() {
+            return sensorItemsList;
+        }
+
+        public static List<Type> getTurnoutItems() {
+            return turnoutItemsList;
+        }
+
+        public static List<Type> getConditionalItems() {
+            return conditionalItemsList;
+        }
+
+        public static List<Type> getLightItems() {
+            return lightItemsList;
+        }
+
+        public static List<Type> getWarrantItems() {
+            return warrantItemsList;
+        }
+
+        public static List<Type> getMemoryItems() {
+            return memoryItemsList;
+        }
+
+        public static List<Type> getEntryExitItems() {
+            return entryExitItemsList;
+        }
+
+        public static List<Type> getSignalHeadStateMachineItems() {
+            return signalHeadStateMachineItemsList;
+        }
+
+        public static boolean isSignalHeadApperance(Type type) {
+            return signalHeadAppearanceSet.contains(type);
+        }
+
+        public static List<Type> getSignalMastItems() {
+            return signalMastItemsList;
+        }
+
+        public static List<Type> getOBlockItems() {
+            return oblockItemsList;
+        }
+
+        public static int getIndexInList(List<Type> table, Type entry) {
+            for (int i = 0; i < table.size(); i++) {
+                if (entry == table.get(i)) {
+                    return i;
+                }
+            }
+            return -1;
+        }
+
+        public static Type getOperatorFromIntValue(int typeInt) {
+            for (Type type : Type.values()) {
+                if (type.getIntValue() == typeInt) {
+                    return type;
+                }
+            }
+
+            throw new IllegalArgumentException("Type is unknown");
+        }
+
+        // Some items uses Bundle.getString() and some items uses rbx.getString()
+        // and therefore the items must call getString() in the call to the constructor.
+        @Override
+        public String toString() {
+            return _string;
+        }
+
+        public String getTestTypeString() {
+            return _testTypeString;
+        }
+    }
 
     // items
     enum Action {
