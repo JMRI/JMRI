@@ -75,7 +75,7 @@ public class DecVariableValueTest extends AbstractVariableValueTestBase {
                        
     }
 
-    public void testBaseMasksBCD() {
+    public void testBaseMasksDecimalValues() {
         HashMap<String, CvValue> v = createCvMap();
         CvValue cv = new CvValue("81", p);
         cv.setValue(0);
