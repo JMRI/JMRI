@@ -24,6 +24,8 @@ package jmri.jmrix.roco.z21;
  * <LI>0x02000000 send Locomotive specific LocoNet data to the client.</LI>
  * <LI>0x04000000 send Turnout specific LocoNet data to the client.</LI>
  * <LI>0x08000000 send Occupancy information from LocoNet to the client</LI>
+ * <LI>0x00040000 Automatically send updates for Railcom data to the client</LI> 
+ * <LI>0x00080000 send can detector messages to the client</LI> 
  * </UL>
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2001 
@@ -174,6 +176,54 @@ public class RocoZ21CommandStation extends jmri.jmrix.roco.RocoCommandStation im
            broadcast_flags = broadcast_flags & (~(0x00000004));
         }
     }
+
+   /**
+    * Is flag bit 0x00040000, which tells the command station to 
+    * automatically send Railcom data to the client set. 
+    * @return true if flag is set.
+    */
+    public boolean getRailComAutomaticFlag(){
+        return((broadcast_flags & 0x00040000) == 0x00040000);
+    }
+
+   /**
+    * Set flag bit 0x00040000, which tells the command station to 
+    * automatically send Railcom data to the client set. 
+    * @param flag true if flag is to be set.
+    */
+    public void setRailComAutomaticFlag(boolean flag){
+        if(flag) {
+           broadcast_flags = broadcast_flags | 0x00040000;
+        }
+        else {
+           broadcast_flags = broadcast_flags & (~(0x00040000));
+        }
+    }
+
+   /**
+    * Is flag bit 0x00080000, which tells the command station to 
+    * send CAN detector data to the client set. 
+    * @return true if flag is set.
+    */
+    public boolean getCanDetectorFlag(){
+        return((broadcast_flags & 0x00080000) == 0x00080000);
+    }
+
+   /**
+    * Set flag bit 0x00080000, which tells the command station to 
+    * send CAN detector data to the client. 
+    * @param flag true if flag is to be set.
+    */
+    public void setCanDetectorFlag(boolean flag){
+        if(flag) {
+           broadcast_flags = broadcast_flags | 0x00080000;
+        }
+        else {
+           broadcast_flags = broadcast_flags & (~(0x00080000));
+        }
+    }
+
+
 
    /**
     * Is flag bit 0x00000100 which tells the command station to send 

@@ -10,6 +10,7 @@ import jmri.jmrix.can.cbus.CbusConstants;
 import jmri.jmrix.can.cbus.CbusMessage;
 import jmri.jmrix.can.cbus.CbusOpCodes;
 import jmri.jmrix.can.cbus.simulator.CbusDummyCS;
+import jmri.jmrix.can.cbus.simulator.CbusDummyNode;
 import jmri.jmrix.can.cbus.simulator.CbusEventResponder;
 import jmri.jmrix.can.TrafficController;
 import jmri.util.ThreadingUtil;
@@ -27,7 +28,8 @@ public class CbusSimulator implements CanListener {
     private TrafficController tc;
     private CanSystemConnectionMemo memo;
 
-    public ArrayList<CbusDummyCS> _csNodes;
+    public ArrayList<CbusDummyCS> _csArr;
+    public ArrayList<CbusDummyNode> _ndArr;
     public ArrayList<CbusEventResponder> _evResponseArr;
 
     private Boolean _processIn;
@@ -37,6 +39,8 @@ public class CbusSimulator implements CanListener {
     
     public static ArrayList<String> csTypes = new ArrayList<String>();
     public static ArrayList<String> csTypesTip = new ArrayList<String>();
+
+    public static ArrayList<Integer> ndTypes = new ArrayList<Integer>();
     
     public static ArrayList<String> evModes = new ArrayList<String>();
     public static ArrayList<String> evModesTip = new ArrayList<String>();
@@ -64,6 +68,10 @@ public class CbusSimulator implements CanListener {
         csTypes.add(Bundle.getMessage("csStandard"));
         csTypesTip.add("Based on CANCMD v3");
         
+        ndTypes.add(0);
+        // 29 CANPAN
+        ndTypes.add(29);
+        
         evModes.add(Bundle.getMessage("HighlightDisabled"));
         evModesTip.add(null);
         
@@ -79,11 +87,14 @@ public class CbusSimulator implements CanListener {
         evModes.add(Bundle.getMessage("CbusEventOff"));
         evModesTip.add(null);
         
-        _csNodes = new ArrayList<CbusDummyCS>();
-        _csNodes.add(new CbusDummyCS(1,this));
+        _csArr = new ArrayList<CbusDummyCS>();
+        _csArr.add(new CbusDummyCS(1,this,0)); // type, this, id
+        
+        _ndArr = new ArrayList<CbusDummyNode>();
+        _ndArr.add(new CbusDummyNode(0,this,1)); // type, this, id
         
         _evResponseArr = new ArrayList<CbusEventResponder>();
-        _evResponseArr.add(new CbusEventResponder(1,this) );
+        _evResponseArr.add(new CbusEventResponder(1,this,0) );
         
         _processIn=false;
         _processOut=true;
@@ -93,19 +104,69 @@ public class CbusSimulator implements CanListener {
     }
     
     public int getNumCS(){
-        return _csNodes.size();
+        return _csArr.size();
     }
     
     public int getNewCSID(int type){
-        _csNodes.add(new CbusDummyCS(type,this));
-        return _csNodes.size()-1;
+        int newIndex = 1;
+        for (int i = 0; i < _csArr.size(); i++) {
+            if ( newIndex <= _csArr.get(i).getSimId() ) {
+                newIndex = _csArr.get(i).getSimId()+1;
+            }
+        }
+        _csArr.add(new CbusDummyCS(type,this,newIndex));
+        return newIndex;
     }
     
     public int getNewEvID(int mode){
-        _evResponseArr.add(new CbusEventResponder(mode,this));
-        return _evResponseArr.size()-1;
+        int newIndex = 1;
+        for (int i = 0; i < _evResponseArr.size(); i++) {
+            if ( newIndex <= _evResponseArr.get(i).getSimId() ) {
+                newIndex = _evResponseArr.get(i).getSimId()+1;
+            }
+        }
+        _evResponseArr.add(new CbusEventResponder(mode,this,newIndex));
+        return newIndex;
     }
     
+    public int getNewNdID(int mode){
+        int newIndex = 1;
+        for (int i = 0; i < _ndArr.size(); i++) {
+            if ( newIndex <= _ndArr.get(i).getSimId() ) {
+                newIndex = _ndArr.get(i).getSimId()+1;
+            }
+        }
+        _ndArr.add(new CbusDummyNode(0,this,newIndex)); 
+        return newIndex;
+    }
+    
+    public CbusDummyNode getNodeFromId(int id){
+        for (int i = 0; i < _ndArr.size(); i++) {
+            if ( id==_ndArr.get(i).getSimId() ){
+                return _ndArr.get(i);
+            }
+        }        
+        return null;
+    }
+
+    public CbusDummyCS getCSFromId(int id){
+        for (int i = 0; i < _csArr.size(); i++) {
+            if ( id==_csArr.get(i).getSimId() ){
+                return _csArr.get(i);
+            }
+        }        
+        return null;
+    }
+
+    public CbusEventResponder getEvRFromId(int id){
+        for (int i = 0; i < _evResponseArr.size(); i++) {
+            if ( id==_evResponseArr.get(i).getSimId() ){
+                return _evResponseArr.get(i);
+            }
+        }        
+        return null;
+    }
+
     public void setProcessIn( Boolean newval){
         _processIn = newval;
     }
@@ -139,7 +200,19 @@ public class CbusSimulator implements CanListener {
     }       
     
     public void resetCs(int cs){
-        _csNodes.get(cs).resetCS();
+        for (int i = 0; i < _csArr.size(); i++) {
+            if ( cs==_csArr.get(i).getSimId() ){
+                _csArr.get(i).resetCS();
+            }
+        }
+    }
+
+    public void resetNd(int id){
+        for (int i = 0; i < _ndArr.size(); i++) {
+            if ( id==_ndArr.get(i).getSimId() ){
+                _ndArr.get(i).resetNode();
+            }
+        }
     }
 
     @Override
@@ -159,42 +232,42 @@ public class CbusSimulator implements CanListener {
     }
 
     public void processCan(CanFrame m) {
-        for ( int i=0 ; ( i < _csNodes.size() ) ; i++ ) {
+        for ( int i=0 ; ( i < _csArr.size() ) ; i++ ) {
             int opc = 0;
-            if ( _csNodes.get(i).getDummyType() != 0 ) {
+            if ( _csArr.get(i).getDummyType() != 0 ) {
                 opc = m.getElement(0);
             }
             
             if ( opc == CbusConstants.CBUS_RTON ) {
-                _csNodes.get(i).setTrackPower(true);
+                _csArr.get(i).setTrackPower(true);
             }
             else if ( opc == CbusConstants.CBUS_RTOF ) {
-                _csNodes.get(i).setTrackPower(false);
+                _csArr.get(i).setTrackPower(false);
             }
             else if ( opc == CbusConstants.CBUS_RESTP ) {
-                _csNodes.get(i).setEstop();
+                _csArr.get(i).setEstop();
             }
             else if ( opc == CbusConstants.CBUS_RLOC ) {
                 int rcvdIntAddr = (m.getElement(1) & 0x3f) * 256 + m.getElement(2);
                 boolean rcvdIsLong = (m.getElement(1) & 0xc0) != 0;
-                _csNodes.get(i).processrloc(rcvdIntAddr,rcvdIsLong);
+                _csArr.get(i).processrloc(rcvdIntAddr,rcvdIsLong);
             }
             else if ( opc == CbusConstants.CBUS_QLOC ) {
                 int session = m.getElement(1);
-                _csNodes.get(i).processQloc( session );
+                _csArr.get(i).processQloc( session );
             }
             else if ( opc == CbusConstants.CBUS_DSPD ) {
                 int session = m.getElement(1);
                 int speeddir = m.getElement(2);
-                _csNodes.get(i).processDspd( session, speeddir );
+                _csArr.get(i).processDspd( session, speeddir );
             }
             else if ( opc == CbusConstants.CBUS_DKEEP ) {
                 int session = m.getElement(1);
-                _csNodes.get(i).processDkeep( session );
+                _csArr.get(i).processDkeep( session );
             }
             else if ( opc == CbusConstants.CBUS_KLOC ) {
                 int session = m.getElement(1);
-                _csNodes.get(i).processKloc( session );
+                _csArr.get(i).processKloc( session );
             }
         }
         
@@ -202,6 +275,10 @@ public class CbusSimulator implements CanListener {
             for ( int i=0 ; ( i < _evResponseArr.size() ) ; i++ ) {
                 _evResponseArr.get(i).processEventforResponse(m);
             }
+        }
+        
+        for ( int i=0 ; ( i < _ndArr.size() ) ; i++ ) {
+            _ndArr.get(i).passMessage(m);
         }
     }
     
@@ -230,7 +307,8 @@ public class CbusSimulator implements CanListener {
         if (tc != null) {
             tc.removeCanListener(this);
         }
-        _csNodes=null;
+        _csArr=null;
+        _ndArr=null;
     }
 
     private static final Logger log = LoggerFactory.getLogger(CbusSimulator.class);

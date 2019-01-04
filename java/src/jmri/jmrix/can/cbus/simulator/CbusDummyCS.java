@@ -16,20 +16,21 @@ public class CbusDummyCS {
     
     private CbusSimulator _sim;
     private ArrayList<DummyCsSession> _csSessions;
-    
-    int _simType;
-    int _maxSessions;
-    int _currentSessions;
-    int _networkDelay;
-    Boolean _trackOn;
-    Boolean _estop;
-    CsPane _pane;
+    private int _simId;
+    private int _simType;
+    private int _maxSessions;
+    private int _currentSessions;
+    private int _networkDelay;
+    private Boolean _trackOn;
+    private Boolean _estop;
+    private CsPane _pane;
     
     private static int DEFAULT_CS_TIMEOUT = 60000; // ms
     private static int DEFAULT_SESSION_START_SPDDIR = 128;  // default DCC speed direction on start session
     
-    public CbusDummyCS( int type, CbusSimulator sim ){
+    public CbusDummyCS( int type, CbusSimulator sim , int simId){
         _sim = sim;
+        _simId = simId;
         _simType = type;
         _csSessions = new ArrayList<DummyCsSession>();
         _maxSessions = 32;
@@ -42,6 +43,10 @@ public class CbusDummyCS {
         if (_sim != null) {
             log.info("Simulated Command Station: {}", CbusSimulator.csTypes.get(_simType) );
         }
+    }
+    
+    public int getSimId() {
+        return _simId;
     }
     
     public void resetCS () {
@@ -72,6 +77,7 @@ public class CbusDummyCS {
     }
     
     protected Boolean getResponseRSTAT() {
+        log.debug("estop {}",_estop);
         return false;
     }
     
@@ -79,7 +85,8 @@ public class CbusDummyCS {
         return _networkDelay;
     }
     
-    int getNextSession() {
+    private int getNextSession() {
+        log.debug("max sessions {}",_maxSessions);
         ArrayList<Integer> nxtSessionList = new ArrayList<Integer>();
         for ( int i=0 ; (i < _csSessions.size()) ; i++) {
             nxtSessionList.add(_csSessions.get(i).getSessionNum());

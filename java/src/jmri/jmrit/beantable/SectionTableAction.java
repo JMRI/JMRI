@@ -359,7 +359,7 @@ public class SectionTableAction extends AbstractTableAction<Section> {
     @Override
     protected void addPressed(ActionEvent e) {
         editMode = false;
-        if ((blockManager.getSystemNameList().size()) > 0) {
+        if ((blockManager.getNamedBeanSet().size()) > 0) {
             addEditPressed();
         } else {
             JOptionPane.showMessageDialog(null, rbx
