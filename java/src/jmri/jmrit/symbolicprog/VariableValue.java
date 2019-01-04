@@ -448,7 +448,8 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
             return (Cv & maskValAsInt(maskString)) >>> offsetVal(maskString);
         } else {
             int radix = Integer.parseInt(maskString);
-            return (Cv/radix) % maxVal;
+            log.trace("get value {} radix {} returns {}", Cv, radix, Cv/radix);
+            return (Cv/radix) % (maxVal+1);
         }
     }
     /**
@@ -466,7 +467,8 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
         } else {
             int radix = Integer.parseInt(maskString);
             int lowPart = oldCv % radix;
-            int highPart = (oldCv / (radix * maxVal))*(radix * maxVal);
+            int highPart = (oldCv / (radix*(maxVal+1)) ) * (radix * (maxVal+1));
+            log.trace("Set sees oldCv {} radix {}, lowPart {}, newVal {}, highPart {}, does {}", oldCv, radix, lowPart, newVal, highPart, highPart+newVal*radix+lowPart);
             return highPart+newVal*radix+lowPart;
         }
     }
