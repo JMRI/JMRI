@@ -85,8 +85,9 @@ public class SerialDCCppPacketizer extends DCCppPacketizer {
                         // At 115200 baud only ~1k messages/s can be sent.
                         // The limit is however how many messages DCC++ BaseStation can process.
                         // At more than 25Hz random functions get activated and replies go missing.
-                        // Keeping a conservative value of 20Hz to be on the safe side.
-                        sleep(50);
+                        // Further on, reading CVs on the programming track is much slower.
+                        // The lowest common denominator between all modes is 4Hz, at this rate everything seems to work fine.
+                        sleep(250);
                     }
 
                     setName("SerialDCCppPacketizer.bkg_refresh (" + resendFunctions.size() + " msg)");
