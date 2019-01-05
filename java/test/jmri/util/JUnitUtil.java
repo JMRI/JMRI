@@ -408,6 +408,41 @@ public class JUnitUtil {
     }
 
     /**
+     * Wait for a specific amount of time
+     * <p>
+     * It's better to wait for a condition, but if you can't find a condition,
+     * this will have to do.
+     * <p>
+     *
+     * @param time Delay in msec
+     */
+    static public void waitFor(int time) {
+        if (javax.swing.SwingUtilities.isEventDispatchThread()) {
+            log.error("Cannot use waitFor on Swing thread", new Exception());
+            return;
+        }
+        int delay = 0;
+        try {
+            while (delay < time) {
+                int priority = Thread.currentThread().getPriority();
+                try {
+                    Thread.currentThread().setPriority(Thread.MIN_PRIORITY);
+                    Thread.sleep(WAITFOR_DELAY_STEP);
+                    delay += WAITFOR_DELAY_STEP;
+                } catch (InterruptedException e) {
+                    return;
+                } finally {
+                    Thread.currentThread().setPriority(priority);
+                }
+            }
+            return;
+        } catch (Exception ex) {
+            log.error("Exception in waitFor condition.", ex);
+            return;
+        }
+    }
+
+    /**
      * Wait for a specific condition to be true, without having to wait longer
      * <p>
      * To be used in tests, will do an assert if the total delay is longer than

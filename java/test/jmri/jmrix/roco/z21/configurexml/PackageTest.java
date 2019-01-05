@@ -10,7 +10,8 @@ import org.slf4j.LoggerFactory;
 @Suite.SuiteClasses({
    ConnectionConfigXmlTest.class,
    Z21ReporterManagerXmlTest.class,
-   Z21XNetTurnoutManagerXmlTest.class
+   Z21XNetTurnoutManagerXmlTest.class,
+   Z21SensorManagerXmlTest.class
 })
 /**
  * Tests for the jmri.jmrix.roco.z21.configurexml package.
