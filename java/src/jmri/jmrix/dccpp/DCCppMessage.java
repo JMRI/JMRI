@@ -2470,9 +2470,12 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
      */
     @Override
     public boolean equals(final Object obj) {
-        if (obj == null) return false;
-        if (! (obj instanceof DCCppMessage)) return false;
-        
+        if (obj == null)
+            return false;
+
+        if (!(obj instanceof DCCppMessage))
+            return false;
+
         final DCCppMessage other = (DCCppMessage) obj;
 
         final String myCmd = this.toString();
@@ -2481,13 +2484,33 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
         if (myCmd.equals(otherCmd))
             return true;
 
-        if (!isFunctionMessage() || !other.isFunctionMessage())
-            return false;
-        
-        if (this.getValueInt(1) != other.getValueInt(1))
+        if (!(myCmd.charAt(0) == DCCppConstants.FUNCTION_CMD) || !(otherCmd.charAt(0) == DCCppConstants.FUNCTION_CMD))
             return false;
 
-        return getFuncBaseByte1(this.getFuncByte1Int()) == getFuncBaseByte1(other.getFuncByte1Int());
+        final int mySpace1 = myCmd.indexOf(' ', 2);
+        final int otherSpace1 = otherCmd.indexOf(' ', 2);
+
+        if (mySpace1 != otherSpace1)
+            return false;
+
+        if (!myCmd.subSequence(2, mySpace1).equals(otherCmd.subSequence(2, otherSpace1)))
+            return false;
+
+        int mySpace2 = myCmd.indexOf(' ', mySpace1 + 1);
+        if (mySpace2 < 0)
+            mySpace2 = myCmd.length();
+
+        int otherSpace2 = otherCmd.indexOf(' ', otherSpace1 + 1);
+        if (otherSpace2 < 0)
+            otherSpace2 = otherCmd.length();
+
+        final int myBaseFunction = Integer.parseInt(myCmd.substring(mySpace1 + 1, mySpace2));
+        final int otherBaseFunction = Integer.parseInt(otherCmd.substring(otherSpace1 + 1, otherSpace2));
+
+        if (myBaseFunction == otherBaseFunction)
+            return true;
+
+        return getFuncBaseByte1(myBaseFunction) == getFuncBaseByte1(otherBaseFunction);
     }
 
     public int hashCode() {
