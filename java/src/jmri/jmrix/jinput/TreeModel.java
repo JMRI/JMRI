@@ -101,7 +101,7 @@ public final class TreeModel extends DefaultTreeModel {
     }
 
     // intended for test routines only
-    void terminateThreads() throws InterruptedException {
+    public void terminateThreads() throws InterruptedException {
         if (runner == null) {
             return;
         }

@@ -247,8 +247,8 @@ NOTE: joal.jar is currently replaced by an own-built version with modifications 
 - From http://types.cs.washington.edu/checker-framework/
 
 ##### ecj.jar
-- Eclipse compiler 4.6 from
-    - http://download.eclipse.org/eclipse/downloads/drops4/R-4.6-201606061100/  (via ecj-4.6.jar) June 22, 2016
+- Eclipse compiler 4.10 from
+    - https://download.eclipse.org/eclipse/downloads/drops4/R-4.10-201812060815/ (via selecting ecj-4.10.jar) January 3, 2019
 - used in ant warnings target
 
 ##### jemmy-22-00c9f753cd0a.jar

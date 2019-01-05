@@ -97,7 +97,7 @@ public class Log4JUtil {
      */
      static public void deprecationWarning(@Nonnull Logger logger, @Nonnull String methodName) {
         if (logDeprecations) {
-            warnOnce(logger, "{} is deprecated, please remove references to it", methodName, new Exception("traceback"));
+            warnOnce(logger, "{} is deprecated, please remove references to it", methodName, shortenStacktrace(new Exception("traceback")));
         }
      }
      
@@ -259,16 +259,39 @@ public class Log4JUtil {
     }
 
     /**
-     * Shorten this stack trace in a Throwable.  If you then pass it to 
+     * Shorten this stack trace in a Throwable to start with the first JMRI method.  
+     * <p>
+     * If you then pass it to 
+     * Log4J for logging, it'll take up less space.
+     * @param t The Throwable to truncate and return
+     * @return The original object with truncated stack trace
+     */
+    public  @Nonnull static <T extends Throwable> T shortenStacktrace(@Nonnull T t) {
+        StackTraceElement[]	originalTrace = t.getStackTrace();
+        int i;
+        for (i = originalTrace.length-1; i>0; i--) { // search from deepest
+            String name = originalTrace[i].getClassName();
+            if (name.equals("jmri.util.junit.TestClassMainMethod")) continue; // special case to ignore high up in stack
+            if (name.equals("apps.tests.AllTest")) continue;                 // special case to ignore high up in stack
+            if (name.startsWith("jmri") || name.startsWith("apps")) break;  // keep those
+        }
+        return shortenStacktrace(t, i+1);
+    }
+
+    /**
+     * Shorten this stack trace in a Throwable to a fixed length.
+     * <p>
+     * If you then pass it to 
      * Log4J for logging, it'll take up less space.
      * @param t The Throwable to truncate and return
      * @param len The number of stack trace entries to keep.
-     * @return THe original object with truncated stack trace
+     * @return The original object with truncated stack trace
      */
     public  @Nonnull static <T extends Throwable> T shortenStacktrace(@Nonnull T t, int len) {
         StackTraceElement[]	originalTrace = t.getStackTrace();
-        StackTraceElement[] newTrace = new StackTraceElement[len];
-        for (int i = 0; i < len; i++) newTrace[i] = originalTrace[i];
+        int newLen = Math.min(len, originalTrace.length);
+        StackTraceElement[] newTrace = new StackTraceElement[newLen];
+        for (int i = 0; i < newLen; i++) newTrace[i] = originalTrace[i];
         t.setStackTrace(newTrace);
         return t;
     }
