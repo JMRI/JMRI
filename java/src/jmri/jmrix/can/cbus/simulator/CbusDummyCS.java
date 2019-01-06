@@ -1,60 +1,138 @@
 package jmri.jmrix.can.cbus.simulator;
 
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import java.util.ArrayList;
-import javax.swing.Timer;
+
+import jmri.jmrix.can.CanFrame;
+import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
+import jmri.jmrix.can.CanListener;
+import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.CbusConstants;
+import jmri.jmrix.can.cbus.CbusSend;
 import jmri.jmrix.can.cbus.simulator.CbusSimulator;
-import jmri.jmrix.can.cbus.swing.simulator.SimulatorPane.CsPane;
+import jmri.jmrix.can.cbus.simulator.CbusDummyCSSession;
+import jmri.jmrix.can.cbus.swing.simulator.CsPane;
+import jmri.jmrix.can.TrafficController;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class CbusDummyCS {
+/**
+ * Simultaing a MERG CBUS Command Station
+ * @author Steve Young Copyright (C) 2018 2019
+ * Can operate as stand-alone or managed via @CbusSimulator
+ * @see CbusSimulator
+ * @see CbusDummyCSSession
+ * @since 4.15.2
+ */
+public class CbusDummyCS implements CanListener {
     
-    private CbusSimulator _sim;
-    private ArrayList<DummyCsSession> _csSessions;
-    private int _simId;
+    private TrafficController tc;
+    private CanSystemConnectionMemo memo;
+    
+    private ArrayList<CbusDummyCSSession> _csSessions;
     private int _simType;
     private int _maxSessions;
     private int _currentSessions;
-    private int _networkDelay;
     private Boolean _trackOn;
     private Boolean _estop;
     private CsPane _pane;
     
-    private static int DEFAULT_CS_TIMEOUT = 60000; // ms
-    private static int DEFAULT_SESSION_START_SPDDIR = 128;  // default DCC speed direction on start session
+    private int _networkDelay;
+    private Boolean _processIn;
+    private Boolean _processOut;
+    private Boolean _sendIn;
+    private Boolean _sendOut;
+    protected CbusSend send;
+
+    public static ArrayList<String> csTypes = new ArrayList<String>();
+    public static ArrayList<String> csTypesTip = new ArrayList<String>();
     
-    public CbusDummyCS( int type, CbusSimulator sim , int simId){
-        _sim = sim;
-        _simId = simId;
-        _simType = type;
-        _csSessions = new ArrayList<DummyCsSession>();
+    protected static int DEFAULT_CS_TIMEOUT = 60000; // ms
+    protected static int DEFAULT_SESSION_START_SPDDIR = 128;  // default DCC speed direction on start session
+    
+    public CbusDummyCS( CanSystemConnectionMemo sysmemo ){
+        memo = sysmemo;
+        if (memo != null) {
+            tc = memo.getTrafficController();
+            tc.addCanListener(this);
+        }
+        init();
+    }
+
+    private void init() {
+        send = new CbusSend(memo);
+        _csSessions = new ArrayList<CbusDummyCSSession>();
         _maxSessions = 32;
         _currentSessions = 0;
-        _networkDelay = CbusSimulator.DEFAULT_DELAY;
+        _networkDelay = 100;
         _trackOn = true;
         _estop = false;
         _pane = null;
+
+        _processIn=false;
+        _processOut=true;
+        _sendIn=true;
+        _sendOut=false;
         
-        if (_sim != null) {
-            log.info("Simulated Command Station: {}", CbusSimulator.csTypes.get(_simType) );
+        csTypes.add(Bundle.getMessage("cSDisabled"));
+        csTypesTip.add(null);
+        csTypes.add(Bundle.getMessage("csStandard"));
+        csTypesTip.add("Based on CANCMD v3");
+        setDummyType(1);
+    }
+
+    public int getNumberSessions(){
+        return _currentSessions;
+    }
+
+    public void setProcessIn( Boolean newval){
+        _processIn = newval;
+    }
+    
+    public void setProcessOut( Boolean newval){
+        _processOut = newval;
+    }
+
+    public void setSendIn( Boolean newval){
+        _sendIn = newval;
+    }
+
+    public void setSendOut( Boolean newval){
+        _sendOut = newval;
+    }
+    
+    public Boolean getProcessIn() {
+        return _processIn;
+    }
+    
+    public Boolean getProcessOut() {
+        return _processOut;
+    }    
+    
+    public Boolean getSendIn() {
+        return _sendIn;
+    }    
+    
+    public Boolean getSendOut() {
+        return _sendOut;
+    }
+    
+    
+    public void dispose(){
+        resetCS();
+        if (tc != null) {
+            tc.removeCanListener(this);
         }
+        send = null;
     }
     
-    public int getSimId() {
-        return _simId;
-    }
-    
-    public void resetCS () {
+    public void resetCS() {
         for ( int i=0 ; (i < _csSessions.size()) ; i++) {
             destroySession(_csSessions.get(i));
         }
         _csSessions = null;
-        _csSessions = new ArrayList<DummyCsSession>();
+        _csSessions = new ArrayList<CbusDummyCSSession>();
         _currentSessions = 0;
         if ( _pane  != null ){
             _pane.setNumSessions(_currentSessions);
@@ -66,9 +144,10 @@ public class CbusDummyCS {
         if ( type == 0 ){
             resetCS();
         }
+        log.info("Simulated Command Station: {}", csTypes.get(_simType) );
     }
     
-    protected int getDummyType() {
+    public int getDummyType() {
         return _simType;
     }
     
@@ -76,14 +155,19 @@ public class CbusDummyCS {
         _pane = pane;
     }
     
-    protected Boolean getResponseRSTAT() {
+    // move to private in future
+    public Boolean getResponseRSTAT() {
         log.debug("estop {}",_estop);
         return false;
     }
     
-    int getDelay() {
+    public int getDelay() {
         return _networkDelay;
     }
+    
+    public void setDelay(int delay) {
+        _networkDelay = delay;
+    }    
     
     private int getNextSession() {
         log.debug("max sessions {}",_maxSessions);
@@ -99,7 +183,7 @@ public class CbusDummyCS {
         return 1000;
     }
     
-    void setTrackPower(Boolean trueorfalse) {
+    private void setTrackPower(Boolean trueorfalse) {
         _trackOn = trueorfalse;
         CanReply r = new CanReply(1); // num elements
         if (_trackOn) {
@@ -107,20 +191,22 @@ public class CbusDummyCS {
         } else {
             r.setElement(0, CbusConstants.CBUS_TOF);
         }
-        _sim.sendReplyWithDelay(r,getDelay());
+        sendReplyWithDelay(r);
     }
 
-    void setEstop() {
-        _estop = true;
-        CanReply r = new CanReply(1);
-        r.setElement(0, CbusConstants.CBUS_ESTOP);
-        _sim.sendReplyWithDelay(r,getDelay());
-        for ( int i=0 ; (i < _csSessions.size()) ; i++) {
-            _csSessions.get(i).setSpd(1);
+    protected void setEstop(Boolean estop) {
+        _estop = estop;
+        if (_estop) {
+            CanReply r = new CanReply(1);
+            r.setElement(0, CbusConstants.CBUS_ESTOP);
+            sendReplyWithDelay(r);
+            for ( int i=0 ; (i < _csSessions.size()) ; i++) {
+                _csSessions.get(i).setSpd(1);
+            }
         }
     }        
     
-    int getExistingSession( int rcvdIntAddr, Boolean rcvdIsLong ) {
+    private int getExistingSession( int rcvdIntAddr, Boolean rcvdIsLong ) {
         for ( int i=0 ; (i < _csSessions.size()) ; i++) {
             if ( 
                 ( _csSessions.get(i).getrcvdIntAddr() == rcvdIntAddr ) &&
@@ -133,7 +219,7 @@ public class CbusDummyCS {
         return -1;
     }
     
-    void processrloc( int rcvdIntAddr, Boolean rcvdIsLong ) {
+    private void processrloc( int rcvdIntAddr, Boolean rcvdIsLong ) {
         
         // check for existing session
         int exSession = getExistingSession( rcvdIntAddr, rcvdIsLong );
@@ -147,13 +233,13 @@ public class CbusDummyCS {
             r.setElement(1, (locoaddr / 256)); // addr hi
             r.setElement(2, locoaddr & 0xff);  // addr low
             r.setElement(3, 2);
-            _sim.sendReplyWithDelay( r,getDelay() );
+            sendReplyWithDelay(r);
             return;
         }
 
         int sessionid=getNextSession();
         
-        DummyCsSession session = new DummyCsSession( this, sessionid,rcvdIntAddr, rcvdIsLong);
+        CbusDummyCSSession session = new CbusDummyCSSession( this, sessionid,rcvdIntAddr, rcvdIsLong);
         _csSessions.add(session);
         _currentSessions++;
         if ( _pane  != null ){
@@ -162,7 +248,7 @@ public class CbusDummyCS {
         session.sendPloc();
     }
     
-    void processQloc( int session ) {
+    private void processQloc( int session ) {
         for ( int i=0 ; (i < _csSessions.size()) ; i++) {
             if ( _csSessions.get(i).getSessionNum() == session  && (
             !_csSessions.get(i).getIsDispatched() )) {
@@ -175,10 +261,10 @@ public class CbusDummyCS {
         r.setElement(1, session);
         r.setElement(2, 0);
         r.setElement(3, 3);
-        _sim.sendReplyWithDelay( r,getDelay() );
+        sendReplyWithDelay(r);
     }
     
-    void processDspd ( int session, int speeddir) {
+    private void processDspd ( int session, int speeddir) {
         for ( int i=0 ; (i < _csSessions.size()) ; i++) {
             if ( _csSessions.get(i).getSessionNum() == session  && (
             !_csSessions.get(i).getIsDispatched() ) ) {
@@ -191,30 +277,32 @@ public class CbusDummyCS {
         r.setElement(1, session);
         r.setElement(2, 0);
         r.setElement(3, 3);
-        _sim.sendReplyWithDelay( r,getDelay() );
+        sendReplyWithDelay(r);
     }
     
-    void processDkeep ( int session ) {
+    private void processDkeep ( int session ) {
         for ( int i=0 ; (i < _csSessions.size()) ; i++) {
             if ( ( _csSessions.get(i).getSessionNum() == session ) && (
             !_csSessions.get(i).getIsDispatched() )) {
-                _csSessions.get(i)._RefreshTimer.restart();
+                _csSessions.get(i).keepAlive();
                 return;
             }
-        }            
+        }
+        // send error if no session present
         CanReply r = new CanReply(4);
         r.setElement(0, CbusConstants.CBUS_ERR);
         r.setElement(1, session);
         r.setElement(2, 0);
         r.setElement(3, 3);
-        _sim.sendReplyWithDelay( r,getDelay() );
+        sendReplyWithDelay(r);
     }
 
-    void destroySession (DummyCsSession session) {
+    protected void destroySession (CbusDummyCSSession session) {
         for ( int i=0 ; (i < _csSessions.size()) ; i++) {
             if ( _csSessions.get(i) == session ) {
-                _csSessions.get(i)._RefreshTimer.stop();
-                _csSessions.get(i)._RefreshTimer = null;
+                
+                _csSessions.get(i).dispose();
+                
                 _csSessions.set(i, null);
                 _csSessions.remove(i);
                 _currentSessions--;
@@ -224,10 +312,10 @@ public class CbusDummyCS {
                 return;
             }
         }
-        log.warn("session not found to destroy");
+        log.error("session not found to destroy");
     }
 
-    void processKloc ( int session ) {
+    private void processKloc ( int session ) {
         for ( int i=0 ; (i < _csSessions.size()) ; i++) {
             if ( _csSessions.get(i).getSessionNum() == session  && (
             !_csSessions.get(i).getIsDispatched() )) {
@@ -241,93 +329,68 @@ public class CbusDummyCS {
         r.setElement(1, session);
         r.setElement(2, 0);
         r.setElement(3, 3);
-        _sim.sendReplyWithDelay( r,getDelay() );
+        sendReplyWithDelay(r);
     }
 
-    private class DummyCsSession {
-        
-        CbusDummyCS _cs;
-        int _sessionID;
-        int _Addr;
-        Boolean _isLong;
-        int _speedDirection;
-        int _fa;
-        int _fb;
-        int _fc;
-        Timer _RefreshTimer;
-        Boolean _dispatched;
-        
-        // last timeout
-        
-        public DummyCsSession (CbusDummyCS cs, int sessionID, int rcvdIntAddr,Boolean rcvdIsLong ) {
-            _cs = cs;
-            _sessionID = sessionID;
-            _Addr = rcvdIntAddr;
-            _isLong = rcvdIsLong;
-            _speedDirection = DEFAULT_SESSION_START_SPDDIR;
-            _fa = 0;
-            _fb = 0;
-            _fc = 0;
-            _dispatched=false;
-            _RefreshTimer = new Timer(DEFAULT_CS_TIMEOUT, new ActionListener() {
-                @Override
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    csSessionTimeout();
-                }
-            });
-            _RefreshTimer.setRepeats(false);     // refresh until stopped by dispose
-            _RefreshTimer.start();
-        }
-        
-        void csSessionTimeout() {
-            log.info("Session {} Timeout",_sessionID);
-            if (_cs.getDummyType() == 1 ) { // CANCMD v3
-                _cs.destroySession(this);
-            }
-        }
-        
-        void sendPloc() {
-            int locoaddr = _Addr;
-            if (_isLong) {
-                locoaddr = locoaddr | 0xC000;
-            }
-            CanReply r = new CanReply(7);
-            r.setElement(0, CbusConstants.CBUS_PLOC);
-            r.setElement(1, _sessionID);
-            r.setElement(2, (locoaddr / 256)); // addr hi
-            r.setElement(3, locoaddr & 0xff);  // addr low
-            r.setElement(4, _speedDirection);
-            r.setElement(5, _fa);
-            r.setElement(6, _fb);
-            r.setElement(7, _fc);
-            _sim.sendReplyWithDelay( r,_cs.getDelay() );
-        }
-        
-        int getSessionNum() {
-            return _sessionID;
-        }
-        
-        int getrcvdIntAddr() {
-            return _Addr;
-        }
-        
-        Boolean getisLong() {
-            return _isLong;
-        }
-        
-        void setSpd( int speeddir) {
-            _speedDirection = speeddir;
-            _RefreshTimer.restart();
-            if (speeddir != 1) {
-                _cs._estop = false;
-            }
-        }
-        
-        Boolean getIsDispatched() {
-            return _dispatched;
-        }
-        
+    private void sendReplyWithDelay(CanReply r) {
+        send.sendWithDelay(r,_sendIn,_sendOut,_networkDelay);
     }
-    
+
+    @Override
+    public void message(CanMessage m) {
+        if ( _processOut ) {
+            CanFrame test = m;
+            passMessage(test);
+        }
+    }
+
+    @Override
+    public void reply(CanReply r) {
+        if ( _processIn ) {
+            CanFrame test = r;
+            passMessage(test);
+        }
+    }
+
+    public void passMessage(CanFrame m) {
+        // log.warn("dummy node canframe {}",m);
+        if ( getDummyType() == 0 ) {
+            return;
+        }
+        int opc = m.getElement(0);
+        
+        if ( opc == CbusConstants.CBUS_RTON ) {
+            setTrackPower(true);
+        }
+        else if ( opc == CbusConstants.CBUS_RTOF ) {
+            setTrackPower(false);
+        }
+        else if ( opc == CbusConstants.CBUS_RESTP ) {
+            setEstop(true);
+        }
+        else if ( opc == CbusConstants.CBUS_RLOC ) {
+            int rcvdIntAddr = (m.getElement(1) & 0x3f) * 256 + m.getElement(2);
+            boolean rcvdIsLong = (m.getElement(1) & 0xc0) != 0;
+            processrloc(rcvdIntAddr,rcvdIsLong);
+        }
+        else if ( opc == CbusConstants.CBUS_QLOC ) {
+            int session = m.getElement(1);
+            processQloc( session );
+        }
+        else if ( opc == CbusConstants.CBUS_DSPD ) {
+            int session = m.getElement(1);
+            int speeddir = m.getElement(2);
+            processDspd( session, speeddir );
+        }
+        else if ( opc == CbusConstants.CBUS_DKEEP ) {
+            int session = m.getElement(1);
+            processDkeep( session );
+        }
+        else if ( opc == CbusConstants.CBUS_KLOC ) {
+            int session = m.getElement(1);
+            processKloc( session );
+        }
+    }
+
     private static final Logger log = LoggerFactory.getLogger(CbusDummyCS.class);
 }
