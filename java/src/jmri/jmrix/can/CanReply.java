@@ -45,6 +45,15 @@ public class CanReply extends AbstractMRReply implements CanMutableFrame {
             _dataChars[i] = d[i];
         }
     }
+    
+    // create a new one from an array, with header
+    public CanReply(int[] d, int header) {
+        this(header);
+        _nDataChars = (d.length <= 8) ? d.length : 8;
+        for (int i = 0; i < _nDataChars; i++) {
+            _dataChars[i] = d[i];
+        }
+    }
 
     // copy one
     public CanReply(@Nonnull CanReply m) {
