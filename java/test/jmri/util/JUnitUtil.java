@@ -590,7 +590,7 @@ public class JUnitUtil {
     public static void resetInstanceManager() {
         // clear all instances from the static InstanceManager
         InstanceManager.getDefault().clearAll();
-        // ensure the auto-defeault UserPreferencesManager is not created
+        // ensure the auto-default UserPreferencesManager is not created
         InstanceManager.setDefault(UserPreferencesManager.class, new TestUserPreferencesManager());
     }
 
