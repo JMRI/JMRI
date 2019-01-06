@@ -1,5 +1,6 @@
 package jmri.jmrix.can.cbus;
 
+import java.awt.GraphicsEnvironment;
 import java.util.Vector;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
@@ -45,6 +46,7 @@ public class CbusFilterTest {
 
     Vector<Integer> _increments;
     Vector<Integer> _nodes;
+    
     public class FtTestFilterFrame extends CbusFilterFrame {
         @Override
         public void passIncrement(int id){ 
@@ -62,6 +64,7 @@ public class CbusFilterTest {
 
     @Test
     public void testincrementCount() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         FtTestFilterFrame tff = new FtTestFilterFrame();
         CbusFilter t = new CbusFilter(tff);
         Assert.assertNotNull("exists",t);
