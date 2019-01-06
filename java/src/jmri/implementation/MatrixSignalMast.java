@@ -405,9 +405,9 @@ public class MatrixSignalMast extends AbstractSignalMast {
                 if (newState >= 0 && t != null) {
                     final int toState = newState;
                     final Turnout setTurnout = t;
-                    ThreadingUtil.runOnLayoutEventually(() -> {   // eventually, even though we have timing here, should be soon
+                    //ThreadingUtil.runOnLayoutEventually(() -> {   // eventually, even though we have timing here, should be soon
                         setTurnout.setCommandedStateAtInterval(toState); // delayed on specific connection by its turnoutManager
-                    });
+                    //});
                     try {
                         Thread.sleep(mDelay); // only the Mast specific user defined delay is applied here
                     } catch (InterruptedException e) {
