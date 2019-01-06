@@ -17,7 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Simultaing event request responses.</p>
+ * Simultaing event request responses.
  * @author Steve Young Copyright (C) 2018
  * @see CbusSimulator
  * @since 4.15.2
