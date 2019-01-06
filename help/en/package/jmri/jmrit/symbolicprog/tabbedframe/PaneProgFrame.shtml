@@ -67,10 +67,10 @@
       When the entry is first created, this ID
       field will contain &quot;&lt;new entry&gt;&quot;.
       The program will insist you change that before you first
-      save the entry.  
+      save the entry.</p>
       <p>
       You can change this at any time later,
-      just remember to save the entry to make the new ID permanent.
+      just remember to save the entry to make the new ID permanent.</p>
 
       <li>Road Name, Road Number, Manufacturer, Owner, Model, 
       Comment and Decoder Comment are for you to use as you see fit.
@@ -80,11 +80,11 @@
       for what appears there when you fill them out.
       
       <li>The Throttle Speed Limit sets the Maximum throttle
-      percentage allowed when using various JMRI throttle tools.</p>
+      percentage allowed when using various JMRI throttle tools.
       
       <li>The DCC Address field is the active DCC address for this
       loco. It comes from the locomotive settings, and you can't change it
-      here. See the <a href="#Basic">Basic Pane</a>.</p>
+      here. See the <a href="#Basic">Basic Pane</a>.
 
       <li>The Decoder Family and Decoder Model values were defined
       when you created this entry earlier.  They can't be changed.
