@@ -130,10 +130,11 @@ public class MatrixSignalMastTest {
 
         m.setAspect("Clear");
         Assert.assertEquals("check clear", "Clear", m.getAspect());
-        Assert.assertEquals("it12 for Clear", Turnout.CLOSED, it12.getCommandedState());
+        Assert.assertEquals("it11 for Clear", Turnout.CLOSED, it11.getCommandedState());
+        // mast delay + interval = 0 but it12 state is fragile (expected state on it12 happens to be identical to it11)
         m.setAspect("Stop");
         Assert.assertEquals("check stop", "Stop", m.getAspect());
-        Assert.assertEquals("it12 for Stop", Turnout.THROWN, it12.getCommandedState());
+        Assert.assertEquals("it11 for Stop", Turnout.THROWN, it11.getCommandedState()); // mast delay + interval = 0
     }
 
     public void testAspectAttributes() {
@@ -149,6 +150,15 @@ public class MatrixSignalMastTest {
         MatrixSignalMast m = new MatrixSignalMast("IF$xsm:basic:one-low($0001)-3t", "user");
 
         Assert.assertNull("check null", m.getAspect());
+    }
+
+    @Test
+    public void testSetDelay() {
+        MatrixSignalMast m = new MatrixSignalMast("IF$xsm:basic:one-low($0001)-3t", "user");
+
+        Assert.assertEquals("initial mast delay 0", 0, m.getMatrixMastCommandDelay());
+        m.setMatrixMastCommandDelay(150);
+        Assert.assertEquals("get new mast delay", 150, m.getMatrixMastCommandDelay());
     }
 
     // from here down is testing infrastructure

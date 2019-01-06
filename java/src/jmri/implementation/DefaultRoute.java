@@ -31,7 +31,7 @@ import org.slf4j.LoggerFactory;
 public class DefaultRoute extends AbstractNamedBean implements Route, java.beans.VetoableChangeListener {
 
     /**
-     * Constructor for Route instance.
+     * Constructor for a Route instance with a given userName.
      *
      * @param systemName suggested system name
      * @param userName   provided user name
@@ -41,7 +41,7 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
     }
 
     /**
-     * Constructor for SignalGroup instance.
+     * Constructor for a Route instance.
      *
      * @param systemName suggested system name
      */
@@ -338,7 +338,6 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
         if (index != -1) {
             _outputTurnoutList.remove(index);
         }
-
     }
 
     /** {@inheritDoc} */

@@ -270,8 +270,8 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
                     + sigsysname
                     + ":" + mastname.substring(11, mastname.length() - 4);
             name += "($" + (paddedNumber.format(MatrixSignalMast.getLastRef() + 1));
-            name += ")" + "-" + bitNum + "t"; // for the number of t = "turnout-outputs", add option for direct packets
-            currentMast = new MatrixSignalMast(name);
+            name += ")" + "-" + bitNum + "t"; // for the number of t = "turnout-outputs", TODO: add d = option for direct packets
+            currentMast = new MatrixSignalMast(name); // timedDelay is stored later on
             InstanceManager.getDefault(jmri.SignalMastManager.class).register(currentMast);
         }
         
@@ -279,7 +279,7 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
         
         currentMast.setBitNum(bitNum); // store number of columns in aspect - outputs matrix in mast
 
-        //store outputs from turnoutBoxes; method in line 976
+        //store outputs from turnoutBoxes; see method MatrixSignalMast#setOutput() line 356
         currentMast.setOutput("output1", turnoutBox1.getDisplayName()); // store choice from turnoutBox1
         setMatrixReference(turnoutBox1, name + ":output1"); // write mast name to output1 bean comment
         if (bitNum > 1) {

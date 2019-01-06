@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
  * <li>basic - name of the signaling system
  * <li>one-searchlight - name of the particular aspect map/mast model
  * <li>($0001) - small ordinal number for telling various matrix signal masts apart
- * <li>name ending in -nt for (binary) Turnout outputs or [to do:] -nd for direct DCC packets,
+ * <li>name ending in -nt for (binary) Turnout outputs or (TODO:) -nd for direct DCC packets,
  * where n = the number of binary outputs, between 1 and mastBitNum (= 6)</li>
  * </ul>
  *
@@ -86,8 +86,6 @@ public class MatrixSignalMast extends AbstractSignalMast {
 
         configureSignalSystemDefinition(system); // (checks for system) in AbstractSignalMast
         configureAspectTable(system, mast); // (create -default- appmapping in var "map") in AbstractSignalMast
-
-        mDelay = getMatrixMastCommandDelay();
     }
 
     private HashMap<String, char[]> aspectToOutput = new HashMap<String, char[]>(16); // "Clear" - 01001 char[] pairs

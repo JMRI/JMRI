@@ -10,7 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Handle XML configuration for DefaultSignalMastManager objects.
+ * Handle XML configuration for MatrixSignalMast objects.
  *
  * @author Bob Jacobsen Copyright: (C) 2009
  * @author Egbert Broerse Copyright: (C) 2016, 2017
