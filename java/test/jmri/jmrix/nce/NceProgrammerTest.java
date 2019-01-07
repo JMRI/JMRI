@@ -12,9 +12,6 @@ import org.junit.*;
 /**
  * JUnit tests for the NceProgrammer class
  * <p>
- * before conversion to JUnit4, most tests had names starting with x, which 
- * disables them in JUnit3; a note why that was done would have been good!
- * These tests now have a JUnit4 Ignore attribute.
  *
  * @author	Bob Jacobsen
  */
@@ -81,13 +78,12 @@ public class NceProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     }
 
     @Test
-    @Ignore("disabled for some reason in JUnit3")
     public void testWriteCvSequenceBin() throws JmriException {
         // and do the write
         p.writeCV("10", 20, l);
         // correct message sent
         Assert.assertEquals("mode message sent", 1, tc.outbound.size());
-        Assert.assertEquals("write message contents", "A0 00 0A 14",
+        Assert.assertEquals("write message contents", "P010 020",
                 ((tc.outbound.elementAt(0))).toString());
         // reply from programmer arrives
         NceReply r = new NceReply(tc);
@@ -115,7 +111,6 @@ public class NceProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     }
 
     @Test
-    @Ignore("disabled for some reason in JUnit3")
     public void testWriteRegisterSequenceBin() throws JmriException {
         // set register mode
         p.setMode(ProgrammingMode.REGISTERMODE);
@@ -124,7 +119,7 @@ public class NceProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
         p.writeCV("3", 12, l);
         // check "prog mode" message sent
         Assert.assertEquals("write message sent", 1, tc.outbound.size());
-        Assert.assertEquals("write message contents", "A6 03 0C",
+        Assert.assertEquals("write message contents", "S3 012",
                 ((tc.outbound.elementAt(0))).toString());
         // reply from programmer arrives
         NceReply r = new NceReply(tc);
@@ -154,14 +149,13 @@ public class NceProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     }
 
     @Test
-    @Ignore("disabled for some reason in JUnit3")
     public void testReadCvSequenceBin() throws JmriException {
         // and do the read
         p.readCV("10", l);
 
         // check "read command" message sent
         Assert.assertEquals("read message sent", 1, tc.outbound.size());
-        Assert.assertEquals("read message contents", "A1 00 0A",
+        Assert.assertEquals("read message contents", "R010",
                 ((tc.outbound.elementAt(0))).toString());
         // reply from programmer arrives
         NceReply r = new NceReply(tc);
@@ -198,7 +192,6 @@ public class NceProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     }
 
     @Test
-    @Ignore("disabled for some reason in JUnit3")
     public void testReadRegisterSequenceBin() throws JmriException {
         // set register mode
         p.setMode(ProgrammingMode.REGISTERMODE);
@@ -208,7 +201,7 @@ public class NceProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
 
         // check "read command" message sent
         Assert.assertEquals("read message sent", 1, tc.outbound.size());
-        Assert.assertEquals("read message contents", "A7 03",
+        Assert.assertEquals("read message contents", "V3",
                 ((tc.outbound.elementAt(0))).toString());
         // reply from programmer arrives
         NceReply r = new NceReply(tc);
