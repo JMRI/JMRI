@@ -986,7 +986,7 @@
     <xs:union>
       <xs:simpleType>
         <xs:restriction base="xs:normalizedString">
-          <xs:pattern value="(V|X)*"/>
+          <xs:pattern value="X*V+X*"/>
           <xs:minLength value="8"/>
           <xs:maxLength value="16"/>
         </xs:restriction>
