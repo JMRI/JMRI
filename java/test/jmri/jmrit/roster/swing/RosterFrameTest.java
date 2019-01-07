@@ -6,16 +6,12 @@ import jmri.*;
 import jmri.jmrit.roster.*;
 import jmri.util.*;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * Test simple functioning of RosterFrame
  *
- * @author	Paul Bender Copyright (C) 2015,2016
+ * @author	Paul Bender Copyright (C) 2015, 2016
  */
 public class RosterFrameTest {
 
@@ -52,36 +48,32 @@ public class RosterFrameTest {
         prog.resetCv(29, 0);
                 
         operator.pushIdentifyButton();
-        // and wait for message that will come at end:
+        // and wait for message that will come at end because nothing is found
         JUnitUtil.waitFor(() ->{
                 return JUnitAppender.checkForMessage("Read address 3, but no such loco in roster") != null;
             }, "error message at end");
             
-        // to leave visible
-        JUnitUtil.waitFor(5000);
-            
         JUnitUtil.dispose(frame);
     }
-
+    
     @Test
     public void testIdentify3Present() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         // add entry to Roster
         Roster roster = Roster.getDefault();
-        RosterEntry re;
-        re = new RosterEntry();
-        re.setId("1st entry");
-        re.setDccAddress("3");
-        roster.addEntry(re);
-        re = new RosterEntry();
-        re.setId("2nd entry");
-        re.setDccAddress("4");
-        roster.addEntry(re);
-        re = new RosterEntry();
-        re.setId("3rd entry");
-        re.setDccAddress("5");
-        roster.addEntry(re);
+        RosterEntry re1 = new RosterEntry();
+        re1.setId("1st entry");
+        re1.setDccAddress("3");
+        roster.addEntry(re1);
+        RosterEntry re2 = new RosterEntry();
+        re2.setId("2nd entry");
+        re2.setDccAddress("4");
+        roster.addEntry(re2);
+        RosterEntry re3 = new RosterEntry();
+        re3.setId("3rd entry");
+        re3.setDccAddress("5");
+        roster.addEntry(re3);
         
         RosterFrame frame = new RosterFrame();
         frame.setVisible(true);
@@ -94,13 +86,13 @@ public class RosterFrameTest {
         prog.resetCv(29, 0);
                 
         operator.pushIdentifyButton();
-        // and wait for message that will come at end:
-        //JUnitUtil.waitFor(() ->{
-        //        return JUnitAppender.checkForMessage("Read address 3, but no such loco in roster") != null;
-        //    }, "error message at end");
-        JUnitUtil.waitFor(5000);
+        
+        JUnitUtil.waitFor(() ->{
+            return frame.getSelectedRosterEntries().length == 1;
+        }, "selection complete");
         RosterEntry[] selected = frame.getSelectedRosterEntries();
         Assert.assertEquals("selected ", 1, selected.length);
+        Assert.assertEquals("selected ", re1, selected[0]);
         
         JUnitUtil.dispose(frame);
     }
@@ -112,21 +104,20 @@ public class RosterFrameTest {
 
         // add entry to Roster
         Roster roster = Roster.getDefault();
-        RosterEntry re;
-        re = new RosterEntry();
-        re.setId("1st entry is 3; mismatched types accepted");
-        re.setDccAddress("3");
-        re.setDecoderModel("Four Function Dual Mode");  // CV8 = 127 Atlas, CV7 = 46
-        re.setDecoderFamily("Four Function Dual Mode"); 
-        roster.addEntry(re);
-        re = new RosterEntry();
-        re.setId("2nd entry");
-        re.setDccAddress("4");
-        roster.addEntry(re);
-        re = new RosterEntry();
-        re.setId("3rd entry");
-        re.setDccAddress("5");
-        roster.addEntry(re);
+        RosterEntry re1 = new RosterEntry();
+        re1.setId("1st entry is 3; mismatched types accepted");
+        re1.setDccAddress("3");
+        re1.setDecoderModel("Four Function Dual Mode");  // CV8 = 127 Atlas, CV7 = 46
+        re1.setDecoderFamily("Four Function Dual Mode"); 
+        roster.addEntry(re1);
+        RosterEntry re2 = new RosterEntry();
+        re2.setId("2nd entry");
+        re2.setDccAddress("4");
+        roster.addEntry(re2);
+        RosterEntry re3 = new RosterEntry();
+        re3.setId("3rd entry");
+        re3.setDccAddress("5");
+        roster.addEntry(re3);
         
         RosterFrame frame = new RosterFrame();
         frame.setVisible(true);
@@ -145,32 +136,38 @@ public class RosterFrameTest {
         //JUnitUtil.waitFor(() ->{
         //        return JUnitAppender.checkForMessage("Read address 3, but no such loco in roster") != null;
         //    }, "error message at end");
-        JUnitUtil.waitFor(5000);
+
+        JUnitUtil.waitFor(() ->{
+            return frame.getSelectedRosterEntries().length == 1;
+        }, "selection complete");
         RosterEntry[] selected = frame.getSelectedRosterEntries();
-        Assert.assertEquals("selected ", 1, selected.length);
+        Assert.assertEquals("selected ", re1, selected[0]);
         
         JUnitUtil.dispose(frame);
     }
 
     @Test
+    @Ignore("RosterFrame doesn't do multiple selection properly yet")
     public void testIdentify3Multiple() {
+    
+        // this is a test of what happens when multiples are selectable
+        
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         // add entry to Roster
         Roster roster = Roster.getDefault();
-        RosterEntry re;
-        re = new RosterEntry();
-        re.setId("1st entry is 3");
-        re.setDccAddress("3");
-        roster.addEntry(re);
-        re = new RosterEntry();
-        re.setId("2nd entry is not 3");
-        re.setDccAddress("4");
-        roster.addEntry(re);
-        re = new RosterEntry();
-        re.setId("3rd entry is 3");
-        re.setDccAddress("3");
-        roster.addEntry(re);
+        RosterEntry re1 = new RosterEntry();
+        re1.setId("1st entry is 3");
+        re1.setDccAddress("3");
+        roster.addEntry(re1);
+        RosterEntry re2 = new RosterEntry();
+        re2.setId("2nd entry is not 3");
+        re2.setDccAddress("4");
+        roster.addEntry(re2);
+        RosterEntry re3 = new RosterEntry();
+        re3.setId("3rd entry is 3");
+        re3.setDccAddress("3");
+        roster.addEntry(re3);
         
         RosterFrame frame = new RosterFrame();
         frame.setVisible(true);
@@ -183,16 +180,17 @@ public class RosterFrameTest {
         prog.resetCv(29, 0);
                  
         operator.pushIdentifyButton();
-        // and wait for message that will come at end:
-        //JUnitUtil.waitFor(() ->{
-        //        return JUnitAppender.checkForMessage("Read address 3, but no such loco in roster") != null;
-        //    }, "error message at end");
-        JUnitUtil.waitFor(5000);
+
+        // right now, nothing is ever selected, because multiple selection 
+        // is not working.  See @Ignore above
+        
+        JUnitUtil.waitFor(() ->{
+            return frame.getSelectedRosterEntries().length == 2;
+        }, "selection complete");
         RosterEntry[] selected = frame.getSelectedRosterEntries();
-        
-        // Following is commented out because multiple selection isn't present yet
-        // Assert.assertEquals("selected ", 1, selected.length);
-        
+        Assert.assertEquals("selected ", re1, selected[0]);
+        Assert.assertEquals("selected ", re3, selected[1]);
+                
         JUnitUtil.dispose(frame);
     }
 
@@ -202,23 +200,22 @@ public class RosterFrameTest {
 
         // add entry to Roster
         Roster roster = Roster.getDefault();
-        RosterEntry re;
-        re = new RosterEntry();
-        re.setId("1st entry is 3 Four Function Dual Mode");
-        re.setDccAddress("3");
-        re.setDecoderModel("Four Function Dual Mode");  // CV8 = 127 Atlas, CV7 = 46
-        re.setDecoderFamily("Four Function Dual Mode"); 
-        roster.addEntry(re);
-        re = new RosterEntry();
-        re.setId("2nd entry in not 3");
-        re.setDccAddress("4");
-        roster.addEntry(re);
-        re = new RosterEntry();
-        re.setId("3rd entry is 3 Dual Mode");
-        re.setDccAddress("3");
-        re.setDecoderModel("Dual Mode");  // CV8 = 127 Atlas, CV7 = 45
-        re.setDecoderFamily("Dual Mode"); 
-        roster.addEntry(re);
+        RosterEntry re1 = new RosterEntry();
+        re1.setId("1st entry is 3 Four Function Dual Mode");
+        re1.setDccAddress("3");
+        re1.setDecoderModel("Four Function Dual Mode");  // CV8 = 127 Atlas, CV7 = 46
+        re1.setDecoderFamily("Four Function Dual Mode"); 
+        roster.addEntry(re1);
+        RosterEntry re2 = new RosterEntry();
+        re2.setId("2nd entry in not 3");
+        re2.setDccAddress("4");
+        roster.addEntry(re2);
+        RosterEntry re3 = new RosterEntry();
+        re3.setId("3rd entry is 3 Dual Mode");
+        re3.setDccAddress("3");
+        re3.setDecoderModel("Dual Mode");  // CV8 = 127 Atlas, CV7 = 45
+        re3.setDecoderFamily("Dual Mode"); 
+        roster.addEntry(re3);
         
         RosterFrame frame = new RosterFrame();
         frame.setVisible(true);
@@ -233,13 +230,13 @@ public class RosterFrameTest {
         prog.resetCv(8, 127); // Atlas
                 
         operator.pushIdentifyButton();
-        // and wait for message that will come at end:
-        //JUnitUtil.waitFor(() ->{
-        //        return JUnitAppender.checkForMessage("Read address 3, but no such loco in roster") != null;
-        //    }, "error message at end");
-        JUnitUtil.waitFor(5000);
+        
+        JUnitUtil.waitFor(() ->{
+            return frame.getSelectedRosterEntries().length == 1;
+        }, "selection complete");
         RosterEntry[] selected = frame.getSelectedRosterEntries();
         Assert.assertEquals("selected ", 1, selected.length);
+        Assert.assertEquals("selected ", re3, selected[0]);  // 2nd address=3 selected by decoder match
         
         JUnitUtil.dispose(frame);
     }
@@ -262,5 +259,5 @@ public class RosterFrameTest {
         JUnitUtil.tearDown();
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(RosterFrameTest.class);
+    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(RosterFrameTest.class);
 }
