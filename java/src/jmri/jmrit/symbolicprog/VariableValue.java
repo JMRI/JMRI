@@ -13,6 +13,29 @@ import org.slf4j.LoggerFactory;
  * The "changed" parameter (non-bound, accessed via isChanged) indicates whether
  * a "write changes" or "read changes" operation should handle this object.
  *
+ * <p>
+ * The mask shown below comes in two forms:
+ * <ul>
+ * <li> A character-by-character bit mask of 8 or 16 binary digits, e.g. "XXVVVVXXX"
+ * <p>In this case, the "V" bits denote a continuous bit field that contains the datum
+ * <li>A small decimal value, i.e. "9"
+ * <p>In this case, the mask forms the multiplier (N) which combines with the maximum
+ * value (maxVal, defined in a subclass) to break the CV into three parts:
+ * <ul>
+ * <li>lowest part, stored as 1 times a value 0-(N-1)
+ * <li> datum stored as datum*N  (datum is limited to maxVal)
+ * <li> highest part, which stored as N*(maxVal+1) times the value
+ * </ul>
+ * As an example, consider storing two decimal digits as a decimal value.  You can't use a
+ * bit mask changing the 2nd digit from 1 to 7, for example with a total value of 14 to 74, 
+ * changes bits that are also used by the first digit.  Instead, code this as
+ * <ul>
+ * <li> mask="1" maxVal="9"
+ * <li> mask="10" maxVal="9"
+ * </ul>
+ * and you'll get the desired effect.  
+ * (This requires Schema <a href="http://jmri.org/xml/schema/decoder-4-15-2.xsd">xml/schema/decoder-4-15-2.xsd</a> for validation)
+ * </ul>
  * @author Bob Jacobsen Copyright (C) 2001, 2002, 2003, 2004, 2005, 2013
  * @author Howard G. Penny Copyright (C) 2005
  */
@@ -398,7 +421,7 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
     private boolean _busy = false;
 
     /**
-     * Convert a String mask like XXXVVVXX
+     * Convert a String bit mask like XXXVVVXX
      * to an int like 0b00011100
      */
     protected int maskValAsInt(String maskString) {
@@ -441,7 +464,7 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
     }
 
     /**
-     * Get the current value from the CV, using the mask as needed
+     * Get the current value from the CV, using the mask as needed.
      */
     protected int getValueInCV(int Cv, String maskString, int maxVal) {
         if (isBitMask(maskString)) {
@@ -453,6 +476,7 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
         }
     }
     /**
+     * Set a value into a CV, using the mask as needed.
      *
      * @param oldCv      Value of the CV before this update is applied
      * @param newVal     Value for this variable (e.g. not the CV value)
@@ -467,9 +491,10 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
         } else {
             int radix = Integer.parseInt(maskString);
             int lowPart = oldCv % radix;
+            int newPart = newVal%(maxVal+1)*radix;
             int highPart = (oldCv / (radix*(maxVal+1)) ) * (radix * (maxVal+1));
             log.trace("Set sees oldCv {} radix {}, lowPart {}, newVal {}, highPart {}, does {}", oldCv, radix, lowPart, newVal, highPart, highPart+newVal*radix+lowPart);
-            return highPart+newVal*radix+lowPart;
+            return highPart+newPart+lowPart;
         }
     }
 
