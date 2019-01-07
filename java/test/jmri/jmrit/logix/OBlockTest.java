@@ -131,7 +131,9 @@ public class OBlockTest {
         OBlock b = blkMgr.createNewOBlock("OB102", "c");
         Assert.assertNull("Allocate w1", b.allocate(w1));
         Assert.assertEquals("state allocated & dark", OBlock.ALLOCATED|OBlock.UNDETECTED, b.getState());
-        Assert.assertEquals("Allocate w2", Bundle.getMessage("AllocatedToWarrant", w1.getDisplayName(), b.getDisplayName()), b.allocate(w2));
+        Assert.assertEquals("Allocate w2",
+                Bundle.getMessage("AllocatedToWarrant", w1.getDisplayName(), b.getDisplayName(), w1.getTrainName()),
+                b.allocate(w2));
         
         Assert.assertEquals("path not found", Bundle.getMessage("PathNotFound", "PathName", b.getDisplayName()), b.setPath("PathName", w1));
         OPath path1 = new OPath(b, "path1");
