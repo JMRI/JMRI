@@ -502,7 +502,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener {
             case "Value": {
                 // update value of Variable
                 CvValue cv = _cvMap.get(getCvNum());
-                int newVal = getValueInCV(cv.getValue(), getMask(), _maxVal);
+                int newVal = getValueInCV(cv.getValue(), getMask(), _maxVal-1); // _maxVal is number of values here, not the index of top one
                 setValue(newVal);  // check for duplicate done inside setVal
                 break;
             }
