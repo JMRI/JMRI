@@ -196,6 +196,8 @@ public class Z21Message extends AbstractMRMessage {
      * <LI>0x02000000 send Locomotive specific LocoNet data to the client.</LI>
      * <LI>0x04000000 send Turnout specific LocoNet data to the client.</LI>
      * <LI>0x08000000 send Occupancy information from LocoNet to the client</LI> 
+     * <LI>0x00040000 Automatically send updates for Railcom data to the client</LI> 
+     * <LI>0x00080000 send can detector messages to the client</LI> 
      * </UL>
      * <P>
      * @param flags integer representing the flags (32 bits).
@@ -261,6 +263,9 @@ public class Z21Message extends AbstractMRMessage {
                return Bundle.getMessage("Z21RMBusProgramModuleRequest", getElement(4));
            case 0x0089:
                return Bundle.getMessage("Z21_RAILCOM_GETDATA");
+           case 0x00C4:
+               int networkID = ( getElement(4) & 0xFF) + ((getElement(5) & 0xFF) << 8);
+               return Bundle.getMessage("Z21CANDetectorRequest",networkID);
            default:
         }
         return toString();
@@ -322,6 +327,27 @@ public class Z21Message extends AbstractMRMessage {
         retval.setElement(2, 0x82);
         retval.setElement(3, 0x00);
         retval.setElement(4, (address & 0xff));
+        return retval;
+    }
+
+    // handle CAN Feedback/Railcom Messages
+    boolean isCanDetectorMessage() {
+        return (getOpCode() == 0x00C4);
+    }
+
+    /**
+     * @param address CAN NetworkID of the module to request data from.
+     * @return z21 message for LAN_CAN_DETECTOR request message
+     */
+    public static Z21Message getLanCanDetector(int address){
+        Z21Message retval = new Z21Message(7);
+        retval.setElement(0, 0x07);
+        retval.setElement(1, 0x00);
+        retval.setElement(2, 0xC4);
+        retval.setElement(3, 0x00);
+        retval.setElement(4, 0x00);// type, currently fixed.
+        retval.setElement(5, (address & 0xff));
+        retval.setElement(6, ((address & 0xff00)>>8));
         return retval;
     }
 

@@ -5,10 +5,7 @@ import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
-import jmri.util.JUnitUtil;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -471,18 +468,5 @@ public class TrackTest extends OperationsTestCase {
         Assert.assertEquals("Track Order", Track.FIFO, t.getServiceOrder());
         t.setServiceOrder(Track.LIFO);
         Assert.assertEquals("Track Order", Track.LIFO, t.getServiceOrder());
-    }
-
-    @Override
-    @Before
-    public void setUp() {
-        super.setUp();
-    }
-
-    // The minimal setup for log4J
-    @Override
-    @After
-    public void tearDown() {
-        JUnitUtil.tearDown();
     }
 }

@@ -1,8 +1,10 @@
 package jmri.jmrix.can.cbus.swing.nodeconfig;
 
+import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,6 +17,7 @@ public class NodeConfigToolPaneTest {
 
     @Test
     public void testCtor() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         NodeConfigToolPane pane = new NodeConfigToolPane();
         Assert.assertNotNull("exists", pane);
     }

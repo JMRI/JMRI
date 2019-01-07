@@ -41,8 +41,10 @@ public class LnTcpServerFrameTest {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         memo = new LocoNetSystemConnectionMemo();
+        // ensure memo exists in order to later use InstanceManager.getDefault()
         lnis = new LocoNetInterfaceScaffold(memo);
         memo.setLnTrafficController(lnis);
+        memo.configureCommandStation(jmri.jmrix.loconet.LnCommandStationType.COMMAND_STATION_DCS100, true, false, true);
     }
 
     @After

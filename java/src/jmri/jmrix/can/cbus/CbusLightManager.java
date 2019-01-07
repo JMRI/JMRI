@@ -1,5 +1,8 @@
 package jmri.jmrix.can.cbus;
 
+import javax.annotation.CheckForNull;
+import javax.annotation.CheckReturnValue;
+import javax.annotation.Nonnull;
 import jmri.JmriException;
 import jmri.Light;
 import jmri.jmrix.can.CanSystemConnectionMemo;
@@ -32,6 +35,27 @@ public class CbusLightManager extends AbstractLightManager {
     }
 
     /**
+     * {@inheritDoc}
+     * Overriden to normalize System Name
+     */
+    @Override
+    @Nonnull
+    public Light provideLight(@Nonnull String key) {
+        String name = normalizeSystemName(key);
+        Light t = getLight(name);
+        if (t == null) {
+            if (name.startsWith(getSystemPrefix() + typeLetter())) {
+                return newLight(name, null);
+            } else if (name.length() > 0) {
+                return newLight(makeSystemName(name), null);
+            } else {
+                throw new IllegalArgumentException("\"" + name + "\" is invalid");
+            }
+        }
+        return t;
+    }
+
+    /**
      * Internal method to invoke the factory, after all the logic for returning
      * an existing method has been invoked.
      *
@@ -60,6 +84,9 @@ public class CbusLightManager extends AbstractLightManager {
         return l;
     }
 
+    /** 
+     * {@inheritDoc} 
+     */
     @Override
     public boolean allowMultipleAdditions(String systemName) {
         return false;
@@ -95,6 +122,9 @@ public class CbusLightManager extends AbstractLightManager {
         return curAddress;
     }
 
+    /** 
+     * {@inheritDoc} 
+     */
     @Override
     public NameValidity validSystemNameFormat(String systemName) {
         String addr = systemName.substring(getSystemPrefix().length() + 1); // get only the address part
@@ -138,6 +168,9 @@ public class CbusLightManager extends AbstractLightManager {
         }
     }
 
+    /** 
+     * {@inheritDoc} 
+     */
     @Override
     public boolean validSystemNameConfig(String systemName) {
         String addr = systemName.substring(getSystemPrefix().length() + 1);
@@ -151,7 +184,32 @@ public class CbusLightManager extends AbstractLightManager {
     }
 
     /**
-     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     * {@inheritDoc}
+     */
+    @Override
+    @CheckForNull
+    public Light getBySystemName(@Nonnull String key ) {
+        String name = normalizeSystemName(key);
+        return _tsys.get(name);
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * Forces upper case and trims leading and trailing whitespace.
+     * Does not check for valid prefix, hence doesn't throw NamedBean.BadSystemNameException.
+     */
+    @CheckReturnValue
+    @Override
+    public @Nonnull
+    String normalizeSystemName(@Nonnull String inputName) {
+        // does not check for valid prefix, hence doesn't throw NamedBean.BadSystemNameException
+        return inputName.toUpperCase().trim();
+    }
+
+
+    /**
+     * {@inheritDoc}
      */
     @Override
     public String getEntryToolTip() {

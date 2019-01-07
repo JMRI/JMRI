@@ -63,8 +63,11 @@ public class SerialAddressTest extends TestCase {
     protected void tearDown() throws Exception {
         super.tearDown();
         JUnitUtil.tearDown();
+        if (stcs != null) stcs.terminateThreads();
         stcs = null;
         memo = null;
+        n10 = null;
+        n18 = null;
     }
 
     public void testValidateSystemNameFormat() {

@@ -1081,37 +1081,13 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
     }
 
     /**
-     * Method to set Route busy when commands are being issued to Route turnouts
-     *
-     * @deprecated Since 4.3.6; use {@link #setRouteBusy(boolean)} instead.
-     */
-    @Deprecated
-    public void setRouteBusy() {
-        busy = true;
-    }
-
-    /**
-     * Method to set Route not busy when all commands have been issued to Route
-     * turnouts
-     *
-     * @deprecated Since 4.3.6; use {@link #setRouteBusy(boolean)} instead.
-     */
-    @Deprecated
-    public void setRouteNotBusy() {
-        busy = false;
-    }
-
-    /**
      * Method to query if Route is busy (returns true if commands are being
      * issued to Route turnouts)
      *
      * @return true if the Route is transistioning to an
      *         {@link jmri.Sensor#ACTIVE} state, false otherwise.
-     * @deprecated Since 4.3.6; will become protected in the future.
      */
-    // Mark protected instead of public when removing 
-    @Deprecated
-    public boolean isRouteBusy() {
+    protected boolean isRouteBusy() {
         return busy;
     }
 

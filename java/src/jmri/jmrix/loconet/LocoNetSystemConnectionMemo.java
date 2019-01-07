@@ -54,26 +54,24 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
     public LocoNetSystemConnectionMemo() {
         super("L", "LocoNet"); // NOI18N
 
-        // self-register
-        register();
-
         // create and register the ComponentFactory for the GUI
         InstanceManager.store(cf = new LnComponentFactory(this),
                 ComponentFactory.class);
     }
 
-    /** 
+    /**
      * Do both the default parent
-     * {@link SystemConnectionMemo} registration, 
+     * {@link SystemConnectionMemo} registration,
      * and register this specific type.
      */
     public void register() {
         super.register(); // registers general type
         InstanceManager.store(this, LocoNetSystemConnectionMemo.class); // also register as specific type
     }
-    
+
     ComponentFactory cf = null;
     private LnTrafficController lt;
+    protected LocoNetThrottledTransmitter tm;
     private SlotManager sm;
     private LnMessageManager lnm = null;
 
@@ -213,6 +211,7 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
         if (type.equals(CommandStation.class)) {
             return true;
         }
+
         return super.provides(type);
     }
 
@@ -263,8 +262,6 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
         }
         return super.get(T);
     }
-
-    protected LocoNetThrottledTransmitter tm;
 
     /**
      * Configure the common managers for LocoNet connections. This puts the
@@ -412,25 +409,28 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
 
     @Override
     public void dispose() {
-        lt = null;
-        sm = null;
         InstanceManager.deregister(this, LocoNetSystemConnectionMemo.class);
         if (cf != null) {
             InstanceManager.deregister(cf, ComponentFactory.class);
         }
         if (powerManager != null) {
+            powerManager.dispose();
             InstanceManager.deregister(powerManager, LnPowerManager.class);
         }
         if (turnoutManager != null) {
+            turnoutManager.dispose();
             InstanceManager.deregister(turnoutManager, LnTurnoutManager.class);
         }
         if (lightManager != null) {
+            lightManager.dispose();
             InstanceManager.deregister(lightManager, LnLightManager.class);
         }
         if (sensorManager != null) {
+            sensorManager.dispose();
             InstanceManager.deregister(sensorManager, LnSensorManager.class);
         }
         if (reporterManager != null) {
+            reporterManager.dispose();
             InstanceManager.deregister(reporterManager, LnReporterManager.class);
         }
         if (throttleManager != null) {
@@ -445,6 +445,12 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
         }
         if (tm != null){
             tm.dispose();
+        }
+        if (sm != null){
+            sm.dispose();
+        }
+        if (lt != null){
+            lt.dispose();
         }
         super.dispose();
     }

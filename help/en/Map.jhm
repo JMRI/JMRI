@@ -300,6 +300,8 @@
 
 <mapID target="package.jmri.jmrix.can.cbus.swing.console.CbusConsoleFrame_opc" url="package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml#opc"/>
 
+<mapID target="package.jmri.jmrix.can.cbus.swing.simulator.SimulatorPane" url="package/jmri/jmrix/can/cbus/swing/simulator/SimulatorPane.shtml"/>
+
 <mapID target="html.hardware.nce.Wangrow_connecting" url="html/hardware/nce/Wangrow.shtml#connecting"/>
 
 <mapID target="package.jmri.jmrit.beantable.ConditionalAddEdit_action" url="package/jmri/jmrit/beantable/ConditionalAddEdit.shtml#action"/>
@@ -539,6 +541,8 @@
 <mapID target="manual.DecoderPro3.Comp_FMap" url="manual/DecoderPro3/Comp_FMap.shtml"/>
 
 <mapID target="html.hardware.XPressNet.index_connectElite" url="html/hardware/XPressNet/index.shtml#connectElite"/>
+
+<mapID target="html.hardware.mqtt.index_connecting" url="html/hardware/mqtt/index.shtml#connecting"/>
 
 <mapID target="manual.DecoderPro3.Programmer_Setup_Setting_Up" url="manual/DecoderPro3/Programmer_Setup.shtml#Setting_Up"/>
 
@@ -917,6 +921,8 @@
 <mapID target="html.tools.Sensors_Debounce" url="html/tools/Sensors.shtml#Debounce"/>
 
 <mapID target="manual.DecoderPro3.Comp_Setup_Roster_Top" url="manual/DecoderPro3/Comp_Setup_Roster.shtml#Top"/>
+
+<mapID target="package.jmri.jmrix.can.cbus.swing.configtool.ConfigToolFrame_filterhighlight" url="package/jmri/jmrix/can/cbus/swing/configtool/ConfigToolFrame.shtml#filterhighlight"/>
 
 <mapID target="html.hardware.loconet.StandaloneLocoNet_examples" url="html/hardware/loconet/StandaloneLocoNet.shtml#examples"/>
 
@@ -1792,6 +1798,8 @@
 
 <mapID target="html.apps.DecoderPro.FAQ_update" url="html/apps/DecoderPro/FAQ.shtml#update"/>
 
+<mapID target="package.jmri.jmrix.can.cbus.swing.cbusslotmonitor.CbusSlotMonitorPane_cabdata" url="package/jmri/jmrix/can/cbus/swing/cbusslotmonitor/CbusSlotMonitorPane.shtml#cabdata"/>
+
 <mapID target="html.hardware.loconet.StandaloneLocoNet_isolthrdetsig" url="html/hardware/loconet/StandaloneLocoNet.shtml#isolthrdetsig"/>
 
 <mapID target="html.tools.TimeTable_technical" url="html/tools/TimeTable.shtml#technical"/>
@@ -2070,6 +2078,8 @@
 
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_BuildReportPrint" url="manual/JMRI_OPS_UsersGuide/Ops_BuildReportPrint.shtml"/>
 
+<mapID target="html.hardware.mqtt.index_limitations" url="html/hardware/mqtt/index.shtml#limitations"/>
+
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_CarAttributes_Top" url="manual/JMRI_OPS_UsersGuide/Ops_CarAttributes.shtml#Top"/>
 
 <mapID target="html.doc.Technical.GitFAQ" url="html/doc/Technical/GitFAQ.shtml"/>
@@ -2109,6 +2119,8 @@
 <mapID target="package.jmri.jmrit.operations.Operations_TroubleShooting" url="package/jmri/jmrit/operations/Operations.shtml#TroubleShooting"/>
 
 <mapID target="manual.DecoderPro3.Programmer_SingleCV" url="manual/DecoderPro3/Programmer_SingleCV.shtml"/>
+
+<mapID target="package.jmri.jmrix.can.cbus.swing.simulator.SimulatorPane_direction" url="package/jmri/jmrix/can/cbus/swing/simulator/SimulatorPane.shtml#direction"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_MakeDepartureTrackAvailable" url="package/jmri/jmrit/operations/Operations.shtml#MakeDepartureTrackAvailable"/>
 
@@ -2206,6 +2218,8 @@
 
 <mapID target="html.hardware.cmri.CMRI_L627" url="html/hardware/cmri/CMRI.shtml#L627"/>
 
+<mapID target="package.jmri.jmrix.can.cbus.swing.simulator.SimulatorPane_cs" url="package/jmri/jmrix/can/cbus/swing/simulator/SimulatorPane.shtml#cs"/>
+
 <mapID target="html.hardware.cmri.CMRI_L626" url="html/hardware/cmri/CMRI.shtml#L626"/>
 
 <mapID target="html.hardware.cmri.CMRI_L625" url="html/hardware/cmri/CMRI.shtml#L625"/>
@@ -2240,6 +2254,8 @@
 
 <mapID target="html.hardware.ecos.index_connecting" url="html/hardware/ecos/index.shtml#connecting"/>
 
+<mapID target="package.jmri.jmrix.can.cbus.swing.simulator.SimulatorPane_opc" url="package/jmri/jmrix/can/cbus/swing/simulator/SimulatorPane.shtml#opc"/>
+
 <mapID target="package.jmri.jmrit.display.LayoutEditor_toolbar" url="package/jmri/jmrit/display/LayoutEditor.shtml#toolbar"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_SwitchListOptions" url="package/jmri/jmrit/operations/Operations.shtml#SwitchListOptions"/>
@@ -2267,6 +2283,8 @@
 <mapID target="html.hardware.XPressNet.index_tools" url="html/hardware/XPressNet/index.shtml#tools"/>
 
 <mapID target="html.web.XMLIO" url="html/web/XMLIO.shtml"/>
+
+<mapID target="package.jmri.jmrix.can.cbus.swing.simulator.SimulatorPane_ev" url="package/jmri/jmrix/can/cbus/swing/simulator/SimulatorPane.shtml#ev"/>
 
 <mapID target="html.hardware.acela.Names_documentation" url="html/hardware/acela/Names.shtml#documentation"/>
 
@@ -2636,6 +2654,8 @@
 
 <mapID target="package.jmri.jmrit.display.EditLayoutSlip" url="package/jmri/jmrit/display/EditLayoutSlip.shtml"/>
 
+<mapID target="package.jmri.jmrix.can.cbus.swing.console.CbusConsoleFrame_filter" url="package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml#filter"/>
+
 <mapID target="html.hardware.PDA_documentation" url="html/hardware/PDA.shtml#documentation"/>
 
 <mapID target="html.doc.Technical.CVSFAQ_ds_store" url="html/doc/Technical/CVSFAQ.shtml#ds_store"/>
@@ -2883,6 +2903,8 @@
 <mapID target="html.setup.Errors" url="html/setup/Errors.shtml"/>
 
 <mapID target="html.tools.throttle.ThrottleChapter2_ControlPanel" url="html/tools/throttle/ThrottleChapter2.shtml#ControlPanel"/>
+
+<mapID target="html.hardware.mqtt.index" url="html/hardware/mqtt/index.shtml"/>
 
 <mapID target="manual.DecoderPro.Installing_JMRI_Top" url="manual/DecoderPro/Installing_JMRI.shtml#Top"/>
 
@@ -3637,6 +3659,8 @@
 <mapID target="html.hardware.modbus.index_limitations" url="html/hardware/modbus/index.shtml#limitations"/>
 
 <mapID target="manual.JMRI_OPS_UsersGuide.index_Main" url="manual/JMRI_OPS_UsersGuide/index.shtml#Main"/>
+
+<mapID target="package.jmri.jmrix.can.cbus.swing.console.CbusConsoleFrame_eventcapture" url="package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml#eventcapture"/>
 
 <mapID target="html.hardware.grapevine.index_connecting" url="html/hardware/grapevine/index.shtml#connecting"/>
 

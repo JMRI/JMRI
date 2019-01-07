@@ -954,6 +954,12 @@
 
  
 <li>
+<a href="html/hardware/mqtt/index.shtml">MQTT </a>
+<ul></ul>
+</li>
+
+ 
+<li>
 <a href="package/jmri/jmrit/dualdecoder/DualDecoderSelectFrame.shtml">Multi-Decoder Control </a>
 <ul></ul>
 </li>

@@ -20,10 +20,8 @@ public class NceMonPanelTest extends jmri.jmrix.AbstractMonPaneTestBase {
     private NceSystemConnectionMemo memo = null;
 
     @Test
-    @Ignore("see comments below for corrections required.")
+    @Ignore("Ignore due to timing-specific, occasionally fail")
     public void testMsg() { 
-             // Prior to JUnit4 conversion, this test method was commented out with a note reading
-             // Following are timing-specific, occasionally fail, so commented out
              NceMessage m = new NceMessage(3);
              m.setBinary(false);
              m.setOpCode('L');
@@ -39,10 +37,8 @@ public class NceMonPanelTest extends jmri.jmrix.AbstractMonPaneTestBase {
          } 
 
     @Test
-    @Ignore("see comments below for corrections required.")
-         public void testReply() { 
-             // Prior to JUnit4 conversion, this test method was commented out with a note reading
-             // Following are timing-specific, occasionally fail, so commented out
+    @Ignore("Ignore due to timing-specific, occasionally fail")
+    public void testReply() { 
              NceReply m = new NceReply(memo.getNceTrafficController());
              m.setBinary(false); 
              m.setOpCode('C'); 
