@@ -717,7 +717,7 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
         
         // TODO: implement forwarding cab signal data 
 
-        log.debug("cab {} signal {}",locaddr,cabsigint);
+        log.debug("cab {} signal {}",locoaddr,cabsigint);
         
     }
 
