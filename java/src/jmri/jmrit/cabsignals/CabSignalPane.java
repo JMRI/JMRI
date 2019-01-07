@@ -8,7 +8,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.Frame;
+import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -32,8 +35,12 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableRowSorter;
 import javax.swing.UIManager;
+import jmri.LocoAddress;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.throttle.LargePowerManagerButton;
+import jmri.jmrit.DccLocoAddressSelector;
+import jmri.jmrit.roster.swing.GlobalRosterEntryComboBox;
+import jmri.jmrit.roster.swing.RosterEntryComboBox;
 import jmri.util.swing.XTableColumnModel;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
@@ -67,6 +74,11 @@ public class CabSignalPane extends jmri.util.swing.JmriPanel {
     protected List<JCheckBoxMenuItem> colMenuList = new ArrayList<JCheckBoxMenuItem>();
     protected List<JCheckBoxMenuItem> cabSigColMenuList = new ArrayList<JCheckBoxMenuItem>();    
     private JToggleButton masterSendCabDataButton;
+    JLabel textLocoLabel = new JLabel();
+    DccLocoAddressSelector locoSelector = new DccLocoAddressSelector();
+    RosterEntryComboBox locoRosterBox;
+    JButton addLocoButton = new JButton();
+    JButton resetLocoButton = new JButton();
     
     @Override
     public void initComponents() {
@@ -78,6 +90,7 @@ public class CabSignalPane extends jmri.util.swing.JmriPanel {
 
 
     public void init() {
+        try {
         JTable slotTable = new JTable(slotModel) {
             // Override JTable Header to implement table header tool tips.
             @Override
@@ -108,12 +121,7 @@ public class CabSignalPane extends jmri.util.swing.JmriPanel {
             String colName = slotTable.getColumnName(colnumber);
             JCheckBoxMenuItem showcol = new JCheckBoxMenuItem(colName);
             colMenuList.add(showcol);
-            if (colnumber<10) {
-                colMenu.add(showcol); // session columnds
-            }
-            else { 
-                cabSigColMenu.add(showcol); // cabsig columns
-            }
+            cabSigColMenu.add(showcol); // cabsig columns
         }
 
         for (int i = 0; i < CabSignalTableModel.MAX_COLUMN; i++) {
@@ -199,6 +207,62 @@ public class CabSignalPane extends jmri.util.swing.JmriPanel {
         
         toppanelcontainer.add(masterSendCabDataButton);
 
+        textLocoLabel.setText(Bundle.getMessage("LocoLabelText"));
+        textLocoLabel.setVisible(true);
+
+        locoSelector.setToolTipText(Bundle.getMessage("LocoSelectorToolTip"));
+        locoSelector.setVisible(true);
+        textLocoLabel.setLabelFor(locoSelector);
+
+        toppanelcontainer.add(textLocoLabel);
+        toppanelcontainer.add(locoSelector);
+
+        locoSelector.addKeyListener(new KeyListener() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                // if we start typing, set the selected index of the locoRosterbox to nothing.
+                locoRosterBox.setSelectedIndex(0);
+            }
+
+            @Override
+            public void keyTyped(KeyEvent e) {
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+            }
+        });
+
+        locoRosterBox = new GlobalRosterEntryComboBox();
+        locoRosterBox.setNonSelectedItem("");
+        locoRosterBox.setSelectedIndex(0);
+
+        locoRosterBox.addPropertyChangeListener("selectedRosterEntries", (PropertyChangeEvent pce) -> {
+            locoSelected();
+        });
+
+        locoRosterBox.setVisible(true);
+        toppanelcontainer.add(locoRosterBox);
+
+        addLocoButton.setText(Bundle.getMessage("AddButtonText"));
+        addLocoButton.setVisible(true);
+        addLocoButton.setToolTipText(Bundle.getMessage("AddButtonToolTip"));
+        addLocoButton.addActionListener((ActionEvent e) -> {
+            addLocoButtonActionPerformed(e);
+        });
+
+        toppanelcontainer.add(addLocoButton);
+
+        resetLocoButton.setText(Bundle.getMessage("ButtonReset"));
+        resetLocoButton.setVisible(true);
+        resetLocoButton.setToolTipText(Bundle.getMessage("ResetButtonToolTip"));
+        resetLocoButton.addActionListener((ActionEvent e) -> {
+            //resetLocoButtonActionPerformed(e);
+        });
+
+        toppanelcontainer.add(resetLocoButton);
+
+
         split = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
             slotScroll, scrolltablefeedback);
         split.setResizeWeight(_splitratio);
@@ -213,6 +277,10 @@ public class CabSignalPane extends jmri.util.swing.JmriPanel {
         
         p1.setVisible(true);
         log.debug("class name {} ",CabSignalPane.class.getName());
+        }catch (Exception e){
+          e.printStackTrace();
+          throw e;
+        }
     }
     
 	private static class DataButtonRenderer implements TableCellRenderer {		
@@ -312,7 +380,21 @@ public class CabSignalPane extends jmri.util.swing.JmriPanel {
         menuList.add(cabsigMenu);
         return menuList;
     }
-    
+
+    public void addLocoButtonActionPerformed(ActionEvent e) {
+        if (locoSelector.getAddress() == null) {
+            return;
+        }
+        LocoAddress locoaddress = locoSelector.getAddress();
+        slotModel.addRow(locoaddress); 
+        slotModel.fireTableDataChanged();
+    }
+
+    public void locoSelected() {
+        if (locoRosterBox.getSelectedRosterEntries().length == 1) {
+            locoSelector.setAddress(locoRosterBox.getSelectedRosterEntries()[0].getDccLocoAddress());
+        }
+    }
 
     /**
      * {@inheritDoc}

@@ -24,7 +24,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public class Bundle extends jmri.jmrit.Bundle {
 
     @Nullable
-    private static final String name = null; // NOI18N
+    private static final String name = "jmri.jmrit.cabsignals.CabSignalBundle"; // NOI18N
 
     //
     // below here is boilerplate to be copied exactly

@@ -25,6 +25,7 @@ import javax.swing.Timer;
 import jmri.Block;
 import jmri.BlockManager;
 import jmri.InstanceManager;
+import jmri.LocoAddress;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.roster.RosterEntry;
@@ -51,88 +52,45 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
     
     private int cmndstat_fw =0; // command station firmware
     
-    // private ArrayList<Integer> cmndstatarr;
-    private ArrayList<Integer> sessionidarr; // session id given by command station
-    // private ArrayList<Integer> throttlecountarr;
-    private ArrayList<String> functionarr; // 
-    private ArrayList<Integer> locoidarr; // loco id without long flag as seen in can message
-    private ArrayList<Boolean> locolongarr; // long address on / off as seen in can message
-    // private ArrayList<String> namearr;
+    private ArrayList<LocoAddress> locoidarr; // loco id without long flag as seen in can message
     private ArrayList<Integer> directionarr; // loco direction
-    private ArrayList<Integer> speedarr; // loco speed
-    private ArrayList<String> speedsteparr;  // loco speed steps
-    private ArrayList<String> alttdarr; // alternative value for block following
     private ArrayList<Block> blockarr;   // current block
     private ArrayList<String> nextblockarr;
     private ArrayList<PropertyChangeListener> mBlockListeners; // ??
     private ArrayList<SignalMast> curmastarr; // updates table when changed
     private ArrayList<Block> mBlockList; // master block list
-    private ArrayList<Boolean[]> funcarray; // array of boolean function values 
-    private ArrayList<Integer> consistarr; // consist id
-    private ArrayList<String> flagsarr;  // loco flags
     private ArrayList<Boolean> cabsigarr; // on or off
     private ArrayList<Integer> cabsigvalarr; // cabsig value int speed, aspect1, aspect2
     public Boolean autoreverseblockdir = true;
     public Boolean masterSendCabData = true;
     protected int cabspeedtype=0; // initially set to disabled
-    private Timer estopTimer;
-    private Timer powerTimer;
     static private int MAX_LINES = 5000;
     TextAreaFIFO tablefeedback;
     
     // column order needs to match list in column tooltips
 
-    static public final int SESSION_ID_COLUMN = 0; 
-
-    static public final int LOCO_ID_COLUMN = 1;
-    static public final int ESTOP_COLUMN = 2;
-    static public final int LOCO_ID_LONG_COLUMN = 3;
-
-    static public final int LOCO_COMMANDED_SPEED_COLUMN = 4;    
-    static public final int LOCO_DIRECTION_COLUMN = 5;
-    static public final int FUNCTION_LIST = 6;
-    static public final int SPEED_STEP_COLUMN = 7;
-    static public final int LOCO_CONSIST_COLUMN = 8;
-    static public final int FLAGS_COLUMN = 9;
-
-    static public final int ALT_TD = 10;
-    static public final int CURRENT_BLOCK = 11;
-    static public final int BLOCK_DIR = 12;
-    static public final int REVERSE_BLOCK_DIR_BUTTON_COLUMN = 13;
-    static public final int NEXT_BLOCK = 14;
-    static public final int NEXT_SIGNAL = 15;
-    static public final int NEXT_ASPECT = 16;
-    static public final int SEND_CABSIG_COLUMN = 17;
+    static public final int LOCO_ID_COLUMN = 0;
+    static public final int LOCO_DIRECTION_COLUMN = 1;
+    static public final int CURRENT_BLOCK = 2;
+    static public final int BLOCK_DIR = 3;
+    static public final int REVERSE_BLOCK_DIR_BUTTON_COLUMN = 4;
+    static public final int NEXT_BLOCK = 5;
+    static public final int NEXT_SIGNAL = 6;
+    static public final int NEXT_ASPECT = 7;
+    static public final int SEND_CABSIG_COLUMN = 8;
     
-    // spare partially coded
-    static public final int NUM_THROTTLES = 97;
-    static public final int LOCO_NAME_COLUMN = 98;
-    static public final int CMND_STATION_ID_COLUMN = 99;
+    static public final int MAX_COLUMN = 9;
     
-    static public final int MAX_COLUMN = 18;
-    
-    static protected final int[] startupColumns = {0,1,2,4,5,11,13,16};
+    static protected final int[] startupColumns = {0,1,2,3,4,5,6,7,8};
     
     CabSignalTableModel(int row, int column) {
         
-        // cmndstatarr = new ArrayList<Integer>();
-        sessionidarr = new ArrayList<Integer>();
-        //  throttlecountarr = new ArrayList<Integer>();
-        functionarr = new ArrayList<String>();
-        locoidarr = new ArrayList<Integer>();
-        locolongarr = new ArrayList<Boolean>();
-        // namearr = new ArrayList<String>();
+        locoidarr = new ArrayList<LocoAddress>();
         directionarr = new ArrayList<Integer>();
-        speedarr = new ArrayList<Integer>();
-        speedsteparr = new ArrayList<String>();
-        alttdarr = new ArrayList<String>();
         blockarr = new ArrayList<Block>();
         nextblockarr = new ArrayList<String>();
         curmastarr = new ArrayList<SignalMast>();
         mBlockListeners = new ArrayList<PropertyChangeListener>();
-        funcarray = new ArrayList<Boolean[]>();
-        consistarr = new ArrayList<Integer>();
-        flagsarr = new ArrayList<String>();
         cabsigarr = new ArrayList<Boolean>();
         cabsigvalarr= new ArrayList<Integer>();
         tablefeedback = new TextAreaFIFO(MAX_LINES);
@@ -172,7 +130,7 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
      */
     @Override
     public int getRowCount() {
-        return sessionidarr.size();
+        return locoidarr.size();
     }
 
     @Override
@@ -189,23 +147,10 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
     @Override
     public String getColumnName(int col) { // not in any order
         switch (col) {
-            case CMND_STATION_ID_COLUMN:
-                // return Bundle.getMessage("CanID");
-                return ("Cmnd Station");
-            case SESSION_ID_COLUMN:
-                return ("Session");
             case LOCO_ID_COLUMN:
                 return ("Loco ID");
-            case LOCO_ID_LONG_COLUMN:
-                return ("Long");
-            case LOCO_CONSIST_COLUMN:
-                return ("Consist ID");
-            case LOCO_NAME_COLUMN:
-                return ("Name");
             case LOCO_DIRECTION_COLUMN:
                 return ("Direction");
-            case ALT_TD:
-                return("TD Alt");
             case CURRENT_BLOCK:
                 return("Block");
             case BLOCK_DIR:
@@ -232,34 +177,10 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
     */
     public static int getPreferredWidth(int col) {
         switch (col) {
-            case CMND_STATION_ID_COLUMN:
-                return new JTextField(4).getPreferredSize().width;
-            case SESSION_ID_COLUMN:
-                return new JTextField(5).getPreferredSize().width;
-            case LOCO_ID_LONG_COLUMN:
-                return new JTextField(3).getPreferredSize().width;
             case LOCO_ID_COLUMN:
                 return new JTextField(4).getPreferredSize().width;
-            case LOCO_CONSIST_COLUMN:
-                return new JTextField(3).getPreferredSize().width;
-            case FLAGS_COLUMN:
-                return new JTextField(4).getPreferredSize().width;
-            case LOCO_NAME_COLUMN:
-                return new JTextField(10).getPreferredSize().width;
             case LOCO_DIRECTION_COLUMN:
                 return new JTextField(8).getPreferredSize().width;
-            case LOCO_COMMANDED_SPEED_COLUMN:
-                return new JTextField(5).getPreferredSize().width;
-            case ESTOP_COLUMN:
-                return new JTextField(5).getPreferredSize().width;
-            case SPEED_STEP_COLUMN:
-                return new JTextField(3).getPreferredSize().width;
-            case NUM_THROTTLES:
-                return new JTextField(3).getPreferredSize().width;
-            case FUNCTION_LIST:
-                return new JTextField(6).getPreferredSize().width;
-            case ALT_TD:
-                return new JTextField(4).getPreferredSize().width;
             case CURRENT_BLOCK:
                 return new JTextField(8).getPreferredSize().width;
             case BLOCK_DIR:
@@ -287,33 +208,9 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
     @Override
     public Class<?> getColumnClass(int col) {
         switch (col) {
-            case CMND_STATION_ID_COLUMN:
-                return Integer.class;
-            case SESSION_ID_COLUMN:
-                return Integer.class;
-            case LOCO_ID_LONG_COLUMN:
-                return Boolean.class;
             case LOCO_ID_COLUMN:
                 return Integer.class;
-            case LOCO_CONSIST_COLUMN:
-                return Integer.class;
-            case LOCO_NAME_COLUMN:
-                return String.class;
             case LOCO_DIRECTION_COLUMN:
-                return String.class;
-            case LOCO_COMMANDED_SPEED_COLUMN:
-                return Integer.class;
-            case ESTOP_COLUMN:
-                return JButton.class;
-            case NUM_THROTTLES:
-                return Integer.class;
-            case FUNCTION_LIST:
-                return String.class;
-            case SPEED_STEP_COLUMN:
-                return String.class;
-            case FLAGS_COLUMN:
-                return String.class;
-            case ALT_TD:
                 return String.class;
             case CURRENT_BLOCK:
                 return String.class;
@@ -342,7 +239,6 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
     @Override
     public boolean isCellEditable(int row, int col) {
         switch (col) {
-            case ALT_TD:
             case SEND_CABSIG_COLUMN:
                 return true;
             default:
@@ -383,34 +279,9 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
         SignalMast mast;
         Block b;
         switch (col) {
-            case CMND_STATION_ID_COLUMN:
-                //    return cmndstatarr.get(row);
-                    return null;
-            case SESSION_ID_COLUMN:
-                if ( sessionidarr.get(row) > 0 ) {
-                    return sessionidarr.get(row);
-                } else {
-                    return null;
-                }
             case LOCO_ID_COLUMN:
                 return locoidarr.get(row);
-            case LOCO_ID_LONG_COLUMN:
-                return locolongarr.get(row);
-            case LOCO_CONSIST_COLUMN:
-                if (consistarr.get(row)>0){
-                    return consistarr.get(row);
-                } else {
-                    return null;
-                }
-            case FLAGS_COLUMN:
-                return flagsarr.get(row);
-            case LOCO_NAME_COLUMN:
-                // return namearr.get(row);
-                return "";
             case LOCO_DIRECTION_COLUMN: 
-                if (speedarr.get(row) == 1){
-                    return("E Stop");
-                }
                 if ( directionarr.get(row) > -1 ) {
                     if ( directionarr.get(row) == 1 ) {
                         return(Bundle.getMessage("FWD"));
@@ -420,14 +291,6 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
                 } else {
                     return "";
                 }
-            case LOCO_COMMANDED_SPEED_COLUMN:
-                if ( speedarr.get(row) > 1 ) {
-                    return speedarr.get(row);
-                } else {
-                    return null;
-                }
-            case ALT_TD:
-                return alttdarr.get(row);
             case CURRENT_BLOCK:
                 b = blockarr.get(row);
                 if ( b != null){
@@ -486,46 +349,9 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
      */
     @Override
     public void setValueAt(Object value, int row, int col) {
-        // log.debug("427 set valueat called row: {} col: {}", row, col);
-        if (col == CMND_STATION_ID_COLUMN) {
-            // cmndstatarr.set(row, (Integer) value);
-            // Runnable r = new Notify(-1, this);
-            // javax.swing.SwingUtilities.invokeLater(r);
-        }
-        else if (col == SESSION_ID_COLUMN) {
-            sessionidarr.set(row, (Integer) value);
+        if (col == LOCO_ID_COLUMN) {
+            locoidarr.set(row,(LocoAddress)  value);
             Runnable r = new Notify(row, this);
-            javax.swing.SwingUtilities.invokeLater(r);
-        }
-        else if (col == LOCO_ID_LONG_COLUMN) {
-            locolongarr.set(row, (Boolean) value);
-        }
-        else if (col == LOCO_ID_COLUMN) {
-            locoidarr.set(row, (Integer) value);
-            Runnable r = new Notify(row, this);
-            javax.swing.SwingUtilities.invokeLater(r);
-        }
-        else if (col == LOCO_CONSIST_COLUMN) {
-            consistarr.set(row, (Integer) value);
-            Runnable r = new Notify(row, this);
-            javax.swing.SwingUtilities.invokeLater(r);
-        }
-        else if (col == LOCO_NAME_COLUMN) {
-            // namearr.set(row, (String) value);
-            // Runnable r = new Notify(row, this); 
-            // javax.swing.SwingUtilities.invokeLater(r);
-            }
-        else if (col == FLAGS_COLUMN) {
-            flagsarr.set(row, (String) value);
-            Runnable r = new Notify(row, this); 
-            javax.swing.SwingUtilities.invokeLater(r);
-            }
-        else if (col == LOCO_COMMANDED_SPEED_COLUMN) {
-            String speedflags = String.format("%8s", 
-            Integer.toBinaryString((Integer) value & 0xFF)).replace(' ', '0');
-            int decimal = Integer.parseInt((speedflags.substring(1)), 2);
-            speedarr.set(row, decimal);
-            Runnable r = new Notify(row, this); 
             javax.swing.SwingUtilities.invokeLater(r);
         }
         else if (col == LOCO_DIRECTION_COLUMN) {
@@ -544,29 +370,6 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
             }
             Runnable r = new Notify(row, this); 
             javax.swing.SwingUtilities.invokeLater(r);
-        }
-        else if (col == ESTOP_COLUMN) {
-            // handled by listener on button
-        }
-        else if (col == NUM_THROTTLES) {
-           // throttlecountarr.set(row, (Integer) value);
-           // Runnable r = new Notify(row, this); 
-           // javax.swing.SwingUtilities.invokeLater(r);
-            }
-        else if (col == FUNCTION_LIST) {
-            functionarr.set(row, (String) value);
-            Runnable r = new Notify(row, this); 
-            javax.swing.SwingUtilities.invokeLater(r);
-        }
-        else if (col == SPEED_STEP_COLUMN) {
-            speedsteparr.set(row, (String) value);
-            Runnable r = new Notify(row, this); 
-            javax.swing.SwingUtilities.invokeLater(r);
-        }
-        else if (col == ALT_TD) {
-            alttdarr.set(row, (String) value);
-            Runnable r = new Notify(row, this); 
-            javax.swing.SwingUtilities.invokeLater(r);            
         }
         else if (col == CURRENT_BLOCK) {          
         }
@@ -595,31 +398,15 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
                 cancelcabsig( row);
             }
             
-            
-            // Runnable r = new Notify(row, this); 
-            // javax.swing.SwingUtilities.invokeLater(r);            
         }
     }
 
-    private synchronized int createnewrow(int locoid, Boolean islong){
-        // log.warn("createnewrow {}",locoid);
+    private synchronized int createnewrow(LocoAddress locoid){
         locoidarr.add(locoid);
-        locolongarr.add(islong);
-        // cmndstatarr.add(-1);
-        sessionidarr.add(-1);        
-        // namearr.add("");
         directionarr.add(-1);
-        speedarr.add(-1);
-        speedsteparr.add("");
-        alttdarr.add("");
         nextblockarr.add("");
         blockarr.add(null);
         curmastarr.add(null);
-        // throttlecountarr.add(0);
-        functionarr.add(""); // function string
-        funcarray.add(new Boolean[29]); // function list
-        consistarr.add(-1);
-        flagsarr.add("");
         cabsigarr.add(true);
         cabsigvalarr.add(0);
         
@@ -629,39 +416,36 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
     }
     
     // return row number for a loco address, creates new row if no existing
-    private synchronized int gettablerow(int locoid, Boolean islong){
+    private synchronized int gettablerow(LocoAddress locoid){
         for (int i = 0; i < getRowCount(); i++) {
             // log.warn("check {} for locoid {}",i,locoid);
             if (locoid==locoidarr.get(i))  {
                 return i;
             }
         }
-        return createnewrow(locoid,islong);
+        return createnewrow(locoid);
+    }
+
+    synchronized void addRow(LocoAddress locoid){
+        for (int i = 0; i < getRowCount(); i++) {
+            // log.warn("check {} for locoid {}",i,locoid);
+            if (locoid==locoidarr.get(i))  {
+                return;
+            }
+        }
+        createnewrow(locoid);
     }
     
     // takes a string returns row if matches locoid or alt td
     private int getrowfromstringval(String blockval){
         for (int i = 0; i < getRowCount(); i++) {
-            String altd = alttdarr.get(i);
             String locoidstr = locoidarr.get(i).toString();
-            if (Objects.equals(blockval,altd)) {
-                return i;
-            }
             if (Objects.equals(blockval,locoidstr)) {
                 return i;
             }
         }
         return -1;
     }    
-    
-    private int getrowfromsession(int sessionid){
-        for (int i = 0; i < getRowCount(); i++) {
-            if (sessionid==sessionidarr.get(i))  {
-                return i;
-            }
-        }
-        return -1;
-    }
     
     private int getrowfromblock( Block blocktotest ){
         for (int i = 0; i < getRowCount(); i++) {
@@ -931,12 +715,8 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
         
         // log.warn("send cabsig");
         int cabsigint = cabsigvalarr.get(row);
-        int locoaddr = locoidarr.get(row);
+        LocoAddress locoaddr = locoidarr.get(row);
         
-        if (locolongarr.get(row)) {
-            locoaddr = locoaddr | 0xC000;
-        }
-
         // TODO: implement forwarding cab signal data 
         
     }
@@ -1027,13 +807,10 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
     public void cancelcabsig(int row){
         // log.warn("cancel cabsig row {}",row);
         cabsigvalarr.set(0,row);
-        int locoaddr = locoidarr.get(row);
+        LocoAddress locoaddr = locoidarr.get(row);
         StringBuilder buf = new StringBuilder();
         buf.append("Cancelling Cabdata for loco " + locoaddr);
         addToLog(0,buf.toString());
-        if (locolongarr.get(row)) {
-            locoaddr = locoaddr | 0xC000;
-        }
 
         // send cancel cab signal.
     }
