@@ -50,8 +50,6 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
     private PropertyChangeListener _cconSignalMastListener = null;
     private int pFromDir[] = new int[50];
     
-    private int cmndstat_fw =0; // command station firmware
-    
     private ArrayList<LocoAddress> locoidarr; // loco id without long flag as seen in can message
     private ArrayList<Integer> directionarr; // loco direction
     private ArrayList<Block> blockarr;   // current block
@@ -718,6 +716,8 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
         LocoAddress locoaddr = locoidarr.get(row);
         
         // TODO: implement forwarding cab signal data 
+
+        log.debug("cab {} signal {}",locaddr,cabsigint);
         
     }
 

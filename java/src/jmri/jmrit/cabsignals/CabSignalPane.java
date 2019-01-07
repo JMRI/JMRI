@@ -70,7 +70,6 @@ public class CabSignalPane extends jmri.util.swing.JmriPanel {
     private JMenu colMenu = new JMenu((Bundle.getMessage("SessCol")));
     private JMenu cabSigColMenu = new JMenu(Bundle.getMessage("SigDataCol"));
     
-    // private JMenu cancmdMenu = new JMenu("CANCMD Setup");
     protected List<JCheckBoxMenuItem> colMenuList = new ArrayList<JCheckBoxMenuItem>();
     protected List<JCheckBoxMenuItem> cabSigColMenuList = new ArrayList<JCheckBoxMenuItem>();    
     private JToggleButton masterSendCabDataButton;
@@ -155,8 +154,6 @@ public class CabSignalPane extends jmri.util.swing.JmriPanel {
         slotModel.configureTable(slotTable);
         
         slotTable.addMouseListener(new CabSignalButtonMouseListener(slotTable));
-        
-        TableCellRenderer dataButtonRenderer = new DataButtonRenderer();
         
         TableCellRenderer chngBlockDirRenderer = new ChngBlockDirRenderer();
         TableColumn ChngBlockDirColumn = tcm.getColumnByModelIndex(CabSignalTableModel.REVERSE_BLOCK_DIR_BUTTON_COLUMN);                
@@ -282,26 +279,6 @@ public class CabSignalPane extends jmri.util.swing.JmriPanel {
           throw e;
         }
     }
-    
-	private static class DataButtonRenderer implements TableCellRenderer {		
-		@Override public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-			JButton button = (JButton)value;
-            // if (slotTable.sessionidarr.get(i)) {
-            //    button.setIcon(new NamedIcon("resources/icons/throttles/RedPowerLED.gif", "resources/icons/throttles/RedPowerLED.gif"));
-            // } else {
-            //    button.setIcon(null);
-            // }
-			if (isSelected){
-                button.setForeground(table.getSelectionForeground());
-                button.setBackground(table.getSelectionBackground());
-            }
-            else {
-                button.setForeground(table.getForeground());
-                button.setBackground(UIManager.getColor("Button.background"));
-                }
-			return button;	
-		}
-	}    
     
 	private static class ChngBlockDirRenderer implements TableCellRenderer {		
 		@Override public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
