@@ -85,14 +85,14 @@ public final class ManagerDefaultsConfigPane extends JmriPanel implements Prefer
         boolean[] selected = new boolean[manager.knownManagers.length];
         for (int x = 0; x < connList.size(); x++) { // up to down
             jmri.jmrix.SystemConnectionMemo memo = connList.get(x);
-            String name = memo.getUserName();
-            log.trace("   Connection name {}", name);
-            matrix.add(new JLabel(name));
+            String connectionName = memo.getUserName();
+            log.trace("   Connection name {}", connectionName);
+            matrix.add(new JLabel(connectionName));
             int i = 0;
             for (ManagerDefaultSelector.Item item : manager.knownManagers) { // left to right
                 log.trace("      item {}", item.typeName);
                 if (memo.provides(item.managerClass)) {
-                    JRadioButton r = new SelectionButton(name, item.managerClass, this);
+                    JRadioButton r = new SelectionButton(connectionName, item.typeName, item.managerClass, this);
                     matrix.add(r);
                     groups[i].add(r);
                     if (!selected[i] && manager.getDefault(item.managerClass) == null) {
@@ -103,6 +103,7 @@ public final class ManagerDefaultsConfigPane extends JmriPanel implements Prefer
                 } else {
                     // leave a blank
                     JRadioButton r = new JRadioButton();
+                    r.setToolTipText(connectionName+" is not a valid choice for"+dropTags(item.typeName));
                     r.setEnabled(false);
                     matrix.add(r);
                 }
@@ -173,38 +174,55 @@ public final class ManagerDefaultsConfigPane extends JmriPanel implements Prefer
         return InstanceManager.getDefault(ManagerDefaultSelector.class).isPreferencesValid(ProfileManager.getDefault().getActiveProfile());
     }
 
+    private static String dropTags(String s) {
+        //while (s.contains("<")) {
+            return s.replaceAll("</?[a-zA-Z]*>"," ");
+        //}
+    }
+    
     /**
      * Captive class to track changes
      */
     static final class SelectionButton extends JRadioButton {
 
-        SelectionButton(String name, Class<?> managerClass, ManagerDefaultsConfigPane pane) {
+        SelectionButton(String connectionName, String managerName, Class<?> managerClass, ManagerDefaultsConfigPane pane) {
             super();
             this.managerClass = managerClass;
-            this.name = name;
+            this.connectionName = connectionName;
+            // we want to remove tags from the manager name
+            this.managerName = dropTags(managerName);
 
-            log.trace("      SelectionButton ctor for {}", name);
-            if (name.equals(InstanceManager.getDefault(ManagerDefaultSelector.class).getDefault(managerClass))) {
+            // for screen readers
+            setToolTipText(makeToolTipText());
+            
+            log.trace("      SelectionButton ctor for {} as {}", connectionName, managerName);
+            if (connectionName.equals(InstanceManager.getDefault(ManagerDefaultSelector.class).getDefault(managerClass))) {
                 this.setSelected(true);
             }
 
             addActionListener((ActionEvent e) -> {
                 if (isSelected()) {
-                    InstanceManager.getDefault(ManagerDefaultSelector.class).setDefault(SelectionButton.this.managerClass, SelectionButton.this.name);
+                    InstanceManager.getDefault(ManagerDefaultSelector.class).setDefault(SelectionButton.this.managerClass, SelectionButton.this.connectionName);
                     pane.dirty = true;
                 }
             });
 
         }
-        String name;
+        String connectionName;
+        String managerName;
         Class<?> managerClass;
+        
+        private String makeToolTipText() { 
+            return connectionName+(isSelected()?" is selected for":" is not selected for")+managerName;
+        }
 
         @Override
         public void setSelected(boolean t) {
             super.setSelected(t);
             log.debug("SelectionButton setSelected called with {}", t);
+            setToolTipText(makeToolTipText());
             if (t) {
-                InstanceManager.getDefault(ManagerDefaultSelector.class).setDefault(this.managerClass, this.name);
+                InstanceManager.getDefault(ManagerDefaultSelector.class).setDefault(this.managerClass, this.connectionName);
             }
         }
     }

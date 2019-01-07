@@ -29,6 +29,7 @@ public class XNetSystemConnectionMemo extends SystemConnectionMemo {
         super("X", Bundle.getMessage("MenuXpressNet"));
         this.xt = xt;
         xt.setSystemConnectionMemo(this);
+        this.setLenzCommandStation(xt.getCommandStation());
         register(); // registers general type
         InstanceManager.store(this, XNetSystemConnectionMemo.class); // also register as specific type
 
@@ -66,6 +67,8 @@ public class XNetSystemConnectionMemo extends SystemConnectionMemo {
         // in addition to setting the traffic controller in this object,
         // set the systemConnectionMemo in the traffic controller
         xt.setSystemConnectionMemo(this);
+        // and make sure the Lenz command station is set.
+        this.setLenzCommandStation(xt.getCommandStation());
     }
 
     /**
@@ -179,13 +182,29 @@ public class XNetSystemConnectionMemo extends SystemConnectionMemo {
 
     public void setCommandStation(CommandStation c) {
         commandStation = c;
-        if (c instanceof LenzCommandStation) {
-            ((LenzCommandStation) c).setTrafficController(xt);
-            ((LenzCommandStation) c).setSystemConnectionMemo(this);
+        if (c instanceof LenzCommandStation && lenzCommandStation == null) {
+            setLenzCommandStation((LenzCommandStation) c);
         }
     }
 
     private CommandStation commandStation = null;
+
+    /**
+     * Provide access to the Lenz Command Station for this particular connection.
+     * <p>
+     * NOTE: Lenz Command Station defaults to NULL
+     */
+    public LenzCommandStation getLenzCommandStation() {
+        return lenzCommandStation;
+    }
+
+    public void setLenzCommandStation(LenzCommandStation c) {
+        lenzCommandStation = c;
+        lenzCommandStation.setTrafficController(xt);
+        lenzCommandStation.setSystemConnectionMemo(this);
+    }
+
+    private LenzCommandStation lenzCommandStation = null;
 
     @Override
     public boolean provides(Class<?> type) {
@@ -215,17 +234,22 @@ public class XNetSystemConnectionMemo extends SystemConnectionMemo {
             return true;
         } else if (type.equals(jmri.ConsistManager.class)) {
             try {
-                return (((LenzCommandStation) getCommandStation()).getCommandStationType() != 0x10);
+               // multimouse doesn't support consists.
+               return (getLenzCommandStation().getCommandStationType()!=0x10 );
             } catch (java.lang.NullPointerException npe) {
-                // if the command station has not been configured yet,
-                // assume true
-                if (log.isTraceEnabled()) {
-                    log.trace("Unconfigured command station", npe);
-                }
+                // initialization may not be complete.  Assume true.
                 return true;
             }
         } else if (type.equals(jmri.CommandStation.class)) {
-            return true;
+            try {
+                // compact/commander do not support the instructions required 
+                // for command station interface.
+                return (getLenzCommandStation().getCommandStationType() != 0x02 );
+            } catch (java.lang.NullPointerException npe) {
+                // initialization may not be complete, return false if no 
+                // command station object.
+                return (getCommandStation()!=null);
+            }
         }
         return super.provides(type);
     }
