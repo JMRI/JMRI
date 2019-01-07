@@ -40,8 +40,9 @@ public class OBlockManager extends AbstractManager<OBlock>
         return jmri.Manager.OBLOCKS;
     }
 
-    @Nonnull@Override
- public String getSystemPrefix() {
+    @Nonnull
+    @Override
+    public String getSystemPrefix() {
         return "O";
     }
 

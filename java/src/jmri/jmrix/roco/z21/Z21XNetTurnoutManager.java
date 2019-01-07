@@ -9,16 +9,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implement turnout manager.
+ * Implement z21 turnout manager.
  * <p>
- * System names are "XTnnn", where nnn is the turnout number without padding.
+ * System names are "XTnnn", where X is the user-configurable system prefix,
+ * nnn is the turnout number without padding.
  *
  * @author	Paul Bender Copyright (C) 2016 
  */
 public class Z21XNetTurnoutManager extends XNetTurnoutManager implements XNetListener {
 
     public Z21XNetTurnoutManager(XNetTrafficController controller, String prefix) {
-        super(controller,prefix);
+        super(controller, prefix);
     }
 
     // XNet-specific methods
@@ -72,6 +73,7 @@ public class Z21XNetTurnoutManager extends XNetTurnoutManager implements XNetLis
            t.message(l);
         }
     }
+
     private final static Logger log = LoggerFactory.getLogger(Z21XNetTurnoutManager.class);
 
 }

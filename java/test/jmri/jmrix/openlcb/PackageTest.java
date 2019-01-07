@@ -8,6 +8,7 @@ import org.junit.runners.Suite;
         CanConverterTest.class,
         OlcbAddressTest.class,
         OpenLcbLocoAddressTest.class,
+        OlcbClockControlTest.class,
         OlcbLightManagerTest.class,
         OlcbSensorManagerTest.class,
         OlcbSignalMastTest.class,

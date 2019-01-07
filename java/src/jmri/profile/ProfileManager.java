@@ -114,15 +114,15 @@ public class ProfileManager extends Bean {
 
     /**
      * Get the {@link Profile} that is currently in use.
+     * <p>
+     * Note that this returning null is not an error condition, and
+     * should not be treated as such, since there are times when the
+     * user interacts with a JMRI application that there should be no
+     * active profile.
      *
      * @return the in use Profile or null if there is no Profile in use
      */
     public Profile getActiveProfile() {
-        // can be null if user deletes directory
-        // DBoudreau 10/24/2018
-//        if (activeProfile == null) {
-//            throw new NullPointerException("activeProfile is null");
-//        }
         return activeProfile;
     }
 
@@ -151,6 +151,7 @@ public class ProfileManager extends Bean {
      * @param identifier the profile path or id; must not be null
      */
     public void setActiveProfile(@Nonnull String identifier) {
+        log.debug("setActiveProfile called with {}", identifier);
         // handle null profile
         if (identifier == null) {
             throw new IllegalArgumentException("identifier is null");
@@ -161,10 +162,14 @@ public class ProfileManager extends Bean {
         if (Profile.isProfile(profileFileWithExt)) {
             profileFile = profileFileWithExt;
         }
+        log.debug("profileFile exists(): {}", profileFile.exists());
+        log.debug("profileFile isDirectory(): {}", profileFile.isDirectory());
         if (profileFile.exists() && profileFile.isDirectory()) {
             if (Profile.isProfile(profileFile)) {
                 try {
+                    log.debug("try setActiveProfile with new Profile({})", profileFile);
                     this.setActiveProfile(new Profile(profileFile));
+                    log.debug("  success");
                     return;
                 } catch (IOException ex) {
                     log.error("Unable to use profile path {} to set active profile.", identifier, ex);

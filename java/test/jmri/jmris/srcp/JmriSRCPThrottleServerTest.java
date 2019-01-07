@@ -1,10 +1,6 @@
 package jmri.jmris.srcp;
 
-import org.junit.Assert;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.*;
 
 import jmri.util.JUnitUtil;
 import jmri.DccLocoAddress;
@@ -30,7 +26,7 @@ public class JmriSRCPThrottleServerTest extends jmri.jmris.AbstractThrottleServe
     }
 
     /**
-     * confirm the throttle request succeeded and an appropirate response
+     * confirm the throttle request succeeded and an appropriate response
      * was forwarded to the client.
      */
     public void confirmThrottleRequestSucceeded(){
@@ -91,8 +87,8 @@ public class JmriSRCPThrottleServerTest extends jmri.jmris.AbstractThrottleServe
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
-        // verify the Internal System Connection memo is available.
-        jmri.InstanceManager.getDefault(jmri.jmrix.internal.InternalSystemConnectionMemo.class);
+        // ensure the Internal System Connection memo is available.
+        jmri.InstanceManager.setDefault(jmri.jmrix.internal.InternalSystemConnectionMemo.class, new jmri.jmrix.internal.InternalSystemConnectionMemo(false));
  
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();

@@ -30,5 +30,6 @@ public class ThrottleControllerListenerScaffold implements ThrottleControllerLis
     }
     
     public void notifyControllerAddressDeclined(ThrottleController tc, DccLocoAddress address, String reason){
+        jmri.InstanceManager.throttleManagerInstance().cancelThrottleRequest(address.getNumber(), address.isLongAddress(), tc);
     }
 }

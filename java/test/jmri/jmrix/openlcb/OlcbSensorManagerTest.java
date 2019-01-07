@@ -2,13 +2,8 @@ package jmri.jmrix.openlcb;
 
 import jmri.Sensor;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
-import org.junit.Test;
+import jmri.util.junit.annotations.*;
+import org.junit.*;
 
 /**
  * Tests for the jmri.jmrix.openlcb.OlcbSensorManager class.
@@ -51,6 +46,7 @@ public class OlcbSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
 
     @Override
     @Ignore("ignoring this test due to the system name format, needs to be properly coded")
+    @ToDo("Fix system name format")
     @Test
     public void testUpperLower() {
     }

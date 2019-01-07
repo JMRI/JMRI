@@ -37,6 +37,7 @@ public class PipeListenerTest {
         PipedWriter wr = new PipedWriter();
         PipedReader pr = new PipedReader(wr,1);
         PipeListener t = new PipeListener(pr,jta);
+        t.setName("PipeListenerTest thread");
         t.start();
         
         String testString = "Test String";

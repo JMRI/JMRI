@@ -235,6 +235,7 @@ public class DecoderIndexFile extends XmlFile {
      */
     @Deprecated
     public synchronized static DecoderIndexFile instance() {
+        jmri.util.Log4JUtil.deprecationWarning(log, "instance");        
         return InstanceManager.getDefault(DecoderIndexFile.class);
     }
 

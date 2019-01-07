@@ -43,6 +43,13 @@ After that, add and commit the additional files that were created within lib/
 
 ### Specific components:
 
+##### jsplitbutton-1.3.1.jar
+- version 1.3.1
+- provides a Swing split button
+- contributed by Randall Wood
+- from https://github.com/rhwood/jsplitbutton
+- javadoc at https://www.javadoc.io/doc/com.alexandriasoftware.swing/jsplitbutton/1.3.1
+
 ##### commons-lang3-3.2.1.jar
 - version 3.2.1
 - provides org.apache.commons.lang3
@@ -69,7 +76,7 @@ After that, add and commit the additional files that were created within lib/
 - from http://www.slf4j.org
 
 ##### openlcb.jar
-- 0.7.18 from https://oss.sonatype.org/service/local/repositories/releases/content/org/openlcb/openlcb/0.7.18/openlcb-0.7.18.jar or the maven central repository.
+- 0.7.22 from https://oss.sonatype.org/service/local/repositories/releases/content/org/openlcb/openlcb/0.7.22/openlcb-0.7.22.jar or the maven central repository.
 
 ##### jlfgr-1_0.jar
 - icons from see http://www.coderanch.com/t/341737/GUI/java/Expand-Collapse-Panels
@@ -77,6 +84,7 @@ After that, add and commit the additional files that were created within lib/
 ##### purejavacomm-1.0.1.jar
 - version 1.0.1
 - from http://www.sparetimelabs.com/maven2/com/sparetimelabs/purejavacomm/1.0.1/
+- javadoc at https://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE
 
 ##### jna-4.2.2.jar
 - version 4.2.2
@@ -147,6 +155,7 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 
 ##### Joal 2.3.1
 - from <http://jogamp.org/deployment/archive/rc/v2.3.1/jar/>
+- -javadoc at https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/
 - cross-platform .jar files
     joal.jar
     gluegen-rt.jar
@@ -238,8 +247,8 @@ NOTE: joal.jar is currently replaced by an own-built version with modifications 
 - From http://types.cs.washington.edu/checker-framework/
 
 ##### ecj.jar
-- Eclipse compiler 4.6 from
-    - http://download.eclipse.org/eclipse/downloads/drops4/R-4.6-201606061100/  (via ecj-4.6.jar) June 22, 2016
+- Eclipse compiler 4.10 from
+    - https://download.eclipse.org/eclipse/downloads/drops4/R-4.10-201812060815/ (via selecting ecj-4.10.jar) January 3, 2019
 - used in ant warnings target
 
 ##### jemmy-22-00c9f753cd0a.jar

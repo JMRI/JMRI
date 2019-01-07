@@ -77,7 +77,7 @@
       <p>NetBeans 8 (available at <a href=
       "http://www.netbeans.org">www.netbeans.org</a>) makes a great
       platform for working with JMRI. The JMRI code is set up to
-      work with NetBeans with almost no additional set-up. (The
+      work with NetBeans with almost no additional setup. (The
       description below is accurate for the Windows version of
       NetBeans 8. NetBeans is <i>supposed</i> to be identical
       across platforms, but this hasn't been checked on anything

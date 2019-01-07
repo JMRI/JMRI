@@ -156,7 +156,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
      * Set the sensor by name.
      *
      * @param pName the name of the Sensor to set
-     * @return true if a Sensor is set; false otherwise
+     * @return true if a Sensor is set and is not null; false otherwise
      */
     public boolean setSensor(String pName) {
         if (pName == null || pName.equals("")) {

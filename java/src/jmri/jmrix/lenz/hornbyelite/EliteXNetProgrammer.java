@@ -7,8 +7,6 @@ import jmri.jmrix.lenz.XNetMessage;
 import jmri.jmrix.lenz.XNetProgrammer;
 import jmri.jmrix.lenz.XNetReply;
 import jmri.jmrix.lenz.XNetTrafficController;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Programmer support for Hornby Elite implementationn of XpressNet.
@@ -39,10 +37,12 @@ public class EliteXNetProgrammer extends XNetProgrammer implements XNetListener 
         super(tc);
     }
 
-    // programming interface
+    /** 
+     * {@inheritDoc}
+     */
     @Override
-    @Deprecated // 4.1.1
-    synchronized public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
+    synchronized public void writeCV(String CVname, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
+        final int CV = Integer.parseInt(CVname);
         log.debug("writeCV {} listens {}", CV, p);
         useProgrammer(p);
         _progRead = false;
@@ -89,14 +89,20 @@ public class EliteXNetProgrammer extends XNetProgrammer implements XNetListener 
         controller().sendXNetMessage(resultMsg, this);
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     synchronized public void confirmCV(String CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         readCV(CV, p);
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
-    @Deprecated // 4.1.1
-    synchronized public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
+    synchronized public void readCV(String CVname, jmri.ProgListener p) throws jmri.ProgrammerException {
+        final int CV = Integer.parseInt(CVname);
         log.debug("readCV {} listens {}", CV, p);
 
         if (!getCanRead()) {
@@ -148,6 +154,9 @@ public class EliteXNetProgrammer extends XNetProgrammer implements XNetListener 
         controller().sendXNetMessage(resultMsg, this);
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     synchronized public void message(XNetReply m) {
         if (m.getElement(0) == XNetConstants.CS_INFO
@@ -334,11 +343,13 @@ public class EliteXNetProgrammer extends XNetProgrammer implements XNetListener 
         }
     }
 
-    // listen for the messages to the Elite
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     synchronized public void message(XNetMessage l) {
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EliteXNetProgrammer.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(EliteXNetProgrammer.class);
 
 }

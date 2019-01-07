@@ -19,7 +19,7 @@ public class LayoutTest {
         Assert.assertNotNull(layout);
         layout.setLayoutName("Test Name");  // NOI18N
         Assert.assertEquals("Test Name", layout.getLayoutName());  // NOI18N
-        Assert.assertEquals("HO", layout.getScale());  // NOI18N
+        Assert.assertEquals("HO", layout.getScale().getScaleName());  // NOI18N
         try {
             layout.setFastClock(0);
         } catch (IllegalArgumentException ex) {
@@ -33,11 +33,6 @@ public class LayoutTest {
         layout.setFastClock(6);
         Assert.assertEquals(6, layout.getFastClock());
         Assert.assertTrue(layout.getRatio() > 0.0f);
-        try {
-            layout.setScale("XY");
-        } catch (IllegalArgumentException ex) {
-            Assert.assertEquals(ex.getMessage(), "ScaleNotFound~XY");  // NOI18N
-        }
         try {
             layout.setThrottles(-2);
         } catch (IllegalArgumentException ex) {

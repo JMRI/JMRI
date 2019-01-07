@@ -714,8 +714,7 @@ public class LayoutTrackEditors {
     private void editLayoutTurnoutEditBlockPressed(ActionEvent a) {
         // check if a block name has been entered
         String newName = editLayoutTurnoutBlockNameComboBox.getUserName();
-        if ((layoutTurnout.getBlockName() != null)
-                || !layoutTurnout.getBlockName().equals(newName)) {
+        if (!layoutTurnout.getBlockName().equals(newName)) {
             // get new block, or null if block has been removed
             try {
                 layoutTurnout.setLayoutBlock(layoutEditor.provideLayoutBlock(newName));

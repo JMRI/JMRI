@@ -904,7 +904,7 @@ public class Train implements java.beans.PropertyChangeListener {
 
     /**
      * Used to determine if train is a local switcher serving one location. Note
-     * the the train can have more than location in its route, but all location
+     * the train can have more than location in its route, but all location
      * names must be "same". See TrainCommon.splitString(String name) for the
      * definition of the "same" name.
      *
@@ -3133,7 +3133,7 @@ public class Train implements java.beans.PropertyChangeListener {
         return file;
     }
 
-    private void setPrinted(boolean printed) {
+    public void setPrinted(boolean printed) {
         boolean old = _printed;
         _printed = printed;
         if (old != printed) {

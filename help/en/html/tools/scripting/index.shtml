@@ -29,13 +29,16 @@
 
       <h2>JMRI: Scripting</h2>
       
-      <p>Any <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/scripting/prog_guide/api.html" target="_blank">
-        Java Scripting API </a> (commonly refered to JSR-223) compliant scripting language can be added to JMRI,
-        however, only JavaScript and Python (Jython) are directly supported in the default installation.
-        If you want to add another scripting language, find a JSR-223 compliant interpreter and add it to
-        the JMRI classpath as <a href="../../doc/Technical/StartUpScripts.shtml" target="_blank">documented for your operating system</a>
-        (different operating systems have different launchers that are configured differently).</p>
-
+      <p>Writing and executing a "script" (program in Python/Jython or other language - see below)
+      is a way of telling JMRI to execute commands specific to your JMRI environment and to partially
+      or even fully automate your layout and train operations.  Scripts can be as simple as telling
+      JMRI to set a single sensor or as complex as setting up multiple objects and running multiple
+      trains based on feedback from your layout.  While there is no comprehensive JMRI scripting manual,
+      the examples provided in the pages linked below will be a primary source of information on how to
+      use scripting to great advantage with JMRI.
+      The "How To" and "What-Where" sections also provide many ideas and hints gleaned from the JMRI
+      community on scripting features and capabilities.</p>
+      
       <p>The following pages discuss scripting JMRI using the Jython version of Python:</p>
 
       <ul>
@@ -59,6 +62,12 @@
        
       <p>See also the help section on <a href="Python.shtml">Python and JMRI.</a></p> 
        
+      <p>Any <a href="https://docs.oracle.com/javase/8/docs/technotes/guides/scripting/prog_guide/api.html" target="_blank">
+        Java Scripting API </a> (commonly refered to JSR-223) compliant scripting language can be added to JMRI,
+        however, only JavaScript and Python (Jython) are directly supported in the default installation.
+        If you want to add another scripting language, find a JSR-223 compliant interpreter and add it to
+        the JMRI classpath as <a href="../../doc/Technical/StartUpScripts.shtml" target="_blank">documented for your operating system</a>
+        (different operating systems have different launchers that are configured differently).</p>
       
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->

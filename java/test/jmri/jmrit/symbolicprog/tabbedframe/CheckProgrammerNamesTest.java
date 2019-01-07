@@ -1,11 +1,7 @@
 package jmri.jmrit.symbolicprog.tabbedframe;
 
 import java.io.File;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * Check the names in an XML programmer file against the names.xml definitions

@@ -22,7 +22,12 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import jmri.*;
+import jmri.BeanSetting;
+import jmri.InstanceManager;
+import jmri.InvokeOnGuiThread;
+import jmri.NamedBean;
+import jmri.Path;
+import jmri.ShutDownTask;
 import jmri.implementation.swing.SwingShutDownTask;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,7 +56,7 @@ public class WarrantTableAction extends AbstractAction {
 
     static int STRUT_SIZE = 10;
     static JMenu _warrantMenu;
-    private static final HashMap<String, Warrant> _warrantMap = new HashMap<String, Warrant>();
+    private static final HashMap<String, Warrant> _warrantMap = new HashMap<>();
     
     private static JTextArea _textArea;
     private static boolean _hasErrors = false;
@@ -106,7 +111,7 @@ public class WarrantTableAction extends AbstractAction {
      * @return a menu containing warrant actions
      */
     synchronized public static JMenu makeWarrantMenu(boolean edit) {
-        if (jmri.InstanceManager.getDefault(OBlockManager.class).getSystemNameList().size() > 1) {
+        if (jmri.InstanceManager.getDefault(OBlockManager.class).getNamedBeanSet().size() > 1) {
             _edit = edit;
             _warrantMenu = new JMenu(Bundle.getMessage("MenuWarrant"));
             updateWarrantMenu();
@@ -175,6 +180,11 @@ public class WarrantTableAction extends AbstractAction {
                 updateWarrantMenu();
             });
         } else {
+            mi = new JMenuItem(Bundle.getMessage("flushLog"));
+            mi.addActionListener((ActionEvent e) -> {
+                OpSessionLog.flush();
+            });
+            _warrantMenu.add(mi);
             mi = new JMenuItem(Bundle.getMessage("stopLog"));
             mi.addActionListener((ActionEvent e) -> {
                 OpSessionLog.close();
@@ -484,16 +494,8 @@ public class WarrantTableAction extends AbstractAction {
                     OBlock myBlock = (OBlock) myPath.getBlock();
                     int state = set.getSetting();
                     OBlock block = (OBlock) path.getBlock();
-//                  String note = "WARNING: ";
                     if (myState != state) {
                         ret = myBlock.addSharedTurnout(myPath, block, path);
-                        /*                       _textArea.append(note+Bundle.getMessage("sharedTurnout", myPath.getName(), myBlock.getDisplayName(),
-                             myTO.getDisplayName(), (myState==jmri.Turnout.CLOSED ? "Closed":"Thrown"),
-                             path.getName(), block.getDisplayName(), to.getDisplayName(),
-                             (state==jmri.Turnout.CLOSED ? "Closed":"Thrown")));
-                      _textArea.append("\n");
-                    } else {
-                        note = "Note: "; */
                     }
                 }
             }

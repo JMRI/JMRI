@@ -94,10 +94,7 @@ public class OlcbTurnout extends jmri.implementation.AbstractTurnout {
      */
     public void finishLoad() {
         // Clear some objects first.
-        if (turnoutListener != null) turnoutListener.release();
-        if (pc != null) pc.release();
-        turnoutListener = null;
-        pc = null;
+        disposePc();
 
         int flags = 0;
         switch (_activeFeedbackType) {
@@ -245,9 +242,15 @@ public class OlcbTurnout extends jmri.implementation.AbstractTurnout {
             closedEventTableEntryHolder.release();
             closedEventTableEntryHolder = null;
         }
+        disposePc();
+        super.dispose();
+    }
+
+    private void disposePc() {
         if (turnoutListener != null) turnoutListener.release();
         if (pc != null) pc.release();
-        super.dispose();
+        turnoutListener = null;
+        pc = null;
     }
 
     /**

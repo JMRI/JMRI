@@ -10,11 +10,11 @@ import org.slf4j.LoggerFactory;
  * <p>
  * Two address formats are supported:
  * <ul>
- *   <li>Oitnnnxxx where:
+ *   <li>Otnnnxxx where:
  *      <ul>
  *      <li>t is the type code: 'T' for turnouts, 'S' for sensors, and
  *      'L' for lights
- *      <li>nn is the node address (0-127)
+ *      <li>nnn is the node address (0-127)
  *      <li>xxx is a bit number of the input or output bit (001-999)
  *      <li>nnxxx = (node address x 1000) + bit number
  *      </ul>

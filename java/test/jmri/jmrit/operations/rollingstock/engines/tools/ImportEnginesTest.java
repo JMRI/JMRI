@@ -12,10 +12,8 @@ import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.swing.JemmyUtil;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
 import org.junit.Test;
 import org.netbeans.jemmy.operators.JFileChooserOperator;
 
@@ -74,22 +72,14 @@ public class ImportEnginesTest extends OperationsTestCase {
         Assert.assertEquals("engines", 0, emanager.getNumEntries());
 
         // do import      
-        Thread mb = new ImportEngines();
+        Thread mb = new ImportEngines(){
+            protected File getFile() {
+                // replace JFileChooser with fixed file to avoid threading issues
+                return new File(OperationsXml.getFileLocation()+OperationsXml.getOperationsDirectoryName() + File.separator + ExportEngines.getOperationsFileName());
+            }
+        };
         mb.setName("Test Import Engines"); // NOI18N
         mb.start();
-
-        jmri.util.JUnitUtil.waitFor(() -> {
-            return mb.getState().equals(Thread.State.WAITING);
-        }, "wait for file chooser");
-
-        // opens file chooser path "operations" "JUnitTest"
-        JFileChooserOperator fco = new JFileChooserOperator();
-        String path = OperationsXml.getOperationsDirectoryName();
-        fco.chooseFile(path + File.separator + ExportEngines.getOperationsFileName());
-        
-        jmri.util.JUnitUtil.waitFor(() -> {
-            return mb.getState().equals(Thread.State.WAITING);
-        }, "wait for dialog");
 
         // dialog windows should now open asking to add 2 models
         JemmyUtil.pressDialogButton(Bundle.getMessage("engineAddModel"), Bundle.getMessage("ButtonYes"));
@@ -169,22 +159,14 @@ public class ImportEnginesTest extends OperationsTestCase {
         lmanager.deregister(loc);
 
         // do import      
-        Thread mb = new ImportEngines();
+        Thread mb = new ImportEngines(){
+            protected File getFile() {
+                // replace JFileChooser with fixed file to avoid threading issues
+                return new File(OperationsXml.getFileLocation()+OperationsXml.getOperationsDirectoryName() + File.separator + ExportEngines.getOperationsFileName());
+            }
+        };
         mb.setName("Test Import Engines"); // NOI18N
         mb.start();
-
-        jmri.util.JUnitUtil.waitFor(() -> {
-            return mb.getState().equals(Thread.State.WAITING);
-        }, "wait for file chooser");
-
-        // opens file chooser path "operations" "JUnitTest"
-        JFileChooserOperator fco = new JFileChooserOperator();
-        String path = OperationsXml.getOperationsDirectoryName();
-        fco.chooseFile(path + File.separator + ExportEngines.getOperationsFileName());
-        
-        jmri.util.JUnitUtil.waitFor(() -> {
-            return mb.getState().equals(Thread.State.WAITING);
-        }, "wait for dialog window to appear");
 
         // dialog windows should now open asking to add 2 models
         JemmyUtil.pressDialogButton(Bundle.getMessage("engineAddModel"), Bundle.getMessage("ButtonYes"));
@@ -238,19 +220,6 @@ public class ImportEnginesTest extends OperationsTestCase {
 
         // confirm import successful
         Assert.assertEquals("engines", 4, emanager.getNumEntries());
-    }
-
-    // The minimal setup for log4J
-    @Override
-    @Before
-    public void setUp() {
-        super.setUp();
-    }
-
-    @Override
-    @After
-    public void tearDown() {
-        super.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(ImportEnginesTest.class);

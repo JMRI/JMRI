@@ -347,6 +347,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
             new TrainEditFrame(null);
         }
         if (ae.getSource() == buildButton) {
+            runFileButton.setEnabled(false);
             // uses a thread which allows table updates during build
             trainManager.buildSelectedTrains(getSortByList());
         }
@@ -401,6 +402,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
                         File csvFile = train.createCSVManifestFile();
                         // Add it to our collection to be processed.
                         tcm.addCVSFile(csvFile);
+                        train.setPrinted(true);
                     }
                 }
             }
@@ -618,6 +620,9 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
         }
         if (e.getPropertyName().equals(TrainManager.LISTLENGTH_CHANGED_PROPERTY)) {
             numTrains.setText(Integer.toString(trainManager.getNumEntries()));
+        }
+        if (e.getPropertyName().equals(TrainManager.TRAINS_BUILT_CHANGED_PROPERTY)) {
+            runFileButton.setEnabled(true);
         }
     }
 

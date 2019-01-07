@@ -14,7 +14,7 @@
 <!-- for more details.                                                      -->
 
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmptyPanes="no" >
-    <version author="Petr Šídlo sidlo64@hotmail.com" version="1" lastUpdated="20180819"/>
+    <version author="Petr Šídlo sidlo64@hotmail.com" version="1" lastUpdated="20181201"/>
     <!-- Accessory decoder  -->
     <!-- Description of circuit diagram https://sites.google.com/site/sidloweb/elektrika/22-uni16ard -->
     <!-- Program description https://sites.google.com/site/sidloweb/elektrika/29-ard-scom-mx -->
@@ -77,7 +77,7 @@
         <tooltip xml:lang="cs">ROCO adresování je NMRA adresování + 4.</tooltip>
       </variable>
     
-      <variable CV="41" item="Aspect lag" default="1" >
+      <variable CV="41" item="Aspect lag" default="4" >
         <decVal min="0" max="255" />
         <label>Aspect lag:</label>
         <label xml:lang="cs">Zpoždění návěsti:</label>
@@ -85,7 +85,7 @@
         <tooltip xml:lang="cs">Zpoždění zobrazení návěsti po poslením příkazu. zpoždění × 0,128 s</tooltip>
       </variable>
         
-      <variable CV="42" item="Bit period" default="10" >
+      <variable CV="42" item="Bit period" default="20" >
         <decVal min="4" max="30" />
         <label>Bit period:</label>
         <label xml:lang="cs">Perioda bitu:</label>
@@ -101,6 +101,21 @@
         <tooltip xml:lang="cs">Zpoždění zahájení činnosti dekodéru po zapnutí. zpoždění × 0,128 s</tooltip>
       </variable>
         
+      <variable CV="44" item="Address order" default="0">
+      	<enumVal>
+            <enumChoice choice="All successively" value="0" >
+                <choice xml:lang="cs">Všechny postupně</choice>
+            </enumChoice>
+            <enumChoice choice="Only even" value="1" >
+                <choice xml:lang="cs">Pouze sudé</choice>
+            </enumChoice>
+      	</enumVal>
+        <label>Address order:</label>
+        <label xml:lang="cs">Pořadí adres:</label>
+        <tooltip>Use all addresses sequentially or only even.</tooltip>
+        <tooltip xml:lang="cs">Použití všech adres postupně nebo pouze sudé.</tooltip>
+      </variable>
+            
       <variable CV="47" item="ProductID1" readOnly="yes" default="1" >
         <decVal/>
         <label>Product ID #1</label>
@@ -4009,6 +4024,7 @@
         <name xml:lang="cs">Dekodér</name>
         <column>
             <display item="Addressing" />
+            <display item="Address order" />
             <display item="Start delay" />
             <display item="Bit period" />
             <display item="Aspect lag" />

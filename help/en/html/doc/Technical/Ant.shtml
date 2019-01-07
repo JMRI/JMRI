@@ -110,6 +110,10 @@
         <dd><code>mvn antrun:run -Danttarget=panelpro</code></dd>
       </dl>
 
+      The <code>scripts/mvn-test</code> includes all the options 
+      necessary to run the Travis CI test Maven job from your
+      local command line.
+      
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

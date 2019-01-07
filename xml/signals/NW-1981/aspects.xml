@@ -40,8 +40,13 @@
         <date>2016-11-24</date>
         <authorinitials>ST</authorinitials>
         <revremark>Added default aspect numbers</revremark>
-
-    </revision>
+	</revision>
+	<revision>
+        <revnumber>2.2</revnumber>
+        <date>2018-11-27</date>
+        <authorinitials>GPM</authorinitials>
+        <revremark>Changed speed1 and speed2 from Restricting to Restricted under aspect Restricting.</revremark>
+	</revision>
 
   </revhistory>
 
@@ -147,8 +152,8 @@
       <rule>Rule 290</rule>
       <indication>Proceed at restricted speed.</indication>
       <reference>Page 65</reference>
-      <speed>Restricting</speed>
-      <speed2>Restricting</speed2>
+      <speed>Restricted</speed>
+      <speed2>Restricted</speed2>
       <route>Either</route>
       <dccAspect>2</dccAspect>
     </aspect>

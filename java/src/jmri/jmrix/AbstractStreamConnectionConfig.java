@@ -241,6 +241,7 @@ abstract public class AbstractStreamConnectionConfig extends AbstractConnectionC
 
     @Override
     public void setManufacturer(String manufacturer) {
+        setInstance();
         adapter.setManufacturer(manufacturer);
     }
 

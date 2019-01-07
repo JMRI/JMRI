@@ -169,7 +169,7 @@ public abstract class AbstractSensorTestBase {
 
     // Test outgoing status request
     @Test
-    public void testXNetSensorStatusRequest() {
+    public void testSensorStatusRequest() {
         t.requestUpdateFromLayout();
         // check that the correct message was sent
         checkStatusRequestMsgSent();

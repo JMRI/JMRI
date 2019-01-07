@@ -212,6 +212,7 @@ public class LocoNetMessageTest {
     }
 
     @Test
+    @SuppressWarnings("unlikely-arg-type") // int[] seems to be unrelated to LocoNetMessage
     public void testEqualsFromInt() {
         int[] t1 = new int[]{0x81, 0x01, 0x02, 0x02};
         int[] t2 = new int[]{0x81, 0x01, 0x02, 0x02, 0x03};
@@ -353,9 +354,9 @@ public class LocoNetMessageTest {
         Assert.assertEquals("Sensor L2S1853 (brightly) is Low.  (BDL16 # 116, DS13; DS54/DS64 # 232, AuxC/A3).\n", m.toMonitorString("L2"));
 
         lntm.dispose();
-
-
-
+        lntm2.dispose();
+        lnsm.dispose();
+        lnsm2.dispose();
     }
 
     @Test

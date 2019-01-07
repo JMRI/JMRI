@@ -5,11 +5,8 @@ import com.pi4j.io.gpio.GpioProvider;
 import jmri.JmriException;
 import jmri.Sensor;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import jmri.util.junit.annotations.*;
+import org.junit.*;
 
 /**
  *
@@ -61,6 +58,7 @@ public class RaspberryPiSensorTest extends jmri.implementation.AbstractSensorTes
     @Override
     @Test
     @Ignore("Base class test does not function correctly for RaspberryPi Sensors")
+    @ToDo("provide mock raspberry pi implementation so code can be tested using parent class test")
     public void testAddListener() throws JmriException {
     }
 

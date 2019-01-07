@@ -13,7 +13,8 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-    <version author="Brian Jackson brian-jackson1@blueyonder.co.uk" version="1.12" lastUpdated="20181016"/>
+   	<version author="Brian Jackson brian-jackson1@blueyonder.co.uk" version="1.13" lastUpdated="20181208"/>
+	<version author="Brian Jackson brian-jackson1@blueyonder.co.uk" version="1.12" lastUpdated="20181016"/>
 	<version author="Brian Jackson brian-jackson1@blueyonder.co.uk" version="1.11" lastUpdated="20181012"/>
 	<version author="Brian Jackson brian-jackson1@blueyonder.co.uk" version="1.10" lastUpdated="20181010"/>
 	<version author="Brian Jackson brian-jackson1@blueyonder.co.uk" version="1.9" lastUpdated="20181009"/>
@@ -24,9 +25,9 @@
 	<version author="Brian Jackson" version="1.6" lastUpdated="20180826"/>
 	<version author="Brian Jackson" version="1.5" lastUpdated="20180825"/>
 	<version author="Dave Heap" version="1.4" lastUpdated="23170520"/>
-    <version author="Dave Heap" version="1.3" lastUpdated="20170520"/>
-    <version author="Nigel Cliffe" version="1.1" lastUpdated="20150121"/>
-    <version author="Nigel Cliffe" version="1" lastUpdated="20141001"/>	
+        <version author="Dave Heap" version="1.3" lastUpdated="20170520"/>
+        <version author="Nigel Cliffe" version="1.1" lastUpdated="20150121"/>
+        <version author="Nigel Cliffe" version="1" lastUpdated="20141001"/>	
     <!--  Version 1 - First version of Hornby TTS sound decoder, based on manual for Duke of Gloucester from Hornby website. -->
     <!--  Version 1.1 adds Class 37 diesel, from manuals posted by user on jmriusers Yahoo Group. 	-->
     <!--  Version 1.2, update to include more recent TTS releases and product ID numbers,  May/June 2016
@@ -47,26 +48,26 @@
     -->
     <!--  Version 1.3 - update to differentiate between 2P & 9F, based on a composite productID of CV159(low) & CV158(high). 	-->
     <!--  Version 1.4 - update to replace "Hornby TTS A4 4-6-0" with "Hornby TTS A4 4-6-2" (typo). 	-->
-	<!--  Version 1.5 - update to include more recent TTS releases and product ID numbers
+    <!--  Version 1.5 - update to include more recent TTS releases and product ID numbers
 			Separate class 37 and class 40, add original class 37 tts chip product no and correct label error on class 66 which should be class 67. 
             Product ID's: 	
 				Class 37 = 147 
 				Class 31 = 161
 				Class 67 = 153 corrected class label from class 66
 				Class 20 = 159 
-	-->	
-	<!--  Version 1.6 added:
+    -->	
+    <!--  Version 1.6 added:
 				Class 60 product ID 163 
 				P2 2-8-2 product ID 133 
-	-->
-	<!--  Version 1.7 new locomotives added:
+    -->
+    <!--  Version 1.7 new locomotives added:
 				Class 08			= 175
 				Class 43 (valenta)  = 181
 				Class 43 (MTU)  	= 157
 				Added option of factory reset of sound volumes only using value of 5 in CV8
-	-->	
-	<!--  Version 1.8 added Class 5MT 4-6-0 Black 5 ID 171  -->
-	<!--  Version 1.9 added and explanation of how composite product ID value is achieved:
+    -->	
+    <!--  Version 1.8 added Class 5MT 4-6-0 Black 5 ID 171  -->
+    <!--  Version 1.9 added and explanation of how composite product ID value is achieved:
 				Hall Class 4-6-0					ID 2699  CV 158 = 10,  CV159 = 139 
 				Castle Class 4-6-0 					ID 	165 hidden awaiting manual to associate the correct sound level cv's
 				S15 Class 4-6-0   					ID	179 hidden awaiting manual to associate the correct sound level cv's
@@ -76,13 +77,13 @@
 				6000 King Class 4-6-0				ID 	141 hidden awaiting manual to associate the correct sound level cv's
 				Lord Nelson Class 4-6-2				ID 	183 hidden awaiting manual to associate the correct sound level cv's
 				
-	-->
-	<!--  Version 1.10 King and Merchant Navy class Visible in list after finding sound manual -->
-	<!--  Version 1.11 the following alterations and additions have been made
+    -->
+    <!--  Version 1.10 King and Merchant Navy class Visible in list after finding sound manual -->
+    <!--  Version 1.11 the following alterations and additions have been made
 				Peppercorn A1 Tornado now showing in list live after receiving copy of sound manual 
 				Class 08 missing sound level CV's added and corrected error in V1.7 regarding CV166 having two horn definitions
-	-->
-	<!--  Version 1.12 make the following Locomotives Visible after receiving Manuals - Thanks to Hornby Hobbies
+    -->
+    <!--  Version 1.12 make the following Locomotives Visible after receiving Manuals - Thanks to Hornby Hobbies
 				Castle Class 4-6-0 					ID 	139 
 				S15 Class 4-6-0   					ID	179 
 				Coronation Class 4-6-2 				ID	177
@@ -97,33 +98,34 @@
 				Start delay and Notching (CV 201 and CV's 210 - 215)
 				
 				Sound settings reorganised so that volume sliders are in Function order and all main Loco sounds are grouped.
-	-->			
-	<!-- NOTE - FOR DECODERS WITH IDENTICAL CV159 VALUES, CV158 IS USED AS THE LOW BYTE AND CV159 THE HIGH BYTE
+    -->
+    <!--  Version 1.13 altered CV Version low versionID to minimum of 10 where neccessary to allow new Vent Van to be correctly identified  -->
+    <!-- NOTE - FOR DECODERS WITH IDENTICAL CV159 VALUES, CV158 IS USED AS THE LOW BYTE AND CV159 THE HIGH BYTE
 			EXAMPLE   CV 158 = 10 BINARY IS 00001010  CV159 = 139 BINARY IS 10001011
 			COMPOSITE PRODUCT ID VALUE BECOMES 0000101010001011 WHICH IN DECIMAL IS 2699
-	-->		
+    -->		
     <decoder>
         <family name="Hornby TTS Sound Decoder" mfg="Hornby" comment="">
             <model model="Hornby TTS Class 08" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="175">
-                <versionCV lowVersionID="2" highVersionID="132"/>
+                <versionCV lowVersionID="10" highVersionID="132"/>
                 <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
                 <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
                 <output name="Aux" label="Gr" maxcurrent="0.1A"/>	
             </model>
 	    <model model="Hornby TTS Class 20" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="159">
-                <versionCV lowVersionID="2" highVersionID="132"/>
+                <versionCV lowVersionID="10" highVersionID="132"/>
                 <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
                 <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
                 <output name="Aux" label="Gr" maxcurrent="0.1A"/>	
             </model>
 	    <model model="Hornby TTS Class 31" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="161">
-                <versionCV lowVersionID="2" highVersionID="132"/>
+                <versionCV lowVersionID="10" highVersionID="132"/>
                 <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
                 <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
                 <output name="Aux" label="Gr" maxcurrent="0.1A"/>
 	    </model>
             <model model="Hornby TTS Class 37" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="cl37,147">
-                <versionCV lowVersionID="2" highVersionID="132"/>
+                <versionCV lowVersionID="10" highVersionID="132"/>
                 <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
                 <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
                 <output name="Aux" label="Gr" maxcurrent="0.1A"/>
@@ -135,19 +137,19 @@
                 <output name="Aux" label="Gr" maxcurrent="0.1A"/>	
             </model>
 	    <model model="Hornby TTS Class 43 HST (Valenta)" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="181">    
-	        <versionCV lowVersionID="2" highVersionID="132"/>
+	        <versionCV lowVersionID="10" highVersionID="132"/>
                 <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
                 <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
                 <output name="Aux" label="Gr" maxcurrent="0.1A"/>
             </model>
 	    <model model="Hornby TTS Class 43 HST (MTU)" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="157">    
-		<versionCV lowVersionID="2" highVersionID="132"/>
+		<versionCV lowVersionID="10" highVersionID="132"/>
                 <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
                 <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
                 <output name="Aux" label="Gr" maxcurrent="0.1A"/>
             </model>
             <model model="Hornby TTS Class 47" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="149">    
-	        <versionCV lowVersionID="2" highVersionID="132"/>
+	        <versionCV lowVersionID="10" highVersionID="132"/>
                 <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
                 <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
                 <output name="Aux" label="Gr" maxcurrent="0.1A"/>
@@ -159,13 +161,13 @@
                 <output name="Aux" label="Gr" maxcurrent="0.1A"/>
             </model>
             <model model="Hornby TTS Class 67" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="153">
-                <versionCV lowVersionID="2" highVersionID="132"/>
+                <versionCV lowVersionID="10" highVersionID="132"/>
                 <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
                 <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
                 <output name="Aux" label="Gr" maxcurrent="0.1A"/>
 	    </model>
 	    <model model="Hornby TTS Class 66" show="no" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="153">
-                <versionCV lowVersionID="2" highVersionID="132"/>
+                <versionCV lowVersionID="10" highVersionID="132"/>
                 <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
                 <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
                 <output name="Aux" label="Gr" maxcurrent="0.1A"/>
@@ -183,7 +185,7 @@
                 <output name="Aux" label="Gr" maxcurrent="0.1A"/>
 	    </model>
             <model model="Hornby TTS Flying Scotsman" show="no" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="137">
-                <versionCV lowVersionID="2" highVersionID="120"/>
+                <versionCV lowVersionID="10" highVersionID="120"/>
                 <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
                 <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
                 <output name="Aux" label="Gr" maxcurrent="0.1A"/>
@@ -195,13 +197,13 @@
                 <output name="Aux" label="Gr" maxcurrent="0.1A"/>
             </model>
             <model model="Hornby TTS Fowler 2P 4-4-0" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="2703">
-                <versionCV lowVersionID="2" highVersionID="120"/>
+                <versionCV lowVersionID="10" highVersionID="120"/>
                 <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
                 <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
                 <output name="Aux" label="Gr" maxcurrent="0.1A"/>
             </model>
 	    <model model="Hornby TTS P2 2-8-2" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="133">
-                <versionCV lowVersionID="2" highVersionID="132"/>
+                <versionCV lowVersionID="10" highVersionID="132"/>
                 <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
                 <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
                 <output name="Aux" label="Gr" maxcurrent="0.1A"/>
@@ -213,19 +215,19 @@
                 <output name="Aux" label="Gr" maxcurrent="0.1A"/>
             </model>
             <model model="Hornby TTS 4F 0-6-0" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="145">
-                <versionCV lowVersionID="2" highVersionID="120"/>
+                <versionCV lowVersionID="10" highVersionID="120"/>
                 <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
                 <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
                 <output name="Aux" label="Gr" maxcurrent="0.1A"/>
             </model>
             <model model="Hornby TTS A4 4-6-0" show="no" replacementModel="Hornby TTS A4 4-6-2" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="135">
-                <versionCV lowVersionID="2" highVersionID="120"/>
+                <versionCV lowVersionID="10" highVersionID="120"/>
                 <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
                 <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
                 <output name="Aux" label="Gr" maxcurrent="0.1A"/>
             </model>
             <model model="Hornby TTS A4 4-6-2" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="135">
-                <versionCV lowVersionID="2" highVersionID="120"/>
+                <versionCV lowVersionID="10" highVersionID="120"/>
                 <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
                 <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
                 <output name="Aux" label="Gr" maxcurrent="0.1A"/>
@@ -237,25 +239,25 @@
                 <output name="Aux" label="Gr" maxcurrent="0.1A"/>
             </model>
 	    <model model="Hornby TTS Hall Class 4-6-0" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="2699">
-                <versionCV lowVersionID="2" highVersionID="120"/>
+                <versionCV lowVersionID="10" highVersionID="120"/>
                 <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
                 <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
                 <output name="Aux" label="Gr" maxcurrent="0.1A"/>
 	    </model>
             <model model="Hornby TTS Castle Class 4-6-0" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="165">
-                <versionCV lowVersionID="2" highVersionID="120"/>
+                <versionCV lowVersionID="10" highVersionID="120"/>
                 <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
                 <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
                 <output name="Aux" label="Gr" maxcurrent="0.1A"/>
 	    </model>
 	    <model model="Hornby TTS S15 Class 4-6-0" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="179">
-                <versionCV lowVersionID="2" highVersionID="120"/>
+                <versionCV lowVersionID="10" highVersionID="120"/>
                 <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
                 <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
                 <output name="Aux" label="Gr" maxcurrent="0.1A"/>
 	    </model>
 	    <model model="Hornby TTS Coronation Class 4-6-2" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="177">
-                <versionCV lowVersionID="2" highVersionID="120"/>
+                <versionCV lowVersionID="10" highVersionID="120"/>
                 <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
                 <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
                 <output name="Aux" label="Gr" maxcurrent="0.1A"/>
@@ -267,19 +269,19 @@
                 <output name="Aux" label="Gr" maxcurrent="0.1A"/>
 	    </model>
 	    <model model="Hornby TTS Merchant Navy Class 4-6-2" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="169">
-                <versionCV lowVersionID="2" highVersionID="120"/>
+                <versionCV lowVersionID="10" highVersionID="120"/>
                 <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
                 <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
                 <output name="Aux" label="Gr" maxcurrent="0.1A"/>
 	    </model>
 	    <model model="Hornby TTS 6000 King Class 4-6-0" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="141">
-                <versionCV lowVersionID="2" highVersionID="120"/>
+                <versionCV lowVersionID="10" highVersionID="120"/>
                 <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
                 <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
                 <output name="Aux" label="Gr" maxcurrent="0.1A"/>
 	    </model>
 	    <model model="Hornby TTS Lord Nelson Class 4-6-2" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="183">
-                <versionCV lowVersionID="2" highVersionID="120"/>
+                <versionCV lowVersionID="10" highVersionID="120"/>
                 <output name="Headlight" label="Wh" maxcurrent="0.1A"/>
                 <output name="Rear Light" label="Ye" maxcurrent="0.1A"/>
                 <output name="Aux" label="Gr" maxcurrent="0.1A"/>

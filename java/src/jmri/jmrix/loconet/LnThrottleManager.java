@@ -1,7 +1,7 @@
 package jmri.jmrix.loconet;
 
-import java.util.concurrent.LinkedBlockingQueue;
 import java.util.Hashtable;
+import java.util.concurrent.LinkedBlockingQueue;
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.LocoAddress;
@@ -155,7 +155,7 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
 
     volatile Thread retrySetupThread;
 
-    Hashtable<Integer, Thread> waitingForNotification = new Hashtable<Integer, Thread>(5);
+    Hashtable<Integer, Thread> waitingForNotification = new Hashtable<>(5);
 
     Hashtable<Integer, LocoNetSlot> slotForAddress;
     LinkedBlockingQueue<ThrottleRequest> requestList;
@@ -384,7 +384,8 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
      * Generally, this will cause the slot to be made "common" and then linked via
      * the "Dispatch" slot.
      * <p>
-     * After disposal, the throttle may not be used to control the loco.
+     * After dispatching, the throttle may not be used to control the loco.
+     * You should check getUsageCountBefore calling as it will fail if not 1
      *
      * @param t is a throttle to be disposed of
      * @param l is the listener for the throttle
@@ -392,11 +393,16 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
     @Override
     public void dispatchThrottle(DccThrottle t, ThrottleListener l) {
         log.debug("dispatchThrottle - throttle {}", t.getLocoAddress());
-        // set status to common
+        // Use slot to dispatch, then release
         if (t instanceof LocoNetThrottle) {
-            ((LocoNetThrottle) t).dispatchThrottle(t, l);
+            // only dispatch if its the last throttle use
+            if (super.getThrottleUsageCount(t.getLocoAddress()) == 1)  {
+                ((LocoNetThrottle) t).dispatchThrottle(t, l);
+            } else {
+                return;
+            }
         }
-        // super.releaseThrottle(t, l);
+        super.releaseThrottle(t, l);
     }
 
     /**
@@ -543,12 +549,16 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
                 processQueuedThrottleSetupRequest();
             }
         } else {
-           // The warning message below is, at a minimum, confusing.
-           // Steal is currently implemented by using the same method
-           // we used to aquire the slot prior to the release of 
-           // Digitrax command stations with expanded slots.
-           //log.warn("user agreed to steal address {}, but no code is in-place to handle the 'steal' (yet)",address.getNumber());
-           commitToAcquireThrottle(slotForAddress.get(address.getNumber()));
+            // Steal is currently implemented by using the same method
+            // we used to aquire the slot prior to the release of 
+            // Digitrax command stations with expanded slots.
+            LocoNetSlot slot = slotForAddress.get(address.getNumber());
+            // Only continue if address is found in a slot
+            if (slot != null) {
+                commitToAcquireThrottle(slot);
+            } else {
+                log.error("Address {} not found in list of slots", address.getNumber());
+            }
         }
     }
 

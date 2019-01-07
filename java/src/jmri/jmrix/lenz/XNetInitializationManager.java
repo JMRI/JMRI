@@ -62,7 +62,7 @@ public class XNetInitializationManager extends AbstractXNetInitializationManager
              apropriate managers */
             if (CSType == 0x02) {
                 if (log.isDebugEnabled()) {
-                    log.debug("Command Station is Commpact/Commander/Other");
+                    log.debug("Command Station is Compact/Commander/Other");
                 }
                 systemMemo.setTurnoutManager(new jmri.jmrix.lenz.XNetTurnoutManager(systemMemo.getXNetTrafficController(), systemMemo.getSystemPrefix()));
                 jmri.InstanceManager.setTurnoutManager(systemMemo.getTurnoutManager());

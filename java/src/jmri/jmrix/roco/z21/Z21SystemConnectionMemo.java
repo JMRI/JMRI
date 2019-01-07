@@ -75,6 +75,22 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     private Z21ReporterManager _rm = null;
 
+    /**
+     * Sensor Manager for this instance.
+     */
+    public void setSensorManager(Z21SensorManager sm){
+        _sm = sm;
+    }
+
+    public Z21SensorManager getSensorManager() {
+        if(_sm==null){
+           setSensorManager(new Z21SensorManager(this));
+        }
+        return _sm;
+    }
+
+    private Z21SensorManager _sm = null;
+
     public XNetProgrammerManager getProgrammerManager() {
         if (_xnettunnel!=null) {
             // delegate to the XPressNet tunnel.
@@ -100,13 +116,21 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         if (type.equals(jmri.MultiMeter.class)){
            return true;
         }
+        if (type.equals(jmri.SensorManager.class)){
+           return true;
+        }
         if (_xnettunnel!=null) {
             // delegate to the XPressNet tunnel.
-            return _xnettunnel.getStreamPortController().getSystemConnectionMemo().provides(type);
+            if(_xnettunnel.getStreamPortController().getSystemConnectionMemo().provides(type)) {
+               return true;
+            } // don't return false here, let the following code run 
         }
         if (_loconettunnel!=null) {
             // delegate to the LocoNet tunnel.
-            return _loconettunnel.getStreamPortController().getSystemConnectionMemo().provides(type);
+            if(_loconettunnel.getStreamPortController().getSystemConnectionMemo().provides(type)) {
+               return true;
+            } // don't return false here, let the following code run
+            
         }
         return super.provides(type); // nothing, by default
     }
@@ -125,6 +149,9 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         }
         if(T.equals(jmri.MultiMeter.class)){
             return (T) getMultiMeter();
+        }
+        if(T.equals(jmri.SensorManager.class)){
+            return (T) getSensorManager();
         }
         if (_xnettunnel!=null && _xnettunnel.getStreamPortController().getSystemConnectionMemo().provides(T) ) {
             // delegate to the XPressNet tunnel.
@@ -160,15 +187,18 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         _tc.sendz21Message(Z21Message.getLanSetBroadcastFlagsRequestMessage(
                            z21CommandStation.getZ21BroadcastFlags()),null);
 
-        // add an XpressNet Tunnel.
-        _xnettunnel = new Z21XPressNetTunnel(this);
-
         // add an LocoNet Tunnel.
         _loconettunnel = new Z21LocoNetTunnel(this);
 
+        // add an XpressNet Tunnel.
+        _xnettunnel = new Z21XPressNetTunnel(this);
+
         // set up the Reporter Manager
         jmri.InstanceManager.setReporterManager(getReporterManager());
-            
+
+        // set up the Sensor Manager
+        jmri.InstanceManager.setSensorManager(getSensorManager());
+
         // but make sure the Loconet memo is set (for one feedback message).
         Z21XNetProgrammerManager xpm = (Z21XNetProgrammerManager) _xnettunnel.getStreamPortController().getSystemConnectionMemo().getProgrammerManager();
         xpm.setLocoNetMemo(_loconettunnel.getStreamPortController().getSystemConnectionMemo());

@@ -6,9 +6,7 @@ import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.automation.Automation;
 import jmri.jmrit.operations.automation.AutomationItem;
 import jmri.jmrit.operations.automation.AutomationManager;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -100,19 +98,6 @@ public class ResumeAutomationActionTest extends OperationsTestCase {
         
         String message = action.getActionString();
         Assert.assertTrue("message contains automation name", message.contains("TEST_AUTOMATION"));
-    }
-
-
-    // The minimal setup for log4J
-    @Override
-    @Before
-    public void setUp() {
-        super.setUp();    }
-
-    @Override
-    @After
-    public void tearDown() {
-        super.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(ResumeAutomationActionTest.class);

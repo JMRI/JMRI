@@ -8,7 +8,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Implement turnout manager for SECSI systems.
  * <p>
- * System names are "ViTnnn", where nnn is the turnout number without padding.
+ * System names are "VTnnn", where V is the user configurable system prefix,
+ * nnn is the turnout number without padding.
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2007
  */
@@ -65,7 +66,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     }
 
     /**
-     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     * {@inheritDoc}
      */
     @Override
     public String getEntryToolTip() {

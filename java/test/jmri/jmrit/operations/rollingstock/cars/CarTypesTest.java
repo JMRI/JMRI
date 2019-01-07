@@ -3,9 +3,8 @@ package jmri.jmrit.operations.rollingstock.cars;
 import java.util.Locale;
 import javax.swing.JComboBox;
 import jmri.InstanceManager;
+import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.util.JUnitOperationsUtil;
-import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -21,7 +20,7 @@ import org.junit.Test;
  *
  * @author Bob Coleman Copyright (C) 2008, 2009
  */
-public class CarTypesTest {
+public class CarTypesTest extends OperationsTestCase {
 
     private Locale defaultLocale;
 
@@ -119,45 +118,18 @@ public class CarTypesTest {
         Assert.assertFalse("Car Types Delete New1", ct.containsName("Type New1"));
     }
 
-    @Test
-    @Ignore("locale set is not having the desired effect")
-    public void defaultNameChangetest() {
-        Locale.setDefault(Locale.US); // set the locale to US English 
-                                      // for this test.
-        CarTypes ct = InstanceManager.getDefault(CarTypes.class);
-        ct.getNames(); //Load predefined car types
-        // change default names produces an error message if the
-        // number of items in carTypeNames and carTypeCovert don't match
-        // when the local is set to US english, this should not occur.
-        ct.changeDefaultNames(jmri.jmrit.operations.setup.Setup.AAR);
-    }
-
-    @Test
-    @Ignore("locale set is not having the desired effect")
-    public void defaultNameChangetestGB() {
-        Locale.setDefault(Locale.UK); // set the locale to UK english 
-                                      // for this test.
-
-        CarTypes ct = InstanceManager.getDefault(CarTypes.class);
-        // change default names produces an error message if the
-        // number of items in carTypeNames and carTypeCovert don't match
-        // when the local is set to US english, this should not occur.
-        ct.changeDefaultNames(jmri.jmrit.operations.setup.Setup.AAR);
-        jmri.util.JUnitAppender.assertErrorMessage(
-                "Properties file doesn't have equal length conversion strings, carTypeNames 10, carTypeConvert 33");
-    }
-
+    @Override
     @Before
-    public void setUp() throws Exception {
-        JUnitUtil.setUp();
-        JUnitOperationsUtil.resetOperationsManager();
+    public void setUp() {
+        super.setUp();
         defaultLocale = Locale.getDefault(); // save the default locale.
     }
 
+    @Override
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         // reset the default locale
         Locale.setDefault(defaultLocale);
-        JUnitUtil.tearDown();
+        super.tearDown();
     }
 }

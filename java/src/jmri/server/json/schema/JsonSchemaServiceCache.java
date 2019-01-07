@@ -112,7 +112,7 @@ public class JsonSchemaServiceCache implements InstanceManagerAutoDefault {
     }
 
     private synchronized JsonSchema getSchema(@Nonnull String type, boolean server, @Nonnull Locale locale, @Nonnull HashMap<String, JsonSchema> map) throws JsonException {
-        log.trace("getSchema(\"{}\", {}, ...)", type, server);
+        this.cacheServices();
         JsonSchema result = map.get(type);
         if (result == null) {
             for (JsonHttpService service : this.getServices(type)) {
