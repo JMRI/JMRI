@@ -434,7 +434,7 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
                     mask = mask | 1;
                 }
             } catch (StringIndexOutOfBoundsException e) {
-                log.error("mask \"{}\" could not be handled for variable ", label());
+                log.error("mask \"{}\" could not be handled for variable {}", maskString, label());
             }
         }
         return mask;
