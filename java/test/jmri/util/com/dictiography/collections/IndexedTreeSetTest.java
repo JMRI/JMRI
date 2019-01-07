@@ -89,7 +89,7 @@ public class IndexedTreeSetTest {
 
             while (set.size() < 100000) {
                 Integer next = random.nextInt();
-                if (!set.contains(next)) {
+                if (!set.contains(String.valueOf(next))) {
                     set.add(String.valueOf(next));
                     m.add(String.valueOf(next));
 //                    ((IndexedTreeSet) m).debug();
