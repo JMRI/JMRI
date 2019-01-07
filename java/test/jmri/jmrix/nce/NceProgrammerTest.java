@@ -78,40 +78,7 @@ public class NceProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     }
 
     @Test
-    public void testWriteCvSequenceBin() throws JmriException {
-        // and do the write
-        p.writeCV("10", 20, l);
-        // correct message sent
-        Assert.assertEquals("mode message sent", 1, tc.outbound.size());
-        Assert.assertEquals("write message contents", "P010 020",
-                ((tc.outbound.elementAt(0))).toString());
-        // reply from programmer arrives
-        NceReply r = new NceReply(tc);
-        tc.sendTestReply(r, p);
-        Assert.assertEquals(" got data value back", 20, l.getRcvdValue());
-        Assert.assertEquals(" listener invoked", 1, l.getRcvdInvoked());
-    }
-
-    @Test
     public void testWriteRegisterSequenceAscii() throws JmriException {
-        // set register mode
-        p.setMode(ProgrammingMode.REGISTERMODE);
-
-        // and do the write
-        p.writeCV("3", 12, l);
-        // check "prog mode" message sent
-        Assert.assertEquals("write message sent", 1, tc.outbound.size());
-        Assert.assertEquals("write message contents", "S3 012",
-                ((tc.outbound.elementAt(0))).toString());
-        // reply from programmer arrives
-        NceReply r = new NceReply(tc);
-        tc.sendTestReply(r, p);
-        Assert.assertEquals(" got data value back", 12, l.getRcvdValue());
-        Assert.assertEquals(" listener invoked", 1, l.getRcvdInvoked());
-    }
-
-    @Test
-    public void testWriteRegisterSequenceBin() throws JmriException {
         // set register mode
         p.setMode(ProgrammingMode.REGISTERMODE);
 
@@ -149,50 +116,7 @@ public class NceProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     }
 
     @Test
-    public void testReadCvSequenceBin() throws JmriException {
-        // and do the read
-        p.readCV("10", l);
-
-        // check "read command" message sent
-        Assert.assertEquals("read message sent", 1, tc.outbound.size());
-        Assert.assertEquals("read message contents", "R010",
-                ((tc.outbound.elementAt(0))).toString());
-        // reply from programmer arrives
-        NceReply r = new NceReply(tc);
-        r.setElement(0, '0');
-        r.setElement(1, '2');
-        r.setElement(2, '0');
-        tc.sendTestReply(r, p);
-
-        Assert.assertEquals(" programmer listener invoked", 1, l.getRcvdInvoked());
-        Assert.assertEquals(" value read", 20, l.getRcvdValue());
-    }
-
-    @Test
     public void testReadRegisterSequenceAscii() throws JmriException {
-        // set register mode
-        p.setMode(ProgrammingMode.REGISTERMODE);
-
-        // and do the read
-        p.readCV("3", l);
-
-        // check "read command" message sent
-        Assert.assertEquals("read message sent", 1, tc.outbound.size());
-        Assert.assertEquals("read message contents", "V3",
-                ((tc.outbound.elementAt(0))).toString());
-        // reply from programmer arrives
-        NceReply r = new NceReply(tc);
-        r.setElement(0, '0');
-        r.setElement(1, '2');
-        r.setElement(2, '0');
-        tc.sendTestReply(r, p);
-
-        Assert.assertEquals(" programmer listener invoked", 1, l.getRcvdInvoked());
-        Assert.assertEquals(" value read", 20, l.getRcvdValue());
-    }
-
-    @Test
-    public void testReadRegisterSequenceBin() throws JmriException {
         // set register mode
         p.setMode(ProgrammingMode.REGISTERMODE);
 
