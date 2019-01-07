@@ -204,7 +204,7 @@ something like:
 </pre>Jython simplifies that by allowing us to provide useful
 variables, and by shortening certain method calls.
 
-      <p>To get access to the SignalHead, Sensor and Turnout
+      <p>To get easier access to the SignalHead, Sensor and Turnout
       managers and the CommandStation object, several shortcut
       variables are defined:</p>
 
@@ -229,13 +229,19 @@ variables, and by shortening certain method calls.
 
         <li>powermanager</li>
 
-        <li>programmers</li>
+        <li>addressedProgrammers</li>
+        <li>globalProgrammers</li>
 
         <li>dcc (current command station)</li>
 
-        <li>shutdown (current shutdown manager)</li>
-
         <li>audio</li>
+
+        <li>shutdown (current shutdown manager)</li>
+        
+        <li>layoutblocks</li>
+
+        <li>warrants</li>
+
       </ul>These can then be referenced directly in Jython as
       <pre>
    t2 = turnouts.provideTurnout("12");

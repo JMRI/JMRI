@@ -29,6 +29,7 @@ public class OpenLcbLocoAddressTest extends TestCase {
         Assert.assertTrue(!a.equals(new OpenLcbLocoAddress(new NodeID(new byte[]{1, 2, 3, 4, 0, 0}))));
     }
 
+    @SuppressWarnings("unlikely-arg-type") // OpenLcbLocoAddress seems to be unrelated to String
     public void testEqualsWrongType() {
         OpenLcbLocoAddress a = new OpenLcbLocoAddress(new NodeID(new byte[]{1, 2, 3, 4, 5, 6}));
         Assert.assertTrue(!a.equals("foo"));
