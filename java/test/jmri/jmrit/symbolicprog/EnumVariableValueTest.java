@@ -169,27 +169,42 @@ public class EnumVariableValueTest extends AbstractVariableValueTestBase {
         cv.setValue(0);
         v.put("81", cv);
         // create a variable pointed at CV 81, check name
-        VariableValue variable = makeVar("label", "comment", "", false, false, false, false, "81", "9", 0, 2, v, null, null);
-        checkValue(variable, "value object initially contains ", "0");
+        EnumVariableValue variable = new EnumVariableValue("label", "comment", "", false, false, false, false, "81", "9", 0, 3, v, null, null);
+        variable.nItems(3);
+        variable.addItem("A");
+        variable.addItem("B");
+        variable.addItem("C");
+        variable.lastItem();
+        
+        checkValue(variable, "value object initially contains ", "A");
+        Assert.assertEquals("cv value", 0*9, cv.getValue());
+
+        setValue(variable, "B");
+        checkValue(variable, "value object contains ", "B");
+        Assert.assertEquals("cv value", 1*9, cv.getValue());
+
+        setValue(variable, "A");
+        checkValue(variable, "value object contains ", "A");
+        Assert.assertEquals("cv value", 0*9, cv.getValue());
 
         // pretend you've edited the value & manually notify
-        setValue(variable, "2");
+        setValue(variable, "C");   // 3rd choice, value = 2
         // check variable value
-        checkValue(variable, "value object contains ", "2");
+        checkValue(variable, "value object contains ", "C");
         // see if the CV was updated
         Assert.assertEquals("cv value", 18, cv.getValue());
         
         // now check that other parts are maintained
-        cv.setValue(3+2*9+81);
+        cv.setValue(3+1*9+81);
         // check variable value
-        checkValue(variable, "value object contains ", "2");
+        checkValue(variable, "value object contains ", "B");
         // see if the CV was updated
-        Assert.assertEquals("cv value", 3+2*9+81, cv.getValue());
+        Assert.assertEquals("cv value", 3+1*9+81, cv.getValue());
 
         // and try setting another value
-        setValue(variable, "1");
-        checkValue(variable, "value object contains ", "1");
-        Assert.assertEquals("cv value", 3+9+81, cv.getValue());
+        setValue(variable, "B");
+        Assert.assertEquals("cv value", 3+1*9+81, cv.getValue());
+        checkValue(variable, "value object contains ", "B");
                        
     }
 
