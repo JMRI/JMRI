@@ -115,6 +115,13 @@ public abstract class LnTrafficController implements LocoNetInterface {
     }
 
     /**
+     * Clean up any resources, particularly threads.
+     * <p>
+     * The object can't be used after this.
+     */
+    public void dispose() {}
+
+    /**
      * Monitor the number of LocoNet messages received across the interface.
      * This includes the messages this client has sent.
      *

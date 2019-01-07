@@ -142,7 +142,7 @@ public class DefaultLogixManager extends AbstractManager<Logix>
         }
         // iterate thru all Logixs that exist
         java.util.Iterator<Logix> iter
-                = getNamedBeanList().iterator();
+                = getNamedBeanSet().iterator();
         while (iter.hasNext()) {
             // get the next Logix
             x = iter.next();

@@ -27,6 +27,7 @@ public class PR2SystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemo
     @Override
     @After
     public void tearDown() {
+        scm.dispose();
         JUnitUtil.tearDown();
     }
 

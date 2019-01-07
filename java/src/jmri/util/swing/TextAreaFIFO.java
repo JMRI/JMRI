@@ -69,7 +69,7 @@ public class TextAreaFIFO extends JTextArea implements DocumentListener {
      *
      * @param newval  Number of lines
      */
-    public void setMaxLines(@Nonnull int newval){
+    public void setMaxLines(int newval){
         _maxLines = newval;
     }
     
