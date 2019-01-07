@@ -5,6 +5,7 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+        CbusDummyCSSessionTest.class,
         CbusDummyCSTest.class,
         CbusDummyNodeTest.class,
         CbusEventResponderTest.class,
