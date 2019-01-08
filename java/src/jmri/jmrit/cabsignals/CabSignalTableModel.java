@@ -102,17 +102,8 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
 
     // order needs to match column list top of dtabledatamodel
     static protected final String[] columnToolTips = {
-        ("Session ID"),
         null, // loco id
-        null, // estop
         ("If Loco ID heard by long address format"),
-        ("Speed Commanded by throttle / CAB"),
-        ("Forward or Reverse"),
-        ("Any Functions set to ON"),
-        ("Speed Steps"),
-        null, // consist id
-        null, // flags
-        ("Alternative Train Describer block value to use ( editable )"),
         ("Block Username"),
         ("North / South / East / West, 8 point block direction"),
         null, // block button
@@ -426,8 +417,8 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
     // takes a string returns row if matches locoid or alt td
     private int getrowfromstringval(String blockval){
         for (int i = 0; i < getRowCount(); i++) {
-            String locoidstr = locoidarr.get(i).toString();
-            if (Objects.equals(blockval,locoidstr)) {
+            if (blockval.equals(locoidarr.get(i).toString()) || 
+                blockval.equals("" + locoidarr.get(i).getNumber())) {
                 return i;
             }
         }
@@ -608,7 +599,8 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
     }
 
     // returns block for a given row
-    // loops through blocklist, compares each block value to row loco id + alternative td
+    // loops through blocklist, compares each block value to locoAddress string
+    // or number.
     private Block findblockforrow(int row) {
         // log.warn("total blocks {} ",(mBlockList.size()) );
         for (Block tb : mBlockList) {
