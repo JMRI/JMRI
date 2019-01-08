@@ -413,17 +413,6 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
         return getRowCount()-1;
     }
     
-    // return row number for a loco address, creates new row if no existing
-    private synchronized int gettablerow(LocoAddress locoid){
-        for (int i = 0; i < getRowCount(); i++) {
-            // log.warn("check {} for locoid {}",i,locoid);
-            if (locoid==locoidarr.get(i))  {
-                return i;
-            }
-        }
-        return createnewrow(locoid);
-    }
-
     synchronized void addRow(LocoAddress locoid){
         for (int i = 0; i < getRowCount(); i++) {
             // log.warn("check {} for locoid {}",i,locoid);
