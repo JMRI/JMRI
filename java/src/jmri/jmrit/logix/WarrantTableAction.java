@@ -111,7 +111,7 @@ public class WarrantTableAction extends AbstractAction {
      * @return a menu containing warrant actions
      */
     synchronized public static JMenu makeWarrantMenu(boolean edit) {
-        if (jmri.InstanceManager.getDefault(OBlockManager.class).getSystemNameList().size() > 1) {
+        if (jmri.InstanceManager.getDefault(OBlockManager.class).getNamedBeanSet().size() > 1) {
             _edit = edit;
             _warrantMenu = new JMenu(Bundle.getMessage("MenuWarrant"));
             updateWarrantMenu();

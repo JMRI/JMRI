@@ -271,8 +271,9 @@ public class Log4JUtil {
         int i;
         for (i = originalTrace.length-1; i>0; i--) { // search from deepest
             String name = originalTrace[i].getClassName();
-            if (name.equals("jmri.util.junit.TestClassMainMethod")) continue; // special case
-            if (name.startsWith("jmri") || name.startsWith("apps")) break;
+            if (name.equals("jmri.util.junit.TestClassMainMethod")) continue; // special case to ignore high up in stack
+            if (name.equals("apps.tests.AllTest")) continue;                 // special case to ignore high up in stack
+            if (name.startsWith("jmri") || name.startsWith("apps")) break;  // keep those
         }
         return shortenStacktrace(t, i+1);
     }

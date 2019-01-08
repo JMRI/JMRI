@@ -212,6 +212,7 @@ public class LocoNetMessageTest {
     }
 
     @Test
+    @SuppressWarnings("unlikely-arg-type") // int[] seems to be unrelated to LocoNetMessage
     public void testEqualsFromInt() {
         int[] t1 = new int[]{0x81, 0x01, 0x02, 0x02};
         int[] t2 = new int[]{0x81, 0x01, 0x02, 0x02, 0x03};

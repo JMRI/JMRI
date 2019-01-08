@@ -60,6 +60,22 @@ public class XNetSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMem
         Assert.assertFalse(t.provides(jmri.ConsistManager.class));
     }
 
+    @Test
+    public void testProivdesCommandStaitonCompact() {
+        // infrastructure objects
+        XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation(){
+          @Override
+          public int getCommandStationType(){
+              return(0x02); // Lenz Compact/Atlas Commander
+          }
+        });
+
+        XNetSystemConnectionMemo t = new XNetSystemConnectionMemo();
+        t.setXNetTrafficController(tc);
+        t.setCommandStation(tc.getCommandStation());
+        Assert.assertFalse(t.provides(jmri.CommandStation.class));
+    }
+
     // The minimal setup for log4J
     @Override
     @Before
