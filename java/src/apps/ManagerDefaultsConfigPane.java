@@ -203,7 +203,7 @@ public final class ManagerDefaultsConfigPane extends JmriPanel implements Prefer
                 if (isSelected()) {
                     InstanceManager.getDefault(ManagerDefaultSelector.class).setDefault(SelectionButton.this.managerClass, SelectionButton.this.connectionName);
                     pane.dirty = true;
-                    setToolTipText(Bundle.getMessage("TooltipDefaultSelectedRestart", this.connectionName, this.managerName))); // update the tooltip when (de)selected
+                    setToolTipText(Bundle.getMessage("TooltipDefaultSelectedRestart", this.connectionName, this.managerName)); // update the tooltip when selected
                 }
             });
 
