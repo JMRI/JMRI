@@ -191,8 +191,8 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
     protected JLabel baudBoxLabel;
     protected String[] baudList;
 
-    protected SpinnerNumberModel intervalSpinner = new SpinnerNumberModel(0, 0, 10000, 1); // 10 sec max seems long enough
-    protected JSpinner outputIntervalSpinner = new JSpinner();
+    protected SpinnerNumberModel intervalSpinner = new SpinnerNumberModel(250, 0, 10000, 1); // 10 sec max seems long enough
+    protected JSpinner outputIntervalSpinner = new JSpinner(intervalSpinner);
     protected JLabel outputIntervalLabel;
     private JButton outputIntervalReset = new JButton(Bundle.getMessage("ButtonReset"));
 
@@ -405,7 +405,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         outputIntervalSpinner.setValue(adapter.getSystemConnectionMemo().getOutputInterval());
         outputIntervalSpinner.setEnabled(true);
         outputIntervalReset.addActionListener((ActionEvent event) -> {
-            outputIntervalSpinner.setValue(0);
+            outputIntervalSpinner.setValue(250);
         });
 
         showAdvanced.setFont(showAdvanced.getFont().deriveFont(9f));

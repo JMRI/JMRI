@@ -270,8 +270,8 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
     protected JTextField serviceTypeField = new JTextField(15);
     protected JLabel serviceTypeFieldLabel;
 
-    protected SpinnerNumberModel intervalSpinner = new SpinnerNumberModel(0, 0, 10000, 1); // 10 sec max seems long enough
-    protected JSpinner outputIntervalSpinner = new JSpinner();
+    protected SpinnerNumberModel intervalSpinner = new SpinnerNumberModel(250, 0, 10000, 1); // 10 sec max seems long enough
+    protected JSpinner outputIntervalSpinner = new JSpinner(intervalSpinner);
     protected JLabel outputIntervalLabel;
     protected JButton outputIntervalReset = new JButton(Bundle.getMessage("ButtonReset"));
 
@@ -363,7 +363,7 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
         outputIntervalSpinner.setValue(adapter.getSystemConnectionMemo().getOutputInterval());
         outputIntervalSpinner.setEnabled(true);
         outputIntervalReset.addActionListener((ActionEvent event) -> {
-            outputIntervalSpinner.setValue(0);
+            outputIntervalSpinner.setValue(250);
         });
 
         showAutoConfig.setFont(showAutoConfig.getFont().deriveFont(9f));

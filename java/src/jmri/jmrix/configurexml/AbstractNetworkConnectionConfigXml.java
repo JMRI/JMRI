@@ -73,6 +73,12 @@ abstract public class AbstractNetworkConnectionConfigXml extends AbstractConnect
             }
         }
 
+        if (adapter.getSystemConnectionMemo().getOutputInterval() > 0) {
+            e.setAttribute("turnoutInterval", String.valueOf(adapter.getSystemConnectionMemo().getOutputInterval()));
+        } else {
+            e.setAttribute("turnoutInterval", "0");
+        }
+
         e.setAttribute("class", this.getClass().getName());
 
         extendElement(e);
@@ -81,7 +87,7 @@ abstract public class AbstractNetworkConnectionConfigXml extends AbstractConnect
     }
 
     /**
-     * Customizable method if you need to add anything more
+     * Customizable method if you need to add anything more.
      *
      * @param e Element being created, update as needed
      */
@@ -169,16 +175,18 @@ abstract public class AbstractNetworkConnectionConfigXml extends AbstractConnect
         // if successful so far, go ahead and configure
         adapter.configure();
 
-        // once all the configure processing has happened, do any
-        // extra config
-        int turnoutInterval = Integer.parseInt(perNode.getAttribute("turnoutInterval").getValue());
-        adapter.getSystemConnectionMemo().setOutputInterval(turnoutInterval);
+        // once all the configure processing has happened, do any extra config
+
+        if (perNode.getAttribute("turnoutInterval") != null) { // migrate existing profile, defaults to 250 ms in memo
+            adapter.getSystemConnectionMemo().setOutputInterval(Integer.parseInt(perNode.getAttribute("turnoutInterval").getValue()));
+        }
+
         unpackElement(shared, perNode);
         return result;
     }
 
     /**
-     * Update static data from XML file
+     * Update static data from XML file.
      *
      * @param element Top level Element to unpack.
      */

@@ -130,12 +130,12 @@ public class MatrixSignalMastTest {
 
         m.setAspect("Clear");
         Assert.assertEquals("check clear", "Clear", m.getAspect());
-        JUnitUtil.waitFor(200); // next test fails on Travis and Appveyor servers without waitFor
+        JUnitUtil.waitFor(100); // next test fails on Travis and Appveyor servers without waitFor
         Assert.assertEquals("it11 for Clear", Turnout.CLOSED, it11.getCommandedState());
         // mast delay + interval = 0 but it12 state is fragile (expected state on it12 happens to be identical to it11)
         m.setAspect("Stop");
         Assert.assertEquals("check stop", "Stop", m.getAspect());
-        JUnitUtil.waitFor(200); // next test fails on Travis and Appveyor servers without waitFor
+        JUnitUtil.waitFor(100); // next test fails on Travis and Appveyor servers without waitFor
         Assert.assertEquals("it11 for Stop", Turnout.THROWN, it11.getCommandedState()); // mast delay + interval = 0
     }
 
