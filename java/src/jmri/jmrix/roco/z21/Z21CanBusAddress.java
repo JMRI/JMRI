@@ -1,8 +1,7 @@
 package jmri.jmrix.roco.z21;
 
 import jmri.Manager.NameValidity;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.ReporterManager;
 
 /**
  * Utility Class supporting parsing and testing of addresses for Z21 CanBus  
@@ -106,7 +105,7 @@ public class Z21CanBusAddress {
         // check for a Reporter 
         if (systemName.charAt(prefix.length() + 1) == 'R') {
             jmri.Reporter r = null;
-            r = jmri.InstanceManager.reporterManagerInstance().getBySystemName(systemName);
+            r = jmri.InstanceManager.getDefault(ReporterManager.class).getBySystemName(systemName);
             if (r != null) {
                 return r.getUserName();
             } else {
@@ -127,6 +126,6 @@ public class Z21CanBusAddress {
         return ("");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Z21CanBusAddress.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Z21CanBusAddress.class);
 
 }

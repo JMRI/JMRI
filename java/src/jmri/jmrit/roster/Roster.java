@@ -28,8 +28,6 @@ import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.ProcessingInstruction;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Roster manages and manipulates a roster of locomotives.
@@ -90,8 +88,6 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
     static final public String schemaVersion = ""; // NOI18N
     private String defaultRosterGroup = null;
     private final HashMap<String, RosterGroup> rosterGroups = new HashMap<>();
-    // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(Roster.class);
 
     /**
      * Name of the default roster index file. {@value #DEFAULT_ROSTER_INDEX}
@@ -1363,4 +1359,5 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
         }
     }
 
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Roster.class);
 }
