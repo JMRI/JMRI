@@ -61,6 +61,11 @@
     </variable>
     <variable item="Decoder ID Text" CV="261" readOnly="yes" default="0">
         <enumVal>
+            <enumChoice choice="Unknown" value ="0">
+                <choice>Unknown</choice>
+                <choice xml:lang="de">Unbekannt</choice>
+                <choice xml:lang="fr">Inconnu</choice>
+            </enumChoice>
             <enumChoice choice="DHP160" value ="16"/>
             <enumChoice choice="DHP250" value ="25"/>
             <enumChoice choice="DHP260" value ="26"/>
