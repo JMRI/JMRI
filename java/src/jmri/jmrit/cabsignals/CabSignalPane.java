@@ -89,7 +89,6 @@ public class CabSignalPane extends jmri.util.swing.JmriPanel {
 
 
     public void init() {
-        try {
         JTable slotTable = new JTable(slotModel) {
             // Override JTable Header to implement table header tool tips.
             @Override
@@ -274,10 +273,6 @@ public class CabSignalPane extends jmri.util.swing.JmriPanel {
         
         p1.setVisible(true);
         log.debug("class name {} ",CabSignalPane.class.getName());
-        }catch (Exception e){
-          e.printStackTrace();
-          throw e;
-        }
     }
     
 	private static class ChngBlockDirRenderer implements TableCellRenderer {		
