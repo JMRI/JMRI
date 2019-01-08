@@ -378,7 +378,7 @@ public class CabSignalPane extends jmri.util.swing.JmriPanel {
      */
     @Override
     public String getHelpTarget() {
-        return "package.jmri.jmrix.can.cbus.swing.cbusslotmonitor.CabSignalPane";
+        return "package.jmri.jmrit.cabsignals.CabSignalPane";
     }    
     
     @Override
