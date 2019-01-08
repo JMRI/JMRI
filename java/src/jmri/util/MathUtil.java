@@ -992,6 +992,18 @@ public final class MathUtil {
         return offset(r1, subtract(center(r2), center(r1)));
     }
 
+    /**
+     * return rectangle at point
+     * @param p, the point
+     * @param width, the width
+     * @param height, the height
+     * @return the rectangle
+     */
+    @CheckReturnValue
+    public static Rectangle2D rectangleAtPoint(@Nonnull Point2D p, Double width, Double height) {
+        return new Rectangle2D.Double(p.getX(), p.getY(), width, height);
+    }
+
     // recursive routine to plot a cubic Bezier...
     // (also returns distance!)
     private static double plotBezier(

@@ -38,12 +38,10 @@ import java.beans.PropertyVetoException;
 import java.io.File;
 import java.lang.reflect.Field;
 import java.text.MessageFormat;
-
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
 import javax.annotation.*;
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -56,11 +54,8 @@ import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
-
 import jmri.*;
-
 import jmri.configurexml.StoreXmlUserAction;
-
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.dispatcher.DispatcherAction;
 import jmri.jmrit.dispatcher.DispatcherFrame;
@@ -89,7 +84,6 @@ import jmri.util.SystemType;
 import jmri.util.swing.JComboBoxUtil;
 import jmri.util.swing.JmriBeanComboBox;
 import jmri.util.swing.JmriColorChooser;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -215,6 +209,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             InstanceManager.getDefault(SignalHeadManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
 
     private transient JRadioButton iconLabelButton = new JRadioButton(Bundle.getMessage("IconLabel"));
+    private transient JRadioButton shapeButton = new JRadioButton(Bundle.getMessage("LayoutShape"));
 
     private transient JButton changeIconsButton = new JButton(Bundle.getMessage("ChangeIcons") + "...");
 
@@ -370,6 +365,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     public transient List<SignalHeadIcon> signalList = new ArrayList<>();                //Signal Head Icons
     public transient List<SignalMastIcon> signalMastList = new ArrayList<>();            //Signal Mast Icons
 
+    private transient List<LayoutShape> layoutShapes = new ArrayList<>();               // LayoutShap list
+
     // counts used to determine unique internal names
     private transient int numAnchors = 0;
     private transient int numEndBumpers = 0;
@@ -379,6 +376,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     private transient int numLayoutSlips = 0;
     private transient int numLayoutTurnouts = 0;
     private transient int numLayoutTurntables = 0;
+    private transient int numShapes = 0;
 
     public transient LayoutEditorFindItems finder = new LayoutEditorFindItems(this);
 
@@ -566,6 +564,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         itemGroup.add(memoryButton);
         itemGroup.add(blockContentsButton);
         itemGroup.add(iconLabelButton);
+        itemGroup.add(shapeButton);
 
         //This is used to enable/disable property controls depending on which (radio) button is selected
         ActionListener selectionListAction = (ActionEvent event) -> {
@@ -676,6 +675,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         memoryButton.addActionListener(selectionListAction);
         blockContentsButton.addActionListener(selectionListAction);
         iconLabelButton.addActionListener(selectionListAction);
+        shapeButton.addActionListener(selectionListAction);
 
         //first row of edit tool bar items
         //turnout items
@@ -904,6 +904,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
         //icon label
         iconLabelButton.setToolTipText(Bundle.getMessage("IconLabelToolTip"));
+        shapeButton.setToolTipText(Bundle.getMessage("ShapeToolTip"));
 
         //change icons...
         //this is enabled/disabled via selectionListAction above
@@ -1256,6 +1257,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
         JPanel iconGroup5 = new JPanel(floatContentLayout);
         iconGroup5.add(iconLabelButton);
+        iconGroup5.add(shapeButton);
         floatEditIcon.add(iconGroup5);
 
         floatEditTabsPane.addTab(Bundle.getMessage("TabIcon"), null, floatEditIcon, null);
@@ -1577,6 +1579,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
             JPanel vTop22Panel = new JPanel(verticalContentLayout);
             vTop22Panel.add(iconLabelButton);
+            vTop22Panel.add(shapeButton);
             vTop22Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop22Panel.getPreferredSize().height));
             vTop22Panel.add(changeIconsButton);
             iconsBorderPanel.add(vTop22Panel);
@@ -1765,6 +1768,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             hTop6Left.add(signalHeadComboBox);
             hTop6Left.add(new JLabel(" "));
             hTop6Left.add(iconLabelButton);
+            hTop6Left.add(shapeButton);
 
             hTop6Panel.add(hTop6Left);
             editToolBarPanel.add(hTop6Panel);
@@ -5031,7 +5035,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 if (allControlling()) {
                     checkControls(false);
                 }
-                 //initialize starting selection - cancel any previous selection rectangle
+                //initialize starting selection - cancel any previous selection rectangle
                 selectionActive = true;
                 selectionX = dLoc.getX();
                 selectionY = dLoc.getY();
@@ -5107,13 +5111,14 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     //    }
     //    return result;
     //}
-
     /**
-     * Called by {@link #mousePressed} to determine if the mouse click was in a turnout control location.
-     * If so, update selectedPointType and selectedObject for use by {@link #mouseReleased}.
+     * Called by {@link #mousePressed} to determine if the mouse click was in a
+     * turnout control location. If so, update selectedPointType and
+     * selectedObject for use by {@link #mouseReleased}.
      * <p>
      * If there's no match, selectedObject is set to null and selectedPointType
-     * is left referring to the results of the checking the last track on the list.
+     * is left referring to the results of the checking the last track on the
+     * list.
      * <p>
      * Refers to the current value of {@link #layoutTrackList) and {@link #dLoc}.
      *
@@ -5408,6 +5413,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                     addBlockContents();
                 } else if (iconLabelButton.isSelected()) {
                     addIcon();
+                } else if (shapeButton.isSelected()) {
+                    addShape(currentPoint);
                 } else if (signalMastButton.isSelected()) {
                     addSignalMast();
                 } else {
@@ -7310,6 +7317,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      * LayoutEditor with the layout block. This method is designed to be used
      * when a panel is loaded. The calling method must handle whether the use
      * count should be incremented.
+     *
      * @return null if blockID does not already exist
      */
     public LayoutBlock getLayoutBlock(@Nonnull String blockID) {
@@ -8574,7 +8582,29 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         if (backgroundImage.contains(b)) {
             backgroundImage.remove(b);
             setDirty();
-            return;
+        }
+    }
+
+    @Nonnull
+    protected LayoutShape addShape(@Nonnull Point2D p) {
+        //get unique name
+        String name = finder.uniqueName("S", ++numShapes);
+
+        //create object
+        LayoutShape o = new LayoutShape(name, p, this);
+        layoutShapes.add(o);
+        unionToPanelBounds(o.getBounds());
+        setDirty();
+        return o;
+    }
+
+    /**
+     * Remove a background image from the list of background images
+     */
+    protected void removeShape(@Nonnull LayoutShape s) {
+        if (layoutShapes.contains(s)) {
+            layoutShapes.remove(s);
+            setDirty();
         }
     }
 
@@ -9266,7 +9296,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      * @return true if block was highlighted
      */
     @SuppressWarnings("unchecked") // Annotate the List<Block> l assignment
-                                   // First, make JmriBeanComboBox generic on <E extends NamedBean> (and manager) to fix this.
+    // First, make JmriBeanComboBox generic on <E extends NamedBean> (and manager) to fix this.
     public boolean highlightBlock(@Nullable Block inBlock) {
         boolean result = false; //assume failure (pessimist!)
 
@@ -9484,6 +9514,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             }
             drawLayoutTracksHidden(g2);
         }
+
+        drawShapes(g2, true);
         drawTrackSegmentsDashed(g2);
         drawLayoutTracksBallast(g2);
         drawLayoutTracksTies(g2);
@@ -9492,6 +9524,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
         drawPositionablePoints(g2, false);
         drawPositionablePoints(g2, true);
+
+        drawShapes(g2, false);
 
         drawDecorations(g2);
 
@@ -9841,6 +9875,24 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         }
     }
 
+    // draw shapes
+    private void drawShapes(Graphics2D g2, boolean isBackground) {
+        for (LayoutShape s : layoutShapes) {
+            if (isBackground) {
+                if (s.getLevel() < 3) {
+                    s.draw(g2);
+                }
+            } else {
+                if (s.getLevel() >= 3) {
+                    s.draw(g2);
+                }
+            }
+            if (isEditable()) {
+                s.drawEditControls(g2);
+            }
+        }
+    }
+
     // draw track segment (in progress)
     private void drawTrackSegmentInProgress(Graphics2D g2) {
         //check for segment in progress
@@ -10134,6 +10186,10 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         )
                 .map(LayoutTurnout.class::cast)
                 .collect(Collectors.toCollection(ArrayList<LayoutTurnout>::new));
+    }
+
+    public List<LayoutShape> getLayoutShapes() {
+        return layoutShapes;
     }
 
     @Override
@@ -10580,7 +10636,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     // The following have been moved to the LayoutTurnout class
     // These remain to ease migration
-
     // defined constants - turnout types
     @Deprecated // 4.11.3
     public static final int RH_TURNOUT = LayoutTurnout.RH_TURNOUT;
