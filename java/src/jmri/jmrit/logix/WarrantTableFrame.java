@@ -110,7 +110,6 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
             return newInstance;
         });
         instance.setVisible(true);
-//        instance.pack();
         return instance;
     }
 
