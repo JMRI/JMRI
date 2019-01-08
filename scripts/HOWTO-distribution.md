@@ -85,12 +85,11 @@ then manually update the end of that line above in this document to be this vers
 - If it's a new year, update copyright dates (done for 2018):
     JMRI:
     * build.xml in the jmri.copyright.years property value
-    * xml/XSLT/build.xml in the property value, index.html, CSVindex.html
+    * xml/XSLT/build.xml
+    * scripts//WinInstallFiles/LaunchJMRI.nsi
     website:
-    * Copyright.html (3 places)
-    * index.html
-    * Footer
-    * contact/index.html
+    * Copyright.shtml (3 places)
+    * Footer Footer.shtml
     * (grep -r for the previous year in the web site, xml; don't change copyright notices!)
 
 - Bring in all possible GitHub JMRI/JMRI [pull requests](https://github.com/JMRI/JMRI/pulls)

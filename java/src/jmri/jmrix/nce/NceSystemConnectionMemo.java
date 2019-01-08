@@ -63,7 +63,7 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     public void setNceTrafficController(NceTrafficController tc) {
         nceTrafficController = tc;
         if (tc != null) {
-            tc.setSystemConnectionMemo(this);
+            tc.setAdapterMemo(this);
         }
     }
 

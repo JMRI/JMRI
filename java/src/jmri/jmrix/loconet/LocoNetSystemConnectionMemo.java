@@ -71,6 +71,7 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
 
     ComponentFactory cf = null;
     private LnTrafficController lt;
+    protected LocoNetThrottledTransmitter tm;
     private SlotManager sm;
     private LnMessageManager lnm = null;
 
@@ -262,8 +263,6 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
         return super.get(T);
     }
 
-    protected LocoNetThrottledTransmitter tm;
-
     /**
      * Configure the common managers for LocoNet connections. This puts the
      * common manager config in one place.
@@ -410,25 +409,28 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
 
     @Override
     public void dispose() {
-        lt = null;
-        sm = null;
         InstanceManager.deregister(this, LocoNetSystemConnectionMemo.class);
         if (cf != null) {
             InstanceManager.deregister(cf, ComponentFactory.class);
         }
         if (powerManager != null) {
+            powerManager.dispose();
             InstanceManager.deregister(powerManager, LnPowerManager.class);
         }
         if (turnoutManager != null) {
+            turnoutManager.dispose();
             InstanceManager.deregister(turnoutManager, LnTurnoutManager.class);
         }
         if (lightManager != null) {
+            lightManager.dispose();
             InstanceManager.deregister(lightManager, LnLightManager.class);
         }
         if (sensorManager != null) {
+            sensorManager.dispose();
             InstanceManager.deregister(sensorManager, LnSensorManager.class);
         }
         if (reporterManager != null) {
+            reporterManager.dispose();
             InstanceManager.deregister(reporterManager, LnReporterManager.class);
         }
         if (throttleManager != null) {
@@ -446,6 +448,9 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
         }
         if (sm != null){
             sm.dispose();
+        }
+        if (lt != null){
+            lt.dispose();
         }
         super.dispose();
     }

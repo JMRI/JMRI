@@ -29,6 +29,7 @@ public class LightControlTest {
     }
     
     @Test
+    @SuppressWarnings("unlikely-arg-type") // String seems to be unrelated to LightControl
     public void testEquals() {
         Light o = new AbstractLight("IL1","test light"){
         };

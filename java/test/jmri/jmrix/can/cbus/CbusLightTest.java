@@ -58,6 +58,12 @@ public class CbusLightTest extends jmri.implementation.AbstractLightTestBase {
         t = new CbusLight("ML","+7",tcis);
         Assert.assertNotNull("exists",t);
     }
+
+    @Test
+    public void testCTorShortEventSingleNegative() {
+        t = new CbusLight("ML","-1234",tcis);
+        Assert.assertNotNull("exists",t);
+    }
     
     @Test
     public void testCTorShortEventDouble() {
