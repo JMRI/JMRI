@@ -147,6 +147,23 @@
       <p>If you do add new attributes or elements, don't forget to
       update the format definition, see below.</p>
 
+      <h3>Persisting References to NamedBeans</h3>
+      
+      Classes should, but don't always, 
+      <a href="Patterns.shtml#handles">hold references to NamedBeans via NamedBean handles</a>.
+      <p>
+      If you're adding persistance for a class that doesn't do that, please
+      update it before going further.  That will save a lot of future trouble.
+      <p>
+      To store a NamedBeanHandle reference, just store the result of the <code>getName()</code>
+      method of the NamedBeanHandle. That's the name the user refers to it by.
+      <p>
+      To load a reference, retrieve that name, look up the corresponding NamedBean
+      (typically with <code>get(String)</code> method of the corresponding manager)
+      and then create the NamedBeanHandle via the usual call:
+      <code>InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(name, thing)</code>
+      
+      
       <h3>Class Migration</h3>
       Sometimes, classes need to be moved to another package as part of
       code maintenance.  Since the fully-qualified class name, including package name,

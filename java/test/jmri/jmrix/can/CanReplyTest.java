@@ -27,6 +27,12 @@ public class CanReplyTest extends CanMRCommonTestBase {
     }
 
     @Test
+    public void testCreateArrayHeader() {
+        CanReply m1 = new CanReply( new int[]{0x98, 0xDE, 0xFF, 0x23, 0x01},0x12 );
+        Assert.assertNotNull("exists",m1);
+    }
+
+    @Test
     @SuppressWarnings("unlikely-arg-type") // Both CanReply and CanMessage are CanFrame with custom equals
     public void testEqualsOp() {
         CanReply m1 = new CanReply();

@@ -2,52 +2,126 @@ package jmri.jmrix.can.cbus.simulator;
 
 import java.util.ArrayList;
 import jmri.jmrix.can.CanFrame;
+import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
+import jmri.jmrix.can.CanListener;
+import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.CbusConstants;
 import jmri.jmrix.can.cbus.CbusOpCodes;
+import jmri.jmrix.can.cbus.CbusSend;
 import jmri.jmrix.can.cbus.node.CbusNodeEvent;
-import jmri.jmrix.can.cbus.simulator.CbusSimulator;
-import jmri.jmrix.can.cbus.swing.simulator.SimulatorPane.NdPane;
+import jmri.jmrix.can.cbus.swing.simulator.NdPane;
+import jmri.jmrix.can.TrafficController;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class CbusDummyNode {
+/**
+ * Simultaing a MERG CBUS Node
+ * @author Steve Young Copyright (C) 2018 2019
+ * @see CbusSimulator
+ * @since 4.15.2
+ */
+public class CbusDummyNode implements CanListener {
     
-    private CbusSimulator _sim;
-    private int _simId;
+    private TrafficController tc;
+    private CanSystemConnectionMemo memo;
+    
     private int[] _parameters;
     private int[] _nvArray;
     private int _flags;
     private int _simType;
     private int _nn;
-    private int _networkDelay;
     private Boolean _inFLiM;
     private Boolean _inSetup;
     private Boolean _learnMode;
     private Boolean _sendsWRACKonNVSET;
     private NdPane _pane;
-    public ArrayList<CbusNodeEvent> _ndEv;
+    private ArrayList<CbusNodeEvent> _ndEv;
+    public static ArrayList<Integer> ndTypes;
     
-    public CbusDummyNode( int type, CbusSimulator sim, int simId ){
-        _sim = sim;
-        _simId = simId;
-        _simType = type;
+    private int _networkDelay;
+    private Boolean _processIn;
+    private Boolean _processOut;
+    private Boolean _sendIn;
+    private Boolean _sendOut;
+    private CbusSend send;
+    
+    public CbusDummyNode( CanSystemConnectionMemo sysmemo ){
+        _simType = 0;
+        memo = sysmemo;
+        if (memo != null) {
+            tc = memo.getTrafficController();
+            tc.addCanListener(this);
+        }
+        init();
+    }
+    
+    private void init(){
+        send = new CbusSend(memo);
         _inFLiM = false;
         _inSetup = false;
         _learnMode = false;
         _nn=0;
         _networkDelay = 40;
         _pane = null;
-        setDummyType(_simType);
+        
         _ndEv = new ArrayList<CbusNodeEvent>();
+
+        _processIn=false;
+        _processOut=true;
+        _sendIn=true;
+        _sendOut=false;
+        
+        ndTypes = new ArrayList<Integer>();
+        
+        ndTypes.add(0); // 0 SlIM
+        ndTypes.add(29); // 29 CANPAN
+        
+        setDummyType(_simType);
     }
     
-    protected int getSimId(){
-        return _simId;
+    public void setDelay( int newval){
+        _networkDelay = newval;
+    }
+    
+    public int getDelay(){
+        return _networkDelay;
+    }
+    
+    public void setProcessIn( Boolean newval){
+        _processIn = newval;
+    }
+    
+    public void setProcessOut( Boolean newval){
+        _processOut = newval;
     }
 
-    public void setParameters(){
+    public void setSendIn( Boolean newval){
+        _sendIn = newval;
+    }
+
+    public void setSendOut( Boolean newval){
+        _sendOut = newval;
+    }
+    
+    public Boolean getProcessIn() {
+        return _processIn;
+    }
+    
+    public Boolean getProcessOut() {
+        return _processOut;
+    }    
+    
+    public Boolean getSendIn() {
+        return _sendIn;
+    }    
+    
+    public Boolean getSendOut() {
+        return _sendOut;
+    }
+
+    private void setParameters(){
         // Para 1 The manufacturer ID
         // Para 2 Minor code version as an alphabetic character (ASCII)
         // Para 3 Manufacturer module identifier as a HEX numeric
@@ -104,16 +178,16 @@ public class CbusDummyNode {
     }
 
     // total events on module
-    public void sendNUMEV(){
+    private void sendNUMEV(){
         CanReply r = new CanReply(4);
         r.setElement(0, CbusConstants.CBUS_NUMEV);
         r.setElement(1, _nn >> 8);
         r.setElement(2, _nn & 0xff);
         r.setElement(3, _ndEv.size());
-        _sim.sendReplyWithDelay( r,_networkDelay );
+        send.sendWithDelay(r,_sendIn,_sendOut,_networkDelay);
     }
 
-    public void evLearn(int nn, int en, int index, int val){
+    private void evLearn(int nn, int en, int index, int val){
         CbusNodeEvent nodeEvent = getNodeEvent(nn,en);
         if (nodeEvent==null){
             nodeEvent = new CbusNodeEvent(nn,en,_nn,getNextFreeIndex(),_parameters[5]);
@@ -123,11 +197,11 @@ public class CbusDummyNode {
         sendWRACK();
     }
     
-    public void evUnLearn(int nn, int en){
+    private void evUnLearn(int nn, int en){
         _ndEv.remove(getNodeEvent(nn, en));
     }
 
-    public CbusNodeEvent getNodeEvent(int nn, int en) {
+    private CbusNodeEvent getNodeEvent(int nn, int en) {
         for (int i = 0; i < _ndEv.size(); i++) {
             if ( ( _ndEv.get(i).getNn() == nn ) && ( _ndEv.get(i).getEn() == en )) {
                 return _ndEv.get(i);
@@ -136,7 +210,7 @@ public class CbusDummyNode {
         return null;
     }
 
-    public CbusNodeEvent getNodeEventByIndex(int index) {
+    private CbusNodeEvent getNodeEventByIndex(int index) {
         for (int i = 0; i < _ndEv.size(); i++) {
             if ( _ndEv.get(i).getIndex() == index ) {
                 return _ndEv.get(i);
@@ -146,7 +220,7 @@ public class CbusDummyNode {
     }
     
     // finds the next event index to allocate
-    public int getNextFreeIndex(){
+    private int getNextFreeIndex(){
         int newIndex = 1;
         for (int i = 0; i < _ndEv.size(); i++) {
             if ( newIndex <= _ndEv.get(i).getIndex() ) {
@@ -156,7 +230,7 @@ public class CbusDummyNode {
         return newIndex;
     }
     
-    public void sendENRSP(){
+    private void sendENRSP(){
         for (int i = 0; i < _ndEv.size(); i++) {
             CanReply r = new CanReply(8);
             r.setElement(0, CbusConstants.CBUS_ENRSP);
@@ -167,11 +241,11 @@ public class CbusDummyNode {
             r.setElement(5, _ndEv.get(i).getEn() >> 8);
             r.setElement(6, _ndEv.get(i).getEn() & 0xff);
             r.setElement(7, _ndEv.get(i).getIndex() );
-            _sim.sendReplyWithDelay( r,_networkDelay );
+            send.sendWithDelay(r,_sendIn,_sendOut,_networkDelay);
         }
     }
     
-    public void sendNEVAL( int index, int varIndex ){
+    private void sendNEVAL( int index, int varIndex ){
         CanReply r = new CanReply(6);
         r.setElement(0, CbusConstants.CBUS_NEVAL);
         r.setElement(1, _nn >> 8);
@@ -179,14 +253,15 @@ public class CbusDummyNode {
         r.setElement(3, index);
         r.setElement(4, varIndex);
         r.setElement(5, getNodeEventByIndex(index).getEvVar(varIndex) );
-        _sim.sendReplyWithDelay( r,_networkDelay );        
+        send.sendWithDelay(r,_sendIn,_sendOut,_networkDelay);
     }
     
+    // move to private in future
     public int getParamater(int number) {
         return _parameters[number];
     }
     
-    public void sendPARAMS() {
+    private void sendPARAMS() {
         CanReply r = new CanReply(8);
         r.setElement(0, CbusConstants.CBUS_PARAMS);
         r.setElement(1, _parameters[1]);
@@ -196,10 +271,10 @@ public class CbusDummyNode {
         r.setElement(5, _parameters[5]);
         r.setElement(6, _parameters[6]);
         r.setElement(7, _parameters[7]);
-        _sim.sendReplyWithDelay( r,_networkDelay );        
+        send.sendWithDelay(r,_sendIn,_sendOut,_networkDelay);
     }
     
-    public void sendPNN() {
+    private void sendPNN() {
         CanReply r = new CanReply(6);
         r.setElement(0, CbusConstants.CBUS_PNN);
         r.setElement(1, _nn >> 8);
@@ -207,47 +282,47 @@ public class CbusDummyNode {
         r.setElement(3, _parameters[1]);
         r.setElement(4, _parameters[3]);
         r.setElement(5, _flags);
-        _sim.sendReplyWithDelay( r,_networkDelay );        
+        send.sendWithDelay(r,_sendIn,_sendOut,_networkDelay);
     }
 
-    public void sendPARAN( int index ){
+    private void sendPARAN( int index ){
         CanReply r = new CanReply(5);
         r.setElement(0, CbusConstants.CBUS_PARAN);
         r.setElement(1, _nn >> 8);
         r.setElement(2, _nn & 0xff);
         r.setElement(3, index);
         r.setElement(4, _parameters[index]);
-        _sim.sendReplyWithDelay( r,_networkDelay );
+        send.sendWithDelay(r,_sendIn,_sendOut,_networkDelay);
     }
     
     // NV Answer
-    public void sendNVANS( int index ) {
+    private void sendNVANS( int index ) {
         CanReply r = new CanReply(5);
         r.setElement(0, CbusConstants.CBUS_NVANS);
         r.setElement(1, _nn >> 8);
         r.setElement(2, _nn & 0xff);
         r.setElement(3, index);
         r.setElement(4, _nvArray[index]);
-        _sim.sendReplyWithDelay( r,_networkDelay );        
+        send.sendWithDelay(r,_sendIn,_sendOut,_networkDelay);
     }
 
-    public void setNV(int index, int newval) {
+    private void setNV(int index, int newval) {
         _nvArray[index]=newval;
         if (_sendsWRACKonNVSET){
             sendWRACK();
         }
     }
     
-    public void sendWRACK(){
+    private void sendWRACK(){
         CanReply r = new CanReply(3);
         r.setElement(0, CbusConstants.CBUS_WRACK);
         r.setElement(1, _nn >> 8);
         r.setElement(2, _nn & 0xff);        
-        _sim.sendReplyWithDelay( r,_networkDelay ); 
+        send.sendWithDelay(r,_sendIn,_sendOut,_networkDelay);
     }
     
     // sim of FiLM Button
-    public void resetNode() {
+    public void flimButton() {
         // send request for node number
         if ( _simType >0 ) {
             _inSetup = true;
@@ -255,19 +330,17 @@ public class CbusDummyNode {
             r.setElement(0, CbusConstants.CBUS_RQNN);
             r.setElement(1, _nn >> 8);
             r.setElement(2, _nn & 0xff);
-            _sim.sendReplyWithDelay( r,_networkDelay );
+            send.sendWithDelay(r,_sendIn,_sendOut,_networkDelay);
         }
     }
     
     public void setDummyType(int type){
         _simType = type;
         setParameters();
-        if (_sim != null) {
-            log.info("Simulated Node: {}", CbusOpCodes.getModuleType(165,_simType) );
-        }
+        log.info("Simulated CBUS Node: {}", CbusOpCodes.getModuleType(165,_simType) );
     }
     
-    protected int getDummyType() {
+    public int getDummyType() {
         return _simType;
     }
     
@@ -286,7 +359,7 @@ public class CbusDummyNode {
         r.setElement(0, CbusConstants.CBUS_NNACK);
         r.setElement(1, _nn >> 8);
         r.setElement(2, _nn & 0xff);
-        _sim.sendReplyWithDelay( r,_networkDelay );
+        send.sendWithDelay(r,_sendIn,_sendOut,_networkDelay);
     }
     
     private void setLearnMode(Boolean newval) {
@@ -354,5 +427,29 @@ public class CbusDummyNode {
             }
         }
     }
+    
+    @Override
+    public void message(CanMessage m) {
+        if ( _processOut ) {
+            CanFrame test = m;
+            passMessage(test);
+        }
+    }
+
+    @Override
+    public void reply(CanReply r) {
+        if ( _processIn ) {
+            CanFrame test = r;
+            passMessage(test);
+        }
+    }
+
+    public void dispose(){
+        if (tc != null) {
+            tc.removeCanListener(this);
+        }
+        send = null;
+    }
+
     private static final Logger log = LoggerFactory.getLogger(CbusDummyNode.class);
 }

@@ -28,7 +28,8 @@ public abstract class AbstractSignalHeadTestBase {
     }
 
     private boolean validAppearance(int appearance, SignalHead s) {
-        return Arrays.asList(s.getValidStates()).contains(SignalHead.RED);
+        for (int item : s.getValidStates() ) if (item == appearance ) return true;
+        return false;
     }
     
     @Test

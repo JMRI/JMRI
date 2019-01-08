@@ -1,45 +1,128 @@
 package jmri.jmrix.can.cbus.simulator;
 
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.Random;
 import jmri.jmrix.can.CanFrame;
+import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
+import jmri.jmrix.can.CanSystemConnectionMemo;
+import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.cbus.CbusConstants;
+import jmri.jmrix.can.cbus.CbusOpCodes;
+import jmri.jmrix.can.cbus.CbusSend;
 import jmri.jmrix.can.cbus.simulator.CbusSimulator;
+import jmri.jmrix.can.TrafficController;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class CbusEventResponder {
+/**
+ * Simultaing event request responses.
+ * @author Steve Young Copyright (C) 2018
+ * @see CbusSimulator
+ * @since 4.15.2
+ */
+public class CbusEventResponder implements CanListener {
     
-    private CbusSimulator _sim;
-    private int _simId;
+    private TrafficController tc;
+    private CanSystemConnectionMemo memo;
     private int _node;
     private int _mode;
     private int _networkDelay;
+    private Boolean _processIn;
+    private Boolean _processOut;
+    private Boolean _sendIn;
+    private Boolean _sendOut;
+    private CbusSend send;
     
-    public CbusEventResponder( int mode, CbusSimulator sim, int simId ){
-        _sim = sim;
-        _simId = simId;
-        _mode = mode;
-        _node = -1;
-        _networkDelay = CbusSimulator.DEFAULT_DELAY;
-        if ( _sim != null ) {
-            log.info("Simulated Event Responses: {}",CbusSimulator.evModes.get(_mode) );
+    public static ArrayList<String> evModes = new ArrayList<String>();
+    public static ArrayList<String> evModesTip = new ArrayList<String>();
+    
+    public CbusEventResponder( CanSystemConnectionMemo memod ){
+        memo = memod;
+        if (memo != null) {
+            tc = memo.getTrafficController();
+            tc.addCanListener(this);
         }
+        init();
+    }
+    
+    private void init(){
+        send = new CbusSend(memo);
+        _mode = 1;
+        _node = -1;
+        _networkDelay = 50;
+        
+        _processIn=false;
+        _processOut=true;
+        _sendIn=true;
+        _sendOut=false;
+        
+        
+        evModes.add(Bundle.getMessage("HighlightDisabled"));
+        evModesTip.add(null);
+        
+        evModes.add(Bundle.getMessage("onOffRand"));
+        evModesTip.add(null);          
+        
+        evModes.add(Bundle.getMessage("odOnEvOff"));
+        evModesTip.add(null);         
+        
+        evModes.add(Bundle.getMessage("CbusEventOn"));
+        evModesTip.add(null);         
+        
+        evModes.add(Bundle.getMessage("CbusEventOff"));
+        evModesTip.add(null);
+        
+        log.info("Simulated Event Responses: {}",evModes.get(_mode) );
+        
     }
 
-    protected int getSimId(){
-        return _simId;
+    public void setDelay( int newval){
+        _networkDelay = newval;
     }
     
+    public int getDelay(){
+        return _networkDelay;
+    }
+
+    public void setProcessIn( Boolean newval){
+        _processIn = newval;
+    }
+    
+    public void setProcessOut( Boolean newval){
+        _processOut = newval;
+    }
+
+    public void setSendIn( Boolean newval){
+        _sendIn = newval;
+    }
+
+    public void setSendOut( Boolean newval){
+        _sendOut = newval;
+    }
+    
+    public Boolean getProcessIn() {
+        return _processIn;
+    }
+    
+    public Boolean getProcessOut() {
+        return _processOut;
+    }    
+    
+    public Boolean getSendIn() {
+        return _sendIn;
+    }    
+    
+    public Boolean getSendOut() {
+        return _sendOut;
+    }
+
     public void setMode(int mode){
         _mode = mode;
     }
     
-    protected int getMode() {
+    public int getMode() {
         return _mode;
     }
 
@@ -47,11 +130,16 @@ public class CbusEventResponder {
         _node = node;
     }
     
-    protected int getNode() {
+    public int getNode() {
         return _node;
     }
-    
-    public void processEventforResponse(CanFrame m) {
+
+    private void processEventforResponse(CanFrame m) {
+        
+        if (!CbusOpCodes.isEventRequest(m.getElement(0))) {
+            return;
+        }
+        
         if ( _mode == 0 ) {
             return;
         }
@@ -103,8 +191,32 @@ public class CbusEventResponder {
             r.setElement(2, m.getElement(2));
             r.setElement(3, m.getElement(3));
             r.setElement(4, m.getElement(4));
-            _sim.sendReplyWithDelay( r,_networkDelay );
+            send.sendWithDelay(r,_sendIn,_sendOut,_networkDelay);
         }
     }
+    
+    @Override
+    public void message(CanMessage m) {
+        if ( _processOut ) {
+            CanFrame test = m;
+            processEventforResponse(test);
+        }
+    }
+
+    @Override
+    public void reply(CanReply r) {
+        if ( _processIn ) {
+            CanFrame test = r;
+            processEventforResponse(test);
+        }
+    }
+
+    public void dispose(){
+        if (tc != null) {
+            tc.removeCanListener(this);
+        }
+        send = null;
+    }
+    
     private static final Logger log = LoggerFactory.getLogger(CbusEventResponder.class);
 }
