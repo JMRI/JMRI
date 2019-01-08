@@ -21,6 +21,7 @@ public class Z21ReporterManagerTest extends jmri.managers.AbstractReporterMgrTes
    @Test
    public void testAutomaticCreateFromRailComReply(){
        Z21ReporterManager zr = (Z21ReporterManager) l;
+       zr.enableInternalReporterCreationFromMessages();  // defautls to disabled.
        byte msg[]={(byte)0x11,(byte)0x00,(byte)0x88,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x05,(byte)0x06,(byte)0x07,(byte)0x08};
        Z21Reply reply = new Z21Reply(msg,17);
        Assert.assertNull("No reporter before message",zr.getReporter("ZR1"));
