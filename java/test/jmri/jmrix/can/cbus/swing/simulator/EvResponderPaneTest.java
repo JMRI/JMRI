@@ -1,4 +1,4 @@
-package jmri.jmrix.can.cbus.simulator;
+package jmri.jmrix.can.cbus.swing.simulator;
 
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -7,16 +7,16 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
+ * Test simple functioning of EvResponderPane
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Steve Young Copyright (C) 2019
  */
-public class CbusEventResponderTest {
+public class EvResponderPaneTest  {
 
     @Test
     public void testCTor() {
-        CbusEventResponder t = new CbusEventResponder(null);
+        EvResponderPane t = new EvResponderPane(null);
         Assert.assertNotNull("exists",t);
-        t.dispose();
     }
 
     // The minimal setup for log4J
@@ -29,7 +29,5 @@ public class CbusEventResponderTest {
     public void tearDown() {
         JUnitUtil.tearDown();
     }
-
-    // private final static Logger log = LoggerFactory.getLogger(CbusEventResponderTest.class);
 
 }

@@ -48,6 +48,37 @@ public class HexVariableValueTest extends AbstractVariableValueTestBase {
     }
 
     // end of abstract members
+
+    // test the handling of radix masks
+    public void testBaseMasks20() {
+        HashMap<String, CvValue> v = createCvMap();
+        CvValue cv = new CvValue("81", p);
+        cv.setValue(0);
+        v.put("81", cv);
+        // create a variable pointed at CV 81, check name
+        VariableValue variable = makeVar("label", "comment", "", false, false, false, false, "81", "3", 0, 19, v, null, null);
+        checkValue(variable, "value object initially contains ", "0");
+
+        // pretend you've edited the value & manually notify
+        setValue(variable, "2");
+        // check variable value
+        checkValue(variable, "value object contains ", "2");
+        // see if the CV was updated
+        Assert.assertEquals("cv value", 6, cv.getValue());
+        
+        // now check that other parts are maintained
+        cv.setValue(1+2*3+3*3*20);
+        // check variable value
+        checkValue(variable, "value object contains ", "2");
+        // see if the CV was updated
+        Assert.assertEquals("cv value", (1+2*3+3*3*20), cv.getValue());
+
+        // and try setting another value
+        setValue(variable, "15");
+        checkValue(variable, "value object contains ", "15");
+        Assert.assertEquals("cv value", (1+15*3+3*3*20), cv.getValue());                
+    }
+
     // from here down is testing infrastructure
     public HexVariableValueTest(String s) {
         super(s);

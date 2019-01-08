@@ -14,8 +14,9 @@ public class CbusDummyNodeTest {
 
     @Test
     public void testCTor() {
-        CbusDummyNode t = new CbusDummyNode(0,null,0);
+        CbusDummyNode t = new CbusDummyNode(null);
         Assert.assertNotNull("exists",t);
+        t.dispose();
     }
 
     // The minimal setup for log4J

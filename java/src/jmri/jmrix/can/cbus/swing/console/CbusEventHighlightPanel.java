@@ -74,7 +74,7 @@ public class CbusEventHighlightPanel extends JPanel {
         JFormattedTextField fieldEv = (JFormattedTextField) compEv.getComponent(0);
         DefaultFormatter formatterEv = (DefaultFormatter) fieldEv.getFormatter();
         fieldEv.setColumns(2);
-        formatterEv.setCommitsOnValidEdit(true); 
+        formatterEv.setCommitsOnValidEdit(true);
         
         this.add(evPane);
 
