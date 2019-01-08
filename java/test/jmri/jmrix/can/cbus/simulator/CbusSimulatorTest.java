@@ -8,7 +8,8 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
+ * @author Steve Young Copyright (c) 2019
  */
 public class CbusSimulatorTest {
 
@@ -16,6 +17,7 @@ public class CbusSimulatorTest {
     public void testCTor() {
         CbusSimulator t = new CbusSimulator(null);
         Assert.assertNotNull("exists",t);
+        t.dispose();
     }
 
     // The minimal setup for log4J

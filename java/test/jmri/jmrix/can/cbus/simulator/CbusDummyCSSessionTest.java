@@ -8,13 +8,13 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Steve Young Copyright (c) 2019
  */
-public class CbusEventResponderTest {
+public class CbusDummyCSSessionTest {
 
     @Test
     public void testCTor() {
-        CbusEventResponder t = new CbusEventResponder(null);
+        CbusDummyCSSession t = new CbusDummyCSSession(null,0,0,false);
         Assert.assertNotNull("exists",t);
         t.dispose();
     }
@@ -30,6 +30,6 @@ public class CbusEventResponderTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CbusEventResponderTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(CbusDummyCSTest.class);
 
 }
