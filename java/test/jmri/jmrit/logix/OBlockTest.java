@@ -127,6 +127,7 @@ public class OBlockTest {
     public void testAllocate() {
         setUp();
         Warrant w1 = new Warrant("IW1", null);
+        w1.setTrainName("T1");
         Warrant w2 = new Warrant("IW2", null);
         OBlock b = blkMgr.createNewOBlock("OB102", "c");
         Assert.assertNull("Allocate w1", b.allocate(w1));
