@@ -22,6 +22,23 @@ public abstract class LnTrafficController implements LocoNetInterface {
     LocoNetSystemConnectionMemo memo = null;
 
     /**
+     * Constructor without reference to a LocoNetSystemConnectionMemo.
+     */
+    public LnTrafficController() {
+        super();
+    }
+
+    /**
+     * Constructor. Gets a reference to the LocoNetSystemConnectionMemo.
+     *
+     * @param memo connection's memo
+     */
+    public LnTrafficController(LocoNetSystemConnectionMemo memo) {
+        super();
+        this.memo = memo;
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override

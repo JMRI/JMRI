@@ -65,14 +65,14 @@ public class LocoNetInterfaceScaffold extends LnTrafficController {
         return;
     }
 
-    /*
+    /**
      * Check number of listeners, used for testing dispose().
      */
     public int numListeners() {
         return listeners.size();
     }
 
-    /*
+    /**
      * Get listeners, used for testing dispose().
      */
     public Vector<LocoNetListener> getListeners() {
