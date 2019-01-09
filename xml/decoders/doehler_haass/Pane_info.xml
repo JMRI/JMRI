@@ -17,6 +17,7 @@
     </label>
     <display item="Manufacturer 2"/>
     <display item="Decoder ID"/>
+    <display item="Decoder ID Text" label=""/>
     <label>
       <text> </text>
     </label>

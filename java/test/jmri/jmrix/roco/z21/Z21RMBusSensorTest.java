@@ -6,7 +6,7 @@ import org.junit.*;
 /**
  * Tests for the jmri.jmrix.roco.z21.Z21RMBusSensor class.
  *
- * @author	Paul Bender Copyright 2004
+ * @author	Paul Bender Copyright 2004,2018
  */
 public class Z21RMBusSensorTest extends jmri.implementation.AbstractSensorTestBase {
 

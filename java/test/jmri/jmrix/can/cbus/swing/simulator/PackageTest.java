@@ -7,8 +7,12 @@ import org.slf4j.LoggerFactory;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-    SimulatorPaneTest.class,
-    BundleTest.class
+    BundleTest.class,
+    CsPaneTest.class,
+    DirectionPaneTest.class,
+    EvResponderPaneTest.class,
+    NdPaneTest.class,
+    SimulatorPaneTest.class
 })
 
 /**

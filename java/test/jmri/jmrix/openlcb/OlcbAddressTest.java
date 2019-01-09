@@ -23,6 +23,7 @@ public class OlcbAddressTest extends TestCase {
 
     }
 
+    @SuppressWarnings("unlikely-arg-type") // String seems to be unrelated to OpenLcbLocoAddress
     public void testAddressNotOK() {
         assertTrue(!new OlcbAddress("+0A1").check());
         assertTrue(!new OlcbAddress("- 001").check());
