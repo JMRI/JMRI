@@ -1510,7 +1510,8 @@ public class LocoNetSlot {
     /**
      * Return the hours value from the slot.  Only valid for fast-clock slot.
      * <p>
-     * This method logs an error if invoked for a slot other than the fast-clock slot.
+     * Note 1: This method logs an error if invoked for a slot other than the fast-clock slot.
+     * Note 2: If getFcMins returns 0 the hour is/maybe one hour slow.
      * <p>
      * @return "Hours" value currently stored in fast clock slot.
      */
@@ -1527,7 +1528,7 @@ public class LocoNetSlot {
     /**
      * For fast-clock slot, set "hours" value.
      * <p>
-     * Note that the new hours value is not effective until a LocoNet
+     * Note 1: The new hours value is not effective until a LocoNet
      * message is sent which writes the fast-clock slot data.
      * <p>
      * This method logs an error if invoked for a slot other than the fast-clock slot.
@@ -1585,9 +1586,8 @@ public class LocoNetSlot {
      * <p>
      * This method logs an error if invoked for a slot other than the fast-clock slot.
      * <p>
-     * @return Return frac_mins field which is the number of 65ms ticks until
-     *         then next minute rollover. These ticks step at the current fast
-     *         clock rate
+     * @return Return frac_mins field including the base but the LO 7bit is unknown (0x0080)
+     *         These ticks step at the current fast clock rate
      */
     public int getFcFracMins() {
         // TODO: consider throwing a LocoNetException if issued for a slot other
@@ -1595,28 +1595,35 @@ public class LocoNetSlot {
         if (getSlot() != LnConstants.FC_SLOT) {
             log.error("getFcFracMins invalid for slot " + getSlot());
         }
-        return 0x3FFF - ((addr & 0x7F) | ((spd & 0x7F) << 7));
+        return ((addr & 0x7F) | ((spd & 0x7F) << 8));
     }
 
     /**
      * Set the "frac_mins" value.
+     * This has to be calculated as a 32bit integer
+     * comprised of a base number and the distance from the base to 0x7FFF
+     * It is read and written as is LO,HO and loses the bit 7 of the LO.
+     * It was never intended for external use.
+     * The base can be found by setting the clock to 0x7F7F, with a rate of 1
+     * and then immediately (less than a second) reading the data masked with 0x7F00.
      * <p>
-     * Note that the new fractional minutes value is not effective until a LocoNet
+     * Note 1: The new fractional minutes value is not effective until a LocoNet
      * message is sent which writes the fast-clock slot data.
+     * Note 2: DT40x & DT500 throttles ignore this value, and set only the whole minutes.
      * <p>
      * This method logs an error if invoked for a slot other than the fast-clock slot.
      * <p>
-     * @param val is the new fast-clock "fractional minutes"
+     * @param val is the new fast-clock "fractional minutes" including the base
      */
     public void setFcFracMins(int val) {
         // TODO: consider throwing a LocoNetException if issued for a slot other
         // than the "fast clock slot".
         if (getSlot() != LnConstants.FC_SLOT) {
-            log.error("setFcFracMins invalid for slot " + getSlot());
+            log.error("setFcFracMins invalid for sl/ot " + getSlot());
         }
-        int temp = 0x3FFF - val;
-        addr = addr | (temp & 0x7F);
-        spd = (temp >> 7) & 0x7F;
+        int temp = 0x7F7F & val;
+        addr = (addr & 0x7F00) | (temp & 0x7F);
+        spd = (temp >> 8) & 0x7F;
     }
 
     /**
