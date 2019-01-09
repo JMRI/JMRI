@@ -1145,15 +1145,19 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                     if (l2.isEmpty()) {
                         l2 = l;
                     }
-                    //Still more than one possible loco, so check against the decoder family
+                    // Still more than one possible loco, so check against the decoder family
+                    log.trace("Checking against decoder family with mfg {} model {}", mfgId, modelId);
                     List<RosterEntry> l3 = new ArrayList<>();
                     List<DecoderFile> temp = InstanceManager.getDefault(DecoderIndexFile.class).matchingDecoderList(null, null, "" + mfgId, "" + modelId, null, null);
+                    log.trace("found {}", temp.size());
                     ArrayList<String> decoderFam = new ArrayList<>();
                     for (DecoderFile f : temp) {
                         if (!decoderFam.contains(f.getModel())) {
                             decoderFam.add(f.getModel());
                         }
                     }
+                    log.trace("matched {} times", decoderFam.size());
+                    
                     for (RosterEntry _re : l2) {
                         if (decoderFam.contains(_re.getDecoderModel())) {
                             l3.add(_re);

@@ -1,16 +1,19 @@
 package jmri.jmrix.can.cbus;
 
 import jmri.jmrix.can.CanMessage;
+import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficController;
 import jmri.jmrix.can.cbus.CbusConstants;
 import jmri.util.swing.TextAreaFIFO;
+import jmri.util.ThreadingUtil;
 
 // import org.slf4j.Logger;
 // import org.slf4j.LoggerFactory;
 
 /**
- * Class to send can messages
+ * Class to send CAN Frames
+ * <p>Auto adds CBUS priority</p>
  * 
  * @author Steve Young (C) 2019
  * 
@@ -21,9 +24,44 @@ public class CbusSend {
     private TextAreaFIFO ta;
     private String newLine = System.getProperty("line.separator");
     
-    public CbusSend(CanSystemConnectionMemo memom, TextAreaFIFO txta){
-        tc = memom.getTrafficController();
+    public CbusSend(CanSystemConnectionMemo memo, TextAreaFIFO txta){
+        if (memo!=null) {
+            tc = memo.getTrafficController();
+        }
         ta = txta;
+    }
+
+    public CbusSend(CanSystemConnectionMemo memo){
+        if (memo!=null) {
+            tc = memo.getTrafficController();
+        }
+        ta = null;
+    }
+    
+    /**
+     * Sends an outgoing CanMessage or incoming CanReply from a CanReply with a specified delay
+     @param r A CanReply Can Frame which will be sent
+     @param sendReply true to send as incoming CcanReply
+     @param sendMessage true to send as outgoing CanMessage
+     @param delay delay in ms
+     */
+    public void sendWithDelay( CanReply r, Boolean sendReply, Boolean sendMessage, int delay ){
+        CbusMessage.setId(r, tc.getCanid() );
+        CbusMessage.setPri(r, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
+        ThreadingUtil.runOnLayoutEventually( ()->{
+            try {
+                Thread.sleep(delay);
+                if (sendReply) {
+                    tc.sendCanReply(r, null);
+                }
+                if (sendMessage) {
+                    CanMessage m = new CanMessage(r);
+                    tc.sendCanMessage(m, null);
+                }
+            } catch (InterruptedException ex) {
+                Thread.currentThread().interrupt();
+            }
+        });        
     }
 
     public void nodeExitLearnEvMode( int nn ) {
