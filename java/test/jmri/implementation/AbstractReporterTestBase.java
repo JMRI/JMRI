@@ -80,10 +80,10 @@ abstract public class AbstractReporterTestBase {
         Assert.assertFalse("LastReport seen after null", lastReportSeen);
     }
 
-    private boolean currentReportSeen = false;
-    private boolean lastReportSeen = false;
+    protected boolean currentReportSeen = false;
+    protected boolean lastReportSeen = false;
 
-    class TestReporterListener implements java.beans.PropertyChangeListener {
+    public class TestReporterListener implements java.beans.PropertyChangeListener {
         @Override
         public void propertyChange(java.beans.PropertyChangeEvent e){
             if (e.getPropertyName().equals("currentReport")) {
