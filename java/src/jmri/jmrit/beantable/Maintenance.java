@@ -67,6 +67,7 @@ public class Maintenance {
      *
      * @param parent Frame to check
      */
+    @SuppressWarnings("deprecation") // requires JUnit tests before can reliably redo getSystemNameList-using algorithms
     public static void findOrphansPressed(Frame parent) {
         Vector<String> display = new Vector<String>();
         Vector<String> names = new Vector<String>();
@@ -249,6 +250,7 @@ public class Maintenance {
      *
      * @param parent Frame to check
      */
+    @SuppressWarnings("deprecation") // requires JUnit tests before can reliably redo getSystemNameList-using algorithms
     public static void findEmptyPressed(Frame parent) {
         Vector<String> display = new Vector<String>();
         Vector<String> names = new Vector<String>();
@@ -431,6 +433,7 @@ public class Maintenance {
      * @param text body of the message to be displayed reporting the result
      * @return true if name is found at least once as a bean name
      */
+    @SuppressWarnings("deprecation") // requires JUnit tests before can reliably redo getSystemNameList-using algorithms
     static boolean search(String name, JTextArea text) {
         String[] names = getTypeAndNames(name);
         if (log.isDebugEnabled()) {

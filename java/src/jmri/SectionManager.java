@@ -261,9 +261,7 @@ public class SectionManager extends AbstractManager<Section> implements Property
             }
         }
         jmri.SignalHeadManager shManager = InstanceManager.getDefault(jmri.SignalHeadManager.class);
-        List<String> signalList = shManager.getSystemNameList();
-        for (int j = 0; j < signalList.size(); j++) {
-            SignalHead sh = shManager.getBySystemName(signalList.get(j));
+        for (SignalHead sh : shManager.getNamedBeanSet()) {
             if (!cUtil.removeSensorsFromSignalHeadLogic(sensorList, sh)) {
                 numErrors++;
             }
@@ -275,9 +273,7 @@ public class SectionManager extends AbstractManager<Section> implements Property
      * Initialize all blocking sensors that exist - sets them to 'ACTIVE'
      */
     public void initializeBlockingSensors() {
-        List<String> list = getSystemNameList();
-        for (int i = 0; i < list.size(); i++) {
-            Section s = getBySystemName(list.get(i));
+        for (Section s : getNamedBeanSet()) {
             try {
                 if (s.getForwardBlockingSensor() != null) {
                     s.getForwardBlockingSensor().setState(Sensor.ACTIVE);
