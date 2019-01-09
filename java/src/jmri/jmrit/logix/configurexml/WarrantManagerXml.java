@@ -44,10 +44,8 @@ public class WarrantManagerXml //extends XmlFile
         Element warrants = new Element("warrants");
         warrants.setAttribute("class","jmri.jmrit.logix.configurexml.WarrantManagerXml");
         WarrantManager manager = (WarrantManager) o;
-        Iterator<String> iter = manager.getSystemNameList().iterator();
-        while (iter.hasNext()) {
-            String sname = iter.next();
-            Warrant warrant = manager.getBySystemName(sname);
+        for (Warrant warrant : manager.getNamedBeanSet()) {
+            String sname = warrant.getSystemName();
             String uname = warrant.getUserName();
             if (log.isDebugEnabled())
                 log.debug("Warrant: sysName= {}, userName= {}", sname, uname);

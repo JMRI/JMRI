@@ -27,8 +27,8 @@ public class CbusCommandStation implements CommandStation, CanListener {
         tc = memo.getTrafficController();
         adapterMemo = memo;
         
-        if ( ( tc != null ) && ( tc.getClass().getName().contains("loopback")) ) {
-            startNetworkSim();
+        if ( ( tc != null ) && ( tc.getClass().getName().contains("Loopback")) ) {
+            _sim = getNetworkSim();
         }
     }
 
@@ -47,15 +47,20 @@ public class CbusCommandStation implements CommandStation, CanListener {
     @Override
     public boolean sendPacket(byte[] packet, int repeats) {
 
-        if (repeats != 1) {
-            log.warn("Only single transmissions currently available");
+        if (repeats < 1) {
+            repeats = 1;
+            log.warn("Ops Mode Accessory Packet 'Send count' of < 1 is illegal and is forced to 1.");
         }
+        if (repeats > 8) {
+            repeats = 8;
+            log.warn("Ops Mode Accessory Packet 'Send count' reduced to 8.");
+        }        
 
         CanMessage m = new CanMessage(2 + packet.length, tc.getCanid());     // Account for opcode and repeat
         int j = 0; // counter of byte in input packet
 
         m.setElement(0, CbusConstants.CBUS_RDCC3 + (((packet.length - 3) & 0x3) << 5));
-        m.setElement(1, 1);   // repeat
+        m.setElement(1, repeats);   // repeat
 
         // add each byte of the input message
         for (j = 0; j < packet.length; j++) {
@@ -138,7 +143,6 @@ public class CbusCommandStation implements CommandStation, CanListener {
         tc.sendCanMessage(msg, this);
     }
 
-
     public CbusSimulator getNetworkSim() {
         if ( _sim == null ) {
             ThreadingUtil.runOnLayout( ()->{
@@ -148,12 +152,9 @@ public class CbusCommandStation implements CommandStation, CanListener {
         return _sim;
     }
     
-    public void startNetworkSim() {
-        if ( _sim == null ) {
-            ThreadingUtil.runOnLayout( ()->{
-                _sim = new CbusSimulator(adapterMemo);
-            });
-        }
+    public void disposeNetworkSim() {
+        _sim.dispose();
+        _sim=null;
     }
 
     @Override

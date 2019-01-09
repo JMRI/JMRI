@@ -8,6 +8,7 @@ import jmri.jmrix.loconet.LnPacketizer;
 import jmri.jmrix.loconet.LocoNetInterface;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetMessageException;
+import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,7 +41,7 @@ public class UhlenbrockPacketizer extends LnPacketizer implements LocoNetInterfa
     @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "Only used during system initialization")
     public UhlenbrockPacketizer() {
-        super();
+        super(new LocoNetSystemConnectionMemo());
         log.debug("UhlenbrockPacketizer instantiated");
     }
 
