@@ -10,7 +10,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.Frame;
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -36,8 +35,8 @@ import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableRowSorter;
 import javax.swing.UIManager;
 import jmri.LocoAddress;
+import jmri.CabSignalListListener;
 import jmri.jmrit.catalog.NamedIcon;
-import jmri.jmrit.throttle.LargePowerManagerButton;
 import jmri.jmrit.DccLocoAddressSelector;
 import jmri.jmrit.roster.swing.GlobalRosterEntryComboBox;
 import jmri.jmrit.roster.swing.RosterEntryComboBox;
@@ -54,7 +53,7 @@ import org.slf4j.LoggerFactory;
  * @author Steve Young Copyright (C) 2018
  * @since 4.13.4
  */
-public class CabSignalPane extends jmri.util.swing.JmriPanel {
+public class CabSignalPane extends jmri.util.swing.JmriPanel implements CabSignalListListener {
 
     private JScrollPane scrolltablefeedback;
     private JSplitPane split;
@@ -177,8 +176,6 @@ public class CabSignalPane extends jmri.util.swing.JmriPanel {
         
         Dimension scrolltablefeedbackminimumSize = new Dimension(150, 20);
         scrolltablefeedback.setMinimumSize(scrolltablefeedbackminimumSize);
-        
-        toppanelcontainer.add(new LargePowerManagerButton(true));
         
         masterSendCabDataButton= new JToggleButton(Bundle.getMessage("SigDataOn"));
         masterSendCabDataButton.setIcon(new NamedIcon("resources/icons/throttles/power_green.png", "resources/icons/throttles/power_green.png"));
@@ -381,6 +378,13 @@ public class CabSignalPane extends jmri.util.swing.JmriPanel {
         slotTable = null;
         slotModel.dispose();
         super.dispose();
+    }
+
+
+    // Cab Signal List Listener interface
+
+    public void notifyCabSignalListChanged(){
+        slotModel.fireTableDataChanged();
     }
 
     private static final Logger log = LoggerFactory.getLogger(CabSignalPane.class);
