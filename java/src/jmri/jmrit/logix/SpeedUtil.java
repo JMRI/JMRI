@@ -388,7 +388,7 @@ public class SpeedUtil {
     }
 
     protected void stopRun(boolean updateSpeedProfile) {
-        if (updateSpeedProfile && _sessionProfile != null) {
+        if (updateSpeedProfile) {
             WarrantManager manager = InstanceManager.getDefault(WarrantManager.class);
             manager.setSpeedProfiles(_rosterId, _mergeProfile, _sessionProfile);
         }
