@@ -91,7 +91,7 @@ public class Z21CanReporter extends jmri.implementation.AbstractRailComReporter 
                int value1 = (msg.getElement(10)&0xFF) + ((msg.getElement(11)&0xFF) << 8);
                int value2 = (msg.getElement(12)&0xFF) + ((msg.getElement(13)&0xFF) << 8);
                log.debug("value 1: {}; value 2: {}",value1,value2);
-               if (value1 != 0 ) { // 0 represents end of list or no railcom address.
+               if (msg.getCanDetectorLocoAddress(value1) != null ) { // 0 represents end of list or no railcom address.
                   // get the first locomotive address from the message.
                   DccLocoAddress l = msg.getCanDetectorLocoAddress(value1);
                   if(l!=null) {
@@ -111,7 +111,7 @@ public class Z21CanReporter extends jmri.implementation.AbstractRailComReporter 
                            tag.setOrientation(0);
                      }
                      notify(tag);
-                     if( value2 != 0 ) { // again, 0 is end of list or no railcom address available.
+                     if( msg.getCanDetectorLocoAddress(value2) != null ) { // again, 0 is end of list or no railcom address available.
                         // get the second locomotive address from the message.
                         DccLocoAddress l2 = msg.getCanDetectorLocoAddress(value2);
                         if(l2!=null) {
@@ -133,29 +133,13 @@ public class Z21CanReporter extends jmri.implementation.AbstractRailComReporter 
                            notify(tag2);
                         }
                      }
+                  } else if(type==0x11) { // address is 0 and first in list.
+                     notify(null);
                   }
-                }
-             } else if( type == 0x01 ) {
+               }
+            } else if( type == 0x01 ) {
                 // status message, not a railcom value, so no report.
-                int value1 = (msg.getElement(10)&0xFF) + ((msg.getElement(11)&0xFF) << 8);
-                if(value1 == 0x0000) {
-                   log.debug("Free without tension");
-                   notify(null); // clear the current report if no tags.
-                } else if(value1 == 0x0001) {
-                   log.debug("Free with tension");
-                } else if(value1 == 0x1000) {
-                   log.debug("Busy without tension");
-                } else if(value1 == 0x1100) {
-                   log.debug("Busy with tension");
-                } else if(value1 == 0x1201) {
-                   log.debug("Busy Overload 1");
-                } else if(value1 == 0x1202) {
-                   log.debug("Busy Overload 2");
-                } else if(value1 == 0x1203) {
-                   log.debug("Busy Overload 3");
-                }
-             } else {
-                //notify(null); // clear the current report if no tags.
+                return;
              }
          }
     }
