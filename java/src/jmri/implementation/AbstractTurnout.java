@@ -162,7 +162,10 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
     protected Runnable r;
     protected LocalTime nextWait;
 
-    /** {@inheritDoc} */
+    /** {@inheritDoc}
+     * Used in {@link jmri.implementation.DefaultRoute#setRoute()} and
+     * {@link jmri.implementation.MatrixSignalMast#updateOutputs(char[])}.
+     */
     @Override
     public void setCommandedStateAtInterval(int s) {
         nextWait = InstanceManager.turnoutManagerInstance().outputIntervalEnds(mSystemName);

@@ -175,7 +175,7 @@ public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
         if (tc.getSystemConnectionMemo() != null) {
             return tc.getSystemConnectionMemo().getOutputInterval();
         } else {
-            return 0;
+            return 250;
         }
     }
 

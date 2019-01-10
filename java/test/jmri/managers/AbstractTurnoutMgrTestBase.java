@@ -130,9 +130,9 @@ public abstract class AbstractTurnoutMgrTestBase extends AbstractManagerTestBase
     @Test
     public void testSetAndGetOutputInterval() {
         Turnout t1 = l.newTurnout(getSystemName(getNumToTest1()), "mine");
-        Assert.assertEquals("default outputInterval", 0, l.getOutputInterval(t1.getSystemName())); // only the prefix of t1 is used to find the manager
+        Assert.assertEquals("default outputInterval", 250, l.getOutputInterval(t1.getSystemName())); // only the prefix of t1 is used to find the manager
         l.setOutputInterval(50);
-        Assert.assertEquals("new outputInterval from manager", 0, l.getOutputInterval(t1.getSystemName())); // only the prefix of t1 is used to find manager, interval is not stored in AbstractTurnoutManager
+        Assert.assertEquals("new outputInterval from manager", 250, l.getOutputInterval(t1.getSystemName())); // only the prefix of t1 is used to find manager, interval is not stored in AbstractTurnoutManager
     }
 
     /**

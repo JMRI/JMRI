@@ -385,7 +385,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
      * <p>
      * Change from e.g. XNetTurnout extensions and scripts using {@link #setOutputInterval(int)}
      */
-    private int TURNOUT_INTERVAL = 0;
+    private int TURNOUT_INTERVAL = 250;
     private LocalTime waitUntil = LocalTime.now();
 
     /** {@inheritDoc} */
@@ -395,7 +395,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
         if (waitUntil.isAfter(LocalTime.now())) {
             waitUntil = waitUntil.plus(TURNOUT_INTERVAL, ChronoUnit.MILLIS);
         } else {
-            waitUntil = LocalTime.now().plus(TURNOUT_INTERVAL, ChronoUnit.MILLIS); // default interval = 0 Ms
+            waitUntil = LocalTime.now().plus(TURNOUT_INTERVAL, ChronoUnit.MILLIS); // default interval = 250 Ms
         }
         return waitUntil;
     }

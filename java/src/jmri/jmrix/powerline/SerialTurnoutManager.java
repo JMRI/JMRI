@@ -125,7 +125,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         if (tc.getAdapterMemo() != null) {
             return tc.getAdapterMemo().getOutputInterval();
         } else {
-            return 0;
+            return 250;
         }
     }
 

@@ -41,7 +41,7 @@ public class MqttTurnoutManager extends jmri.managers.AbstractTurnoutManager {
         if (mqttAdapter.getSystemConnectionMemo() != null) {
             return mqttAdapter.getSystemConnectionMemo().getOutputInterval();
         } else {
-            return 0;
+            return 250;
         }
     }
 

@@ -293,8 +293,9 @@ abstract public class SystemConnectionMemo extends Bean {
     protected int _interval = 250;
 
     /**
-     * Get the Interval (in ms) to wait between/before commands are send, configured in AdapterConfig.
-     * Used in {@link jmri.implementation.AbstractTurnout#setCommandedState(int)}
+     * Get the connection specific OutputInterval (in ms) to wait between/before commands
+     * are send, configured in AdapterConfig.
+     * Used in {@link jmri.implementation.AbstractTurnout#setCommandedStateAtInterval(int)}.
      */
     public int getOutputInterval() {
         log.debug("Getting interval {}", _interval);

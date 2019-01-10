@@ -250,7 +250,7 @@ public class LnTurnoutManager extends AbstractTurnoutManager implements LocoNetL
     public int getOutputInterval(String systemName) {
         if (_memo == null) {
             log.debug("LnTurnoutMemo = NULL"); // LnMemo is null during initialization, so catch that
-            return 0;
+            return 250;
         } else {
             log.debug("LnTurnoutMemo ={}, interval ={}", _memo.getUserName(), _memo.getOutputInterval());
             return _memo.getOutputInterval();

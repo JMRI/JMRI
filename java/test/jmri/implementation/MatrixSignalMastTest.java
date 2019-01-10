@@ -158,7 +158,7 @@ public class MatrixSignalMastTest {
     public void testSetDelay() {
         MatrixSignalMast m = new MatrixSignalMast("IF$xsm:basic:one-low($0001)-3t", "user");
 
-        Assert.assertEquals("initial mast delay 0", 0, m.getMatrixMastCommandDelay());
+        Assert.assertEquals("initial mast delay 0", 250, m.getMatrixMastCommandDelay());
         m.setMatrixMastCommandDelay(150);
         Assert.assertEquals("get new mast delay", 150, m.getMatrixMastCommandDelay());
     }

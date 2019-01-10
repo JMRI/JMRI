@@ -45,7 +45,7 @@ public class DccTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestB
     @Test
     @Override
     public void testSetAndGetOutputInterval() { // DccTurnoutManager has no direct access to a Memo or TC
-        Assert.assertEquals("default outputInterval", 0, l.getOutputInterval("BT21")); // only the prefix is used to find the manager
+        Assert.assertEquals("default outputInterval", 250, l.getOutputInterval("BT21")); // only the prefix is used to find the manager
         l.setOutputInterval(30);
         Assert.assertEquals("new outputInterval from manager", 30, l.getOutputInterval("BT21")); // direct set & get
     }

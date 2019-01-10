@@ -1,6 +1,7 @@
 package jmri.jmrix.pi;
 
 import java.util.ResourceBundle;
+import javax.annotation.Nonnull;
 import jmri.InstanceManager;
 import jmri.LightManager;
 import jmri.SensorManager;
@@ -16,18 +17,20 @@ import org.slf4j.LoggerFactory;
  * instance manager to activate their particular system.
  *
  * @author   Paul Bender Copyright (C) 2015
- * 
  */
-
 public class RaspberryPiSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
-   public RaspberryPiSystemConnectionMemo(){
-     super("P","RaspberryPi");
-     register(); // registers general type
-     InstanceManager.store(this,RaspberryPiSystemConnectionMemo.class); // also register as specific type
-     if(log.isDebugEnabled()) log.debug("Created RaspberryPiSystemConnectionMemo");
-   }
+    public RaspberryPiSystemConnectionMemo(@Nonnull String prefix, @Nonnull String name) {
+        super(prefix, name); // NOI18N
 
+        register(); // registers general type
+        InstanceManager.store(this, RaspberryPiSystemConnectionMemo.class); // also register as specific type
+        log.debug("Created RaspberryPiSystemConnectionMemo");
+    }
+
+    public RaspberryPiSystemConnectionMemo(){
+        this("P","RaspberryPi");
+    }
 
     /*
      * Provides access to the Sensor Manager for this particular connection.
@@ -74,7 +77,7 @@ public class RaspberryPiSystemConnectionMemo extends jmri.jmrix.SystemConnection
     private LightManager lightManager=null;
 
     public void configureManagers(){
-       setTurnoutManager(new RaspberryPiTurnoutManager(getSystemPrefix()));
+       setTurnoutManager(new RaspberryPiTurnoutManager(this));
        setSensorManager(new RaspberryPiSensorManager(getSystemPrefix()));
     }
     
@@ -118,6 +121,4 @@ public class RaspberryPiSystemConnectionMemo extends jmri.jmrix.SystemConnection
 
     private final static Logger log = LoggerFactory.getLogger(RaspberryPiSystemConnectionMemo.class);
 
-
 }
-

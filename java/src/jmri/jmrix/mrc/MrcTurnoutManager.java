@@ -46,7 +46,7 @@ public class MrcTurnoutManager extends jmri.managers.AbstractTurnoutManager {
         if (tc.getAdapterMemo() != null) {
             return tc.getAdapterMemo().getOutputInterval();
         } else {
-            return 0;
+            return 250;
         }
     }
 

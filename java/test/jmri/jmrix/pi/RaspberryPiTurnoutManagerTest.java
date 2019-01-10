@@ -18,18 +18,17 @@ public class RaspberryPiTurnoutManagerTest extends jmri.managers.AbstractTurnout
 
     @Override
     public String getSystemName(int i){
-        return "PIT"+i;
+        return l.getSystemPrefix() + "T" + i;
     }
 
-
-   @Test
-   public void ConstructorTest(){
+    @Test
+    public void ConstructorTest(){
        Assert.assertNotNull(l);
    }
 
-   @Test
-   public void checkPrefix(){
-       Assert.assertEquals("Prefix","PI",l.getSystemPrefix());
+    @Test
+    public void checkPrefix(){
+       Assert.assertEquals("Prefix", "P2", l.getSystemPrefix());
    }
 
     @Override    
@@ -93,9 +92,9 @@ public class RaspberryPiTurnoutManagerTest extends jmri.managers.AbstractTurnout
     @Override
     public void testSetAndGetOutputInterval() {
         Turnout t1 = l.newTurnout(getSystemName(17), "mine");
-        Assert.assertEquals("default outputInterval", 0, l.getOutputInterval(t1.getSystemName())); // only the prefix of t1 is used to find the manager
+        Assert.assertEquals("default outputInterval", 250, l.getOutputInterval(t1.getSystemName())); // only the prefix of t1 is used to find the manager
         l.setOutputInterval(50);
-        Assert.assertEquals("new outputInterval from manager", 50, l.getOutputInterval(t1.getSystemName())); // only the prefix of t1 is used to find manager, interval is not stored in AbstractTurnoutManager
+        Assert.assertEquals("new outputInterval from manager", 250, l.getOutputInterval(t1.getSystemName())); // only the prefix of t1 is used to find manager, interval is not stored in AbstractTurnoutManager
     }
 
     @Override
@@ -116,7 +115,7 @@ public class RaspberryPiTurnoutManagerTest extends jmri.managers.AbstractTurnout
        GpioProvider myprovider = new PiGpioProviderScaffold();
        GpioFactory.setDefaultProvider(myprovider);
        jmri.util.JUnitUtil.resetInstanceManager();
-       l = new RaspberryPiTurnoutManager("Pi");
+       l = new RaspberryPiTurnoutManager(new RaspberryPiSystemConnectionMemo("P2","RaspberryPi"));
     }
 
     @After

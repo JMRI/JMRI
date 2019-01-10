@@ -205,7 +205,7 @@ public class DCCppTurnoutManager extends jmri.managers.AbstractTurnoutManager im
         if (tc.getSystemConnectionMemo() != null) {
             return tc.getSystemConnectionMemo().getOutputInterval();
         } else {
-            return 0;
+            return 250;
         }
     }
 

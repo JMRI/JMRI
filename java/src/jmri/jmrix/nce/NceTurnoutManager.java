@@ -110,7 +110,7 @@ public class NceTurnoutManager extends jmri.managers.AbstractTurnoutManager impl
         if (tc.getAdapterMemo() != null) {
             return tc.getAdapterMemo().getOutputInterval();
         } else {
-            return 0;
+            return 250;
         }
     }
 

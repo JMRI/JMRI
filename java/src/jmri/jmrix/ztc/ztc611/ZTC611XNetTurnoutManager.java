@@ -8,7 +8,7 @@ import jmri.Turnout;
  * System names are "XTnnn", where X is the user-configurable system prefix,
  * nnn is the turnout number without padding.
  *
- * @author Paul Bender Copyright (C) 2008,2017
+ * @author Paul Bender Copyright (C) 2008, 2017
  */
 public class ZTC611XNetTurnoutManager extends jmri.jmrix.lenz.XNetTurnoutManager implements jmri.jmrix.lenz.XNetListener {
 
