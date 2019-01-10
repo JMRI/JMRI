@@ -259,7 +259,7 @@ public class JmriConfigurationManager implements ConfigureManager {
             log.error("Unable to get File for {}", url);
             throw new JmriException(ex.getMessage(), ex);
         }
-        // make this url the default "Save Panels..." file
+        // make this url the default "Store Panels..." file
         JFileChooser ufc = jmri.configurexml.StoreXmlUserAction.getUserFileChooser();
         ufc.setSelectedFile(new File(FileUtil.urlToURI(url)));
 
