@@ -2810,7 +2810,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
      */
     @Override
     public boolean equals(Object obj) {
-        if (obj == this) return true;  // for efficiency
         if (obj == null) return false; // by contract
 
         if (obj instanceof Warrant) {  // NamedBeans are not equal to things of other types
