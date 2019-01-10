@@ -12,10 +12,14 @@ import java.util.Set;
 import jmri.Block;
 import jmri.IdTag;
 import jmri.LocoAddress;
+import jmri.DccLocoAddress;
 import jmri.Manager;
 import jmri.NamedBean;
 import jmri.PhysicalLocationReporter;
 import jmri.Reporter;
+import jmri.jmrit.roster.Roster;
+import jmri.jmrit.roster.RosterEntry;
+import jmri.jmrit.vsdecoder.VSDConfig;
 import jmri.jmrit.vsdecoder.listener.ListeningSpot;
 import jmri.jmrit.vsdecoder.listener.VSDListener;
 import jmri.jmrit.vsdecoder.swing.VSDManagerFrame;
@@ -24,6 +28,7 @@ import jmri.util.JmriJFrame;
 import jmri.util.PhysicalLocation;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.GraphicsEnvironment;
 import javax.swing.Timer;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -174,9 +179,46 @@ public class VSDecoderManager implements PropertyChangeListener {
 
     public JmriJFrame provideManagerFrame() {
         if (managerFrame == null) {
-            managerFrame = new VSDManagerFrame();
+            if (GraphicsEnvironment.isHeadless()) {
+                String vsdRosterGroup = "VSD";
+                if (Roster.getDefault().getRosterGroupList().contains(vsdRosterGroup)) {
+                    List<RosterEntry> rosterList;
+                    rosterList = Roster.getDefault().getEntriesInGroup(vsdRosterGroup);
+                    // Allow <max_decoder> roster entries
+                    int entry_counter = 0;
+                    for (RosterEntry entry : rosterList) {
+                        if (entry_counter < max_decoder) {
+                            VSDConfig config = new VSDConfig();
+                            config.setLocoAddress(entry.getDccLocoAddress());
+                            log.debug("Roster entry VSD address: {}", config.getLocoAddress());
+                            boolean is_loaded = LoadVSDFileAction.loadVSDFile(entry.getAttribute("VSDecoder_Path"));
+                            if (!is_loaded) {
+                                log.error("loading VSD file {}: {}", entry.getAttribute("VSDecoder_Path"), is_loaded);
+                            }
+                            log.debug(" entry full VSD path: {}", entry.getAttribute("VSDecoder_Path"));
+                            config.setProfileName(entry.getAttribute("VSDecoder_Profile"));
+                            log.debug(" entry VSD profile: {}", entry.getAttribute("VSDecoder_Profile"));
+                            VSDecoder newDecoder = VSDecoderManager.instance().getVSDecoder(config);
+                            if (newDecoder != null) {
+                                log.info("VSD profile {} loaded", config.getProfileName());
+                            }
+                            entry_counter++;
+                        } else {
+                            log.warn("Only {} roster entries allowed. Disgarded {}", max_decoder, rosterList.size() - max_decoder);
+                        }
+                    }
+                    if (entry_counter == 0) {
+                        log.info("No Roster entry found in Roster Group {}", vsdRosterGroup);
+                    }
+                } else {
+                    log.warn("Roster group \"{}\" not found", vsdRosterGroup);
+                }
+            } else {
+                // Run VSDecoder with GUI
+                managerFrame = new VSDManagerFrame();
+            }
         } else {
-            log.warn("Virtual Sound Decoder Manager is already running");
+            log.warn("Virtual Sound Decoder Manager is already running"); // VSDManagerFrameTitle?
         }
         return managerFrame;
     }
@@ -890,7 +932,9 @@ public class VSDecoderManager implements PropertyChangeListener {
             }
         }
 
-        fireMyEvent(new VSDManagerEvent(this, VSDManagerEvent.EventType.PROFILE_LIST_CHANGE, new_entries));
+        if (!GraphicsEnvironment.isHeadless()) {
+            fireMyEvent(new VSDManagerEvent(this, VSDManagerEvent.EventType.PROFILE_LIST_CHANGE, new_entries));
+        }
     }
 
     void initSoundPositionTimer(VSDecoder d) {

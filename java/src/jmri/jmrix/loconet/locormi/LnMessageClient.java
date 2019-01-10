@@ -37,8 +37,8 @@ public class LnMessageClient extends LnTrafficRouter {
     LnMessageClientPollThread pollThread = null;
 
     public LnMessageClient() {
-        super();
-        clientMemo = new LocoNetSystemConnectionMemo();
+        super(new LocoNetSystemConnectionMemo());
+        clientMemo = new LocoNetSystemConnectionMemo();  // client is separate?
     }
 
     /**

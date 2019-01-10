@@ -252,8 +252,9 @@ public class SignalSpeedMap extends Bean implements InstanceManagerAutoDefault, 
         return null;
     }
 
-    @Deprecated
+    @Deprecated // 4.7.something
     public boolean isRatioOfNormalSpeed() {
+        jmri.util.Log4JUtil.deprecationWarning(log, "isRatioOfNormalSpeed"); 
         return (_interpretation == PERCENT_NORMAL);
     }
 
@@ -269,8 +270,9 @@ public class SignalSpeedMap extends Bean implements InstanceManagerAutoDefault, 
         return _stepIncrement;
     }
 
-    @Deprecated
+    @Deprecated // 4.7.something
     public int getNumSteps() {
+        jmri.util.Log4JUtil.deprecationWarning(log, "getNumSteps"); 
         return _numSteps;
     }
 

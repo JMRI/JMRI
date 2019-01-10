@@ -42,7 +42,7 @@ public class AbstractRailComReporter extends AbstractReporter
             AbstractRailComReporter r;
             if ((r = (AbstractRailComReporter) id.getWhereLastSeen()) != null) {
                 log.debug("Previous reporter: " + r.mSystemName);
-                if (r != this && r.getCurrentReport() == id) {
+                if (!(r.equals(this)) && r.getCurrentReport() == id) {
                     log.debug("Notify previous");
                     r.notify(null);
                 } else {

@@ -87,6 +87,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
         setTimeout(DCCppMessageTimeout);
         myRegex = message.myRegex;
         myMessage = message.myMessage;
+        toStringCache = message.toStringCache;
     }
 
     /**
@@ -118,6 +119,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
         setRetries(_nRetries);
         setTimeout(DCCppMessageTimeout);
         myMessage = new StringBuilder(s); // yes, copy... or... maybe not.
+        toStringCache = s;
         // gather bytes in result
         setRegex();
         _nDataChars = myMessage.length();
@@ -312,37 +314,37 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
             case DCCppConstants.ACCESSORY_CMD:
                 myRegex = DCCppConstants.ACCESSORY_CMD_REGEX; break;
             case DCCppConstants.TURNOUT_CMD:
-                if ((match(myMessage.toString(), DCCppConstants.TURNOUT_ADD_REGEX, "ctor")) != null) {
+                if ((match(toString(), DCCppConstants.TURNOUT_ADD_REGEX, "ctor")) != null) {
                 myRegex = DCCppConstants.TURNOUT_ADD_REGEX;
-                } else if ((match(myMessage.toString(), DCCppConstants.TURNOUT_DELETE_REGEX, "ctor")) != null) {
+                } else if ((match(toString(), DCCppConstants.TURNOUT_DELETE_REGEX, "ctor")) != null) {
                     myRegex = DCCppConstants.TURNOUT_DELETE_REGEX;
-                } else if ((match(myMessage.toString(), DCCppConstants.TURNOUT_LIST_REGEX, "ctor")) != null) {
+                } else if ((match(toString(), DCCppConstants.TURNOUT_LIST_REGEX, "ctor")) != null) {
                     myRegex = DCCppConstants.TURNOUT_LIST_REGEX;
-                } else if ((match(myMessage.toString(), DCCppConstants.TURNOUT_CMD_REGEX, "ctor")) != null) {
+                } else if ((match(toString(), DCCppConstants.TURNOUT_CMD_REGEX, "ctor")) != null) {
                     myRegex = DCCppConstants.TURNOUT_CMD_REGEX;
                 } else {
                     myRegex = "";
                 }
                 break;
             case DCCppConstants.SENSOR_CMD:
-                if ((match(myMessage.toString(), DCCppConstants.SENSOR_ADD_REGEX, "ctor")) != null) {
+                if ((match(toString(), DCCppConstants.SENSOR_ADD_REGEX, "ctor")) != null) {
                 myRegex = DCCppConstants.SENSOR_ADD_REGEX;
-                } else if ((match(myMessage.toString(), DCCppConstants.SENSOR_DELETE_REGEX, "ctor")) != null) {
+                } else if ((match(toString(), DCCppConstants.SENSOR_DELETE_REGEX, "ctor")) != null) {
                     myRegex = DCCppConstants.SENSOR_DELETE_REGEX;
-                } else if ((match(myMessage.toString(), DCCppConstants.SENSOR_LIST_REGEX, "ctor")) != null) {
+                } else if ((match(toString(), DCCppConstants.SENSOR_LIST_REGEX, "ctor")) != null) {
                     myRegex = DCCppConstants.SENSOR_LIST_REGEX;
                 } else {
                     myRegex = "";
                 }
                 break;
             case DCCppConstants.OUTPUT_CMD:
-                if ((match(myMessage.toString(), DCCppConstants.OUTPUT_ADD_REGEX, "ctor")) != null) {
+                if ((match(toString(), DCCppConstants.OUTPUT_ADD_REGEX, "ctor")) != null) {
                 myRegex = DCCppConstants.OUTPUT_ADD_REGEX;
-                } else if ((match(myMessage.toString(), DCCppConstants.OUTPUT_DELETE_REGEX, "ctor")) != null) {
+                } else if ((match(toString(), DCCppConstants.OUTPUT_DELETE_REGEX, "ctor")) != null) {
                     myRegex = DCCppConstants.OUTPUT_DELETE_REGEX;
-                } else if ((match(myMessage.toString(), DCCppConstants.OUTPUT_LIST_REGEX, "ctor")) != null) {
+                } else if ((match(toString(), DCCppConstants.OUTPUT_LIST_REGEX, "ctor")) != null) {
                     myRegex = DCCppConstants.OUTPUT_LIST_REGEX;
-                } else if ((match(myMessage.toString(), DCCppConstants.OUTPUT_CMD_REGEX, "ctor")) != null) {
+                } else if ((match(toString(), DCCppConstants.OUTPUT_CMD_REGEX, "ctor")) != null) {
                     myRegex = DCCppConstants.OUTPUT_CMD_REGEX;
                 } else {
                     myRegex = "";
@@ -386,6 +388,8 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
         }
     }
     
+    private String toStringCache = null;
+    
     /**
      * Converts DCCppMessage to String format (without the {@code <>} brackets)
      * 
@@ -393,7 +397,10 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
      */
     @Override
     public String toString() {
-        return(myMessage.toString());
+        if (toStringCache==null)
+            toStringCache = myMessage.toString();
+        
+        return toStringCache;
         /*
         String s = Character.toString(opcode);
         for (int i = 0; i < valueList.size(); i++) {
@@ -578,6 +585,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
         } else if (n > 0) {
             myMessage.setCharAt(n,c);
         }
+        toStringCache = null;
     }
     // For DCC++, the opcode is the first character in the
     // command (after the < ).
@@ -593,6 +601,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
         }
         opcode = (char) (i & 0xFF);
         myMessage.setCharAt(0, opcode);
+        toStringCache = null;
     }
 
     @Override
@@ -611,12 +620,12 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
     }
    
     private int getGroupCount(){
-        Matcher m = match(myMessage.toString(), myRegex, "gvs");
+        Matcher m = match(toString(), myRegex, "gvs");
         return m.groupCount();
     }
  
     public String getValueString(int idx) {
-        Matcher m = match(myMessage.toString(), myRegex, "gvs");
+        Matcher m = match(toString(), myRegex, "gvs");
         if (m == null) {
             log.error("No match!");
             return("");
@@ -629,7 +638,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
     }
     
     public int getValueInt(int idx) {
-        Matcher m = match(myMessage.toString(), myRegex, "gvi");
+        Matcher m = match(toString(), myRegex, "gvi");
         if (m == null) {
             log.error("No match!");
             return(0);
@@ -642,8 +651,8 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
     }
     
     public boolean getValueBool(int idx) {
-        log.debug("msg = {}, regex = {}", myMessage.toString(), myRegex);
-        Matcher m = match(myMessage.toString(), myRegex, "gvi");
+        log.debug("msg = {}, regex = {}", toString(), myRegex);
+        Matcher m = match(toString(), myRegex, "gvi");
         
         if (m == null) {
             log.error("No Match!");
@@ -2470,9 +2479,12 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
      */
     @Override
     public boolean equals(final Object obj) {
-        if (obj == null) return false;
-        if (! (obj instanceof DCCppMessage)) return false;
-        
+        if (obj == null)
+            return false;
+
+        if (!(obj instanceof DCCppMessage))
+            return false;
+
         final DCCppMessage other = (DCCppMessage) obj;
 
         final String myCmd = this.toString();
@@ -2481,17 +2493,37 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
         if (myCmd.equals(otherCmd))
             return true;
 
-        if (!isFunctionMessage() || !other.isFunctionMessage())
-            return false;
-        
-        if (this.getValueInt(1) != other.getValueInt(1))
+        if (!(myCmd.charAt(0) == DCCppConstants.FUNCTION_CMD) || !(otherCmd.charAt(0) == DCCppConstants.FUNCTION_CMD))
             return false;
 
-        return getFuncBaseByte1(this.getFuncByte1Int()) == getFuncBaseByte1(other.getFuncByte1Int());
+        final int mySpace1 = myCmd.indexOf(' ', 2);
+        final int otherSpace1 = otherCmd.indexOf(' ', 2);
+
+        if (mySpace1 != otherSpace1)
+            return false;
+
+        if (!myCmd.subSequence(2, mySpace1).equals(otherCmd.subSequence(2, otherSpace1)))
+            return false;
+
+        int mySpace2 = myCmd.indexOf(' ', mySpace1 + 1);
+        if (mySpace2 < 0)
+            mySpace2 = myCmd.length();
+
+        int otherSpace2 = otherCmd.indexOf(' ', otherSpace1 + 1);
+        if (otherSpace2 < 0)
+            otherSpace2 = otherCmd.length();
+
+        final int myBaseFunction = Integer.parseInt(myCmd.substring(mySpace1 + 1, mySpace2));
+        final int otherBaseFunction = Integer.parseInt(otherCmd.substring(otherSpace1 + 1, otherSpace2));
+
+        if (myBaseFunction == otherBaseFunction)
+            return true;
+
+        return getFuncBaseByte1(myBaseFunction) == getFuncBaseByte1(otherBaseFunction);
     }
 
     public int hashCode() {
-        return myMessage.hashCode();
+        return toString().hashCode();
     }
     
     /**

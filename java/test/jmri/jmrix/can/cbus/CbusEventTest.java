@@ -1,5 +1,6 @@
-package jmri.util;
+package jmri.jmrix.can.cbus;
 
+import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -7,13 +8,14 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
+ * @author Steve Young Copyright (C) 2019
  */
-public class RuntimeUtilTest {
+public class CbusEventTest {
 
     @Test
     public void testCTor() {
-        RuntimeUtil t = new RuntimeUtil();
+        CbusEvent t = new CbusEvent(0,1);
         Assert.assertNotNull("exists",t);
     }
 
@@ -28,6 +30,6 @@ public class RuntimeUtilTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(RuntimeUtilTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(CbusEventTest.class);
 
 }

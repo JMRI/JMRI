@@ -68,11 +68,8 @@ public class LnPacketizer extends LnTrafficController {
 
     /**
      * Synchronized list used as a transmit queue.
-     * <p>
-     * This is public to allow access from the internal class(es) when compiling
-     * with Java 1.1
      */
-    public LinkedList<byte[]> xmtList = new LinkedList<byte[]>();
+    protected LinkedList<byte[]> xmtList = new LinkedList<byte[]>();
 
     /**
      * XmtHandler (a local class) object to implement the transmit thread.
@@ -98,6 +95,7 @@ public class LnPacketizer extends LnTrafficController {
      */
     @Override
     public void sendLocoNetMessage(LocoNetMessage m) {
+
         // update statistics
         transmittedMsgCount++;
 
@@ -462,26 +460,49 @@ public class LnPacketizer extends LnTrafficController {
         log.debug("startThreads current priority = {} max available = {} default = {} min available = {}", // NOI18N
                 priority, Thread.MAX_PRIORITY, Thread.NORM_PRIORITY, Thread.MIN_PRIORITY);
 
+        // start the RcvHandler in a thread of its own
+        if (rcvHandler == null) {
+            rcvHandler = new RcvHandler(this);
+        }
+        rcvThread = new Thread(rcvHandler, "LocoNet receive handler"); // NOI18N
+        rcvThread.setDaemon(true);
+        rcvThread.setPriority(Thread.MAX_PRIORITY);
+        rcvThread.start();
+
         // make sure that the xmt priority is no lower than the current priority
         int xmtpriority = (Thread.MAX_PRIORITY - 1 > priority ? Thread.MAX_PRIORITY - 1 : Thread.MAX_PRIORITY);
         // start the XmtHandler in a thread of its own
-        Thread xmtThread = new Thread(xmtHandler, "LocoNet transmit handler"); // NOI18N
+        xmtThread = new Thread(xmtHandler, "LocoNet transmit handler"); // NOI18N
         log.debug("Xmt thread starts at priority {}", xmtpriority); // NOI18N
         xmtThread.setDaemon(true);
         xmtThread.setPriority(Thread.MAX_PRIORITY - 1);
         xmtThread.start();
 
-        // start the RcvHandler in a thread of its own
-        if (rcvHandler == null) {
-            rcvHandler = new RcvHandler(this);
-        }
-        Thread rcvThread = new Thread(rcvHandler, "LocoNet receive handler"); // NOI18N
-        rcvThread.setDaemon(true);
-        rcvThread.setPriority(Thread.MAX_PRIORITY);
-        rcvThread.start();
         log.info("lnPacketizer Started");
     }
 
+    Thread rcvThread;
+    Thread xmtThread;
+    
+    /**
+     * End threads, intended for testing only
+     */
+    @SuppressWarnings("deprecation") // stop() is deprecated, but it's not going away
+    public void dispose() {
+        if (xmtThread != null) {
+            xmtThread.stop(); // interrupt not sufficient?
+            try {
+                xmtThread.join();
+            } catch (InterruptedException e) { log.warn("unexpected InterruptedException", e);}
+        }
+        if (rcvThread != null) {
+            rcvThread.interrupt();
+            try {
+                rcvThread.join();
+            } catch (InterruptedException e) { log.warn("unexpected InterruptedException", e);}
+        }
+        super.dispose();
+    }
     private final static Logger log = LoggerFactory.getLogger(LnPacketizer.class);
 
 }

@@ -26,6 +26,7 @@ public class BlockTest {
     }
 
     @Test
+    @SuppressWarnings("unlikely-arg-type") // String / StringBuffer seems to be unrelated to Block
     public void testEquals() {
         Block b1 = new Block("SystemName1");
         Block b2 = new Block("SystemName2");
@@ -43,7 +44,8 @@ public class BlockTest {
         Assert.assertFalse(b1.equals(null));
 
         // check another type
-        Assert.assertFalse(b1.equals(new StringBuffer("foo")));        
+        Assert.assertFalse(b1.equals(new StringBuffer("foo")));
+        Assert.assertFalse(b1.equals("foo"));
     }
 
     @Test

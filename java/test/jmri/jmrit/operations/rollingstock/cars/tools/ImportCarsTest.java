@@ -73,24 +73,16 @@ public class ImportCarsTest extends OperationsTestCase {
 
         // do import
 
-        Thread mb = new ImportCars();
+        Thread mb = new ImportCars(){
+            protected File getFile() {
+                // replace JFileChooser with fixed file to avoid threading issues
+                return new File(OperationsXml.getFileLocation()+OperationsXml.getOperationsDirectoryName() + File.separator + ExportCars.getOperationsFileName());
+            }
+        };
         mb.setName("Test Import Cars"); // NOI18N
         mb.start();
 
-        jmri.util.JUnitUtil.waitFor(() -> {
-            return mb.getState().equals(Thread.State.WAITING);
-        }, "wait for file chooser");
-
-        // opens file chooser path "operations" "JUnitTest"
-        JFileChooserOperator fco = new JFileChooserOperator();
-        String path = OperationsXml.getOperationsDirectoryName();
-        fco.chooseFile(path + File.separator + ExportCars.getOperationsFileName());
-
-        jmri.util.JUnitUtil.waitFor(() -> {
-            return mb.getState().equals(Thread.State.WAITING);
-        }, "wait for dialog");
-
-        // import complete 
+        // wait for import complete and acknowledge
         JemmyUtil.pressDialogButton(Bundle.getMessage("SuccessfulImport"), Bundle.getMessage("ButtonOK"));
 
         try {

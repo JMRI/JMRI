@@ -3,8 +3,9 @@ package jmri.jmrix.can.cbus;
 import java.awt.Color;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+// import org.slf4j.Logger;
+// import org.slf4j.LoggerFactory;
 
 /**
  * Class to implement highlighting of CBUS events.
@@ -34,7 +35,6 @@ public class CbusEventHighlighter {
      * @return true if event matches
      */
     public boolean highlight(CanMessage m) {
-        log.debug("Highlight on Message: " + m.toString());
         if (!CbusMessage.isEvent(m)) {
             return false;
         }
@@ -50,15 +50,12 @@ public class CbusEventHighlighter {
         }
         if ((_dir != CbusConstants.EVENT_DIR_EITHER )
                 && (_dir != CbusConstants.EVENT_DIR_OUT )) {
-            // log.debug("does not match event dir {}",_dir);
             return false;
         }
-        // log.debug("Message matches highlight with direction {}",_dir);
         return true;
     }
 
     public boolean highlight(CanReply r) {
-        log.debug("highlight on Reply: " + r.toString());
         if (!CbusMessage.isEvent(r)) {
             return false;
         }
@@ -74,19 +71,17 @@ public class CbusEventHighlighter {
         }
         if ((_dir != CbusConstants.EVENT_DIR_EITHER)
                 && (_dir != CbusConstants.EVENT_DIR_IN)) {
-            // log.debug("does not match event dir {}",_dir);
             return false;
         }
-        // log.debug("Reply matches highlight with event dir {}",_dir);
         return true;
     }
 
     // control terms to be included in highlight
+    
     /**
      * Set whether NN (Node Number) will be included in highlight.
      */
     public void setNnEnable(boolean b) {
-        log.debug("highlight NN enable: " + b);
         _nnEnabled = b;
     }
 
@@ -94,18 +89,15 @@ public class CbusEventHighlighter {
      * Set whether Ev (event number) will be included in highlight.
      */
     public void setEvEnable(boolean b) {
-        log.debug("highlight EV enable: " + b);
         _evEnabled = b;
     }
 
     // highlight values
     public void setNn(int n) {
-        log.debug("highlight NN set: " + n);
         _nn = n;
     }
 
     public void setEv(int n) {
-        log.debug("highlight EV set: " + n);
         _ev = n;
     }
 
@@ -115,15 +107,14 @@ public class CbusEventHighlighter {
      * matches either ON or OFF.
      */
     public void setType(int n) {
-        log.debug("highlight EV type set: " + n);
         _type = n;
     }
 
     /**
-     * Set value of direction to match. Type is the EVENT_IN, EVENT_OUT, EVENT_EITHER_DIR
+     * Set value of direction to match. 
+     * Type is EVENT_DIR_UNSET EVENT_DIR_IN, EVENT_DIR_OUT, EVENT_EITHER_DIR EVENT_DIR_EITHER
      */
     public void setDir(int n) {
-        log.debug("highlight EV direction set: " + n);
         _dir = n;
     }
 
@@ -135,5 +126,5 @@ public class CbusEventHighlighter {
         return _color;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CbusEventHighlighter.class);
+    // private final static Logger log = LoggerFactory.getLogger(CbusEventHighlighter.class);
 }
