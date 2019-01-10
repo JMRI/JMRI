@@ -13,6 +13,7 @@ public class Z21MultiMeter extends jmri.implementation.AbstractMultiMeter implem
 
     private Z21TrafficController tc = null;
     private Z21SystemConnectionMemo _memo = null;
+    private boolean enabled = false;  // disable by default; prevent polling when not being used.
 
     public Z21MultiMeter(Z21SystemConnectionMemo memo) {
         super(-1); // no timer, since we already poll for this information. 
@@ -34,10 +35,12 @@ public class Z21MultiMeter extends jmri.implementation.AbstractMultiMeter implem
 
     @Override 
     public void enable(){
+        enabled = true;
     }
 
     @Override 
     public void disable(){
+        enabled = false;
     }
 
     @Override
@@ -56,7 +59,9 @@ public class Z21MultiMeter extends jmri.implementation.AbstractMultiMeter implem
 
     @Override
     protected void requestUpdateFromLayout() {
-        tc.sendz21Message(Z21Message.getLanSystemStateDataChangedRequestMessage(), this);
+        if( enabled ) {
+            tc.sendz21Message(Z21Message.getLanSystemStateDataChangedRequestMessage(), this);
+        }
     }
 
     @Override
