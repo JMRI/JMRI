@@ -674,7 +674,25 @@ public class SpeedUtil {
                 rampLength, deltaTime*numSteps, fSpeed, toSpeed);
         return rampLength;
     }
-    
+
+    /**
+     * Return the distance traveled at current speed from one speed change to the next.
+     * 
+     * @param prevSpeed throttle setting when speed changed to currSpeed
+     * @param currSpeed throttle setting being set
+     * @param isForward direction of decoder
+     * @param speedTime elapsed time from  when speed changed to currSpeed to next speed setting
+     * @return distance traveled
+     */
+    protected float getDistanceAtSpeedChange(float prevSpeed, float currSpeed, boolean isForward, int speedTime) {
+        boolean increasing = (prevSpeed <= currSpeed);
+        float momentumTime = getMomentumTime(currSpeed - prevSpeed, increasing);
+        float dist = getTrackSpeed((prevSpeed + currSpeed)/2, isForward) * momentumTime;
+        if (speedTime > momentumTime) { // then the remainder at waitSpeed
+            dist += getTrackSpeed(currSpeed, isForward) * (speedTime - momentumTime);
+        }
+        return dist;
+    }
     /*************** dynamic calibration ***********************/
     long _timeAtSpeed;
     float _distanceTravelled;
@@ -783,9 +801,9 @@ public class SpeedUtil {
      */
     protected void speedChange() {
         _numchanges++;
-        if (!log.isDebugEnabled() && _numchanges > 1) {
+/*        if (!log.isDebugEnabled() && _numchanges > 1) {
             return;
-        }
+        }*/
         long time = System.currentTimeMillis();
         float throttleSetting = _throttle.getSpeedSetting();
         long elapsedTime = time - _changetime;
