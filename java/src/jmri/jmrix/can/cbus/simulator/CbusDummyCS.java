@@ -191,7 +191,7 @@ public class CbusDummyCS implements CanListener {
         } else {
             r.setElement(0, CbusConstants.CBUS_TOF);
         }
-        sendReplyWithDelay(r);
+        send.sendWithDelay(r,_sendIn,_sendOut,_networkDelay);
     }
 
     protected void setEstop(Boolean estop) {
@@ -199,7 +199,7 @@ public class CbusDummyCS implements CanListener {
         if (_estop) {
             CanReply r = new CanReply(1);
             r.setElement(0, CbusConstants.CBUS_ESTOP);
-            sendReplyWithDelay(r);
+            send.sendWithDelay(r,_sendIn,_sendOut,_networkDelay);
             for ( int i=0 ; (i < _csSessions.size()) ; i++) {
                 _csSessions.get(i).setSpd(1);
             }
@@ -233,7 +233,7 @@ public class CbusDummyCS implements CanListener {
             r.setElement(1, (locoaddr / 256)); // addr hi
             r.setElement(2, locoaddr & 0xff);  // addr low
             r.setElement(3, 2);
-            sendReplyWithDelay(r);
+            send.sendWithDelay(r,_sendIn,_sendOut,_networkDelay);
             return;
         }
 
@@ -261,7 +261,7 @@ public class CbusDummyCS implements CanListener {
         r.setElement(1, session);
         r.setElement(2, 0);
         r.setElement(3, 3);
-        sendReplyWithDelay(r);
+        send.sendWithDelay(r,_sendIn,_sendOut,_networkDelay);
     }
     
     private void processDspd ( int session, int speeddir) {
@@ -269,6 +269,9 @@ public class CbusDummyCS implements CanListener {
             if ( _csSessions.get(i).getSessionNum() == session  && (
             !_csSessions.get(i).getIsDispatched() ) ) {
                 _csSessions.get(i).setSpd(speeddir);
+                if ((speeddir & 0x7f) != 1) {
+                    setEstop(false);
+                }
                 return;
             }
         }
@@ -277,7 +280,7 @@ public class CbusDummyCS implements CanListener {
         r.setElement(1, session);
         r.setElement(2, 0);
         r.setElement(3, 3);
-        sendReplyWithDelay(r);
+        send.sendWithDelay(r,_sendIn,_sendOut,_networkDelay);
     }
     
     private void processDkeep ( int session ) {
@@ -294,7 +297,7 @@ public class CbusDummyCS implements CanListener {
         r.setElement(1, session);
         r.setElement(2, 0);
         r.setElement(3, 3);
-        sendReplyWithDelay(r);
+        send.sendWithDelay(r,_sendIn,_sendOut,_networkDelay);
     }
 
     protected void destroySession (CbusDummyCSSession session) {
@@ -329,10 +332,6 @@ public class CbusDummyCS implements CanListener {
         r.setElement(1, session);
         r.setElement(2, 0);
         r.setElement(3, 3);
-        sendReplyWithDelay(r);
-    }
-
-    private void sendReplyWithDelay(CanReply r) {
         send.sendWithDelay(r,_sendIn,_sendOut,_networkDelay);
     }
 
