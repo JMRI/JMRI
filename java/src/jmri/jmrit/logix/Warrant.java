@@ -2824,5 +2824,15 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         return false;
     }
 
+    /**
+     * {@inheritDoc}
+     * 
+     * @return hash code value is based on the system and train names.
+     */
+    @Override
+    public int hashCode() {
+        return (getSystemName().concat(getTrainName())).hashCode();
+    }
+    
     private final static Logger log = LoggerFactory.getLogger(Warrant.class);
 }
