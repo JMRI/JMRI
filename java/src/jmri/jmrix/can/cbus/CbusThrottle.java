@@ -426,7 +426,9 @@ public class CbusThrottle extends AbstractThrottle {
         mRefreshTimer.stop();
         mRefreshTimer.setRepeats(true);
         mRefreshTimer.start();
-        cs.setSpeedDir(_handle, new_spd);
+        if (cs != null ) {
+            cs.setSpeedDir(_handle, new_spd);
+        }
         if (Math.abs(oldSpeed - this.speedSetting) > 0.0001) {
             notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting);
         }
@@ -529,11 +531,11 @@ public class CbusThrottle extends AbstractThrottle {
         if ( mRefreshTimer != null ) {
             mRefreshTimer.stop();
         }
-
-        cs.releaseSession(_handle);
+        if ( cs != null ) {
+            cs.releaseSession(_handle);
+        }
         _handle = -1;
         cs = null;
-
         mRefreshTimer = null;
         finishRecord();
     }
