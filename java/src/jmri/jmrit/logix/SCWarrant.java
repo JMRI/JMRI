@@ -865,7 +865,15 @@ public class SCWarrant extends Warrant {
     public boolean equals(Object obj) {
         return super.equals(obj);
     }
-   
+
+    /* What super does currently is fine. But FindBug reports HE_EQUALS_NO_HASHCODE
+     * FindBug wants us to duplicate and override anyway
+     */
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+    
     /**
      * 
      */
