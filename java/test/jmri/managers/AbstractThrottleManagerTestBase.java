@@ -90,11 +90,6 @@ public abstract class AbstractThrottleManagerTestBase {
     public void canBeLongAddress() {
        Assert.assertNotNull(tm.canBeLongAddress(50));
     }
-	
-    @Test
-    public void canBeLongAddressNegative() {
-       Assert.assertFalse(tm.canBeLongAddress(-23));
-    }	
 
     @Test
     public void canBeShortAddress() {
