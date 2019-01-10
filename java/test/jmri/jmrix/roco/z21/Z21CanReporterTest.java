@@ -49,6 +49,67 @@ public class Z21CanReporterTest extends jmri.implementation.AbstractRailComRepor
         Assert.assertFalse("LastReport seen after empty list", lastReportSeen);
     }
 
+    @Test
+    public void testCollectionAfterMessage() {
+       Z21CanReporter zr = (Z21CanReporter) r;
+       zr.addPropertyChangeListener(new TestReporterListener());
+       byte msg[]={(byte)0x0E,(byte)0x00,(byte)0xC4,(byte)0x00,(byte)0xcd,(byte)0xab,(byte)0x01,(byte)0x00,(byte)0x01,(byte)0x11,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00};
+       Z21Reply reply = new Z21Reply(msg,14);
+       zr.reply(reply);
+       // Check that the collection has one element.
+       Assert.assertEquals("Collection Size 1 after message", 1, zr.getCollection().size());
+
+       byte msg2[]={(byte)0x0E,(byte)0x00,(byte)0xC4,(byte)0x00,(byte)0xcd,(byte)0xab,(byte)0x01,(byte)0x00,(byte)0x01,(byte)0x11,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00};
+       reply = new Z21Reply(msg2,14);
+       zr.reply(reply);
+       // Check that the collection wass cleared.
+       Assert.assertEquals("Collection Size 0 after clear message", 0, zr.getCollection().size());
+       Assert.assertTrue("Collection Empty", zr.getCollection().isEmpty());
+   }
+    
+   @Test
+   public void testCollectionAfterMessageWith2Tags() {
+      Z21CanReporter zr = (Z21CanReporter) r;
+      zr.addPropertyChangeListener(new TestReporterListener());
+      byte msg[]={(byte)0x0E,(byte)0x00,(byte)0xC4,(byte)0x00,(byte)0xcd,(byte)0xab,(byte)0x01,(byte)0x00,(byte)0x01,(byte)0x11,(byte)0x01,(byte)0x00,(byte)0x02,(byte)0x00};
+      Z21Reply reply = new Z21Reply(msg,14);
+      zr.reply(reply);
+      byte msg2[]={(byte)0x0E,(byte)0x00,(byte)0xC4,(byte)0x00,(byte)0xcd,(byte)0xab,(byte)0x01,(byte)0x00,(byte)0x01,(byte)0x12,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00}; // end of list, but second pair.
+      reply = new Z21Reply(msg2,14);
+      zr.reply(reply);
+      // Check that the collection has two element.
+      Assert.assertEquals("Collection Size 2 after message", 2, zr.getCollection().size());
+
+      byte msg3[]={(byte)0x0E,(byte)0x00,(byte)0xC4,(byte)0x00,(byte)0xcd,(byte)0xab,(byte)0x01,(byte)0x00,(byte)0x01,(byte)0x11,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00};
+      reply = new Z21Reply(msg3,14);
+      zr.reply(reply);
+      // Check that the collection wass cleared.
+      Assert.assertEquals("Collection Size 0 after clear message", 0, zr.getCollection().size());
+      Assert.assertTrue("Collection Empty", zr.getCollection().isEmpty());
+   }
+
+   @Test
+   public void testCollectionAfterMessageWith3Tags() {
+      Z21CanReporter zr = (Z21CanReporter) r;
+      zr.addPropertyChangeListener(new TestReporterListener());
+      byte msg[]={(byte)0x0E,(byte)0x00,(byte)0xC4,(byte)0x00,(byte)0xcd,(byte)0xab,(byte)0x01,(byte)0x00,(byte)0x01,(byte)0x11,(byte)0x01,(byte)0x00,(byte)0x02,(byte)0x00};
+      Z21Reply reply = new Z21Reply(msg,14);
+      zr.reply(reply);
+      byte msg2[]={(byte)0x0E,(byte)0x00,(byte)0xC4,(byte)0x00,(byte)0xcd,(byte)0xab,(byte)0x01,(byte)0x00,(byte)0x01,(byte)0x12,(byte)0x03,(byte)0x00,(byte)0x00,(byte)0x00}; // end of list, but second pair.
+      reply = new Z21Reply(msg2,14);
+      zr.reply(reply);
+      // Check that the collection has two element.
+      JUnitUtil.waitFor( () -> { return ( zr.getCollection().size() > 2); });
+      Assert.assertEquals("Collection Size 3 after message", 3, zr.getCollection().size());
+
+      byte msg3[]={(byte)0x0E,(byte)0x00,(byte)0xC4,(byte)0x00,(byte)0xcd,(byte)0xab,(byte)0x01,(byte)0x00,(byte)0x01,(byte)0x11,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00};
+      reply = new Z21Reply(msg3,14);
+      zr.reply(reply);
+      // Check that the collection wass cleared.
+      Assert.assertEquals("Collection Size 0 after clear message", 0, zr.getCollection().size());
+      Assert.assertTrue("Collection Empty", zr.getCollection().isEmpty());
+   }
+
    @Override
    @Before
    public void setUp() {
