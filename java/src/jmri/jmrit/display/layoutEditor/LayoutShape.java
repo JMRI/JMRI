@@ -190,6 +190,41 @@ public class LayoutShape {
         level = l;
     }
 
+    public void addPoint(Point2D p) {
+        if (shapePoints.size() < getMaxNumberPoints()) {
+            shapePoints.add(new LayoutShapePoint(p));
+        }
+    }
+
+    public void setPoint(Point2D p, int idx) {
+        if (idx < shapePoints.size()) {
+            shapePoints.get(idx).setPoint(p);
+        }
+    }
+
+    // should only be used by xml save code
+    protected ArrayList<LayoutShapePoint> getPointList() {
+        return shapePoints;
+    }
+
+    /**
+     * get the number of points
+     *
+     * @return the number of points
+     */
+    public int getNumberPoints() {
+        return shapePoints.size();
+    }
+
+    /**
+     * get the maximum number of points
+     *
+     * @return the maximum number of points
+     */
+    public int getMaxNumberPoints() {
+        return LayoutTrack.SHAPE_POINT_OFFSET_MAX - LayoutTrack.SHAPE_POINT_OFFSET_MIN + 1;
+    }
+
     /**
      * getBounds() - return the bounds of this shape
      *
@@ -220,6 +255,10 @@ public class LayoutShape {
             // we can create a rectangle for the passed in point and then
             // test if any of the points below are in that rectangle instead.
             Rectangle2D r = layoutEditor.trackEditControlRectAt(hitPoint);
+
+            if (r.contains(getCoordsCenter())) {
+                result = LayoutTrack.SHAPE_CENTER;
+            }
             for (int idx = 0; idx < shapePoints.size(); idx++) {
                 if (r.contains(shapePoints.get(idx).getPoint())) {
                     result = LayoutTrack.SHAPE_POINT_OFFSET_MIN + idx;
@@ -239,6 +278,21 @@ public class LayoutShape {
         return result;
     }   // findHitPointType
 
+    public static boolean isShapeHitPointType(int t) {
+        return ((t == LayoutTrack.SHAPE_CENTER)
+                || isShapePointOffsetHitPointType(t));
+    }
+
+    public static boolean isShapePointOffsetHitPointType(int t) {
+        return ((t >= LayoutTrack.SHAPE_POINT_OFFSET_MIN)
+                && (t <= LayoutTrack.SHAPE_POINT_OFFSET_MAX));
+    }
+
+    /**
+     * get coordinates of center point of shape
+     *
+     * @return Point2D coordinates of center point of shape
+     */
     public Point2D getCoordsCenter() {
         return MathUtil.midPoint(getBounds());
     }
@@ -253,9 +307,11 @@ public class LayoutShape {
      */
 //    @Override
     public void setCoordsCenter(@Nonnull Point2D p) {
-        Point2D factor = MathUtil.subtract(getCoordsCenter(), p);
-        for (LayoutShapePoint lsp : shapePoints) {
-            lsp.setPoint(MathUtil.add(factor, lsp.getPoint()));
+        Point2D factor = MathUtil.subtract(p, getCoordsCenter());
+        if (!MathUtil.isEqualToZeroPoint2D(factor)) {
+            for (LayoutShapePoint lsp : shapePoints) {
+                lsp.setPoint(MathUtil.add(factor, lsp.getPoint()));
+            }
         }
     }
 
@@ -323,11 +379,11 @@ public class LayoutShape {
             popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-//                    if (layoutEditor.removeLayoutShape(LayoutShape.this)) {
-//                        // Returned true if user did not cancel
-//                        remove();
-//                        dispose();
-//                    }
+                    if (layoutEditor.removeLayoutShape(LayoutShape.this)) {
+                        // Returned true if user did not cancel
+                        remove();
+                        dispose();
+                    }
                 }
             });
             popup.show(mouseEvent.getComponent(), mouseEvent.getX(), mouseEvent.getY());
