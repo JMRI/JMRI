@@ -1,8 +1,5 @@
 package jmri.jmrix.lenz;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * XNet specific class to send heartbeat messages to
  * the XNet.  Heartbeat messages are only required if
@@ -90,7 +87,5 @@ public class XNetHeartBeat implements XNetListener {
     public void notifyTimeout(XNetMessage msg){
         // this class doesn't care about timeouts.
     }
-
-    private final static Logger log = LoggerFactory.getLogger(XNetHeartBeat.class);
 
 }

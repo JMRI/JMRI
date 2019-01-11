@@ -1,8 +1,5 @@
 package jmri.jmrix.roco.z21;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Z21 specific class to send heartbeat messages to
  * the Z21.  Heartbeat messages are only required if
@@ -73,7 +70,5 @@ public class Z21HeartBeat implements Z21Listener {
        // if we see any outgoing message, restart the timer
        keepAliveTimer.restart();
     }
-
-    private final static Logger log = LoggerFactory.getLogger(Z21HeartBeat.class);
 
 }
