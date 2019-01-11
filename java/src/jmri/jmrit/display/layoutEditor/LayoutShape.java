@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.geom.GeneralPath;
+import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
@@ -17,7 +18,6 @@ import javax.swing.AbstractAction;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JSeparator;
-import jmri.util.ColorUtil;
 import jmri.util.MathUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -61,7 +61,7 @@ public class LayoutShape {
         }
     }
 
-    private enum LayoutShapePointType {
+    public enum LayoutShapePointType {
         eVertex("Vertex"), eCurve("Curve");
 
         private transient String name;
@@ -127,8 +127,9 @@ public class LayoutShape {
     private String name = "";
     private LayoutShapeType layoutShapeType = LayoutShapeType.eOpen;
     private int level = 3;
+    private int lineWidth = 3;
     private Color lineColor = Color.BLACK;
-    private Color fillColor = ColorUtil.CLEAR;
+    private Color fillColor = Color.DARK_GRAY;
 
     // these are saved
     private ArrayList<LayoutShapePoint> shapePoints = new ArrayList<>(); // list of LayoutShapePoints
@@ -163,7 +164,25 @@ public class LayoutShape {
     }
 
     public void setType(LayoutShapeType t) {
-        layoutShapeType = t;
+        if (layoutShapeType != t) {
+            switch (t) {
+                case eOpen:
+                case eClosed:
+                case eFilled:
+                    layoutShapeType = t;
+                    break;
+                default:
+                    log.error("Invalid Shape Type " + t); //I18IN
+            }
+        }
+    }
+
+    public int getLineWidth() {
+        return lineWidth;
+    }
+
+    public void setLineWidth(int w) {
+        lineWidth = w;
     }
 
     public Color getLineColor() {
@@ -363,6 +382,10 @@ public class LayoutShape {
 
             popup.add(new JSeparator(JSeparator.HORIZONTAL));
 
+            //TODO: add menu items to display/change layoutShapeType, level, 
+            // lineWidth, lineColor and fillColor.
+            //TODO: add menu items to display/change shapePoint LayoutShapePointType.
+//
 //            JCheckBoxMenuItem hiddenCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("Hidden"));
 //            hiddenCheckBoxMenuItem.setSelected(hidden);
 //            popup.add(hiddenCheckBoxMenuItem);
@@ -436,6 +459,11 @@ public class LayoutShape {
             Point2D p = lsp.getPoint();
             path.lineTo(p.getX(), p.getY());
         }
+        if (getType() == LayoutShapeType.eFilled) {
+            g2.setColor(fillColor);
+            g2.fill(path);
+        }
+        g2.setColor(lineColor);
         g2.draw(path);
     }   // draw
 
@@ -444,6 +472,14 @@ public class LayoutShape {
 
         for (LayoutShapePoint slp : shapePoints) {
             g2.draw(layoutEditor.trackEditControlRectAt(slp.getPoint()));
+        }
+        Point2D end1 = shapePoints.get(0).getPoint();
+        for (LayoutShapePoint slp : shapePoints) {
+            Point2D end2 = slp.getPoint();
+            if (slp.getType() == LayoutShapePointType.eCurve) {
+                g2.draw(new Line2D.Double(end1, end2));
+            }
+            end1 = end2;
         }
         g2.draw(layoutEditor.trackEditControlCircleAt(getCoordsCenter()));
     }   // drawEditControls

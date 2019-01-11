@@ -1,5 +1,7 @@
 package jmri.jmrit.display.layoutEditor;
 
+import static jmri.jmrit.display.Editor.rbean;
+
 import apps.gui.GuiLafPreferencesManager;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.BasicStroke;
@@ -10799,7 +10801,5 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     public static final int TURNTABLE_RAY_OFFSET = LayoutTrack.TURNTABLE_RAY_OFFSET;
 
     //initialize logging
-    private transient final static Logger log
-            = LoggerFactory.getLogger(LayoutEditor.class
-            );
+    private transient final static Logger log = LoggerFactory.getLogger(LayoutEditor.class);
 }
