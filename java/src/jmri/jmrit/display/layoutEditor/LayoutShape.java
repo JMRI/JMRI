@@ -89,6 +89,10 @@ public class LayoutShape {
         }
     } // enum LayoutShapePointType
 
+    /**
+     * These are the points that make up the outline of the shape
+     * Each point can be ether a vertex or a control point for a curve
+     */
     public static class LayoutShapePoint {
 
         private transient LayoutShapePointType type = LayoutShapePointType.eVertex;
@@ -435,7 +439,7 @@ public class LayoutShape {
 
     //@Override
     protected void draw(Graphics2D g2) {
-        g2.setColor(lineColor);
+        //TODO: I think this would work better as a Bezier curve for eCurve points
         GeneralPath path = new GeneralPath();
         int idx, cnt = shapePoints.size();
         for (idx = 0; idx < cnt; idx++) {
