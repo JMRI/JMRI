@@ -87,47 +87,30 @@ public class Z21CanReporter extends jmri.implementation.AbstractRailComReporter 
             int type = ( msg.getElement(9) & 0xFF);
             log.debug("reporter message type {}",type);
             if (type >= 0x11 && type <= 0x1f) {
-               int index = (type - 0x11)*2; // two reports per message.
+               if(type==0x11) { // restart the list.
+                  log.debug("clear list, size {}",idTags.size());
+                  idTags.clear();
+               }
                int value1 = (msg.getElement(10)&0xFF) + ((msg.getElement(11)&0xFF) << 8);
                int value2 = (msg.getElement(12)&0xFF) + ((msg.getElement(13)&0xFF) << 8);
-               log.debug("value {}: {}; value {}: {}",index,value1,index+1,value2);
                RailCom tag = getRailComTagFromValue(msg,value1);
                if(tag != null ) {
+                  log.debug("add tag {}",tag);
                   notify(tag);
-                  idTags.add(index,tag);
+                  idTags.add(tag);
+                  log.debug("after add, new list size {}",idTags.size());
                   // add the tag to the collection
                   tag = getRailComTagFromValue(msg,value2);
                   if(tag != null ) {
+                     log.debug("add tag {} ",tag);
                      notify(tag);
                      // add the tag to idTags
-                     idTags.add(index+1,tag);
-                  } else {
-                     // remove the tag from idTags
-                     // end of list found, remove all remaining tags.
-                     try{
-                        for(int i=idTags.size()-1;i>=index+1;i--){
-                            idTags.remove(i);
-                        }
-                     } catch (java.lang.IndexOutOfBoundsException iob) {
-                        // shouldn't happen, and not an error in this case.
-                        log.trace("attempted to remove end of list, but already cleared");
-                     }
+                     idTags.add(tag);
+                     log.debug("after add, new list size {}",idTags.size());
                   }
                } else if(type==0x11) { // address is 0 and first in list.
-                  // clear the idTags list.
-                  idTags.removeIf(Predicate.isEqual(null).negate());
-                  // and the report.
+                  // we cleared the list, so send the empty report.
                   notify(null);
-               } else {
-                  // end of list found, remove all remaining tags.
-                  try{
-                     for(int i=idTags.size()-1;i>=index;i--){
-                         idTags.remove(i);
-                     }
-                  } catch (java.lang.IndexOutOfBoundsException iob) {
-                     // shouldn't happen, and not an error in this case.
-                     log.trace("attempted to remove end of list, but already cleared");
-                  }
                }
             } else if( type == 0x01 ) {
                 // status message, not a railcom value, so no report.
