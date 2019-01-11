@@ -287,7 +287,9 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     @Override
     public void dispose() {
-        heartBeat.dispose();
+        if(heartBeat!=null) {
+           heartBeat.dispose();
+        }
         shutdownTunnel();
         InstanceManager.deregister(this, Z21SystemConnectionMemo.class);
         super.dispose();
