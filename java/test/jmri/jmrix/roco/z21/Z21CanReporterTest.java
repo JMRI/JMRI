@@ -25,6 +25,30 @@ public class Z21CanReporterTest extends jmri.implementation.AbstractRailComRepor
 
    }
 
+    @Test
+    public void testPropertyChangeAfterMessage() {
+        currentReportSeen = false;
+        lastReportSeen = false;
+        Z21CanReporter zr = (Z21CanReporter) r;
+        zr.addPropertyChangeListener(new TestReporterListener());
+        byte msg[]={(byte)0x0E,(byte)0x00,(byte)0xC4,(byte)0x00,(byte)0xcd,(byte)0xab,(byte)0x01,(byte)0x00,(byte)0x01,(byte)0x11,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00};
+        Z21Reply reply = new Z21Reply(msg,14);
+        zr.reply(reply);
+        // Check that both CurrentReport and LastReport were seen
+        Assert.assertTrue("CurrentReport seen", currentReportSeen);
+        Assert.assertTrue("LastReport seen", lastReportSeen);
+
+        currentReportSeen = false;
+        lastReportSeen = false;
+        byte msg2[]={(byte)0x0E,(byte)0x00,(byte)0xC4,(byte)0x00,(byte)0xcd,(byte)0xab,(byte)0x01,(byte)0x00,(byte)0x01,(byte)0x11,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x00};
+        reply = new Z21Reply(msg2,14);
+        zr.reply(reply);
+        // Check that both CurrentReport was seen
+        Assert.assertTrue("CurrentReport seen after empty list", currentReportSeen);
+        // and last Report was not seen
+        Assert.assertFalse("LastReport seen after empty list", lastReportSeen);
+    }
+
    @Override
    @Before
    public void setUp() {
