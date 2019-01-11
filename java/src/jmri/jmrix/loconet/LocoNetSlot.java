@@ -1279,18 +1279,27 @@ public class LocoNetSlot {
         if (getSlot() != LnConstants.FC_SLOT) {
             log.error("getFcFracMins invalid for slot " + getSlot());
         }
-        return 0x3FFF - ((addr & 0x7F) | ((spd & 0x7F) << 7));
+        return ((addr & 0x7F) | ((spd & 0x7F) << 8));
     }
 
     /**
      * Set the "frac_mins" value.
+     * This has to be calculated as required by the Command Station,
+     * then bit shifted if required.
+     * It is comprised of a base number and the distance from the base to 0x8000
+     * or 0x4000 deoending on command station.
+     * It is read and written as is LO,HO and loses the bit 7 of the LO.
+     * It was never intended for external use.
+     * The base can be found by setting the clock to 0xXX7F, with a rate of 1
+     * and pounding the clock every 250 to 100 msecs until it roles.
      * <p>
-     * Note that the new fractional minutes value is not effective until a LocoNet
-     * message is sent which writes the fast-clock slot data.
+     * Note 1: The new fractional minutes value is not effective until a LocoNet slot write happens
+     * <p>
+     * Note 2: DT40x & DT500 throttles ignore this value, and set only the whole minutes.
      * <p>
      * This method logs an error if invoked for a slot other than the fast-clock slot.
      * <p>
-     * @param val is the new fast-clock "fractional minutes"
+     * @param val is the new fast-clock "fractional minutes" including the base, and bit shifted if required.
      */
     public void setFcFracMins(int val) {
         // TODO: consider throwing a LocoNetException if issued for a slot other
@@ -1298,9 +1307,9 @@ public class LocoNetSlot {
         if (getSlot() != LnConstants.FC_SLOT) {
             log.error("setFcFracMins invalid for slot " + getSlot());
         }
-        int temp = 0x3FFF - val;
-        addr = addr | (temp & 0x7F);
-        spd = (temp >> 7) & 0x7F;
+        int temp = 0x7F7F & val;
+        addr = (addr & 0x7F00) | (temp & 0x7F);
+        spd = (temp >> 8) & 0x7F;
     }
 
     /**

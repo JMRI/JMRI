@@ -1,6 +1,5 @@
 package jmri.jmrix.loconet;
 
-import jmri.ProgListenerScaffold;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -852,15 +851,15 @@ public class LocoNetSlotTest {
 
 
         s = new LocoNetSlot(123);
-        Assert.assertEquals("FcFracMins initial value", 0x3FFF, s.getFcFracMins());
+        Assert.assertEquals("FcFracMins initial value", 0, s.getFcFracMins());
         Assert.assertEquals("FcMinutes initial value", 53, s.getFcMinutes());
         Assert.assertEquals("FcHours initial value", 0, s.getFcHours());
         Assert.assertEquals("FcDays initial value", 0, s.getFcDays());
-        s.setFcFracMins(18);
+        s.setFcFracMins(0x4321);
         s.setFcMinutes(41);
         s.setFcHours(2);
         s.setFcDays(3);
-        Assert.assertEquals("getFcFracMins", 18, s.getFcFracMins());
+        Assert.assertEquals("getFcFracMins", 0x4321, s.getFcFracMins());
         Assert.assertEquals("getFcMinutes", 41, s.getFcMinutes());
         Assert.assertEquals("getFcHours", 2, s.getFcHours());
         Assert.assertEquals("getFcDays", 3, s.getFcDays());
