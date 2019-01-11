@@ -6,6 +6,9 @@ import javax.annotation.Nonnull;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 
+// import org.slf4j.Logger;
+// import org.slf4j.LoggerFactory;
+
 /**
  * Utilities for handling CBUS addresses.
  * <P>
@@ -109,11 +112,9 @@ public class CbusAddress {
                 aFrame[1] = (node >> 8) & 0xff;
 
                 // add command
-                if (hCode.group(6) == null) {
+                if (( hCode.group(6)!= null ) && (hCode.group(6).equals("+"))) {
                     aFrame[0] = CbusConstants.CBUS_ACON;
-                } else if (hCode.group(6).equals("+")) {
-                    aFrame[0] = CbusConstants.CBUS_ACON;
-                } else if (hCode.group(6).equals("-")) {
+                } else if (( hCode.group(6)!= null ) && (hCode.group(6).equals("-"))) {
                     aFrame[0] = CbusConstants.CBUS_ACOF;
                 } else // default
                 {
@@ -165,12 +166,17 @@ public class CbusAddress {
         return hCode.reset(aString).matches();
     }
 
-    boolean match(CanReply r) {
+    /**
+     * Does the CbusAddress match a CanReply ( CanFrame being received by JMRI )
+     *
+     * @param r CanReply being tested
+     * @return true if matches
+     */
+     boolean match(CanReply r) {
         if (r.getNumDataElements() != aFrame.length) {
             return false;
         }
-        int opc = CbusMessage.getOpcode(r);
-        if (CbusOpCodes.isShortEvent(opc)) {
+        if (CbusMessage.isShort(r)) {
             // Skip node number for short events
             if (aFrame[0] != r.getElement(0)) {
                 return false;
@@ -190,12 +196,17 @@ public class CbusAddress {
         return true;
     }
 
+    /**
+     * Does the CbusAddress match a CanMessage ( CanFrame being sent by JMRI )
+     *
+     * @param r CanMessage being tested
+     * @return true if matches
+     */
     boolean match(CanMessage r) {
         if (r.getNumDataElements() != aFrame.length) {
             return false;
         }
-        int opc = CbusMessage.getOpcode(r);
-        if (CbusOpCodes.isShortEvent(opc)) {
+        if (CbusMessage.isShort(r)) {
             // Skip node number for short events
             if (aFrame[0] != r.getElement(0)) {
                 return false;
@@ -240,11 +251,7 @@ public class CbusAddress {
             if (!hCode.reset(pStrings[i]).matches()) {
                 return new CbusAddress[0];
             }
-
             retval[i] = new CbusAddress(pStrings[i]);
-            if (retval[i] == null) {
-                return new CbusAddress[0];
-            }
         }
         return retval;
     }
@@ -267,17 +274,25 @@ public class CbusAddress {
         return aFrame;
     }
 
-    @Override
+    /**
+     * eg. X9801D203A4 or +N123E456
+     *
+     */
+     @Override
     public String toString() {
         return aString;
     }
 
-    public String toCanonicalString() {
+    /**
+     * eg. x9801D203A4 or x90007B01C8
+     *
+     */
+     public String toCanonicalString() {
         String retval = "x";
         for (int i = 0; i < aFrame.length; i++) {
             retval = jmri.util.StringUtil.appendTwoHexFromInt(aFrame[i], retval);
         }
         return retval;
     }
-
+    // private final static Logger log = LoggerFactory.getLogger(CbusAddress.class);
 }

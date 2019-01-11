@@ -93,16 +93,16 @@ public class Z21CanSensor extends jmri.implementation.AbstractSensor implements 
                 int value1 = (msg.getElement(10)&0xFF) + ((msg.getElement(11)&0xFF) << 8);
                 log.debug("value {}",value1);
                 if(value1 == 0x0000) {
-                   log.debug("Free without tension");
+                   log.debug("Free without voltage");
                    setOwnState(Sensor.INACTIVE);
                 } else if(value1 == 0x0100) {
-                   log.debug("Free with tension");
+                   log.debug("Free with voltage");
                    setOwnState(Sensor.INACTIVE);
                 } else if(value1 == 0x1000) {
-                   log.debug("Busy without tension");
+                   log.debug("Busy without voltage");
                    setOwnState(Sensor.ACTIVE);
                 } else if(value1 == 0x1100) {
-                   log.debug("Busy with tension");
+                   log.debug("Busy with voltage");
                    setOwnState(Sensor.ACTIVE);
                 } else if(value1 == 0x1201) {
                    log.debug("Busy Overload 1");

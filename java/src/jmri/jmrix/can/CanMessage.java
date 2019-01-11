@@ -134,6 +134,11 @@ public class CanMessage extends AbstractMRMessage implements CanMutableFrame {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     * default toString does not contain the header
+     * this format matches @CanReply
+     */
     @Override
     public String toString() {
         String s = String.format("[%x] ", _header);

@@ -527,9 +527,9 @@ public class Z21Reply extends AbstractMRReply {
     // address value is the 16 bits of the two bytes containing the
     // address.  The most significan two bits represent the direction.
     DccLocoAddress getCanDetectorLocoAddress(int addressValue) {
-        //if(!isCanDetectorMessage()) {
-        //   return null;
-        //}
+        if(!isCanDetectorMessage()) {
+           return null;
+        }
         if(addressValue==0) {
            return null;
         } else {

@@ -42,15 +42,17 @@
       
       <p>Default options are shown on the right.</p>
       
-      <p>You can add extra command stations or event responders by selecting Add in the top menu.</p>
+      <p>You can add extra command stations, nodes or event responders by selecting Add in the top menu.</p>
 
       
-     <h2><a name="direction" id="direction">Direction</a></h2>
+     <h2><a name="direction" id="direction">Direction and Delay</a></h2>
+     <p>Direction and delay are unique to each simulated object.</p>
       <ul>
       <li>Listen Outgoing - eg listening for a JMRI throttle</li>
       <li>Listen Incoming - eg listening for a CANCAB</li>
       <li>Send as Incoming - eg sending to JMRI throttle</li>
       <li>Send as Outgoing - eg sending to CANCAB</li>
+      <li>Delay - Delay in simulation responding to requests ( ms )</li>
       </ul>
 
 
@@ -89,7 +91,7 @@
 
 
      <h2><a name="nodes" id="nodes" >Nodes</a></h2>
-        <p>No nodes are silulated by default.</p>
+        <p>No nodes are simulated by default.</p>
         <p>When selecting a node, in enters in SLiM mode, you'll need to 
         press the FLiM button to introduce it to the network.</p>
         <p>When selecting a new node ( or disabling by selecting SLiM ),
