@@ -959,8 +959,10 @@ public class NXFrame extends WarrantRoute {
                 blockName = bo.getBlock().getDisplayName();
                 w.addThrottleCommand(new ThrottleSetting((int) noopTime, "NoOp", "Enter Block", blockName,
                         (hasProfileSpeeds ? _speedUtil.getTrackSpeed(curThrottle, isForward) : 0.0f)));
-                if (log.isDebugEnabled()) log.debug("{}. Enter block \"{}\" noopTime= {}, speedTime= {} blockLen= {}",
+                if (log.isDebugEnabled()) {
+                    log.debug("{}. Enter block \"{}\" noopTime= {}, speedTime= {} blockLen= {}",
                         cmdNum++, blockName, noopTime, speedTime, blockLen);
+                }
             }
         }
         if (log.isDebugEnabled()) {
