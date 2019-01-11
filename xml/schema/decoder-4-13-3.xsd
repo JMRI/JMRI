@@ -982,9 +982,9 @@
         </xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:normalizedString">
-      <xs:pattern value="X*V+X*"/>
+      <xs:pattern value="(V|X)*"/>
       <xs:minLength value="8"/>
-      <xs:maxLength value="16"/>
+      <xs:maxLength value="8"/>
     </xs:restriction>
   </xs:simpleType>
 
