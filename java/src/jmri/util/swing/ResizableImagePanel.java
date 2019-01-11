@@ -139,6 +139,13 @@ public class ResizableImagePanel extends JPanel implements ComponentListener {
         return _imagePath;
     }
 
+    /**
+     * Read image and handle exif information if it exists in the file.
+     * 
+     * @param file the image file
+     * @return the image
+     * @throws IOException in case of an I/O error
+     */
     private BufferedImage readImage(File file) throws IOException {
         ThumbnailParameterBuilder builder = new ThumbnailParameterBuilder();
         builder.scale(1.0);
