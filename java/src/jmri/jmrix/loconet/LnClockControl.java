@@ -296,7 +296,7 @@ public class LnClockControl extends DefaultClockControl implements SlotListener,
         MINUTE_START,
         MINUTE_NORMAL,
         MINUTE_END
-    };
+    }
 
     /**
      * Accessor routines
