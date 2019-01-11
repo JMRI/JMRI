@@ -89,7 +89,7 @@ public class LayoutShape {
         }
     } // enum LayoutShapePointType
 
-    public class LayoutShapePoint {
+    public static class LayoutShapePoint {
 
         private transient LayoutShapePointType type = LayoutShapePointType.eVertex;
         private transient Point2D point;
