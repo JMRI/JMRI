@@ -53,7 +53,7 @@
 
 -warn:+dep-ann
 -warn:+deprecation
--warn:-allDeprecation
+-warn:+allDeprecation
 
 -warn:-allJavadoc
 -warn:-javadoc

@@ -1,4 +1,4 @@
-# These are the CI (fussy) settings used for the warnings and tests-warnings Ant targets
+# These are the CI (fussy) settings used for the warnings-ci and tests-warnings-ci Ant targets
 # See the java/ecj.warning.options file for those used during development ant operations
 # The two files should be the same _except_ for warn vs err at start of lines with + signs
 
@@ -51,9 +51,9 @@
 -warn:-paramAssign
 -warn:-unnecessaryElse
 
--warn:+dep-ann
--warn:-deprecation
--warn:-allDeprecation
+-err:+dep-ann
+-err:+deprecation
+-err:+allDeprecation
 
 -warn:-allJavadoc
 -warn:-javadoc
