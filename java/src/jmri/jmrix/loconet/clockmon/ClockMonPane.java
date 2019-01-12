@@ -85,7 +85,7 @@ public class ClockMonPane extends LnPanel implements SlotListener {
         seconds.setMinimumSize(seconds.getSize());
         panel1.add(new JLabel(":"));
         panel1.add(frac_mins);
-        frac_mins.setMinimumSize(frac_mins.getSize());;
+        frac_mins.setMinimumSize(frac_mins.getSize());
         add(panel1);
 
         JPanel panel2 = new JPanel();
@@ -186,7 +186,7 @@ public class ClockMonPane extends LnPanel implements SlotListener {
                 JOptionPane.showMessageDialog(commandStationZeroDec, Bundle.getMessage("InvalidZeroDecRange"), "",
                         JOptionPane.ERROR_MESSAGE);
             }
-        } catch (Exception Ex) {
+        } catch (NumberFormatException Ex) {
             JOptionPane.showMessageDialog(commandStationZeroDec, Bundle.getMessage("InvalidZeroDecFormat"), "",
                     JOptionPane.ERROR_MESSAGE);
         }
@@ -202,7 +202,7 @@ public class ClockMonPane extends LnPanel implements SlotListener {
                 JOptionPane.showMessageDialog(commandStationZeroHex, Bundle.getMessage("InvalidZeroHexRange"), "",
                         JOptionPane.ERROR_MESSAGE);
             }
-        } catch (Exception Ex) {
+        } catch (NumberFormatException Ex) {
             JOptionPane.showMessageDialog(commandStationZeroHex, Bundle.getMessage("InvalidZeroHexFormat"), "",
                     JOptionPane.ERROR_MESSAGE);
         }
