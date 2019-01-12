@@ -37,7 +37,8 @@ public class NceMonBinary {
     private static final int REPLY_OK = '!';   // command completed successfully
 
     /**
-     * Creates a command message for the log, in a human-friendly form if possible.
+     * Creates a command message for the log, in a human-friendly form if
+     * possible.
      *
      * @param m the raw command message
      * @return the displayable message string
@@ -482,10 +483,11 @@ public class NceMonBinary {
     }
 
     /**
-     * Creates a reply message for the log, in a human-friendly form if possible.
+     * Creates a reply message for the log, in a human-friendly form if
+     * possible.
      *
      * @param r the raw reply message
-     * @return  the displayable message string
+     * @return the displayable message string
      */
     public String displayReply(NceReply r) {
         return parseReply(r) + NEW_LINE;
@@ -495,7 +497,7 @@ public class NceMonBinary {
         switch (replyType) {
             case (REPLY_STANDARD):
                 /* standard reply is a single byte
-                 * Errors returned: 
+                 * Errors returned:
                  * '0'= command not supported
                  * '1'= loco/accy/signal address out of range
                  * '2'= cab address or op code out of range
