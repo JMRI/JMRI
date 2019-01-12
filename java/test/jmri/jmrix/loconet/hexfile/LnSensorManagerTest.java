@@ -113,6 +113,7 @@ public class LnSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase
     @After
     public void tearDown() {
         l.dispose();
+        lnis = null;
         JUnitUtil.tearDown();
     }
 

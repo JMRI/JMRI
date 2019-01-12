@@ -57,7 +57,7 @@ public class LnMessageClient extends LnTrafficRouter {
                 log.warn("sendLocoNetMessage: no connection to server");
             }
         } catch (java.rmi.RemoteException ex) {
-            log.warn("sendLocoNetMessage: Exception: " + ex);
+            log.warn("sendLocoNetMessage: Exception: ", ex);
         }
     }
 
@@ -70,18 +70,14 @@ public class LnMessageClient extends LnTrafficRouter {
         serverName = remoteHostName;
         pollTimeout = timeoutSec * 1000;  // convert to ms
 
-        if (log.isDebugEnabled()) {
-            log.debug("configureRemoteConnection: "
-                    + remoteHostName + " " + timeoutSec);
-        }
+        log.debug("configureRemoteConnection: {} {}", remoteHostName, timeoutSec);
 
         try {
             if (System.getSecurityManager() == null) {
                 System.setSecurityManager(new SecurityManager());
             }
-            log.debug("security manager set, set interface to //" // NOI18N
-                    + remoteHostName + "//" // NOI18N
-                    + LnMessageServer.serviceName);
+            log.debug("security manager set, set interface to //{}//{}", // NOI18N
+                    remoteHostName, LnMessageServer.serviceName);
             LnMessageServerInterface lnServer = (LnMessageServerInterface) java.rmi.Naming.lookup(
                     "//" + serverName + "/" + LnMessageServer.serviceName); // NOI18N
 
@@ -89,7 +85,7 @@ public class LnMessageClient extends LnTrafficRouter {
             lnMessageBuffer.enable(0);
             pollThread = new LnMessageClientPollThread(this);
         } catch (java.rmi.NotBoundException | java.rmi.RemoteException | java.net.MalformedURLException ex) {
-            log.error("Exception while trying to connect: " + ex); // NOI18N
+            log.error("Exception while trying to connect: ", ex); // NOI18N
             throw new LocoNetException("Failed to Connect to Server: " + serverName); // NOI18N
         }
     }

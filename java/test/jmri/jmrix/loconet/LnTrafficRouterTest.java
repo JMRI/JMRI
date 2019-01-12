@@ -18,8 +18,7 @@ public class LnTrafficRouterTest {
         LocoNetInterfaceScaffold upstream = new LocoNetInterfaceScaffold();
 
         // create object
-        LnTrafficRouter router = new LnTrafficRouter();
-        router.setSystemConnectionMemo(memo);
+        LnTrafficRouter router = new LnTrafficRouter(memo);
         memo.setLnTrafficController(router);
 
         Assert.assertEquals("router is tc", memo.getLnTrafficController(), router);
@@ -37,14 +36,12 @@ public class LnTrafficRouterTest {
         Assert.assertTrue(upstream.outbound.elementAt(0) == m);
     }
 
-    private LocoNetSystemConnectionMemo memo;
     static int count = 0;
 
     @Test
     public void testReceiveAndForward() {
         // create object
-        LnTrafficRouter router = new LnTrafficRouter();
-        router.setSystemConnectionMemo(memo);
+        LnTrafficRouter router = new LnTrafficRouter(memo);
         memo.setLnTrafficController(router);
         Assert.assertEquals("router is tc", memo.getLnTrafficController(), router);
 
@@ -68,12 +65,10 @@ public class LnTrafficRouterTest {
     @Test
     public void testConnectAndDisconnect() {
         // scaffold for upstream
-        LocoNetInterfaceScaffold upstream = new LocoNetInterfaceScaffold();
-        upstream.setSystemConnectionMemo(memo);
+        LocoNetInterfaceScaffold upstream = new LocoNetInterfaceScaffold(memo);
 
         // create object
-        LnTrafficRouter router = new LnTrafficRouter();
-        router.setSystemConnectionMemo(memo);
+        LnTrafficRouter router = new LnTrafficRouter(memo);
         memo.setLnTrafficController(router);
         Assert.assertEquals("router is tc", memo.getLnTrafficController(), router);
 
@@ -85,6 +80,8 @@ public class LnTrafficRouterTest {
         router.disconnectPort(upstream);
         Assert.assertTrue("not connected", !router.status());
     }
+
+    private LocoNetSystemConnectionMemo memo;
 
     // The minimal setup for log4J
     @Before

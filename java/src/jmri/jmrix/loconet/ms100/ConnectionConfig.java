@@ -1,7 +1,7 @@
 package jmri.jmrix.loconet.ms100;
 
 /**
- * Definition of objects to handle configuring an LocoBuffer layout connection
+ * Definition of objects to handle configuring a LocoBuffer layout connection
  * via an LocoNet MS100Adapter object.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
@@ -17,7 +17,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
     }
 
     /**
-     * Ctor for a functional Swing object with no prexisting adapter
+     * Ctor for a functional Swing object with no preexisting adapter
      */
     public ConnectionConfig() {
         super();
