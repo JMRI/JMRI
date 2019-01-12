@@ -32,10 +32,13 @@ import org.slf4j.LoggerFactory;
  */
 public class LayoutShape {
 
+    /**
+     * enum LayoutShapeType eOpen, eClosed, eFilled
+     */
     public enum LayoutShapeType {
         eOpen("Open"), eClosed("Closed"), eFilled("Filled");
 
-        private transient String name;
+        private final transient String name;
         private transient static final Map<String, LayoutShapeType> ENUM_MAP;
 
         LayoutShapeType(String name) {
@@ -61,10 +64,13 @@ public class LayoutShape {
         }
     }
 
+    /**
+     * enum LayoutShapePointType eVertex, eCurve
+     */
     public enum LayoutShapePointType {
         eVertex("Vertex"), eCurve("Curve");
 
-        private transient String name;
+        private final transient String name;
         private static final transient Map<String, LayoutShapePointType> ENUM_MAP;
 
         LayoutShapePointType(String name) {
@@ -90,7 +96,7 @@ public class LayoutShape {
     } // enum LayoutShapePointType
 
     /**
-     * These are the points that make up the outline of the shape
+     * These are the points that make up the outline of the shape.
      * Each point can be ether a vertex or a control point for a curve
      */
     public static class LayoutShapePoint {
@@ -100,6 +106,8 @@ public class LayoutShape {
 
         /**
          * constructor method
+         *
+         * @param c Point2D for initial point
          */
         public LayoutShapePoint(Point2D c) {
             this.point = c;
@@ -108,6 +116,8 @@ public class LayoutShape {
 
         /**
          * accessor methods
+         *
+         * @return the LayoutShapePointType
          */
         public LayoutShapePointType getType() {
             return type;
@@ -136,18 +146,25 @@ public class LayoutShape {
     private Color fillColor = Color.DARK_GRAY;
 
     // these are saved
-    private ArrayList<LayoutShapePoint> shapePoints = new ArrayList<>(); // list of LayoutShapePoints
+    // list of LayoutShapePoints
+    private final ArrayList<LayoutShapePoint> shapePoints;
 
     /**
      * constructor method
+     *
+     * @param name         the name of the shape
+     * @param c            the Point2D for the initial point
+     * @param layoutEditor reference to the LayoutEditor this shape is in
      */
     public LayoutShape(String name, Point2D c, LayoutEditor layoutEditor) {
+        this.shapePoints = new ArrayList<>();
         this.name = name;
         this.shapePoints.add(new LayoutShapePoint(c));
         this.layoutEditor = layoutEditor;
     }
 
     // this should only be used for debugging...
+    @Override
     public String toString() {
         return String.format("LayoutShape %s", name);
     }
@@ -158,6 +175,8 @@ public class LayoutShape {
 
     /**
      * accessor methods
+     *
+     * @return the name of this shape
      */
     public String getName() {
         return name;
@@ -256,9 +275,9 @@ public class LayoutShape {
     public Rectangle2D getBounds() {
         Rectangle2D result = MathUtil.rectangleAtPoint(shapePoints.get(0).getPoint(), 1.0, 1.0);
 
-        for (LayoutShapePoint lsp : shapePoints) {
+        shapePoints.forEach((lsp) -> {
             result.add(lsp.getPoint());
-        }
+        });
         return result;
     }
 
@@ -332,9 +351,9 @@ public class LayoutShape {
     public void setCoordsCenter(@Nonnull Point2D p) {
         Point2D factor = MathUtil.subtract(p, getCoordsCenter());
         if (!MathUtil.isEqualToZeroPoint2D(factor)) {
-            for (LayoutShapePoint lsp : shapePoints) {
+            shapePoints.forEach((lsp) -> {
                 lsp.setPoint(MathUtil.add(factor, lsp.getPoint()));
-            }
+            });
         }
     }
 
@@ -347,9 +366,9 @@ public class LayoutShape {
 //    @Override
     public void scaleCoords(float xFactor, float yFactor) {
         Point2D factor = new Point2D.Double(xFactor, yFactor);
-        for (LayoutShapePoint lsp : shapePoints) {
+        shapePoints.forEach((lsp) -> {
             lsp.setPoint(MathUtil.multiply(lsp.getPoint(), factor));
-        }
+        });
     }
 
     /**
@@ -361,9 +380,9 @@ public class LayoutShape {
 //    @Override
     public void translateCoords(float xFactor, float yFactor) {
         Point2D factor = new Point2D.Double(xFactor, yFactor);
-        for (LayoutShapePoint lsp : shapePoints) {
+        shapePoints.forEach((lsp) -> {
             lsp.setPoint(MathUtil.add(factor, lsp.getPoint()));
-        }
+        });
     }
 
     private JPopupMenu popup = null;
@@ -413,7 +432,9 @@ public class LayoutShape {
                     }
                 }
             });
-            popup.show(mouseEvent.getComponent(), mouseEvent.getX(), mouseEvent.getY());
+            if (mouseEvent != null) {
+                popup.show(mouseEvent.getComponent(), mouseEvent.getX(), mouseEvent.getY());
+            }
         }
         return popup;
     }   // showPopup
@@ -445,38 +466,56 @@ public class LayoutShape {
         for (idx = 0; idx < cnt; idx++) {
             LayoutShapePoint lsp = shapePoints.get(idx);
             Point2D p = lsp.getPoint();
+
+            int idx1 = (idx + 1) % cnt;
+            LayoutShapePoint lsp1 = shapePoints.get(idx1);
+            Point2D p1 = lsp1.getPoint();
+
+            Point2D midP = MathUtil.midPoint(p, p1);
+
             if (idx == 0) {
-                path.moveTo(p.getX(), p.getY());
+                if ((getType() == LayoutShapeType.eOpen)
+                        || (lsp.getType() == LayoutShapePointType.eVertex)) {
+                    path.moveTo(p.getX(), p.getY());
+                } else {
+                    path.moveTo(midP.getX(), midP.getY());
+                }
+            } else if ((getType() == LayoutShapeType.eOpen)
+                    && (idx == cnt - 1)) {
+                    path.lineTo(p.getX(), p.getY());
             } else {
                 if (lsp.getType() == LayoutShapePointType.eVertex) {
                     path.lineTo(p.getX(), p.getY());
                 } else if (lsp.getType() == LayoutShapePointType.eCurve) {
-                    LayoutShapePoint lsp1 = shapePoints.get((idx + 1) % cnt);
-                    Point2D p1 = lsp1.getPoint();
                     path.quadTo(p.getX(), p.getY(), p1.getX(), p1.getY());
                     idx++;
                 }
             }
         }
+
         if (getType() != LayoutShapeType.eOpen) {
             LayoutShapePoint lsp = shapePoints.get(0);
             Point2D p = lsp.getPoint();
             path.lineTo(p.getX(), p.getY());
         }
-        if (getType() == LayoutShapeType.eFilled) {
+
+        if (getType()
+                == LayoutShapeType.eFilled) {
             g2.setColor(fillColor);
             g2.fill(path);
         }
+
         g2.setColor(lineColor);
+
         g2.draw(path);
     }   // draw
 
     protected void drawEditControls(Graphics2D g2) {
         g2.setColor(Color.black);
 
-        for (LayoutShapePoint slp : shapePoints) {
+        shapePoints.forEach((slp) -> {
             g2.draw(layoutEditor.trackEditControlRectAt(slp.getPoint()));
-        }
+        });
         Point2D end1 = shapePoints.get(0).getPoint();
         for (LayoutShapePoint slp : shapePoints) {
             Point2D end2 = slp.getPoint();
