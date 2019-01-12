@@ -176,6 +176,14 @@ public class LnClockControl extends DefaultClockControl implements SlotListener,
         return commandStationFracType;
     }
 
+    /**
+     * Force a Calibration Cycle - Total Reset
+     */
+    public void startCalibrate() {
+        commandStationFracType = CommandStationFracType.TYPE1;
+        commandStationZeroSecond =  commandStationEndMinute;
+        calibrateCommandStationClock();
+    }
 
     /**
      * Convert milliseconds to minFrac
@@ -183,14 +191,14 @@ public class LnClockControl extends DefaultClockControl implements SlotListener,
      * @return the HI LO as an integer and adjusted.
      */
     public int convertMilliSecondsToFcFracMin(int milliSecs) {
-        long fracmins;
+        int fracmins;
         if (commandStationFracType == CommandStationFracType.TYPE1) {
-            fracmins = (((commandStationEndMinuteType1 - commandStationZeroSecond) * milliSecs) / MSECPERMINUTE ) + commandStationZeroSecond ;
+            fracmins = (((commandStationEndMinuteType1 - commandStationZeroSecond) * milliSecs) / (int) MSECPERMINUTE ) + commandStationZeroSecond ;
             // the completed calculation fits.
-            return (int) (((fracmins & 0x7F80) << 1) +  (fracmins & 0x00F7));
+            return (((fracmins & 0x7F80) << 1) +  (fracmins & 0x00F7));
         } else {
-            fracmins = (((commandStationEndMinuteType2 - commandStationZeroSecond) * milliSecs) / MSECPERMINUTE ) + commandStationZeroSecond ;
-            return (int) (fracmins & 0x7FFF);
+            fracmins = (((commandStationEndMinuteType2 - commandStationZeroSecond) * milliSecs) / (int) MSECPERMINUTE ) + commandStationZeroSecond ;
+            return (fracmins & 0x7FFF);
         }
     }
 
@@ -251,10 +259,10 @@ public class LnClockControl extends DefaultClockControl implements SlotListener,
                     msg.getElement(1) == 0x7B &&
                     msg.getElement(2) == 0x00) {
                 log.debug("Replying to FC slot read");
-                sendClockMsg(false, minuteFracType.MINUTE_NORMAL, false);
+                sendClockMsg(false, MinuteFracType.MINUTE_NORMAL, false);
             } else if (msg.getOpCode() == LnConstants.OPC_PANEL_QUERY && msg.getElement(1) == 0x00) {
                 log.debug("Replying to Panel Query");
-                sendClockMsg(false, minuteFracType.MINUTE_NORMAL, false);
+                sendClockMsg(false, MinuteFracType.MINUTE_NORMAL, false);
             }
         }
     }
@@ -292,7 +300,7 @@ public class LnClockControl extends DefaultClockControl implements SlotListener,
      * Describes the type of minute fraction required
      *
      */
-    private enum  minuteFracType {
+    private enum  MinuteFracType {
         MINUTE_START,
         MINUTE_NORMAL,
         MINUTE_END
@@ -432,22 +440,23 @@ public class LnClockControl extends DefaultClockControl implements SlotListener,
      * from the last increment or the minute to xx
      *
      */
-    protected void calibrateCommandStationClock() {
+    public void calibrateCommandStationClock() {
         // ensure old thread dead.
         commandStationSyncLimit = 0;
         try {
             Thread.sleep(1000);
         } catch (Exception Ex) {
+            log.trace("Killed - Give Up");
             return;
         }
-        sendClockMsg(true, minuteFracType.MINUTE_END, true);
+        sendClockMsg(true, MinuteFracType.MINUTE_END, true);
         newCommandStationZero = 0x7FFF; // force big,type 2. we need the min.
         // start new thread to pump the FastSlot
         new Thread(new Runnable() {
             @Override
             public void run() {
-                int everyMilli = 250;
-                int limit = 5000 / everyMilli;
+                int everyMilli = 100;
+                int limit = 10000 / everyMilli;
                 if (testState == TestState.TESTING_WITH_SYNC) {
                     everyMilli = 250;
                     limit = 5;
@@ -499,6 +508,16 @@ public class LnClockControl extends DefaultClockControl implements SlotListener,
             // dont mess with the syncing
             return;
         }
+        // cant use real time for testing
+        if (testState == TestState.NOT_TESTING) {
+            Date now = clock.getTime();
+            curDays = now.getDate();
+            curHours = now.getHours();
+            curMinutes = now.getMinutes();
+            curMilliSeconds = (int) (now.getTime() % MSECPERMINUTE);
+            curRate = (int) clock.getRate();
+        }
+
         if (newCommandStationZero < commandStationZeroSecond) {
             if (commandStationFracType == CommandStationFracType.TYPE1) {
                 commandStationZeroSecond = (( newCommandStationZero & 0x7f00 ) >> 1) + (newCommandStationZero & 0x7f);
@@ -513,7 +532,7 @@ public class LnClockControl extends DefaultClockControl implements SlotListener,
             fastClockCounter -= 1;
             if (fastClockCounter < 1) {
                 log.debug("Send Write Master Time");
-                sendClockMsg(true,  minuteFracType.MINUTE_START, false);
+                sendClockMsg(true,  MinuteFracType.MINUTE_START, false);
                 fastClockCounter = curRate;
             }
         }
@@ -522,7 +541,7 @@ public class LnClockControl extends DefaultClockControl implements SlotListener,
             fastClockCounter -= 1;
             if (fastClockCounter < 1) {
                 log.debug("Send Heartbeat/Master Blast");
-                sendClockMsg(false, minuteFracType.MINUTE_START, false);
+                sendClockMsg(false, MinuteFracType.MINUTE_START, false);
                 fastClockCounter = curRate;
             }
         }
@@ -610,7 +629,7 @@ public class LnClockControl extends DefaultClockControl implements SlotListener,
             return;
         }
         // we are not calibrating - send start of minute.
-        sendClockMsg(true, minuteFracType.MINUTE_START, false);
+        sendClockMsg(true, MinuteFracType.MINUTE_START, false);
     }
 
     /**
@@ -618,7 +637,7 @@ public class LnClockControl extends DefaultClockControl implements SlotListener,
      * @param sendWrite true - this a write slot message
      * @param minFracType , START, END or normal
      */
-    private void sendClockMsg(boolean sendWrite, minuteFracType minFracType, boolean calibrate) {
+    private void sendClockMsg(boolean sendWrite, MinuteFracType minFracType, boolean calibrate) {
         int fractionalMinutes;
         // use the current time set in curDays,Hours,Minutes,Milliseconds
         //if we are calibrating or have not done so successfully, skip this
