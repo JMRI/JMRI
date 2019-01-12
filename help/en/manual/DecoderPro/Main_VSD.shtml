@@ -135,7 +135,7 @@
       presses to JMRI. Currently compatible throttles include:
 
       <ul>
-        <li>JMRI software and web throttles</li>
+        <li>JMRI software and web throttles**</li>
 
         <li>Digitrax</li>
 
@@ -177,6 +177,10 @@
       sounds if you are using an incompatible throttle
       system.</p><a name="locations" id="locations"></a><a name=
       "VSDLocations" id="VSDLocations"></a>
+
+      <p>**VSD could also be setup to run in a so called "headless" mode. See 
+      <a href="VSD_Headless.shtml">more details</a> on this.
+      </p>
 
       <h4>Location Following</h4>
 
