@@ -57,7 +57,7 @@ public class ClockMonPane extends LnPanel implements SlotListener {
 
         List<ClockControl> listClocks = jmri.InstanceManager.getList(jmri.ClockControl.class);
         for (ClockControl item : listClocks) {
-            if (item.getClass().getName() == "jmri.jmrix.loconet.LnClockControl") {
+            if (item.getClass().getName().equals("jmri.jmrix.loconet.LnClockControl")) {
                 loconetClock = (LnClockControl) item;
             }
         }
