@@ -118,8 +118,7 @@ public class TmccSystemConnectionMemo extends SystemConnectionMemo {
     /**
      * Provide manager by class.
      */
-    @SuppressWarnings("deprecation")
-    @SuppressWarnings("unchecked")
+     @SuppressWarnings({"deprecation", "unchecked"})
     @Override
     public <T> T get(Class<?> T) {
         if (getDisabled()) {
