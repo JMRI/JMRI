@@ -8,16 +8,14 @@ import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
-
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.jmrix.loconet.LnPortController;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * LnHexFilePort implements a LnPortController via a ASCII-hex input file. See
- * below for the file format There are user-level controls for send next message
+ * LnHexFilePort implements a LnPortController via an ASCII-hex input file. See
+ * below for the file format. There are user-level controls for send next message
  * how long to wait between messages
  *
  * An object of this class should run in a thread of its own so that it can fill
@@ -57,13 +55,11 @@ public class LnHexFilePort extends LnPortController implements Runnable, jmri.jm
 
     /**
      * Fill the contents from a file.
-     * <p>
-     * @param file - file to be read
+     *
+     * @param file the file to be read
      */
     public void load(File file) {
-        if (log.isDebugEnabled()) {
-            log.debug("file: " + file); // NOI18N
-        }
+            log.debug("file: {}", file); // NOI18N
 
         // create the pipe stream for output, also store as the input stream if somebody wants to send
         // (This will emulate the LocoNet echo)
@@ -159,8 +155,8 @@ public class LnHexFilePort extends LnPortController implements Runnable, jmri.jm
 
     /**
      * Provide a new message delay value, but don't allow it to go below 2 msec.
-     * <p>
-     * @param newDelay - delay, in milliseconds
+     *
+     * @param newDelay delay, in milliseconds
      */
     public void setDelay(int newDelay) {
         delay = Math.max(2, newDelay);
@@ -249,7 +245,7 @@ public class LnHexFilePort extends LnPortController implements Runnable, jmri.jm
 
     /**
      * Get an array of valid values for "option 3"; used to display valid
-     * options. May not be null, but may have zero entries
+     * options. May not be null, but may have zero entries.
      *
      * @return the options
      */
@@ -261,7 +257,7 @@ public class LnHexFilePort extends LnPortController implements Runnable, jmri.jm
     /**
      * Get a String that says what Option 3 represents. May be an empty string,
      * but will not be null
-     * <p>
+     *
      * @return string containing the text for "Option 3"
      */
     public String option3Name() {
