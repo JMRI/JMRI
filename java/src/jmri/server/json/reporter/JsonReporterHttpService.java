@@ -94,8 +94,8 @@ public class JsonReporterHttpService extends JsonHttpService {
     @Override
     public ArrayNode doGetList(String type, Locale locale) throws JsonException {
         ArrayNode root = this.mapper.createArrayNode();
-        for (String name : InstanceManager.getDefault(ReporterManager.class).getSystemNameList()) {
-            root.add(this.doGet(REPORTER, name, locale));
+        for (Reporter r : InstanceManager.getDefault(ReporterManager.class).getNamedBeanSet()) {
+            root.add(this.doGet(REPORTER, r.getSystemName(), locale));
         }
         return root;
     }

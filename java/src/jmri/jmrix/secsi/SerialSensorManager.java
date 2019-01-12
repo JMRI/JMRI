@@ -136,6 +136,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     /**
      * Register any orphan Sensors when a new Serial Node is created.
      */
+    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations
     public void registerSensorsForNode(SerialNode node) {
         log.debug("registering node {}", node.getNodeAddress());
         // get list containing all Sensors

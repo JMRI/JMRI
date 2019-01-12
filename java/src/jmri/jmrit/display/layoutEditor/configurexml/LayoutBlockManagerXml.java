@@ -32,6 +32,7 @@ public class LayoutBlockManagerXml extends jmri.managers.configurexml.AbstractNa
      * @return Element containing the complete info
      */
     @Override
+    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations
     public Element store(Object o) {
         Element layoutblocks = new Element("layoutblocks");
         setStoreElementClass(layoutblocks);

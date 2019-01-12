@@ -65,14 +65,12 @@ public class JsonLayoutBlockSocketService extends JsonSocketService<JsonLayoutBl
     }
 
     private void addListenersToChildren() {
-        InstanceManager.getDefault(LayoutBlockManager.class).getSystemNameList().stream().forEach((lbn) -> { //add listeners to each child (if not already)
+        InstanceManager.getDefault(LayoutBlockManager.class).getNamedBeanSet().stream().forEach((lb) -> { //add listeners to each child (if not already)
+            String lbn = lb.getSystemName();
             if (!layoutBlockListeners.containsKey(lbn)) {
                 log.debug("adding LayoutBlockListener for LayoutBlock '{}'", lbn);
-                LayoutBlock lb = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock(lbn);
-                if (lb != null) {
-                    layoutBlockListeners.put(lbn, new LayoutBlockListener(lb));
-                    lb.addPropertyChangeListener(this.layoutBlockListeners.get(lbn));
-                }
+                layoutBlockListeners.put(lbn, new LayoutBlockListener(lb));
+                lb.addPropertyChangeListener(this.layoutBlockListeners.get(lbn));
             }
         });
     }    

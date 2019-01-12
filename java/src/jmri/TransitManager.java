@@ -189,17 +189,10 @@ public class TransitManager extends AbstractManager<Transit> implements Property
      */
     public ArrayList<Transit> getListUsingSection(Section s) {
         ArrayList<Transit> list = new ArrayList<>();
-        List<String> tList = getSystemNameList();
-        for (int i = 0; i < tList.size(); i++) {
-            String tName = tList.get(i);
-            if ((tName != null) && (tName.length() > 0)) {
-                Transit tTransit = getTransit(tName);
-                if (tTransit != null) {
-                    if (tTransit.containsSection(s)) {
-                        // this Transit uses the specified Section
-                        list.add(tTransit);
-                    }
-                }
+        for (Transit tTransit : getNamedBeanSet()) {
+            if (tTransit.containsSection(s)) {
+                // this Transit uses the specified Section
+                list.add(tTransit);
             }
         }
         return list;
@@ -207,17 +200,10 @@ public class TransitManager extends AbstractManager<Transit> implements Property
 
     public ArrayList<Transit> getListUsingBlock(Block b) {
         ArrayList<Transit> list = new ArrayList<>();
-        List<String> tList = getSystemNameList();
-        for (int i = 0; i < tList.size(); i++) {
-            String tName = tList.get(i);
-            if ((tName != null) && (tName.length() > 0)) {
-                Transit tTransit = getTransit(tName);
-                if (tTransit != null) {
-                    if (tTransit.containsBlock(b)) {
-                        // this Transit uses the specified Section
-                        list.add(tTransit);
-                    }
-                }
+        for (Transit tTransit : getNamedBeanSet()) {
+            if (tTransit.containsBlock(b)) {
+                // this Transit uses the specified Section
+                list.add(tTransit);
             }
         }
         return list;
@@ -225,18 +211,11 @@ public class TransitManager extends AbstractManager<Transit> implements Property
 
     public ArrayList<Transit> getListEntryBlock(Block b) {
         ArrayList<Transit> list = new ArrayList<>();
-        List<String> tList = getSystemNameList();
-        for (int i = 0; i < tList.size(); i++) {
-            String tName = tList.get(i);
-            if ((tName != null) && (tName.length() > 0)) {
-                Transit tTransit = getTransit(tName);
-                if (tTransit != null) {
-                    ArrayList<Block> entryBlock = tTransit.getEntryBlocksList();
-                    if (entryBlock.contains(b)) {
-                        // this Transit uses the specified Section
-                        list.add(tTransit);
-                    }
-                }
+        for (Transit tTransit : getNamedBeanSet()) {
+            ArrayList<Block> entryBlock = tTransit.getEntryBlocksList();
+            if (entryBlock.contains(b)) {
+                // this Transit uses the specified Section
+                list.add(tTransit);
             }
         }
         return list;
