@@ -22,7 +22,6 @@ import org.openide.util.lookup.ServiceProvider;
 
 /**
  * Provide GUI to configure InstanceManager defaults.
- * <P>
  *
  * @author Bob Jacobsen Copyright (C) 2010
  * @since 2.9.5
@@ -50,7 +49,7 @@ public final class ManagerDefaultsConfigPane extends JmriPanel implements Prefer
     JPanel matrix;
 
     /**
-     * Invoke when first displayed to load and present options
+     * Invoke when first displayed to load and present options.
      */
     public void update() {
         log.debug(" update start");
@@ -103,7 +102,7 @@ public final class ManagerDefaultsConfigPane extends JmriPanel implements Prefer
                 } else {
                     // leave a blank
                     JRadioButton r = new JRadioButton();
-                    r.setToolTipText(connectionName+" is not a valid choice for"+dropTags(item.typeName));
+                    r.setToolTipText(Bundle.getMessage("TooltipDefaultnotValid", connectionName, dropTags(item.typeName)));
                     r.setEnabled(false);
                     matrix.add(r);
                 }
@@ -181,7 +180,7 @@ public final class ManagerDefaultsConfigPane extends JmriPanel implements Prefer
     }
     
     /**
-     * Captive class to track changes
+     * Captive class to track changes.
      */
     static final class SelectionButton extends JRadioButton {
 
@@ -204,6 +203,7 @@ public final class ManagerDefaultsConfigPane extends JmriPanel implements Prefer
                 if (isSelected()) {
                     InstanceManager.getDefault(ManagerDefaultSelector.class).setDefault(SelectionButton.this.managerClass, SelectionButton.this.connectionName);
                     pane.dirty = true;
+                    setToolTipText(Bundle.getMessage("TooltipDefaultSelectedRestart", this.connectionName, this.managerName)); // update the tooltip when selected
                 }
             });
 
@@ -213,7 +213,8 @@ public final class ManagerDefaultsConfigPane extends JmriPanel implements Prefer
         Class<?> managerClass;
         
         private String makeToolTipText() { 
-            return connectionName+(isSelected()?" is selected for":" is not selected for")+managerName;
+            return (isSelected()? Bundle.getMessage("TooltipDefaultSelected", connectionName, managerName):
+                    Bundle.getMessage("TooltipDefaultNotSelected", connectionName, managerName));
         }
 
         @Override
@@ -228,4 +229,5 @@ public final class ManagerDefaultsConfigPane extends JmriPanel implements Prefer
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ManagerDefaultsConfigPane.class);
+
 }
