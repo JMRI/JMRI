@@ -19,8 +19,6 @@ public class NceMonBinary {
 
     private static final Logger log = LoggerFactory.getLogger(NceMonBinary.class);
 
-    private static final String NEW_LINE = "\n";
-
     private int replyType = REPLY_UNKNOWN;
 
     private static final int REPLY_UNKNOWN = 0;
@@ -44,7 +42,7 @@ public class NceMonBinary {
      * @return the displayable message string
      */
     public String displayMessage(NceMessage m) {
-        return parseMessage(m) + NEW_LINE;
+        return parseMessage(m);
     }
 
     private String parseMessage(NceMessage m) {
@@ -60,8 +58,7 @@ public class NceMonBinary {
             case (NceMessage.SET_CLOCK_CMD):
                 if (m.getNumDataElements() == 3) {
                     return MessageFormat.format(Bundle.getMessage("SET_CLOCK_CMD"),
-                            new Object[]{m.getElement(1), m.getElement(2)})
-                            + NEW_LINE;
+                            new Object[]{m.getElement(1), m.getElement(2)});
                 }
                 break;
             case (NceMessage.CLOCK_1224_CMD):
@@ -490,7 +487,7 @@ public class NceMonBinary {
      * @return the displayable message string
      */
     public String displayReply(NceReply r) {
-        return parseReply(r) + NEW_LINE;
+        return parseReply(r);
     }
 
     private String parseReply(NceReply r) {
