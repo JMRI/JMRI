@@ -52,6 +52,7 @@ abstract public class AbstractController {
      */
     @SuppressWarnings("unchecked") // The systemNameList assignment is List<E extends Namedbean> to List<NamedBean>
                                    // Make this class generic on <E extends NamedBean> (and manager) to fix this.
+    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations
     public void buildList(jmri.Manager manager) {
         if (sysNameList == null) {
             sysNameList = manager.getSystemNameList();
