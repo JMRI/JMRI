@@ -455,16 +455,11 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
         _mastAspectsList = null;
 
         SignalHeadManager shm = InstanceManager.getDefault(SignalHeadManager.class);
-        List<String> systemNameList = shm.getSystemNameList();
-        _signalHeadsList = new ArrayList<SignalGroupSignalHead>(systemNameList.size());
+        _signalHeadsList = new ArrayList<SignalGroupSignalHead>();
         // create list of all available Single Output Signal Heads to choose from
-        Iterator<String> iter = systemNameList.iterator();
-        // int i = 1; // for debug of iter next
-        while (iter.hasNext()) {
-            String systemName = iter.next();
-            SignalHead sh = shm.getBySystemName(systemName);
-            // log.debug("Iteration {} of : Looking for Signal Head {}", i, systemNameList.size(), systemName);
-            // debug using i & sysnamelist.size
+        for (SignalHead sh : shm.getNamedBeanSet()) {
+            String systemName = sh.getSystemName();
+
             if (sh != null) {
                 if (sh.getClass().getName().contains("SingleTurnoutSignalHead")) {
                     String userName = sh.getUserName();

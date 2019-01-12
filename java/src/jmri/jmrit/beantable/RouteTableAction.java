@@ -468,22 +468,17 @@ public class RouteTableAction extends AbstractTableAction<Route> {
             cancelEdit();
         }
         jmri.TurnoutManager tm = InstanceManager.turnoutManagerInstance();
-        List<String> systemNameList = tm.getSystemNameList();
-        _turnoutList = new ArrayList<>(systemNameList.size());
-        Iterator<String> iter = systemNameList.iterator();
-        while (iter.hasNext()) {
-            String systemName = iter.next();
-            String userName = tm.getBySystemName(systemName).getUserName();
+        _turnoutList = new ArrayList<>();
+        for (Turnout t : tm.getNamedBeanSet()) {
+            String systemName = t.getSystemName();
+            String userName = t.getUserName();
             _turnoutList.add(new RouteTurnout(systemName, userName));
         }
 
         jmri.SensorManager sm = InstanceManager.sensorManagerInstance();
-        systemNameList = sm.getSystemNameList();
-        _sensorList = new ArrayList<>(systemNameList.size());
-        iter = systemNameList.iterator();
-        while (iter.hasNext()) {
-            String systemName = iter.next();
-            Sensor s = sm.getBySystemName(systemName);
+         _sensorList = new ArrayList<>();
+        for (Sensor s : sm.getNamedBeanSet()) {
+            String systemName = s.getSystemName();
             if (s != null) {
                 String userName = s.getUserName();
                 _sensorList.add(new RouteSensor(systemName, userName));

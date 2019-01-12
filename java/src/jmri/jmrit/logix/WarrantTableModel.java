@@ -115,11 +115,8 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
      */
     public synchronized void init() {
         ArrayList<Warrant> tempList = new ArrayList<>();
-        List<String> systemNameList = _manager.getSystemNameList();
-        Iterator<String> iter = systemNameList.iterator();
         // copy over warrants still listed
-        while (iter.hasNext()) {
-            Warrant w = _manager.getBySystemName(iter.next());
+        for (Warrant w : _manager.getNamedBeanSet()) {
             if (!_warList.contains(w)) { // new warrant
                 w.addPropertyChangeListener(this);
             } else {

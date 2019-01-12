@@ -789,8 +789,8 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
             if (dPair.dp == null) {
                 continue;
             }
-            for (String lgxName : mgr.getSystemNameList()) {
-                jmri.Logix lgx = mgr.getLogix(lgxName);
+            for (jmri.Logix lgx : mgr.getNamedBeanSet()) {
+                String lgxName = lgx.getSystemName();
                 for (int i = 0; i < lgx.getNumConditionals(); i++) {
                     String cdlName = lgx.getConditionalByNumberOrder(i);
                     jmri.implementation.DefaultConditional cdl = (jmri.implementation.DefaultConditional) lgx.getConditional(cdlName);

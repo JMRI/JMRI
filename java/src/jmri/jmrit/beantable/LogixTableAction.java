@@ -653,9 +653,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
     }
 
     void enableAll(boolean enable) {
-        List<String> sysNameList = _logixManager.getSystemNameList();
-        for (int i = 0; i < sysNameList.size(); i++) {
-            Logix x = _logixManager.getBySystemName(sysNameList.get(i));
+        for (Logix x : _logixManager.getNamedBeanSet()) {
             x.setEnabled(enable);
         }
     }
