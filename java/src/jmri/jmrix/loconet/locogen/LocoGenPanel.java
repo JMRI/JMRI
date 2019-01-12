@@ -46,7 +46,7 @@ public class LocoGenPanel extends jmri.jmrix.loconet.swing.LnPanel
     JTextField mPacketField[] = new JTextField[MAXSEQUENCE];
     JCheckBox mUseField[] = new JCheckBox[MAXSEQUENCE];
     JTextField mDelayField[] = new JTextField[MAXSEQUENCE];
-    JToggleButton mRunButton = new JToggleButton(Bundle.getMessage("ButtonGo"));
+    JToggleButton mRunButton = new JToggleButton(Bundle.getMessage("ButtonRun"));
 
     /**
      * {@inheritDoc}

@@ -62,7 +62,7 @@ public abstract class AbstractReporter extends AbstractNamedBean implements Repo
     }
 
     // internal data members
-    private Object _lastReport = null;
-    private Object _currentReport = null;
+    protected Object _lastReport = null;
+    protected Object _currentReport = null;
 
 }
