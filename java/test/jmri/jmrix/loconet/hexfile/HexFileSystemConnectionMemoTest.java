@@ -17,8 +17,8 @@ public class HexFileSystemConnectionMemoTest extends jmri.jmrix.SystemConnection
     @Before
     public void setUp() {
        JUnitUtil.setUp();
-       LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
        HexFileSystemConnectionMemo memo = new HexFileSystemConnectionMemo();
+       LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold(memo);
        memo.setLnTrafficController(lnis);
        memo.configureCommandStation(jmri.jmrix.loconet.LnCommandStationType.COMMAND_STATION_DCS100,false,false,false,false);
        memo.configureManagers();

@@ -3,7 +3,7 @@ package jmri.jmrix.loconet.locobufferusb;
 import jmri.util.SystemType;
 
 /**
- * Definition of objects to handle configuring an LocoBuffer-Usb layout
+ * Definition of objects to handle configuring a LocoBuffer-USB layout
  * connection via a LocoBufferIIAdapter object.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003

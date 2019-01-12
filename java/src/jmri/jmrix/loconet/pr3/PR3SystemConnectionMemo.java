@@ -113,9 +113,7 @@ public class PR3SystemConnectionMemo extends LocoNetSystemConnectionMemo {
             } else {
                 log.warn("The PR3 will not be automatically returned to 'LocoNet interface' mode upon quit!"); // NOI18N
             }
-
         }
-
     }
 
     @Override
@@ -195,5 +193,7 @@ public class PR3SystemConnectionMemo extends LocoNetSystemConnectionMemo {
         }
         super.dispose();
     }
+
     private final static Logger log = LoggerFactory.getLogger(PR3SystemConnectionMemo.class);
+
 }
