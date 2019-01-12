@@ -819,6 +819,7 @@ public final class MathUtil {
     @Deprecated // 4.9.4
     @CheckReturnValue
     public static Rectangle2D rectangle2DForRectangle(@Nonnull Rectangle r) {
+        jmri.util.Log4JUtil.deprecationWarning(log, "rectangle2DForRectangle");
         return rectangleToRectangle2D(r);
     }
 
