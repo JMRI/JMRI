@@ -154,12 +154,12 @@ public class LnClockControl extends DefaultClockControl implements SlotListener,
      * If set will prevent CS clock speed and type discovery
      * @param val - the value of the Zero Second.
      *       either 16bit integer.
-     *       or 14 bit integer ( Hi >> 1 + LO )
+     *       or 14 bit integer ( Hi &gt&gt 1 + LO )
      */
     public void setCommandStationZeroSecond(int val) {
         commandStationZeroSecond = val;
     }
-
+    
     public int getCommandStationZeroSecond() {
         return commandStationZeroSecond;
     }
