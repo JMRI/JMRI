@@ -1206,8 +1206,7 @@ public final class MathUtil {
      * @param p[] control points
      * @return the length of the Bezier curve
      */
-    public static GeneralPath getBezierPath(
-            @Nonnull Point2D p[]) {
+    public static GeneralPath getBezierPath(@Nonnull Point2D p[]) {
         return getBezierPath(p, 0);
     }
 

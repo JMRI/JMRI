@@ -96,12 +96,12 @@ public class LayoutShape {
     } // enum LayoutShapePointType
 
     /**
-     * These are the points that make up the outline of the shape.
-     * Each point can be ether a vertex or a control point for a curve
+     * These are the points that make up the outline of the shape. Each point
+     * can be ether a vertex or a control point for a curve
      */
     public static class LayoutShapePoint {
 
-        private transient LayoutShapePointType type = LayoutShapePointType.eVertex;
+        private transient LayoutShapePointType type;
         private transient Point2D point;
 
         /**
@@ -111,7 +111,7 @@ public class LayoutShape {
          */
         public LayoutShapePoint(Point2D c) {
             this.point = c;
-            this.type = LayoutShapePointType.eVertex;
+            this.type = LayoutShapePointType.eCurve;
         }
 
         /**
@@ -194,7 +194,7 @@ public class LayoutShape {
                 case eFilled:
                     layoutShapeType = t;
                     break;
-                default:
+                default:    // You shouldn't ever have any invalid LayoutShapeTypes
                     log.error("Invalid Shape Type " + t); //I18IN
             }
         }
@@ -392,7 +392,7 @@ public class LayoutShape {
      */
     //@Override
     @Nonnull
-    protected JPopupMenu showPopup(@Nullable MouseEvent mouseEvent) {
+    protected JPopupMenu showShapePopUp(@Nullable MouseEvent mouseEvent, int hitPointType) {
         if (popup != null) {
             popup.removeAll();
         } else {
@@ -404,6 +404,9 @@ public class LayoutShape {
             jmi.setEnabled(false);
 
             popup.add(new JSeparator(JSeparator.HORIZONTAL));
+
+            jmi = popup.add("hitPointType: " + hitPointType);
+            jmi.setEnabled(false);
 
             //TODO: add menu items to display/change layoutShapeType, level, 
             // lineWidth, lineColor and fillColor.
@@ -460,47 +463,123 @@ public class LayoutShape {
 
     //@Override
     protected void draw(Graphics2D g2) {
-        //TODO: I think this would work better as a Bezier curve for eCurve points
         GeneralPath path = new GeneralPath();
-        int idx, cnt = shapePoints.size();
-        for (idx = 0; idx < cnt; idx++) {
-            LayoutShapePoint lsp = shapePoints.get(idx);
-            Point2D p = lsp.getPoint();
 
-            int idx1 = (idx + 1) % cnt;
-            LayoutShapePoint lsp1 = shapePoints.get(idx1);
-            Point2D p1 = lsp1.getPoint();
+        if (false) {    //TODO: I think this would work better as a Bezier curve for eCurve points
+            int idx, cnt = shapePoints.size();
+            for (idx = 0; idx < cnt; idx++) {
+                LayoutShapePoint lsp = shapePoints.get(idx);
+                Point2D p = lsp.getPoint();
 
-            Point2D midP = MathUtil.midPoint(p, p1);
+                int idx1 = (idx + 1) % cnt;
+                LayoutShapePoint lsp1 = shapePoints.get(idx1);
+                Point2D p1 = lsp1.getPoint();
 
-            if (idx == 0) {
-                if ((getType() == LayoutShapeType.eOpen)
-                        || (lsp.getType() == LayoutShapePointType.eVertex)) {
-                    path.moveTo(p.getX(), p.getY());
+                Point2D midP = MathUtil.midPoint(p, p1);
+
+                if (idx == 0) {
+                    if ((getType() == LayoutShapeType.eOpen)
+                            || (lsp.getType() == LayoutShapePointType.eVertex)) {
+                        path.moveTo(p.getX(), p.getY());
+                    } else {
+                        path.moveTo(midP.getX(), midP.getY());
+                    }
+                } else if ((getType() == LayoutShapeType.eOpen)
+                        && (idx == cnt - 1)) {
+                    path.lineTo(p.getX(), p.getY());
                 } else {
-                    path.moveTo(midP.getX(), midP.getY());
+                    if (lsp.getType() == LayoutShapePointType.eVertex) {
+                        path.lineTo(p.getX(), p.getY());
+                    } else if (lsp.getType() == LayoutShapePointType.eCurve) {
+                        path.quadTo(p.getX(), p.getY(), p1.getX(), p1.getY());
+                        idx++;
+                    }
                 }
-            } else if ((getType() == LayoutShapeType.eOpen)
-                    && (idx == cnt - 1)) {
-                    path.lineTo(p.getX(), p.getY());
-            } else {
-                if (lsp.getType() == LayoutShapePointType.eVertex) {
-                    path.lineTo(p.getX(), p.getY());
-                } else if (lsp.getType() == LayoutShapePointType.eCurve) {
-                    path.quadTo(p.getX(), p.getY(), p1.getX(), p1.getY());
-                    idx++;
+            }
+        } else {
+            ArrayList<Point2D> bezierPoints = new ArrayList<>();
+            int cnt = shapePoints.size();
+
+            for (int idx = 0; idx < cnt; idx++) {
+                LayoutShapePoint lsp = shapePoints.get(idx);
+                Point2D p = lsp.getPoint();
+
+                int idx1 = (idx + 1) % cnt;
+                LayoutShapePoint lsp1 = shapePoints.get(idx1);
+                Point2D p1 = lsp1.getPoint();
+
+                if (true) { // for debugging; TODO: remove or disable
+                    if (getType() == LayoutShapeType.eOpen) {
+                        if ((idx == 0) || (idx1 == 0)) {
+                            lsp.setType(LayoutShapePointType.eVertex);
+                        } else {
+                            lsp.setType(LayoutShapePointType.eCurve);
+                        }
+                    }
                 }
+
+                switch (lsp.getType()) {
+                    case eVertex: {
+                        if (idx == 0) {
+                            path.moveTo(p.getX(), p.getY());
+                        } else {
+                            int idx0 = (idx + cnt - 1) % cnt;
+                            LayoutShapePoint lsp0 = shapePoints.get(idx0);
+                            //Point2D p0 = lsp0.getPoint();
+
+                            switch (lsp0.getType()) {
+                                case eVertex: {
+                                    path.lineTo(p.getX(), p.getY());
+                                    break;
+                                }
+                                case eCurve: {
+                                    bezierPoints.add(lsp.getPoint());
+                                    Point2D[] points = bezierPoints.toArray(new Point2D[bezierPoints.size()]);
+                                    path.append(MathUtil.getBezierPath(points), true);
+                                    break;
+                                }
+                            }
+                        }
+                        bezierPoints.clear();
+                        bezierPoints.add(lsp.getPoint());
+                        break;
+                    }
+
+                    case eCurve: {
+                        if (idx == 0) {
+                            Point2D midPoint = MathUtil.midPoint(p, p1);
+                            path.moveTo(midPoint.getX(), midPoint.getY());
+                            bezierPoints.add(midPoint);
+                        } else if (idx1 == 0) {
+                            int idx2 = (idx1 + 1) % cnt;
+                            LayoutShapePoint lsp2 = shapePoints.get(idx2);
+                            Point2D p2 = lsp2.getPoint();
+
+                            bezierPoints.add(p);
+                            Point2D midPoint = MathUtil.midPoint(p1, p2);
+                            bezierPoints.add(midPoint);
+                        } else {
+                            bezierPoints.add(p);
+                        }
+                        break;
+                    }
+                }
+            }
+            if (bezierPoints.size() >= 3) {
+                Point2D[] points = bezierPoints.toArray(new Point2D[bezierPoints.size()]);
+                path.append(MathUtil.getBezierPath(points), true);
             }
         }
 
         if (getType() != LayoutShapeType.eOpen) {
             LayoutShapePoint lsp = shapePoints.get(0);
             Point2D p = lsp.getPoint();
-            path.lineTo(p.getX(), p.getY());
+            if (lsp.getType() == LayoutShapePointType.eVertex) {
+                path.lineTo(p.getX(), p.getY());
+            }
         }
 
-        if (getType()
-                == LayoutShapeType.eFilled) {
+        if (getType() == LayoutShapeType.eFilled) {
             g2.setColor(fillColor);
             g2.fill(path);
         }
@@ -516,14 +595,18 @@ public class LayoutShape {
         shapePoints.forEach((slp) -> {
             g2.draw(layoutEditor.trackEditControlRectAt(slp.getPoint()));
         });
-        Point2D end1 = shapePoints.get(0).getPoint();
-        for (LayoutShapePoint slp : shapePoints) {
-            Point2D end2 = slp.getPoint();
-            if (slp.getType() == LayoutShapePointType.eCurve) {
+        Point2D end0 = shapePoints.get(0).getPoint();
+        Point2D end1 = end0;
+        for (LayoutShapePoint lsp : shapePoints) {
+            Point2D end2 = lsp.getPoint();
                 g2.draw(new Line2D.Double(end1, end2));
-            }
             end1 = end2;
         }
+
+        if (getType() != LayoutShapeType.eOpen) {
+            g2.draw(new Line2D.Double(end1, end0));
+        }
+
         g2.draw(layoutEditor.trackEditControlCircleAt(getCoordsCenter()));
     }   // drawEditControls
 

@@ -5692,7 +5692,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 }
                 LayoutShape ls = checkLayoutShapePopUps(dLoc);
                 if (ls != null) {
-                    ls.showPopup(event);
+                    ls.showShapePopUp(event, selectedHitPointType);
                     break;
                 }
             } while (false);
