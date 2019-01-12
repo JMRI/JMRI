@@ -479,12 +479,8 @@ public class RouteTableAction extends AbstractTableAction<Route> {
          _sensorList = new ArrayList<>();
         for (Sensor s : sm.getNamedBeanSet()) {
             String systemName = s.getSystemName();
-            if (s != null) {
-                String userName = s.getUserName();
-                _sensorList.add(new RouteSensor(systemName, userName));
-            } else {
-                log.error("Failed to get sensor {}", systemName);
-            }
+            String userName = s.getUserName();
+            _sensorList.add(new RouteSensor(systemName, userName));
         }
         initializeIncludedList();
 

@@ -36,7 +36,6 @@ public class DefaultSignalGroupManagerXml
         element.setAttribute("class", this.getClass().getName());
 
         // include contents
-        List<String> names = m.getSystemNameList();
         for (SignalGroup p : m.getNamedBeanSet()) {
             Element e = new Element("signalgroup");
             e.addContent(new Element("systemName").addContent(p.getSystemName()));

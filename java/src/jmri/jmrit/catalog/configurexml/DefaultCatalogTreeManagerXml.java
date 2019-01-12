@@ -107,14 +107,9 @@ public class DefaultCatalogTreeManagerXml extends XmlFile {
      * @param trees List of contents
      */
     public void store(Element cat, Set<CatalogTree> trees) {
-        CatalogTreeManager manager = InstanceManager.getDefault(jmri.CatalogTreeManager.class);
         cat.setAttribute("class", "jmri.jmrit.catalog.DefaultCatalogTreeManagerConfigXML");
         for (CatalogTree ct : trees) {
             String sname = ct.getSystemName();
-            if (sname == null) {
-                log.error("System name null during store");
-                continue;
-            }
             log.debug("system name is {}", sname);
             if (sname.charAt(1) != CatalogTree.XML) {
                 continue;

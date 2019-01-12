@@ -459,17 +459,12 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
         // create list of all available Single Output Signal Heads to choose from
         for (SignalHead sh : shm.getNamedBeanSet()) {
             String systemName = sh.getSystemName();
-
-            if (sh != null) {
-                if (sh.getClass().getName().contains("SingleTurnoutSignalHead")) {
-                    String userName = sh.getUserName();
-                    // add every single output signal head item to the list
-                    _signalHeadsList.add(new SignalGroupSignalHead(systemName, userName));
-                } else {
-                    log.debug("Signal Head {} is not a Single Output Controlled Signal Head", systemName);
-                }
-            } else { // this is not an error and the value of systemName mentioned is actually from the last head that was indeed loaded
-                log.error("Failed to get signal head {} (SGTA)", systemName);
+            if (sh.getClass().getName().contains("SingleTurnoutSignalHead")) {
+                String userName = sh.getUserName();
+                // add every single output signal head item to the list
+                _signalHeadsList.add(new SignalGroupSignalHead(systemName, userName));
+            } else {
+                log.debug("Signal Head {} is not a Single Output Controlled Signal Head", systemName);
             }
         }
 
