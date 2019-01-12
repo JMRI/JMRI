@@ -1105,7 +1105,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                         _resumePending = true;
                         float scriptSpeed = 0;
                         int idxSpeedCmd = Math.max(_idxSkipToSpeedCommand-1, _idxCurrentCommand); // resume speed index
-                        for (int idx = idxSpeedCmd; idx > 0; idx--) {
+/*                        for (int idx = idxSpeedCmd; idx > 0; idx--) {
                             // backing down to find script speed when script is resumed
                             ThrottleSetting ts = _commands.get(idx);
                             if ("SPEED".equals(ts.getCommand().toUpperCase())) {
@@ -1113,9 +1113,9 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                                 break;
                             }
                         }
-                        _endSpeed = _speedUtil.modifySpeed(scriptSpeed, _endSpeedType, _isForward);
+                        _endSpeed = _speedUtil.modifySpeed(scriptSpeed, _endSpeedType, _isForward);*/
                         // is scriptSpeed simply _normalSpeed? thus eliminate above.
-                        log.info("normalSpeed= {}, scriptSpeed= {} speedType= {} endSpeed= {}", _normalSpeed, scriptSpeed, _endSpeedType, _endSpeed);
+                        // log.info("normalSpeed= {}, scriptSpeed= {} speedType= {} endSpeed= {}", _normalSpeed, scriptSpeed, _endSpeedType, _endSpeed);
                         // However, the ramp up will take time and script may have other speed commands while
                         // ramping up. So 'scriptSpeed' may not be actual script speed when ramp up distance
                         // is traveled.  Adjust '_endSpeed' to match that 'scriptSpeed'.
@@ -1142,11 +1142,11 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                                 rampDist = _speedUtil.rampLengthForSpeedChange(speed, _endSpeed, _isForward);
                                 advanceToCommandIndex(idx); // don't let script set speeds up to here
                             }
-                            log.debug("cmd= {}, et= {}, _endSpeed= {}, scriptDist= {}, rampDist= {}", cmd, ts.getTime(), _endSpeed, scriptDist, rampDist);
+                            if (log.isDebugEnabled())
+                                log.debug("cmd= {}, et= {}, _endSpeed= {}, scriptDist= {}, rampDist= {}", cmd, ts.getTime(),
+                                        _endSpeed, scriptDist, rampDist);
                         }
                         _normalSpeed = scriptSpeed;
-                        log.info("Adjustment: _idxSkipToSpeedCommand= {}, scriptSpeed= {}, endSpeed= {}", 
-                                _idxSkipToSpeedCommand, scriptSpeed, _endSpeed);
 
                         if (log.isDebugEnabled()) 
                             log.debug("Ramp up for \"{}\". curSpeed= {}, endSpeed= {}, resumeIndex= {}, nextSpeedIdx= {}, rampDist= {}",
@@ -1260,6 +1260,9 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                                     advanceToCommandIndex(idx); // skip up to this speed command
                                 }
                             }
+                            if (log.isDebugEnabled())
+                                log.debug("_normalSpeed= {}, _endSpeed= {}, resumeIndx= {}",
+                                        _normalSpeed, _endSpeed, _idxSkipToSpeedCommand+1);
                         }
                     }
                     

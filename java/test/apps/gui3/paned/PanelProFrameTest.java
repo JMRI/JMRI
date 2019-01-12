@@ -18,7 +18,7 @@ public class PanelProFrameTest {
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         PanelProFrame t = new PanelProFrame("test");
-        Assert.assertNotNull("exists",t);
+        Assert.assertNotNull("exists", t);
         t.dispose();
     }
 
@@ -28,7 +28,7 @@ public class PanelProFrameTest {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         
-        // The class under test uses two loconet connections it pulls from the InstanceManager.
+        // The class under test uses two LocoNet connections it pulls from the InstanceManager.
         jmri.jmrix.loconet.LocoNetSystemConnectionMemo memo = new jmri.jmrix.loconet.LocoNetSystemConnectionMemo();
         jmri.jmrix.loconet.LocoNetInterfaceScaffold lnis = new jmri.jmrix.loconet.LocoNetInterfaceScaffold(memo);
         memo.setLnTrafficController(lnis);

@@ -28,7 +28,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
     }
 
     /**
-     * Constructor for a functional Swing object with no prexisting adapter
+     * Constructor for a functional Swing object with no preexisting adapter
      */
     public ConnectionConfig() {
         super();

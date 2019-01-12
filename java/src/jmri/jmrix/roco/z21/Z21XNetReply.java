@@ -65,7 +65,7 @@ public class Z21XNetReply extends XNetReply {
         } else if((getElement(0)&0xE0)==0xE0 && ((getElement(0)&0x0f) >= 7 && (getElement(0)&0x0f) <=15 )){
             //This is a Roco specific throttle information message.
             //Data Byte 0 and 1 contain the locomotive address
-            int messageaddress=((getElement(1)&0x3F) << 8)+getElement(2);
+            int messageaddress=((getElement(1)&0x3F) << 8)+(getElement(2)&0xff);
                text = "Z21 Mobile decoder info reply for address " + 
                       messageaddress + ":";
                //The message is for this throttle.

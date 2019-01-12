@@ -14,8 +14,9 @@ public class CbusEventResponderTest {
 
     @Test
     public void testCTor() {
-        CbusEventResponder t = new CbusEventResponder(0,null);
+        CbusEventResponder t = new CbusEventResponder(null);
         Assert.assertNotNull("exists",t);
+        t.dispose();
     }
 
     // The minimal setup for log4J

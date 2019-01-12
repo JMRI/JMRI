@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Base for classes representing a LocoNet communications port
+ * Base for classes representing a LocoNet communications port.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002
  */

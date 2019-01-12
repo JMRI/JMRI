@@ -68,6 +68,7 @@ public class SerialDCCppPacketizer extends DCCppPacketizer {
     private final class RefreshThread extends Thread {
         public RefreshThread() {
             setDaemon(true);
+            setPriority(Thread.MIN_PRIORITY);
             setName("SerialDCCppPacketizer.bkg_refresh");
         }
 
@@ -78,12 +79,15 @@ public class SerialDCCppPacketizer extends DCCppPacketizer {
                     final DCCppMessage message = resendFunctions.take();
 
                     if (message != null) {
-                        message.setRetries(1);
+                        message.setRetries(0);
                         sendDCCppMessage(message, null);
 
                         // At 115200 baud only ~1k messages/s can be sent.
-                        // Be nice and don't overload the wire.
-                        sleep(1);
+                        // The limit is however how many messages DCC++ BaseStation can process.
+                        // At more than 25Hz random functions get activated and replies go missing.
+                        // Further on, reading CVs on the programming track is much slower.
+                        // The lowest common denominator between all modes is 4Hz, at this rate everything seems to work fine.
+                        sleep(250);
                     }
 
                     setName("SerialDCCppPacketizer.bkg_refresh (" + resendFunctions.size() + " msg)");

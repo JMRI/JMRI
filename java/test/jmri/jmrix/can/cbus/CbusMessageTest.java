@@ -12,7 +12,7 @@ import org.junit.Test;
 /**
  *
  * @author Paul Bender Copyright (C) 2017
- * @author Steve Young Copyright (C) 2018
+ * @author Steve Young Copyright (C) 2018 2019
  */
 public class CbusMessageTest {
 
@@ -255,7 +255,7 @@ public class CbusMessageTest {
         r.setNumDataElements(1);
         r.setElement(0, 0x05); // TON OPC    
         Assert.assertEquals("isRequestTrackOff Bad Reply", CbusMessage.isTrackOff(r),false);
-    }    
+    }
     
     @Test
     public void testgetRequestTrackOnMessage() {
@@ -270,7 +270,144 @@ public class CbusMessageTest {
         Assert.assertTrue("getRequestTrackOff OPC", m.getElement(0) == 0x08); // RTON OPC
         Assert.assertTrue("getRequestTrackOff Length", m.getNumDataElements() == 1);
     }
+
+    @Test
+    public void testgetDataLength() {
+        CanReply r = new CanReply(0x12);
+        CanMessage m = new CanMessage(0x12);
+        r.setElement(0, 0x04); // TOF OPC
+        m.setElement(0, 0x04); // TOF OPC
+        Assert.assertEquals("Data Length 0 r",0,CbusMessage.getDataLength(r));
+        Assert.assertEquals("Data Length 0 m",0,CbusMessage.getDataLength(m));
+        r.setElement(0, 0x11); // RQMN
+        m.setElement(0, 0x11); // RQMN
+        Assert.assertEquals("Data Length 0 r",0,CbusMessage.getDataLength(r));
+        Assert.assertEquals("Data Length 0 m",0,CbusMessage.getDataLength(m));
+
+        r.setElement(0, 0x83); // WCVB OPC
+        m.setElement(0, 0x83); // WCVB OPC
+        Assert.assertEquals("Data Length 4 r",4,CbusMessage.getDataLength(r));
+        Assert.assertEquals("Data Length 4 m",4,CbusMessage.getDataLength(m));
+        r.setElement(0, 0xe2); // NAME
+        m.setElement(0, 0xe2); // NAME
+        Assert.assertEquals("Data Length 7 r",7,CbusMessage.getDataLength(r));
+        Assert.assertEquals("Data Length 7 m",7,CbusMessage.getDataLength(m));
+        
+        r = null;
+        m = null;
+    }
     
+    @Test
+    public void testsetgetPriority() {
+        CanReply r = new CanReply(0x00);
+        CanMessage m = new CanMessage(0x00);
+        Assert.assertEquals("Priority 0 r",0,CbusMessage.getPri(r));
+        Assert.assertEquals("Priority 0 m",0,CbusMessage.getPri(m));
+        
+        try {
+            CbusMessage.setPri(r,0xff);
+            Assert.fail("Should have thrown an exception");
+        } catch (Exception e) {
+            Assert.assertTrue(true);
+        }
+        
+        try {
+            CbusMessage.setPri(m,0xff);
+            Assert.fail("Should have thrown an exception");
+        } catch (Exception e) {
+            Assert.assertTrue(true);
+        }
+        
+        CbusMessage.setPri(m,CbusConstants.DEFAULT_MINOR_PRIORITY);
+        CbusMessage.setPri(r,CbusConstants.DEFAULT_MINOR_PRIORITY);
+        Assert.assertEquals("Priority DEFAULT_MINOR_PRIORITY r",3,CbusMessage.getPri(r));
+        Assert.assertEquals("Priority DEFAULT_MINOR_PRIORITY m",3,CbusMessage.getPri(m));
+
+        CbusMessage.setPri(m,CbusConstants.DEFAULT_DYNAMIC_PRIORITY);
+        CbusMessage.setPri(r,CbusConstants.DEFAULT_DYNAMIC_PRIORITY);
+        Assert.assertEquals("Priority DEFAULT_DYNAMIC_PRIORITY r",2,CbusMessage.getPri(r));
+        Assert.assertEquals("Priority DEFAULT_DYNAMIC_PRIORITY m",2,CbusMessage.getPri(m));
+        
+        r.setExtended(true);
+        m.setExtended(true);
+        
+        Assert.assertEquals("Priority setExtended r",0,CbusMessage.getPri(r));
+        Assert.assertEquals("Priority setExtended m",0,CbusMessage.getPri(m));        
+
+        CbusMessage.setPri(m,CbusConstants.DEFAULT_MINOR_PRIORITY);
+        CbusMessage.setPri(r,CbusConstants.DEFAULT_MINOR_PRIORITY);
+        Assert.assertEquals("Priority setExtended DEFAULT_MINOR_PRIORITY r",3,CbusMessage.getPri(r));
+        Assert.assertEquals("Priority setExtended DEFAULT_MINOR_PRIORITY m",3,CbusMessage.getPri(m));
+        
+    }
+    
+    @Test
+    public void testsetgetId() {
+        
+        CanReply r = new CanReply(0x00);
+        CanMessage m = new CanMessage(0x00);
+        Assert.assertEquals("getId 0 r",0,CbusMessage.getId(r));
+        Assert.assertEquals("getId 0 m",0,CbusMessage.getId(m));
+        CbusMessage.setId(r,0x01);
+        CbusMessage.setId(m,0x01);
+        Assert.assertEquals("getId 1 r",1,CbusMessage.getId(r));
+        Assert.assertEquals("getId 1 m",1,CbusMessage.getId(m));
+        CbusMessage.setId(r,120);
+        CbusMessage.setId(m,120);
+        Assert.assertEquals("getId 120 r",120,CbusMessage.getId(r));
+        Assert.assertEquals("getId 120 m",120,CbusMessage.getId(m));
+        try {
+            CbusMessage.setId(r,0xff);
+            Assert.fail("Should have thrown an exception");
+        } catch (Exception e) {
+            Assert.assertTrue(true);
+        }
+        
+        try {
+            CbusMessage.setId(m,0xff);
+            Assert.fail("Should have thrown an exception");
+        } catch (Exception e) {
+            Assert.assertTrue(true);
+        }
+        
+        r.setExtended(true);
+        m.setExtended(true);        
+        
+        CbusMessage.setId(r,0x01);
+        CbusMessage.setId(m,0x01);
+        Assert.assertEquals("getId 1 r",1,CbusMessage.getId(r));
+        Assert.assertEquals("getId 1 m",1,CbusMessage.getId(m));
+        CbusMessage.setId(r,120);
+        CbusMessage.setId(m,120);
+        Assert.assertEquals("getId 120 r",120,CbusMessage.getId(r));
+        Assert.assertEquals("getId 120 m",120,CbusMessage.getId(m));        
+        try {
+            CbusMessage.setId(r,0xffffff);
+            Assert.fail("r Should have thrown an exception");
+        } catch (Exception e) {
+            Assert.assertTrue(true);
+        }
+        
+        try {
+            CbusMessage.setId(m,0xffffff);
+            Assert.fail("m Should have thrown an exception");
+        } catch (Exception e) {
+            Assert.assertTrue(true);
+        }        
+        
+    }
+    
+    @Test
+    public void testisArst() {
+        CanReply r = new CanReply(0x12);
+        r.setNumDataElements(1);
+        r.setElement(0, 0x07); // Arst OPC
+        Assert.assertTrue(CbusMessage.isArst(r));
+        r.setElement(0, 0x06);
+        Assert.assertFalse(CbusMessage.isArst(r));
+    }
+    
+
     // The minimal setup for log4J
     @Before
     public void setUp() {

@@ -14,7 +14,7 @@ public class TreeAction extends JmriJFrameAction {
     }
 
     public TreeAction() {
-        this("USB Input Control");
+        this(Bundle.getMessage("USBInputControl"));
     }
 
     @Override

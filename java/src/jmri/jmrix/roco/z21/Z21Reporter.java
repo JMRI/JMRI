@@ -70,8 +70,6 @@ public class Z21Reporter extends jmri.implementation.AbstractRailComReporter imp
                  RailCom tag = InstanceManager.getDefault(RailComManager.class).provideIdTag("" + l.getNumber());
                  tag.setAddressType(l.isLongAddress()?RailCom.LONG_ADDRESS:RailCom.SHORT_ADDRESS);
                  tag.setActualSpeed(msg.getRailComSpeed(i));
-                 tag.setActualTemperature(msg.getRailComTemp(i));
-                 // set the tag report.
                  notify(tag);
              }
              if(tags == 0){

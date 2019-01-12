@@ -1409,8 +1409,10 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
             if ((block.getState() & OBlock.OCCUPIED) != 0 && !startBlock.equals(block)) {
                 return Bundle.getMessage("BlockRougeOccupied", block.getDisplayName());
             }
-            if (!this.equals(block.getWarrant())) {
-                return Bundle.getMessage("AllocatedToWarrant", block.getWarrant().getDisplayName(), block.getDisplayName());
+            Warrant w = block.getWarrant();
+            if (w !=null && !this.equals(w)) {
+                return Bundle.getMessage("AllocatedToWarrant",
+                        w.getDisplayName(), block.getDisplayName(), w.getTrainName());
             }
         }
         return null;
@@ -2794,5 +2796,42 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         }
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * This implementation tests that 
+     * {@link jmri.NamedBean#getSystemName()}
+     * is equal for this and obj.
+     * To allow a warrant to run with sections, train name is included to test equality
+     *
+     * @param obj the reference object with which to compare.
+     * @return {@code true} if this object is the same as the obj argument;
+     *         {@code false} otherwise.
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) return false; // by contract
+
+        if (obj instanceof Warrant) {  // NamedBeans are not equal to things of other types
+            Warrant b = (Warrant) obj;
+            String trainName = this.getTrainName();
+            if (trainName == null) {
+                return (b.getTrainName() == null);
+            }
+            return (this.getSystemName().equals(b.getSystemName()) && trainName.equals(b.getTrainName()));
+        }
+        return false;
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * @return hash code value is based on the system and train names.
+     */
+    @Override
+    public int hashCode() {
+        return (getSystemName().concat(getTrainName())).hashCode();
+    }
+    
     private final static Logger log = LoggerFactory.getLogger(Warrant.class);
 }
