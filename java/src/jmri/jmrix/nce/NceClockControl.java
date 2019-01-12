@@ -522,7 +522,8 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
         tc.sendNceMessage(cmdNce, this);
     }
 
-    @SuppressWarnings({"deprecation", "unused"})
+    @SuppressWarnings("deprecation")
+    @SuppressWarnings("unused")
     @SuppressFBWarnings(value = "UPM_UNCALLED_PRIVATE_METHOD", justification="was previously marked with @SuppressWarnings, reason unknown")
     private Date getNceDate() {
         Date now = internalClock.getTime();
@@ -547,7 +548,8 @@ public class NceClockControl extends DefaultClockControl implements NceListener 
         return (nceTime);
     }
 
-    @SuppressWarnings({"deprecation", "unused"})
+    @SuppressWarnings("deprecation")
+    @SuppressWarnings("unused")
     @SuppressFBWarnings(value = "UPM_UNCALLED_PRIVATE_METHOD", justification="was previously marked with @SuppressWarnings, reason unknown")
     private double getIntTime() {
         Date now = internalClock.getTime();
