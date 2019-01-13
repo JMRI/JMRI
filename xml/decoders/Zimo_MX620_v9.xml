@@ -1301,7 +1301,7 @@
           <enumChoice choice="F4">
             <choice>F4</choice>
           </enumChoice>
-          <enumChoice choice="F3">
+          <enumChoice choice="F3" value="16">
             <choice>F3</choice>
           </enumChoice>
         </enumVal>

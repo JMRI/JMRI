@@ -218,6 +218,23 @@
         </li>
       </ul>
 
+      <h2>Block Table Controls</h2>
+      <p>Along the bottom of the Block Table pane are buttons
+      that control its operation.</p>
+
+      <dl>
+        <dt>Add...</dt>
+
+        <dd>Push this button to <a href="BlockAddEdit.shtml">create
+          a new Block</a>.</dd>
+
+        <dt>Block Length Units</dt>
+
+        <dd>Choose between showing the Block Length (measured in real world
+        units on the layout) in either inches or centimeters.<br>
+        Existing values will be converted.</dd>
+      </dl>
+
       <a name="addBlock" id="addBlock"></a>
       <h2>Adding a new Block</h2>
 

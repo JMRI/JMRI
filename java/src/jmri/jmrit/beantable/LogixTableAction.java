@@ -653,9 +653,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
     }
 
     void enableAll(boolean enable) {
-        List<String> sysNameList = _logixManager.getSystemNameList();
-        for (int i = 0; i < sysNameList.size(); i++) {
-            Logix x = _logixManager.getBySystemName(sysNameList.get(i));
+        for (Logix x : _logixManager.getNamedBeanSet()) {
             x.setEnabled(enable);
         }
     }
@@ -1414,7 +1412,8 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
     void loadReferenceNames(List<ConditionalVariable> varList, TreeSet<String> treeSet) {
         treeSet.clear();
         for (ConditionalVariable var : varList) {
-            if (var.getType() == Conditional.TYPE_CONDITIONAL_TRUE || var.getType() == Conditional.TYPE_CONDITIONAL_FALSE) {
+            if (var.getType() == Conditional.Type.CONDITIONAL_TRUE
+                    || var.getType() == Conditional.Type.CONDITIONAL_FALSE) {
                 treeSet.add(var.getName());
             }
         }
@@ -1824,7 +1823,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
                 showCondName = "C" + (rx + 1);
             }
             condText.append("\n  " + showSystemName + "  " + showCondName + "   \n");
-            if (curConditional.getLogicType() == Conditional.MIXED) {
+            if (curConditional.getLogicType() == Conditional.AntecedentOperator.MIXED) {
                 _antecedent = curConditional.getAntecedentExpression();
                 String antecedent = ConditionalEditBase.translateAntecedent(_antecedent, false);
                 condText.append("   " + Bundle.getMessage("LogixAntecedent") + " " + antecedent + "  \n");   // NOI18N

@@ -70,8 +70,8 @@ public class JsonLayoutBlockHttpService extends JsonNamedBeanHttpService {
     @Override
     public ArrayNode doGetList(String type, Locale locale) throws JsonException {
         ArrayNode root = this.mapper.createArrayNode();
-        for (String name : InstanceManager.getDefault(LayoutBlockManager.class).getSystemNameList()) {
-            root.add(this.doGet(LAYOUTBLOCK, name, locale));
+        for (LayoutBlock lb: InstanceManager.getDefault(LayoutBlockManager.class).getNamedBeanSet()) {
+            root.add(this.doGet(LAYOUTBLOCK, lb.getSystemName(), locale));
         }
         return root;
 

@@ -322,7 +322,8 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
 
     /** {@inheritDoc} */
     @Override
-    @Deprecated  // will be removed when Manager method is removed due to @Override
+    @Deprecated  // will be removed when superclass method is removed due to @Override
+    @SuppressWarnings("deprecation")  // temporary implementation of method with @Override
     public String[] getSystemNameArray() {
         jmri.util.Log4JUtil.deprecationWarning(log, "getSystemNameArray");
         if (log.isTraceEnabled()) log.trace("Manager#getSystemNameArray() called", new Exception("traceback"));
@@ -336,7 +337,8 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     
     /** {@inheritDoc} */
     @Override
-    @Deprecated  // will be removed when Manager method is removed due to @Override
+    @Deprecated  // will be removed when superclass method is removed due to @Override
+    @SuppressWarnings("deprecation")  // temporary implementation of method with @Override
     public List<String> getSystemNameList() {
         // jmri.util.Log4JUtil.deprecationWarning(log, "getSystemNameList");
         if (cachedSystemNameList == null) {
@@ -351,7 +353,8 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
 
     /** {@inheritDoc} */
     @Override
-    @Deprecated  // will be removed when Manager method is removed due to @Override
+    @Deprecated  // will be removed when superclass method is removed due to @Override
+    @SuppressWarnings("deprecation")  // temporary implementation of method with @Override
                  // Only used in ConfigureXML
     public List<String> getSystemNameAddedOrderList() {
         //jmri.util.Log4JUtil.deprecationWarning(log, "getSystemNameAddedOrderList");
@@ -361,7 +364,8 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
 
     /** {@inheritDoc} */
     @Override
-    @Deprecated  // will be removed when Manager method is removed due to @Override
+    @Deprecated  // will be removed when superclass method is removed due to @Override
+    @SuppressWarnings("deprecation")  // temporary implementation of method with @Override
     public List<E> getNamedBeanList() {
         jmri.util.Log4JUtil.deprecationWarning(log, "getNamedBeanList");
         if (cachedNamedBeanList == null) {
