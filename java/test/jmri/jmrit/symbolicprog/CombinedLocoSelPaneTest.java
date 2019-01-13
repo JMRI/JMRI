@@ -21,6 +21,16 @@ public class CombinedLocoSelPaneTest {
         Assert.assertNotNull("exists",t);
     }
 
+    @Test
+    public void testSelectLocoAddressNotInRoster() {
+        // This method was put in place to catch a missing resource bundle
+        // key. in the selectLoco method.
+        JLabel jl = new JLabel("test selector");
+        ProgModePane pmp = new ProgModePane(javax.swing.BoxLayout.X_AXIS);
+        CombinedLocoSelPane t = new CombinedLocoSelPane(jl,pmp);
+        t.selectLoco(1234);
+    }
+
     // The minimal setup for log4J
     @Before
     public void setUp() {
