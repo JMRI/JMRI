@@ -4645,7 +4645,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         undoTranslateSelectionMenuItem.setEnabled(canUndoMoveSelection);
 
             //apply translation to icon items within the selection
-            //List<Positionable> contents = getContents();
             for (Positionable c : _positionableSelection) {
                 Point2D upperLeft = c.getLocation();
                 int xNew = (int) (upperLeft.getX() + xTranslation);
@@ -5078,8 +5077,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             //not in edit mode - check if mouse is on a turnout (using wider search range)
             selectedObject = null;
             checkControls(true);
-        } else if ((isMetaDown(event)
-                || event.isAltDown())
+        } else if ((isMetaDown(event) || event.isAltDown())
                 && !event.isShiftDown() && !event.isControlDown()) {
             //not in edit mode - check if moving a marker if there are any
             selectedObject = checkMarkerPopUps(dLoc);
@@ -5087,8 +5085,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 selectedHitPointType = LayoutTrack.MARKER;
                 startDelta.setLocation(MathUtil.subtract(((LocoIcon) selectedObject).getLocation(), dLoc));
             }
-        } else if (event.isPopupTrigger()
-                && !event.isShiftDown()) {
+        } else if (event.isPopupTrigger() && !event.isShiftDown()) {
             //not in edit mode - check if a marker popup menu is being requested
             LocoIcon lo = checkMarkerPopUps(dLoc);
             if (lo != null) {
@@ -8766,6 +8763,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     /**
      * Remove a background image from the list of background images
+     * @param b PositionableLabel to remove
      */
     protected void removeBackground(@Nonnull PositionableLabel b) {
         if (backgroundImage.contains(b)) {
@@ -8774,6 +8772,11 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         }
     }
 
+    /**
+     * add a layout shape to the list of layout shapes
+     * @param p Point2D where the shape should be
+     * @return the LayoutShape
+     */
     @Nonnull
     protected LayoutShape addLayoutShape(@Nonnull Point2D p) {
         //get unique name
@@ -8788,7 +8791,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     /**
-     * Remove a background image from the list of background images
+     * Remove a layout shape from the list of layout shapes
+     * @param s the LayoutShape to add
+     * @return true if added
      */
     protected boolean removeLayoutShape(@Nonnull LayoutShape s) {
         boolean result = false;
@@ -10343,22 +10348,19 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     public List<PositionablePoint> getPositionablePoints() {
-        return getLayoutTracksOfClass(PositionablePoint.class
-        )
+        return getLayoutTracksOfClass(PositionablePoint.class)
                 .map(PositionablePoint.class::cast)
                 .collect(Collectors.toCollection(ArrayList<PositionablePoint>::new));
     }
 
     public List<LayoutSlip> getLayoutSlips() {
-        return getLayoutTracksOfClass(LayoutSlip.class
-        )
+        return getLayoutTracksOfClass(LayoutSlip.class)
                 .map(LayoutSlip.class::cast)
                 .collect(Collectors.toCollection(ArrayList<LayoutSlip>::new));
     }
 
     public List<TrackSegment> getTrackSegments() {
-        return getLayoutTracksOfClass(TrackSegment.class
-        )
+        return getLayoutTracksOfClass(TrackSegment.class)
                 .map(TrackSegment.class::cast)
                 .collect(Collectors.toCollection(ArrayList<TrackSegment>::new));
     }
