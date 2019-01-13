@@ -3020,6 +3020,8 @@
 
 <mapID target="html.hardware.loconet.Digitrax_SeeAlso" url="html/hardware/loconet/Digitrax.shtml#SeeAlso"/>
 
+<mapID target="manual.DecoderPro.VSD_Headless" url="manual/DecoderPro/VSD_Headless.shtml"/>
+
 <mapID target="html.hardware.roco.z21.index_tools" url="html/hardware/roco/z21/index.shtml#tools"/>
 
 <mapID target="html.hardware.loconet.Addressing_boardId" url="html/hardware/loconet/Addressing.shtml#boardId"/>
@@ -3929,6 +3931,8 @@
 <mapID target="manual.DecoderPro3.Start_DCC_Systems" url="manual/DecoderPro3/Start_DCC_Systems.shtml"/>
 
 <mapID target="html.setup.Faq" url="html/setup/Faq.shtml"/>
+
+<mapID target="package.jmri.jmrix.can.cbus.swing.simulator.SimulatorPane_nodes" url="package/jmri/jmrix/can/cbus/swing/simulator/SimulatorPane.shtml#nodes"/>
 
 <mapID target="package.jmri.jmrit.dispatcher.Dispatcher_intro" url="package/jmri/jmrit/dispatcher/Dispatcher.shtml#intro"/>
 
