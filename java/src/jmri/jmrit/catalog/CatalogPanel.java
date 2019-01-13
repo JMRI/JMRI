@@ -703,9 +703,8 @@ public class CatalogPanel extends JPanel {
         CatalogPanel catalog = new CatalogPanel("catalogs", "selectNode", addButtonPanel);
         catalog.init(treeDrop, dragIcon);
         CatalogTreeManager manager = InstanceManager.getDefault(jmri.CatalogTreeManager.class);
-        List<String> sysNames = manager.getSystemNameList();
-        for (int i = 0; i < sysNames.size(); i++) {
-            String systemName = sysNames.get(i);
+        for (CatalogTree tree : manager.getNamedBeanSet()) {
+            String systemName = tree.getSystemName();
             if (systemName.charAt(0) == 'I') {
                 catalog.addTree(manager.getBySystemName(systemName));
             }

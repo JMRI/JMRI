@@ -4,6 +4,7 @@ package jmri.jmrix.loconet.locomon;
 import java.awt.GraphicsEnvironment;
 import jmri.jmrix.AbstractMonPaneScaffold;
 import jmri.jmrix.loconet.LocoNetMessage;
+import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import org.junit.After;
@@ -106,7 +107,7 @@ public class LocoMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
     jmri.TurnoutManager l;
     jmri.SensorManager s;
     jmri.ReporterManager r;
-    
+
     // The minimal setup for log4J
     @Override
     @Before
@@ -117,7 +118,8 @@ public class LocoMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
         JUnitUtil.initDefaultUserMessagePreferences();
 
         // prepare an interface, register
-        jmri.jmrix.loconet.LocoNetInterfaceScaffold lnis = new jmri.jmrix.loconet.LocoNetInterfaceScaffold();
+        LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo("L", "LocoNet");
+        jmri.jmrix.loconet.LocoNetInterfaceScaffold lnis = new jmri.jmrix.loconet.LocoNetInterfaceScaffold(memo);
         // create and register the manager object
         jmri.util.JUnitUtil.initInternalTurnoutManager();
         l = new jmri.jmrix.loconet.LnTurnoutManager(lnis, lnis, "L", false);
@@ -148,4 +150,5 @@ public class LocoMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
 
         jmri.util.JUnitUtil.tearDown();
     }
+
 }

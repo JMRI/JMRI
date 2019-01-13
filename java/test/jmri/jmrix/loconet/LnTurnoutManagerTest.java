@@ -12,7 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Tests for the jmri.jmrix.loconet.LnTurnoutManager class
+ * Tests for the jmri.jmrix.loconet.LnTurnoutManager class.
  *
  * @author	Bob Jacobsen Copyright 2005
  */
@@ -22,8 +22,6 @@ public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBa
     public String getSystemName(int i) {
         return "LT" + i;
     }
-
-    LocoNetInterfaceScaffold lnis;
 
     @Test
     @Override
@@ -106,17 +104,15 @@ public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBa
         // ask for a Turnout, and check type
         Turnout o = l.newTurnout("LT21", "my name");
 
-        if (log.isDebugEnabled()) {
-            log.debug("received turnout value " + o);
-        }
+        log.debug("received turnout value {}", o);
         Assert.assertTrue(null != (LnTurnout) o);
 
         // make sure loaded into tables
         if (log.isDebugEnabled()) {
-            log.debug("by system name: " + l.getBySystemName("LT21"));
+            log.debug("by system name: {}", l.getBySystemName("LT21"));
         }
         if (log.isDebugEnabled()) {
-            log.debug("by user name:   " + l.getByUserName("my name"));
+            log.debug("by user name:   {}", l.getByUserName("my name"));
         }
 
         Assert.assertTrue(null != l.getBySystemName("LT21"));
@@ -124,20 +120,26 @@ public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBa
 
     }
 
+    private LocoNetInterfaceScaffold lnis;
+    private LocoNetSystemConnectionMemo memo;
+
     @Override
     @Before
     public void setUp(){
         jmri.util.JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
         // prepare an interface, register
-        lnis = new LocoNetInterfaceScaffold();
+        memo = new LocoNetSystemConnectionMemo("L", "LocoNet");
+        lnis = new LocoNetInterfaceScaffold(memo);
         // create and register the manager object
-        l = new LnTurnoutManager(lnis, lnis, "L", false);
+        l = new LnTurnoutManager(lnis, lnis, memo.getSystemPrefix(), false);
         jmri.InstanceManager.setTurnoutManager(l);
     }
 
     @After
     public void tearDown() {
+        memo.dispose();
+        lnis = null;
         JUnitUtil.tearDown();
     }
 
