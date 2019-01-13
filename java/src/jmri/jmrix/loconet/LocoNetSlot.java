@@ -1295,7 +1295,7 @@ public class LocoNetSlot {
      * <p>
      * Note 1: The new fractional minutes value is not effective until a LocoNet slot write happens
      * <p>
-     * Note 2: DT40x &amp DT500 throttles ignore this value, and set only the whole minutes.
+     * Note 2: DT40x &amp; DT500 throttles ignore this value, and set only the whole minutes.
      * <p>
      * This method logs an error if invoked for a slot other than the fast-clock slot.
      * <p>
