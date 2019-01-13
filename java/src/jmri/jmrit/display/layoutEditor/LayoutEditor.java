@@ -906,7 +906,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
         //icon label
         iconLabelButton.setToolTipText(Bundle.getMessage("IconLabelToolTip"));
-        shapeButton.setToolTipText(Bundle.getMessage("ShapeToolTip"));
+        shapeButton.setToolTipText(Bundle.getMessage("LayoutShapeToolTip"));
 
         //change icons...
         //this is enabled/disabled via selectionListAction above

@@ -15,6 +15,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.swing.AbstractAction;
+import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JSeparator;
@@ -111,7 +113,7 @@ public class LayoutShape {
          */
         public LayoutShapePoint(Point2D c) {
             this.point = c;
-            this.type = LayoutShapePointType.eCurve;
+            this.type = LayoutShapePointType.eVertex;
         }
 
         /**
@@ -139,7 +141,7 @@ public class LayoutShape {
     // operational instance variables (not saved between sessions)
     private LayoutEditor layoutEditor = null;
     private String name = "";
-    private LayoutShapeType layoutShapeType = LayoutShapeType.eOpen;
+    private LayoutShapeType layoutShapeType;
     private int level = 3;
     private int lineWidth = 3;
     private Color lineColor = Color.BLACK;
@@ -157,6 +159,7 @@ public class LayoutShape {
      * @param layoutEditor reference to the LayoutEditor this shape is in
      */
     public LayoutShape(String name, Point2D c, LayoutEditor layoutEditor) {
+        this.layoutShapeType = LayoutShapeType.eOpen;
         this.shapePoints = new ArrayList<>();
         this.name = name;
         this.shapePoints.add(new LayoutShapePoint(c));
@@ -336,7 +339,11 @@ public class LayoutShape {
      * @return Point2D coordinates of center point of shape
      */
     public Point2D getCoordsCenter() {
-        return MathUtil.midPoint(getBounds());
+        Point2D sumPoint = MathUtil.zeroPoint2D();
+        for (LayoutShapePoint lsp : shapePoints) {
+            sumPoint = MathUtil.add(sumPoint, lsp.getPoint());
+        }
+        return MathUtil.divide(sumPoint, shapePoints.size());
     }
 
     /*
@@ -405,26 +412,73 @@ public class LayoutShape {
 
             popup.add(new JSeparator(JSeparator.HORIZONTAL));
 
-            jmi = popup.add("hitPointType: " + hitPointType);
-            jmi.setEnabled(false);
+            if (true) { // only enable for debugging; TODO: delete or disable this for production
+                jmi = popup.add("hitPointType: " + hitPointType);
+                jmi.setEnabled(false);
+            }
 
-            //TODO: add menu items to display/change layoutShapeType, level, 
-            // lineWidth, lineColor and fillColor.
-            //TODO: add menu items to display/change shapePoint LayoutShapePointType.
-//
-//            JCheckBoxMenuItem hiddenCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("Hidden"));
-//            hiddenCheckBoxMenuItem.setSelected(hidden);
-//            popup.add(hiddenCheckBoxMenuItem);
-//            hiddenCheckBoxMenuItem.addActionListener((java.awt.event.ActionEvent e1) -> {
-//                JCheckBoxMenuItem o = (JCheckBoxMenuItem) e1.getSource();
-//                setHidden(o.isSelected());
-//            });
-//            popup.add(new AbstractAction(Bundle.getMessage("ButtonEdit")) {
-//                @Override
-//                public void actionPerformed(ActionEvent e) {
-//                    layoutEditor.getLayoutTrackEditors().editLayoutShape(LayoutShape.this);
-//                }
-//            });
+            // add "Change Shape Type to..." menu
+            JMenu shapeTypeMenu = new JMenu(Bundle.getMessage("ChangeShapeTypeTo"));
+            jmi = shapeTypeMenu.add(new JCheckBoxMenuItem(new AbstractAction(Bundle.getMessage("ShapeTypeOpen")) {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    setType(LayoutShapeType.eOpen);
+                    layoutEditor.repaint();
+                }
+            }));
+            jmi.setSelected(getType() == LayoutShapeType.eOpen);
+
+            jmi = shapeTypeMenu.add(new JCheckBoxMenuItem(new AbstractAction(Bundle.getMessage("ShapeTypeClosed")) {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    setType(LayoutShapeType.eClosed);
+                    layoutEditor.repaint();
+                }
+            }));
+            jmi.setSelected(getType() == LayoutShapeType.eClosed);
+
+            jmi = shapeTypeMenu.add(new JCheckBoxMenuItem(new AbstractAction(Bundle.getMessage("ShapeTypeFilled")) {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    setType(LayoutShapeType.eFilled);
+                    layoutEditor.repaint();
+                }
+            }));
+            jmi.setSelected(getType() == LayoutShapeType.eFilled);
+
+            popup.add(shapeTypeMenu);
+
+            // Add "Change Shape Point Type to..." menu
+            if (hitPointType != LayoutTrack.SHAPE_CENTER) {
+                int pointIndex = hitPointType - LayoutTrack.SHAPE_POINT_OFFSET_MIN;
+                LayoutShapePoint lsp = shapePoints.get(pointIndex);
+
+                if (lsp != null) { // this should never happen... but just in case...
+                    JMenu shapePointTypeMenu = new JMenu(Bundle.getMessage("ChangeShapePointTypeTo"));
+                    jmi = shapePointTypeMenu.add(new JCheckBoxMenuItem(new AbstractAction(Bundle.getMessage("ShapePointTypeVertex")) {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            lsp.setType(LayoutShapePointType.eVertex);
+                            layoutEditor.repaint();
+                        }
+                    }));
+                    jmi.setSelected(lsp.getType() == LayoutShapePointType.eVertex);
+
+                    jmi = shapePointTypeMenu.add(new JCheckBoxMenuItem(new AbstractAction(Bundle.getMessage("ShapePointTypeCurve")) {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            lsp.setType(LayoutShapePointType.eCurve);
+                            layoutEditor.repaint();
+                        }
+                    }));
+                    jmi.setSelected(lsp.getType() == LayoutShapePointType.eCurve);
+
+                    popup.add(shapePointTypeMenu);
+                }
+            }
+            //TODO: add menu items to display/change level, lineWidth, lineColor and fillColor.
+
+            popup.add(new JSeparator(JSeparator.HORIZONTAL));
             popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -465,119 +519,64 @@ public class LayoutShape {
     protected void draw(Graphics2D g2) {
         GeneralPath path = new GeneralPath();
 
-        if (false) {    //TODO: I think this would work better as a Bezier curve for eCurve points
-            int idx, cnt = shapePoints.size();
-            for (idx = 0; idx < cnt; idx++) {
-                LayoutShapePoint lsp = shapePoints.get(idx);
-                Point2D p = lsp.getPoint();
-
-                int idx1 = (idx + 1) % cnt;
-                LayoutShapePoint lsp1 = shapePoints.get(idx1);
-                Point2D p1 = lsp1.getPoint();
-
-                Point2D midP = MathUtil.midPoint(p, p1);
-
-                if (idx == 0) {
-                    if ((getType() == LayoutShapeType.eOpen)
-                            || (lsp.getType() == LayoutShapePointType.eVertex)) {
-                        path.moveTo(p.getX(), p.getY());
-                    } else {
-                        path.moveTo(midP.getX(), midP.getY());
-                    }
-                } else if ((getType() == LayoutShapeType.eOpen)
-                        && (idx == cnt - 1)) {
-                    path.lineTo(p.getX(), p.getY());
-                } else {
-                    if (lsp.getType() == LayoutShapePointType.eVertex) {
-                        path.lineTo(p.getX(), p.getY());
-                    } else if (lsp.getType() == LayoutShapePointType.eCurve) {
-                        path.quadTo(p.getX(), p.getY(), p1.getX(), p1.getY());
-                        idx++;
-                    }
-                }
-            }
-        } else {
-            ArrayList<Point2D> bezierPoints = new ArrayList<>();
-            int cnt = shapePoints.size();
-
-            for (int idx = 0; idx < cnt; idx++) {
-                LayoutShapePoint lsp = shapePoints.get(idx);
-                Point2D p = lsp.getPoint();
-
-                int idx1 = (idx + 1) % cnt;
-                LayoutShapePoint lsp1 = shapePoints.get(idx1);
-                Point2D p1 = lsp1.getPoint();
-
-                if (true) { // for debugging; TODO: remove or disable
-                    if (getType() == LayoutShapeType.eOpen) {
-                        if ((idx == 0) || (idx1 == 0)) {
-                            lsp.setType(LayoutShapePointType.eVertex);
-                        } else {
-                            lsp.setType(LayoutShapePointType.eCurve);
-                        }
-                    }
-                }
-
-                switch (lsp.getType()) {
-                    case eVertex: {
-                        if (idx == 0) {
-                            path.moveTo(p.getX(), p.getY());
-                        } else {
-                            int idx0 = (idx + cnt - 1) % cnt;
-                            LayoutShapePoint lsp0 = shapePoints.get(idx0);
-                            //Point2D p0 = lsp0.getPoint();
-
-                            switch (lsp0.getType()) {
-                                case eVertex: {
-                                    path.lineTo(p.getX(), p.getY());
-                                    break;
-                                }
-                                case eCurve: {
-                                    bezierPoints.add(lsp.getPoint());
-                                    Point2D[] points = bezierPoints.toArray(new Point2D[bezierPoints.size()]);
-                                    path.append(MathUtil.getBezierPath(points), true);
-                                    break;
-                                }
-                            }
-                        }
-                        bezierPoints.clear();
-                        bezierPoints.add(lsp.getPoint());
-                        break;
-                    }
-
-                    case eCurve: {
-                        if (idx == 0) {
-                            Point2D midPoint = MathUtil.midPoint(p, p1);
-                            path.moveTo(midPoint.getX(), midPoint.getY());
-                            bezierPoints.add(midPoint);
-                        } else if (idx1 == 0) {
-                            int idx2 = (idx1 + 1) % cnt;
-                            LayoutShapePoint lsp2 = shapePoints.get(idx2);
-                            Point2D p2 = lsp2.getPoint();
-
-                            bezierPoints.add(p);
-                            Point2D midPoint = MathUtil.midPoint(p1, p2);
-                            bezierPoints.add(midPoint);
-                        } else {
-                            bezierPoints.add(p);
-                        }
-                        break;
-                    }
-                }
-            }
-            if (bezierPoints.size() >= 3) {
-                Point2D[] points = bezierPoints.toArray(new Point2D[bezierPoints.size()]);
-                path.append(MathUtil.getBezierPath(points), true);
-            }
-        }
-
-        if (getType() != LayoutShapeType.eOpen) {
-            LayoutShapePoint lsp = shapePoints.get(0);
+        int idx, cnt = shapePoints.size();
+        for (idx = 0; idx < cnt; idx++) {
+            // this point
+            LayoutShapePoint lsp = shapePoints.get(idx);
             Point2D p = lsp.getPoint();
-            if (lsp.getType() == LayoutShapePointType.eVertex) {
-                path.lineTo(p.getX(), p.getY());
+
+            // left point
+            int idxL = (idx + cnt - 1) % cnt;
+            LayoutShapePoint lspL = shapePoints.get(idxL);
+            Point2D pL = lspL.getPoint();
+            Point2D midL = MathUtil.midPoint(pL, p);
+
+            // right point
+            int idxR = (idx + 1) % cnt;
+            LayoutShapePoint lspR = shapePoints.get(idxR);
+            Point2D pR = lspR.getPoint();
+            Point2D midR = MathUtil.midPoint(p, pR);
+
+            // if this is an open shape...
+            LayoutShapePointType lspt = lsp.getType();
+            if (getType() == LayoutShapeType.eOpen) {
+                // and this is first or last point...
+                if ((idx == 0) || (idxR == 0)) {
+                    // then force vertext shape point type
+                    lspt = LayoutShapePointType.eVertex;
+                }
             }
-        }
+            switch (lspt) {
+                case eVertex: {
+                    if (idx == 0) { // if this is the first point...
+                        // ...and our shape is open...
+                        if (getType() == LayoutShapeType.eOpen) {
+                            path.moveTo(p.getX(), p.getY());    // then start here
+                        } else {    // otherwise
+                            path.moveTo(midL.getX(), midL.getY());  //start here
+                            path.lineTo(p.getX(), p.getY());        //draw to here
+                        }
+                    } else {
+                        path.lineTo(midL.getX(), midL.getY());  //start here
+                        path.lineTo(p.getX(), p.getY());        //draw to here
+                    }
+                    // if this is not the last point...
+                    // ...or our shape isn't open
+                    if ((idxR != 0) || (getType() != LayoutShapeType.eOpen)) {
+                        path.lineTo(midR.getX(), midR.getY());      // draw to here
+                    }
+                    break;
+                }
+
+                case eCurve: {
+                    if (idx == 0) { // if this is the first point
+                        path.moveTo(midL.getX(), midL.getY());  // then start here
+                    }
+                    path.quadTo(p.getX(), p.getY(), midR.getX(), midR.getY());
+                    break;
+                }
+            }
+        }   // for (idx = 0; idx < cnt; idx++)
 
         if (getType() == LayoutShapeType.eFilled) {
             g2.setColor(fillColor);
@@ -585,7 +584,6 @@ public class LayoutShape {
         }
 
         g2.setColor(lineColor);
-
         g2.draw(path);
     }   // draw
 
@@ -599,7 +597,7 @@ public class LayoutShape {
         Point2D end1 = end0;
         for (LayoutShapePoint lsp : shapePoints) {
             Point2D end2 = lsp.getPoint();
-                g2.draw(new Line2D.Double(end1, end2));
+            g2.draw(new Line2D.Double(end1, end2));
             end1 = end2;
         }
 
