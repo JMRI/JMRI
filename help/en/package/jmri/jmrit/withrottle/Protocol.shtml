@@ -630,7 +630,7 @@ MT+S3&lt;;&gt;ED&amp;RGW 341
 
       <p>The second element is the actual address to select, using
       either the address directly ("S79" or "L3002") or by referencing
-      a roster entry using the "E" command (such as "ED&RGW 341").<p>
+      a roster entry using the "E" command (such as "ED&amp;RGW 341").<p>
 
       <p>Note that while this key must be formatted like an address, it
       is <b>not</b> directly related to the actual address in use.  For example,
