@@ -99,7 +99,7 @@ public class NceMessageTest extends jmri.jmrix.AbstractMessageTestBase {
     public void testReadPagedCVBinToMonitorString() {
         tc.setCommandOptions(NceTrafficController.OPTION_2006);
         msg = NceMessage.getReadPagedCV(tc, 12);
-        Assert.assertEquals("monitor string compare ", "Read CV 12 in paged mode\n", msg.toMonitorString());
+        Assert.assertEquals("monitor string compare ", "Read CV 12 in paged mode", msg.toMonitorString());
     }
 
     @Test
@@ -113,7 +113,7 @@ public class NceMessageTest extends jmri.jmrix.AbstractMessageTestBase {
     public void testWritePagedCVAsciiToMonitorString() {
         tc.setCommandOptions(NceTrafficController.OPTION_2004);
         msg = NceMessage.getWritePagedCV(tc, 12, 251);
-        Assert.assertEquals("monitor string compare ", "binary cmd: P012 251\n", msg.toMonitorString());
+        Assert.assertEquals("monitor string compare ", "binary cmd: P012 251", msg.toMonitorString());
     }
 
     @Test

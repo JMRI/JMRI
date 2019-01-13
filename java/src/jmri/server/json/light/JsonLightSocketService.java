@@ -64,14 +64,12 @@ public class JsonLightSocketService extends JsonSocketService<JsonLightHttpServi
     }
 
     private void addListenersToChildren() {
-        InstanceManager.getDefault(LightManager.class).getSystemNameList().stream().forEach((ln) -> { //add listeners to each child (if not already)
+        InstanceManager.getDefault(LightManager.class).getNamedBeanSet().stream().forEach((l) -> { //add listeners to each child (if not already)
+            String ln = l.getSystemName();
             if (!lightListeners.containsKey(ln)) {
                 log.debug("adding LightListener for Light '{}'", ln);
-                Light l = InstanceManager.getDefault(LightManager.class).getLight(ln);
-                if (l != null) {
-                    lightListeners.put(ln, new LightListener(l));
-                    l.addPropertyChangeListener(this.lightListeners.get(ln));
-                }
+                lightListeners.put(ln, new LightListener(l));
+                l.addPropertyChangeListener(this.lightListeners.get(ln));
             }
         });
     }    

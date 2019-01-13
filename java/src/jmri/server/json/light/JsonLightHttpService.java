@@ -93,8 +93,8 @@ public class JsonLightHttpService extends JsonNamedBeanHttpService {
     @Override
     public ArrayNode doGetList(String type, Locale locale) throws JsonException {
         ArrayNode root = this.mapper.createArrayNode();
-        for (String name : InstanceManager.lightManagerInstance().getSystemNameList()) {
-            root.add(this.doGet(LIGHT, name, locale));
+        for (Light l : InstanceManager.lightManagerInstance().getNamedBeanSet()) {
+            root.add(this.doGet(LIGHT, l.getSystemName(), locale));
         }
         return root;
 

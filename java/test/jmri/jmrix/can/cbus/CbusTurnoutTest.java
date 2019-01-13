@@ -323,6 +323,55 @@ public class CbusTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
         Assert.assertTrue(t.getCommandedState() == Turnout.CLOSED);    
     }
 
+
+    // with presence of node number should still resolve to short event turnout due to opc
+    @Test
+    public void testTurnoutCanMessageShortEvWithNode() throws jmri.JmriException {
+        CbusTurnout t = new CbusTurnout("MT","+12345",tcis);
+        CanMessage m = new CanMessage(tcis.getCanid());
+        m.setNumDataElements(5);
+        m.setElement(0, 0x95); // EVULN OPC
+        m.setElement(1, 0xd4);
+        m.setElement(2, 0x31);
+        m.setElement(3, 0x30);
+        m.setElement(4, 0x39);
+        t.message(m);
+        Assert.assertTrue(t.getCommandedState() == Turnout.UNKNOWN);        
+        
+        m.setElement(0, 0x98); // ASON OPC
+        t.message(m);
+        Assert.assertTrue(t.getCommandedState() == Turnout.THROWN);
+        
+        m.setElement(0, 0x99); // ASOF OPC
+        t.message(m);
+        Assert.assertTrue(t.getCommandedState() == Turnout.CLOSED);
+        
+    }
+    
+    // with presence of node number should still resolve to short event turnout due to opc
+    @Test
+    public void testTurnoutCanReplyShortEvWithNode() throws jmri.JmriException {
+        CbusTurnout t = new CbusTurnout("MT","+12345",tcis);
+        CanReply r = new CanReply(tcis.getCanid());
+        r.setNumDataElements(5);
+        r.setElement(0, 0x95); // EVULN OPC
+        r.setElement(1, 0xd4);
+        r.setElement(2, 0x31);
+        r.setElement(3, 0x30);
+        r.setElement(4, 0x39);
+        t.reply(r);
+        Assert.assertTrue(t.getCommandedState() == Turnout.UNKNOWN);        
+        
+        r.setElement(0, 0x98); // ASON OPC
+        t.reply(r);
+        Assert.assertTrue(t.getCommandedState() == Turnout.THROWN);
+        
+        r.setElement(0, 0x99); // ASOF OPC
+        t.reply(r);
+        Assert.assertTrue(t.getCommandedState() == Turnout.CLOSED);
+        
+    }
+
     // The minimal setup for log4J
     @Before
     public void setUp() {

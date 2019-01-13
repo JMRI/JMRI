@@ -27,7 +27,7 @@ public class JmriMemoryPropertyListener extends JmriSimplePropertyListener {
 
     String _data;
 
-    JmriMemoryPropertyListener(String propName, int type, String name, int varType,
+    JmriMemoryPropertyListener(String propName, int type, String name, Conditional.Type varType,
             Conditional client, String data) {
         super(propName, type, name, varType, client);
         _data = data;
