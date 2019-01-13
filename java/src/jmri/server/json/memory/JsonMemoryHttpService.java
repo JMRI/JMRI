@@ -72,8 +72,8 @@ public class JsonMemoryHttpService extends JsonNamedBeanHttpService {
     @Override
     public ArrayNode doGetList(String type, Locale locale) throws JsonException {
         ArrayNode root = this.mapper.createArrayNode();
-        for (String name : InstanceManager.memoryManagerInstance().getSystemNameList()) {
-            root.add(this.doGet(MEMORY, name, locale));
+        for (Memory m : InstanceManager.memoryManagerInstance().getNamedBeanSet()) {
+            root.add(this.doGet(MEMORY, m.getSystemName(), locale));
         }
         return root;
 

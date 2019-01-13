@@ -265,6 +265,7 @@ public class SignalGroupSubTableAction {
      * @param g Parent Signal Head
      * @param headName System or User Name of this Signal Head
      */
+    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations
     void editHead(SignalGroup g, String headName) {
         curSignalGroup = g;
         curHeadName = headName;

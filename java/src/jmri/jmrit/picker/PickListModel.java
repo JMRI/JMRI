@@ -122,6 +122,7 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
         makePickList();
     }
 
+    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations
     private void makePickList() {
         // Don't know who is added or deleted so remove all name change listeners
         if (_pickList != null) {

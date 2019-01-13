@@ -890,6 +890,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
         sectionTableModel.fireTableDataChanged();
     }
 
+    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations & generics
     void replacePrimaryForSeqPressed(ActionEvent e) {
         int seq = getSeqNum();
         if (seq == 0) {
@@ -929,13 +930,12 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
         List<Section> possibles = new ArrayList<>();
         int[] possiblesDirection = new int[150];
         List<String> possibleNames = new ArrayList<>();
-        List<String> allSections = sectionManager.getSystemNameList();
-        for (int i = 0; i < allSections.size(); i++) {
+        
+        for (Section s : sectionManager.getNamedBeanSet()) {
             Section mayBeSection = null;
-            String mayBeName = allSections.get(i);
+            String mayBeName = s.getSystemName();
             int mayBeDirection = 0;
-            Section s = sectionManager.getBySystemName(mayBeName);
-            if ((s != null) && (s != sOld) && (s != beforeSection)
+            if ((s != sOld) && (s != beforeSection)
                     && (s != afterSection) && (!inSectionList(s, altOldList))) {
                 if (beforeSection != null) {
                     if (forwardConnected(s, beforeSection, beforeSectionDirection)) {
@@ -1098,6 +1098,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
         sectionTableModel.fireTableDataChanged();
     }
 
+    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations & generics
     void addAlternateForSeqPressed(ActionEvent e) {
         if (sectionList.size() > maxSections) {
             JOptionPane.showMessageDialog(addFrame, rbx
@@ -1143,13 +1144,11 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
         List<Section> possibles = new ArrayList<>();
         int[] possiblesDirection = new int[150];
         List<String> possibleNames = new ArrayList<>();
-        List<String> allSections = sectionManager.getSystemNameList();
-        for (int i = 0; i < allSections.size(); i++) {
+        for (Section s : sectionManager.getNamedBeanSet()) {
             Section mayBeSection = null;
-            String mayBeName = allSections.get(i);
+            String mayBeName = s.getSystemName();
             int mayBeDirection = 0;
-            Section s = sectionManager.getBySystemName(mayBeName);
-            if ((s != null) && (s != primarySection) && (s != beforeSection)
+            if ((s != primarySection) && (s != beforeSection)
                     && (s != afterSection) && (!inSectionList(s, altOldList))) {
                 if (beforeSection != null) {
                     if (forwardConnected(s, beforeSection, beforeSectionDirection)) {

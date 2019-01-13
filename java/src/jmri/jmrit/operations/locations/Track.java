@@ -2454,6 +2454,7 @@ public class Track {
      * @param e Consist XML element
      * @param location The Location loading this track.
      */
+    @SuppressWarnings("deprecation") // until there's a replacement for convertFromXmlComment()
     public Track(Element e, Location location) {
         _location = location;
         Attribute a;

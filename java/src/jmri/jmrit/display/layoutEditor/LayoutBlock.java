@@ -166,6 +166,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
      * process considers IB1 and IB01 to be the same name which results in a
      * silent failure.
      */
+    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations, generics
     protected void initializeLayoutBlock() {
         //get/create a Block object corresponding to this LayoutBlock
         block = null;   // assume failure (pessimist!)

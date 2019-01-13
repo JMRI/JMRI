@@ -300,8 +300,7 @@ public class BlockManager extends AbstractManager<Block> implements PropertyChan
     public List<Block> getBlocksOccupiedByRosterEntry(@Nonnull RosterEntry re) {
         List<Block> blockList = new ArrayList<>();
 
-        getSystemNameList().stream().forEach((sysName) -> {
-            Block b = getBySystemName(sysName);
+        getNamedBeanSet().stream().forEach((b) -> {
             Object obj;
             if (b!= null && (obj = b.getValue()) != null) {
                 if (obj instanceof RosterEntry && obj == re) {
