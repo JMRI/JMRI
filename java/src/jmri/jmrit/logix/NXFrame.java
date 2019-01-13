@@ -74,7 +74,7 @@ public class NXFrame extends WarrantRoute {
     private JPanel _switchPanel;
     private JPanel _trainPanel;
     
-    public static float INCRE_RATE = 1.08f;  // multiplier to increase throttle increments
+    public static float INCRE_RATE = 1.10f;  // multiplier to increase throttle increments
 
 
     protected NXFrame() {
@@ -93,6 +93,10 @@ public class NXFrame extends WarrantRoute {
     
     private void init() {
         if (log.isDebugEnabled()) log.debug("newInstance");
+        WarrantFrame f = WarrantTableAction.getWarrantFrame();
+        if (f != null) {    // only edit one warrant at a time.
+            WarrantTableAction.closeWarrantFrame(f);
+        }
         updatePreferences();
         makeMenus();
 
@@ -490,7 +494,7 @@ public class NXFrame extends WarrantRoute {
             if (log.isDebugEnabled()) {
                 log.debug("WarrantTableFrame run warrant. msg= " + msg + " Remove warrant " + warrant.getDisplayName());
             }
-            tableFrame.getModel().removeWarrant(warrant);
+            tableFrame.getModel().removeWarrant(warrant, false);
         }
 
         if (msg == null && mode == Warrant.MODE_RUN) {
@@ -678,16 +682,20 @@ public class NXFrame extends WarrantRoute {
     private float getPathLength(BlockOrder bo) {
         float len = bo.getPath().getLengthMm();
         if (len <= 0) {
-            String sLen = JOptionPane.showInputDialog(this, 
-                    Bundle.getMessage("zeroPathLength", bo.getPathName(), bo.getBlock().getDisplayName())
-                    + Bundle.getMessage("getPathLength", bo.getPathName(), bo.getBlock().getDisplayName()),
-                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
-            try {
-                len = NumberFormat.getNumberInstance().parse(sLen).floatValue();                    
-            } catch (java.text.ParseException  pe) {
-                len = -1.0f;
-            } catch (java.lang.NullPointerException  npe) {
-                len = -1.0f;
+            len = bo.getTempPathLen();
+            if ( len <= 0) {
+                String sLen = JOptionPane.showInputDialog(this, 
+                        Bundle.getMessage("zeroPathLength", bo.getPathName(), bo.getBlock().getDisplayName())
+                        + Bundle.getMessage("getPathLength", bo.getPathName(), bo.getBlock().getDisplayName()),
+                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                try {
+                    len = NumberFormat.getNumberInstance().parse(sLen).floatValue();                    
+                } catch (java.text.ParseException  pe) {
+                    len = -1.0f;
+                } catch (java.lang.NullPointerException  npe) {
+                    len = -1.0f;
+                }
+                bo.setTempPathLen(len);
             }
         }
        return len;
@@ -951,8 +959,10 @@ public class NXFrame extends WarrantRoute {
                 blockName = bo.getBlock().getDisplayName();
                 w.addThrottleCommand(new ThrottleSetting((int) noopTime, "NoOp", "Enter Block", blockName,
                         (hasProfileSpeeds ? _speedUtil.getTrackSpeed(curThrottle, isForward) : 0.0f)));
-                if (log.isDebugEnabled()) log.debug("{}. Enter block \"{}\" noopTime= {}, speedTime= {} blockLen= {}",
+                if (log.isDebugEnabled()) {
+                    log.debug("{}. Enter block \"{}\" noopTime= {}, speedTime= {} blockLen= {}",
                         cmdNum++, blockName, noopTime, speedTime, blockLen);
+                }
             }
         }
         if (log.isDebugEnabled()) {

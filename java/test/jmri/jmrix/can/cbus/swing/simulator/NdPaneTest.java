@@ -1,4 +1,4 @@
-package jmri.jmrit.display.configurexml;
+package jmri.jmrix.can.cbus.swing.simulator;
 
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -7,17 +7,16 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * LayoutTurnoutXmlTest.java
+ * Test simple functioning of NdPane
  *
- * Description: tests for the LayoutTurnoutXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Steve Young Copyright (C) 2019
  */
-public class LayoutTurnoutXmlTest {
+public class NdPaneTest  {
 
     @Test
-    public void testCtor(){
-      Assert.assertNotNull("LayoutTurnoutXml constructor",new LayoutTurnoutXml());
+    public void testCTor() {
+        NdPane t = new NdPane();
+        Assert.assertNotNull("exists",t);
     }
 
     // The minimal setup for log4J
@@ -30,5 +29,5 @@ public class LayoutTurnoutXmlTest {
     public void tearDown() {
         JUnitUtil.tearDown();
     }
-}
 
+}

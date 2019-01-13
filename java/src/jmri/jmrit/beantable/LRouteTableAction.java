@@ -109,6 +109,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
          * Override to filter out the LRoutes from the rest of Logix.
          */
         @Override
+        @SuppressWarnings("deprecation") // needs careful unwinding for Set operations
         protected synchronized void updateNameList() {
             // first, remove listeners from the individual objects
             if (sysNameList != null) {

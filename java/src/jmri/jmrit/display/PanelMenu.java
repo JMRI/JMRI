@@ -73,7 +73,7 @@ public class PanelMenu extends JMenu {
      * @deprecated since 4.9.3; use
      * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
      */
-    @Deprecated
+    @Deprecated // 4.9.3
     static public PanelMenu instance() {
         return InstanceManager.getDefault(PanelMenu.class);
     }
@@ -84,7 +84,7 @@ public class PanelMenu extends JMenu {
      * @deprecated since 4.9.3; use
      * {@link jmri.InstanceManager#reset(java.lang.Class)} instead
      */
-    @Deprecated
+    @Deprecated // 4.9.3
     static public void dispose() {
         // do nothing
     }

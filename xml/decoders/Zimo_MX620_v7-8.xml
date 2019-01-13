@@ -15,15 +15,16 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Mark Waters mark16w-jmri@yahoo.co.uk" version="1.02" lastUpdated="20090626"/>
   <version author="Nigel Cliffe ncliffe@btinternet.com and Mark Waters mark16w-jmri@yahoo.co.uk" version="1.01" lastUpdated="20090222"/>
-  <!-- 
+  <version author="Alain Le Marchand" version="1.01" lastUpdated="20190110"/>
+  <!--
      This decoder configuration file is based the Zimo_MX620_v6.xml V 1.01 file, dated 20080328.
      Re-instating CV 116 (bug fixed by Zimo in v7), Modified CV124, Extended CV 161,
-     Extended CVs 125-132 and CVs 181-2.  
+     Extended CVs 125-132 and CVs 181-2.
 
      Based on the "SW-Version 9.1 2008 10 18" English version of the ZIMO MX620
      decoder manual (with thanks to Art Luescher of ZIMO Agency of North America
      for the translations!).
-     
+
      This decoder XML is meant to be used with the "Comprehensive" programmer format.
      Continued the practice of using unrelated "item" names to place Zimo unique
      variables on the proper pane of the Comprehensive programmer.
@@ -31,6 +32,7 @@
   <!-- V 1 new file -->
   <!-- V 1.01 Fixed error in CV161 mask -->
   <!-- V 1.02 added CV's 129 & 130, corrected CV161 masks -->
+  <!-- V 1.03 corrected CV124 mask for bits 2,6 -->
   <decoder>
     <family name="Zimo MX620" mfg="Zimo">
       <model model="MX620 version 7-8" lowVersionID="7" highVersionID="8" maxInputVolts="12-22V" maxMotorCurrent="0.8A, peak=2A for 5 sec." maxTotalCurrent="0.8A" formFactor="N" numOuts="6" numFns="14">
@@ -1302,7 +1304,7 @@
           <enumChoice choice="F4">
             <choice>F4</choice>
           </enumChoice>
-          <enumChoice choice="F3">
+          <enumChoice choice="F3" value="16">
             <choice>F3</choice>
           </enumChoice>
         </enumVal>

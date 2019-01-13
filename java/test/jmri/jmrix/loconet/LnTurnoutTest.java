@@ -13,36 +13,9 @@ import org.slf4j.LoggerFactory;
 public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
 
     @Override
-    @Before
-    public void setUp() {
-       JUnitUtil.setUp();
-        // prepare an interface
-        lnis = new LocoNetInterfaceScaffold();
-
-        // outwait any pending delayed sends
-        try {
-            synchronized (this) {
-                this.wait(LnTurnout.METERINTERVAL + 25);
-            }
-        } catch (InterruptedException e) {
-        }
-
-        // create object under test
-        t = new LnTurnout("L", 21, lnis);
-    }
-
-    @After
-    public void tearDown(){
-       t.dispose();
-       JUnitUtil.tearDown();
-    }
-
-    @Override
     public int numListeners() {
         return lnis.numListeners();
     }
-
-    LocoNetInterfaceScaffold lnis;
 
     /**
      * Check that last two messages correspond to closed/on, then closed/off.
@@ -280,6 +253,36 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
         Assert.assertEquals(lnis.outbound.elementAt(lnis.outbound.size() - 1).toString(),
                 "B0 14 10 00");  // THROWN/ON loconet message
         Assert.assertTrue(t.getCommandedState() == jmri.Turnout.THROWN);
+    }
+
+    LocoNetInterfaceScaffold lnis;
+    LocoNetSystemConnectionMemo memo;
+
+    @Override
+    @Before
+    public void setUp() {
+        JUnitUtil.setUp();
+        // prepare an interface
+        memo = new LocoNetSystemConnectionMemo("L", "LocoNet");
+        lnis = new LocoNetInterfaceScaffold(memo);
+        memo.setLnTrafficController(lnis);
+
+        // outwait any pending delayed sends
+        try {
+            synchronized (this) {
+                this.wait(LnTurnout.METERINTERVAL + 25);
+            }
+        } catch (InterruptedException e) {
+        }
+
+        // create object under test
+        t = new LnTurnout("L", 21, lnis);
+    }
+
+    @After
+    public void tearDown(){
+        t.dispose();
+        JUnitUtil.tearDown();
     }
 
     private final static Logger log = LoggerFactory.getLogger(LnTurnoutTest.class);

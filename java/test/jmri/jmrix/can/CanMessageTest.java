@@ -41,6 +41,7 @@ public class CanMessageTest extends CanMRCommonTestBase {
     }
 
     @Test
+    @SuppressWarnings("unlikely-arg-type") // Both CanReply and CanMessage are CanFrame with custom equals
     public void testEqualsReply() {
         CanMessage m1 = new CanMessage(0, 0x12);
         m1.setExtended(true);
@@ -61,6 +62,7 @@ public class CanMessageTest extends CanMRCommonTestBase {
     }
 
     @Test
+    @SuppressWarnings("unlikely-arg-type") // Both CanReply and CanMessage are CanFrame with custom equals
     public void testEqualsData() {
         CanMessage m1 = new CanMessage(0x12);
         m1.setNumDataElements(2);
@@ -76,19 +78,39 @@ public class CanMessageTest extends CanMRCommonTestBase {
         m3.setNumDataElements(2);
         m3.setElement(0, 0x01);
         m3.setElement(1, 0x82);
+        
+        CanMessage m4 = new CanMessage(0x12);
+        m4.setNumDataElements(1);
+        m4.setElement(0, 0x07);        
 
         Assert.assertTrue("equals self", m1.equals(m1));
         Assert.assertTrue("equals copy", m1.equals(new CanMessage(m1)));
         Assert.assertTrue("equals same", m1.equals(m2));
         Assert.assertTrue("not equals diff Ext", !m1.equals(m3));
+        Assert.assertTrue("not equals null", !m1.equals(null));
+        Assert.assertTrue("not equals string value", !m1.equals("[12] 81 12"));
+        Assert.assertTrue("not equals diff ele length", !m1.equals(m4));
+    }
+
+    @Test
+    @SuppressWarnings("unlikely-arg-type") // Both CanReply and CanMessage are CanFrame with custom equals
+    public void testMessageFromReply() {
+        CanReply r = new CanReply(0x55);
+        r.setNumDataElements(2);
+        r.setHeader(0x55);
+        r.setElement(0, 0x01);
+        r.setElement(1, 0x82);
+        
+        CanMessage m = new CanMessage(r);
+        Assert.assertTrue("Header 0x55", m.getHeader() == 0x55);
+        Assert.assertTrue("2 Elements", m.getNumDataElements() == 2);
+        Assert.assertTrue("equals same", m.equals(r));
     }
 
     @Test
     public void testHeaderAccessors() {
-        CanMessage m = new CanMessage(0x555);
-
-        Assert.assertTrue("Header 0x555", m.getHeader() == 0x555);
-
+        CanMessage m = new CanMessage(0x55);
+        Assert.assertTrue("Header 0x55", m.getHeader() == 0x55);
     }
 
     @Test

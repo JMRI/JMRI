@@ -895,7 +895,9 @@
                 $("#no-websockets").addClass("show").removeClass("hidden");
             }
             $(window).unload(function() {
-                jmri.socket.close();
+                if (jmri.socket != null) { 
+                    jmri.socket.close();
+                }
                 jmri.socket = null;
                 jmri = null;
             });

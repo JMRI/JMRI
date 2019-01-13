@@ -59,6 +59,7 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
     JList<String> _sensorGroupList;
 
     @Override
+    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations
     public void initComponents() {
         addHelpMenu("package.jmri.jmrit.sensorgroup.SensorGroupFrame", true);
 
@@ -254,12 +255,11 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
         _nameField.setText(group);
         // Look for Sensor group in Route table
         RouteManager rm = InstanceManager.getDefault(jmri.RouteManager.class);
-        List<String> l = rm.getSystemNameList();
         String prefix = (namePrefix + group + nameDivider).toUpperCase();
         boolean isRoute = false;
         int setRow = 0;
-        for (int i = 0; i < l.size(); i++) {
-            String name = l.get(i);
+        for (Route r : rm.getNamedBeanSet()) {
+            String name = r.getSystemName();
             if (name.startsWith(prefix)) {
                 isRoute = true;
                 String sensor = name.substring(prefix.length());
@@ -347,13 +347,10 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
 
         // remove the old routes
         RouteManager rm = InstanceManager.getDefault(jmri.RouteManager.class);
-        List<String> l = rm.getSystemNameList();
-
-        for (int i = 0; i < l.size(); i++) {
-            String name = l.get(i);
+        for (Route r : rm.getNamedBeanSet()) {
+            String name = r.getSystemName();
             if (name.startsWith(prefix)) {
                 // OK, kill this one
-                Route r = rm.getBySystemName(l.get(i));
                 r.deActivateRoute();
                 rm.deleteRoute(r);
             }

@@ -4,6 +4,7 @@
 # This file may be needed only if jython.exec=true in python.properties
 #
 # These should be kept consistent with those in jmri.script.JmriScriptEngineManager
+# and help/en/html/tools/scripting/Start.shtml
 # 
 
 # Default imports
@@ -11,21 +12,21 @@ import java
 import jmri
 
 # JMRI default managers
-turnouts     = jmri.InstanceManager.getDefault(jmri.TurnoutManager)
 sensors      = jmri.InstanceManager.getDefault(jmri.SensorManager)
+turnouts     = jmri.InstanceManager.getDefault(jmri.TurnoutManager)
+lights       = jmri.InstanceManager.getDefault(jmri.LightManager)
 signals      = jmri.InstanceManager.getDefault(jmri.SignalHeadManager)
 masts        = jmri.InstanceManager.getDefault(jmri.SignalMastManager)
-lights       = jmri.InstanceManager.getDefault(jmri.LightManager)
-dcc          = jmri.InstanceManager.getDefault(jmri.CommandStation)
-reporters    = jmri.InstanceManager.getDefault(jmri.ReporterManager)
-memories     = jmri.InstanceManager.getDefault(jmri.MemoryManager)
 routes       = jmri.InstanceManager.getDefault(jmri.RouteManager)
 blocks       = jmri.InstanceManager.getDefault(jmri.BlockManager)
+reporters    = jmri.InstanceManager.getDefault(jmri.ReporterManager)
+memories     = jmri.InstanceManager.getDefault(jmri.MemoryManager)
 powermanager = jmri.InstanceManager.getDefault(jmri.PowerManager)
 addressedProgrammers = jmri.InstanceManager.getDefault(jmri.AddressedProgrammerManager)
 globalProgrammers = jmri.InstanceManager.getDefault(jmri.GlobalProgrammerManager)
-shutdown     = jmri.InstanceManager.getDefault(jmri.ShutDownManager)
+dcc          = jmri.InstanceManager.getDefault(jmri.CommandStation)
 audio        = jmri.InstanceManager.getDefault(jmri.AudioManager)
+shutdown     = jmri.InstanceManager.getDefault(jmri.ShutDownManager)
 layoutblocks = jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager)
 warrants     = jmri.InstanceManager.getDefault(jmri.jmrit.logix.WarrantManager)
 

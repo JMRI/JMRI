@@ -1,6 +1,7 @@
 package jmri.jmrix.loconet;
 
 import java.util.ResourceBundle;
+import javax.annotation.Nonnull;
 import jmri.AddressedProgrammerManager;
 import jmri.ClockControl;
 import jmri.CommandStation;
@@ -33,7 +34,7 @@ import org.slf4j.LoggerFactory;
 public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
 
     /**
-     * Must manually register() after construction is complete
+     * Must manually register() after construction is complete.
      */
     public LocoNetSystemConnectionMemo(LnTrafficController lt, SlotManager sm) {
         super("L", "LocoNet"); // NOI18N
@@ -49,10 +50,14 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
     }
 
     /**
-     * Must manually register() after construction is complete
+     * Must manually register() after construction is complete.
      */
     public LocoNetSystemConnectionMemo() {
-        super("L", "LocoNet"); // NOI18N
+        this("L", "LocoNet"); // NOI18N
+    }
+
+    public LocoNetSystemConnectionMemo(@Nonnull String prefix, @Nonnull String name) {
+        super(prefix, name); // NOI18N
 
         // create and register the ComponentFactory for the GUI
         InstanceManager.store(cf = new LnComponentFactory(this),
@@ -71,11 +76,12 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
 
     ComponentFactory cf = null;
     private LnTrafficController lt;
+    protected LocoNetThrottledTransmitter tm;
     private SlotManager sm;
     private LnMessageManager lnm = null;
 
     /**
-     * Provides access to the SlotManager for this particular connection.
+     * Provide access to the SlotManager for this particular connection.
      *
      * @return the slot manager or null if no valid slot manager is available
      */
@@ -137,7 +143,7 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
      * @param mTurnoutExtraSpace Is the user configuration set for extra time
      *                           between turnout operations?
      * @param mTranspondingAvailable    Is the layout configured to provide
-     *                                  transopnding reports
+     *                                  transponding reports
      */
     public void configureCommandStation(LnCommandStationType type, boolean mTurnoutNoRetry,
                                             boolean mTurnoutExtraSpace, boolean mTranspondingAvailable) {
@@ -261,8 +267,6 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
         }
         return super.get(T);
     }
-
-    protected LocoNetThrottledTransmitter tm;
 
     /**
      * Configure the common managers for LocoNet connections. This puts the
@@ -410,25 +414,28 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
 
     @Override
     public void dispose() {
-        lt = null;
-        sm = null;
         InstanceManager.deregister(this, LocoNetSystemConnectionMemo.class);
         if (cf != null) {
             InstanceManager.deregister(cf, ComponentFactory.class);
         }
         if (powerManager != null) {
+            powerManager.dispose();
             InstanceManager.deregister(powerManager, LnPowerManager.class);
         }
         if (turnoutManager != null) {
+            turnoutManager.dispose();
             InstanceManager.deregister(turnoutManager, LnTurnoutManager.class);
         }
         if (lightManager != null) {
+            lightManager.dispose();
             InstanceManager.deregister(lightManager, LnLightManager.class);
         }
         if (sensorManager != null) {
+            sensorManager.dispose();
             InstanceManager.deregister(sensorManager, LnSensorManager.class);
         }
         if (reporterManager != null) {
+            reporterManager.dispose();
             InstanceManager.deregister(reporterManager, LnReporterManager.class);
         }
         if (throttleManager != null) {
@@ -446,6 +453,9 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
         }
         if (sm != null){
             sm.dispose();
+        }
+        if (lt != null){
+            lt.dispose();
         }
         super.dispose();
     }

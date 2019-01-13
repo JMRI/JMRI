@@ -477,17 +477,17 @@ public interface Manager<E extends NamedBean> {
      * that are being removed during the JMRI 4.11 cycle.
      *
      * @param prefix the system prefix
-     * @deprecated to make sure we remember to remove this post-4.11
+     * @deprecated 4.11.2 to make sure we remember to remove this post-migration
      * @since 4.11.2
      * @return true if a legacy prefix, hence non-parsable
      */
-    @Deprecated
+    @Deprecated // 4.11.2 to make sure we remember to remove this post-migration
     @CheckReturnValue
     public static boolean isLegacySystemPrefix(@Nonnull String prefix) {
         return LEGACY_PREFIXES.contains(prefix);
     }
 
-    @Deprecated
+    @Deprecated // 4.11.2 to make sure we remember to remove this post-migration
     static final TreeSet<String> LEGACY_PREFIXES = new TreeSet<>(Arrays.asList(
             new String[]{
                 "DX", "DCCPP", "DP", "MR", "MC", "PI", "TM"
@@ -500,11 +500,11 @@ public interface Manager<E extends NamedBean> {
      * This is a slightly-expensive operation, and should be used sparingly
      *
      * @param prefix the system prefix
-     * @deprecated to make sure we remember to remove this post-4.11
+     * @deprecated // 4.11.2 to make sure we remember to remove this post-migration
      * @since 4.11.2
      * @return length of a legacy prefix, if present, otherwise -1
      */
-    @Deprecated
+    @Deprecated // 4.11.2 to make sure we remember to remove this post-migration
     @CheckReturnValue
     public static int startsWithLegacySystemPrefix(@Nonnull String prefix) {
         // implementation replies on legacy suffix length properties to gain a bit of speed...

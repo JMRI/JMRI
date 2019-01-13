@@ -1,4 +1,4 @@
-package jmri.jmrit.display.configurexml;
+package jmri.jmrix.roco.z21.configurexml;
 
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -7,17 +7,17 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * LayoutBlockManagerXmlTest.java
+ * Z21SensorManagerXml.java
  *
- * Description: tests for the LayoutBlockManagerXml class
+ * Description: tests for the Z21SensorManagerXml class
  *
  * @author   Paul Bender  Copyright (C) 2016
  */
-public class LayoutBlockManagerXmlTest {
+public class Z21SensorManagerXmlTest {
 
     @Test
     public void testCtor(){
-      Assert.assertNotNull("LayoutBlockManagerXml constructor",new LayoutBlockManagerXml());
+      Assert.assertNotNull("Z21SensorManagerXml constructor",new Z21SensorManagerXml());
     }
 
     // The minimal setup for log4J

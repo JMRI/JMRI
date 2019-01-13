@@ -34,6 +34,7 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
      * @return Element containing the complete info
      */
     @Override
+    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations
     public Element store(Object o) {
 //    	long numCond = 0;
 //    	long numStateVars = 0;

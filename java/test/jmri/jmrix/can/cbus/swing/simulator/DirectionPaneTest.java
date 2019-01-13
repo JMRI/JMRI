@@ -1,4 +1,4 @@
-package jmri.jmrit.display.configurexml;
+package jmri.jmrix.can.cbus.swing.simulator;
 
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -7,17 +7,16 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * TrackSegmentXmlTest.java
+ * Test simple functioning of CbusSlotMonitorPane.
  *
- * Description: tests for the TrackSegmentXml class
- *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
-public class TrackSegmentXmlTest {
+public class DirectionPaneTest  {
 
     @Test
-    public void testCtor(){
-      Assert.assertNotNull("TrackSegmentXml constructor",new TrackSegmentXml());
+    public void testCTor() {
+        DirectionPane t = new DirectionPane();
+        Assert.assertNotNull("exists",t);
     }
 
     // The minimal setup for log4J
@@ -32,4 +31,3 @@ public class TrackSegmentXmlTest {
     }
 
 }
-

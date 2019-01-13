@@ -3,7 +3,6 @@ package jmri.jmrix.can.cbus.swing.console;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Desktop;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
@@ -18,8 +17,6 @@ import java.util.Date;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
@@ -29,12 +26,10 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultHighlighter;
-import javax.swing.text.Element;
 import javax.swing.text.Highlighter;
 import jmri.jmrix.AbstractMessage;
 import jmri.jmrix.can.CanListener;
@@ -43,13 +38,13 @@ import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.swing.configtool.ConfigToolPane;
 import jmri.jmrix.can.cbus.swing.CbusFilterFrame;
-import jmri.jmrix.can.swing.CanNamedPaneAction;
 import jmri.jmrix.can.TrafficController;
 import jmri.jmrix.can.cbus.CbusConstants;
 import jmri.jmrix.can.cbus.CbusMessage;
 import jmri.jmrix.can.cbus.CbusOpCodes;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
+import jmri.util.swing.TextAreaFIFO;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -218,6 +213,8 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
      */
     @Override
     public void dispose() {
+        monTextPaneCan.dispose();
+        monTextPaneCbus.dispose();
         if (tc != null) {
             tc.removeCanListener(this);
         }
@@ -1470,45 +1467,6 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
             super(color);
         }
     }
-    
-
-    /**
-     * Keeps the message log windows to a reasonable length
-     * https://community.oracle.com/thread/1373400
-     */
-    protected static class TextAreaFIFO extends JTextArea implements DocumentListener {
-        private int maxLines;
-    
-        public TextAreaFIFO(int lines) {
-            maxLines = lines;
-            getDocument().addDocumentListener( this );
-        }
-    
-        public void insertUpdate(DocumentEvent e) {
-            javax.swing.SwingUtilities.invokeLater( new Runnable() {
-                public void run() {
-                    removeLines();
-                }
-            });
-        }
-        public void removeUpdate(DocumentEvent e) {}
-        public void changedUpdate(DocumentEvent e) {}
-        public void removeLines()
-        {
-            Element root = getDocument().getDefaultRootElement();
-            while (root.getElementCount() > maxLines) {
-                Element firstLine = root.getElement(0);
-                try {
-                    getDocument().remove(0, firstLine.getEndOffset());
-                } catch(BadLocationException ble) {
-                    System.out.println(ble);
-                }
-            }
-        setCaretPosition( getDocument().getLength() );
-        }
-    }
-
-
     
     /**
      * Nested class to create one of these using old-style defaults.

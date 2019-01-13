@@ -13,10 +13,10 @@ public class Z21MultiMeter extends jmri.implementation.AbstractMultiMeter implem
 
     private Z21TrafficController tc = null;
     private Z21SystemConnectionMemo _memo = null;
+    private boolean enabled = false;  // disable by default; prevent polling when not being used.
 
     public Z21MultiMeter(Z21SystemConnectionMemo memo) {
-        super(0); // no timer, hardware automatically sends 
-                  // updates when changes detected.
+        super(-1); // no timer, since we already poll for this information. 
         _memo = memo;
         tc = _memo.getTrafficController();
 
@@ -35,10 +35,12 @@ public class Z21MultiMeter extends jmri.implementation.AbstractMultiMeter implem
 
     @Override 
     public void enable(){
+        enabled = true;
     }
 
     @Override 
     public void disable(){
+        enabled = false;
     }
 
     @Override
@@ -49,7 +51,7 @@ public class Z21MultiMeter extends jmri.implementation.AbstractMultiMeter implem
     public void reply(Z21Reply r) {
         log.debug("Z21MultiMeter received reply: {}", r.toString());
         if (r.isSystemDataChangedReply()) {
-            setCurrent(r.getSystemDataMainCurrent() * 1.0f);
+            setCurrent(r.getSystemDataMainCurrent() / 3000.0f);
             setVoltage(r.getSystemDataVCCVoltage() * 1.0f);
         }
 
@@ -57,7 +59,9 @@ public class Z21MultiMeter extends jmri.implementation.AbstractMultiMeter implem
 
     @Override
     protected void requestUpdateFromLayout() {
-        tc.sendz21Message(Z21Message.getLanSystemStateDataChangedRequestMessage(), this);
+        if( enabled ) {
+            tc.sendz21Message(Z21Message.getLanSystemStateDataChangedRequestMessage(), this);
+        }
     }
 
     @Override

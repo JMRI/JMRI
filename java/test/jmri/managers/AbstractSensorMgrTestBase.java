@@ -103,7 +103,7 @@ public abstract class AbstractSensorMgrTestBase extends AbstractManagerTestBase<
         Sensor t = l.provideSensor("" + getNumToTest1());
         // check
         Assert.assertTrue("real object returned ", t != null);
-        Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
+        Assert.assertEquals("system name correct ", t,l.getBySystemName(getSystemName(getNumToTest1())));
     }
 
     @Test(expected=IllegalArgumentException.class)

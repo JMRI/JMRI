@@ -112,6 +112,8 @@ public class CbusFilter {
     private int mainfilter (CanFrame test) {
         // log.debug("mainfilter canFrame {}",test);
         int opc = test.getElement(0);
+        int nodeNum = (test.getElement(1) * 256 + test.getElement(2));
+        int eventNum = (test.getElement(3) * 256 + test.getElement(4));
         // log.debug("test opc 0 is {}",opc);
         
         switch (opc) {
@@ -143,8 +145,7 @@ public class CbusFilter {
                 if ( filters.get(CFCSC) ){ return CFCSC; } else { incrementCount(CFCSC); }
                 break;
             case CbusConstants.CBUS_STAT:
-                if ( checknode((test.getElement(1) * 256 + test.getElement(2))) > -1 ) {
-                    return checknode((test.getElement(1) * 256 + test.getElement(2))); }
+                if ( checknode(nodeNum) > -1 ) { return checknode(nodeNum); }
                 if ( filters.get(CFCS) ){ return CFCS; } else { incrementCount(CFCS); }
                 if ( filters.get(CFCSC) ){ return CFCSC; } else { incrementCount(CFCSC); }
                 break;
@@ -165,8 +166,7 @@ public class CbusFilter {
             case CbusConstants.CBUS_CANID: 
             case CbusConstants.CBUS_PARAN: 
             case CbusConstants.CBUS_PNN:
-                if ( checknode((test.getElement(1) * 256 + test.getElement(2))) > -1 ) {
-                    return checknode((test.getElement(1) * 256 + test.getElement(2))); }
+                if ( checknode(nodeNum) > -1 ) { return checknode(nodeNum); }
                 if ( filters.get(CFNDCONFIG) ){ return CFNDCONFIG; } else { incrementCount(CFNDCONFIG); }
                 if ( filters.get(CFNDSETUP) ){ return CFNDSETUP; } else { incrementCount(CFNDSETUP); }
                 break;
@@ -178,8 +178,7 @@ public class CbusFilter {
             case CbusConstants.CBUS_RQNN:
             case CbusConstants.CBUS_NNREL: 
             case CbusConstants.CBUS_NNACK:
-                if ( checknode((test.getElement(1) * 256 + test.getElement(2))) > -1 ) {
-                    return checknode((test.getElement(1) * 256 + test.getElement(2))); }
+                if ( checknode(nodeNum) > -1 ) { return checknode(nodeNum); }
                 if ( filters.get(CFNDCONFIG) ){ return CFNDCONFIG; } else { incrementCount(CFNDCONFIG); }
                 if ( filters.get(CFNDNUM) ){ return CFNDNUM; } else { incrementCount(CFNDNUM); }
                 break;
@@ -226,28 +225,24 @@ public class CbusFilter {
             case CbusConstants.CBUS_EVANS:
             case CbusConstants.CBUS_ENRSP:
             case CbusConstants.CBUS_EVLRNI:
-                if ( checknode((test.getElement(1) * 256 + test.getElement(2))) > -1 ) {
-                    return checknode((test.getElement(1) * 256 + test.getElement(2))); }
+                if ( checknode(nodeNum) > -1 ) { return checknode(nodeNum); }
                 if ( filters.get(CFNDCONFIG) ){ return CFNDCONFIG; } else { incrementCount(CFNDCONFIG); }
                 if ( filters.get(CFNDEV) ){ return CFNDEV; } else { incrementCount(CFNDEV); }
                 break;
             case CbusConstants.CBUS_RQDAT:
-                if ( checknode((test.getElement(1) * 256 + test.getElement(2))) > -1 ) {
-                    return checknode((test.getElement(1) * 256 + test.getElement(2))); }
+                if ( checknode(nodeNum) > -1 ) { return checknode(nodeNum); }
                 if ( filters.get(CFDATA) ){ return CFDATA; } else { incrementCount(CFDATA); }
                 if ( filters.get(CFRQDAT) ){ return CFRQDAT; } else { incrementCount(CFRQDAT); }
                 break;
             case CbusConstants.CBUS_RQDDS:
-                if ( checkeventDat((test.getElement(3) * 256 + test.getElement(4))) > -1 ) {
-                    return checkeventDat((test.getElement(3) * 256 + test.getElement(4))); }
+                if ( checkeventDat(eventNum) > -1 ) { return checkeventDat(eventNum); }
                 if ( filters.get(CFDATA) ){ return CFDATA; } else { incrementCount(CFDATA); }
                 if ( filters.get(CFRQDDS) ){ return CFRQDDS; } else { incrementCount(CFRQDDS); }
                 break;
             case CbusConstants.CBUS_NVRD:
             case CbusConstants.CBUS_NVSET:
             case CbusConstants.CBUS_NVANS:
-                if ( checknode((test.getElement(1) * 256 + test.getElement(2))) > -1 ) {
-                    return checknode((test.getElement(1) * 256 + test.getElement(2))); }
+                if ( checknode(nodeNum) > -1 ) { return checknode(nodeNum); }
                 if ( filters.get(CFNDCONFIG) ){ return CFNDCONFIG; } else { incrementCount(CFNDCONFIG); }
                 if ( filters.get(CFNDVAR) ){ return CFNDVAR; } else { incrementCount(CFNDVAR); }
                 break;
@@ -261,180 +256,144 @@ public class CbusFilter {
                 if ( filters.get(CFCSPROG) ){ return CFCSPROG; } else { incrementCount(CFCSPROG); }
                 break;
             case CbusConstants.CBUS_ACON:
-                if ( checkevent((test.getElement(3) * 256 + test.getElement(4))) > -1 ) {
-                    return checkevent((test.getElement(3) * 256 + test.getElement(4))); }
+                if ( checkevent(eventNum) > -1 ) { return checkevent(eventNum); }
                 if ( filters.get(CFON) ){ return CFON; } else { incrementCount(CFON); }
                 if ( filters.get(CFLONG) ){ return CFLONG; } else { incrementCount(CFLONG); }
                 if ( filters.get(CFSTD) ){ return CFSTD; } else { incrementCount(CFSTD); }
                 if ( filters.get(CFED0) ){ return CFED0; } else { incrementCount(CFED0); }
-                if ( checknode((test.getElement(1) * 256 + test.getElement(2))) > -1 ) {
-                    return checknode((test.getElement(1) * 256 + test.getElement(2))); }
+                if ( checknode(nodeNum) > -1 ) { return checknode(nodeNum); }
                 break;
             case CbusConstants.CBUS_ACOF:
-                if ( checkevent((test.getElement(3) * 256 + test.getElement(4))) > -1 ) {
-                    return checkevent((test.getElement(3) * 256 + test.getElement(4))); }
+                if ( checkevent(eventNum) > -1 ) { return checkevent(eventNum); }
                 if ( filters.get(CFOF) ){ return CFOF; } else { incrementCount(CFOF); }
                 if ( filters.get(CFLONG) ){ return CFLONG; } else { incrementCount(CFLONG); }
                 if ( filters.get(CFSTD) ){ return CFSTD; } else { incrementCount(CFSTD); }
                 if ( filters.get(CFED0) ){ return CFED0; } else { incrementCount(CFED0); }
-                if ( checknode((test.getElement(1) * 256 + test.getElement(2))) > -1 ) {
-                    return checknode((test.getElement(1) * 256 + test.getElement(2))); }
+                if ( checknode(nodeNum) > -1 ) { return checknode(nodeNum); }
                 break;
             case CbusConstants.CBUS_AREQ:
-                if ( checkevent((test.getElement(3) * 256 + test.getElement(4))) > -1 ) {
-                    return checkevent((test.getElement(3) * 256 + test.getElement(4))); }
+                if ( checkevent(eventNum) > -1 ) { return checkevent(eventNum); }
                 if ( filters.get(CFLONG) ){ return CFLONG; } else { incrementCount(CFLONG); }
                 if ( filters.get(CFREQUEST) ){ return CFREQUEST; } else { incrementCount(CFREQUEST); }
-                if ( checknode((test.getElement(1) * 256 + test.getElement(2))) > -1 ) {
-                    return checknode((test.getElement(1) * 256 + test.getElement(2))); }
+                if ( checknode(nodeNum) > -1 ) { return checknode(nodeNum); }
                 break;
             case CbusConstants.CBUS_ARON:
-                if ( checkevent((test.getElement(3) * 256 + test.getElement(4))) > -1 ) {
-                    return checkevent((test.getElement(3) * 256 + test.getElement(4))); }
+                if ( checkevent(eventNum) > -1 ) { return checkevent(eventNum); }
                 if ( filters.get(CFON) ){ return CFON; } else { incrementCount(CFON); }
                 if ( filters.get(CFLONG) ){ return CFLONG; } else { incrementCount(CFLONG); }
                 if ( filters.get(CFSTD) ){ return CFSTD; } else { incrementCount(CFSTD); }
                 if ( filters.get(CFRESPONSE) ){ return CFRESPONSE; } else { incrementCount(CFRESPONSE); }
-                if ( checknode((test.getElement(1) * 256 + test.getElement(2))) > -1 ) {
-                    return checknode((test.getElement(1) * 256 + test.getElement(2))); }
+                if ( checknode(nodeNum) > -1 ) { return checknode(nodeNum); }
                 break;
             case CbusConstants.CBUS_AROF:
-                if ( checkevent((test.getElement(3) * 256 + test.getElement(4))) > -1 ) {
-                    return checkevent((test.getElement(3) * 256 + test.getElement(4))); }
+                if ( checkevent(eventNum) > -1 ) { return checkevent(eventNum); }
                 if ( filters.get(CFOF) ){ return CFOF; } else { incrementCount(CFOF); }
                 if ( filters.get(CFLONG) ){ return CFLONG; } else { incrementCount(CFLONG); }
                 if ( filters.get(CFSTD) ){ return CFSTD; } else { incrementCount(CFSTD); }
                 if ( filters.get(CFRESPONSE) ){ return CFRESPONSE; } else { incrementCount(CFRESPONSE); }
-                if ( checknode((test.getElement(1) * 256 + test.getElement(2))) > -1 ) {
-                    return checknode((test.getElement(1) * 256 + test.getElement(2))); }
+                if ( checknode(nodeNum) > -1 ) { return checknode(nodeNum); }
                 break;
             case CbusConstants.CBUS_ASON:
-                if ( checkevent((test.getElement(3) * 256 + test.getElement(4))) > -1 ) {
-                    return checkevent((test.getElement(3) * 256 + test.getElement(4))); }
+                if ( checkevent(eventNum) > -1 ) { return checkevent(eventNum); }
                 if ( filters.get(CFON) ){ return CFON; } else { incrementCount(CFON); }
                 if ( filters.get(CFSHORT) ){ return CFSHORT; } else { incrementCount(CFSHORT); }
                 if ( filters.get(CFSTD) ){ return CFSTD; } else { incrementCount(CFSTD); }
                 if ( filters.get(CFED0) ){ return CFED0; } else { incrementCount(CFED0); }
-                if ( checknode((test.getElement(1) * 256 + test.getElement(2))) > -1 ) {
-                    return checknode((test.getElement(1) * 256 + test.getElement(2))); }
+                if ( checknode(nodeNum) > -1 ) { return checknode(nodeNum); }
                 break;
             case CbusConstants.CBUS_ASOF:
-                if ( checkevent((test.getElement(3) * 256 + test.getElement(4))) > -1 ) {
-                    return checkevent((test.getElement(3) * 256 + test.getElement(4))); }
+                if ( checkevent(eventNum) > -1 ) { return checkevent(eventNum); }
                 if ( filters.get(CFOF) ){ return CFOF; } else { incrementCount(CFOF); }
                 if ( filters.get(CFSHORT) ){ return CFSHORT; } else { incrementCount(CFSHORT); }
                 if ( filters.get(CFSTD) ){ return CFSTD; } else { incrementCount(CFSTD); }
                 if ( filters.get(CFED0) ){ return CFED0; } else { incrementCount(CFED0); }
-                if ( checknode((test.getElement(1) * 256 + test.getElement(2))) > -1 ) {
-                    return checknode((test.getElement(1) * 256 + test.getElement(2))); }
+                if ( checknode(nodeNum) > -1 ) { return checknode(nodeNum); }
                 break;
             case CbusConstants.CBUS_ASRQ:
-                if ( checkevent((test.getElement(3) * 256 + test.getElement(4))) > -1 ) {
-                    return checkevent((test.getElement(3) * 256 + test.getElement(4))); }
+                if ( checkevent(eventNum) > -1 ) { return checkevent(eventNum); }
                 if ( filters.get(CFSHORT) ){ return CFSHORT; } else { incrementCount(CFSHORT); }
                 if ( filters.get(CFREQUEST) ){ return CFREQUEST; } else { incrementCount(CFREQUEST); }
-                if ( checknode((test.getElement(1) * 256 + test.getElement(2))) > -1 ) {
-                    return checknode((test.getElement(1) * 256 + test.getElement(2))); }
+                if ( checknode(nodeNum) > -1 ) { return checknode(nodeNum); }
                 break;
             case CbusConstants.CBUS_ARSON:
-                if ( checkevent((test.getElement(3) * 256 + test.getElement(4))) > -1 ) {
-                    return checkevent((test.getElement(3) * 256 + test.getElement(4))); }
+                if ( checkevent(eventNum) > -1 ) { return checkevent(eventNum); }
                 if ( filters.get(CFON) ){ return CFON; } else { incrementCount(CFON); }
                 if ( filters.get(CFSHORT) ){ return CFSHORT; } else { incrementCount(CFSHORT); }
                 if ( filters.get(CFSTD) ){ return CFSTD; } else { incrementCount(CFSTD); }
                 if ( filters.get(CFRESPONSE) ){ return CFRESPONSE; } else { incrementCount(CFRESPONSE); }
-                if ( checknode((test.getElement(1) * 256 + test.getElement(2))) > -1 ) {
-                    return checknode((test.getElement(1) * 256 + test.getElement(2))); }
+                if ( checknode(nodeNum) > -1 ) { return checknode(nodeNum); }
                 break;
             case CbusConstants.CBUS_ARSOF:
-                if ( checkevent((test.getElement(3) * 256 + test.getElement(4))) > -1 ) {
-                    return checkevent((test.getElement(3) * 256 + test.getElement(4))); }
+                if ( checkevent(eventNum) > -1 ) { return checkevent(eventNum); }
                 if ( filters.get(CFOF) ){ return CFOF; } else { incrementCount(CFOF); }
                 if ( filters.get(CFSHORT) ){ return CFSHORT; } else { incrementCount(CFSHORT); }
                 if ( filters.get(CFSTD) ){ return CFSTD; } else { incrementCount(CFSTD); }
                 if ( filters.get(CFRESPONSE) ){ return CFRESPONSE; } else { incrementCount(CFRESPONSE); }
-                if ( checknode((test.getElement(1) * 256 + test.getElement(2))) > -1 ) {
-                    return checknode((test.getElement(1) * 256 + test.getElement(2))); }
+                if ( checknode(nodeNum) > -1 ) { return checknode(nodeNum); }
                 break;
             case CbusConstants.CBUS_ACON1:
-                if ( checkevent((test.getElement(3) * 256 + test.getElement(4))) > -1 ) {
-                    return checkevent((test.getElement(3) * 256 + test.getElement(4))); }
+                if ( checkevent(eventNum) > -1 ) { return checkevent(eventNum); }
                 if ( filters.get(CFON) ){ return CFON; } else { incrementCount(CFON); }
                 if ( filters.get(CFLONG) ){ return CFLONG; } else { incrementCount(CFLONG); }
                 if ( filters.get(CFSTD) ){ return CFSTD; } else { incrementCount(CFSTD); }
                 if ( filters.get(CFED1) ){ return CFED1; } else { incrementCount(CFED1); }
-                if ( checknode((test.getElement(1) * 256 + test.getElement(2))) > -1 ) {
-                    return checknode((test.getElement(1) * 256 + test.getElement(2))); }
+                if ( checknode(nodeNum) > -1 ) { return checknode(nodeNum); }
                 break;
             case CbusConstants.CBUS_ACOF1:
-                if ( checkevent((test.getElement(3) * 256 + test.getElement(4))) > -1 ) {
-                    return checkevent((test.getElement(3) * 256 + test.getElement(4))); }
+                if ( checkevent(eventNum) > -1 ) { return checkevent(eventNum); }
                 if ( filters.get(CFOF) ){ return CFOF; } else { incrementCount(CFOF); }
                 if ( filters.get(CFLONG) ){ return CFLONG; } else { incrementCount(CFLONG); }
                 if ( filters.get(CFSTD) ){ return CFSTD; } else { incrementCount(CFSTD); }
                 if ( filters.get(CFED1) ){ return CFED1; } else { incrementCount(CFED1); }
-                if ( checknode((test.getElement(1) * 256 + test.getElement(2))) > -1 ) {
-                    return checknode((test.getElement(1) * 256 + test.getElement(2))); }
+                if ( checknode(nodeNum) > -1 ) { return checknode(nodeNum); }
                 break;
             case CbusConstants.CBUS_ARON1:
-                if ( checkevent((test.getElement(3) * 256 + test.getElement(4))) > -1 ) {
-                    return checkevent((test.getElement(3) * 256 + test.getElement(4))); }
+                if ( checkevent(eventNum) > -1 ) { return checkevent(eventNum); }
                 if ( filters.get(CFON) ){ return CFON; } else { incrementCount(CFON); }
                 if ( filters.get(CFLONG) ){ return CFLONG; } else { incrementCount(CFLONG); }
                 if ( filters.get(CFRESPONSE) ){ return CFRESPONSE; } else { incrementCount(CFRESPONSE); }
                 if ( filters.get(CFED1) ){ return CFED1; } else { incrementCount(CFED1); }
-                if ( checknode((test.getElement(1) * 256 + test.getElement(2))) > -1 ) {
-                    return checknode((test.getElement(1) * 256 + test.getElement(2))); }
+                if ( checknode(nodeNum) > -1 ) { return checknode(nodeNum); }
                 break;
             case CbusConstants.CBUS_AROF1:
-                if ( checkevent((test.getElement(3) * 256 + test.getElement(4))) > -1 ) {
-                    return checkevent((test.getElement(3) * 256 + test.getElement(4))); }
+                if ( checkevent(eventNum) > -1 ) { return checkevent(eventNum); }
                 if ( filters.get(CFOF) ){ return CFOF; } else { incrementCount(CFOF); }
                 if ( filters.get(CFLONG) ){ return CFLONG; } else { incrementCount(CFLONG); }
                 if ( filters.get(CFRESPONSE) ){ return CFRESPONSE; } else { incrementCount(CFRESPONSE); }
                 if ( filters.get(CFED1) ){ return CFED1; } else { incrementCount(CFED1); }
-                if ( checknode((test.getElement(1) * 256 + test.getElement(2))) > -1 ) {
-                    return checknode((test.getElement(1) * 256 + test.getElement(2))); }
+                if ( checknode(nodeNum) > -1 ) { return checknode(nodeNum); }
                 break;
             case CbusConstants.CBUS_ASON1:
-                if ( checkevent((test.getElement(3) * 256 + test.getElement(4))) > -1 ) {
-                    return checkevent((test.getElement(3) * 256 + test.getElement(4))); }
+                if ( checkevent(eventNum) > -1 ) { return checkevent(eventNum); }
                 if ( filters.get(CFON) ){ return CFON; } else { incrementCount(CFON); }
                 if ( filters.get(CFSHORT) ){ return CFSHORT; } else { incrementCount(CFSHORT); }
                 if ( filters.get(CFSTD) ){ return CFSTD; } else { incrementCount(CFSTD); }
                 if ( filters.get(CFED1) ){ return CFED1; } else { incrementCount(CFED1); }
-                if ( checknode((test.getElement(1) * 256 + test.getElement(2))) > -1 ) {
-                    return checknode((test.getElement(1) * 256 + test.getElement(2))); }
+                if ( checknode(nodeNum) > -1 ) { return checknode(nodeNum); }
                 break;
             case CbusConstants.CBUS_ASOF1:
-                if ( checkevent((test.getElement(3) * 256 + test.getElement(4))) > -1 ) {
-                    return checkevent((test.getElement(3) * 256 + test.getElement(4))); }
+                if ( checkevent(eventNum) > -1 ) { return checkevent(eventNum); }
                 if ( filters.get(CFOF) ){ return CFOF; } else { incrementCount(CFOF); }
                 if ( filters.get(CFSHORT) ){ return CFSHORT; } else { incrementCount(CFSHORT); }
                 if ( filters.get(CFSTD) ){ return CFSTD; } else { incrementCount(CFSTD); }
                 if ( filters.get(CFED1) ){ return CFED1; } else { incrementCount(CFED1); }
-                if ( checknode((test.getElement(1) * 256 + test.getElement(2))) > -1 ) {
-                    return checknode((test.getElement(1) * 256 + test.getElement(2))); }
+                if ( checknode(nodeNum) > -1 ) { return checknode(nodeNum); }
                 break;
             case CbusConstants.CBUS_ARSON1:
-                if ( checkevent((test.getElement(3) * 256 + test.getElement(4))) > -1 ) {
-                    return checkevent((test.getElement(3) * 256 + test.getElement(4))); }
+                if ( checkevent(eventNum) > -1 ) { return checkevent(eventNum); }
                 if ( filters.get(CFON) ){ return CFON; } else { incrementCount(CFON); }
                 if ( filters.get(CFSHORT) ){ return CFSHORT; } else { incrementCount(CFSHORT); }
                 if ( filters.get(CFRESPONSE) ){ return CFRESPONSE; } else { incrementCount(CFRESPONSE); }
                 if ( filters.get(CFED1) ){ return CFED1; } else { incrementCount(CFED1); }
-                if ( checknode((test.getElement(1) * 256 + test.getElement(2))) > -1 ) {
-                    return checknode((test.getElement(1) * 256 + test.getElement(2))); }
+                if ( checknode(nodeNum) > -1 ) { return checknode(nodeNum); }
                 break;
             case CbusConstants.CBUS_ARSOF1:
-                if ( checkevent((test.getElement(3) * 256 + test.getElement(4))) > -1 ) {
-                    return checkevent((test.getElement(3) * 256 + test.getElement(4))); }
+                if ( checkevent(eventNum) > -1 ) { return checkevent(eventNum); }
                 if ( filters.get(CFOF) ){ return CFOF; } else { incrementCount(CFOF); }
                 if ( filters.get(CFSHORT) ){ return CFSHORT; } else { incrementCount(CFSHORT); }
                 if ( filters.get(CFRESPONSE) ){ return CFRESPONSE; } else { incrementCount(CFRESPONSE); }
                 if ( filters.get(CFED1) ){ return CFED1; } else { incrementCount(CFED1); }
-                if ( checknode((test.getElement(1) * 256 + test.getElement(2))) > -1 ) {
-                    return checknode((test.getElement(1) * 256 + test.getElement(2))); }
+                if ( checknode(nodeNum) > -1 ) { return checknode(nodeNum); }
                 break;
             case CbusConstants.CBUS_CABDAT:                
                 if ( filters.get(CFDATA) ){ return CFDATA; } else { incrementCount(CFDATA); }
@@ -445,106 +404,86 @@ public class CbusFilter {
                 if ( filters.get(CFCLOCK) ){ return CFCLOCK; } else { incrementCount(CFCLOCK); }
                 break;
             case CbusConstants.CBUS_ACON2:
-                if ( checkevent((test.getElement(3) * 256 + test.getElement(4))) > -1 ) {
-                    return checkevent((test.getElement(3) * 256 + test.getElement(4))); }
+                if ( checkevent(eventNum) > -1 ) { return checkevent(eventNum); }
                 if ( filters.get(CFON) ){ return CFON; } else { incrementCount(CFON); }
                 if ( filters.get(CFLONG) ){ return CFLONG; } else { incrementCount(CFLONG); }
                 if ( filters.get(CFSTD) ){ return CFSTD; } else { incrementCount(CFSTD); }
                 if ( filters.get(CFED2) ){ return CFED2; } else { incrementCount(CFED2); }
-                if ( checknode((test.getElement(1) * 256 + test.getElement(2))) > -1 ) {
-                    return checknode((test.getElement(1) * 256 + test.getElement(2))); }
+                if ( checknode(nodeNum) > -1 ) { return checknode(nodeNum); }
                 break;
             case CbusConstants.CBUS_ACOF2:
-                if ( checkevent((test.getElement(3) * 256 + test.getElement(4))) > -1 ) {
-                    return checkevent((test.getElement(3) * 256 + test.getElement(4))); }
+                if ( checkevent(eventNum) > -1 ) { return checkevent(eventNum); }
                 if ( filters.get(CFOF) ){ return CFOF; } else { incrementCount(CFOF); }
                 if ( filters.get(CFLONG) ){ return CFLONG; } else { incrementCount(CFLONG); }
                 if ( filters.get(CFSTD) ){ return CFSTD; } else { incrementCount(CFSTD); }
                 if ( filters.get(CFED2) ){ return CFED2; } else { incrementCount(CFED2); }
-                if ( checknode((test.getElement(1) * 256 + test.getElement(2))) > -1 ) {
-                    return checknode((test.getElement(1) * 256 + test.getElement(2))); }
+                if ( checknode(nodeNum) > -1 ) { return checknode(nodeNum); }
                 break;
             case CbusConstants.CBUS_ARON2:
-                if ( checkevent((test.getElement(3) * 256 + test.getElement(4))) > -1 ) {
-                    return checkevent((test.getElement(3) * 256 + test.getElement(4))); }
+                if ( checkevent(eventNum) > -1 ) { return checkevent(eventNum); }
                 if ( filters.get(CFON) ){ return CFON; } else { incrementCount(CFON); }
                 if ( filters.get(CFLONG) ){ return CFLONG; } else { incrementCount(CFLONG); }
                 if ( filters.get(CFRESPONSE) ){ return CFRESPONSE; } else { incrementCount(CFRESPONSE); }
                 if ( filters.get(CFED2) ){ return CFED2; } else { incrementCount(CFED2); }
-                if ( checknode((test.getElement(1) * 256 + test.getElement(2))) > -1 ) {
-                    return checknode((test.getElement(1) * 256 + test.getElement(2))); }
+                if ( checknode(nodeNum) > -1 ) { return checknode(nodeNum); }
                 break;
             case CbusConstants.CBUS_AROF2:
-                if ( checkevent((test.getElement(3) * 256 + test.getElement(4))) > -1 ) {
-                    return checkevent((test.getElement(3) * 256 + test.getElement(4))); }
+                if ( checkevent(eventNum) > -1 ) { return checkevent(eventNum); }
                 if ( filters.get(CFOF) ){ return CFOF; } else { incrementCount(CFOF); }
                 if ( filters.get(CFLONG) ){ return CFLONG; } else { incrementCount(CFLONG); }
                 if ( filters.get(CFRESPONSE) ){ return CFRESPONSE; } else { incrementCount(CFRESPONSE); }
                 if ( filters.get(CFED2) ){ return CFED2; } else { incrementCount(CFED2); }
-                if ( checknode((test.getElement(1) * 256 + test.getElement(2))) > -1 ) {
-                    return checknode((test.getElement(1) * 256 + test.getElement(2))); }
+                if ( checknode(nodeNum) > -1 ) { return checknode(nodeNum); }
                 break;
             case CbusConstants.CBUS_ACON3:
-                if ( checkevent((test.getElement(3) * 256 + test.getElement(4))) > -1 ) {
-                    return checkevent((test.getElement(3) * 256 + test.getElement(4))); }
+                if ( checkevent(eventNum) > -1 ) { return checkevent(eventNum); }
                 if ( filters.get(CFON) ){ return CFON; } else { incrementCount(CFON); }
                 if ( filters.get(CFLONG) ){ return CFLONG; } else { incrementCount(CFLONG); }
                 if ( filters.get(CFSTD) ){ return CFSTD; } else { incrementCount(CFSTD); }
                 if ( filters.get(CFED3) ){ return CFED3; } else { incrementCount(CFED3); }
-                if ( checknode((test.getElement(1) * 256 + test.getElement(2))) > -1 ) {
-                    return checknode((test.getElement(1) * 256 + test.getElement(2))); }
+                if ( checknode(nodeNum) > -1 ) { return checknode(nodeNum); }
                 break;
             case CbusConstants.CBUS_ACOF3:
-                if ( checkevent((test.getElement(3) * 256 + test.getElement(4))) > -1 ) {
-                    return checkevent((test.getElement(3) * 256 + test.getElement(4))); }
+                if ( checkevent(eventNum) > -1 ) { return checkevent(eventNum); }
                 if ( filters.get(CFOF) ){ return CFOF; } else { incrementCount(CFOF); }
                 if ( filters.get(CFLONG) ){ return CFLONG; } else { incrementCount(CFLONG); }
                 if ( filters.get(CFSTD) ){ return CFSTD; } else { incrementCount(CFSTD); }
                 if ( filters.get(CFED3) ){ return CFED3; } else { incrementCount(CFED3); }
-                if ( checknode((test.getElement(1) * 256 + test.getElement(2))) > -1 ) {
-                    return checknode((test.getElement(1) * 256 + test.getElement(2))); }
+                if ( checknode(nodeNum) > -1 ) { return checknode(nodeNum); }
                 break;
             case CbusConstants.CBUS_ARON3:
-                if ( checkevent((test.getElement(3) * 256 + test.getElement(4))) > -1 ) {
-                    return checkevent((test.getElement(3) * 256 + test.getElement(4))); }
+                if ( checkevent(eventNum) > -1 ) { return checkevent(eventNum); }
                 if ( filters.get(CFON) ){ return CFON; } else { incrementCount(CFON); }
                 if ( filters.get(CFLONG) ){ return CFLONG; } else { incrementCount(CFLONG); }
                 if ( filters.get(CFRESPONSE) ){ return CFRESPONSE; } else { incrementCount(CFRESPONSE); }
                 if ( filters.get(CFED3) ){ return CFED3; } else { incrementCount(CFED3); }
-                if ( checknode((test.getElement(1) * 256 + test.getElement(2))) > -1 ) {
-                    return checknode((test.getElement(1) * 256 + test.getElement(2))); }
+                if ( checknode(nodeNum) > -1 ) { return checknode(nodeNum); }
                 break;
             case CbusConstants.CBUS_AROF3:
-                if ( checkevent((test.getElement(3) * 256 + test.getElement(4))) > -1 ) {
-                    return checkevent((test.getElement(3) * 256 + test.getElement(4))); }
+                if ( checkevent(eventNum) > -1 ) { return checkevent(eventNum); }
                 if ( filters.get(CFOF) ){ return CFOF; } else { incrementCount(CFOF); }
                 if ( filters.get(CFLONG) ){ return CFLONG; } else { incrementCount(CFLONG); }
                 if ( filters.get(CFRESPONSE) ){ return CFRESPONSE; } else { incrementCount(CFRESPONSE); }
                 if ( filters.get(CFED3) ){ return CFED3; } else { incrementCount(CFED3); }
-                if ( checknode((test.getElement(1) * 256 + test.getElement(2))) > -1 ) {
-                    return checknode((test.getElement(1) * 256 + test.getElement(2))); }
+                if ( checknode(nodeNum) > -1 ) { return checknode(nodeNum); }
                 break;
             case CbusConstants.CBUS_ACDAT:
-                if ( checknode((test.getElement(1) * 256 + test.getElement(2))) > -1 ) {
-                    return checknode((test.getElement(1) * 256 + test.getElement(2))); }
+                if ( checknode(nodeNum) > -1 ) { return checknode(nodeNum); }
                 if ( filters.get(CFDATA) ){ return CFDATA; } else { incrementCount(CFDATA); }
                 if ( filters.get(CFACDAT) ){ return CFACDAT; } else { incrementCount(CFACDAT); }
                 break;
             case CbusConstants.CBUS_ARDAT:
-                if ( checknode((test.getElement(1) * 256 + test.getElement(2))) > -1 ) {
-                    return checknode((test.getElement(1) * 256 + test.getElement(2))); }
+                if ( checknode(nodeNum) > -1 ) { return checknode(nodeNum); }
                 if ( filters.get(CFDATA) ){ return CFDATA; } else { incrementCount(CFDATA); }
                 if ( filters.get(CFARDAT) ){ return CFARDAT; } else { incrementCount(CFARDAT); }
                 break;
             case CbusConstants.CBUS_DDES:
-                if ( checkeventDat((test.getElement(3) * 256 + test.getElement(4))) > -1 ) {
-                    return checkeventDat((test.getElement(3) * 256 + test.getElement(4))); }
+                if ( checkeventDat(eventNum) > -1 ) { return checkeventDat(eventNum); }
                 if ( filters.get(CFDATA) ){ return CFDATA; } else { incrementCount(CFDATA); }
                 if ( filters.get(CFDDES) ){ return CFDDES; } else { incrementCount(CFDDES); }
                 break;
             case CbusConstants.CBUS_DDRS:
-                if ( checkeventDat((test.getElement(3) * 256 + test.getElement(4))) > -1 ) {
-                    return checkeventDat((test.getElement(3) * 256 + test.getElement(4))); }
+                if ( checkeventDat(eventNum) > -1 ) { return checkeventDat(eventNum); }
                 if ( filters.get(CFDATA) ){ return CFDATA; } else { incrementCount(CFDATA); }
                 if ( filters.get(CFDDRS) ){ return CFDDRS; } else { incrementCount(CFDDRS); }
                 break;
@@ -581,7 +520,9 @@ public class CbusFilter {
         
         if (!_nodes.contains(node)){
             _nodes.add(node);
-            _filterFrame.addNode(node,(positionInNodeList(node)+ CFMAXCATS));
+            if (_filterFrame !=null) {
+                _filterFrame.addNode(node,(positionInNodeList(node)+ CFMAXCATS));
+            }
         }
         
         if ( filters.get(CFNODE) && ( node > 0 ) ){ return CFNODE; } else { incrementCount(CFNODE); }
@@ -883,9 +824,11 @@ public class CbusFilter {
     
     protected void incrementCount(int filternum){
         // log.debug("increment count {}",filternum);
-        ThreadingUtil.runOnGUIEventually( ()->{
-            _filterFrame.passIncrement(filternum);
-        });
+        if (_filterFrame != null ) {
+            ThreadingUtil.runOnGUIEventually( ()->{
+                _filterFrame.passIncrement(filternum);
+            });
+        }
     }
 
     // filter values

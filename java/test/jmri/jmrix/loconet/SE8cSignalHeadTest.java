@@ -245,8 +245,8 @@ public class SE8cSignalHeadTest {
 
         JUnitUtil.resetProfileManager();
 
-        lnis = new LocoNetInterfaceScaffold();
         memo = new jmri.jmrix.loconet.LocoNetSystemConnectionMemo();
+        lnis = new LocoNetInterfaceScaffold(memo);
         memo.setLnTrafficController(lnis);
         jmri.InstanceManager.store(lnis, jmri.jmrix.loconet.LnTrafficController.class);
         jmri.InstanceManager.setDefault(jmri.jmrix.loconet.LnTrafficController.class, lnis);
