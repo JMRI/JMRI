@@ -451,6 +451,7 @@ public class LnClockControl extends DefaultClockControl implements SlotListener,
         }
         sendClockMsg(true, MinuteFracType.MINUTE_END, true);
         newCommandStationZero = 0x7FFF; // force big,type 2. we need the min.
+        found7FCommandStationClockSync = false;
         // start new thread to pump the FastSlot
         new Thread(new Runnable() {
             @Override
@@ -458,7 +459,7 @@ public class LnClockControl extends DefaultClockControl implements SlotListener,
                 int everyMilli = 100;
                 int limit = 10000 / everyMilli;
                 if (testState == TestState.TESTING_WITH_SYNC) {
-                    everyMilli = 250;
+                    everyMilli = 100;
                     limit = 5;
                 }
                 commandStationSyncLimit = limit;
@@ -477,7 +478,8 @@ public class LnClockControl extends DefaultClockControl implements SlotListener,
             }
         }).start();
         // emergency brake so no command station?
-        new Thread(new Runnable() {
+        // 30 secs max.
+/*        new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
@@ -489,7 +491,7 @@ public class LnClockControl extends DefaultClockControl implements SlotListener,
                 }
                 commandStationSyncLimit = 0;
             }
-        }).start();
+        }).start(); */
     }
 
     /**
