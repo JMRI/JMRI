@@ -4642,7 +4642,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             undoDeltaX = -xTranslation;
             undoDeltaY = -yTranslation;
             canUndoMoveSelection = true;
-        undoTranslateSelectionMenuItem.setEnabled(canUndoMoveSelection);
+            undoTranslateSelectionMenuItem.setEnabled(canUndoMoveSelection);
 
             //apply translation to icon items within the selection
             for (Positionable c : _positionableSelection) {
@@ -4712,7 +4712,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             resizePanelBounds(false);
             redrawPanel();
             canUndoMoveSelection = false;
-        undoTranslateSelectionMenuItem.setEnabled(canUndoMoveSelection);
+            undoTranslateSelectionMenuItem.setEnabled(canUndoMoveSelection);
         }
     }
 
@@ -8763,6 +8763,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     /**
      * Remove a background image from the list of background images
+     *
      * @param b PositionableLabel to remove
      */
     protected void removeBackground(@Nonnull PositionableLabel b) {
@@ -8774,6 +8775,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     /**
      * add a layout shape to the list of layout shapes
+     *
      * @param p Point2D where the shape should be
      * @return the LayoutShape
      */
@@ -8792,6 +8794,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     /**
      * Remove a layout shape from the list of layout shapes
+     *
      * @param s the LayoutShape to add
      * @return true if added
      */
@@ -10373,15 +10376,13 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     public List<LayoutTurntable> getLayoutTurntables() {
-        return getLayoutTracksOfClass(LayoutTurntable.class
-        )
+        return getLayoutTracksOfClass(LayoutTurntable.class)
                 .map(LayoutTurntable.class::cast)
                 .collect(Collectors.toCollection(ArrayList<LayoutTurntable>::new));
     }
 
     public List<LevelXing> getLevelXings() {
-        return getLayoutTracksOfClass(LevelXing.class
-        )
+        return getLayoutTracksOfClass(LevelXing.class)
                 .map(LevelXing.class::cast)
                 .collect(Collectors.toCollection(ArrayList<LevelXing>::new));
     }
@@ -10391,8 +10392,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     public List<LayoutTurnout> getLayoutTurnoutsAndSlips() {
-        return getLayoutTracksOfClass(LayoutTurnout.class
-        )
+        return getLayoutTracksOfClass(LayoutTurnout.class)
                 .map(LayoutTurnout.class::cast)
                 .collect(Collectors.toCollection(ArrayList<LayoutTurnout>::new));
     }
