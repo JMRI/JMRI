@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder-4-13-3.xsl"?>
 <!-- version 1 - Ronald Kuhn - for fw 3.06 and 3.07-->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <variable item="Effect LV" CV="145" default="0" exclude="PD12A_2016.03,PD12A_2016.06">
@@ -8,6 +8,91 @@
     <label xml:lang="de">Effekt LV    </label>
     <label xml:lang="ca">Efecte LV    </label>
   </variable>
+  <variable item="Effect LV A" CV="145" mask="1" default="0" exclude="PD12A_2016.03,PD12A_2016.06">
+    <decVal max="2"/>
+    <label>Effect LV A</label>
+    <label xml:lang="de">Effekt LV A</label>
+    <label xml:lang="ca">Efecte LV A</label>
+  </variable>
+  <variable item="Effect LV A enum" CV="145" mask="1" default="0" exclude="PD12A_2016.03,PD12A_2016.06">
+    <enumVal>
+        <enumChoice>
+            <choice>No effect</choice>
+        </enumChoice>
+        <enumChoice>
+            <choice>Only in forward</choice>
+        </enumChoice>
+        <enumChoice>        
+            <choice>Only in backward</choice>
+        </enumChoice>
+    </enumVal>
+  </variable>
+  <variable item="Effect LV B" CV="145" mask="3" default="0" exclude="PD12A_2016.03,PD12A_2016.06">
+    <decVal max="2"/>
+    <label>Effect LV B</label>
+    <label xml:lang="de">Effekt LV B</label>
+    <label xml:lang="ca">Efecte LV B</label>
+  </variable>
+  <variable item="Effect LV B enum" CV="145" mask="3" default="0" exclude="PD12A_2016.03,PD12A_2016.06">  
+    <enumVal>
+        <enumChoice>
+            <choice>No effect</choice>
+        </enumChoice>
+        <enumChoice>
+            <choice>Only while stopped</choice>
+        </enumChoice>
+        <enumChoice>        
+            <choice>Only while driving</choice>
+        </enumChoice>
+    </enumVal> 
+  </variable>     
+  <variable item="Effect LV C" CV="145" mask="9" default="0" exclude="PD12A_2016.03,PD12A_2016.06">
+    <decVal max="2"/>
+    <label>Effect LV C</label>
+    <label xml:lang="de">Effekt LV C</label>
+    <label xml:lang="ca">Efecte LV C</label>
+  </variable>
+  <variable item="Effect LV C enum" CV="145" mask="9" default="0" exclude="PD12A_2016.03,PD12A_2016.06">  
+    <enumVal>
+        <enumChoice>
+            <choice>No effect</choice>
+        </enumChoice>
+        <enumChoice>
+            <choice>Only when F0 (Light) OFF</choice>
+        </enumChoice>
+        <enumChoice>        
+            <choice>Only when F0 (Light) ON</choice>
+        </enumChoice>
+    </enumVal> 
+  </variable>   
+  <variable item="Effect LV D" CV="145" mask="27" default="0" exclude="PD12A_2016.03,PD12A_2016.06">
+    <decVal max="5"/>
+    <label>Effect LV D</label>
+    <label xml:lang="de">Effekt LV D</label>
+    <label xml:lang="ca">Efecte LV D</label>
+  </variable>
+  <variable item="Effect LV D enum" CV="145" mask="27" default="0" exclude="PD12A_2016.03,PD12A_2016.06">  
+    <enumVal>
+        <enumChoice>
+            <choice>No effect</choice>
+        </enumChoice>
+        <enumChoice>
+            <choice>Not in shunting mode</choice>
+        </enumChoice>
+        <enumChoice>        
+            <choice>Only in shunting mode</choice>
+        </enumChoice>
+        <enumChoice>
+            <choice>Ignore direction when shunting</choice>
+        </enumChoice>
+        <enumChoice>        
+            <choice>Ignore drive/stop when shunting</choice>
+        </enumChoice> 
+        <enumChoice>        
+            <choice>Ignore direction and drive/stop when shunting</choice>
+        </enumChoice>                  
+    </enumVal> 
+  </variable>     
   <variable item="Effect LV enum" CV="145" default="0" exclude="PD12A_2016.03,PD12A_2016.06">
     <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv145-152_fw3.06_enum.xml"/>
     <label>Effect LV</label>

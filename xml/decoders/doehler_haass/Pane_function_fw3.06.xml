@@ -29,6 +29,34 @@
           <display item="Effect LV enum" label=""></display>
         </row>
         <row>
+          <label>
+            <text>Test: </text>
+          </label>
+          <display item="Effect LV A"></display>
+          <display item="Effect LV A enum" label=""></display>
+        </row>
+        <row>
+          <label>
+            <text>Test: </text>
+          </label>
+          <display item="Effect LV B"></display>
+          <display item="Effect LV B enum" label=""></display>
+        </row>
+        <row>
+          <label>
+            <text>Test: </text>
+          </label>
+          <display item="Effect LV C"></display>
+          <display item="Effect LV C enum" label=""></display>
+        </row>
+        <row>
+          <label>
+            <text>Test: </text>
+          </label>
+          <display item="Effect LV D"></display>
+          <display item="Effect LV D enum" label=""></display>
+        </row>
+        <row>
           <display item="Effect LR"></display>
           <display item="Effect LR enum" label=""></display>
         </row>
