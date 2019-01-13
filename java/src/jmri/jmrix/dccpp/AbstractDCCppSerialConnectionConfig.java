@@ -19,7 +19,7 @@ abstract public class AbstractDCCppSerialConnectionConfig extends jmri.jmrix.Abs
     }
 
     /**
-     * Ctor for a functional Swing object with no prexisting adapter
+     * Ctor for a functional Swing object with no preexisting adapter
      */
     public AbstractDCCppSerialConnectionConfig() {
         super();

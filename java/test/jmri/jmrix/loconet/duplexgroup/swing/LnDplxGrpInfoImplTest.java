@@ -2168,8 +2168,8 @@ public class LnDplxGrpInfoImplTest {
 
         JUnitUtil.resetProfileManager();
 
-        lnis = new jmri.jmrix.loconet.LocoNetInterfaceScaffold();
         memo = new jmri.jmrix.loconet.LocoNetSystemConnectionMemo();
+        lnis = new jmri.jmrix.loconet.LocoNetInterfaceScaffold(memo);
         memo.setLnTrafficController(lnis);
 
         memo.configureCommandStation(jmri.jmrix.loconet.LnCommandStationType.COMMAND_STATION_DCS100,false,false,false);

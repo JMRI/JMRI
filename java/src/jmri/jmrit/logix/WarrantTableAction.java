@@ -263,10 +263,7 @@ public class WarrantTableAction extends AbstractAction {
 
     synchronized protected static void portalNameChange(String oldName, String newName) {
         WarrantManager manager = InstanceManager.getDefault(WarrantManager.class);
-        List<String> systemNameList = manager.getSystemNameList();
-        Iterator<String> iter = systemNameList.iterator();
-        while (iter.hasNext()) {
-            Warrant w = manager.getBySystemName(iter.next());
+        for (Warrant w : manager.getNamedBeanSet()) {
             List<BlockOrder> orders = w.getBlockOrders();
             Iterator<BlockOrder> it = orders.iterator();
             while (it.hasNext()) {
@@ -283,10 +280,7 @@ public class WarrantTableAction extends AbstractAction {
 
     synchronized protected static void pathNameChange(OBlock block, String oldName, String newName) {
         WarrantManager manager = InstanceManager.getDefault(WarrantManager.class);
-        List<String> systemNameList = manager.getSystemNameList();
-        Iterator<String> iter = systemNameList.iterator();
-        while (iter.hasNext()) {
-            Warrant w = manager.getBySystemName(iter.next());
+        for (Warrant w : manager.getNamedBeanSet()) {
             List<BlockOrder> orders = w.getBlockOrders();
             Iterator<BlockOrder> it = orders.iterator();
             while (it.hasNext()) {

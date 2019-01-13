@@ -212,6 +212,7 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
     /**
      * Method to register any orphan Sensors when a new Acela Node is created.
      */
+    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations
     public void registerSensorsForNode(AcelaNode node) {
         // get list containing all Sensors
         log.info("Trying to register sensor from Manager 2: {}Sxx", getSystemPrefix()); // multichar prefix

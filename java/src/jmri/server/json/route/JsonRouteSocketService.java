@@ -70,17 +70,15 @@ public class JsonRouteSocketService extends JsonSocketService<JsonRouteHttpServi
     }
 
     private void addListenersToChildren() {
-        routeManager.getSystemNameList().stream().forEach((rn) -> { //add listeners to each child (if not already)
+        routeManager.getNamedBeanSet().stream().forEach((route) -> { //add listeners to each child (if not already)
+            String rn = route.getSystemName();
             if (!routeListeners.containsKey(rn)) {
                 log.debug("adding RouteListener for Route {}", rn);
-                Route route  = routeManager.getRoute(rn);
-                if (route != null) {
-                    Sensor sensor = route.getTurnoutsAlgdSensor();
-                    if (sensor != null) {
-                        RouteListener listener = new RouteListener(route);
-                        sensor.addPropertyChangeListener(listener);
-                        this.routeListeners.put(rn, listener);
-                    }
+                Sensor sensor = route.getTurnoutsAlgdSensor();
+                if (sensor != null) {
+                    RouteListener listener = new RouteListener(route);
+                    sensor.addPropertyChangeListener(listener);
+                    this.routeListeners.put(rn, listener);
                 }
             }
         });

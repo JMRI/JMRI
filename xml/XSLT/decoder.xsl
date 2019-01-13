@@ -18,9 +18,6 @@
 <!-- for more details.                                                      -->
  
 <xsl:stylesheet	version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:docbook="http://docbook.org/ns/docbook">
-      <xsl:param name="JmriCopyrightYear">
-        2000 - 2016
-      </xsl:param>
 
 <!-- Need to instruct the XSLT processor to use HTML output rules.
      See http://www.w3.org/TR/xslt#output for more details

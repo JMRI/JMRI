@@ -27,7 +27,7 @@ import org.junit.Test;
  * not extend to uses in other software products. If you wish to use this code,
  * algorithm or these message formats outside of JMRI, please contact Digitrax
  * Inc for separate permission.
- * <p>
+ *
  * @author	Bob Jacobsen
  * @author B. Milhaupt Copyright (C) 2018
  *
@@ -48,7 +48,6 @@ public class LocoNetMessageTest {
 
         new LocoNetMessage(-1);
         jmri.util.JUnitAppender.assertErrorMessage("LocoNetMessage does not allow object creation if length is less than 2.");
-
     }
 
     @Test
@@ -65,8 +64,6 @@ public class LocoNetMessageTest {
         byte[] t1 = new byte[]{(byte) 0x81};
         new LocoNetMessage(t1);
         jmri.util.JUnitAppender.assertErrorMessage("Cannot create a LocoNet message of length shorter than two.");
-
-
     }
 
     @Test
@@ -104,7 +101,6 @@ public class LocoNetMessageTest {
                 new int[]{1, 2, 3, 4, 5, 6, 7, 8}, 63);
         checkPeerXfr(m4, 0x1050, 0x1051,
                 new int[]{1, 2, 3, 4, 5, 6, 7, 8}, 63);
-
     }
 
     @Test
@@ -112,7 +108,6 @@ public class LocoNetMessageTest {
         LocoNetMessage m = new LocoNetMessage();
         jmri.util.JUnitAppender.assertErrorMessage("LocoNetMessage does not allow a constructor with no argument");
         Assert.assertEquals("expect 0-length LocoNetMessage object", 0, m.getNumDataElements());
-
     }
 
     @Test
@@ -144,7 +139,6 @@ public class LocoNetMessageTest {
         m = new LocoNetMessage("81 7e");
         jmri.util.JUnitAppender.assertErrorMessage("LocoNetMessage does not allow a constructor with a 'String' argument");
         Assert.assertEquals("expect 0-length LocoNetMessage object", 0, m.getNumDataElements());
-
     }
 
     // use the makePeerXfr calls, already tested to check the decoding
@@ -567,8 +561,6 @@ public class LocoNetMessageTest {
         m = new LocoNetMessage(d);
         m.setParity();
         Assert.assertEquals("byte 5 expected", 0x26, m.getElement(5));
-
-
     }
 
     @Test
@@ -598,7 +590,6 @@ public class LocoNetMessageTest {
         Assert.assertFalse(m.checkParity());
         m.setElement(3, 0x19);
         Assert.assertTrue(m.checkParity());
-
     }
 
     @Before

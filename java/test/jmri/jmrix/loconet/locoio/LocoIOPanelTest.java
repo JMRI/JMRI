@@ -10,19 +10,18 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Tests for the jmri.jmrix.loconet.locoio.LocoIOFrame class
+ * Tests for the jmri.jmrix.loconet.locoio.LocoIOPanel class.
  *
  * @author	Bob Jacobsen Copyright (C) 2002
  */
 public class LocoIOPanelTest extends jmri.util.swing.JmriPanelTest {
 
     private LocoNetInterfaceScaffold lnis;
+    private LocoNetSystemConnectionMemo memo;
 
     @Test
     public void testReadAll() {
         LocoIOPanel f = (LocoIOPanel) panel;
-        LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo();
-        memo.setLnTrafficController(lnis);
         f.initComponents(memo);
 
         // click button
@@ -37,7 +36,6 @@ public class LocoIOPanelTest extends jmri.util.swing.JmriPanelTest {
 
         // dispose and end operation
         f.dispose();
-        memo.dispose();
     }
 
     @Test
@@ -47,9 +45,6 @@ public class LocoIOPanelTest extends jmri.util.swing.JmriPanelTest {
 
         // prepare an interface
         LocoIOPanel f = (LocoIOPanel) panel;
-        LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo();
-        lnis.setSystemConnectionMemo(memo);
-        memo.setLnTrafficController(lnis);
         f.initComponents(memo);
 
         f.addrField.setText("1234");
@@ -67,7 +62,6 @@ public class LocoIOPanelTest extends jmri.util.swing.JmriPanelTest {
 
         // dispose and end operation
         f.dispose();
-        memo.dispose();
     }
 
     @Test
@@ -79,9 +73,6 @@ public class LocoIOPanelTest extends jmri.util.swing.JmriPanelTest {
                 return 1;
             }
         };
-        LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo();
-        lnis.setSystemConnectionMemo(memo);
-        memo.setLnTrafficController(lnis);
         f.initComponents(memo);
 
         f.addrField.setText("0134");
@@ -98,11 +89,9 @@ public class LocoIOPanelTest extends jmri.util.swing.JmriPanelTest {
 
         // dispose and end operation
         f.dispose();
-        memo.dispose();
-        
+
         // suppress optional message
         jmri.util.JUnitAppender.suppressWarnMessage("Address must be [1..126], was 308");
-
     }
 
     // The minimal setup for log4J
@@ -110,7 +99,9 @@ public class LocoIOPanelTest extends jmri.util.swing.JmriPanelTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        lnis = new LocoNetInterfaceScaffold();
+        memo = new LocoNetSystemConnectionMemo();
+        lnis = new LocoNetInterfaceScaffold(memo);
+        memo.setLnTrafficController(lnis);
         panel = new LocoIOPanel();
         helpTarget = "package.jmri.jmrix.loconet.locoio.LocoIOFrame";
         title = Bundle.getMessage("MenuItemLocoIOProgrammer");
@@ -119,6 +110,8 @@ public class LocoIOPanelTest extends jmri.util.swing.JmriPanelTest {
     @Override
     @After
     public void tearDown() {
+        memo.dispose();
+        lnis = null;
         JUnitUtil.tearDown();
     }
 

@@ -123,6 +123,7 @@ public class SRCPVisitor extends SRCPParserDefaultVisitor implements SRCPParserV
     }
 
     @Override
+    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations
     public Object visit(ASTget node, Object data) {
         log.debug("Get " + ((SimpleNode) node.jjtGetChild(1)).jjtGetValue());
         int bus = Integer.parseInt(((String) ((SimpleNode) node.jjtGetChild(0)).jjtGetValue()));
