@@ -1,0 +1,199 @@
+# SprogBundle_fr.properties
+#
+# French properties for the jmri.jmrix.sprog classes
+# French Translation by Herv\u00e9 BLOREC on 2019-01-13
+
+GetSprogFirmwareVersion = Obtenir la Version du Micrologiciel SPROG
+SprogXFirmwareUpdate = SPROG {0} Mise \u00e0 Jour du Micrologiciel
+# Sprog4FirmwareUpdate = Mise \u00e0 jour du micrologiciel SPROG v3 / v4
+# Sprog3FirmwareUpdate = Mise \u00e0 jour du micrologiciel SPROG II / SPROG 3
+# Sprog2FirmwareUpdate = Mise \u00e0 jour du micrologiciel SPROG II
+#SprogFirmwareUpdate = Mise \u00e0 jour du micrologiciel SPROG
+SprogConsoleTitle = Console SPROG
+SprogProgrammerTitle = Programmeur SPROG
+SprogBootloaderXTitle = Chargeur de D\u00e9marrage SPROG {0} 
+SprogVersionTitle = Version SPROG
+SprogVersionDialogString = Version SPROG: {0}
+CommandHistoryTitle = Historique des commandes
+
+# mise \u00e0 jour des messages
+IoErrorReadingHexFile = I/O Erreur lors de la lecture du fichier hexad\u00e9cimal!
+InvalidHexDigitAtLine = Chiffre hexad\u00e9cimal invalide \u00e0 la ligne {0}
+SprogXUpdateDialogString = Pour proc\u00e9der \u00e0 une mise \u00e0 jour du microprogramme SPROG {0}, vous devez disposer d'un fichier de mise \u00e0 jour du microprogramme .hex valide.\nEtes-vous certain de vouloir mettre \u00e0 jour le microprogramme SPROG II?
+StatusFoundX = Trouv\u00e9 {0}
+StatusSprogNotFound = SPROG introuvable - recherche du chargeur de d\u00e9marrage
+StatusIncorrectSprogType = Type SPROG incorrect d\u00e9tect\u00e9
+StatusMalformedbootLoaderReply = R\u00e9ponse du chargeur d'amorçage mal form\u00e9e
+StatusBadBootloaderChecksum = Somme de contr\u00f4le du chargeur d'amorçage incorrecte
+StatusConnectedToBootloader = Connect\u00e9 \u00e0 la version du chargeur de d\u00e9marrage {0}
+StatusUnableToConnectBootloader = Impossible de se connecter au chargeur de d\u00e9marrage
+StatusBadReplyWriteRequest = Mauvaise r\u00e9ponse \u00e0 la demande d'\u00e9criture
+ErrorFrameDialogTitle = Se connecter au chargeur de d\u00e9marrage
+ErrorFrameDialogString = R\u00e9ponse du chargeur de d\u00e9marrage mal form\u00e9e./nAvez-vous d\u00e9j\u00e0 oubli\u00e9 de d\u00e9verrouiller le firmware?
+# Les 2 suivants sont actuellement (4.7) comment\u00e9s dans update.SPROGIIUpdateFrame:
+#StatusBadReplyErase = Mauvaise r\u00e9ponse pour effacer la commande
+#StatusBadReplyModeRequest = R\u00e9ponse incorrecte \u00e0 la demande de mode SPROG
+StatusBadBootloaderReply = R\u00e9ponse incorrecte \u00e0 la commande "set boot".
+HexFileSelectTitle = S\u00e9lection de fichier Hex
+HexFileSelectDialogString = Le fichier ne semble pas \u00eatre un fichier hexad\u00e9cimal SPROG II valide.
+CurrentLimitDialogString = Limite actuelle non valide entr\u00e9e.\nVeuillez entrer une valeur dans la plage {0}
+FatalErrorTitlproperties
+#
+# French properties for the jmri.jmrix.sprog classes
+# French Translation by Herv\u00e9 BLOREC on 2019-01-13
+
+GetSprogFirmwareVersion = Obtenir la Version du Micrologiciel SPROG
+SprogXFirmwareUpdate = SPROG {0} Mise \u00e0 Jour du Micrologiciel
+# Sprog4FirmwareUpdate = Mise \u00e0 jour du micrologiciel SPROG v3 / v4
+# Sprog3FirmwareUpdate = Mise \u00e0 jour du micrologiciel SPROG II / SPROG 3
+# Sprog2FirmwareUpdate = Mise \u00e0 jour du micrologiciel SPROG II
+#SprogFirmwareUpdate = Mise \u00e0 jour du micrologiciel SPROG
+SprogConsoleTitle = Console SPROG
+SprogProgrammerTitle = Programmeur SPROG
+SprogBootloaderXTitle = Chargeur de D\u00e9marrage SPROG {0} 
+SprogVersionTitle = Version SPROG
+SprogVersionDialogString = Version SPROG: {0}
+CommandHistoryTitle = Historique des commandes
+
+# mise \u00e0 jour des messages
+IoErrorReadingHexFile = I/O Erreur lors de la lecture du fichier hexad\u00e9cimal!
+InvalidHexDigitAtLine = Chiffre hexad\u00e9cimal invalide \u00e0 la ligne {0}
+SprogXUpdateDialogString = Pour proc\u00e9der \u00e0 une mise \u00e0 jour du microprogramme SPROG {0}, vous devez disposer d'un fichier de mise \u00e0 jour du microprogramme .hex valide.\nEtes-vous certain de vouloir mettre \u00e0 jour le microprogramme SPROG II?
+StatusFoundX = Trouv\u00e9 {0}
+StatusSprogNotFound = SPROG introuvable - recherche du chargeur de d\u00e9marrage
+StatusIncorrectSprogType = Type SPROG incorrect d\u00e9tect\u00e9
+StatusMalformedbootLoaderReply = R\u00e9ponse du chargeur d'amorçage mal form\u00e9e
+StatusBadBootloaderChecksum = Somme de contr\u00f4le du chargeur d'amorçage incorrecte
+StatusConnectedToBootloader = Connect\u00e9 \u00e0 la version du chargeur de d\u00e9marrage {0}
+StatusUnableToConnectBootloader = Impossible de se connecter au chargeur de d\u00e9marrage
+StatusBadReplyWriteRequest = Mauvaise r\u00e9ponse \u00e0 la demande d'\u00e9criture
+ErrorFrameDialogTitle = Se connecter au chargeur de d\u00e9marrage
+ErrorFrameDialogString = R\u00e9ponse du chargeur de d\u00e9marrage mal form\u00e9e./nAvez-vous d\u00e9j\u00e0 oubli\u00e9 de d\u00e9verrouiller le firmware?
+# Les 2 suivants sont actuellement (4.7) comment\u00e9s dans update.SPROGIIUpdateFrame:
+#StatusBadReplyErase = Mauvaise r\u00e9ponse pour effacer la commande
+#StatusBadReplyModeRequest = R\u00e9ponse incorrecte \u00e0 la demande de mode SPROG
+StatusBadBootloaderReply = R\u00e9ponse incorrecte \u00e0 la commande "set boot".
+HexFileSelectTitle = S\u00e9lection de fichier Hex
+HexFileSelectDialogString = Le fichier ne semble pas \u00eatre un fichier hexad\u00e9cimal SPROG II valide.
+CurrentLimitDialogString = Limite actuelle non valide entr\u00e9e.\nVeuillez entrer une valeur dans la plage {0}
+FatalErrorTitle = Erreur Fatale
+ErrorConnectingDialogString = Impossible de se connecter au chargeur de d\u00e9marrage.
+ErrorConnectingStatus = Erreur Fatale - impossible de se connecter
+ErrorTimeoutDialogString = D\u00e9lai d'attente pendant l'\u00e9criture dans SPROG.
+ErrorTimeoutStatus = Erreur irr\u00e9cup\u00e9rable - impossible d'\u00e9crire
+
+# Description des types de sprog
+TypeTimeoutTalkingToSPROG = D\u00e9lai de communication avec SPROG
+TypeUnrecognisedSPROG = SPROG non reconnu
+TypeNotConnectedToSPROG = Non connect\u00e9 \u00e0 un SPROG
+TypeNoSprogPromptFound = Aucune invite SPROG trouv\u00e9e
+TypeUnknownHardware = Mat\u00e9riel inconnu
+
+# cha\u00eene de boutons
+ButtonProgram = Programme
+ButtonContinue = Continuer
+ButtonProgramTooltip = Reprogrammer le SPROG avec un nouveau firmware
+ButtonSelectHexFile = S\u00e9lectionner le fichier hexad\u00e9cimal ...
+ButtonSelectHexFileTooltip = Cliquez ici pour s\u00e9lectionner un fichier hexad\u00e9cimal sur le disque \u00e0 charger sur votre SPROG.
+ButtonSetSPROGMode = D\u00e9finir en mode SPROG
+ButtonSetSPROGModeTooltip = Cliquez ici pour d\u00e9finir le SPROG II en mode SPROG
+
+SpeedStepModeLabel = Mode pas \u00e0 pas de la vitesse de l'acc\u00e9l\u00e9rateur SPROG:
+ButtonXStep = {0} \u00e9tape
+ButtonXStepTooltip = D\u00e9finir {0} pas de vitesse pour le papillon SPROG
+
+# \u00C9l\u00e9ments de la console Sprog
+SendCommandTitle = Envoyer une commande SPROG
+#CommandLabel = Commande:
+SendCommandFieldTooltip = Entrez la commande sous forme de cha\u00eene ASCII (l'entr\u00e9e hexad\u00e9cimale n'est pas encore disponible)
+SendPacketTooltip = Envoyer un paquet \u00e0 SPROG
+EnterSPROGCommandTooltip = Entrez une commande SPROG et cliquez sur [{0}]
+ConfigurationTitle = Configuration
+CurrentLimitLabel = Limite de courant (mA):
+CurrentLimitFieldTooltip = Entrez la nouvelle limite de courant en milliAmps (moins de 1000)
+ButtonSetZTCMode = D\u00e9finir le mode ZTC
+ButtonSetZTCModeTooltip = A utiliser lors de la programmation d'anciens d\u00e9codeurs ZTC
+ButtonSetBluelineMode = D\u00e9finir le mode Blueline
+ButtonSetBluelineModeTooltip = S\u00e9lectionnez cette option lors de la programmation de d\u00e9codeurs Blueline - la programmation sera globalement plus lente
+ButtonUnlockFirmware = D\u00e9verrouiller le micrologiciel SPROG
+ButtonUnlockFirmwareTooltip = Utilisez ceci UNIQUEMENT si vous \u00eates sur le point de mettre \u00e0 jour le micrologiciel SPROG
+ButtonApplyTooltip = Enregistrer la configuration SPROG (dans la m\u00e9moire EEPROM SPROG)
+#ApplyConfigurationTitle = Enregistrer et appliquer la configuration
+
+\u00C9l\u00e9ments SlotMon #Sprog
+SprogSlotMonitorTitle = Moniteur d'Emplacement SPROG
+
+\u00C9l\u00e9ments #SprogNano
+SprogNanoCSTitle = Centrale de commande SPROG Nano
+OptionTrackPowerLabel = Suivre l'alimentation au d\u00e9marrage:
+
+\u00C9l\u00e9ments #SprogCS
+SprogCSTitle = Station de commande SPROG
+
+\u00C9l\u00e9ments #PiSprog
+PiSprogNanoCSTitle = Centrale de commande Pi-SPROG Nano
+PiSprog1ProgrammerTitle = Programmeur Pi-SPROG One
+PiSprog1CSTitle = Centrale de commande Pi-SPROG One
+
+# SprogTurnout (Ajouter au volet tableau) item (sans entr\u00e9es)
+AddOutputEntryToolTip = entrez un nombre compris entre 1 et 2044 (inclus).e = Erreur Fatale
+ErrorConnectingDialogString = Impossible de se connecter au chargeur de d\u00e9marrage.
+ErrorConnectingStatus = Erreur Fatale - impossible de se connecter
+ErrorTimeoutDialogString = D\u00e9lai d'attente pendant l'\u00e9criture dans SPROG.
+ErrorTimeoutStatus = Erreur irr\u00e9cup\u00e9rable - impossible d'\u00e9crire
+
+# Description des types de sprog
+TypeTimeoutTalkingToSPROG = D\u00e9lai de communication avec SPROG
+TypeUnrecognisedSPROG = SPROG non reconnu
+TypeNotConnectedToSPROG = Non connect\u00e9 \u00e0 un SPROG
+TypeNoSprogPromptFound = Aucune invite SPROG trouv\u00e9e
+TypeUnknownHardware = Mat\u00e9riel inconnu
+
+# cha\u00eene de boutons
+ButtonProgram = Programme
+ButtonContinue = Continuer
+ButtonProgramTooltip = Reprogrammer le SPROG avec un nouveau firmware
+ButtonSelectHexFile = S\u00e9lectionner le fichier hexad\u00e9cimal ...
+ButtonSelectHexFileTooltip = Cliquez ici pour s\u00e9lectionner un fichier hexad\u00e9cimal sur le disque \u00e0 charger sur votre SPROG.
+ButtonSetSPROGMode = D\u00e9finir en mode SPROG
+ButtonSetSPROGModeTooltip = Cliquez ici pour d\u00e9finir le SPROG II en mode SPROG
+
+SpeedStepModeLabel = Mode pas \u00e0 pas de la vitesse de l'acc\u00e9l\u00e9rateur SPROG:
+ButtonXStep = {0} \u00e9tape
+ButtonXStepTooltip = D\u00e9finir {0} pas de vitesse pour le papillon SPROG
+
+# \u00C9l\u00e9ments de la console Sprog
+SendCommandTitle = Envoyer une commande SPROG
+#CommandLabel = Commande:
+SendCommandFieldTooltip = Entrez la commande sous forme de cha\u00eene ASCII (l'entr\u00e9e hexad\u00e9cimale n'est pas encore disponible)
+SendPacketTooltip = Envoyer un paquet \u00e0 SPROG
+EnterSPROGCommandTooltip = Entrez une commande SPROG et cliquez sur [{0}]
+ConfigurationTitle = Configuration
+CurrentLimitLabel = Limite de courant (mA):
+CurrentLimitFieldTooltip = Entrez la nouvelle limite de courant en milliAmps (moins de 1000)
+ButtonSetZTCMode = D\u00e9finir le mode ZTC
+ButtonSetZTCModeTooltip = A utiliser lors de la programmation d'anciens d\u00e9codeurs ZTC
+ButtonSetBluelineMode = D\u00e9finir le mode Blueline
+ButtonSetBluelineModeTooltip = S\u00e9lectionnez cette option lors de la programmation de d\u00e9codeurs Blueline - la programmation sera globalement plus lente
+ButtonUnlockFirmware = D\u00e9verrouiller le micrologiciel SPROG
+ButtonUnlockFirmwareTooltip = Utilisez ceci UNIQUEMENT si vous \u00eates sur le point de mettre \u00e0 jour le micrologiciel SPROG
+ButtonApplyTooltip = Enregistrer la configuration SPROG (dans la m\u00e9moire EEPROM SPROG)
+#ApplyConfigurationTitle = Enregistrer et appliquer la configuration
+
+\u00C9l\u00e9ments SlotMon #Sprog
+SprogSlotMonitorTitle = Moniteur d'Emplacement SPROG
+
+\u00C9l\u00e9ments #SprogNano
+SprogNanoCSTitle = Centrale de commande SPROG Nano
+OptionTrackPowerLabel = Suivre l'alimentation au d\u00e9marrage:
+
+\u00C9l\u00e9ments #SprogCS
+SprogCSTitle = Station de commande SPROG
+
+\u00C9l\u00e9ments #PiSprog
+PiSprogNanoCSTitle = Centrale de commande Pi-SPROG Nano
+PiSprog1ProgrammerTitle = Programmeur Pi-SPROG One
+PiSprog1CSTitle = Centrale de commande Pi-SPROG One
+
+# SprogTurnout (Ajouter au volet tableau) item (sans entr\u00e9es)
+AddOutputEntryToolTip = entrez un nombre compris entre 1 et 2044 (inclus).
