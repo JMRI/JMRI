@@ -218,9 +218,9 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
                     sensor = (String) _sensorModel.getValueAt(i, BeanTableModel.SNAME_COLUMN);
                 }
                 variableList.add(new ConditionalVariable(false, Conditional.Operator.OR,
-                        Conditional.TYPE_SENSOR_ACTIVE, sensor, true));
+                        Conditional.Type.SENSOR_ACTIVE, sensor, true));
                 actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE,
-                        Conditional.ACTION_SET_SENSOR, sensor,
+                        Conditional.Action.SET_SENSOR, sensor,
                         Sensor.INACTIVE, ""));
                 count++;
             }
@@ -232,7 +232,7 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
         }
         Conditional c = new SensorGroupConditional(cSystemName, cUserName);
         c.setStateVariables(variableList);
-        c.setLogicType(Conditional.ALL_OR, "");
+        c.setLogicType(Conditional.AntecedentOperator.ALL_OR, "");
         c.setAction(actionList);
         logix.addConditional(cSystemName, 0);       // Update the Logix Conditional names list
         logix.addConditional(cSystemName, c);       // Update the Logix Conditional hash map
