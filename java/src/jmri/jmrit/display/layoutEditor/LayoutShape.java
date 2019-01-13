@@ -1,5 +1,6 @@
 package jmri.jmrit.display.layoutEditor;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
@@ -20,7 +21,10 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JSeparator;
+import jmri.util.ColorUtil;
 import jmri.util.MathUtil;
+import jmri.util.QuickPromptUtil;
+import jmri.util.swing.JmriColorChooser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -208,7 +212,7 @@ public class LayoutShape {
     }
 
     public void setLineWidth(int w) {
-        lineWidth = w;
+        lineWidth = Math.max(0, w);
     }
 
     public Color getLineColor() {
@@ -232,7 +236,10 @@ public class LayoutShape {
     }
 
     public void setLevel(int l) {
-        level = l;
+        if (level != l) {
+            level = l;
+            layoutEditor.sortLayoutShapesByLevel();
+        }
     }
 
     public void addPoint(Point2D p) {
@@ -476,7 +483,60 @@ public class LayoutShape {
                     popup.add(shapePointTypeMenu);
                 }
             }
-            //TODO: add menu items to display/change level, lineWidth, lineColor and fillColor.
+
+            // Add "Set Level: x" menu
+            jmi = popup.add(new JMenuItem(Bundle.getMessage("MakeLabel",
+                    Bundle.getMessage("ShapeLevelMenuItemTitle")) + level));
+            jmi.setToolTipText(Bundle.getMessage("ShapeLevelMenuItemToolTip"));
+            jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+                //prompt for level
+                int newValue = QuickPromptUtil.promptForInt(layoutEditor,
+                        Bundle.getMessage("ShapeLevelMenuItemTitle"),
+                        Bundle.getMessage("ShapeLevelMenuItemTitle"),
+                        level);
+                setLevel(newValue);
+                layoutEditor.repaint();
+            });
+
+            jmi = popup.add(new JMenuItem(Bundle.getMessage("ShapeLineColorMenuItemTitle")));
+            jmi.setToolTipText(Bundle.getMessage("ShapeLineColorMenuItemToolTip"));
+            jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+                Color newColor = JmriColorChooser.showDialog(null, "Choose a color", lineColor);
+                if ((newColor != null) && !newColor.equals(lineColor)) {
+                    setLineColor(newColor);
+                    layoutEditor.repaint();
+                }
+            });
+            jmi.setForeground(lineColor);
+            jmi.setBackground(ColorUtil.contrast(lineColor));
+
+            if (getType() == LayoutShapeType.eFilled) {
+                jmi = popup.add(new JMenuItem(Bundle.getMessage("ShapeFillColorMenuItemTitle")));
+                jmi.setToolTipText(Bundle.getMessage("ShapeFillColorMenuItemToolTip"));
+                jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+                    Color newColor = JmriColorChooser.showDialog(null, "Choose a color", fillColor);
+                    if ((newColor != null) && !newColor.equals(fillColor)) {
+                        setFillColor(newColor);
+                        layoutEditor.repaint();
+                    }
+                });
+                jmi.setForeground(fillColor);
+                jmi.setBackground(ColorUtil.contrast(fillColor));
+            }
+
+            // add "Set Line Width: x" menu
+            jmi = popup.add(new JMenuItem(Bundle.getMessage("MakeLabel",
+                    Bundle.getMessage("ShapeLineWidthMenuItemTitle")) + lineWidth));
+            jmi.setToolTipText(Bundle.getMessage("ShapeLineWidthMenuItemToolTip"));
+            jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+                //prompt for lineWidth
+                int newValue = QuickPromptUtil.promptForInt(layoutEditor,
+                        Bundle.getMessage("ShapeLineWidthMenuItemTitle"),
+                        Bundle.getMessage("ShapeLineWidthMenuItemTitle"),
+                        lineWidth);
+                setLineWidth(newValue);
+                layoutEditor.repaint();
+            });
 
             popup.add(new JSeparator(JSeparator.HORIZONTAL));
             popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
@@ -582,13 +642,17 @@ public class LayoutShape {
             g2.setColor(fillColor);
             g2.fill(path);
         }
-
+        g2.setStroke(new BasicStroke(lineWidth,
+                BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
         g2.setColor(lineColor);
         g2.draw(path);
     }   // draw
 
     protected void drawEditControls(Graphics2D g2) {
-        g2.setColor(Color.black);
+        Color backgroundColor = layoutEditor.getBackgroundColor();
+        Color controlsColor = ColorUtil.contrast(backgroundColor);
+        controlsColor = ColorUtil.setAlpha(controlsColor, 0.5);
+        g2.setColor(controlsColor);
 
         shapePoints.forEach((slp) -> {
             g2.draw(layoutEditor.trackEditControlRectAt(slp.getPoint()));
@@ -608,7 +672,6 @@ public class LayoutShape {
         g2.draw(layoutEditor.trackEditControlCircleAt(getCoordsCenter()));
     }   // drawEditControls
 
-    private final static Logger log = LoggerFactory.getLogger(LayoutShape.class
-    );
+    private final static Logger log = LoggerFactory.getLogger(LayoutShape.class);
 
 }   // class LayoutShape

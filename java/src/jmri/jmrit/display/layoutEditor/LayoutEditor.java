@@ -5013,7 +5013,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                                 for (LayoutShape ls : layoutShapes) {
                                     selectedHitPointType = ls.findHitPointType(dLoc, true);
                                     if (LayoutShape.isShapeHitPointType(selectedHitPointType)) {
-                                        log.warn("drag selectedObject: ", ls);
+                                        //log.warn("drag selectedObject: ", ls);
                                         selectedObject = ls;    // found one!
                                         beginLocation.setLocation(dLoc);
                                         currentLocation.setLocation(beginLocation);
@@ -5045,7 +5045,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 for (LayoutShape ls : layoutShapes) {
                     selectedHitPointType = ls.findHitPointType(dLoc, true);
                     if (LayoutShape.isShapePointOffsetHitPointType(selectedHitPointType)) {
-                        log.warn("extend selectedObject: ", ls);
+                        //log.warn("extend selectedObject: ", ls);
                         selectedObject = ls;    // nope, we're extending
                         beginLocation.setLocation(dLoc);
                         currentLocation.setLocation(beginLocation);
@@ -9642,6 +9642,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         // things that only get drawn in edit mode
         if (isEditable()) {
             drawLayoutTrackEditControls(g2);
+            drawShapeEditControls(g2);
 
             drawMemoryRects(g2);
             drawBlockContentsRects(g2);
@@ -9988,20 +9989,11 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     // draw shapes
     private void drawShapes(Graphics2D g2, boolean isBackground) {
-        for (LayoutShape s : layoutShapes) {
-            if (isBackground) {
-                if (s.getLevel() < 3) {
-                    s.draw(g2);
-                }
-            } else {
-                if (s.getLevel() >= 3) {
-                    s.draw(g2);
-                }
+        layoutShapes.forEach((s) -> {
+            if (isBackground == (s.getLevel() < 3)) {
+                s.draw(g2);
             }
-            if (isEditable()) {
-                s.drawEditControls(g2);
-            }
-        }
+        });
     }
 
     // draw track segment (in progress)
@@ -10039,9 +10031,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             //log.warn("drawShapeInProgress: selectedObject: " + selectedObject);
             if ((selectedObject != null)) {
 //                    && (LayoutShape.isShapePointOffsetHitPointType(selectedHitPointType))) {
-//            log.warn("drawShapeInProgress: selectedHitPointType: " + selectedHitPointType);
-                log.warn("beginLocation: " + beginLocation);
-                log.warn("currentLocation: " + currentLocation);
+//                log.warn("drawShapeInProgress: selectedHitPointType: " + selectedHitPointType);
+//                log.warn("beginLocation: " + beginLocation);
+//                log.warn("currentLocation: " + currentLocation);
 
                 g2.setColor(Color.DARK_GRAY);
                 g2.setStroke(new BasicStroke(3.0F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
@@ -10056,6 +10048,13 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
         layoutTrackList.forEach((tr) -> {
             tr.drawEditControls(g2);
+        });
+    }
+
+    private void drawShapeEditControls(Graphics2D g2) {
+        g2.setStroke(new BasicStroke(1.0F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
+        layoutShapes.forEach((s) -> {
+            s.drawEditControls(g2);
         });
     }
 
@@ -10320,6 +10319,16 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     public List<LayoutShape> getLayoutShapes() {
         return layoutShapes;
+    }
+
+    public void sortLayoutShapesByLevel() {
+        Collections.sort(layoutShapes, new Comparator<LayoutShape>() {
+            @Override
+            public int compare(LayoutShape lhs, LayoutShape rhs) {
+                // -1 == less than, +1 == greater than, 0 == equal
+                return Integer.signum(lhs.getLevel() - rhs.getLevel());
+            }
+        });
     }
 
     @Override
