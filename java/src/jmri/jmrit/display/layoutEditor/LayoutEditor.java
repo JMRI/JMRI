@@ -6796,7 +6796,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                                 ((LayoutShape) selectedObject).setCoordsCenter(currentPoint);
                             } else if (LayoutShape.isShapePointOffsetHitPointType(selectedHitPointType)) {
                                 int index = selectedHitPointType - LayoutTrack.SHAPE_POINT_OFFSET_MIN;
-                                ((LayoutShape) selectedObject).setPoint(currentPoint, index);
+                                ((LayoutShape) selectedObject).setPoint(index, currentPoint);
                             } else if (selectedHitPointType >= LayoutTrack.TURNTABLE_RAY_OFFSET) {
                                 LayoutTurntable turn = (LayoutTurntable) selectedObject;
                                 turn.setRayCoordsIndexed(currentPoint.getX(), currentPoint.getY(),

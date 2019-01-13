@@ -116,8 +116,18 @@ public class LayoutShape {
          * @param c Point2D for initial point
          */
         public LayoutShapePoint(Point2D c) {
-            this.point = c;
             this.type = LayoutShapePointType.eVertex;
+            this.point = c;
+        }
+
+        /**
+         * constructor method
+         *
+         * @param c Point2D for initial point
+         */
+        public LayoutShapePoint(LayoutShapePointType t, Point2D c) {
+            this(c);
+            this.type = t;
         }
 
         /**
@@ -156,18 +166,39 @@ public class LayoutShape {
     private final ArrayList<LayoutShapePoint> shapePoints;
 
     /**
-     * constructor method
+     * constructor method (used by XML loading code)
+     *
+     * @param name         the name of the shape
+     * @param layoutEditor reference to the LayoutEditor this shape is in
+     */
+    public LayoutShape(String name, LayoutEditor layoutEditor) {
+        this.name = name;
+        this.layoutEditor = layoutEditor;
+        this.layoutShapeType = LayoutShapeType.eOpen;
+        this.shapePoints = new ArrayList<>();
+    }
+
+    /**
+     * constructor method (used by XML loading code)
+     *
+     * @param name         the name of the shape
+     * @param layoutEditor reference to the LayoutEditor this shape is in
+     */
+    public LayoutShape(String name, LayoutShapeType t, LayoutEditor layoutEditor) {
+        this(name, layoutEditor);
+        this.layoutShapeType = t;
+    }
+
+    /**
+     * constructor method (used by LayoutEditor)
      *
      * @param name         the name of the shape
      * @param c            the Point2D for the initial point
      * @param layoutEditor reference to the LayoutEditor this shape is in
      */
     public LayoutShape(String name, Point2D c, LayoutEditor layoutEditor) {
-        this.layoutShapeType = LayoutShapeType.eOpen;
-        this.shapePoints = new ArrayList<>();
-        this.name = name;
+        this(name, layoutEditor);
         this.shapePoints.add(new LayoutShapePoint(c));
-        this.layoutEditor = layoutEditor;
     }
 
     // this should only be used for debugging...
@@ -242,20 +273,40 @@ public class LayoutShape {
         }
     }
 
+    /**
+     * add point
+     * @param p the point to add
+     */
     public void addPoint(Point2D p) {
         if (shapePoints.size() < getMaxNumberPoints()) {
             shapePoints.add(new LayoutShapePoint(p));
         }
     }
 
-    public void setPoint(Point2D p, int idx) {
+    /**
+     * add point
+     * @param t the type of point to add
+     * @param p the point to add
+     */
+    public void addPoint(LayoutShapePointType t, Point2D p) {
+        if (shapePoints.size() < getMaxNumberPoints()) {
+            shapePoints.add(new LayoutShapePoint(t, p));
+        }
+    }
+
+    /**
+     * set point
+     * @param idx the index of the point to add
+     * @param p the point to add
+     */
+    public void setPoint(int idx, Point2D p) {
         if (idx < shapePoints.size()) {
             shapePoints.get(idx).setPoint(p);
         }
     }
 
     // should only be used by xml save code
-    protected ArrayList<LayoutShapePoint> getPointList() {
+    public ArrayList<LayoutShapePoint> getPoints() {
         return shapePoints;
     }
 

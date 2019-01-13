@@ -19,6 +19,7 @@ import org.slf4j.LoggerFactory;
    PositionablePointXmlTest.class,
    TrackSegmentXmlTest.class,
    BundleTest.class,
+   LayoutShapeXmlTest.class,
    LayoutTrackDrawingOptionsXmlTest.class,
 })
 /**

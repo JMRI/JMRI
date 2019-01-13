@@ -97,7 +97,7 @@ public class LayoutShapeTest {
         ls.setCoordsCenter(newCenterPoint);
         Assert.assertEquals("ls.getCoordsCenter equals...", newCenterPoint, ls.getCoordsCenter());
 
-        ArrayList<LayoutShape.LayoutShapePoint> lspoints = ls.getPointList();
+        ArrayList<LayoutShape.LayoutShapePoint> lspoints = ls.getPoints();
 
         Assert.assertEquals("ls.getPoint(0) equals...", new Point2D.Double(50.0, 125.0), lspoints.get(0).getPoint());
         Assert.assertEquals("ls.getPoint(1) equals...", new Point2D.Double(100.0, 125.0), lspoints.get(1).getPoint());
@@ -115,7 +115,7 @@ public class LayoutShapeTest {
         Assert.assertEquals("ls.getCoordsCenter ",
                 new Point2D.Double(112.5, 312.5), ls.getCoordsCenter());
 
-        ArrayList<LayoutShape.LayoutShapePoint> lspoints = ls.getPointList();
+        ArrayList<LayoutShape.LayoutShapePoint> lspoints = ls.getPoints();
 
         Assert.assertEquals("ls.getPoint(0) equals...", new Point2D.Double(75.0, 250.0), lspoints.get(0).getPoint());
         Assert.assertEquals("ls.getPoint(1) equals...", new Point2D.Double(150.0, 250.0), lspoints.get(1).getPoint());
@@ -134,7 +134,7 @@ public class LayoutShapeTest {
                 new Point2D.Double(90.5, 150.5), ls.getCoordsCenter());
 
 
-        ArrayList<LayoutShape.LayoutShapePoint> lspoints = ls.getPointList();
+        ArrayList<LayoutShape.LayoutShapePoint> lspoints = ls.getPoints();
 
         Assert.assertEquals("ls.getPoint(0) equals...", new Point2D.Double(65.5, 125.5), lspoints.get(0).getPoint());
         Assert.assertEquals("ls.getPoint(1) equals...", new Point2D.Double(115.5, 125.5), lspoints.get(1).getPoint());
@@ -158,7 +158,7 @@ public class LayoutShapeTest {
         ///Assert.assertTrue("ls.findHitPointType equals SHAPE_CENTER", hitType == LayoutTrack.SHAPE_CENTER);
 
 
-        ArrayList<LayoutShape.LayoutShapePoint> lspoints = ls.getPointList();
+        ArrayList<LayoutShape.LayoutShapePoint> lspoints = ls.getPoints();
 
         hitType = ls.findHitPointType(lspoints.get(0).getPoint(), true);
         Assert.assertEquals("ls.findHitPointType(point[0]) equals SHAPE_POINT_OFFSET_MIN", LayoutTrack.SHAPE_POINT_OFFSET_MIN, hitType);
