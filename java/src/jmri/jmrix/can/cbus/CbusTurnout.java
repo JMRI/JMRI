@@ -80,6 +80,7 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
         else {
             m.setOpCode(CbusConstants.CBUS_AREQ);
         }
+        CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
         tc.sendCanMessage(m, this);
     }
     
@@ -97,6 +98,7 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
             } else {
                 m = addrThrown.makeMessage(tc.getCanid());
             }
+            CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
             tc.sendCanMessage(m, this);
         } 
         if (s == Turnout.CLOSED) {
@@ -106,6 +108,7 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
             else {
                 m = addrClosed.makeMessage(tc.getCanid());
             }
+            CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
             tc.sendCanMessage(m, this);
         }
     }
