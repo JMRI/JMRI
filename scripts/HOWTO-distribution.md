@@ -203,7 +203,7 @@ git push github
 
 - Check that the correct milestone is on all merged pulls. This is needed for the release note. Start with the list of PRs merged since the last test release was started:
 ```
-https://github.com/JMRI/JMRI/pulls?q=is%3Apr+is%3Aclosed+merged%3A%3E2016-08-13+no%3Amilestone
+https://github.com/JMRI/JMRI/pulls?q=is%3Apr+is%3Aclosed+merged%3A%3E2018-12-13+no%3Amilestone
 ```
 where the date at the end should be the date (and optionally time) of the last release. For each, if it doesn't have the right milestone set, and is a change to the release code (e.g. isn't just a change to the CI settings or similar), add the current milestone.  
 
@@ -386,9 +386,9 @@ Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.4.13.6+Rcb07def.dmg](https://github.com/JMRI/JMRI/releases/download/v4.13.6/JMRI.4.13.6+Rcb07def.dmg) | 6deb881792c4cf03a3088196a2d19f9d303999d2aa31e0e913a61fd4312f5f13
-[JMRI.4.13.6+Rcb07def.exe](https://github.com/JMRI/JMRI/releases/download/v4.13.6/JMRI.4.13.6+Rcb07def.exe) | 21ebcac7d872f02a353f482e954b0d2ecec0df0a3eac3fdc20bd2f168fa4ebaa
-[JMRI.4.13.6+Rcb07def.tgz](https://github.com/JMRI/JMRI/releases/download/v4.13.6/JMRI.4.13.6+Rcb07def.tgz) | dfc165645ffc13b2b5f88b2c29a4510ec70204244a5a84b77a0e4425806ae38a
+[JMRI.4.15.2+Rfda0762.dmg](https://github.com/JMRI/JMRI/releases/download/v4.15.2/JMRI.4.15.2+Rfda0762.dmg) | 3a9bf1dc406e9e22a49dad149d9eda5f514bde046730e2de6f78bc391827bddd
+[JMRI.4.15.2+Rfda0762.exe](https://github.com/JMRI/JMRI/releases/download/v4.15.2/JMRI.4.15.2+Rfda0762.exe) | 9ef30f469a5390dfa9586c3a8c7174f5a224f2091f2e95011c80dd8a603856a4
+[JMRI.4.15.2+Rfda0762.tgz](https://github.com/JMRI/JMRI/releases/download/v4.15.2/JMRI.4.15.2+Rfda0762.tgz) | e03646519f020ad1421bc78c22ed85ce082191b8f91c40d7d722105d1d6f0633
 ```
 
 - Attach files by selecting them or dragging them in. Make sure that the Linux one is .tgz, not .tar.
@@ -440,7 +440,7 @@ If there are any changes in other files, do both of:
 This is the next release in the 4.16 cycle. It's intended to be released around (July 12) from HEAD of master.
 ```
 
-- Confirm that the tag for the current release (v4.15.2 for release 4.15.2) is in place via the [tags page](https://github.com/JMRI/JMRI/tags), then manually delete the current release branch (release-4.15.2) via the [GitHub branches page](https://github.com/JMRI/JMRI/branches).  (N.B. We are experimenting with having the `release*` branches protected, in which case you may have to go to Setting; Branches; then edit the Release* branch name to ReleaseX* to disable the protection before removing the branch.  If you do that, remember to replace the protection!)
+- Confirm that the tag for the current release (v4.15.2 for release 4.15.2) is in place via the [tags page](https://github.com/JMRI/JMRI/tags), then manually delete the current release branch (release-4.15.2) via the [GitHub branches page](https://github.com/JMRI/JMRI/branches).  (N.B. We are experimenting with having the `release*` branches protected, in which case you may have to go to Setting; Branches; then edit the release* branch name to releaseX* to disable the protection before removing the branch.  If you do that, remember to replace the protection!)
 
 - Go to the GitHub PR and Issues [labels list](https://github.com/JMRI/JMRI/labels) and remove any "afterNextTestRelease" (and "afterNextProductionRelease" if appropriate) labels from done items
 
