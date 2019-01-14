@@ -134,10 +134,10 @@ public class MatrixSignalMastTest {
         JUnitUtil.waitFor(250); // next test fails on Travis and Appveyor servers without waitFor
         Assert.assertEquals("it11 for Clear", Turnout.CLOSED, it11.getCommandedState());
         // mast delay + interval = 0 but it12 state is fragile (expected state on it12 happens to be identical to it11)
-        m.setAspect("Stop"); // remove test if it takes too long as part of alltest
-        Assert.assertEquals("check stop", "Stop", m.getAspect());
-        JUnitUtil.waitFor(600); // next test fails on Travis and Appveyor servers without waitFor
-        Assert.assertEquals("it11 for Stop", Turnout.THROWN, it11.getCommandedState()); // mast delay + interval = 0
+//        m.setAspect("Stop"); // removed test since it will take too long as part of alltest
+//        Assert.assertEquals("check stop", "Stop", m.getAspect());
+//        JUnitUtil.waitFor(600); // next test fails on Travis and Appveyor servers without waitFor
+//        Assert.assertEquals("it11 for Stop", Turnout.THROWN, it11.getCommandedState()); // mast delay + interval = 0
     }
 
     public void testAspectAttributes() {
