@@ -52,7 +52,6 @@ public class CbusLightTest extends jmri.implementation.AbstractLightTestBase {
         }
     }
 
-
     @Test
     public void testCTorShortEventSingle() {
         t = new CbusLight("ML","+7",tcis);
@@ -367,6 +366,54 @@ public class CbusLightTest extends jmri.implementation.AbstractLightTestBase {
   
     }
 
+    // with presence of node number should still resolve to short event turnout due to opc
+    @Test
+    public void testLightCanMessageShortEvWithNode() throws jmri.JmriException {
+        CbusLight t = new CbusLight("ML","+12345",tcis);
+        CanMessage m = new CanMessage(tcis.getCanid());
+        m.setNumDataElements(5);
+        m.setElement(0, 0x95); // EVULN OPC
+        m.setElement(1, 0xd4);
+        m.setElement(2, 0x31);
+        m.setElement(3, 0x30);
+        m.setElement(4, 0x39);
+        t.message(m);
+        Assert.assertTrue(t.getState() == Light.OFF);
+        
+        m.setElement(0, 0x98); // ASON OPC
+        t.message(m);
+        Assert.assertTrue(t.getState() == Light.ON);
+        
+        m.setElement(0, 0x99); // ASOF OPC
+        t.message(m);
+        Assert.assertTrue(t.getState() == Light.OFF);
+        
+    }
+    
+    // with presence of node number should still resolve to short event turnout due to opc
+    @Test
+    public void testLightCanReplyShortEvWithNode() throws jmri.JmriException {
+        CbusLight t = new CbusLight("ML","+12345",tcis);
+        CanReply r = new CanReply(tcis.getCanid());
+        r.setNumDataElements(5);
+        r.setElement(0, 0x95); // EVULN OPC
+        r.setElement(1, 0xd4);
+        r.setElement(2, 0x31);
+        r.setElement(3, 0x30);
+        r.setElement(4, 0x39);
+        t.reply(r);
+        Assert.assertTrue(t.getState() == Light.OFF);
+        
+        r.setElement(0, 0x98); // ASON OPC
+        t.reply(r);
+        Assert.assertTrue(t.getState() == Light.ON);
+        
+        r.setElement(0, 0x99); // ASOF OPC
+        t.reply(r);
+        Assert.assertTrue(t.getState() == Light.OFF);
+        
+    }
+
     public void checkStatusRequestMsgSent() {
         Assert.assertEquals("same object", ("[78] 92 01 C8 01 41"), 
             (tcis.outbound.elementAt(tcis.outbound.size() - 1).toString()));
@@ -399,6 +446,22 @@ public class CbusLightTest extends jmri.implementation.AbstractLightTestBase {
         int testnum3 = numListeners();
         Assert.assertEquals("number decreased",testnum , testnum3 );
         
+    }
+
+    @Test
+    public void testIntensity() {
+        
+        Assert.assertTrue(0 == t.getCurrentIntensity());
+        t.setTargetIntensity(1);
+        Assert.assertTrue(1.0 == t.getCurrentIntensity());
+        Assert.assertEquals("intensity on","[78] 90 01 C8 01 41" , 
+            (tcis.outbound.elementAt(tcis.outbound.size() - 1).toString()) );
+        t.setTargetIntensity(0.0);
+        Assert.assertTrue(0 == t.getCurrentIntensity());
+        Assert.assertEquals("intensity on","[78] 91 01 C8 01 41" , 
+            (tcis.outbound.elementAt(tcis.outbound.size() - 1).toString()) );        
+        
+         // t.setTargetIntensity(0.25); not currently defined for CBUS
     }
 
     // The minimal setup for log4J

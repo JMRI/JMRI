@@ -68,7 +68,7 @@ public class Z21CanReporter extends jmri.implementation.AbstractRailComReporter 
     // the Z21 Listener interface
 
     /**
-     * { @inheritDoc }
+     * {@inheritDoc}
      */
     @Override
     public void reply(Z21Reply msg){
@@ -88,29 +88,32 @@ public class Z21CanReporter extends jmri.implementation.AbstractRailComReporter 
             log.debug("reporter message type {}",type);
             if (type >= 0x11 && type <= 0x1f) {
                if(type==0x11) { // restart the list.
-                  log.debug("clear list, size {}",idTags.size());
+                  log.trace("clear list, size {}",idTags.size());
                   idTags.clear();
+                  notify(null);
                }
                int value1 = (msg.getElement(10)&0xFF) + ((msg.getElement(11)&0xFF) << 8);
                int value2 = (msg.getElement(12)&0xFF) + ((msg.getElement(13)&0xFF) << 8);
                RailCom tag = getRailComTagFromValue(msg,value1);
                if(tag != null ) {
-                  log.debug("add tag {}",tag);
+                  log.trace("add tag {}",tag);
                   notify(tag);
                   idTags.add(tag);
-                  log.debug("after add, new list size {}",idTags.size());
                   // add the tag to the collection
                   tag = getRailComTagFromValue(msg,value2);
                   if(tag != null ) {
-                     log.debug("add tag {} ",tag);
+                     log.trace("add tag {} ",tag);
                      notify(tag);
                      // add the tag to idTags
                      idTags.add(tag);
-                     log.debug("after add, new list size {}",idTags.size());
                   }
-               } else if(type==0x11) { // address is 0 and first in list.
-                  // we cleared the list, so send the empty report.
-                  notify(null);
+               }
+               if(log.isDebugEnabled()){
+                  log.debug("after message, new list size {}",idTags.size());
+                  int i = 0;
+                  for(RailCom id:idTags){
+                      log.debug("{}: {}",i++,id);
+                  }
                }
             } else if( type == 0x01 ) {
                 // status message, not a railcom value, so no report.
@@ -148,7 +151,7 @@ public class Z21CanReporter extends jmri.implementation.AbstractRailComReporter 
     }
 
     /**
-     * { @inheritDoc }
+     * {@inheritDoc}
      */
     @Override
     public void message(Z21Message msg){
@@ -162,7 +165,7 @@ public class Z21CanReporter extends jmri.implementation.AbstractRailComReporter 
 
     // the CollectingReporter interface.
     /**
-     * { @inheritDoc }
+     * {@inheritDoc}
      */
     @Override 
     public java.util.Collection getCollection(){
