@@ -68,7 +68,7 @@ public class Z21CanReporter extends jmri.implementation.AbstractRailComReporter 
     // the Z21 Listener interface
 
     /**
-     * { @inheritDoc }
+     * {@inheritDoc}
      */
     @Override
     public void reply(Z21Reply msg){
@@ -148,7 +148,7 @@ public class Z21CanReporter extends jmri.implementation.AbstractRailComReporter 
     }
 
     /**
-     * { @inheritDoc }
+     * {@inheritDoc}
      */
     @Override
     public void message(Z21Message msg){
@@ -162,7 +162,7 @@ public class Z21CanReporter extends jmri.implementation.AbstractRailComReporter 
 
     // the CollectingReporter interface.
     /**
-     * { @inheritDoc }
+     * {@inheritDoc}
      */
     @Override 
     public java.util.Collection getCollection(){
