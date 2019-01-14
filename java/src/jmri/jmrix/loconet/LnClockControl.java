@@ -96,20 +96,135 @@ public class LnClockControl extends DefaultClockControl implements SlotListener,
         clock.addMinuteChangeListener(minuteChangeListener);
     }
 
+    final SlotManager sm;
+    final LnTrafficController tc;
+    final LnPowerManager pm;
+
     /**
-     * True, we are trying to find the minimum valid value of fracMin.
-     * If false will terminate thread, so must be volatile
+     * The throttle ID used for setting the clock and broadcasting LnClockControl time packets
      */
-    private volatile boolean waitingForCommandStationClockSync = false;
+    private final int clockThrottleId = 0x01CC;
+
+    /* Operational variables */
+    jmri.Timebase clock = null;
+    java.beans.PropertyChangeListener minuteChangeListener = null;
+
+    /* current values of clock variables */
+    private int curDays = 0;
+    private int curHours = 0;
+    private int curMinutes = 0;
+    private int curMilliSeconds = 0;
+    private int curRate = 1;
+    private int savedRate = 1;
+
+    /**
+     * When less that 1, we are on a whole real minute.
+     */
+    private int fastClockCounter = -1;
+
+    /**
+     * CommandStation timings discovery is active while the value is greater than 0.
+     * exposed for tests
+     */
+    protected int commandStationSyncLimit = 0;
     private boolean found7FCommandStationClockSync = false;
-    private int commandStationFracType =1;
     private int prevHiFrac = 0;
     private int prevLoFrac = 0;
     private int newCommandStationZero = 0x8000;
 
+    /**
+     * Initialized to commandStationEndMinute. Indicates that
+     * the Command Station fast clock has not be calibrated.
+     * Once calibrated it holds the value of the minFrac
+     * minute = zero.
+     */
+    private int commandStationZeroSecond =  0x8000;
+    private final int commandStationEndMinute = 0x8000;
+    private final int commandStationEndMinuteType1 = 0x4000; //14bit
+    private final int commandStationEndMinuteType2 = 0x8000; //16bit
+
+    public enum CommandStationFracType {
+        TYPE1,
+        TYPE2
+    }
+    private CommandStationFracType commandStationFracType = CommandStationFracType.TYPE1;
+
+    /**
+     * This must be in the correct type 1 or type 2 format
+     * If set will prevent CS clock speed and type discovery
+     * @param val - the value of the Zero Second.
+     *       either 16bit integer.
+     *       or 14 bit integer ( Hi &gt;&gt; 1 + LO )
+     */
+    public void setCommandStationZeroSecond(int val) {
+        commandStationZeroSecond = val;
+    }
+    
+    public int getCommandStationZeroSecond() {
+        return commandStationZeroSecond;
+    }
+
+    /**
+     * The command station clock type
+     * @param val 1 = type 1 (14bit) type 2 = 16bit.
+     */
+    public void setCommandStationFracType(CommandStationFracType val) {
+        commandStationFracType = val;
+    }
+
+    public CommandStationFracType getCommandStationFracType() {
+        return commandStationFracType;
+    }
+
+    /**
+     * Force a Calibration Cycle - Total Reset
+     */
+    public void startCalibrate() {
+        commandStationFracType = CommandStationFracType.TYPE1;
+        commandStationZeroSecond =  commandStationEndMinute;
+        calibrateCommandStationClock();
+    }
+
+    /**
+     * Convert milliseconds to minFrac
+     * @param milliSecs time in milliseconds
+     * @return the HI LO as an integer and adjusted.
+     */
+    public int convertMilliSecondsToFcFracMin(int milliSecs) {
+        int fracmins;
+        if (commandStationFracType == CommandStationFracType.TYPE1) {
+            fracmins = (((commandStationEndMinuteType1 - commandStationZeroSecond) * milliSecs) / (int) MSECPERMINUTE ) + commandStationZeroSecond ;
+            // the completed calculation fits.
+            return (((fracmins & 0x7F80) << 1) +  (fracmins & 0x00F7));
+        } else {
+            fracmins = (((commandStationEndMinuteType2 - commandStationZeroSecond) * milliSecs) / (int) MSECPERMINUTE ) + commandStationZeroSecond ;
+            return (fracmins & 0x7FFF);
+        }
+    }
+
+    /**
+     * Convert  minFrac to milliseconds
+     * @param fcMinFrac time in milliseconds
+     * @return the HI LO as an integer and adjusted.
+     */
+    public int convertFcFracMinToMilliSeconds(int fcMinFrac) {
+        long millis = 0;
+        if (commandStationZeroSecond == commandStationEndMinute) {
+            // not calibrated
+            return 0;
+        }
+        if (commandStationFracType == CommandStationFracType.TYPE1) {
+            int temp = (( fcMinFrac & 0x4f00 ) * 128) + ( fcMinFrac & 0x7F );
+            millis = (( temp - commandStationZeroSecond ) * MSECPERMINUTE )/ (commandStationEndMinuteType1 - commandStationZeroSecond );
+        } else {
+            millis = (( fcMinFrac - commandStationZeroSecond ) * MSECPERMINUTE )/ (commandStationEndMinuteType2 - commandStationZeroSecond );
+        }
+        return (int) millis;
+    }
+
     @Override
     public void message(LocoNetMessage msg) {
-        if (waitingForCommandStationClockSync) {
+        if (commandStationSyncLimit > 0) {
             // get the FracHigh Byte
             if ((msg.getOpCode() == LnConstants.OPC_SL_RD_DATA ) &&
                     msg.getElement(1) == 0x0E &&
@@ -127,13 +242,14 @@ public class LnClockControl extends DefaultClockControl implements SlotListener,
                     log.debug("Found 7F");
                     found7FCommandStationClockSync = true;
                 }
-                if (commandStationFracType == 1 && prevHiFrac == msg.getElement(5) && prevLoFrac > msg.getElement(4) ) {
+                if (commandStationFracType == CommandStationFracType.TYPE1 && prevHiFrac == msg.getElement(5) && prevLoFrac > msg.getElement(4) ) {
                     log.debug("Found CS Type 2");
-                    commandStationFracType = 2;
+                    commandStationFracType = CommandStationFracType.TYPE2;
                 }
                 prevHiFrac = msg.getElement(5);
                 prevLoFrac = msg.getElement(4);
             }
+            commandStationSyncLimit--;
             return;
         }
         if (useInternal && synchronizeWithInternalClock) {
@@ -143,50 +259,13 @@ public class LnClockControl extends DefaultClockControl implements SlotListener,
                     msg.getElement(1) == 0x7B &&
                     msg.getElement(2) == 0x00) {
                 log.debug("Replying to FC slot read");
-                sendClockMsg(false, minuteFracType.MINUTE_NORMAL, false);
+                sendClockMsg(false, MinuteFracType.MINUTE_NORMAL, false);
             } else if (msg.getOpCode() == LnConstants.OPC_PANEL_QUERY && msg.getElement(1) == 0x00) {
                 log.debug("Replying to Panel Query");
-                sendClockMsg(false, minuteFracType.MINUTE_NORMAL, false);
+                sendClockMsg(false, MinuteFracType.MINUTE_NORMAL, false);
             }
         }
     }
-
-    final SlotManager sm;
-    final LnTrafficController tc;
-    final LnPowerManager pm;
-
-    /**
-     * The throttle ID used for setting the clock and broadcasting LnClockControl time packets
-     */
-    private final int clockThrottleId = 0x01CC;
-
-    /**
-     * Initialized to commandStationEndMinute. Indicates that
-     * the Command Station fast clock has not be calibrated.
-     * Once calibrated it holds the value of the minFrac
-     * minute = zero.
-     */
-    private int commandStationZeroSecond =  0x8000;
-    private int commandStationEndMinute = 0x8000;
-    private final int commandStationEndMinuteType1 = 0x4000;
-    private final int commandStationEndMinuteType2 = 0x8000;
-
-    /* Operational variables */
-    jmri.Timebase clock = null;
-    java.beans.PropertyChangeListener minuteChangeListener = null;
-
-    /* current values of clock variables */
-    private int curDays = 0;
-    private int curHours = 0;
-    private int curMinutes = 0;
-    private int curFractionalMinutes = 900;
-    private int curRate = 1;
-    private int savedRate = 1;
-
-    /**
-     * When less that 1, we are on a whole real minute.
-     */
-    private int fastClockCounter = -1;
 
     /* current options and flags */
     /**
@@ -209,11 +288,11 @@ public class LnClockControl extends DefaultClockControl implements SlotListener,
     private boolean timebaseErrorReported = false;
 
     /**
-     * Number of milli seconds per hour
+     * Number of milliseconds per hour
      */
     final static long MSECPERHOUR = 3600000;
     /**
-     * Number of milli seconds per minute
+     * Number of milliseconds per minute
      */
     final static long MSECPERMINUTE = 60000;
 
@@ -221,11 +300,11 @@ public class LnClockControl extends DefaultClockControl implements SlotListener,
      * Describes the type of minute fraction required
      *
      */
-    private enum  minuteFracType {
+    private enum  MinuteFracType {
         MINUTE_START,
         MINUTE_NORMAL,
         MINUTE_END
-    };
+    }
 
     /**
      * Accessor routines
@@ -273,21 +352,14 @@ public class LnClockControl extends DefaultClockControl implements SlotListener,
         curDays = now.getDate();
         curHours = now.getHours();
         curMinutes = now.getMinutes();
+        curMilliSeconds = (int) (now.getTime() % MSECPERMINUTE);
         setClock();
     }
 
     @SuppressWarnings("deprecation")
     @Override
     public Date getTime() {
-        Date tem = clock.getTime();
-        int cHours = tem.getHours();
-        long cNumMSec = tem.getTime();
-        long nNumMSec = ((cNumMSec / MSECPERHOUR) * MSECPERHOUR) - (cHours * MSECPERHOUR)
-                + (curHours * MSECPERHOUR) + (curMinutes * MSECPERMINUTE);
-        // Work out how far through the current fast minute we are
-        // and add that on to the time.
-        nNumMSec += (long) ( curFractionalMinutes - commandStationZeroSecond ) / (commandStationEndMinute - commandStationZeroSecond) * MSECPERMINUTE;
-        return (new Date(nNumMSec));
+        return clock.getTime();
     }
 
     @Override
@@ -307,6 +379,20 @@ public class LnClockControl extends DefaultClockControl implements SlotListener,
         setClock();
     }
 
+    /**
+     * Used for the sole purpose of disabling calibration in the test environment
+     */
+    public enum TestState {
+        NOT_TESTING,
+        TESTING_NO_SYNC,
+        TESTING_WITH_SYNC
+    }
+
+    private TestState testState =  TestState.NOT_TESTING;
+
+    public void setTestState(TestState val) {
+        testState = val;
+    }
 
     @SuppressWarnings("deprecation")
     @Override
@@ -335,12 +421,14 @@ public class LnClockControl extends DefaultClockControl implements SlotListener,
         curDays = now.getDate();
         curHours = now.getHours();
         curMinutes = now.getMinutes();
-
+        curMilliSeconds = (int) (now.getTime() % MSECPERMINUTE);
         if (!getTime) {
             setTime(now);
         }
 
-        calibrateCommandStationClock();
+        if (commandStationZeroSecond == commandStationEndMinute && testState != TestState.TESTING_NO_SYNC) {
+            calibrateCommandStationClock();
+        }
 
         // force a correction at next fast minute after calibration
         fastClockCounter = -1;
@@ -352,38 +440,58 @@ public class LnClockControl extends DefaultClockControl implements SlotListener,
      * from the last increment or the minute to xx
      *
      */
-    private void calibrateCommandStationClock() {
+    public void calibrateCommandStationClock() {
         // ensure old thread dead.
-        waitingForCommandStationClockSync = false;
+        commandStationSyncLimit = 0;
         try {
             Thread.sleep(1000);
         } catch (Exception Ex) {
+            log.trace("Killed - Give Up");
             return;
         }
-        sendClockMsg(true, minuteFracType.MINUTE_END, true);
+        sendClockMsg(true, MinuteFracType.MINUTE_END, true);
         newCommandStationZero = 0x7FFF; // force big,type 2. we need the min.
-        // start new thread.
-        waitingForCommandStationClockSync = true;
+        found7FCommandStationClockSync = false;
+        // start new thread to pump the FastSlot
         new Thread(new Runnable() {
             @Override
             public void run() {
-                int everyMilli = 250;
-                int limit = 5000 / everyMilli;
+                int everyMilli = 100;
+                int limit = 10000 / everyMilli;
+                if (testState == TestState.TESTING_WITH_SYNC) {
+                    everyMilli = 100;
+                    limit = 5;
+                }
+                commandStationSyncLimit = limit;
                 for (int i = 0; i < limit; i++) {
-                    if (!waitingForCommandStationClockSync) {
-                        return;
-                    }
-                    try { Thread.sleep(everyMilli); }
-                    catch (Exception Ex) {
-                        // we are killed, die.
-                        waitingForCommandStationClockSync =false;
+                    if (commandStationSyncLimit < 1) {
                         return;
                     }
                     initiateRead();
+                    try { Thread.sleep(everyMilli); }
+                    catch (Exception Ex) {
+                        // we are killed, die.
+                        commandStationSyncLimit = 0;
+                        return;
+                    }
                 }
-                waitingForCommandStationClockSync = false;
             }
         }).start();
+        // emergency brake so no command station?
+        // 30 secs max.
+/*        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(30000);
+                } catch (Exception Ex) {
+                    // we are killed, die.
+                    commandStationSyncLimit = 0;
+                    return;
+                }
+                commandStationSyncLimit = 0;
+            }
+        }).start(); */
     }
 
     /**
@@ -398,15 +506,26 @@ public class LnClockControl extends DefaultClockControl implements SlotListener,
      * Skip this if we are calibrating
      */
     public void newMinute() {
-        if (waitingForCommandStationClockSync) {
+        if (commandStationSyncLimit > 0) {
             // dont mess with the syncing
             return;
         }
+        // cant use real time for testing
+        if (testState == TestState.NOT_TESTING) {
+            Date now = clock.getTime();
+            curDays = now.getDate();
+            curHours = now.getHours();
+            curMinutes = now.getMinutes();
+            curMilliSeconds = (int) (now.getTime() % MSECPERMINUTE);
+            curRate = (int) clock.getRate();
+        }
+
         if (newCommandStationZero < commandStationZeroSecond) {
-            if (commandStationFracType == 1) {
-                commandStationZeroSecond = newCommandStationZero & 0x7f00 >> 1 & newCommandStationZero & 0x7f;
+            if (commandStationFracType == CommandStationFracType.TYPE1) {
+                commandStationZeroSecond = (( newCommandStationZero & 0x7f00 ) >> 1) + (newCommandStationZero & 0x7f);
+            } else {
+                commandStationZeroSecond = newCommandStationZero;
             }
-            commandStationZeroSecond = newCommandStationZero;
             // if synchronizing send immediate.
             fastClockCounter = -1;
         }
@@ -415,7 +534,7 @@ public class LnClockControl extends DefaultClockControl implements SlotListener,
             fastClockCounter -= 1;
             if (fastClockCounter < 1) {
                 log.debug("Send Write Master Time");
-                sendClockMsg(true,  minuteFracType.MINUTE_START, false);
+                sendClockMsg(true,  MinuteFracType.MINUTE_START, false);
                 fastClockCounter = curRate;
             }
         }
@@ -424,7 +543,7 @@ public class LnClockControl extends DefaultClockControl implements SlotListener,
             fastClockCounter -= 1;
             if (fastClockCounter < 1) {
                 log.debug("Send Heartbeat/Master Blast");
-                sendClockMsg(false, minuteFracType.MINUTE_START, false);
+                sendClockMsg(false, MinuteFracType.MINUTE_START, false);
                 fastClockCounter = curRate;
             }
         }
@@ -474,6 +593,7 @@ public class LnClockControl extends DefaultClockControl implements SlotListener,
         curDays = s.getFcDays();
         curHours = s.getFcHours();
         curMinutes = s.getFcMinutes();
+        curMilliSeconds = convertFcFracMinToMilliSeconds(s.getFcFracMins());
         if (curRate != s.getFcRate()) {
             try {
                 clock.userSetRate(s.getFcRate());
@@ -485,7 +605,9 @@ public class LnClockControl extends DefaultClockControl implements SlotListener,
                 }
             }
         }
-        curFractionalMinutes = s.getFcFracMins();
+        // We are a  LocoNet Slave. Do not calculate or use minFrac/curMilliSeconds
+        // as DTxxx throttles dont, and if we did we would be fast.
+        // curMilliSeconds = milliSecondsFromFrac(s.getFcFracMins());
         // we calculate a new msec value for a specific hour/minute
         // in the current day, then set that.
         Date tem = clock.getTime();
@@ -493,8 +615,6 @@ public class LnClockControl extends DefaultClockControl implements SlotListener,
         long cNumMSec = tem.getTime();
         long nNumMSec = ((cNumMSec / MSECPERHOUR) * MSECPERHOUR) - (cHours * MSECPERHOUR)
                 + (curHours * MSECPERHOUR) + (curMinutes * MSECPERMINUTE);
-        // We are a  LocoNet Slave. Do not calculate or use Fast Minute Frac
-        // as DTxxx throttles dont, and if we did we would be fast.
         clock.setTime(new Date(nNumMSec));
 
         // re-set timeout
@@ -511,24 +631,7 @@ public class LnClockControl extends DefaultClockControl implements SlotListener,
             return;
         }
         // we are not calibrating - send start of minute.
-        sendClockMsg(true, minuteFracType.MINUTE_START, false);
-    }
-
-    /**
-     * Convert milliseconds to minFrac
-     * @param milliSecs time in milliseconds
-     * @return the HI LO as an integer and adjusted.
-     */
-    private int convertMilliSecondsToFcFracMin(int milliSecs) {
-        long fracmins;
-        if (commandStationFracType == 1) {
-            fracmins = (((commandStationEndMinuteType1 - commandStationZeroSecond) * milliSecs) / MSECPERMINUTE ) + commandStationZeroSecond ;
-            // the completed calculation fits.
-            return (int) ((fracmins & 0x7F00) / 2 +  (fracmins & 0x00F7));
-        } else {
-            fracmins = (((commandStationEndMinuteType2 - commandStationZeroSecond) * milliSecs) / MSECPERMINUTE ) + commandStationZeroSecond ;
-            return (int) (fracmins & 0x7FFF);
-        }
+        sendClockMsg(true, MinuteFracType.MINUTE_START, false);
     }
 
     /**
@@ -536,35 +639,27 @@ public class LnClockControl extends DefaultClockControl implements SlotListener,
      * @param sendWrite true - this a write slot message
      * @param minFracType , START, END or normal
      */
-    private void sendClockMsg(boolean sendWrite, minuteFracType minFracType, boolean calibrate) {
-        // set the time            // get time from the internal clock
-        Date now = clock.getTime();
-        curDays = now.getDate();
-        // Update current time
-        curHours = now.getHours();
-        curMinutes = now.getMinutes();
-        long millis = now.getTime();
-        /* calculate curFractionalMinutes as required */
-        int milliSeconds;
+    private void sendClockMsg(boolean sendWrite, MinuteFracType minFracType, boolean calibrate) {
+        int fractionalMinutes;
+        // use the current time set in curDays,Hours,Minutes,Milliseconds
         //if we are calibrating or have not done so successfully, skip this
         if (!calibrate && commandStationZeroSecond != commandStationEndMinute) {
             switch (minFracType) {
                 case MINUTE_START:
-                    milliSeconds = 0;
-                    curFractionalMinutes = commandStationZeroSecond;
+                    curMilliSeconds = 0;
                     break;
                 case MINUTE_NORMAL:
-                    milliSeconds = (int) (millis % MSECPERMINUTE);
+                    // leave as set
                     break;
                 case MINUTE_END:
                 default:
-                    milliSeconds = 59000;
+                    curMilliSeconds = 59000;
                     break;
             }
-            curFractionalMinutes = convertMilliSecondsToFcFracMin(milliSeconds);
+            fractionalMinutes = convertMilliSecondsToFcFracMin(curMilliSeconds);
         } else {
             // set to near end of minute.
-            curFractionalMinutes = 0x7f4f;
+            fractionalMinutes = 0x7f4f;
         }
 
         /* Build the base slot, and then modify for specific need */
@@ -577,13 +672,11 @@ public class LnClockControl extends DefaultClockControl implements SlotListener,
             // set back so we don't move forward afterwards
             s.setFcMinutes(curMinutes-1);
             s.setFcRate(1);
-            s.setFcFracMins(curFractionalMinutes);
         } else {
             s.setFcMinutes(curMinutes);
             s.setFcRate(curRate);
-            s.setFcFracMins(curFractionalMinutes);
         }
-        s.setFcFracMins(curFractionalMinutes);
+        s.setFcFracMins(fractionalMinutes);
         s.setThrottleIdentity(clockThrottleId);
         s.setFcCntrlBitOn(LnConstants.FC_VALID);
         // set other content
@@ -621,7 +714,7 @@ public class LnClockControl extends DefaultClockControl implements SlotListener,
             minuteChangeListener = null;
         }
         // force waiting for sync thread stopped
-        waitingForCommandStationClockSync = false;
+        commandStationSyncLimit = 0;
     }
 
     private final static Logger log = LoggerFactory.getLogger(LnClockControl.class);
