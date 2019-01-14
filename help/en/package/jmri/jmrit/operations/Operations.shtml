@@ -889,6 +889,81 @@
     especially if you are managing data for more than one railroad. For example, if today is August
     29, 2012, the program will create a backup directory named "2012_08_29_00".</p>
 
+   <h4>What isn't backed up by OperationsPro</h4>
+
+   <p>There are many OperationPro directories and files that aren't backed up using the methods described above. You
+    can find all of the directories and files not backed up inside the "operations" directory. Here's the list with the
+    file types and directory names:</p>
+
+   <table>
+    <tr>
+     <td>File Type</td>
+
+     <td>Directory</td>
+    </tr>
+
+    <tr>
+     <td>Train Build Reports</td>
+
+     <td>buildstatus</td>
+    </tr>
+
+    <tr>
+     <td>Old Train Build Reports</td>
+
+     <td>buildStatusBackups</td>
+    </tr>
+
+    <tr>
+     <td>CSV Manifests</td>
+
+     <td>csvManifests</td>
+    </tr>
+
+    <tr>
+     <td>CSV SwitchLists</td>
+
+     <td>csvSwitchLists</td>
+    </tr>
+
+    <tr>
+     <td>json Manifests</td>
+
+     <td>jsonManifests</td>
+    </tr>
+
+    <tr>
+     <td>Log Files</td>
+
+     <td>logger</td>
+    </tr>
+
+    <tr>
+     <td>Train Manifests</td>
+
+     <td>manifests</td>
+    </tr>
+
+    <tr>
+     <td>Old Train Manifests</td>
+
+     <td>manifestBackups</td>
+    </tr>
+
+    <tr>
+     <td>SwitchLists</td>
+
+     <td>switchLists</td>
+    </tr>
+
+    <tr>
+     <td>Old SwitchLists</td>
+
+     <td>switchListsBackups</td>
+    </tr>
+
+   </table>
+
    <a name="Restore" id="Restore"></a>
    <h3>Restore</h3>
 
