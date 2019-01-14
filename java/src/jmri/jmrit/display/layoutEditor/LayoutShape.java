@@ -395,11 +395,12 @@ public class LayoutShape {
     }
 
     /**
-     * return the hit point type for the shape at this location
+     * find the hit (location) type for a point
      *
-     * @param hitPoint
-     * @param useRectangles
-     * @return int - hit point type
+     * @param hitPoint           - the point
+     * @param useRectangles      - whether to use (larger) rectangles or
+     *                           (smaller) circles for hit testing
+     * @return the hit point type for the point (or NONE)
      */
     protected int findHitPointType(@Nonnull Point2D hitPoint, boolean useRectangles) {
         int result = LayoutTrack.NONE;  // assume point not on shape

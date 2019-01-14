@@ -56,7 +56,28 @@ import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import jmri.*;
+import jmri.Block;
+import jmri.BlockManager;
+import jmri.ConfigureManager;
+import jmri.InstanceManager;
+import jmri.InvokeOnGuiThread;
+import jmri.JmriException;
+import jmri.Memory;
+import jmri.MemoryManager;
+import jmri.NamedBean;
+import jmri.Reporter;
+import jmri.ReporterManager;
+import jmri.Sensor;
+import jmri.SensorManager;
+import jmri.SignalHead;
+import jmri.SignalHeadManager;
+import jmri.SignalMast;
+import jmri.SignalMastLogic;
+import jmri.SignalMastLogicManager;
+import jmri.SignalMastManager;
+import jmri.TransitManager;
+import jmri.Turnout;
+import jmri.UserPreferencesManager;
 import jmri.configurexml.StoreXmlUserAction;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.dispatcher.DispatcherAction;
@@ -6517,7 +6538,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      * Horizontally (at average y coord) or Vertically (at average x coord).
      *
      * @param popup the JPopupMenu to add alignment menu to
-     * @return
+     * @return true if alignment menu added
      */
     public boolean setShowAlignmentMenu(@Nonnull JPopupMenu popup) {
         if (showAlignPopup()) {
@@ -7460,7 +7481,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      * @param sensorName the sensor name to validate
      * @param blk        the LayoutBlock in which to set it
      * @param openFrame  the frame (Component) it is in
-     * @return
+     * @return true if sensor is valid
      */
     public boolean validateSensor(
             @Nonnull String sensorName,
