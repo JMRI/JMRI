@@ -170,6 +170,50 @@
     runs a specific test or test suite.<br>
     (Hint: How to set this up <a href="IntelliJ.shtml#test">using IntelliJ</a>)
 
+    <h3><a name="testingvars" id="testingvars">Optional Checks</a></h3>
+    There are a number of 
+    run-time optional checks
+    that can be turned on by setting environmental variables.
+    We periodically run them to check on how the overall test
+    system is working, but they're too time intensive
+    to leave on all the time.
+      <dl>
+        <dt>jmri.skipschematests</dt>
+            <dd>If true, JUnit tests will skip checking the schema of all the test XML files.</dd>
+        <dt>jmri.skipjythontests</dt>
+            <dd>If true, JUnit tests will skip running the jython/tests scripts.</dd>
+        <dt>jmri.log4jconfigfilename</dt>
+            <dd>Override the default "tests.lcf" logging control file name.</dd>
+        <dt>jmri.demo</dt>
+            <dd>When set true, leave certain windows open to demonstrate their capability</dd>
+        <dt>jmri.migrationtests</dt>
+            <dd>When set true, run some extra tests; usually used during code migration,
+                where not everything is right yet but you want to be able to include
+                tests for individual running.  </dd>
+        <dt>jmri.util.JUnitUtil.printSetUpTearDownNames</dt>
+            <dd>If true, JUnit tests will print out each JUnitUtil.setUp() and JUnitUtil.teardown() call.
+                This can be useful if i.e. the CI tests are hanging, and you can't figure out which
+                test class is the problem.</dd>
+        <dt>jmri.util.JUnitUtil.checkSetUpTearDownSequence</dt>
+            <dd>If true, check for whether JUnitUtil.setUp() and JUnitUtil.teardown() follow each other
+                int the proper sequence. Print a message if not.  (This slows execution a 
+                bit due to the time needed to keep history for the message)</dd>
+        <dt>jmri.util.JUnitUtil.checkSequenceDumpsStack</dt>
+            <dd>If true, makes jmri.util.JUnitUtil.checkSetUpTearDownSequence more verbose by also
+                including the current stack trace along with the traces of the most recent setUp and 
+                tearDown calls.</dd>
+         <dt>jmri.util.JUnitUtil.checkRemnantThreads</dt>
+            <dd>If true, checks for any threads that have not yet been terminated during 
+                the test tearDown processing. If found, the context is logged as a warning.</dd>
+         <dt>jmri.util.JUnitUtil.checkTestDuration</dt>
+            <dd>If true, issues a warning if a test takes too long.  The default
+                limit is 5000 msec, but you can change it defining the 
+                jmri.util.JUnitUtil.checkTestDurationMax environment variable.</dd>
+     </dl>
+    
+      For more on setting these, see the 
+      <a href="StartUpScripts.shtml#prop">start-up scripts page</a>.
+    
       <h3><a name="I18N" id="I18N">A Note on Internationalization (I18N)</a></h3>
       
       Tests check the correctness of text in GUI elements, warning messages, and 
@@ -690,13 +734,19 @@
       or you should add code to terminate them.
       <p>
       You can check whether you've left any threads running by
-      editing the <code>java/test/jmri/util/JUnitUtil.java</code> file
-      and finding a line like:
+      setting the 
+      <code>jmri.util.JUnitUtil.checkRemnantThreads</code>
+      environment variable to true, with i.e.
 <pre style="font-family: monospace;">
-        // checkThreads(false);  // true means stop on 1st extra thread
+setenv JMRI_OPTIONS -Djmri.util.JUnitUtil.checkRemnantThreads=true 
 </pre>
-      Uncomment that, compile and run your tests.  It will report
-      any threads you've left running.
+      or the equivalent for your computer type.  
+      This tells the 
+      <code>jmri.util.JUnitUtil.tearDown()</code>
+      method to check for any (new) threads that are 
+      still running at the end of each test. This check
+      is a bit time-intensive, so we don't leave it on 
+      all the time.
 
       <h3><a id="io" name="io"></a>Testing I/O</h3>
       Some test
