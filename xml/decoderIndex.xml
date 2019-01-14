@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!--Written by JMRI version 4.15.2ish+jake+20181227T1604Z+R6c9a33f5d6 on Thu Dec 27 08:04:59 PST 2018-->
-  <decoderIndex version="922">
+  <!--Written by JMRI version 4.15.2ish+jake+20190113T0106Z+R39dd784b65 on Sat Jan 12 17:07:49 PST 2019-->
+  <decoderIndex version="924">
     <mfgList nmraListDate="2015-03-06" updated="2015-03-25" lastadd="107,124,126,128,134">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -23848,6 +23848,40 @@
             <functionlabel num="6" lockable="true">FX6 function</functionlabel>
           </functionlabels>
         </model>
+        <model model="2-8-0 Consolidation - [HO]" numOuts="2" numFns="14" connector="other" productID="Bald280" formFactor="HO" comment="&lt;html&gt;Baldwin Consolidation 2-8-0 &lt;br&gt;Exhaust Chuff: Medium Steam&lt;br&gt;Air Compressor: Cross Compound&lt;br&gt;&lt;/html&gt;">
+          <versionCV lowVersionID="82" />
+          <output name="3" label="FX5| Rule 17">
+            <label xml:lang="it">FX5|Regola 17</label>
+          </output>
+          <output name="4" label="FX6|Mode">
+            <label xml:lang="it">FX6|Modo</label>
+          </output>
+          <output name="5" label="Whistle| ">
+            <label xml:lang="it">Fischio| </label>
+          </output>
+          <output name="6" label="Bell| ">
+            <label xml:lang="it">Campana| </label>
+          </output>
+          <output name="7" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="8" label="Short|Whistle">
+            <label xml:lang="it">Breve|Fischio</label>
+          </output>
+          <output name="9" label="Steam|Release">
+            <label xml:lang="it">Rilascio|Vapore</label>
+          </output>
+          <output name="10" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="11" label="Dimming| ">
+            <label xml:lang="it">Smorzam| </label>
+          </output>
+          <output name="12" label="Mute| ">
+            <label xml:lang="it">Silenzio| </label>
+          </output>
+          <functionlabels>
+            <functionlabel num="6" lockable="true">FX6 function</functionlabel>
+          </functionlabels>
+        </model>
         <model model="2-8-2 Mikado - [HO]" numOuts="2" numFns="14" connector="other" productID="Bald282" formFactor="HO" comment="&lt;html&gt;Baldwin Mikado 2-8-2 &lt;br&gt;Exhaust Chuff: Medium Steam&lt;br&gt;Air Compressor: Cross Compound&lt;br&gt;&lt;/html&gt;">
           <versionCV lowVersionID="82" />
           <output name="3" label="FX5| Rule 17">
@@ -24088,6 +24122,74 @@
           </functionlabels>
         </model>
         <model model="2-8-4 Berkshire - Chesapeake &amp; Ohio Kanawha [N]" numOuts="2" numFns="14" connector="other" productID="Lima284_CO_N" formFactor="N" comment="&lt;html&gt;Lima Locomotive Works 2-8-4, whistles for Chesapeake &amp; Ohio Kanawha version (N scale)&lt;br&gt;Exhaust Chuff: Medium Steam&lt;br&gt;Air Compressor: Cross Compound&lt;br&gt;&lt;/html&gt;">
+          <versionCV lowVersionID="82" />
+          <output name="3" label="FX5| Rule 17">
+            <label xml:lang="it">FX5|Regola 17</label>
+          </output>
+          <output name="4" label="FX6|Mode">
+            <label xml:lang="it">FX6|Modo</label>
+          </output>
+          <output name="5" label="Whistle| ">
+            <label xml:lang="it">Fischio| </label>
+          </output>
+          <output name="6" label="Bell| ">
+            <label xml:lang="it">Campana| </label>
+          </output>
+          <output name="7" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="8" label="Short|Whistle">
+            <label xml:lang="it">Breve|Fischio</label>
+          </output>
+          <output name="9" label="Steam|Release">
+            <label xml:lang="it">Rilascio|Vapore</label>
+          </output>
+          <output name="10" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="11" label="Dimming| ">
+            <label xml:lang="it">Smorzam| </label>
+          </output>
+          <output name="12" label="Mute| ">
+            <label xml:lang="it">Silenzio| </label>
+          </output>
+          <functionlabels>
+            <functionlabel num="6" lockable="true">FX6 function</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="4-8-4 Class J - Norfolk &amp; Western [HO]" numOuts="2" numFns="14" connector="other" productID="CLSJ484" formFactor="HO" comment="&lt;html&gt;Class J 4-8-4, whistles for N&amp;W Class J No.611 &lt;br&gt;Exhaust Chuff: Medium Steam&lt;br&gt;Air Compressor: Cross Compound&lt;br&gt;&lt;/html&gt;">
+          <versionCV lowVersionID="82" />
+          <output name="3" label="FX5| Rule 17">
+            <label xml:lang="it">FX5|Regola 17</label>
+          </output>
+          <output name="4" label="FX6|Mode">
+            <label xml:lang="it">FX6|Modo</label>
+          </output>
+          <output name="5" label="Whistle| ">
+            <label xml:lang="it">Fischio| </label>
+          </output>
+          <output name="6" label="Bell| ">
+            <label xml:lang="it">Campana| </label>
+          </output>
+          <output name="7" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="8" label="Short|Whistle">
+            <label xml:lang="it">Breve|Fischio</label>
+          </output>
+          <output name="9" label="Steam|Release">
+            <label xml:lang="it">Rilascio|Vapore</label>
+          </output>
+          <output name="10" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="11" label="Dimming| ">
+            <label xml:lang="it">Smorzam| </label>
+          </output>
+          <output name="12" label="Mute| ">
+            <label xml:lang="it">Silenzio| </label>
+          </output>
+          <functionlabels>
+            <functionlabel num="6" lockable="true">FX6 function</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="4-8-4 GS-4 - Southern Pacific [HO]" numOuts="2" numFns="14" connector="other" productID="GS4484" formFactor="HO" comment="&lt;html&gt;GS-4 4-8-4, whistles for Southern Pacific 6 chime &lt;br&gt;Exhaust Chuff: Medium Steam&lt;br&gt;Air Compressor: Cross Compound&lt;br&gt;&lt;/html&gt;">
           <versionCV lowVersionID="82" />
           <output name="3" label="FX5| Rule 17">
             <label xml:lang="it">FX5|Regola 17</label>

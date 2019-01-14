@@ -751,9 +751,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         ActiveTrain at = activeTrainsList.get(atSelectedIndex);
         //Transit t = at.getTransit();
         List<AllocatedSection> allocatedSectionList = at.getAllocatedSectionList();
-        List<String> allSections = InstanceManager.getDefault(jmri.SectionManager.class).getSystemNameList();
-        for (int j = 0; j < allSections.size(); j++) {
-            Section s = InstanceManager.getDefault(jmri.SectionManager.class).getSection(allSections.get(j));
+        for (Section s : InstanceManager.getDefault(jmri.SectionManager.class).getNamedBeanSet()) {
             if (s.getState() == Section.FREE) {
                 // not already allocated, check connectivity to this train's allocated sections
                 boolean connected = false;

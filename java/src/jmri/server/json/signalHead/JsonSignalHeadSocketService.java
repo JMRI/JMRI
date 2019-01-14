@@ -64,14 +64,12 @@ public class JsonSignalHeadSocketService extends JsonSocketService<JsonSignalHea
     }
 
     private void addListenersToChildren() {
-        InstanceManager.getDefault(SignalHeadManager.class).getSystemNameList().stream().forEach((shn) -> { //add listeners to each child (if not already)
+        InstanceManager.getDefault(SignalHeadManager.class).getNamedBeanSet().stream().forEach((sh) -> { //add listeners to each child (if not already)
+            String shn = sh.getSystemName();
             if (!signalHeadListeners.containsKey(shn)) {
                 log.debug("adding SignalHeadListener for SignalHead '{}'", shn);
-                SignalHead sh = InstanceManager.getDefault(SignalHeadManager.class).getSignalHead(shn);
-                if (sh != null) {
-                    signalHeadListeners.put(shn, new SignalHeadListener(sh));
-                    sh.addPropertyChangeListener(this.signalHeadListeners.get(shn));
-                }
+                signalHeadListeners.put(shn, new SignalHeadListener(sh));
+                sh.addPropertyChangeListener(this.signalHeadListeners.get(shn));
             }
         });
     }    
