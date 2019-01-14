@@ -183,6 +183,10 @@ git push github
 
 - Merge all relevant [PRs in the JMRI/website repository](https://github.com/JMRI/website/pulls) to ensure release note draft is up to date
 
+- Copy the release note body from help/en/releasenotes/current-draft-note.shtml in the JMRI/JMRI repository into the actual release note in website repository:
+     JMRI/help/en/releasenotes/current-draft-note.shtml
+     website/releasenote/jmri4.15.3.shtml
+     
 - Create the _next_ release note, so that people will document new (overlapping) changes there. Best way to do this is to copy the current release note now, before you prune out all the headers and other info where changes weren't made. (We need to work through automation of version number values below) (If you're creating a production version, its release note is made from a merge of the features of all the test releases; also create the *.*.1 note for the next test release)
 
 ```    
@@ -254,6 +258,17 @@ Jenkins will be creating files shortly at the [CI server](http://builds.jmri.org
 
 If you're developing any additional (post-4.15.2) changes that you want in the JMRI 4.16 production release, please start from this branch, i.e. do `git checkout -b release-4.15.2` to start your work.
 ```
+
+- Copy the release note body from help/en/releasenotes/current-draft-note.shtml in the JMRI/JMRI repository into the actual release note in website repository:
+     JMRI/help/en/releasenotes/current-draft-note.shtml
+     website/releasenote/jmri4.15.3.shtml
+
+- Create a new current-draft-note
+     cp help/en/releasenotes/jmri4.15-master.shtml help/en/releasenotes/current-draft-note.shtml
+     
+- Commit the release note changes on both repositories and push directly
+
+- Pull back to make sure your repository is fully up to date
 
 ================================================================================
 ## Build Files with Jenkins
@@ -498,7 +513,7 @@ If you are currently using JMRI 4.9.6 or earlier, we strongly recommend that you
 
 If you use JMRI on Linux or Mac and are updating from JMRI 4.7.3 or earlier, there’s a necessary migration step. (Not needed on Windows) Please see the JMRI 4.12 release note for details: <http://jmri.org/releasenotes/jmri4.12.shtml#migration>
 
-For more information on the issues, new features and bug fixes in 4.15.2 please see the release note:
+For more information on the issues, new features and bug fixes in 4.15.2 please see the release note:   
 <http://jmri.org/releasenotes/jmri4.15.2.shtml>
 
 Note that JMRI is made available under the GNU General Public License. For more information, please see our copyright and licensing page.
