@@ -74,7 +74,7 @@ public class NXFrame extends WarrantRoute {
     private JPanel _switchPanel;
     private JPanel _trainPanel;
     
-    public static float INCRE_RATE = 1.08f;  // multiplier to increase throttle increments
+    public static float INCRE_RATE = 1.10f;  // multiplier to increase throttle increments
 
 
     protected NXFrame() {
@@ -93,6 +93,10 @@ public class NXFrame extends WarrantRoute {
     
     private void init() {
         if (log.isDebugEnabled()) log.debug("newInstance");
+        WarrantFrame f = WarrantTableAction.getWarrantFrame();
+        if (f != null) {    // only edit one warrant at a time.
+            WarrantTableAction.closeWarrantFrame(f);
+        }
         updatePreferences();
         makeMenus();
 
@@ -490,7 +494,7 @@ public class NXFrame extends WarrantRoute {
             if (log.isDebugEnabled()) {
                 log.debug("WarrantTableFrame run warrant. msg= " + msg + " Remove warrant " + warrant.getDisplayName());
             }
-            tableFrame.getModel().removeWarrant(warrant);
+            tableFrame.getModel().removeWarrant(warrant, false);
         }
 
         if (msg == null && mode == Warrant.MODE_RUN) {
@@ -955,8 +959,10 @@ public class NXFrame extends WarrantRoute {
                 blockName = bo.getBlock().getDisplayName();
                 w.addThrottleCommand(new ThrottleSetting((int) noopTime, "NoOp", "Enter Block", blockName,
                         (hasProfileSpeeds ? _speedUtil.getTrackSpeed(curThrottle, isForward) : 0.0f)));
-                if (log.isDebugEnabled()) log.debug("{}. Enter block \"{}\" noopTime= {}, speedTime= {} blockLen= {}",
+                if (log.isDebugEnabled()) {
+                    log.debug("{}. Enter block \"{}\" noopTime= {}, speedTime= {} blockLen= {}",
                         cmdNum++, blockName, noopTime, speedTime, blockLen);
+                }
             }
         }
         if (log.isDebugEnabled()) {

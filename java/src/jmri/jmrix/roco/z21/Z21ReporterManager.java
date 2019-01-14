@@ -16,6 +16,11 @@ import org.slf4j.LoggerFactory;
 public class Z21ReporterManager extends jmri.managers.AbstractReporterManager implements Z21Listener {
 
     private Z21SystemConnectionMemo _memo = null;
+    private boolean autoCreateInternalReporter = false;  // disable automatic 
+                                            // creation of the internal reporter
+                                            // by default.  It interferes with
+                                            // reports from the Roco 10808
+                                            // which it preceeds in the circuit.  
 
     /**
      * Create a new Z21ReporterManager
@@ -88,7 +93,7 @@ public class Z21ReporterManager extends jmri.managers.AbstractReporterManager im
     public void reply(Z21Reply msg){
          // LAN_RAILCOM_DATACHANGED messages are related to the built in
          // reporter.
-         if(msg.isRailComDataChangedMessage()){
+         if(autoCreateInternalReporter && msg.isRailComDataChangedMessage()){
             log.debug("Received RailComDatachanged message");
             Z21Reporter r = (Z21Reporter) getBySystemName(getSystemPrefix()+typeLetter()+1); // there is only one built in reporter.
            if ( null == r ) {
@@ -107,10 +112,12 @@ public class Z21ReporterManager extends jmri.managers.AbstractReporterManager im
                int msgPort = ( msg.getElement(8) & 0xFF);
                int address = ( msg.getElement(6)&0xFF) + ((msg.getElement(7)&0xFF) << 8);
                String sysName = getSystemPrefix()+typeLetter()+address+":"+msgPort;
+               log.debug("asking for reporter {}",sysName);
                Z21CanReporter r = (Z21CanReporter) getBySystemName(sysName);
                if ( null == r ) {
                   // try with the module's CAN network ID
-                  sysName = getSystemPrefix()+typeLetter()+String.format("%4x",netID)+":"+msgPort;
+                  sysName = getSystemPrefix()+typeLetter()+String.format("%4X",netID)+":"+msgPort;
+                  log.debug("not found; asking for reporter {}",sysName);
                   r = (Z21CanReporter) getBySystemName(sysName);
                   if (null == r) {
                      log.debug("Creating reporter {}",sysName);
@@ -134,6 +141,14 @@ public class Z21ReporterManager extends jmri.managers.AbstractReporterManager im
     @Override
     public void message(Z21Message msg){
          // we don't need to handle outgoing messages, so just ignore them.
+    }
+
+    /**
+     * Enable automatic creation of the Internal Z21 Reporter from messages.  
+     * Defaults to disabled.
+     */
+    public void enableInternalReporterCreationFromMessages(){
+       autoCreateInternalReporter = true;
     }
 
     private static final Logger log = LoggerFactory.getLogger(Z21ReporterManager.class);

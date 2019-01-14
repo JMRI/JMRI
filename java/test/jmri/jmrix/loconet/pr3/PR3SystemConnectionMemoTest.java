@@ -11,7 +11,6 @@ import org.junit.Before;
  */
 public class PR3SystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
 
-
     // The minimal setup for log4J
     @Override
     @Before

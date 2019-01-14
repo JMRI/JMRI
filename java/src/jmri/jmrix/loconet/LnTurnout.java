@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  * This implementation implements the "SENT" feedback, where LocoNet messages
  * originating on the layout can change both KnownState and CommandedState. We
  * change both because we consider a LocoNet message to reflect how the turnout
- * should be, even if its a readback status message. E.g. if you use a DS54
+ * should be, even if it's a readback status message. E.g. if you use a DS54
  * local input to change the state, resulting in a status message, we still
  * consider that to be a commanded state change.
  * <p>
@@ -207,7 +207,7 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
                 public void run() {
                     noConsistencyTimersRunning--;
                     if (!isConsistentState() && noConsistencyTimersRunning == 0) {
-                        log.debug("LnTurnout resending command for turnout " + _number);
+                        log.debug("LnTurnout resending command for turnout {}", _number);
                         forwardCommandChangeToLayout(getCommandedState());
                     }
                 }
@@ -263,7 +263,6 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
                 }
                 return;
             }
-
             case LnConstants.OPC_SW_REP: {
                 /* page 9 of Loconet PE */
 
@@ -372,7 +371,6 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
                 }
                 return;
             }
-
             default:
                 return;
         }
@@ -381,7 +379,7 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
     @Override
     protected void turnoutPushbuttonLockout(boolean _pushButtonLockout) {
         if (log.isDebugEnabled()) {
-            log.debug("Send command to " + (_pushButtonLockout ? "Lock" : "Unlock") + " Pushbutton LT" + _number);
+            log.debug("Send command to {} Pushbutton {}T{}", (_pushButtonLockout ? "Lock" : "Unlock"), _prefix, _number);
         }
     }
 

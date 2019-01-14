@@ -603,7 +603,7 @@
       panels.</p>
 
       <ul>
-        <li><strong>Save Panels...</strong> - When this item is selected, a
+        <li><strong>Store Panels...</strong> - When this item is selected, a
         Save dialog is shown. When Save is selected in the Save
         dialog, all layout configuration information is written to
         disk, including information for all panels, Layout

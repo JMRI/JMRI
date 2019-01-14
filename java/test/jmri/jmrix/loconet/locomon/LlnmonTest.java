@@ -6539,7 +6539,6 @@ public class LlnmonTest extends TestCase {
         jmri.InstanceManager.setTurnoutManager(lntm);
         jmri.InstanceManager.setSensorManager(lnsm);
         jmri.InstanceManager.setReporterManager(lnrm);
-
     }
 
     @Override

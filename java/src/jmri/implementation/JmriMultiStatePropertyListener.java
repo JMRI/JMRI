@@ -30,17 +30,17 @@ public class JmriMultiStatePropertyListener extends JmriSimplePropertyListener {
 
     ArrayList<Integer> _states;
 
-    JmriMultiStatePropertyListener(String propName, int type, String name, int varType,
+    JmriMultiStatePropertyListener(String propName, int type, String name, Conditional.Type varType,
             Conditional client, int state) {
         super(propName, type, name, varType, client);
-        _states = new ArrayList<Integer>();
+        _states = new ArrayList<>();
         _states.add(Integer.valueOf(state));
     }
 
-    JmriMultiStatePropertyListener(String propName, int type, NamedBeanHandle<?> namedBean, int varType,
+    JmriMultiStatePropertyListener(String propName, int type, NamedBeanHandle<?> namedBean, Conditional.Type varType,
             Conditional client, int state) {
         super(propName, type, namedBean, varType, client);
-        _states = new ArrayList<Integer>();
+        _states = new ArrayList<>();
         _states.add(Integer.valueOf(state));
     }
 

@@ -61,7 +61,6 @@ public class LnPortControllerTest extends jmri.jmrix.AbstractSerialPortControlle
             public String openPort(String portName, String appName){
                return "";
             }
-
        };
     }
 

@@ -131,8 +131,8 @@ public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBa
         Assert.assertEquals("new outputInterval from manager", 40, l.getOutputInterval("LT22")); // test method in manager
     }
 
-    LocoNetInterfaceScaffold lnis;
-    LocoNetSystemConnectionMemo memo;
+    private LocoNetInterfaceScaffold lnis;
+    private LocoNetSystemConnectionMemo memo;
 
     @Override
     @Before
@@ -149,6 +149,8 @@ public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBa
 
     @After
     public void tearDown() {
+        memo.dispose();
+        lnis = null;
         JUnitUtil.tearDown();
     }
 

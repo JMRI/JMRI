@@ -1406,7 +1406,7 @@
           <enumChoice choice="F4">
             <choice>F4</choice>
           </enumChoice>
-          <enumChoice choice="F3">
+          <enumChoice choice="F3" value="16">
             <choice>F3</choice>
           </enumChoice>
         </enumVal>
@@ -1691,7 +1691,7 @@
         <label>Servo Control Signal</label>
         <label xml:lang="it">Segnale controllo Servo</label>
       </variable>
-      <variable item="Servo Centering" CV="161" mask="VVVVVXVV" default="0">
+      <variable item="Servo Centering" CV="161" mask="XXXXXVXX" default="0">
         <enumVal>
           <enumChoice choice="Moves to centre in dual key if both Fn's off">
             <choice>Moves to centre in dual key if both Fn's off</choice>

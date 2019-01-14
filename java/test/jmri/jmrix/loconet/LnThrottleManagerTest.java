@@ -1156,6 +1156,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
     public void tearDown() {
         ((LnThrottleManager)tm).dispose();
         memo.dispose();
+        lnis = null;
         JUnitUtil.tearDown();
     }
 

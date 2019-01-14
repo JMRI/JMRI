@@ -25,17 +25,16 @@ public class LnIPLImplementationTest {
     public void testCtor() {
         Assert.assertNotNull("exists", iplImplementation);
         memo.dispose();
-        jmri.InstanceManager.deregister(memo,jmri.jmrix.loconet.LocoNetSystemConnectionMemo.class);
+        jmri.InstanceManager.deregister(memo, jmri.jmrix.loconet.LocoNetSystemConnectionMemo.class);
         memo = new jmri.jmrix.loconet.LocoNetSystemConnectionMemo();
         memo.setLnTrafficController(lnis);
 
 //        memo.configureManagers();
 //        memo.configureCommandStation(jmri.jmrix.loconet.LnCommandStationType.COMMAND_STATION_DCS100,false,false,false);
 
-        jmri.InstanceManager.store(memo,jmri.jmrix.loconet.LocoNetSystemConnectionMemo.class);
+        jmri.InstanceManager.store(memo, jmri.jmrix.loconet.LocoNetSystemConnectionMemo.class);
 
         iplImplementation = new LnIPLImplementation(memo);
-
     }
 
     @Test
@@ -1489,8 +1488,8 @@ public class LnIPLImplementationTest {
                     equivSn,
                     (long)LnIPLImplementation.extractIplIdentitySlaveSerialNumber(msg));
         }
-
     }
+
     @Test
     public void testConnectMethod() {
         java.beans.PropertyChangeListener l = new java.beans.PropertyChangeListener() {
@@ -1559,9 +1558,6 @@ public class LnIPLImplementationTest {
         propChangeQueryFlag = false;
         Assert.assertNull("extracting slave device from GPON message", LnIPLImplementation.extractInterpretedIplSlaveDevice(m));
 
-
-
-
         iplImplementation.removePropertyChangeListener(l);
     }
 
@@ -1610,12 +1606,10 @@ public class LnIPLImplementationTest {
         jmri.InstanceManager.store(memo,jmri.jmrix.loconet.LocoNetSystemConnectionMemo.class);
 
         iplImplementation = new LnIPLImplementation(memo);
-
-
     }
 
     @After
-    public void tearDown() {        
+    public void tearDown() {
         memo.dispose();
         JUnitUtil.tearDown();
     }
