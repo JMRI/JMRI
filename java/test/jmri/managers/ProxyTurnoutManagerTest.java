@@ -143,7 +143,7 @@ public class ProxyTurnoutManagerTest extends TestCase {
     }
 
     public void testOutputInterval() {
-        Assert.assertEquals("default outputInterval", 0, l.getOutputInterval("JT1")); // JT1 need not exist, only the prefix is used to find manager
+        Assert.assertEquals("default outputInterval", 250, l.getOutputInterval("JT1")); // JT1 need not exist, only the prefix is used to find manager
         l.setOutputInterval(50);
         Assert.assertEquals("Proxy outputInterval", 50, l.getOutputInterval("JT1")); // stored in proxyTurnoutManager
         Assert.assertEquals("Internal outputInterval", 50, l.getOutputInterval("IT1")); // stored in InternalTurnoutManager

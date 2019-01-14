@@ -128,14 +128,15 @@ public class MatrixSignalMastTest {
         log.debug(java.util.Arrays.toString(m.getBitsForAspect("Clear"))); //debug
         Assert.assertEquals("check bitarray for stop", "[0, 0, 1]", java.util.Arrays.toString(m.getBitsForAspect("Stop")));
 
+        InstanceManager.turnoutManagerInstance().setOutputInterval(0); // default outputInterval = 250, set to 0 to speed up test
         m.setAspect("Clear");
         Assert.assertEquals("check clear", "Clear", m.getAspect());
-        JUnitUtil.waitFor(100); // next test fails on Travis and Appveyor servers without waitFor
+        JUnitUtil.waitFor(250); // next test fails on Travis and Appveyor servers without waitFor
         Assert.assertEquals("it11 for Clear", Turnout.CLOSED, it11.getCommandedState());
         // mast delay + interval = 0 but it12 state is fragile (expected state on it12 happens to be identical to it11)
-        m.setAspect("Stop");
+        m.setAspect("Stop"); // remove test if it takes too long as part of alltest
         Assert.assertEquals("check stop", "Stop", m.getAspect());
-        JUnitUtil.waitFor(100); // next test fails on Travis and Appveyor servers without waitFor
+        JUnitUtil.waitFor(600); // next test fails on Travis and Appveyor servers without waitFor
         Assert.assertEquals("it11 for Stop", Turnout.THROWN, it11.getCommandedState()); // mast delay + interval = 0
     }
 
@@ -158,7 +159,7 @@ public class MatrixSignalMastTest {
     public void testSetDelay() {
         MatrixSignalMast m = new MatrixSignalMast("IF$xsm:basic:one-low($0001)-3t", "user");
 
-        Assert.assertEquals("initial mast delay 0", 250, m.getMatrixMastCommandDelay());
+        Assert.assertEquals("initial mast delay 0", 0, m.getMatrixMastCommandDelay());
         m.setMatrixMastCommandDelay(150);
         Assert.assertEquals("get new mast delay", 150, m.getMatrixMastCommandDelay());
     }
