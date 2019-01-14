@@ -5017,7 +5017,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                                         selectedObject = ls;    // found one!
                                         beginLocation.setLocation(dLoc);
                                         currentLocation.setLocation(beginLocation);
-                                        startDelta.setLocation(MathUtil.subtract(ls.getCoordsCenter(), dLoc));
+                                        startDelta.setLocation(MathUtil.zeroPoint2D);
                                         break;
                                     }
                                 }
@@ -5450,7 +5450,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                         setCursor(Cursor.getDefaultCursor());
                     } else {
                         LayoutShape ls = (LayoutShape) selectedObject;
-                        ls.addPoint(currentPoint);
+                        ls.addPoint(currentPoint, selectedHitPointType - LayoutTrack.SHAPE_POINT_OFFSET_MIN);
                     }
                 } else if (signalMastButton.isSelected()) {
                     addSignalMast();

@@ -71,10 +71,10 @@ public class LayoutShape {
     }
 
     /**
-     * enum LayoutShapePointType eVertex, eCurve
+     * enum LayoutShapePointType eStraight, eCurve
      */
     public enum LayoutShapePointType {
-        eVertex("Vertex"), eCurve("Curve");
+        eStraight("Straight"), eCurve("Curve");
 
         private final transient String name;
         private static final transient Map<String, LayoutShapePointType> ENUM_MAP;
@@ -103,7 +103,7 @@ public class LayoutShape {
 
     /**
      * These are the points that make up the outline of the shape. Each point
-     * can be ether a vertex or a control point for a curve
+     * can be ether a straight or a control point for a curve
      */
     public static class LayoutShapePoint {
 
@@ -116,7 +116,7 @@ public class LayoutShape {
          * @param c Point2D for initial point
          */
         public LayoutShapePoint(Point2D c) {
-            this.type = LayoutShapePointType.eVertex;
+            this.type = LayoutShapePointType.eStraight;
             this.point = c;
         }
 
@@ -275,6 +275,7 @@ public class LayoutShape {
 
     /**
      * add point
+     *
      * @param p the point to add
      */
     public void addPoint(Point2D p) {
@@ -285,6 +286,56 @@ public class LayoutShape {
 
     /**
      * add point
+     *
+     * @param p         the point to add
+     * @param nearIndex the index of the existing point to add it near note:
+     *                  "near" is defined as before or after depending on
+     *                  closest neighbor
+     */
+    public void addPoint(Point2D p, int nearIndex) {
+        int cnt = shapePoints.size();
+        if (cnt < getMaxNumberPoints()) {
+            // this point
+            LayoutShapePoint lsp = shapePoints.get(nearIndex);
+            Point2D sp = lsp.getPoint();
+
+            // left point
+            int idxL = (nearIndex + cnt - 1) % cnt;
+            LayoutShapePoint lspL = shapePoints.get(idxL);
+            Point2D pL = lspL.getPoint();
+            double distL = MathUtil.distance(p, pL);
+
+            // right point
+            int idxR = (nearIndex + 1) % cnt;
+            LayoutShapePoint lspR = shapePoints.get(idxR);
+            Point2D pR = lspR.getPoint();
+            double distR = MathUtil.distance(p, pR);
+
+            // if nearIndex is the 1st point in open shape...
+            if ((getType() == LayoutShapeType.eOpen) && (nearIndex == 0)) {
+                distR = MathUtil.distance(pR, p);
+                distL = MathUtil.distance(pR, sp);
+            }
+            int beforeIndex = (distR < distL) ? idxR : nearIndex;
+
+            // if nearIndex is the last point in open shape...
+            if ((getType() == LayoutShapeType.eOpen) && (idxR == 0)) {
+                distR = MathUtil.distance(pL, p);
+                distL = MathUtil.distance(pL, sp);
+                beforeIndex = (distR < distL) ? nearIndex : nearIndex + 1;
+            }
+
+            if (beforeIndex >= cnt) {
+                shapePoints.add(new LayoutShapePoint(p));
+            } else {
+                shapePoints.add(beforeIndex, new LayoutShapePoint(p));
+            }
+        }
+    }
+
+    /**
+     * add point
+     *
      * @param t the type of point to add
      * @param p the point to add
      */
@@ -296,8 +347,9 @@ public class LayoutShape {
 
     /**
      * set point
+     *
      * @param idx the index of the point to add
-     * @param p the point to add
+     * @param p   the point to add
      */
     public void setPoint(int idx, Point2D p) {
         if (idx < shapePoints.size()) {
@@ -464,6 +516,7 @@ public class LayoutShape {
             popup = new JPopupMenu();
         }
         if (layoutEditor.isEditable()) {
+            int pointIndex = hitPointType - LayoutTrack.SHAPE_POINT_OFFSET_MIN;
 
             JMenuItem jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("LayoutShape")) + getName());
             jmi.setEnabled(false);
@@ -507,20 +560,42 @@ public class LayoutShape {
             popup.add(shapeTypeMenu);
 
             // Add "Change Shape Point Type to..." menu
-            if (hitPointType != LayoutTrack.SHAPE_CENTER) {
-                int pointIndex = hitPointType - LayoutTrack.SHAPE_POINT_OFFSET_MIN;
+            if (hitPointType == LayoutTrack.SHAPE_CENTER) {
+                JMenu shapePointTypeMenu = new JMenu(Bundle.getMessage("ChangeAllShapePointTypesTo"));
+                jmi = shapePointTypeMenu.add(new JCheckBoxMenuItem(new AbstractAction(Bundle.getMessage("ShapePointTypeStraight")) {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        for (LayoutShapePoint ls : shapePoints) {
+                            ls.setType(LayoutShapePointType.eStraight);
+                        }
+                        layoutEditor.repaint();
+                    }
+                }));
+
+                jmi = shapePointTypeMenu.add(new JCheckBoxMenuItem(new AbstractAction(Bundle.getMessage("ShapePointTypeCurve")) {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        for (LayoutShapePoint ls : shapePoints) {
+                            ls.setType(LayoutShapePointType.eCurve);
+                        }
+                        layoutEditor.repaint();
+                    }
+                }));
+
+                popup.add(shapePointTypeMenu);
+            } else {
                 LayoutShapePoint lsp = shapePoints.get(pointIndex);
 
                 if (lsp != null) { // this should never happen... but just in case...
                     JMenu shapePointTypeMenu = new JMenu(Bundle.getMessage("ChangeShapePointTypeTo"));
-                    jmi = shapePointTypeMenu.add(new JCheckBoxMenuItem(new AbstractAction(Bundle.getMessage("ShapePointTypeVertex")) {
+                    jmi = shapePointTypeMenu.add(new JCheckBoxMenuItem(new AbstractAction(Bundle.getMessage("ShapePointTypeStraight")) {
                         @Override
                         public void actionPerformed(ActionEvent e) {
-                            lsp.setType(LayoutShapePointType.eVertex);
+                            lsp.setType(LayoutShapePointType.eStraight);
                             layoutEditor.repaint();
                         }
                     }));
-                    jmi.setSelected(lsp.getType() == LayoutShapePointType.eVertex);
+                    jmi.setSelected(lsp.getType() == LayoutShapePointType.eStraight);
 
                     jmi = shapePointTypeMenu.add(new JCheckBoxMenuItem(new AbstractAction(Bundle.getMessage("ShapePointTypeCurve")) {
                         @Override
@@ -590,16 +665,26 @@ public class LayoutShape {
             });
 
             popup.add(new JSeparator(JSeparator.HORIZONTAL));
-            popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    if (layoutEditor.removeLayoutShape(LayoutShape.this)) {
-                        // Returned true if user did not cancel
-                        remove();
-                        dispose();
+            if (hitPointType == LayoutTrack.SHAPE_CENTER) {
+                popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        if (layoutEditor.removeLayoutShape(LayoutShape.this)) {
+                            // Returned true if user did not cancel
+                            remove();
+                            dispose();
+                        }
                     }
-                }
-            });
+                });
+            } else {
+                popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        shapePoints.remove(pointIndex);
+                        layoutEditor.repaint();
+                    }
+                });
+            }
             if (mouseEvent != null) {
                 popup.show(mouseEvent.getComponent(), mouseEvent.getX(), mouseEvent.getY());
             }
@@ -653,12 +738,12 @@ public class LayoutShape {
             if (getType() == LayoutShapeType.eOpen) {
                 // and this is first or last point...
                 if ((idx == 0) || (idxR == 0)) {
-                    // then force vertext shape point type
-                    lspt = LayoutShapePointType.eVertex;
+                    // then force straightt shape point type
+                    lspt = LayoutShapePointType.eStraight;
                 }
             }
             switch (lspt) {
-                case eVertex: {
+                case eStraight: {
                     if (idx == 0) { // if this is the first point...
                         // ...and our shape is open...
                         if (getType() == LayoutShapeType.eOpen) {
@@ -708,21 +793,22 @@ public class LayoutShape {
         shapePoints.forEach((slp) -> {
             g2.draw(layoutEditor.trackEditControlRectAt(slp.getPoint()));
         });
-        Point2D end0 = shapePoints.get(0).getPoint();
-        Point2D end1 = end0;
-        for (LayoutShapePoint lsp : shapePoints) {
-            Point2D end2 = lsp.getPoint();
-            g2.draw(new Line2D.Double(end1, end2));
-            end1 = end2;
-        }
+        if (shapePoints.size() > 0) {
+            Point2D end0 = shapePoints.get(0).getPoint();
+            Point2D end1 = end0;
+            for (LayoutShapePoint lsp : shapePoints) {
+                Point2D end2 = lsp.getPoint();
+                g2.draw(new Line2D.Double(end1, end2));
+                end1 = end2;
+            }
 
-        if (getType() != LayoutShapeType.eOpen) {
-            g2.draw(new Line2D.Double(end1, end0));
+            if (getType() != LayoutShapeType.eOpen) {
+                g2.draw(new Line2D.Double(end1, end0));
+            }
         }
 
         g2.draw(layoutEditor.trackEditControlCircleAt(getCoordsCenter()));
     }   // drawEditControls
 
     private final static Logger log = LoggerFactory.getLogger(LayoutShape.class);
-
 }   // class LayoutShape

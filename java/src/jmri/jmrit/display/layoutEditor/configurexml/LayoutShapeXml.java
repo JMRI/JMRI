@@ -132,7 +132,7 @@ public class LayoutShapeXml extends AbstractXmlAdapter {
                     for (int i = 0; i < elementList.size(); i++) {
                         Element relem = elementList.get(i);
 
-                        LayoutShape.LayoutShapePointType pointType = LayoutShape.LayoutShapePointType.eVertex;
+                        LayoutShape.LayoutShapePointType pointType = LayoutShape.LayoutShapePointType.eStraight;
                         try {
                             pointType = LayoutShape.LayoutShapePointType.getName(relem.getAttribute("type").getValue());
                         } catch (java.lang.NullPointerException e) {
