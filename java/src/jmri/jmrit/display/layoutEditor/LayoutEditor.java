@@ -3558,6 +3558,14 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             }
         }
 
+        for (LayoutShape o : layoutShapes) {
+            if (result.isEmpty()) {
+                result = o.getBounds();
+            } else {
+                result = result.createUnion(o.getBounds());
+            }
+        }
+
         // put a grid size margin around it
         result = MathUtil.inset(result, gridSize1st * gridSize2nd / -2.0);
 
@@ -5632,8 +5640,13 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         beginTrack = null;
         foundTrack = null;
 
-        isDragging = false;
         delayedPopupTrigger = false;
+
+        if (isDragging) {
+            resizePanelBounds(true);
+            isDragging = false;
+        }
+
         requestFocusInWindow();
     }   // mouseReleased
 

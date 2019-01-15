@@ -38,123 +38,9 @@ import org.slf4j.LoggerFactory;
  */
 public class LayoutShape {
 
-    /**
-     * enum LayoutShapeType eOpen, eClosed, eFilled
-     */
-    public enum LayoutShapeType {
-        eOpen("Open"), eClosed("Closed"), eFilled("Filled");
-
-        private final transient String name;
-        private transient static final Map<String, LayoutShapeType> ENUM_MAP;
-
-        LayoutShapeType(String name) {
-            this.name = name;
-        }
-
-        //Build an immutable map of String name to enum pairs.
-        static {
-            Map<String, LayoutShapeType> map = new ConcurrentHashMap<>();
-
-            for (LayoutShapeType instance : LayoutShapeType.values()) {
-                map.put(instance.getName(), instance);
-            }
-            ENUM_MAP = Collections.unmodifiableMap(map);
-        }
-
-        public static LayoutShapeType getName(@Nullable String name) {
-            return ENUM_MAP.get(name);
-        }
-
-        public String getName() {
-            return name;
-        }
-    }
-
-    /**
-     * enum LayoutShapePointType eStraight, eCurve
-     */
-    public enum LayoutShapePointType {
-        eStraight("Straight"), eCurve("Curve");
-
-        private final transient String name;
-        private static final transient Map<String, LayoutShapePointType> ENUM_MAP;
-
-        LayoutShapePointType(String name) {
-            this.name = name;
-        }
-
-        //Build an immutable map of String name to enum pairs.
-        static {
-            Map<String, LayoutShapePointType> map = new ConcurrentHashMap<>();
-            for (LayoutShapePointType instance : LayoutShapePointType.values()) {
-                map.put(instance.getName(), instance);
-            }
-            ENUM_MAP = Collections.unmodifiableMap(map);
-        }
-
-        public static LayoutShapePointType getName(@Nullable String name) {
-            return ENUM_MAP.get(name);
-        }
-
-        public String getName() {
-            return name;
-        }
-    } // enum LayoutShapePointType
-
-    /**
-     * These are the points that make up the outline of the shape. Each point
-     * can be ether a straight or a control point for a curve
-     */
-    public static class LayoutShapePoint {
-
-        private transient LayoutShapePointType type;
-        private transient Point2D point;
-
-        /**
-         * constructor method
-         *
-         * @param c Point2D for initial point
-         */
-        public LayoutShapePoint(Point2D c) {
-            this.type = LayoutShapePointType.eStraight;
-            this.point = c;
-        }
-
-        /**
-         * constructor method
-         *
-         * @param c Point2D for initial point
-         */
-        public LayoutShapePoint(LayoutShapePointType t, Point2D c) {
-            this(c);
-            this.type = t;
-        }
-
-        /**
-         * accessor methods
-         *
-         * @return the LayoutShapePointType
-         */
-        public LayoutShapePointType getType() {
-            return type;
-        }
-
-        public void setType(LayoutShapePointType type) {
-            this.type = type;
-        }
-
-        public Point2D getPoint() {
-            return point;
-        }
-
-        public void setPoint(Point2D point) {
-            this.point = point;
-        }
-    }   // class LayoutShapePoint
-
     // operational instance variables (not saved between sessions)
     private LayoutEditor layoutEditor = null;
-    private String name = "";
+    private String name;
     private LayoutShapeType layoutShapeType;
     private int level = 3;
     private int lineWidth = 3;
@@ -218,6 +104,10 @@ public class LayoutShape {
      */
     public String getName() {
         return name;
+    }
+
+    public void setName(String n) {
+        name = n;
     }
 
     public LayoutShapeType getType() {
@@ -397,9 +287,9 @@ public class LayoutShape {
     /**
      * find the hit (location) type for a point
      *
-     * @param hitPoint           - the point
-     * @param useRectangles      - whether to use (larger) rectangles or
-     *                           (smaller) circles for hit testing
+     * @param hitPoint      - the point
+     * @param useRectangles - whether to use (larger) rectangles or (smaller)
+     *                      circles for hit testing
      * @return the hit point type for the point (or NONE)
      */
     protected int findHitPointType(@Nonnull Point2D hitPoint, boolean useRectangles) {
@@ -519,8 +409,19 @@ public class LayoutShape {
         if (layoutEditor.isEditable()) {
             int pointIndex = hitPointType - LayoutTrack.SHAPE_POINT_OFFSET_MIN;
 
-            JMenuItem jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("LayoutShape")) + getName());
-            jmi.setEnabled(false);
+            //JMenuItem jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("LayoutShape")) + getName());
+            JMenuItem jmi = popup.add(Bundle.getMessage("ShapeNameMenuItemTitle", getName()));
+
+            jmi.setToolTipText(Bundle.getMessage("ShapeNameMenuItemToolTip"));
+            jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+                //prompt for new name
+                String newValue = QuickPromptUtil.promptForString(layoutEditor,
+                        Bundle.getMessage("LayoutShapeName"),
+                        Bundle.getMessage("LayoutShapeName"),
+                        name);
+                setName(newValue);
+                layoutEditor.repaint();
+            });
 
             popup.add(new JSeparator(JSeparator.HORIZONTAL));
 
@@ -528,39 +429,41 @@ public class LayoutShape {
 //                jmi = popup.add("hitPointType: " + hitPointType);
 //                jmi.setEnabled(false);
 //            }
-
             // add "Change Shape Type to..." menu
-            JMenu shapeTypeMenu = new JMenu(Bundle.getMessage("ChangeShapeTypeTo"));
-            jmi = shapeTypeMenu.add(new JCheckBoxMenuItem(new AbstractAction(Bundle.getMessage("ShapeTypeOpen")) {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    setType(LayoutShapeType.eOpen);
-                    layoutEditor.repaint();
-                }
-            }));
-            jmi.setSelected(getType() == LayoutShapeType.eOpen);
+            JMenu shapeTypeMenu = new JMenu(Bundle.getMessage("ChangeShapeTypeFromTo", getType().getName()));
+            if (getType() != LayoutShapeType.eOpen) {
+                jmi = shapeTypeMenu.add(new JCheckBoxMenuItem(new AbstractAction(Bundle.getMessage("ShapeTypeOpen")) {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        setType(LayoutShapeType.eOpen);
+                        layoutEditor.repaint();
+                    }
+                }));
+            }
 
-            jmi = shapeTypeMenu.add(new JCheckBoxMenuItem(new AbstractAction(Bundle.getMessage("ShapeTypeClosed")) {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    setType(LayoutShapeType.eClosed);
-                    layoutEditor.repaint();
-                }
-            }));
-            jmi.setSelected(getType() == LayoutShapeType.eClosed);
+            if (getType() != LayoutShapeType.eClosed) {
+                jmi = shapeTypeMenu.add(new JCheckBoxMenuItem(new AbstractAction(Bundle.getMessage("ShapeTypeClosed")) {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        setType(LayoutShapeType.eClosed);
+                        layoutEditor.repaint();
+                    }
+                }));
+            }
 
-            jmi = shapeTypeMenu.add(new JCheckBoxMenuItem(new AbstractAction(Bundle.getMessage("ShapeTypeFilled")) {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    setType(LayoutShapeType.eFilled);
-                    layoutEditor.repaint();
-                }
-            }));
-            jmi.setSelected(getType() == LayoutShapeType.eFilled);
+            if (getType() != LayoutShapeType.eFilled) {
+                jmi = shapeTypeMenu.add(new JCheckBoxMenuItem(new AbstractAction(Bundle.getMessage("ShapeTypeFilled")) {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        setType(LayoutShapeType.eFilled);
+                        layoutEditor.repaint();
+                    }
+                }));
+            }
 
             popup.add(shapeTypeMenu);
 
-            // Add "Change Shape Point Type to..." menu
+            // Add "Change Shape Type from {0} to..." menu
             if (hitPointType == LayoutTrack.SHAPE_CENTER) {
                 JMenu shapePointTypeMenu = new JMenu(Bundle.getMessage("ChangeAllShapePointTypesTo"));
                 jmi = shapePointTypeMenu.add(new JCheckBoxMenuItem(new AbstractAction(Bundle.getMessage("ShapePointTypeStraight")) {
@@ -588,26 +491,22 @@ public class LayoutShape {
                 LayoutShapePoint lsp = shapePoints.get(pointIndex);
 
                 if (lsp != null) { // this should never happen... but just in case...
-                    JMenu shapePointTypeMenu = new JMenu(Bundle.getMessage("ChangeShapePointTypeTo"));
-                    jmi = shapePointTypeMenu.add(new JCheckBoxMenuItem(new AbstractAction(Bundle.getMessage("ShapePointTypeStraight")) {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            lsp.setType(LayoutShapePointType.eStraight);
-                            layoutEditor.repaint();
+                    String otherPointTypeName = (lsp.getType() == LayoutShapePointType.eStraight)
+                            ? LayoutShapePointType.eCurve.getName() : LayoutShapePointType.eStraight.getName();
+                    jmi = popup.add(Bundle.getMessage("ChangeShapePointTypeFromTo", lsp.getType().getName(), otherPointTypeName));
+                    jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+                        switch (lsp.getType()) {
+                            case eStraight: {
+                                lsp.setType(LayoutShapePointType.eCurve);
+                                break;
+                            }
+                            case eCurve: {
+                                lsp.setType(LayoutShapePointType.eStraight);
+                                break;
+                            }
                         }
-                    }));
-                    jmi.setSelected(lsp.getType() == LayoutShapePointType.eStraight);
-
-                    jmi = shapePointTypeMenu.add(new JCheckBoxMenuItem(new AbstractAction(Bundle.getMessage("ShapePointTypeCurve")) {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            lsp.setType(LayoutShapePointType.eCurve);
-                            layoutEditor.repaint();
-                        }
-                    }));
-                    jmi.setSelected(lsp.getType() == LayoutShapePointType.eCurve);
-
-                    popup.add(shapePointTypeMenu);
+                        layoutEditor.repaint();
+                    });
                 }
             }
 
@@ -810,6 +709,120 @@ public class LayoutShape {
 
         g2.draw(layoutEditor.trackEditControlCircleAt(getCoordsCenter()));
     }   // drawEditControls
+
+    /**
+     * These are the points that make up the outline of the shape. Each point
+     * can be ether a straight or a control point for a curve
+     */
+    public static class LayoutShapePoint {
+
+        private transient LayoutShapePointType type;
+        private transient Point2D point;
+
+        /**
+         * constructor method
+         *
+         * @param c Point2D for initial point
+         */
+        public LayoutShapePoint(Point2D c) {
+            this.type = LayoutShapePointType.eStraight;
+            this.point = c;
+        }
+
+        /**
+         * constructor method
+         *
+         * @param c Point2D for initial point
+         */
+        public LayoutShapePoint(LayoutShapePointType t, Point2D c) {
+            this(c);
+            this.type = t;
+        }
+
+        /**
+         * accessor methods
+         *
+         * @return the LayoutShapePointType
+         */
+        public LayoutShapePointType getType() {
+            return type;
+        }
+
+        public void setType(LayoutShapePointType type) {
+            this.type = type;
+        }
+
+        public Point2D getPoint() {
+            return point;
+        }
+
+        public void setPoint(Point2D point) {
+            this.point = point;
+        }
+    }   // class LayoutShapePoint
+
+    /**
+     * enum LayoutShapeType eOpen, eClosed, eFilled
+     */
+    public enum LayoutShapeType {
+        eOpen("Open"), eClosed("Closed"), eFilled("Filled");
+
+        private final transient String name;
+        private transient static final Map<String, LayoutShapeType> ENUM_MAP;
+
+        LayoutShapeType(String name) {
+            this.name = name;
+        }
+
+        //Build an immutable map of String name to enum pairs.
+        static {
+            Map<String, LayoutShapeType> map = new ConcurrentHashMap<>();
+
+            for (LayoutShapeType instance : LayoutShapeType.values()) {
+                map.put(instance.getName(), instance);
+            }
+            ENUM_MAP = Collections.unmodifiableMap(map);
+        }
+
+        public static LayoutShapeType getName(@Nullable String name) {
+            return ENUM_MAP.get(name);
+        }
+
+        public String getName() {
+            return name;
+        }
+    }
+
+    /**
+     * enum LayoutShapePointType eStraight, eCurve
+     */
+    public enum LayoutShapePointType {
+        eStraight("Straight"), eCurve("Curve");
+
+        private final transient String name;
+        private static final transient Map<String, LayoutShapePointType> ENUM_MAP;
+
+        LayoutShapePointType(String name) {
+            this.name = name;
+        }
+
+        //Build an immutable map of String name to enum pairs.
+        static {
+            Map<String, LayoutShapePointType> map = new ConcurrentHashMap<>();
+            for (LayoutShapePointType instance : LayoutShapePointType.values()) {
+                map.put(instance.getName(), instance);
+            }
+            ENUM_MAP = Collections.unmodifiableMap(map);
+        }
+
+        public static LayoutShapePointType getName(@Nullable String name) {
+            return ENUM_MAP.get(name);
+        }
+
+        public String getName() {
+            return name;
+        }
+    } // enum LayoutShapePointType
 
     private final static Logger log = LoggerFactory.getLogger(LayoutShape.class);
 }   // class LayoutShape
