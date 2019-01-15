@@ -34,10 +34,16 @@
         <longAddressVal/>
         <label>Long Address</label>
       </variable>
+      <!-- Note that the Hi byte in CV3 is not used, with mask "XXXXXXXX".
+      This code is used for consistency with other decoders of the brand that allow a larger address range -->
       <variable item="Servo Start Address" CV="2" mask="VVVVVVVV" default="0">
         <splitVal highCV="3" upperMask="XXXXXXXX" factor="8" offset="1"/>
         <label>Desired Servo Start Address</label>
-        <tooltip>Desired address of first servo.  Entry will be rounded down to a block-of-eight boundary (1, 9 ,... 2041).</tooltip>
+        <tooltip>&lt;html&gt;Desired address of first servo.&lt;br&gt;
+                Entry will be rounded down to a block-of-eight boundary (1, 9 ,... 2041).&lt;br&gt;
+                Avoid using addresses 1017-1020 if possible&lt;br&gt;
+                (those addresses are also used by a special interrogation command).&lt;br&gt;
+                &lt;/html&gt;</tooltip>
       </variable>
       <variable item="Servo Base Block Lo Change" CV="2" infoOnly="yes">
         <decVal/>
@@ -112,7 +118,9 @@
       <variable item="Sensor Start Address" CV="10" mask="VVVVVVVV" default="0">
         <splitVal highCV="11" upperMask="XXXXXXXV" factor="8" offset="1"/>
         <label>Desired Sensor Start Address</label>
-        <tooltip>Desired address of first sensor.  Entry will be rounded down block-of-eight boundary (1, 9, ... 4089).</tooltip>
+        <tooltip>&lt;html&gt;Desired address of first sensor.&lt;br&gt;
+            Entry will be rounded down block-of-eight boundary (1, 9, ... 4089).&lt;br&gt;
+            &lt;/html&gt;</tooltip>
       </variable>
       <variable item="Sensor Base Block Lo Change" CV="10" infoOnly="yes">
         <decVal/>
