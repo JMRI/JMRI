@@ -27,12 +27,12 @@ public class CbusTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
 
     @Override
     public void checkClosedMsgSent() {
-        Assert.assertTrue(("[78] 99 00 00 00 01").equals(tcis.outbound.elementAt(tcis.outbound.size() - 1).toString()));
+        Assert.assertTrue(("[5f8] 99 00 00 00 01").equals(tcis.outbound.elementAt(tcis.outbound.size() - 1).toString()));
     }
 
     @Override
     public void checkThrownMsgSent() {
-        Assert.assertTrue(("[78] 98 00 00 00 01").equals(tcis.outbound.elementAt(tcis.outbound.size() - 1).toString()));
+        Assert.assertTrue(("[5f8] 98 00 00 00 01").equals(tcis.outbound.elementAt(tcis.outbound.size() - 1).toString()));
     }
 
     @Override
@@ -45,11 +45,11 @@ public class CbusTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
     }
     
     public void checkStatusRequestMsgSent() {
-        Assert.assertTrue(("[78] 9A 00 00 00 01").equals(tcis.outbound.elementAt(tcis.outbound.size() - 1).toString()));
+        Assert.assertTrue(("[5f8] 9A 00 00 00 01").equals(tcis.outbound.elementAt(tcis.outbound.size() - 1).toString()));
     }    
 
     public void checkLongStatusRequestMsgSent() {
-        Assert.assertTrue(("[78] 92 30 39 D4 31").equals(tcis.outbound.elementAt(tcis.outbound.size() - 1).toString()));
+        Assert.assertTrue(("[5f8] 92 30 39 D4 31").equals(tcis.outbound.elementAt(tcis.outbound.size() - 1).toString()));
     } 
     
     @Test
