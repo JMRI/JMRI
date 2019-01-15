@@ -183,6 +183,10 @@ git push github
 
 - Merge all relevant [PRs in the JMRI/website repository](https://github.com/JMRI/website/pulls) to ensure release note draft is up to date
 
+- Copy the release note body from help/en/releasenotes/current-draft-note.shtml in the JMRI/JMRI repository into the actual release note in website repository:
+     JMRI/help/en/releasenotes/current-draft-note.shtml
+     website/releasenote/jmri4.15.3.shtml
+     
 - Create the _next_ release note, so that people will document new (overlapping) changes there. Best way to do this is to copy the current release note now, before you prune out all the headers and other info where changes weren't made. (We need to work through automation of version number values below) (If you're creating a production version, its release note is made from a merge of the features of all the test releases; also create the *.*.1 note for the next test release)
 
 ```    
@@ -203,7 +207,7 @@ git push github
 
 - Check that the correct milestone is on all merged pulls. This is needed for the release note. Start with the list of PRs merged since the last test release was started:
 ```
-https://github.com/JMRI/JMRI/pulls?q=is%3Apr+is%3Aclosed+merged%3A%3E2016-08-13+no%3Amilestone
+https://github.com/JMRI/JMRI/pulls?q=is%3Apr+is%3Aclosed+merged%3A%3E2018-12-13+no%3Amilestone
 ```
 where the date at the end should be the date (and optionally time) of the last release. For each, if it doesn't have the right milestone set, and is a change to the release code (e.g. isn't just a change to the CI settings or similar), add the current milestone.  
 
@@ -254,6 +258,17 @@ Jenkins will be creating files shortly at the [CI server](http://builds.jmri.org
 
 If you're developing any additional (post-4.15.2) changes that you want in the JMRI 4.16 production release, please start from this branch, i.e. do `git checkout -b release-4.15.2` to start your work.
 ```
+
+- Copy the release note body from help/en/releasenotes/current-draft-note.shtml in the JMRI/JMRI repository into the actual release note in website repository:
+     JMRI/help/en/releasenotes/current-draft-note.shtml
+     website/releasenote/jmri4.15.3.shtml
+
+- Create a new current-draft-note
+     cp help/en/releasenotes/jmri4.15-master.shtml help/en/releasenotes/current-draft-note.shtml
+     
+- Commit the release note changes on both repositories and push directly
+
+- Pull back to make sure your repository is fully up to date
 
 ================================================================================
 ## Build Files with Jenkins
@@ -386,9 +401,9 @@ Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.4.13.6+Rcb07def.dmg](https://github.com/JMRI/JMRI/releases/download/v4.13.6/JMRI.4.13.6+Rcb07def.dmg) | 6deb881792c4cf03a3088196a2d19f9d303999d2aa31e0e913a61fd4312f5f13
-[JMRI.4.13.6+Rcb07def.exe](https://github.com/JMRI/JMRI/releases/download/v4.13.6/JMRI.4.13.6+Rcb07def.exe) | 21ebcac7d872f02a353f482e954b0d2ecec0df0a3eac3fdc20bd2f168fa4ebaa
-[JMRI.4.13.6+Rcb07def.tgz](https://github.com/JMRI/JMRI/releases/download/v4.13.6/JMRI.4.13.6+Rcb07def.tgz) | dfc165645ffc13b2b5f88b2c29a4510ec70204244a5a84b77a0e4425806ae38a
+[JMRI.4.15.2+Rfda0762.dmg](https://github.com/JMRI/JMRI/releases/download/v4.15.2/JMRI.4.15.2+Rfda0762.dmg) | 3a9bf1dc406e9e22a49dad149d9eda5f514bde046730e2de6f78bc391827bddd
+[JMRI.4.15.2+Rfda0762.exe](https://github.com/JMRI/JMRI/releases/download/v4.15.2/JMRI.4.15.2+Rfda0762.exe) | 9ef30f469a5390dfa9586c3a8c7174f5a224f2091f2e95011c80dd8a603856a4
+[JMRI.4.15.2+Rfda0762.tgz](https://github.com/JMRI/JMRI/releases/download/v4.15.2/JMRI.4.15.2+Rfda0762.tgz) | e03646519f020ad1421bc78c22ed85ce082191b8f91c40d7d722105d1d6f0633
 ```
 
 - Attach files by selecting them or dragging them in. Make sure that the Linux one is .tgz, not .tar.
@@ -440,7 +455,7 @@ If there are any changes in other files, do both of:
 This is the next release in the 4.16 cycle. It's intended to be released around (July 12) from HEAD of master.
 ```
 
-- Confirm that the tag for the current release (v4.15.2 for release 4.15.2) is in place via the [tags page](https://github.com/JMRI/JMRI/tags), then manually delete the current release branch (release-4.15.2) via the [GitHub branches page](https://github.com/JMRI/JMRI/branches).  (N.B. We are experimenting with having the `release*` branches protected, in which case you may have to go to Setting; Branches; then edit the Release* branch name to ReleaseX* to disable the protection before removing the branch.  If you do that, remember to replace the protection!)
+- Confirm that the tag for the current release (v4.15.2 for release 4.15.2) is in place via the [tags page](https://github.com/JMRI/JMRI/tags), then manually delete the current release branch (release-4.15.2) via the [GitHub branches page](https://github.com/JMRI/JMRI/branches).  (N.B. We are experimenting with having the `release*` branches protected, in which case you may have to go to Setting; Branches; then edit the release* branch name to releaseX* to disable the protection before removing the branch.  If you do that, remember to replace the protection!)
 
 - Go to the GitHub PR and Issues [labels list](https://github.com/JMRI/JMRI/labels) and remove any "afterNextTestRelease" (and "afterNextProductionRelease" if appropriate) labels from done items
 
@@ -498,7 +513,7 @@ If you are currently using JMRI 4.9.6 or earlier, we strongly recommend that you
 
 If you use JMRI on Linux or Mac and are updating from JMRI 4.7.3 or earlier, there’s a necessary migration step. (Not needed on Windows) Please see the JMRI 4.12 release note for details: <http://jmri.org/releasenotes/jmri4.12.shtml#migration>
 
-For more information on the issues, new features and bug fixes in 4.15.2 please see the release note:
+For more information on the issues, new features and bug fixes in 4.15.2 please see the release note:   
 <http://jmri.org/releasenotes/jmri4.15.2.shtml>
 
 Note that JMRI is made available under the GNU General Public License. For more information, please see our copyright and licensing page.
