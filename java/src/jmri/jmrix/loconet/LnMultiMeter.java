@@ -1,7 +1,5 @@
 package jmri.jmrix.loconet;
 
-import jmri.jmrix.dccpp.DCCppConstants;
-import jmri.jmrix.dccpp.DCCppMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,15 +11,17 @@ public class LnMultiMeter extends jmri.implementation.AbstractMultiMeter impleme
 
     private SlotManager sm = null;
     private LnTrafficController tc = null;
+
     /**
      * Create a ClockControl object for a Loconet clock
+     *
      * @param scm - connection memo
      */
     public LnMultiMeter(LocoNetSystemConnectionMemo scm) {
         super(LnConstants.METER_INTERVAL_MS);
-        this.sm  = scm.getSlotManager();
-        this.tc  = scm.getLnTrafficController();
-       tc.addLocoNetListener(~0,  this);
+        this.sm = scm.getSlotManager();
+        this.tc = scm.getLnTrafficController();
+        tc.addLocoNetListener(~0, this);
 
         initTimer();
     }
@@ -31,17 +31,19 @@ public class LnMultiMeter extends jmri.implementation.AbstractMultiMeter impleme
         if (msg.getOpCode() != LnConstants.OPC_EXP_RD_SL_DATA || msg.getElement(1) != 21 || msg.getElement(2) == 249) {
             return;
         }
+        log.debug("Found slot 249");
         // CS Types supported
         switch (msg.getElement(16)) {
             case LnConstants.RE_IPL_DIGITRAX_HOST_DCS240:
             case LnConstants.RE_IPL_DIGITRAX_HOST_DCS210:
-        setCurrent((msg.getElement(6) / 10.0f) / (msg.getElement(7) / 10.0f));
-        break;
-           default:
-               // do nothing
+                log.debug("Found Evolution CS Amps[{}] Max[{}]",msg.getElement(6) / 10.0f, (msg.getElement(7) / 10.0f));
+                setCurrent((msg.getElement(6) / 10.0f) / (msg.getElement(7) / 10.0f));
+                break;
+            default:
+                // do nothing
         }
     }
-    
+
     protected void requestUpdateFromLayout() {
         sm.sendReadSlot(249);
     }
@@ -68,6 +70,5 @@ public class LnMultiMeter extends jmri.implementation.AbstractMultiMeter impleme
     }
 
     private final static Logger log = LoggerFactory.getLogger(LnMultiMeter.class);
-
 
 }

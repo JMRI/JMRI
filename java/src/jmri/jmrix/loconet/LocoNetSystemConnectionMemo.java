@@ -36,6 +36,9 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
 
     /**
      * Must manually register() after construction is complete.
+     *
+     * @param lt - Traffic Controller
+     * @param sm - Slot Manager
      */
     public LocoNetSystemConnectionMemo(LnTrafficController lt, SlotManager sm) {
         super("L", "LocoNet"); // NOI18N
@@ -44,7 +47,7 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
         this.sm = sm; // doesn't full register, but fine for this purpose.
 
         // self-registration is deferred until the command station type is set below
-                
+
         // create and register the ComponentFactory for the GUI
         InstanceManager.store(cf = new LnComponentFactory(this),
                 ComponentFactory.class);
@@ -66,9 +69,8 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
     }
 
     /**
-     * Do both the default parent
-     * {@link SystemConnectionMemo} registration,
-     * and register this specific type.
+     * Do both the default parent {@link SystemConnectionMemo} registration, and
+     * register this specific type.
      */
     public void register() {
         super.register(); // registers general type
@@ -88,7 +90,8 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
      */
     public SlotManager getSlotManager() {
         if (sm == null) {
-            log.debug("slot manager is null, but there should always be a valid SlotManager", new Exception("Traceback"));
+            log.debug("slot manager is null, but there should always be a valid SlotManager",
+                    new Exception("Traceback"));
         }
         return sm;
     }
@@ -137,19 +140,19 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
     /**
      * Configure the programming manager and "command station" objects.
      *
-     * @param type               Command station type, used to configure various
-     *                           operations
-     * @param mTurnoutNoRetry    Is the user configuration set for no turnout
-     *                           operation retries?
+     * @param type Command station type, used to configure various operations
+     * @param mTurnoutNoRetry Is the user configuration set for no turnout
+     *            operation retries?
      * @param mTurnoutExtraSpace Is the user configuration set for extra time
-     *                           between turnout operations?
-     * @param mTranspondingAvailable    Is the layout configured to provide
-     *                                  transopnding reports
-     * @param mLoconetProtocolAutoDetect Do we automatically detect the protocol to use or force LocoNet 1.1                                 
+     *            between turnout operations?
+     * @param mTranspondingAvailable Is the layout configured to provide
+     *            transopnding reports
+     * @param mLoconetProtocolAutoDetect Do we automatically detect the protocol
+     *            to use or force LocoNet 1.1
      */
     public void configureCommandStation(LnCommandStationType type, boolean mTurnoutNoRetry,
-                                            boolean mTurnoutExtraSpace, boolean mTranspondingAvailable,
-                                            boolean mLoconetProtocolAutoDetect) {
+            boolean mTurnoutExtraSpace, boolean mTranspondingAvailable,
+            boolean mLoconetProtocolAutoDetect) {
 
         // store arguments
         this.mTurnoutNoRetry = mTurnoutNoRetry;
@@ -325,7 +328,7 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
 
         //MultiMeter mm = getMultiMeter();
         jmri.InstanceManager.store(getMultiMeter(), jmri.MultiMeter.class);
-        
+
     }
 
     protected LnPowerManager powerManager;
@@ -476,13 +479,13 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
         if (clockControl != null) {
             InstanceManager.deregister(clockControl, LnClockControl.class);
         }
-        if (tm != null){
+        if (tm != null) {
             tm.dispose();
         }
-        if (sm != null){
+        if (sm != null) {
             sm.dispose();
         }
-        if (lt != null){
+        if (lt != null) {
             lt.dispose();
         }
         super.dispose();
