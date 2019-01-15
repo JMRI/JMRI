@@ -135,37 +135,10 @@
                 If false or unspecified, the engine will be started when the 
                 first script is launched.</dd>
       </dl>
+        <a id="testingvars" name="testingvars"></a>
         There are also a few that are only used during testing, i.e. in the JUnit CI 
-        tests.        
-      <dl>
-        <dt>jmri.skipschematests</dt>
-            <dd>If true, JUnit tests will skip checking the schema of all the test XML files.</dd>
-        <dt>jmri.skipjythontests</dt>
-            <dd>If true, JUnit tests will skip running the jython/tests scripts.</dd>
-        <dt>jmri.log4jconfigfilename</dt>
-            <dd>Override the default "tests.lcf" logging control file name.</dd>
-        <dt>jmri.demo</dt>
-            <dd>When set true, leave certain windows open to demonstrate their capability</dd>
-        <dt>jmri.migrationtests</dt>
-            <dd>When set true, run some extra tests; usually used during code migration,
-                where not everything is right yet but you want to be able to include
-                tests for individual running.  </dd>
-        <dt>jmri.util.JUnitUtil.printSetUpTearDownNames</dt>
-            <dd>If true, JUnit tests will print out each JUnitUtil.setUp() and JUnitUtil.teardown() call.
-                This can be useful if i.e. the CI tests are hanging, and you can't figure out which
-                test class is the problem.</dd>
-        <dt>jmri.util.JUnitUtil.checkSetUpTearDownSequence</dt>
-            <dd>If true, check for whether JUnitUtil.setUp() and JUnitUtil.teardown() follow each other
-                int the proper sequence. Print a message if not.  (This slows execution a 
-                bit due to the time needed to keep history for the message)</dd>
-        <dt>jmri.util.JUnitUtil.checkSequenceDumpsStack</dt>
-            <dd>If true, makes jmri.util.JUnitUtil.checkSetUpTearDownSequence more verbose by also
-                including the current stack trace along with the traces of the most recent setUp and 
-                tearDown calls.</dd>
-         <dt>jmri.util.JUnitUtil.checkRemnantThreads</dt>
-            <dd>If true, checks for any threads that have not yet been terminated during 
-                the test tearDown processing. If found, the context is logged as a warning.</dd>
-     </dl>
+        tests. They're documented on the 
+        <a href="JUnit.shtml#testingvars">JMRI JUnit page</a>.
 
       <h2 id="Linux">Linux</h2>
 
