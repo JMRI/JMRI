@@ -524,10 +524,10 @@ public class LayoutShape {
 
             popup.add(new JSeparator(JSeparator.HORIZONTAL));
 
-            if (true) { // only enable for debugging; TODO: delete or disable this for production
-                jmi = popup.add("hitPointType: " + hitPointType);
-                jmi.setEnabled(false);
-            }
+//            if (true) { // only enable for debugging; TODO: delete or disable this for production
+//                jmi = popup.add("hitPointType: " + hitPointType);
+//                jmi.setEnabled(false);
+//            }
 
             // add "Change Shape Type to..." menu
             JMenu shapeTypeMenu = new JMenu(Bundle.getMessage("ChangeShapeTypeTo"));
