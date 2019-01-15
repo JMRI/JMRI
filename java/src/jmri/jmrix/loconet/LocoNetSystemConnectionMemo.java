@@ -9,6 +9,7 @@ import jmri.ConsistManager;
 import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
 import jmri.LightManager;
+import jmri.MultiMeter;
 import jmri.PowerManager;
 import jmri.ReporterManager;
 import jmri.SensorManager;
@@ -219,6 +220,9 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
         if (type.equals(CommandStation.class)) {
             return true;
         }
+        if (type.equals(MultiMeter.class)) {
+            return true;
+        }
 
         return super.provides(type);
     }
@@ -268,6 +272,10 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
         if (T.equals(CommandStation.class)) {
             return (T) getSlotManager();
         }
+        if (T.equals(MultiMeter.class)) {
+            return (T) getMultiMeter();
+        }
+
         return super.get(T);
     }
 
@@ -311,8 +319,13 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
         setConsistManager(new LocoNetConsistManager(this));
 
         ClockControl cc = getClockControl();
+
         // make sure InstanceManager knows about that
         InstanceManager.setDefault(ClockControl.class, cc);
+
+        //MultiMeter mm = getMultiMeter();
+        jmri.InstanceManager.store(getMultiMeter(), jmri.MultiMeter.class);
+        
     }
 
     protected LnPowerManager powerManager;
@@ -408,6 +421,18 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
             lightManager = new LnLightManager(getLnTrafficController(), getSystemPrefix());
         }
         return lightManager;
+    }
+
+    protected LnMultiMeter Multimeter;
+
+    public LnMultiMeter getMultiMeter() {
+        if (getDisabled()) {
+            return null;
+        }
+        if (Multimeter == null) {
+            Multimeter = new LnMultiMeter(this);
+        }
+        return Multimeter;
     }
 
     @Override

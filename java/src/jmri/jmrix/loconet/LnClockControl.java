@@ -479,7 +479,7 @@ public class LnClockControl extends DefaultClockControl implements SlotListener,
         }).start();
         // emergency brake so no command station?
         // 30 secs max.
-/*        new Thread(new Runnable() {
+        new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
@@ -491,7 +491,7 @@ public class LnClockControl extends DefaultClockControl implements SlotListener,
                 }
                 commandStationSyncLimit = 0;
             }
-        }).start(); */
+        }).start();
     }
 
     /**
