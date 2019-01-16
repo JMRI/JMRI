@@ -79,6 +79,7 @@ public class CbusSensor extends AbstractSensor implements CanListener {
         else {
             m.setOpCode(CbusConstants.CBUS_AREQ);
         }
+        CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
         tc.sendCanMessage(m, this);
     }
 
@@ -101,6 +102,7 @@ public class CbusSensor extends AbstractSensor implements CanListener {
                 m = addrActive.makeMessage(tc.getCanid());
                 setOwnState(Sensor.ACTIVE);
             }
+            CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
             tc.sendCanMessage(m, this);
         } else if (s == Sensor.INACTIVE) {
             if (getInverted()){
@@ -110,6 +112,7 @@ public class CbusSensor extends AbstractSensor implements CanListener {
                 m = addrInactive.makeMessage(tc.getCanid());
                 setOwnState(Sensor.INACTIVE);
             }
+            CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
             tc.sendCanMessage(m, this);
         }
         if (s == Sensor.UNKNOWN){
