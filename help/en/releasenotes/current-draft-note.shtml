@@ -389,7 +389,7 @@
 
         <h4>Signal Heads</h4>
             <ul>
-                <li></li>
+                <li>Fix an XML validation problem when reading files with RGB heads</li>
             </ul>
 
         <h4>Signal Masts</h4>
