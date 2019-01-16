@@ -48,6 +48,9 @@
         The left part contains the raw CAN frames. The right part
         interprets their MERG CBUS meaning.</p>
         
+        <p>If the MERG CBUS event table is running, the event table will be queried for 
+        event and node names.</p>
+        
         <p>You can open multiple console windows, whereby an 
         instance number is added to the title bar.
         <br> This number is also added to any Filter, Highlight or 
