@@ -6,8 +6,7 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
      BundleTest.class,
-     CbusEventTablePaneTest.class,
-     CbusEventTableDataModelTest.class
+     CbusEventTablePaneTest.class
 })
 
 /**
