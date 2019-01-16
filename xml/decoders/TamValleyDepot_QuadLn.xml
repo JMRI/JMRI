@@ -34,8 +34,11 @@
         <longAddressVal/>
         <label>Long Address</label>
       </variable>
-      <!-- Note that the Hi byte in CV3 is not used, with mask "XXXXXXXX".
-      This code is used for consistency with other decoders of the brand that allow a larger address range -->
+      <!--  Note that the Hi byte in CV3 is not used, with mask "XXXXXXXX".
+            This code is required to apply factor and offset to a single CV,
+            that are only supported with the splitVal statement.
+            Besides it is also consistent with of other decoders of the same family
+            that are using longer addresses coded over CV2 et CV3     -->
       <variable item="Servo Start Address" CV="2" mask="VVVVVVVV" default="0">
         <splitVal highCV="3" upperMask="XXXXXXXX" factor="8" offset="1"/>
         <label>Desired Servo Start Address</label>
