@@ -94,7 +94,7 @@ public class CbusMessage {
      * @return the node number
      */
     public static int getNodeNumber(CanMessage m) {
-        if (isEvent(m)) {
+        if (isEvent(m) && !isShort(m) ) {
             return m.getElement(1) * 256 + m.getElement(2);
         } else {
             return 0;
@@ -305,7 +305,7 @@ public class CbusMessage {
      * @return the node number
      */
     public static int getNodeNumber(CanReply r) {
-        if (isEvent(r)) {
+        if (isEvent(r) && !isShort(r) ) {
             return r.getElement(1) * 256 + r.getElement(2);
         } else {
             return 0;
