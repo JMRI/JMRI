@@ -1,5 +1,7 @@
 package jmri.jmrix.loconet;
 
+import jmri.jmrix.dccpp.DCCppConstants;
+
 /**
  * Constants to represent values seen in LocoNet traffic.
  * <p>
@@ -261,6 +263,9 @@ public final class LnConstants {
     /** Fast clock is in this slot                           */
     public final static int FC_SLOT = 0x7b;
 
+    /** Fast CLock valid **/
+    public final static int FC_VALID = 0X40;
+   
      /** This slot communicates with the programming track   */
     public final static int PRG_SLOT = 0x7c;
 
@@ -452,6 +457,9 @@ public final class LnConstants {
     }
 
 // start of values not from llnmon.c
+
+// Multimeter polling interval
+    public final static int METER_INTERVAL_MS = 30000;
 
 // Expanded slot index values
     public final static int EXP_MAST = 0;
