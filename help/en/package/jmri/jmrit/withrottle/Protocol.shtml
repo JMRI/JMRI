@@ -632,11 +632,10 @@ MT+S3&lt;;&gt;ED&amp;RGW 341
       either the address directly ("S79" or "L3002") or by referencing
       a roster entry using the "E" command (such as "ED&amp;RGW 341").</p>
 
-      <p>Note that while this key must be formatted like an address, it
-      is <b>not</b> directly related to the actual address in use.  For example,
-      sending the command "MT+S23<;>L3000" will attempt to select the
-      locomotive with long address 3000, but will refer to it in
-      subsequent communication as "S23".</p>
+      <p>The key address MUST match the address chosen via the
+      third element of the string (after the &lt;;&gt;).  Any mismatch
+      results in undefined behavior (and is known to vary between
+      implementations).</p>
 
       <p>The reply from this command is quite verbose, and contains
       details about this locomotive as known by JMRI. If the engine

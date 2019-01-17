@@ -389,7 +389,7 @@
 
         <h4>Signal Heads</h4>
             <ul>
-                <li></li>
+                <li>Fix an XML validation problem when reading files with RGB heads</li>
             </ul>
 
         <h4>Signal Masts</h4>
@@ -460,5 +460,6 @@
             <li>We're building the release note a
                 <a href="/help/en/html/doc/Technical/gitdeveloper.shtml">different way</a>
                 starting with this release.</li>
+            <li>All the PackageList test files were updated to JUnit4 form, without a separate main()</li>
         </ul>
 
