@@ -32,11 +32,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Table data model for display of Cbus events
+ * Table data actions 
  *
- * @author Andrew Crosland (C) 2009
  * @author Steve Young (c) 2018
- * @see CbusEventTablePane
  * 
  */
 public class CbusEventTableAction {
@@ -150,7 +148,6 @@ public class CbusEventTableAction {
     /**
      * Delete Button Clicked
      * See whether to display confirm popup
-     * @see removeRow
      * @param row int row number
      */
     public void buttonDeleteClicked(int row) {
