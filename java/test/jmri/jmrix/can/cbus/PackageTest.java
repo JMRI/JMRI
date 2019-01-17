@@ -35,7 +35,8 @@ import org.junit.runners.Suite;
         CbusTurnoutTest.class,
         BundleTest.class,
         CbusEventTest.class,
-        CbusSendTest.class
+        CbusSendTest.class,
+        jmri.jmrix.can.cbus.eventtable.PackageTest.class
 })
 
 /**
