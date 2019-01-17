@@ -22,9 +22,6 @@ public class Z21MultiMeter extends jmri.implementation.AbstractMultiMeter implem
 
         tc.addz21Listener(this);
 
-        //initTimer();
-        initializeHardwareMeter();
-
         log.debug("Z21MultiMeter constructor called");
 
     }
@@ -36,11 +33,17 @@ public class Z21MultiMeter extends jmri.implementation.AbstractMultiMeter implem
     @Override 
     public void enable(){
         enabled = true;
+        RocoZ21CommandStation cs = _memo.getRocoZ21CommandStation();
+        cs.setSystemStatusMessagesFlag(true);
+        tc.sendz21Message(Z21Message.getLanSetBroadcastFlagsRequestMessage(cs.getZ21BroadcastFlags()),this);
     }
 
     @Override 
     public void disable(){
         enabled = false;
+        RocoZ21CommandStation cs = _memo.getRocoZ21CommandStation();
+        cs.setSystemStatusMessagesFlag(false);
+        tc.sendz21Message(Z21Message.getLanSetBroadcastFlagsRequestMessage(cs.getZ21BroadcastFlags()),this);
     }
 
     @Override
@@ -66,9 +69,6 @@ public class Z21MultiMeter extends jmri.implementation.AbstractMultiMeter implem
 
     @Override
     public void initializeHardwareMeter() {
-         RocoZ21CommandStation cs = _memo.getRocoZ21CommandStation();
-         cs.setSystemStatusMessagesFlag(true);
-         tc.sendz21Message(Z21Message.getLanSetBroadcastFlagsRequestMessage(cs.getZ21BroadcastFlags()),this);
     }
 
     @Override

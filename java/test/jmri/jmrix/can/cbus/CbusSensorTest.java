@@ -27,23 +27,23 @@ public class CbusSensorTest extends jmri.implementation.AbstractSensorTestBase {
 
     @Override
     public void checkOnMsgSent() {
-        Assert.assertTrue(("[78] 98 00 00 00 01").equals(tcis.outbound.elementAt(tcis.outbound.size() - 1).toString()));
+        Assert.assertEquals(("[5f8] 98 00 00 00 01"),(tcis.outbound.elementAt(tcis.outbound.size() - 1).toString()));
     }
 
     @Override
     public void checkOffMsgSent() {
-        Assert.assertTrue(("[78] 99 00 00 00 01").equals(tcis.outbound.elementAt(tcis.outbound.size() - 1).toString()));
+        Assert.assertEquals(("[5f8] 99 00 00 00 01"),(tcis.outbound.elementAt(tcis.outbound.size() - 1).toString()));
     }
 
     @Override
     public void checkStatusRequestMsgSent() {
-        Assert.assertTrue(("[78] 9A 00 00 00 01").equals(tcis.outbound.elementAt(tcis.outbound.size() - 1).toString()));
+        Assert.assertEquals(("[5f8] 9A 00 00 00 01"),(tcis.outbound.elementAt(tcis.outbound.size() - 1).toString()));
     }
     
     // X923039D431
     
     public void checkLongStatusRequestMsgSent() {
-        Assert.assertTrue(("[78] 92 30 39 D4 31").equals(tcis.outbound.elementAt(tcis.outbound.size() - 1).toString()));
+        Assert.assertEquals(("[5f8] 92 30 39 D4 31"),(tcis.outbound.elementAt(tcis.outbound.size() - 1).toString()));
     }
     
     public void checkNoMsgSent() {
