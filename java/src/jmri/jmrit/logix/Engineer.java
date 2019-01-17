@@ -26,7 +26,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
 
     private int _idxCurrentCommand;     // current throttle command
     private String _currentCommand;
-    private int _idxSkipToSpeedCommand;   // only make non-speed commands until this index
+    private int _idxSkipToSpeedCommand;   // skip to this index to reset script when ramping
     private float _normalSpeed = 0;       // current commanded throttle setting (unmodified)
     private String _speedType = Warrant.Normal;    // current speed name
     private long et;    // actual elapsed time while waiting to do current command
