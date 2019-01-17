@@ -8,6 +8,7 @@ import jmri.IdTagListener;
 import jmri.InstanceManager;
 import jmri.LocoAddress;
 import jmri.PhysicalLocationReporter;
+import jmri.RailCom;
 import jmri.ReporterManager;
 import jmri.util.PhysicalLocation;
 import org.slf4j.Logger;
@@ -80,20 +81,10 @@ public class AbstractRailComReporter extends AbstractReporter
     @Override
     public LocoAddress getLocoAddress(String rep) {
         // For now, we assume the current report.
-        // IdTag.getTagID() is a system-name-ized version of the loco address. I think.
-        // Matcher.group(1) : loco address (I think)
-        IdTag cr = (IdTag) this.getCurrentReport();
-        ReporterManager rm = InstanceManager.getDefault(jmri.ReporterManager.class);
-        Pattern p = Pattern.compile("" + rm.getSystemPrefix() + rm.typeLetter() + "(\\d+)");
-        Matcher m = p.matcher(cr.getTagID());
-        if (m.find()) {
-            log.debug("Parsed address: " + m.group(1));
-            // I have no idea what kind of loco address an Ecos reporter uses,
-            // so we'll default to DCC for now.
-            return (new DccLocoAddress(Integer.parseInt(m.group(1)), LocoAddress.Protocol.DCC));
-        } else {
-            return (null);
-        }
+        // IdTags passed by RailCom reporters are actually jmri.RailCom objects
+        // so we use properties of the RailCom object here.
+        RailCom cr = (RailCom) this.getCurrentReport();
+        return cr.getDccLocoAddress();
     }
 
     /**

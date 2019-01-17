@@ -244,7 +244,7 @@ public class XNetSystemConnectionMemo extends SystemConnectionMemo {
             try {
                 // compact/commander do not support the instructions required 
                 // for command station interface.
-                return (getLenzCommandStation().getCommandStationType() != 0x02 );
+                return (getLenzCommandStation().getCommandStationType() != 0x02  && getCommandStation()!=null );
             } catch (java.lang.NullPointerException npe) {
                 // initialization may not be complete, return false if no 
                 // command station object.

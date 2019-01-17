@@ -25,7 +25,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Provides an edit panel for a Block object
+ * Provides an edit panel for a Block object.
  *
  * @author Kevin Dickerson Copyright (C) 2011
  */
@@ -313,5 +313,7 @@ public class BlockEditAction extends BeanEditAction {
         bei.add(basic);
         return basic;
     }
+
     // private final static Logger log = LoggerFactory.getLogger(BlockEditAction.class);
+
 }

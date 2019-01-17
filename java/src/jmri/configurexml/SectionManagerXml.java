@@ -28,6 +28,7 @@ public class SectionManagerXml extends jmri.managers.configurexml.AbstractNamedB
      * @return Element containing the complete info
      */
     @Override
+    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations
     public Element store(Object o) {
         Element sections = new Element("sections");
         setStoreElementClass(sections);

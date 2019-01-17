@@ -1,5 +1,6 @@
 package jmri.jmrix.can.cbus;
 
+import jmri.Sensor;
 import jmri.Turnout;
 import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
@@ -80,7 +81,17 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
         else {
             m.setOpCode(CbusConstants.CBUS_AREQ);
         }
+        CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
         tc.sendCanMessage(m, this);
+        
+        if (getFeedbackMode() == ONESENSOR || getFeedbackMode() == TWOSENSOR) {
+            Sensor s1 = getFirstSensor();
+            if (s1 != null) s1.requestUpdateFromLayout();
+        }
+        if (getFeedbackMode() == TWOSENSOR) {
+            Sensor s2 = getSecondSensor();
+            if (s2 != null) s2.requestUpdateFromLayout();
+        }
     }
     
     /**
@@ -97,6 +108,7 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
             } else {
                 m = addrThrown.makeMessage(tc.getCanid());
             }
+            CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
             tc.sendCanMessage(m, this);
         } 
         if (s == Turnout.CLOSED) {
@@ -106,6 +118,7 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
             else {
                 m = addrClosed.makeMessage(tc.getCanid());
             }
+            CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
             tc.sendCanMessage(m, this);
         }
     }
@@ -142,9 +155,23 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
     @Override
     public void message(CanMessage f) {
         if (addrThrown.match(f)) {
-            newCommandedState(!getInverted() ? THROWN : CLOSED);
+            int state = (!getInverted() ? THROWN : CLOSED);
+            newCommandedState(state);
+            if (_activeFeedbackType == DIRECT) {
+                newKnownState(state);
+            } else if (_activeFeedbackType == DELAYED) {
+                newKnownState(INCONSISTENT);
+                jmri.util.ThreadingUtil.runOnLayoutDelayed( () -> { newKnownState(state); },DELAYED_FEEDBACK_INTERVAL );
+            }
         } else if (addrClosed.match(f)) {
-            newCommandedState(!getInverted() ? CLOSED : THROWN);
+            int state = (!getInverted() ? CLOSED : THROWN);
+            newCommandedState(state);
+            if (_activeFeedbackType == DIRECT) {
+                newKnownState(state);
+            } else if (_activeFeedbackType == DELAYED) {
+                newKnownState(INCONSISTENT);
+                jmri.util.ThreadingUtil.runOnLayoutDelayed( () -> { newKnownState(state); },DELAYED_FEEDBACK_INTERVAL );
+            }
         }
     }
     
@@ -156,9 +183,23 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
         // convert response events to normal
         f = CbusMessage.opcRangeToStl(f);
         if (addrThrown.match(f)) {
-            newCommandedState(!getInverted() ? THROWN : CLOSED);
+            int state = (!getInverted() ? THROWN : CLOSED);
+            newCommandedState(state);
+            if (_activeFeedbackType == DIRECT) {
+                newKnownState(state);
+            } else if (_activeFeedbackType == DELAYED) {
+                newKnownState(INCONSISTENT);
+                jmri.util.ThreadingUtil.runOnLayoutDelayed( () -> { newKnownState(state); },DELAYED_FEEDBACK_INTERVAL );
+            }
         } else if (addrClosed.match(f)) {
-            newCommandedState(!getInverted() ? CLOSED : THROWN);
+            int state = (!getInverted() ? CLOSED : THROWN);
+            newCommandedState(state);
+            if (_activeFeedbackType == DIRECT) {
+                newKnownState(state);
+            } else if (_activeFeedbackType == DELAYED) {
+                newKnownState(INCONSISTENT);
+                jmri.util.ThreadingUtil.runOnLayoutDelayed( () -> { newKnownState(state); },DELAYED_FEEDBACK_INTERVAL );
+            }
         }
     }
     

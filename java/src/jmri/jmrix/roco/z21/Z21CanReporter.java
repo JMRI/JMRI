@@ -1,5 +1,8 @@
 package jmri.jmrix.roco.z21;
 
+import java.util.ArrayList;
+import java.util.function.Predicate;
+import jmri.CollectingReporter;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.RailCom;
@@ -15,13 +18,15 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2016
  */
-public class Z21CanReporter extends jmri.implementation.AbstractRailComReporter implements Z21Listener {
+public class Z21CanReporter extends jmri.implementation.AbstractRailComReporter implements Z21Listener,CollectingReporter {
 
     private Z21SystemConnectionMemo _memo = null;
 
     private int networkID=0; // CAN network ID associated with this reporter's module.
     private int moduleAddress=-1; // User assigned address associated with this reporter's module.
     private int port; // module port (0-7) associated with this reporter.
+
+    private ArrayList<RailCom> idTags;
 
     /**  
      * Create a new Z21CanReporter.
@@ -39,37 +44,31 @@ public class Z21CanReporter extends jmri.implementation.AbstractRailComReporter 
         //Address format passed is in the form of moduleAddress:pin 
         int seperator = systemName.indexOf(":");
         int start = _memo.getSystemPrefix().length() + 1;
-           try {
-              try{
-                 moduleAddress = (Integer.parseInt(systemName.substring(start,seperator)));
-              } catch (NumberFormatException ex) {
-                 // didn't parse as a decimal, check to see if network ID 
-                 // was used instead.
-                 networkID = (Integer.parseInt(systemName.substring(start,seperator),16));
-                 
-              }
-              port = (Integer.parseInt(systemName.substring(seperator + 1)));
+        try {
+           try{
+              moduleAddress = (Integer.parseInt(systemName.substring(start,seperator)));
            } catch (NumberFormatException ex) {
-              log.debug("Unable to convert " + systemName + " into the cab and input format of nn:xx");
-              throw new IllegalArgumentException("requires mm:pp format address.");
+              // didn't parse as a decimal, check to see if network ID 
+              // was used instead.
+              networkID = (Integer.parseInt(systemName.substring(start,seperator),16));
            }
-        // request an update from the layout.
-        //requestUpdateFromLayout();  // leave commented out for now, causing 
-                                      // loop that needs investigation.
-    //    if(networkID!=0){
-    // leave commented out for now, causing loop that needs investigation.
-    //       _memo.getTrafficController().sendz21Message(Z21Message.getLanCanDetector(networkID),this);
-    //    }
+           port = (Integer.parseInt(systemName.substring(seperator + 1)));
+        } catch (NumberFormatException ex) {
+           log.debug("Unable to convert " + systemName + " into the cab and input format of nn:xx");
+           throw new IllegalArgumentException("requires mm:pp format address.");
+        }
+        idTags = new ArrayList<RailCom>();
+        // request an update from the layout
+        //if(networkID!=0){
+        //leave commented out for now, causing loop that needs investigation.
+        //   _memo.getTrafficController().sendz21Message(Z21Message.getLanCanDetector(networkID),this);
+        //}
     }
 
     // the Z21 Listener interface
 
     /**
-     * Member function that will be invoked by a z21Interface implementation to
-     * forward a z21 message from the layout.
-     *
-     * @param msg The received z21 reply. Note that this same object may be
-     * presented to multiple users. It should not be modified here.
+     * {@inheritDoc}
      */
     @Override
     public void reply(Z21Reply msg){
@@ -88,18 +87,33 @@ public class Z21CanReporter extends jmri.implementation.AbstractRailComReporter 
             int type = ( msg.getElement(9) & 0xFF);
             log.debug("reporter message type {}",type);
             if (type >= 0x11 && type <= 0x1f) {
+               if(type==0x11) { // restart the list.
+                  log.trace("clear list, size {}",idTags.size());
+                  idTags.clear();
+                  notify(null);
+               }
                int value1 = (msg.getElement(10)&0xFF) + ((msg.getElement(11)&0xFF) << 8);
                int value2 = (msg.getElement(12)&0xFF) + ((msg.getElement(13)&0xFF) << 8);
-               log.debug("value 1: {}; value 2: {}",value1,value2);
                RailCom tag = getRailComTagFromValue(msg,value1);
                if(tag != null ) {
+                  log.trace("add tag {}",tag);
                   notify(tag);
+                  idTags.add(tag);
+                  // add the tag to the collection
                   tag = getRailComTagFromValue(msg,value2);
                   if(tag != null ) {
+                     log.trace("add tag {} ",tag);
                      notify(tag);
+                     // add the tag to idTags
+                     idTags.add(tag);
                   }
-               } else if(type==0x11) { // address is 0 and first in list.
-                  notify(null);
+               }
+               if(log.isDebugEnabled()){
+                  log.debug("after message, new list size {}",idTags.size());
+                  int i = 0;
+                  for(RailCom id:idTags){
+                      log.debug("{}: {}",i++,id);
+                  }
                }
             } else if( type == 0x01 ) {
                 // status message, not a railcom value, so no report.
@@ -137,12 +151,7 @@ public class Z21CanReporter extends jmri.implementation.AbstractRailComReporter 
     }
 
     /**
-     * Member function that will be invoked by a z21Interface implementation to
-     * forward a z21 message sent to the layout. Normally, this function will do
-     * nothing.
-     *
-     * @param msg The received z21 message. Note that this same object may be
-     * presented to multiple users. It should not be modified here.
+     * {@inheritDoc}
      */
     @Override
     public void message(Z21Message msg){
@@ -152,6 +161,15 @@ public class Z21CanReporter extends jmri.implementation.AbstractRailComReporter 
     @Override
     public void dispose(){
         super.dispose();
+    }
+
+    // the CollectingReporter interface.
+    /**
+     * {@inheritDoc}
+     */
+    @Override 
+    public java.util.Collection getCollection(){
+        return idTags;
     }
 
     private static final Logger log = LoggerFactory.getLogger(Z21CanReporter.class);

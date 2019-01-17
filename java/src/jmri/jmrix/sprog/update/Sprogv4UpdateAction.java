@@ -21,6 +21,7 @@ public class Sprogv4UpdateAction extends SprogUpdateAction {
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public void actionPerformed(ActionEvent e) {
         Object[] options = {Bundle.getMessage("ButtonCancel"), Bundle.getMessage("ButtonContinue")};
         if (1 == JOptionPane.showOptionDialog(null,

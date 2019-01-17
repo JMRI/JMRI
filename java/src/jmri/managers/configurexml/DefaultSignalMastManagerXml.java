@@ -37,10 +37,8 @@ public class DefaultSignalMastManagerXml
         element.setAttribute("class", this.getClass().getName());
         if (m != null) {
             // include contents
-            List<String> names = m.getSystemNameList();
-            for (int i = 0; i < names.size(); i++) {
+            for (SignalMast p : m.getNamedBeanSet()) {
                 //Element e = new Element("signalmast");
-                SignalMast p = m.getSignalMast(names.get(i));
                 try {
                     Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(p);
                     if (e != null) {

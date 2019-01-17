@@ -460,6 +460,7 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
      *
      * @param e Consist XML element
      */
+    @SuppressWarnings("deprecation") // until there's a replacement for convertFromXmlComment()
     public RouteLocation(Element e) {
         Attribute a;
         if ((a = e.getAttribute(Xml.ID)) != null) {

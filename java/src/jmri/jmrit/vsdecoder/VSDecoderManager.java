@@ -870,8 +870,8 @@ public class VSDecoderManager implements PropertyChangeListener {
 
             // Re-register for all the reporters. The registerReporterListener() will skip
             // any that we're already registered for.
-            for (String sysName : jmri.InstanceManager.getDefault(jmri.ReporterManager.class).getSystemNameList()) {
-                registerReporterListener(sysName);
+            for (Reporter r : jmri.InstanceManager.getDefault(jmri.ReporterManager.class).getNamedBeanSet()) {
+                registerReporterListener(r.getSystemName());
             }
 
             // It could be that we lost a Reporter.  But since we aren't keeping a list anymore

@@ -5,6 +5,7 @@ import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
+import jmri.jmrix.can.cbus.eventtable.CbusEventTableDataModel;
 import jmri.jmrix.can.cbus.simulator.CbusSimulator;
 import jmri.jmrix.can.TrafficController;
 import jmri.util.ThreadingUtil;
@@ -35,6 +36,7 @@ public class CbusCommandStation implements CommandStation, CanListener {
     TrafficController tc;
     CanSystemConnectionMemo adapterMemo;
     CbusSimulator _sim = null;
+    CbusEventTableDataModel _evTab = null;
 
     /**
      * Send a specific packet to the rails.
@@ -156,6 +158,44 @@ public class CbusCommandStation implements CommandStation, CanListener {
         _sim.dispose();
         _sim=null;
     }
+    
+    public void setEventTable( CbusEventTableDataModel evTab ){
+        _evTab = evTab;
+    }
+    
+    public CbusEventTableDataModel getEventTable() {
+        return _evTab;
+    }
+    
+    public String getEventName( int nn, int en ){
+        if ( _evTab !=null ){
+            return _evTab.getEventName(nn,en);
+        }
+        return "";
+    }
+
+    public String getEventNodeString( int nn, int en ){
+        String _return="";
+        if ( _evTab !=null ){
+            _return =  _evTab.getEventString(nn,en);
+        }
+        if (_return.equals("")) {
+            StringBuilder addevbuf = new StringBuilder(50);
+            if (nn>0) {
+                addevbuf.append(Bundle.getMessage("OPC_NN"));
+                addevbuf.append(":");
+                addevbuf.append(nn);
+                addevbuf.append(" ");
+            }
+            addevbuf.append(Bundle.getMessage("OPC_EN"));
+            addevbuf.append(":");
+            addevbuf.append(en);
+            _return = addevbuf.toString();
+        }
+        return _return;
+    }
+    
+    
 
     @Override
     public void message(CanMessage m) {

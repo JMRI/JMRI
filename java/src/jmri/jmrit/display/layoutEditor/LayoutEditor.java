@@ -3630,7 +3630,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         JMenuItem newTrainItem = new JMenuItem(Bundle.getMessage("MenuItemNewTrain"));
         dispMenu.add(newTrainItem);
         newTrainItem.addActionListener((ActionEvent event) -> {
-            if (InstanceManager.getDefault(TransitManager.class).getSystemNameList().size() <= 0) {
+            if (InstanceManager.getDefault(TransitManager.class).getNamedBeanSet().size() <= 0) {
                 //Inform the user that there are no Transits available, and don't open the window
                 JOptionPane.showMessageDialog(null,
                         ResourceBundle.getBundle("jmri.jmrit.dispatcher.DispatcherBundle").

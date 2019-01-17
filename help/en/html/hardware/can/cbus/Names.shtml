@@ -133,7 +133,30 @@
         not a sensor generator.
         Events are not intrinsically associated with
         specific hardware objects, people can use events in many ways.</p>
+        
+        <p>You can request the status of a sensor by clicking Query in the sensor table. </p>
       
+       <h4><a name="turnout" id="turnout">Turnout Operation</a></h4>
+      
+      <p>MERG CBUS is setup in JMRI for 4 types of turnout ( output ) feedback.</p>
+      <p>Turnouts have 2 states, the commanded state, and the Feedback state 
+      which is used on panel displays and elsewhere.</p>
+      
+      <ul>
+      <li>Direct - When the commanded state is changed, 
+      the feedback state will reflect the commanded state.</li>
+      <li>Delayed - When the commanded state is changed, 
+      the feedback state will reflect the commanded state following a brief delay.</li>
+      <li>1 Sensor - When the commanded state is changed, the feedback state will not change.
+      <br>The feedback state will change when the sensor attached changes state ( eg. Single microswitch events )</li>
+      <li>2 Sensor - When the commanded state is changed, the feedback state will not change.
+      <br>Feedback state will change when the 2 sensors agree on state ( eg. servo end travel events )</li>
+      </ul>
+      
+      <p>You can request the status of a turnout by clicking Query in the turnout table. </p>
+      <p>If a turnout uses 1 or 2 sensor feedback, these sensor statuses will also be requested.</p>
+      
+      <p>See <a href="../../../doc/Technical/TurnoutFeedback.shtml">JMRI : Turnout Feedback</a> for more info.</p>
       
       </div>
       
@@ -486,9 +509,6 @@
       </tr>
       </table>
       
-      <img src="images/web/merg-cbus-server-400x256.png"
-      width="400" height="256" alt="merg cbus server" align="right">
-      
       <p>Ensure you use the right opscode, eg if you include Nodes for a FiLM address, use ACON instead of ASON.</p>
       
       <p>Sensors, Turnouts and Lights stored as Hex response events using the long and short 
@@ -542,7 +562,12 @@
       available free for MERG members to download.
       </p>
       
-      <p>For system development, you may prefer to view the actual full packet across various applications, eg MERG CBUS SERVER.</p>
+      <img src="images/web/merg-cbus-server-400x256.png"
+      width="400" height="256" alt="merg cbus server" align="right">
+      
+      
+      <p>For advanced system development and packet proving, you may prefer to view the 
+      full packet across various applications, eg MERG CBUS SERVER.</p>
       
         <p>The <a href="../../../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml"
         >JMRI MERG CBUS Console Tool</a> can be very useful in seeing what is being sent 
@@ -610,6 +635,11 @@
         >Command Station Monitor</a> - Command Station Monitor OPCs</li>
         <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml#opc"
         >Console</a> - All OPCs</li>
+        <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/simulator/SimulatorPane.shtml#opc"
+        >Simulator</a> - Most OPCs</li>
+        <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/eventrequestmonitor/CbusEventRequestTablePane.shtml#opc"
+        >Event Request Monitor</a> - Mainly event OPCs</li>
+
        </ul>        
         
         <h4>Sensor, Turnout and Light OPCs</h4>
