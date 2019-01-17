@@ -705,7 +705,6 @@ public class SpeedUtil {
         boolean mergeOK = true;
         float length = blkOrder.getPath().getLengthMm();
         if (length <= 0) {
-            float aveSettings = blkOrder.getTempPathLen();
             if ( length <= 0) {
                 msg = " length <= 0";
                 mergeOK = false;
