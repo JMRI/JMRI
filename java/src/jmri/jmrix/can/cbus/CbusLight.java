@@ -77,9 +77,11 @@ public class CbusLight extends AbstractLight
         CanMessage m;
         if (newState == ON) {
             m = addrOn.makeMessage(tc.getCanid());
+            CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
             tc.sendCanMessage(m, this);
         } else if (newState == OFF) {
             m = addrOff.makeMessage(tc.getCanid());
+            CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
             tc.sendCanMessage(m, this);
         } else {
             log.warn("illegal state requested for Light: " + getSystemName());
@@ -98,6 +100,7 @@ public class CbusLight extends AbstractLight
         else {
             m.setOpCode(CbusConstants.CBUS_AREQ);
         }
+        CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
         tc.sendCanMessage(m, this);
     }
     

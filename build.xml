@@ -1999,7 +1999,7 @@
         <exec executable="./scripts/tidy-check.sh"
               osFamily="unix"
               failonerror="true">
-            <arg value="help/en/*/*/"/>
+            <arg value="help/en/*/*"/>
         </exec>
             
     </target>
