@@ -13,6 +13,7 @@ public class Z21MultiMeter extends jmri.implementation.AbstractMultiMeter implem
 
     private Z21TrafficController tc = null;
     private Z21SystemConnectionMemo _memo = null;
+    private boolean enabled = false;  // disable by default; prevent polling when not being used.
 
     public Z21MultiMeter(Z21SystemConnectionMemo memo) {
         super(-1); // no timer, since we already poll for this information. 
@@ -20,9 +21,6 @@ public class Z21MultiMeter extends jmri.implementation.AbstractMultiMeter implem
         tc = _memo.getTrafficController();
 
         tc.addz21Listener(this);
-
-        //initTimer();
-        initializeHardwareMeter();
 
         log.debug("Z21MultiMeter constructor called");
 
@@ -34,10 +32,18 @@ public class Z21MultiMeter extends jmri.implementation.AbstractMultiMeter implem
 
     @Override 
     public void enable(){
+        enabled = true;
+        RocoZ21CommandStation cs = _memo.getRocoZ21CommandStation();
+        cs.setSystemStatusMessagesFlag(true);
+        tc.sendz21Message(Z21Message.getLanSetBroadcastFlagsRequestMessage(cs.getZ21BroadcastFlags()),this);
     }
 
     @Override 
     public void disable(){
+        enabled = false;
+        RocoZ21CommandStation cs = _memo.getRocoZ21CommandStation();
+        cs.setSystemStatusMessagesFlag(false);
+        tc.sendz21Message(Z21Message.getLanSetBroadcastFlagsRequestMessage(cs.getZ21BroadcastFlags()),this);
     }
 
     @Override
@@ -56,14 +62,13 @@ public class Z21MultiMeter extends jmri.implementation.AbstractMultiMeter implem
 
     @Override
     protected void requestUpdateFromLayout() {
-        tc.sendz21Message(Z21Message.getLanSystemStateDataChangedRequestMessage(), this);
+        if( enabled ) {
+            tc.sendz21Message(Z21Message.getLanSystemStateDataChangedRequestMessage(), this);
+        }
     }
 
     @Override
     public void initializeHardwareMeter() {
-         RocoZ21CommandStation cs = _memo.getRocoZ21CommandStation();
-         cs.setSystemStatusMessagesFlag(true);
-         tc.sendz21Message(Z21Message.getLanSetBroadcastFlagsRequestMessage(cs.getZ21BroadcastFlags()),this);
     }
 
     @Override

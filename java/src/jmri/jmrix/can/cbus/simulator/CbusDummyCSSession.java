@@ -102,9 +102,6 @@ public class CbusDummyCSSession {
     protected void setSpd( int speeddir) {
         _speedDirection = speeddir;
         _RefreshTimer.restart();
-        if (speeddir != 1) {
-            _cs.setEstop(false);
-        }
     }
     
     protected Boolean getIsDispatched() {

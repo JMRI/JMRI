@@ -324,9 +324,18 @@
             characters, as that makes it clearer what's going on.
             If the variable is a full byte, this attribute can be
             omitted.
+            <p>
+            Generally, the V characters should be a contiguous block 
+            of bits as specified in the manufacturer's documentation
+            for the decoder.  In certain rare cases, the
+            layout of the decoder might
+            require a different pattern like XXVVXXVV, but 
+            in those cases please check the operation of the 
+            resulting decoder definition carefully to make sure it 
+            does what you want.
             
             <p>
-            As a special case, this can also be used (along with 
+            As another special case, this can also be used (along with 
             some other attributes) to handle CVs that are coded in
             bases other than binary:  Ones that store their 
             parts as decimal digits, or even base 3 or 5.

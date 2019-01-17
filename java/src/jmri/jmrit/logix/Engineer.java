@@ -1144,10 +1144,6 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                                 rampDist = _speedUtil.rampLengthForSpeedChange(speed, _endSpeed, _isForward);
                                 advanceToCommandIndex(idx); // don't let script set speeds up to here
                             }
-                            if (log.isDebugEnabled()) 
-                                log.debug("cmd= {}, et= {}, _endSpeed= {}, scriptDist= {}, rampDist= {}",
-                                        cmd, ts.getTime(), _endSpeed, scriptDist, rampDist);
-                            idx++;
                         }
                         _normalSpeed = scriptSpeed;
 

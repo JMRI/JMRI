@@ -219,6 +219,11 @@ NOTE: joal.jar is currently replaced by an own-built version with modifications 
 - Java Native Access platform-specific utilities library
 - from http://search.maven.org/#artifactdetails%7Cnet.java.dev.jna%7Cjna-platform%7C4.4.0%7Cjar
 
+##### thumbnailator-0.4.8.jar
+- Thumbnailator
+- from https://github.com/coobird/thumbnailator
+- Used by jmri.util.swing.ResizableImagePanel to read Exif information in JPEG files.
+
 ##### vecmath-1.5.2.jar
 - from Java3D 1.5.2
 - from http://search.maven.org/#search%7Cga%7C1%7Cg%3Ajavax.vecmath

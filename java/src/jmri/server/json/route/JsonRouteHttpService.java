@@ -119,8 +119,8 @@ public class JsonRouteHttpService extends JsonNamedBeanHttpService {
     @Override
     public ArrayNode doGetList(String type, Locale locale) throws JsonException {
         ArrayNode root = this.mapper.createArrayNode();
-        for (String name : InstanceManager.getDefault(RouteManager.class).getSystemNameList()) {
-            root.add(this.doGet(ROUTE, name, locale));
+        for (Route r : InstanceManager.getDefault(RouteManager.class).getNamedBeanSet()) {
+            root.add(this.doGet(ROUTE, r.getSystemName(), locale));
         }
         return root;
 

@@ -7,7 +7,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI Hardware Support - NCE</title>
-  <meta name="Author" content="Bob Jacobsen">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help NCE"><!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
@@ -77,8 +77,8 @@
 
   <h2>Connecting</h2>
 
-  <h3>Settings</h3><a name="AIU" id="AIU"></a> <a name="names" id=
-  "names"></a>
+  <h3>Settings</h3><a name="AIU" id="AIU"></a>
+  <a name="names" id="names"></a>
 
   <h4>AIU (Input) Numbering</h4>
   The NCE "AIU" device allows the NCE
