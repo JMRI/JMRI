@@ -2249,7 +2249,6 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         int retVal = fileChooser.showOpenDialog(null);
         if (retVal == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
-            boolean isSuccessful = false;
             try {
                 feedbackList = new TimeTableCsvImport().importCsv(file);
             } catch (IOException ex) {

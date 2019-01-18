@@ -72,6 +72,39 @@ public class TimeTableCsvImportTest {
         }
     }
 
+    @Test
+    public void testMinimalImport() {
+        TimeTableDataManager dm = new TimeTableDataManager(false);
+        TimeTableCsvImport imp = new TimeTableCsvImport();
+        List<String> feedback = new ArrayList<>();
+        try {
+            File file = FileUtil.getFile("preference:TestMinimalCsvImport.csv");  // NOI18N
+            createMinimalCsvFile(file);
+            feedback = imp.importCsv(file);
+        } catch (IOException ex) {
+            log.error("Unable to test the CSV export process");  // NOI18N
+            return;
+        }
+        Assert.assertEquals("Minimal:", 0, feedback.size());
+    }
+
+    @Test
+    public void testBadImport() {
+        TimeTableDataManager dm = new TimeTableDataManager(false);
+        TimeTableCsvImport imp = new TimeTableCsvImport();
+        List<String> feedback = new ArrayList<>();
+        try {
+            File file = FileUtil.getFile("preference:TestBadCsvImport.csv");  // NOI18N
+            createBadCsvFile(file);
+            feedback = imp.importCsv(file);
+        } catch (IOException ex) {
+            log.error("Unable to test the CSV export process");  // NOI18N
+            return;
+        }
+        jmri.util.JUnitAppender.assertWarnMessage("Unable to process record 1, content = [Train]");  // NOI18N
+        Assert.assertEquals("Bad:", 1, feedback.size());
+    }
+
     public void createCsvFile(File file) {
         // Create a test CSV file for the import test
         try (Writer writer = new BufferedWriter(new OutputStreamWriter(
@@ -87,7 +120,7 @@ public class TimeTableCsvImportTest {
            writer.write("Stop,1,,25\n");
            writer.write("Stop,2,30,Meet QRS\n");
            writer.write("Stop,3\n");
-           writer.write("Train,QRS,Test 2,1,30,420\n");
+           writer.write("Train,QRS,Test 2,1,30,420,0,Note\n");
            writer.write("Stop,3,,25\n");
            writer.write("Stop,2,30,Meet XYZ\n");
            writer.write("Stop,1\n");
@@ -97,6 +130,32 @@ public class TimeTableCsvImportTest {
         }
     }
 
+    public void createMinimalCsvFile(File file) {
+        // Create a test CSV file for the import test
+        try (Writer writer = new BufferedWriter(new OutputStreamWriter(
+                new FileOutputStream(file.getAbsolutePath()), "utf-8"))) {
+           writer.write("Layout\n");
+           writer.write("TrainType\n");
+           writer.write("Segment\n");
+           writer.write("Station\n");
+           writer.write("Schedule\n");
+           writer.write("Train\n");
+           writer.close();
+        } catch (IOException ex) {
+            log.warn("Unable to create the minimal test import CSV file ", ex);
+        }
+    }
+
+    public void createBadCsvFile(File file) {
+        // Create a test CSV file for the import test
+        try (Writer writer = new BufferedWriter(new OutputStreamWriter(
+                new FileOutputStream(file.getAbsolutePath()), "utf-8"))) {
+           writer.write("Train\n");
+           writer.close();
+        } catch (IOException ex) {
+            log.warn("Unable to create the bad test import CSV file ", ex);
+        }
+    }
     @Before
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
