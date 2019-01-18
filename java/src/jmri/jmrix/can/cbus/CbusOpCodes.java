@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import jmri.jmrix.can.cbus.CbusCommandStation;
 import jmri.jmrix.AbstractMessage;
 
 // import org.slf4j.Logger;
@@ -53,6 +54,13 @@ public class CbusOpCodes {
             }
             else if (fields[i].startsWith("^2")) { // replace with loco id from 2 bytes
                 fields[i] = locoFromBytes(msg.getElement(idx++), msg.getElement(idx++) );
+            }
+            else if (fields[i].startsWith("$4")) { // replace the 4 bytes with event / node name ( if possible )
+                CbusCommandStation cmndstat = (CbusCommandStation) jmri.InstanceManager.getDefault(jmri.CommandStation.class);
+                int nn = (256*msg.getElement(idx++))+(msg.getElement(idx++));
+                int en = (256*msg.getElement(idx++))+(msg.getElement(idx++));
+                // log.warn("fetching node {} event {}",nn,en);
+                fields[i] = cmndstat.getEventNodeString(nn,en);
             }
             // concatenat to the result
             buf.append(fields[i]);
@@ -285,23 +293,17 @@ public class CbusOpCodes {
         Bundle.getMessage("OPC_SN") + ":,%1, " + Bundle.getMessage("OPC_CV") + ":,%2, " + 
         Bundle.getMessage("OPC_DA") + ":,%1"); // NOI18N
         
-        result.put(CbusConstants.CBUS_ACON, Bundle.getMessage("CBUS_ACON") + " " + 
-        Bundle.getMessage("OPC_NN") + ":,%2, " + Bundle.getMessage("OPC_EN") + ":,%2"); // NOI18N
+        result.put(CbusConstants.CBUS_ACON, Bundle.getMessage("CBUS_ACON") + " ,$4, "); // NOI18N
         
-        result.put(CbusConstants.CBUS_ACOF, Bundle.getMessage("CBUS_ACOF") + " " + 
-        Bundle.getMessage("OPC_NN") + ":,%2, " + Bundle.getMessage("OPC_EN") + ":,%2"); // NOI18N
+        result.put(CbusConstants.CBUS_ACOF, Bundle.getMessage("CBUS_ACOF") + " ,$4, "); // NOI18N
         
-        result.put(CbusConstants.CBUS_AREQ, Bundle.getMessage("CBUS_AREQ") + " " + 
-        Bundle.getMessage("OPC_NN") + ":,%2, " + Bundle.getMessage("OPC_EN") + ":,%2"); // NOI18N
+        result.put(CbusConstants.CBUS_AREQ, Bundle.getMessage("CBUS_AREQ") + " ,$4, "); // NOI18N
         
-        result.put(CbusConstants.CBUS_ARON, Bundle.getMessage("CBUS_ARON") + " " + 
-        Bundle.getMessage("OPC_NN") + ":,%2, " + Bundle.getMessage("OPC_EN") + ":,%2"); // NOI18N
+        result.put(CbusConstants.CBUS_ARON, Bundle.getMessage("CBUS_ARON") + " ,$4, "); // NOI18N
         
-        result.put(CbusConstants.CBUS_AROF, Bundle.getMessage("CBUS_AROF") + " " + 
-        Bundle.getMessage("OPC_NN") + ":,%2, " + Bundle.getMessage("OPC_EN") + ":,%2"); // NOI18N
+        result.put(CbusConstants.CBUS_AROF, Bundle.getMessage("CBUS_AROF") + " ,$4, "); // NOI18N
         
-        result.put(CbusConstants.CBUS_EVULN, Bundle.getMessage("CBUS_EVULN") + " " + 
-        Bundle.getMessage("OPC_NN") + ":,%2, " + Bundle.getMessage("OPC_EN") + ":,%2"); // NOI18N
+        result.put(CbusConstants.CBUS_EVULN, Bundle.getMessage("CBUS_EVULN") + " ,$4, "); // NOI18N
         
         result.put(CbusConstants.CBUS_NVSET, Bundle.getMessage("CBUS_NVSET") + " " + 
         Bundle.getMessage("OPC_NN") + ":,%2, " + Bundle.getMessage("OPC_NV") + ":,%1, " + 
@@ -311,14 +313,11 @@ public class CbusOpCodes {
         Bundle.getMessage("OPC_NN") + ":,%2, " + Bundle.getMessage("OPC_NV") + ":,%1, " + 
         Bundle.getMessage("OPC_VL") + ":,%1"); // NOI18N
         
-        result.put(CbusConstants.CBUS_ASON, Bundle.getMessage("CBUS_ASON") + " " + 
-        Bundle.getMessage("OPC_NN") + ":,%2, " + Bundle.getMessage("OPC_DN") + ":,%2"); // NOI18N
+        result.put(CbusConstants.CBUS_ASON, Bundle.getMessage("CBUS_ASON") + " ,$4, "); // NOI18N
         
-        result.put(CbusConstants.CBUS_ASOF, Bundle.getMessage("CBUS_ASOF") + " " + 
-        Bundle.getMessage("OPC_NN") + ":,%2, " + Bundle.getMessage("OPC_DN") + ":,%2"); // NOI18N
+        result.put(CbusConstants.CBUS_ASOF, Bundle.getMessage("CBUS_ASOF") + " ,$4, "); // NOI18N
         
-        result.put(CbusConstants.CBUS_ASRQ, Bundle.getMessage("CBUS_ASRQ") + " " + 
-        Bundle.getMessage("OPC_NN") + ":,%2, " + Bundle.getMessage("OPC_DN") + ":,%2"); // NOI18N
+        result.put(CbusConstants.CBUS_ASRQ, Bundle.getMessage("CBUS_ASRQ") + " ,$4, "); // NOI18N
         
         result.put(CbusConstants.CBUS_PARAN, Bundle.getMessage("CBUS_PARAN") + " " + 
         Bundle.getMessage("OPC_NN") + ":,%2, " + Bundle.getMessage("OPC_PA") + ":,%1, " + 
@@ -327,11 +326,9 @@ public class CbusOpCodes {
         result.put(CbusConstants.CBUS_REVAL, Bundle.getMessage("CBUS_REVAL") + " " + 
         Bundle.getMessage("OPC_NN") + ":,%2, " + Bundle.getMessage("OPC_EN") + ":,%1, EV:,%1"); // NOI18N
         
-        result.put(CbusConstants.CBUS_ARSON, Bundle.getMessage("CBUS_ARSON") + " " + 
-        Bundle.getMessage("OPC_NN") + ":,%2, " + Bundle.getMessage("OPC_DN") + ":,%2"); // NOI18N
+        result.put(CbusConstants.CBUS_ARSON, Bundle.getMessage("CBUS_ARSON") + " ,$4, "); // NOI18N
         
-        result.put(CbusConstants.CBUS_ARSOF, Bundle.getMessage("CBUS_ARSOF") + " " + 
-        Bundle.getMessage("OPC_NN") + ":,%2, " + Bundle.getMessage("OPC_DN") + ":,%2"); // NOI18N
+        result.put(CbusConstants.CBUS_ARSOF, Bundle.getMessage("CBUS_ARSOF") + " ,$4, "); // NOI18N
         
         result.put(CbusConstants.CBUS_EXTC3, Bundle.getMessage("CBUS_EXTC3") + " :,%1, " + 
         Bundle.getMessage("OPC_DA") + ":,%1, ,%1, ,%1"); // NOI18N
@@ -344,48 +341,38 @@ public class CbusOpCodes {
         Bundle.getMessage("OPC_SN") + ":,%1, " + Bundle.getMessage("OPC_CV") + ":,%2, " + 
         Bundle.getMessage("OPC_MD") + ":,%1, " + Bundle.getMessage("OPC_DA") + ":,%1"); // NOI18N
         
-        result.put(CbusConstants.CBUS_ACON1, Bundle.getMessage("CBUS_ACON1") + " " + 
-        Bundle.getMessage("OPC_NN") + ":,%2, " + Bundle.getMessage("OPC_EN") + ":,%2, " + 
+        result.put(CbusConstants.CBUS_ACON1, Bundle.getMessage("CBUS_ACON1") + " ,$4, " +
         Bundle.getMessage("OPC_DA") + ":,%1"); // NOI18N
         
-        result.put(CbusConstants.CBUS_ACOF1, Bundle.getMessage("CBUS_ACOF1") + " " + 
-        Bundle.getMessage("OPC_NN") + ":,%2, " + Bundle.getMessage("OPC_EN") + ":,%2, " + 
+        result.put(CbusConstants.CBUS_ACOF1, Bundle.getMessage("CBUS_ACOF1") + " ,$4, " +
         Bundle.getMessage("OPC_DA") + ":,%1"); // NOI18N
         
-        result.put(CbusConstants.CBUS_REQEV, Bundle.getMessage("CBUS_REQEV") + " " + 
-        Bundle.getMessage("OPC_NN") + ":,%2, " + Bundle.getMessage("OPC_EN") + ":,%2, " + 
+        result.put(CbusConstants.CBUS_REQEV, Bundle.getMessage("CBUS_REQEV") + " ,$4, " +
         Bundle.getMessage("OPC_EV") + ":,%1"); // NOI18N
         
-        result.put(CbusConstants.CBUS_ARON1, Bundle.getMessage("CBUS_ARON1") + " " + 
-        Bundle.getMessage("OPC_NN") + ":,%2, " + Bundle.getMessage("OPC_EN") + ":,%2, " + 
+        result.put(CbusConstants.CBUS_ARON1, Bundle.getMessage("CBUS_ARON1") + " ,$4, " +
         Bundle.getMessage("OPC_DA") + ":,%1"); // NOI18N
         
-        result.put(CbusConstants.CBUS_AROF1, Bundle.getMessage("CBUS_AROF1") + " " + 
-        Bundle.getMessage("OPC_NN") + ":,%2, " + Bundle.getMessage("OPC_EN") + ":,%2, " + 
+        result.put(CbusConstants.CBUS_AROF1, Bundle.getMessage("CBUS_AROF1") + " ,$4, " +
         Bundle.getMessage("OPC_DA") + ":,%1"); // NOI18N
         
-        result.put(CbusConstants.CBUS_NEVAL, Bundle.getMessage("CBUS_NEVAL") + " " + 
-        Bundle.getMessage("OPC_NN") + ":,%2, " + Bundle.getMessage("OPC_EN") + ":,%1, " + 
+        result.put(CbusConstants.CBUS_NEVAL, Bundle.getMessage("CBUS_NEVAL") + " ,$4, " +
         Bundle.getMessage("OPC_EV") + ":,%1, " + Bundle.getMessage("OPC_VL") + ":,%1"); // NOI18N
         
         result.put(CbusConstants.CBUS_PNN, Bundle.getMessage("CBUS_PNN") + " " + 
         Bundle.getMessage("OPC_NN") + ":,%2, " + Bundle.getMessage("OPC_MF") + ":,%1, " + 
         Bundle.getMessage("OPC_MI") + ":,%1, " + Bundle.getMessage("OPC_FL") + ":,%1");
         
-        result.put(CbusConstants.CBUS_ASON1, Bundle.getMessage("CBUS_ASON1") + " " + 
-        Bundle.getMessage("OPC_NN") + ":,%2, " + Bundle.getMessage("OPC_DN") + ":,%2, " + 
+        result.put(CbusConstants.CBUS_ASON1, Bundle.getMessage("CBUS_ASON1") + " ,$4, " +
         Bundle.getMessage("OPC_DA") + ":,%1"); // NOI18N
         
-        result.put(CbusConstants.CBUS_ASOF1, Bundle.getMessage("CBUS_ASOF1") + " " + 
-        Bundle.getMessage("OPC_NN") + ":,%2, " + Bundle.getMessage("OPC_DN") + ":,%2, " + 
+        result.put(CbusConstants.CBUS_ASOF1, Bundle.getMessage("CBUS_ASOF1") + " ,$4, " +
         Bundle.getMessage("OPC_DA") + ":,%1"); // NOI18N
         
-        result.put(CbusConstants.CBUS_ARSON1, Bundle.getMessage("CBUS_ARSON1") + " " + 
-        Bundle.getMessage("OPC_NN") + ":,%2, " + Bundle.getMessage("OPC_DN") + ":,%2, " + 
+        result.put(CbusConstants.CBUS_ARSON1, Bundle.getMessage("CBUS_ARSON1") + " ,$4, " +
         Bundle.getMessage("OPC_DA") + ":,%1"); // NOI18N
         
-        result.put(CbusConstants.CBUS_ARSOF1, Bundle.getMessage("CBUS_ARSOF1") + " " + 
-        Bundle.getMessage("OPC_NN") + ":,%2, " + Bundle.getMessage("OPC_DN") + ":,%2, " + 
+        result.put(CbusConstants.CBUS_ARSOF1, Bundle.getMessage("CBUS_ARSOF1") + " ,$4, " +
         Bundle.getMessage("OPC_DA") + ":,%1"); // NOI18N
         
         result.put(CbusConstants.CBUS_EXTC4, Bundle.getMessage("CBUS_EXTC4") + " :,%1, " + 
@@ -405,44 +392,34 @@ public class CbusOpCodes {
         Bundle.getMessage("OPC_FW") + ":,%1, " + Bundle.getMessage("OPC_FD") + ":,%1, " + 
         Bundle.getMessage("OPC_FM") + ":,%1, " + Bundle.getMessage("OPC_FT") + ":,%1"); // NOI18N
         
-        result.put(CbusConstants.CBUS_ACON2, Bundle.getMessage("CBUS_ACON2") + " " + 
-        Bundle.getMessage("OPC_NN") + ":,%2, " + Bundle.getMessage("OPC_EN") + ":,%2, " + 
+        result.put(CbusConstants.CBUS_ACON2, Bundle.getMessage("CBUS_ACON2") + " ,$4, " +
         Bundle.getMessage("OPC_DA") + ":,%1, ,%1"); // NOI18N
         
-        result.put(CbusConstants.CBUS_ACOF2, Bundle.getMessage("CBUS_ACOF2") + " " + 
-        Bundle.getMessage("OPC_NN") + ":,%2, " + Bundle.getMessage("OPC_EN") + ":,%2, " + 
+        result.put(CbusConstants.CBUS_ACOF2, Bundle.getMessage("CBUS_ACOF2") + " ,$4, " +
         Bundle.getMessage("OPC_DA") + ":,%1, ,%1"); // NOI18N
         
-        result.put(CbusConstants.CBUS_EVLRN, Bundle.getMessage("CBUS_EVLRN") + " " + 
-        Bundle.getMessage("OPC_NN") + ":,%2, " + Bundle.getMessage("OPC_EN") + ":,%2, " + 
+        result.put(CbusConstants.CBUS_EVLRN, Bundle.getMessage("CBUS_EVLRN") + " ,$4, " +
         Bundle.getMessage("OPC_EV") + ":,%1, " + Bundle.getMessage("OPC_VL") + ":,%1"); // NOI18N
         
-        result.put(CbusConstants.CBUS_EVANS, Bundle.getMessage("CBUS_EVANS") + " " + 
-        Bundle.getMessage("OPC_NN") + ":,%2, " + Bundle.getMessage("OPC_EN") + ":,%2, " + 
+        result.put(CbusConstants.CBUS_EVANS, Bundle.getMessage("CBUS_EVANS") + " ,$4, " +
         Bundle.getMessage("OPC_EV") + ":,%1, " + Bundle.getMessage("OPC_VL") + ":,%1"); // NOI18N
         
-        result.put(CbusConstants.CBUS_ARON2, Bundle.getMessage("CBUS_ARON2") + " " + 
-        Bundle.getMessage("OPC_NN") + ":,%2, " + Bundle.getMessage("OPC_EN") + ":,%2, " + 
+        result.put(CbusConstants.CBUS_ARON2, Bundle.getMessage("CBUS_ARON2") + " ,$4, " +
         Bundle.getMessage("OPC_DA") + ":,%1, ,%1"); // NOI18N
         
-        result.put(CbusConstants.CBUS_AROF2, Bundle.getMessage("CBUS_AROF2") + " " + 
-        Bundle.getMessage("OPC_NN") + ":,%2, " + Bundle.getMessage("OPC_EN") + ":,%2, " + 
+        result.put(CbusConstants.CBUS_AROF2, Bundle.getMessage("CBUS_AROF2") + " ,$4, " +
         Bundle.getMessage("OPC_DA") + ":,%1, ,%1"); // NOI18N
         
-        result.put(CbusConstants.CBUS_ASON2, Bundle.getMessage("CBUS_ASON2") + " " + 
-        Bundle.getMessage("OPC_NN") + ":,%2, " + Bundle.getMessage("OPC_DN") + ":,%2, " + 
+        result.put(CbusConstants.CBUS_ASON2, Bundle.getMessage("CBUS_ASON2") + " ,$4, " +
         Bundle.getMessage("OPC_DA") + ":,%1, ,%1"); // NOI18N
         
-        result.put(CbusConstants.CBUS_ASOF2, Bundle.getMessage("CBUS_ASOF2") + " " + 
-        Bundle.getMessage("OPC_NN") + ":,%2, " + Bundle.getMessage("OPC_DN") + ":,%2, " + 
+        result.put(CbusConstants.CBUS_ASOF2, Bundle.getMessage("CBUS_ASOF2") + " ,$4, " +
         Bundle.getMessage("OPC_DA") + ":,%1, ,%1"); // NOI18N
         
-        result.put(CbusConstants.CBUS_ARSON2, Bundle.getMessage("CBUS_ARSON2") + " " + 
-        Bundle.getMessage("OPC_NN") + ":,%2, " + Bundle.getMessage("OPC_DN") + ":,%2, " + 
+        result.put(CbusConstants.CBUS_ARSON2, Bundle.getMessage("CBUS_ARSON2") + " ,$4, " +
         Bundle.getMessage("OPC_DA") + ":,%1, ,%1"); // NOI18N
         
-        result.put(CbusConstants.CBUS_ARSOF2, Bundle.getMessage("CBUS_ARSOF2") + " " + 
-        Bundle.getMessage("OPC_NN") + ":,%2, " + Bundle.getMessage("OPC_DN") + ":,%2, " + 
+        result.put(CbusConstants.CBUS_ARSOF2, Bundle.getMessage("CBUS_ARSOF2") + " ,$4, " +
         Bundle.getMessage("OPC_DA") + ":,%1, ,%1"); // NOI18N
         
         result.put(CbusConstants.CBUS_EXTC5, Bundle.getMessage("CBUS_EXTC5") + " :,%1, " + 
@@ -468,28 +445,23 @@ public class CbusOpCodes {
         result.put(CbusConstants.CBUS_PARAMS, Bundle.getMessage("CBUS_PARAMS") + " " + 
         Bundle.getMessage("OPC_PA") + ":,%1, ,%1, ,%1, ,%1, ,%1, ,%1, ,%1"); // NOI18N
         
-        result.put(CbusConstants.CBUS_ACON3, Bundle.getMessage("CBUS_ACON3") + " " + 
-        Bundle.getMessage("OPC_NN") + ":,%2, " + Bundle.getMessage("OPC_EN") + ":,%2, " + 
+        result.put(CbusConstants.CBUS_ACON3, Bundle.getMessage("CBUS_ACON3") + " ,$4, " +
         Bundle.getMessage("OPC_DA") + ":,%1, ,%1, ,%1"); // NOI18N
         
-        result.put(CbusConstants.CBUS_ACOF3, Bundle.getMessage("CBUS_ACOF3") + " " + 
-        Bundle.getMessage("OPC_NN") + ":,%2, " + Bundle.getMessage("OPC_EN") + ":,%2, " + 
+        result.put(CbusConstants.CBUS_ACOF3, Bundle.getMessage("CBUS_ACOF3") + " ,$4, " +
         Bundle.getMessage("OPC_DA") + ":,%1, ,%1, ,%1"); // NOI18N
         
         result.put(CbusConstants.CBUS_ENRSP, Bundle.getMessage("CBUS_ENRSP") + " " + 
         Bundle.getMessage("OPC_NN") + ":,%2, " + Bundle.getMessage("OPC_NN") + ":,%2, " + 
         Bundle.getMessage("OPC_EN") + ":,%2, " + Bundle.getMessage("OPC_EV") + ":,%1"); // NOI18N
         
-        result.put(CbusConstants.CBUS_ARON3, Bundle.getMessage("CBUS_ARON3") + " " + 
-        Bundle.getMessage("OPC_NN") + ":,%2, " + Bundle.getMessage("OPC_EN") + ":,%2, " + 
+        result.put(CbusConstants.CBUS_ARON3, Bundle.getMessage("CBUS_ARON3") + " ,$4, " +
         Bundle.getMessage("OPC_DA") + ":,%1, ,%1, ,%1"); // NOI18N
         
-        result.put(CbusConstants.CBUS_AROF3, Bundle.getMessage("CBUS_AROF3") + " " + 
-        Bundle.getMessage("OPC_NN") + ":,%2, " + Bundle.getMessage("OPC_EN") + ":,%2, " + 
+        result.put(CbusConstants.CBUS_AROF3, Bundle.getMessage("CBUS_AROF3") + " ,$4, " +
         Bundle.getMessage("OPC_DA") + ":,%1, ,%1, ,%1"); // NOI18N
         
-        result.put(CbusConstants.CBUS_EVLRNI, Bundle.getMessage("CBUS_EVLRNI") + " " + 
-        Bundle.getMessage("OPC_NN") + ":,%2, " + Bundle.getMessage("OPC_EN") + ":,%2, " + 
+        result.put(CbusConstants.CBUS_EVLRNI, Bundle.getMessage("CBUS_EVLRNI") + " ,$4, " +
         Bundle.getMessage("OPC_ET") + ":,%1, " + Bundle.getMessage("OPC_EV") + ":,%1, " + 
         Bundle.getMessage("OPC_VL") + ":,%1"); // NOI18N
         
@@ -501,12 +473,10 @@ public class CbusOpCodes {
         Bundle.getMessage("OPC_NN") + ":,%2, " +
         Bundle.getMessage("OPC_DA") + ":,%1, ,%1, ,%1, ,%1, ,%1"); // NOI18N
         
-        result.put(CbusConstants.CBUS_ASON3, Bundle.getMessage("CBUS_ASON3") + " " + 
-        Bundle.getMessage("OPC_NN") + ":,%2, " + Bundle.getMessage("OPC_DN") + ":,%2, " + 
+        result.put(CbusConstants.CBUS_ASON3, Bundle.getMessage("CBUS_ASON3") + " ,$4, " +
         Bundle.getMessage("OPC_DA") + ":,%1, ,%1, ,%1"); // NOI18N
         
-        result.put(CbusConstants.CBUS_ASOF3, Bundle.getMessage("CBUS_ASOF3") + " " + 
-        Bundle.getMessage("OPC_NN") + ":,%2, " + Bundle.getMessage("OPC_DN") + ":,%2, " + 
+        result.put(CbusConstants.CBUS_ASOF3, Bundle.getMessage("CBUS_ASOF3") + " ,$4, " +
         Bundle.getMessage("OPC_DA") + ":,%1, ,%1, ,%1"); // NOI18N
         
         result.put(CbusConstants.CBUS_DDES, Bundle.getMessage("CBUS_DDES") + " " + 
@@ -515,12 +485,10 @@ public class CbusOpCodes {
         result.put(CbusConstants.CBUS_DDRS, Bundle.getMessage("CBUS_DDRS") + " " + 
         Bundle.getMessage("OPC_DN") + ":,%2, " + Bundle.getMessage("OPC_DA") + ":,%1, ,%1, ,%1, ,%1, ,%1"); // NOI18N
         
-        result.put(CbusConstants.CBUS_ARSON3, Bundle.getMessage("CBUS_ARSON3") + " " + 
-        Bundle.getMessage("OPC_NN") + ":,%2, " + Bundle.getMessage("OPC_DN") + ":,%2, " + 
+        result.put(CbusConstants.CBUS_ARSON3, Bundle.getMessage("CBUS_ARSON3") + " ,$4, " +
         Bundle.getMessage("OPC_DA") + ":,%1, ,%1, ,%1"); // NOI18N
         
-        result.put(CbusConstants.CBUS_ARSOF3, Bundle.getMessage("CBUS_ARSOF3") + " " + 
-        Bundle.getMessage("OPC_NN") + ":,%2, " + Bundle.getMessage("OPC_DN") + ":,%2, " + 
+        result.put(CbusConstants.CBUS_ARSOF3, Bundle.getMessage("CBUS_ARSOF3") + " ,$4, " +
         Bundle.getMessage("OPC_DA") + ":,%1, ,%1, ,%1"); // NOI18N
         
         result.put(CbusConstants.CBUS_EXTC6, Bundle.getMessage("CBUS_EXTC6") + " :,%1, " + 

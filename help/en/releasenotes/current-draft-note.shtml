@@ -62,7 +62,10 @@
 
         <h4>MERG CBUS</h4>
             <ul>
-                <li></li>
+                <li>Turnouts now accept DIRECT and DELAYED feedback.</li>
+                <li>Querying a turnout will also query any feedback sensors for that turnout.<li>
+                <li>Event Request monitoring has moved from the Event Table to a stand-alone request monitoring table.</li>
+                <li>The CBUS console will attempt to lookup event ( and node ) names from the Event Table.</li>
             </ul>
 
         <h4>MQTT</h4>

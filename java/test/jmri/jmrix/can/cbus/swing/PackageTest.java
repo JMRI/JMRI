@@ -15,6 +15,7 @@ import org.junit.runners.Suite;
     jmri.jmrix.can.cbus.swing.simulator.PackageTest.class,
     jmri.jmrix.can.cbus.swing.CbusFilterFrameTest.class,
     jmri.jmrix.can.cbus.swing.CbusFilterPanelTest.class,
+    jmri.jmrix.can.cbus.swing.eventrequestmonitor.PackageTest.class,
     BundleTest.class
 })
 
