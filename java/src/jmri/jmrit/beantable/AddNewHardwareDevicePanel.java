@@ -44,6 +44,7 @@ public class AddNewHardwareDevicePanel extends jmri.util.swing.JmriPanel {
         c.gridx = 0;
         c.gridy = 1;
         p.add(sysAddressLabel, c);
+        sysAddressLabel.setLabelFor(sysAddress);
         c.gridy = 2;
         p.add(userNameLabel, c);
         c.gridx = 2;
