@@ -620,5 +620,15 @@ public class LayoutEditorFindItems {
         return result;
     }
 
+    /**
+     * Determine the first unused object name...
+     *
+     * @param inPrefix     ...with this prefix...
+     * @return the first unused object name
+     */
+    public String uniqueName(String inPrefix) {
+        return uniqueName(inPrefix, 1);
+    }
+
     private final static Logger log = LoggerFactory.getLogger(LayoutEditorFindItems.class);
 }

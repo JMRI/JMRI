@@ -593,6 +593,7 @@ public class LayoutShape {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         LayoutShape ls = new LayoutShape(LayoutShape.this);
+                        ls.setName(layoutEditor.getFinder().uniqueName("S"));
 
                         double gridSize = layoutEditor.getGridSize();
                         Point2D delta = new Point2D.Double(gridSize, gridSize);
