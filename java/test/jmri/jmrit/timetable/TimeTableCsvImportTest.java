@@ -94,7 +94,7 @@ public class TimeTableCsvImportTest {
             log.error("Unable to test the CSV export process");  // NOI18N
             return;
         }
-        jmri.util.JUnitAppender.assertWarnMessage("Unable to process record 1, content = [Train]");  // NOI18N
+        jmri.util.JUnitAppender.assertWarnMessage("Unable to process record 2, content = [Layout]");  // NOI18N
         Assert.assertEquals("Bad:", 1, feedback.size());
     }
 
@@ -143,7 +143,11 @@ public class TimeTableCsvImportTest {
         // Create a test CSV file for the import test
         try (Writer writer = new BufferedWriter(new OutputStreamWriter(
                 new FileOutputStream(file.getAbsolutePath()), "utf-8"))) {
-           writer.write("Train\n");
+           writer.write("Layout\n");
+           writer.write("Layout\n");
+           writer.write("TrainType, UseLayoutTypes\n");
+           writer.write("Segment\n");
+           writer.write("Station, UseSegmentStations\n");
            writer.close();
         } catch (IOException ex) {
             log.warn("Unable to create the bad test import CSV file ", ex);
