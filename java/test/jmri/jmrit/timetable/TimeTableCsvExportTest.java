@@ -59,8 +59,10 @@ public class TimeTableCsvExportTest {
             Scanner input = new Scanner(file);
             while (input.hasNextLine()) {
                 String line = input.nextLine();
+                log.debug("line = {}", line);
                 count++;
             }
+            input.close();
         } catch (IOException ex) {
             log.error("Scanner exception: ", ex);
         }

@@ -31,6 +31,7 @@ public class TimeTableCsvImportTest {
             log.error("Unable to test the CSV export process");  // NOI18N
             return;
         }
+        Assert.assertEquals("feedback:", 0, feedback.size());
 
         // Verify results
         int layoutCount = 0;
@@ -41,25 +42,19 @@ public class TimeTableCsvImportTest {
         int trainCount = 0;
         int stopCount = 0;
 
-        for (Layout layout : dm.getLayouts(true)) {
+        for (Layout layout : dm.getLayouts(false)) {
             layoutCount++;
             int layoutId = layout.getLayoutId();
-            for (TrainType type : dm.getTrainTypes(layoutId, true)) {
-                typeCount++;
-            }
-            for (Segment segment : dm.getSegments(layoutId, true)) {
+            typeCount += dm.getTrainTypes(layoutId, false).size();
+            for (Segment segment : dm.getSegments(layoutId, false)) {
                 segmentCount++;
-                for (Station station : dm.getStations(segment.getSegmentId(), true)) {
-                    stationCount++;
-                }
+                stationCount += dm.getStations(segment.getSegmentId(), false).size();
             }
-            for (Schedule schedule : dm.getSchedules(layoutId, true)) {
+            for (Schedule schedule : dm.getSchedules(layoutId, false)) {
                 scheduleCount++;
-                for (Train train : dm.getTrains(schedule.getScheduleId(), 0, true)) {
+                for (Train train : dm.getTrains(schedule.getScheduleId(), 0, false)) {
                     trainCount++;
-                    for (Stop stop : dm.getStops(train.getTrainId(), 0, true)) {
-                        stopCount++;
-                    }
+                    stopCount += dm.getStops(train.getTrainId(), 0, false).size();
                 }
             }
             Assert.assertEquals("Layouts:", 1, layoutCount);
@@ -74,7 +69,6 @@ public class TimeTableCsvImportTest {
 
     @Test
     public void testMinimalImport() {
-        TimeTableDataManager dm = new TimeTableDataManager(false);
         TimeTableCsvImport imp = new TimeTableCsvImport();
         List<String> feedback = new ArrayList<>();
         try {
@@ -90,7 +84,6 @@ public class TimeTableCsvImportTest {
 
     @Test
     public void testBadImport() {
-        TimeTableDataManager dm = new TimeTableDataManager(false);
         TimeTableCsvImport imp = new TimeTableCsvImport();
         List<String> feedback = new ArrayList<>();
         try {
