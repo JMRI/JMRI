@@ -9,12 +9,12 @@
             <ul>
                 <li></li>
             </ul>
-		
+
 	    <h4>Bachrus Speedo</h4>
             <ul>
                 <li></li>
             </ul>
-		
+
         <h4>C/MRI</h4>
             <ul>
                 <li></li>
@@ -262,7 +262,7 @@
             <ul>
                 <li></li>
             </ul>
-	    
+
 	    <h4>Team Digital</h4>
             <ul>
                 <li></li>
@@ -399,7 +399,7 @@
             <ul>
                 <li></li>
             </ul>
-            
+
     	<h4>Signal Groups</h4>
             <ul>
                 <li></li>
@@ -430,7 +430,12 @@
         <a id="Timetable" name="Timetable"/>
         <span class="since">since 4.13.4</span>
         <ul>
-            <li></li>
+            <li>New menu item: <strong>Export CSV File</strong> &mdash; Create a
+            CSV file that can be imported into a spreadsheet program.  This can
+            be used to create a traditional timetable.</li>
+            <li>New menu item: <strong>Import CSV File</strong> &mash; Import a
+            CSV file that contains external timetable data to create a new
+            layout defintion or extend an existing layout definition.</li>
         </ul>
 
    <h3>Warrants</h3>
@@ -450,7 +455,7 @@
         <ul>
             <li></li>
         </ul>
-        
+
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"/>
         <ul>

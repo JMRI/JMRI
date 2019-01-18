@@ -598,7 +598,7 @@ public class TimeTableDataManager {
      * @param checkTime The time value to be check.
      * @return true if the time is valid.
      */
-    boolean validateTime(int checkStart, int checkDuration, int checkTime) {
+    public boolean validateTime(int checkStart, int checkDuration, int checkTime) {
         if (checkDuration == 24 && checkTime < 1440) {
             return true;
         }
