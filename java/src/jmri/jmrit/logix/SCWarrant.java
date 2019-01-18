@@ -1,10 +1,9 @@
 package jmri.jmrit.logix;
 
-import java.io.StringWriter;
 import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.List;
 import java.util.concurrent.LinkedBlockingQueue;
-import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
 import jmri.NamedBean;
@@ -31,7 +30,7 @@ public class SCWarrant extends Warrant {
     private long timeToPlatform = 500;
     private float speedFactor = 0.8f;
     private boolean forward = true;
-    private boolean _allowShallowAllocation = false;
+    private final boolean _allowShallowAllocation = false;
     private DccThrottle _throttle = null;
     /**
      * Create an object with no route defined. The list of BlockOrders is the
@@ -646,7 +645,7 @@ public class SCWarrant extends Warrant {
      * The waiting for event must happen in a separate thread.
      * Therefore the main code of runSignalControlledTrain is put in this class.
      *******************************************************************************************************************************/
-    static LinkedBlockingQueue<SCWarrant> waitToRunQ = new LinkedBlockingQueue<SCWarrant>();
+    static LinkedBlockingQueue<SCWarrant> waitToRunQ = new LinkedBlockingQueue<>();
     private class SCTrainRunner implements Runnable {
         SCWarrant _warrant = null;
         SCTrainRunner(SCWarrant warrant) {
@@ -859,6 +858,21 @@ public class SCWarrant extends Warrant {
         }
     }
     
+    /* What super does currently is fine. But FindBug reports EQ_DOESNT_OVERRIDE_EQUALS
+     * FindBug wants us to duplicate and override anyway
+     */
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
+    }
+
+    /* What super does currently is fine. But FindBug reports HE_EQUALS_NO_HASHCODE
+     * FindBug wants us to duplicate and override anyway
+     */
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
     
     /**
      * 

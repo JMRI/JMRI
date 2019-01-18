@@ -384,7 +384,7 @@ public class DefaultSignalMastLogicManager
      */
     public void generateSection() {
         SectionManager sm = InstanceManager.getDefault(jmri.SectionManager.class);
-        for (Section nb : sm.getNamedBeanList()) {
+        for (Section nb : sm.getNamedBeanSet()) {
             if (nb.getSectionType() == Section.SIGNALMASTLOGIC) {
                 nb.removeProperty("intermediateSection");
             }

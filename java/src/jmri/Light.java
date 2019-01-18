@@ -111,6 +111,7 @@ public interface Light extends DigitalIO {
     
     /** {@inheritDoc} */
     @Override
+    @InvokeOnLayoutThread
     default public void setCommandedState(int s) {
         setState(s);
     }
@@ -129,6 +130,7 @@ public interface Light extends DigitalIO {
     
     /** {@inheritDoc} */
     @Override
+    @InvokeOnLayoutThread
     default public void requestUpdateFromLayout() {
         // Do nothing
     }
@@ -147,6 +149,7 @@ public interface Light extends DigitalIO {
      * @throws IllegalArgumentException if invalid newState provided
      */
     @Override
+    @InvokeOnLayoutThread
     public void setState(int newState);
 
     /**
@@ -208,6 +211,7 @@ public interface Light extends DigitalIO {
      *                                  new value is between MaxIntensity and
      *                                  MinIntensity
      */
+    @InvokeOnLayoutThread
     public void setTargetIntensity(double intensity);
 
     /**
@@ -250,6 +254,7 @@ public interface Light extends DigitalIO {
      *                                  current value of the minIntensity
      *                                  property
      */
+    @InvokeOnLayoutThread
     public void setMaxIntensity(double intensity);
 
     /**
@@ -277,6 +282,7 @@ public interface Light extends DigitalIO {
      *                                  current value of the maxIntensity
      *                                  property
      */
+    @InvokeOnLayoutThread
     public void setMinIntensity(double intensity);
 
     /**
@@ -318,6 +324,7 @@ public interface Light extends DigitalIO {
      *                                  minutes is not 0.0
      * @throws IllegalArgumentException if minutes is negative
      */
+    @InvokeOnLayoutThread
     public void setTransitionTime(double minutes);
 
     /**
@@ -366,6 +373,7 @@ public interface Light extends DigitalIO {
      *
      * @param state true if control logic is enabled; false otherwise
      */
+    @InvokeOnLayoutThread
     public void setEnabled(boolean state);
 
     /**
@@ -380,11 +388,13 @@ public interface Light extends DigitalIO {
      * Activates a Light. This method activates each LightControl, setting up a
      * control mechanism, appropriate to its control type.
      */
+    @InvokeOnLayoutThread
     public void activateLight();
 
     /**
      * Deactivates a Light. This method deactivates each LightControl, shutting
      * down its control mechanism.
      */
+    @InvokeOnLayoutThread
     public void deactivateLight();
 }

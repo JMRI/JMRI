@@ -37,7 +37,7 @@ public class XpaMonPane extends jmri.jmrix.AbstractMonPane implements XpaListene
     
     @Override
     public void dispose() {
-        XpaTrafficController.instance().removeXpaListener(this);
+        if (tc != null) tc.removeXpaListener(this);
         super.dispose();
     }
 

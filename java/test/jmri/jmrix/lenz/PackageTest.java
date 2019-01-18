@@ -54,6 +54,7 @@ import org.junit.runners.Suite;
         AbstractXNetInitializationManagerTest.class,
         XNetAddressTest.class,
         XNetStreamConnectionConfigTest.class,
+        XNetHeartBeatTest.class,
 })
 
 /**

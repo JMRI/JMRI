@@ -8,10 +8,8 @@ import jmri.jmrit.operations.trains.TrainsTableFrame;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -52,21 +50,6 @@ public class PrintTrainsActionTest extends OperationsTestCase {
 
         JUnitUtil.dispose(printPreviewFrame);
         JUnitUtil.dispose(ttf);
-    }
-
-    // The minimal setup for log4J
-    @Override
-    @Before
-    public void setUp() {
-        super.setUp();
-
-        JUnitOperationsUtil.resetOperationsManager();
-    }
-
-    @Override
-    @After
-    public void tearDown() {
-        super.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(PrintTrainsActionTest.class);

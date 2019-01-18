@@ -120,6 +120,10 @@ public abstract class Mx1TrafficController implements Mx1Interface {
         return mCommandStation;
     }
 
+    public Mx1SystemConnectionMemo getAdapterMemo() {
+        return adaptermemo;
+    }
+
     public void setAdapterMemo(Mx1SystemConnectionMemo memo) {
         adaptermemo = memo;
     }

@@ -9,7 +9,7 @@ import jmri.Sensor;
 
 /**
  * Provides an edit panel for the sensor pull up/pull down configuration.
- * This is designed so that it can be re-used in other panels.  This is based
+ * This is designed so that it can be re-used in other panels. This is based
  * on the SensorDebounceEditAction class.
  *
  * @author Kevin Dickerson Copyright (C) 2011
@@ -19,7 +19,7 @@ public class SensorPullUpEditAction extends BeanEditAction {
 
     @Override
     public String helpTarget() {
-        return "package.jmri.jmrit.beantable.SensorTable";
+        return "package.jmri.jmrit.beantable.SensorAddEdit";
     } //IN18N
 
     @Override

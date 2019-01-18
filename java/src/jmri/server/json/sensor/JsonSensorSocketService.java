@@ -65,14 +65,12 @@ public class JsonSensorSocketService extends JsonSocketService<JsonSensorHttpSer
     }
 
     private void addListenersToChildren() {
-        InstanceManager.getDefault(SensorManager.class).getSystemNameList().stream().forEach((sn) -> { //add listeners to each child (if not already)
+        InstanceManager.getDefault(SensorManager.class).getNamedBeanSet().stream().forEach((s) -> { //add listeners to each child (if not already)
+            String sn = s.getSystemName();
             if (!sensorListeners.containsKey(sn)) {
                 log.debug("adding SensorListener for Sensor {}", sn);
-                Sensor s = InstanceManager.getDefault(SensorManager.class).getSensor(sn);
-                if (s != null) {
-                    sensorListeners.put(sn, new SensorListener(s));
-                    s.addPropertyChangeListener(this.sensorListeners.get(sn));
-                }
+                sensorListeners.put(sn, new SensorListener(s));
+                s.addPropertyChangeListener(this.sensorListeners.get(sn));
             }
         });
     }

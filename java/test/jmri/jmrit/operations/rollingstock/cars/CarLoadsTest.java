@@ -3,9 +3,7 @@ package jmri.jmrit.operations.rollingstock.cars;
 import java.util.List;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -132,19 +130,5 @@ public class CarLoadsTest extends OperationsTestCase {
 
         Assert.assertEquals("default empty", "E", cl.getDefaultEmptyName());
         Assert.assertEquals("default load", "L", cl.getDefaultLoadName());
-    }
-
-    // from here down is testing infrastructure
-    // Ensure minimal setup for log4J
-    @Override
-    @Before
-    public void setUp() {
-        super.setUp();
-    }
-
-    @Override
-    @After
-    public void tearDown() {
-        super.tearDown();
     }
 }

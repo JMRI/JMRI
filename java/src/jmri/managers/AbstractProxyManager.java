@@ -464,9 +464,10 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
     /** {@inheritDoc} */
     @Nonnull
     @Override
-    @Deprecated  // will be removed when Manager method is removed due to @Override
+    @Deprecated  // will be removed when superclass method is removed due to @Override
+    @SuppressWarnings("deprecation")  // temporary implementation of method with @Override
     public String[] getSystemNameArray() {
-        jmri.util.Log4JUtil.warnOnce(log, "Manager#getSystemNameArray() is deprecated");
+        jmri.util.Log4JUtil.deprecationWarning(log, "getSystemNameArray");        
         if (log.isTraceEnabled()) log.trace("Manager#getSystemNameArray() called", new Exception("traceback"));
         
         List<E> list = getNamedBeanList();
@@ -479,8 +480,10 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
     /** {@inheritDoc} */
     @Nonnull
     @Override
-    @Deprecated  // will be removed when Manager method is removed due to @Override
+    @Deprecated  // will be removed when superclass method is removed due to @Override
+    @SuppressWarnings("deprecation")  // temporary implementation of method with @Override
     public List<String> getSystemNameList() {
+        // jmri.util.Log4JUtil.deprecationWarning(log, "getSystemNameList"); // used by configureXML
         List<E> list = getNamedBeanList();
         ArrayList<String> retval = new ArrayList<>(list.size());
         for (E e : list) retval.add(e.getSystemName());
@@ -488,18 +491,23 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
     }
 
     private ArrayList<String> addedOrderList = null;
+    
     protected void updateOrderList() {
         if (addedOrderList == null) return; // only maintain if requested
         addedOrderList.clear();
         for (Manager<E> m : mgrs) {
-            addedOrderList.addAll(m.getSystemNameAddedOrderList());
+            @SuppressWarnings("deprecation") // getSystemNameAddedOrderList() call needed until deprecated code removed
+            List<String> t = m.getSystemNameAddedOrderList();
+            addedOrderList.addAll(t);
         }
     }
 
     /** {@inheritDoc} */
     @Override
-    @Deprecated  // will be removed when Manager method is removed due to @Override
+    @Deprecated  // will be removed when superclass method is removed due to @Override
+    @SuppressWarnings("deprecation")  // temporary implementation of method with @Override
     public List<String> getSystemNameAddedOrderList() {
+        // jmri.util.Log4JUtil.deprecationWarning(log, "getSystemNameAddedOrderList"); // used by configureXML
         addedOrderList = new ArrayList<>();  // need to start maintaining it
         updateOrderList();
         return Collections.unmodifiableList(addedOrderList);
@@ -507,9 +515,11 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
 
     /** {@inheritDoc} */
     @Override
-    @Deprecated  // will be removed when Manager method is removed due to @Override
+    @Deprecated  // will be removed when superclass method is removed due to @Override
+    @SuppressWarnings("deprecation")  // temporary implementation of method with @Override
     @Nonnull
     public List<E> getNamedBeanList() {
+        // jmri.util.Log4JUtil.deprecationWarning(log, "getNamedBeanList"); // used by getSystemNameList
         // by doing this in order by manager and from each managers ordered sets, its finally in order
         ArrayList<E> tl = new ArrayList<>();
         for (Manager<E> m : mgrs) {

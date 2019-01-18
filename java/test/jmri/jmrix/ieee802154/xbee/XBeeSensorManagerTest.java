@@ -9,11 +9,8 @@ import com.digi.xbee.api.exceptions.XBeeException;
 import com.digi.xbee.api.exceptions.InterfaceNotOpenException;
 import com.digi.xbee.api.exceptions.TimeoutException;
 import jmri.Sensor;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import jmri.util.junit.annotations.*;
+import org.junit.*;
 
 /**
  * XBeeSensorManagerTest.java
@@ -85,6 +82,7 @@ public class XBeeSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
 
     @Override
     @Ignore("ignoring this test due to the system name format, needs to be properly coded")
+    @ToDo("fix system name format")
     @Test
     public void testUpperLower() {
     }

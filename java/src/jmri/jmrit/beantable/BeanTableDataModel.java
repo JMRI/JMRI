@@ -100,6 +100,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         return propertyColumns.get(tgt);
     }
 
+    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations & generics
     protected synchronized void updateNameList() {
         // first, remove listeners from the individual objects
         if (sysNameList != null) {
@@ -793,6 +794,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         fireTableRowsUpdated(row, row);
     }
 
+    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations & generics
     public void moveBean(int row, int column) {
         final T t = getBySystemName(sysNameList.get(row));
         String currentName = t.getUserName();

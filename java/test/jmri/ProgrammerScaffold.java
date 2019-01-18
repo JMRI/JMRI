@@ -34,31 +34,13 @@ public class ProgrammerScaffold implements Programmer {
     }
 
     @Override
-    public void writeCV(int CV, int val, ProgListener p) throws ProgrammerException {
-    }
+    public void writeCV(String CV, int val, ProgListener p) throws ProgrammerException {}
 
     @Override
-    public void readCV(int CV, ProgListener p) throws ProgrammerException {
-    }
+    public void readCV(String CV, ProgListener p) throws ProgrammerException {}
 
     @Override
-    public void confirmCV(int CV, int val, ProgListener p) throws ProgrammerException {
-    }
-
-    @Override
-    public void writeCV(String CV, int val, ProgListener p) throws ProgrammerException {
-        writeCV(Integer.parseInt(CV), val, p);
-    }
-
-    @Override
-    public void readCV(String CV, ProgListener p) throws ProgrammerException {
-        readCV(Integer.parseInt(CV), p);
-    }
-
-    @Override
-    public void confirmCV(String CV, int val, ProgListener p) throws ProgrammerException {
-        confirmCV(Integer.parseInt(CV), val, p);
-    }
+    public void confirmCV(String CV, int val, ProgListener p) throws ProgrammerException {}
 
     @Override
     public void setMode(ProgrammingMode p) {

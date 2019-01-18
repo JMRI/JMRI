@@ -5,7 +5,6 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import java.awt.GraphicsEnvironment;
 
 /**
  *
@@ -15,7 +14,6 @@ public class XNetAddressTest {
 
     @Test
     public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         XNetAddress t = new XNetAddress();
         Assert.assertNotNull("exists",t);
     }

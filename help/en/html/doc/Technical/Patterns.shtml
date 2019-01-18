@@ -61,6 +61,7 @@
       "http://jmri.org/JavaDoc/doc/jmri/NamedBean.html">NamedBean</a>
       class.
 
+      <a id="handles" name="handles"></a>
       <h3>Naming and Handles</h3>
       
       <p>To get access to a specific object (a NamedBean of a

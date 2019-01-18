@@ -9,10 +9,8 @@ import jmri.jmrit.operations.locations.Track;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -79,19 +77,6 @@ public class LocationsByCarLoadFrameTest extends OperationsTestCase {
         Assert.assertFalse(track.acceptsLoad("E", "Flat"));
         
         JUnitUtil.dispose(lclf);
-    }
-
-    // The minimal setup for log4J
-    @Override
-    @Before
-    public void setUp() {
-        super.setUp();
-    }
-
-    @Override
-    @After
-    public void tearDown() {
-        super.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(LocationsByCarLoadFrameTest.class);

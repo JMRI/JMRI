@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/dispatcheroptions.xsl" type="text/xsl"?>
+<!DOCTYPE dispatcheroptions SYSTEM "/xml/DTD/dispatcher-options.dtd">
+<dispatcheroptions>
+  <!--Written by JMRI version 4.11.8ish+sg+20180613T1134Z+R3790cf9766 on Fri Jun 15 13:49:57 EDT 2018-->
+  <options lename="Test Layout" useconnectivity="yes" trainsfromroster="yes" trainsfromtrains="no" trainsfromuser="no" autoallocate="yes" autoturnouts="yes" trustknownturnouts="yes" minthrottleinterval="100" fullramptime="10000" hasoccupancydetection="yes" shortactivetrainnames="no" shortnameinblock="yes" extracolorforallocated="yes" nameinallocatedblock="no" supportvsdecoder="no" layoutscale="HO" usescalemeters="no" userosterentryinblock="no" usesignaltype="signalmast" />
+</dispatcheroptions>

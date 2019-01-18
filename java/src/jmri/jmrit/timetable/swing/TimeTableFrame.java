@@ -38,6 +38,8 @@ import javax.swing.tree.DefaultTreeSelectionModel;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 import jmri.InstanceManager;
+import jmri.Scale;
+import jmri.ScaleManager;
 import jmri.UserPreferencesManager;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.SplitButtonColorChooserPanel;
@@ -405,6 +407,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         // Layout
         _editLayoutName = new JTextField(20);
         _editScale = new JComboBox<>();
+        _editScale.addItemListener(layoutScaleItemEvent);
         _editFastClock = new JTextField(5);
         _editThrottles = new JTextField(5);
         _editMetric = new JCheckBox();
@@ -530,6 +533,40 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
                 Stop stop = _dataMgr.getStop(_curNodeId);
                 if (stop.getStagingTrack() <= stagingTracks) {
                     _editStagingTrack.setModel(new SpinnerNumberModel(stop.getStagingTrack(), 0, stagingTracks, 1));
+                }
+            }
+        }
+    };
+
+    /**
+     * If the custom scale item is selected provide a dialog to set the scale ratio
+     */
+    transient ItemListener layoutScaleItemEvent = new ItemListener() {
+        public void itemStateChanged(ItemEvent e) {
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+                if (_editScale.hasFocus()) {
+                    Scale scale = (Scale) _editScale.getSelectedItem();
+                    if (scale.getScaleName().equals("CUSTOM")) {  // NOI18N
+                        String ans = JOptionPane.showInputDialog(
+                                Bundle.getMessage("ScaleRatioChange"),  // NOI18N
+                                scale.getScaleRatio()
+                                );
+                        if (ans != null) {
+                            try {
+                                double newRatio = Double.parseDouble(ans);
+                                scale.setScaleRatio(newRatio);
+                            } catch (java.lang.IllegalArgumentException
+                                    | java.beans.PropertyVetoException ex) {
+                                log.warn("Unable to change custom ratio: {}", ex.getMessage());  // NOI18N
+                                JOptionPane.showMessageDialog(null,
+                                        Bundle.getMessage("NumberFormatError", ans, "Custom ratio"),  // NOI18N
+                                        Bundle.getMessage("WarningTitle"),  // NOI18N
+                                        JOptionPane.WARNING_MESSAGE);
+                                Layout layout = _dataMgr.getLayout(_curNodeId);
+                                _editScale.setSelectedItem(layout.getScale());
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -1003,11 +1040,11 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         _showScaleMK.setText(String.format("%.2f %s", layout.getScaleMK(), unitMeasure)); // NOI18N
 
         _editScale.removeAllItems();
-        for (Scale scale : Scale.values()) {
+        for (Scale scale : ScaleManager.getScales()) {
             _editScale.addItem(scale);
         }
         jmri.util.swing.JComboBoxUtil.setupComboBoxMaxRows(_editScale);
-        _editScale.setSelectedItem(Scale.valueOf(layout.getScale()));
+        _editScale.setSelectedItem(layout.getScale());
     }
 
     /*
@@ -1164,9 +1201,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
 
         // Pre-validate and convert inputs
         String newName = _editLayoutName.getText().trim();
-        Scale scale = (Scale) _editScale.getSelectedItem();
-        String newScale = scale.name();
-        log.info("s = {}, n = {}", scale, newScale);
+        Scale newScale = (Scale) _editScale.getSelectedItem();
         int newFastClock = parseNumber(_editFastClock, "fast clock");  // NOI18N
         if (newFastClock < 1) {
             newFastClock = layout.getFastClock();
@@ -2460,7 +2495,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
      * Set/clear dirty flag and save button
      * @param dirty True if changes have been made that are not saved.
      */
-    void setShowReminder(boolean dirty) {
+    public void setShowReminder(boolean dirty) {
         _isDirty = dirty;
         _saveButton.setEnabled(dirty);
     }

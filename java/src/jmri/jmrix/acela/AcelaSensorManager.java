@@ -7,7 +7,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Manage the Acela-specific Sensor implementation.
  * <p>
- * System names are "ASnnnn", where nnnn is the sensor number without padding.
+ * System names are "ASnnnn", where A is the user configurable system prefix,
+ * nnnn is the sensor number without padding.
  * <p>
  * Sensors are numbered from 0.
  * <p>
@@ -211,6 +212,7 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
     /**
      * Method to register any orphan Sensors when a new Acela Node is created.
      */
+    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations
     public void registerSensorsForNode(AcelaNode node) {
         // get list containing all Sensors
         log.info("Trying to register sensor from Manager 2: {}Sxx", getSystemPrefix()); // multichar prefix

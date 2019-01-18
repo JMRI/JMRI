@@ -3,7 +3,6 @@ package jmri.jmrix.can.cbus.swing.console;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Desktop;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
@@ -18,8 +17,6 @@ import java.util.Date;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
@@ -29,23 +26,25 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultHighlighter;
-import javax.swing.text.Element;
 import javax.swing.text.Highlighter;
 import jmri.jmrix.AbstractMessage;
 import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
+import jmri.jmrix.can.cbus.swing.configtool.ConfigToolPane;
+import jmri.jmrix.can.cbus.swing.CbusFilterFrame;
 import jmri.jmrix.can.TrafficController;
 import jmri.jmrix.can.cbus.CbusConstants;
 import jmri.jmrix.can.cbus.CbusMessage;
 import jmri.jmrix.can.cbus.CbusOpCodes;
 import jmri.util.FileUtil;
+import jmri.util.JmriJFrame;
+import jmri.util.swing.TextAreaFIFO;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,6 +57,7 @@ import org.slf4j.LoggerFactory;
  */
 public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements CanListener {
 
+    protected static int console_instance_num;
     static private int CAN = 0;
     static private int CBUS = 1;
     static private int MAX_LINES = 5000;
@@ -68,12 +68,12 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
     transient private int _dcc=0;
     transient private int _total=0;
     private boolean _decimal = false;
+    
+    public JPanel _evCap;
 
     // member declarations
     protected JButton clearButton = new JButton();
     protected JToggleButton freezeButton = new JToggleButton();
-    protected JToggleButton noDccButton = new JToggleButton();
-    protected JToggleButton noEventsButton = new JToggleButton();
     
     protected JScrollPane jScrollPane1Can = new JScrollPane();
     protected JScrollPane jScrollPane1Cbus = new JScrollPane();
@@ -104,7 +104,9 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
     protected JCheckBox showStatsCheckBox = new JCheckBox();
     protected JCheckBox showPacketCheckBox = new JCheckBox();
     protected JCheckBox showSendEventCheckBox = new JCheckBox();
-    protected JButton filterButton = new JButton();
+    public JButton filterButton = new JButton();
+    public JButton highlightButton = new JButton();
+    protected JButton evCaptureButton = new JButton();
     protected JCheckBox decimalCheckBox = new JCheckBox();
     protected JCheckBox decimalCheckBoxB = new JCheckBox();
     protected JCheckBox decimalCheckBoxC = new JCheckBox();
@@ -146,7 +148,10 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
 
     DateFormat df = new SimpleDateFormat("HH:mm:ss.SSS");
 
-    private CbusEventFilterFrame _filterFrame;
+    private CbusFilterFrame _filterFrame;
+    private CbusEventHighlightFrame _highlightFrame;
+    public ConfigToolPane _evCapFrame;
+    public JmriJFrame _ecf;
     
     // to find and remember the log file
     final javax.swing.JFileChooser logFileChooser = new JFileChooser(FileUtil.getUserFilesPath());
@@ -154,12 +159,23 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
     // members for handling the CBUS interface
     //CanMessage msg;
     TrafficController tc = null;
-
     String replyString;
 
     public CbusConsolePane() {
         super();
         _filterFrame = null;
+        _highlightFrame = null;
+        _evCapFrame = null;
+        _ecf = null;
+        incrementInstance();
+    }
+
+    public static int getConsoleInstanceNum() {
+        return console_instance_num;
+    }
+    
+    public static void incrementInstance() {
+        console_instance_num++;
     }
 
     /**
@@ -168,8 +184,15 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
     @Override
     public String getTitle() {
         if (memo != null) {
-            return (memo.getUserName() + " " + Bundle.getMessage("CbusConsoleTitle"));
-
+            StringBuffer title = new StringBuffer(20);
+            title.append(memo.getUserName());
+            title.append(" ");
+            title.append(Bundle.getMessage("CbusConsoleTitle"));
+            if (getConsoleInstanceNum() > 1) {
+                title.append(" ");
+                title.append( getConsoleInstanceNum() );
+            }
+            return title.toString();
         }
         return Bundle.getMessage("CbusConsoleTitle");
     }
@@ -190,8 +213,22 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
      */
     @Override
     public void dispose() {
+        monTextPaneCan.dispose();
+        monTextPaneCbus.dispose();
         if (tc != null) {
             tc.removeCanListener(this);
+        }
+        if (_highlightFrame != null) {
+            _highlightFrame.dispose();
+            _highlightFrame=null;
+        }
+        if (_filterFrame != null) {
+            _filterFrame.dispose();
+            _filterFrame=null;
+        }
+        if (_ecf != null) {
+            _ecf.dispose();
+            _ecf=null;
         }
         super.dispose();
     }
@@ -244,18 +281,28 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
         filterButton.setVisible(true);
         filterButton.setToolTipText(Bundle.getMessage("TooltipFilter"));
         
+        highlightButton.setText(Bundle.getMessage("ButtonHighlight"));
+        highlightButton.setVisible(true);
+        highlightButton.setToolTipText(Bundle.getMessage("TooltipHighlighter"));
+
+        evCaptureButton.setText(Bundle.getMessage("CapConfigTitle"));
+        evCaptureButton.setVisible(true);
+        // evCaptureButton.setToolTipText(Bundle.getMessage("TooltipHighlighter"));        
+        
         showPane.add(showLogCheckBox);        
         showPane.add(showStatsCheckBox);
         showPane.add(showPacketCheckBox);
         showPane.add(showSendEventCheckBox);
         showPane.add(filterButton);
+        showPane.add(highlightButton);
+        showPane.add(evCaptureButton);
 
         add(showPane, BorderLayout.NORTH);
         
         monTextPaneCan.setVisible(true);
         monTextPaneCan.setToolTipText(Bundle.getMessage("TooltipMonTextPaneCan"));
         monTextPaneCan.setEditable(false);
-        monTextPaneCan.setRows(MAX_LINES);
+        monTextPaneCan.setRows(5);
         monTextPaneCan.setColumns(5);
 
         monTextPaneCbus.setVisible(true);
@@ -391,20 +438,10 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
         freezeButton.setVisible(true);
         freezeButton.setToolTipText(Bundle.getMessage("TooltipStopScroll"));
         
-        noDccButton.setText(Bundle.getMessage("noDccButton"));
-        noDccButton.setVisible(true);
-        noDccButton.setToolTipText(Bundle.getMessage("noDccButtonTip"));
-        
-        noEventsButton.setText(Bundle.getMessage("noEventsButton"));
-        noEventsButton.setVisible(true);
-        noEventsButton.setToolTipText(Bundle.getMessage("noEventsButtonTip"));
-        
         JPanel messageButtonOptionpane = new JPanel();
         messageButtonOptionpane.setLayout(new BoxLayout(messageButtonOptionpane, BoxLayout.X_AXIS));
         messageButtonOptionpane.add(clearButton);
         messageButtonOptionpane.add(freezeButton);
-        messageButtonOptionpane.add(noEventsButton);
-        messageButtonOptionpane.add(noDccButton);
         paneA.add(messageButtonOptionpane);
         
         JPanel messageCheckOptionpane = new JPanel();
@@ -643,26 +680,6 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
         };
         freezeButton.addActionListener(freezeButtonaction); 
         
-
-
-        ActionListener noEventsButtonaction = ae -> {
-            if (noEventsButton.isSelected()) {
-                noEventsButton.setForeground(Color.red);
-            } else {
-                noEventsButton.setForeground(new JTextField().getForeground()); // reset to default
-            }
-        };
-        noEventsButton.addActionListener(noEventsButtonaction); 
-
-        ActionListener noDccButtonaction = ae -> {
-            if (noDccButton.isSelected()) {
-                noDccButton.setForeground(Color.red);
-            } else {
-                noDccButton.setForeground(new JTextField().getForeground()); // reset to default
-            }
-        };
-        noDccButton.addActionListener(noDccButtonaction); 
-        
         showLogCheckBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -691,6 +708,7 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
                 clearButtonActionPerformed(e);
             }
         });
+        
         startLogButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -700,6 +718,7 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
                 stopLogButton.setVisible(true);                
             }
         });
+        
         stopLogButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -709,13 +728,13 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
                 startLogButton.setVisible(true);
             }
         });
+        
         openFileChooserButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 openFileChooserButtonActionPerformed(e);
             }
         });
-
         
         openLogFileButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
@@ -727,7 +746,6 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
                 }
             }
         });
-
         
         filterButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
@@ -736,6 +754,19 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
             }
         });
 
+        highlightButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                highlightButtonActionPerformed(e);
+            }
+        });
+        
+        evCaptureButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                evCaptureButtonActionPerformed(e);
+            }
+        });
         
         ActionListener logenteraction = ae -> {
             textToLogButtonActionPerformed(ae);
@@ -744,14 +775,12 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
         logenterButton.addActionListener(logenteraction);
         entryField.addActionListener(logenteraction);
         
-        
         copyButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 copyButtonActionPerformed(e);
             }
         });
-
        
         ActionListener sendPacketaction = ae -> {
             sendPacketButtonActionPerformed(ae);
@@ -802,7 +831,6 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
             }
         });        
         
-
         linesBuffer[CAN] = new StringBuffer();
         linesBuffer[CBUS] = new StringBuffer();
     }
@@ -813,17 +841,17 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
      * @param decoded     string the decoded, protocol specific, form.
      * Both should contain the same number of well-formed lines, e.g. end with \n
      * @param priorities string
-     * @param filter      int
+     * @param highlight   int
      */
-    public void nextLine(String line, String decoded, String priorities, int filter) {
+    public void nextLine(String line, String decoded, String priorities, int highlight) {
 
         StringBuffer sbCan = new StringBuffer(180);
         StringBuffer sbCbus = new StringBuffer(180);
-        final int filterIndex = filter;
-        // log.debug("_filterFrame: " + _filterFrame + " filter: " + filter);
-        if (filterIndex >= 0) {
-            final Color filterColor = _filterFrame.getColor(filter);
-            cbusHighlightPainter = new CbusHighlightPainter(filterColor);
+        final int highlightIndex = highlight;
+        // log.debug("_highlightFrame: " + _highlightFrame + " highlight: " + highlight);
+        if (highlightIndex >= 0) {
+            final Color highlightColor = _highlightFrame.getColor(highlight);
+            cbusHighlightPainter = new CbusHighlightPainter(highlightColor);
         }
 
         // display the timestamp if requested
@@ -837,9 +865,9 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
             sbCbus.append((priorities) + " ");
         }
 
-        if (filterIndex >= 0) {
-            sbCan.append((Bundle.getMessage("ButtonFilter") + (filterIndex + 1) + ": "));
-            sbCbus.append((Bundle.getMessage("ButtonFilter") + (filterIndex + 1) + ": "));
+        if (highlightIndex >= 0) {
+            sbCan.append((Bundle.getMessage("ButtonHighlight") + (highlightIndex + 1) + ": "));
+            sbCbus.append((Bundle.getMessage("ButtonHighlight") + (highlightIndex + 1) + ": "));
         }
 
         // display decoded data
@@ -864,7 +892,7 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
                         final int endc = monTextPaneCan.getText().length();
 
                         try {
-                            if (filterIndex >= 0) {
+                            if (highlightIndex >= 0) {
                                 // log.debug("Add highlight start: " + start + " end: " + end);
                                 cbusHighlighter.addHighlight(start, end - 1, cbusHighlightPainter);
                                 canHighlighter.addHighlight(startc, endc - 1, cbusHighlightPainter);
@@ -949,7 +977,6 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
             }
         }
     }
-
     
     public void openLogFileActionPerformed(java.awt.event.ActionEvent e) throws IOException {
         // start at current file, show dialog
@@ -968,7 +995,6 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
         
     }
     
-    
     public void textToLogButtonActionPerformed(java.awt.event.ActionEvent e) {
         nextLine(entryField.getText() + "\n", entryField.getText() + "\n", "", -1);
     }
@@ -976,27 +1002,60 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
     public void filterButtonActionPerformed(java.awt.event.ActionEvent e) {
         // log.debug("Cbus Console filter button action performed");
         if (_filterFrame == null) {
-            _filterFrame = new CbusEventFilterFrame(this);
+            _filterFrame = new CbusFilterFrame(this,_evCapFrame);
             try {
                 _filterFrame.initComponents();
             } catch (Exception ex) {
                 log.error("Exception: " + ex.toString());
             }
             _filterFrame.setVisible(true);
+            if (_evCapFrame != null ) {
+                _evCapFrame.setFilter(_filterFrame);
+            }
         } else {
             _filterFrame.setState(Frame.NORMAL);
             _filterFrame.setVisible(true);
         }
     }
+    
+    public void highlightButtonActionPerformed(java.awt.event.ActionEvent e) {
+        // log.debug("Cbus Console filter button action performed");
+        if (_highlightFrame == null) {
+            _highlightFrame = new CbusEventHighlightFrame(this,_evCapFrame);
+            try {
+                _highlightFrame.initComponents();
+            } catch (Exception ex) {
+                log.error("Exception: " + ex.toString());
+            }
+            _highlightFrame.setVisible(true);
+            if (_evCapFrame != null ) {
+                _evCapFrame.setHighlighter(_highlightFrame);
+            }
+        } else {
+            _highlightFrame.setState(Frame.NORMAL);
+            _highlightFrame.setVisible(true);
+        }
+    }
 
-//    public void filterFrameClosed() {
-//        log.debug("Cbus Console filter frame closed");
-//        nextLine("All filters removed\n", "All filters removed\n", "", -1);
-//        _filterFrame = null;
-//    }
+    public void evCaptureButtonActionPerformed(java.awt.event.ActionEvent e) {
+        // log.debug("Cbus Console filter button action performed");
+        if (_evCapFrame == null ) {
+            _ecf = new JmriJFrame("Event Capture paired to " + getTitle() + " Filter and Highlighter");
+            _evCapFrame = new ConfigToolPane(this, _filterFrame, _highlightFrame);
+            _ecf.add(_evCapFrame);
+            _evCapFrame.initComponents(memo);
+            _ecf.pack();
+            _ecf.setState(Frame.NORMAL);
+            _ecf.setVisible(true);
+        } else {
+            _ecf.setState(Frame.NORMAL);
+            _ecf.setVisible(true);
+        }
+            // jmri.jmrix.can.cbus.swing.configtool.ConfigToolAction();
+    }
 
-    public void filterOn(int index, int nn, boolean nnEn, int ev, boolean evEn, int ty) {
-        // log.debug("Cbus Console filter applied");
+    public void highlightOn(int index, int nn, boolean nnEn, int ev, boolean evEn, int ty, int dr) {
+        // log.debug("Cbus Console highlight applied");
         StringBuffer sb = new StringBuffer(80);
         if (nnEn) {
             sb.append((Bundle.getMessage("CbusNode") + nn + " "));
@@ -1011,12 +1070,24 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
         } else {
             sb.append(Bundle.getMessage("CbusEventOnOrOff"));
         }
+        if (dr == CbusConstants.EVENT_DIR_IN) {
+            sb.append(Bundle.getMessage("InEventsTooltip"));
+        } else if (dr == CbusConstants.EVENT_DIR_OUT) {
+            sb.append(Bundle.getMessage("OutEventsTooltip"));
+        } else {
+            sb.append(Bundle.getMessage("InOrOutEventsToolTip"));
+        }        
         sb.append("\n");
         nextLine(sb.toString(), sb.toString(), "", index);
     }
+    
+    public void filterChanged(String text) {
+        // log.debug("Cbus Console filter update");
+        nextLine( text + " \n", text + " \n", "", -1);
+    }
 
-    public void filterOff(int index) {
-        // log.debug("Cbus Console filter removed");
+    public void highlightOff(int index) {
+        // log.debug("Cbus Console highlight removed");
         nextLine( Bundle.getMessage("HighlightDisabled") + " \n", Bundle.getMessage("HighlightDisabled") + " \n", "", index);
     }
 
@@ -1073,7 +1144,6 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
         for (j = 0; j < 8; j++) {
             dataFields[j].setText("");
         }
-
     }
 
     synchronized public void statsClearButtonActionPerformed(java.awt.event.ActionEvent e) {
@@ -1169,88 +1239,75 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
     
     @Override
     public synchronized void message(CanMessage m) {  // process an outgoing message and log it
+        if ( ( _filterFrame!=null ) && ( _filterFrame.filter(m)) ) {
+            return;
+        }
         sentCountField.setText(Integer.toString(++_sent));
         totalCountField.setText(Integer.toString(++_total));
         int opc = CbusMessage.getOpcode(m);
         if (CbusOpCodes.isEvent(opc)) {
             eventsCountField.setText(Integer.toString(++_events));
-            if (noEventsButton.isSelected()) {
-                return;
-            }
         }
 
         if (CbusOpCodes.isDcc(opc)) {
             dccCountField.setText(Integer.toString(++_dcc));
-            if (noDccButton.isSelected()) {
-                return;
+        }
+        
+        StringBuilder output = new StringBuilder();
+        
+        if (showarrowsCheckBox.isSelected()) {
+            output.append(Bundle.getMessage("CBUS_OUT") + " ");
+        }
+
+        if (canidCheckBox.isSelected()) {
+            output.append(Bundle.getMessage("CanID") + ": " + CbusMessage.getId(m) + " ");
+        }
+        
+        if (showRtrCheckBox.isSelected()) {
+            if (m.isRtr()) { 
+                output.append(Bundle.getMessage("IsRtrFrame") + " ");
+            } else { 
+                output.append(Bundle.getMessage("IsNotRtrFrame") + " ");
             }
         }
         
-        String canid="";
-        if (canidCheckBox.isSelected()) {
-            canid=Bundle.getMessage("CanID") + ": " + CbusMessage.getId(m) + " ";
-        }
-
-        String arrows="";
-        if (showarrowsCheckBox.isSelected()) {
-            arrows=Bundle.getMessage("CBUS_OUT") + " ";
+        if (showOpcCheckBox.isSelected()) {
+            output.append(decodeopc(m, m.isExtended(), m.getHeader())+ " ");
         }
         
-        String opctxt="";
-        if (showOpcCheckBox.isSelected()) {
-            opctxt=decodeopc(m, m.isExtended(), m.getHeader())+ " ";
-        }
+        output.append(decode(m, m.isExtended(), m.getHeader()) + " ");
 
-        String xopc="";
         if (showOpcExtraCheckBox.isSelected()) {
             if (!m.isExtended()) {
                 String cbusopc = "CTIP_" + decodeopc(m, m.isExtended(), m.getHeader());
-                xopc = Bundle.getMessage(cbusopc)+ " ";
+                output.append(Bundle.getMessage(cbusopc)+ " ");
             }
         }
         
-        
-        String addr="";
         if (showAddressCheckBox.isSelected()) {
-            addr = " [" + CbusMessage.toAddress(m) + "] ";
+            output.append(" [" + CbusMessage.toAddress(m) + "] ");
         }
         
-        String can="";
         if (showCanCheckBox.isSelected()) {
-            can = m.toString() + " ";
+            output.append( m.toString() + " ");
         }   
         
-        
-        String rtr="";
-        if (showRtrCheckBox.isSelected()) {
-            // rtr=" " + Bundle.getMessage("CBUS_OUT");
-            if (m.isRtr()) { 
-                rtr=Bundle.getMessage("IsRtrFrame") + " ";
-            } else { 
-                rtr=Bundle.getMessage("IsNotRtrFrame") + " ";
-            }
-        }
-    
-        nextLine( Bundle.getMessage("EventSent") + ": " + m.toString() + "\n",
-                arrows +
-                canid + 
-                rtr + 
-                opctxt + 
-                decode(m, m.isExtended(), m.getHeader()) + " " +
-                xopc + 
-                addr + 
-                can + "\n",
-                
+        output.append("\n");
+
+        nextLine( Bundle.getMessage("EventSent") + ": " + m.toMonitorString() + "\n",
+                output.toString() ,
                 Bundle.getMessage("DynPriTitle") + ": " + CbusMessage.getPri(m) / 4 + " " + 
                 Bundle.getMessage("MinPriTitle") + ": " + (CbusMessage.getPri(m) & 3),
-                
-                (_filterFrame != null) ? _filterFrame.filter(m) : -1);
+                (_highlightFrame != null) ? _highlightFrame.highlight(m) : -1);
                 
         
     }
 
     @Override
-    public synchronized void reply(CanReply r) {  // receive a reply message and log it TODO I18N?
+    public synchronized void reply(CanReply r) {  // receive a reply message and log it
+        if ( ( _filterFrame!=null ) && ( _filterFrame.filter(r) ) ) {
+            return;
+        }
         int j;
         // Capture most recent received packet
         if (_decimal) {
@@ -1273,77 +1330,56 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
         int opc = CbusMessage.getOpcode(r);
         if (CbusOpCodes.isEvent(opc)) {
             eventsCountField.setText(Integer.toString(++_events));
-            if (noEventsButton.isSelected()) {
-                return;
-            }
         }
 
         if (CbusOpCodes.isDcc(opc)) {
             dccCountField.setText(Integer.toString(++_dcc));
-            if (noDccButton.isSelected()) {
-                return;
-            }
-        }        
-        
-        
-        String canid="";
-        if (canidCheckBox.isSelected()) {
-            canid=Bundle.getMessage("CanID") + ": " + CbusMessage.getId(r) + " ";
         }
         
-        String arrows="";
+        StringBuilder output = new StringBuilder();
+        
         if (showarrowsCheckBox.isSelected()) {
-            arrows=Bundle.getMessage("CBUS_IN") + " ";
-        }        
-        
-
-        String opctxt="";
-        if (showOpcCheckBox.isSelected()) {
-            opctxt=decodeopc(r, r.isExtended(), r.getHeader())+ " ";
+            output.append(Bundle.getMessage("CBUS_IN") + " ");
         }
 
-        String xopc="";
+        if (canidCheckBox.isSelected()) {
+            output.append(Bundle.getMessage("CanID") + ": " + CbusMessage.getId(r) + " ");
+        }        
+
+        if (showRtrCheckBox.isSelected()) {
+            if (r.isRtr()) { 
+                output.append(Bundle.getMessage("IsRtrFrame"));
+            } else { 
+                output.append(Bundle.getMessage("IsNotRtrFrame"));
+            }
+        }
+
+        if (showOpcCheckBox.isSelected()) {
+            output.append(decodeopc(r, r.isExtended(), r.getHeader())+ " ");
+        }
+        
+        output.append(decode(r, r.isExtended(), r.getHeader()) + " ");
+
         if (showOpcExtraCheckBox.isSelected()) {
             String cbusopc = "CTIP_" + decodeopc(r, r.isExtended(), r.getHeader());
-            xopc = Bundle.getMessage(cbusopc)+ " ";
+            output.append(Bundle.getMessage(cbusopc)+ " ");
         }
 
-        String addr="";
         if (showAddressCheckBox.isSelected()) {
-            addr = " [" + CbusMessage.toAddress(r) + "] ";
+            output.append(" [" + CbusMessage.toAddress(r) + "] ");
         }
         
-        String can="";
         if (showCanCheckBox.isSelected()) {
-            can = r.toString() + " ";
-        }           
-        
-        
-        
-        String rtr="";
-        if (showRtrCheckBox.isSelected()) {
-            // rtr=" " + Bundle.getMessage("CBUS_OUT");
-            if (r.isRtr()) { 
-                rtr=Bundle.getMessage("IsRtrFrame");
-            } else { 
-                rtr=Bundle.getMessage("IsNotRtrFrame");
-            }
+            output.append(r.toString() + " ");
         }
         
+        output.append("\n");
         
-        nextLine( Bundle.getMessage("EventReceived") + ": " + r.toString() + "\n",
-                arrows + 
-                canid + 
-                rtr + 
-                opctxt + 
-                decode(r, r.isExtended(), r.getHeader()) + " " +
-                xopc +
-                addr + 
-                can +
-                "\n",
+        nextLine( Bundle.getMessage("EventReceived") + ": " + r.toMonitorString() + "\n",
+                output.toString(),
                 Bundle.getMessage("DynPriTitle") + ": " + CbusMessage.getPri(r) / 4 + " " + 
                 Bundle.getMessage("MinPriTitle") + ": " + (CbusMessage.getPri(r) & 3),
-                (_filterFrame != null) ? _filterFrame.filter(r) : -1);
+                (_highlightFrame != null) ? _highlightFrame.highlight(r) : -1);
         rcvdCountField.setText(Integer.toString(++_rcvd));
     }
 
@@ -1431,45 +1467,6 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
             super(color);
         }
     }
-    
-
-    /**
-     * Keeps the message log windows to a reasonable length
-     * https://community.oracle.com/thread/1373400
-     */
-    protected static class TextAreaFIFO extends JTextArea implements DocumentListener {
-        private int maxLines;
-    
-        public TextAreaFIFO(int lines) {
-            maxLines = lines;
-            getDocument().addDocumentListener( this );
-        }
-    
-        public void insertUpdate(DocumentEvent e) {
-            javax.swing.SwingUtilities.invokeLater( new Runnable() {
-                public void run() {
-                    removeLines();
-                }
-            });
-        }
-        public void removeUpdate(DocumentEvent e) {}
-        public void changedUpdate(DocumentEvent e) {}
-        public void removeLines()
-        {
-            Element root = getDocument().getDefaultRootElement();
-            while (root.getElementCount() > maxLines) {
-                Element firstLine = root.getElement(0);
-                try {
-                    getDocument().remove(0, firstLine.getEndOffset());
-                } catch(BadLocationException ble) {
-                    System.out.println(ble);
-                }
-            }
-        setCaretPosition( getDocument().getLength() );
-        }
-    }
-
-
     
     /**
      * Nested class to create one of these using old-style defaults.

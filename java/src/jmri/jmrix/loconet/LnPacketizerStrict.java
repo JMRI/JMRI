@@ -275,7 +275,7 @@ public class LnPacketizerStrict extends LnPacketizer {
                                     try {
                                         Thread.sleep(waitTime);
                                     } catch (InterruptedException ee) {
-                                        log.warn("waitBusy sleep Interupted", ee); // NOI18N
+                                        log.warn("waitBusy sleep Interrupted", ee); // NOI18N
                                     }
                                 }
                                 ostream.write(msg);
@@ -291,7 +291,7 @@ public class LnPacketizerStrict extends LnPacketizer {
                                     try {
                                         Thread.sleep(1);
                                     } catch (InterruptedException ee) {
-                                        log.error("waitForMsg sleep Interupted", ee); // NOI18N
+                                        log.error("waitForMsg sleep Interrupted", ee); // NOI18N
                                     }
                                     waitCount++;
                                 }
@@ -313,7 +313,7 @@ public class LnPacketizerStrict extends LnPacketizer {
                                         try {
                                             Thread.sleep(1);
                                         } catch (InterruptedException ee) {
-                                            log.error("waitingOnLack sleep Interupted", ee); // NOI18N
+                                            log.error("waitingOnLack sleep Interrupted", ee); // NOI18N
                                         }
                                         waitCount++;
                                     }

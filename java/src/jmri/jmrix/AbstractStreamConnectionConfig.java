@@ -42,7 +42,7 @@ abstract public class AbstractStreamConnectionConfig extends AbstractConnectionC
     }
 
     /**
-     * Ctor for a functional object with no prexisting adapter. 
+     * Ctor for a functional object with no preexisting adapter.
      */
     public AbstractStreamConnectionConfig() {
         adapter = null;
@@ -241,6 +241,7 @@ abstract public class AbstractStreamConnectionConfig extends AbstractConnectionC
 
     @Override
     public void setManufacturer(String manufacturer) {
+        setInstance();
         adapter.setManufacturer(manufacturer);
     }
 

@@ -24,6 +24,12 @@
         <authorinitials>GPM</authorinitials>
         <revremark>Initial version of the the NW color light, search light, and semaphore signals.</revremark>
     </revision>
+	<revision>
+        <revnumber>2</revnumber>
+        <date>2018-11-26</date>
+        <authorinitials>GPM</authorinitials>
+        <revremark>Deleleted ourAspects which this signal mast cannot display.</revremark>
+    </revision>
   </revhistory>
 
   <aspecttable>N&amp;W 1981</aspecttable>
@@ -113,36 +119,28 @@
       <advancedAspect>Clear</advancedAspect>
       <ourAspect>Clear</ourAspect>
       <ourAspect>Diverging Clear</ourAspect>
-    </aspectMapping>
+	</aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Approach Diverging</advancedAspect>
       <ourAspect>Clear</ourAspect>
       <ourAspect>Diverging Clear</ourAspect>
-    </aspectMapping>
+	</aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Advance Approach</advancedAspect>
       <ourAspect>Clear</ourAspect>
       <ourAspect>Diverging Clear</ourAspect>
-    </aspectMapping>
+	</aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Diverging Clear</advancedAspect>
       <ourAspect>Approach Diverging</ourAspect>
-      <ourAspect>Diverging Approach Diverging</ourAspect>
-    </aspectMapping>
-
-    <aspectMapping>
-      <advancedAspect>Diverging Clear Lunar</advancedAspect>
-      <ourAspect>Approach Diverging</ourAspect>
-      <ourAspect>Diverging Approach Diverging</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Diverging Approach Diverging</advancedAspect>
       <ourAspect>Approach Diverging</ourAspect>
-      <ourAspect>Diverging Approach Diverging</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
@@ -155,38 +153,32 @@
     <aspectMapping>
       <advancedAspect>Diverging Approach</advancedAspect>
       <ourAspect>Approach Diverging</ourAspect>
-      <ourAspect>Diverging Approach Diverging</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Slow Clear</advancedAspect>
       <ourAspect>Approach</ourAspect>
-      <ourAspect>Diverging Approach</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Slow Approach</advancedAspect>
       <ourAspect>Approach</ourAspect>
       <ourAspect>Approach Diverging</ourAspect>
-      <ourAspect>Diverging Approach</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Restricting</advancedAspect>
       <ourAspect>Approach</ourAspect>
-      <ourAspect>Diverging Approach</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Stop and Proceed</advancedAspect>
       <ourAspect>Approach</ourAspect>
-      <ourAspect>Diverging Approach</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Stop and Stay</advancedAspect>
       <ourAspect>Approach</ourAspect>
-      <ourAspect>Diverging Approach</ourAspect>
     </aspectMapping>
 
   </aspectMappings>

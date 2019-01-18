@@ -133,16 +133,6 @@ public interface ReporterManager extends ProvidingManager<Reporter> {
     Reporter newReporter(@Nonnull String systemName, String userName);
 
     /**
-     * Get a list of all Reporter system names.
-     *
-     * @return a list of reporter system names or an empty list if there are no
-     *         reporters
-     */
-    @Nonnull public
-    @Override
-    List<String> getSystemNameList();
-
-    /**
      * Determine if it is possible to add a range of reporters in numerical
      * order.
      *
@@ -163,7 +153,7 @@ public interface ReporterManager extends ProvidingManager<Reporter> {
     public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix);
 
     /**
-     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     * {@inheritDoc}
      */
     @Override
     public String getEntryToolTip();

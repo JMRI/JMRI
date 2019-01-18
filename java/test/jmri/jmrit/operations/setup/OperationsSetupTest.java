@@ -8,9 +8,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
 import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
 import jmri.jmrit.operations.routes.RouteManagerXml;
 import jmri.jmrit.operations.trains.TrainManagerXml;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -483,34 +481,5 @@ public class OperationsSetupTest extends OperationsTestCase {
 
         // read it
         ox.readFile(OperationsSetupXml.getFileLocation() + OperationsSetupXml.getOperationsDirectoryName() + File.separator + InstanceManager.getDefault(OperationsSetupXml.class).getOperationsFileName());
-    }
-
-    // from here down is testing infrastructure
-    // Ensure minimal setup for log4J
-    /**
-     * Test-by test initialization.
-     */
-    @Before
-    @Override
-    public void setUp() {
-        super.setUp();
-    }
-
-//    // Main entry point
-//    static public void main(String[] args) {
-//        String[] testCaseName = {"-noloading", OperationsSetupTest.class.getName()};
-//        junit.textui.TestRunner.main(testCaseName);
-//    }
-//
-//    // test suite from all defined tests
-//    public static Test suite() {
-//        TestSuite suite = new TestSuite(OperationsSetupTest.class);
-//        return suite;
-//    }
-
-    @After
-    @Override
-    public void tearDown() {
-        super.tearDown();
     }
 }

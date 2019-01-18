@@ -189,7 +189,7 @@
         <li>The single corresponding Command Station (group) choice will be selected
         automatically.</li>
 
-        <li>If diseried, adjust the system prefix and connection user name.<br>
+        <li>If desired, adjust the system prefix and connection user name.<br>
         Note that an existing panel contains a certain prefix and changing this
         option here will lead to an error upon loading such a panel.</li>
 

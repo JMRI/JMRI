@@ -1,5 +1,12 @@
 package jmri.jmrit.timetable;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyVetoException;
+import java.beans.VetoableChangeListener;
+import jmri.Scale;
+import jmri.ScaleManager;
+import jmri.jmrit.timetable.swing.TimeTableFrame;
+
 /**
  * Define the content of a Layout record.
  * <p>
@@ -10,7 +17,7 @@ package jmri.jmrit.timetable;
  * rolling back the changes.
  * @author Dave Sand Copyright (C) 2018
  */
-public class Layout {
+public class Layout implements VetoableChangeListener {
 
     /**
      * Create a new layout with default values.
@@ -18,10 +25,11 @@ public class Layout {
     public Layout() {
         _layoutId = _dm.getNextId("Layout");  // NOI18N
         _dm.addLayout(_layoutId, this);
+        _scale.addVetoableChangeListener("ScaleRatio", this);  // NOI18N
         setScaleMK();
     }
 
-    public Layout(int layoutId, String layoutName, String scale, int fastClock, int throttles, boolean metric) {
+    public Layout(int layoutId, String layoutName, Scale scale, int fastClock, int throttles, boolean metric) {
         _layoutId = layoutId;
         setLayoutName(layoutName);
         setScale(scale);
@@ -34,22 +42,23 @@ public class Layout {
 
     private final int _layoutId;
     private String _layoutName = "New Layout";  // NOI18N
-    private String _scale = "HO";  // NOI18N
+    private Scale _scale = ScaleManager.getScale("HO");  // NOI18N
     private int _fastClock = 4;
     private int _throttles = 0;
     private boolean _metric = false;
 
-    private float _ratio = 87.1f;
-    private float _scaleMK;          // Scale mile (real feet) or km (real meter)
+    private double _ratio = 87.1;
+    private double _scaleMK;          // Scale mile (real feet) or km (real meter)
 
     /**
      * Calculate the length of a scale mile or scale kilometer.
      * The values are adjusted for scale and fast clock ratio.
      * The resulting value is the real feet or meters.
+     * The final step is to re-calculate the train times.
      * @throws IllegalArgumentException The calculate can throw an exception which will get re-thrown.
      */
     public void setScaleMK() throws IllegalArgumentException {
-        float distance = (_metric) ? 1000 : 5280;
+        double distance = (_metric) ? 1000 : 5280;
         _scaleMK = distance / _ratio / _fastClock;
         log.debug("scaleMK = {}, scale = {}", _scaleMK, _scale);  // NOI18N
 
@@ -61,7 +70,7 @@ public class Layout {
         }
     }
 
-    public float getScaleMK() {
+    public double getScaleMK() {
         return _scaleMK;
     }
 
@@ -77,30 +86,25 @@ public class Layout {
         _layoutName = newName;
     }
 
-    public float getRatio() {
+    public double getRatio() {
         return _ratio;
     }
 
-    public String getScale() {
+    public Scale getScale() {
         return _scale;
     }
 
-    public void setScale(String newScale) {
-        if (newScale.isEmpty()) {
-            newScale = "HO";  // NOI18N
+    public void setScale(Scale newScale) {
+        _scale.removeVetoableChangeListener("ScaleRatio", this);  // NOI18N
+        if (newScale == null) {
+            newScale = ScaleManager.getScale("HO");  // NOI18N
             log.warn("No scale found, defaulting to HO");  // NOI18N
         }
-        Scale eScale;
-        try {
-            eScale = Scale.valueOf(newScale);
-        } catch (IllegalArgumentException ex) {
-            throw new IllegalArgumentException(String.format("%s~%s", _dm.SCALE_NF, newScale));  // NOI18N
-        }
 
-        String oldScale = _scale;
-        Float oldRatio = _ratio;
-        _scale = eScale.name();
-        _ratio = eScale.getRatio();
+        Scale oldScale = _scale;
+        double oldRatio = _ratio;
+        _scale = newScale;
+        _ratio = newScale.getScaleRatio();
 
         try {
             // Update the smile/skm which includes stop recalcs
@@ -111,6 +115,7 @@ public class Layout {
             setScaleMK();
             throw ex;
         }
+        _scale.addVetoableChangeListener("ScaleRatio", this);  // NOI18N
     }
 
     public int getFastClock() {
@@ -189,6 +194,43 @@ public class Layout {
 
     public String toString() {
         return _layoutName;
+    }
+
+    /**
+     * Listen for ratio changes to my current scale.  Verify that the new ratio
+     * is neither too small nor too large.  Too large can cause train times to move
+     * outside of the schedule window.  If the new ratio is invalid, the change
+     * will be vetoed.
+     * @param evt The scale ratio property change event.
+     * @throws PropertyVetoException The message will depend on the actual error.
+     */
+    public void vetoableChange(PropertyChangeEvent evt) throws PropertyVetoException {
+        log.debug("scale change event: layout = {}, evt = {}", _layoutName, evt);
+        double newRatio = (Double) evt.getNewValue();
+        if (newRatio < 1.0) {
+            throw new PropertyVetoException("Ratio is less than 1", evt);
+        }
+
+        double oldRatio = _ratio;
+        _ratio = newRatio;
+
+        try {
+            // Update the smile/skm which includes stop recalcs
+            setScaleMK();
+        } catch (IllegalArgumentException ex) {
+            // Roll back the ratio change
+            _ratio = oldRatio;
+            setScaleMK();
+            throw new PropertyVetoException("New ratio causes calc errors", evt);
+        }
+
+        TimeTableFrame frame = jmri.InstanceManager.getNullableDefault(TimeTableFrame.class);
+        if (frame != null) {
+            frame.setShowReminder(true);
+        } else {
+            // Save any changes
+            jmri.jmrit.timetable.configurexml.TimeTableXml.doStore();
+        }
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Layout.class);

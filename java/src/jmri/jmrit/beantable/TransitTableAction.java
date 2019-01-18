@@ -1,5 +1,6 @@
 package jmri.jmrit.beantable;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.FlowLayout;
@@ -8,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -31,8 +33,6 @@ import javax.swing.table.TableColumnModel;
 import jmri.Block;
 import jmri.EntryPoint;
 import jmri.InstanceManager;
-import jmri.Manager;
-import jmri.NamedBean;
 import jmri.Section;
 import jmri.SectionManager;
 import jmri.Sensor;
@@ -75,6 +75,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
         if (sectionManager == null || transitManager == null) {
             setEnabled(false);
         }
+        updateSensorList();
     }
 
     public TransitTableAction() {
@@ -295,6 +296,23 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             protected String getBeanType() {
                 return "Transit";
             }
+
+            @Override
+            public void configureTable(JTable table) {
+                jmri.InstanceManager.sensorManagerInstance().addPropertyChangeListener(this);
+                super.configureTable(table);
+            }
+
+            @Override
+            public void propertyChange(java.beans.PropertyChangeEvent e) {
+                if (e.getSource() instanceof jmri.SensorManager) {
+                    if (e.getPropertyName().equals("DisplayListName") || e.getPropertyName().equals("length")) {
+                        updateSensorList();
+                    }
+                }
+                super.propertyChange(e);
+            }
+
         };
     }
 
@@ -312,23 +330,25 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
     private boolean editMode = false;
     private boolean duplicateMode = false;
     private TransitManager transitManager = null;
-    private SectionManager sectionManager = InstanceManager.getNullableDefault(jmri.SectionManager.class);
+    private final SectionManager sectionManager = InstanceManager.getNullableDefault(jmri.SectionManager.class);
     private Transit curTransit = null;
     private SectionTableModel sectionTableModel = null;
-    private List<Section> sectionList = new ArrayList<>();
-    private int[] direction = new int[150];
-    private int[] sequence = new int[150];
+    private final List<Section> sectionList = new ArrayList<>();
+    private final int[] direction = new int[150];
+    private final int[] sequence = new int[150];
     @SuppressWarnings("unchecked")
-    private List<TransitSectionAction>[] action = new ArrayList[150];
-    private boolean[] alternate = new boolean[150];
-    private boolean[] safe = new boolean[150];
-    private int maxSections = 150;  // must be equal to the dimension of the above arrays
-    private List<Section> primarySectionBoxList = new ArrayList<>();
-    private int[] priSectionDirection = new int[150];
-    private List<Section> alternateSectionBoxList = new ArrayList<>();
-    private int[] altSectionDirection = new int[150];
-    private List<Section> insertAtBeginningBoxList = new ArrayList<>();
-    private int[] insertAtBeginningDirection = new int[150];
+    private final List<TransitSectionAction>[] action = new ArrayList[150];
+    private final boolean[] alternate = new boolean[150];
+    private final boolean[] safe = new boolean[150];
+    private String sensorList[];
+    private final String[] sensorStopAllocation = new String[150];
+    private final int maxSections = 150;  // must be equal to the dimension of the above arrays
+    private final List<Section> primarySectionBoxList = new ArrayList<>();
+    private final int[] priSectionDirection = new int[150];
+    private final List<Section> alternateSectionBoxList = new ArrayList<>();
+    private final int[] altSectionDirection = new int[150];
+    private final List<Section> insertAtBeginningBoxList = new ArrayList<>();
+    private final int[] insertAtBeginningDirection = new int[150];
     private Section curSection = null;
     private int curSectionDirection = 0;
     private Section prevSection = null;
@@ -348,6 +368,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
     JComboBox<String> primarySectionBox = new JComboBox<>();
     JButton addNextSection = null;
     JCheckBox addAsSafe = null;
+    JComboBox<String> stopAllocatingSensorBox = new JComboBox<>();
     JButton removeLastSection = null;
     JButton removeFirstSection = null;
     JButton insertAtBeginning = null;
@@ -363,6 +384,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
     jmri.UserPreferencesManager pref;
     String systemNameAuto = this.getClass().getName() + ".AutoSystemName";
 
+
     /**
      * Responds to the Add... button and the Edit buttons in Transit Table.
      */
@@ -370,7 +392,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
     protected void addPressed(ActionEvent e) {
         editMode = false;
         duplicateMode = false;
-        if ((sectionManager.getSystemNameList().size()) > 0) {
+        if ((sectionManager.getNamedBeanSet().size()) > 0) {
             addEditPressed();
         } else {
             JOptionPane.showMessageDialog(null, rbx
@@ -442,11 +464,14 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             p11.add(new JLabel(rbx.getString("SectionTableMessage")));
             p1.add(p11);
             JPanel p12 = new JPanel();
+            p12.setLayout(new BorderLayout());
             // initialize table of sections
             sectionTableModel = new SectionTableModel();
             JTable sectionTable = new JTable(sectionTableModel);
+            sectionTable.setDefaultRenderer(JComboBox.class, new jmri.jmrit.symbolicprog.ValueRenderer());
+            sectionTable.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
+            sectionTable.setDefaultRenderer(Boolean.class, new EnablingCheckboxRenderer());
             sectionTable.setRowSelectionAllowed(false);
-            sectionTable.setPreferredScrollableViewportSize(new java.awt.Dimension(650, 150));
             TableColumnModel sectionColumnModel = sectionTable.getColumnModel();
             TableColumn sequenceColumn = sectionColumnModel.getColumn(SectionTableModel.SEQUENCE_COLUMN);
             sequenceColumn.setResizable(true);
@@ -455,7 +480,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             TableColumn sectionColumn = sectionColumnModel.getColumn(SectionTableModel.SECTIONNAME_COLUMN);
             sectionColumn.setResizable(true);
             sectionColumn.setMinWidth(150);
-            sectionColumn.setMaxWidth(210);
+            //sectionColumn.setMaxWidth(210);
             TableColumn actionColumn = sectionColumnModel.getColumn(SectionTableModel.ACTION_COLUMN);
             // install button renderer and editor
             ButtonRenderer buttonRenderer = new ButtonRenderer();
@@ -466,20 +491,28 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             sectionTable.setRowHeight(testButton.getPreferredSize().height);
             actionColumn.setResizable(false);
             actionColumn.setMinWidth(testButton.getPreferredSize().width);
+            TableColumn directionColumn = sectionColumnModel.getColumn(SectionTableModel.SEC_DIRECTION_COLUMN);
+            directionColumn.setResizable(true);
+            directionColumn.setMinWidth((int)new JLabel(rbx.getString("DirectionColName").substring(1,7)).getPreferredSize().getWidth());
+            directionColumn.setMaxWidth((int)new JLabel(rbx.getString("DirectionColName").concat("WW")).getPreferredSize().getWidth());
             TableColumn alternateColumn = sectionColumnModel.getColumn(SectionTableModel.ALTERNATE_COLUMN);
             alternateColumn.setResizable(true);
-            alternateColumn.setMinWidth(140);
-            alternateColumn.setMaxWidth(170);
+            alternateColumn.setMinWidth((int)new JLabel(rbx.getString("AlternateColName").substring(1,7)).getPreferredSize().getWidth());
+            alternateColumn.setMaxWidth((int)new JLabel(rbx.getString("AlternateColName").concat("WW")).getPreferredSize().getWidth());
             JScrollPane sectionTableScrollPane = new JScrollPane(sectionTable);
             p12.add(sectionTableScrollPane, BorderLayout.CENTER);
             p1.add(p12);
             JPanel p13 = new JPanel();
-            p13.setLayout(new FlowLayout());
             p13.add(primarySectionBox);
             primarySectionBox.setToolTipText(rbx.getString("PrimarySectionBoxHint"));
             p13.add(addNextSection = new JButton(rbx.getString("AddPrimaryButton")));
             p13.add(addAsSafe = new JCheckBox(Bundle.getMessage("TransitSectionIsSafe")));
             addAsSafe.setToolTipText(Bundle.getMessage("TransitSectionIsSafeHint"));
+            JPanel p13A = new JPanel();
+            p13A.add(new JLabel(Bundle.getMessage("PauseAllocationOnSensorActive")));
+            p13A.add(stopAllocatingSensorBox = new JComboBox<>(sensorList));
+            p13.add(p13A);
+            stopAllocatingSensorBox.setToolTipText(Bundle.getMessage("PauseAllocationOnSensorActiveHint"));
             addNextSection.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -487,6 +520,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
                 }
             });
             addNextSection.setToolTipText(rbx.getString("AddPrimaryButtonHint"));
+            p13.setLayout(new FlowLayout());
             p1.add(p13);
             JPanel p14 = new JPanel();
             p14.setLayout(new FlowLayout());
@@ -664,6 +698,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
                     action[i] = ts.getTransitSectionActionList();
                     alternate[i] = ts.isAlternate();
                     safe[i] = ts.isSafe();
+                    sensorStopAllocation[i] = ts.getStopAllocatingSensor();
                 }
             }
             int index = sectionList.size() - 1;
@@ -697,6 +732,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             action[i] = null;
             alternate[i] = false;
             safe[i] = false;
+            sensorStopAllocation[i] = "";
         }
         curSection = null;
         curSectionDirection = 0;
@@ -730,6 +766,11 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             curSequenceNum++;
             sequence[j] = curSequenceNum;
             safe[j] = addAsSafe.isSelected();
+            if (stopAllocatingSensorBox.getSelectedIndex() >= 0) {
+                sensorStopAllocation[j] = (String)stopAllocatingSensorBox.getSelectedItem();
+            } else {
+                sensorStopAllocation[j] = "";
+            }
             action[j] = new ArrayList<>();
             alternate[j] = false;
             if ((sectionList.size() == 2) && (curSection != null)) {
@@ -803,12 +844,14 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
                 action[i + 1] = action[i];
                 sequence[i + 1] = sequence[i] + 1;
                 safe[i + 1] = safe[i];
+                sensorStopAllocation[i + 1] = sensorStopAllocation[i];
             }
             direction[0] = insertAtBeginningDirection[index];
             curSequenceNum++;
             sequence[0] = 1;
             alternate[0] = false;
             safe[0] = addAsSafe.isSelected();
+            sensorStopAllocation[0] = "";
             action[0] = new ArrayList<>();
             if (curSequenceNum == 2) {
                 prevSectionDirection = direction[0];
@@ -834,6 +877,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
                 action[j] = action[i];
                 alternate[j] = alternate[i];
                 safe[j] = safe[i];
+                sensorStopAllocation[j] = sensorStopAllocation[i];
             }
             for (int k = 0; k < keep; k++) {
                 sectionList.remove(0);
@@ -845,6 +889,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
         sectionTableModel.fireTableDataChanged();
     }
 
+    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations & generics
     void replacePrimaryForSeqPressed(ActionEvent e) {
         int seq = getSeqNum();
         if (seq == 0) {
@@ -884,13 +929,12 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
         List<Section> possibles = new ArrayList<>();
         int[] possiblesDirection = new int[150];
         List<String> possibleNames = new ArrayList<>();
-        List<String> allSections = sectionManager.getSystemNameList();
-        for (int i = 0; i < allSections.size(); i++) {
+        
+        for (Section s : sectionManager.getNamedBeanSet()) {
             Section mayBeSection = null;
-            String mayBeName = allSections.get(i);
+            String mayBeName = s.getSystemName();
             int mayBeDirection = 0;
-            Section s = sectionManager.getBySystemName(mayBeName);
-            if ((s != null) && (s != sOld) && (s != beforeSection)
+            if ((s != sOld) && (s != beforeSection)
                     && (s != afterSection) && (!inSectionList(s, altOldList))) {
                 if (beforeSection != null) {
                     if (forwardConnected(s, beforeSection, beforeSectionDirection)) {
@@ -1042,6 +1086,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
                         action[j] = action[j + 1];
                         alternate[j] = alternate[j + 1];
                         safe[j] = safe[j + 1];
+                        sensorStopAllocation[j] = sensorStopAllocation[j + 1];
                     }
                     sectionList.remove(i);
                 }
@@ -1052,6 +1097,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
         sectionTableModel.fireTableDataChanged();
     }
 
+    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations & generics
     void addAlternateForSeqPressed(ActionEvent e) {
         if (sectionList.size() > maxSections) {
             JOptionPane.showMessageDialog(addFrame, rbx
@@ -1097,13 +1143,11 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
         List<Section> possibles = new ArrayList<>();
         int[] possiblesDirection = new int[150];
         List<String> possibleNames = new ArrayList<>();
-        List<String> allSections = sectionManager.getSystemNameList();
-        for (int i = 0; i < allSections.size(); i++) {
+        for (Section s : sectionManager.getNamedBeanSet()) {
             Section mayBeSection = null;
-            String mayBeName = allSections.get(i);
+            String mayBeName = s.getSystemName();
             int mayBeDirection = 0;
-            Section s = sectionManager.getBySystemName(mayBeName);
-            if ((s != null) && (s != primarySection) && (s != beforeSection)
+            if ((s != primarySection) && (s != beforeSection)
                     && (s != afterSection) && (!inSectionList(s, altOldList))) {
                 if (beforeSection != null) {
                     if (forwardConnected(s, beforeSection, beforeSectionDirection)) {
@@ -1193,11 +1237,17 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             action[i + 1] = action[i];
             sequence[i + 1] = sequence[i];
             safe[i + 1] = safe[i];
+            sensorStopAllocation[i + 1] = sensorStopAllocation[i];
         }
         direction[index] = possiblesDirection[k];
         sequence[index] = sequence[index - 1];
         alternate[index] = true;
         safe[index] = addAsSafe.isSelected();
+        if (stopAllocatingSensorBox.getSelectedIndex() < 0) {
+            sensorStopAllocation[index] = "";
+        } else {
+            sensorStopAllocation[index] = (String) stopAllocatingSensorBox.getSelectedItem();
+        }
         action[index] = new ArrayList<>();
         initializeSectionCombos();
         updateSeqNum();
@@ -1312,7 +1362,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
         curTransit.removeAllSections();
         for (int i = 0; i < sectionList.size(); i++) {
             TransitSection ts = new TransitSection(sectionList.get(i),
-                    sequence[i], direction[i], alternate[i], safe[i]);
+                    sequence[i], direction[i], alternate[i], safe[i], sensorStopAllocation[i]);
             List<TransitSectionAction> list = action[i];
             if (list != null) {
                 for (int j = 0; j < list.size(); j++) {
@@ -1420,6 +1470,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
     }
 
     @SuppressWarnings("unused")
+    @SuppressFBWarnings(value = "UPM_UNCALLED_PRIVATE_METHOD", justification="was previously marked with @SuppressWarnings, reason unknown")
     private boolean connected(Section s1, Section s2) {
         if ((s1 != null) && (s2 != null)) {
             List<EntryPoint> s1Entries = s1.getEntryPointList();
@@ -1514,7 +1565,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
     private int activeRow = 0;
     private SpecialActionTableModel actionTableModel = null;
     private JmriJFrame actionTableFrame = null;
-    private JLabel fixedSectionLabel = new JLabel("X");
+    private final JLabel fixedSectionLabel = new JLabel("X");
 
     private void addEditActionsPressed(int r) {
         activeRow = r;
@@ -1646,27 +1697,27 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
     private boolean editActionMode = false;
     private JmriJFrame addEditActionFrame = null;
     private TransitSectionAction curTSA = null;
-    private JComboBox<String> whenBox = new JComboBox<>();
-    private JmriBeanComboBox whenSensorComboBox = new JmriBeanComboBox(InstanceManager.getDefault(SensorManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
-    private JSpinner whenDataSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 65500, 1)); // delay
-    private JComboBox<String> whatBox = new JComboBox<>();
-    private JSpinner whatPercentSpinner = new JSpinner(); // speed
-    private JSpinner whatMinuteSpinner1 = new JSpinner(new SpinnerNumberModel(1, 1, 65500, 1));     // time in ms
-    private JSpinner whatMinuteSpinner2 = new JSpinner(new SpinnerNumberModel(100, 100, 65500, 1)); // time in ms
-    private JSpinner locoFunctionSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 28, 1));       // function ID
-    private JTextField whatStringField = new JTextField(12);
+    private final JComboBox<String> whenBox = new JComboBox<>();
+    private final JmriBeanComboBox whenSensorComboBox = new JmriBeanComboBox(InstanceManager.getDefault(SensorManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+    private final JSpinner whenDataSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 65500, 1)); // delay
+    private final JComboBox<String> whatBox = new JComboBox<>();
+    private final JSpinner whatPercentSpinner = new JSpinner(); // speed
+    private final JSpinner whatMinuteSpinner1 = new JSpinner(new SpinnerNumberModel(1, 1, 65500, 1));     // time in ms
+    private final JSpinner whatMinuteSpinner2 = new JSpinner(new SpinnerNumberModel(100, 100, 65500, 1)); // time in ms
+    private final JSpinner locoFunctionSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 28, 1));       // function ID
+    private final JTextField whatStringField = new JTextField(12);
     private JButton updateActionButton = null;
     private JButton createActionButton = null;
     private JButton cancelAddEditActionButton = null;
-    private JComboBox<String> blockBox = new JComboBox<>();
+    private final JComboBox<String> blockBox = new JComboBox<>();
     private List<Block> blockList = new ArrayList<>();
-    private JRadioButton onButton = new JRadioButton(Bundle.getMessage("StateOn"));
-    private JRadioButton offButton = new JRadioButton(Bundle.getMessage("StateOff"));
-    private JLabel doneSensorLabel = new JLabel(rbx.getString("DoneSensorLabel"));
+    private final JRadioButton onButton = new JRadioButton(Bundle.getMessage("StateOn"));
+    private final JRadioButton offButton = new JRadioButton(Bundle.getMessage("StateOff"));
+    private final JLabel doneSensorLabel = new JLabel(rbx.getString("DoneSensorLabel"));
     private JPanel signalPanel;
-    private JmriBeanComboBox doneSensorComboBox = new JmriBeanComboBox(InstanceManager.getDefault(SensorManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
-    private JmriBeanComboBox signalMastComboBox = new JmriBeanComboBox(InstanceManager.getDefault(SignalMastManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
-    private JmriBeanComboBox signalHeadComboBox = new JmriBeanComboBox(InstanceManager.getDefault(SignalHeadManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+    private final JmriBeanComboBox doneSensorComboBox = new JmriBeanComboBox(InstanceManager.getDefault(SensorManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+    private final JmriBeanComboBox signalMastComboBox = new JmriBeanComboBox(InstanceManager.getDefault(SignalMastManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
+    private final JmriBeanComboBox signalHeadComboBox = new JmriBeanComboBox(InstanceManager.getDefault(SignalHeadManager.class), null, JmriBeanComboBox.DisplayOptions.DISPLAYNAME);
 
     private void addEditActionWindow() {
         if (addEditActionFrame == null) {
@@ -2533,6 +2584,8 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
         public static final int SEC_DIRECTION_COLUMN = 3;
         public static final int ALTERNATE_COLUMN = 4;
         public static final int SAFE_COLUMN = 5;
+        public static final int STOPALLOCATING_SENSOR = 6;
+        public static final int NUMBER_OF_COLUMNS = 7;
 
         public SectionTableModel() {
             super();
@@ -2545,6 +2598,11 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
                 // a new NamedBean is available in the manager
                 fireTableDataChanged();
             }
+            if (e.getSource() instanceof jmri.SensorManager) {
+                if (e.getPropertyName().equals("DisplayListName")) {
+                    updateSensorList();
+                }
+            }
         }
 
         @Override
@@ -2555,12 +2613,15 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             if (c == SAFE_COLUMN) {
                 return Boolean.class;
             }
+            if (c == STOPALLOCATING_SENSOR) {
+                return JComboBox.class;
+            }
             return String.class;
         }
 
         @Override
         public int getColumnCount() {
-            return SAFE_COLUMN + 1;
+            return NUMBER_OF_COLUMNS;
         }
 
         @Override
@@ -2573,6 +2634,8 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
             if (c == ACTION_COLUMN) {
                 return (true);
             } else if (c == SAFE_COLUMN) {
+                return(true);
+            } else if (c == STOPALLOCATING_SENSOR) {
                 return(true);
             }
             return (false);
@@ -2593,7 +2656,9 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
                     return rbx.getString("AlternateColName");
                 case SAFE_COLUMN:
                     return rbx.getString("SafeColName");
-                default:
+                case STOPALLOCATING_SENSOR:
+                    return rbx.getString("StopAllocationColName");
+               default:
                     return "";
             }
         }
@@ -2614,6 +2679,8 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
                     return new JTextField(12).getPreferredSize().width;
                 case SAFE_COLUMN:
                     return new JTextField(4).getPreferredSize().width;
+                case STOPALLOCATING_SENSOR:
+                    return new JTextField(12).getPreferredSize().width;
                 default:
                     // fall through
                     break;
@@ -2649,22 +2716,59 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
                 case SAFE_COLUMN:
                     boolean val = safe[rx];
                     return Boolean.valueOf(val);
+                case STOPALLOCATING_SENSOR:
+                    String sensor = sensorStopAllocation[rx];
+                    JComboBox<String> cb = new JComboBox<>(sensorList);
+                    String name = "";
+                    if (sensor != null) {
+                        name = sensor;
+                    }
+                    cb.setSelectedItem(name);
+                    return cb;
                 default:
                     return Bundle.getMessage("BeanStateUnknown");
             }
         }
 
         @Override
+        @SuppressWarnings("unchecked")
         public void setValueAt(Object value, int row, int col) {
             if (col == ACTION_COLUMN) {
                 addEditActionsPressed(row);
             } else if (col == SAFE_COLUMN) {
                 boolean val = ((Boolean) value).booleanValue();
                 safe[row] = val; // use checkbox to show Safe
-            }
+            } else if (col == STOPALLOCATING_SENSOR) {
+                JComboBox<String> cb = (JComboBox<String>) value;
+                if (cb.getSelectedIndex() < 0) {
+                    sensorStopAllocation[row] = "";
+                } else {
+                    sensorStopAllocation[row] = (String) cb.getSelectedItem();
+                }
+             }
             return;
         }
     }
+
+    private void updateSensorList() {
+        Set<Sensor> nameSet = jmri.InstanceManager.sensorManagerInstance().getNamedBeanSet();
+        String[] displayList = new String[nameSet.size()];
+        int i = 0;
+        for (Sensor nBean : nameSet) {
+            if (nBean != null) {
+                displayList[i++] = nBean.getDisplayName();
+            }
+        }
+        java.util.Arrays.sort(displayList);
+        sensorList = new String[displayList.length + 1];
+        sensorList[0] = "";
+        i = 1;
+        for (String name : displayList) {
+            sensorList[i] = name;
+            i++;
+        }
+    }
+
 
     /**
      * Table model for Actions in Special Actions window. Currently shows max. 5

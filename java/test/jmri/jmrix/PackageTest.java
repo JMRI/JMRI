@@ -65,7 +65,6 @@ import org.junit.runners.Suite;
         ConnectionStatusTest.class,
         jmri.jmrix.swing.PackageTest.class,
         ActiveSystemsMenuTest.class,
-        DCCManufacturerListTest.class,
         OtherConnectionTypeListTest.class,
         jmri.jmrix.debugthrottle.PackageTest.class,
         AbstractMessageTest.class,

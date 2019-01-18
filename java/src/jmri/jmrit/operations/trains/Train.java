@@ -904,7 +904,7 @@ public class Train implements java.beans.PropertyChangeListener {
 
     /**
      * Used to determine if train is a local switcher serving one location. Note
-     * the the train can have more than location in its route, but all location
+     * the train can have more than location in its route, but all location
      * names must be "same". See TrainCommon.splitString(String name) for the
      * definition of the "same" name.
      *
@@ -3558,6 +3558,7 @@ public class Train implements java.beans.PropertyChangeListener {
      *
      * @param e Consist XML element
      */
+    @SuppressWarnings("deprecation") // until there's a replacement for convertFromXmlComment()
     public Train(Element e) {
         org.jdom2.Attribute a;
         if ((a = e.getAttribute(Xml.ID)) != null) {

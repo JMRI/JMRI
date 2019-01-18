@@ -305,7 +305,7 @@ public class DefaultLogix extends AbstractNamedBean
      * <p>
      * For Entry/Exit references, replace NX user names and old style NX UUID references
      * with the new style "IN:" + UUID reference.  If the referenced NX does not exist,
-     * it will be removed from the the Variable or Action list. (4.11.4)
+     * it will be removed from the Variable or Action list. (4.11.4)
      * <p>
      * Called by {@link jmri.managers.DefaultLogixManager#activateAllLogixs}
      * @since 4.7.4
@@ -334,7 +334,8 @@ public class DefaultLogix extends AbstractNamedBean
             ArrayList<ConditionalVariable> badVariable = new ArrayList<>();
             for (ConditionalVariable var : varList) {
                 // Find any Conditional State Variables
-                if (var.getType() == Conditional.TYPE_CONDITIONAL_TRUE || var.getType() == Conditional.TYPE_CONDITIONAL_FALSE) {
+                if (var.getType() == Conditional.Type.CONDITIONAL_TRUE
+                        || var.getType() == Conditional.Type.CONDITIONAL_FALSE) {
                     // Get the referenced (target) conditonal -- The name can be either a system name or a user name
                     Conditional cRef = InstanceManager.getDefault(jmri.ConditionalManager.class).getConditional(var.getName());
                     if (cRef != null) {
@@ -356,8 +357,8 @@ public class DefaultLogix extends AbstractNamedBean
                 }
 
                 // Find any Entry/Exit State Variables
-                if (var.getType() == Conditional.TYPE_ENTRYEXIT_ACTIVE
-                        || var.getType() == Conditional.TYPE_ENTRYEXIT_INACTIVE) {
+                if (var.getType() == Conditional.Type.ENTRYEXIT_ACTIVE
+                        || var.getType() == Conditional.Type.ENTRYEXIT_INACTIVE) {
                     if (!NXUUID.matcher(var.getName()).find()) {
                         // Either a user name or an old style system name (plain UUID)
                         jmri.jmrit.entryexit.DestinationPoints dp =
@@ -388,9 +389,9 @@ public class DefaultLogix extends AbstractNamedBean
             ArrayList<ConditionalAction> badAction = new ArrayList<>();
             for (ConditionalAction action : actionList) {
                 // Find any Entry/Exit Actions
-                if (action.getType() == Conditional.ACTION_SET_NXPAIR_ENABLED
-                        || action.getType() == Conditional.ACTION_SET_NXPAIR_DISABLED
-                        || action.getType() == Conditional.ACTION_SET_NXPAIR_SEGMENT) {
+                if (action.getType() == Conditional.Action.SET_NXPAIR_ENABLED
+                        || action.getType() == Conditional.Action.SET_NXPAIR_DISABLED
+                        || action.getType() == Conditional.Action.SET_NXPAIR_SEGMENT) {
                     if (!NXUUID.matcher(action.getDeviceName()).find()) {
                         // Either a user name or an old style system name (plain UUID)
                         jmri.jmrit.entryexit.DestinationPoints dp =
@@ -439,85 +440,85 @@ public class DefaultLogix extends AbstractNamedBean
                     int varListenerType = 0;
                     String varName = variable.getName();
                     NamedBeanHandle<?> namedBean = variable.getNamedBean();
-                    int varType = variable.getType();
+                    Conditional.Type varType = variable.getType();
                     int signalAspect = -1;
                     // Get Listener type from variable type
                     switch (varType) {
-                        case Conditional.TYPE_SENSOR_ACTIVE:
-                        case Conditional.TYPE_SENSOR_INACTIVE:
+                        case SENSOR_ACTIVE:
+                        case SENSOR_INACTIVE:
                             varListenerType = LISTENER_TYPE_SENSOR;
                             break;
-                        case Conditional.TYPE_TURNOUT_THROWN:
-                        case Conditional.TYPE_TURNOUT_CLOSED:
+                        case TURNOUT_THROWN:
+                        case TURNOUT_CLOSED:
                             varListenerType = LISTENER_TYPE_TURNOUT;
                             break;
-                        case Conditional.TYPE_CONDITIONAL_TRUE:
-                        case Conditional.TYPE_CONDITIONAL_FALSE:
+                        case CONDITIONAL_TRUE:
+                        case CONDITIONAL_FALSE:
                             varListenerType = LISTENER_TYPE_CONDITIONAL;
                             break;
-                        case Conditional.TYPE_LIGHT_ON:
-                        case Conditional.TYPE_LIGHT_OFF:
+                        case LIGHT_ON:
+                        case LIGHT_OFF:
                             varListenerType = LISTENER_TYPE_LIGHT;
                             break;
-                        case Conditional.TYPE_MEMORY_EQUALS:
-                        case Conditional.TYPE_MEMORY_COMPARE:
-                        case Conditional.TYPE_MEMORY_EQUALS_INSENSITIVE:
-                        case Conditional.TYPE_MEMORY_COMPARE_INSENSITIVE:
+                        case MEMORY_EQUALS:
+                        case MEMORY_COMPARE:
+                        case MEMORY_EQUALS_INSENSITIVE:
+                        case MEMORY_COMPARE_INSENSITIVE:
                             varListenerType = LISTENER_TYPE_MEMORY;
                             break;
-                        case Conditional.TYPE_ROUTE_FREE:
-                        case Conditional.TYPE_ROUTE_OCCUPIED:
-                        case Conditional.TYPE_ROUTE_ALLOCATED:
-                        case Conditional.TYPE_ROUTE_SET:
-                        case Conditional.TYPE_TRAIN_RUNNING:
+                        case ROUTE_FREE:
+                        case ROUTE_OCCUPIED:
+                        case ROUTE_ALLOCATED:
+                        case ROUTE_SET:
+                        case TRAIN_RUNNING:
                             varListenerType = LISTENER_TYPE_WARRANT;
                             break;
-                        case Conditional.TYPE_FAST_CLOCK_RANGE:
+                        case FAST_CLOCK_RANGE:
                             varListenerType = LISTENER_TYPE_FASTCLOCK;
                             varName = "clock";  // NOI18N
                             break;
-                        case Conditional.TYPE_SIGNAL_HEAD_RED:
+                        case SIGNAL_HEAD_RED:
                             varListenerType = LISTENER_TYPE_SIGNALHEAD;
                             signalAspect = SignalHead.RED;
                             break;
-                        case Conditional.TYPE_SIGNAL_HEAD_YELLOW:
+                        case SIGNAL_HEAD_YELLOW:
                             varListenerType = LISTENER_TYPE_SIGNALHEAD;
                             signalAspect = SignalHead.YELLOW;
                             break;
-                        case Conditional.TYPE_SIGNAL_HEAD_GREEN:
+                        case SIGNAL_HEAD_GREEN:
                             varListenerType = LISTENER_TYPE_SIGNALHEAD;
                             signalAspect = SignalHead.GREEN;
                             break;
-                        case Conditional.TYPE_SIGNAL_HEAD_DARK:
+                        case SIGNAL_HEAD_DARK:
                             varListenerType = LISTENER_TYPE_SIGNALHEAD;
                             signalAspect = SignalHead.DARK;
                             break;
-                        case Conditional.TYPE_SIGNAL_HEAD_FLASHRED:
+                        case SIGNAL_HEAD_FLASHRED:
                             varListenerType = LISTENER_TYPE_SIGNALHEAD;
                             signalAspect = SignalHead.FLASHRED;
                             break;
-                        case Conditional.TYPE_SIGNAL_HEAD_FLASHYELLOW:
+                        case SIGNAL_HEAD_FLASHYELLOW:
                             varListenerType = LISTENER_TYPE_SIGNALHEAD;
                             signalAspect = SignalHead.FLASHYELLOW;
                             break;
-                        case Conditional.TYPE_SIGNAL_HEAD_FLASHGREEN:
+                        case SIGNAL_HEAD_FLASHGREEN:
                             varListenerType = LISTENER_TYPE_SIGNALHEAD;
                             signalAspect = SignalHead.FLASHGREEN;
                             break;
-                        case Conditional.TYPE_SIGNAL_HEAD_LIT:
-                        case Conditional.TYPE_SIGNAL_HEAD_HELD:
+                        case SIGNAL_HEAD_LIT:
+                        case SIGNAL_HEAD_HELD:
                             varListenerType = LISTENER_TYPE_SIGNALHEAD;
                             break;
-                        case Conditional.TYPE_SIGNAL_MAST_ASPECT_EQUALS:
-                        case Conditional.TYPE_SIGNAL_MAST_LIT:
-                        case Conditional.TYPE_SIGNAL_MAST_HELD:
+                        case SIGNAL_MAST_ASPECT_EQUALS:
+                        case SIGNAL_MAST_LIT:
+                        case SIGNAL_MAST_HELD:
                             varListenerType = LISTENER_TYPE_SIGNALMAST;
                             break;
-                        case Conditional.TYPE_BLOCK_STATUS_EQUALS:
+                        case BLOCK_STATUS_EQUALS:
                             varListenerType = LISTENER_TYPE_OBLOCK;
                             break;
-                        case Conditional.TYPE_ENTRYEXIT_ACTIVE:
-                        case Conditional.TYPE_ENTRYEXIT_INACTIVE:
+                        case ENTRYEXIT_ACTIVE:
+                        case ENTRYEXIT_INACTIVE:
                             varListenerType = LISTENER_TYPE_ENTRYEXIT;
                             break;
                         default:
@@ -562,7 +563,7 @@ public class DefaultLogix extends AbstractNamedBean
                                 break;
                             case LISTENER_TYPE_SIGNALHEAD:
                                 if (signalAspect < 0) {
-                                    if (varType == Conditional.TYPE_SIGNAL_HEAD_LIT) {
+                                    if (varType == Conditional.Type.SIGNAL_HEAD_LIT) {
                                         listener = new JmriTwoStatePropertyListener("Lit", LISTENER_TYPE_SIGNALHEAD,  // NOI18N
                                                 namedBean, varType, conditional);
                                     } else { // varType == Conditional.TYPE_SIGNAL_HEAD_HELD
@@ -634,8 +635,8 @@ public class DefaultLogix extends AbstractNamedBean
                         }
                     }
                     // addition listeners needed for memory compare
-                    if (varType == Conditional.TYPE_MEMORY_COMPARE
-                            || varType == Conditional.TYPE_MEMORY_COMPARE_INSENSITIVE) {
+                    if (varType == Conditional.Type.MEMORY_COMPARE
+                            || varType == Conditional.Type.MEMORY_COMPARE_INSENSITIVE) {
                         positionOfListener = getPositionOfListener(varListenerType, varType,
                                 variable.getDataString());
                         if (positionOfListener == -1) {
@@ -669,14 +670,14 @@ public class DefaultLogix extends AbstractNamedBean
         }
     }
 
-    private int getPositionOfListener(int varListenerType, int varType, String varName) {
+    private int getPositionOfListener(int varListenerType, Conditional.Type varType, String varName) {
         // check if already in list
         for (int j = 0; (j < _listeners.size()); j++) {
             if (varListenerType == _listeners.get(j).getType()) {
                 if (varName.equals(_listeners.get(j).getDevName())) {
                     if (varListenerType == LISTENER_TYPE_SIGNALHEAD) {
-                        if (varType == Conditional.TYPE_SIGNAL_HEAD_LIT
-                                || varType == Conditional.TYPE_SIGNAL_HEAD_HELD) {
+                        if (varType == Conditional.Type.SIGNAL_HEAD_LIT
+                                || varType == Conditional.Type.SIGNAL_HEAD_HELD) {
                             if (varType == _listeners.get(j).getVarType()) {
                                 return j;
                             }
@@ -702,7 +703,7 @@ public class DefaultLogix extends AbstractNamedBean
      * return information that can be used to test for inconsistency in
      * suppressing triggering of a calculation among multiple occurances of the
      * same state variable. Caller provides an ArrayList of the variables to
-     * check and and empty Array list to return the counts for triggering or
+     * check and an empty Array list to return the counts for triggering or
      * suppressing calculation. The first index is a count that the
      * correspondeing variable triggers calculation and second is a count that
      * the correspondeing variable suppresses Calculation. Note this method must

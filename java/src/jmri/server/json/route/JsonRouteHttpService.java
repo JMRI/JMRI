@@ -30,11 +30,9 @@ public class JsonRouteHttpService extends JsonNamedBeanHttpService {
 
     @Override
     public JsonNode doGet(String type, String name, Locale locale) throws JsonException {
-        ObjectNode root = mapper.createObjectNode();
         Route route = InstanceManager.getDefault(RouteManager.class).getRoute(name);
-        root.put(JSON.TYPE, ROUTE);
-        ObjectNode data = this.getNamedBean(route, name, type, locale); // throws JsonException if route == null
-        root.set(JSON.DATA, data);
+        ObjectNode root = this.getNamedBean(route, name, type, locale); // throws JsonException if route == null
+        ObjectNode data = root.with(JSON.DATA);
         if (route != null) {
             switch (route.getState()) {
                 case Sensor.ACTIVE:
@@ -121,8 +119,8 @@ public class JsonRouteHttpService extends JsonNamedBeanHttpService {
     @Override
     public ArrayNode doGetList(String type, Locale locale) throws JsonException {
         ArrayNode root = this.mapper.createArrayNode();
-        for (String name : InstanceManager.getDefault(RouteManager.class).getSystemNameList()) {
-            root.add(this.doGet(ROUTE, name, locale));
+        for (Route r : InstanceManager.getDefault(RouteManager.class).getNamedBeanSet()) {
+            root.add(this.doGet(ROUTE, r.getSystemName(), locale));
         }
         return root;
 

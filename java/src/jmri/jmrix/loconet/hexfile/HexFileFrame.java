@@ -39,7 +39,7 @@ public class HexFileFrame extends JmriJFrame {
 
     /**
      * Because this creates a FileChooser, this should be invoked on the
-     * GUI frame
+     * GUI frame.
      */
     @InvokeOnGuiThread
     public HexFileFrame() {
@@ -130,7 +130,7 @@ public class HexFileFrame extends JmriJFrame {
     @InvokeOnGuiThread
     public void dispose() {
         // leaves the LocoNet Packetizer (e.g. the simulated connection)
-        // running.
+        // running so that the application can keep pretending to run with the window closed.
         super.dispose();
     }
 
@@ -151,7 +151,7 @@ public class HexFileFrame extends JmriJFrame {
         port.load(inputFileChooser.getSelectedFile());
 
         // wake copy
-        sourceThread.interrupt();
+        sourceThread.interrupt();  // really should be using notifyAll instead....
 
         // reach here while file runs.  Need to return so GUI still acts,
         // but that normally lets the button go back to default.
@@ -253,7 +253,7 @@ public class HexFileFrame extends JmriJFrame {
         }
     }
 
-    private Thread sourceThread;
+    Thread sourceThread;  // tests need access
 
     public void setAdapter(LnHexFilePort adapter) {
         port = adapter;

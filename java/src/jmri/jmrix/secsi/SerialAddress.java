@@ -10,9 +10,9 @@ import org.slf4j.LoggerFactory;
  * <p>
  * Two address formats are supported:
  * <ul>
- *   <li>Vitnnnxxx where:
+ *   <li>Vtnnnxxx where:
  *      <ul>
- *      <li>Vi is the system connection prefix with optional index
+ *      <li>V is the system connection prefix with optional index
  *      <li>t is the type code: 'T' for turnouts, 'S' for sensors,
  *      and 'L' for lights
  *      <li>nn is the node address (0-127)
@@ -22,9 +22,9 @@ import org.slf4j.LoggerFactory;
  *      Examples: VT2 (node address 0, bit 2), V2S1003 (node address 1,
  *      bit 3), VL11234 (node address 11, bit234)
  *   </li>
- *   <li>VitnnnBxxxx where:
+ *   <li>VtnnnBxxxx where:
  *      <ul>
- *      <li>Vi is the system connection prefix with optional index
+ *      <li>V is the system connection prefix with optional index
  *      <li>t is the type code: 'T' for turnouts, 'S' for sensors,
  *      and 'L' for lights
  *      <li>nnn is the node address of the input or output bit (0-127)

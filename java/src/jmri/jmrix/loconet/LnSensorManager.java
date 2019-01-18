@@ -7,7 +7,8 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Manage the LocoNet-specific Sensor implementation.
- * System names are "LiSnnn", where nnn is the sensor number without padding.
+ * System names are "LSnnn", where L is the user configurable system prefix,
+ * nnn is the sensor number without padding.
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
@@ -241,7 +242,7 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
     }
 
     /**
-     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     * {@inheritDoc}
      */
     @Override
     public String getEntryToolTip() {

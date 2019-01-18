@@ -2,12 +2,14 @@ package jmri.jmrix.loconet;
 
 import javax.annotation.*;
 import jmri.Turnout;
+import jmri.managers.AbstractTurnoutManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Manage the LocoNet-specific Turnout implementation.
- * System names are "LiTnnn", where nnn is the turnout number without padding.
+ * System names are "LTnnn", where L is the user configurable system prefix,
+ * nnn is the turnout number without padding.
  * <p>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
  * and used with permission as part of the JMRI project. That permission does
@@ -26,7 +28,7 @@ import org.slf4j.LoggerFactory;
  *   from JMRI. (This might be a problem if more than one computer is executing
  *   this algorithm)
  *   <li>By sending the message as fast as we can, we tie up the LocoNet during
- *   the the recovery. This is a mixed bag; delaying can cause messages to get out
+ *   the recovery. This is a mixed bag; delaying can cause messages to get out
  *   of sequence on the rails. But not delaying takes up a lot of LocoNet
  *   bandwidth.
  * </ul>
@@ -36,7 +38,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2007
  */
-public class LnTurnoutManager extends jmri.managers.AbstractTurnoutManager implements LocoNetListener {
+public class LnTurnoutManager extends AbstractTurnoutManager implements LocoNetListener {
 
     // ctor has to register for LocoNet events
     public LnTurnoutManager(LocoNetInterface fastcontroller, LocoNetInterface throttledcontroller, String prefix, boolean mTurnoutNoRetry) {
@@ -92,7 +94,7 @@ public class LnTurnoutManager extends jmri.managers.AbstractTurnoutManager imple
                     systemName.substring(prefix.length() + 1) +
                     " to LocoNet turnout address"); // NOI18N
         }
-        LnTurnout t = new LnTurnout(getSystemPrefix(), addr, throttledcontroller);
+        LnTurnout t = new LnTurnout(prefix, addr, throttledcontroller);
         t.setUserName(userName);
         if (_binaryOutput) t.setBinaryOutput(true);
         if (_useOffSwReqAsConfirmation) {
@@ -205,7 +207,7 @@ public class LnTurnoutManager extends jmri.managers.AbstractTurnoutManager imple
             log.error("invalid character in header field of loconet turnout system name: {}", systemName);
             return (0);
         }
-        // name must be in the LTnnnnn format (L is user configurable)
+        // name must be in the LiTnnnnn format (Li is user configurable)
         int num = 0;
         try {
             num = Integer.parseInt(systemName.substring(
@@ -226,7 +228,7 @@ public class LnTurnoutManager extends jmri.managers.AbstractTurnoutManager imple
     }
 
     /**
-     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     * {@inheritDoc}
      */
     @Override
     public String getEntryToolTip() {

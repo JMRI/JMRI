@@ -39,8 +39,6 @@
            <Bug pattern="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD" />
            <Bug pattern="UCF_USELESS_CONTROL_FLOW" />
            <Bug pattern="UC_USELESS_CONDITION" />
-           <Bug pattern="UPM_UNCALLED_PRIVATE_METHOD" />
-           <Bug pattern="URF_UNREAD_FIELD" />
            <Bug pattern="UWF_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR" />
            <Bug pattern="UW_UNCOND_WAIT" />
            <Bug pattern="WA_NOT_IN_LOOP" />
@@ -88,8 +86,8 @@
      <Match>
        <!-- JMRI code is often written to trust weird from other classes,
             so the question of "malicious" is complicated. The rules in
-            this category should be restored in small batches  -->
-       <Bug category="MALICIOUS_CODE" />
+            this category should be restored in small batches  
+       <Bug category="MALICIOUS_CODE" /> -->
      </Match>
 
     <!-- items we're unlikely to restore -->
