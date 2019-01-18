@@ -6463,7 +6463,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         redrawPanel();
     }
 
-    private void amendSelectionGroup(@Nonnull LayoutShape ls) {
+    protected void amendSelectionGroup(@Nonnull LayoutShape ls) {
         if (_layoutShapeSelection.contains(ls)) {
             _layoutShapeSelection.remove(ls);
         } else {

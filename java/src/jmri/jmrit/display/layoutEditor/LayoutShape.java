@@ -87,6 +87,25 @@ public class LayoutShape {
         this.shapePoints.add(new LayoutShapePoint(c));
     }
 
+    /**
+     * constructor method (used by duplicate)
+     *
+     * @param name         the name of the shape
+     * @param c            the Point2D for the initial point
+     * @param layoutEditor reference to the LayoutEditor this shape is in
+     */
+    public LayoutShape(LayoutShape layoutShape) {
+        this(layoutShape.getName(), layoutShape.getLayoutEditor());
+        this.setType(layoutShape.getType());
+        this.setLevel(layoutShape.getLevel());
+        this.setLineColor(layoutShape.getLineColor());
+        this.setFillColor(layoutShape.getFillColor());
+
+        for (LayoutShapePoint lsp : layoutShape.getPoints()) {
+            this.shapePoints.add(new LayoutShapePoint(lsp.getType(), lsp.getPoint()));
+        }
+    }
+
     // this should only be used for debugging...
     @Override
     public String toString() {
@@ -161,6 +180,10 @@ public class LayoutShape {
             level = l;
             layoutEditor.sortLayoutShapesByLevel();
         }
+    }
+
+    public LayoutEditor getLayoutEditor() {
+        return layoutEditor;
     }
 
     /**
@@ -566,6 +589,23 @@ public class LayoutShape {
 
             popup.add(new JSeparator(JSeparator.HORIZONTAL));
             if (hitPointType == LayoutTrack.SHAPE_CENTER) {
+                jmi = popup.add(new AbstractAction(Bundle.getMessage("ShapeDuplicateMenuItemTitle")) {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        LayoutShape ls = new LayoutShape(LayoutShape.this);
+
+                        double gridSize = layoutEditor.getGridSize();
+                        Point2D delta = new Point2D.Double(gridSize, gridSize);
+                        for (LayoutShapePoint lsp : ls.getPoints()) {
+                            lsp.setPoint(MathUtil.add(lsp.getPoint(), delta));
+                        }
+                        layoutEditor.getLayoutShapes().add(ls);
+                        layoutEditor.clearSelectionGroups();
+                        layoutEditor.amendSelectionGroup(ls);
+                    }
+                });
+                jmi.setToolTipText(Bundle.getMessage("ShapeDuplicateMenuItemToolTip"));
+
                 popup.add(new AbstractAction(Bundle.getMessage("ButtonDelete")) {
                     @Override
                     public void actionPerformed(ActionEvent e) {
