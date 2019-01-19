@@ -84,15 +84,11 @@ public abstract class AbstractNamedBean implements NamedBean {
 
     /**
      * {@inheritDoc}
-     * <p>
-     * It would be good to eventually make this final to 
-     * keep it consistent system-wide, but 
-     * we have some existing classes to update first.
      * 
      * @return user name if not null or empty, else return system name
      */
     @Override
-    public String getDisplayName() {
+    final public String getDisplayName() {
         String name = getUserName();
         if (name != null && !name.isEmpty()) {
             return name;
