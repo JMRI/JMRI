@@ -625,22 +625,6 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
     }
 
     @Override
-    // note that this doesn't properly implement the 
-    // contract in {@link NamedBean.toString()}, 
-    // which means things like tables and persistance 
-    // might not behave properly.
-    public String toString() {
-        StringBuilder sb = new StringBuilder("Portal \"");
-        sb.append(getUserName());
-        sb.append("\" from block \"");
-        sb.append(getFromBlockName());
-        sb.append("\" to block \"");
-        sb.append(getToBlockName());
-        sb.append("\"");
-        return sb.toString();
-    }
-
-    @Override
     public String getBeanType() {
         return Bundle.getMessage("BeanNamePortal");
     }

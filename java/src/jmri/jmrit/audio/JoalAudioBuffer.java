@@ -141,15 +141,6 @@ public class JoalAudioBuffer extends AbstractAudioBuffer {
         return dataStorageBuffer;
     }
 
-    @Override
-    public String toString() {
-        if (this.getState() != STATE_LOADED) {
-            return "Empty buffer";
-        } else {
-            return this.getURL() + " (" + parseFormat() + ", " + this.freq[0] + " Hz)";
-        }
-    }
-
     /**
      * Internal method to return a string representation of the audio format
      *

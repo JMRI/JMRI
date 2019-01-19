@@ -284,52 +284,5 @@ public class DefaultRailCom extends DefaultIdTag implements jmri.RailCom {
 
     Hashtable<Integer, Integer> cvValues = new Hashtable<>();
 
-    // note that this doesn't properly implement the 
-    // contract in {@link NamedBean.toString()}, 
-    // which means things like tables and persistance 
-    // might not behave properly.
-    @Override
-    public String toString() {
-        String comment;
-        switch (getOrientation()) {
-            case ORIENTA:
-                comment = "Orientation A ";
-                break;
-            case ORIENTB:
-                comment = "Orientation B ";
-                break;
-            case UNKNOWN:
-                comment = "Unknown Orientation ";
-                break;
-            default:
-                comment = "Unknown Orientation ";
-                break;
-        }
-        comment = comment + "Address " + getDccLocoAddress() + " ";
-
-        if (getWaterLevel() != -1) {
-            comment = comment + "Water " + getWaterLevel() + " ";
-        }
-        if (getFuelLevel() != -1) {
-            comment = comment + "Fuel " + getFuelLevel() + " ";
-        }
-        if ((getLocation() != -1)) {
-            comment = comment + "Location : " + getLocation() + " ";
-        }
-        if ((getRoutingNo() != -1)) {
-            comment = comment + "Routing No : " + getRoutingNo() + " ";
-        }
-        if ((getActualTemperature() != -1)) {
-            comment = comment + "Temperature : " + getActualTemperature() + " ";
-        }
-        if ((getActualLoad() != -1)) {
-            comment = comment + "Load : " + getActualLoad() + " ";
-        }
-        if ((getActualSpeed() != -1)) {
-            comment = comment + "Speed : " + getActualSpeed();
-        }
-        return comment;
-    }
-
     private final static Logger log = LoggerFactory.getLogger(DefaultRailCom.class);
 }

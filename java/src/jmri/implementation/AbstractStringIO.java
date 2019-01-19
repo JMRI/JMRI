@@ -115,11 +115,4 @@ public abstract class AbstractStringIO extends AbstractNamedBean implements Stri
         return Bundle.getMessage("BeanNameStringIO");
     }
 
-    /** {@inheritDoc} */
-    @Override
-    @Nonnull
-    public String toString() {
-        return this.getClass().getName() + " (" + this.getSystemName() + ")"; //NOI18N
-    }
-
 }

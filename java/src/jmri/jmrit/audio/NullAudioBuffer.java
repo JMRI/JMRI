@@ -52,15 +52,6 @@ public class NullAudioBuffer extends AbstractAudioBuffer {
     }
 
     @Override
-    public String toString() {
-        if (this.getState() != STATE_LOADED) {
-            return "Empty buffer";
-        } else {
-            return this.getURL() + " (" + parseFormat() + ", " + "?? Hz)";
-        }
-    }
-
-    @Override
     protected boolean loadBuffer(InputStream stream) {
         // No need to do this for the NullAudioBuffer - it's always successful ;-)
         return true;

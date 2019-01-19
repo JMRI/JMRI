@@ -229,13 +229,6 @@ public abstract class AbstractAudioListener extends AbstractAudio implements Aud
         // Move along... nothing to see here...
     }
 
-    @Override
-    public String toString() {
-        return "Pos: " + this.getPosition().toString()
-                + ", gain=" + this.getGain()
-                + ", meters/unit=" + this.getMetersPerUnit();
-    }
-
     private static final Logger log = LoggerFactory.getLogger(AbstractAudioListener.class);
 
     /**

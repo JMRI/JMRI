@@ -57,16 +57,6 @@ public abstract class AbstractIdTag extends AbstractNamedBean implements IdTag {
         }
     }
 
-    // note that this doesn't properly implement the 
-    // contract in {@link NamedBean.toString()}, 
-    // which means things like tables and persistance 
-    // might not behave properly.
-    @Override
-    public String toString() {
-        String userName = getUserName();
-        return (userName == null || userName.isEmpty()) ? getTagID() : userName;
-    }
-
     @Override
     public String getBeanType() {
         return Bundle.getMessage("BeanNameReporter");
