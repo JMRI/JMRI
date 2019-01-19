@@ -90,9 +90,7 @@ public class LayoutShape {
     /**
      * constructor method (used by duplicate)
      *
-     * @param name         the name of the shape
-     * @param c            the Point2D for the initial point
-     * @param layoutEditor reference to the LayoutEditor this shape is in
+     * @param layoutShape to duplicate (deep copy)
      */
     public LayoutShape(LayoutShape layoutShape) {
         this(layoutShape.getName(), layoutShape.getLayoutEditor());
