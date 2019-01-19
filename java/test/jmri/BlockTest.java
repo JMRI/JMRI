@@ -1,5 +1,6 @@
 package jmri;
 
+import jmri.implementation.StringReport;
 import jmri.jmrix.internal.InternalSensorManager;
 import jmri.util.JUnitUtil;
 
@@ -300,7 +301,7 @@ public class BlockTest {
             }
         };
         b.setReporter(rm.provideReporter("IR22"));
-        rm.provideReporter("IR22").setReport("report");
+        rm.provideReporter("IR22").setReport(new StringReport("report"));
         // For each report, there are two PropertyChangeEvents -
         // "currentReport" and "lastReport"
         Assert.assertEquals("count of detected changes", 2, count);
@@ -319,7 +320,7 @@ public class BlockTest {
             }
         };
         b.setReporter(rm.provideReporter("IR22"));
-        rm.provideReporter("IR22").setReport("report");
+        rm.provideReporter("IR22").setReport(new StringReport("report"));
         // Only detecting "currentReport" PropertyChangeEvent
         Assert.assertEquals("count of detected changes", 1, count);
 
@@ -341,7 +342,7 @@ public class BlockTest {
             }
         };
         b.setReporter(rm.provideReporter("IR22"));
-        rm.provideReporter("IR22").setReport("report");
+        rm.provideReporter("IR22").setReport(new StringReport("report"));
         // Only detecting "lastReport" PropertyChangeEvent
         Assert.assertEquals("count of detected changes", 1, count);
 

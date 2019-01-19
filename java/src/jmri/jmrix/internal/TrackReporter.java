@@ -2,6 +2,7 @@ package jmri.jmrix.internal;
 
 import java.util.Deque;
 import java.util.ArrayDeque;
+import jmri.Report;
 import jmri.implementation.AbstractReporter;
 import jmri.CollectingReporter;
 
@@ -15,28 +16,28 @@ import jmri.CollectingReporter;
  */
 public class TrackReporter extends AbstractReporter implements CollectingReporter {
 
-    private Deque collection = null;
+    private Deque<Report> collection = null;
 
     public TrackReporter(String systemName) {
         super(systemName.toUpperCase());
-        collection = new ArrayDeque<Object>();
+        collection = new ArrayDeque<>();
     }
 
     public TrackReporter(String systemName, String userName) {
         super(systemName.toUpperCase(), userName);
-        collection = new ArrayDeque<Object>();
+        collection = new ArrayDeque<>();
     }
 
     /**
      * Provide a general method for updating the report.
      */
     @Override
-    public void setReport(Object r) {
+    public void setReport(Report r) {
         if (r == _currentReport) {
             return;
         }
-        Object old = _currentReport;
-        Object oldLast = _lastReport;
+        Report old = _currentReport;
+        Report oldLast = _lastReport;
         _currentReport = r;
         if (r != null) {
             _lastReport = r;
@@ -70,7 +71,7 @@ public class TrackReporter extends AbstractReporter implements CollectingReporte
     // these methods record the order of reports seen.
 
     @SuppressWarnings("unchecked")
-    public void pushEast(Object o){
+    public void pushEast(Report o){
          if(o != null) {
             collection.addFirst(o);
             setReport(o);
@@ -78,21 +79,21 @@ public class TrackReporter extends AbstractReporter implements CollectingReporte
     }
 
     @SuppressWarnings("unchecked")
-    public void pushWest(Object o){
+    public void pushWest(Report o){
          if(o != null) {
             collection.addLast(o);
             setReport(o);
          }
     }
 
-    public Object pullEast(){
-       Object retval = collection.removeFirst();
+    public Report pullEast(){
+       Report retval = collection.removeFirst();
        setReport(collection.peekFirst());
        return retval;
     }
 
-    public Object pullWest(){
-       Object retval = collection.removeLast();
+    public Report pullWest(){
+       Report retval = collection.removeLast();
        setReport(collection.peekLast());
        return retval;
     }

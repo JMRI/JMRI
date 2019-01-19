@@ -1,6 +1,8 @@
 package jmri.jmrix.loconet;
 
 import jmri.LocoAddress;
+import jmri.Report;
+import jmri.implementation.StringReport;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -15,8 +17,8 @@ import org.junit.Test;
 public class LnReporterTest extends jmri.implementation.AbstractReporterTestBase {
 
     @Override
-    protected Object generateObjectToReport(){
-        return "3 enter";
+    protected Report generateObjectToReport(){
+        return new StringReport("3 enter");
     }
 
     @Test

@@ -1,6 +1,8 @@
 package jmri.jmrix.jmriclient;
 
+import jmri.Report;
 import jmri.implementation.AbstractReporter;
+import jmri.implementation.StringReport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -59,7 +61,7 @@ public class JMRIClientReporter extends AbstractReporter implements JMRIClientLi
         } else {
             String text = "REPORTER " + transmitName + "\n";
             if (!message.equals(text)) {
-                String report = message.substring(text.length());
+                Report report = new StringReport(message.substring(text.length()));
                 log.debug("setting report to " + report);
                 setReport(report);  // this is an update of the report.
             } else {

@@ -2,6 +2,7 @@ package jmri.implementation;
 
 import jmri.util.JUnitUtil;
 import jmri.IdTag;
+import jmri.Report;
 import org.junit.*;
 /**
  *
@@ -10,7 +11,7 @@ import org.junit.*;
 public class AbstractRailComReporterTest extends AbstractReporterTestBase {
 
     @Override
-    protected Object generateObjectToReport(){
+    protected Report generateObjectToReport(){
         return new DefaultRailCom("ID1234", "Test Tag");
     }
 

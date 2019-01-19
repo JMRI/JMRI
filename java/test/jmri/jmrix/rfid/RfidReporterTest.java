@@ -2,6 +2,7 @@ package jmri.jmrix.rfid;
 
 import org.junit.*;
 import jmri.IdTag;
+import jmri.Report;
 
 /**
  * RfidReporterTest.java
@@ -13,7 +14,7 @@ import jmri.IdTag;
 public class RfidReporterTest extends jmri.implementation.AbstractReporterTestBase {
 
     @Override
-    protected Object generateObjectToReport(){
+    protected Report generateObjectToReport(){
         return new jmri.implementation.DefaultIdTag("ID0413276BC1", "Test Tag");
     }
 

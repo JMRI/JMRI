@@ -15,7 +15,7 @@ package jmri;
  * <P>
  * In contrast to Sensors, a Reporter provides more detailed information. A
  * Sensor provides a status of ACTIVE or INACTIVE, while a Reporter returns an
- * Object. The real type of that object can be whatever a particular Reporter
+ * Report. The real type of that report can be whatever a particular Reporter
  * finds useful to report. Typical values might be a String or Int, both of
  * which can be displayed, printed, equated, etc.
  * <P>
@@ -47,23 +47,23 @@ public interface Reporter extends NamedBean {
      * Query the last report. This will return a value even if there's no
      * current report available. If there is a current report, both this and the
      * current report will be equal. If nothing has ever been reported, this
-     * will return a null object.
+     * will return null.
      *
      * @return the last report or null
      */
-    public Object getLastReport();
+    public Report getLastReport();
 
     /**
      * Query the current report. If there is no current report available (e.g.
      * the reporting hardware says no information is currently available) this
-     * will return a null object.
+     * will return null.
      *
      * @return the current report or null
      */
-    public Object getCurrentReport();
+    public Report getCurrentReport();
 
     /**
-     * Set the report to an arbitrary object.
+     * Set the report.
      * <P>
      * A Reporter object will usually just "report"; its contents usually come
      * from the layout, and hence are only set by lower-level implementation
@@ -73,7 +73,7 @@ public interface Reporter extends NamedBean {
      *
      * @param r the report
      */
-    public void setReport(Object r);
+    public void setReport(Report r);
 
     /**
      * Provide an integer form of the last report.

@@ -1,5 +1,6 @@
 package jmri.implementation;
 
+import jmri.Report;
 import jmri.Reporter;
 import org.junit.*;
 
@@ -26,7 +27,7 @@ abstract public class AbstractReporterTestBase {
     protected Reporter r = null; 
 
     // concrete classes should generate an appropriate report.
-    abstract protected Object generateObjectToReport();
+    abstract protected Report generateObjectToReport();
 
     @Test
     public void testCtor() {

@@ -707,9 +707,9 @@ public class VSDecoderManager implements PropertyChangeListener {
                         return;
                     }
                     if (blk.isReportingCurrent()) {
-                        repVal = (String) blk.getReporter().getCurrentReport();
+                        repVal = blk.getReporter().getCurrentReport().getString();
                     } else {
-                        repVal = (String) blk.getReporter().getLastReport();
+                        repVal = blk.getReporter().getLastReport().getString();
                     }
                 } else {
                     log.debug("Ignoring report. not an OCCUPIED event.");

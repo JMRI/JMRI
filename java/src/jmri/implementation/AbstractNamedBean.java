@@ -218,6 +218,8 @@ public abstract class AbstractNamedBean implements NamedBean {
     @Nonnull
     @Override
     public String toString() {
+        jmri.IdTag a;
+        jmri.Reporter r;
         return getSystemName();
     }
 

@@ -8,6 +8,7 @@ import jmri.DccLocoAddress;
 import jmri.LocoAddress;
 import jmri.PhysicalLocationReporter;
 import jmri.implementation.AbstractReporter;
+import jmri.implementation.StringReport;
 import jmri.util.PhysicalLocation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -84,7 +85,7 @@ public class RpsReporter extends AbstractReporter implements MeasurementListener
      */
     void notifyLeaving(Integer id) {
         firePropertyChange("Leaving", null, id);
-        setReport("");
+        setReport(new StringReport(""));
     }
 
     /**
@@ -93,7 +94,7 @@ public class RpsReporter extends AbstractReporter implements MeasurementListener
      */
     void notifyArriving(Integer id) {
         firePropertyChange("Arriving", null, id);
-        setReport("" + id);
+        setReport(new StringReport("" + id));
     }
 
     /**

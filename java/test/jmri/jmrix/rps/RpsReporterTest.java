@@ -1,5 +1,7 @@
 package jmri.jmrix.rps;
 
+import jmri.Report;
+import jmri.implementation.StringReport;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 
@@ -10,8 +12,8 @@ import org.junit.*;
 public class RpsReporterTest extends jmri.implementation.AbstractReporterTestBase {
 
     @Override
-    protected Object generateObjectToReport(){
-        return "3";
+    protected Report generateObjectToReport(){
+        return new StringReport("3");
     }
 
     // The minimal setup for log4J

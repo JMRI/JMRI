@@ -25,7 +25,7 @@ import org.jdom2.Element;
  * @author Matthew Harris Copyright (C) 2011
  * @since 2.11.4
  */
-public interface IdTag extends NamedBean {
+public interface IdTag extends NamedBean, Report {
 
     /**
      * Constant representing an "unseen" state, indicating that the ID tag has

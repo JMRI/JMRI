@@ -7,7 +7,9 @@ import java.util.HashMap;
 import java.util.Map;
 import jmri.InstanceManager;
 import jmri.JmriException;
+import jmri.Report;
 import jmri.Reporter;
+import jmri.implementation.StringReport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,7 +31,7 @@ abstract public class AbstractReporterServer {
     /*
      * Protocol Specific Abstract Functions
      */
-    abstract public void sendReport(String reporter, Object r) throws IOException;
+    abstract public void sendReport(String reporter, Report r) throws IOException;
 
     abstract public void sendErrorStatus(String reporter) throws IOException;
 
@@ -65,9 +67,9 @@ abstract public class AbstractReporterServer {
      * Set the report state of a reporter
      * 
      * @parm reporterName - the name of a reporter
-     * @parm r - the object containing the report (currently a string).
+     * @parm r - the report.
      */
-    public void setReporterReport(String reporterName, Object r) {
+    public void setReporterReport(String reporterName, Report r) {
         Reporter reporter;
         // load address from reporterAddrTextField
         try {
@@ -114,7 +116,7 @@ abstract public class AbstractReporterServer {
                     now = null;
                 }
                 try {
-                    sendReport(name, now);
+                    sendReport(name, new StringReport(now));
                 } catch (IOException ie) {
                     log.debug("Error Sending Status");
                     // if we get an error, de-register

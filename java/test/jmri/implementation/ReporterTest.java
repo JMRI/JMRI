@@ -38,50 +38,19 @@ public class ReporterTest {
     @Test
     public void testReportStringObject() {
         // Report a String
-        r.setReport("Something To Report");
+        r.setReport(new StringReport("Something To Report"));
         // Check that both CurrentReport and LastReport are String objects
-        Assert.assertTrue("CurrentReport Object is 'String'", r.getCurrentReport() instanceof String);
-        Assert.assertTrue("LastReport Object is 'String'", r.getLastReport() instanceof String);
+        Assert.assertTrue("CurrentReport Object is 'StringReport'", r.getCurrentReport() instanceof StringReport);
+        Assert.assertTrue("LastReport Object is 'StringReport'", r.getLastReport() instanceof StringReport);
         // Check the value of both CurrentReport and LastReport
-        Assert.assertEquals("CurrentReport String is 'Something To Report'", "Something To Report", r.getCurrentReport());
-        Assert.assertEquals("LastReport String is 'Something To Report'", "Something To Report", r.getLastReport());
+        Assert.assertEquals("CurrentReport String is 'Something To Report'", "Something To Report", r.getCurrentReport().getString());
+        Assert.assertEquals("LastReport String is 'Something To Report'", "Something To Report", r.getLastReport().getString());
 
         // Nothing to report now
         r.setReport(null);
         // Check that CurrentReport returns a null value, but LastReport returns the reported String
         Assert.assertEquals("After null report, CurrentReport String is null", null, r.getCurrentReport());
         Assert.assertEquals("After null report, LastReport String is 'Something To Report'", "Something To Report", r.getLastReport());
-    }
-
-    @Test
-    public void testReportOtherObject() {
-        // Create an ObjectToReport object to report
-        ObjectToReport otr = new ObjectToReport(42);
-        // and report it.
-        r.setReport(otr);
-
-        // Check that both CurrentReport and LastReport are ObjectToReport objects
-        Assert.assertTrue("CurrentReport Object is 'ObjectToReport'", r.getCurrentReport() instanceof ObjectToReport);
-        Assert.assertTrue("LastReport Object is 'ObjectToReport'", r.getLastReport() instanceof ObjectToReport);
-        // Check the value of the ObjectToReport objects
-        Assert.assertEquals("CurrentReport value is '42'", 42, ((ObjectToReport) r.getCurrentReport()).getValue());
-        Assert.assertEquals("LastReport value is '42'", 42, ((ObjectToReport) r.getLastReport()).getValue());
-        // Check that the returned object is the earlier created ObjectToReport
-        Assert.assertSame("CurrentReport Object is identical to otr", otr, r.getCurrentReport());
-        Assert.assertSame("LastReport Object is identical to otr", otr, r.getCurrentReport());
-
-        // Create a new ObjectToReport with an identical value
-        ObjectToReport otr2 = new ObjectToReport(42);
-        // Check that the returned object is different to this new one
-        Assert.assertNotSame("CurrentReport Object is different", otr2, r.getCurrentReport());
-        Assert.assertNotSame("LastReport Object is different", otr2, r.getCurrentReport());
-
-        // Nothing to report now
-        r.setReport(null);
-        // Check that CurrentReport returns a null value, but LastReport returns the first created ObjectToReport
-        Assert.assertEquals("After null report, CurrentReport Object is null", null, r.getCurrentReport());
-        Assert.assertEquals("After null report, LastReport value is '42'", 42, ((ObjectToReport) r.getLastReport()).getValue());
-        Assert.assertSame("After null report, LastReport Object is identical to otr", otr, r.getLastReport());
     }
 
     @Before

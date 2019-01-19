@@ -10,6 +10,7 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Reporter;
 import jmri.ReporterManager;
+import jmri.implementation.StringReport;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.util.JUnitUtil;
@@ -38,11 +39,11 @@ public class JsonReporterHttpServiceTest  {
             Assert.assertEquals("IR1", result.path(JSON.DATA).path(JSON.NAME).asText());
             // JSON node has the text "null" if reporter is null
             Assert.assertEquals("null", result.path(JSON.DATA).path(JsonReporter.REPORT).asText());
-            reporter1.setReport("throw");
+            reporter1.setReport(new StringReport("throw"));
             result = service.doGet(REPORTER, "IR1", Locale.ENGLISH);
             Assert.assertNotNull(result);
             Assert.assertEquals("throw", result.path(JSON.DATA).path(JsonReporter.REPORT).asText());
-            reporter1.setReport("close");
+            reporter1.setReport(new StringReport("close"));
             result = service.doGet(REPORTER, "IR1", Locale.ENGLISH);
             Assert.assertNotNull(result);
             Assert.assertEquals("close", result.path(JSON.DATA).path(JsonReporter.REPORT).asText());
@@ -63,13 +64,13 @@ public class JsonReporterHttpServiceTest  {
             // set off
             message = mapper.createObjectNode().put(JSON.NAME, "IR1").put(JsonReporter.REPORT, "close");
             result = service.doPost(REPORTER, "IR1", message, Locale.ENGLISH);
-            Assert.assertEquals("close", reporter1.getCurrentReport());
+            Assert.assertEquals("close", reporter1.getCurrentReport().getString());
             Assert.assertNotNull(result);
             Assert.assertEquals("close", result.path(JSON.DATA).path(JsonReporter.REPORT).asText());
             // set on
             message = mapper.createObjectNode().put(JSON.NAME, "IR1").put(JsonReporter.REPORT, "throw");
             result = service.doPost(REPORTER, "IR1", message, Locale.ENGLISH);
-            Assert.assertEquals("throw", reporter1.getCurrentReport());
+            Assert.assertEquals("throw", reporter1.getCurrentReport().getString());
             Assert.assertNotNull(result);
             Assert.assertEquals("throw", result.path(JSON.DATA).path(JsonReporter.REPORT).asText());
             // set null

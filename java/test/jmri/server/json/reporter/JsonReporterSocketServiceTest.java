@@ -8,6 +8,7 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Reporter;
 import jmri.ReporterManager;
+import jmri.implementation.StringReport;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonMockConnection;
@@ -36,16 +37,16 @@ public class JsonReporterSocketServiceTest {
             // TODO: test that service is listener in ReporterManager
             // default null value of memory1 has text representation "null" in JSON
             Assert.assertEquals("null", connection.getMessage().path(JSON.DATA).path(JsonReporter.REPORT).asText());
-            memory1.setReport("throw");
+            memory1.setReport(new StringReport("throw"));
             JUnitUtil.waitFor(() -> {
-                return memory1.getCurrentReport().equals("throw");
+                return memory1.getCurrentReport().getString().equals("throw");
             }, "Reporter to throw");
             Assert.assertEquals("throw", connection.getMessage().path(JSON.DATA).path(JsonReporter.REPORT).asText());
-            memory1.setReport("close");
+            memory1.setReport(new StringReport("close"));
             JUnitUtil.waitFor(() -> {
-                return memory1.getCurrentReport().equals("close");
+                return memory1.getCurrentReport().getString().equals("close");
             }, "Reporter to close");
-            Assert.assertEquals("close", memory1.getCurrentReport());
+            Assert.assertEquals("close", memory1.getCurrentReport().getString());
             Assert.assertEquals("close", connection.getMessage().path(JSON.DATA).path(JsonReporter.REPORT).asText());
             service.onClose();
             // TODO: test that service is no longer a listener in ReporterManager
@@ -65,16 +66,16 @@ public class JsonReporterSocketServiceTest {
             // Reporter "close"
             message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IR1").put(JsonReporter.REPORT, "close");
             service.onMessage(JsonReporter.REPORTER, message, JSON.POST, Locale.ENGLISH);
-            Assert.assertEquals("close", memory1.getCurrentReport());
+            Assert.assertEquals("close", memory1.getCurrentReport().getString());
             // Reporter "throw"
             message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IR1").put(JsonReporter.REPORT, "throw");
             service.onMessage(JsonReporter.REPORTER, message, JSON.POST, Locale.ENGLISH);
-            Assert.assertEquals("throw", memory1.getCurrentReport());
+            Assert.assertEquals("throw", memory1.getCurrentReport().getString());
             // Reporter UNKNOWN - remains ON
             message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IR1").putNull(JsonReporter.REPORT);
             service.onMessage(JsonReporter.REPORTER, message, JSON.POST, Locale.ENGLISH);
             Assert.assertEquals(null, memory1.getCurrentReport());
-            memory1.setReport("throw");
+            memory1.setReport(new StringReport("throw"));
             // Reporter no value
             message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IR1");
             JsonException exception = null;
@@ -83,7 +84,7 @@ public class JsonReporterSocketServiceTest {
             } catch (JsonException ex) {
                 exception = ex;
             }
-            Assert.assertEquals("throw", memory1.getCurrentReport());
+            Assert.assertEquals("throw", memory1.getCurrentReport().getString());
             Assert.assertNull(exception);
         } catch (IOException | JmriException | JsonException ex) {
             Assert.fail(ex.getMessage());

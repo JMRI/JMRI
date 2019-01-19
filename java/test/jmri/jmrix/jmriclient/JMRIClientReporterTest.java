@@ -1,5 +1,6 @@
 package jmri.jmrix.jmriclient;
 
+import jmri.Report;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 
@@ -13,7 +14,7 @@ import org.junit.*;
 public class JMRIClientReporterTest extends jmri.implementation.AbstractReporterTestBase{
 
     @Override
-    protected Object generateObjectToReport(){
+    protected Report generateObjectToReport(){
         return new jmri.implementation.DefaultIdTag("ID0413276BC1", "Test Tag");
     }
 

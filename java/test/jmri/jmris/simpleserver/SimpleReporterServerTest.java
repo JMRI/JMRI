@@ -1,5 +1,6 @@
 package jmri.jmris.simpleserver;
 
+import jmri.implementation.StringReport;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -151,7 +152,7 @@ public class SimpleReporterServerTest {
         SimpleReporterServer a = new SimpleReporterServer(input, output);
         try {
             a.initReporter("IR1");
-            a.sendReport("IR1","Hello World");
+            a.sendReport("IR1",new StringReport("Hello World"));
             Assert.assertEquals("sendErrorStatus check","REPORTER IR1 Hello World\n",sb.toString());
         } catch(java.io.IOException ioe){
             Assert.fail("Exception sending Error Status");

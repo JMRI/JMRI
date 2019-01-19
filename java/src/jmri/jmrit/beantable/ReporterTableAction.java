@@ -20,6 +20,7 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import jmri.InstanceManager;
 import jmri.Manager;
+import jmri.Report;
 import jmri.Reporter;
 import jmri.ReporterManager;
 import jmri.util.ConnectionNameFromSystemName;
@@ -135,7 +136,7 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
             public void setValueAt(Object value, int row, int col) {
                 if (col == VALUECOL) {
                     Reporter t = getBySystemName(sysNameList.get(row));
-                    t.setReport(value);
+                    t.setReport((Report)value);
                     fireTableRowsUpdated(row, row);
                 }
                 if (col == LASTREPORTCOL) {

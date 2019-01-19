@@ -6,6 +6,7 @@ import jmri.DccLocoAddress;
 import jmri.LocoAddress;
 import jmri.PhysicalLocationReporter;
 import jmri.implementation.AbstractReporter;
+import jmri.implementation.StringReport;
 import jmri.util.PhysicalLocation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -88,7 +89,7 @@ public class LnReporter extends AbstractReporter implements LocoNetListener, Phy
         }
 
         lastLoco = (enter ? loco : -1);
-        setReport("" + loco + (enter ? " enter" : " exits")); // NOI18N
+        setReport(new StringReport("" + loco + (enter ? " enter" : " exits"))); // NOI18N
     }
 
     /**
@@ -108,7 +109,7 @@ public class LnReporter extends AbstractReporter implements LocoNetListener, Phy
         boolean north = ((l.getElement(3) & 0x20) == 0);
 
         // get loco address
-        setReport("" + loco + " seen " + (north ? "northbound" : "southbound")); // NOI18N
+        setReport(new StringReport("" + loco + " seen " + (north ? "northbound" : "southbound"))); // NOI18N
 
     }
 

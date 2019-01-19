@@ -1,5 +1,6 @@
 package jmri.jmrix.internal;
 
+import jmri.implementation.StringReport;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 
@@ -15,13 +16,13 @@ public class TrackReporterTest extends jmri.implementation.AbstractRailComReport
    public void testSingleEndedTrackEast(){
        // this track should work like a stack, add or remove from one end only.
        TrackReporter tr = (TrackReporter)r;
-       tr.pushEast("Hello");
-       Assert.assertEquals("after 1st push","Hello",tr.getCurrentReport());
-       tr.pushEast("World");
-       Assert.assertEquals("after 2nd push","World",tr.getCurrentReport());
-       Assert.assertEquals("pull last entered","World",tr.pullEast());
-       Assert.assertEquals("last report","Hello",tr.getCurrentReport());
-       Assert.assertEquals("pull first entered","Hello",tr.pullEast());
+       tr.pushEast(new StringReport("Hello"));
+       Assert.assertEquals("after 1st push","Hello",tr.getCurrentReport().getString());
+       tr.pushEast(new StringReport("World"));
+       Assert.assertEquals("after 2nd push","World",tr.getCurrentReport().getString());
+       Assert.assertEquals("pull last entered","World",tr.pullEast().getString());
+       Assert.assertEquals("last report","Hello",tr.getCurrentReport().getString());
+       Assert.assertEquals("pull first entered","Hello",tr.pullEast().getString());
        Assert.assertNull("last report",tr.getCurrentReport());
    }
 
@@ -29,13 +30,13 @@ public class TrackReporterTest extends jmri.implementation.AbstractRailComReport
    public void testSingleEndedTrackWest(){
        // this track should work like a stack, add or remove from one end only.
        TrackReporter tr = (TrackReporter)r;
-       tr.pushWest("Hello");
-       Assert.assertEquals("after 1st push","Hello",tr.getCurrentReport());
-       tr.pushWest("World");
-       Assert.assertEquals("after 2nd push","World",tr.getCurrentReport());
-       Assert.assertEquals("pull last entered","World",tr.pullWest());
-       Assert.assertEquals("last report","Hello",tr.getCurrentReport());
-       Assert.assertEquals("pull first entered","Hello",tr.pullWest());
+       tr.pushWest(new StringReport("Hello"));
+       Assert.assertEquals("after 1st push","Hello",tr.getCurrentReport().getString());
+       tr.pushWest(new StringReport("World"));
+       Assert.assertEquals("after 2nd push","World",tr.getCurrentReport().getString());
+       Assert.assertEquals("pull last entered","World",tr.pullWest().getString());
+       Assert.assertEquals("last report","Hello",tr.getCurrentReport().getString());
+       Assert.assertEquals("pull first entered","Hello",tr.pullWest().getString());
        Assert.assertNull("last report",tr.getCurrentReport());
    }
 
@@ -43,13 +44,13 @@ public class TrackReporterTest extends jmri.implementation.AbstractRailComReport
    public void testDoubleEndedTrack(){
        // this track should work like a queue, add from one end remove from the other.
        TrackReporter tr = (TrackReporter)r;
-       tr.pushWest("Hello");
-       Assert.assertEquals("after 1st push","Hello",tr.getCurrentReport());
-       tr.pushWest("World");
-       Assert.assertEquals("after 2nd push","World",tr.getCurrentReport());
-       Assert.assertEquals("pull first entered","Hello",tr.pullEast());
-       Assert.assertEquals("last report","World",tr.getCurrentReport());
-       Assert.assertEquals("pull last entered","World",tr.pullEast());
+       tr.pushWest(new StringReport("Hello"));
+       Assert.assertEquals("after 1st push","Hello",tr.getCurrentReport().getString());
+       tr.pushWest(new StringReport("World"));
+       Assert.assertEquals("after 2nd push","World",tr.getCurrentReport().getString());
+       Assert.assertEquals("pull first entered","Hello",tr.pullEast().getString());
+       Assert.assertEquals("last report","World",tr.getCurrentReport().getString());
+       Assert.assertEquals("pull last entered","World",tr.pullEast().getString());
        Assert.assertNull("last report",tr.getCurrentReport());
    }
 

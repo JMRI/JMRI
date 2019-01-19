@@ -1,5 +1,6 @@
 package jmri.implementation;
 
+import jmri.Report;
 import jmri.Reporter;
 
 /**
@@ -32,12 +33,12 @@ public abstract class AbstractReporter extends AbstractNamedBean implements Repo
     }
     
     @Override
-    public Object getCurrentReport() {
+    public Report getCurrentReport() {
         return _currentReport;
     }
 
     @Override
-    public Object getLastReport() {
+    public Report getLastReport() {
         return _lastReport;
     }
 
@@ -45,12 +46,12 @@ public abstract class AbstractReporter extends AbstractNamedBean implements Repo
      * Provide a general method for updating the report.
      */
     @Override
-    public void setReport(Object r) {
+    public void setReport(Report r) {
         if (r == _currentReport) {
             return;
         }
-        Object old = _currentReport;
-        Object oldLast = _lastReport;
+        Report old = _currentReport;
+        Report oldLast = _lastReport;
         _currentReport = r;
         if (r != null) {
             _lastReport = r;
@@ -62,7 +63,7 @@ public abstract class AbstractReporter extends AbstractNamedBean implements Repo
     }
 
     // internal data members
-    protected Object _lastReport = null;
-    protected Object _currentReport = null;
+    protected Report _lastReport = null;
+    protected Report _currentReport = null;
 
 }

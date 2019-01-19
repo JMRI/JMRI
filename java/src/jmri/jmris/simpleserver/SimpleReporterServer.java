@@ -5,7 +5,9 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import jmri.InstanceManager;
 import jmri.JmriException;
+import jmri.Report;
 import jmri.Reporter;
+import jmri.implementation.StringReport;
 import jmri.jmris.AbstractReporterServer;
 import jmri.jmris.JmriConnection;
 
@@ -36,7 +38,7 @@ public class SimpleReporterServer extends AbstractReporterServer {
      * Protocol Specific Abstract Functions
      */
     @Override
-    public void sendReport(String reporterName, Object r) throws IOException {
+    public void sendReport(String reporterName, Report r) throws IOException {
         addReporterToList(reporterName);
         if (r != null) {
             this.sendMessage("REPORTER " + reporterName + " " + r.toString() + "\n");
@@ -62,7 +64,7 @@ public class SimpleReporterServer extends AbstractReporterServer {
         // where xxxxxx is the reporter identifier and REPORTSTRING is
         // the report, which may contain spaces.
         if (index2 > 0 && ( newlinepos - (index2 + 1) > 0)) {
-            setReporterReport(reporterName, statusString.substring(index2 + 1,newlinepos));
+            setReporterReport(reporterName, new StringReport(statusString.substring(index2 + 1,newlinepos)));
             // setReporterReport ALSO triggers sending the status report, so 
             // no further action is required to echo the status to the client.
         } else {

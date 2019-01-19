@@ -1,5 +1,6 @@
 package jmri.jmrix.can.cbus;
 
+import jmri.Report;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -14,7 +15,7 @@ import org.junit.Test;
 public class CbusReporterTest extends jmri.implementation.AbstractReporterTestBase {
 
     @Override
-    protected Object generateObjectToReport(){
+    protected Report generateObjectToReport(){
         return new jmri.implementation.DefaultIdTag("ID0413276BC1", "Test Tag");
     }
 

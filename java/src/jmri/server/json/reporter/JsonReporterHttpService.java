@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
 import jmri.Reporter;
 import jmri.ReporterManager;
+import jmri.implementation.StringReport;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonHttpService;
 
@@ -75,7 +76,7 @@ public class JsonReporterHttpService extends JsonHttpService {
             if (data.path(REPORT).isNull()) {
                 reporter.setReport(null);
             } else {
-                reporter.setReport(data.path(REPORT).asText());
+                reporter.setReport(new StringReport(data.path(REPORT).asText()));
             }
         }
         return this.doGet(type, name, locale);
