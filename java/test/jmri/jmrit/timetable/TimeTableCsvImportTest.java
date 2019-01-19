@@ -131,8 +131,11 @@ public class TimeTableCsvImportTest {
            writer.write("TrainType\n");
            writer.write("Segment\n");
            writer.write("Station\n");
+           writer.write("Station,,10\n");
            writer.write("Schedule\n");
            writer.write("Train\n");
+           writer.write("Stop,1\n");
+           writer.write("Stop,2\n");
            writer.close();
         } catch (IOException ex) {
             log.warn("Unable to create the minimal test import CSV file ", ex);
