@@ -97,16 +97,11 @@ public abstract class AbstractNamedBean implements NamedBean {
         }
     }
 
-    /**
-     * <p>
-     * It would be good to eventually make this final to 
-     * keep it consistent system-wide, but 
-     * we have some existing classes to update first.
-     */
+    /** {@inheritDoc} */
     @Override
-    public String getFullyFormattedDisplayName() {
+    final public String getFullyFormattedDisplayName() {
         String name = getUserName();
-        if (name != null && name.length() > 0 && !name.equals(getSystemName())) {
+        if (name != null && !name.isEmpty() && !name.equals(getSystemName())) {
             name = getSystemName() + "(" + name + ")";
         } else {
             name = getSystemName();
@@ -203,6 +198,7 @@ public abstract class AbstractNamedBean implements NamedBean {
         return pcs.getPropertyChangeListeners();
     }
 
+    /** {@inheritDoc} */
     @Override
     final public String getSystemName() {
         return mSystemName;
