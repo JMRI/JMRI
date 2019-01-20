@@ -86,7 +86,7 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
                 }
                 value = r.getCurrentReport();
                 if(value == null) {
-                   return (String) null;
+                   return null;
                 } else if(value instanceof jmri.Reportable) {
                    return ((jmri.Reportable)value).toReportString();
                 } else {

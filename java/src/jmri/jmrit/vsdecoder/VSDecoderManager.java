@@ -714,8 +714,6 @@ public class VSDecoderManager implements PropertyChangeListener {
                            } else {
                               repVal = currentReport.toString();
                            }
-                        } else {
-                           repVal = null;
                         }
                     } else {
                         Object lastReport = blk.getReporter().getLastReport();
@@ -725,8 +723,6 @@ public class VSDecoderManager implements PropertyChangeListener {
                            } else {
                               repVal = lastReport.toString();
                            }
-                        } else {
-                           repVal = null;
                         }
                     }
                 } else {
