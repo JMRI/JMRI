@@ -64,7 +64,7 @@ public class TimeTableFrameTest {
 
         Thread openDialog = createModalDialogOperatorThread("Open", Bundle.getMessage("ButtonCancel"), "openDialog");  // NOI18N
         JMenuItem importMenuItem = (JMenuItem)jpm.getComponent(2);
-        Assert.assertTrue(importMenuItem.getText().equals(Bundle.getMessage("MenuImport")));  // NOI18N
+        Assert.assertTrue(importMenuItem.getText().equals(Bundle.getMessage("MenuImportSgn")));  // NOI18N
         new JMenuItemOperator(importMenuItem).doClick();
         JUnitUtil.waitFor(()->{return !(openDialog.isAlive());}, "open dialog finished");
     }
