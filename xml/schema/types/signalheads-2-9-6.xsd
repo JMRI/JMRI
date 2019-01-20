@@ -117,6 +117,7 @@
                       </xs:simpleType>
                       <xs:simpleType>
                         <xs:restriction base="xs:string">
+                          <xs:enumeration value="blue"/><!-- for RGB signal heads -->
                           <xs:enumeration value="low"/>
                           <xs:enumeration value="high"/>
                           <xs:enumeration value="input1"/>

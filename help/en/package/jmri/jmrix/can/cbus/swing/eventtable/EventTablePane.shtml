@@ -26,7 +26,6 @@
       
         <ul class="snav">
         <li><a href="#stats">Columns</a></li>
-        <li><a href="#status">Requesting Event Status</a></li>
         <li><a href="#importexport">Table Import and Export</a></li>
         <li><a href="#opc">OPCs</a></li>
         </ul>
@@ -112,42 +111,6 @@
         <li>Out Session : Running total events sent out by JMRI.</li>    
         </ul>
     
-    <h3>Feedback Columns</h3>  
-    
-    <ul>
-      <li>FB Status - Status of the very last feedback request.  OK, Waiting or NO Feedback.</li>
-      
-      <li>FB reqiured - Number of response events required to prove.<br>
-      Unavailable if FB Event or Node number is set.</li>
-
-      <li>FB Outstanding - Number of feedback events are currently outstanding.</li> 
-      
-      <li>FB Timeout - ms before alerts set in.<br>
-      Unavailable if FB Event or node numbers set.</li>
-      
-      <li>FB Event - If this particular event is feedback for another event, 
-      include that other event number.</li>
-      
-      <li>FB Node - If this particular event is feedback for another event, 
-      include that  event node number.</li>
-     </ul>
-
-
-      <p>When an event is sent by JMRI 
-      which has a number in the feedback response column,
-      the event table will listen for its response and warn if this is not received.
-      </p>
-      
-      <p>The system will listen for a feedback event in the 
-      form of a response event, or a normal on off event.
-      The response events do not have to status ( on or off ) match, 
-      and can be any of the data lengths.</p>
-      
-
-   
-      <img src="../../../../../../../html/hardware/can/cbus/images/swing/event-table/merg-cbus-ev-table-feedback-792x221.png"
-      width="792" height="221" alt="MERG CBUS Event Table Feedback" >      
-      
     <h3>JMRI Link Columns</h3>
       
       <ul>
@@ -172,55 +135,7 @@
         width="1096" height="279" alt="MERG CBUS Event Table JMRI Links" >
       
     
-    <h3><a name="status" id="status">Requesting Event Status</a></h3>
-        <div>
-      <p>On clicking Status, JMRI sends an event accessory status request message 
-      to the network, long if the event has a node, short if without.</p>
-      <p>This triggers a JMRI event listener which awaits a response 
-      from the event, either a request response or a normal event 
-      is accepted as a response.</p>
-      <p>If nothing is set in event feedback, the default timeout is 
-      5 seconds from the same event and node combination.</p>
-      <p>Some users may want to create a new JMRI turnout, sensor or light 
-      to represent the get status button and send the event request status message.
-      
-      <br>The hardware addresses for these request events would look something like:</p>
-      
-        <table border="1">
-        <tbody>
-        <tr>
-        <th>Hardware Address</th>
-        <th>Ops Code Hex</th>
-        <th>Ops Code Translated</th>
-        <th>Node Dec</th>
-        <th>Event Dec</th>
-        </tr>
-        <tr>
-        <td>X9A0000007B</td>
-        <td>9A</td>
-        <td>Accessory Request Short</td>
-        <td>0</td>
-        <td>123</td>
-        </tr>      
-        <tr>
-        <td>X92007B01C8</td>
-        <td>92</td>
-        <td>Accessory Request Long</td>
-        <td>123</td>
-        <td>456</td>
-        </tr>  
-        </tbody>
-        </table>
-      
-      <p>There are a few methods within JMRI of sending this event to ping every few seconds, 
-      one being to create a jython script to ping 1 sensor every few seconds, 
-      and use logix on this 1 sensor to create other ping event status requests outputs.</p>
 
-      <p>When an event response request message is heard on the network, 
-      the event table will listen for event feedback.</p>
-      </div>
-            
-      
       
     <h3><a name="importexport" id="importexport">Printing and Export / Import from MERG FCU</a></h3>
     
@@ -246,8 +161,6 @@
       
       
     <h3><a name="opc" id="opc">Supported Operation Codes</a></h3>
-        <img src="../../../../../../../html/hardware/can/cbus/images/swing/event-table/merg-cbus-ev-table-columns-431x506.png"
-        width="451" height="506" alt="MERG CBUS Event Table Columns" align="right">
       
         <ul>
         <li>ASON - Sent when user clicks send on / toggle button, node number 0 </li>
@@ -294,7 +207,7 @@
         <p>Any event OPCs sent with extra data bytes will be logged according to its core event and node combination, 
         irrelevant of extra data bytes.</p>
         <p>The extra data is not currently displayed in the table, 
-        although likely to be added as a new column at some point.</p>
+        although likely to be added as a column at some point.</p>
        
       
     <h3>JMRI Help</h3>

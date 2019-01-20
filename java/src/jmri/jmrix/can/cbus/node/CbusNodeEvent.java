@@ -8,13 +8,13 @@ import jmri.jmrix.can.cbus.CbusEvent;
  * @author Steve Young Copyright (C) 2019
  */
 public class CbusNodeEvent extends CbusEvent {
-    int _thisnode;
-    int _index;
-    int[] _evVarArr;
-    int _nodeConfigPanelID;
+    private int _thisnode;
+    private int _index;
+    private int[] _evVarArr;
+    private int _nodeConfigPanelID;
     
-    public CbusNodeEvent( int _nn, int _en, int thisnode, int index, int maxEvVar){
-        super(_nn,_en);
+    public CbusNodeEvent( int nn, int en, int thisnode, int index, int maxEvVar){
+        super(nn,en);
         _thisnode = thisnode;
         _index = index;
         _nodeConfigPanelID = -1;
@@ -30,11 +30,8 @@ public class CbusNodeEvent extends CbusEvent {
         return _evVarArr[(index-1)];
     }
     
-    public Boolean matches(int nn, int en) {
-        if ( (nn == _nn) && (en == _en) ) {
-            return true;
-        }
-        return false;
+    public int getParentNn(){
+        return _thisnode;
     }
 
     public void setIndex(int index){
@@ -51,14 +48,6 @@ public class CbusNodeEvent extends CbusEvent {
 
     public int getIndex(){
         return _index;
-    }
-    
-    public int getNn(){
-        return _nn;
-    }
-    
-    public int getEn() {
-        return _en;
     }
     
     public int getNumEvVars() {
