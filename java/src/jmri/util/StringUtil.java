@@ -477,5 +477,54 @@ public class StringUtil {
         }
     }
 
+    /**
+     * Return the last int value within a string
+     * eg XX123XX456X will return 456
+     *
+     * @param str contents to process
+     * @return last value in int form , -1 if not found
+     */
+    @CheckReturnValue
+    @Nonnull
+    static public int getLastIntFromString(@Nonnull String str){
+        StringBuilder sb = new StringBuilder();
+        for (int i = str.length() - 1; i >= 0; i --) {
+            char c = str.charAt(i);
+            if(c != ' '){
+                if (Character.isDigit(c)) {
+                    sb.insert(0, c);
+                } else {
+                    if (!sb.toString().equals("")) {
+                        break;
+                    }
+                }
+            }
+        }
+        if (!sb.toString().equals("")) {
+            return (Integer.parseInt(sb.toString()));  
+        }
+        return -1;
+    }
+
+    /**
+     * Replace the last occurance of string value within a String
+     * eg  from ABC to DEF will convert XXABCXXXABCX to XXABCXXXDEFX
+     *
+     * @param string contents to process
+     * @param from value within string to be replaced
+     * @param to new value
+     * @return string with the replacement, original value if no match.
+     */
+    @CheckReturnValue
+    @Nonnull
+    static public String replaceLast(@Nonnull String string, @Nonnull String from, @Nonnull String to) {
+        int lastIndex = string.lastIndexOf(from);
+        if (lastIndex < 0) {
+            return string;
+        }
+        String tail = string.substring(lastIndex).replaceFirst(from, to);
+        return string.substring(0, lastIndex) + tail;
+    }
+
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(StringUtil.class);
 }
