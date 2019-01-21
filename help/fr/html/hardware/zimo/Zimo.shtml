@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
 <!-- $Id$ -->
-<!-- UpDated  by Blorec Herv&#233; le 2013-09-20-->
+<!-- UpDated  by Blorec Herv&#233; le 2019-01-21-->
 
 <html lang="fr">
 <head>
@@ -30,19 +30,45 @@
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h2>JMRI Guide Mat&eacute;riel: Zimo mx-1</h2>
+      <h1>Guide Mat&eacute;riel: ZIMO MX-1</h><a name="hardware" id=
+      "hardware"></a>
 
-      <h3>Mat&eacute;riel support&eacute;</h3>
+      <h2>Mat&eacute;riel support&eacute;</h2>
+
+      <h3>Centrale de Commande</h3>
+
+      <h3>Interfaces Ordinateur</h3>
 
       <ul>
-        <li>Zimo mx-1</li>
-      </ul>
+	<li>MX-1 - Protocole ASCII</li>
 
-      <h3>Limitations</h3>
+        <li>MXULF - Protocole Binaire <b>Jusqu'au logiciel
+        0.61.05</b></li>
 
-      <p>TBD</p>
+        <li>MX-10 - Protocole Binairel (Provisoire)</li>
+      </ul><a name="limitations" id="limitations"></a>
 
-      <h3>Installations</h3>
+      <h2>Limitations</h2>
+      
+      <p>Le protocole ASCII ne supporte actuellement que la programmation</p>
+
+      <p>Le protocole binaire prend en charge les &#233;l&#233;ments suivantsg</p>
+<ul>
+         <li> Programmation, &#224; la fois en Mode Principal & amp; Mode Service </li>
+
+         <li> R&#233;gulateur </li>
+
+         <li> Commande Aiguillage- Provisoire </li>
+	</ul> <b> Remarque </b> Les tests du protocole binaire ont &#233;t&#233; effectu&#233;s
+        &#224; l’aide du MXULF, la commande aiguillage n’a pas
+       &#233;t&#233; enti&#232;rement test&#233;e. Des probl&#232;mes peuvent survenir lors de l'utilisation avec le MX-10
+       mais nous n'avons actuellement aucun mat&#233;riel &#224; tester.
+       <a name="connecting" id="connecting"> </a>
+
+
+      <h2>Connexion</h2>
+
+      <h3>MX-1 R&#233;glage</h3>
 
       <ol>
         <li>Pour connecter votre ordinateur &agrave; un
@@ -57,7 +83,7 @@
         pouvez le s&eacute;lectionner dans le menu
         "&eacute;dition".</li>
 
-        <li>s&eacute;lectionnez "Zimo MX-1" de la bo&icirc;te de
+        <li>s&eacute;lectionnez "ZIMO MX-1" de la bo&icirc;te de
         s&eacute;lection en haut. Vous pouvez alors
         s&eacute;lectionnez le port s&eacute;rie appropri&eacute;
         dans la seconde bo&icirc;te de s&eacute;lection .</li>
