@@ -377,7 +377,12 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"/>
         <ul>
-            <li></li>
+            <li>Geoff Bunza provided sample scripts supporting bulk 
+            <a href="http://jmri.org/jython/serialinput/Sensor_Channel_To_JMRI/Sensor_Channels_Readme.md">sensor channels</a>
+            and
+            <a href="http://jmri.org/jython/serialinput/Turnout_Channel_from_JMRI/Turnout_Channels_Readme.md">turnout channels</a>
+            via USB between JMRI Sensor and Turnout Tables and Arduino interfaces to hardware.</li>.
+            For more information, see the Readme files linked just above.
         </ul>
 
     <h3>Signals</h3>
