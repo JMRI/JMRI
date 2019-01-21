@@ -672,9 +672,11 @@ public class PositionablePoint extends LayoutTrack {
             if (oldTrack != null) {
                 result = true;  // assume success (optimist!)
                 if (connect1 == oldTrack) {
-                    connect1 = null;
+                    connect1 = null;        // disconnect connect1
                     reCheckBlockBoundary();
                     removeLinkedPoint();
+                    connect1 = connect2;    // Move connect2 to connect1
+                    connect2 = null;        // disconnect connect2
                 } else if (connect2 == oldTrack) {
                     connect2 = null;
                     reCheckBlockBoundary();
