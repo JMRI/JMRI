@@ -6,6 +6,7 @@ import static jmri.server.json.JSON.NAME;
 import static jmri.server.json.JSON.STATE;
 import static jmri.server.json.JSON.TYPE;
 import static jmri.server.json.JSON.USERNAME;
+import static jmri.server.json.JSON.VALUE;
 import static jmri.server.json.reporter.JsonReporter.LAST_REPORT;
 import static jmri.server.json.reporter.JsonReporter.REPORT;
 import static jmri.server.json.reporter.JsonReporter.REPORTER;
@@ -47,9 +48,15 @@ public class JsonReporterHttpService extends JsonHttpService {
         data.put(STATE, reporter.getState());
         data.put(COMMENT, reporter.getComment());
         if (reporter.getCurrentReport() != null) {
-            data.put(REPORT, reporter.getCurrentReport().toString());
+            String report = reporter.getCurrentReport().toString();
+            data.put(REPORT, report);
+            //value matches text displayed on panel
+            data.put(VALUE, (report.equals("") 
+                    ? Bundle.getMessage(locale, "Blank")
+                            : reporter.getCurrentReport().toString()));
         } else {
             data.putNull(REPORT);
+            data.put(VALUE,  Bundle.getMessage(locale, "NoReport"));
         }
         if (reporter.getLastReport() != null) {
             data.put(LAST_REPORT, reporter.getLastReport().toString());
