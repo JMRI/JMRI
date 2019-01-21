@@ -25,6 +25,9 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+; - Version 0.1.24.0
+; - Add support for Java 11 Registry Keys
+; -------------------------------------------------------------------------
 ; - Version 0.1.23.0
 ; - Add JVM option 'Djogamp.gluegen.UseTempJarCache=false'
 ; -------------------------------------------------------------------------
@@ -284,9 +287,13 @@ Section "Main"
     ClearErrors
     ReadRegStr $R1 HKLM "SOFTWARE\JavaSoft\JRE" "CurrentVersion"
     ReadRegStr $R0 HKLM "SOFTWARE\JavaSoft\JRE\$R1" "JavaHome"
-    IfErrors 0 +3
+    IfErrors 0 FoundJavaInstallPoint
     ReadRegStr $R1 HKLM "SOFTWARE\JavaSoft\Java Runtime Environment" "CurrentVersion"
     ReadRegStr $R0 HKLM "SOFTWARE\JavaSoft\Java Runtime Environment\$R1" "JavaHome"
+    IfErrors 0 FoundJavaInstallPoint
+    ReadRegStr $R1 HKLM "SOFTWARE\JavaSoft\JDK" "CurrentVersion"
+    ReadRegStr $R0 HKLM "SOFTWARE\JavaSoft\JDK\$R1" "JavaHome"
+  FoundJavaInstallPoint:
     StrCpy $R0 "$R0\bin\$JAVAEXE"
 
   ; -- Not found
