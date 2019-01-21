@@ -1,6 +1,8 @@
 package jmri.jmrit.display.layoutEditor;
 
 import static java.lang.Float.POSITIVE_INFINITY;
+import static jmri.jmrit.display.layoutEditor.LayoutTrack.NONE;
+import static jmri.jmrit.display.layoutEditor.LayoutTrack.POS_POINT;
 import static jmri.jmrit.display.layoutEditor.LayoutTrack.TRACK;
 
 import java.awt.BorderLayout;
@@ -1257,7 +1259,7 @@ public class PositionablePoint extends LayoutTrack {
             linkPointsBox.setEnabled(false);
             return;
         }
-        int ourDir = getConnect1Dir();
+
         linkPointsBox.setEnabled(true);
         LayoutEditor le = editorCombo.getItemAt(editorCombo.getSelectedIndex()).item();
         for (PositionablePoint p : le.getPositionablePoints()) {
@@ -1268,7 +1270,7 @@ public class PositionablePoint extends LayoutTrack {
                     linkPointsBox.setSelectedItem(p.getConnect2().getLayoutBlock().getDisplayName());
                 } else if (p.getLinkedPoint() == null) {
                     if (p.getConnect1() != null && p.getConnect1().getLayoutBlock() != null) {
-                        if (p.getConnect1().getLayoutBlock() != getConnect1().getLayoutBlock() && ourDir != p.getConnect1Dir()) {
+                        if (p.getConnect1().getLayoutBlock() != getConnect1().getLayoutBlock() /* && ourDir != p.getConnect1Dir() */ ) {
                             pointList.add(p);
                             linkPointsBox.addItem(p.getConnect1().getLayoutBlock().getDisplayName());
                         }
