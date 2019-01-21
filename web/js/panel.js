@@ -476,6 +476,14 @@ function processPanelXML($returnedData, $success, $xhr) {
                                     $widget["systemName"] = $widget.name;
                                 jmri.getMemory($widget["systemName"]);
                                 break;
+                            case "reportericon" :
+                                $widget['name'] = $widget.reporter; //normalize name
+                                $widget.jsonType = "reporter"; // JSON object type
+                                $widget['text'] = $widget.reporter; //use name for initial text
+                                if (typeof $widget["systemName"] == "undefined")
+                                    $widget["systemName"] = $widget.name;
+                                jmri.getReporter($widget["systemName"]);
+                                break;
                             case "BlockContentsIcon" :
                                 $widget['name'] = $widget.systemName; //normalize name (id got stepped on)
                                 $widget.jsonType = "block"; // JSON object type
@@ -2027,10 +2035,10 @@ var $setWidgetState = function($id, $newState) {
                 $reDrawIcon($widget)
                 break;
             case "text" :
-                if ($widget.jsonType == "memory" || $widget.jsonType == "block") {
+                if ($widget.jsonType == "memory" || $widget.jsonType == "block" || $widget.jsonType == "reporter" ) {
                     if ($widget.widgetType == "fastclock") {
                         $drawClock($widget);
-                    } else {  //set memory/block text to new value from server, suppressing "null"
+                    } else {  //set memory/block/reporter text to new value from server, suppressing "null"
                         $('div#' + $id).text(($newState != null) ? $newState : "");
                     }
                 } else {
@@ -2250,7 +2258,7 @@ var $getWidgetFamily = function($widget, $element) {
         case "memoryInputIcon" :
         case "fastclock" :
         case "BlockContentsIcon" :
-//  case "reportericon" :
+        case "reportericon" :
         case "beanswitch" :
             return "text";
             break;
@@ -2373,7 +2381,7 @@ function updateOccupancy(occupancyName, state, data) {
 
 function updateOccupancySub(occupancyName, state) {
     if (occupancyNames[occupancyName]) {
-        jmri.log("setting occupancies for sensor " + occupancyName + " to " + state);
+        //jmri.log("setting occupancies for sensor " + occupancyName + " to " + state);
         $.each(occupancyNames[occupancyName], function(index, widgetId) {
             $widget = $gWidgets[widgetId];
             if ($widget.blockname) {
@@ -2394,7 +2402,7 @@ function updateOccupancySub(occupancyName, state) {
 }
 
 function setBlockColor(blockName, newColor) {
-    jmri.log("setting color for block " + blockName + " to " + newColor);
+    //jmri.log("setting color for block " + blockName + " to " + newColor);
     var $blk = $gBlks[blockName];
     if (typeof $blk != "undefined") {
         $gBlks[blockName].blockcolor = newColor;
