@@ -5,23 +5,22 @@ import java.awt.event.ActionEvent;
 import java.text.MessageFormat;
 import java.util.ResourceBundle;
 import jmri.InstanceManager;
+import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.JemmyUtil;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class PrintTrainManifestActionTest {
+public class PrintTrainManifestActionTest extends OperationsTestCase {
 
     @Test
     public void testCTor() {
@@ -47,7 +46,7 @@ public class PrintTrainManifestActionTest {
         PrintTrainManifestAction pa = new PrintTrainManifestAction("Test Action", true, train1);
         Assert.assertNotNull("exists", pa);
 
-        // should cause file chooser to appear
+        // should cause dialog window to appear
         Thread printAction = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -61,12 +60,15 @@ public class PrintTrainManifestActionTest {
             return printAction.getState().equals(Thread.State.WAITING);
         }, "wait for dialog to appear");
 
+        // preview previous manifest?
         JemmyUtil.pressDialogButton(MessageFormat.format(
-                Bundle.getMessage("PrintPreviousManifest"), new Object[]{"preview"}), "Yes");
-                
-        jmri.util.JUnitUtil.waitFor(() -> {
-            return printAction.getState().equals(Thread.State.TERMINATED);
-        }, "wait to complete");
+                Bundle.getMessage("PrintPreviousManifest"), new Object[]{"preview"}), Bundle.getMessage("ButtonYes"));
+        
+        try {
+            printAction.join();
+        } catch (InterruptedException e) {
+            // do nothing
+        }
         
         // confirm print preview window is showing
         ResourceBundle rb = ResourceBundle
@@ -76,18 +78,6 @@ public class PrintTrainManifestActionTest {
         Assert.assertNotNull("exists", printPreviewFrame);
 
         JUnitUtil.dispose(printPreviewFrame);
-    }
-
-    // The minimal setup for log4J
-    @Before
-    public void setUp() {
-        JUnitUtil.setUp();
-        JUnitUtil.resetProfileManager();
-    }
-
-    @After
-    public void tearDown() {
-        JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(PrintTrainManifestActionTest.class);

@@ -8,7 +8,8 @@
 # documentation of org.apache.log4j.PropertyConfigurator
 # or jmri.org/help/en/html/doc/Technical/Logging.shtml
 
-# This configures two appenders:  J and R.
+# This configures three appenders:  J, R and A1.  J and R 
+# are used routinely; A1 is for debugging use.
 
 # The default level for test logging is WARN:  All the specific
 # class loggers are initially set to ignore everything below that.
@@ -17,6 +18,7 @@
 # at the bottom.  Then the logging level on each appender (see
 # below) is used to decide if the data is actually logged.
 
+# Add A1 in the next line to turn it on
 log4j.rootCategory= WARN, R, J
 log4j.category.jmri=WARN
 
@@ -68,6 +70,13 @@ log4j.appender.R.layout=org.apache.log4j.PatternLayout
 log4j.appender.R.layout.ConversionPattern=%d{ss,SSS} [%t] %-5p %c{2}.%M() - %m%n
 log4j.appender.R.Threshold=TRACE
 
+# A1 is set to be a ConsoleAppender which outputs to System.err.
+log4j.appender.A1=org.apache.log4j.ConsoleAppender
+log4j.appender.A1.target=System.err
+log4j.appender.A1.layout=org.apache.log4j.PatternLayout
+log4j.appender.A1.layout.ConversionPattern=%d{ss,SSS} [%t] %-5p %c{2}.%M() - %m%n
+log4j.appender.A1.Threshold=TRACE
+
 # ###################################################################
 #   Configure some verbose components
 # ###################################################################
@@ -94,8 +103,8 @@ log4j.category.io.github.bonigarcia.wdm=OFF
 
 # Examples of changing priority of specific categories (classes, packages):
 #
-# log4j.category.jmri.InstanceManager=DEBUG
-# log4j.category.jmri.implementation.DefaultSignalMastLogic=DEBUG
+# log4j.category.apps=DEBUG
+# log4j.category.jmri.profile=DEBUG
 # log4j.category.jmri.implementation.SignalSpeedMap=DEBUG
 # log4j.category.jmri.jmrit.symbolicprog.DecVariableValue=DEBUG
 # log4j.category.jmri.jmrit.symbolicprog=DEBUG

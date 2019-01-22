@@ -282,7 +282,7 @@ public class SignalHeadSection implements Section<CodeGroupThreeBits, CodeGroupT
         // start the timer for the signals to change
         if (currentIndication != lastIndication) {
             log.debug("codeValueDelivered started timer for return indication"); // NOI18N
-            new Timer("Signal Section Timer").schedule(new TimerTask() { // NOI18N
+            jmri.util.TimerUtil.schedule(new TimerTask() { // NOI18N
                 @Override
                 public void run() {
                     jmri.util.ThreadingUtil.runOnGUI( ()->{

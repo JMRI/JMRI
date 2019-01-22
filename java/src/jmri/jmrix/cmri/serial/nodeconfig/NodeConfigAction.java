@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
-@Deprecated
+@Deprecated // replaced by jmri.jmrix.cmri.serial.nodeconfigmanager.NodeConfigManagerAction
 public class NodeConfigAction extends AbstractAction {
 
     private CMRISystemConnectionMemo _memo = null;
@@ -26,6 +26,7 @@ public class NodeConfigAction extends AbstractAction {
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public void actionPerformed(ActionEvent e) {
         NodeConfigFrame f = new NodeConfigFrame(_memo);
         try {

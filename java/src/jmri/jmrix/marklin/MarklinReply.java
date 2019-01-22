@@ -62,8 +62,8 @@ public class MarklinReply extends jmri.jmrix.AbstractMRReply {
         return !isResponse();
     }
 
-    /*
-     * {@inhertDoc}
+    /**
+     * {@inheritDoc}
      */
     @Override
     public String toString(){
@@ -75,8 +75,8 @@ public class MarklinReply extends jmri.jmrix.AbstractMRReply {
         return buf.toString();
     }
 
-    /*
-     * {@inhertDoc}
+    /**
+     * {@inheritDoc}
      */
     @Override
     public String toMonitorString(){

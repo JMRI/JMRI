@@ -416,13 +416,9 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
 
             // Loop through RfidTags
             root.addContent(values = new Element("idtags")); // NOI18N
-            List<String> idTagList = manager.getSystemNameList();
-            for (int i = 0; i < idTagList.size(); i++) {
-                IdTag t = manager.getBySystemName(idTagList.get(i));
-                if (t != null) {
-                    log.debug("Writing IdTag: {}", t.getSystemName());
-                    values.addContent(t.store(manager.isStateStored()));
-                }
+            for (IdTag t : manager.getNamedBeanSet()) {
+                log.debug("Writing IdTag: {}", t.getSystemName());
+                values.addContent(t.store(manager.isStateStored()));
             }
             writeXML(file, doc);
         }

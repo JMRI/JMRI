@@ -8,9 +8,7 @@ import jmri.jmrit.operations.automation.AutomationItem;
 import jmri.jmrit.operations.automation.AutomationManager;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -118,11 +116,13 @@ public class GotoActionTest extends OperationsTestCase {
         automation.run();
 
         Thread run = JUnitUtil.getThreadByName("Run action item: " + automationItem1.getId());
-
+   
         if (run != null) {
-            jmri.util.JUnitUtil.waitFor(() -> {
-                return run.getState().equals(Thread.State.TERMINATED);
-            }, "wait for terminated");
+            try {
+                run.join();
+            } catch (InterruptedException e) {
+                // do nothing
+            }
         }
 
         Assert.assertTrue(automationItem1.isActionSuccessful());
@@ -130,11 +130,13 @@ public class GotoActionTest extends OperationsTestCase {
         Assert.assertFalse(automationItem1.isActionRunning());
 
         Thread run2 = JUnitUtil.getThreadByName("Run action item: " + automationItem2.getId());
-
+        
         if (run2 != null) {
-            jmri.util.JUnitUtil.waitFor(() -> {
-                return run2.getState().equals(Thread.State.TERMINATED);
-            }, "wait for terminated");
+            try {
+                run2.join();
+            } catch (InterruptedException e) {
+                // do nothing
+            }
         }
 
         // the first halt
@@ -147,19 +149,6 @@ public class GotoActionTest extends OperationsTestCase {
         Assert.assertEquals("current automation item", automationItem3, automation.getCurrentAutomationItem());
         Assert.assertEquals("last automation item", automationItem2, automation.getLastAutomationItem());
 
-    }
-
-    // The minimal setup for log4J
-    @Override
-    @Before
-    public void setUp() {
-        super.setUp();
-    }
-
-    @Override
-    @After
-    public void tearDown() {
-        super.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(GotoActionTest.class);

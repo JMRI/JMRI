@@ -22,7 +22,7 @@ import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.excel.TrainCustomManifest;
 import jmri.jmrit.operations.trains.excel.TrainCustomSwitchList;
-import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
+import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
 import jmri.script.JmriScriptEngineManager;
 import jmri.util.ColorUtil;
 import org.jdom2.Attribute;
@@ -66,7 +66,7 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
     public static final String OPEN_FILE_CHANGED_PROPERTY = "TrainsOpenFile"; // NOI18N
     public static final String RUN_FILE_CHANGED_PROPERTY = "TrainsRunFile"; // NOI18N
     public static final String TRAIN_ACTION_CHANGED_PROPERTY = "TrainsAction"; // NOI18N
-    public static final String ACTIVE_TRAIN_SCHEDULE_ID = "ActiveTrainScheduleId"; // NOI18N
+//    public static final String ACTIVE_TRAIN_SCHEDULE_ID = "ActiveTrainScheduleId"; // NOI18N
     public static final String ROW_COLOR_NAME_CHANGED_PROPERTY = "TrainsRowColorChange"; // NOI18N
     public static final String TRAINS_BUILT_CHANGED_PROPERTY = "TrainsBuiltChange"; // NOI18N
 
@@ -84,6 +84,7 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
      */
     @Deprecated
     public static synchronized TrainManager instance() {
+        jmri.util.Log4JUtil.deprecationWarning(log, "instance");        
         return InstanceManager.getDefault(TrainManager.class);
     }
 
@@ -185,13 +186,20 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
      * Sets the selected schedule id
      *
      * @param id Selected schedule id
+     * Moved to TrainScheduleManager.java
+     * @deprecated at or before 4.13.7
      */
-    @Deprecated
+    @Deprecated  // at or before 4.13.7
     public void setTrainSecheduleActiveId(String id) {
         InstanceManager.getDefault(TrainScheduleManager.class).setTrainScheduleActiveId(id);
     }
 
-    @Deprecated
+    /**
+     * @deprecated at or before 4.13.7
+     * Moved to TrainScheduleManager.java
+     * @return active schedule id
+     */
+    @Deprecated // at or before 4.13.7
     public String getTrainScheduleActiveId() {
         return InstanceManager.getDefault(TrainScheduleManager.class).getTrainScheduleActiveId();
     }
@@ -796,7 +804,7 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
         }
         // manifest options
         newTrain.setRailroadName(train.getRailroadName());
-        newTrain.setManifestLogoURL(train.getManifestLogoURL());
+        newTrain.setManifestLogoPathName(train.getManifestLogoPathName());
         newTrain.setShowArrivalAndDepartureTimes(train.isShowArrivalAndDepartureTimesEnabled());
         // build options
         newTrain.setAllowLocalMovesEnabled(train.isAllowLocalMovesEnabled());
@@ -1034,9 +1042,9 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
             }
 
             // moved to train schedule manager
-            e = options.getChild(jmri.jmrit.operations.trains.timetable.Xml.TRAIN_SCHEDULE_OPTIONS);
+            e = options.getChild(jmri.jmrit.operations.trains.schedules.Xml.TRAIN_SCHEDULE_OPTIONS);
             if (e != null) {
-                if ((a = e.getAttribute(jmri.jmrit.operations.trains.timetable.Xml.ACTIVE_ID)) != null) {
+                if ((a = e.getAttribute(jmri.jmrit.operations.trains.schedules.Xml.ACTIVE_ID)) != null) {
                     InstanceManager.getDefault(TrainScheduleManager.class).setTrainScheduleActiveId(a.getValue());
                 }
             }
@@ -1110,7 +1118,7 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
         }
 
         InstanceManager.getDefault(TrainCustomManifest.class).store(options); // save custom manifest elements
-        InstanceManager.getDefault(TrainCustomSwitchList.class).store(options); // save custom manifest elements
+        InstanceManager.getDefault(TrainCustomSwitchList.class).store(options); // save custom switch list elements
 
         root.addContent(options);
 

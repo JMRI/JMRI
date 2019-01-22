@@ -97,10 +97,10 @@ public abstract class RollingStockAttribute {
         if (name == null) {
             return;
         }
-        // insert at start of list, sort later
         if (list.contains(name)) {
             return;
         }
+        // insert at start of list, sort on restart
         list.add(0, name);
         maxNameLength = 0; // reset maximum name length
     }

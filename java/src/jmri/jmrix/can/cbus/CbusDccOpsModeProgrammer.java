@@ -2,13 +2,13 @@ package jmri.jmrix.can.cbus;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Nonnull;
+
 import jmri.AddressedProgrammer;
 import jmri.ProgListener;
 import jmri.ProgrammerException;
 import jmri.ProgrammingMode;
 import jmri.jmrix.can.CanReply;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Provide an Ops Mode Programmer via a wrapper what works with the CBUS command
@@ -23,7 +23,6 @@ public class CbusDccOpsModeProgrammer extends CbusDccProgrammer implements Addre
 
     int mAddress;
     boolean mLongAddr;
-    private final static Logger log = LoggerFactory.getLogger(CbusDccOpsModeProgrammer.class);
 
     public CbusDccOpsModeProgrammer(int pAddress, boolean pLongAddr, jmri.jmrix.can.TrafficController tc) {
         super(tc);
@@ -31,12 +30,14 @@ public class CbusDccOpsModeProgrammer extends CbusDccProgrammer implements Addre
         mLongAddr = pLongAddr;
     }
 
-    /**
+    /** 
+     * {@inheritDoc}
+     *
      * Forward a write request to an ops-mode write operation
      */
     @Override
-    @Deprecated // 4.1.1
-    synchronized public void writeCV(int CV, int val, ProgListener p) throws ProgrammerException {
+    synchronized public void writeCV(String CVname, int val, ProgListener p) throws ProgrammerException {
+        final int CV = Integer.parseInt(CVname);
         log.debug("ops mode write CV=" + CV + " val=" + val);
 
         // record state.  COMMANDSENT is just waiting for a reply...
@@ -51,9 +52,12 @@ public class CbusDccOpsModeProgrammer extends CbusDccProgrammer implements Addre
         notifyProgListenerEnd(_val, jmri.ProgListener.OK);
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
-    @Deprecated // 4.1.1
-    synchronized public void readCV(int CV, ProgListener p) throws ProgrammerException {
+    synchronized public void readCV(String CVname, ProgListener p) throws ProgrammerException {
+        final int CV = Integer.parseInt(CVname);
         if (log.isDebugEnabled()) {
             log.debug("read CV=" + CV);
         }
@@ -61,6 +65,9 @@ public class CbusDccOpsModeProgrammer extends CbusDccProgrammer implements Addre
         throw new ProgrammerException();
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     synchronized public void confirmCV(String CV, int val, ProgListener p) throws ProgrammerException {
         if (log.isDebugEnabled()) {
@@ -70,22 +77,30 @@ public class CbusDccOpsModeProgrammer extends CbusDccProgrammer implements Addre
         throw new ProgrammerException();
     }
 
-    /**
+    /** 
+     * {@inheritDoc}
+     *
      * Types implemented here.
      */
     @Override
+    @Nonnull
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
         ret.add(ProgrammingMode.OPSBYTEMODE);
         return ret;
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     synchronized public void reply(CanReply m) {
         // We will not see any replies
     }
 
-    /**
+    /** 
+     * {@inheritDoc}
+     *
      * Can this ops-mode programmer read back values?
      *
      * @return always false
@@ -95,16 +110,25 @@ public class CbusDccOpsModeProgrammer extends CbusDccProgrammer implements Addre
         return false;
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public boolean getLongAddress() {
         return mLongAddr;
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public int getAddressNumber() {
         return mAddress;
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public String getAddress() {
         return "" + getAddressNumber() + " " + getLongAddress();
@@ -118,5 +142,6 @@ public class CbusDccOpsModeProgrammer extends CbusDccProgrammer implements Addre
      */
     void cleanup() {
     }
-
+    
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusDccOpsModeProgrammer.class);
 }

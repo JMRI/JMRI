@@ -13,8 +13,6 @@ import javax.annotation.Nonnull;
 import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.managers.AbstractManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Basic Implementation of a BlockManager.
@@ -246,6 +244,7 @@ public class BlockManager extends AbstractManager<Block> implements PropertyChan
     @Deprecated
     @CheckForNull
     static public BlockManager instance() {
+        jmri.util.Log4JUtil.deprecationWarning(log, "instance");        
         return InstanceManager.getDefault(BlockManager.class);
     }
 
@@ -301,8 +300,7 @@ public class BlockManager extends AbstractManager<Block> implements PropertyChan
     public List<Block> getBlocksOccupiedByRosterEntry(@Nonnull RosterEntry re) {
         List<Block> blockList = new ArrayList<>();
 
-        getSystemNameList().stream().forEach((sysName) -> {
-            Block b = getBySystemName(sysName);
+        getNamedBeanSet().stream().forEach((b) -> {
             Object obj;
             if (b!= null && (obj = b.getValue()) != null) {
                 if (obj instanceof RosterEntry && obj == re) {
@@ -370,6 +368,5 @@ public class BlockManager extends AbstractManager<Block> implements PropertyChan
         return Instant.now().toEpochMilli() - lastTimeLayoutPowerOn.toEpochMilli();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(BlockManager.class);
-
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BlockManager.class);
 }

@@ -14,8 +14,11 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="td@teamdigital1.com" version="1.1" lastUpdated="20090622"/>
+  <version author="Alain Le Marchand" version="1.2" lastUpdated="20190111"/>
   <!-- Version 1 initial release -->
   <!-- Version 1.1 corrected CV29 2009/06/22 -->
+  <!-- Version 1.2 corrected mask CV72, 73, 74
+                   added 2 more choices for CV71 to 74  -->
   <decoder>
     <family name="Stationary Decoder" mfg="Team Digital" type="stationary">
       <model model="SMC4" lowVersionID="1" comment="SMC4 is a stationary decoder, but it can be programmed in the usual way"/>
@@ -610,7 +613,7 @@
         <decVal min="1" max="127"/>
         <label>Servo 4 Move Speed</label>
       </variable>
-      <variable item="Servo 1 Behavior" CV="71" mask="XXXXXXVV" default="0">
+      <variable item="Servo 1 Behavior" CV="71" mask="XXXXVVVV" default="0">
         <enumVal>
           <enumChoice choice="None" value="0">
             <choice>None</choice>
@@ -620,6 +623,12 @@
           </enumChoice>
           <enumChoice choice="Speed to Position" value="2">
             <choice>Speed to Position</choice>
+          </enumChoice>
+          <enumChoice choice="Dash Pot Speed Dir. 1" value="4">
+            <choice>Dash Pot Speed Dir. 1</choice>
+          </enumChoice>
+          <enumChoice choice="Dash Pot Speed Dir. 2" value="8">
+            <choice>Dash Pot Speed Dir. 2</choice>
           </enumChoice>
         </enumVal>
         <label>Servo 1 Behavior</label>
@@ -635,7 +644,7 @@
         </enumVal>
         <label>Reverse</label>
       </variable>
-      <variable item="Servo 2 Behavior" CV="72" mask="VXXXXXVV" default="0">
+      <variable item="Servo 2 Behavior" CV="72" mask="XXXXVVVV" default="0">
         <enumVal>
           <enumChoice choice="None" value="0">
             <choice>None</choice>
@@ -645,6 +654,12 @@
           </enumChoice>
           <enumChoice choice="Speed to Position" value="2">
             <choice>Speed to Position</choice>
+          </enumChoice>
+          <enumChoice choice="Dash Pot Speed Dir. 1" value="4">
+            <choice>Dash Pot Speed Dir. 1</choice>
+          </enumChoice>
+          <enumChoice choice="Dash Pot Speed Dir. 2" value="8">
+            <choice>Dash Pot Speed Dir. 2</choice>
           </enumChoice>
         </enumVal>
         <label>Servo 2 Behavior</label>
@@ -660,7 +675,7 @@
         </enumVal>
         <label>Reverse</label>
       </variable>
-      <variable item="Servo 3 Behavior" CV="73" mask="VXXXXXVV" default="0">
+      <variable item="Servo 3 Behavior" CV="73" mask="XXXXVVVV" default="0">
         <enumVal>
           <enumChoice choice="None" value="0">
             <choice>None</choice>
@@ -670,6 +685,12 @@
           </enumChoice>
           <enumChoice choice="Speed to Position" value="2">
             <choice>Speed to Position</choice>
+          </enumChoice>
+          <enumChoice choice="Dash Pot Speed Dir. 1" value="4">
+            <choice>Dash Pot Speed Dir. 1</choice>
+          </enumChoice>
+          <enumChoice choice="Dash Pot Speed Dir. 2" value="8">
+            <choice>Dash Pot Speed Dir. 2</choice>
           </enumChoice>
         </enumVal>
         <label>Servo 3 Behavior</label>
@@ -685,7 +706,7 @@
         </enumVal>
         <label>Reverse</label>
       </variable>
-      <variable item="Servo 4 Behavior" CV="74" mask="VXXXXXVV" default="0">
+      <variable item="Servo 4 Behavior" CV="74" mask="XXXXVVVV" default="0">
         <enumVal>
           <enumChoice choice="None" value="0">
             <choice>None</choice>
@@ -695,6 +716,12 @@
           </enumChoice>
           <enumChoice choice="Speed to Position" value="2">
             <choice>Speed to Position</choice>
+          </enumChoice>
+          <enumChoice choice="Dash Pot Speed Dir. 1" value="4">
+            <choice>Dash Pot Speed Dir. 1</choice>
+          </enumChoice>
+          <enumChoice choice="Dash Pot Speed Dir. 2" value="8">
+            <choice>Dash Pot Speed Dir. 2</choice>
           </enumChoice>
         </enumVal>
         <label>Servo 4 Behavior</label>

@@ -8,10 +8,8 @@ import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.swing.JemmyUtil;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -55,19 +53,6 @@ public class ExportCarsTest extends OperationsTestCase {
 
         java.io.File file = new java.io.File(ExportCars.defaultOperationsFilename());
         Assert.assertTrue("Confirm file creation", file.exists());
-    }
-
-    // The minimal setup for log4J
-    @Override
-    @Before
-    public void setUp() {
-        super.setUp();
-    }
-
-    @Override
-    @After
-    public void tearDown() {
-        super.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(ExportCarsTest.class);

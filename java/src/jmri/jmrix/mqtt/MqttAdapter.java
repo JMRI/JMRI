@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  *
- * @author lionel
+ * @author Lionel Jeanson
  */
 public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implements MqttCallback {
 
@@ -133,7 +133,7 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
 
     @Override
     public void messageArrived(String topic, MqttMessage mm) throws Exception {
-        log.debug("Message reveiced, topic : {}", topic);
+        log.debug("Message received, topic : {}", topic);
         if (!mqttEventListeners.containsKey(topic)) {
             log.error("No one subscribed to {}", topic);
             throw new Exception("No subscriber for MQTT topic " + topic);
@@ -149,4 +149,5 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
     }
 
     private final static Logger log = LoggerFactory.getLogger(MqttAdapter.class);
+
 }

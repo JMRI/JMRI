@@ -24,7 +24,7 @@
     Provides build services for JMRI libraries and applications
     </description>
 
-    <property name="jmri.copyright.year" value="1997-2018"/>
+    <property name="jmri.copyright.year" value="1997-2019"/>
 
     <property environment="env"/>
 
@@ -224,6 +224,7 @@
         <pathelement location="${libdir}/mqtt-client-0.4.0.jar"/>
         <pathelement location="${libdir}/json-schema-validator-0.1.19.jar"/>
         <pathelement location="${libdir}/jsplitbutton-1.3.1.jar"/>
+        <pathelement location="${libdir}/thumbnailator-0.4.8.jar"/>
     </path>
     <pathconvert property="runtime.class.jars" refid="runtime.class.path"/>
 
@@ -269,7 +270,7 @@
         <pathelement location="${libdir}/cglib-nodep-2.2.2.jar"/>
         <pathelement location="${libdir}/javassist-3.20.0-GA.jar"/>
         <pathelement location="${libdir}/objenesis-2.2.jar"/>
-        <pathelement location="${libdir}/jemmy-2.3.1.1-RELEASE802.jar"/>
+        <pathelement location="${libdir}/jemmy-22-00c9f753cd0a.jar"/>
         <pathelement location="${libdir}/system-rules-1.16.0.jar"/>
         <!-- cucumber and it's dependencies -->
         <pathelement location="${libdir}/cucumber-core-2.0.1.jar"/>
@@ -286,6 +287,10 @@
         <!-- Selenium and it's dependencies -->
         <pathelement location="${libdir}/selenium-server-standalone-3.6.0.jar"/>
         <pathelement location="${libdir}/webdrivermanager-2.0.1.jar"/>
+        <!-- Spring Mock and it's dependencies -->
+        <pathelement location="${libdir}/spring-test-5.1.3.RELEASE.jar"/>
+        <pathelement location="${libdir}/spring-core-5.1.3.RELEASE.jar"/>
+        <pathelement location="${libdir}/spring-web-5.1.3.RELEASE.jar"/>
         <!-- include JMRI classes last -->
         <pathelement location="${target}/"/>  <!-- after declared jars to check for name collisions -->
         <pathelement location="${testtarget}"/> <!-- test resources in classpath that collide with stock resources -->
@@ -1739,6 +1744,7 @@
            use="true"
            failonerror="true"
            windowtitle="JMRI API">
+
             <packageset dir="${source}" defaultexcludes="yes">
                 <include name="jmri/**"/>
                 <include name="apps/**"/>
@@ -1751,6 +1757,7 @@
             <arg value="2300"/><!-- change from default 100 warnings -->
             <arg value="-quiet"/>
             <arg value="-splitindex"/>
+
             <!-- disable output of custom @navassoc tag - used for UML image generation -->
             <tag name="navassoc" enabled="false"/>
 
@@ -1779,15 +1786,17 @@
             <link href="http://docs.oracle.com/javase/8/docs/api/"/>
             <link href="http://download.oracle.com/javase/8/docs/api/"/>
             <link href="http://java.sun.com/products/javacomm/reference/api/"/>
-            <!-- <link href="http://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE"/> not machine readable content -->
             <link href="http://www.jdom.org/docs/apidocs/"/>
             <link href="http://javacsv.sourceforge.net/"/>
             <link href="http://fasterxml.github.io/jackson-databind/javadoc/2.0.6"/>
             <link href="http://logging.apache.org/log4j/1.2/apidocs/"/>
             <link href="http://download.java.net/media/java3d/javadoc/1.3.2/"/>
-            <link href="https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/"/>
             <link href="http://www.openlcb.org/trunk/prototypes/java/doc/"/>
             <link href="https://commons.apache.org/proper/commons-lang/javadocs/api-release"/>
+            <link offline="true" href="https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/" packagelistLoc="lib/joal-2.3.1-packagelist"/>
+            <!-- it might be possible to set the user agent to access the following, see https://stackoverflow.com/questions/33866209/linking-to-javadoc-io-using-javadoc-link-option -->
+            <link offline="true" href="https://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE"  packagelistLoc="lib/purejavacomm-1.0.1-package-list" />
+            <link offline="true" href="https://www.javadoc.io/doc/com.alexandriasoftware.swing/jsplitbutton/1.3.1" packagelistLoc="lib/jsplitbutton-1.3.1-package-list" />
         </javadoc>
     </target>
 
@@ -1806,6 +1815,7 @@
            use="true"
            failonerror="true"
            windowtitle="JMRI API">
+
             <packageset dir="${source}" defaultexcludes="yes">
                 <include name="jmri/**"/>
                 <include name="apps/**"/>
@@ -1818,6 +1828,7 @@
             <arg value="2300"/><!-- change from default 100 warnings -->
             <arg value="-quiet"/>
             <arg value="-splitindex"/>
+            
             <!-- disable output of custom @navassoc tag - used for UML image generation -->
             <tag name="navassoc" enabled="false"/>
 
@@ -1846,15 +1857,17 @@
             <link href="http://docs.oracle.com/javase/8/docs/api/"/>
             <link href="http://download.oracle.com/javase/8/docs/api/"/>
             <link href="http://java.sun.com/products/javacomm/reference/api/"/>
-            <!-- <link href="http://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE"/> not machine readable content -->
             <link href="http://www.jdom.org/docs/apidocs/"/>
             <link href="http://javacsv.sourceforge.net/"/>
-            <link href="http://static.javadoc.io/com.fasterxml.jackson.core/jackson-databind/2.8.11"/>
+            <link href="http://fasterxml.github.io/jackson-databind/javadoc/2.0.6"/>
             <link href="http://logging.apache.org/log4j/1.2/apidocs/"/>
             <link href="http://download.java.net/media/java3d/javadoc/1.3.2/"/>
-            <link href="https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/"/>
-            <link href="http://static.javadoc.io/org.openlcb/openlcb/0.7.15"/>
+            <link href="http://www.openlcb.org/trunk/prototypes/java/doc/"/>
             <link href="https://commons.apache.org/proper/commons-lang/javadocs/api-release"/>
+            <link offline="true" href="https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/" packagelistLoc="lib/joal-2.3.1-packagelist"/>
+            <!-- it might be possible to set the user agent to access the following, see https://stackoverflow.com/questions/33866209/linking-to-javadoc-io-using-javadoc-link-option -->
+            <link offline="true" href="https://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE"  packagelistLoc="lib/purejavacomm-1.0.1-package-list" />
+            <link offline="true" href="https://www.javadoc.io/doc/com.alexandriasoftware.swing/jsplitbutton/1.3.1" packagelistLoc="lib/jsplitbutton-1.3.1-package-list" />
         </javadoc>
     </target>
 
@@ -1875,6 +1888,7 @@
            package="yes"
            use="true"
            windowtitle="JMRI API">
+
             <packageset dir="${source}" defaultexcludes="yes">
                 <include name="jmri/**"/>
                 <include name="apps/**"/>
@@ -1889,6 +1903,7 @@
             <arg value="500"/><!-- change from default 100 errors -->
             <arg value="-quiet"/>
             <arg value="-splitindex"/>
+            
             <!-- disable output of custom @navassoc tag - used for UML image generation -->
             <tag name="navassoc" enabled="false"/>
 
@@ -1927,16 +1942,17 @@
             <link href="http://docs.oracle.com/javase/8/docs/api/"/>
             <link href="http://download.oracle.com/javase/8/docs/api/"/>
             <link href="http://java.sun.com/products/javacomm/reference/api/"/>
-            <!-- <link href="http://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE"/> not machine readable content -->
             <link href="http://www.jdom.org/docs/apidocs/"/>
-            <link href="http://javacsv.sourceforge.net/"/> <!-- A -->
-            <link href="http://fasterxml.github.io/jackson-databind/javadoc/2.8.11"/>
+            <link href="http://javacsv.sourceforge.net/"/>
+            <link href="http://fasterxml.github.io/jackson-databind/javadoc/2.0.6"/>
             <link href="http://logging.apache.org/log4j/1.2/apidocs/"/>
             <link href="http://download.java.net/media/java3d/javadoc/1.3.2/"/>
-            <link href="https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/"/>
             <link href="http://www.openlcb.org/trunk/prototypes/java/doc/"/>
             <link href="https://commons.apache.org/proper/commons-lang/javadocs/api-release"/>
-
+            <link offline="true" href="https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/" packagelistLoc="lib/joal-2.3.1-packagelist"/>
+            <!-- it might be possible to set the user agent to access the following, see https://stackoverflow.com/questions/33866209/linking-to-javadoc-io-using-javadoc-link-option -->
+            <link offline="true" href="https://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE"  packagelistLoc="lib/purejavacomm-1.0.1-package-list" />
+            <link offline="true" href="https://www.javadoc.io/doc/com.alexandriasoftware.swing/jsplitbutton/1.3.1" packagelistLoc="lib/jsplitbutton-1.3.1-package-list" />
         </javadoc>
         <apply executable="dot" dest="${doctarget}" parallel="false">
             <arg value="-Tpng"/>
@@ -1983,7 +1999,7 @@
         <exec executable="./scripts/tidy-check.sh"
               osFamily="unix"
               failonerror="true">
-            <arg value="help/en/*/*/"/>
+            <arg value="help/en/*/*"/>
         </exec>
             
     </target>

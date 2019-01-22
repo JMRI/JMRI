@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the XmlFile class.
- * <P>
+ * <p>
  * Uses (creates, modifies, destroys) files in the local preferences directory
  * and the custom <user.home>/temp/xml directory
  *
@@ -91,9 +91,7 @@ public class XmlFileTest {
                     boolean result = false;
 
                     try {
-                        XmlFile xf = new XmlFile() {
-                            { warned = false; }
-                        };   // odd syntax is due to XmlFile being abstract
+                        XmlFile xf = new XmlFile() {};   // odd syntax is due to XmlFile being abstract
                         xf.setValidate(validate);
                         xf.rootFromInputStream(new java.io.ByteArrayInputStream(content.getBytes(java.nio.charset.StandardCharsets.UTF_8)));
                         result = true;

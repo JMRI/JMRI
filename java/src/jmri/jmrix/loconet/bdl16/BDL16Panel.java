@@ -64,9 +64,9 @@ public class BDL16Panel extends AbstractBoardProgPanel {
      * @param readOnInit  True to trigger automatic read of the board
      */
     public BDL16Panel(int boardNum, boolean readOnInit) {
-        super(boardNum, readOnInit);
+        super(boardNum, readOnInit,"BDL16");
         setTypeWord(0x71);  // configure BDL16x message type
-                origAccessBoardNum = boardNum;
+        origAccessBoardNum = boardNum;
         boardNumsEntryValue.add(boardNum);
     }
 

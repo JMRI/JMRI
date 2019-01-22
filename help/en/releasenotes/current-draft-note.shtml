@@ -1,0 +1,480 @@
+
+    <h3>Hardware Support</h3>
+
+        <ul>
+          <li></li>
+        </ul>
+
+	    <h4>Anyma DMX512</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+	    <h4>Bachrus Speedo</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>C/MRI</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>DCC++</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>DCC4pc</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>Direct</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>ESU</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>JMRI Simple Server/JMRI Client</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>LocoNet</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>Maple</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>Marklin CS2</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>MERG CBUS</h4>
+            <ul>
+                <li>Turnouts now accept DIRECT and DELAYED feedback.</li>
+                <li>Querying a turnout will also query any feedback sensors for that turnout.<li>
+                <li>Event Request monitoring has moved from the Event Table to a stand-alone request monitoring table.</li>
+                <li>The CBUS console will attempt to lookup event ( and node ) names from the Event Table.</li>
+            </ul>
+
+        <h4>MQTT</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>MRC</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>NCE</h4>
+            <ul>
+                <li><li>
+            </ul>
+
+        <h4>Oak Tree</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4><a href="http://openlcb.org">OpenLCB</a></h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>RFID</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>Roco z21/Z21</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>Secsi</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>SPROG</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>TAMS</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>TMCC</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>Uhlenbrock Intellibox</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>Zimo MXULF</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>ZTC</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+    <h3>New / Updated decoder definitions</h3>
+      <ul>
+        <li></li>
+     </ul>
+
+        <h4>Arnold</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>Bachmann</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>BLI</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>BNM Hobbies</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>Digikeijs (Digirails)</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>Digitrax</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>Doehler &amp; Haas</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>ESU</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>Hornby</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>Kuehn</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>LaisDCC</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4><a href="http://www.ldhtrenes.com.ar">LDH</a></h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>Lenz</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>MGP</h4>
+             <ul>
+                <li></li>
+             </ul>
+
+        <h4>Mistral Train Models</h4>
+             <ul>
+                <li></li>
+             </ul>
+
+        <h4>MTH</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>MRC</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>NCE</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>Norsk Modelljernbane (NJM)</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>QSI</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>Rautenhaus</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>RR-CirKits</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>SoundTraxx</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>TCS</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+	    <h4>Team Digital</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>Technologistic (train-O-matic)</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>Trix Modelleisenbahn</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>Uhlenbrock</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>Umelec</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>Viessmann</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>Wangrow</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>ZIMO</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>Miscellaneous</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+    <h3>DecoderPro</h3>
+        <a id="DecoderPro" name="DecoderPro"/>
+        <ul>
+          <li></li>
+        </ul>
+
+   <h3>Dispatcher</h3>
+        <a id="Dispatcher" name="Dispatcher"/>
+        <ul>
+             <li></li>
+        </ul>
+
+   <h3>Internationalization</h3>
+        <a id="I18N" name="I18N"/>
+        <ul>
+            <li></li>
+        </ul>
+
+    <h3>Layout Editor</h3>
+        <a id="LE" name="LE"/>
+        <ul>
+	        <li></li>
+        </ul>
+
+    <h3>Logix</h3>
+        <a id="Logix" name="Logix"/>
+        <ul>
+          <li></li>
+        </ul>
+
+    <h3>Operations</h3>
+        <a id="Operations" name="Operations"/>
+        <ul>
+            <li></li>
+        </ul>
+
+   <h3>Panel Editors</h3>
+        <a id="PE" name="PE"/>
+        <ul>
+            <li></li>
+        </ul>
+
+    <h3>Preferences</h3>
+        <a id="Preferences" name="Preferences"/>
+        <ul>
+            <li></li>
+        </ul>
+
+    <h3>Resources</h3>
+        <a id="Resources" name="Resources"/>
+        <ul>
+            <li></li>
+        </ul>
+
+    <h3>Roster</h3>
+        <a id="Roster" name="Roster"/>
+        <ul>
+            <li></li>
+        </ul>
+
+    <h3>Turnouts, Lights, Sensors and other elements</h3>
+        <a id="TLae" name="TLae"/>
+        <ul>
+            <li></li>
+        </ul>
+
+    <h3>Scripting</h3>
+        <a id="Scripting" name="Scripting"/>
+        <ul>
+            <li>Geoff Bunza provided sample scripts supporting bulk 
+            <a href="http://jmri.org/jython/serialinput/Sensor_Channel_To_JMRI/Sensor_Channels_Readme.md">sensor channels</a>
+            and
+            <a href="http://jmri.org/jython/serialinput/Turnout_Channel_from_JMRI/Turnout_Channels_Readme.md">turnout channels</a>
+            via USB between JMRI Sensor and Turnout Tables and Arduino interfaces to hardware.</li>.
+            For more information, see the Readme files linked just above.
+        </ul>
+
+    <h3>Signals</h3>
+        <a id="Signals" name="Signals"/>
+        <ul>
+            <li></li>
+        </ul>
+        <h4>Signal Systems</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>Signal Heads</h4>
+            <ul>
+                <li>Fix an XML validation problem when reading files with RGB heads</li>
+            </ul>
+
+        <h4>Signal Masts</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+    	<h4>Signal Groups</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+    	<h4>Simple Signal Logic</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+	    <h4>NX Entry/Exit Logic</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+	    <h4>USS CTC Logic</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+   <h3>Switchboard Editor</h3>
+        <a id="SW" name="SW"/>
+        <ul>
+            <li></li>
+        </ul>
+
+    <h3>Timetable</h3>
+        <a id="Timetable" name="Timetable"/>
+        <span class="since">since 4.13.4</span>
+        <ul>
+            <li>New menu item: <strong>Export CSV File</strong> &mdash; Create a
+            CSV file that can be imported into a spreadsheet program.  This can
+            be used to create a traditional timetable.</li>
+            <li>New menu item: <strong>Import CSV File</strong> &mash; Import a
+            CSV file that contains external timetable data to create a new
+            layout defintion or extend an existing layout definition.</li>
+        </ul>
+
+   <h3>Warrants</h3>
+        <a id="Wt" name="Wt"/>
+        <ul>
+            <li></li>
+        </ul>
+
+   <h3>Web Access</h3>
+        <a id="WA" name="WA"/>
+        <ul>
+            <li> </li>
+        </ul>
+
+   <h3>WiThrottle Server</h3>
+        <a id="WS" name="WS"/>
+        <ul>
+            <li></li>
+        </ul>
+
+   <h3>Virtual Sound Decoder</h3>
+        <a id="VSD" name="VSD"/>
+        <ul>
+            <li></li>
+        </ul>
+
+    <h3>Miscellaneous</h3>
+        <a id="Misc" name="Misc"/>
+        <ul>
+            <li>We're building the release note a
+                <a href="/help/en/html/doc/Technical/gitdeveloper.shtml">different way</a>
+                starting with this release.</li>
+            <li>All the PackageList test files were updated to JUnit4 form, without a separate main()</li>
+            <li>The Windows "installer" and "launcher" have been updated to support 
+                Oracle's Java JDK 11 installation mechanisms on Windows platforms.</li>
+        </ul>
+

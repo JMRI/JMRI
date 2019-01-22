@@ -6,9 +6,7 @@ import jmri.jmrit.operations.automation.AutomationItem;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.JUnitOperationsUtil;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -38,12 +36,37 @@ public class MoveTrainActionTest extends OperationsTestCase {
     }
     
     @Test
+    public void testTrainNotBuilt() {
+        JUnitOperationsUtil.initOperationsData();
+        TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
+        Train train1 = tmanager.getTrainById("1");
+        Assert.assertNotNull(train1);
+        
+        MoveTrainAction action = new MoveTrainAction();
+        Assert.assertNotNull("exists",action);
+        AutomationItem automationItem = new AutomationItem("TestId");
+        automationItem.setAction(action);
+        Assert.assertEquals("confirm registered", automationItem, action.getAutomationItem());
+        
+        // does nothing, no train assignment
+        action.doAction();       
+        Assert.assertFalse(train1.isTrainEnRoute());
+        Assert.assertFalse(automationItem.isActionSuccessful());
+        
+        // does nothing, train not built
+        automationItem.setTrain(train1);
+        action.doAction();       
+        Assert.assertFalse(train1.isTrainEnRoute());
+        Assert.assertFalse(automationItem.isActionSuccessful());
+    }
+    
+    @Test
     public void testAction() {
         JUnitOperationsUtil.initOperationsData();
         TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
         Train train1 = tmanager.getTrainById("1");
         Assert.assertNotNull(train1);
-        train1.build();
+        Assert.assertTrue(train1.build());
         
         MoveTrainAction action = new MoveTrainAction();
         Assert.assertNotNull("exists",action);
@@ -65,17 +88,31 @@ public class MoveTrainActionTest extends OperationsTestCase {
         action.doAction();
         Assert.assertTrue(automationItem.isActionSuccessful());
     }
-
-    // The minimal setup for log4J
-    @Override
-    @Before
-    public void setUp() {
-        super.setUp();    }
-
-    @Override
-    @After
-    public void tearDown() {
-        super.tearDown();
+    
+    @Test
+    public void testActionRouteLocataion() {
+        JUnitOperationsUtil.initOperationsData();
+        TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
+        Train train1 = tmanager.getTrainById("1");
+        Assert.assertNotNull(train1);
+        Assert.assertTrue(train1.build());
+        
+        MoveTrainAction action = new MoveTrainAction();
+        Assert.assertNotNull("exists",action);
+        AutomationItem automationItem = new AutomationItem("TestId");
+        automationItem.setAction(action);
+        Assert.assertEquals("confirm registered", automationItem, action.getAutomationItem());
+        
+        // does nothing, no train assignment
+        action.doAction();       
+        Assert.assertFalse(train1.isTrainEnRoute());
+        Assert.assertFalse(automationItem.isActionSuccessful());
+        
+        automationItem.setTrain(train1);
+        automationItem.setRouteLocation(train1.getTrainTerminatesRouteLocation());
+        action.doAction();       
+        Assert.assertTrue(train1.isTrainEnRoute());
+        Assert.assertTrue(automationItem.isActionSuccessful());
     }
 
     // private final static Logger log = LoggerFactory.getLogger(MoveTrainActionTest.class);

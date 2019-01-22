@@ -512,6 +512,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         for (Element item : shared.getChildren()) {
             // get the class, hence the adapter object to do loading
             String adapterName = item.getAttribute("class").getValue();
+            adapterName = jmri.configurexml.ConfigXmlManager.currentClassName(adapterName);
 
             if (log.isDebugEnabled()) {
                 String id = "<null>";
@@ -592,7 +593,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
             cm.registerUser(panel);
         }
         //open Dispatcher frame if any Transits are defined, and open Dispatcher flag set on
-        if (jmri.InstanceManager.getDefault(jmri.TransitManager.class).getSystemNameList().size() > 0) {
+        if (jmri.InstanceManager.getDefault(jmri.TransitManager.class).getNamedBeanSet().size() > 0) {
             try {
                 boolean value = shared.getAttribute("openDispatcher").getBooleanValue();
                 panel.setOpenDispatcherOnLoad(value);

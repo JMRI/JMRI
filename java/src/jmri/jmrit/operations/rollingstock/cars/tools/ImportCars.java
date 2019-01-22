@@ -228,7 +228,7 @@ public class ImportCars extends ImportRollingStock {
                     JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("CarRoadNumberTooLong"),
                             new Object[]{(carRoad + " " + carNumber), carNumber}),
                             MessageFormat.format(Bundle
-                                    .getMessage("carRoadNum"), new Object[]{Control.max_len_string_road_number + 1}),
+                                    .getMessage("RoadNumMustBeLess"), new Object[]{Control.max_len_string_road_number + 1}),
                             JOptionPane.ERROR_MESSAGE);
                     break;
                 }
@@ -536,7 +536,7 @@ public class ImportCars extends ImportRollingStock {
 
                     log.debug("Add car ({} {}) owner ({}) built ({}) location ({}, {})", carRoad, carNumber, carOwner,
                             carBuilt, carLocationName, carTrackName);
-                    Car car = manager.newCar(carRoad, carNumber);
+                    Car car = manager.newRS(carRoad, carNumber);
                     car.setTypeName(carType);
                     car.setLength(carLength);
                     car.setWeight(carWeight);

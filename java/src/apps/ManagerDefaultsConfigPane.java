@@ -22,7 +22,6 @@ import org.openide.util.lookup.ServiceProvider;
 
 /**
  * Provide GUI to configure InstanceManager defaults.
- * <P>
  *
  * @author Bob Jacobsen Copyright (C) 2010
  * @since 2.9.5
@@ -50,29 +49,32 @@ public final class ManagerDefaultsConfigPane extends JmriPanel implements Prefer
     JPanel matrix;
 
     /**
-     * Invoke when first displayed to load and present options
+     * Invoke when first displayed to load and present options.
      */
     public void update() {
+        log.debug(" update start");
         matrix.removeAll();
 
         // this doesn't find non-migrated systems, how do we handle that eventually?
         List<SystemConnectionMemo> connList = InstanceManager.getList(SystemConnectionMemo.class);
         if (!connList.isEmpty()) {
-            log.debug("update of {} connections", connList.size());
+            log.debug("   update of {} connections", connList.size());
             reloadConnections(connList);
         } else {
-            log.debug("update with no new-form system connections configured");
+            log.debug("   update with no new-form system connections configured");
             matrix.add(new JLabel("No new-form system connections configured"));
         }
+        log.debug(" update end");
     }
 
     void reloadConnections(List<SystemConnectionMemo> connList) {
-        log.debug(" reloadConnections");
+        log.debug(" reloadConnections start");
         ManagerDefaultSelector manager = InstanceManager.getDefault(ManagerDefaultSelector.class);
         matrix.setLayout(new GridLayout2(connList.size() + 1, manager.knownManagers.length + 1));
         matrix.add(new JLabel(""));
 
         for (ManagerDefaultSelector.Item item : manager.knownManagers) {
+            log.trace("   Add typeName {}", item.typeName);
             matrix.add(new JLabel(item.typeName));
         }
         groups = new ButtonGroup[manager.knownManagers.length];
@@ -82,21 +84,25 @@ public final class ManagerDefaultsConfigPane extends JmriPanel implements Prefer
         boolean[] selected = new boolean[manager.knownManagers.length];
         for (int x = 0; x < connList.size(); x++) { // up to down
             jmri.jmrix.SystemConnectionMemo memo = connList.get(x);
-            String name = memo.getUserName();
-            matrix.add(new JLabel(name));
+            String connectionName = memo.getUserName();
+            log.trace("   Connection name {}", connectionName);
+            matrix.add(new JLabel(connectionName));
             int i = 0;
             for (ManagerDefaultSelector.Item item : manager.knownManagers) { // left to right
+                log.trace("      item {}", item.typeName);
                 if (memo.provides(item.managerClass)) {
-                    JRadioButton r = new SelectionButton(name, item.managerClass, this);
+                    JRadioButton r = new SelectionButton(connectionName, item.typeName, item.managerClass, this);
                     matrix.add(r);
                     groups[i].add(r);
                     if (!selected[i] && manager.getDefault(item.managerClass) == null) {
+                        log.trace("      setting selected based on default");
                         r.setSelected(true);
                         selected[i] = true;
                     }
                 } else {
                     // leave a blank
                     JRadioButton r = new JRadioButton();
+                    r.setToolTipText(Bundle.getMessage("TooltipDefaultnotValid", connectionName, dropTags(item.typeName)));
                     r.setEnabled(false);
                     matrix.add(r);
                 }
@@ -104,7 +110,7 @@ public final class ManagerDefaultsConfigPane extends JmriPanel implements Prefer
             }
         }
         revalidate();
-
+        log.debug(" reloadConnections end");
     }
 
     ButtonGroup[] groups;
@@ -167,39 +173,61 @@ public final class ManagerDefaultsConfigPane extends JmriPanel implements Prefer
         return InstanceManager.getDefault(ManagerDefaultSelector.class).isPreferencesValid(ProfileManager.getDefault().getActiveProfile());
     }
 
+    private static String dropTags(String s) {
+        //while (s.contains("<")) {
+            return s.replaceAll("</?[a-zA-Z]*>"," ");
+        //}
+    }
+    
     /**
-     * Captive class to track changes
+     * Captive class to track changes.
      */
     static final class SelectionButton extends JRadioButton {
 
-        SelectionButton(String name, Class<?> managerClass, ManagerDefaultsConfigPane pane) {
+        SelectionButton(String connectionName, String managerName, Class<?> managerClass, ManagerDefaultsConfigPane pane) {
             super();
             this.managerClass = managerClass;
-            this.name = name;
+            this.connectionName = connectionName;
+            // we want to remove tags from the manager name
+            this.managerName = dropTags(managerName);
 
-            if (name.equals(InstanceManager.getDefault(ManagerDefaultSelector.class).getDefault(managerClass))) {
+            // for screen readers
+            setToolTipText(makeToolTipText());
+            
+            log.trace("      SelectionButton ctor for {} as {}", connectionName, managerName);
+            if (connectionName.equals(InstanceManager.getDefault(ManagerDefaultSelector.class).getDefault(managerClass))) {
                 this.setSelected(true);
             }
 
             addActionListener((ActionEvent e) -> {
                 if (isSelected()) {
-                    InstanceManager.getDefault(ManagerDefaultSelector.class).setDefault(SelectionButton.this.managerClass, SelectionButton.this.name);
+                    InstanceManager.getDefault(ManagerDefaultSelector.class).setDefault(SelectionButton.this.managerClass, SelectionButton.this.connectionName);
                     pane.dirty = true;
+                    setToolTipText(Bundle.getMessage("TooltipDefaultSelectedRestart", this.connectionName, this.managerName)); // update the tooltip when selected
                 }
             });
 
         }
-        String name;
+        String connectionName;
+        String managerName;
         Class<?> managerClass;
+        
+        private String makeToolTipText() { 
+            return (isSelected()? Bundle.getMessage("TooltipDefaultSelected", connectionName, managerName):
+                    Bundle.getMessage("TooltipDefaultNotSelected", connectionName, managerName));
+        }
 
         @Override
         public void setSelected(boolean t) {
             super.setSelected(t);
+            log.debug("SelectionButton setSelected called with {}", t);
+            setToolTipText(makeToolTipText());
             if (t) {
-                InstanceManager.getDefault(ManagerDefaultSelector.class).setDefault(this.managerClass, this.name);
+                InstanceManager.getDefault(ManagerDefaultSelector.class).setDefault(this.managerClass, this.connectionName);
             }
         }
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ManagerDefaultsConfigPane.class);
+
 }

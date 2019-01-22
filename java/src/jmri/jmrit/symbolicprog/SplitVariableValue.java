@@ -54,9 +54,9 @@ public class SplitVariableValue extends VariableValue
         _value.addFocusListener(this);
         mSecondCV = pSecondCV;
 
-        lowerbitmask = maskVal(mask);
+        lowerbitmask = maskValAsInt(mask);
         lowerbitoffset = offsetVal(mask);
-        upperbitmask = maskVal(uppermask);
+        upperbitmask = maskValAsInt(uppermask);
 
         // upper bit offset includes lower bit offset, and MSB bits missing from upper part
         upperbitoffset = offsetVal(uppermask);

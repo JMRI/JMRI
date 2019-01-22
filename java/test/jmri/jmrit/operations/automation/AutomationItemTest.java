@@ -3,7 +3,7 @@ package jmri.jmrit.operations.automation;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.automation.actions.ActionCodes;
-import jmri.jmrit.operations.automation.actions.ActivateTimetableAction;
+import jmri.jmrit.operations.automation.actions.ActivateTrainScheduleAction;
 import jmri.jmrit.operations.automation.actions.BuildTrainAction;
 import jmri.jmrit.operations.automation.actions.GotoAction;
 import jmri.jmrit.operations.automation.actions.RunAutomationAction;
@@ -11,11 +11,9 @@ import jmri.jmrit.operations.automation.actions.WaitTrainAction;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.trains.Train;
-import jmri.jmrit.operations.trains.timetable.TrainSchedule;
-import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
-import org.junit.After;
+import jmri.jmrit.operations.trains.schedules.TrainSchedule;
+import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 public class AutomationItemTest extends OperationsTestCase {
@@ -145,7 +143,7 @@ public class AutomationItemTest extends OperationsTestCase {
         automationItem.setTrainSchedule(trainSchedule);
 
         Assert.assertEquals("Do nothing action can't have a train schedule assignment", null, automationItem.getTrainSchedule());
-        automationItem.setAction(new ActivateTimetableAction());
+        automationItem.setAction(new ActivateTrainScheduleAction());
         Assert.assertEquals(trainSchedule, automationItem.getTrainSchedule());
 
         automationItem.setTrainSchedule(null);
@@ -153,17 +151,5 @@ public class AutomationItemTest extends OperationsTestCase {
 
         automationItem.setOther(trainSchedule);
         Assert.assertEquals(trainSchedule, automationItem.getTrainSchedule());
-    }
-
-    @Override
-    @Before
-    public void setUp() {
-        super.setUp();
-    }
-
-    @Override
-    @After
-    public void tearDown() {
-        super.tearDown();
     }
 }

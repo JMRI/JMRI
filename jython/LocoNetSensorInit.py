@@ -19,9 +19,9 @@ class LocoNetSensorInit(jmri.jmrit.automat.AbstractAutomaton) :
 
         # For BDL16 (remove the 4 "#" symbols if you have a BDL16)
 
-        jmri.InstanceManager.powerManagerInstance().setPower(jmri.PowerManager.OFF)
+        jmri.InstanceManager.getDefault(jmri.PowerManager).setPower(jmri.PowerManager.OFF)
         self.waitMsec(1000)
-        jmri.InstanceManager.powerManagerInstance().setPower(jmri.PowerManager.ON)
+        jmri.InstanceManager.getDefault(jmri.PowerManager).setPower(jmri.PowerManager.ON)
         self.waitMsec(1000)
 
         # For BDL168, SE8C, SIC24 SIC24AD, SRC16, SRC8

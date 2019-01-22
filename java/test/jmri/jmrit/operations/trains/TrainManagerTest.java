@@ -13,7 +13,6 @@ import jmri.jmrit.operations.rollingstock.cars.CarLoad;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.JemmyUtil;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
@@ -258,7 +257,7 @@ public class TrainManagerTest extends OperationsTestCase {
 
         
         JemmyUtil.pressDialogButton(MessageFormat.format(Bundle.getMessage("TerminateTrain"),
-                            new Object[]{train2.getName(), train2.getDescription()}), "Yes");
+                            new Object[]{train2.getName(), train2.getDescription()}), Bundle.getMessage("ButtonYes"));
         
         jmri.util.JUnitUtil.waitFor(() -> {
             return terminate.getState().equals(Thread.State.TERMINATED);
@@ -276,11 +275,4 @@ public class TrainManagerTest extends OperationsTestCase {
 
         jmri.util.JUnitOperationsUtil.initOperationsData();
     }
-
-    @After
-    @Override
-    public void tearDown() {
-        super.tearDown();
-    }
-
 }

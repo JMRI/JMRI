@@ -185,9 +185,9 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         registerUserName(s);
 
         // notifications
-        firePropertyChange("length", null, _beans.size());
         int position = getPosition(s);
         fireDataListenersAdded(position, position, s);
+        firePropertyChange("length", null, _beans.size());
         // listen for name and state changes to forward
         s.addPropertyChangeListener(this, "", "Manager");
     }
@@ -322,9 +322,10 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
 
     /** {@inheritDoc} */
     @Override
-    @Deprecated  // will be removed when Manager method is removed due to @Override
+    @Deprecated  // will be removed when superclass method is removed due to @Override
+    @SuppressWarnings("deprecation")  // temporary implementation of method with @Override
     public String[] getSystemNameArray() {
-        jmri.util.Log4JUtil.warnOnce(log, "Manager#getSystemNameArray() is deprecated");
+        jmri.util.Log4JUtil.deprecationWarning(log, "getSystemNameArray");
         if (log.isTraceEnabled()) log.trace("Manager#getSystemNameArray() called", new Exception("traceback"));
 
         if (cachedSystemNameArray == null) {
@@ -336,8 +337,10 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     
     /** {@inheritDoc} */
     @Override
-    @Deprecated  // will be removed when Manager method is removed due to @Override
+    @Deprecated  // will be removed when superclass method is removed due to @Override
+    @SuppressWarnings("deprecation")  // temporary implementation of method with @Override
     public List<String> getSystemNameList() {
+        // jmri.util.Log4JUtil.deprecationWarning(log, "getSystemNameList");
         if (cachedSystemNameList == null) {
             cachedSystemNameList = new ArrayList<>();
             for (E b : _beans) {
@@ -350,16 +353,21 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
 
     /** {@inheritDoc} */
     @Override
-    @Deprecated  // will be removed when Manager method is removed due to @Override
+    @Deprecated  // will be removed when superclass method is removed due to @Override
+    @SuppressWarnings("deprecation")  // temporary implementation of method with @Override
+                 // Only used in ConfigureXML
     public List<String> getSystemNameAddedOrderList() {
+        //jmri.util.Log4JUtil.deprecationWarning(log, "getSystemNameAddedOrderList");
         return Collections.unmodifiableList(_originalOrderList);
     }
 
 
     /** {@inheritDoc} */
     @Override
-    @Deprecated  // will be removed when Manager method is removed due to @Override
+    @Deprecated  // will be removed when superclass method is removed due to @Override
+    @SuppressWarnings("deprecation")  // temporary implementation of method with @Override
     public List<E> getNamedBeanList() {
+        jmri.util.Log4JUtil.deprecationWarning(log, "getNamedBeanList");
         if (cachedNamedBeanList == null) {
             cachedNamedBeanList = new ArrayList<>(_beans);
         }

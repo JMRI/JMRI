@@ -361,7 +361,7 @@
         <label>F3 controls output 5</label>
         <label xml:lang="it">F3 controlla uscita 5</label>
       </variable>
-      <variable item="F3 controls output 6" CV="37" mask="XXVXVXXX" minOut="6" minFn="3">
+      <variable item="F3 controls output 6" CV="37" mask="XXXXVXXX" minOut="6" minFn="3">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F3 controls output 6</label>
         <label xml:lang="it">F3 controlla uscita 6</label>

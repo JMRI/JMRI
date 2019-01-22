@@ -9,7 +9,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.event.WindowEvent;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.io.IOException;
@@ -24,8 +23,6 @@ import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
@@ -36,14 +33,11 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JSplitPane;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
-import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultFormatter;
-import javax.swing.text.Element;
 import javax.swing.Timer;
 import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
@@ -51,9 +45,12 @@ import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.CbusConstants;
 import jmri.jmrix.can.cbus.CbusMessage;
+import jmri.jmrix.can.cbus.CbusSend;
 import jmri.jmrix.can.cbus.CbusOpCodes;
+import jmri.jmrix.can.cbus.node.CbusNodeEvent;
+import jmri.jmrix.can.cbus.swing.nodeconfig.NodeEditEventFrame;
 import jmri.jmrix.can.TrafficController;
-import jmri.util.JmriJFrame;
+import jmri.util.swing.TextAreaFIFO;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -65,7 +62,7 @@ import org.slf4j.LoggerFactory;
  * Methods are certainly subject to change and should not be relied on at present.
  *
  * @author Bob Jacobsen Copyright (C) 2008
- * @author Steve Young Copyright (C) 2018
+ * @author Steve Young Copyright (C) 2018 2019
  * @since 2.3.1
  */
 public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements CanListener {
@@ -73,13 +70,13 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
     JButton selectNodeButton;
     JButton searchForNodesButton;
     private JPanel cards;
-    private JComboBox<String> nodeSelBox = new JComboBox<>();
-    private static TextAreaFIFO tablefeedback = new TextAreaFIFO(1000);
+    protected JComboBox<String> nodeSelBox = new JComboBox<>();
+    protected TextAreaFIFO tablefeedback = new TextAreaFIFO(1000);
     private JScrollPane scrolltablefeedback = new JScrollPane (tablefeedback);
     private JSplitPane split;
     private double _splitratio = 0.9;
     private JPanel p1 = new JPanel();
- 
+    protected static String ls = System.getProperty("line.separator");
     private JPanel selectNodePane = new JPanel();
     private JPanel propertiespane = new JPanel();
     private JPanel nvpane = new JPanel();
@@ -104,8 +101,6 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
     private JPanel nvorevbuttonpane = new JPanel();    
     private ButtonGroup group = new ButtonGroup();
     private JButton nodesupportlinkbutton = new JButton();
-    private JButton framedeletebutton;
-    private JButton frameeditevbutton;
     private JButton writebutton;
 
     private int searchForNodesDelay=2000;
@@ -118,31 +113,26 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
     private boolean WAITINGRESPONSE_GET_EV_VAL=false;
     private boolean WAITINGRESPONSE_SET_EV_VAL=false;
     private boolean WAITINGRESPONSE_UNLEARN_EV=false;
-    private boolean RELEARN_WHEN_DELETED=false;
+    protected boolean RELEARN_WHEN_DELETED=false;
     private boolean WAITINGRESPONSE_RQNN_PARAMS=false;
     private boolean WAITINGRESPONSE_SNN=false;
+    private boolean NODE_NUM_DIALOGUE_OPEN=false;
     
-    private static int _nodeinsetup=0;
+    protected int _nodeinsetup=0;
     private int _nodeparameters=0;
     private int _nextnodeparam=0;
     private int _nextnodenv=0;
     private int _numevents=0;
     private int _nodecanid;
-    private int _nextev;
-    private int _nextevvar;
-    private int _nextsetevvar;
+    protected int _nextsetevvar;
+    private int _evVarsReceived;
+    
     private JLabel propertieslabel = new JLabel();
     private List<JSpinner> nvFields;
-    private List<JSpinner> evFields;
     private List<JLabel> nvToHex;
-    private List<JLabel> evToHex;
     private List<JButton> evEditButList = new ArrayList<JButton>();
     
-    private JSpinner numberSpinnerEv;
-    private JSpinner numberSpinnernd;
-    
     private URI supportlink;
-    private String toolTipHexDec="<html>(<span style='background-color:white'> Hex </span>) Binary</html>";
     private ActionListener nodeParTotFListener;
     private Timer nodeparamtimer = null;
     private Timer setNVTimer;
@@ -151,24 +141,30 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
     private Timer unlearnEvTimer;
     private Timer sNnTimer;
     private Timer onStartup; // not just startup, for a few other things as well atm, all way after startup though.
+
+    
     private Timer getnumEvTimer;
     private Timer getEvVarTimer;
     
-    private JmriJFrame editevframe;
+    private NodeEditEventFrame editevframe;
 
-    private ArrayList<String> nodearr = new ArrayList<String>(20);
-    private ArrayList<ArrayList<JLabel>> eventListRow = new ArrayList<ArrayList<JLabel>>();
+    private ArrayList<String> nodearr;
+    private ArrayList<ArrayList<JLabel>> eventListRow;
     private ArrayList<JLabel> eventListCols = new ArrayList<JLabel>();
     private List<Integer> paramlist;
     private List<Integer> nvlist;
+    protected ArrayList<CbusNodeEvent> _ndEvArr;
+    private int _numEventResponsesOutstanding;
 
-    TrafficController tc;
+    private TrafficController tc;
+    protected CbusSend send;
 
     @Override
     public void initComponents(CanSystemConnectionMemo memo) {
         super.initComponents(memo);
         tc = memo.getTrafficController();
         tc.addCanListener(this);
+        send = new CbusSend(memo,tablefeedback);
     }
 
     @Override
@@ -181,6 +177,9 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
 
     public NodeConfigToolPane() {
         super();
+        
+        nodearr = new ArrayList<String>(20);
+        _ndEvArr = new ArrayList<CbusNodeEvent>();
         this.setLayout(new BorderLayout());
 
         p1.setBorder(BorderFactory.createTitledBorder((Bundle.getMessage("ChooseNode"))));
@@ -306,22 +305,7 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
 
         enableAdminButtons(false);
         searchForNodesButton.setEnabled(true);
-        
         tablefeedback.append(Bundle.getMessage("NodeConfigStartup"));
-        
-        /*  Uncomment to start node search on startup
-        Timer onStartup = new Timer(250, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                searchfornodes();
-                onStartup.stop();
-                onStartup=null;
-            }
-        });
-        onStartup.setRepeats(false);
-        onStartup.start();
-        
-        */
     }
     
     private void checkWriteButtonDirty(){
@@ -337,11 +321,12 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
         }
     }
     
+    // called following number of events response from node
     private void geteventsonmodulebyindex(){
         ActionListener getEVNumandNodeTimerTimeOut = new ActionListener(){
             @Override
             public void actionPerformed( ActionEvent e ){           
-                tablefeedback.append("\n"+Bundle.getMessage("NodeNoResponseGetEv",(String)nodeSelBox.getSelectedItem())); 
+                tablefeedback.append( ls +Bundle.getMessage("NodeNoResponseGetEv",(String)nodeSelBox.getSelectedItem())); 
                 JOptionPane.showMessageDialog(null, 
                     Bundle.getMessage("NodeNoResponseGetEv",(String)nodeSelBox.getSelectedItem()), 
                     Bundle.getMessage("WarningTitle"),
@@ -351,16 +336,10 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
         getEVNumandNodeTimer = new Timer( searchForNodesDelay, getEVNumandNodeTimerTimeOut);
         getEVNumandNodeTimer.setRepeats( false );
         getEVNumandNodeTimer.start();
-        
-        // tablefeedback.append("\nSending message requesting each event on module to get event / node.");
-        CanMessage m = new CanMessage(tc.getCanid());
-        m.setNumDataElements(3);
-        CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
-        m.setElement(0, CbusConstants.CBUS_NERD);
-        m.setElement(1, _nodeinsetup >> 8);
-        m.setElement(2, _nodeinsetup & 0xff);
+
         WAITINGRESPONSE_GET_EV_BY_INDEX=true;
-        tc.sendCanMessage(m, null);        
+        _numEventResponsesOutstanding = _numevents;
+        send.nERD(_nodeinsetup);
     }
     
     private void gettoteventsonmodule(){
@@ -368,7 +347,7 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
         ActionListener getnumEvTimerTimeOut = new ActionListener(){
             @Override
             public void actionPerformed( ActionEvent e ){           
-                tablefeedback.append("\n"+Bundle.getMessage("NodeNoResponseGetEv",(String)nodeSelBox.getSelectedItem())); 
+                tablefeedback.append( ls +Bundle.getMessage("NodeNoResponseGetEv",(String)nodeSelBox.getSelectedItem())); 
                 JOptionPane.showMessageDialog(null, 
                     Bundle.getMessage("NodeNoResponseGetEv",(String)nodeSelBox.getSelectedItem()), 
                     Bundle.getMessage("WarningTitle"),
@@ -378,15 +357,8 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
         getnumEvTimer = new Timer( searchForNodesDelay, getnumEvTimerTimeOut);
         getnumEvTimer.setRepeats( false );
         getnumEvTimer.start();
-
-        CanMessage m = new CanMessage(tc.getCanid());
-        m.setNumDataElements(3);
-        CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
-        m.setElement(0, CbusConstants.CBUS_RQEVN);
-        m.setElement(1, _nodeinsetup >> 8);
-        m.setElement(2, _nodeinsetup & 0xff);
         WAITINGRESPONSE_GET_NUM_EV=true;
-        tc.sendCanMessage(m, null);
+        send.rQEVN(_nodeinsetup);
     }
     
     private void writebuttonClicked(){
@@ -399,7 +371,7 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
                 int newnv = (Integer) nvFields.get(i).getValue();
                 if (oldnv != newnv ) {
                     String listtext="<li>"+ Bundle.getMessage("NVFromTo",(i+1),oldnv,newnv) + "</li>";
-                    tablefeedback.append("\n" + Bundle.getMessage("NVFromTo",(i+1),oldnv,newnv));
+                    tablefeedback.append( ls  + Bundle.getMessage("NVFromTo",(i+1),oldnv,newnv));
                     changedtot++;
                     buf.append(listtext);
                 }
@@ -411,17 +383,18 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
                         (Bundle.getMessage("NVConfirmWrite",_nodeinsetup)), JOptionPane.YES_NO_OPTION,
                         JOptionPane.QUESTION_MESSAGE);
                 if (response != JOptionPane.YES_OPTION) {
-                    tablefeedback.append("\n"+Bundle.getMessage("NVWriteCancelled"));
+                    tablefeedback.append( ls+Bundle.getMessage("NVWriteCancelled"));
                     return;
                 } else {
-                    tablefeedback.append("\n"+Bundle.getMessage("NVWriteStarted"));
+                    tablefeedback.append( ls +Bundle.getMessage("NVWriteStarted"));
                     _nextnodenv=0;
                     setnextnv();
                 }
             }
         }
         else {
-            showEditDialogueEvent(-1);
+            CbusNodeEvent newevent = new CbusNodeEvent(-1,-1,_nodeinsetup,-1,paramlist.get(5));
+            showEditDialogueEvent(this,newevent);
         }
     }
 
@@ -431,19 +404,12 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
             int newnv = (Integer) nvFields.get(i).getValue();
             if (oldnv != newnv ) {
                 WAITINGRESPONSE_SETNV=true;
-                CanMessage m = new CanMessage(tc.getCanid());
-                m.setNumDataElements(5);
-                CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
-                m.setElement(0, CbusConstants.CBUS_NVSET);
-                m.setElement(1, _nodeinsetup >> 8);
-                m.setElement(2, _nodeinsetup & 0xff);
-                m.setElement(3, (i+1));
-                m.setElement(4, newnv);
-                tc.sendCanMessage(m, null);
+                send.nVSET(_nodeinsetup, (i+1), newnv );
+                
                 ActionListener setNVTimerTimeOut = new ActionListener(){
                     @Override
                     public void actionPerformed( ActionEvent e ){           
-                        tablefeedback.append("\n" + Bundle.getMessage("NVSetTimedout",nodeSelBox.getSelectedItem(),_nextnodenv));
+                        tablefeedback.append( ls  + Bundle.getMessage("NVSetTimedout",nodeSelBox.getSelectedItem(),_nextnodenv));
                         JOptionPane.showMessageDialog(null, 
                             Bundle.getMessage("NVSetTimedout",nodeSelBox.getSelectedItem(),_nextnodenv), 
                             Bundle.getMessage("WarningTitle"),
@@ -459,7 +425,7 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
                 return;
             }
         }
-        tablefeedback.append("\n" + Bundle.getMessage("NVsSent"));
+        tablefeedback.append( ls  + Bundle.getMessage("NVsSent"));
         updateNvPane();
     }
     
@@ -476,6 +442,8 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
         nvlist = new ArrayList<>();
         nvlist.add(0); // add one here so loop starts at 1;
         nvListpane.remove(nvbuildlist);
+        nvListpane.validate();
+        nvListpane.repaint();
         nvbuildlist=null;
         nvbuildlist = new JPanel();
         nvbuildlist.setLayout(new BoxLayout(nvbuildlist, BoxLayout.Y_AXIS));
@@ -486,10 +454,13 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
     
     private void updateEvPane(){
         evListpane.remove(evbuildlist);
+        evListpane.validate();
+        evListpane.repaint();
         eventListRow = null;
         eventListCols = null;
         evEditButList = null;
         eventListRow = new ArrayList<ArrayList<JLabel>>();
+        _ndEvArr = new ArrayList<CbusNodeEvent>();
         eventListCols = new ArrayList<JLabel>();
         evEditButList = new ArrayList<JButton>();
         enableAdminButtons(false);
@@ -513,21 +484,13 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
         
         if (_nextnodenv <= (paramlist.get(6))) {
             WAITINGRESPONSE_GETNV=true;
-            //   tablefeedback.append("\n" + "Try to get nv " + _nextnodenv + " ");
-            CanMessage m = new CanMessage(tc.getCanid());
-            m.setNumDataElements(4);
-            CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
-            m.setElement(0, CbusConstants.CBUS_NVRD);
-            m.setElement(1, _nodeinsetup >> 8);
-            m.setElement(2, _nodeinsetup & 0xff);
-            m.setElement(3, _nextnodenv); // get total parameters for this module
-            tc.sendCanMessage(m, null);
+            send.nVRD(_nodeinsetup,_nextnodenv);
             _nextnodenv++;
         }
         else {
             nvbuildlist.add(spacer);
             WAITINGRESPONSE_GETNV=false;
-            tablefeedback.append("\n"+Bundle.getMessage("NVsComplete"));
+            tablefeedback.append( ls +Bundle.getMessage("NVsComplete"));
             split.setResizeWeight(_splitratio);
             enableAdminButtons(true);
             checkWriteButtonDirty();
@@ -537,12 +500,10 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
     }
     
     private void searchfornodes(){
+        disposeEditDialogueEvent();
         WAITINGRESPONSE_STARTUPISANODEINSETUP=true;
-        CanMessage m = new CanMessage(tc.getCanid());
-        m.setNumDataElements(1);
-        CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
-        m.setElement(0, CbusConstants.CBUS_RQNP);
-        tc.sendCanMessage(m, null);
+        send.nodeRequestParamSetup();
+        
         nodearr=null;
         nodearr = new ArrayList<String>(20);
         searchForNodesButton.setText(Bundle.getMessage("SearchingNodes"));
@@ -553,12 +514,7 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
         nvorevpane.setVisible(false);
         nvPaneSelectButton.setSelected(true);
         
-        tablefeedback.append("\n" + Bundle.getMessage("NodeSearchStart"));
-        CanMessage n = new CanMessage(tc.getCanid());
-        n.setNumDataElements(1);
-        CbusMessage.setPri(n, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
-        n.setElement(0, CbusConstants.CBUS_QNN);
-        tc.sendCanMessage(n, null);
+        send.searchForNodes();
         
         ActionListener searchForNodesTimerTimeOut = new ActionListener(){
             @Override
@@ -566,7 +522,7 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
                 WAITINGRESPONSE_STARTUPISANODEINSETUP=false;
                 int itemCount = nodearr.size();
                 searchForNodesButton.setEnabled(true);
-                tablefeedback.append("\n" + Bundle.getMessage("NodeSearchComplete",itemCount));
+                tablefeedback.append( ls  + Bundle.getMessage("NodeSearchComplete",itemCount));
                 searchForNodesButton.setText(Bundle.getMessage("Refresh"));
                 nodeSelBox.removeAllItems();
                 if (itemCount>0) {
@@ -585,58 +541,34 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
         searchForNodesTimer.start();
     }
     
-    public int getfirstintfromstring(String petName){
-        StringBuffer buf = new StringBuffer();
-        for (int i=0; i<petName.length(); i++){
-            Character chars = petName.charAt(i);
-            if(chars != ' '){
-                if(Character.isDigit(chars)){
-                    buf.append(chars);
-                } else {
-                    if (buf.length()>0) {
-                        break;
-                    }
-                }
-            }
-        }
-        if (buf.length()==0) {
-            buf.append("0");
-        }
-        return (Integer.parseInt(buf.toString()));  
-    }
-    
+    // starts getnodeparametertotal
     private void nodeselected(){
-        String petName = (String)nodeSelBox.getSelectedItem();
+        disposeEditDialogueEvent();
+        String nodeName = (String)nodeSelBox.getSelectedItem();
         propertiespane.setVisible(true);
         nvorevpane.setVisible(true);
         paramlist=null;
         paramlist= new ArrayList<Integer>(21);
         split.setDividerLocation(_splitratio);
-        propertiespane.setBorder(BorderFactory.createTitledBorder((Bundle.getMessage("CbusNode") + petName ))); 
-        _nodeinsetup=getfirstintfromstring(petName);
-        tablefeedback.append("\n" + Bundle.getMessage("NodeSelected",petName));
+        propertiespane.setBorder(BorderFactory.createTitledBorder((Bundle.getMessage("CbusNode") + nodeName ))); 
+        _nodeinsetup=getfirstintfromstring(nodeName);
+        tablefeedback.append( ls  + Bundle.getMessage("NodeSelected",nodeName));
         if (_nodeinsetup>0) {
             getnodeparametertotal(_nodeinsetup);
         }
     }
 
+    // called when node selected
+    // sends rQNPN
     private void getnodeparametertotal(Integer _nodeinsetup) {
         // request total node parameters
         _nextnodeparam=1;
         WAITINGRESPONSE_GETNODEPARAM=true;
-        CanMessage m = new CanMessage(tc.getCanid());
-        m.setNumDataElements(4);
-        CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
-        m.setElement(0, CbusConstants.CBUS_RQNPN);
-        m.setElement(1, _nodeinsetup >> 8);
-        m.setElement(2, _nodeinsetup & 0xff);
-        m.setElement(3, 0); // get total parameters for this module
-        // add time wait + check to see if parameters received
 
         nodeParTotFListener = new ActionListener(){
             @Override
             public void actionPerformed( ActionEvent e ){
-                tablefeedback.append("\n" + Bundle.getMessage("NodeNoResponseGetPar",(String)nodeSelBox.getSelectedItem()));
+                tablefeedback.append( ls  + Bundle.getMessage("NodeNoResponseGetPar",(String)nodeSelBox.getSelectedItem()));
                 nodeparamtimer.stop();
                 nodeparamtimer=null;
                 WAITINGRESPONSE_GETNODEPARAM=false;
@@ -646,23 +578,16 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
         nodeparamtimer = new Timer( searchForNodesDelay, nodeParTotFListener);
         nodeparamtimer.setRepeats( false );
         nodeparamtimer.start();
-        tablefeedback.append("\n" + (Bundle.getMessage("CBUS_RQNPN")));
-        tc.sendCanMessage(m, null);
-
+        
+        send.rQNPN(_nodeinsetup,0);
+        tablefeedback.append( ls  + (Bundle.getMessage("CBUS_RQNPN")));
     }
 
+    // when all params got, update nv or ev pane
     private void getindividparam(){  // node parameters + build parameter pane
         if (_nextnodeparam < (_nodeparameters+1)) {
-            CanMessage m = new CanMessage(tc.getCanid());
-            m.setNumDataElements(4);
-            CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
-            m.setElement(0, CbusConstants.CBUS_RQNPN);
-            m.setElement(1, _nodeinsetup >> 8);
-            m.setElement(2, _nodeinsetup & 0xff);
-            m.setElement(3, _nextnodeparam); // get total parameters for this module
-            tc.sendCanMessage(m, null);
+            send.rQNPN(_nodeinsetup,_nextnodeparam);
             _nextnodeparam++;
-            
         } else if (_nextnodeparam == (_nodeparameters+1)){
 
             nodeparamtimer.stop();
@@ -718,34 +643,6 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
             } else {
                 nodesupportlinkbutton.setVisible(false);
             }
-            
-            /*
-            nodepropbuilder.append ("<br>");              
-            nodepropbuilder.append (paramlist.get(6));
-            nodepropbuilder.append (" Node Variables. ");            
-            nodepropbuilder.append (getnodeflags(paramlist.get(8)));   
-
-            nodepropbuilder.append ("<br>");           
-            nodepropbuilder.append (paramlist.get(4));             
-            nodepropbuilder.append (" Max events, "); 
-            nodepropbuilder.append (paramlist.get(5));   
-            nodepropbuilder.append (" variables per event.");             
-            
-            nodepropbuilder.append ("<br> Processor:"); 
-            nodepropbuilder.append (paramlist.get(9));              
-            nodepropbuilder.append (" Load Address:"); 
-            nodepropbuilder.append (paramlist.get(11)); 
-            nodepropbuilder.append (paramlist.get(12)); 
-            nodepropbuilder.append (paramlist.get(13));             
-            nodepropbuilder.append (paramlist.get(14)); 
-            nodepropbuilder.append ("<br> CPU manufacturer id:"); 
-            nodepropbuilder.append (paramlist.get(15));
-            nodepropbuilder.append (paramlist.get(16));
-            nodepropbuilder.append (paramlist.get(17));            
-            nodepropbuilder.append (paramlist.get(18));
-            nodepropbuilder.append (" CPU manufacturer code:");             
-            nodepropbuilder.append (paramlist.get(19));
-            */
        
             propertieslabel.setText("<html>" + nodepropbuilder.toString() + "</html> ");
             propertiespane.setSize(propertiespane.getPreferredSize());
@@ -757,40 +654,6 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
                 updateEvPane();
             }
         }
-    }
-    
-    public String getnodeflags(int flags){
-        StringBuilder toreturn = new StringBuilder(34);
-        String nodeflags = String.format("%8s", 
-            Integer.toBinaryString(flags & 0xFF)).replace(' ', '0');
-        if (Objects.equals("1",String.valueOf(nodeflags.charAt(7)))) {
-            toreturn.append(Bundle.getMessage("Consumer"));
-            toreturn.append(" ");
-        }
-        if (Objects.equals("1",String.valueOf(nodeflags.charAt(6)))) {
-            toreturn.append(Bundle.getMessage("Producer"));
-            toreturn.append(" ");
-            }
-        if (Objects.equals("1",String.valueOf(nodeflags.charAt(5)))) {
-            toreturn.append(Bundle.getMessage("Flim"));
-            toreturn.append(" ");
-            }
-        if (Objects.equals("1",String.valueOf(nodeflags.charAt(4)))) {
-            toreturn.append(Bundle.getMessage("Bootloader"));
-            toreturn.append(" ");
-            }
-        return toreturn.toString();
-    }
-    
-    public final static String showformats(int num){
-        if (num>0) {
-            return ("<html> (<span style='background-color:white'>  <b> " + 
-                String.valueOf(Integer.toHexString(num)) + 
-                " </span> ) " + 
-                (String.format("%8s", Integer.toBinaryString(num)).replace(' ', '0')).substring(0,4) + " " +
-                (String.format("%8s", Integer.toBinaryString(num)).replace(' ', '0')).substring(4,8) + " </html>");
-        }
-        return "";
     }
     
     public void addnvtolist(int nvid){
@@ -811,7 +674,7 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
         JLabel nvhexlabel = new JLabel("", JLabel.CENTER);
 
         if ((nvlist.get(nvid)) > 0 ) {
-            nvhexlabel.setToolTipText(toolTipHexDec);
+            nvhexlabel.setToolTipText(Bundle.getMessage("toolTipHexDec"));
         }
         nvhexlabel.setText(showformats(nvlist.get(nvid)));
         
@@ -834,7 +697,7 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
                     field.setBackground(Color.white);
                 } else {
                     nvToHex.get(Integer.valueOf(nvid-1)).setText(showformats(newval));
-                    nvToHex.get(Integer.valueOf(nvid-1)).setToolTipText(toolTipHexDec);
+                    nvToHex.get(Integer.valueOf(nvid-1)).setToolTipText(Bundle.getMessage("toolTipHexDec"));
                     field.setBackground(Color.yellow);
                 }
             }
@@ -862,49 +725,46 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
         nvListpane.validate(); // more GUI intenseive but gives visual clue to user than it's a full refresh
     }
     
+    // get ev by ev index
+    public void startReval(int nextev, int nextevvar){
+        WAITINGRESPONSE_GET_EV_VAL=true;
+        ActionListener getEvVarTimerTimeOut = new ActionListener(){
+            @Override
+            public void actionPerformed( ActionEvent e ){           
+                tablefeedback.append( ls  + Bundle.getMessage("NodeNoRespGetEvVar",nodeSelBox.getSelectedItem(),nextev));
+                JOptionPane.showMessageDialog(null, 
+                    Bundle.getMessage("NodeNoRespGetEvVar",nodeSelBox.getSelectedItem(),nextev), 
+                    Bundle.getMessage("WarningTitle"),
+                    JOptionPane.ERROR_MESSAGE);
+                WAITINGRESPONSE_GET_EV_VAL=false;
+                getEvVarTimer=null;
+            }
+        };
+        getEvVarTimer = new Timer( searchForNodesDelay, getEvVarTimerTimeOut);
+        getEvVarTimer.setRepeats( false );
+        getEvVarTimer.start();
+        send.rEVAL(_nodeinsetup, nextev, nextevvar );
+    }
+    
+    // called when all empty event rows have been created
+    // and from response to get the next event variable
     public void getEvVarsByEv(){
-        //  log.debug("912 num events {} Next Ev {} Var {} ",_numevents,_nextev,_nextevvar);
-        if ( _nextevvar > paramlist.get(5)) {
-            _nextevvar=1;
-            _nextev++;
-            evEditButList.get(_nextev-2).setEnabled(true);
-            if((_nextev % 10 == 0) && (_nextev < _numevents)){
-                tablefeedback.append("\n" + Bundle.getMessage("GetEventsUpdate",_nextev,_numevents));
-            }   
+        _evVarsReceived++;
+        int tot = _evVarsReceived/paramlist.get(5);
+        if ( ( tot > 0 ) && ( tot % 10 == 0 ) && ( tot < _numevents ) ) {
+            tablefeedback.append( ls  + Bundle.getMessage("GetEventsUpdate",tot,_numevents));
         }
-        if (_nextev > _numevents) {
-            tablefeedback.append("\n" + Bundle.getMessage("GetEventsComplete",(_nextev-1),_numevents));
-            enableAdminButtons(true);
-        } else {
-            // log.debug("927 Next Ev {} Var {} ",_nextev,_nextevvar);
-            WAITINGRESPONSE_GET_EV_VAL=true;
-            ActionListener getEvVarTimerTimeOut = new ActionListener(){
-                @Override
-                public void actionPerformed( ActionEvent e ){           
-                    tablefeedback.append("\n" + Bundle.getMessage("NodeNoRespGetEvVar",nodeSelBox.getSelectedItem(),_nextev));
-                    JOptionPane.showMessageDialog(null, 
-                        Bundle.getMessage("NodeNoRespGetEvVar",nodeSelBox.getSelectedItem(),_nextev), 
-                        Bundle.getMessage("WarningTitle"),
-                        JOptionPane.ERROR_MESSAGE);
-                    WAITINGRESPONSE_GET_EV_VAL=false;
-                    getEvVarTimer=null;
+        for (int i = 0; i < _ndEvArr.size(); i++) {
+            for (int j = 0; j < paramlist.get(5); j++) {
+                if ( _ndEvArr.get(i).getEvVar(j+1) < 0 ) {
+                    startReval(_ndEvArr.get(i).getIndex(),j+1);
+                    return;
                 }
-            };
-            getEvVarTimer = new Timer( searchForNodesDelay, getEvVarTimerTimeOut);
-            getEvVarTimer.setRepeats( false );
-            getEvVarTimer.start();            
-            
-            CanMessage m = new CanMessage(tc.getCanid());
-            m.setNumDataElements(5);
-            CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
-            m.setElement(0, CbusConstants.CBUS_REVAL);
-            m.setElement(1, _nodeinsetup >> 8);
-            m.setElement(2, _nodeinsetup & 0xff);
-            m.setElement(3, _nextev);
-            m.setElement(4, _nextevvar);
-            tc.sendCanMessage(m, null);
-            _nextevvar++;
+            }
+            evEditButList.get(i).setEnabled(true);
         }
+        tablefeedback.append( ls  + Bundle.getMessage("GetEventsComplete",(_numevents),_numevents));
+        enableAdminButtons(true);
     }
 
     public void enableAdminButtons(boolean trueorfalse) {
@@ -919,378 +779,24 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
         }   
     }
     
-    public void showhidedeletebutton( int intevent, int nodeint){
-        int newvalev = (Integer) numberSpinnerEv.getValue();
-        int newvalnd = (Integer) numberSpinnernd.getValue();
-        if (( newvalev == intevent ) && ( newvalnd == nodeint )) {
-            framedeletebutton.setEnabled(true);
-        } else {
-            framedeletebutton.setEnabled(false);
-        }
+    // frame to edit / create event
+    public void showEditDialogueEvent(NodeConfigToolPane tp, CbusNodeEvent ndEv) {
+        editevframe = new NodeEditEventFrame(tp,ndEv);
+        editevframe.initComponents();
     }
     
-    public void enabledisableeditbutton(int evnum){
-        int newvalev = (Integer) numberSpinnerEv.getValue();
-        int newvalnd = (Integer) numberSpinnernd.getValue();
-        int oldVale=getfirstintfromstring(eventListRow.get((evnum-1)).get(1).getText());
-        int oldValn=getfirstintfromstring(eventListRow.get((evnum-1)).get(0).getText());
-        if ( newvalev != oldVale ) {
-            frameeditevbutton.setEnabled(true);
-            return;
+    protected void disposeEditDialogueEvent(){
+        if (editevframe != null ) {
+            editevframe.dispose();
         }
-        if ( newvalnd != oldValn ) {
-            frameeditevbutton.setEnabled(true);
-            return;
-        }
-        for ( int ci=1 ; ci < ((paramlist.get(5))+1) ; ci++){
-            int newval = (Integer) evFields.get((ci+1)).getValue();
-            int oldVal = getfirstintfromstring(eventListRow.get((evnum-1)).get(ci+1).getText());
-            // log.debug("new vals i:{} props5:{} new:{} old:{} ",ci,paramlist.get(5),newval,oldVal);
-            if (newval!=oldVal){
-                frameeditevbutton.setEnabled(true);
-                return;                
-            }
-        }
-        frameeditevbutton.setEnabled(false);
-        return;
+        editevframe = null;
     }
     
-    public void showEditDialogueEvent(int evnum) {
-        enableAdminButtons(false);
-        evFields=null;
-        evFields = new ArrayList<>();
-        evToHex=null;
-        evToHex = new ArrayList<>();
-        
-        String title;
-        if (evnum<0){
-            title=Bundle.getMessage("CbusNode") + (String)nodeSelBox.getSelectedItem() + 
-            " " + Bundle.getMessage("NewEvent");
-        } else {
-            title=Bundle.getMessage("CbusNode") + (String)nodeSelBox.getSelectedItem() +
-            " " + Bundle.getMessage("EditEvent") + evnum + "";
-        }
-        editevframe = new JmriJFrame(title);
-        
-        JPanel setevpanel = new JPanel();
-        setevpanel.setLayout(new BoxLayout(setevpanel, BoxLayout.Y_AXIS));
-        
-        JPanel inputpanel = new JPanel();
-        frameeditevbutton = new JButton(Bundle.getMessage("EditEvent"));
-        JButton framenewevbutton = new JButton(Bundle.getMessage("NewEvent"));
-        framedeletebutton = new JButton(Bundle.getMessage("ButtonDelete"));
-        JButton framecancelbutton = new JButton(Bundle.getMessage("Cancel"));
-        
-        inputpanel.add(framecancelbutton);
-        
-        if (evnum<0){
-            inputpanel.add(framenewevbutton);
-        } else {
-            inputpanel.add(frameeditevbutton);
-            frameeditevbutton.setEnabled(false);
-            inputpanel.add(framedeletebutton);
-        }
-        
-        JPanel individeventEv= new JPanel(); // row container
-        individeventEv.setLayout(new GridLayout(1, 3));
-        
-        String eventstring="0";
-        if (evnum>0) {
-            eventstring = eventListRow.get((evnum-1)).get(1).getText();
-        }
-        int intevent=Integer.parseInt(eventstring);
-        JLabel newnvhexlabelEv = new JLabel(" ", JLabel.CENTER);
-        evToHex.add(newnvhexlabelEv);
-
-
-        numberSpinnerEv = new JSpinner(new SpinnerNumberModel(intevent, 0, 65535, 1));
-        evFields.add(numberSpinnerEv);                   
-        numberSpinnerEv.setToolTipText(Bundle.getMessage("NdEvEditToolTip",intevent));
-        JComponent compEv = numberSpinnerEv.getEditor();
-        JFormattedTextField fieldEv = (JFormattedTextField) compEv.getComponent(0);
-        DefaultFormatter formatterEv = (DefaultFormatter) fieldEv.getFormatter();
-        formatterEv.setCommitsOnValidEdit(true);
-
-        individeventEv.add(new JLabel(Bundle.getMessage("CbusEvent"), JLabel.RIGHT));
-        individeventEv.add(numberSpinnerEv);
-        individeventEv.add(newnvhexlabelEv);
-        setevpanel.add(individeventEv);
-        
-        JPanel individeventNd= new JPanel(); // row container
-        individeventNd.setLayout(new GridLayout(1, 3));
-        String nodestring="0";
-        if (evnum>0) {
-            nodestring = eventListRow.get((evnum-1)).get(0).getText();
-        }    
-        int nodeint=Integer.parseInt(nodestring);
-        JLabel newnvhexlabelNd = new JLabel(" ", JLabel.CENTER);
-        evToHex.add(newnvhexlabelNd);     
-     
-        numberSpinnernd = new JSpinner(new SpinnerNumberModel(nodeint, 0, 65535, 1));
-        evFields.add(numberSpinnernd);
-        numberSpinnernd.setToolTipText(Bundle.getMessage("NdEvEditToolTip",nodeint));
-        JComponent compNd = numberSpinnernd.getEditor();
-        JFormattedTextField fieldNd = (JFormattedTextField) compNd.getComponent(0);
-        DefaultFormatter formatterNd = (DefaultFormatter) fieldNd.getFormatter();
-        formatterNd.setCommitsOnValidEdit(true);
-        
-        individeventNd.add(new JLabel(Bundle.getMessage("CbusNode"), JLabel.RIGHT));
-        individeventNd.add(numberSpinnernd);
-        individeventNd.add(newnvhexlabelNd);
-
-        setevpanel.add(individeventNd);
-        
-        evFields.get(0).addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                int newvalev = (Integer) numberSpinnerEv.getValue();
-                if ( newvalev == intevent ) {
-                    fieldEv.setBackground(Color.white);
-                } else {
-                    fieldEv.setBackground(Color.yellow);
-                }
-                showhidedeletebutton( intevent, nodeint);
-                if (evnum>0) {
-                    enabledisableeditbutton((evnum));
-                }
-            }
-        });
-        
-        evFields.get(1).addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                int newvalnd = (Integer) numberSpinnernd.getValue();
-                if ( newvalnd == nodeint ) {
-                    fieldNd.setBackground(Color.white);
-                } else {
-                    fieldNd.setBackground(Color.yellow);
-                }
-                showhidedeletebutton( intevent, nodeint);
-                if (evnum>0) {
-                    enabledisableeditbutton((evnum));
-                }
-            }
-        });
-        
-        // loop through each ev var
-        for ( int ei=1 ; (ei <= paramlist.get(5)) ; ei++){
-            final int myei = ei;
-            String eventVal = "0";
-            if (evnum>0) {
-                eventVal = eventListRow.get((evnum-1)).get(ei+1).getText();
-            }
-            if (eventVal.length() == 0) {
-                eventVal="0";
-            }
-            final int intEventVal=getfirstintfromstring(eventVal);
-            
-            // template stuff "may" go here-ish ?
-            // move everything down here into seperate function ?
-            
-            JLabel newnvhexlabel = new JLabel(" ", JLabel.CENTER);
-            evToHex.add(newnvhexlabel);
-            if (intEventVal>0) {
-                newnvhexlabel.setText(showformats(intEventVal));
-                newnvhexlabel.setToolTipText(toolTipHexDec);
-            }            
-            
-            JPanel individevent= new JPanel(); // row container
-            individevent.setLayout(new GridLayout(1, 3));
-            
-            JSpinner numberSpinner = new JSpinner(new SpinnerNumberModel(intEventVal, 0, 255, 1));
-            evFields.add(numberSpinner);
-            numberSpinner.setToolTipText(Bundle.getMessage("NdEvEditToolTip",intEventVal));
-            JComponent comp = numberSpinner.getEditor();
-            JFormattedTextField field = (JFormattedTextField) comp.getComponent(0);
-            DefaultFormatter formatter = (DefaultFormatter) field.getFormatter();
-            formatter.setCommitsOnValidEdit(true);
-            evFields.get(myei+1).addChangeListener(new ChangeListener() {
-                @Override
-                public void stateChanged(ChangeEvent e) {
-                    int newval = (Integer) numberSpinner.getValue();
-                    
-                    if (newval==0) {
-                        
-                        evToHex.get(Integer.valueOf(myei+1)).setText("");
-                        evToHex.get(Integer.valueOf(myei+1)).setToolTipText("");
-                        
-                    } else {
-                    
-                        evToHex.get(Integer.valueOf(myei+1)).setText(showformats(newval));
-                        evToHex.get(Integer.valueOf(myei+1)).setToolTipText(toolTipHexDec);
-                    }
-
-                    if ( newval == intEventVal ) {
-
-                        field.setBackground(Color.white);
-                    } else {
-
-                        field.setBackground(Color.yellow);
-                    }
-                    if (evnum>0) {
-                        enabledisableeditbutton((evnum));
-                    }
-                }
-            });
-            
-            individevent.add(new JLabel(Bundle.getMessage("EvVar",ei), JLabel.RIGHT));
-            individevent.add(numberSpinner);
-            individevent.add(newnvhexlabel);
-            
-            setevpanel.add(individevent);
-        }
-        
-        setevpanel.validate();
-        editevframe.add(setevpanel, BorderLayout.CENTER);
-        editevframe.add(inputpanel, BorderLayout.PAGE_END);
-        
-        Dimension editevframeminimumSize = new Dimension(150, 200);
-        editevframe.setMinimumSize(editevframeminimumSize);
-        editevframe.pack();
-        editevframe.setResizable(true);
-
-        editevframe.addWindowListener(new java.awt.event.WindowAdapter() {
-            @Override
-            public void windowClosed(WindowEvent e) {
-                editevframe.dispose();
-                enableAdminButtons(true);
-            }
-            
-            @Override
-            public void windowClosing(WindowEvent e) {
-                editevframe.dispose();
-                enableAdminButtons(true);
-            }
-        });
-        
-        framedeletebutton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                int newevent = (Integer) numberSpinnerEv.getValue();
-                int newvalnd = (Integer) numberSpinnernd.getValue();
-                int response = JOptionPane.showConfirmDialog(null,
-                        (Bundle.getMessage("NdDelEvConfrm",newevent,newvalnd,nodeSelBox.getSelectedItem())),
-                        (Bundle.getMessage("DelEvPopTitle")), JOptionPane.YES_NO_OPTION,         
-                        JOptionPane.ERROR_MESSAGE);
-                if (response == JOptionPane.YES_OPTION) {
-                    editevframe.setEnabled(false);
-                    
-                    nodeEnterLearnEvMode(_nodeinsetup);
-
-                    // wait for learn mode, send delete message with timeout
-                    onStartup = new Timer(1000, new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent arg0) {
-                            onStartup.stop();
-                            onStartup=null;
-                            RELEARN_WHEN_DELETED=false;
-                            sendunlearn(newevent, newvalnd);
-                        }
-                    });
-                    onStartup.setRepeats(false);
-                    onStartup.start();
-                } else {
-                    return;
-                }
-            }
-        });
-        
-        framecancelbutton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                editevframe.dispose();
-                enableAdminButtons(true);
-            }
-        });        
-        
-        framenewevbutton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                // make sure event >1
-                int newevent = (Integer) numberSpinnerEv.getValue();
-                int newvalnd = (Integer) numberSpinnernd.getValue();
-                if (newevent < 1) {
-                    JOptionPane.showMessageDialog(null, 
-                        (Bundle.getMessage("EnterEventNum")), Bundle.getMessage("WarningTitle"),
-                        JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-                
-                // check for existing event / node combination
-                for ( int i=0 ; (i <eventListRow.size() ) ; i++){
-                    String testeventstring = eventListRow.get((i)).get(1).getText();
-                    String testnodestring = eventListRow.get((i)).get(0).getText();
-                    int testevent=Integer.parseInt(testeventstring);
-                    int testnode=Integer.parseInt(testnodestring);
-                    
-                    if ((newevent==testevent) && (newvalnd==testnode)) {
-                        JOptionPane.showMessageDialog(null, 
-                            (Bundle.getMessage("DuplicateEvNd")), Bundle.getMessage("WarningTitle"),
-                            JOptionPane.ERROR_MESSAGE);
-                        return;
-                    }
-                }
-                
-                editevframe.setEnabled(false);
-                nodeEnterLearnEvMode(_nodeinsetup);
-                _nextsetevvar=1;
-                onStartup = new Timer(1000, new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent arg0) {
-                        setEvVarLoop();
-                        onStartup.stop();
-                        onStartup=null;
-                    }
-                });
-                onStartup.setRepeats(false); // Only execute once
-                onStartup.start();
-            }
-        });        
-        
-        frameeditevbutton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                String testeventstring = eventListRow.get(((evnum-1))).get(1).getText();
-                String testnodestring = eventListRow.get(((evnum-1))).get(0).getText();
-                int testevent=Integer.parseInt(testeventstring);
-                int testnode=Integer.parseInt(testnodestring);
-                
-                int response = JOptionPane.showConfirmDialog(null,
-                    Bundle.getMessage("NdConfirmEditEv",testevent,testnode,nodeSelBox.getSelectedItem()),
-                    (Bundle.getMessage("ConfirmQuestion")), JOptionPane.YES_NO_OPTION,
-                    JOptionPane.QUESTION_MESSAGE);
-                if (response == JOptionPane.YES_OPTION) {
-                    editevframe.setEnabled(false);
-                    tablefeedback.append("\n"+Bundle.getMessage("EditingEvent") );
-                    nodeEnterLearnEvMode(_nodeinsetup);
-                    _nextsetevvar=1;
-                    onStartup = new Timer(1000, new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent arg0) {
-                            RELEARN_WHEN_DELETED=true;
-                            sendunlearn(testevent, testnode);
-                            onStartup.stop();
-                            onStartup=null;
-                        }
-                    });
-                    onStartup.setRepeats(false);
-                    onStartup.start();
-                }
-            }
-        });           
-        
-        editevframe.setVisible(true);
-    }
-    
-    private void sendunlearn(int newevent, int newvalnd){
+    protected void sendunlearn(int newevent, int newvalnd){
         // node should already be iin learn mode
         // EVULN
         WAITINGRESPONSE_UNLEARN_EV=true;
-        CanMessage m = new CanMessage(tc.getCanid());
-        m.setNumDataElements(5);
-        CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
-        m.setElement(0, CbusConstants.CBUS_EVULN);
-        m.setElement(1, newvalnd >> 8);
-        m.setElement(2, newvalnd & 0xff);
-        m.setElement(3, newevent >> 8);
-        m.setElement(4, newevent & 0xff);
-        tc.sendCanMessage(m, null);
+        send.nodeUnlearnEvent( newvalnd, newevent );
         
         ActionListener UnlearnEvListener = new ActionListener(){
             @Override
@@ -1303,7 +809,7 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
                     setEvVarLoop();
                 }
                 else {
-                    nodeExitLearnEvMode(_nodeinsetup);
+                    send.nodeExitLearnEvMode(_nodeinsetup);
                     // delay then refresh
                     onStartup = new Timer(1000, new ActionListener() {
                         @Override
@@ -1312,9 +818,10 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
                             onStartup.stop();
                             onStartup=null;
                             editevframe.dispose();
+                            editevframe=null;
                             enableAdminButtons(true);
                             updateEvPane();
-                            nodeExitLearnEvMode(_nodeinsetup); // no harm in sending again due to earlier failure
+                            send.nodeExitLearnEvMode(_nodeinsetup); // no harm in sending again due to earlier failure
                         }
                     });
                     onStartup.setRepeats(false); // Only execute once
@@ -1327,19 +834,19 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
         unlearnEvTimer.start();
     }
     
-    private void setEvVarLoop(){
+    protected void setEvVarLoop(){
         if ( _nextsetevvar <= paramlist.get(5) ) {
-            int newval = (Integer) evFields.get((_nextsetevvar+1)).getValue();
-            int newevent = (Integer) numberSpinnerEv.getValue();
-            int newvalnd = (Integer) numberSpinnernd.getValue();
+            int newval = editevframe.getEvVar( _nextsetevvar+1 );
+            int newevent = editevframe.getEventVal();
+            int newvalnd = editevframe.getNodeVal();
             // send teach message
             WAITINGRESPONSE_SET_EV_VAL=true;
-            tablefeedback.append("\n" + Bundle.getMessage("NdTeachEv",nodeSelBox.getSelectedItem(),
+            tablefeedback.append( ls  + Bundle.getMessage("NdTeachEv",nodeSelBox.getSelectedItem(),
                 newevent,newvalnd,(_nextsetevvar),newval));
             ActionListener SetEvModeListener = new ActionListener(){
                 @Override
                 public void actionPerformed( ActionEvent e ){
-                    tablefeedback.append("\n" +
+                    tablefeedback.append( ls  +
                     Bundle.getMessage("NdEvVarTimeout",
                     nodeSelBox.getSelectedItem(),newevent,newvalnd,_nextsetevvar,newval));
                     setEvVarTimer.stop();
@@ -1357,25 +864,18 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
             setEvVarTimer.setRepeats( false );
             setEvVarTimer.start();
             
-            CanMessage m = new CanMessage(tc.getCanid());
-            CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
-            m.setNumDataElements(7);
-            m.setElement(0, CbusConstants.CBUS_EVLRN);
-            m.setElement(1, newvalnd >> 8);
-            m.setElement(2, newvalnd & 0xff);
-            m.setElement(3, newevent >> 8);
-            m.setElement(4, newevent & 0xff);
-            m.setElement(5, _nextsetevvar);
-            m.setElement(6, newval);
-            tc.sendCanMessage(m, null);
+            send.nodeTeachEventLearnMode( newvalnd, newevent, _nextsetevvar, newval );
+            
         }
         else {
-            nodeExitLearnEvMode(_nodeinsetup);
+            send.nodeExitLearnEvMode(_nodeinsetup);
             onStartup = new Timer(1000, new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent arg0) {
-                    tablefeedback.append("\n" + Bundle.getMessage("NdCompleteEvVar"));
+                    tablefeedback.append( ls  + Bundle.getMessage("NdCompleteEvVar"));
+                    
                     editevframe.dispose();
+                    editevframe=null;
                     enableAdminButtons(true);
                     updateEvPane();
                     onStartup.stop();
@@ -1388,29 +888,15 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
         _nextsetevvar++;
     }
     
-    private void nodeEnterLearnEvMode( int nn) {
-        CanMessage m = new CanMessage(tc.getCanid());
-        m.setNumDataElements(3);
-        CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
-        m.setElement(0, CbusConstants.CBUS_NNLRN);
-        m.setElement(1, _nodeinsetup >> 8);
-        m.setElement(2, _nodeinsetup & 0xff);
-        tablefeedback.append("\n" + Bundle.getMessage("NdReqEnterLearn",(String)nodeSelBox.getSelectedItem()));
-        tc.sendCanMessage(m, null);
+    public void openEditButton(CbusNodeEvent thisevent ){
+        showEditDialogueEvent(this,thisevent);
     }
     
-    private void nodeExitLearnEvMode( int nn) {
-        CanMessage m = new CanMessage(tc.getCanid());
-        m.setNumDataElements(3);
-        CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
-        m.setElement(0, CbusConstants.CBUS_NNULN);
-        m.setElement(1, _nodeinsetup >> 8);
-        m.setElement(2, _nodeinsetup & 0xff);
-        tablefeedback.append("\n" + Bundle.getMessage("NdReqExitLearn",(String)nodeSelBox.getSelectedItem()));
-        tc.sendCanMessage(m, null);
-    }    
-    
-    private void addEventTableRow(int data2, int data3, int eventnum){
+    // if all table event rows received, start getting event vars
+    private void addEventTableRow(int eventNode, int eventNum, int eventIndex){
+        CbusNodeEvent thisevent = new CbusNodeEvent(eventNode,eventNum,_nodeinsetup,eventIndex,paramlist.get(5));
+        _ndEvArr.add(thisevent);
+        _numEventResponsesOutstanding--;
         
         JLabel spacerlabel = new JLabel("<html> <br > </html>");
         JPanel spacer= new JPanel();
@@ -1426,15 +912,21 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
             headings.add(new JLabel("V" + i, JLabel.CENTER));
         }
 
-        if (eventnum==1) {
+        // table header row
+        if (_numEventResponsesOutstanding+1==_numevents) {
+            evbuildlist.add(spacer);
+            evbuildlist.add(headings);
+        }
+        
+        if ( (_numevents - (_numEventResponsesOutstanding +1 ) ) % 5 == 0 ) {
             evbuildlist.add(spacer);
             evbuildlist.add(headings);
         }
         
         JPanel individev= new JPanel(); // row container
 
-        JLabel evData2 = new JLabel("" + (data2) + "", JLabel.CENTER);
-        JLabel evData3 = new JLabel("" + (data3) + "", JLabel.CENTER);
+        JLabel evData2 = new JLabel("" + (eventNode) + "", JLabel.CENTER);
+        JLabel evData3 = new JLabel("" + (eventNum) + "", JLabel.CENTER);
         JButton editEVButton = new JButton(Bundle.getMessage("Edit"));
         editEVButton.setVisible(true);
         editEVButton.setEnabled(false);
@@ -1457,35 +949,47 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
         editEVButton.addActionListener (new ActionListener () {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // log.debug("edit clicked {} ",(eventnum-1));
-                showEditDialogueEvent(eventnum);
+                // log.debug("edit clicked {} ",(eventIndex-1));
+                
+                openEditButton(thisevent);
             }
-        }); 
+        });
 
         eventListRow.add(eventListCols);
+        thisevent.setNodeConfigPanelID(eventListRow.size()-1);
+        
         individev.addMouseListener(new HighlightJPanelsChildMouseListeners());
         evbuildlist.add(individev);
         
-        if(eventnum % 5 == 0){
-            evbuildlist.add(spacer);
-            evbuildlist.add(headings);
-        }
-        
-        if (eventnum==_numevents) {
+        if ( _numEventResponsesOutstanding == 0 ) {
             getEVNumandNodeTimer.stop();
             WAITINGRESPONSE_GET_EV_BY_INDEX=false;
             evbuildlist.add(spacer);
-            _nextev=1;
-            _nextevvar=1;
+
+            _evVarsReceived=-1;
             getEvVarsByEv();
-            tablefeedback.append("\n" + Bundle.getMessage("NdEvDone"));
+            tablefeedback.append( ls  + Bundle.getMessage("NdEvDone"));
         }
         evListpane.validate();
         evListpane.repaint();
     }
     
-    private void startnodeallocation(int nn) { // x500000
-        tablefeedback.append("\n" + Bundle.getMessage("NdRqNn",nn));
+    public CbusNodeEvent getNodeEventByIndex(int index) {
+        for (int i = 0; i < _ndEvArr.size(); i++) {
+            if ( _ndEvArr.get(i).getIndex() == index ) {
+                return _ndEvArr.get(i);
+            }
+        }
+        return null;
+    }
+    
+    private void startnodeallocation(int nn) {
+        if (NODE_NUM_DIALOGUE_OPEN) {
+            return;
+        }
+        NODE_NUM_DIALOGUE_OPEN=true;
+        
+        tablefeedback.append( ls  + Bundle.getMessage("NdRqNn",nn));
         rqNNpane = new JPanel();
         JPanel bottomrqNNpane = new JPanel();
         String spinnerlabel=Bundle.getMessage("NdRqNnSelect");
@@ -1551,46 +1055,39 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
         Toolkit.getDefaultToolkit().beep();
         
         WAITINGRESPONSE_RQNN_PARAMS=true;
-        CanMessage m = new CanMessage(tc.getCanid());
-        m.setNumDataElements(1);
-        CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
-        m.setElement(0, CbusConstants.CBUS_RQNP);
-        tc.sendCanMessage(m, null);
+        send.nodeRequestParamSetup();
+        
         int option = JOptionPane.showOptionDialog(null, 
             rqNNpane, 
             popuplabel, 
             JOptionPane.OK_CANCEL_OPTION, 
             JOptionPane.QUESTION_MESSAGE, null, null, null);
         if (option == JOptionPane.CANCEL_OPTION) {
-            tablefeedback.append("\n" + Bundle.getMessage("NnAllocCancel"));
+            tablefeedback.append( ls  + Bundle.getMessage("NnAllocCancel"));
             WAITINGRESPONSE_RQNN_PARAMS=false;
+            NODE_NUM_DIALOGUE_OPEN=false;
         } else if (option == JOptionPane.OK_OPTION) {
             int newval = (Integer) rqnnSpinner.getValue();
-            tablefeedback.append("\n" + Bundle.getMessage("NnAllocSelected",newval));
+            tablefeedback.append( ls  + Bundle.getMessage("NnAllocSelected",newval));
             
             sNnTimer = new Timer(1000, new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent arg0) {
                     WAITINGRESPONSE_SNN=false;
-                    tablefeedback.append("\n" + "No Confirmation of Setting Node Number ");
+                    tablefeedback.append( ls  + "No Confirmation of Setting Node Number ");
                     JOptionPane.showMessageDialog(null, 
                         Bundle.getMessage("NnAllocError",newval), Bundle.getMessage("WarningTitle"),
                         JOptionPane.ERROR_MESSAGE);
                     sNnTimer.stop();
                     sNnTimer=null;
+                    NODE_NUM_DIALOGUE_OPEN=false;
                 }
             });
             sNnTimer.setRepeats(false);
             sNnTimer.start();            
             
             WAITINGRESPONSE_SNN=true;
-            CanMessage mn = new CanMessage(tc.getCanid());
-            mn.setNumDataElements(3);
-            CbusMessage.setPri(mn, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
-            mn.setElement(0, CbusConstants.CBUS_SNN);
-            mn.setElement(1, newval >> 8);
-            mn.setElement(2, newval & 0xff);
-            tc.sendCanMessage(mn, null);
+            send.nodeSetNodeNumber(newval);
         }
     }
     
@@ -1604,7 +1101,7 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
         }        
         else if (opc==CbusConstants.CBUS_NNREL) {
             int canid = CbusMessage.getId(m);
-            tablefeedback.append("\n" + Bundle.getMessage("NdRelease",nn,canid));
+            tablefeedback.append( ls  + Bundle.getMessage("NdRelease",nn,canid));
             int response = JOptionPane.showConfirmDialog(null,
                     ("<html>" + Bundle.getMessage("NdRelease",nn,canid) + 
                     "<br>" + Bundle.getMessage("NdRefreshListQ") + "</html>"),
@@ -1622,7 +1119,8 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
                 sNnTimer.stop();
                 sNnTimer=null;
                 WAITINGRESPONSE_SNN=false;
-                tablefeedback.append("\n" + Bundle.getMessage("NnAllocConfirm",nn));
+                NODE_NUM_DIALOGUE_OPEN=false;
+                tablefeedback.append( ls  + Bundle.getMessage("NnAllocConfirm",nn));
                 int response = JOptionPane.showConfirmDialog(null,
                     ("<html>" + Bundle.getMessage("NnAllocConfirm",nn) + 
                     "<br>" + Bundle.getMessage("NdRefreshListQ") + "</html>"),
@@ -1651,19 +1149,19 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
                 WAITINGRESPONSE_UNLEARN_EV=false;
                 unlearnEvTimer.stop();
                 unlearnEvTimer=null;
-                tablefeedback.append("\n" + Bundle.getMessage("NdModUnlrnConfrm"));
-                nodeExitLearnEvMode(_nodeinsetup);
+                tablefeedback.append( ls  + Bundle.getMessage("NdModUnlrnConfrm"));
+                send.nodeExitLearnEvMode(_nodeinsetup);
                 
                 // delay then refresh
                 onStartup = new Timer(1000, new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent arg0) {
-                        //  tablefeedback.append("\n" + "Completed teaching event variables"); 
+                        //  tablefeedback.append( ls  + "Completed teaching event variables"); 
                         onStartup.stop();
                         onStartup=null;
                         if (RELEARN_WHEN_DELETED) {
-                            tablefeedback.append("\n"+Bundle.getMessage("NdModStartLrn"));
-                            nodeEnterLearnEvMode( _nodeinsetup);
+                            tablefeedback.append( ls +Bundle.getMessage("NdModStartLrn"));
+                            send.nodeEnterLearnEvMode( _nodeinsetup);
                             // delay then refresh
                             onStartup = new Timer(1000, new ActionListener() {
                                 @Override
@@ -1677,6 +1175,7 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
                             onStartup.start();   
                         }
                         else {
+                            log.warn("node exit learn mode should close window here");
                             editevframe.dispose();
                             updateEvPane();
                         }
@@ -1689,16 +1188,16 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
                 WAITINGRESPONSE_UNLEARN_EV=false;
                 setEvVarTimer.stop();
                 setEvVarTimer=null;
-                tablefeedback.append("\n"+Bundle.getMessage("NdDelEvErr") );
+                tablefeedback.append( ls +Bundle.getMessage("NdDelEvErr") );
                 JOptionPane.showMessageDialog(null, 
                     Bundle.getMessage("NdDelEvErr"), Bundle.getMessage("WarningTitle"),
                     JOptionPane.ERROR_MESSAGE);
-                nodeExitLearnEvMode(_nodeinsetup);
+                send.nodeExitLearnEvMode(_nodeinsetup);
             }
         }
         if (WAITINGRESPONSE_SET_EV_VAL) {
             if ( opc == CbusConstants.CBUS_WRACK) {
-                tablefeedback.append("\n"+Bundle.getMessage("NdCnfrmWrite"));
+                tablefeedback.append( ls +Bundle.getMessage("NdCnfrmWrite"));
                 WAITINGRESPONSE_SET_EV_VAL=false;
                 setEvVarTimer.stop();
                 setEvVarTimer=null;
@@ -1708,7 +1207,7 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
                 WAITINGRESPONSE_SET_EV_VAL=false;
                 setEvVarTimer.stop();
                 setEvVarTimer=null;
-                tablefeedback.append("\n" + Bundle.getMessage("NdEvVarWriteError"));
+                tablefeedback.append( ls  + Bundle.getMessage("NdEvVarWriteError"));
                 JOptionPane.showMessageDialog(null, 
                     Bundle.getMessage("NdEvVarWriteError"), Bundle.getMessage("WarningTitle"),
                     JOptionPane.ERROR_MESSAGE);
@@ -1717,17 +1216,18 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
         }
         if (WAITINGRESPONSE_STARTUPISANODEINSETUP) {
             if (opc==CbusConstants.CBUS_PARAMS) { // response from the rqnp sent
-                // WAITINGRESPONSE_STARTUPISANODEINSETUP=false;
-                int canid = CbusMessage.getId(m);
-                tablefeedback.append("\n" + Bundle.getMessage("NdAlreadySetup",canid));
-                int response = JOptionPane.showConfirmDialog(null,
-                        ("<html>" + Bundle.getMessage("NdAlreadySetup",canid) + "</html>"),
-                        Bundle.getMessage("NdAlreadySetpTitl"), JOptionPane.YES_NO_OPTION,
-                        JOptionPane.ERROR_MESSAGE);
-                if (response == JOptionPane.YES_OPTION) {
-                    startnodeallocation(0);
-                } else {
-                    return;
+                if (!NODE_NUM_DIALOGUE_OPEN) {
+                    int canid = CbusMessage.getId(m);
+                    tablefeedback.append( ls  + Bundle.getMessage("NdAlreadySetup",canid));
+                    int response = JOptionPane.showConfirmDialog(null,
+                            ("<html>" + Bundle.getMessage("NdAlreadySetup",canid) + "</html>"),
+                            Bundle.getMessage("NdAlreadySetpTitl"), JOptionPane.YES_NO_OPTION,
+                            JOptionPane.ERROR_MESSAGE);
+                    if (response == JOptionPane.YES_OPTION) {
+                        startnodeallocation(0);
+                    } else {
+                        return;
+                    }
                 }
             }
 
@@ -1735,20 +1235,14 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
                 int manu = m.getElement(3);
                 int elfour = m.getElement(4);
                 nodearr.add(nn + " " + CbusOpCodes.getModuleType(manu,elfour));
-                tablefeedback.append("\n" + Bundle.getMessage("CBUS_IN") + " ");
+                tablefeedback.append( ls  + Bundle.getMessage("CBUS_IN") + " ");
                 tablefeedback.append(Bundle.getMessage("CbusNode") + nn);            
                 tablefeedback.append(" " + CbusOpCodes.getManu(manu));
                 tablefeedback.append(" " + CbusOpCodes.getModuleType(manu,elfour));
-                // tablefeedback.append(" " + getnodeflags(m.getElement(5)));
+                // tablefeedback.append(" " + (m.getElement(5)));
                 
                 // ensure node is NOT in learn event mode
-                CanMessage mn = new CanMessage(tc.getCanid());
-                mn.setNumDataElements(3);
-                CbusMessage.setPri(mn, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
-                mn.setElement(0, CbusConstants.CBUS_NNULN);
-                mn.setElement(1, nn >> 8);
-                mn.setElement(2, nn & 0xff);
-                tc.sendCanMessage(mn, null);
+                send.nodeExitLearnEvMode(nn);
             }
         }
         if (Objects.equals(nn,_nodeinsetup)) {
@@ -1768,8 +1262,12 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
                     getnumEvTimer=null;
                     _numevents =  m.getElement(3);
                     WAITINGRESPONSE_GET_NUM_EV=false;
-                    tablefeedback.append("\n" + Bundle.getMessage("GotNumEvents",_numevents));
-                    geteventsonmodulebyindex();
+                    tablefeedback.append( ls  + Bundle.getMessage("GotNumEvents",_numevents));
+                    if ( _numevents > 0 ) {
+                        geteventsonmodulebyindex();
+                    } else {
+                        enableAdminButtons(true);
+                    }
                 }
             }
             
@@ -1791,12 +1289,12 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
                 setNVTimer.stop();
                 setNVTimer=null;
                 if (opc == CbusConstants.CBUS_WRACK ) { // WRACK Node Acknowledge response
-                    tablefeedback.append("\n" + Bundle.getMessage("NVSetConfirm",_nextnodenv));
+                    tablefeedback.append( ls  + Bundle.getMessage("NVSetConfirm",_nextnodenv));
                     WAITINGRESPONSE_SETNV=false;
                     setnextnv();
                 }
                 else if ( opc == CbusConstants.CBUS_CMDERR) { // CMDERR error writing to node
-                    tablefeedback.append("\n" + Bundle.getMessage("NVSetFail",_nextnodenv));
+                    tablefeedback.append( ls  + Bundle.getMessage("NVSetFail",_nextnodenv));
                     WAITINGRESPONSE_SETNV=false;
                     JOptionPane.showMessageDialog(null, 
                         Bundle.getMessage("NVSetFailTitle"), Bundle.getMessage("WarningTitle"),
@@ -1819,15 +1317,15 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
                     WAITINGRESPONSE_GET_EV_VAL=false;
                     getEvVarTimer.stop();
                     getEvVarTimer=null;
-                    int en = m.getElement(3);
+                    int index = m.getElement(3);
                     int ev = m.getElement(4);
-                    int var = m.getElement(5);
+                    int val = m.getElement(5);
+                    getNodeEventByIndex(index).setEvVar(ev,val);
                     String builder="";
-                    
-                    if ( var > 0 ) {
-                      builder = ("<html><span style='background-color:white'> <b> " + var + " </b> </span></html>");
+                    if ( val > 0 ) {
+                      builder = ("<html><span style='background-color:white'> <b> " + val + " </b> </span></html>");
                     }
-                    eventListRow.get((en-1)).get((ev+1)).setText(builder);
+                    eventListRow.get(getNodeEventByIndex(index).getNodeConfigPanelID()).get((ev+1)).setText(builder);
                     evListpane.validate();
                     // get the next one
                     getEvVarsByEv();
@@ -1836,8 +1334,22 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
         }
     }
     
+    /**
+     * Do nothing with outgoing messages so simulators can be tested alongside real hardware
+     */
     @Override
     public void message(CanMessage m) {
+    }
+
+    public final static String showformats(int num){
+        if (num>0) {
+            return ("<html> (<span style='background-color:white'>  <b> " + 
+                String.valueOf(Integer.toHexString(num)) + 
+                " </span> ) " + 
+                (String.format("%8s", Integer.toBinaryString(num)).replace(' ', '0')).substring(0,4) + " " +
+                (String.format("%8s", Integer.toBinaryString(num)).replace(' ', '0')).substring(4,8) + " </html>");
+        }
+        return "";
     }
 
     public static class HighlightJPanelsChildMouseListeners implements MouseListener{
@@ -1868,48 +1380,35 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
         }
     }
 
+
+    public static final int getfirstintfromstring(String toTest){
+        StringBuffer buf = new StringBuffer();
+        for (int i=0; i<toTest.length(); i++){
+            Character chars = toTest.charAt(i);
+            if(chars != ' '){
+                if(Character.isDigit(chars)){
+                    buf.append(chars);
+                } else {
+                    if (buf.length()>0) {
+                        break;
+                    }
+                }
+            }
+        }
+        if (buf.length()==0) {
+            buf.append("0");
+        }
+        return (Integer.parseInt(buf.toString()));  
+    }
+    
+
     @Override
     public void dispose() {
         // disconnect from the CBUS
         if (tc != null) {
             tc.removeCanListener(this);
         }
-    }
-
-    /**
-     * Keeps the message log windows to a reasonable length
-     * https://community.oracle.com/thread/1373400
-     */
-    private static class TextAreaFIFO extends JTextArea implements DocumentListener {
-        private int maxLines;
-    
-        public TextAreaFIFO(int lines) {
-            maxLines = lines;
-            getDocument().addDocumentListener( this );
-        }
-    
-        public void insertUpdate(DocumentEvent e) {
-            javax.swing.SwingUtilities.invokeLater( new Runnable() {
-                public void run() {
-                    removeLines();
-                }
-            });
-        }
-        public void removeUpdate(DocumentEvent e) {}
-        public void changedUpdate(DocumentEvent e) {}
-        public void removeLines()
-        {
-            Element root = getDocument().getDefaultRootElement();
-            while (root.getElementCount() > maxLines) {
-                Element firstLine = root.getElement(0);
-                try {
-                    getDocument().remove(0, firstLine.getEndOffset());
-                } catch(BadLocationException ble) {
-                    System.out.println(ble);
-                }
-            }
-        setCaretPosition( getDocument().getLength() );
-        }
+        tablefeedback.dispose();
     }
     
     /**

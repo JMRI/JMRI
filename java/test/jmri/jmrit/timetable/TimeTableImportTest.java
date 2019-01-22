@@ -7,7 +7,7 @@ import java.util.List;
 import org.junit.*;
 
 /**
- * Tests for the TimeTableFrame Class
+ * Tests for the TimeTableImport Class
  * @author Dave Sand Copyright (C) 2018
  */
 public class TimeTableImportTest {
@@ -19,7 +19,7 @@ public class TimeTableImportTest {
 
     @Test
     public void testImport() {
-        TimeTableDataManager dm = new TimeTableDataManager();
+        TimeTableDataManager dm = new TimeTableDataManager(false);
         TimeTableImport imp = new TimeTableImport();
         try {
             File file = FileUtil.getFile("program:xml/demoTimetable/TestSample.sgn");  // NOI18N

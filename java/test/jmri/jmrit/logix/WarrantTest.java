@@ -159,7 +159,7 @@ public class WarrantTest {
         Assert.assertEquals("BlockOrder", warrant.getLastOrder().toString(), lastOrder.toString());
         Assert.assertEquals("BlockOrder", warrant.getViaOrder().toString(), viaOrder.toString());
 
-        String msg = warrant.allocateRoute(orders);
+        String msg = warrant.allocateRoute(false, orders);
         Assert.assertNull("allocateRoute - "+msg, msg);
         warrant.deAllocate();
         
@@ -177,9 +177,9 @@ public class WarrantTest {
 //        DccLocoAddress dccAddress = new DccLocoAddress(999, true);
 //        Assert.assertNotNull("dccAddress", dccAddress);
         warrant.getSpeedUtil().setDccAddress("999(L)");
-        msg = warrant.setRoute(0, orders);
+        msg = warrant.setRoute(false, orders);
         Assert.assertNull("setRoute - "+msg, msg);
-        msg =  warrant.checkStartBlock(Warrant.MODE_RUN);
+        msg =  warrant.checkStartBlock();
         Assert.assertNull("checkStartBlock - "+msg, msg);
         msg = warrant.checkRoute();
         Assert.assertNull("checkRoute - "+msg, msg);
@@ -197,9 +197,12 @@ public class WarrantTest {
 
         jmri.util.JUnitUtil.waitFor(() -> {
             String m =  warrant.getRunningMessage();
-            return m.endsWith("Cmd #2.");
+            return m.endsWith("Cmd #2.") || m.endsWith("Cmd #3.");
         }, "Train starts to move after 2nd command");
         jmri.util.JUnitUtil.releaseThread(this, 100); // What should we specifically waitFor?
+
+        // confirm one message logged
+        jmri.util.JUnitAppender.assertWarnMessage("Path NorthToWest in block North has length zero. Cannot run NXWarrants or ramp speeds through blocks with zero length.");
 
         jmri.util.ThreadingUtil.runOnLayout( ()->{
             try {
@@ -218,8 +221,6 @@ public class WarrantTest {
         // wait for done
         jmri.util.JUnitUtil.waitFor(()->{return warrant.getRunningMessage().equals("Idle");}, "warrant not done");
         
-        // confirm one message logged
-        // jmri.util.JUnitAppender.assertWarnMessage("Block West does not have a length for path SouthToNorth");
     }
     
     

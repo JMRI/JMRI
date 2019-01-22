@@ -6,14 +6,8 @@ import java.awt.geom.Rectangle2D;
 import jmri.JmriException;
 import jmri.util.JUnitUtil;
 import jmri.util.MathUtil;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Ignore;
-import org.junit.Test;
+import jmri.util.junit.annotations.*;
+import org.junit.*;
 
 /**
  * Test simple functioning of LayoutSlip
@@ -212,6 +206,7 @@ public class LayoutSlipTest {
 
     @Test
     @Ignore("No Test yet")
+    @ToDo("finish initialization of test and write code to test activation of turnouts")
     public void testActivateTurnout() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("LayoutEditor exists", layoutEditor);
@@ -223,6 +218,7 @@ public class LayoutSlipTest {
 
     @Test
     @Ignore("No Test yet")
+    @ToDo("finish initialization of test and write code to test deactivation of turnouts")
     public void testDeactivateTurnout() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("LayoutEditor exists", layoutEditor);

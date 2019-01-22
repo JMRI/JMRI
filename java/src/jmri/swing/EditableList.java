@@ -73,6 +73,8 @@ public class EditableList<E> extends JList<E> implements CellEditorListener {
         return editingIndex;
     }
 
+     //This uses the deprecated {@link JComponent#setNextFocusableComponent} method.
+    @SuppressWarnings( "deprecation" )
     public Component prepareEditor(int index) {
         E value = getModel().getElementAt(index);
         boolean isSelected = isSelectedIndex(index);

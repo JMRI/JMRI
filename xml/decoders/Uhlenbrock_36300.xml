@@ -16,8 +16,8 @@
     <!-- Version 1 - Created from Uhlenbrock_76560.xml v1 (Alain Le Marchand), added Uhlenbrock 363x decoder models, Dutch translation -->
     <!-- WARNING: output names fully linked to function mapping include file - do not change independently -->
 <decoder>
-    <family name="Multi-Protocol IntelliSound3 Decoder" mfg="Uhlenbrock Elektronik" lowVersionID="9"><!-- to be checked by hardware owner -->
-      <model model="36320" numOuts="9" numFns="14" maxMotorCurrent="1.2A" formFactor="HO" connector="NMRAmedium" productID="36320" comment="IntelliSound 3 with PluX22 plug and RailCom(R)">
+    <family name="Multi-Protocol IntelliSound3 Decoder" mfg="Uhlenbrock Elektronik"><!-- version was checked by hardware owner Frits -->
+      <model model="36320" lowVersionID="11" highVersionID="11" numOuts="9" numFns="14" maxMotorCurrent="1.2A" formFactor="HO" connector="NMRAmedium" productID="36320" comment="IntelliSound 3 with PluX22 plug and RailCom(R)">
         <output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
         <output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>
         <output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA"/>
@@ -31,7 +31,7 @@
         <output name="Start/brake" label="inertia"/>
         <size length="30" width="15" height="4.8" units="mm"/>
       </model>
-      <model model="36360" numOuts="9" numFns="14" maxMotorCurrent="1.2A" formFactor="HO" connector="PluX22" productID="36360" comment="IntelliSound 3 with PluX22 plug and RailCom(R)">
+      <model model="36360" lowVersionID="5" highVersionID="5" numOuts="9" numFns="14" maxMotorCurrent="1.2A" formFactor="HO" connector="PluX22" productID="36360" comment="IntelliSound 3 with PluX22 plug and RailCom(R)">
         <output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
         <output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>
         <output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA"/>
@@ -57,7 +57,7 @@
     <variables>
       <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/vStartHighMid-accelDecel.xml"/>
-      <variable item="Decoder Version" CV="7" readOnly="yes" default="9">
+      <variable item="Decoder Version" CV="7" readOnly="yes" default="5">
         <decVal/>
         <label>Manufacturer Version No: </label>
         <label xml:lang="it">Versione Decoder: </label>

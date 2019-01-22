@@ -13,6 +13,7 @@ import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficController;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,11 +36,16 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
         tc = memo.getTrafficController();
         tc.addCanListener(this);
     }
+    
+    public void dispose() {
+        tc.removeCanListener(this);
+    }
 
     TrafficController tc;
 
     /**
-     * CBUS allows only one throttle per address
+     * CBUS allows only one throttle per address at present
+     * todo - implement gloc opc for throttle sharing?
      */
     @Override
     protected boolean singleUse() {
@@ -52,12 +58,17 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
      */
     @Override
     synchronized public void requestThrottleSetup(LocoAddress address, boolean control) {
-        _dccAddr = (DccLocoAddress) address;
+        try {
+            _dccAddr = (DccLocoAddress) address;
+        }
+        catch(java.lang.ClassCastException cce){
+            log.error("{} is not a DccLocoAddress",address);
+        }
         _intAddr = _dccAddr.getNumber();
 
         // The CBUS protocol requires that we request a session from the command
         // station. Throttle object will be notified by Command Station
-        log.debug("Requesting session for throttle");
+        log.debug("Requesting session for loco {}",_intAddr);
 
         CanMessage msg = new CanMessage(3, tc.getCanid());
         // Request a session for this throttle
@@ -79,14 +90,14 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
      * Called when track stopped message received. Sets all JMRI managed
      * throttles to speed zero
      */
-    void stopAll() {
+    private void stopAll() {
         // Get set of handles for JMRI managed throttles and
         // iterate over them setting the speed of each throttle to 0
-        log.debug("stopAll() setting all speeds to emergency stop");
+        // log.info("stopAll() setting all speeds to emergency stop");
         Iterator<Integer> itr = softThrottles.keySet().iterator();
         while (itr.hasNext()) {
             CbusThrottle throttle = softThrottles.get(itr.next());
-            throttle.setSpeedSetting(0.0F);
+            throttle.setSpeedSetting(-1.0f);
         }
     }
 
@@ -94,7 +105,6 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
     public void message(CanMessage m) {
         int opc = m.getElement(0);
         int handle;
-
         switch (opc) {
             case CbusConstants.CBUS_ESTOP:
             case CbusConstants.CBUS_RESTP:
@@ -108,6 +118,23 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
                 softThrottles.remove(handle);
                 break;
 
+            case CbusConstants.CBUS_DSPD:
+                // only if emergency stop
+                if ((m.getElement(2) & 0x7f) == 1 ){
+                    Iterator<Integer> itr;
+                    // Find a throttle corresponding to the handle
+                    itr = softThrottles.keySet().iterator();
+                    handle = m.getElement(1);
+                    while (itr.hasNext()) {
+                        CbusThrottle throttle = softThrottles.get(itr.next());
+                        if (throttle.getHandle() == handle) {
+                            // Set the throttle session to match the DSPD packet
+                            throttle.updateSpeedSetting(m.getElement(2) & 0x7f);
+                            throttle.updateIsForward((m.getElement(2) & 0x80) == 0x80);
+                        }
+                    }
+                }
+                break;
             default:
                 break;
         }
@@ -259,7 +286,7 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
                     CbusThrottle throttle = softThrottles.get(itr.next());
                     if (throttle.getHandle() == handle) {
                         // Set the throttle session to match the DFUN packet received
-                        log.debug("DFUN group: " + m.getElement(2) + " Fns: " + m.getElement(3) + " for session: " + m.getElement(1));
+                        // log.debug("DFUN group: " + m.getElement(2) + " Fns: " + m.getElement(3) + " for session: " + m.getElement(1));
                         switch (m.getElement(2)) {
                             case 1:
                                 throttle.updateFunctionGroup1(m.getElement(3));
@@ -393,10 +420,12 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
     @Override
     public boolean disposeThrottle(DccThrottle t, jmri.ThrottleListener l) {
         log.debug("disposeThrottle called for " + t);
-        if (super.disposeThrottle(t, l)) {
-            CbusThrottle lnt = (CbusThrottle) t;
-            lnt.throttleDispose();
-            return true;
+        if (t instanceof CbusThrottle) {
+            if (super.disposeThrottle(t, l)) {
+                CbusThrottle lnt = (CbusThrottle) t;
+                lnt.throttleDispose();
+                return true;
+            }
         }
         return false;
     }

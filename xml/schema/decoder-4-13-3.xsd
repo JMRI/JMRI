@@ -978,13 +978,13 @@
   <xs:simpleType name="maskType">
     <xs:annotation>
         <xs:documentation>
-          Type for CV mask values: 8 or 16 characters of either V (valid bit) or X (ignore bit).
+          Type for CV mask values: 8 or 16 characters of either V (valid bit) or X (ignore bit) with the V's consecutive.
         </xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:normalizedString">
       <xs:pattern value="(V|X)*"/>
       <xs:minLength value="8"/>
-      <xs:maxLength value="16"/>
+      <xs:maxLength value="8"/>
     </xs:restriction>
   </xs:simpleType>
 

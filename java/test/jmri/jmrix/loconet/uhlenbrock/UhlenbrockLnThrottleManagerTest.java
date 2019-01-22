@@ -4,11 +4,8 @@ import jmri.jmrix.loconet.LnTrafficController;
 import jmri.jmrix.loconet.LocoNetInterfaceScaffold;
 import jmri.jmrix.loconet.UhlenbrockSlotManager;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import jmri.util.junit.annotations.*;
+import org.junit.*;
 
 /**
  *
@@ -20,8 +17,10 @@ public class UhlenbrockLnThrottleManagerTest extends jmri.managers.AbstractThrot
 
     @Test
     @Override
-    @Ignore("test requires further setup")
+    @Ignore("parent class test requires further setup")
+    @ToDo("finish initialization and remove this overriden test so that the parent class test can run")
     public void testGetThrottleInfo() {
+        Assert.fail("parent class test requires further setup");
     }
 
     // The minimal setup for log4J

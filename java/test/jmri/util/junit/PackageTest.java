@@ -7,6 +7,7 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
         AssertTest.class,
         jmri.util.junit.rules.PackageTest.class
+        jmri.util.junit.annotations.PackageTest.class
 })
 
 /**

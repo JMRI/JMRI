@@ -8,8 +8,6 @@ import jmri.ProgListener;
 import jmri.Programmer;
 import jmri.ProgrammerException;
 import jmri.ProgrammingMode;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Common implementations for the Programmer interface.
@@ -103,24 +101,16 @@ public abstract class AbstractProgrammer implements Programmer {
 
     /** {@inheritDoc} */
     @Override
-    @SuppressWarnings("deprecation") // this is a migration call, to be removed when writeCV(int, int, ProgListener) is removed
-    public void writeCV(String CV, int val, ProgListener p) throws ProgrammerException {
-        writeCV(Integer.parseInt(CV), val, p);
-    }
+    abstract public void writeCV(String CV, int val, ProgListener p) throws ProgrammerException;
 
     /** {@inheritDoc} */
     @Override
-    @SuppressWarnings("deprecation") // this is a migration call, to be removed when readCV(int, ProgListener) is removed
-    public void readCV(String CV, ProgListener p) throws ProgrammerException {
-        readCV(Integer.parseInt(CV), p);
-    }
+    abstract public void readCV(String CV, ProgListener p) throws ProgrammerException;
 
     /** {@inheritDoc} */
     @Override
-    @Deprecated // 4.1.1
-    public final void confirmCV(int CV, int val, ProgListener p) throws ProgrammerException {
-        confirmCV(""+CV, val, p);
-    }
+    abstract public void confirmCV(String CV, int val, ProgListener p) throws ProgrammerException;
+
 
     /** {@inheritDoc} 
      * Basic implementation. Override this to turn reading on and off globally.
@@ -305,6 +295,6 @@ public abstract class AbstractProgrammer implements Programmer {
 
     javax.swing.Timer timer = null;
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractProgrammer.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractProgrammer.class);
 
 }
