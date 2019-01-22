@@ -476,5 +476,10 @@
             <li>All the PackageList test files were updated to JUnit4 form, without a separate main()</li>
             <li>The Windows "installer" and "launcher" have been updated to support 
                 Oracle's Java JDK 11 installation mechanisms on Windows platforms.</li>
+            <li>Starting with the release, 
+                <a href="http://jmri.org/help/en/html/setup/MigrateSystemPrefixes.shtml">legacy system prefixes</a>
+                will cause JMRI to issues a warning at startup.  This warning can't be suppressed
+                without migrating the prefix in the connection configuration (and any associated
+                panel files and scripts).
         </ul>
 
