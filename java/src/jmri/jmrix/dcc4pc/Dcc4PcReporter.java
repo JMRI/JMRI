@@ -8,13 +8,13 @@ import jmri.LocoAddress;
 import jmri.PhysicalLocationReporter;
 import jmri.RailCom;
 import jmri.Sensor;
-import jmri.implementation.AbstractReporter;
+import jmri.implementation.AbstractRailComReporter;
 import jmri.util.PhysicalLocation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Extend jmri.AbstractReporter for Dcc4Pc Reporters Implemenation for providing
+ * Extend jmri.AbstractRailComReporter for Dcc4Pc Reporters Implemenation for providing
  * status of rail com decoders at this reporter location.
  * <p>
  * The reporter will decode the rail com packets and add the information to the
@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  * @author Kevin Dickerson Copyright (C) 2012
  */
-public class Dcc4PcReporter extends AbstractReporter implements PhysicalLocationReporter {
+public class Dcc4PcReporter extends AbstractRailComReporter {
 
     public Dcc4PcReporter(String systemName, String userName) {  // a human-readable Reporter number must be specified!
         super(systemName, userName);  // can't use prefix here, as still in construction
@@ -468,68 +468,6 @@ public class Dcc4PcReporter extends AbstractReporter implements PhysicalLocation
             addr = address;
         }
         return rcTag;
-    }
-
-    // Methods to support PhysicalLocationReporter interface
-    /**
-     * getLocoAddress()
-     *
-     * Parses out a (possibly old) LnReporter-generated report string to extract
-     * the address from the front. Assumes the LocoReporter format is "NNNN
-     * [enter|exit]"
-     */
-    @Override
-    public LocoAddress getLocoAddress(String rep) {
-        // Matcher stops at the DCC loco address.
-        // m.group(1) is the orientation
-        // m.group(2) is the loco address number
-        // m.group(3) is the loco address protocol postfix
-        Pattern ln_p = Pattern.compile("(Orient A|Orient B|Unknown state)\\s+Address\\s+(\\d+)\\((S|L|SX|MM|M4|MFX|OpenLCB|D)\\)");
-        Matcher m = ln_p.matcher(rep);
-        if (m.find()) {
-            log.debug("Parsed address: " + m.group(2));
-            // right now, the DefaultRailCom object always returns a DCC (long or short) address.
-            // Canonically we should  catch Integer parse failures, but the regex above should ensure
-            // m.group(2) is always only a valid integer.
-            return (new DccLocoAddress(Integer.parseInt(m.group(2)), LocoAddress.Protocol.DCC));
-        } else {
-            return (null);
-        }
-    }
-
-    /**
-     * getDirection()
-     *
-     * Parses out a (possibly old) LnReporter-generated report string to extract
-     * the direction from the end. Assumes the LocoReporter format is "NNNN
-     * [enter|exit]"
-     */
-    @Override
-    public PhysicalLocationReporter.Direction getDirection(String rep) {
-        // TEMPORARY:  Assume we're always Entering, if asked.
-        return (PhysicalLocationReporter.Direction.ENTER);
-    }
-
-    /**
-     * getPhysicalLocation()
-     *
-     * Returns the PhysicalLocation of this Reporter. Assumed to be the location
-     * of the locomotive being reported about
-     */
-    @Override
-    public PhysicalLocation getPhysicalLocation() {
-        return (getPhysicalLocation(null));
-    }
-
-    /**
-     * getPhysicalLocation(String s)
-     *
-     * Returns the PhysicalLocation of this Reporter. Assumed to be the location
-     * of the locomotive being reported about. Does not use the parameter s.
-     */
-    @Override
-    public PhysicalLocation getPhysicalLocation(String s) {
-        return (PhysicalLocation.getBeanPhysicalLocation(this));
     }
 
     public final static char ACK = 0x80;

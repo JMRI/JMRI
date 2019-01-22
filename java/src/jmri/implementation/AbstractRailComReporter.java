@@ -24,8 +24,7 @@ import org.slf4j.LoggerFactory;
  * @author Paul Bender Copyright (c) 2016
  * @since 4.5.4
  */
-public class AbstractRailComReporter extends AbstractReporter
-        implements IdTagListener, PhysicalLocationReporter {
+public class AbstractRailComReporter extends AbstractIdTagReporter {
 
     public AbstractRailComReporter(String systemName) {
         super(systemName);
@@ -33,40 +32,6 @@ public class AbstractRailComReporter extends AbstractReporter
 
     public AbstractRailComReporter(String systemName, String userName) {
         super(systemName, userName);
-    }
-
-    @Override
-    public void notify(IdTag id) {
-        log.debug("Notify: " + this.mSystemName);
-        if (id != null) {
-            log.debug("Tag: " + id);
-            AbstractRailComReporter r;
-            if ((r = (AbstractRailComReporter) id.getWhereLastSeen()) != null) {
-                log.debug("Previous reporter: " + r.mSystemName);
-                if (!(r.equals(this)) && r.getCurrentReport() == id) {
-                    log.debug("Notify previous");
-                    r.notify(null);
-                } else {
-                    log.debug("Current report was: " + r.getCurrentReport());
-                }
-            }
-            id.setWhereLastSeen(this);
-            log.debug("Seen here: " + this.mSystemName);
-        }
-        setReport(id);
-        setState(id != null ? IdTag.SEEN : IdTag.UNSEEN);
-    }
-
-    private int state = UNKNOWN;
-
-    @Override
-    public void setState(int s) {
-        state = s;
-    }
-
-    @Override
-    public int getState() {
-        return state;
     }
 
     // Methods to support PhysicalLocationReporter interface
@@ -85,43 +50,6 @@ public class AbstractRailComReporter extends AbstractReporter
         // so we use properties of the RailCom object here.
         RailCom cr = (RailCom) this.getCurrentReport();
         return cr.getDccLocoAddress();
-    }
-
-    /**
-     * getDirection()
-     *
-     * Gets the direction (ENTER/EXIT) of the report. Because of the way 
-     * RailCom Reporters work, all reports are ENTER type.
-     */
-    @Override
-    public PhysicalLocationReporter.Direction getDirection(String rep) {
-        // TEMPORARY:  Assume we're always Entering, if asked.
-        return (PhysicalLocationReporter.Direction.ENTER);
-    }
-
-    /**
-     * getPhysicalLocation()
-     *
-     * Returns the PhysicalLocation of the Reporter
-     *
-     * Reports its own location, for now. Not sure if that's the right thing or
-     * not. NOT DONE YET
-     */
-    @Override
-    public PhysicalLocation getPhysicalLocation() {
-        return (this.getPhysicalLocation(null));
-    }
-
-    /**
-     * getPhysicalLocation(String s)
-     *
-     * Returns the PhysicalLocation of the Reporter
-     *
-     * Does not use the parameter s
-     */
-    @Override
-    public PhysicalLocation getPhysicalLocation(String s) {
-        return (PhysicalLocation.getBeanPhysicalLocation(this));
     }
 
     private static final Logger log = LoggerFactory.getLogger(AbstractRailComReporter.class);
