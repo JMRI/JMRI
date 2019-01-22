@@ -1205,7 +1205,7 @@ Function CheckJRE
     ReadRegStr $0 HKLM "SOFTWARE\JavaSoft\Java Runtime Environment\$1" "JavaHome"
     IfErrors 0 JRECheck
     ReadRegStr $1 HKLM "SOFTWARE\JavaSoft\JDK" "CurrentVersion"
-    ReadRegStr $0 HKLM "SOFTWARE\JavaSoft\JDK\$R1" "JavaHome"
+    ReadRegStr $0 HKLM "SOFTWARE\JavaSoft\JDK\$1" "JavaHome"
 
     ; -- Not found
     IfErrors 0 JRECheck
