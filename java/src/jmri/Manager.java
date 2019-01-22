@@ -440,6 +440,18 @@ public interface Manager<E extends NamedBean> {
                             public boolean execute() {
                                 if (legacyNameSet.size() == 0) return true;
                                 
+                                // as an extremely ugly hack, handle the special case of 
+                                // Reporters-with-an-M-system letter, e.g. from MERG
+                                //
+                                // We couldn't do this earlier because the name might be checked
+                                // before the bean is created
+                                ReporterManager rm = InstanceManager.getDefault(ReporterManager.class);
+                                for (String name : legacyNameSet) {
+                                    // The legacy MR name for MRC can't do Reporters
+                                    if (name.startsWith("MR") && rm.getReporter(name) != null) legacyNameSet.remove(name);
+                                }
+                                if (legacyNameSet.size() == 0) return true;
+                                
                                 org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Manager.class);
                                 log.warn("The following legacy names need to be migrated:");
                                 for (String name : legacyNameSet) log.warn("    {}", name);
