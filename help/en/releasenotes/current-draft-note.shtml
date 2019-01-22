@@ -474,5 +474,7 @@
                 <a href="/help/en/html/doc/Technical/gitdeveloper.shtml">different way</a>
                 starting with this release.</li>
             <li>All the PackageList test files were updated to JUnit4 form, without a separate main()</li>
+            <li>The Windows "installer" and "launcher" have been updated to support 
+                Oracle's Java JDK 11 installation mechanisms on Windows platforms.</li>
         </ul>
 

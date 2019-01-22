@@ -1,6 +1,8 @@
 package jmri.jmrit.display.layoutEditor;
 
 import static java.lang.Float.POSITIVE_INFINITY;
+import static jmri.jmrit.display.layoutEditor.LayoutTrack.NONE;
+import static jmri.jmrit.display.layoutEditor.LayoutTrack.POS_POINT;
 import static jmri.jmrit.display.layoutEditor.LayoutTrack.TRACK;
 
 import java.awt.BorderLayout;
@@ -670,9 +672,11 @@ public class PositionablePoint extends LayoutTrack {
             if (oldTrack != null) {
                 result = true;  // assume success (optimist!)
                 if (connect1 == oldTrack) {
-                    connect1 = null;
+                    connect1 = null;        // disconnect connect1
                     reCheckBlockBoundary();
                     removeLinkedPoint();
+                    connect1 = connect2;    // Move connect2 to connect1
+                    connect2 = null;        // disconnect connect2
                 } else if (connect2 == oldTrack) {
                     connect2 = null;
                     reCheckBlockBoundary();
@@ -1257,7 +1261,7 @@ public class PositionablePoint extends LayoutTrack {
             linkPointsBox.setEnabled(false);
             return;
         }
-        int ourDir = getConnect1Dir();
+
         linkPointsBox.setEnabled(true);
         LayoutEditor le = editorCombo.getItemAt(editorCombo.getSelectedIndex()).item();
         for (PositionablePoint p : le.getPositionablePoints()) {
@@ -1268,7 +1272,7 @@ public class PositionablePoint extends LayoutTrack {
                     linkPointsBox.setSelectedItem(p.getConnect2().getLayoutBlock().getDisplayName());
                 } else if (p.getLinkedPoint() == null) {
                     if (p.getConnect1() != null && p.getConnect1().getLayoutBlock() != null) {
-                        if (p.getConnect1().getLayoutBlock() != getConnect1().getLayoutBlock() && ourDir != p.getConnect1Dir()) {
+                        if (p.getConnect1().getLayoutBlock() != getConnect1().getLayoutBlock() /* && ourDir != p.getConnect1Dir() */ ) {
                             pointList.add(p);
                             linkPointsBox.addItem(p.getConnect1().getLayoutBlock().getDisplayName());
                         }
