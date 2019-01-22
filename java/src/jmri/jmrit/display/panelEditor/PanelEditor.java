@@ -37,6 +37,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import jmri.CatalogTreeManager;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
@@ -50,6 +51,7 @@ import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.PositionablePopupUtil;
 import jmri.jmrit.display.ToolTip;
 import jmri.util.JmriJFrame;
+import jmri.util.SystemType;
 import jmri.util.swing.JmriColorChooser;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -727,7 +729,7 @@ public class PanelEditor extends Editor implements ItemListener {
             }
             if (event.isPopupTrigger()) {
                 log.debug("mousePressed calls showPopUp");
-                if (event.isMetaDown() || event.isAltDown()) {
+                if (isMetaDown(event) || event.isAltDown()) {
                     // if requesting a popup and it might conflict with moving, delay the request to mouseReleased
                     delayedPopupTrigger = true;
                 } else {
@@ -748,7 +750,7 @@ public class PanelEditor extends Editor implements ItemListener {
             }
         } else {
             if (event.isPopupTrigger()) {
-                if (event.isMetaDown() || event.isAltDown()) {
+                if (isMetaDown(event) || event.isAltDown()) {
                     // if requesting a popup and it might conflict with moving, delay the request to mouseReleased
                     delayedPopupTrigger = true;
                 } else {
@@ -766,7 +768,7 @@ public class PanelEditor extends Editor implements ItemListener {
             }
         }
         // if ((event.isControlDown() || _selectionGroup!=null) && _currentSelection!=null){
-        if ((event.isControlDown()) || event.isMetaDown() || event.isAltDown()) {
+        if ((event.isControlDown()) || isMetaDown(event) || event.isAltDown()) {
             //Don't want to do anything, just want to catch it, so that the next two else ifs are not
             //executed
         } else if ((_currentSelection == null && _multiItemCopyGroup == null)
@@ -848,7 +850,7 @@ public class PanelEditor extends Editor implements ItemListener {
     @Override
     public void mouseDragged(MouseEvent event) {
         setToolTip(null); // ends tooltip if displayed
-        if ((event.isPopupTrigger()) || (!event.isMetaDown() && !event.isAltDown())) {
+        if ((event.isPopupTrigger()) || (!isMetaDown(event) && !event.isAltDown())) {
             if (_currentSelection != null) {
                 List<Positionable> selections = getSelectedItems(event);
                 if (selections.size() > 0) {
@@ -1302,6 +1304,19 @@ public class PanelEditor extends Editor implements ItemListener {
            }
         });
         popup.add(edit);
+    }
+
+    // The meta key was until Java 8 the right mouse button on Windows.
+    // On Java 9 on Windows 10, there is no more meta key. Note that this
+    // method is called both on mouse button events and mouse move events,
+    // and therefore "event.getButton() == MouseEvent.BUTTON3" doesn't work.
+    // event.getButton() always return 0 for MouseMoveEvent.
+    protected boolean isMetaDown(MouseEvent event) {
+        if (SystemType.isWindows() || SystemType.isLinux()) {
+            return SwingUtilities.isRightMouseButton(event);
+        } else {
+            return isMetaDown(event);
+        }
     }
 
     private final static Logger log = LoggerFactory.getLogger(PanelEditor.class);

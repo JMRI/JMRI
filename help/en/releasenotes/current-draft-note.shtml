@@ -9,12 +9,12 @@
             <ul>
                 <li></li>
             </ul>
-		
+
 	    <h4>Bachrus Speedo</h4>
             <ul>
                 <li></li>
             </ul>
-		
+
         <h4>C/MRI</h4>
             <ul>
                 <li></li>
@@ -262,7 +262,7 @@
             <ul>
                 <li></li>
             </ul>
-	    
+
 	    <h4>Team Digital</h4>
             <ul>
                 <li></li>
@@ -377,7 +377,12 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"/>
         <ul>
-            <li></li>
+            <li>Geoff Bunza provided sample scripts supporting bulk 
+            <a href="http://jmri.org/jython/serialinput/Sensor_Channel_To_JMRI/Sensor_Channels_Readme.md">sensor channels</a>
+            and
+            <a href="http://jmri.org/jython/serialinput/Turnout_Channel_from_JMRI/Turnout_Channels_Readme.md">turnout channels</a>
+            via USB between JMRI Sensor and Turnout Tables and Arduino interfaces to hardware.</li>.
+            For more information, see the Readme files linked just above.
         </ul>
 
     <h3>Signals</h3>
@@ -399,7 +404,7 @@
             <ul>
                 <li></li>
             </ul>
-            
+
     	<h4>Signal Groups</h4>
             <ul>
                 <li></li>
@@ -430,7 +435,12 @@
         <a id="Timetable" name="Timetable"/>
         <span class="since">since 4.13.4</span>
         <ul>
-            <li></li>
+            <li>New menu item: <strong>Export CSV File</strong> &mdash; Create a
+            CSV file that can be imported into a spreadsheet program.  This can
+            be used to create a traditional timetable.</li>
+            <li>New menu item: <strong>Import CSV File</strong> &mash; Import a
+            CSV file that contains external timetable data to create a new
+            layout defintion or extend an existing layout definition.</li>
         </ul>
 
    <h3>Warrants</h3>
@@ -450,7 +460,7 @@
         <ul>
             <li></li>
         </ul>
-        
+
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"/>
         <ul>
@@ -464,5 +474,7 @@
                 <a href="/help/en/html/doc/Technical/gitdeveloper.shtml">different way</a>
                 starting with this release.</li>
             <li>All the PackageList test files were updated to JUnit4 form, without a separate main()</li>
+            <li>The Windows "installer" and "launcher" have been updated to support 
+                Oracle's Java JDK 11 installation mechanisms on Windows platforms.</li>
         </ul>
 
