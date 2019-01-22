@@ -28,25 +28,6 @@ public class Dcc4PcReporter extends AbstractRailComReporter {
         super(systemName, userName);  // can't use prefix here, as still in construction
     }
 
-    /**
-     * Provide an int value for use in scripts, etc. This will be the numeric
-     * locomotive address last seen, unless the last message said the loco was
-     * exiting. Note that there may still some other locomotive in the
-     * transponding zone!
-     *
-     * @return -1 if the last message specified exiting
-     */
-    @Override
-    public int getState() {
-        return lastLoco;
-    }
-
-    @Override
-    public void setState(int s) {
-        lastLoco = s;
-    }
-    int lastLoco = -1;
-
     @Override
     public void dispose() {
         super.dispose();
@@ -419,7 +400,6 @@ public class Dcc4PcReporter extends AbstractRailComReporter {
             log.debug(this.getDisplayName() + " Create/Get id tag for " + addr);
         }
         rcTag = jmri.InstanceManager.getDefault(jmri.RailComManager.class).provideIdTag("" + addr);
-        rcTag.setWhereLastSeen(this);
 
         rcTag.setAddressType(addr_type);
 
@@ -453,20 +433,14 @@ public class Dcc4PcReporter extends AbstractRailComReporter {
 
         address_part_1 = 0;
         address_part_2 = -1;
-        setReport(rcTag);
+        notify(rcTag);
         return rcTag;
     }
 
     RailCom provideTag(int address, int addr_type) {
         log.debug("provide Tag");
         RailCom rcTag = jmri.InstanceManager.getDefault(jmri.RailComManager.class).provideIdTag("" + address);
-        rcTag.setWhereLastSeen(this);
-        rcTag.setAddressType(addr_type);
-        setReport(rcTag);
-        lastLoco = address;
-        synchronized (this) {
-            addr = address;
-        }
+        notify(rcTag);
         return rcTag;
     }
 
