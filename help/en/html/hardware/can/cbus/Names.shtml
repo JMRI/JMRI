@@ -193,9 +193,9 @@
       <h2><a name="sysname" id="sysname">System Names</a></h2>
        <div>
         <p>When adding an item to your JMRI
-        <a href="../../../../package/jmri/jmrit/beantable/SensorTable.shtml">Sensors Table</a>,
-        <a href="../../../../package/jmri/jmrit/beantable/TurnoutTable.shtml">Turnouts Table</a>,
-        <a href="../../../../package/jmri/jmrit/beantable/LightTable.shtml">Lights Table</a> or
+        <a href="../../../../package/jmri/jmrit/beantable/SensorTable.shtml">Sensor Table</a>,
+        <a href="../../../../package/jmri/jmrit/beantable/TurnoutTable.shtml">Turnout Table</a>,
+        <a href="../../../../package/jmri/jmrit/beantable/LightTable.shtml">Light Table</a> or
         <a href="../../../../package/jmri/jmrit/beantable/ReporterTable.shtml">Reporter Table</a>,
 
         a JMRI system name is automatically created from the hardware address you input.
