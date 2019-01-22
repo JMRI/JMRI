@@ -50,6 +50,9 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+; - Version 0.1.24.1
+; - Correct the support for Java 11 Registry Keys
+; -------------------------------------------------------------------------
 ; - Version 0.1.24.0
 ; - Add support for Java 11 Registry Keys
 ; -------------------------------------------------------------------------
@@ -301,7 +304,7 @@
   ; -- usually, this will be determined by the build.xml ant script
   !define JRE_VER   "1.8"                       ; Required JRE version
 !endif
-!define INST_VER  "0.1.24.0"                   ; Installer version
+!define INST_VER  "0.1.24.1"                   ; Installer version
 !define PNAME     "${APP}.${JMRI_VER}"          ; Name of installer.exe
 !define SRCDIR    "."                           ; Path to head of sources
 InstallDir        "$PROGRAMFILES\JMRI"          ; Default install directory
