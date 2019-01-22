@@ -446,7 +446,8 @@ public interface Manager<E extends NamedBean> {
                                 // We couldn't do this earlier because the name might be checked
                                 // before the bean is created
                                 ReporterManager rm = InstanceManager.getDefault(ReporterManager.class);
-                                for (String name : legacyNameSet) {
+                                 Set<String> tempSet = new HashSet<>(legacyNameSet); // to avoid concurrent mod
+                                for (String name : tempSet) {
                                     // The legacy MR name for MRC can't do Reporters
                                     if (name.startsWith("MR") && rm.getReporter(name) != null) legacyNameSet.remove(name);
                                 }
