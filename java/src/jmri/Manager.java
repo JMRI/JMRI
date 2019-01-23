@@ -446,22 +446,27 @@ public interface Manager<E extends NamedBean> {
                                 // We couldn't do this earlier because the name might be checked
                                 // before the bean is created
                                 ReporterManager rm = InstanceManager.getDefault(ReporterManager.class);
+                                java.util.SortedSet<String> tempSet = new java.util.TreeSet<>(); 
                                 for (String name : legacyNameSet) {
                                     // The legacy MR name for MRC can't do Reporters
-                                    if (name.startsWith("MR") && rm.getReporter(name) != null) legacyNameSet.remove(name);
+                                    if (name.startsWith("MR") && rm.getReporter(name) != null) continue;
+                                    tempSet.add(name);
                                 }
-                                if (legacyNameSet.size() == 0) return true;
+                                if (tempSet.size() == 0) return true;
                                 
                                 org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Manager.class);
                                 log.warn("The following legacy names need to be migrated:");
-                                for (String name : legacyNameSet) log.warn("    {}", name);
+                                for (String name : tempSet) log.warn("    {}", name);
                                 
                                 // now create the legacy.csv file
                                 try (java.io.PrintWriter writer = new java.io.PrintWriter(jmri.util.FileUtil.getUserFilesPath()+java.io.File.separator+"legacy_bean_names.csv");) {
-                                    for (String name : legacyNameSet) writer.println(name);
+                                    for (String name : tempSet) writer.println(name);
                                 } catch (java.io.IOException e) {
                                     log.error("Failed to write legacy name file", e);
                                 }
+                                
+                                // clean up in case invoked twice
+                                legacyNameSet.clear();
                                 return true;
                             }
                 };
