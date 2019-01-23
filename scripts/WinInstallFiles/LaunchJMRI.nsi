@@ -285,12 +285,15 @@ Section "Main"
   ; -- Read from machine registry
   JRESearch:
     ClearErrors
+    DetailPrint "Checking 'JRE'..."
     ReadRegStr $R1 HKLM "SOFTWARE\JavaSoft\JRE" "CurrentVersion"
     ReadRegStr $R0 HKLM "SOFTWARE\JavaSoft\JRE\$R1" "JavaHome"
     IfErrors 0 FoundJavaInstallPoint
+    DetailPrint "Checking 'Java Runtime Environment'..."
     ReadRegStr $R1 HKLM "SOFTWARE\JavaSoft\Java Runtime Environment" "CurrentVersion"
     ReadRegStr $R0 HKLM "SOFTWARE\JavaSoft\Java Runtime Environment\$R1" "JavaHome"
     IfErrors 0 FoundJavaInstallPoint
+    DetailPrint "Checking 'JDK'..."
     ReadRegStr $R1 HKLM "SOFTWARE\JavaSoft\JDK" "CurrentVersion"
     ReadRegStr $R0 HKLM "SOFTWARE\JavaSoft\JDK\$R1" "JavaHome"
   FoundJavaInstallPoint:
@@ -307,6 +310,7 @@ Section "Main"
       Goto JRESearch
 
   JreNotFound:
+    DetailPrint "Java not found!"
     MessageBox MB_OK|MB_ICONSTOP "Java not found!"
     Goto Exit
 
