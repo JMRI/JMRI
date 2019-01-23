@@ -391,18 +391,20 @@
           Windows using NSIS</a></h2>
 
           <p>It is possible for NetBeans users to create a release
-          package for use on the Windows platform. This requires
-          installation of the Nullsoft Scriptable Install System
-          (NSIS), which can be downloaded from <a href=
-          "http://sourceforge.net/projects/nsis">the NSIS project
-          web site</a> on SourceForge.</p>
+          package for use on the Windows platform. JMRI requires use of a special NSIS build, 
+          which is available for Windows-based machines at <a href=
+          "https://nsis.sourceforge.io/Special_Builds">the NSIS project
+              'Special Builds' page</a> as the <strong>"Large Strings"</strong> build.  The 
+          NSIS project does not provide a "Large Strings" build install 
+          package for non-Windows machines, so developers on non-Windows
+          platforms cannot properly build Windows install packages.</p>
 
-          <p>Once NSIS is installed on the computer, it is
-          necessary to create a file called local.properties in the
-          same directory as JMRI's build.xml file. This file is
+          <p>Once the NSIS "Large Strings" Special Build is installed on the computer, it is
+          necessary to create a file called <strong>local.properties</strong> in the
+          same directory as JMRI's build.xml file. The local.properties file is
           specifically <i>not</i> checked in via GitHub, so that your
           machine-specific tool installation paths are <i>not</i>
-          checked in to GitHub. Create the file, and add a variable
+          checked in to GitHub. Create the local.properties file, and add a variable
           definition with the correct path to the directory which
           includes the NSIS executable, such as:</p>
 
@@ -415,13 +417,14 @@
           nsis.home=/opt/nsis/nsis-2.46/</p>
 
           <p>If you will be installing the SpotBugs tool, you will
-              also define spotbugs.home in this file. You may also
+              also define spotbugs.home in the local.properties file. You may also
               define several other machine-specific and user-specific
           information as described in various locations in the
           build.xml file.</p>
 
-          <p>With the NSIS package installed to your computer, and
-          build.xml properly modified, the Windows package may be
+          <p>With the the NSIS "Large Strings" Special Build package 
+          installed on your Windows-based computer, and
+          the <strong>local.properties</strong> file properly modified, the Windows package may be
           created by running the "package-windows" ant target in
           build.xml.</p>
 
