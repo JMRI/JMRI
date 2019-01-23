@@ -143,6 +143,12 @@ public class ManagerTest {
         Assert.assertEquals(2, Manager.startsWithLegacySystemPrefix("DXS1"));
         Assert.assertEquals(5, Manager.startsWithLegacySystemPrefix("DCCPPT4"));
         Assert.assertEquals(2, Manager.startsWithLegacySystemPrefix("DPS12"));
+
+        Assert.assertEquals(5, Manager.startsWithLegacySystemPrefix("DCCPPT1"));
+        Assert.assertEquals(2, Manager.startsWithLegacySystemPrefix("DXT1"));
+        Assert.assertEquals(2, Manager.startsWithLegacySystemPrefix("MRT1"));
+        Assert.assertEquals(2, Manager.startsWithLegacySystemPrefix("TML1"));
+        Assert.assertEquals(2, Manager.startsWithLegacySystemPrefix("PIL1"));
         
         Assert.assertEquals(-1, Manager.startsWithLegacySystemPrefix("CT1"));
         Assert.assertEquals(-1, Manager.startsWithLegacySystemPrefix("C2T12"));
@@ -166,6 +172,7 @@ public class ManagerTest {
         Manager.getSystemPrefixLength("DCCPPT1");
         Manager.getSystemPrefixLength("MRT1");
         Manager.getSystemPrefixLength("DXT1");
+        Manager.getSystemPrefixLength("TML1");
         
         // and try
         Manager.legacyReportTask.execute();
@@ -175,6 +182,7 @@ public class ManagerTest {
         JUnitAppender.assertWarnMessage("    DCCPPT1");
         JUnitAppender.assertWarnMessage("    DXT1");
         JUnitAppender.assertWarnMessage("    MRT1");
+        JUnitAppender.assertWarnMessage("    TML1");
         Assert.assertTrue(JUnitAppender.verifyNoBacklog());
     }
     
@@ -202,6 +210,7 @@ public class ManagerTest {
         Manager.getSystemPrefixLength("DCCPPT2");
         Manager.getSystemPrefixLength("MR2");
         Manager.getSystemPrefixLength("DXT2");
+        Manager.getSystemPrefixLength("TML2");
         // and try
         Manager.legacyReportTask.execute();
         
@@ -209,6 +218,8 @@ public class ManagerTest {
         JUnitAppender.assertWarnMessage("The following legacy names need to be migrated:");
         JUnitAppender.assertWarnMessage("    DCCPPT2");
         JUnitAppender.assertWarnMessage("    DXT2");
+        // MR2 suppressed
+        JUnitAppender.assertWarnMessage("    TML2");
         Assert.assertTrue(JUnitAppender.verifyNoBacklog());
     }
 
