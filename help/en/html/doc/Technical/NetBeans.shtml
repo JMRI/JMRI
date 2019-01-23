@@ -470,6 +470,9 @@
           <p>The ant target "LaunchJMRI.exe" may then be used to create the JMRI 
           Windows Launcher.  Create the launcher before creating the Windows 
           installation package.</p>
+          <p>Note that either the "standard" or the "large strings" version of the NSIS
+          tool may be used to create the Windows "installer", but only the "large strings"
+          version of the NSIS tool will create a fully-functional Windows "launcher".
 
           <h2><a id="xmltools" name="xmltools">Using NetBeans XML
           tools</a></h2>NetBeans has nice tools for working with
