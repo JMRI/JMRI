@@ -25,7 +25,7 @@ public abstract class AbstractSensorMgrTestBase extends AbstractManagerTestBase<
     // implementing classes must provide these abstract members:
     //
     @Before
-    abstract public void setUp();    	// load t with actual object; create scaffolds as needed
+    abstract public void setUp();    	// load l with actual object; create scaffolds as needed
 
     abstract public String getSystemName(int i);
 
