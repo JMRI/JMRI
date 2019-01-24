@@ -15,7 +15,7 @@ import org.jdom2.Element;
  *   <li>RFID-tag.</li>
  *   <li>Digitrax Transponding Decoders</li>
  *   <li>RailCom tags</li>
- * <ul>
+ * </ul>
  * <P>
  * Each IdTag contains the following information:
  * <ul>
