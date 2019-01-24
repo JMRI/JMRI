@@ -2,11 +2,8 @@ package jmri.jmrix.powerline;
 
 import jmri.Sensor;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import jmri.util.junit.annotations.*;
+import org.junit.*;
 
 /**
  * JUnit tests for the SerialSensorManager class.
@@ -84,6 +81,7 @@ public class SerialSensorManagerTest extends jmri.managers.AbstractSensorMgrTest
     @Override
     @Ignore("ignoring this test due to the system name format, needs to be properly coded")
     @Test
+    @ToDo("modify system name format, then remove this overriden test so that the test in the parent class can run")
     public void testUpperLower() {
     }
 

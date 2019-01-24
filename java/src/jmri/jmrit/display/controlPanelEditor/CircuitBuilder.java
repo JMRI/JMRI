@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.SortedSet;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -937,8 +938,8 @@ public class CircuitBuilder {
                 }
             }
         }
-        List<Portal> list = portalMgr.getNamedBeanList();
-        Iterator<Portal> iter = list.iterator();
+        Set<Portal> set = portalMgr.getNamedBeanSet();
+        Iterator<Portal> iter = set.iterator();
         while (iter.hasNext()) {
             Portal portal =  iter.next();
             String name = portal.getName();

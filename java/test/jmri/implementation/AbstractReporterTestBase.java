@@ -59,6 +59,41 @@ abstract public class AbstractReporterTestBase {
          Assert.assertEquals("bean type",r.getBeanType(),Bundle.getMessage("BeanNameReporter"));
     }
 
+    @Test
+    public void testPropertyChange() {
+        currentReportSeen = false;
+        lastReportSeen = false;
+        r.addPropertyChangeListener(new TestReporterListener());
+        // Report a String
+        r.setReport(generateObjectToReport());
+        // Check that both CurrentReport and LastReport were seen
+        Assert.assertTrue("CurrentReport seen", currentReportSeen);
+        Assert.assertTrue("LastReport seen", lastReportSeen);
+
+        // Nothing to report now
+        currentReportSeen = false;
+        lastReportSeen = false;
+        r.setReport(null);
+        // Check that CurrentReport was seen
+        Assert.assertTrue("CurrentReport seen after null", currentReportSeen);
+        // Check that LastReport was not seen (no change on null)
+        Assert.assertFalse("LastReport seen after null", lastReportSeen);
+    }
+
+    protected boolean currentReportSeen = false;
+    protected boolean lastReportSeen = false;
+
+    public class TestReporterListener implements java.beans.PropertyChangeListener {
+        @Override
+        public void propertyChange(java.beans.PropertyChangeEvent e){
+            if (e.getPropertyName().equals("currentReport")) {
+                currentReportSeen = true;
+            } else if (e.getPropertyName().equals("lastReport")) {
+                lastReportSeen = true;
+            }
+        }
+    }
+
     @Before
     abstract public void setUp();
 

@@ -43,7 +43,7 @@ public class AddressedHighCvProgrammerFacadeTest extends TestCase {
         Assert.assertTrue("index L not written", !dp.hasBeenWritten(254));
         Assert.assertTrue("index val not written", !dp.hasBeenWritten(255));
 
-        p.readCV(4, l);
+        p.readCV("4", l);
         waitReply();
         Assert.assertEquals("read back", 12, readValue);
     }

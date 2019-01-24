@@ -66,21 +66,21 @@ public class OsIndicator implements Constants {
         // Load variable into the Conditional
         List<ConditionalVariable> variableList = c.getCopyOfStateVariables();
         variableList.add(new ConditionalVariable(false, Conditional.Operator.NONE,
-                Conditional.TYPE_SENSOR_INACTIVE,
+                Conditional.Type.SENSOR_INACTIVE,
                 osSensor, true));
         if (!lock.equals("")) {
             variableList.add(new ConditionalVariable(false, Conditional.Operator.AND,
-                    Conditional.TYPE_SENSOR_INACTIVE,
+                    Conditional.Type.SENSOR_INACTIVE,
                     lock, true));
         }
         c.setStateVariables(variableList);
 
         List<ConditionalAction> actionList = c.getCopyOfActions();
         actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE,
-                Conditional.ACTION_SET_TURNOUT, output,
+                Conditional.Action.SET_TURNOUT, output,
                 Turnout.CLOSED, " ")); //NOI18N
         actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_FALSE,
-                Conditional.ACTION_SET_TURNOUT, output,
+                Conditional.Action.SET_TURNOUT, output,
                 Turnout.THROWN, " ")); //NOI18N
         c.setAction(actionList);          // string data
 

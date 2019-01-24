@@ -54,7 +54,7 @@ public interface ConditionalAction {
      *
      * @return the type
      */
-    int getType();
+    Conditional.Action getType();
 
     /**
      * @return String name of this consequent type
@@ -83,7 +83,7 @@ public interface ConditionalAction {
      */
     void setType(String type);
 
-    void setType(int type);
+    void setType(Conditional.Action type);
 
     public String description(boolean triggerType);
 

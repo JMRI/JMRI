@@ -14,6 +14,7 @@ import org.junit.Assert;
  */
 public class TurnoutOperationTest extends TestCase {
 
+    @SuppressWarnings("unlikely-arg-type") // String unrelated when testing Wrong type
     public void testEquals() {
         TurnoutOperation to1 = new TurnoutOperation("to1"){
             @Override

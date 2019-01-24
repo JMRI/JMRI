@@ -45,7 +45,7 @@ public class ShowCarsInTrainFrame extends OperationsFrame implements java.beans.
     JLabel textPickUp = new JLabel(Bundle.getMessage("Pickup"));
     JLabel textInTrain = new JLabel(Bundle.getMessage("InTrain"));
     JLabel textSetOut = new JLabel(Bundle.getMessage("SetOut"));
-    
+
     // panels
     JPanel pCars = new JPanel();
 
@@ -162,7 +162,9 @@ public class ShowCarsInTrainFrame extends OperationsFrame implements java.beans.
                                         car.toString(), car
                                                 .getRouteLocation().getName(),
                                         car.getTrackName(), car.getRouteDestination().getName());
-                                JCheckBox checkBox = new JCheckBox(TrainCommon.splitString(car.toString()));
+                                JCheckBox checkBox = new JCheckBox(TrainCommon.splitString(car.getRoadName()) +
+                                        " " +
+                                        TrainCommon.splitString(car.getNumber()));
                                 if (car.getRouteDestination() == rl) {
                                     addItemLeft(pCars, checkBox, 2, i++); // set out
                                 } else if (car.getRouteLocation() == rl && car.getTrack() != null) {

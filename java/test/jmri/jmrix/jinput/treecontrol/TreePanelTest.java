@@ -1,11 +1,8 @@
 package jmri.jmrix.jinput.treecontrol;
 
+import jmri.jmrix.jinput.TreeModel;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * Test simple functioning of TreePanel
@@ -15,9 +12,24 @@ import org.junit.Test;
 public class TreePanelTest {
 
     @Test
-    public void testCtor() {
-        TreePanel action = new TreePanel();
-        Assert.assertNotNull("exists", action);
+    public void testCtor() throws InterruptedException {
+        try {
+            // just checking for failure to construct
+            new TreePanel();
+        } catch (Throwable e) {
+            log.warn("TreeModelTest caught "+e);
+            if (e instanceof UnsatisfiedLinkError) {
+                log.info("TreeModel.instance threw UnsatisfiedLinkError, which means we can't test on this platform");
+                return;
+            } else if (e instanceof ClassNotFoundException) {
+                log.info("TreeModel.instance threw ClassNotFoundException, which means we can't test on this platform");
+                return;
+            } else {
+                Assert.fail("instance threw "+e);
+            }
+        }
+        // then kill the thread
+        TreeModel.instance().terminateThreads();
     }
 
     @Before
@@ -26,5 +38,9 @@ public class TreePanelTest {
     }
 
     @After
-    public void tearDown() {        JUnitUtil.tearDown();    }
+    public void tearDown() {
+        JUnitUtil.tearDown();
+    }
+
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TreePanelTest.class);
 }

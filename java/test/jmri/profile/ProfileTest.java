@@ -161,6 +161,7 @@ public class ProfileTest {
      * Test of equals method, of class Profile.
      */
     @Test
+    @SuppressWarnings("unlikely-arg-type") // String seems to be unrelated to Profile
     public void testEquals() {
         try {
             File rootFolder = folder.newFolder(Profile.PROFILE);

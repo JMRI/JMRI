@@ -34,6 +34,7 @@ public interface DigitalIO extends NamedBean {
      *
      * @param s the desired state
      */
+    @InvokeOnLayoutThread
     public void setCommandedState(int s);
 
     /**
@@ -58,6 +59,7 @@ public interface DigitalIO extends NamedBean {
      * Request an update from the layout soft/hardware. May not even happen, and
      * if it does it will happen later; listen for the result.
      */
+    @InvokeOnLayoutThread
     public void requestUpdateFromLayout();
     
 }

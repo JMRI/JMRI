@@ -32,12 +32,15 @@ import javax.swing.event.TreeExpansionEvent;
 import javax.swing.event.TreeExpansionListener;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.DefaultTreeSelectionModel;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 import jmri.InstanceManager;
+import jmri.Scale;
+import jmri.ScaleManager;
 import jmri.UserPreferencesManager;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.SplitButtonColorChooserPanel;
@@ -378,15 +381,27 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
                     setSimplePreferenceState("jmri.jmrit.timetable:TrainTimes", _showTrainTimes);  // NOI18N
         });
 
-        JMenuItem imp = new JMenuItem(Bundle.getMessage("MenuImport"));  // NOI18N
-        imp.addActionListener((ActionEvent event) -> {
+        JMenuItem impsgn = new JMenuItem(Bundle.getMessage("MenuImportSgn"));  // NOI18N
+        impsgn.addActionListener((ActionEvent event) -> {
             importPressed();
+        });
+
+        JMenuItem impcsv = new JMenuItem(Bundle.getMessage("MenuImportCsv"));  // NOI18N
+        impcsv.addActionListener((ActionEvent event) -> {
+            importCsvPressed();
+        });
+
+        JMenuItem expcsv = new JMenuItem(Bundle.getMessage("MenuExportCsv"));  // NOI18N
+        expcsv.addActionListener((ActionEvent event) -> {
+            exportCsvPressed();
         });
 
         JMenu ttMenu = new JMenu(Bundle.getMessage("MenuTimetable"));  // NOI18N
         ttMenu.add(trainTime);
         ttMenu.addSeparator();
-        ttMenu.add(imp);
+        ttMenu.add(impsgn);
+        ttMenu.add(impcsv);
+        ttMenu.add(expcsv);
 
         JMenuBar menuBar = new JMenuBar();
         menuBar.add(ttMenu);
@@ -405,6 +420,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         // Layout
         _editLayoutName = new JTextField(20);
         _editScale = new JComboBox<>();
+        _editScale.addItemListener(layoutScaleItemEvent);
         _editFastClock = new JTextField(5);
         _editThrottles = new JTextField(5);
         _editMetric = new JCheckBox();
@@ -530,6 +546,40 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
                 Stop stop = _dataMgr.getStop(_curNodeId);
                 if (stop.getStagingTrack() <= stagingTracks) {
                     _editStagingTrack.setModel(new SpinnerNumberModel(stop.getStagingTrack(), 0, stagingTracks, 1));
+                }
+            }
+        }
+    };
+
+    /**
+     * If the custom scale item is selected provide a dialog to set the scale ratio
+     */
+    transient ItemListener layoutScaleItemEvent = new ItemListener() {
+        public void itemStateChanged(ItemEvent e) {
+            if (e.getStateChange() == ItemEvent.SELECTED) {
+                if (_editScale.hasFocus()) {
+                    Scale scale = (Scale) _editScale.getSelectedItem();
+                    if (scale.getScaleName().equals("CUSTOM")) {  // NOI18N
+                        String ans = JOptionPane.showInputDialog(
+                                Bundle.getMessage("ScaleRatioChange"),  // NOI18N
+                                scale.getScaleRatio()
+                                );
+                        if (ans != null) {
+                            try {
+                                double newRatio = Double.parseDouble(ans);
+                                scale.setScaleRatio(newRatio);
+                            } catch (java.lang.IllegalArgumentException
+                                    | java.beans.PropertyVetoException ex) {
+                                log.warn("Unable to change custom ratio: {}", ex.getMessage());  // NOI18N
+                                JOptionPane.showMessageDialog(null,
+                                        Bundle.getMessage("NumberFormatError", ans, "Custom ratio"),  // NOI18N
+                                        Bundle.getMessage("WarningTitle"),  // NOI18N
+                                        JOptionPane.WARNING_MESSAGE);
+                                Layout layout = _dataMgr.getLayout(_curNodeId);
+                                _editScale.setSelectedItem(layout.getScale());
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -1003,11 +1053,11 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         _showScaleMK.setText(String.format("%.2f %s", layout.getScaleMK(), unitMeasure)); // NOI18N
 
         _editScale.removeAllItems();
-        for (Scale scale : Scale.values()) {
+        for (Scale scale : ScaleManager.getScales()) {
             _editScale.addItem(scale);
         }
         jmri.util.swing.JComboBoxUtil.setupComboBoxMaxRows(_editScale);
-        _editScale.setSelectedItem(Scale.valueOf(layout.getScale()));
+        _editScale.setSelectedItem(layout.getScale());
     }
 
     /*
@@ -1164,9 +1214,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
 
         // Pre-validate and convert inputs
         String newName = _editLayoutName.getText().trim();
-        Scale scale = (Scale) _editScale.getSelectedItem();
-        String newScale = scale.name();
-        log.info("s = {}, n = {}", scale, newScale);
+        Scale newScale = (Scale) _editScale.getSelectedItem();
         int newFastClock = parseNumber(_editFastClock, "fast clock");  // NOI18N
         if (newFastClock < 1) {
             newFastClock = layout.getFastClock();
@@ -1188,7 +1236,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
             update = true;
         }
 
-        if (layout.getScale().equals(newScale)) {
+        if (!layout.getScale().equals(newScale)) {
             try {
                 layout.setScale(newScale);
                 update = true;
@@ -2181,16 +2229,173 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
             } catch (IOException ex) {
                 log.error("Import exception: {}", ex);  // NOI18N
                 JOptionPane.showMessageDialog(null,
-                        Bundle.getMessage("ImportFailed"),  // NOI18N
+                        Bundle.getMessage("ImportFailed", "SGN"),  // NOI18N
                         Bundle.getMessage("ErrorTitle"),  // NOI18N
                         JOptionPane.ERROR_MESSAGE);
                 return;
             }
             savePressed();
             JOptionPane.showMessageDialog(null,
-                    Bundle.getMessage("ImportCompleted"),  // NOI18N
+                    Bundle.getMessage("ImportCompleted", "SGN"),  // NOI18N
                     Bundle.getMessage("MessageTitle"),  // NOI18N
                     JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+
+    List<String> feedbackList;
+    void importCsvPressed() {
+        fileChooser = new JFileChooser(jmri.util.FileUtil.getUserFilesPath());
+        fileChooser.setFileFilter(new FileNameExtensionFilter("Import File", "csv"));
+        int retVal = fileChooser.showOpenDialog(null);
+        if (retVal == JFileChooser.APPROVE_OPTION) {
+            File file = fileChooser.getSelectedFile();
+            try {
+                feedbackList = new TimeTableCsvImport().importCsv(file);
+            } catch (IOException ex) {
+                log.error("Import exception: {}", ex);  // NOI18N
+                JOptionPane.showMessageDialog(null,
+                        Bundle.getMessage("ImportCsvFailed", "CVS"),  // NOI18N
+                        Bundle.getMessage("ErrorTitle"),  // NOI18N
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            if (feedbackList.size() > 0) {
+                StringBuilder msg = new StringBuilder(Bundle.getMessage("ImportCsvErrors"));  // NOI18N
+                for (String feedback : feedbackList) {
+                    msg.append(feedback + "\n");
+                }
+                JOptionPane.showMessageDialog(null,
+                        msg.toString(),
+                        Bundle.getMessage("ErrorTitle"),  // NOI18N
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            savePressed();
+            JOptionPane.showMessageDialog(null,
+                    Bundle.getMessage("ImportCompleted", "CSV"),  // NOI18N
+                    Bundle.getMessage("MessageTitle"),  // NOI18N
+                    JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+
+    void exportCsvPressed() {
+        // Select layout
+        List<Layout> layouts = _dataMgr.getLayouts(true);
+        if (layouts.size() == 0) {
+            JOptionPane.showMessageDialog(null,
+                    Bundle.getMessage("ExportLayoutError"),  // NOI18N
+                    Bundle.getMessage("ErrorTitle"),  // NOI18N
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        int layoutId = layouts.get(0).getLayoutId();
+        if (layouts.size() > 1) {
+            Layout layout = (Layout) JOptionPane.showInputDialog(
+                    null,
+                    Bundle.getMessage("ExportSelectLayout"),  // NOI18N
+                    Bundle.getMessage("QuestionTitle"),  // NOI18N
+                    JOptionPane.PLAIN_MESSAGE,
+                    null,
+                    layouts.toArray(),
+                    null);
+            if (layout == null) return;
+            layoutId = layout.getLayoutId();
+        }
+
+        // Select segment
+        List<Segment> segments = _dataMgr.getSegments(layoutId, true);
+        if (segments.size() == 0) {
+            JOptionPane.showMessageDialog(null,
+                    Bundle.getMessage("ExportSegmentError"),  // NOI18N
+                    Bundle.getMessage("ErrorTitle"),  // NOI18N
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        int segmentId = segments.get(0).getSegmentId();
+        if (segments.size() > 1) {
+            Segment segment = (Segment) JOptionPane.showInputDialog(
+                    null,
+                    Bundle.getMessage("ExportSelectSegment"),  // NOI18N
+                    Bundle.getMessage("QuestionTitle"),  // NOI18N
+                    JOptionPane.PLAIN_MESSAGE,
+                    null,
+                    segments.toArray(),
+                    null);
+            if (segment == null) return;
+            segmentId = segment.getSegmentId();
+        }
+
+        // Select schedule
+        List<Schedule> schedules = _dataMgr.getSchedules(layoutId, true);
+        if (schedules.size() == 0) {
+            JOptionPane.showMessageDialog(null,
+                    Bundle.getMessage("ExportScheduleError"),  // NOI18N
+                    Bundle.getMessage("ErrorTitle"),  // NOI18N
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        int scheduleId = schedules.get(0).getScheduleId();
+        if (schedules.size() > 1) {
+            Schedule schedule = (Schedule) JOptionPane.showInputDialog(
+                    null,
+                    Bundle.getMessage("ExportSelectSchedule"),  // NOI18N
+                    Bundle.getMessage("QuestionTitle"),  // NOI18N
+                    JOptionPane.PLAIN_MESSAGE,
+                    null,
+                    schedules.toArray(),
+                    null);
+            if (schedule == null) return;
+            scheduleId = schedule.getScheduleId();
+        }
+
+        fileChooser = new JFileChooser(jmri.util.FileUtil.getUserFilesPath());
+        fileChooser.setFileFilter(new FileNameExtensionFilter("Export as CSV File", "csv"));  // NOI18N
+        int retVal = fileChooser.showSaveDialog(null);
+        if (retVal == JFileChooser.APPROVE_OPTION) {
+            File file = fileChooser.getSelectedFile();
+            String fileName = file.getAbsolutePath();
+            String fileNameLC = fileName.toLowerCase();
+            if (!fileNameLC.endsWith(".csv")) {  // NOI18N
+                fileName = fileName + ".csv";  // NOI18N
+                file = new File(fileName);
+            }
+            if (file.exists()) {
+                if (JOptionPane.showConfirmDialog(null,
+                        Bundle.getMessage("FileOverwriteWarning", file.getName()),  // NOI18N
+                        Bundle.getMessage("QuestionTitle"),  // NOI18N
+                        JOptionPane.OK_CANCEL_OPTION,
+                        JOptionPane.QUESTION_MESSAGE) != JOptionPane.OK_OPTION) {
+                    return;
+                }
+            }
+
+
+            boolean hasErrors;
+            try {
+                hasErrors = new TimeTableCsvExport().exportCsv(file, layoutId, segmentId, scheduleId);
+            } catch (IOException ex) {
+                log.error("Export exception: {}", ex);  // NOI18N
+                JOptionPane.showMessageDialog(null,
+                        Bundle.getMessage("ExportFailed"),  // NOI18N
+                        Bundle.getMessage("ErrorTitle"),  // NOI18N
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+
+
+
+            if (hasErrors) {
+                JOptionPane.showMessageDialog(null,
+                        Bundle.getMessage("ExportFailed"),  // NOI18N
+                        Bundle.getMessage("ErrorTitle"),  // NOI18N
+                        JOptionPane.ERROR_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null,
+                        Bundle.getMessage("ExportCompleted", file),  // NOI18N
+                        Bundle.getMessage("MessageTitle"),  // NOI18N
+                        JOptionPane.INFORMATION_MESSAGE);
+            }
         }
     }
 
@@ -2460,7 +2665,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
      * Set/clear dirty flag and save button
      * @param dirty True if changes have been made that are not saved.
      */
-    void setShowReminder(boolean dirty) {
+    public void setShowReminder(boolean dirty) {
         _isDirty = dirty;
         _saveButton.setEnabled(dirty);
     }

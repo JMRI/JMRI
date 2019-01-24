@@ -7005,7 +7005,7 @@ class ADpowerMonitor (PropertyChangeListener) :
     powerOffTime = -1L
     
     def __init__(self):
-        self.powerManager = InstanceManager.powerManagerInstance()
+        self.powerManager = InstanceManager.getDefault(jmri.PowerManager)
         if self.powerManager != None and not AutoDispatcher.lenzSimulation :
             ADpowerMonitor.powerOn = (self.powerManager.getPower()
               == PowerManager.ON)

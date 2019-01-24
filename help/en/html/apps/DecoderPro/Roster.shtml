@@ -41,9 +41,10 @@
       number of individual locomotives.</p>
 
       <p>Each Roster entry has an "identifier" (Roster ID) by which
-      it's known. When the program wants you to select a Roster
-      entry, it will show a selection box or menu containing all of
-      the Roster entry IDs. You can use anything you want for this:
+      it's known. This is your name it.
+      When the program wants you to select a Roster
+      entry, it will ask you to pick from a selection box or menu containing 
+      Roster entry IDs. You can use anything you want for this:
       Road number, type, even "That crummy old model I need to
       repaint" or "My beautiful Shay".</p>
 
@@ -59,8 +60,9 @@
       <dl>
         <dt>Roster ID</dt>
 
-        <dd>The ID for this entry. You can change it if you want,
-        in which case it will appear in selection boxes, etc, with
+        <dd>Your name for the new locomotive, see above.
+        You can change an entry's ID later,
+        in which case it will appear in new selection boxes, etc, with
         the new ID name.</dd>
 
         <dt>DCC Address</dt>

@@ -148,6 +148,23 @@ public class RosterEntryTest {
     }
 
     @Test
+    public void testDateFormatHistoric() {
+        RosterEntry r = new RosterEntry("file here");
+
+        r.setId("test Id");
+        TimeZone tz = TimeZone.getDefault();
+        try {
+            TimeZone.setDefault(TimeZone.getTimeZone("GMT-7"));
+            r.setDateUpdated("03-Oct-2015 11:19:12"); // this is in local time
+        } finally {
+            TimeZone.setDefault(tz);
+        }
+        
+        Assert.assertTrue(jmri.util.JUnitAppender.verifyNoBacklog()); 
+        Assert.assertEquals("2015-10-03T18:19:12Z", r.getDateUpdated());
+    }
+
+    @Test
     public void testDateFormatISO() {
         RosterEntry r = new RosterEntry("file here");
 
@@ -155,7 +172,7 @@ public class RosterEntryTest {
         r.setDateUpdated("2018-03-05T02:34:55Z");
         
         Assert.assertTrue(jmri.util.JUnitAppender.verifyNoBacklog()); 
-        Assert.assertEquals("2018-03-05T02:34:55Z", r.getDateUpdated().toString());
+        Assert.assertEquals("2018-03-05T02:34:55Z", r.getDateUpdated());
     }
 
     @Test

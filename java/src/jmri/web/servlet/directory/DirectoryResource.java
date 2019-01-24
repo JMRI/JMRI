@@ -196,7 +196,8 @@ public class DirectoryResource extends Resource {
     }
 
     @Override
-    @Deprecated
+    @Deprecated  // will be removed when superclass method is removed due to @Override
+    @SuppressWarnings("deprecation")  // temporary implementation of method with @Override
     public URL getURL() {
         return this.resource.getURL();
     }

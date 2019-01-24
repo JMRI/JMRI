@@ -39,10 +39,6 @@ public class CbusSensor extends AbstractSensor implements CanListener {
         // build local addresses
         CbusAddress a = new CbusAddress(address);
         CbusAddress[] v = a.split();
-        if (v == null) {
-            log.error("Did not find usable system name: " + address);
-            return;
-        }
         switch (v.length) {
             case 1:
                 addrActive = v[0];
@@ -83,6 +79,7 @@ public class CbusSensor extends AbstractSensor implements CanListener {
         else {
             m.setOpCode(CbusConstants.CBUS_AREQ);
         }
+        CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
         tc.sendCanMessage(m, this);
     }
 
@@ -105,6 +102,7 @@ public class CbusSensor extends AbstractSensor implements CanListener {
                 m = addrActive.makeMessage(tc.getCanid());
                 setOwnState(Sensor.ACTIVE);
             }
+            CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
             tc.sendCanMessage(m, this);
         } else if (s == Sensor.INACTIVE) {
             if (getInverted()){
@@ -114,8 +112,10 @@ public class CbusSensor extends AbstractSensor implements CanListener {
                 m = addrInactive.makeMessage(tc.getCanid());
                 setOwnState(Sensor.INACTIVE);
             }
+            CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
             tc.sendCanMessage(m, this);
-        } else if (s == Sensor.UNKNOWN){
+        }
+        if (s == Sensor.UNKNOWN){
             setOwnState(Sensor.UNKNOWN);
         }
     }
@@ -126,6 +126,32 @@ public class CbusSensor extends AbstractSensor implements CanListener {
     @Override
     public boolean canInvert() {
         return true;
+    }    
+    
+    /**
+     * Package method returning CanMessage for the Active Sensor Address
+     */    
+    public CanMessage getAddrActive(){
+        CanMessage m;
+        if (getInverted()){
+            m = addrInactive.makeMessage(tc.getCanid());              
+        } else {
+            m = addrActive.makeMessage(tc.getCanid());
+        }
+        return m;
+    }
+    
+    /**
+     * Package method returning CanMessage for the Inactive Sensor Address
+     */    
+    public CanMessage getAddrInactive(){
+        CanMessage m;
+        if (getInverted()){
+            m = addrActive.makeMessage(tc.getCanid());              
+        } else {
+            m = addrInactive.makeMessage(tc.getCanid());
+        }
+        return m;
     }    
     
     /**

@@ -40,6 +40,7 @@ public interface Sensor extends DigitalIO {
     
     /** {@inheritDoc} */
     @Override
+    @InvokeOnLayoutThread
     default public void setCommandedState(int s) {
         try {
             setState(s);
@@ -62,6 +63,7 @@ public interface Sensor extends DigitalIO {
      * @param newState the state to set
      * @throws jmri.JmriException if unable to set the state
      */
+    @InvokeOnLayoutThread
     public void setKnownState(int newState) throws jmri.JmriException;
 
     /**
@@ -74,6 +76,7 @@ public interface Sensor extends DigitalIO {
      *
      * @param inverted true if the sensor should be inverted; false otherwise
      */
+    @InvokeOnLayoutThread
     public void setInverted(boolean inverted);
 
     /**
@@ -159,7 +162,7 @@ public interface Sensor extends DigitalIO {
      * @deprecated Since JMRI 4.9.2, use {@link #setUseDefaultTimerSettings(boolean)}
      * @param flag true to set to current defaults if not previously true
      */
-    @Deprecated
+    @Deprecated // 4.9.2
     public void useDefaultTimerSettings(boolean flag);
     
     /**
@@ -167,7 +170,7 @@ public interface Sensor extends DigitalIO {
      * @return true if using default debounce values from the
      *         {@link jmri.SensorManager}
      */
-    @Deprecated
+    @Deprecated // 4.9.2
     public boolean useDefaultTimerSettings();
     /**
      * Some sensor boards also serve the function of being able to report back
@@ -243,6 +246,7 @@ public interface Sensor extends DigitalIO {
      *
      * @param r PullResistance value to use.
      */
+    @InvokeOnLayoutThread
     public void setPullResistance(PullResistance r);
 
     /**

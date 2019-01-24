@@ -118,7 +118,7 @@ public class CodeLine {
     
     void startExternalCodeLine() {
         hStartTO.getBean().setCommandedState(Turnout.THROWN);
-        new Timer("Codeline Timer").schedule(new TimerTask() {  // NOI18N
+        jmri.util.TimerUtil.schedule(new TimerTask() {
             @Override
             public void run() {
                 hStartTO.getBean().setCommandedState(Turnout.CLOSED);

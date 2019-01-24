@@ -25,6 +25,9 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+; - Version 0.1.24.0
+; - Add support for Java 11 Registry Keys
+; -------------------------------------------------------------------------
 ; - Version 0.1.23.0
 ; - Add JVM option 'Djogamp.gluegen.UseTempJarCache=false'
 ; -------------------------------------------------------------------------
@@ -145,8 +148,8 @@
 ; -------------------------------------------------------------------------
 !define AUTHOR     "Matt Harris for JMRI"         ; Author name
 !define APP        "LaunchJMRI"                   ; Application name
-!define COPYRIGHT  "(C) 1997-2017 JMRI Community" ; Copyright string
-!define VER        "0.1.23.0"                     ; Launcher version
+!define COPYRIGHT  "(C) 1997-2019 JMRI Community" ; Copyright string
+!define VER        "0.1.24.0"                     ; Launcher version
 !define PNAME      "${APP}"                       ; Name of launcher
 ; -- Comment out next line to use {app}.ico
 !define ICON       "decpro5.ico"                  ; Launcher icon
@@ -282,11 +285,18 @@ Section "Main"
   ; -- Read from machine registry
   JRESearch:
     ClearErrors
+    DetailPrint "Checking 'JRE'..."
     ReadRegStr $R1 HKLM "SOFTWARE\JavaSoft\JRE" "CurrentVersion"
     ReadRegStr $R0 HKLM "SOFTWARE\JavaSoft\JRE\$R1" "JavaHome"
-    IfErrors 0 +3
+    IfErrors 0 FoundJavaInstallPoint
+    DetailPrint "Checking 'Java Runtime Environment'..."
     ReadRegStr $R1 HKLM "SOFTWARE\JavaSoft\Java Runtime Environment" "CurrentVersion"
     ReadRegStr $R0 HKLM "SOFTWARE\JavaSoft\Java Runtime Environment\$R1" "JavaHome"
+    IfErrors 0 FoundJavaInstallPoint
+    DetailPrint "Checking 'JDK'..."
+    ReadRegStr $R1 HKLM "SOFTWARE\JavaSoft\JDK" "CurrentVersion"
+    ReadRegStr $R0 HKLM "SOFTWARE\JavaSoft\JDK\$R1" "JavaHome"
+  FoundJavaInstallPoint:
     StrCpy $R0 "$R0\bin\$JAVAEXE"
 
   ; -- Not found
@@ -300,6 +310,7 @@ Section "Main"
       Goto JRESearch
 
   JreNotFound:
+    DetailPrint "Java not found!"
     MessageBox MB_OK|MB_ICONSTOP "Java not found!"
     Goto Exit
 

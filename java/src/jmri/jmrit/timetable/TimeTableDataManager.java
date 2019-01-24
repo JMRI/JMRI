@@ -371,7 +371,7 @@ public class TimeTableDataManager {
             }
         }
         if (sort) {
-            Collections.sort(list, (o1, o2) -> o1.getDistanceString().compareTo(o2.getDistanceString()));
+            Collections.sort(list, (o1, o2) -> Double.compare(o1.getDistance(), o2.getDistance()));
         }
         return list;
     }
@@ -434,7 +434,7 @@ public class TimeTableDataManager {
             }
         }
         if (sort) {
-            Collections.sort(list, (o1, o2) -> o1.getSeqSort().compareTo(o2.getSeqSort()));
+            Collections.sort(list, (o1, o2) -> Integer.compare(o1.getSeq(), o2.getSeq()));
         }
         return list;
     }
@@ -498,7 +498,7 @@ public class TimeTableDataManager {
         Layout layout = getLayout(schedule.getLayoutId());
         ArrayList<Stop> stops = getStops(trainId, 0, true);
 
-        float smile = layout.getScaleMK();
+        double smile = layout.getScaleMK();
         int startHH = schedule.getStartHour();
         int duration = schedule.getDuration();
         int currentTime = train.getStartTime();
@@ -534,7 +534,7 @@ public class TimeTableDataManager {
                         stop.setDepartTime(newDepart);
                     }
                 } else {
-                    throw new IllegalArgumentException(TIME_OUT_OF_RANGE);
+                    throw new IllegalArgumentException(String.format("%s~%d~%s", TIME_OUT_OF_RANGE, stop.getSeq(), train.getTrainName()));  // NOI18N
                 }
                 firstStop = false;
                 continue;
@@ -598,7 +598,7 @@ public class TimeTableDataManager {
      * @param checkTime The time value to be check.
      * @return true if the time is valid.
      */
-    boolean validateTime(int checkStart, int checkDuration, int checkTime) {
+    public boolean validateTime(int checkStart, int checkDuration, int checkTime) {
         if (checkDuration == 24 && checkTime < 1440) {
             return true;
         }

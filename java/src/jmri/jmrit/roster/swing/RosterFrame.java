@@ -1145,15 +1145,19 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                     if (l2.isEmpty()) {
                         l2 = l;
                     }
-                    //Still more than one possible loco, so check against the decoder family
+                    // Still more than one possible loco, so check against the decoder family
+                    log.trace("Checking against decoder family with mfg {} model {}", mfgId, modelId);
                     List<RosterEntry> l3 = new ArrayList<>();
                     List<DecoderFile> temp = InstanceManager.getDefault(DecoderIndexFile.class).matchingDecoderList(null, null, "" + mfgId, "" + modelId, null, null);
+                    log.trace("found {}", temp.size());
                     ArrayList<String> decoderFam = new ArrayList<>();
                     for (DecoderFile f : temp) {
                         if (!decoderFam.contains(f.getModel())) {
                             decoderFam.add(f.getModel());
                         }
                     }
+                    log.trace("matched {} times", decoderFam.size());
+                    
                     for (RosterEntry _re : l2) {
                         if (decoderFam.contains(_re.getDecoderModel())) {
                             l3.add(_re);
@@ -1504,6 +1508,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                 && evt.getPropertyName().equals(InstanceManager.getDefaultsPropertyName(GlobalProgrammerManager.class))
                 && evt.getNewValue() == null)) {
             gpm = InstanceManager.getNullableDefault(GlobalProgrammerManager.class);
+            log.trace("found global programming manager {}", gpm);
         }
         if (gpm != null) {
             String serviceModeProgrammerName = gpm.getUserName();
@@ -1541,9 +1546,10 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             });
         }
 
+        log.trace("start global check with {}, {}, {}", serModeProCon, gpm, (gpm != null ? gpm.isGlobalProgrammerAvailable() : "<none>"));
         if (serModeProCon != null && gpm != null && gpm.isGlobalProgrammerAvailable()) {
             if (ConnectionStatus.instance().isConnectionOk(serModeProCon.getConnectionName(), serModeProCon.getInfo())) {
-                log.debug("GPM Connection online");
+                log.debug("GPM Connection online 1");
                 serviceModeProgrammerLabel.setText(
                         Bundle.getMessage("ServiceModeProgOnline", serModeProCon.getConnectionName()));
                 serviceModeProgrammerLabel.setForeground(new Color(0, 128, 0));
@@ -1562,7 +1568,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             }
         } else if (gpm != null && gpm.isGlobalProgrammerAvailable()) {
             if (ConnectionStatus.instance().isSystemOk(gpm.getUserName())) {
-                log.debug("GPM Connection online");
+                log.debug("GPM Connection online 2");
                 serviceModeProgrammerLabel.setText(
                         Bundle.getMessage("ServiceModeProgOnline", gpm.getUserName()));
                 serviceModeProgrammerLabel.setForeground(new Color(0, 128, 0));
@@ -1581,6 +1587,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             }
         } else {
             // No service programmer available, disable interface sections not available
+            log.debug("no service programmer");
             serviceModeProgrammerLabel.setText(Bundle.getMessage("NoServiceProgrammerAvailable"));
             serviceModeProgrammerLabel.setForeground(Color.red);
             if (oldServMode != null) {

@@ -2,11 +2,12 @@ package jmri.implementation;
 
 import java.util.Date;
 import jmri.IdTag;
+import jmri.Reportable;
 import jmri.Reporter;
 
 /**
  * Abstract implementation of {@link jmri.IdTag} containing code common to all
- * concrete implementations.
+ * concrete implementations.  This implementation also implements {@link jmri.Reportable}.
  * <hr>
  * This file is part of JMRI.
  * <P>
@@ -22,7 +23,7 @@ import jmri.Reporter;
  * @author  Matthew Harris Copyright (C) 2011
  * @since 2.11.4
  */
-public abstract class AbstractIdTag extends AbstractNamedBean implements IdTag {
+public abstract class AbstractIdTag extends AbstractNamedBean implements IdTag,Reportable  {
 
     protected Reporter whereLastSeen = null;
 
@@ -57,12 +58,8 @@ public abstract class AbstractIdTag extends AbstractNamedBean implements IdTag {
         }
     }
 
-    // note that this doesn't properly implement the 
-    // contract in {@link NamedBean.toString()}, 
-    // which means things like tables and persistance 
-    // might not behave properly.
     @Override
-    public String toString() {
+    public String toReportString() {
         String userName = getUserName();
         return (userName == null || userName.isEmpty()) ? getTagID() : userName;
     }

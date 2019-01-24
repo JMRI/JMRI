@@ -139,7 +139,7 @@ public final class CbusConstants {
     // Opcodes with 6 data
     public static final int CBUS_RDCC5 = 0xC0;
     public static final int CBUS_WCVOA = 0xC1;
-
+    public static final int CBUS_CABDAT = 0xC2;
     public static final int CBUS_FCLK = 0xCF;
 
     public static final int CBUS_ACON2 = 0xD0;
@@ -218,6 +218,15 @@ public final class CbusConstants {
     public static final int EVENT_ON = 0;
     public static final int EVENT_OFF = 1;
     public static final int EVENT_EITHER = 2;
+    public static final int EVENT_NEITHER = 3;
+    
+    /**
+     * Event directions
+     */
+    public static final int EVENT_DIR_UNSET = 0;
+    public static final int EVENT_DIR_IN = 1;
+    public static final int EVENT_DIR_OUT = 2;
+    public static final int EVENT_DIR_EITHER = 3;
 
     /**
      * CBUS Priorities

@@ -49,10 +49,8 @@ public class OBlockManagerXml // extends XmlFile
         Element blocks = new Element("oblocks");
         blocks.setAttribute("class", "jmri.jmrit.logix.configurexml.OBlockManagerXml");
         OBlockManager manager = (OBlockManager) o;
-        Iterator<String> iter = manager.getSystemNameList().iterator();
-        while (iter.hasNext()) {
-            String sname = iter.next();
-            OBlock block = manager.getBySystemName(sname);
+        for (OBlock block : manager.getNamedBeanSet()) {
+            String sname = block.getSystemName();
             String uname = block.getUserName();
             if (log.isDebugEnabled()) {
                 log.debug("OBlock: sysName= {}, userName= {}", sname, uname);

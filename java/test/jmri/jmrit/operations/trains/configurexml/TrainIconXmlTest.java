@@ -1,9 +1,7 @@
 package jmri.jmrit.operations.trains.configurexml;
 
-import jmri.util.JUnitUtil;
-import org.junit.After;
+import jmri.jmrit.operations.OperationsTestCase;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -11,25 +9,12 @@ import org.junit.Test;
  *
  * Description: tests for the TrainIconXml class
  *
- * @author   Paul Bender  Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
-public class TrainIconXmlTest {
+public class TrainIconXmlTest extends OperationsTestCase {
 
     @Test
-    public void testCtor(){
-      Assert.assertNotNull("TrainIconXml constructor",new TrainIconXml());
+    public void testCtor() {
+        Assert.assertNotNull("TrainIconXml constructor", new TrainIconXml());
     }
-
-    // The minimal setup for log4J
-    @Before
-    public void setUp() {
-        JUnitUtil.setUp();
-    }
-
-    @After
-    public void tearDown() {
-        JUnitUtil.tearDown();
-    }
-
 }
-

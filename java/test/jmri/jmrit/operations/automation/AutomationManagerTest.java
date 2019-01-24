@@ -5,9 +5,7 @@ import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.trains.TrainManagerXml;
 import jmri.util.JUnitOperationsUtil;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 public class AutomationManagerTest extends OperationsTestCase {
@@ -189,19 +187,5 @@ public class AutomationManagerTest extends OperationsTestCase {
         
         // confirm two automations restored
         Assert.assertEquals("number of automations", 2,  automationManager.getSize());
-    }
-
-
-
-    @Override
-    @Before
-    public void setUp() {
-        super.setUp();
-    }
-
-    @Override
-    @After
-    public void tearDown() {
-        super.tearDown();
     }
 }

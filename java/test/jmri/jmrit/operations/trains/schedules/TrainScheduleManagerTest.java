@@ -1,39 +1,25 @@
 package jmri.jmrit.operations.trains.schedules;
 
-import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
-import jmri.util.JUnitUtil;
-import org.junit.After;
+import jmri.jmrit.operations.OperationsTestCase;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
-public class TrainScheduleManagerTest {
+public class TrainScheduleManagerTest extends OperationsTestCase {
 
     @Test
     public void testCTor() {
         TrainScheduleManager t = new TrainScheduleManager();
-        Assert.assertNotNull("exists",t);
+        Assert.assertNotNull("exists", t);
     }
 
     @Test
-    public void testGetComboBox(){
+    public void testGetComboBox() {
         TrainScheduleManager t = new TrainScheduleManager();
-        Assert.assertNotNull("ComboBox Available",t.getComboBox());
-    }
-
-    // The minimal setup for log4J
-    @Before
-    public void setUp() {
-        JUnitUtil.setUp();
-    }
-
-    @After
-    public void tearDown() {
-        JUnitUtil.tearDown();
+        Assert.assertNotNull("ComboBox Available", t.getComboBox());
     }
 
     // private final static Logger log = LoggerFactory.getLogger(TrainScheduleManagerTest.class);

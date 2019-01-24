@@ -7,7 +7,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Manage the system-specific Sensor implementation.
  * <p>
- * System names are "OSnnnn", where nnnn is the sensor number without padding.
+ * System names are "OSnnn", where O is the user configurable system prefix,
+ * nnn is the sensor number without padding.
  * <p>
  * Sensors are numbered from 1.
  *
@@ -135,6 +136,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     /**
      * Method to register any orphan Sensors when a new Serial Node is created.
      */
+    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations
     public void registerSensorsForNode(SerialNode node) {
         // get list containing all Sensors
         java.util.Iterator<String> iter
@@ -161,7 +163,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     /**
-     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     * {@inheritDoc}
      */
     @Override
     public String getEntryToolTip() {

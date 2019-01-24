@@ -38,7 +38,13 @@ public class DefaultRailComTest {
     @Test
     public void testRailComToString() {
         RailCom r = new DefaultRailCom("ID1234");
-        Assert.assertEquals("RailCom toString ", "Unknown Orientation Address 1234(S) ", r.toString());
+        Assert.assertEquals("RailCom toString ", "ID1234", r.toString());
+    }
+
+    @Test
+    public void testRailComToReportString() {
+        DefaultRailCom r = new DefaultRailCom("ID1234");
+        Assert.assertEquals("RailCom toReportString ", "Unknown Orientation Address 1234(S) ", r.toReportString());
     }
 
     @Test

@@ -84,6 +84,7 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
      */
     @Deprecated
     public static synchronized TrainManager instance() {
+        jmri.util.Log4JUtil.deprecationWarning(log, "instance");        
         return InstanceManager.getDefault(TrainManager.class);
     }
 
@@ -185,13 +186,20 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
      * Sets the selected schedule id
      *
      * @param id Selected schedule id
+     * Moved to TrainScheduleManager.java
+     * @deprecated at or before 4.13.7
      */
-    @Deprecated
+    @Deprecated  // at or before 4.13.7
     public void setTrainSecheduleActiveId(String id) {
         InstanceManager.getDefault(TrainScheduleManager.class).setTrainScheduleActiveId(id);
     }
 
-    @Deprecated
+    /**
+     * @deprecated at or before 4.13.7
+     * Moved to TrainScheduleManager.java
+     * @return active schedule id
+     */
+    @Deprecated // at or before 4.13.7
     public String getTrainScheduleActiveId() {
         return InstanceManager.getDefault(TrainScheduleManager.class).getTrainScheduleActiveId();
     }
@@ -1110,7 +1118,7 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
         }
 
         InstanceManager.getDefault(TrainCustomManifest.class).store(options); // save custom manifest elements
-        InstanceManager.getDefault(TrainCustomSwitchList.class).store(options); // save custom manifest elements
+        InstanceManager.getDefault(TrainCustomSwitchList.class).store(options); // save custom switch list elements
 
         root.addContent(options);
 

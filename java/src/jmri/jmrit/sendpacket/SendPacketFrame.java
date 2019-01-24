@@ -42,7 +42,7 @@ public class SendPacketFrame extends jmri.util.JmriJFrame {
     JTextField mPacketField[] = new JTextField[MAXSEQUENCE];
     JCheckBox mUseField[] = new JCheckBox[MAXSEQUENCE];
     JSpinner mDelaySpinner[] = new JSpinner[MAXSEQUENCE];
-    JToggleButton mRunButton = new JToggleButton(Bundle.getMessage("ButtonGo"));
+    JToggleButton mRunButton = new JToggleButton(Bundle.getMessage("ButtonStart"));
 
     @Override
     public void initComponents() {

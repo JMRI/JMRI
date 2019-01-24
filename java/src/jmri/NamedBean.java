@@ -233,6 +233,7 @@ public interface NamedBean extends Comparable<NamedBean> {
      * @param s the state
      * @throws JmriException general error when setting the state fails
      */
+    @InvokeOnLayoutThread
     public void setState(int s) throws JmriException;
 
     /**

@@ -37,6 +37,7 @@ public abstract class AbstractReporterManagerConfigXML extends AbstractNamedBean
         setStoreElementClass(reporters);
         ReporterManager tm = (ReporterManager) o;
         if (tm != null) {
+            @SuppressWarnings("deprecation") // getSystemNameAddedOrderList() call needed until deprecated code removed
             java.util.Iterator<String> iter
                     = tm.getSystemNameAddedOrderList().iterator();
 

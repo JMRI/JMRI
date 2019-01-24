@@ -28,6 +28,7 @@ public class DefaultLogixManagerXml extends jmri.managers.configurexml.AbstractN
      * @return Element containing the complete info
      */
     @Override
+    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations
     public Element store(Object o) {
         Element logixs = new Element("logixs");
         setStoreElementClass(logixs);

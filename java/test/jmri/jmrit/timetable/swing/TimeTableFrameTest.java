@@ -1,13 +1,13 @@
 package jmri.jmrit.timetable.swing;
 
 import java.awt.GraphicsEnvironment;
+import javax.swing.JPopupMenu;
+import javax.swing.JMenuItem;
 import jmri.jmrit.timetable.*;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 import org.netbeans.jemmy.EventTool;
 import org.netbeans.jemmy.operators.*;
-import javax.swing.JPopupMenu;
-import javax.swing.JMenuItem;
 
 /**
  * Tests for the TimeTableFrame Class
@@ -21,7 +21,7 @@ public class TimeTableFrameTest {
     JButtonOperator _jbtn = null;
 
     @Test
-    public void testCreatEmtpy() {
+    public void testCreatEmpty() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         TimeTableFrame f = new TimeTableFrame();
         Assert.assertNotNull(f);
@@ -64,7 +64,7 @@ public class TimeTableFrameTest {
 
         Thread openDialog = createModalDialogOperatorThread("Open", Bundle.getMessage("ButtonCancel"), "openDialog");  // NOI18N
         JMenuItem importMenuItem = (JMenuItem)jpm.getComponent(2);
-        Assert.assertTrue(importMenuItem.getText().equals(Bundle.getMessage("MenuImport")));  // NOI18N
+        Assert.assertTrue(importMenuItem.getText().equals(Bundle.getMessage("MenuImportSgn")));  // NOI18N
         new JMenuItemOperator(importMenuItem).doClick();
         JUnitUtil.waitFor(()->{return !(openDialog.isAlive());}, "open dialog finished");
     }
@@ -181,13 +181,6 @@ public class TimeTableFrameTest {
     }
 
     void editTests() {
-        // Simulate Preferences >> Warrants layout scale change.
-        try {
-            jmri.jmrit.logix.WarrantPreferences.getDefault().setLayoutScale(160f);
-        } catch (java.lang.NullPointerException ex) {
-            // Ignore exception
-        }
-
         // Layout: Bad fastclock value, good value to force recalc, throttle too low.
         _jto.clickOnPath(_jto.findPath(new String[]{"Sample"}));  // NOI18N
         _jtxt = new JTextFieldOperator(_jfo, 1);
@@ -196,6 +189,7 @@ public class TimeTableFrameTest {
         Thread edit1 = createModalDialogOperatorThread(Bundle.getMessage("WarningTitle"), Bundle.getMessage("ButtonOK"), "edit1");  // NOI18N
         new JButtonOperator(_jfo, Bundle.getMessage("ButtonUpdate")).doClick();  // NOI18N
         JUnitUtil.waitFor(()->{return !(edit1.isAlive());}, "edit1 finished");  // NOI18N
+        jmri.util.JUnitAppender.assertWarnMessage("'bad fast clock' is not a valid number for fast clock");
 
         _jtxt = new JTextFieldOperator(_jfo, 1);
         _jtxt.clickMouse();
@@ -207,6 +201,19 @@ public class TimeTableFrameTest {
         Thread edit2 = createModalDialogOperatorThread(Bundle.getMessage("WarningTitle"), Bundle.getMessage("ButtonOK"), "edit2");  // NOI18N
         new JButtonOperator(_jfo, Bundle.getMessage("ButtonUpdate")).doClick();  // NOI18N
         JUnitUtil.waitFor(()->{return !(edit2.isAlive());}, "edit2 finished");  // NOI18N
+
+        // Change scale
+        // NOTE:  This section may cause issues in the future.  The JComboBoxOperator
+        // appears to select entry 0 before selecting the specified entry.
+        // Since CUSTOM is entry zero, the custom listener is triggered which puts
+        // up dialog box.  By setting the combo box before making edit mode
+        // active (text field click), the dialog box goes away and the actual
+        // selected scale entry is shown.
+        new JComboBoxOperator(_jfo, 0).selectItem("N (160.0)");  // NOI18N
+        _jtxt = new JTextFieldOperator(_jfo, 0);
+        _jtxt.clickMouse();
+        new JButtonOperator(_jfo, Bundle.getMessage("ButtonUpdate")).doClick();  // NOI18N
+        Assert.assertEquals(new JLabelOperator(_jfo, 6).getText(), "6.60 feet");
 
         // Station:  Distance and staging track.
         _jto.clickOnPath(_jto.findPath(new String[]{"Sample", "Segments", "Mainline", "Alpha"}));  // NOI18N
@@ -236,13 +243,13 @@ public class TimeTableFrameTest {
         new JSpinnerOperator(_jfo, 1).setValue(30);
         new JButtonOperator(_jfo, Bundle.getMessage("ButtonUpdate")).doClick();  // NOI18N
 
-//         _jtxt = new JTextFieldOperator(_jfo, 0);
-//         _jtxt.clickMouse();  // Activate Update button
-//         new JSpinnerOperator(_jfo, 0).setValue(1);
-//         new JSpinnerOperator(_jfo, 1).setValue(22);
-//         Thread edit5 = createModalDialogOperatorThread(Bundle.getMessage("WarningTitle"), Bundle.getMessage("ButtonOK"), "edit5");  // NOI18N
-//         new JButtonOperator(_jfo, Bundle.getMessage("ButtonUpdate")).doClick();  // NOI18N
-//         JUnitUtil.waitFor(()->{return !(edit5.isAlive());}, "edit5 finished");
+        _jtxt = new JTextFieldOperator(_jfo, 0);
+        _jtxt.clickMouse();  // Activate Update button
+        new JSpinnerOperator(_jfo, 0).setValue(1);
+        new JSpinnerOperator(_jfo, 1).setValue(22);
+        Thread edit5 = createModalDialogOperatorThread(Bundle.getMessage("WarningTitle"), Bundle.getMessage("ButtonOK"), "edit5");  // NOI18N
+        new JButtonOperator(_jfo, Bundle.getMessage("ButtonUpdate")).doClick();  // NOI18N
+        JUnitUtil.waitFor(()->{return !(edit5.isAlive());}, "edit5 finished");
 
         // Train:  Speed, Start time, Notes
         _jto.clickOnPath(_jto.findPath(new String[]{"Sample", "Schedule", "114", "AMX"}));  // NOI18N
@@ -283,6 +290,17 @@ public class TimeTableFrameTest {
         textArea.clickMouse();
         textArea.setText(java.util.UUID.randomUUID().toString());  // NOI18N
         new JButtonOperator(_jfo, Bundle.getMessage("ButtonUpdate")).doClick();  // NOI18N
+
+        // Indirect layout listener veto tests
+        try {
+            jmri.ScaleManager.getScale("N").setScaleRatio(500.0);
+        } catch (java.beans.PropertyVetoException ex) {
+        }
+
+        try {
+            jmri.ScaleManager.getScale("UK-N").setScaleRatio(150.0);
+        } catch (Exception ex) {
+        }
     }
 
     void timeRangeTests() {

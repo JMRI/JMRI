@@ -13,8 +13,6 @@ import jmri.DccThrottle;
 import jmri.InstanceManager;
 import jmri.Throttle;
 import jmri.ThrottleListener;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * An abstract implementation of DccThrottle. Based on Glen Oberhauser's
@@ -534,20 +532,6 @@ abstract public class AbstractThrottle implements DccThrottle {
     // data members to hold contact with the property listeners
     final private Vector<PropertyChangeListener> listeners = new Vector<>();
 
-    /**
-     * Dispose when finished with this object. After this, further usage of this
-     * Throttle object will result in a JmriException.
-     */
-    @Deprecated
-    @Override
-    public void dispose() {
-        if (!active) {
-            log.error("Dispose called when not active");
-        }
-        log.warn("Dispose called without knowing the original throttle listener");
-        InstanceManager.throttleManagerInstance().disposeThrottle(this, null);
-    }
-
     @Override
     public void dispose(ThrottleListener l) {
         if (!active) {
@@ -556,32 +540,12 @@ abstract public class AbstractThrottle implements DccThrottle {
         InstanceManager.throttleManagerInstance().disposeThrottle(this, l);
     }
 
-    @Deprecated
-    @Override
-    public void dispatch() {
-        if (!active) {
-            log.warn("dispatch called when not active");
-        }
-        log.warn("dispatch called without knowing the original throttle listener");
-        InstanceManager.throttleManagerInstance().dispatchThrottle(this, null);
-    }
-
     @Override
     public void dispatch(ThrottleListener l) {
         if (!active) {
             log.warn("dispatch called when not active");
         }
         InstanceManager.throttleManagerInstance().dispatchThrottle(this, l);
-    }
-
-    @Deprecated
-    @Override
-    public void release() {
-        if (!active) {
-            log.warn("release called when not active");
-        }
-        log.warn("Release called without knowing the original throttle listener");
-        InstanceManager.throttleManagerInstance().releaseThrottle(this, null);
     }
 
     @Override
@@ -1415,6 +1379,10 @@ abstract public class AbstractThrottle implements DccThrottle {
         stopClock();
         String currentDurationString = re.getAttribute("OperatingDuration");
         long currentDuration = 0;
+        if (currentDurationString == null) {
+            currentDurationString = "0";
+            log.info("operating duration for {} starts as zero", getLocoAddress());
+        }
         try {
             currentDuration = Long.parseLong(currentDurationString);
         } catch (NumberFormatException e) {
@@ -1488,6 +1456,6 @@ abstract public class AbstractThrottle implements DccThrottle {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(AbstractThrottle.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractThrottle.class);
 
 }

@@ -13,7 +13,6 @@ import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.JemmyUtil;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -314,11 +313,5 @@ public class SidingEditFrameTest extends OperationsTestCase {
         JUnitOperationsUtil.loadTrain(l);
         TrainManager trainManager = InstanceManager.getDefault(TrainManager.class);
         trainA = trainManager.getTrainByName("Test Train A"); 
-    }
-
-    @Override
-    @After
-    public void tearDown() {
-        super.tearDown();
     }
 }

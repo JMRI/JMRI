@@ -216,6 +216,18 @@ public class Z21MessageTest extends jmri.jmrix.AbstractMessageTestBase {
         Assert.assertEquals("Monitor String","LocoNet Tunnel Message: Transponder address 10 (short) (or long address 16010) present at LR5 () (BDL16x Board ID 1 RX4 zone C or BXP88 Board ID 1 section 5 or the BXPA1 Board ID 5 section).\n",msg.toMonitorString());
     }
 
+    @Test
+    public void toMonitorStringLanRMBusGetDataRequest(){
+        msg = Z21Message.getLanRMBusGetDataRequestMessage(0);
+        Assert.assertEquals("Monitor String","Z21 RM Bus Data Request for group 0",msg.toMonitorString());
+    }
+
+    @Test
+    public void toMonitorStringLanRMBusProgramModule(){
+        msg = Z21Message.getLanRMBusProgramModuleMessage(0);
+        Assert.assertEquals("Monitor String","Z21 RM Bus Program Module to Address 0",msg.toMonitorString());
+    }
+
 
     // The minimal setup for log4J
     @Before

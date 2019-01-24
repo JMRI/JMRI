@@ -3,9 +3,10 @@ package jmri.jmrix.srcp;
 import jmri.Sensor;
 
 /**
- * Implement Sensor manager for SRCP systems
- * <P>
- * System names are "DSnnn", where nnn is the sensor number without padding.
+ * Implement Sensor manager for SRCP systems.
+ * <p>
+ * System names are "DSnnn", where D is the user configurable system prefix,
+ * nnn is the sensor number without padding.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2008
  */

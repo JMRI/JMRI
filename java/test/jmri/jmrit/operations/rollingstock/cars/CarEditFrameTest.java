@@ -13,10 +13,8 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -379,8 +377,8 @@ public class CarEditFrameTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeave(f.saveButton);
         // Change all car type to caboose dialog window should appear
         // need to push the "No" button in the dialog window to close
-        JemmyUtil.pressDialogButton(f,
-                Bundle.getMessage("carModifyAllType", new Object[]{Bundle.getMessage("Caboose")}),
+        JemmyUtil.pressDialogButton(f, MessageFormat.format(
+                Bundle.getMessage("carModifyAllType"), new Object[]{Bundle.getMessage("Caboose")}),
                 Bundle.getMessage("ButtonNo"));
 
         Assert.assertTrue("now a caboose", c6.isCaboose());
@@ -391,8 +389,8 @@ public class CarEditFrameTest extends OperationsTestCase {
         Assert.assertFalse("still no fred", c6.hasFred());
         JemmyUtil.enterClickAndLeave(f.saveButton);
         // need to push the "No" button in the dialog window to close
-        JemmyUtil.pressDialogButton(f,
-                Bundle.getMessage("carModifyAllType", new Object[]{Bundle.getMessage("Caboose")}),
+        JemmyUtil.pressDialogButton(f, MessageFormat.format(
+                Bundle.getMessage("carModifyAllType"), new Object[]{Bundle.getMessage("Caboose")}),
                 Bundle.getMessage("ButtonNo"));
         Assert.assertFalse("no longer a caboose", c6.isCaboose());
         Assert.assertTrue("now has a fred", c6.hasFred());
@@ -402,8 +400,8 @@ public class CarEditFrameTest extends OperationsTestCase {
         Assert.assertFalse("still not hazardous 3", c6.isHazardous());
         JemmyUtil.enterClickAndLeave(f.saveButton);
         // need to push the "No" button in the dialog window to close
-        JemmyUtil.pressDialogButton(f,
-                Bundle.getMessage("carModifyAllType", new Object[]{Bundle.getMessage("Caboose")}),
+        JemmyUtil.pressDialogButton(f, MessageFormat.format(
+                Bundle.getMessage("carModifyAllType"), new Object[]{Bundle.getMessage("Caboose")}),
                 Bundle.getMessage("ButtonNo"));
         Assert.assertFalse("still no longer a caboose", c6.isCaboose());
         Assert.assertTrue("still has a fred", c6.hasFred());
@@ -413,8 +411,8 @@ public class CarEditFrameTest extends OperationsTestCase {
         Assert.assertFalse("not utility", c6.isUtility());
         JemmyUtil.enterClickAndLeave(f.saveButton);
         // need to push the "No" button in the dialog window to close
-        JemmyUtil.pressDialogButton(f,
-                Bundle.getMessage("carModifyAllType", new Object[]{Bundle.getMessage("Caboose")}),
+        JemmyUtil.pressDialogButton(f,MessageFormat.format(
+                Bundle.getMessage("carModifyAllType"), new Object[]{Bundle.getMessage("Caboose")}),
                 Bundle.getMessage("ButtonNo"));
         Assert.assertTrue("now utility", c6.isUtility());
         Assert.assertFalse("not a caboose", c6.isCaboose());
@@ -784,6 +782,7 @@ public class CarEditFrameTest extends OperationsTestCase {
         Assert.assertEquals("kernel", k, car.getKernel());
         Assert.assertEquals("order", 2, car.getBlocking());
         Assert.assertFalse(car.getKernel().isLead(car));
+        Assert.assertFalse(car.isLead());
         Assert.assertEquals("Track", "North End 2", car2.getTrackName());
 
         // now remove the kernel
@@ -1239,18 +1238,5 @@ public class CarEditFrameTest extends OperationsTestCase {
         Assert.assertTrue(InstanceManager.getDefault(CarLoads.class).containsName(c1.getTypeName(), "TEST_LOAD"));
 
         JUnitUtil.dispose(f);
-    }
-
-    // Ensure minimal setup for log4J
-    @Override
-    @Before
-    public void setUp() {
-        super.setUp();
-    }
-
-    @Override
-    @After
-    public void tearDown() {
-        super.tearDown();
     }
 }

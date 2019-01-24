@@ -66,14 +66,12 @@ public class JsonBlockSocketService extends JsonSocketService<JsonBlockHttpServi
     }
 
     private void addListenersToChildren() {
-        InstanceManager.getDefault(BlockManager.class).getSystemNameList().stream().forEach((bn) -> { //add listeners to each child (if not already)
+        InstanceManager.getDefault(BlockManager.class).getNamedBeanSet().stream().forEach((b) -> { //add listeners to each child (if not already)
+            String bn = b.getSystemName();
             if (!blockListeners.containsKey(bn)) {
                 log.debug("adding BlockListener for Block '{}'", bn);
-                Block b = InstanceManager.getDefault(BlockManager.class).getBlock(bn);
-                if (b != null) {
-                    blockListeners.put(bn, new BlockListener(b));
-                    b.addPropertyChangeListener(this.blockListeners.get(bn));
-                }
+                blockListeners.put(bn, new BlockListener(b));
+                b.addPropertyChangeListener(this.blockListeners.get(bn));
             }
         });
     }    

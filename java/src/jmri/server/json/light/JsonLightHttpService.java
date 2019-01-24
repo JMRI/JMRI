@@ -33,11 +33,9 @@ public class JsonLightHttpService extends JsonNamedBeanHttpService {
 
     @Override
     public JsonNode doGet(String type, String name, Locale locale) throws JsonException {
-        ObjectNode root = mapper.createObjectNode();
-        root.put(TYPE, LIGHT);
         Light light = InstanceManager.lightManagerInstance().getLight(name);
-        ObjectNode data = this.getNamedBean(light, name, type, locale);
-        root.set(DATA, data);
+        ObjectNode root = this.getNamedBean(light, name, type, locale);
+        ObjectNode data = root.with(DATA);
         if (light != null) {
             switch (light.getState()) {
                 case Light.ON:
@@ -95,8 +93,8 @@ public class JsonLightHttpService extends JsonNamedBeanHttpService {
     @Override
     public ArrayNode doGetList(String type, Locale locale) throws JsonException {
         ArrayNode root = this.mapper.createArrayNode();
-        for (String name : InstanceManager.lightManagerInstance().getSystemNameList()) {
-            root.add(this.doGet(LIGHT, name, locale));
+        for (Light l : InstanceManager.lightManagerInstance().getNamedBeanSet()) {
+            root.add(this.doGet(LIGHT, l.getSystemName(), locale));
         }
         return root;
 

@@ -96,26 +96,26 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
     }
     
     @Override
-    @Deprecated
+    @Deprecated  // will be removed when superclass method is removed due to @Override
+    @SuppressWarnings("deprecation")  // temporary implementation of method with @Override
     public void useDefaultTimerSettings(boolean boo) {
         setUseDefaultTimerSettings(boo);
     }
     
     @Override
-    @Deprecated
+    @Deprecated  // will be removed when superclass method is removed due to @Override
+    @SuppressWarnings("deprecation")  // temporary implementation of method with @Override
     public boolean useDefaultTimerSettings() {
         return getUseDefaultTimerSettings();
     }
-    
 
     protected Thread thr;
     protected Runnable r;
 
-    /* 
-     * Before going active or inactive or checking that we can go active, we will wait 500ms
-     * for things to settle down to help prevent a race condition
+    /**
+     * Before going active or inactive or checking that we can go active, we will wait for
+     * sensorDebounceGoing(In)Active for things to settle down to help prevent a race condition.
      */
-
     protected void sensorDebounce() {
         final int lastKnownState = _knownState;
         r = new Runnable() {
@@ -162,9 +162,10 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
         }
     }
 
-    // setKnownState() for implementations that can't
-    // actually do it on the layout. Not intended for use by implementations
-    // that can
+    /**
+     * Perform setKnownState(int) for implementations that can't actually
+     * do it on the layout. Not intended for use by implementations that can.
+     */
     @Override
     public void setKnownState(int s) throws jmri.JmriException {
         setOwnState(s);
@@ -193,8 +194,8 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
                 sensorDebounce();
                 return;
             } else {
-                //we shall try to stop the thread as one of the state changes 
-                //might start the thread, while the other may not.
+                // we shall try to stop the thread as one of the state changes
+                // might start the thread, while the other may not.
                 if (thr != null) {
                     thr.interrupt();
                 }

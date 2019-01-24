@@ -84,7 +84,14 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
                 if (r == null) {
                     return "";
                 }
-                return (value = r.getCurrentReport()) == null ? "" : value.toString();
+                value = r.getCurrentReport();
+                if(value == null) {
+                   return null;
+                } else if(value instanceof jmri.Reportable) {
+                   return ((jmri.Reportable)value).toReportString();
+                } else {
+                   return value.toString();
+                }
             }
 
             /**
@@ -199,7 +206,14 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
             public Object getValueAt(int row, int col) {
                 if (col == LASTREPORTCOL) {
                     Reporter t = getBySystemName(sysNameList.get(row));
-                    return t.getLastReport();
+                    Object value = t.getLastReport();
+                    if(value == null) {
+                       return null;
+                    } else if(value instanceof jmri.Reportable) {
+                       return ((jmri.Reportable)value).toReportString();
+                    } else {
+                       return value.toString();
+                    }
                 }
                 return super.getValueAt(row, col);
             }
@@ -309,8 +323,8 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
                     canAddRange(e);
                 }
             };
-            if (InstanceManager.reporterManagerInstance().getClass().getName().contains("ProxyReporterManager")) {            
-            jmri.managers.ProxyReporterManager proxy = (jmri.managers.ProxyReporterManager) InstanceManager.reporterManagerInstance();          
+            if (InstanceManager.getDefault(ReporterManager.class).getClass().getName().contains("ProxyReporterManager")) {            
+            jmri.managers.ProxyReporterManager proxy = (jmri.managers.ProxyReporterManager) InstanceManager.getDefault(ReporterManager.class);          
                 List<Manager<Reporter>> managerList = proxy.getDisplayOrderManagerList();
                 for (Manager<Reporter> reporter : managerList) {
                     String manuName = ConnectionNameFromSystemName.getConnectionName(reporter.getSystemPrefix());
@@ -490,8 +504,8 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
             // Tab All or first time opening, default tooltip
             connectionChoice = "TBD";
         }
-        if (InstanceManager.reporterManagerInstance().getClass().getName().contains("ProxyReporterManager")) {            
-            jmri.managers.ProxyReporterManager proxy = (jmri.managers.ProxyReporterManager) InstanceManager.reporterManagerInstance();    
+        if (InstanceManager.getDefault(ReporterManager.class).getClass().getName().contains("ProxyReporterManager")) {            
+            jmri.managers.ProxyReporterManager proxy = (jmri.managers.ProxyReporterManager) InstanceManager.getDefault(ReporterManager.class);    
             List<Manager<Reporter>> managerList = proxy.getDisplayOrderManagerList();
             String systemPrefix = ConnectionNameFromSystemName.getPrefixFromName(connectionChoice);
             for (Manager<Reporter> mgr : managerList) {
