@@ -27,7 +27,7 @@
  * the value <em>put</em> is included in message:
  * <code>{"type":"<em>type</em>","method":"put","data":{"name":"<em>name</em>"}}</code>.</li>
  * </ul></li>
- * <code>{"list":"<em>type</em>"}</code>. Returns an array of all items of "type".
+ * <li><code>{"list":"<em>type</em>"}</code>. Returns an array of all items of "type".
  * Initiates individual listeners for each item (see above) plus a list listener
  * which will send an updated list when items of "type" are added or deleted.</li>
  * <li>a heartbeat in the form <code>{"type":"ping"}</code>. The heartbeat gets
