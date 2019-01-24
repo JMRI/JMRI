@@ -82,6 +82,20 @@ public class IdTagTest {
        // don't override toReporterString so we can test the default
        // implementation. 
 
+       @Override
+       public void setProperty(String key,Object value){
+       }
+
+       @Override
+       public Object getProperty(String key){
+          return null;
+       }
+
+       @Override
+       public java.util.Map<String,Object> getProperties(){
+          return null;
+       }
+
     }
 
     @Before
