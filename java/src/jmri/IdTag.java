@@ -121,26 +121,4 @@ public interface IdTag extends NamedBean {
      */
     public void load(@Nonnull Element e);
 
-    /**
-     * Set an IdTag property
-     *
-     * @param key is the property to set
-     * @param value is the value to add to the set of properties
-     */
-    public void setProperty(String key,Object value);
-
-    /**
-     * Get an IdTag property
-     *
-     * @param key is the property to get
-     * @return the value associated with the key
-     */
-    public Object getProperty(String key);
-
-    /**
-     * Get the map of key/value pairs.
-     *
-     * @return value pair map.
-     */
-    public java.util.Map<String,Object> getProperties();
 }

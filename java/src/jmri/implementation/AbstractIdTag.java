@@ -1,8 +1,7 @@
 package jmri.implementation;
 
 import java.util.Date;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.Map;
+import java.util.Set;
 import jmri.IdTag;
 import jmri.Reportable;
 import jmri.Reporter;
@@ -30,8 +29,6 @@ public abstract class AbstractIdTag extends AbstractNamedBean implements IdTag,R
     protected Reporter whereLastSeen = null;
 
     protected Date whenLastSeen = null;
-
-    protected ConcurrentHashMap<String,Object> properties = null;
 
     public AbstractIdTag(String systemName) {
         super(systemName.toUpperCase());
@@ -73,13 +70,13 @@ public abstract class AbstractIdTag extends AbstractNamedBean implements IdTag,R
         }
 
         // check to see if any properties have been added.
-        Map valueMap = getProperties();
-        if(valueMap!=null){
+        Set keySet = getPropertyKeys();
+        if(keySet!=null){
             // we have properties, so append the values to the
             // end of the report seperated by spaces.
-            for( Object s : valueMap.values()) {
+            for( Object s : keySet) {
                 sb.append(" ");
-                sb.append(s.toString());
+                sb.append(getProperty((String)s));
             }
         }
         return sb.toString();
@@ -95,39 +92,18 @@ public abstract class AbstractIdTag extends AbstractNamedBean implements IdTag,R
      */
     @Override
     public void setProperty(String key,Object value){
-         if(properties==null){
-            properties = new ConcurrentHashMap<String,Object>();
-         }
-         if(properties.containsKey(key)){
+         Set<String> keySet = getPropertyKeys();
+         if(keySet.contains(key)){
             // key already in the map, replace the value.
-            Object oldValue = properties.replace(key,value);
+            Object oldValue = getProperty(key);
             if(!(oldValue.equals(value))){
+	       super.setProperty(key,value);
                firePropertyChange(key,oldValue,value);
             }
          } else {
-            properties.put(key,value);
+	    super.setProperty(key,value);
             firePropertyChange(key,null,value);
          }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Object getProperty(String key){
-         if(properties == null){
-             return null;
-         } else {
-             return properties.getOrDefault(key,null);
-         }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public java.util.Map<String,Object> getProperties(){
-       return properties;
     }
 
 //    private static final Logger log = LoggerFactory.getLogger(AbstractIdTag.class);
