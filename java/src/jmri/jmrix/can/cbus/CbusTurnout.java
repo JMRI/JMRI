@@ -151,6 +151,8 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
     
     /**
      * {@inheritDoc}
+     *
+     * @see jmri.jmrix.can.CanListener#message(jmri.jmrix.can.CanMessage)
      */
     @Override
     public void message(CanMessage f) {
@@ -177,6 +179,8 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
     
     /**
      * {@inheritDoc}
+     *
+     * @see jmri.jmrix.can.CanListener#reply(jmri.jmrix.can.CanReply)
      */
     @Override
     public void reply(CanReply f) {
