@@ -6,10 +6,31 @@ import javax.annotation.Nonnull;
 import org.jdom2.Element;
 
 /**
- * IdTag represents a tag that might be attached to a specific piece of rolling
- * stock to uniquely identify it.
+ * IdTag is a pre-parsed representation of an identification message from the
+ * layout.  One use of an IdTag is a device that might be attached to any 
+ * specific piece of rolling stock to uniquely identify it.
  * <P>
- * An example would be an RFID-tag.
+ * Examples include
+ * <ul>
+ *   <li>RFID-tag.</li>
+ *   <li>Digitrax Transponding Decoders</li>
+ *   <li>RailCom tags</li>
+ * </ul>
+ * <P>
+ * Each IdTag contains the following information:
+ * <ul>
+ *   <li>A System Name</li>
+ *   <li>A User Name (which may be null)</li>
+ *   <li>A TagID<li>
+ *   <li>A reference to the last reporter to see the tag, which may be null</li>
+ *   <li>The date and time the last reporter saw the tag, which may be null</li>
+ *   <li>A list of key/value pairs holding properties</li>
+ * </ul>
+ * <p>
+ * The system name is of the form IDxxxx where xxxx is the same value as the TagID.
+ * <p>
+ * The list of key value pairs is maintained by the reporters parsing and 
+ * updating the list.  This information may vary between implementations.
  * <hr>
  * This file is part of JMRI.
  * <P>
@@ -100,4 +121,26 @@ public interface IdTag extends NamedBean {
      */
     public void load(@Nonnull Element e);
 
+    /**
+     * Set an IdTag property
+     *
+     * @param key is the property to set
+     * @param value is the value to add to the set of properties
+     */
+    public void setProperty(String key,Object value);
+
+    /**
+     * Get an IdTag property
+     *
+     * @param key is the property to get
+     * @return the value associated with the key
+     */
+    public Object getProperty(String key);
+
+    /**
+     * Get the map of key/value pairs.
+     *
+     * @return value pair map.
+     */
+    public java.util.Map<String,Object> getProperties();
 }
