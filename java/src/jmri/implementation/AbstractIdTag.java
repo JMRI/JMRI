@@ -89,6 +89,9 @@ public abstract class AbstractIdTag extends AbstractNamedBean implements IdTag,R
 
     /**
      * {@inheritDoc}
+     *
+     * This implementation fires property change listeners
+     * when properties change.
      */
     @Override
     public void setProperty(String key,Object value){
@@ -97,7 +100,8 @@ public abstract class AbstractIdTag extends AbstractNamedBean implements IdTag,R
             // key already in the map, replace the value.
             Object oldValue = getProperty(key);
             if(!(oldValue.equals(value))){
-	       super.setProperty(key,value);
+	       removeProperty(key); // make sure the old value is removed.
+	       super.setProperty(key,value); // then add the new one.
                firePropertyChange(key,oldValue,value);
             }
          } else {
