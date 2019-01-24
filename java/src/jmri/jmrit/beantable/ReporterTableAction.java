@@ -84,7 +84,14 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
                 if (r == null) {
                     return "";
                 }
-                return (value = r.getCurrentReport()) == null ? "" : value.toString();
+                value = r.getCurrentReport();
+                if(value == null) {
+                   return null;
+                } else if(value instanceof jmri.Reportable) {
+                   return ((jmri.Reportable)value).toReportString();
+                } else {
+                   return value.toString();
+                }
             }
 
             /**
@@ -199,7 +206,14 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
             public Object getValueAt(int row, int col) {
                 if (col == LASTREPORTCOL) {
                     Reporter t = getBySystemName(sysNameList.get(row));
-                    return t.getLastReport();
+                    Object value = t.getLastReport();
+                    if(value == null) {
+                       return null;
+                    } else if(value instanceof jmri.Reportable) {
+                       return ((jmri.Reportable)value).toReportString();
+                    } else {
+                       return value.toString();
+                    }
                 }
                 return super.getValueAt(row, col);
             }

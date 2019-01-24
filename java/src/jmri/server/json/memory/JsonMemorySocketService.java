@@ -64,14 +64,12 @@ public class JsonMemorySocketService extends JsonSocketService<JsonMemoryHttpSer
     }
     
     private void addListenersToChildren() {
-        InstanceManager.getDefault(MemoryManager.class).getSystemNameList().stream().forEach((mn) -> { //add listeners to each child (if not already)
+        InstanceManager.getDefault(MemoryManager.class).getNamedBeanSet().stream().forEach((m) -> { //add listeners to each child (if not already)
+            String mn = m.getSystemName();
             if (!memoryListeners.containsKey(mn)) {
                 log.debug("adding MemoryListener for Memory '{}'", mn);
-                Memory m = InstanceManager.getDefault(MemoryManager.class).getMemory(mn);
-                if (m != null) {
-                    memoryListeners.put(mn, new MemoryListener(m));
-                    m.addPropertyChangeListener(this.memoryListeners.get(mn));
-                }
+                memoryListeners.put(mn, new MemoryListener(m));
+                m.addPropertyChangeListener(this.memoryListeners.get(mn));
             }
         });
     }

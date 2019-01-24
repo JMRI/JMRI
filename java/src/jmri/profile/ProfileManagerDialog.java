@@ -58,6 +58,7 @@ public class ProfileManagerDialog extends JDialog {
 
     private Timer timer;
     private int countDown;
+    private boolean disableTimer;
 
     /**
      * Creates new form ProfileManagerDialog
@@ -66,7 +67,19 @@ public class ProfileManagerDialog extends JDialog {
      * @param modal  {@inheritDoc}
      */
     public ProfileManagerDialog(Frame parent, boolean modal) {
+        this(parent, modal, false);
+    }
+
+    /**
+     * Creates new form ProfileManagerDialog
+     *
+     * @param parent {@inheritDoc}
+     * @param modal  {@inheritDoc}
+     * @param disableTimer true if the timer should be disabled
+     */
+    public ProfileManagerDialog(Frame parent, boolean modal, boolean disableTimer) {
         super(parent, modal);
+        this.disableTimer = disableTimer;
         initComponents();
         ProfileManager.getDefault().addPropertyChangeListener(ProfileManager.ACTIVE_PROFILE, (PropertyChangeEvent evt) -> {
             profiles.setSelectedValue(ProfileManager.getDefault().getActiveProfile(), true);
@@ -251,8 +264,15 @@ public class ProfileManagerDialog extends JDialog {
 
     private void formWindowOpened(WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         countDown = ProfileManager.getDefault().getAutoStartActiveProfileTimeout();
-        countDownLbl.setText(Integer.toString(countDown));
+        if (disableTimer) {
+            countDownLbl.setText("");
+        } else {
+            countDownLbl.setText(Integer.toString(countDown));
+        }
         timer = new Timer(1000, (ActionEvent e) -> {
+            if (disableTimer) {
+                return;
+            }
             if (countDown > 0) {
                 countDown--;
                 countDownLbl.setText(Integer.toString(countDown));

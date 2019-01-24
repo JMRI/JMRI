@@ -30,7 +30,7 @@ public abstract class BeanTableModel extends AbstractTableModel {
 
     @Override
     public int getRowCount() {
-        return getManager().getSystemNameList().size();
+        return getManager().getNamedBeanSet().size();
     }
 
     @Override
@@ -60,6 +60,7 @@ public abstract class BeanTableModel extends AbstractTableModel {
      * User name column must be handled by subclass
      */
     @Override
+    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations & generics
     public Object getValueAt(int r, int c) {
         switch (c) {
             case SNAME_COLUMN:  // slot number

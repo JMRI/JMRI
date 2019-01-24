@@ -192,7 +192,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener {
         // compute new cv value by combining old and request
         int oldCv = cv.getValue();
         int newVal = getIntValue();
-        int newCv = newValue(oldCv, newVal, getMask());
+        int newCv = setValueInCV(oldCv, newVal, getMask(), _maxVal-1);
         if (newCv != oldCv) {
             cv.setValue(newCv);  // to prevent CV going EDITED during loading of decoder file
 
@@ -502,7 +502,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener {
             case "Value": {
                 // update value of Variable
                 CvValue cv = _cvMap.get(getCvNum());
-                int newVal = (cv.getValue() & maskVal(getMask())) >>> offsetVal(getMask());
+                int newVal = getValueInCV(cv.getValue(), getMask(), _maxVal-1); // _maxVal value is count of possibles, i.e. radix
                 setValue(newVal);  // check for duplicate done inside setVal
                 break;
             }

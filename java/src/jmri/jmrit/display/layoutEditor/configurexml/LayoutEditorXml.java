@@ -593,7 +593,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
             cm.registerUser(panel);
         }
         //open Dispatcher frame if any Transits are defined, and open Dispatcher flag set on
-        if (jmri.InstanceManager.getDefault(jmri.TransitManager.class).getSystemNameList().size() > 0) {
+        if (jmri.InstanceManager.getDefault(jmri.TransitManager.class).getNamedBeanSet().size() > 0) {
             try {
                 boolean value = shared.getAttribute("openDispatcher").getBooleanValue();
                 panel.setOpenDispatcherOnLoad(value);

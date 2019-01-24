@@ -30,7 +30,7 @@ public class AnymaDMX_ConnectionConfig extends AbstractUsbConnectionConfig {
     }
 
     /**
-     * Ctor for a functional Swing object with no prexisting adapter
+     * Ctor for a functional Swing object with no preexisting adapter
      */
     public AnymaDMX_ConnectionConfig() {
         this(new AnymaDMX_UsbPortAdapter());

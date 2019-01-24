@@ -65,14 +65,12 @@ public class JsonReporterSocketService extends JsonSocketService<JsonReporterHtt
     }
 
     private void addListenersToChildren() {
-        InstanceManager.getDefault(ReporterManager.class).getSystemNameList().stream().forEach((rn) -> { //add listeners to each child (if not already)
+        InstanceManager.getDefault(ReporterManager.class).getNamedBeanSet().stream().forEach((r) -> { //add listeners to each child (if not already)
+            String rn = r.getSystemName();
             if (!reporterListeners.containsKey(rn)) {
                 log.debug("adding ReporterListener for Reporter '{}'", rn);
-                Reporter r = InstanceManager.getDefault(ReporterManager.class).getReporter(rn);
-                if (r != null) {
-                    reporterListeners.put(rn, new ReporterListener(r));
-                    r.addPropertyChangeListener(this.reporterListeners.get(rn));
-                }
+                reporterListeners.put(rn, new ReporterListener(r));
+                r.addPropertyChangeListener(this.reporterListeners.get(rn));
             }
         });
     }    
@@ -94,7 +92,8 @@ public class JsonReporterSocketService extends JsonSocketService<JsonReporterHtt
         }
 
         @Override
-        public void propertyChange(PropertyChangeEvent e) {
+        public void propertyChange(PropertyChangeEvent evt) {
+            log.debug("in ReporterListener for '{}' '{}' ('{}'=>'{}')", this.reporter.getSystemName(), evt.getPropertyName(), evt.getOldValue(), evt.getNewValue());            
 //            if (e.getPropertyName().equals("currentReport")) {
                 try {
                     try {

@@ -1318,6 +1318,7 @@ public class Location implements java.beans.PropertyChangeListener {
      *
      * @param e Consist XML element
      */
+    @SuppressWarnings("deprecation") // until there's a replacement for convertFromXmlComment()
     public Location(Element e) {
         Attribute a;
         if ((a = e.getAttribute(Xml.ID)) != null) {
@@ -1389,9 +1390,11 @@ public class Location implements java.beans.PropertyChangeListener {
         } catch (NumberFormatException nfe) {
             log.error("Train icon coordinates aren't vaild for location {}", getName());
         }
+        
         if ((a = e.getAttribute(Xml.COMMENT)) != null) {
             _comment = OperationsXml.convertFromXmlComment(a.getValue());
         }
+
         if ((a = e.getAttribute(Xml.SWITCH_LIST_COMMENT)) != null) {
             _switchListComment = a.getValue();
         }

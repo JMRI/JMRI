@@ -97,15 +97,6 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean imp
         };
     }
 
-    @Override
-    public String getDisplayName() {
-        String uName = getUserName();
-        if (uName != null) {
-            return uName;
-        }
-        return getSystemName();
-    }
-
     String getUniqueId() {
         return getSystemName();
     }

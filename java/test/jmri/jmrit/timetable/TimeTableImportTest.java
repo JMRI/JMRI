@@ -7,7 +7,7 @@ import java.util.List;
 import org.junit.*;
 
 /**
- * Tests for the TimeTableFrame Class
+ * Tests for the TimeTableImport Class
  * @author Dave Sand Copyright (C) 2018
  */
 public class TimeTableImportTest {
