@@ -155,6 +155,12 @@ public class MultiThrottleTest {
     public void testIsValidAddress() throws NoSuchMethodException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
         Method m = throttle.getClass().getDeclaredMethod("isValidAddr", String.class);
         m.setAccessible(true);
+        Assert.assertFalse((Boolean)m.invoke(throttle, "hjs"));
+        JUnitAppender.assertWarnMessage("JMRI: address 'hjs' must have a letter S or L and then digit(s)");
+        Assert.assertFalse((Boolean)m.invoke(throttle, "s13"));
+        JUnitAppender.assertWarnMessage("JMRI: address 's13' must have a letter S or L and then digit(s)");
+        Assert.assertFalse((Boolean)m.invoke(throttle, "l13"));
+        JUnitAppender.assertWarnMessage("JMRI: address 'l13' must have a letter S or L and then digit(s)");
         Assert.assertFalse((Boolean)m.invoke(throttle, "S"));
         JUnitAppender.assertWarnMessage("JMRI: address 'S' must have a letter S or L and then digit(s)");
         Assert.assertFalse((Boolean)m.invoke(throttle, "L"));
