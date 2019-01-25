@@ -128,6 +128,11 @@ public class MultiThrottle {
      * @param key address to be validated, of form Lnnnn or Snnn
      */
     private boolean isValidAddr(String key) {
+        if (key.length() < 2) {
+            String msg = Bundle.getMessage("ErrorAddressTooShort", key);
+            log.warn(msg);
+            return false;
+        }
         int addr = Integer.parseInt(key.substring(1));
         if ((key.charAt(0) == 'L') && 
                 !jmri.InstanceManager.throttleManagerInstance().canBeLongAddress(addr)) {
