@@ -1,8 +1,5 @@
 package jmri.jmrix.can.cbus.eventtable;
 
-import jmri.jmrix.can.CanSystemConnectionMemo;
-// import jmri.jmrix.can.TrafficControllerScaffold;
-
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -19,17 +16,49 @@ public class CbusTableEventTest {
 
     @Test
     public void testCTor() {
-        
-       // TrafficControllerScaffold tcis = new TrafficControllerScaffold();
-      //  CanSystemConnectionMemo memo = new CanSystemConnectionMemo();
-      //  memo.setTrafficController(tcis);
         // int,int,EvState,int,String,String,String,int,int,int,int,Date
         CbusTableEvent t = new CbusTableEvent(0,1,null,0,"","","",0,0,0,0,null);
         Assert.assertNotNull("exists",t);
-        
         t = null;
-      //  memo = null;
     }
+    
+    @Test
+    public void testSetGet() {
+        
+        CbusTableEvent t = new CbusTableEvent(0,1,null,0,"","","",0,0,0,0,null);
+        
+        t.setDate(new java.util.Date() );
+        Assert.assertNotNull("date",t.getDate());
+        
+        t.setStlOn("ON STL String");
+        Assert.assertEquals("ON STL String", "ON STL String",(t.getStlOn()) );
+        
+        t.setStlOff("OFF STL String");
+        Assert.assertEquals("OFF STL String", "OFF STL String",(t.getStlOff()) );
+        
+        t.setCanId(123);
+        Assert.assertEquals("Can ID set", 123,(t.getEventCanId()) );
+        
+        t.setComment("EvEnT CoMmEnT");
+        Assert.assertEquals("EvEnT CoMmEnT", "EvEnT CoMmEnT",(t.getComment()) );
+        
+        Assert.assertEquals("getSessionOn starts 0", 0,(t.getSessionOn()) );
+        Assert.assertEquals("getSessionOff starts 0", 0,(t.getSessionOff()) );
+        Assert.assertEquals("getSessionIn starts 0", 0,(t.getSessionIn()) );
+        Assert.assertEquals("getSessionOut starts 0", 0,(t.getSessionOut()) );
+        
+        t.bumpSessionOn();
+        t.bumpSessionOff();
+        t.bumpSessionIn();
+        t.bumpSessionOut();
+
+        Assert.assertEquals("getSessionOn 1", 1,(t.getSessionOn()) );
+        Assert.assertEquals("getSessionOff 1", 1,(t.getSessionOff()) );
+        Assert.assertEquals("getSessionIn 1", 1,(t.getSessionIn()) );
+        Assert.assertEquals("getSessionOut 1", 1,(t.getSessionOut()) );
+        
+    }    
+    
 
     // The minimal setup for log4J
     @Before

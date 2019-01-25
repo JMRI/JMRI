@@ -81,7 +81,9 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
         }
         // connect to the CanInterface
         tc = memo.getTrafficController();
-        tc.addCanListener(this);
+        if (tc != null ) {
+            tc.addCanListener(this);
+        }
         ta = new CbusEventTableAction(this);
     }
 
