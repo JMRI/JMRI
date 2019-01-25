@@ -130,6 +130,7 @@ public class MultiThrottle {
     private boolean isValidAddr(String key) {
         if (key.length() < 2) {
             String msg = Bundle.getMessage("ErrorAddressTooShort", key);
+            parentController.sendAlertMessage(msg);
             log.warn(msg);
             return false;
         }
