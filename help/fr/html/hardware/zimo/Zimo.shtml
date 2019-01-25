@@ -52,15 +52,15 @@
       
       <p>Le protocole ASCII ne supporte actuellement que la programmation</p>
 
-      <p>Le protocole binaire prend en charge les &#233;l&#233;ments suivantsg</p>
+      <p>Le protocole binaire prend en charge les &#233;l&#233;ments suivants</p>
 <ul>
-         <li> Programmation, &#224; la fois en Mode Principal & amp; Mode Service </li>
+         <li> Programmation, &#224; la fois en Mode Principal &amp; Mode Service </li>
 
          <li> R&#233;gulateur </li>
 
          <li> Commande Aiguillage- Provisoire </li>
 	</ul> <b> Remarque </b> Les tests du protocole binaire ont &#233;t&#233; effectu&#233;s
-        &#224; l’aide du MXULF, la commande aiguillage n’a pas
+        &#224; l'aide du MXULF, la commande aiguillage n'a pas
        &#233;t&#233; enti&#232;rement test&#233;e. Des probl&#232;mes peuvent survenir lors de l'utilisation avec le MX-10
        mais nous n'avons actuellement aucun mat&#233;riel &#224; tester.
        <a name="connecting" id="connecting"> </a>
