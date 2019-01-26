@@ -97,8 +97,8 @@
       </variable>
       <variable item="Data Format" CV="49" mask="XXXVXXXX">
         <enumVal>
-          <enumChoice choice="Motorola and DDC">
-            <choice>Motorola and DDC</choice>
+          <enumChoice choice="Motorola and DCC">
+            <choice>Motorola and DCC</choice>
           </enumChoice>
           <enumChoice choice="Selectrix">
             <choice>Selectrix</choice>
@@ -191,7 +191,7 @@
         <decVal/>
         <label>Offset Register</label>
       </variable>
-      <variable item="Page Register" CV="64" default="0" readOnly="yes" tooltip="Used with DDC paged mode programming">
+      <variable item="Page Register" CV="64" default="0" readOnly="yes" tooltip="Used with DCC paged mode programming">
         <decVal/>
         <label>Page Register</label>
       </variable>
