@@ -84,17 +84,42 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager {
         return getSystemPrefix() + typeLetter() + curAddress;
     }
 
+    // systemName M
+    @Override
+    public boolean allowMultipleAdditions(String systemName) {
+        return true;
+    }
+
     @Override
     public String getNextValidAddress(String curAddress, String prefix) {
-        // always return this (the current) name without change
+        String testAddr = curAddress;
+        // make sure starting name is valid
         try {
-            validateSystemNameFormat(curAddress);
+            validateSystemNameFormat(testAddr);
         } catch (IllegalArgumentException ex) {
             jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
                     showErrorMessage(Bundle.getMessage("ErrorTitle"), Bundle.getMessage("ErrorConvertNumberX", curAddress), "" + ex, "", true, false);
             return null;
         }
-        return curAddress;
+        
+        //If the hardware address passed does not already exist then this can
+        //be considered the next valid address.
+        Sensor s = getBySystemName(prefix + typeLetter() + testAddr);
+        if (s == null) {
+            return testAddr;
+        }
+
+        String newaddr = CbusAddress.getIncrement(testAddr);
+        if (newaddr==null) {
+            return null;
+        }
+        //If the new hardware address does not already exist then this can
+        //be considered the next valid address.
+        Sensor snew = getBySystemName(prefix + typeLetter() + newaddr);
+        if (snew == null) {
+            return newaddr;
+        }
+        return null;
     }
 
     @Override
