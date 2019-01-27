@@ -1,0 +1,68 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<!-- UpDated by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-01-27--> 
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI Hardware Support - DCC4PC</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+    <p>L'&#233;quipement DCC4PC est constitu&#233; de d&#233;tecteur d'occupation de canton et d'un lecteur de Railcom  dans un seul boitier, 
+    chaque carte permet de d&#233;tecter 16 cantons avec l'info RailCom en retour pour chacun d'eux
+    <p>Pour avoir cette info RailCom celui-ci doit &#234;tre utilis&#233; avec un syst&#232;me qui g&#233;n&#232;re un cr&#233;neau RailComm dans 
+    le signal de traction, utilisable par les d&#233;codeurs qui g&#233;n&#232;rent ce signal de r&#233;trosignalisation RailCom
+    
+      <h1>Support Mat&#233;riel: DCC4PC</h1><a name="hardware" id=
+      "hardware"></a>
+
+      <p>JMRI se connecte au DCC4PC en utilisant son propre protocole OmniBus plut&#244;t que le mode &#233;mul&#233; des TAM's.</p>
+
+      <h3>Capteurs</h3>
+<p>Des capteurs sont g&#233;n&#233;r&#233;s automatiquement pour les six premi&#232;res cartes (cartes adress&#233;es 0 &#224; 5) lors de l'initialisation de la connexion..</p>
+
+<p>Des capteurs suppl&#233;mentaires pour les cartes dont l'adresse est sup&#233;rieure &#224; 5 peuvent &#234;tre ajout&#233;s &#224; l'aide du tableau capteurs. Seul le premier capteur de la carte doit &#234;tre entr&#233;.</p>
+
+
+<p>Le nom syst&#232;me d'un capteur est compos&#233; suivant le format DPS1: 01, o&#249; "DP" est le nom syst&#232;me de Dcc4Pc, "S" signifie capteur, "1" est l'adresse de la carte et "01" est la broche sur cette carte. </p>
+
+      <h3>Journaux</h3>
+      <p>Les Journaux sont automatiquement cr&#233;&#233;s lorsque des capteurs sont ajout&#233;s car les deux marchent ensemble. Il n'est pas n&#233;cessaire de les cr&#233;er manuellement..
+      
+      <h3>Programmation</h3>
+      <p>Le syst&#232;me DCC4PC permettra la lecture des valeurs de CV &#224; l'aide de la programmation en mode ops, mais cela d&#233;pend du mat&#233;riel compatible RailComm.
+      
+      <a name="tools" id="tools"></a>
+      <h2>Outils JMRI DCC4PC Tools</h2>
+      <ul>
+        <li>Moniteur de Commande DCC4PC</li>
+                <p>Ceci r&#233;pertorie toutes les commandes trait&#233;es envoy&#233;es et re&#231;ues vers/depuis l'interface. Cela exclut les commandes envoy&#233;es entre JMRI et l'interface dans le processus de r&#233;cup&#233;ration de la date. </P>
+
+        <li>Envoyer une Commande DCC4PC</li>
+            <p>Autoriser l'envoi de commandes &#224; l'interface de l'ordinateur ou &#224; un tableau de d&#233;tection, &#233;galement appel&#233; tableau enfant. Les commandes &#233;crites en hexad&#233;cimal doivent &#234;tre pr&#233;c&#233;d&#233;es de 0x, suivies des commandes sans espaces, par exemple 0x0b020a </p>
+        <li>Info DCC4PC</li>
+            <p>R&#233;cup&#232;re les informations du p&#233;riph&#233;rique d'interface ordinateur. </p
+        <li>Circuits Lecteur DCC4PC</li>
+            <p>Affiche les informations actuelles de toutes les cartes de d&#233;tection configur&#233;es. Il est &#233;galement possible de changer l'adresse d'un tableau. Veuillez noter que, pour ce faire, un nouveau jeu de capteurs et de journaux sera g&#233;n&#233;r&#233; avec la nouvelle adresse. Les anciens capteurs ne seront ni supprim&#233;s ni d&#233;plac&#233;s.
+
+
+      </ul>
+      <!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+</body>
+</html>
