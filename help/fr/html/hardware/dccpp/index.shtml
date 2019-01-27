@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="fr">
-<!-- Translated by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2017-01-23 -->
+<!-- Translated by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-01-28 -->
 <head>
 <title>JMRI Hardware Support - DCC++</title>
 <meta name="Author" content="Mark Underwood">
@@ -48,7 +48,9 @@
 		<li>D&#233;finir/Effacer la configuration sp&#233;cifiques des octets variables</li>
 		<li>Lire des octets variables de configuration</LI>
 	</ul>
-	<li>Programmation sur la Voie d'Exploitaion</li>
+	<li>Programmation sur la Voie Principale</li>
+	<li style="list-style: none">
+          <ul>
 	<ul><li>&#201;criture des octets variables de configuration</LI>
 		<li>D&#233;finir/Effacer la configuration sp&#233;cifiques des octets variables</li>
 	</ul>
@@ -56,13 +58,13 @@
 	<li>Acc&#232;s et commandes directement par les bornes E/S de l'Arduino pour les fonctions et les capteurs</li>
 </ul>
 
-<p><strong><em>NOTE:</em>La prise en charge DCC++ est cass&#233;e dans les versions JMRI 4.1.6 et 4.2.x .S'il vous plait utilisez JMRI 4.3.1 ou des versions plus r&#233;centes avec DCC++</strong></p>
+<p><strong><em>NOTE:</em>La prise en charge DCC++ est cass&#233;e dans les versions JMRI 4.1.6 et 4.2.x .S'il vous plait utilisez JMRI 4.3.1 ou des versions plus r&#233;centes avec DCC++<</strong></p><a name="hardware"></a>
 
 <a name="hardware"></a><h2>Mat&#233;riel pris en charge</h2>
 
 <h3>Centrales</h3>
 <p>
-	Actuellement les Centrales DCC++ de base peuvent &#234;tre construite soit depuis une plateforme Arduino Uno 
+	Actuellement les Centrales DCC++ de base peuvent &#234;tre construites soit depuis une plateforme Arduino Uno 
 	ou une Arduino M&#233;ga. JMRI devrait prendre en charge la plateforme soit via un USB ou une connexion R&#233;seau.
 
 <h3>Interfaces Informatiques</H3>
@@ -72,15 +74,16 @@
 		<li>S&#233;rie/USB: Connexion directe &#224; un Arduino via un c&#226;ble USB</li>
 		<li>Simulateur: Centrale simul&#233;e pour une exploitation hors-ligne ou des tests</li>
 		<li>R&#233;seau: connexion TCP/IP depuis JMRI &#224; une centrale avec un Shield Ethernet ou WiFi</li>
-		<li>DCC++ Over TCP :Connexion r&#233;seau &#224; distance &#224; une instance JMRI locale connect&#233;e &#224; une Centrale</li>
+		<li>DCC++ Over TCP :Connexion r&#233;seau &#224; distance &#224; une instance JMRI locale connect&#233;e &#224; une Centrale de Commande</li>
 	</ul>
 
 <h4>Simulateur</h4>
+
 <p>Pour utiliser le simulateur, choisir simplement cette option dans les Pr&#233;f&#233;rences JMRI. Notez que quelques fonctions ne travailleront
  pas dans ce mode. Par exemple, le Simulateur ne prands pas ( pour le moment) en charge les affectations, le stockage et le rappel des affectations des 
 Capteurs et des Aiguillages. L'interface Simulateur est assez fonctionnelle pour garder JMRI disponible pour travailler 
 sur des projets hors-ligne tels que l'Exploitation ou la d&#233;signation des Panneaux ou des Logix, mais n'est pas suffisant 
-pour &#234;tre Pour &#234;tre un &#233;mulateur de centrale &#224; part enti&#232;re. 
+pour &#234;tre un &#233;mulateur de centrale &#224; part enti&#232;re. 
 
 <h4>DCC++ Over TCP</h4>
 <p>Pour le DCC++ Over TCP, un ordinateur h&#244;te doit &#234;tre connect&#233; &#224; la centrale
@@ -131,8 +134,8 @@ l'interface DCC++ Over TCP pour acc&#233;der &#224; distance et contr&#244;ler l
 	panneau des Pr&#233;f&#233;rences. Celui-ci s'ouvre automatiquement lors d'un premier d&#233;marrage 
 	du programme, ou vous pouvez le s&#233;lectionner dans le menu "&#201;dition".</li>
 
-	<li>S&#233;lectionnez "DCC++" dans la fen&#234;tre de s&#233;lection en haut( "System Manufacturer" ).</li>
-	<li>S&#233;lectionnez "DCC++ Serial Port" dans la seconde fen&#234;tre ( "System Connection" )</li>
+	<li>S&#233;lectionnez "DCC++" dans la fen&#234;tre de s&#233;lection en haut( "Fabricant Syst&#232;me" ).</li>
+	<li>S&#233;lectionnez "DCC++ Serial Port" dans la seconde fen&#234;tre ( "Connexion syst&#232;me" )</li>
 	<li>S&#233;lectionn&#233; le port USB/Serial appropri&#233; dans la troisi&#232;me fen&#234;tre  ("Serial Port") </li>
 
 	<li>Cliquez "Enregistrer". Il vous sera demand&#233; si c'est OK pour quitter le 
@@ -152,8 +155,10 @@ l'interface DCC++ Over TCP pour acc&#233;der &#224; distance et contr&#244;ler l
 		D&#233;marrez un des programmes JMRI, puis allez au panneau des Pr&#233;f&#233;rences. Celui-ci s'ouvre 
 		automatiquement lors d'un premier d&#233;marrage du programme, ou vous pouvez le s&#233;lectionner 
 		dans le menu "&#201;dition" ( depuis le menu Application sur OS X ). </li>
-	<li>S&#233;lectionnez "DCC++" dans la fen&#234;tre de s&#233;lection en haut( "System Manufacturer" ).</li>
-	<li>S&#233;lectionnez "DCC++ Ethernet" dans la seconde fen&#234;tre ( "System Connection" )</li>
+	<li>S&#233;lectionnez "DCC++" dans la fen&#234;tre de s&#233;lection en haut( "Fabricant Syst&#232;me" ).</li>
+	
+	<li>S&#233;lectionnez "DCC++ Ethernet" dans la seconde fen&#234;tre ( "Connexion syst&#232;me" )</li>
+	
 	<li>Entrez l'adresse IP et le num&#233;ro du Port de la Centrale DCC++</li>
 
 	<li>Cliquez "Enregistrer". Il vous sera demand&#233; si c'est OK pour quitter le 
@@ -167,17 +172,24 @@ l'interface DCC++ Over TCP pour acc&#233;der &#224; distance et contr&#244;ler l
 <ol>
 	<li>Premi&#232;rement, connectez la Centrale DCC++ &#224; un ordinateur h&#244;te via le
 		l(interface S&#233;rie ou le R&#233;seau somme d&#233;crit pr&#233;c&#233;demment</li>
+		
 	<li>Sur l'ordinateur h&#244;te s&#233;lectionnez "DCC++ Over TCP Server" depuis le menu DCC++.
 		V&#233;rifiez les r&#233;glages, puis pressez sur le bouton "Start Server". Si vous voulez que 
 		le serveur d&#233;marre automatiquementquand JMRI est lanc&#233;, cochez la
-		case propos&#233;e.
+		case propos&#233;e.</li>
+		
 	<li>L'ordinateur H&#244;te doit &#234;tre ex&#233;cut&#233; avec le serveur DCC++ actif avant 
 		le lancement de l'ordinateur Client</li>
+		
 	<li>sur l'ordinateur client, lancer JMRI </li>
-	<li>Dans les Pr&#233;f&#233;rences connxion, s&#233;lectionnez DCC++ comme le "System Manufacturer"</li>
-	<li>S&#233;lectionnez "DCC++ Over TCP" dans la seconde fen&#234;tre "System Connection" </li>
+	
+	<li>Dans les Pr&#233;f&#233;rences connexion, s&#233;lectionnez DCC++ comme le "Fabricant Syst&#232;me"</li>
+	
+	<li>S&#233;lectionnez "DCC++ Over TCP" dans la seconde fen&#234;tre "Connexion syst&#232;me" </li>
+	
 	<li>Entrez le nom r&#233;seau ou l'adresse IP de l'ordinateur h&#244;te et v&#233;rifiez
 		que le num&#233;ro du port est le m&#234;me sur sur l'ordinateur h&#244;te</li>
+		
 	<li>Enregistrez vos Pr&#233;f&#233;rences er red&#233;marrez</li>
 </ol>
 
@@ -189,15 +201,15 @@ l'interface DCC++ Over TCP pour acc&#233;der &#224; distance et contr&#244;ler l
 <ol>
 		<li>D&#233;marrez un des programmes JMRI, puis allez au panneau des P&#233;f&#233;rences.
 		Celui-ci s'ouvre automatiquement lors d'un premier d&#233;marrage du programme, ou vous pouvez le s&#233;lectionner 
-		dans le menu "&#201;dition".
+		dans le menu "&#201;dition".</li>
 
 		<li>S&#233;lectionnez "DCC++ Simulator" dans la fen&#234;tre de s&#233;lection du haut. Il n'y a pas 
-		d'&#233;tapes suppl&#233;mentaires de configuration pour utiliser le Simulateur DCC++.
+		d'&#233;tapes suppl&#233;mentaires de configuration pour utiliser le Simulateur DCC++.</li>
 
 		<li>Cliquez sur "Enregistrer", il vous sera demand&#233; si vous voulez quittez le programme,
-		cliquez "Oui".
+		cliquez "Oui".</li>
 		
-		<li>Red&#233;marrez le programme, Vous devez &#234;tre op&#233;rationnel.
+		<li>Red&#233;marrez le programme, Vous devez &#234;tre op&#233;rationnel.</li>
 </ol>
 
 <a name="tools"></a><h2>Outils JMRI DCC++</h2>
@@ -209,14 +221,15 @@ l'interface DCC++ Over TCP pour acc&#233;der &#224; distance et contr&#244;ler l
 <li>Mesure Courant Voie
 <li>Configurer les Capteurs et Aiguillages
 <li>Charger DCC++ over TCP Server
-</ul>
-<img src="images/DCCppGeneratePack.png" width="117" height="47">&nbsp;
-<img src="images/DCCppTrackCurrent.png" width="89" height="43">&nbsp;
-<img src="images/DCCppConfigTO.png" width="186" height="101">&nbsp;
-<img src="images/DCCppOverTCPIP.png" width="219" height="47">&nbsp;
+/ul><img src="images/DCCppGeneratePack.png" width="117"
+      height="47">  <img src="images/DCCppTrackCurrent.png" width=
+      "89" height="43">  <img src="images/DCCppConfigTO.png" width=
+      "186" height="101">  <img src="images/DCCppOverTCPIP.png"
+      width="219" height="47">  <a name="documentation"></a>
+
 
 <a name="documentation"></a><h2>Documentation</h2>
-<h3>aide JMRI </h3>
+<h3>Aide JMRI </h3>
 <p>Des informations suppl&#233;mentaires peuvent tre trouv&#233;es sur les pages suivantes:
 
 <h3>Autres Sources d'Information</h3>
