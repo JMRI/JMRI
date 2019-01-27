@@ -513,14 +513,14 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
                     rangeCheckBox.setEnabled(((ReporterManager) mgr).allowMultipleAdditions(systemPrefix));
                     // get tooltip from ProxyReporterManager
                     addEntryToolTip = mgr.getEntryToolTip();
-                   log.debug("R add box set");
+                    log.debug("R add box set");
                     break;
                 }
             }
         } else if (reportManager.allowMultipleAdditions(ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem()))) {
             rangeCheckBox.setEnabled(true);
             log.debug("R add box enabled2");
-            // get tooltip from sensor manager
+            // get tooltip from reporter manager
             addEntryToolTip = reportManager.getEntryToolTip();
         }
         else {
@@ -528,7 +528,7 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
         }
         // show hwAddressTextField field tooltip in the Add Reporter pane that matches system connection selected from combobox
         hardwareAddressTextField.setToolTipText("<html>"
-                + Bundle.getMessage("AddEntryToolTipLine1", connectionChoice, Bundle.getMessage("Sensors"))
+                + Bundle.getMessage("AddEntryToolTipLine1", connectionChoice, Bundle.getMessage("Reporters"))
                 + "<br>" + addEntryToolTip + "</html>");
         hardwareAddressTextField.setBackground(Color.yellow); // reset
         addButton.setEnabled(true); // ambiguous, so start enabled
