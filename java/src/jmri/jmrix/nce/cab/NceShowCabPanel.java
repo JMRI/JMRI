@@ -120,7 +120,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
     private static final int FIRST_TIME_SLEEP = 3000; // delay first operation to let panel build
 
     private static final int CAB_MIN_USB = 2; // USB cabs start at 2
-    private static final int CAB_MIN_PRO = 2; // Serial cabs start at 2
+    private static final int CAB_MIN_PRO = 1; // Serial cabs start at 1
     private static final int CAB_MAX_USB = 10; // There are up to 10 cabs
     private static final int CAB_MAX_PRO = 65; // There are up to 64 cabs plus the serial computer cab
     private static final int CAB_LINE_LEN = 16; // display line length of 16 bytes
