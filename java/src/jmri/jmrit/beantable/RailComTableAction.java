@@ -38,11 +38,13 @@ public class RailComTableAction extends AbstractTableAction<IdTag> {
         super(actionName);
 
         // disable ourself if there is no primary RailComm manager available
-        if (InstanceManager.getNullableDefault(RailComManager.class) == null) {
+        if (tagManager == null) {
             setEnabled(false);
         }
         includeAddButton = false;
     }
+
+    protected RailComManager tagManager = InstanceManager.getDefault(jmri.RailComManager.class);
 
     public RailComTableAction() {
         this("Rail Com Table");
@@ -73,7 +75,7 @@ public class RailComTableAction extends AbstractTableAction<IdTag> {
 
             @Override
             public String getValue(String name) {
-                RailCom tag = (RailCom) InstanceManager.getDefault(RailComManager.class).getBySystemName(name);
+                RailCom tag = (RailCom) tagManager.getBySystemName(name);
                 if (tag == null) {
                     return "?";
                 }
@@ -82,21 +84,17 @@ public class RailComTableAction extends AbstractTableAction<IdTag> {
 
             @Override
             public RailComManager getManager() {
-                RailComManager m = InstanceManager.getDefault(RailComManager.class);
-                if (!m.isInitialised()) {
-                    m.init();
-                }
-                return m;
+                return tagManager;
             }
 
             @Override
             public RailCom getBySystemName(String name) {
-                return (RailCom) InstanceManager.getDefault(RailComManager.class).getBySystemName(name);
+                return (RailCom) tagManager.getBySystemName(name);
             }
 
             @Override
             public RailCom getByUserName(String name) {
-                return (RailCom) InstanceManager.getDefault(RailComManager.class).getByUserName(name);
+                return (RailCom) tagManager.getByUserName(name);
             }
 
             @Override

@@ -42,11 +42,13 @@ public class IdTagTableAction extends AbstractTableAction<IdTag> {
         super(actionName);
 
         // disable ourself if there is no primary IdTag manager available
-        if (InstanceManager.getNullableDefault(IdTagManager.class) == null) {
+        if (tagManager == null) {
             setEnabled(false);
         }
 
     }
+
+    protected IdTagManager tagManager = InstanceManager.getDefault(jmri.IdTagManager.class);
 
     public IdTagTableAction() {
         this(Bundle.getMessage("TitleIdTagTable"));
@@ -66,7 +68,7 @@ public class IdTagTableAction extends AbstractTableAction<IdTag> {
 
             @Override
             public String getValue(String name) {
-                IdTag tag = InstanceManager.getDefault(IdTagManager.class).getBySystemName(name);
+                IdTag tag = tagManager.getBySystemName(name);
                 if (tag == null) {
                     return "?";
                 }
@@ -75,24 +77,18 @@ public class IdTagTableAction extends AbstractTableAction<IdTag> {
 
             @Override
             public Manager<IdTag> getManager() {
-                IdTagManager m = InstanceManager.getDefault(IdTagManager.class);
-                if (!m.isInitialised()) {
-                    m.init();
-                }
-                return m;
+                return tagManager;
             }
 
             @Override
             public IdTag getBySystemName(String name) {
-                return InstanceManager.getDefault(IdTagManager.class).getBySystemName(name);
+                return tagManager.getBySystemName(name);
             }
 
             @Override
             public IdTag getByUserName(String name) {
-                return InstanceManager.getDefault(IdTagManager.class).getByUserName(name);
+                return tagManager.getByUserName(name);
             }
-            /*public int getDisplayDeleteMsg() { return InstanceManager.getDefault(jmri.UserPreferencesManager.class).getWarnMemoryInUse(); }
-             public void setDisplayDeleteMsg(int boo) { InstanceManager.getDefault(jmri.UserPreferencesManager.class).setWarnMemoryInUse(boo); }*/
 
             @Override
             public void clickOn(IdTag t) {
@@ -275,7 +271,7 @@ public class IdTagTableAction extends AbstractTableAction<IdTag> {
         }
         String sName = sysName.getText();
         try {
-            InstanceManager.getDefault(IdTagManager.class).newIdTag(sName, user);
+            tagManager.newIdTag(sName, user);
         } catch (IllegalArgumentException ex) {
             // user input no good
             handleCreateException(sName);
@@ -298,14 +294,14 @@ public class IdTagTableAction extends AbstractTableAction<IdTag> {
     @Override
     public void addToFrame(BeanTableFrame f) {
         f.addToBottomBox(isStateStored, this.getClass().getName());
-        isStateStored.setSelected(InstanceManager.getDefault(IdTagManager.class).isStateStored());
+        isStateStored.setSelected(tagManager.isStateStored());
         isStateStored.addActionListener((ActionEvent e) -> {
-            InstanceManager.getDefault(IdTagManager.class).setStateStored(isStateStored.isSelected());
+            tagManager.setStateStored(isStateStored.isSelected());
         });
         f.addToBottomBox(isFastClockUsed, this.getClass().getName());
-        isFastClockUsed.setSelected(InstanceManager.getDefault(IdTagManager.class).isFastClockUsed());
+        isFastClockUsed.setSelected(tagManager.isFastClockUsed());
         isFastClockUsed.addActionListener((ActionEvent e) -> {
-            InstanceManager.getDefault(IdTagManager.class).setFastClockUsed(isFastClockUsed.isSelected());
+            tagManager.setFastClockUsed(isFastClockUsed.isSelected());
         });
         log.debug("Added CheckBox in addToFrame method");
     }
@@ -313,14 +309,14 @@ public class IdTagTableAction extends AbstractTableAction<IdTag> {
     @Override
     public void addToPanel(AbstractTableTabAction<IdTag> f) {
         f.addToBottomBox(isStateStored, this.getClass().getName());
-        isStateStored.setSelected(InstanceManager.getDefault(IdTagManager.class).isStateStored());
+        isStateStored.setSelected(tagManager.isStateStored());
         isStateStored.addActionListener((ActionEvent e) -> {
-            InstanceManager.getDefault(IdTagManager.class).setStateStored(isStateStored.isSelected());
+            tagManager.setStateStored(isStateStored.isSelected());
         });
         f.addToBottomBox(isFastClockUsed, this.getClass().getName());
-        isFastClockUsed.setSelected(InstanceManager.getDefault(IdTagManager.class).isFastClockUsed());
+        isFastClockUsed.setSelected(tagManager.isFastClockUsed());
         isFastClockUsed.addActionListener((ActionEvent e) -> {
-            InstanceManager.getDefault(IdTagManager.class).setFastClockUsed(isFastClockUsed.isSelected());
+            tagManager.setFastClockUsed(isFastClockUsed.isSelected());
         });
         log.debug("Added CheckBox in addToPanel method");
     }
