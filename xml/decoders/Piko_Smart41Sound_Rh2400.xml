@@ -1,37 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2014 All rights reserved -->
-<!--                                                                        -->
-<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
-<!-- the terms of version 2 of the GNU General Public License as published  -->
-<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
-<!-- of this license.                                                       -->
-<!--                                                                        -->
-<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
-<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
-<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
-<!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-    <version author="Egbert Broerse" version="1" lastUpdated="20181018"/>
-    <!-- Version 1 - Copied and adapted from Uhlenbrock_36500.xml + Dutch translation -->
+    <version author="Egbert Broerse" version="1" lastUpdated="20190128"/>
+    <!-- Version 1 - Copied and adapted from Uhlenbrock_36500.xml -->
     <!-- WARNING: output names fully linked to function mapping include file - do not change independently -->
 <decoder>
-    <family name="Multi-Protocol IntelliSound4 Decoder" mfg="Uhlenbrock Elektronik" lowVersionID="9"><!-- to be checked by hardware owner -->
-      <model model="36520" numOuts="9" numFns="14" maxMotorCurrent="1.2A" formFactor="HO" connector="NMRAmedium" productID="36520" comment="IntelliSound 4 with PluX22 plug and RailCom(R)">
-        <output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
-        <output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>
-        <output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA"/>
-        <output name="4" label=". A2 ." connection="solder" maxcurrent="400 mA"/>
-        <output name="5" label=". A3 ." connection="solder" maxcurrent="400 mA"/>
-        <output name="6" label=". A4 ." connection="solder" maxcurrent="400 mA"/>
-        <output name="7" label=". A5 ." connection="solder" maxcurrent="400 mA"/>
-        <output name="8" label=". A6 ." connection="solder" maxcurrent="400 mA"/>
-        <output name="9" label=". A7 ." connection="solder" maxcurrent="400 mA"/>
-        <output name="Shunting" label="mode"/>
-        <output name="Start/brake" label="inertia"/>
-        <size length="30" width="16" height="4.6" units="mm"/>
-      </model>
-      <model model="36560" numOuts="9" numFns="14" maxMotorCurrent="1.2A" formFactor="HO" connector="PluX22" productID="36560" comment="IntelliSound 4 with PluX22 plug and RailCom(R)">
+    <family name="SmartDecoder 4.1 Sound" mfg="Piko Spielwaren"><!-- to be checked by hardware owner -->
+      <model model="PIKO41RH2400" numOuts="9" numFns="14" maxMotorCurrent="1.2A" formFactor="N" connector="Next18" productID="PIKO41RH2400" comment="Piko SmartDecoder 4.1 Sound Dieselloco Rh2400 Next18 plug and RailCom(R) (Plus)">
         <output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
         <output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>
         <output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA"/>
@@ -43,7 +19,7 @@
         <output name="9" label=". A7 ." connection="plug" maxcurrent="400 mA"/>
         <output name="Shunting" label="mode"/>
         <output name="Start/brake" label="inertia"/>
-        <size length="30" width="16" height="4.6" units="mm"/>
+        <size length="30.2" width="16" height="3.8" units="mm"/>
       </model>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes">
@@ -57,7 +33,7 @@
     <variables>
       <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/vStartHighMid-accelDecel.xml"/>
-      <variable item="Decoder Version" CV="7" readOnly="yes" default="9">
+      <variable item="Decoder Version" CV="7" readOnly="yes" default="39">
         <decVal/>
         <label>Manufacturer Version No: </label>
         <label xml:lang="it">Versione Decoder: </label>
@@ -65,7 +41,7 @@
         <label xml:lang="de">Decoder Version: </label>
         <label xml:lang="nl">Versie van decoder: </label>
       </variable>
-      <variable item="Manufacturer" CV="8" readOnly="yes" default="85">
+      <variable item="Manufacturer" CV="8" readOnly="yes" default="162">
         <decVal/>
         <label>Manufacturer ID: </label>
         <label xml:lang="it">ID Costruttore: </label>
@@ -73,25 +49,7 @@
         <label xml:lang="de">Hersteller ID: </label>
         <label xml:lang="nl">Fabrikant-ID: </label>
       </variable>
-      <!-- CV12 - see below with CV49 -->
-      <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv13analogfunction.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv29analog.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29RailCom.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>
-      <!-- Include function mapping -->
-      <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/functionmap7outputs.xml"/>
-      <!-- End function mapping -->
-      <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv47.48trim.xml"/>
-      <!-- CV49 Uhlenbrock decoder configuration - common bits -->
-      <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv49common.xml"/>
-      <!-- CV49 bits 3-4 moved to CV12 in this decoder 			-->
-      <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv12dataformat.xml"/>
-      <!-- CV49 specific bits for this decoder-->
-      <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv49braking.xml"/>
-      <!-- added for 363xx/365xx CV50 -->
+
       <variable item="Motorola address 2" CV="50" default="0">
         <decVal max="255"/>
         <label>Motorola loco address 2</label>
@@ -101,9 +59,8 @@
         <tooltip xml:lang="de">für F5 bis F8 (Wert 1-255)</tooltip>
         <tooltip xml:lang="nl">voor F5 t/m F8 (waarde 1-255)</tooltip>
       </variable>
-      <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv51analog.xml"/>
-      <!-- CV 51 voor 365xx/325xx -->
-      <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv51bits2367.xml"/>
+      <!-- CV51 -->
+      <xi:include href="http://jmri.org/xml/decoders/piko/cv51config2.xml"/>
       <variable item="EMF Option 1" CV="53" default="35">
         <decVal max="63"/>
         <label>Repetition rate</label>
@@ -162,29 +119,25 @@
         <label xml:lang="nl">Uitschakeltemperatuur</label>
         <tooltip>in °C, different with each decoder</tooltip>
       </variable>
-      <!-- added for 363xx/365xx -->
-      <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv62error.xml"/>
-      <variable item="End braking speed" CV="64" default="30">
-        <decVal/>
-        <label>End braking speed</label>
-        <label xml:lang="de">Geschw. am Ende Bremsstrecke</label>
-        <label xml:lang="nl">Snelheid aan einde Remsectie</label>
-        <tooltip>Valid when CV49 Bit 2=1 (Braking end) and Bit 7=1 (Braking analog)</tooltip>
+
+      <variable item="Advanced Function Mapping" CV="96" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Advanced Function Mapping</label>
+        <label xml:lang="de">Art des Function Mappings</label>
       </variable>
+
       <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv65.66registers.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv107.108indepOutputs.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv57lissy.xml"/>
       <!-- CVs 109 - 111, 116 - 123 -->
       <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/optionVars7outputs.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv124.129coupling.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv130.134smoke.xml"/>
-      <!-- integrate IntelliSound3/4 variables in decoder -->
+      <!-- SmartSound 4.1 variables -->
       <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/soundVars7outputs.xml"/>
     </variables>
-    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/factReset.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/piko/factReset.xml"/>
   </decoder>
-  <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/PaneUhlenbrock.xml"/>
-  <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/soundPane7outputs.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/piko/PanePiko.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/fmapPane7outputs.xml"/>
 </decoder-config>
