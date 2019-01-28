@@ -277,4 +277,33 @@ public class StringUtilTest {
         int[] d = new int[]{1, 2, 3};
         Assert.assertEquals("Object", "[1],[2],[3]", StringUtil.arrayToString(d));
     }
+    
+    @Test
+    public void testGetLastIntFromString() {
+        Assert.assertEquals("aABC123DEFb", 123, StringUtil.getLastIntFromString("aABC123DEFb"));
+        Assert.assertEquals("no val", -1, StringUtil.getLastIntFromString(""));
+        Assert.assertEquals("0", 0, StringUtil.getLastIntFromString("0"));
+        Assert.assertEquals("+2", 2, StringUtil.getLastIntFromString("+2"));
+        Assert.assertEquals("-5", 5, StringUtil.getLastIntFromString("-5"));
+        Assert.assertEquals("ABC123DEF", 123,StringUtil.getLastIntFromString("ABC123DEF"));
+        Assert.assertEquals("ABC123", 123, StringUtil.getLastIntFromString("ABC123"));
+        Assert.assertEquals("123", 123, StringUtil.getLastIntFromString("123"));
+        Assert.assertEquals("123ABC", 123, StringUtil.getLastIntFromString("123ABC"));
+        Assert.assertEquals("123ABC456", 456, StringUtil.getLastIntFromString("123ABC456"));
+        Assert.assertEquals("123A654BC456", 456, StringUtil.getLastIntFromString("123A654BC456"));
+        Assert.assertEquals("XD+123ABC-456", 456, StringUtil.getLastIntFromString("XD+123ABC-456"));
+        Assert.assertEquals("Ac456fg123ABC789jh", 789, StringUtil.getLastIntFromString("Ac456fg123ABC789jh"));
+    }        
+    
+    @Test
+    public void testReplaceLast() {
+        Assert.assertEquals("no vals", "", StringUtil.replaceLast("","",""));
+        Assert.assertEquals("D4F5gaz", "D4F5gaz", StringUtil.replaceLast("D4F5gaz","",""));
+        Assert.assertEquals("D4F5gaz F5 S1", "D4S1gaz", StringUtil.replaceLast("D4F5gaz","F5","S1"));
+        Assert.assertEquals("D4F5g1234", "D4F5g1234", StringUtil.replaceLast("D4F5g123","123","1234"));
+        Assert.assertEquals("77YYYzz", "77YYYzz", StringUtil.replaceLast("xxYYYzz","xx","77"));
+        Assert.assertEquals("xxAA77YYYzz", "xxAA77YYYzz", StringUtil.replaceLast("xxAAxxYYYzz","xx","77"));
+        Assert.assertEquals("122", "122", StringUtil.replaceLast("121","1","2"));
+    }
+    
 }

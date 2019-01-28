@@ -1,5 +1,7 @@
 package jmri.jmrix.can.cbus;
 
+import java.beans.PropertyChangeEvent;
+import jmri.Reporter;
 import jmri.Sensor;
 import jmri.implementation.AbstractSensor;
 import jmri.jmrix.can.CanListener;
@@ -27,7 +29,8 @@ public class CbusSensor extends AbstractSensor implements CanListener {
         this.tc = tc;
         init(address);
     }
-
+    
+    Reporter reporter = null;
     TrafficController tc;
 
     /**
@@ -180,6 +183,43 @@ public class CbusSensor extends AbstractSensor implements CanListener {
         } else if (addrInactive.match(f)) {
             setOwnState(!getInverted() ? Sensor.INACTIVE : Sensor.ACTIVE);
         }
+    }
+    
+    /**
+     * {@inheritDoc}
+     *
+     * When a reporter is attached to the sensor, the sensor will go
+     * active when an ID tag is present ( assuming Sensor not inverted )
+     * inactive when the same ID tag is announced by another reporter.
+     */
+    @Override
+    public void setReporter(Reporter er) {
+        reporter = er;
+        if (reporter!=null) {
+            log.debug("attached to reporter",reporter);
+            reporter.addPropertyChangeListener((PropertyChangeEvent e) -> {
+                log.debug("Report {} new value {}",reporter, e.getNewValue());
+                if (e.getPropertyName().equals("currentReport")) {
+                    try {
+                        if (e.getNewValue()==null) {
+                            setKnownState(Sensor.INACTIVE); // setKnownState does any inversion
+                        } else {
+                            setKnownState(Sensor.ACTIVE); // setKnownState does any inversion
+                        }
+                    } catch (jmri.JmriException ex) {
+                        log.error("Reporter {} unable to change sensor status",reporter);
+                    }
+                }
+            });
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Reporter getReporter() {
+        return reporter;
     }
     
     /**
