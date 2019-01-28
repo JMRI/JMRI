@@ -1,0 +1,130 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<!-- UpDated by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-01-28 -->
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <!-- Copyright ($Author$) 2016 -->
+
+  <title>JMRI: DCC++ Sensors</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <h1>Capteurs DCC++ </h1>
+      
+      N'importe quelle broche de l'Arduino peut &#234;tre utilis&#233;e comme entr&#233;e Capteur DCC**
+      
+      <h2>Broches de Commande des Capteur DCC++ index&#233;es</h2>
+
+      <p>Chaque broche Capteur a une entr&#233;e dans le tableau Capteur de la Centrale de Commande. La centrale de commande  stocke le num&#233;ro de broche E/S de l'Arduino IO actuel
+       int&#233;rieurement, et vous affectez une valeur d'ID (comprise entre 0 et 32767) au capteur
+      . JMRI r&#233;f&#233;rence le capteur en utilisant la valeur ID,
+       pas le num&#233;ro de code Arduino.</p>
+       <p> Il n'est pas n&#233;cessaire que les valeurs d'identifiant de capteur soient s&#233;quentielles. Chaque ID de capteur peut &#234;tre n'importe quelle valeur inutilis&#233;e dans la plage autoris&#233;e (0-32767). </P>
+      
+
+      <p> Si vous utilisez des broches analogiques Arduino  comme entr&#233;es num&#233;riques, utilisez le num&#233;ro de broche num&#233;rique de la broche. Par exemple, la broche analogique A0 est la broche num&#233;rique 14 </p>
+      <p> Pour contr&#244;ler une broche Arduino E/S &#224; l'aide du contr&#244;le index&#233;,
+           suivez ces &#233;tapes. </p>
+
+      .</p>
+      
+      <h3>1: Choisir un Nom Syst&#232;me et un Nom Utilisateur</h3>
+      
+      <p>L'Adresse Mat&#233;rielle d'un capteur index&#233; est la valeur ID attribu&#233;e dans le Tableau interne des Capteurs de la Centrale de Commande
+           Par exemple, si votre capteur est connect&#233; &#224; la broche 7 d'Arduino et que la valeur 13 du capteur est attribu&#233;e &#224; ce capteur dans 
+           la Centrale de Commande, l'adresse mat&#233;rielle de ce capteur doit &#234;tre 13
+.</p>
+      <p>Le Nom Utilisateur peut &#234;tre ce que vous voulez.</p>
+      
+      <h3>2: Ajouter le Capteur au Tableau d'Aiguillage JMRI</h3>
+      
+      <p>REMARQUE: Les configurations de capteur stock&#233;es dans la m&#233;moire EEPROM de la Centrale de Commande seront automatiquement ajout&#233;es au Tableau de Capteurs JMRI.
+           au d&#233;marrage
+.</p>
+      <p>Dans le Tableau de Capteurs JMRI...</p>
+      <ol>
+          <li>Cliquer sur le bouton "Add"</li>
+          <li>Etre s&#251;r que "DCC++" est s&#233;lectionn&#233; dans le s&#233;lecteur de Nom de Syst&#232;me</li>
+          <li>Entrer la valeur de l'ID dans la case Adresse Mat&#233;rielle</li>
+          <li>Entrer le Nom Utilisateur du Capteur dans la case Nom Utilisateur</li>
+          <li>Cliquer "OK"</li>
+          <li>Cliquez &#233;ventuellement sur "Modifier" sur la ligne du nouveau capteur et modifiez la configuration du capteur dans JMRI.</li>
+      </ol>
+
+      <table>
+            <tbody><tr>
+                <th>Entr&#233;e</th>
+                <th>Signification</th>
+                <th>Donner le Nom Syst&#232;me</th>
+                <th>Masquer</th>
+                <th>Equivalent</th>
+                <th>Minimum</th>
+                <th>Maximum</th>
+            </tr>
+            <tr>
+                <td>4:3</td>
+                <td>(convertit &#224; 50)</td>
+                <td>DCCPP50</td>
+                <td>node : broche</td>
+                <td> </td>
+                <td>0</td>
+                <td> </td>
+            </tr>
+        </tbody>
+      </table>
+      <!-- this table is an exceprt from the table in the help/en/html/doc/Technical/Names.shtml
+      based on information from the Hardware help pages
+      by Egbert Broerse @silverailscolo July 2017 -->
+
+      <h3>3: Configurez la Centrale de Commande</h3>
+      
+      <p>Utilisez l'outil JMRI/DCC++ "Configure Base Station" (4.6.x: "Configure Sensors & Turnouts") pour stocker 
+      les ID Capteur et les num&#233;ros des broches de l'Arduino dans la  Centrale de Commande.</p>
+      <ol>
+          <li>Dans le Menu DCC++, choisissez "Configure Base Station" (ou "Configure Sensors & Turnouts")</li>
+          <li>Choisissez l'onglet "Capteur"</li>
+          <li>Cliquez le bouton "Add Sensor". Ceci ajoutera une nouvelle ligne dans le tableau.</li>
+          <li>Dans la nouvelle rang&#233;e, mettre l'"Index" &#224; la valeur de l'ID de la nouvelle sortie</li>
+          <li>Dans la nouvelle rang&#233;e, mettre dans le "Pin #" le num&#233;ro de broche de l'Arduino ppour le nouveau capteur</li>
+          <li>Si la sortie de la broches n&#233;cessite l'activation de la r&#233;sistance de rappel interne, cochez la case "Pullup"..</li>
+          <li>Cliquez sur "Enregistrer les Capteurs" ou "Fermer" et r&#233;pondez aux invites.</li>
+      </ol>
+      
+      <p>Remarque: sur les versions 4.6.x et ant&#233;rieures de JMRI, si vous choisissez "Enregistrer les capteurs", vous ne pourrez <em> pas </em> 
+      &#233;crire les modifications dans la m&#233;moire EEPROM de la station de base. Pour &#233;crire sur EEPROM, vous devez choisir
+           "Fermer" <em> au lieu </ em> de "Enregistrer les capteurs".
+</p>
+      
+      <h2>Notes g&#233;n&#233;rales</h2>
+      
+      <h3>ID de capteur</h3>
+      
+       <p>Les ID de capteur ne doivent pas n&#233;cessairement &#234;tre s&#233;quentiels. Vous pouvez utiliser n'importe quelle valeur non utilis&#233;e
+           dans la plage autoris&#233;e (0-32767). Les ID de capteur peuvent &#234;tre identiques aux ID d'Aiguillage ou de Sortie. </P>
+      
+      <h3> Utilisation de l'outil "Configurer la Centrale de Commande" JMRI </h3>
+      
+       <p> L'outil "Configurer la Centrale de Commande" est un moyen pratique de programmer les Tableaux Capteur, Aiguillage et Sortie.
+       Centrale de Commande. Cependant, il n'est pas n&#233;cessaire de travailler avec DCC ++ dans JMRI. Vous pouvez,
+       par exemple, configurez les Tableaux de votre Centrale de Commande &#224; l'aide de l'interface de commande s&#233;rie DCC ++ ou du
+       Logiciel DCC ++ Controller. Tant que les ID attribu&#233;s dans la Centrale de Commande correspondent &#224; l'Adresse Mat&#233;rielle
+       attribu&#233; dans le Tableau des Capteurs de JMRI, tout ira bien. </ p>
+
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+</body>
+</html>
