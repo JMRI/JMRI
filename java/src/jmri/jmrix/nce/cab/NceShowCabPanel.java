@@ -36,70 +36,70 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Frame to display NCE cabs
- *
+ * <p>
  * Note, NCE bit layout MSB = bit 7, LSB = bit 0.
- *
+ * <p>
  * From Jim Scorse at NCE:
- *
+ * <p>
  * Each cab has a 256 byte "context page" in system RAM These pages start at
  * 0x8000 in system RAM with Cab 0 at 0x8800, cab 1 at 0x8900, Cab 2 at 0x8a00,
  * etc.
- *
+ * <p>
  * Below is a list of offsets (in decimal) into the cab context page for useful
  * memory locations.
- *
+ * <p>
  * For example if you want to know the current speed of cab address 2's
  * currently selected loco look at memory location 0x8a00 + 32 dec (0x20). This
  * will be address 0x8a20.
- *
- *
+ * <p>
+ * <p>
  * To determine if a cab is active (plugged in at any point this session) you
  * will need to look at the byte "FLAGS1" (offset 101)
- *
+ * <p>
  * If bit 1 of FLAGS1 = 1 then the cab has been talked to at least once by the
  * command station.
- *
+ * <p>
  * Bits 0 and 7 indicate the type of cab being use this session at this cab
  * address
- *
+ * <p>
  * Bit 7,0 = 0,0 Procab or other cab with an LCD display (type A) Bit 7,0 = 0,1
  * Cab04 other cab without an LCD (type B) Bit 7,0 = 1,0 USB or similar device
  * (type C) Bit 7,0 = 1,1 AIU or similar device (type D)
- *
- *
+ * <p>
+ * <p>
  * CAB_BASE EQU 0 ; LCD_TOP_LINE EQU 0 ;16 chars (in ASCII) for top line of LCD
  * LCD_BOT_LINE EQU 16 ;16 chars (in ASCII) for bottom line of LCD
- *
+ * <p>
  * CURR_SPEED EQU 32 ;this cab's current speed ADDR_H EQU 33 ;loco address, high
  * byte ADDR_L EQU 34 ;loco address, low byte FLAGS EQU 35 ;bit 0 - Do not use
  * ;bit 1 - 1=128 speed mode, 0=28 speed mode ;bit 2 - 1=forward, 0=reverse ;bit
  * 3 - Do not use ;bit 4 - Do not use ;bit 5 - Do not use ;bit 6 - Do not use
  * ;bit 7 - 1=rear loco of consist is active address use reverse speeds
- *
+ * <p>
  * FUNCTION_L EQU 36 ;bit 0 = function 1, 1=on, 0=off ;bit 1 = function 2, 1=on,
  * 0=off ;bit 2 = function 3, 1=on, 0=off ;bit 3 = function 4, 1=on, 0=off ;bit
  * 4 = headlight, 1=on, 0=off
- *
+ * <p>
  * FUNCTION_H EQU 37 ;bit 0 = function 5, 1=on, 0=off ;bit 1 = function 6, 1=on,
  * 0=off ;bit 2 = function 7, 1=on, 0=off ;bit 3 = function 8, 1=on, 0=off ;bit
  * 4 = function 9, 1=on, 0=off ;bit 5 = function 10, 1=on, 0=off ;bit 6 =
  * function 11, 1=on, 0=off ;bit 7 = function 12, 1=on, 0=off
- *
+ * <p>
  * ALIAS EQU 38 ;If loco is in consist this is the consist address
- *
- *
+ * <p>
+ * <p>
  * FUNC13_20 EQU 82 ;bit map of current functions (bit 0=F13) FUNC21_28 EQU 83
  * ;bit map of current functions (bit 0=F21)
- *
+ * <p>
  * ACC_AD_H EQU 90 ;current accessory address high byte ACC_AD_L EQU 91 ;current
  * accessory address low byte
- *
+ * <p>
  * ;lower nibble bit 0 =1 if setup advanced consist in process
- *
+ * <p>
  * FLAGS2 EQU 93 ;bit 0 = \ ;bit 1 = {@literal >}Number of recalls for this cab
  * ;bit 2 = / 1-6 valid ;bit 3 = 1=refresh LCD on ProCab ;bit 4 = Do not use
  * ;bit 5 = Do not use ;bit 6 = Do not use ;bit 7 = Do not use
- *
+ * <p>
  * FLAGS1 EQU 101 ;bit0 - 0 = type a or type C cab, 1 = type b or type d ;bit1 -
  * 0 = cab type not determined, 1 = it has ;bit2 - 0 = Do not use ;bit3 - 0 = Do
  * not use ;bit4 - 0 = Do not use ;bit5 - 0 = Do not use ;bit6 - 0 = Do not use
@@ -172,6 +172,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
     JCheckBox checkBoxAutoRefresh = new JCheckBox(Bundle.getMessage("CheckBoxLabelAutoRefresh"));
 
     static class DataRow {
+
         int cabNumber;
         String cabType;
         String longShort;
@@ -271,8 +272,8 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
         // fill in cab array
         minCabNum = CAB_MIN_PRO;
         maxCabNum = CAB_MAX_PRO;
-        if ((tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_NONE) &&
-                (tc.getCmdGroups() & NceTrafficController.CMDS_MEM) != 0) {
+        if ((tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_NONE)
+                && (tc.getCmdGroups() & NceTrafficController.CMDS_MEM) != 0) {
             minCabNum = CAB_MIN_USB;
             maxCabNum = CAB_MAX_USB;
         }
@@ -300,7 +301,6 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
         //        checkBoxShowDisplayText.setToolTipText(Bundle.getMessage("CheckBoxShowDisplayToolTip"));
         //        checkBoxShowDisplayText.setSelected(true);
         //        checkBoxShowDisplayText.setEnabled(false);
-
         checkBoxAutoRefresh.setToolTipText(Bundle.getMessage("CheckBoxAutoRefreshToolTip"));
         checkBoxAutoRefresh.setSelected(false);
         addCheckBoxAction(checkBoxAutoRefresh);
@@ -737,13 +737,13 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                         if (cabLine1Array[currCabId][i] != recChars[i]) {
                             foundChange++;
                             if (log.isDebugEnabled()) {
-                                log.debug(currCabId +
-                                        ": CabLine1[" +
-                                        i +
-                                        "] " +
-                                        recChars[i] +
-                                        "<->" +
-                                        cabLine1Array[currCabId][i]);
+                                log.debug(currCabId
+                                        + ": CabLine1["
+                                        + i
+                                        + "] "
+                                        + recChars[i]
+                                        + "<->"
+                                        + cabLine1Array[currCabId][i]);
                             }
                         }
                         cabLine1Array[currCabId][i] = recChars[i];
@@ -769,13 +769,13 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                         if (cabLine2Array[currCabId][i] != recChars[i]) {
                             foundChange++;
                             if (log.isDebugEnabled()) {
-                                log.debug(currCabId +
-                                        ": CabLine2[" +
-                                        i +
-                                        "] " +
-                                        recChars[i] +
-                                        "<->" +
-                                        cabLine2Array[currCabId][i]);
+                                log.debug(currCabId
+                                        + ": CabLine2["
+                                        + i
+                                        + "] "
+                                        + recChars[i]
+                                        + "<->"
+                                        + cabLine2Array[currCabId][i]);
                             }
                         }
                         cabLine2Array[currCabId][i] = recChars[i];
@@ -818,9 +818,9 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
             }
         }
 
-        textStatus.setText(Bundle.getMessage("StatusProcessingDone") +
-                ". " +
-                MessageFormat.format(Bundle.getMessage("StatusCabsFound"), cabsFound));
+        textStatus.setText(Bundle.getMessage("StatusProcessingDone")
+                + ". "
+                + MessageFormat.format(Bundle.getMessage("StatusCabsFound"), cabsFound));
         cabModel.fireTableDataChanged();
         this.setVisible(true);
         this.repaint();
@@ -1104,13 +1104,13 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                         if (cabLine1Array[currCabId][ptrCabLine] != recChars[ptrData]) {
                             foundChange++;
                             if (log.isDebugEnabled()) {
-                                log.debug(currCabId +
-                                        ": CabLine1[" +
-                                        ptrCabLine +
-                                        "] " +
-                                        recChars[ptrData] +
-                                        "<->" +
-                                        cabLine1Array[currCabId][ptrCabLine]);
+                                log.debug(currCabId
+                                        + ": CabLine1["
+                                        + ptrCabLine
+                                        + "] "
+                                        + recChars[ptrData]
+                                        + "<->"
+                                        + cabLine1Array[currCabId][ptrCabLine]);
                             }
                         }
                         cabLine1Array[currCabId][ptrCabLine] = recChars[ptrData];
@@ -1129,13 +1129,13 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                         if (cabLine1Array[currCabId][ptrCabLine] != recChars[ptrData]) {
                             foundChange++;
                             if (log.isDebugEnabled()) {
-                                log.debug(currCabId +
-                                        ": CabLine1[" +
-                                        ptrCabLine +
-                                        "] " +
-                                        recChars[ptrData] +
-                                        "<->" +
-                                        cabLine1Array[currCabId][ptrCabLine]);
+                                log.debug(currCabId
+                                        + ": CabLine1["
+                                        + ptrCabLine
+                                        + "] "
+                                        + recChars[ptrData]
+                                        + "<->"
+                                        + cabLine1Array[currCabId][ptrCabLine]);
                             }
                         }
                         cabLine1Array[currCabId][ptrCabLine] = recChars[ptrData];
@@ -1154,13 +1154,13 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                         if (cabLine1Array[currCabId][ptrCabLine] != recChars[ptrData]) {
                             foundChange++;
                             if (log.isDebugEnabled()) {
-                                log.debug(currCabId +
-                                        ": CabLine1[" +
-                                        ptrCabLine +
-                                        "] " +
-                                        recChars[ptrData] +
-                                        "<->" +
-                                        cabLine1Array[currCabId][ptrCabLine]);
+                                log.debug(currCabId
+                                        + ": CabLine1["
+                                        + ptrCabLine
+                                        + "] "
+                                        + recChars[ptrData]
+                                        + "<->"
+                                        + cabLine1Array[currCabId][ptrCabLine]);
                             }
                         }
                         cabLine1Array[currCabId][ptrCabLine] = recChars[ptrData];
@@ -1179,13 +1179,13 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                         if (cabLine1Array[currCabId][ptrCabLine] != recChars[ptrData]) {
                             foundChange++;
                             if (log.isDebugEnabled()) {
-                                log.debug(currCabId +
-                                        ": CabLine1[" +
-                                        ptrCabLine +
-                                        "] " +
-                                        recChars[ptrData] +
-                                        "<->" +
-                                        cabLine1Array[currCabId][ptrCabLine]);
+                                log.debug(currCabId
+                                        + ": CabLine1["
+                                        + ptrCabLine
+                                        + "] "
+                                        + recChars[ptrData]
+                                        + "<->"
+                                        + cabLine1Array[currCabId][ptrCabLine]);
                             }
                         }
                         cabLine1Array[currCabId][ptrCabLine] = recChars[ptrData];
@@ -1212,13 +1212,13 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                         if (cabLine2Array[currCabId][ptrCabLine] != recChars[ptrData]) {
                             foundChange++;
                             if (log.isDebugEnabled()) {
-                                log.debug(currCabId +
-                                        ": CabLine2[" +
-                                        ptrCabLine +
-                                        "] " +
-                                        recChars[ptrData] +
-                                        "<->" +
-                                        cabLine2Array[currCabId][ptrCabLine]);
+                                log.debug(currCabId
+                                        + ": CabLine2["
+                                        + ptrCabLine
+                                        + "] "
+                                        + recChars[ptrData]
+                                        + "<->"
+                                        + cabLine2Array[currCabId][ptrCabLine]);
                             }
                         }
                         cabLine2Array[currCabId][ptrCabLine] = recChars[ptrData];
@@ -1237,13 +1237,13 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                         if (cabLine2Array[currCabId][ptrCabLine] != recChars[ptrData]) {
                             foundChange++;
                             if (log.isDebugEnabled()) {
-                                log.debug(currCabId +
-                                        ": CabLine2[" +
-                                        ptrCabLine +
-                                        "] " +
-                                        recChars[ptrData] +
-                                        "<->" +
-                                        cabLine2Array[currCabId][ptrCabLine]);
+                                log.debug(currCabId
+                                        + ": CabLine2["
+                                        + ptrCabLine
+                                        + "] "
+                                        + recChars[ptrData]
+                                        + "<->"
+                                        + cabLine2Array[currCabId][ptrCabLine]);
                             }
                         }
                         cabLine2Array[currCabId][ptrCabLine] = recChars[ptrData];
@@ -1262,13 +1262,13 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                         if (cabLine2Array[currCabId][ptrCabLine] != recChars[ptrData]) {
                             foundChange++;
                             if (log.isDebugEnabled()) {
-                                log.debug(currCabId +
-                                        ": CabLine2[" +
-                                        ptrCabLine +
-                                        "] " +
-                                        recChars[ptrData] +
-                                        "<->" +
-                                        cabLine2Array[currCabId][ptrCabLine]);
+                                log.debug(currCabId
+                                        + ": CabLine2["
+                                        + ptrCabLine
+                                        + "] "
+                                        + recChars[ptrData]
+                                        + "<->"
+                                        + cabLine2Array[currCabId][ptrCabLine]);
                             }
                         }
                         cabLine2Array[currCabId][ptrCabLine] = recChars[ptrData];
@@ -1287,13 +1287,13 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                         if (cabLine2Array[currCabId][ptrCabLine] != recChars[ptrData]) {
                             foundChange++;
                             if (log.isDebugEnabled()) {
-                                log.debug(currCabId +
-                                        ": CabLine2[" +
-                                        ptrCabLine +
-                                        "] " +
-                                        recChars[ptrData] +
-                                        "<->" +
-                                        cabLine2Array[currCabId][ptrCabLine]);
+                                log.debug(currCabId
+                                        + ": CabLine2["
+                                        + ptrCabLine
+                                        + "] "
+                                        + recChars[ptrData]
+                                        + "<->"
+                                        + cabLine2Array[currCabId][ptrCabLine]);
                             }
                         }
                         cabLine2Array[currCabId][ptrCabLine] = recChars[ptrData];
@@ -1337,9 +1337,9 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
             }
         }
 
-        textStatus.setText(Bundle.getMessage("StatusProcessingDone") +
-                ". " +
-                MessageFormat.format(Bundle.getMessage("StatusCabsFound"), cabsFound));
+        textStatus.setText(Bundle.getMessage("StatusProcessingDone")
+                + ". "
+                + MessageFormat.format(Bundle.getMessage("StatusCabsFound"), cabsFound));
         cabModel.fireTableDataChanged();
         this.setVisible(true);
         this.repaint();
@@ -1347,7 +1347,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 
     /**
      * Process for functions F0-F4
-     *
+     * <p>
      */
     private void procFunctions0_4(int currCabId, int c) {
         cabData[currCabId].F0 = (c & NceCmdStationMemory.FUNC_L_F0) != 0;
@@ -1359,7 +1359,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 
     /**
      * Process for functions 5 through 12
-     *
+     * <p>
      */
     private void procFunctions5_12(int currCabId, int c) {
         cabData[currCabId].F5 = (c & NceCmdStationMemory.FUNC_H_F5) != 0;
@@ -1374,7 +1374,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 
     /**
      * Process char for functions 13-20
-     *
+     * <p>
      */
     private void procFunctions13_20(int currCabId, int c) {
         cabData[currCabId].F13 = (c & NceCmdStationMemory.FUNC_H_F13) != 0;
@@ -1389,7 +1389,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 
     /**
      * Process char for functions 21-28
-     *
+     * <p>
      */
     private void procFunctions21_28(int currCabId, int c) {
         cabData[currCabId].F21 = (c & NceCmdStationMemory.FUNC_H_F21) != 0;
@@ -1669,48 +1669,48 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
         }
 
         private final String[] columnNames1LineText = {
-                Bundle.getMessage("ColHeaderCabId"),
-                Bundle.getMessage("ColHeaderType"),
-                Bundle.getMessage("ColHeaderPurge"),
-                Bundle.getMessage("ColHeaderLongShort"),
-                Bundle.getMessage("ColHeaderLoco"),
-                Bundle.getMessage("ColHeaderSpeed"),
-                Bundle.getMessage("ColHeaderDir"),
-                Bundle.getMessage("ColHeaderMode"),
-                Bundle.getMessage("ColHeaderConsist"),
-                Bundle.getMessage("ColHeaderConsistPos"),
-                Bundle.getMessage("ColHeaderF0"),
-                Bundle.getMessage("ColHeaderF1"),
-                Bundle.getMessage("ColHeaderF2"),
-                Bundle.getMessage("ColHeaderF3"),
-                Bundle.getMessage("ColHeaderF4"),
-                Bundle.getMessage("ColHeaderF5"),
-                Bundle.getMessage("ColHeaderF6"),
-                Bundle.getMessage("ColHeaderF7"),
-                Bundle.getMessage("ColHeaderF8"),
-                Bundle.getMessage("ColHeaderF9"),
-                Bundle.getMessage("ColHeaderF10"),
-                Bundle.getMessage("ColHeaderF11"),
-                Bundle.getMessage("ColHeaderF12"),
-                Bundle.getMessage("ColHeaderF13"),
-                Bundle.getMessage("ColHeaderF14"),
-                Bundle.getMessage("ColHeaderF15"),
-                Bundle.getMessage("ColHeaderF16"),
-                Bundle.getMessage("ColHeaderF17"),
-                Bundle.getMessage("ColHeaderF18"),
-                Bundle.getMessage("ColHeaderF19"),
-                Bundle.getMessage("ColHeaderF20"),
-                Bundle.getMessage("ColHeaderF21"),
-                Bundle.getMessage("ColHeaderF22"),
-                Bundle.getMessage("ColHeaderF23"),
-                Bundle.getMessage("ColHeaderF24"),
-                Bundle.getMessage("ColHeaderF25"),
-                Bundle.getMessage("ColHeaderF26"),
-                Bundle.getMessage("ColHeaderF27"),
-                Bundle.getMessage("ColHeaderF28"),
-                Bundle.getMessage("ColHeaderText1"),
-                Bundle.getMessage("ColHeaderText2"),
-                Bundle.getMessage("ColHeaderLastUsed")
+            Bundle.getMessage("ColHeaderCabId"),
+            Bundle.getMessage("ColHeaderType"),
+            Bundle.getMessage("ColHeaderPurge"),
+            Bundle.getMessage("ColHeaderLongShort"),
+            Bundle.getMessage("ColHeaderLoco"),
+            Bundle.getMessage("ColHeaderSpeed"),
+            Bundle.getMessage("ColHeaderDir"),
+            Bundle.getMessage("ColHeaderMode"),
+            Bundle.getMessage("ColHeaderConsist"),
+            Bundle.getMessage("ColHeaderConsistPos"),
+            Bundle.getMessage("ColHeaderF0"),
+            Bundle.getMessage("ColHeaderF1"),
+            Bundle.getMessage("ColHeaderF2"),
+            Bundle.getMessage("ColHeaderF3"),
+            Bundle.getMessage("ColHeaderF4"),
+            Bundle.getMessage("ColHeaderF5"),
+            Bundle.getMessage("ColHeaderF6"),
+            Bundle.getMessage("ColHeaderF7"),
+            Bundle.getMessage("ColHeaderF8"),
+            Bundle.getMessage("ColHeaderF9"),
+            Bundle.getMessage("ColHeaderF10"),
+            Bundle.getMessage("ColHeaderF11"),
+            Bundle.getMessage("ColHeaderF12"),
+            Bundle.getMessage("ColHeaderF13"),
+            Bundle.getMessage("ColHeaderF14"),
+            Bundle.getMessage("ColHeaderF15"),
+            Bundle.getMessage("ColHeaderF16"),
+            Bundle.getMessage("ColHeaderF17"),
+            Bundle.getMessage("ColHeaderF18"),
+            Bundle.getMessage("ColHeaderF19"),
+            Bundle.getMessage("ColHeaderF20"),
+            Bundle.getMessage("ColHeaderF21"),
+            Bundle.getMessage("ColHeaderF22"),
+            Bundle.getMessage("ColHeaderF23"),
+            Bundle.getMessage("ColHeaderF24"),
+            Bundle.getMessage("ColHeaderF25"),
+            Bundle.getMessage("ColHeaderF26"),
+            Bundle.getMessage("ColHeaderF27"),
+            Bundle.getMessage("ColHeaderF28"),
+            Bundle.getMessage("ColHeaderText1"),
+            Bundle.getMessage("ColHeaderText2"),
+            Bundle.getMessage("ColHeaderLastUsed")
         };
 
         private boolean showAllCabs = false;
@@ -1727,8 +1727,8 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
             int activeRows = 0;
             if (!getShowAllCabs()) {
                 for (int i = minCabNum; i <= maxCabNum; i++) {
-                    if ((cabFlag1Array[i] &
-                            NceCmdStationMemory.FLAGS1_MASK_CABISACTIVE) == NceCmdStationMemory.FLAGS1_CABISACTIVE) {
+                    if ((cabFlag1Array[i]
+                            & NceCmdStationMemory.FLAGS1_MASK_CABISACTIVE) == NceCmdStationMemory.FLAGS1_CABISACTIVE) {
                         activeRows++;
                     }
                 }
@@ -1740,7 +1740,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 
         /**
          * Return cabId for row number
-         * 
+         *
          * @param row row for cab information
          * @return cab id
          */
@@ -1748,8 +1748,8 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
             int activeRows = -1;
             if (!getShowAllCabs()) {
                 for (int i = minCabNum; i <= maxCabNum; i++) {
-                    if ((cabFlag1Array[i] &
-                            NceCmdStationMemory.FLAGS1_MASK_CABISACTIVE) == NceCmdStationMemory.FLAGS1_CABISACTIVE) {
+                    if ((cabFlag1Array[i]
+                            & NceCmdStationMemory.FLAGS1_MASK_CABISACTIVE) == NceCmdStationMemory.FLAGS1_CABISACTIVE) {
                         activeRows++;
                         if (row == activeRows) {
                             return i;
@@ -1778,8 +1778,8 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                 return null;
             }
             DataRow r = cabData[cabId];
-            boolean activeCab = (cabFlag1Array[cabId] &
-                    NceCmdStationMemory.FLAGS1_MASK_CABISACTIVE) == NceCmdStationMemory.FLAGS1_CABISACTIVE;
+            boolean activeCab = (cabFlag1Array[cabId]
+                    & NceCmdStationMemory.FLAGS1_MASK_CABISACTIVE) == NceCmdStationMemory.FLAGS1_CABISACTIVE;
             if (r == null) {
                 return null;
             }
