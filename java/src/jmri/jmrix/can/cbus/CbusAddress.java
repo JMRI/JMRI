@@ -5,6 +5,7 @@ import java.util.regex.Pattern;
 import javax.annotation.Nonnull;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
+import jmri.util.StringUtil;
 
 // import org.slf4j.Logger;
 // import org.slf4j.LoggerFactory;
@@ -254,6 +255,40 @@ public class CbusAddress {
             retval[i] = new CbusAddress(pStrings[i]);
         }
         return retval;
+    }
+
+    /**
+     * Increments a CBUS address by 1
+     * eg +123 to +124
+     * eg -N123E456 to -N123E457
+     * returns null if unable to make the address
+     *
+     */
+    public static String getIncrement( @Nonnull String testAddr ) {
+        CbusAddress a = new CbusAddress(testAddr);
+        CbusAddress[] v = a.split();
+        switch (v.length) {
+            case 1:
+                // get last part and increment
+                int last =  StringUtil.getLastIntFromString(v[0].toString());
+                if ( last < 1 ) { // event numbers should be > 0
+                    return null;
+                }
+                return StringUtil.replaceLast(v[0].toString(), String.valueOf(last), String.valueOf(last+1));
+            case 2:
+                int lasta =  StringUtil.getLastIntFromString(v[0].toString());
+                int lastb =  StringUtil.getLastIntFromString(v[1].toString());
+                if ( ( lasta < 1 ) || ( lastb < 1 ) ) { // event numbers should be > 0
+                    return null;
+                }
+                StringBuilder sb = new StringBuilder();
+                sb.append(StringUtil.replaceLast(v[0].toString(), String.valueOf(lasta), String.valueOf(lasta+1)));
+                sb.append(";");
+                sb.append(StringUtil.replaceLast(v[1].toString(), String.valueOf(lastb), String.valueOf(lastb+1)));
+                return sb.toString();
+            default:
+                return null;
+        }
     }
 
     /**

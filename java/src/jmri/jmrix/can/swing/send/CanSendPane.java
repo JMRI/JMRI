@@ -24,8 +24,8 @@ import jmri.jmrix.can.cbus.CbusMessage;
 import jmri.jmrix.can.TrafficController;
 import jmri.jmrix.can.cbus.CbusAddress;
 import jmri.util.StringUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+// import org.slf4j.Logger;
+// import org.slf4j.LoggerFactory;
 
 /**
  * User interface for sending CAN frames to exercise the system
@@ -45,25 +45,20 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel {
     JButton sendButton = new JButton();
     JTextField packetTextField = new JTextField(12);
     JCheckBox cbusPriorityCheckbox = new JCheckBox(Bundle.getMessage("AddCbusPriorFull"));
+    JCheckBox sendAsMessage = new JCheckBox(Bundle.getMessage("SendAsMessage"));
+    JCheckBox sendAsReply = new JCheckBox(Bundle.getMessage("SendAsReply"));
     
     public CanSendPane() {
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-
-        JPanel cbuspriorholder = new JPanel();
-        cbuspriorholder.setBorder(BorderFactory.createTitledBorder(
-            BorderFactory.createEtchedBorder(), Bundle.getMessage("AddCbusPriority")));
-        cbuspriorholder.add(cbusPriorityCheckbox);
-        add(cbuspriorholder);          
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));     
         
         // Handle single-packet part
         JPanel topPane = new JPanel();
         // Add a nice border
         topPane.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createEtchedBorder(), Bundle.getMessage("SendFrameTitle")));
-        add(topPane);
-
+        
         JPanel pane1 = new JPanel();
-        pane1.setLayout(new BoxLayout(pane1, BoxLayout.X_AXIS));      
+        pane1.setLayout(new BoxLayout(pane1, BoxLayout.X_AXIS));
         
         JPanel entry = new JPanel();
         jLabel1.setText(Bundle.getMessage("FrameLabel"));
@@ -76,32 +71,24 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel {
         entry.add(jLabel1);
         entry.add(packetTextField);
         packetTextField.setToolTipText(Bundle.getMessage("EnterHexToolTip"));
-        pane1.add(entry);
-
-        pane1.add(sendButton);
-        pane1.add(Box.createVerticalGlue());
-
+        topPane.add(entry);
+        topPane.add(sendButton);
         
         ActionListener l = ae -> {
             sendButtonActionPerformed(ae);
         };
-        
         sendButton.addActionListener(l);
         packetTextField.addActionListener(l);
         
-        
-        topPane.add(pane1);
-
         // Configure the sequence
         JPanel bottomPane = new JPanel();
         // Add a nice border
         bottomPane.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createEtchedBorder(), Bundle.getMessage("SendSeqTitle")));
         bottomPane.setLayout(new BoxLayout(bottomPane, BoxLayout.Y_AXIS));
-        add(bottomPane);
+        
         JPanel pane2 = new JPanel();
         pane2.setLayout(new GridLayout(MAXSEQUENCE + 2, 3));
-        // pane2.add(new JLabel(Bundle.getMessage("ButtonSend")));
         pane2.add(new JLabel(" "));
         pane2.add(new JLabel(Bundle.getMessage("PacketLabel")));
         pane2.add(new JLabel(Bundle.getMessage("WaitLabel")));
@@ -121,8 +108,26 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel {
         pane2.add(new JLabel(" "));
         pane2.add(mRunButton);
         bottomPane.add(pane2);
-        // bottomPane.add(Box.createVerticalGlue()); // starts a new row in layout
-
+        
+        JPanel optionholder = new JPanel();
+        optionholder.setBorder(BorderFactory.createTitledBorder(
+            BorderFactory.createEtchedBorder(), Bundle.getMessage("Options")));
+        JPanel optionlist = new JPanel();
+            
+        optionlist.setLayout(new BoxLayout(optionlist, BoxLayout.Y_AXIS));
+        optionlist.add(cbusPriorityCheckbox);
+        optionlist.add(sendAsMessage);
+        optionlist.add(sendAsReply);
+        
+        cbusPriorityCheckbox.setSelected(true);
+        sendAsMessage.setSelected(true);
+        
+        optionholder.add(optionlist);
+        
+        add(topPane);
+        add(bottomPane);
+        add(optionholder);     
+        
         mRunButton.setToolTipText(Bundle.getMessage("StartToolTip"));
         mRunButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
@@ -165,13 +170,18 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel {
     }
 
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
-         try {
+        try {
             CanMessage m = createPacket(packetTextField.getText().replaceAll("\\s",""));
             if (cbusPriorityCheckbox.isSelected()) {
                 CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
             }
-            tc.sendCanMessage(m, null);        
-            log.debug("sendButtonActionPerformed: " + m);
+            if (sendAsMessage.isSelected()) {
+                tc.sendCanMessage(m, null);
+            }
+            if (sendAsReply.isSelected()) {
+                CanReply mr = new CanReply(m);
+                tc.sendCanReply(mr, null);
+            }
         } catch (StringIndexOutOfBoundsException ex) {
             JOptionPane.showMessageDialog(null, 
             (Bundle.getMessage("NoMakeFrame")), Bundle.getMessage("WarningTitle"),
@@ -286,7 +296,13 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel {
                 }
                 
                 // send it
-                tc.sendCanMessage(m, null);
+                if (sendAsMessage.isSelected()) {
+                    tc.sendCanMessage(m, null);
+                }
+                if (sendAsReply.isSelected()) {
+                    CanReply mr = new CanReply(m);
+                    tc.sendCanReply(mr, null);
+                }
                 startSequenceDelay();
             } catch (StringIndexOutOfBoundsException ex) {
                 JOptionPane.showMessageDialog(null, 
@@ -374,6 +390,6 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel {
                     jmri.InstanceManager.getDefault(CanSystemConnectionMemo.class));
         }
     }
-    private final static Logger log = LoggerFactory.getLogger(CanSendPane.class);
+    // private final static Logger log = LoggerFactory.getLogger(CanSendPane.class);
 
 }

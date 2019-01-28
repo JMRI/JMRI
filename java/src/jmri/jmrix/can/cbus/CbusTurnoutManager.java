@@ -79,10 +79,11 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
 
     /** 
      * {@inheritDoc} 
+     * systemName M
      */
     @Override
     public boolean allowMultipleAdditions(String systemName) {
-        return false;
+        return true;
     }
 
     /** 
@@ -114,13 +115,31 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
      */
     @Override
     public String getNextValidAddress(String curAddress, String prefix) throws JmriException {
-        // always return this (the current) name without change
+        String testAddr = curAddress;
+        // make sure starting name is valid
         try {
-            validateSystemNameFormat(curAddress);
+            validateSystemNameFormat(testAddr);
         } catch (IllegalArgumentException e) {
             throw new JmriException(e.toString());
         }
-        return curAddress;
+        //If the hardware address passed does not already exist then this can
+        //be considered the next valid address.
+        Turnout s = getBySystemName(prefix + typeLetter() + testAddr);
+        if (s == null) {
+            return testAddr;
+        }
+        // build local addresses
+        String newaddr = CbusAddress.getIncrement(testAddr);
+        if (newaddr==null) {
+            return null;
+        }
+        //If the new hardware address does not already exist then this can
+        //be considered the next valid address.
+        Turnout snew = getBySystemName(prefix + typeLetter() + newaddr);
+        if (snew == null) {
+            return newaddr;
+        }
+        return null;
     }
 
     @Override
