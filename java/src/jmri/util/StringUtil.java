@@ -485,7 +485,6 @@ public class StringUtil {
      * @return last value in int form , -1 if not found
      */
     @CheckReturnValue
-    @Nonnull
     static public int getLastIntFromString(@Nonnull String str){
         StringBuilder sb = new StringBuilder();
         for (int i = str.length() - 1; i >= 0; i --) {
