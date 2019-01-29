@@ -1,6 +1,5 @@
 /**
- * The JMRI JSON Services provide access to JMRI layout, operations and roster
- * elements.
+ * The JMRI JSON Services provide access to JMRI via JSON messages via HTTP or a socket. 
  *
  * <h2>Requests</h2>
  * <p>
@@ -55,8 +54,27 @@
  * be joined together when using JSON in other protocols.</li>
  * </ul>
  *
+ * <h2>Notes</h2>
+ * <p>
+ * The JMRI JSON services are defined using {@link jmri.spi.JsonServiceFactory} objects
+ * which may be loaded as third-party plug-ins to JMRI (see
+ * <a href="http://jmri.org/help/en/html/doc/Technical/plugins.shtml#service">Plug-in mechanisms</a>).
+ * Because of this the JSON server can make no guarantees concerning how the JSON services
+ * handling a specific type of object behave; specifically the following are not guaranteed:
+ * <ul>
+ * <li>An array response to a list request contains all items of the requested type.</li>
+ * <li>An array response does not contain duplicate items of the same type with different data.</li>
+ * <li>The message sent from a JMRI server is in response to the last message received when using sockets.</li>
+ * <li>Requests for an object will cause a listener to be created for that object such that the
+ * client is automatically updated when the object or object state changes.</li>
+ * <li>Requests for a list will cause a listener to be created that automatically updates the client
+ * when objects of a type are added or removed within JMRI.</li>
+ * <li>A single service will be the only responder to a specific message.</li>
+ * </ul>
+ *
  * @since 4.3.4
  * @see jmri.web.servlet.json.JsonServlet
  * @see jmri.jmris.json.JsonServer
+ * @see jmri.spi.JsonServiceFactory
  */
 package jmri.server.json;
