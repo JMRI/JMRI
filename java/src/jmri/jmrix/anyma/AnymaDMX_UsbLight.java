@@ -114,6 +114,7 @@ public class AnymaDMX_UsbLight extends AbstractVariableLight {
     /**
      * {@inheritDoc}
      */
+     @Override
      protected int getNumberOfSteps() {
         return 256;
     }

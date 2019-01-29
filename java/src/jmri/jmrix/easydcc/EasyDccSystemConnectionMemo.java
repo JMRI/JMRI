@@ -213,6 +213,7 @@ public class EasyDccSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
 
     private EasyDccConsistManager consistManager;
 
+    @Override
     public EasyDccConsistManager getConsistManager() {
         if (getDisabled()) {
             return null;
