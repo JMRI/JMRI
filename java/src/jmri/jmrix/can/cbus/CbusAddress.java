@@ -7,8 +7,8 @@ import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.util.StringUtil;
 
-// import org.slf4j.Logger;
-// import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Utilities for handling CBUS addresses.
@@ -265,30 +265,155 @@ public class CbusAddress {
      *
      */
     public static String getIncrement( @Nonnull String testAddr ) {
+        log.debug("testing address {}",testAddr);
         CbusAddress a = new CbusAddress(testAddr);
         CbusAddress[] v = a.split();
+        String newString="";
         switch (v.length) {
-            case 1:
-                // get last part and increment
-                int last =  StringUtil.getLastIntFromString(v[0].toString());
-                if ( last < 1 ) { // event numbers should be > 0
-                    return null;
-                }
-                return StringUtil.replaceLast(v[0].toString(), String.valueOf(last), String.valueOf(last+1));
             case 2:
                 int lasta =  StringUtil.getLastIntFromString(v[0].toString());
                 int lastb =  StringUtil.getLastIntFromString(v[1].toString());
-                if ( ( lasta < 1 ) || ( lastb < 1 ) ) { // event numbers should be > 0
-                    return null;
-                }
                 StringBuilder sb = new StringBuilder();
                 sb.append(StringUtil.replaceLast(v[0].toString(), String.valueOf(lasta), String.valueOf(lasta+1)));
                 sb.append(";");
                 sb.append(StringUtil.replaceLast(v[1].toString(), String.valueOf(lastb), String.valueOf(lastb+1)));
-                return sb.toString();
+                newString= sb.toString();
+                break;
             default:
-                return null;
+                // get last part and increment
+                int last =  StringUtil.getLastIntFromString(v[0].toString());
+                newString= StringUtil.replaceLast(v[0].toString(), String.valueOf(last), String.valueOf(last+1));
+                break;
         }
+        try {
+            return validateSysName(newString);
+        } catch (IllegalArgumentException e) {
+            log.error(e.toString());
+        }
+        return null;
+    }
+
+    /**
+     * Work out the details for Cbus hardware address validation
+     * Logging of handled cases no higher than WARN.
+     *
+     * @param address the hardware address to check
+     * @throws IllegalArgumentException when delimiter is not found
+     */
+    public static String validateSysName( String address ) throws IllegalArgumentException  {
+        
+        if ( address == null ) {
+            throw new IllegalArgumentException("No address Passed ");
+        }        
+        
+        if ( address.endsWith(";") ) {
+            throw new IllegalArgumentException("Should not end with ; " + address);
+        }
+        
+        // 1st set of switch cases enable strings to pass as a CbusAddress if unsigned
+        String[] addressArray = address.split(";");
+        switch (addressArray.length) {
+            case 1:
+                address = checkPartOfName(addressArray[0],"+");
+                break;
+            case 2:                    
+                address = checkPartOfName(addressArray[0],"+") + ";" + checkPartOfName(addressArray[1],"-");
+                break;
+            default:
+                throw new IllegalArgumentException("Wrong number of events in address: " + address);
+        }
+        
+        CbusAddress a = new CbusAddress(address);
+        CbusAddress[] v = a.split();
+        switch (v.length) {
+            case 0:
+                throw new IllegalArgumentException("Did not find usable hardware address: " + address + " for a valid Cbus sensor address");
+            case 1:
+                if ( address.startsWith("+") || address.startsWith("-") ) {
+                    break;
+                }
+                int unsigned = 0;
+                try {
+                    unsigned = Integer.parseInt(address); // accept unsigned integer, will add "+" upon creationz
+                    if ( unsigned > 100000 ) {
+                        break;
+                    }
+                } catch (NumberFormatException ex) {
+                    log.debug("Unable to convert {} into Cbus format +nn", address);
+                }
+                throw new IllegalArgumentException("can't make 2nd event from address " + address);
+            case 2:
+                break;
+            default:
+                throw new IllegalArgumentException("Wrong number of events in address: " + address);
+        }
+        return address;
+    }
+    
+    private static String checkPartOfName( String testpart, String plusOrMinus ){
+        int unsigned = 0;
+        String part = testpart;
+        try {
+            unsigned = Integer.parseInt(part); // accept unsigned single integer, will add "+" upon creationz
+            log.debug("part {} is integer {}",part,unsigned);
+            if ( unsigned == 0 ){
+                throw new IllegalArgumentException("Event cannot be 0 in address: " + part);
+            }
+            if ( (part.charAt(0) != '+') && ( (part.charAt(0) != '-') ) ) {
+                if ( unsigned > 0 && unsigned < 65536 ) {
+                    part = plusOrMinus + part;
+                }
+            }
+            if ( unsigned > 65535 && unsigned < 100000 ) {
+                throw new IllegalArgumentException("On Too big for an event, too low for node + event : " + part);
+            }
+            if ( unsigned < -65535 && unsigned > -100000 ) {
+                throw new IllegalArgumentException("Off Too big for an event, too low for node + event : " + part);
+            }
+            if (part == "+0") {
+                throw new IllegalArgumentException("Event cannot be 0 in address: " + part);
+            }
+            if (part == "-0") {
+                throw new IllegalArgumentException("Event cannot be 0 in address: " + part);
+            }            
+            
+        } catch (NumberFormatException ex) {
+            log.debug("Unable to convert {} into Cbus format +nn", part);
+        }
+        if ( unsigned == 0 ) {
+            // so it's a string.
+            // ignoring anything starting with x or X as it may be a HEX value
+            // which is checked by core CbusAddress
+            try {
+                if ( (part.charAt(0) != 'x') && (part.charAt(0) != 'X') ) {
+                    log.debug("not an int or hex {}",part);
+                    
+                    // it's got a string in somewhere, start by checking event number
+                    int lasta =  StringUtil.getLastIntFromString(part);
+                    log.debug("last string {}",lasta);
+                    if ( lasta == 0 ){
+                        throw new IllegalArgumentException("Event cannot be 0 in address: " + part);
+                    }
+                    if ( lasta > 65535 ){
+                        throw new IllegalArgumentException("Event Too Large in address: " + part);
+                    }
+                    int firsta =  StringUtil.getFirstIntFromString(part);
+                    log.debug("first string {}",firsta);
+                    if ( firsta == 0 ){
+                        throw new IllegalArgumentException("Node cannot be 0 in address: " + part);
+                    }
+                    if ( firsta > 65535 ){
+                        throw new IllegalArgumentException("Node Too Large in address: " + part);
+                    }
+                }
+            }
+            catch ( StringIndexOutOfBoundsException ex ) {
+                throw new IllegalArgumentException("Address Too Short? : " + part);
+            }
+            
+            
+        }
+        return part;
     }
 
     /**
@@ -329,5 +454,5 @@ public class CbusAddress {
         }
         return retval;
     }
-    // private final static Logger log = LoggerFactory.getLogger(CbusAddress.class);
+    private final static Logger log = LoggerFactory.getLogger(CbusAddress.class);
 }
