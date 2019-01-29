@@ -32,7 +32,7 @@ import org.slf4j.LoggerFactory;
  */
 public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTagManager, Disposable {
 
-    private boolean dirty = false;
+    protected boolean dirty = false;
     private boolean initialised = false;
     private boolean loading = false;
     private boolean storeState = false;
@@ -60,7 +60,7 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
             log.debug("Initialising");
             // Load when created
             loading = true;
-            new DefaultIdTagManagerXml().load();
+            readIdTagDetails();
             loading = false;
             dirty = false;
 
@@ -74,8 +74,7 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
                             // Save IdTag details prior to exit, if necessary
                             log.debug("Start writing IdTag details...");
                             try {
-                                ((DefaultIdTagManager) InstanceManager.getDefault(IdTagManager.class)).writeIdTagDetails();
-                                //new jmri.managers.DefaultIdTagManager().writeIdTagDetails();
+                                writeIdTagDetails();
                             } catch (java.io.IOException ioe) {
                                 log.error("Exception writing IdTags: {}", (Object) ioe);
                             }
@@ -89,6 +88,7 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
             }
             initialised = true;
         }
+        InstanceManager.setIdTagManager(this);
     }
 
     /**
@@ -236,11 +236,19 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
 
     public void writeIdTagDetails() throws java.io.IOException {
         if (this.dirty) {
-            new DefaultIdTagManagerXml().store();
+            new DefaultIdTagManagerXml(this,"IdTags.xml").store();  //NOI18N
             this.dirty = false;
             log.debug("...done writing IdTag details");
         }
     }
+
+    public void readIdTagDetails() {
+        log.debug("reading idTag Details");
+        new DefaultIdTagManagerXml(this,"IdTags.xml").load();  //NOI18N
+        this.dirty = false;
+        log.debug("...done reading IdTag details");
+    }
+
 
     @Override
     public void setStateStored(boolean state) {

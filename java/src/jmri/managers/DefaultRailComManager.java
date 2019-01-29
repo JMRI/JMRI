@@ -13,6 +13,7 @@ import jmri.RailCom;
 import jmri.RailComManager;
 import jmri.Reporter;
 import jmri.implementation.DefaultRailCom;
+import jmri.managers.configurexml.DefaultIdTagManagerXml;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,6 +29,7 @@ public class DefaultRailComManager extends DefaultIdTagManager
 
     public DefaultRailComManager() {
         InstanceManager.store(this, RailComManager.class);
+        InstanceManager.setIdTagManager(this);
     }
 
     @Override
@@ -83,9 +85,6 @@ public class DefaultRailComManager extends DefaultIdTagManager
         // save in the maps
         register(s);
 
-        // make sure we save to the IdTagManager as well.
-        InstanceManager.getDefault(jmri.IdTagManager.class).register(s);
-
         // if that failed, blame it on the input arguements
         if (s == null) {
             throw new IllegalArgumentException();
@@ -95,8 +94,20 @@ public class DefaultRailComManager extends DefaultIdTagManager
     }
 
     @Override
-    public boolean isInitialised() {
-        return true;
+    public void writeIdTagDetails() throws java.io.IOException {
+        if (this.dirty) {
+            new DefaultIdTagManagerXml(this,"RailComIdTags.xml").store();  //NOI18N
+            this.dirty = false;
+            log.debug("...done writing IdTag details");
+        }
+    }
+
+    @Override
+    public void readIdTagDetails() {
+        log.debug("reading idTag Details");
+        new DefaultIdTagManagerXml(this,"RailComIdTags.xml").load();  //NOI18N
+        this.dirty = false;
+        log.debug("...done reading IdTag details");
     }
 
     private static final Logger log = LoggerFactory.getLogger(DefaultRailComManager.class);
