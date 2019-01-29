@@ -59,7 +59,17 @@
       
       To fix this issue, you update your configuration and panel files to
       use new prefixes.
-
+      <p>
+      If you encounter any problems, please
+      ask for help on the 
+      <a href="https://groups.io/g/jmriusers">JMRI users group</a>.  
+      There are people there who will happily do the necessary file modifications.
+        If your computer is connected to the Internet, you can upload your configuration as 
+            described on
+            <a href="../../package/jmri/jmrit/mailreport/Report.shtml">this page</a>.
+            This will make it easy for the people on jmriusers
+            see exactly what's needed.
+      
       <ul>
       <li>First, you should be using 
             <a href="/releasenotes/jmri4.12.shtml">JMRI 4.12</a>
@@ -67,14 +77,29 @@
             version, please update to at least 
             <a href="/releasenotes/jmri4.12.shtml">JMRI 4.12</a>
             and fix any problems.
-      <li>If your computer is connected to the Internet, please upload your configuration as 
-            debugging information as described on
-            <a href="../../package/jmri/jmrit/mailreport/Report.shtml">this page</a>.
-            This will make it easy for the people who help you in the next step 
-            to see exactly what's needed.
-      <li>Next, ask for help on the 
-            <a href="https://groups.io/g/jmriusers">JMRI users group</a>.  
-            There are people there who will happily do the necessary file modifications.
+      <li>Next, determine the new prefix for your connection:
+            <ul>
+            <li>DCCPP for DCC++ should be changed to D
+            <li>DP for DCC4PC should be changed to D
+            <li>DX for Anya DX should be changed to D
+            <li>MC for Marklin CS2 should be changed to M
+            <li>MR for MRC should be changed to M
+            <li>PI for Raspberry Pi should be changed to P
+            <li>TM for TMCC should be changed to T
+            </ul>
+            However, if you already have a connection with that
+            letter, you'll need to pick another one.  The letter
+            is arbitrary, so just pick one that makes sense to you.
+        <li>Take a backup of all your files.  Maybe more than one.
+            And make sure that they're usable in case you need to restore 
+            from them!
+        <li>Take all your panel files, and edit them to change the prefix
+            of all the references.  To help with this, the last time
+            you run JMRI, it put a list of reference names in the log near the end,
+            and a similar "legacy_bean_names.csv" file was written to your user files directory.
+            You can search for each of those reference names in turn and change it to the new prefix.
+        <li>Start JMRI, open the Preferences to the Connection pane, 
+            change your connection prefix, Save and Restart.
        </ul>
       
       <h2 id="not">What happens if I don't  make this change?</h2>
