@@ -67,7 +67,7 @@ public class DnDJTable extends JTable implements DropTargetListener,
         new DropTarget(this, DnDConstants.ACTION_COPY, this);
     }
 
-    @Ovveride
+    @Override
     public boolean editCellAt(int row, int column, java.util.EventObject e) {
         boolean res = super.editCellAt(row, column, e);
         java.awt.Component c = this.getEditorComponent();
