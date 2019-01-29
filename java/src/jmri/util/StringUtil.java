@@ -5,7 +5,6 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
-import java.util.Collection;
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
@@ -485,7 +484,6 @@ public class StringUtil {
      * @return last value in int form , -1 if not found
      */
     @CheckReturnValue
-    @Nonnull
     static public int getLastIntFromString(@Nonnull String str){
         StringBuilder sb = new StringBuilder();
         for (int i = str.length() - 1; i >= 0; i --) {
