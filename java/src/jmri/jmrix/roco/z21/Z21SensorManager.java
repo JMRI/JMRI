@@ -137,6 +137,7 @@ public class Z21SensorManager extends jmri.managers.AbstractSensorManager implem
      *
      * @return VALID if system name has a valid format, else return INVALID
      */
+    @Override
     public NameValidity validSystemNameFormat(String systemName) {
         if ( Z21RMBusAddress.validSystemNameFormat(systemName, 'S', getSystemPrefix()) == NameValidity.VALID ) {
            return (Z21RMBusAddress.validSystemNameFormat(systemName, 'S', getSystemPrefix()));

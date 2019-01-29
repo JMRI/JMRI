@@ -119,14 +119,17 @@ public class ProfileManagerDialog extends JDialog {
         setTitle(Bundle.getMessage("ProfileManagerDialog.title")); // NOI18N
         setMinimumSize(new Dimension(310, 110));
         addMouseListener(new MouseAdapter() {
+            @Override
             public void mousePressed(MouseEvent evt) {
                 formMousePressed(evt);
             }
         });
         addWindowListener(new WindowAdapter() {
+            @Override
             public void windowOpened(WindowEvent evt) {
                 formWindowOpened(evt);
             }
+            @Override
             public void windowClosed(WindowEvent evt) {
                 formWindowClosed(evt);
             }
@@ -145,6 +148,7 @@ public class ProfileManagerDialog extends JDialog {
 
 
         profiles.addKeyListener(new KeyAdapter() {
+            @Override
             public void keyPressed(KeyEvent evt) {
                 profilesKeyPressed(evt);
             }
