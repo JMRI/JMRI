@@ -4,6 +4,7 @@ import javax.annotation.Nonnull;
 
 import jmri.IdTag;
 import jmri.IdTagManager;
+import jmri.Manager;
 import jmri.Reporter;
 import java.util.List;
 import java.util.ArrayList;
@@ -30,6 +31,9 @@ public class ProxyIdTagManager extends AbstractProxyManager<IdTag>
 
     @Override
     public void init() {
+        if(!isInitialised()){
+           getDefaultManager();
+        }
     }
 
     @Override
@@ -40,6 +44,11 @@ public class ProxyIdTagManager extends AbstractProxyManager<IdTag>
     @Override
     protected AbstractManager<IdTag> makeInternalManager() {
         return new jmri.managers.DefaultIdTagManager();
+    }
+
+    @Override
+    public Manager<IdTag> getDefaultManager() {
+        return getInternalManager();
     }
 
     /**
