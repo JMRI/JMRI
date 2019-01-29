@@ -226,6 +226,13 @@
           can be played-back by the computer.</dd>
 
           <dd>
+            <h3><a href="TimeTable.shtml">Time Table</a></h3>
+          </dd>
+
+          <dd>Create a timetable to manage train movements.  Display a
+          graph that can help schedule meets.</dd>
+
+          <dd>
             <h3><a href=
             "../../package/jmri/jmrit/dispatcher/Dispatcher.shtml">Dispatcher(Pro)</a></h3>
           </dd>

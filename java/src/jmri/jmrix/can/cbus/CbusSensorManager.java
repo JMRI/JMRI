@@ -2,10 +2,9 @@ package jmri.jmrix.can.cbus;
 
 import jmri.JmriException;
 import jmri.Sensor;
-import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
-import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,7 +16,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2008
  */
-public class CbusSensorManager extends jmri.managers.AbstractSensorManager implements CanListener {
+public class CbusSensorManager extends jmri.managers.AbstractSensorManager {
 
     @Override
     public String getSystemPrefix() {
@@ -27,14 +26,12 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager imple
     // to free resources when no longer used
     @Override
     public void dispose() {
-        memo.getTrafficController().removeCanListener(this);
         super.dispose();
     }
 
     //Implemented ready for new system connection memo
     public CbusSensorManager(CanSystemConnectionMemo memo) {
         this.memo = memo;
-        memo.getTrafficController().addCanListener(this);
     }
 
     CanSystemConnectionMemo memo;
@@ -87,17 +84,42 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager imple
         return getSystemPrefix() + typeLetter() + curAddress;
     }
 
+    // systemName M
+    @Override
+    public boolean allowMultipleAdditions(String systemName) {
+        return true;
+    }
+
     @Override
     public String getNextValidAddress(String curAddress, String prefix) {
-        // always return this (the current) name without change
+        String testAddr = curAddress;
+        // make sure starting name is valid
         try {
-            validateSystemNameFormat(curAddress);
+            validateSystemNameFormat(testAddr);
         } catch (IllegalArgumentException ex) {
             jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
                     showErrorMessage(Bundle.getMessage("ErrorTitle"), Bundle.getMessage("ErrorConvertNumberX", curAddress), "" + ex, "", true, false);
             return null;
         }
-        return curAddress;
+        
+        //If the hardware address passed does not already exist then this can
+        //be considered the next valid address.
+        Sensor s = getBySystemName(prefix + typeLetter() + testAddr);
+        if (s == null) {
+            return testAddr;
+        }
+
+        String newaddr = CbusAddress.getIncrement(testAddr);
+        if (newaddr==null) {
+            return null;
+        }
+        //If the new hardware address does not already exist then this can
+        //be considered the next valid address.
+        Sensor snew = getBySystemName(prefix + typeLetter() + newaddr);
+        if (snew == null) {
+            return newaddr;
+        }
+        return null;
     }
 
     @Override
@@ -152,25 +174,21 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager imple
         return entryToolTip;
     }
 
-    // listen for sensors, creating them as needed
-    @Override
-    public void reply(CanReply l) {
-        // doesn't do anything, because for now 
-        // we want you to create manually
-    }
-
-    @Override
-    public void message(CanMessage l) {
-        // doesn't do anything, because 
-        // messages come from us
-    }
-
     /**
-     * No mechanism currently exists to request status updates from all layout
-     * sensors.
+     * Send a query message to each sensor using the active address
+     * eg. for a CBUS address "+7;-5", the query will got to event 7.
      */
     @Override
     public void updateAll() {
+        log.info("Requesting status for all sensors");
+        getNamedBeanSet().forEach((nb) -> {
+            try {
+                CbusSensor cs = (CbusSensor) provideSensor(nb.toString());
+                cs.requestUpdateFromLayout();
+            } catch(java.lang.ClassCastException cce){
+                log.warn("not a cbus sensor");
+            }
+        });
     }
 
     private final static Logger log = LoggerFactory.getLogger(CbusSensorManager.class);

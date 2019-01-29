@@ -16,9 +16,6 @@ import jmri.jmrix.loconet.LocoNetListener;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LnTrafficController;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Provides an Ops mode programming interface for Roco Z21 Currently only Byte
  * mode is implemented, though XpressNet also supports bit mode writes for POM
@@ -46,12 +43,14 @@ public class Z21XNetOpsModeProgrammer extends jmri.jmrix.lenz.XNetOpsModeProgram
         }
     }
 
-    /**
+    /** 
+     * {@inheritDoc}
+     *
      * Send an ops-mode write request to the Xpressnet.
      */
     @Override
-    @Deprecated // 4.1.1
-    synchronized public void writeCV(int CV, int val, ProgListener p) throws ProgrammerException {
+    synchronized public void writeCV(String CVname, int val, ProgListener p) throws ProgrammerException {
+        final int CV = Integer.parseInt(CVname);
         XNetMessage msg = XNetMessage.getWriteOpsModeCVMsg(mAddressHigh, mAddressLow, CV, val);
         msg.setBroadcastReply(); // reply comes through a loconet message.
         tc.sendXNetMessage(msg, this);
@@ -65,9 +64,12 @@ public class Z21XNetOpsModeProgrammer extends jmri.jmrix.lenz.XNetOpsModeProgram
         restartTimer(msg.getTimeout());
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
-    @Deprecated // 4.1.1
-    synchronized public void readCV(int CV, ProgListener p) throws ProgrammerException {
+    synchronized public void readCV(String CVname, ProgListener p) throws ProgrammerException {
+        final int CV = Integer.parseInt(CVname);
         XNetMessage msg = XNetMessage.getVerifyOpsModeCVMsg(mAddressHigh, mAddressLow, CV, value);
         /* we need to save the programer so we can send messages
          back to the programming screen when we receive
@@ -79,6 +81,9 @@ public class Z21XNetOpsModeProgrammer extends jmri.jmrix.lenz.XNetOpsModeProgram
         restartTimer(msg.getTimeout());
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public void confirmCV(String CVname, int val, ProgListener p) throws ProgrammerException {
         int CV = Integer.parseInt(CVname);
@@ -93,6 +98,9 @@ public class Z21XNetOpsModeProgrammer extends jmri.jmrix.lenz.XNetOpsModeProgram
         restartTimer(msg.getTimeout());
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     synchronized public void message(XNetReply l) {
         if (progState == NOTPROGRAMMING) {
@@ -208,6 +216,6 @@ public class Z21XNetOpsModeProgrammer extends jmri.jmrix.lenz.XNetOpsModeProgram
 
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(Z21XNetOpsModeProgrammer.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Z21XNetOpsModeProgrammer.class);
 
 }

@@ -101,6 +101,8 @@
           </ul>
         </li>
         <li><a href="#graph">Timetable Graph</a></li>
+        <li><a href="#csvimport">CSV Import</a></li>
+        <li><a href="#csvexport">CSV Export</a></li>
         <li><a href="#structure">Data Structure</a></li>
         <li><a href="#technical">Technical</a></li>
       </ul>
@@ -193,6 +195,10 @@
         <dd>When enabled, the minutes portion of the train time is included in the graph.</dd>
         <dt><strong>Import SGN file</strong></dt>
         <dd>Import a legacy SGN (SchedGen) file.</dd>
+        <dt><strong>Import CSV file</strong></dt>
+        <dd>Import a CSV file that contains data to create or extend timetable data.</dd>
+        <dt><strong>Export CSV file</strong></dt>
+        <dd>Export a CSV file that can be imported into a spreadsheet to produce a timetable.</dd>
       </dl>
       </div>
 
@@ -356,6 +362,123 @@
 
         <p>For trains that span segments, only the activity in the active segment
         is displayed.</p>
+
+      <a name="csvimport" id="csvimport"></a>
+      <h2>CSV Import</h2>
+        <p>The CSV Import menu item can be used to create and extend the data for a timetable
+        by using additional data from other sources.  The input file has the following format.</p>
+        <p>CSV Record Types. The first field is the record type keyword (not I18N).
+        Most fields are optional.</p>
+        <ul>
+          <li>
+            "Layout", "layout name", "scale", fastClock, throttles, "metric"
+            <ul>
+              <li>Defaults:  "New Layout", "HO", 4, 0, "No"</li>
+              <li>Occurs:  Must be first record, occurs once</li>
+            </ul>
+            </li><li>
+            "TrainType", "type name", color number
+            <ul>
+              <li>Defaults: "New Type", #000000</li>
+              <li>Occurs:  Follows Layout record, occurs 0 to n times.  If none,
+              a default train type is created which will be used for all trains.</li>
+              <li>Note 1:  #000000 is black.</li>
+              <li>Note 2: If the type name is <strong>UseLayoutTypes</strong>,
+              the train types for the current layout will be used.</li>
+            </ul>
+          </li><li>
+            "Segment", "segment name"
+            <ul>
+              <li>Default: "New Segment"</li>
+              <li>Occurs: Follows last TrainType, if any.  Occurs 1 to n times.</li>
+            </ul>
+          </li><li>
+            "Station", "station name", distance, doubleTrack, sidings, staging
+            <ul>
+              <li>Defaults: "New Station", 1.0, No, 0, 0</li>
+              <li>Occurs:  Follows parent segment, occurs 1 to n times.</li>
+              <li>Note:  If the station name is <strong>UseSegmentStations</strong>,
+              the stations for the current segment will be used.</li>
+            </ul>
+          </li><li>
+            "Schedule", "schedule name", "effective date", startHour, duration
+            <ul>
+              <li>Defaults:  "New Schedule", "Today", 0, 24</li>
+              <li>Occurs: Follows last station, occurs 1 to n times.</li>
+            </ul>
+          </li><li>
+            "Train", "train name", "train description", type, defaultSpeed, starttime, throttle, notes
+            <ul>
+              <li>Defaults:  "NT", "New Train", 0, 1, 0, 0, ""</li>
+              <li>Occurs:  Follows parent schedule, occurs 1 to n times.</li>
+              <li>Note1:  The type is the relative number of the train type listed
+              above starting with 1 for the first train type.</li>
+              <li>Note2:  The start time is an integer between 0 and 1439,
+              subject to the schedule start time and duration.</li>
+            </ul>
+          </li><li>
+            "Stop", station, duration, nextSpeed, stagingTrack, notes
+              <ul>
+                <li>Defaults:  0, 0, 0, 0, ""</li>
+                <li>Required: station number.</li>
+                <li>Occurs: Follows parent train in the proper sequence.  Occurs 1 to n times.</li>
+                <li>Note 1: The station is the relative number of the station listed above starting with 1 for the first station.</li>
+                <li>Note 2: If more that one segment is used, the station number is cumulative.</li>
+              </ul>
+          </li>
+        </ul>
+        <p>Except for Stops, each record can have one of three actions:</p>
+        <ol>
+          <li>If no name is supplied, a default object will be created.</li>
+          <li>If the name matches an existing name, the existing object will be used.</li>
+          <li>A new object will be created with the supplied name.  The remaining
+          fields, if any, will replace the default values.</li>
+        </ol>
+        <p>Minimal file using defaults except for station names and distances:</p>
+        <pre>
+  "Layout"
+  "Segment"
+  "Station", "Station 1", 0.0
+  "Station", "Station 2", 25.0
+  "Schedule"
+  "Train"
+  "Stop", 1
+  "Stop", 2
+        </pre>
+        <p>
+        The import applies the changes to the data in memory.  At the end of the
+        import a dialog is displayed with the option to save the changes to the
+        timetable data file.
+        </p>
+
+      <a name="csvexport" id="csvexport"></a>
+      <h2>CSV Export</h2>
+        <p>The CSV Export menu item is used to create a CSV file that can imported
+        into a spreadsheet program.  The timetable data will be for the selected
+        layout, segment and schedule.  The train names will be sorted by name and
+        grouped by direction of travel.  The stations will be in order based on
+        distance.</p>
+
+        <p>While turns are supported by the graphing process, they don't work for
+        a timetable since they have both up and down directions.  For these cases
+        use two trains, one for going out and a second one for returning.  In the
+        sample below, BT and GT are turns that highlight this issue.
+        </p>
+
+        <p>CSV Content:</p>
+        <ul>
+          <li>Line 1 - Layout name, segment name and schedule name.</li>
+          <li>Line 2 - Train names sorted by name and grouped by down or up direction.</li>
+          <li>Line 3 to end - Station row with the arrival and departure times for each train.</li>
+        </ul>
+
+        <p>Sample spreadsheet using the CSV export file:</p>
+        <div style="margin-left: 2em">
+        <a href="images/SampleTimetable.png">
+        <img src="images/SampleTimetable.png"
+        alt="Sample Spreadsheet Timetable" height="224" width="873">
+        </a>
+        </div>
 
       <a name="structure" id="structure"></a>
       <h2>Data Structure</h2>

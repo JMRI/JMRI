@@ -219,6 +219,11 @@ NOTE: joal.jar is currently replaced by an own-built version with modifications 
 - Java Native Access platform-specific utilities library
 - from http://search.maven.org/#artifactdetails%7Cnet.java.dev.jna%7Cjna-platform%7C4.4.0%7Cjar
 
+##### thumbnailator-0.4.8.jar
+- Thumbnailator
+- from https://github.com/coobird/thumbnailator
+- Used by jmri.util.swing.ResizableImagePanel to read Exif information in JPEG files.
+
 ##### vecmath-1.5.2.jar
 - from Java3D 1.5.2
 - from http://search.maven.org/#search%7Cga%7C1%7Cg%3Ajavax.vecmath
@@ -247,8 +252,8 @@ NOTE: joal.jar is currently replaced by an own-built version with modifications 
 - From http://types.cs.washington.edu/checker-framework/
 
 ##### ecj.jar
-- Eclipse compiler 4.6 from
-    - http://download.eclipse.org/eclipse/downloads/drops4/R-4.6-201606061100/  (via ecj-4.6.jar) June 22, 2016
+- Eclipse compiler 4.10 from
+    - https://download.eclipse.org/eclipse/downloads/drops4/R-4.10-201812060815/ (via selecting ecj-4.10.jar) January 3, 2019
 - used in ant warnings target
 
 ##### jemmy-22-00c9f753cd0a.jar

@@ -141,23 +141,16 @@ public class DefaultLogixManager extends AbstractManager<Logix>
             x.setGuiNames();
         }
         // iterate thru all Logixs that exist
-        java.util.Iterator<String> iter
-                = getSystemNameList().iterator();
+        java.util.Iterator<Logix> iter
+                = getNamedBeanSet().iterator();
         while (iter.hasNext()) {
             // get the next Logix
-            String sysName = iter.next();
-            if (sysName == null) {
-                log.error("System name null when activating Logixs");
-                break;
-            }
-            if (sysName.equals(LRouteTableAction.LOGIX_INITIALIZER)) {
+            x = iter.next();
+
+            if (x.getSystemName().equals(LRouteTableAction.LOGIX_INITIALIZER)) {
                 continue;
             }
-            x = getBySystemName(sysName);
-            if (x == null) {
-                log.error("Error getting Logix *" + sysName + "* when activating Logixs");
-                break;
-            }
+
             if (loadDisabled) {
                 // user has requested that Logixs be loaded disabled
                 log.warn("load disabled set - will not activate logic for: " + x.getDisplayName());

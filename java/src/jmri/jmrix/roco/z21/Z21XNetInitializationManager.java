@@ -2,7 +2,6 @@ package jmri.jmrix.roco.z21;
 
 import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
-import jmri.jmrix.lenz.XNetConsistManager;
 import jmri.jmrix.lenz.XNetInitializationManager;
 import jmri.jmrix.lenz.XNetLightManager;
 import jmri.jmrix.lenz.XNetSensorManager;
@@ -44,11 +43,6 @@ public class Z21XNetInitializationManager extends XNetInitializationManager {
         if (systemMemo.getProgrammerManager().isGlobalProgrammerAvailable()) {
             jmri.InstanceManager.store(systemMemo.getProgrammerManager(), GlobalProgrammerManager.class);
         }
-        /* the "raw" Command Station only works on systems that support
-         Ops Mode Programming */
-        systemMemo.setCommandStation(systemMemo.getXNetTrafficController().getCommandStation());
-        InstanceManager.store(systemMemo.getCommandStation(), jmri.CommandStation.class);
-        systemMemo.setConsistManager(new XNetConsistManager(systemMemo));
         systemMemo.setTurnoutManager(new Z21XNetTurnoutManager(systemMemo.getXNetTrafficController(), systemMemo.getSystemPrefix()));
         InstanceManager.setTurnoutManager(systemMemo.getTurnoutManager());
         systemMemo.setLightManager(new XNetLightManager(systemMemo.getXNetTrafficController(), systemMemo.getSystemPrefix()));

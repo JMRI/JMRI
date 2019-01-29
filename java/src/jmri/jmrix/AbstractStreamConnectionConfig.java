@@ -41,7 +41,7 @@ abstract public class AbstractStreamConnectionConfig extends AbstractConnectionC
     }
 
     /**
-     * Ctor for a functional object with no prexisting adapter. 
+     * Ctor for a functional object with no preexisting adapter.
      */
     public AbstractStreamConnectionConfig() {
         adapter = null;

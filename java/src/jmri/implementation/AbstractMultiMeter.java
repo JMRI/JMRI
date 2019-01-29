@@ -1,7 +1,6 @@
 package jmri.implementation;
 
 import java.beans.PropertyChangeListener;
-import java.util.Timer;
 import java.util.TimerTask;
 import jmri.MultiMeter;
 import jmri.beans.Bean;
@@ -20,7 +19,6 @@ abstract public class AbstractMultiMeter extends Bean implements MultiMeter {
 
     //private boolean is_enabled = false;
     private UpdateTask intervalTask = null;
-    private Timer intervalTimer = null;
     private int sleepInterval = 10000; // default to 10 second sleep interval.
 
     public AbstractMultiMeter(int interval){
@@ -28,16 +26,17 @@ abstract public class AbstractMultiMeter extends Bean implements MultiMeter {
     }
 
     protected void initTimer() {
-        if(intervalTimer!=null) {
-           intervalTimer.cancel();
+        if(intervalTask!=null) {
+           intervalTask.cancel();
            intervalTask = null;
-           intervalTimer = null;
+        }
+        if(sleepInterval <0){
+           return; // don't start or restart the timer.
         }
         intervalTask = new UpdateTask();
-        intervalTimer = new Timer("MultiMeter Update Timer", true);
         // At some point this will be dynamic intervals...
         log.debug("Starting Meter Timer");
-        intervalTimer.scheduleAtFixedRate(intervalTask,
+        jmri.util.TimerUtil.scheduleAtFixedRate(intervalTask,
                 sleepInterval, sleepInterval);
     }
 
@@ -93,7 +92,8 @@ abstract public class AbstractMultiMeter extends Bean implements MultiMeter {
     }
 
     @Override
-    @Deprecated
+    @Deprecated  // will be removed when superclass method is removed due to @Override
+    @SuppressWarnings("deprecation")  // temporary implementation of method with @Override
     public void updateCurrent(float c) {
         setCurrent(c);
     }
@@ -111,7 +111,8 @@ abstract public class AbstractMultiMeter extends Bean implements MultiMeter {
     }
 
     @Override
-    @Deprecated
+    @Deprecated  // will be removed when superclass method is removed due to @Override
+    @SuppressWarnings("deprecation")  // temporary implementation of method with @Override
     public void updateVoltage(float v) {
         setVoltage(v);
     }
@@ -125,7 +126,8 @@ abstract public class AbstractMultiMeter extends Bean implements MultiMeter {
      * {@inheritDoc}
      */
     @Override
-    @Deprecated
+    @Deprecated  // will be removed when superclass method is removed due to @Override
+    @SuppressWarnings("deprecation")  // temporary implementation of method with @Override
     public synchronized void addDataUpdateListener(PropertyChangeListener l) {
         this.addPropertyChangeListener(CURRENT, l);
         this.addPropertyChangeListener(VOLTAGE, l);
@@ -135,7 +137,8 @@ abstract public class AbstractMultiMeter extends Bean implements MultiMeter {
      * {@inheritDoc}
      */
     @Override
-    @Deprecated
+    @Deprecated  // will be removed when superclass method is removed due to @Override
+    @SuppressWarnings("deprecation")  // temporary implementation of method with @Override
     public synchronized void removeDataUpdateListener(PropertyChangeListener l) {
         this.removePropertyChangeListener(CURRENT, l);
         this.removePropertyChangeListener(VOLTAGE, l);
@@ -145,7 +148,8 @@ abstract public class AbstractMultiMeter extends Bean implements MultiMeter {
      * {@inheritDoc}
      */
     @Override
-    @Deprecated
+    @Deprecated  // will be removed when superclass method is removed due to @Override
+    @SuppressWarnings("deprecation")  // temporary implementation of method with @Override
     public PropertyChangeListener[] getDataUpdateListeners() {
         return this.getPropertyChangeListeners(CURRENT);
     }
@@ -155,10 +159,9 @@ abstract public class AbstractMultiMeter extends Bean implements MultiMeter {
      */
     @Override
     public void dispose(){
-        if(intervalTimer!=null) {
-           intervalTimer.cancel();
+        if(intervalTask!=null) {
+           intervalTask.cancel();
            intervalTask = null;
-           intervalTimer = null;
         }
     }
 

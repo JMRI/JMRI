@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  * @author	Bob Jacobsen Copyright (C) 2010 copied from NCE into PowerLine for
  * multiple connections by
  * @author	Ken Cameron Copyright (C) 2011 copied from PowerLine into z21 by
- * @author	Paul Bender Copyright (C) 2013
+ * @author	Paul Bender Copyright (C) 2013,2019
  */
 public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
@@ -78,18 +78,18 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     /**
      * Sensor Manager for this instance.
      */
-    public void setSensorManager(Z21RMBusSensorManager sm){
+    public void setSensorManager(Z21SensorManager sm){
         _sm = sm;
     }
 
-    public Z21RMBusSensorManager getSensorManager() {
+    public Z21SensorManager getSensorManager() {
         if(_sm==null){
-           setSensorManager(new Z21RMBusSensorManager(this));
+           setSensorManager(new Z21SensorManager(this));
         }
         return _sm;
     }
 
-    private Z21RMBusSensorManager _sm = null;
+    private Z21SensorManager _sm = null;
 
     public XNetProgrammerManager getProgrammerManager() {
         if (_xnettunnel!=null) {
@@ -198,13 +198,16 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
         // set up the Sensor Manager
         jmri.InstanceManager.setSensorManager(getSensorManager());
-            
+
         // but make sure the Loconet memo is set (for one feedback message).
         Z21XNetProgrammerManager xpm = (Z21XNetProgrammerManager) _xnettunnel.getStreamPortController().getSystemConnectionMemo().getProgrammerManager();
         xpm.setLocoNetMemo(_loconettunnel.getStreamPortController().getSystemConnectionMemo());
 
         // setup the MultiMeter
         getMultiMeter();
+
+        // setup the HeartBeat
+        getHeartBeat();
 
    }
 
@@ -260,6 +263,20 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     private Z21MultiMeter meter = null;
 
+    /**
+     * Provide access to the Z21HeartBeat instance for this connection.
+     * <p>
+     * NOTE: HeartBeat defaults to NULL
+     */
+    public Z21HeartBeat getHeartBeat() {
+        if(heartBeat == null){
+           heartBeat = new Z21HeartBeat(this);
+        }
+        return heartBeat;
+    }
+    
+    private Z21HeartBeat heartBeat = null;
+
 
     void shutdownTunnel(){
         if (_xnettunnel!=null) {
@@ -270,6 +287,9 @@ public class Z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     @Override
     public void dispose() {
+        if(heartBeat!=null) {
+           heartBeat.dispose();
+        }
         shutdownTunnel();
         InstanceManager.deregister(this, Z21SystemConnectionMemo.class);
         super.dispose();

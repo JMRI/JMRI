@@ -52,9 +52,7 @@ public class LawicellTrafficController extends jmri.jmrix.can.TrafficController 
 
     public void setgcState(int s) {
         gcState = s;
-        if (log.isDebugEnabled()) {
-            log.debug("Setting gcState " + s);
-        }
+        log.debug("Setting gcState {}",s);
     }
 
     public boolean isBootMode() {
@@ -66,7 +64,7 @@ public class LawicellTrafficController extends jmri.jmrix.can.TrafficController 
      */
     @Override
     public void sendCanMessage(CanMessage m, CanListener reply) {
-        log.debug("TrafficController sendCanMessage() " + m.toString());
+        log.debug("TrafficController sendCanMessage() {}", m.toString());
         sendMessage(m, reply);
     }
 
@@ -75,7 +73,7 @@ public class LawicellTrafficController extends jmri.jmrix.can.TrafficController 
      */
     @Override
     public void sendCanReply(CanReply r, CanListener reply) {
-        log.debug("TrafficController sendCanReply() " + r.toString());
+        log.debug("TrafficController sendCanReply() {}", r.toString());
         notifyReply(r, reply);
     }
 
@@ -115,13 +113,14 @@ public class LawicellTrafficController extends jmri.jmrix.can.TrafficController 
      */
     @Override
     public CanReply decodeFromHardware(AbstractMRReply m) {
-        if (log.isDebugEnabled()) {
-            log.debug("Decoding from hardware: '" + m + "'\n");
-        }
-        Reply gc = (Reply) m;
-        CanReply ret = gc.createReply();
-        if (log.isDebugEnabled()) {
-            log.debug("Decoded " + gc + " as " + ret);
+        log.debug("Decoding from hardware: {}", m );
+        CanReply ret = new CanReply();
+        try {
+            Reply gc = (Reply) m;
+            ret = gc.createReply();
+            log.debug("Decoded {} as {} ",gc,ret);
+        } catch (java.lang.ClassCastException cce){
+                log.error("Unable to cast Reply {}",m);
         }
         return ret;
     }
@@ -131,11 +130,8 @@ public class LawicellTrafficController extends jmri.jmrix.can.TrafficController 
      */
     @Override
     public AbstractMRMessage encodeForHardware(CanMessage m) {
-        log.debug("Encoding for hardware");
         Message ret = new Message(m);
-        if (log.isDebugEnabled()) {
-            log.debug("encoded as " + ret);
-        }
+        log.debug("Encoding for hardware as {}",ret);
         return ret;
     }
 
@@ -174,6 +170,3 @@ public class LawicellTrafficController extends jmri.jmrix.can.TrafficController 
 
     private final static Logger log = LoggerFactory.getLogger(LawicellTrafficController.class);
 }
-
-
-

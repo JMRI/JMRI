@@ -7,7 +7,7 @@ import jmri.NamedBean;
 import jmri.Sensor;
 
 /**
- * Provides an edit panel for a Sensor object
+ * Provides an edit panel for a Sensor object.
  *
  * @author Kevin Dickerson Copyright (C) 2011
  */
@@ -15,7 +15,7 @@ public class SensorEditAction extends BeanEditAction {
 
     @Override
     public String helpTarget() {
-        return "package.jmri.jmrit.beantable.SensorTable";
+        return "package.jmri.jmrit.beantable.SensorAddEdit";
     } //IN18N
 
     SensorDebounceEditAction debounce;

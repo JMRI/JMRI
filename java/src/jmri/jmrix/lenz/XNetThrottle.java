@@ -2,7 +2,6 @@ package jmri.jmrix.lenz;
 
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.concurrent.LinkedBlockingQueue;
-import java.util.Timer;
 
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
@@ -22,8 +21,6 @@ import org.slf4j.LoggerFactory;
 public class XNetThrottle extends AbstractThrottle implements XNetListener {
 
     protected boolean isAvailable;  // Flag  stating if the throttle is in use or not.
-
-    static protected AtomicReference<Timer> statusTimer = new AtomicReference<>(); // Shared Timer used for status
 
     protected java.util.TimerTask statusTask;   // Timer Task used to periodically get current
                                                 // status of the throttle when throttle not available.
@@ -1391,12 +1388,6 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
     protected void startStatusTimer() {
         log.debug("Status Timer Started");
 
-        // atomically make sure there's a timer available
-        statusTimer.updateAndGet(timer -> {
-            if (timer == null) return new java.util.Timer("XPressNet Throttle Status Timer", true);
-            else return timer;
-        });
-        
         if (statusTask != null) {
             statusTask.cancel();
             statusTask = null;
@@ -1410,7 +1401,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
             }
         };
         
-        statusTimer.get().schedule(statusTask, statTimeoutValue, statTimeoutValue);
+        jmri.util.TimerUtil.schedule(statusTask, statTimeoutValue, statTimeoutValue);
     }
 
     /**

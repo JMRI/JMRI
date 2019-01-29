@@ -111,7 +111,7 @@ public class WarrantTableAction extends AbstractAction {
      * @return a menu containing warrant actions
      */
     synchronized public static JMenu makeWarrantMenu(boolean edit) {
-        if (jmri.InstanceManager.getDefault(OBlockManager.class).getSystemNameList().size() > 1) {
+        if (jmri.InstanceManager.getDefault(OBlockManager.class).getNamedBeanSet().size() > 1) {
             _edit = edit;
             _warrantMenu = new JMenu(Bundle.getMessage("MenuWarrant"));
             updateWarrantMenu();
@@ -263,10 +263,7 @@ public class WarrantTableAction extends AbstractAction {
 
     synchronized protected static void portalNameChange(String oldName, String newName) {
         WarrantManager manager = InstanceManager.getDefault(WarrantManager.class);
-        List<String> systemNameList = manager.getSystemNameList();
-        Iterator<String> iter = systemNameList.iterator();
-        while (iter.hasNext()) {
-            Warrant w = manager.getBySystemName(iter.next());
+        for (Warrant w : manager.getNamedBeanSet()) {
             List<BlockOrder> orders = w.getBlockOrders();
             Iterator<BlockOrder> it = orders.iterator();
             while (it.hasNext()) {
@@ -283,10 +280,7 @@ public class WarrantTableAction extends AbstractAction {
 
     synchronized protected static void pathNameChange(OBlock block, String oldName, String newName) {
         WarrantManager manager = InstanceManager.getDefault(WarrantManager.class);
-        List<String> systemNameList = manager.getSystemNameList();
-        Iterator<String> iter = systemNameList.iterator();
-        while (iter.hasNext()) {
-            Warrant w = manager.getBySystemName(iter.next());
+        for (Warrant w : manager.getNamedBeanSet()) {
             List<BlockOrder> orders = w.getBlockOrders();
             Iterator<BlockOrder> it = orders.iterator();
             while (it.hasNext()) {
@@ -494,16 +488,8 @@ public class WarrantTableAction extends AbstractAction {
                     OBlock myBlock = (OBlock) myPath.getBlock();
                     int state = set.getSetting();
                     OBlock block = (OBlock) path.getBlock();
-//                  String note = "WARNING: ";
                     if (myState != state) {
                         ret = myBlock.addSharedTurnout(myPath, block, path);
-                        /*                       _textArea.append(note+Bundle.getMessage("sharedTurnout", myPath.getName(), myBlock.getDisplayName(),
-                             myTO.getDisplayName(), (myState==jmri.Turnout.CLOSED ? "Closed":"Thrown"),
-                             path.getName(), block.getDisplayName(), to.getDisplayName(),
-                             (state==jmri.Turnout.CLOSED ? "Closed":"Thrown")));
-                      _textArea.append("\n");
-                    } else {
-                        note = "Note: "; */
                     }
                 }
             }

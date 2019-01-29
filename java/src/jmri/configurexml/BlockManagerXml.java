@@ -50,6 +50,7 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
      * @return Element containing the complete info
      */
     @Override
+    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations
     public Element store(Object o) {
         Element blocks = new Element("blocks");
         setStoreElementClass(blocks);

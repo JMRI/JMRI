@@ -71,6 +71,7 @@ import org.junit.runners.Suite;
         SocketUtilTest.class,
         SystemNameComparatorTest.class,
         SystemTypeTest.class,
+        TimerUtilTest.class,
         XmlFilenameFilterTest.class,
         JmriJFrameActionTest.class,
         JLogoutputFrameTest.class,

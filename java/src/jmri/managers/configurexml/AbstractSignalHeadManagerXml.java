@@ -41,6 +41,7 @@ public class AbstractSignalHeadManagerXml extends AbstractNamedBeanManagerConfig
      * @return Element containing the complete info
      */
     @Override
+    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations
     public Element store(Object o) {
         Element signalheads = new Element("signalheads");
         setStoreElementClass(signalheads);

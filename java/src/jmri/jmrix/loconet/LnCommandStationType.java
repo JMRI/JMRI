@@ -146,7 +146,7 @@ public enum LnCommandStationType {
             for (java.lang.reflect.Constructor<?> ctor : allConstructors) {
                 Class<?>[] pType = ctor.getParameterTypes();
                 if (pType.length == 1 && pType[0].equals(LnTrafficController.class)) {
-                    // this is the right ctor
+                    // this is the correct ctor
                     return (SlotManager) ctor.newInstance(tc);
                 }
             }

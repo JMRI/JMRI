@@ -211,9 +211,9 @@
         </dd>
       </dl><a name="controls" id="controls"></a>
 
-      <h2>Turnout Table Controls</h2>There are some buttons and
-      checkboxes along the bottom of the Turnout Table pane that
-      control its operation.
+      <h2>Turnout Table Controls</h2>
+      <p>Along the bottom of the Turnout Table pane are buttons and
+      checkboxes that control its operation.</p>
 
       <dl>
         <dt>Add...</dt>
@@ -246,6 +246,11 @@
         <dd>When checked, lets you set the Thrown and Closed speeds
         for each Turnout. Choose either Use Block Speed or one of
         the speed values from the list.</dd>
+
+        <dt>Show State Query actions</dt>
+
+        <dd>When checked, the optional Sensor State Query and State Forget
+          columns are shown.</dd>
 
         <dt>Automation menu</dt>
 
@@ -391,7 +396,7 @@
         examples page on the JMRI website.</dd>
       </dl>
 
-      <h2><a name="automation" id="automation"></a>Turnout
+      <a name="automation" id="automation"></a><h2>Turnout
       Automation</h2>
 
       <p>JMRI can watch a Turnout and automate certain operations

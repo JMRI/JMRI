@@ -29,6 +29,9 @@
       number of people have contributed their effort to JMRI. They
       are listed below in alphabetical order and deserve our
       thanks.
+      See the  
+      <a href="http://jmri.org/Copyright.html">JMRI copyright and licensing page</a>
+      for the terms under which they make their work available to others.
 
       <p>In addition, a large number of people have donated to the
       project. For more information, or to donate, please see
@@ -235,6 +238,10 @@
         <a href=
         "http://www.quaker-valley.com/CTC/JMRI_Panel_Tutorial.html">
         online panel tutorial</a>.</li>
+
+        <li>Geoff Bunza, <!-- gbglacier -->
+        who provided serial input and output scripts for Arduino.
+        </li>
 
         <li>Bob Byck, who did extensive testing of test release
         1.7.3</li>
@@ -600,7 +607,9 @@
         
         <li>James Koretsky, who contributed the Burlington Northern
         1989 signal definition</li>
-
+        
+        <li>>Github user Koryphon, real name unknown, who contributed to the MacOS X documentation.
+        
         <li>Matjaz Krajnc, who provided better code and icons for
         the web throttle</li>
         

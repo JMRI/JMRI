@@ -3558,6 +3558,7 @@ public class Train implements java.beans.PropertyChangeListener {
      *
      * @param e Consist XML element
      */
+    @SuppressWarnings("deprecation") // until there's a replacement for convertFromXmlComment()
     public Train(Element e) {
         org.jdom2.Attribute a;
         if ((a = e.getAttribute(Xml.ID)) != null) {

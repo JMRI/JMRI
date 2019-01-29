@@ -5,6 +5,10 @@ import java.util.regex.Pattern;
 import javax.annotation.Nonnull;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
+import jmri.util.StringUtil;
+
+// import org.slf4j.Logger;
+// import org.slf4j.LoggerFactory;
 
 /**
  * Utilities for handling CBUS addresses.
@@ -109,11 +113,9 @@ public class CbusAddress {
                 aFrame[1] = (node >> 8) & 0xff;
 
                 // add command
-                if (hCode.group(6) == null) {
+                if (( hCode.group(6)!= null ) && (hCode.group(6).equals("+"))) {
                     aFrame[0] = CbusConstants.CBUS_ACON;
-                } else if (hCode.group(6).equals("+")) {
-                    aFrame[0] = CbusConstants.CBUS_ACON;
-                } else if (hCode.group(6).equals("-")) {
+                } else if (( hCode.group(6)!= null ) && (hCode.group(6).equals("-"))) {
                     aFrame[0] = CbusConstants.CBUS_ACOF;
                 } else // default
                 {
@@ -165,12 +167,17 @@ public class CbusAddress {
         return hCode.reset(aString).matches();
     }
 
-    boolean match(CanReply r) {
+    /**
+     * Does the CbusAddress match a CanReply ( CanFrame being received by JMRI )
+     *
+     * @param r CanReply being tested
+     * @return true if matches
+     */
+     boolean match(CanReply r) {
         if (r.getNumDataElements() != aFrame.length) {
             return false;
         }
-        int opc = CbusMessage.getOpcode(r);
-        if (CbusOpCodes.isShortEvent(opc)) {
+        if (CbusMessage.isShort(r)) {
             // Skip node number for short events
             if (aFrame[0] != r.getElement(0)) {
                 return false;
@@ -190,12 +197,17 @@ public class CbusAddress {
         return true;
     }
 
+    /**
+     * Does the CbusAddress match a CanMessage ( CanFrame being sent by JMRI )
+     *
+     * @param r CanMessage being tested
+     * @return true if matches
+     */
     boolean match(CanMessage r) {
         if (r.getNumDataElements() != aFrame.length) {
             return false;
         }
-        int opc = CbusMessage.getOpcode(r);
-        if (CbusOpCodes.isShortEvent(opc)) {
+        if (CbusMessage.isShort(r)) {
             // Skip node number for short events
             if (aFrame[0] != r.getElement(0)) {
                 return false;
@@ -240,13 +252,43 @@ public class CbusAddress {
             if (!hCode.reset(pStrings[i]).matches()) {
                 return new CbusAddress[0];
             }
-
             retval[i] = new CbusAddress(pStrings[i]);
-            if (retval[i] == null) {
-                return new CbusAddress[0];
-            }
         }
         return retval;
+    }
+
+    /**
+     * Increments a CBUS address by 1
+     * eg +123 to +124
+     * eg -N123E456 to -N123E457
+     * returns null if unable to make the address
+     *
+     */
+    public static String getIncrement( @Nonnull String testAddr ) {
+        CbusAddress a = new CbusAddress(testAddr);
+        CbusAddress[] v = a.split();
+        switch (v.length) {
+            case 1:
+                // get last part and increment
+                int last =  StringUtil.getLastIntFromString(v[0].toString());
+                if ( last < 1 ) { // event numbers should be > 0
+                    return null;
+                }
+                return StringUtil.replaceLast(v[0].toString(), String.valueOf(last), String.valueOf(last+1));
+            case 2:
+                int lasta =  StringUtil.getLastIntFromString(v[0].toString());
+                int lastb =  StringUtil.getLastIntFromString(v[1].toString());
+                if ( ( lasta < 1 ) || ( lastb < 1 ) ) { // event numbers should be > 0
+                    return null;
+                }
+                StringBuilder sb = new StringBuilder();
+                sb.append(StringUtil.replaceLast(v[0].toString(), String.valueOf(lasta), String.valueOf(lasta+1)));
+                sb.append(";");
+                sb.append(StringUtil.replaceLast(v[1].toString(), String.valueOf(lastb), String.valueOf(lastb+1)));
+                return sb.toString();
+            default:
+                return null;
+        }
     }
 
     /**
@@ -267,17 +309,25 @@ public class CbusAddress {
         return aFrame;
     }
 
-    @Override
+    /**
+     * eg. X9801D203A4 or +N123E456
+     *
+     */
+     @Override
     public String toString() {
         return aString;
     }
 
-    public String toCanonicalString() {
+    /**
+     * eg. x9801D203A4 or x90007B01C8
+     *
+     */
+     public String toCanonicalString() {
         String retval = "x";
         for (int i = 0; i < aFrame.length; i++) {
             retval = jmri.util.StringUtil.appendTwoHexFromInt(aFrame[i], retval);
         }
         return retval;
     }
-
+    // private final static Logger log = LoggerFactory.getLogger(CbusAddress.class);
 }

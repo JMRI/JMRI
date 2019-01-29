@@ -52,7 +52,7 @@ public class SensorDebounceEditActionTest {
     public void testServiceCalls() {
         SensorDebounceEditAction t = new SensorDebounceEditAction();
 
-        Assert.assertEquals("package.jmri.jmrit.beantable.SensorTable", t.helpTarget());
+        Assert.assertEquals("package.jmri.jmrit.beantable.SensorAddEdit", t.helpTarget());
         Assert.assertEquals("Sensor", t.getBeanType());
         
         t.initPanels();
