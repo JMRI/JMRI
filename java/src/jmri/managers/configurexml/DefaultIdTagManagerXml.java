@@ -34,7 +34,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Concrete implementation of abstract {@link jmri.jmrit.XmlFile} for
- * the {@link jmri.Managers.DefaultIdTagManager}.
+ * the {@link jmri.managers.DefaultIdTagManager}.
  *
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Matthew Harris Copyright (C) 2011
