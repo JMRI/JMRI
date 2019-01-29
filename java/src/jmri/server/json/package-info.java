@@ -10,6 +10,7 @@
  * <li>list requests in the form:
  * <code>{"type":"<em>type</em>","method":"list"}</code> or
  * <code>{"type":"list","list":"<em>type</em>"}</code> or
+ * <code>{"list":"<em>type</em>"}</code>.</li>
  * <li>individual item state requests in the form:
  * <code>{"type":"<em>type</em>","data":{"name":"<em>name</em>"}}</code>. In
  * addition to the initial response, most requests will initiate listeners,
@@ -27,9 +28,6 @@
  * the value <em>put</em> is included in message:
  * <code>{"type":"<em>type</em>","method":"put","data":{"name":"<em>name</em>"}}</code>.</li>
  * </ul></li>
- * <li><code>{"list":"<em>type</em>"}</code>. Returns an array of all items of "type".
- * Initiates individual listeners for each item (see above) plus a list listener
- * which will send an updated list when items of "type" are added or deleted.</li>
  * <li>a heartbeat in the form <code>{"type":"ping"}</code>. The heartbeat gets
  * a <code>{"type":"pong"}</code> response.</li>
  * <li>a sign off in the form: <code>{"type":"goodbye"}</code> to which an
@@ -48,7 +46,13 @@
  * <li>a sign off in the form: <code>{"type":"goodbye"}</code> before the
  * connection gets closed.</li>
  * <li><code>[<em>message</em>,<em>message</em>]</code>, an array of object
- * message types. The array contains all objects of the requested type.</li>
+ * message types. There is no guarantee that an array contains all objects of a
+ * single type, or that an array contains all of the objects of a single
+ * type, since it is, by design, possible for multiple services, including third-party
+ * services to respond to a single request, and the JSON server neither makes nor
+ * enforces any guarantees concerning how those services respond. Multiple responses
+ * are joined together when using JSON via HTTP protocol, and may or may not
+ * be joined together when using JSON in other protocols.</li>
  * </ul>
  *
  * @since 4.3.4
