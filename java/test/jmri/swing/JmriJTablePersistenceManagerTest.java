@@ -362,7 +362,7 @@ public class JmriJTablePersistenceManagerTest {
         Assume.assumeNotNull(profile);
         // copy preferences into profile
         File source = new File(ClassLoader.getSystemResource("jmri/swing/JmriJTablePersistenceManagerTest-user-interface.xml").toURI());
-        File target = new File(new File(new File(profile.getPath(), Profile.PROFILE), NodeIdentity.identity()), Profile.UI_CONFIG);
+        File target = new File(new File(new File(profile.getPath(), Profile.PROFILE), NodeIdentity.networkIdentity()), Profile.UI_CONFIG);
         FileUtil.createDirectory(target.getParentFile());
         FileUtil.copy(source, target);
         JmriJTablePersistenceManagerSpy instance = new JmriJTablePersistenceManagerSpy();

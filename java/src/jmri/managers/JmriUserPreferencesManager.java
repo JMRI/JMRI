@@ -846,7 +846,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
         this.loading = true;
         File perNodeConfig = null;
         try {
-            perNodeConfig = FileUtil.getFile(FileUtil.PROFILE + Profile.PROFILE + "/" + NodeIdentity.identity() + "/" + Profile.UI_CONFIG); // NOI18N
+            perNodeConfig = FileUtil.getFile(FileUtil.PROFILE + Profile.PROFILE + "/" + NodeIdentity.networkIdentity() + "/" + Profile.UI_CONFIG); // NOI18N
             if (!perNodeConfig.canRead()) {
                 perNodeConfig = null;
                 log.trace("    sharedConfig can't be read");

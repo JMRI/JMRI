@@ -35,7 +35,7 @@ import jmri.util.node.NodeIdentity;
  * the Railroad Name preference.</li>
  * <li><code>&lt;node-identity&gt;/profile.properties</code> preferences that
  * are specific to the profile running on a specific host (&lt;node-identity&gt;
- * is the identity returned by {@link jmri.util.node.NodeIdentity#identity()}).
+ * is the identity returned by {@link jmri.util.node.NodeIdentity#networkIdentity()}).
  * An example of such a preference would be a file location.</li>
  * </ul>
  * <p>
@@ -266,14 +266,14 @@ public final class JmriPreferencesProvider {
         } else {
             dir = new File(this.path, Profile.PROFILE);
             if (!this.shared) {
-                File nodeDir = new File(dir, NodeIdentity.identity());
+                File nodeDir = new File(dir, NodeIdentity.networkIdentity());
                 if (!nodeDir.exists()) {
                     boolean success = NodeIdentity.copyFormerIdentity(dir, nodeDir);
                     if (!success) {
                         log.debug("copyFormerIdentity({}, {}) did not copy", dir, nodeDir);
                     }
                 }
-                dir = new File(dir, NodeIdentity.identity());
+                dir = new File(dir, NodeIdentity.networkIdentity());
             }
         }
         log.debug("createDirectory(\"{}\")", dir);

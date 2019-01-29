@@ -36,12 +36,12 @@ public abstract class AbstractConfigurationProvider {
         } else {
             dir = new File(this.project.getPath(), Profile.PROFILE);
             if (!shared) {
-                File nodeDir = new File(dir, NodeIdentity.identity());
+                File nodeDir = new File(dir, NodeIdentity.networkIdentity());
                 if (!nodeDir.exists()) {
                     boolean success = NodeIdentity.copyFormerIdentity(dir, nodeDir);
                     if (! success) log.debug("copyFormerIdentity({}, {}) did not copy", dir, nodeDir);
                 }
-                dir = new File(dir, NodeIdentity.identity());
+                dir = new File(dir, NodeIdentity.networkIdentity());
             }
         }
         log.debug("createDirectory(\"{}\")", dir);

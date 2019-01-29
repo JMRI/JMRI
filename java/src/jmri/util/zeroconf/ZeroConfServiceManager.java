@@ -158,7 +158,7 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
             // tight space constraints in terms of the number of bytes that properties
             // can use, and there are some unconstrained properties that we would like to use.
             properties.put("jmri", jmri.Version.getCanonicalVersion());
-            properties.put("node", NodeIdentity.identity());
+            properties.put("node", NodeIdentity.networkIdentity());
             s = new ZeroConfService(ServiceInfo.create(type, name, port, weight, priority, properties));
             log.debug("Creating new ZeroConfService {} with properties {}", s.getKey(), properties);
         }
@@ -341,7 +341,7 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
     synchronized HashMap<InetAddress, JmDNS> getDNSes() {
         if (JMDNS_SERVICES.isEmpty()) {
             log.debug("JmDNS version: {}", JmDNS.VERSION);
-            String name = NodeIdentity.identity();
+            String name = NodeIdentity.networkIdentity();
             // make a DNS safe node identity
             // truncate since hostnames are limited to 63 characters
             if (name.length() > 63) {

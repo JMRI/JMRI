@@ -21,7 +21,7 @@ import jmri.profile.Profile;
  * <li><code>&lt;node-identity&gt;/{@value jmri.profile.Profile#UI_CONFIG}</code>
  * preferences that are specific to the profile running on a specific host
  * (&lt;node-identity&gt; is the identity returned by
- * {@link jmri.util.node.NodeIdentity#identity()}). An example of such a
+ * {@link jmri.util.node.NodeIdentity#networkIdentity()}). An example of such a
  * preference would be a file location.</li>
  * </ul>
  * <p>

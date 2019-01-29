@@ -18,7 +18,7 @@ public class NodeIdentityTest {
 
     @Test
     public void testIdentity() {
-        Assert.assertNotNull(NodeIdentity.identity());
+        Assert.assertNotNull(NodeIdentity.networkIdentity());
     }
 
     @Test(expected=IllegalArgumentException.class)

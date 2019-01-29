@@ -934,7 +934,7 @@ public class JmriUserPreferencesManagerTest {
         m1.setSimplePreferenceState(strClass, true);
         m1.setComboBoxLastSelection(strClass, "selection1");
         m1.setSaveAllowed(true);
-        File target = new File(new File(new File(ProfileManager.getDefault().getActiveProfile().getPath(), "profile"), NodeIdentity.identity()), "user-interface.xml");
+        File target = new File(new File(new File(ProfileManager.getDefault().getActiveProfile().getPath(), "profile"), NodeIdentity.networkIdentity()), "user-interface.xml");
         Assert.assertTrue(target.exists());
         Assert.assertTrue(target.isFile());
         if (log.isDebugEnabled()) {
@@ -974,7 +974,7 @@ public class JmriUserPreferencesManagerTest {
         m1.setSimplePreferenceState(strClass, true);
         m1.setComboBoxLastSelection(strClass, "selection1");
         m1.setSaveAllowed(true);
-        File target = new File(new File(new File(ProfileManager.getDefault().getActiveProfile().getPath(), "profile"), NodeIdentity.identity()), "user-interface.xml");
+        File target = new File(new File(new File(ProfileManager.getDefault().getActiveProfile().getPath(), "profile"), NodeIdentity.networkIdentity()), "user-interface.xml");
         Assert.assertTrue(target.exists());
         Assert.assertTrue(target.isFile());
         if (log.isDebugEnabled()) {

@@ -151,7 +151,7 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase {
         Assert.assertEquals("JSON Version", JSON.JSON_PROTOCOL_VERSION, data.path(JSON.JSON).asText());
         Assert.assertEquals("Heartbeat", Math.round(heartbeat * 0.9f), data.path(JSON.HEARTBEAT).asInt());
         Assert.assertEquals("RR Name", InstanceManager.getDefault(WebServerPreferences.class).getRailroadName(), data.path(JSON.RAILROAD).asText());
-        Assert.assertEquals("Node Identity", NodeIdentity.identity(), data.path(JSON.NODE).asText());
+        Assert.assertEquals("Node Identity", NodeIdentity.networkIdentity(), data.path(JSON.NODE).asText());
         Profile profile = ProfileManager.getDefault().getActiveProfile();
         Assert.assertNotNull(profile);
         Assert.assertEquals("Profile", profile.getName(), data.path(JSON.ACTIVE_PROFILE).asText());
@@ -228,7 +228,7 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase {
         Assert.assertEquals(InstanceManager.getDefault(WebServerPreferences.class).getRailroadName(), data.path(JSON.NAME).asText());
         Assert.assertEquals(9999, data.path(JSON.PORT).asInt());
         Assert.assertEquals(JSON.ZEROCONF_SERVICE_TYPE, data.path(JSON.TYPE).asText());
-        Assert.assertEquals(NodeIdentity.identity(), data.path(JSON.NODE).asText());
+        Assert.assertEquals(NodeIdentity.networkIdentity(), data.path(JSON.NODE).asText());
         Assert.assertEquals(Metadata.getBySystemName(Metadata.JMRIVERCANON), data.path("jmri").asText());
         Assert.assertEquals(Metadata.getBySystemName(Metadata.JMRIVERSION), data.path("version").asText());
         service.stop();
@@ -249,7 +249,7 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase {
         this.validate(result);
         // We should have a single node with no history of nodes
         Assert.assertEquals(JSON.NODE, result.path(JSON.TYPE).asText());
-        Assert.assertEquals(NodeIdentity.identity(), result.path(JSON.DATA).path(JSON.NODE).asText());
+        Assert.assertEquals(NodeIdentity.networkIdentity(), result.path(JSON.DATA).path(JSON.NODE).asText());
         Assert.assertEquals(0, result.path(JSON.DATA).path(JSON.FORMER_NODES).size());
     }
 
@@ -309,7 +309,7 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase {
         Assert.assertEquals(InstanceManager.getDefault(WebServerPreferences.class).getRailroadName(), data.path(JSON.NAME).asText());
         Assert.assertEquals(9999, data.path(JSON.PORT).asInt());
         Assert.assertEquals(JSON.ZEROCONF_SERVICE_TYPE, data.path(JSON.TYPE).asText());
-        Assert.assertEquals(NodeIdentity.identity(), data.path(JSON.NODE).asText());
+        Assert.assertEquals(NodeIdentity.networkIdentity(), data.path(JSON.NODE).asText());
         Assert.assertEquals(Metadata.getBySystemName(Metadata.JMRIVERCANON), data.path("jmri").asText());
         Assert.assertEquals(Metadata.getBySystemName(Metadata.JMRIVERSION), data.path("version").asText());
         service.stop();

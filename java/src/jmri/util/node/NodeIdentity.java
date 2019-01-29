@@ -111,13 +111,14 @@ public class NodeIdentity {
     }
 
     /**
-     * Return the node's current identity.
+     * Return the node's current network identity.
      *
-     * @return An identity. If this identity is not in the form
-     * <i>jmri-MACADDRESS-profileId</i>, this identity should be considered
+     * @return A network identity. If this identity is not in the form
+     * {@code jmri-MACADDRESS-profileId}, or if {@code MACADDRESS} is a 
+     * multicast MAC address, this identity should be considered
      * unreliable and subject to change across JMRI restarts.
      */
-    public static synchronized String identity() {
+    public static synchronized String networkIdentity() {
         String uniqueId = "-";
         try {
             uniqueId += ProfileManager.getDefault().getActiveProfile().getUniqueId();
