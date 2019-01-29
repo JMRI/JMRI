@@ -20,9 +20,6 @@ import javax.swing.Timer;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.CbusCommandStation;
 import jmri.jmrix.can.cbus.simulator.CbusSimulator;
-import jmri.jmrix.can.cbus.swing.simulator.CsPane;
-import jmri.jmrix.can.cbus.swing.simulator.EvResponderPane;
-import jmri.jmrix.can.cbus.swing.simulator.NdPane;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -90,7 +87,7 @@ public class SimulatorPane extends jmri.jmrix.can.swing.CanPanel {
         super();
     }
     
-    public void init() {
+    private void init() {
         
         _disposeSimOnWindowClose=false;
         
