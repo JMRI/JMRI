@@ -435,7 +435,6 @@
 
     <h3>Timetable</h3>
         <a id="Timetable" name="Timetable"/>
-        <span class="since">since 4.13.4</span>
         <ul>
             <li>New menu item: <strong>Export CSV File</strong> &mdash; Create a
             CSV file that can be imported into a spreadsheet program.  This can

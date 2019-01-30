@@ -130,6 +130,7 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
      *
      * @return VALID if system name has a valid format, else return INVALID
      */
+    @Override
     public NameValidity validSystemNameFormat(String systemName) {
         return (XNetAddress.validSystemNameFormat(systemName, 'S', getSystemPrefix()));
     }

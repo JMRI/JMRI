@@ -367,6 +367,7 @@ public class CbusEventRequestTablePane extends jmri.jmrix.can.swing.CanPanel imp
      * Sets timestamp format + background to last heard column
      */    
     private static class TimeStampRenderer extends DefaultTableCellRenderer {
+        @Override
         public Component getTableCellRendererComponent(
             JTable table, Object value, boolean isSelected, 
             boolean hasFocus, int row, int column) {
@@ -382,6 +383,7 @@ public class CbusEventRequestTablePane extends jmri.jmrix.can.swing.CanPanel imp
      * Sets background to spot the lesser used number columns
      */    
     private static class OsRenderer extends DefaultTableCellRenderer {
+        @Override
         public Component getTableCellRendererComponent(
             JTable table, Object value, boolean isSelected, 
             boolean hasFocus, int row, int column) {
@@ -410,6 +412,7 @@ public class CbusEventRequestTablePane extends jmri.jmrix.can.swing.CanPanel imp
      * Sets background to last feedback column
      */    
     private static class LafbRenderer extends DefaultTableCellRenderer {
+        @Override
         public Component getTableCellRendererComponent(
             JTable table, Object value, boolean isSelected, 
             boolean hasFocus, int row, int column) {

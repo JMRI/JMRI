@@ -197,6 +197,7 @@ public class IndexedTreeMap<K, V>
      *
      * @return the number of key-value mappings in this map
      */
+    @Override
     public int size() {
         return size;
     }
@@ -214,6 +215,7 @@ public class IndexedTreeMap<K, V>
      *                              and this map uses natural ordering, or its comparator
      *                              does not permit null keys
      */
+    @Override
     public boolean containsKey(Object key) {
         return getEntry(key) != null;
     }
@@ -231,6 +233,7 @@ public class IndexedTreeMap<K, V>
      *         {@code false} otherwise
      * @since 1.2
      */
+    @Override
     public boolean containsValue(Object value) {
         for (Entry<K, V> e = getFirstEntry(); e != null; e = successor(e))
             if (valEquals(value, e.value))
@@ -260,6 +263,7 @@ public class IndexedTreeMap<K, V>
      *                              and this map uses natural ordering, or its comparator
      *                              does not permit null keys
      */
+    @Override
     public V get(Object key) {
         Entry<K, V> p = getEntry(key);
         return (p == null ? null : p.value);
@@ -299,6 +303,7 @@ public class IndexedTreeMap<K, V>
      */
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DE_MIGHT_IGNORE",
                     justification = "Exception cannot happen because stream argument was provided as null")
+    @Override
     public void putAll(Map<? extends K, ? extends V> map) {
         int mapSize = map.size();
         if (size == 0 && mapSize != 0 && map instanceof SortedMap) {
@@ -545,6 +550,7 @@ public class IndexedTreeMap<K, V>
      *                              and this map uses natural ordering, or its comparator
      *                              does not permit null keys
      */
+    @Override
     @SuppressWarnings("unchecked") // package needs update to Java 1.8 generics for maps
     public V put(K key, V value) {
         Entry<K, V> t = root;
@@ -618,6 +624,7 @@ public class IndexedTreeMap<K, V>
      *                              and this map uses natural ordering, or its comparator
      *                              does not permit null keys
      */
+    @Override
     public V remove(Object key) {
         Entry<K, V> p = getEntry(key);
         if (p == null)
@@ -632,6 +639,7 @@ public class IndexedTreeMap<K, V>
      * Removes all of the mappings from this map.
      * The map will be empty after this call returns.
      */
+    @Override
     public void clear() {
         modCount++;
         size = 0;
@@ -647,6 +655,7 @@ public class IndexedTreeMap<K, V>
     @SuppressWarnings("unchecked") // package needs update to Java 1.8 generics for maps
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DE_MIGHT_IGNORE",
                     justification = "Exception cannot happen because stream argument was provided as null")
+    @Override
     public Object clone() {
         IndexedTreeMap<K, V> clone = null;
         try {
@@ -907,6 +916,7 @@ public class IndexedTreeMap<K, V>
      * operations.  It does not support the {@code add} or {@code addAll}
      * operations.
      */
+    @Override
     public Set<K> keySet() {
         return navigableKeySet();
     }
@@ -942,6 +952,7 @@ public class IndexedTreeMap<K, V>
      * {@code retainAll} and {@code clear} operations.  It does not
      * support the {@code add} or {@code addAll} operations.
      */
+    @Override
     public Collection<V> values() {
         Collection<V> vs = values;
         return (vs != null) ? vs : (values = new Values());
@@ -962,6 +973,7 @@ public class IndexedTreeMap<K, V>
      * {@code clear} operations.  It does not support the
      * {@code add} or {@code addAll} operations.
      */
+    @Override
     public Set<Map.Entry<K, V>> entrySet() {
         EntrySet es = entrySet;
         return (es != null) ? es : (entrySet = new EntrySet());
@@ -1062,18 +1074,22 @@ public class IndexedTreeMap<K, V>
     // View class support
 
     class Values extends AbstractCollection<V> {
+        @Override
         public Iterator<V> iterator() {
             return new ValueIterator(getFirstEntry());
         }
 
+        @Override
         public int size() {
             return IndexedTreeMap.this.size();
         }
 
+        @Override
         public boolean contains(Object o) {
             return IndexedTreeMap.this.containsValue(o);
         }
 
+        @Override
         public boolean remove(Object o) {
             for (Entry<K, V> e = getFirstEntry(); e != null; e = successor(e)) {
                 if (valEquals(e.getValue(), o)) {
@@ -1084,17 +1100,20 @@ public class IndexedTreeMap<K, V>
             return false;
         }
 
+        @Override
         public void clear() {
             IndexedTreeMap.this.clear();
         }
     }
 
     class EntrySet extends AbstractSet<Map.Entry<K, V>> {
+        @Override
         public Iterator<Map.Entry<K, V>> iterator() {
             return new EntryIterator(getFirstEntry());
         }
 
         @SuppressWarnings("unchecked") // package needs update to Java 1.8 generics for maps
+        @Override
         public boolean contains(Object o) {
             if (!(o instanceof Map.Entry))
                 return false;
@@ -1105,6 +1124,7 @@ public class IndexedTreeMap<K, V>
         }
 
         @SuppressWarnings("unchecked") // package needs update to Java 1.8 generics for maps
+        @Override
         public boolean remove(Object o) {
             if (!(o instanceof Map.Entry))
                 return false;
@@ -1118,10 +1138,12 @@ public class IndexedTreeMap<K, V>
             return false;
         }
 
+        @Override
         public int size() {
             return IndexedTreeMap.this.size();
         }
 
+        @Override
         public void clear() {
             IndexedTreeMap.this.clear();
         }
@@ -1150,6 +1172,7 @@ public class IndexedTreeMap<K, V>
         }
 
         @SuppressWarnings("unchecked") // package needs update to Java 1.8 generics for maps
+        @Override
         public Iterator<E> iterator() {
             if (m instanceof IndexedTreeMap)
                 return ((IndexedTreeMap<E, Object>) m).keyIterator();
@@ -1165,18 +1188,22 @@ public class IndexedTreeMap<K, V>
                 return ((IndexedTreeMap.NavigableSubMap) m).descendingKeyIterator();
         }
 
+        @Override
         public int size() {
             return m.size();
         }
 
+        @Override
         public boolean isEmpty() {
             return m.isEmpty();
         }
 
+        @Override
         public boolean contains(Object o) {
             return m.containsKey(o);
         }
 
+        @Override
         public void clear() {
             m.clear();
         }
@@ -1219,6 +1246,7 @@ public class IndexedTreeMap<K, V>
             return e == null ? null : e.getKey();
         }
 
+        @Override
         public boolean remove(Object o) {
             int oldSize = size();
             m.remove(o);
@@ -1575,28 +1603,34 @@ public class IndexedTreeMap<K, V>
 
         // public methods
 
+        @Override
         public boolean isEmpty() {
             return (fromStart && toEnd) ? m.isEmpty() : entrySet().isEmpty();
         }
 
+        @Override
         public int size() {
             return (fromStart && toEnd) ? m.size() : entrySet().size();
         }
 
+        @Override
         public final boolean containsKey(Object key) {
             return inRange(key) && m.containsKey(key);
         }
 
+        @Override
         public final V put(K key, V value) {
             if (!inRange(key))
                 throw new IllegalArgumentException("key out of range");
             return m.put(key, value);
         }
 
+        @Override
         public final V get(Object key) {
             return !inRange(key) ? null : m.get(key);
         }
 
+        @Override
         public final V remove(Object key) {
             return !inRange(key) ? null : m.remove(key);
         }
@@ -1677,6 +1711,7 @@ public class IndexedTreeMap<K, V>
                     (navigableKeySetView = new IndexedTreeMap.KeySet(this));
         }
 
+        @Override
         public final Set<K> keySet() {
             return navigableKeySet();
         }
@@ -1702,6 +1737,7 @@ public class IndexedTreeMap<K, V>
         abstract class EntrySetView extends AbstractSet<Map.Entry<K, V>> {
             private transient int size = -1, sizeModCount;
 
+            @Override
             public int size() {
                 if (fromStart && toEnd)
                     return m.size();
@@ -1717,12 +1753,14 @@ public class IndexedTreeMap<K, V>
                 return size;
             }
 
+            @Override
             public boolean isEmpty() {
                 IndexedTreeMap.Entry<K, V> n = absLowest();
                 return n == null || tooHigh(n.key);
             }
 
             @SuppressWarnings("unchecked") // package needs update to Java 1.8 generics for maps
+            @Override
             public boolean contains(Object o) {
                 if (!(o instanceof Map.Entry))
                     return false;
@@ -1736,6 +1774,7 @@ public class IndexedTreeMap<K, V>
             }
 
             @SuppressWarnings("unchecked") // package needs update to Java 1.8 generics for maps
+            @Override
             public boolean remove(Object o) {
                 if (!(o instanceof Map.Entry))
                     return false;
@@ -1941,45 +1980,55 @@ public class IndexedTreeMap<K, V>
                                     toEnd, hi, hiInclusive));
         }
 
+        @Override
         Iterator<K> keyIterator() {
             return new SubMapKeyIterator(absLowest(), absHighFence());
         }
 
+        @Override
         Iterator<K> descendingKeyIterator() {
             return new DescendingSubMapKeyIterator(absHighest(), absLowFence());
         }
 
         final class AscendingEntrySetView extends EntrySetView {
+            @Override
             public Iterator<Map.Entry<K, V>> iterator() {
                 return new SubMapEntryIterator(absLowest(), absHighFence());
             }
         }
 
+        @Override
         public Set<Map.Entry<K, V>> entrySet() {
             EntrySetView es = entrySetView;
             return (es != null) ? es : new AscendingEntrySetView();
         }
 
+        @Override
         IndexedTreeMap.Entry<K, V> subLowest() {
             return absLowest();
         }
 
+        @Override
         IndexedTreeMap.Entry<K, V> subHighest() {
             return absHighest();
         }
 
+        @Override
         IndexedTreeMap.Entry<K, V> subCeiling(K key) {
             return absCeiling(key);
         }
 
+        @Override
         IndexedTreeMap.Entry<K, V> subHigher(K key) {
             return absHigher(key);
         }
 
+        @Override
         IndexedTreeMap.Entry<K, V> subFloor(K key) {
             return absFloor(key);
         }
 
+        @Override
         IndexedTreeMap.Entry<K, V> subLower(K key) {
             return absLower(key);
         }
@@ -2044,45 +2093,55 @@ public class IndexedTreeMap<K, V>
                                     toEnd, hi, hiInclusive));
         }
 
+        @Override
         Iterator<K> keyIterator() {
             return new DescendingSubMapKeyIterator(absHighest(), absLowFence());
         }
 
+        @Override
         Iterator<K> descendingKeyIterator() {
             return new SubMapKeyIterator(absLowest(), absHighFence());
         }
 
         final class DescendingEntrySetView extends EntrySetView {
+            @Override
             public Iterator<Map.Entry<K, V>> iterator() {
                 return new DescendingSubMapEntryIterator(absHighest(), absLowFence());
             }
         }
 
+        @Override
         public Set<Map.Entry<K, V>> entrySet() {
             EntrySetView es = entrySetView;
             return (es != null) ? es : new DescendingEntrySetView();
         }
 
+        @Override
         IndexedTreeMap.Entry<K, V> subLowest() {
             return absHighest();
         }
 
+        @Override
         IndexedTreeMap.Entry<K, V> subHighest() {
             return absLowest();
         }
 
+        @Override
         IndexedTreeMap.Entry<K, V> subCeiling(K key) {
             return absFloor(key);
         }
 
+        @Override
         IndexedTreeMap.Entry<K, V> subHigher(K key) {
             return absLower(key);
         }
 
+        @Override
         IndexedTreeMap.Entry<K, V> subFloor(K key) {
             return absCeiling(key);
         }
 
+        @Override
         IndexedTreeMap.Entry<K, V> subLower(K key) {
             return absHigher(key);
         }
@@ -2110,6 +2169,7 @@ public class IndexedTreeMap<K, V>
                     toEnd, toKey, false);
         }
 
+        @Override
         public Set<Map.Entry<K, V>> entrySet() {
             throw new InternalError();
         }
@@ -2215,6 +2275,7 @@ public class IndexedTreeMap<K, V>
             return oldValue;
         }
 
+        @Override
         public boolean equals(Object o) {
             if (!(o instanceof Map.Entry))
                 return false;
@@ -2223,12 +2284,14 @@ public class IndexedTreeMap<K, V>
             return valEquals(key, e.getKey()) && valEquals(value, e.getValue());
         }
 
+        @Override
         public int hashCode() {
             int keyHash = (key == null ? 0 : key.hashCode());
             int valueHash = (value == null ? 0 : value.hashCode());
             return keyHash ^ valueHash;
         }
 
+        @Override
         public String toString() {
             return key + "=" + value;
         }

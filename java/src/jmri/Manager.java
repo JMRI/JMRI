@@ -647,6 +647,7 @@ public interface Manager<E extends NamedBean> {
          *
          * @return the event source
          */
+        @Override
         public Manager<E> getSource() { return source; }
   
         /**
@@ -684,6 +685,7 @@ public interface Manager<E extends NamedBean> {
          * 
          * @return A string.
          */
+         @Override
          public String toString() {
             return getClass().getName() + "[type=" + type + ",index0=" + index0 + ",index1=" + index1 + "]";
         }

@@ -67,6 +67,7 @@ public class DnDJTable extends JTable implements DropTargetListener,
         new DropTarget(this, DnDConstants.ACTION_COPY, this);
     }
 
+    @Override
     public boolean editCellAt(int row, int column, java.util.EventObject e) {
         boolean res = super.editCellAt(row, column, e);
         java.awt.Component c = this.getEditorComponent();
@@ -299,10 +300,12 @@ public class DnDJTable extends JTable implements DropTargetListener,
         }
 
         //////////////export
+        @Override
         public int getSourceActions(JComponent c) {
             return COPY;
         }
 
+        @Override
         public Transferable createTransferable(JComponent c) {
             JTable table = (JTable) c;
             int col = table.getSelectedColumn();
@@ -318,12 +321,14 @@ public class DnDJTable extends JTable implements DropTargetListener,
                     (String) table.getModel().getValueAt(row, col), row, col, _table);
             return new TableCellTransferable(tcss);
         }
-
+    
+        @Override
         public void exportDone(JComponent c, Transferable t, int action) {
             //if (log.isDebugEnabled()) log.debug("DnDHandler.exportDone at table ");
         }
 
         /////////////////////import
+        @Override
         public boolean canImport(JComponent comp, DataFlavor[] transferFlavors) {
             //if (log.isDebugEnabled()) log.debug("DnDHandler.canImport ");
 
@@ -343,6 +348,7 @@ public class DnDJTable extends JTable implements DropTargetListener,
             return true;
         }
 
+        @Override
         public boolean importData(JComponent comp, Transferable tr) {
             //if (log.isDebugEnabled()) log.debug("DnDHandler.importData ");
             DataFlavor[] flavors = new DataFlavor[]{TABLECELL_FLAVOR, DataFlavor.stringFlavor};

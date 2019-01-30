@@ -2522,6 +2522,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
         return getFuncBaseByte1(myBaseFunction) == getFuncBaseByte1(otherBaseFunction);
     }
 
+    @Override
     public int hashCode() {
         return toString().hashCode();
     }
