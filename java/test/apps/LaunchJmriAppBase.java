@@ -54,6 +54,7 @@ abstract public class LaunchJmriAppBase {
         try {
 
             // create a custom profile
+            folder.create();
             File tempFolder = folder.newFolder();
             File profileDir = new File (tempFolder.getAbsolutePath()+File.separator+profileName);
             profileDir.mkdir();

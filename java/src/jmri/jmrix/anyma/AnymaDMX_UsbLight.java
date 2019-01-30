@@ -85,6 +85,7 @@ public class AnymaDMX_UsbLight extends AbstractVariableLight {
     /**
      * {@inheritDoc}
      */
+     @Override
      protected void sendIntensity(double intensity) {
         log.debug("*    sendIntensity({})", "" + intensity);
         AnymaDMX_TrafficController trafficController = _memo.getTrafficController();
@@ -97,6 +98,7 @@ public class AnymaDMX_UsbLight extends AbstractVariableLight {
     /**
      * {@inheritDoc}
      */
+     @Override
      protected void sendOnOffCommand(int newState) {
         log.debug("*    sendOnOffCommand({})", newState);
         AnymaDMX_TrafficController trafficController = _memo.getTrafficController();
@@ -114,6 +116,7 @@ public class AnymaDMX_UsbLight extends AbstractVariableLight {
     /**
      * {@inheritDoc}
      */
+     @Override
      protected int getNumberOfSteps() {
         return 256;
     }

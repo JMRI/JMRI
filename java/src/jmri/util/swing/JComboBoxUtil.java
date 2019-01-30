@@ -83,7 +83,10 @@ public class JComboBoxUtil {
     @SuppressWarnings("unchecked")
     private static <E extends Object, T extends JComboBox<E>> void insertDummy(T inComboBox) {
         try {
-            inComboBox.insertItemAt((E) new Object() { public String toString() { return "XYZxyz"; } }, 0);  
+            inComboBox.insertItemAt((E) new Object() { 
+                @Override
+                public String toString() { return "XYZxyz"; } 
+            }, 0);  
         } catch (ClassCastException ex) {
             log.error("Could not handle cast of dummy element", ex);
         } 

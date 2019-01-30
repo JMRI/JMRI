@@ -27,6 +27,7 @@ public class AnymaDMX_UsbPortAdapter extends UsbPortAdapter {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void configure() {
         log.debug("*    configure() called.");
 
