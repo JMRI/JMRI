@@ -189,7 +189,7 @@ public class CbusSensor extends AbstractSensor implements CanListener {
      * {@inheritDoc}
      *
      * When a reporter is attached to the sensor, the sensor will go
-     * active when > 0 ID tags are present ( assuming Sensor not inverted ),
+     * active when ID tags are present ( assuming Sensor not inverted ),
      * inactive when no ID tags are present, ie all previously announced
      * ID tags have since been announced by other reporters.
      */
