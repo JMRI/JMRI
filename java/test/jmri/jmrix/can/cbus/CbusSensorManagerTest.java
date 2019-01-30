@@ -8,8 +8,8 @@ import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+// import org.slf4j.Logger;
+// import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrix.can.cbus.CbusSensorManager class.
@@ -489,5 +489,5 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         memo.dispose();
         JUnitUtil.tearDown();
     }
-     private final static Logger log = LoggerFactory.getLogger(CbusSensorManagerTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(CbusSensorManagerTest.class);
 }
