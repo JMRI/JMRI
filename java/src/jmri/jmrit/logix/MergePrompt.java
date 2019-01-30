@@ -2,6 +2,7 @@ package jmri.jmrit.logix;
 
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -119,13 +120,7 @@ public class MergePrompt extends JDialog {
         mainPanel.add(description);
         mainPanel.add(pane);
         if (_anomalyMap != null && _anomalyMap.size() > 0) {
-            JPanel p = new JPanel();
-            p.setLayout(new BoxLayout(p, BoxLayout.PAGE_AXIS));
-            JLabel l = new JLabel(Bundle.getMessage("anomalyPrompt"));
-            l.setForeground(java.awt.Color.RED);
-            l.setAlignmentX(JComponent.CENTER_ALIGNMENT);
-            p.add(l);
-            mainPanel.add(p);
+            mainPanel.add(makeAnomalyPanel());
         }
         mainPanel.add(panel);
 
@@ -167,29 +162,13 @@ public class MergePrompt extends JDialog {
 
         HashMap<Integer, Boolean> anomalies = _anomalyMap.get(id);
         if (anomalies != null && anomalies.size() > 0) {
-            panel = new JPanel();
-            panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-            JLabel label = new JLabel(Bundle.getMessage("deletePrompt1"));
-            label.setForeground(java.awt.Color.RED);
-            label.setAlignmentX(JComponent.CENTER_ALIGNMENT);
-            panel.add(label);
-            label = new JLabel(Bundle.getMessage("deletePrompt2"));
-            label.setAlignmentX(JComponent.CENTER_ALIGNMENT);
-            panel.add(label);
-            label = new JLabel(Bundle.getMessage("deletePrompt3"));
-            label.setAlignmentX(JComponent.CENTER_ALIGNMENT);
-            panel.add(label);
-            _viewFrame.add(panel);
-
+            _viewFrame.add(makeEditInfoPanel());
         }
 
         JPanel spPanel = new JPanel();
         spPanel.setLayout(new BoxLayout(spPanel, BoxLayout.LINE_AXIS));
         spPanel.add(Box.createGlue());
 
-        panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-        panel.add(new JLabel(Bundle.getMessage("rosterSpeedProfile")));
         RosterEntry re = Roster.getDefault().entryFromTitle(id);
         RosterSpeedProfile speedProfile = null;
         if (re != null) {
@@ -198,26 +177,13 @@ public class MergePrompt extends JDialog {
         if (speedProfile == null) {
             speedProfile = new RosterSpeedProfile(null);
         }
-        SpeedProfilePanel speedPanel = new SpeedProfilePanel(speedProfile, null);
-        panel.add(speedPanel);
-        spPanel.add(panel);
+        spPanel.add(makeSpeedProfilePanel("rosterSpeedProfile", speedProfile,  false, null));
         spPanel.add(Box.createGlue());
 
-        panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-        panel.add(new JLabel(Bundle.getMessage("mergedSpeedProfile")));
-        speedPanel = new SpeedProfilePanel(_mergeProfiles.get(id), anomalies);
-        speedPanel.setEditable(true);
-        panel.add(speedPanel);
-        spPanel.add(panel);
+        spPanel.add(makeSpeedProfilePanel("mergedSpeedProfile", _mergeProfiles.get(id), true, anomalies));
         spPanel.add(Box.createGlue());
 
-        panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-        panel.add(new JLabel(Bundle.getMessage("sessionSpeedProfile")));
-        speedPanel = new SpeedProfilePanel(_sessionProfiles.get(id), null);
-        panel.add(speedPanel);
-        spPanel.add(panel);
+        spPanel.add(makeSpeedProfilePanel("sessionSpeedProfile", _sessionProfiles.get(id), false, null));
         spPanel.add(Box.createGlue());
 
         _viewFrame.add(spPanel);
@@ -225,15 +191,55 @@ public class MergePrompt extends JDialog {
         pack();
     }
 
+    static JPanel makeEditInfoPanel() {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+        JLabel label = new JLabel(Bundle.getMessage("deletePrompt1"));
+        label.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 12));
+        label.setForeground(java.awt.Color.RED);
+        label.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+        panel.add(label);
+        label = new JLabel(Bundle.getMessage("deletePrompt2"));
+        label.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 12));
+        label.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+        panel.add(label);
+        label = new JLabel(Bundle.getMessage("deletePrompt3"));
+        label.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 12));
+        label.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+        panel.add(label);
+        return panel;
+    }
+
+    static JPanel makeAnomalyPanel() {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+        JLabel l = new JLabel(Bundle.getMessage("anomalyPrompt"));
+        l.setForeground(java.awt.Color.RED);
+        l.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+        panel.add(l);
+        return panel;
+    }
+
+    static JPanel makeSpeedProfilePanel(String title, RosterSpeedProfile profile, 
+                boolean edit, HashMap<Integer, Boolean> anomalies) {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+        panel.add(new JLabel(Bundle.getMessage(title)));
+        SpeedProfilePanel speedPanel = new SpeedProfilePanel(profile, edit);
+        if (anomalies != null) {
+            speedPanel.setAnomalies(anomalies);
+        }
+        panel.add(speedPanel);
+        return panel;
+    }
     /**
      * Check that non zero value are ascending for both forward and reverse
      * speeds. Omit anomalies.
      *
      * @param speedProfile speedProfile
-     * @param id           roster id
-     * @return HashMap of Key and direction of possible errors
+     * @return HashMap of Key and direction of possible errors (anomalies)
      */
-    static public HashMap<Integer, Boolean> validateSpeedProfile(RosterSpeedProfile speedProfile, String id) {
+    static public HashMap<Integer, Boolean> validateSpeedProfile(RosterSpeedProfile speedProfile) {
         // do forward speeds, then reverse
         HashMap<Integer, Boolean> anomalies = new HashMap<>();
         TreeMap<Integer, SpeedStep> rosterTree = speedProfile.getProfileSpeeds();
@@ -245,21 +251,17 @@ public class MergePrompt extends JDialog {
             float forward = entry.getValue().getForwardSpeed();
             Integer key = entry.getKey();
             if (forward > 0.0f) {
-                if (forward < lastForward) {  // anomaly - remove bad entry
+                if (forward < lastForward) {  // anomaly found
                     while (iter.hasNext()) {
                         Map.Entry<Integer, SpeedStep> nextEntry = iter.next();
                         float nextForward = nextEntry.getValue().getForwardSpeed();
                         if (nextForward > 0.0f) {
                             if (nextForward > lastForward) {    // remove forward
-                                log.warn("SpeedProfile anomaly at key={}, forward={} for {}", key, forward, id);
                                 anomalies.put(key, true);
-                                //speedProfile.setForwardSpeed(key, 0.0f);
                                 forward = nextForward;
                                 key = nextEntry.getKey();
                             } else {    // remove lastForward
-                                log.warn("SpeedProfile anomaly at key={}, forward={} for {}", lastKey, lastForward, id);
                                 anomalies.put(lastKey, true);
-                                //speedProfile.setForwardSpeed(lastKey, 0.0f);
                             }
                             break;
                         }
@@ -279,21 +281,17 @@ public class MergePrompt extends JDialog {
             float reverse = entry.getValue().getReverseSpeed();
             Integer key = entry.getKey();
             if (reverse > 0.0f) {
-                if (reverse < lastReverse) {  // anomaly - remove bad entry
+                if (reverse < lastReverse) {  // anomaly found
                     while (iter.hasNext()) {
                         Map.Entry<Integer, SpeedStep> nextEntry = iter.next();
                         float nextreverse = nextEntry.getValue().getReverseSpeed();
                         if (nextreverse > 0.0f) {
                             if (nextreverse > lastReverse) {    // remove reverse
-                                log.warn("SpeedProfile anomaly at key={}, reverse={} for {}", key, reverse, id);
                                 anomalies.put(key, false);
-                                //speedProfile.setReverseSpeed(key, 0.0f);
                                 reverse = nextreverse;
                                 key = nextEntry.getKey();
                             } else {    // remove lastReverse
-                                log.warn("SpeedProfile anomaly at key={}, reverse={} for {}", lastKey, lastReverse, id);
                                 anomalies.put(lastKey, false);
-                                //speedProfile.setReverseSpeed(lastKey, 0.0f);
                             }
                             break;
                         }
@@ -448,5 +446,4 @@ public class MergePrompt extends JDialog {
     }
 
     private final static Logger log = LoggerFactory.getLogger(MergePrompt.class);
-
 }

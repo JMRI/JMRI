@@ -58,7 +58,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         _speedUtil = warrant.getSpeedUtil();
         _commands = _warrant.getThrottleCommands();
         _idxCurrentCommand = 0;
-        _idxSkipToSpeedCommand = -1;
+        _idxSkipToSpeedCommand = 0;
         _throttle = throttle;
         _syncIdx = -1;
         _waitForSensor = false;
