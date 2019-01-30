@@ -41,7 +41,6 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
 
     public DefaultIdTagManager() {
         super();
-        InstanceManager.setIdTagManager(this);
     }
 
     @Override

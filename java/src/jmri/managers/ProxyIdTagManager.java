@@ -43,7 +43,11 @@ public class ProxyIdTagManager extends AbstractProxyManager<IdTag>
 
     @Override
     protected AbstractManager<IdTag> makeInternalManager() {
-        return new jmri.managers.DefaultIdTagManager();
+        // since this really is an internal tracking mechanisim,
+        // build the new manager and add it here.
+        DefaultIdTagManager tagMan = new DefaultIdTagManager();
+        jmri.InstanceManager.setIdTagManager(tagMan);
+        return tagMan;
     }
 
     @Override
