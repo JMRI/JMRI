@@ -45,12 +45,13 @@ import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.CbusConstants;
 import jmri.jmrix.can.cbus.CbusMessage;
+import jmri.jmrix.can.cbus.CbusNameService;
 import jmri.jmrix.can.cbus.CbusSend;
 import jmri.jmrix.can.cbus.CbusOpCodes;
 import jmri.jmrix.can.cbus.node.CbusNodeEvent;
-import jmri.jmrix.can.cbus.swing.nodeconfig.NodeEditEventFrame;
 import jmri.jmrix.can.TrafficController;
 import jmri.util.swing.TextAreaFIFO;
+import jmri.util.StringUtil;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -131,6 +132,8 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
     private List<JSpinner> nvFields;
     private List<JLabel> nvToHex;
     private List<JButton> evEditButList = new ArrayList<JButton>();
+    private List<JButton> evCopyButList = new ArrayList<JButton>();
+    
     
     private URI supportlink;
     private ActionListener nodeParTotFListener;
@@ -459,10 +462,12 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
         eventListRow = null;
         eventListCols = null;
         evEditButList = null;
+        evCopyButList = null;
         eventListRow = new ArrayList<ArrayList<JLabel>>();
         _ndEvArr = new ArrayList<CbusNodeEvent>();
         eventListCols = new ArrayList<JLabel>();
         evEditButList = new ArrayList<JButton>();
+        evCopyButList = new ArrayList<JButton>();
         enableAdminButtons(false);
         CardLayout cardLayout = (CardLayout) cards.getLayout();
         cardLayout.show(cards, "EVP");
@@ -551,7 +556,7 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
         paramlist= new ArrayList<Integer>(21);
         split.setDividerLocation(_splitratio);
         propertiespane.setBorder(BorderFactory.createTitledBorder((Bundle.getMessage("CbusNode") + nodeName ))); 
-        _nodeinsetup=getfirstintfromstring(nodeName);
+        _nodeinsetup = StringUtil.getFirstIntFromString(nodeName);
         tablefeedback.append( ls  + Bundle.getMessage("NodeSelected",nodeName));
         if (_nodeinsetup>0) {
             getnodeparametertotal(_nodeinsetup);
@@ -762,6 +767,7 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
                 }
             }
             evEditButList.get(i).setEnabled(true);
+            evCopyButList.get(i).setEnabled(true);
         }
         tablefeedback.append( ls  + Bundle.getMessage("GetEventsComplete",(_numevents),_numevents));
         enableAdminButtons(true);
@@ -776,6 +782,7 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
         writebutton.setEnabled(trueorfalse);
         for ( int i=0 ; (i <evEditButList.size() ) ; i++){
             evEditButList.get(i).setEnabled(trueorfalse);
+            evCopyButList.get(i).setEnabled(trueorfalse);
         }   
     }
     
@@ -891,6 +898,14 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
     public void openEditButton(CbusNodeEvent thisevent ){
         showEditDialogueEvent(this,thisevent);
     }
+
+    private void openCopyButton ( CbusNodeEvent thisevent ) {
+        log.info("open copy button clicked");
+        CbusNodeEvent newEvent = new CbusNodeEvent(thisevent);
+        newEvent.setNn(-1);
+        newEvent.setEn(-1);
+        showEditDialogueEvent(this,newEvent);
+    }
     
     // if all table event rows received, start getting event vars
     private void addEventTableRow(int eventNode, int eventNum, int eventIndex){
@@ -907,7 +922,8 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
         headings.setLayout(new GridLayout(1, ( 3 + paramlist.get(5))));
         headings.add(new JLabel(Bundle.getMessage("CbusEvent"), JLabel.CENTER));
         headings.add(new JLabel(Bundle.getMessage("CbusNode"), JLabel.CENTER));
-        headings.add(new JLabel("")); // edit button column        
+        headings.add(new JLabel("")); // edit button column
+        headings.add(new JLabel("")); // copy button column
         for (int i=1 ; (i <= paramlist.get(5)) ; i++){
             headings.add(new JLabel("V" + i, JLabel.CENTER));
         }
@@ -928,10 +944,14 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
         JLabel evData2 = new JLabel("" + (eventNode) + "", JLabel.CENTER);
         JLabel evData3 = new JLabel("" + (eventNum) + "", JLabel.CENTER);
         JButton editEVButton = new JButton(Bundle.getMessage("Edit"));
+        JButton copyEVButton = new JButton(("Copy"));
         editEVButton.setVisible(true);
         editEVButton.setEnabled(false);
+        copyEVButton.setVisible(true);
+        copyEVButton.setEnabled(false);
+        evCopyButList.add(copyEVButton);
         evEditButList.add(editEVButton);
-        individev.setLayout(new GridLayout(1, (3 + paramlist.get(5))));
+        individev.setLayout(new GridLayout(1, (4 + paramlist.get(5))));
         eventListCols = new ArrayList<JLabel>();
         
         individev.add(evData3);
@@ -939,6 +959,7 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
         eventListCols.add(evData2);
         eventListCols.add(evData3);
         individev.add(editEVButton);
+        individev.add(copyEVButton);
         
         for (int i=1 ; (i <= paramlist.get(5)) ; i++){
             JLabel evvalLabel = new JLabel(".", JLabel.CENTER);
@@ -950,8 +971,15 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
             @Override
             public void actionPerformed(ActionEvent e) {
                 // log.debug("edit clicked {} ",(eventIndex-1));
-                
                 openEditButton(thisevent);
+            }
+        });
+
+        copyEVButton.addActionListener (new ActionListener () {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // log.debug("edit clicked {} ",(eventIndex-1));
+                openCopyButton(thisevent);
             }
         });
 
@@ -959,6 +987,7 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
         thisevent.setNodeConfigPanelID(eventListRow.size()-1);
         
         individev.addMouseListener(new HighlightJPanelsChildMouseListeners());
+        individev.setToolTipText( new CbusNameService().getEventNodeString(eventNode, eventNum ) );
         evbuildlist.add(individev);
         
         if ( _numEventResponsesOutstanding == 0 ) {
@@ -972,6 +1001,7 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
         }
         evListpane.validate();
         evListpane.repaint();
+        
     }
     
     public CbusNodeEvent getNodeEventByIndex(int index) {
@@ -1009,7 +1039,7 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
         
         int newnn = 256;
         for (int i = 0; i < nodearr.size(); i++) {
-            if ( newnn == getfirstintfromstring(nodearr.get(i)) ) {
+            if ( newnn == StringUtil.getFirstIntFromString(nodearr.get(i)) ) {
                 newnn++;
             }
         }
@@ -1038,7 +1068,7 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
                 }              
               
                 for (int i = 0; i < nodearr.size(); i++) {
-                    if ( newval == getfirstintfromstring(nodearr.get(i)) ) {
+                    if ( newval == StringUtil.getFirstIntFromString(nodearr.get(i)) ) {
                         rqNNspinnerlabel.setText(Bundle.getMessage("NdNumInUse",(nodearr.get(i))));
                         rqfield.setBackground(Color.red);
                     }
@@ -1379,28 +1409,6 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
             }
         }
     }
-
-
-    public static final int getfirstintfromstring(String toTest){
-        StringBuffer buf = new StringBuffer();
-        for (int i=0; i<toTest.length(); i++){
-            Character chars = toTest.charAt(i);
-            if(chars != ' '){
-                if(Character.isDigit(chars)){
-                    buf.append(chars);
-                } else {
-                    if (buf.length()>0) {
-                        break;
-                    }
-                }
-            }
-        }
-        if (buf.length()==0) {
-            buf.append("0");
-        }
-        return (Integer.parseInt(buf.toString()));  
-    }
-    
 
     @Override
     public void dispose() {
