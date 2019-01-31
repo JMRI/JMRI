@@ -1,5 +1,6 @@
 package jmri.jmrix.can.cbus;
 
+import jmri.Manager.NameValidity;
 import jmri.Sensor;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
@@ -158,7 +159,7 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
             l.provideSensor("MS;XABCDEF");
             Assert.fail("Single hex ; Should have thrown an exception");
         } catch (Exception e) {
-            JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: Did not find usable ");
+            JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException:");
             Assert.assertTrue(true);
         }
 
@@ -166,7 +167,7 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
             l.provideSensor("MSXABCDEF;");
             Assert.fail("Single hex ; Should have thrown an exception");
         } catch (Exception e) {
-            JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: Did not find usable ");
+            JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
             Assert.assertTrue(true);
         }
         
@@ -174,7 +175,7 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
             l.provideSensor("MS;");
             Assert.fail("; no arg Should have thrown an exception");
         } catch (Exception e) {
-            JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: Did not find");
+            JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
             Assert.assertTrue(true);
         }        
         
@@ -182,7 +183,7 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
             l.provideSensor("MS;+N15E6");
             Assert.fail("MS Should have thrown an exception");
         } catch (Exception e) {
-            JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: Did not find");
+            JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
             Assert.assertTrue(true);
         }
         
@@ -328,25 +329,148 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         Assert.assertNotNull("exists",t3);
 
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
     
     @Test
     public void testgetEntryToolTip() {
         String x = l.getEntryToolTip();
         Assert.assertTrue(x.contains("<html>"));
+        
+        Assert.assertTrue(l.allowMultipleAdditions("M77"));
+        
     }
+    
+    @Test
+    public void testvalidSystemNameFormat() {
+        
+        Assert.assertEquals("MS+123",NameValidity.VALID,l.validSystemNameFormat("MS+123"));
+        Assert.assertEquals("MS+N123E123",NameValidity.VALID,l.validSystemNameFormat("MS+N123E123"));
+        Assert.assertEquals("MS+123;456",NameValidity.VALID,l.validSystemNameFormat("MS+123;456"));
+        Assert.assertEquals("MS1",NameValidity.VALID,l.validSystemNameFormat("MS1"));
+        Assert.assertEquals("MS1;2",NameValidity.VALID,l.validSystemNameFormat("MS1;2"));
+        Assert.assertEquals("MS65535",NameValidity.VALID,l.validSystemNameFormat("MS65535"));
+        Assert.assertEquals("MS-65535",NameValidity.VALID,l.validSystemNameFormat("MS-65535"));
+        Assert.assertEquals("MS100001",NameValidity.VALID,l.validSystemNameFormat("MS100001"));
+        Assert.assertEquals("MS-100001",NameValidity.VALID,l.validSystemNameFormat("MS-100001"));
+        Assert.assertEquals("MS+N65535e65535",NameValidity.VALID,l.validSystemNameFormat("MS+N65535e65535"));
+        Assert.assertEquals("MS+N65535e65535;-N65535e65535",NameValidity.VALID,l.validSystemNameFormat("MS+N65535e65535;-N65535e65535"));
+        Assert.assertEquals("MS+N1E2;-N3E4",NameValidity.VALID,l.validSystemNameFormat("MS+N1E2;-N3E4"));
+        Assert.assertEquals("MS-N1E2;+N3E4",NameValidity.VALID,l.validSystemNameFormat("MS-N1E2;+N3E4"));
+
+        Assert.assertEquals("M",NameValidity.INVALID,l.validSystemNameFormat("M"));
+        Assert.assertEquals("MS",NameValidity.INVALID,l.validSystemNameFormat("MS"));
+        Assert.assertEquals("MS-65536",NameValidity.INVALID,l.validSystemNameFormat("MS-65536"));        
+        Assert.assertEquals("MS65536",NameValidity.INVALID,l.validSystemNameFormat("MS65536"));
+        Assert.assertEquals("MS+1;+0",NameValidity.INVALID,l.validSystemNameFormat("MS+1;+0"));
+        Assert.assertEquals("MS+1;-0",NameValidity.INVALID,l.validSystemNameFormat("MS+1;-0"));        
+        Assert.assertEquals("MS+0;+17",NameValidity.INVALID,l.validSystemNameFormat("MS+0;+17"));
+        Assert.assertEquals("MS+0;-17",NameValidity.INVALID,l.validSystemNameFormat("MS+0;-17"));
+        Assert.assertEquals("MS+0",NameValidity.INVALID,l.validSystemNameFormat("MS+0"));
+        Assert.assertEquals("MS-0",NameValidity.INVALID,l.validSystemNameFormat("MS-0"));
+        Assert.assertEquals("MS7;0",NameValidity.INVALID,l.validSystemNameFormat("MS7;0"));
+        Assert.assertEquals("MS0;7",NameValidity.INVALID,l.validSystemNameFormat("MS0;7"));
+        Assert.assertEquals("MS+N17E0",NameValidity.INVALID,l.validSystemNameFormat("MS+N17E0"));
+        Assert.assertEquals("MS+N17E00",NameValidity.INVALID,l.validSystemNameFormat("MS+N17E00"));
+        Assert.assertEquals("MS+N0E17",NameValidity.INVALID,l.validSystemNameFormat("MS+N0E17"));
+        Assert.assertEquals("MS+N00E17",NameValidity.INVALID,l.validSystemNameFormat("MS+N00E17"));
+        Assert.assertEquals("MS+0E17",NameValidity.INVALID,l.validSystemNameFormat("MS+0E17"));
+        Assert.assertEquals("MS0E17",NameValidity.INVALID,l.validSystemNameFormat("MS0E17"));
+        Assert.assertEquals("MS+N65535e65536",NameValidity.INVALID,l.validSystemNameFormat("MS+N65535e65536"));
+        Assert.assertEquals("MS+N65536e65535",NameValidity.INVALID,l.validSystemNameFormat("MS+N65536e65535"));
+        
+    }
+    
+    @Test
+    public void testgetNextValidAddress() {
+        
+        try {
+            Assert.assertEquals("+17","+17",l.getNextValidAddress("+17","M"));
+            Sensor t =  l.provideSensor("MS+17");
+            Assert.assertNotNull("exists",t);
+            Assert.assertEquals("+18","+18",l.getNextValidAddress("+17","M"));
+        
+            Assert.assertEquals("+N45E22","+N45E22",l.getNextValidAddress("+N45E22","M"));
+            Sensor ta =  l.provideSensor("MS+N45E22");
+            Assert.assertNotNull("exists",ta);
+            Assert.assertEquals("+N45E23","+N45E23",l.getNextValidAddress("+N45E22","M"));        
+        
+        
+            Assert.assertTrue(true);
+        } catch (Exception e) {
+            Assert.assertTrue(false);
+        }
+        
+        try {
+            Assert.assertEquals("null",null,l.getNextValidAddress(null,"M"));
+            
+        } catch (Exception e) {
+            JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
+            Assert.assertTrue(true);
+        }
+    }
+
+    @Test
+    public void testgetNextValidAddressPt2() {
+        Sensor t =  l.provideSensor("MS+65535");
+        Assert.assertNotNull("exists",t);
+            
+        try {
+            Assert.assertEquals("+65535",null,l.getNextValidAddress("+65535","M"));
+            JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
+            Assert.assertTrue(true);
+        } catch (Exception e) {
+            // JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
+            Assert.assertTrue(false);
+        }
+    }
+    
+    @Test
+    public void testgetNextValidAddressPt3() {
+        
+        Sensor t =  l.provideSensor("MS+10");
+        Assert.assertNotNull("exists",t);
+            
+        try {
+            Assert.assertEquals("+10","+11",l.getNextValidAddress("+10","M"));
+            Assert.assertTrue(true);
+        } catch (Exception e) {
+            Assert.assertTrue(false);
+        }
+    }
+
+    @Test
+    public void testcreateSystemName() {
+        
+        try {
+            Assert.assertEquals("MS+10","MS+10",l.createSystemName("+10","M"));
+            Assert.assertEquals("MS+N34E610","MS+N34E610",l.createSystemName("+N34E610","M"));
+            Assert.assertEquals("MS-N34E610","MS-N34E610",l.createSystemName("-N34E610","M"));
+            Assert.assertEquals("MS+N34E610;-N987E654","MS+N34E610;-N987E654",l.createSystemName("+N34E610;-N987E654","M"));
+            
+        } catch (Exception e) {
+            Assert.assertTrue(false);
+        }
+        
+        try {
+            Assert.assertEquals("M2S+10","MS+10",l.createSystemName("+10","M2"));
+        } catch (Exception e) {
+            Assert.assertTrue(false);
+        }
+
+        try {
+            Assert.assertEquals("M2S+10","MS+10",l.createSystemName("+10","ZZZZZZZZZ"));
+        } catch (Exception e) {
+            Assert.assertTrue(false);
+        }
+        
+        try {
+            Assert.assertEquals("MSS",null,l.createSystemName("S","M"));
+            Assert.assertTrue(false);
+        } catch (Exception e) {
+            // JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
+            Assert.assertTrue(true);
+        }
+    }
+    
     
     // The minimal setup for log4J
     @Override

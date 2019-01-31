@@ -295,17 +295,6 @@
           <td> </td>
         </tr>
         <tr>
-          <td>in</td>
-          <td>200018M07</td>
-          <td>listen to Events 18 .. 1F</td>
-          <td>MS200018M07</td>
-          <td>+ M + hex mask</td>
-          <td>N/A</td>
-          <td> </td>
-          <td> </td>
-          <td> </td>
-        </tr>
-        <tr>
           <td>both</td>
           <td>X90002D002E;X91FFFFFFFE</td>
           <td>hex CAN frame msg. Active;
