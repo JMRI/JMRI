@@ -707,28 +707,10 @@ public class SpeedUtil {
         _settingsTravelled += throttle * elapsedTime;
         _timeAtSpeed += elapsedTime;
 
-        StringBuilder  msg = new StringBuilder ();
-        boolean mergeOK = true;
         float length = blkOrder.getPath().getLengthMm();
-        if (length <= 0) {
-            if ( length <= 0) {
-                msg.append(" length <= 0");
-                mergeOK = false;
-            }
-        }
-        float ratio = length / _distanceTravelled;
-        if (ratio < .85f || ratio > 1.176f ) {
-            msg.append(", train ");
-            msg.append(_rosterId);
-            msg.append("'s SpeedProfile values inaccurate.  ");
-        }
+        boolean mergeOK = (length <= 0);
         elapsedTime = toBlock._entryTime - fromBlock._entryTime;
-        ratio = elapsedTime / _timeAtSpeed;
-        if (ratio < .99f || ratio > 1.01f ) {
-            msg.append(" elapsedTime=");
-            msg.append(elapsedTime);
-            msg.append(" but _timeAtSpeed=");
-            msg.append(_timeAtSpeed);
+        if (Math.abs(elapsedTime - _timeAtSpeed) > 10) {
             mergeOK = false;
         }
         // measuredSpeed is the actual measured speed
@@ -742,11 +724,6 @@ public class SpeedUtil {
                    _numchanges, fromBlock.getDisplayName(), length, throttle, measuredSpeed, _distanceTravelled, aveSettings, profileSpeed, aveSpeed);
         }*/
         if (!mergeOK) {
-            if (msg.length() > 0) {
-                msg.insert(0, fromBlock.getDisplayName());
-                msg.insert(0, "At block ");
-                log.warn(msg.toString());
-            }
             clearStats();
             return;
         }
