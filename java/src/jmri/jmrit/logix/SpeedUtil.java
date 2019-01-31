@@ -741,12 +741,12 @@ public class SpeedUtil {
             log.debug("{} changes on block {}: length={} exitSetting={} speed={}. calcDist={} aveThrottleSetting={} aveProfileSpeed={} calcAveSpeed={}",
                    _numchanges, fromBlock.getDisplayName(), length, throttle, measuredSpeed, _distanceTravelled, aveSettings, profileSpeed, aveSpeed);
         }*/
-        if (msg.length() > 0) {
-            msg.insert(0, fromBlock.getDisplayName());
-            msg.insert(0, "At block ");
-            log.warn(msg.toString());
-        }
         if (!mergeOK) {
+            if (msg.length() > 0) {
+                msg.insert(0, fromBlock.getDisplayName());
+                msg.insert(0, "At block ");
+                log.warn(msg.toString());
+            }
             clearStats();
             return;
         }
