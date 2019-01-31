@@ -119,7 +119,7 @@ public class CbusEventRequestMonitorEvent extends CbusEvent {
     // adds event + node name
     protected void getNameFromTable(){
         if (_name.equals("")) {
-            _name = CbusNameService.getEventName(getNn(),getEn());
+            _name = new CbusNameService().getEventName(getNn(),getEn());
             if (!_name.equals("")) {
                 _model.setValueAt(_name, _model.eventRow(getNn(),getEn()), 
                     CbusEventRequestDataModel.NAME_COLUMN);

@@ -20,8 +20,8 @@ import javax.swing.Timer;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.simulator.CbusSimulator;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+// import org.slf4j.Logger;
+// import org.slf4j.LoggerFactory;
 
 /**
  * Pane for viewing and setting simulated network objects.
@@ -41,7 +41,6 @@ public class SimulatorPane extends jmri.jmrix.can.swing.CanPanel {
     private JPanel _csPanes;
     private JPanel _ndPanes;
     private JPanel _evPanes;
-    private Timer _initTimer;
     private Boolean _disposeSimOnWindowClose;
     private JScrollPane mainScroll;
 
@@ -229,5 +228,5 @@ public class SimulatorPane extends jmri.jmrix.can.swing.CanPanel {
                     jmri.InstanceManager.getDefault(CanSystemConnectionMemo.class));
         }
     }
-    private final static Logger log = LoggerFactory.getLogger(SimulatorPane.class);
+    // private final static Logger log = LoggerFactory.getLogger(SimulatorPane.class);
 }
