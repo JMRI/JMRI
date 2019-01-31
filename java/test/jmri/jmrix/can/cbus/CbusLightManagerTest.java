@@ -3,6 +3,7 @@ package jmri.jmrix.can.cbus;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.Light;
+import jmri.Manager.NameValidity;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
@@ -23,7 +24,7 @@ public class CbusLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
 
     private CanSystemConnectionMemo memo = null;
     // private TrafficControllerScaffold tc;
-    // private CbusLightManager l;
+    // CbusLightManager l;
 
     @Test
     public void testctor(){
@@ -44,7 +45,7 @@ public class CbusLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
 
     @Override
     public String getSystemName(int i) {
-        return "MLX0A;" + i;
+        return "MLX0A;+" + i;
     }
 
     @Override // numeric system name has a + added to it
@@ -318,8 +319,134 @@ public class CbusLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
     public void testgetEntryToolTip() {
         String x = l.getEntryToolTip();
         Assert.assertTrue(x.contains("<html>"));
+        
+        Assert.assertTrue(l.allowMultipleAdditions("M77"));
+        
+    }
+
+    @Test
+    public void testvalidSystemNameFormat() {
+        
+        Assert.assertEquals("ML+123",NameValidity.VALID,l.validSystemNameFormat("MS+123"));
+        Assert.assertEquals("ML+N123E123",NameValidity.VALID,l.validSystemNameFormat("MS+N123E123"));
+        Assert.assertEquals("ML+123;456",NameValidity.VALID,l.validSystemNameFormat("MS+123;456"));
+        Assert.assertEquals("ML1",NameValidity.VALID,l.validSystemNameFormat("MS1"));
+        Assert.assertEquals("ML1;2",NameValidity.VALID,l.validSystemNameFormat("MS1;2"));
+        Assert.assertEquals("ML65535",NameValidity.VALID,l.validSystemNameFormat("MS65535"));
+        Assert.assertEquals("ML-65535",NameValidity.VALID,l.validSystemNameFormat("MS-65535"));
+        Assert.assertEquals("ML100001",NameValidity.VALID,l.validSystemNameFormat("MS100001"));
+        Assert.assertEquals("ML-100001",NameValidity.VALID,l.validSystemNameFormat("MS-100001"));
+
+        Assert.assertEquals("M",NameValidity.INVALID,l.validSystemNameFormat("M"));
+        Assert.assertEquals("ML",NameValidity.INVALID,l.validSystemNameFormat("ML"));
+        Assert.assertEquals("ML-65536",NameValidity.INVALID,l.validSystemNameFormat("ML-65536"));        
+        Assert.assertEquals("ML65536",NameValidity.INVALID,l.validSystemNameFormat("ML65536"));
+        Assert.assertEquals("ML+1;+0",NameValidity.INVALID,l.validSystemNameFormat("ML+1;+0"));
+        Assert.assertEquals("ML+1;-0",NameValidity.INVALID,l.validSystemNameFormat("ML+1;-0"));        
+        Assert.assertEquals("ML+0;+17",NameValidity.INVALID,l.validSystemNameFormat("ML+0;+17"));
+        Assert.assertEquals("ML+0;-17",NameValidity.INVALID,l.validSystemNameFormat("ML+0;-17"));
+        Assert.assertEquals("ML+0",NameValidity.INVALID,l.validSystemNameFormat("ML+0"));
+        Assert.assertEquals("ML-0",NameValidity.INVALID,l.validSystemNameFormat("ML-0"));
+        Assert.assertEquals("ML7;0",NameValidity.INVALID,l.validSystemNameFormat("ML7;0"));
+        Assert.assertEquals("ML0;7",NameValidity.INVALID,l.validSystemNameFormat("ML0;7"));
+        
+    }
+
+    @Test
+    public void testgetNextValidAddress() {
+        CbusLightManager l = new CbusLightManager(memo);
+        try {
+            Assert.assertEquals("+17","+17",l.getNextValidAddress("+17","M"));
+            Light t =  l.provideLight("ML+17");
+            Assert.assertNotNull("exists",t);
+            Assert.assertEquals("+18","+18",l.getNextValidAddress("+17","M"));
+        
+            Assert.assertEquals("+N45E22","+N45E22",l.getNextValidAddress("+N45E22","M"));
+            Light ta =  l.provideLight("ML+N45E22");
+            Assert.assertNotNull("exists",ta);
+            Assert.assertEquals("+N45E23","+N45E23",l.getNextValidAddress("+N45E22","M"));        
+        
+        
+            Assert.assertTrue(true);
+        } catch (Exception e) {
+            Assert.assertTrue(false);
+        }
+        
+        try {
+            Assert.assertEquals("null",null,l.getNextValidAddress(null,"M"));
+            
+        } catch (Exception e) {
+            // JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
+            // Assert.assertTrue(true);
+        }
+    }
+
+    @Test
+    public void testgetNextValidAddressPt2() {
+        CbusLightManager l = new CbusLightManager(memo);
+        Light t =  l.provideLight("ML+65535");
+        Assert.assertNotNull("exists",t);
+            
+        try {
+            Assert.assertEquals("+65535",null,l.getNextValidAddress("+65535","M"));
+            JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
+            Assert.assertTrue(true);
+        } catch (Exception e) {
+            // JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
+            Assert.assertTrue(false);
+        }
     }
     
+    @Test
+    public void testgetNextValidAddressPt3() {
+        CbusLightManager l = new CbusLightManager(memo);
+        Light t =  l.provideLight("ML+10");
+        Assert.assertNotNull("exists",t);
+            
+        try {
+            Assert.assertEquals("+10","+11",l.getNextValidAddress("+10","M"));
+            // JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
+            Assert.assertTrue(true);
+        } catch (Exception e) {
+            // JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
+            Assert.assertTrue(false);
+        }
+    }
+    
+    @Test
+    public void testcreateSystemName() {
+        
+        CbusLightManager l = new CbusLightManager(memo);
+        
+        try {
+            Assert.assertEquals("ML+10","ML+10",l.createSystemName("+10","M"));
+            Assert.assertEquals("ML+N34E610","ML+N34E610",l.createSystemName("+N34E610","M"));
+            
+        } catch (Exception e) {
+            Assert.assertTrue(false);
+        }
+        
+        try {
+            Assert.assertEquals("M2L+10","ML+10",l.createSystemName("+10","M2"));
+        } catch (Exception e) {
+            Assert.assertTrue(false);
+        }
+
+        try {
+            Assert.assertEquals("M2L+10","ML+10",l.createSystemName("+10","ZZZZZZZZZ"));
+        } catch (Exception e) {
+            Assert.assertTrue(false);
+        }
+        
+        try {
+            Assert.assertEquals("MLL",null,l.createSystemName("L","M"));
+            Assert.assertTrue(true);
+        } catch (Exception e) {
+            // JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
+            Assert.assertTrue(true);
+        }
+    }
+
     // The minimal setup for log4J
     @Before
     public void setUp() {

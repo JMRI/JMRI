@@ -1,5 +1,7 @@
 package jmri.jmrix.can.cbus;
 
+import java.beans.PropertyChangeEvent;
+import jmri.Reporter;
 import jmri.Sensor;
 import jmri.implementation.AbstractSensor;
 import jmri.jmrix.can.CanListener;
@@ -27,7 +29,8 @@ public class CbusSensor extends AbstractSensor implements CanListener {
         this.tc = tc;
         init(address);
     }
-
+    
+    Reporter reporter = null;
     TrafficController tc;
 
     /**
@@ -180,6 +183,44 @@ public class CbusSensor extends AbstractSensor implements CanListener {
         } else if (addrInactive.match(f)) {
             setOwnState(!getInverted() ? Sensor.INACTIVE : Sensor.ACTIVE);
         }
+    }
+    
+    /**
+     * {@inheritDoc}
+     *
+     * When a reporter is attached to the sensor, the sensor will go
+     * active when ID tags are present ( assuming Sensor not inverted ),
+     * inactive when no ID tags are present, ie all previously announced
+     * ID tags have since been announced by other reporters.
+     */
+    @Override
+    public void setReporter(Reporter er) {
+        reporter = er;
+        if (reporter!=null) {
+            log.debug("attached to reporter",reporter);
+            reporter.addPropertyChangeListener((PropertyChangeEvent e) -> {
+                log.debug("Report {} property {} new value {}",reporter, e.getPropertyName(), e.getNewValue());
+                if (e.getPropertyName().equals("state")) {
+                    try {
+                        if ( (int) e.getNewValue()==jmri.IdTag.SEEN) {
+                            setKnownState(Sensor.ACTIVE); // setKnownState does any inversion
+                        } else {
+                            setKnownState(Sensor.INACTIVE); // setKnownState does any inversion
+                        }
+                    } catch (jmri.JmriException ex) {
+                        log.error("Reporter {} unable to change sensor status",reporter);
+                    }
+                }
+            });
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Reporter getReporter() {
+        return reporter;
     }
     
     /**

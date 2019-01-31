@@ -485,9 +485,10 @@ public class LnPacketizer extends LnTrafficController {
     Thread xmtThread;
     
     /**
-     * End threads, intended for testing only
+     * {@inheritDoc}
      */
     @SuppressWarnings("deprecation") // stop() is deprecated, but it's not going away
+    @Override
     public void dispose() {
         if (xmtThread != null) {
             xmtThread.stop(); // interrupt not sufficient?

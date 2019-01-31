@@ -13,7 +13,6 @@ import jmri.util.swing.JemmyUtil;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Test;
-import org.netbeans.jemmy.operators.JFileChooserOperator;
 
 /**
  *
@@ -74,6 +73,7 @@ public class ImportCarsTest extends OperationsTestCase {
         // do import
 
         Thread mb = new ImportCars(){
+            @Override
             protected File getFile() {
                 // replace JFileChooser with fixed file to avoid threading issues
                 return new File(OperationsXml.getFileLocation()+OperationsXml.getOperationsDirectoryName() + File.separator + ExportCars.getOperationsFileName());

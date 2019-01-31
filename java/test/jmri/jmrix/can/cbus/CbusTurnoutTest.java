@@ -3,6 +3,7 @@ package jmri.jmrix.can.cbus;
 
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
+import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.Turnout;
 import jmri.util.JUnitUtil;
@@ -64,6 +65,33 @@ public class CbusTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
         checkLongStatusRequestMsgSent();
 
     }
+    
+    @Test
+    public void testRequestUpdateSensors() {
+        
+        CanSystemConnectionMemo memo = new CanSystemConnectionMemo();
+        memo.setTrafficController(tcis);
+        jmri.InstanceManager.setDefault(jmri.SensorManager.class,new CbusSensorManager(memo));
+
+        t.requestUpdateFromLayout();
+        Assert.assertEquals(1,tcis.outbound.size());
+        tcis.outbound.clear();
+        
+        try {
+            t.provideFirstFeedbackSensor("MS+54321");
+        } catch (jmri.JmriException ex) { }
+        t.setFeedbackMode("ONESENSOR");
+        t.requestUpdateFromLayout();
+        Assert.assertEquals(2,tcis.outbound.size());
+        tcis.outbound.clear();
+        
+        try {
+            t.provideSecondFeedbackSensor("MS+4545");
+        } catch (jmri.JmriException ex) { }
+        t.setFeedbackMode("TWOSENSOR");
+        t.requestUpdateFromLayout();
+        Assert.assertEquals(3,tcis.outbound.size());
+    }    
     
     @Test
     public void testNullEvent() {
@@ -323,7 +351,6 @@ public class CbusTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
         Assert.assertTrue(t.getCommandedState() == Turnout.CLOSED);    
     }
 
-
     // with presence of node number should still resolve to short event turnout due to opc
     @Test
     public void testTurnoutCanMessageShortEvWithNode() throws jmri.JmriException {
@@ -371,6 +398,53 @@ public class CbusTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
         Assert.assertTrue(t.getCommandedState() == Turnout.CLOSED);
         
     }
+
+    @Test
+    public void testDelayedTurnoutCanMessage() throws jmri.JmriException {
+        CbusTurnout t = new CbusTurnout("MT","+N54321E12345",tcis);
+        CanMessage m = new CanMessage(tcis.getCanid());
+        m.setNumDataElements(5);
+        m.setElement(0, 0x90); // ACON OPC
+        m.setElement(1, 0xd4);
+        m.setElement(2, 0x31);
+        m.setElement(3, 0x30);
+        m.setElement(4, 0x39);
+        
+        CbusTurnout.DELAYED_FEEDBACK_INTERVAL=1;
+        t.setFeedbackMode("DELAYED");
+        t.message(m);
+        Assert.assertTrue(t.getKnownState() == Turnout.INCONSISTENT); 
+        JUnitUtil.waitFor(()->{ return(t.getKnownState() == Turnout.THROWN); }, "msg Turnout.THROWN didn't arrive");
+        
+        m.setElement(0, 0x91); // ACOF OPC
+        t.message(m);
+        Assert.assertTrue(t.getKnownState() == Turnout.INCONSISTENT); 
+        JUnitUtil.waitFor(()->{ return(t.getKnownState() == Turnout.CLOSED); }, "msg Turnout.CLOSED didn't arrive"); 
+    }
+    
+    
+    @Test
+    public void testDelayedTurnoutCanReply() throws jmri.JmriException {
+        CbusTurnout t = new CbusTurnout("MT","+N54321E12345",tcis);
+        CanReply m = new CanReply(tcis.getCanid());
+        m.setNumDataElements(5);
+        m.setElement(0, 0x90); // ACON OPC
+        m.setElement(1, 0xd4);
+        m.setElement(2, 0x31);
+        m.setElement(3, 0x30);
+        m.setElement(4, 0x39);
+        
+        CbusTurnout.DELAYED_FEEDBACK_INTERVAL=1;
+        t.setFeedbackMode("DELAYED");
+        t.reply(m);
+        Assert.assertTrue(t.getKnownState() == Turnout.INCONSISTENT); 
+        JUnitUtil.waitFor(()->{ return(t.getKnownState() == Turnout.THROWN); }, "reply Turnout.THROWN didn't arrive");
+        
+        m.setElement(0, 0x91); // ACOF OPC
+        t.reply(m);
+        Assert.assertTrue(t.getKnownState() == Turnout.INCONSISTENT); 
+        JUnitUtil.waitFor(()->{ return(t.getKnownState() == Turnout.CLOSED); }, "reply Turnout.CLOSED didn't arrive"); 
+    }    
 
     // The minimal setup for log4J
     @Before

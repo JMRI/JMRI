@@ -235,7 +235,7 @@ public class CbusFilter {
                 if ( filters.get(CFRQDAT) ){ return CFRQDAT; } else { incrementCount(CFRQDAT); }
                 break;
             case CbusConstants.CBUS_RQDDS:
-                if ( checkeventDat(eventNum) > -1 ) { return checkeventDat(eventNum); }
+                if ( checkevent(nodeNum) > -1 ) { return checkevent(nodeNum); } // byte 1 and 2 are device number
                 if ( filters.get(CFDATA) ){ return CFDATA; } else { incrementCount(CFDATA); }
                 if ( filters.get(CFRQDDS) ){ return CFRQDDS; } else { incrementCount(CFRQDDS); }
                 break;
@@ -478,12 +478,12 @@ public class CbusFilter {
                 if ( filters.get(CFARDAT) ){ return CFARDAT; } else { incrementCount(CFARDAT); }
                 break;
             case CbusConstants.CBUS_DDES:
-                if ( checkeventDat(eventNum) > -1 ) { return checkeventDat(eventNum); }
+                if ( checkevent(nodeNum) > -1 ) { return checkevent(nodeNum); } // byte 1 and 2 are device num
                 if ( filters.get(CFDATA) ){ return CFDATA; } else { incrementCount(CFDATA); }
                 if ( filters.get(CFDDES) ){ return CFDDES; } else { incrementCount(CFDDES); }
                 break;
             case CbusConstants.CBUS_DDRS:
-                if ( checkeventDat(eventNum) > -1 ) { return checkeventDat(eventNum); }
+                if ( checkevent(nodeNum) > -1 ) { return checkevent(nodeNum); } // byte 1 and 2 are device num
                 if ( filters.get(CFDATA) ){ return CFDATA; } else { incrementCount(CFDATA); }
                 if ( filters.get(CFDDRS) ){ return CFDDRS; } else { incrementCount(CFDDRS); }
                 break;
@@ -541,13 +541,6 @@ public class CbusFilter {
     private int checkevent(int event) {
         // log.debug("checking event {}",event);
         if ( filters.get(CFEVENT) ){ return CFEVENT; } else { incrementCount(CFEVENT); }
-        if (( filters.get(CFEVENTMIN) ) && ( event < _evMin)){ return CFEVENTMIN; } else { incrementCount(CFEVENTMIN); }
-        if (( filters.get(CFEVENTMAX) ) && ( event > _evMax)){ return CFEVENTMAX; } else { incrementCount(CFEVENTMAX); }
-        return -1;
-    }
-
-    private int checkeventDat(int event) {
-        // log.debug("checking event {}",event);
         if (( filters.get(CFEVENTMIN) ) && ( event < _evMin)){ return CFEVENTMIN; } else { incrementCount(CFEVENTMIN); }
         if (( filters.get(CFEVENTMAX) ) && ( event > _evMax)){ return CFEVENTMAX; } else { incrementCount(CFEVENTMAX); }
         return -1;
