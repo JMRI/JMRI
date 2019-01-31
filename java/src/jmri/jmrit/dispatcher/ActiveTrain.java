@@ -1083,7 +1083,7 @@ public class ActiveTrain {
                 }
             }
             if (!resetDone) {
-                try { Thread.sleep(200); } catch (InterruptedException e) { log.debug(e.getLocalizedMessage());};
+                try { Thread.sleep(200); } catch (InterruptedException e) { log.debug(e.getLocalizedMessage());}
             }
             ++resetCount;
         }

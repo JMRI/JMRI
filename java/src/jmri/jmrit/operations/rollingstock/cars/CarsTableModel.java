@@ -413,8 +413,6 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
                 int row = _table.rowAtPoint(point);
                 if (column == PICTURE_COLUMN) {
                     try {
-                        //get the Point where the drop occurred
-                        Point loc = dtde.getLocation();
                         //get Transfer data
                         dtde.acceptDrop(DnDConstants.ACTION_COPY_OR_MOVE);
                         Transferable t = dtde.getTransferable();

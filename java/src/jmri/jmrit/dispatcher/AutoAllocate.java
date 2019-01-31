@@ -303,35 +303,6 @@ public class AutoAllocate {
         }
     }
 
-    private boolean stopAllocateSensorSet(AllocationRequest ar) {
-        if (ar.getActiveTrain().getLastAllocatedSection() != null 
-                && ar.getActiveTrain().getLastAllocatedSection().getComment() != null 
-                && ar.getActiveTrain().getLastAllocatedSection().getComment().contains("#Sensor:")) {
-            String sensorNames[] = ar.getActiveTrain().getLastAllocatedSection().getComment().substring(8).split(":");
-            if (sensorNames.length < 1) {
-                log.error("Invalid #Sensor: construct");
-                return true;
-            }
-            for (String sensorName : sensorNames) {
-                Sensor sensor;
-                try {
-                    if (sensorName.length() > 0 && sensorName.startsWith("!")) {
-                        sensor = InstanceManager.sensorManagerInstance().provideSensor(sensorName.substring(1));
-                        if (sensor.getKnownState() == Sensor.INACTIVE) {
-                            return true;
-                        }
-                    } else {
-                        sensor = InstanceManager.sensorManagerInstance().provideSensor(sensorName);
-                        if (sensor.getKnownState() == Sensor.ACTIVE) {
-                            return true;
-                        }
-                    }
-                } catch (Exception ex) { log.error("Ahhh[{}]",sensorName,ex);return false;}
-            }
-        }
-        return false;
-    }
-
     /**
      * Entered to request a choice of Next Section when a Section is being
      * allocated and there are alternate Section choices for the next Section.
