@@ -50,11 +50,6 @@ public class ProxyIdTagManager extends AbstractProxyManager<IdTag>
         return tagMan;
     }
 
-    @Override
-    public Manager<IdTag> getDefaultManager() {
-        return getInternalManager();
-    }
-
     /**
      * Locate via user name, then system name if needed.
      *
@@ -161,20 +156,6 @@ public class ProxyIdTagManager extends AbstractProxyManager<IdTag>
             return ((IdTagManager) getMgr(i)).validSystemNameFormat(systemName);
         }
         return NameValidity.INVALID;
-    }
-
-    /**
-     * Normalize a system name Locate a system specfic IdTagManager based on a
-     * system name. Returns "" if no manager exists. If a manager is found,
-     * return its determination of a normalized system name
-     */
-    @Override
-    public String normalizeSystemName(String systemName) {
-        int i = matchTentative(systemName);
-        if (i >= 0) {
-            return ((IdTagManager) getMgr(i)).normalizeSystemName(systemName);
-        }
-        return "";
     }
 
     /**

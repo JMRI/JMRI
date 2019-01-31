@@ -33,11 +33,19 @@ public class DefaultRailComManager extends DefaultIdTagManager
     }
 
     @Override
+    public String getSystemPrefix() {
+        return "R";  /* this is really internal, but we need a prefix
+                        to differentiate between this and the DefaultIdTag 
+                        so the tags don't get merged in the tabbed 
+                        ID table. */
+    }
+
+    @Override
     protected RailCom createNewIdTag(String systemName, String userName) {
         // we've decided to enforce that IdTag system
-        // names start with ID by prepending if not present
-        if (!systemName.startsWith("ID")) {
-            systemName = "ID" + systemName;
+        // names start with RD by prepending if not present
+        if (!systemName.startsWith(getSystemPrefix() + "D")) {
+            systemName = getSystemPrefix() + "D" + systemName;
         }
         return new DefaultRailCom(systemName, userName);
     }

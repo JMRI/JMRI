@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DateFormat;
 import java.util.Date;
+import javax.annotation.Nonnull;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -37,7 +38,6 @@ public class IdTagTableAction extends AbstractTableAction<IdTag> {
      *
      * @param actionName title of the action
      */
-    @SuppressWarnings("OverridableMethodCallInConstructor")
     public IdTagTableAction(String actionName) {
         super(actionName);
 
@@ -49,6 +49,17 @@ public class IdTagTableAction extends AbstractTableAction<IdTag> {
     }
 
     protected IdTagManager tagManager = InstanceManager.getDefault(jmri.IdTagManager.class);
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setManager(@Nonnull Manager<IdTag> t) {
+        tagManager = (IdTagManager) t;
+        if (m != null) {
+            m.setManager(tagManager);
+        }
+    }
 
     public IdTagTableAction() {
         this(Bundle.getMessage("TitleIdTagTable"));
@@ -233,6 +244,7 @@ public class IdTagTableAction extends AbstractTableAction<IdTag> {
     protected String helpTarget() {
         return "package.jmri.jmrit.beantable.IdTagTable";
     }
+
     JmriJFrame addFrame = null;
     JTextField sysName = new JTextField(12);
     JTextField userName = new JTextField(15);
@@ -308,17 +320,24 @@ public class IdTagTableAction extends AbstractTableAction<IdTag> {
 
     @Override
     public void addToPanel(AbstractTableTabAction<IdTag> f) {
-        f.addToBottomBox(isStateStored, this.getClass().getName());
+        String systemPrefix = tagManager.getSystemPrefix();
+        if (tagManager instanceof jmri.managers.ProxyIdTagManager ) {
+            systemPrefix = "All"; // NOI18N
+        }
+        /* The following code fails to add the buttons to the "ALL tab".
+           the reason for the failure is unclear, but this needs to be
+           fixed.
+        f.addToBottomBox(isStateStored, systemPrefix );
         isStateStored.setSelected(tagManager.isStateStored());
         isStateStored.addActionListener((ActionEvent e) -> {
             tagManager.setStateStored(isStateStored.isSelected());
         });
-        f.addToBottomBox(isFastClockUsed, this.getClass().getName());
+        f.addToBottomBox(isFastClockUsed, systemPrefix );
         isFastClockUsed.setSelected(tagManager.isFastClockUsed());
         isFastClockUsed.addActionListener((ActionEvent e) -> {
             tagManager.setFastClockUsed(isFastClockUsed.isSelected());
-        });
-        log.debug("Added CheckBox in addToPanel method");
+        });*/
+        log.debug("Added CheckBox in addToPanel method for system {}",systemPrefix);
     }
 
     @Override

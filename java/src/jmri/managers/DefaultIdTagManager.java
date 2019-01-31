@@ -167,11 +167,11 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
     }
 
     protected IdTag createNewIdTag(String systemName, String userName) {
-        // we've decided to enforce that IdTag system
-        // names start with ID by prepending if not present
-        if (!systemName.startsWith("ID")) // NOI18N
+        // Names start with the system prefix followed by D.
+        // Add the prefix if not present.
+        if (!systemName.startsWith(getSystemPrefix() + typeLetter() )) // NOI18N
         {
-            systemName = "ID" + systemName; // NOI18N
+            systemName = getSystemPrefix() + typeLetter() + systemName; // NOI18N
         }
         return new DefaultIdTag(systemName, userName);
     }
