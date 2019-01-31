@@ -28,8 +28,8 @@ import jmri.jmrit.roster.RosterSpeedProfile.SpeedStep;
 import jmri.util.JmriJFrame;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 
 /**
  * Prompts user to select SpeedProfile to write to Roster
@@ -69,7 +69,6 @@ public class MergePrompt extends JDialog {
 
         table.setDefaultRenderer(Boolean.class, new EnablingCheckboxRenderer());
         table.getColumnModel().getColumn(MergeTableModel.VIEW_COL).setCellEditor(new ButtonEditor(new JButton()));
-//        table.getColumnModel().getColumn(MergeTableModel.VIEW_COL).setCellRenderer(new ButtonRenderer());
         table.getColumnModel().getColumn(MergeTableModel.VIEW_COL).setCellRenderer(new ButtonCellRenderer());
 
         int tablewidth = 0;
@@ -445,5 +444,5 @@ public class MergePrompt extends JDialog {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MergePrompt.class);
+//    private final static Logger log = LoggerFactory.getLogger(MergePrompt.class);
 }
