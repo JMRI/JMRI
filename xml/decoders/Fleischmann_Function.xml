@@ -519,7 +519,7 @@
         <label xml:lang="nl">Uitgang B werkt bij</label>
 			</variable>
 			<variable CV="131" mask="XXVXXXXX" default="1" item="driving direction B">
-				<xi:include href="http://jmri.org/xml/decoders/parts/enum-Offon.xml"/>
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 				<label>Output B depends on the driving direction</label>
         <label xml:lang="de">Ausgang B ist von der Fahrtrichtung abhängig</label>
         <label xml:lang="nl">Uitgang B is van de rijrichting afhankelijk</label>
@@ -615,7 +615,7 @@
         <label xml:lang="nl">Uitgang C werkt bij</label>
 			</variable>
 			<variable CV="141" mask="XXVXXXXX" default="0" item="driving direction C">
-				<xi:include href="http://jmri.org/xml/decoders/parts/enum-Offon.xml"/>
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 				<label>Output C depends on the driving direction</label>
         <label xml:lang="de">Ausgang C ist von der Fahrtrichtung abhängig</label>
         <label xml:lang="nl">Uitgang C is van de rijrichting afhankelijk</label>
@@ -711,7 +711,7 @@
         <label xml:lang="nl">Uitgang D werkt bij</label>
 			</variable>
 			<variable CV="151" mask="XXVXXXXX" default="0" item="driving direction D">
-				<xi:include href="http://jmri.org/xml/decoders/parts/enum-Offon.xml"/>
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 				<label>Output D depends on the driving direction</label>
         <label xml:lang="de">Ausgang D ist von der Fahrtrichtung abhängig</label>
         <label xml:lang="nl">Uitgang D is van de rijrichting afhankelijk</label>
