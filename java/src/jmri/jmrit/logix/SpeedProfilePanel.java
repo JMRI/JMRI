@@ -2,6 +2,7 @@ package jmri.jmrit.logix;
 
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Window;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
@@ -68,7 +69,7 @@ public class SpeedProfilePanel extends JPanel {
                         deleteRow();
                     } else if (ch == KeyEvent.VK_ENTER) {
                         ((SpeedTableModel)_table.getModel()).updateAnomaly();
-                        _scrollPane.revalidate();
+                        rePack();
                     }
                 }
                 @Override
@@ -162,6 +163,17 @@ public class SpeedProfilePanel extends JPanel {
         }
     }
 
+    private void rePack() {
+        Component comp = getParent();
+        while (comp != null) {
+            comp.invalidate();
+            if (comp instanceof Window) {
+                ((Window)comp).pack();
+                return;
+            }
+            comp = comp.getParent();
+        }
+    }
 
     static class SpeedTableModel extends javax.swing.table.AbstractTableModel {
         static final int STEP_COL = 0;
@@ -454,7 +466,7 @@ public class SpeedProfilePanel extends JPanel {
                     model.addEntry(sourceEntry);
                 }
                 model.fireTableDataChanged();
-                _scrollPane.revalidate();
+                rePack();
 
                 return true;
             } catch (UnsupportedFlavorException ufe) {

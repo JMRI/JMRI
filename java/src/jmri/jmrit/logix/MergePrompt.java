@@ -157,12 +157,10 @@ public class MergePrompt extends JDialog {
         _viewFrame.add(Box.createGlue());
         JPanel panel = new JPanel();
         panel.add(new JLabel(Bundle.getMessage("viewTitle", id)));
+        panel.add(MergePrompt.makeEditInfoPanel());
         _viewFrame.add(panel);
 
         HashMap<Integer, Boolean> anomalies = _anomalyMap.get(id);
-        if (anomalies != null && anomalies.size() > 0) {
-            _viewFrame.add(makeEditInfoPanel());
-        }
 
         JPanel spPanel = new JPanel();
         spPanel.setLayout(new BoxLayout(spPanel, BoxLayout.LINE_AXIS));

@@ -274,7 +274,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         panel.add(Box.createGlue());
 
         HashMap<Integer, Boolean> an = MergePrompt.validateSpeedProfile(speedProfile);
-        if (an != null && an.size() >0) {
+        if (an != null && an.size() > 0) {
             framePanel.add(MergePrompt.makeAnomalyPanel());
         }
         panel.add(MergePrompt.makeSpeedProfilePanel("mergedSpeedProfile", speedProfile, true, an));

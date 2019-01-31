@@ -708,7 +708,7 @@ public class SpeedUtil {
         _timeAtSpeed += elapsedTime;
 
         float length = blkOrder.getPath().getLengthMm();
-        boolean mergeOK = (length <= 0);
+        boolean mergeOK = (length > 0);
         elapsedTime = toBlock._entryTime - fromBlock._entryTime;
         if (Math.abs(elapsedTime - _timeAtSpeed) > 10) {
             mergeOK = false;
