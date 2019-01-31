@@ -51,8 +51,7 @@ public class NodeEditEventFrame extends JmriJFrame {
     private Timer waitForLearnMode;
     private NodeConfigToolPane _tp;
     private CbusNodeEvent _ndEv;
-    private JLabel NdEvNameLabel;
-    private JPanel NdEvNamePanel;
+    private JLabel ndEvNameLabel;
     
     /**
      * Create a new instance of NodeEditEventFrame.
@@ -134,21 +133,13 @@ public class NodeEditEventFrame extends JmriJFrame {
       //  individeventNd.setVisible(true);
 
         setCoreNodeEventPanel.add(individeventNd);
-        
         setCoreNodeEventPanel.add(new JSeparator(SwingConstants.HORIZONTAL));
         
-        
-        
-        NdEvNamePanel= new JPanel(); // row container
-     //   NdEvNamePanel.setLayout(new GridLayout(1, 1));
-        NdEvNamePanel.setLayout(new BoxLayout(NdEvNamePanel, BoxLayout.X_AXIS));
-        // String NdEvName = new CbusNameService().getEventNodeString(_ndEv.getNn(), (Math.max(1,_ndEv.getEn())) );
-        
-        NdEvNameLabel = new JLabel("Fetching Name",SwingConstants.CENTER);
-        NdEvNameLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        ndEvNameLabel = new JLabel("",SwingConstants.CENTER);
+        ndEvNameLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         updateSelectedEventNodeName();
         
-        setCoreNodeEventPanel.add( NdEvNameLabel);
+        setCoreNodeEventPanel.add( ndEvNameLabel);
         
         evFields.get(0).addChangeListener(new ChangeListener() {
             @Override
@@ -373,7 +364,7 @@ public class NodeEditEventFrame extends JmriJFrame {
 
     private void updateSelectedEventNodeName(){
         
-        NdEvNameLabel.setText("<html><div style='text-align: center;'>" + 
+        ndEvNameLabel.setText("<html><div style='text-align: center;'>" + 
         new CbusNameService().getEventNodeString(getNodeVal(), getEventVal() )
         + "</div></html>");
         

@@ -43,13 +43,19 @@ public class CbusCommandStationTest {
     @Test
     public void testgetSimLoopbacktc() {
         TrafficControllerScaffoldLoopback tc = new TrafficControllerScaffoldLoopback();
-        memo.setTrafficController(tc); 
-        CbusCommandStation tccs = new CbusCommandStation(memo);
-        CbusSimulator sim = jmri.InstanceManager.getDefault(jmri.jmrix.can.cbus.simulator.CbusSimulator.class);
-        Assert.assertNotNull("exists",sim);
-        sim.dispose();
+        memo.setTrafficController(tc);
+        CbusSimulator sim;
+        CbusCommandStation ta = new CbusCommandStation(memo);
+        try {
+            sim = jmri.InstanceManager.getDefault(jmri.jmrix.can.cbus.simulator.CbusSimulator.class);
+            Assert.assertTrue(true);
+        } catch (NullPointerException e) {
+            Assert.assertTrue(false);
+        }
+        
         sim = null;
-        tc=null;
+        tc = null;
+        ta = null;
     }
 
     // test originates from loconet
