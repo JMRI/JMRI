@@ -69,6 +69,7 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
      * {@link SystemConnectionMemo} registration,
      * and register this specific type.
      */
+    @Override
     public void register() {
         super.register(); // registers general type
         InstanceManager.store(this, LocoNetSystemConnectionMemo.class); // also register as specific type

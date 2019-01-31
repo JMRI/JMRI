@@ -140,8 +140,9 @@
       <h3>List Names</h3>
 
       <p>Currently the servlet supports the following list names
-      (not all of these are actually lists) used for GET operations
-      to return lists.</p>
+      used for GET operations to return lists or messages.
+      Singleton types return a message, list types return
+      an array containing all items of requested type.</p>
 
       <table class="data">
         <tr>
@@ -323,7 +324,7 @@
 
           <td>*</td>
 
-          <td>n/a</td>
+          <td>power message</td>
         </tr>
 
         <tr>
@@ -443,7 +444,7 @@
 
           <td></td>
 
-          <td>n/a</td>
+          <td>time message</td>
         </tr>
 
         <tr>

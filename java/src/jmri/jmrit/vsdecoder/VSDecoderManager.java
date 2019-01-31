@@ -707,9 +707,23 @@ public class VSDecoderManager implements PropertyChangeListener {
                         return;
                     }
                     if (blk.isReportingCurrent()) {
-                        repVal = (String) blk.getReporter().getCurrentReport();
+                        Object currentReport = blk.getReporter().getCurrentReport();
+                        if ( currentReport != null) {
+                           if(currentReport instanceof jmri.Reportable) {
+                              repVal = ((jmri.Reportable)currentReport).toReportString();
+                           } else {
+                              repVal = currentReport.toString();
+                           }
+                        }
                     } else {
-                        repVal = (String) blk.getReporter().getLastReport();
+                        Object lastReport = blk.getReporter().getLastReport();
+                        if ( lastReport != null) {
+                           if(lastReport instanceof jmri.Reportable) {
+                              repVal = ((jmri.Reportable)lastReport).toReportString();
+                           } else {
+                              repVal = lastReport.toString();
+                           }
+                        }
                     }
                 } else {
                     log.debug("Ignoring report. not an OCCUPIED event.");

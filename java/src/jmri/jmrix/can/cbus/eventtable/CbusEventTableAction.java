@@ -113,7 +113,7 @@ public class CbusEventTableAction {
             _model.setValueAt("", i, CbusEventTableDataModel.STLR_ON_COLUMN);
             _model.setValueAt("", i, CbusEventTableDataModel.STLR_OFF_COLUMN);
         }
-        jmri.SensorManager sm = InstanceManager.sensorManagerInstance();
+        jmri.SensorManager sm = InstanceManager.getDefault(jmri.SensorManager.class);
         sm.getNamedBeanSet().forEach((nb) -> {
             if (nb instanceof CbusSensor) {
                 CbusSensor cs = (CbusSensor) sm.provideSensor(nb.toString());
@@ -123,7 +123,7 @@ public class CbusEventTableAction {
                 linkHwaddtoEvent( cs.getAddrInactive(), text, nb.getDisplayName() );
             }
         });
-        jmri.TurnoutManager tm = InstanceManager.turnoutManagerInstance();
+        jmri.TurnoutManager tm = InstanceManager.getDefault(jmri.TurnoutManager.class);
         tm.getNamedBeanSet().forEach((nb) -> {
             if (nb instanceof CbusTurnout) {
                 CbusTurnout ct = (CbusTurnout) tm.provideTurnout(nb.toString());
@@ -133,7 +133,7 @@ public class CbusEventTableAction {
                 linkHwaddtoEvent( ct.getAddrClosed(), text, nb.getDisplayName() );
             }
         });
-        jmri.LightManager lm = InstanceManager.lightManagerInstance();
+        jmri.LightManager lm = InstanceManager.getDefault(jmri.LightManager.class);
         lm.getNamedBeanSet().forEach((nb) -> {
             if (nb instanceof CbusLight) {
                 CbusLight cl = (CbusLight) lm.provideLight(nb.toString());

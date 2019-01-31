@@ -170,6 +170,15 @@
       <h4>Default System Letters</h4>
       <p>Note that some of these are placeholders, and have no underlying
       implementation. (Links are to JMRI pages with more information)</p>
+      
+      <p>Also note that some older implementations used 
+      formats that don't meet the current standard, with 
+      system <u>letters</u> such as
+      "DX", "DCCPP", "DP", "MR", "MC", "PI", "TM".
+      These 
+      <a href="../../setup/MigrateSystemPrefixes.shtml">need to be migrated</a>,
+      and we have a have a 
+      <a href="../../setup/MigrateSystemPrefixes.shtml">process in place to do that</a>.
 
       <ul>
         <li>A CTI <a href=

@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.Date;
 import jmri.IdTag;
 import jmri.Reporter;
+import jmri.Reportable;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -38,10 +39,16 @@ public class DefaultIdTagTest {
     @Test
     public void testIdTagToString() {
         IdTag r = new DefaultIdTag("ID0413276BC1");
-        Assert.assertEquals("IdTag toString is 0413276BC1", "0413276BC1", r.toString());
+        Assert.assertEquals("IdTag toString is ID0413276BC1", "ID0413276BC1", r.toString());
+    }
+
+    @Test
+    public void testIdTagToReportString() {
+        DefaultIdTag r = new DefaultIdTag("ID0413276BC1");
+        Assert.assertEquals("IdTag toReportString is 0413276BC1", "0413276BC1", r.toReportString());
 
         r.setUserName("Test Tag");
-        Assert.assertEquals("IdTag toString is 'Test Tag'", "Test Tag", r.toString());
+        Assert.assertEquals("IdTag toReportString is 'Test Tag'", "Test Tag", r.toReportString());
     }
 
     @Test

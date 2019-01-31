@@ -287,6 +287,8 @@ public class CbusSlotMonitorPane extends jmri.jmrix.can.swing.CanPanel {
 		public CbusSlotButtonMouseListener(JTable table) {
 			this.table = table;
 		}
+		
+		@Override
 		public void mouseClicked(MouseEvent e) {
 			int column = table.getColumnModel().getColumnIndexAtX(e.getX());
 			int row    = e.getY()/table.getRowHeight(); 
