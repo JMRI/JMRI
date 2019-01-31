@@ -41,19 +41,11 @@ public class CbusCommandStationTest {
     }
     
     @Test
-    public void testgetSimNormaltc() {      
-        CbusSimulator sim = t.getNetworkSim();
-        Assert.assertNotNull("exists",sim);
-        sim.dispose();
-        sim = null;
-    }
-
-    @Test
     public void testgetSimLoopbacktc() {
         TrafficControllerScaffoldLoopback tc = new TrafficControllerScaffoldLoopback();
         memo.setTrafficController(tc); 
         CbusCommandStation tccs = new CbusCommandStation(memo);
-        CbusSimulator sim = tccs.getNetworkSim();
+        CbusSimulator sim = jmri.InstanceManager.getDefault(jmri.jmrix.can.cbus.simulator.CbusSimulator.class);
         Assert.assertNotNull("exists",sim);
         sim.dispose();
         sim = null;
