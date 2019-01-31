@@ -478,6 +478,34 @@ public class StringUtil {
     }
 
     /**
+     * Return the first int value within a string
+     * eg X X123XX456X will return 123
+     *
+     * @param str contents to process
+     * @return first value in int form , -1 if not found
+     */
+    @CheckReturnValue
+    static public int getFirstIntFromString(@Nonnull String str){
+        StringBuilder sb = new StringBuilder();
+        for (int i =0; i<str.length(); i ++) {
+            char c = str.charAt(i);
+            if(c != ' '){
+                if (Character.isDigit(c)) {
+                    sb.append(c);
+                } else {
+                    if (!sb.toString().equals("")) {
+                        break;
+                    }
+                }
+            }
+        }
+        if (!sb.toString().equals("")) {
+            return (Integer.parseInt(sb.toString()));  
+        }
+        return -1;
+    }
+
+    /**
      * Return the last int value within a string
      * eg XX123XX456X will return 456
      *
