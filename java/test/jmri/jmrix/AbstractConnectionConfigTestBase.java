@@ -63,7 +63,7 @@ abstract public class AbstractConnectionConfigTestBase {
     	cc.setDisabled(true);
         Assert.assertTrue("disabled",cc.getDisabled());
 	cc.setDisabled(false);
-        Assert.assertTrue("disabled",cc.getDisabled());
+        Assert.assertFalse("not disabled",cc.getDisabled());
     }
 
     /**
