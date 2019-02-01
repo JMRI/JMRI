@@ -369,40 +369,9 @@ public class SpeedProfilePanel extends JPanel {
             SpeedTableModel model = (SpeedTableModel)table.getModel();
             return new EntrySelection(model.getRowEntry(row));
         }
-
-        @Override
-        public boolean canImport(TransferHandler.TransferSupport support) {
-            DataFlavor[] flavors =  support.getDataFlavors();
-            if (flavors == null) {
-                return false;
-            }
-            for (int k = 0; k < flavors.length; k++) {
-                if (_entryFlavor.equals(flavors[k])) {
-                    return true;
-                }
-            }
-            return false;
-        }
     }
 
-    class ImportEntryTranferHandler extends TransferHandler {
-
-        @Override
-        public int getSourceActions(JComponent c) {
-            return COPY;
-        }
-
-        @Override
-        public Transferable createTransferable(JComponent c) {
-            JTable table = (JTable) c;
-            int row = table.getSelectedRow();
-            if (row < 0) {
-                return null;
-            }
-            row = table.convertRowIndexToModel(row);
-            SpeedTableModel model = (SpeedTableModel)table.getModel();
-            return new EntrySelection(model.getRowEntry(row));
-        }
+    class ImportEntryTranferHandler extends ExportEntryTranferHandler {
 
         @Override
         public boolean canImport(TransferHandler.TransferSupport support) {
