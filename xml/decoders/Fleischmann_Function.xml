@@ -13,13 +13,13 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <version author="Peter Mansvelder pman@mac.com" version="0.1" lastUpdated="20100825"/>
+	<version author="Peter Mansvelder pman@mac.com" version="0.1" lastUpdated="20100825"/>
 	<version author="Wouter Kok" version="1.00" lastUpdated="20190131"/>
-  <!-- Version 0.10 - Initial release 25 August 2010 (is unusable) -->
+	<!-- Version 0.10 - Initial release 25 August 2010 (is unusable) -->
 	<!-- Version 1.00 - Initial version total rewritten              -->
-  <decoder>
-    <family name="Fleischmann function decoders" mfg="Fleischmann">
-      <model model="686401" lowVersionID="10" maxInputVolts="20V" maxTotalCurrent="0.80 A" formFactor="" connector="Wires" numOuts="4" numFns="9" productID="686401">
+	<decoder>
+		<family name="Fleischmann function decoders" mfg="Fleischmann">
+			<model model="686401" lowVersionID="10" maxInputVolts="20V" maxTotalCurrent="0.80 A" formFactor="" connector="Wires" numOuts="4" numFns="9" productID="686401">
 			<output name="1" label="Output A">
 					<label xml:lang="de">Ausgang A</label>
 					<label xml:lang="nl">Uitgang A</label>
@@ -37,7 +37,7 @@
 					<label xml:lang="nl">Uitgang D</label>
 				</output>
 				<size length="28" width="12.2" height="2.6" units="mm"/>
-      </model>
+			</model>
 			<model model="686403" lowVersionID="11" maxInputVolts="20V" maxTotalCurrent="0.80 A" formFactor="" connector="Wires" numOuts="4" numFns="4" productID="686403">
 			<output name="1" label="Output A">
 					<label xml:lang="de">Ausgang A</label>
@@ -56,62 +56,71 @@
 					<label xml:lang="nl">Uitgang D</label>
 				</output>
 				<size length="24" width="10" height="2.3" units="mm"/>
-      </model>
-    </family>
-    <programming direct="yes" paged="yes" register="yes" ops="yes"/>
-    <variables>
-      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+			</model>
+		</family>
+		<programming direct="yes" paged="yes" register="yes" ops="yes"/>
+		<variables>
+			<xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
 			<variable CV="3" default="2" item="Acceleration">
-        <decVal/>
-        <label>Acceleration value on departure</label>
-        <label xml:lang="de">Verzögerungswert beim Anfahren</label>
+				<decVal/>
+				<label>Acceleration value on departure</label>
+				<label xml:lang="de">Verzögerungswert beim Anfahren</label>
 				<label xml:lang="nl">Vertragingswaarde bij wegrijden</label>
-      </variable>
+			</variable>
 			<variable CV="4" default="2" item="Deceleration">
-        <decVal/>
-        <label>Deceleration value when breaking</label>
-        <label xml:lang="de">Verzögerungswert beim Bremsen</label>
+				<decVal/>
+				<label>Deceleration value when breaking</label>
+				<label xml:lang="de">Verzögerungswert beim Bremsen</label>
 				<label xml:lang="nl">De vertragingswaarde bij het remmen.</label>
-      </variable>
-      <variable CV="7" readOnly="yes" default="10" item="Decoder Version" tooltip="The decoder version number (read only)">
-        <decVal/>
-        <label>Software Version Number</label>
-        <label xml:lang="it">Versione Decoder: </label>
-        <label xml:lang="fr">Version décodeur: </label>
-        <label xml:lang="de">Decoder Version: </label>
+			</variable>
+			<variable CV="7" readOnly="yes" default="10" item="Decoder Version" tooltip="The decoder version number (read only)">
+				<decVal/>
+				<label>Software Version Number</label>
+				<label xml:lang="it">Versione Decoder: </label>
+				<label xml:lang="fr">Version décodeur: </label>
+				<label xml:lang="de">Decoder Version: </label>
 				<label xml:lang="nl">Decoder versie: </label>
 				<tooltip>&lt;html&gt;Decoder Version&lt;br&gt;</tooltip>
 				<tooltip xml:lang="de">&lt;html&gt;Decoder Version&lt;br&gt;</tooltip>
 				<tooltip xml:lang="nl">&lt;html&gt;Decoder versie&lt;br&gt;</tooltip>
-      </variable>
-      <variable CV="8" readOnly="yes" default="155" item="Manufacturer" tooltip="The manufacturer's ID number (read only)">
-        <decVal/>
-        <label>Manufacturer ID</label>
-        <label xml:lang="it">ID Costruttore: </label>
-        <label xml:lang="fr">ID constructeur: </label>
-        <label xml:lang="de">Hersteller ID: </label>
-      </variable>
-			<variable CV="11" default="0" item="Packet Timeout">
-        <decVal/>
-        <label>Time after which a running loco without further running instructions is stopped</label>
-        <label xml:lang="de">Zeit, nach der eine fahrende Lok ohne weitere Geschwindigkeitsbefehle gestoppt wird</label>
-				<label xml:lang="nl">Tijd, na een rijdende Loc zonder snelheid opdrachten gestopt wordt</label>
-      </variable>
-      <variable CV="12" mask="XXXXXXXV" default="1" item="Analog mode" tooltip="Analog Mode">
-        <enumVal>
-          <enumChoice choice="Digital Operation Only" value = "0">
-            <choice>Digital Operation Only</choice>
-						<choice xml:lang="de">de</choice>
-						<choice xml:lang="nl">nl</choice>
-          </enumChoice>
-          <enumChoice choice="Digital + Analog Operation" value = "1">
-            <choice>Digital + Analog Operation</choice>
-						<choice xml:lang="de">de</choice>
-						<choice xml:lang="nl">nl</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Analog Mode</label>
-      </variable>
+			</variable>
+			<variable CV="8" item="Manufacturer" default="155" readOnly="yes">
+				<decVal/>
+				<label>Manufacturer ID:</label>
+				<label xml:lang="it">ID Costruttore: </label>
+				<label xml:lang="fr">ID constructeur: </label>
+				<label xml:lang="de">Hersteller ID: </label>
+				<label xml:lang="nl">Fabrikanten ID: </label>
+				<tooltip>&lt;html&gt;ID 155 = Fleischmann&lt;br&gt; https://https://www.fleischmann.de/en/home/index.html&lt;br&gt;</tooltip>
+				<tooltip xml:lang="de">&lt;html&gt;ID 155 = Fleischmann&lt;br&gt;https://www.fleischmann.de/de/home/index.html&lt;br&gt;</tooltip>
+				<tooltip xml:lang="nl">&lt;html&gt;ID 155 = Fleischmann&lt;br&gt;www.fleischmann.de/de/home/index.html&lt;br&gt;</tooltip>
+			</variable>
+			<variable CV="11" default="0" item="Packet timeout">
+				<decVal/>
+				<label>Packet timeout (0-255)</label>
+				<label xml:lang="de">Paket unterbrechung (0-255)</label>
+				<label xml:lang="nl">Pakket onderbreking (0-255)</label>
+				<tooltip>&lt;html&gt;Time after which a running loco without further running instructions is stopped.&lt;br&gt;Time = n *0,2s.&lt;br&gt;If 0, no timeout.&lt;br&gt;</tooltip>
+				<tooltip xml:lang="de">&lt;html&gt;Zeit, nach der eine fahrende Lok ohne weitere Geschwindigkeitsbefehle gestoppt wird.&lt;br&gt;Zeit = n *0,2s.&lt;br&gt;Bei 0 keine Zeitüberschreitung.&lt;br&gt;</tooltip>
+				<tooltip xml:lang="nl">&lt;html&gt;Tijd, na een rijdende Loc zonder snelheid opdrachten gestopt wordt.&lt;br&gt;Tijd = n *0,2s.&lt;br&gt;bij 0, geen Tijdoverschrijding.&lt;br&gt;</tooltip>
+			</variable>
+			<variable CV="12" mask="XXXXXXXV" default="1" item="Analog mode" tooltip="Analog Mode">
+				<enumVal>
+					<enumChoice choice="Digital Operation Only" value = "0">
+						<choice>Digital Operation Only</choice>
+						<choice xml:lang="de">Gleichstrombetrieb aus.</choice>
+						<choice xml:lang="nl">Gelijkstroombedrijf uit</choice>
+					</enumChoice>
+					<enumChoice choice="Digital + Analog Operation" value = "1">
+						<choice>Digital and Analog Operation</choice>
+						<choice xml:lang="de">Digital und Gleichstrombetrieb.</choice>
+						<choice xml:lang="nl">Digitale en Gelijkstroombedrijf</choice>
+					</enumChoice>
+				</enumVal>
+				<label>protocol  </label>
+				<label xml:lang="de">Protokoll  </label>
+				<label xml:lang="nl">protocol  </label>
+			</variable>
 			<!-- CV=29 -->
 			<xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
 			<xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
@@ -127,93 +136,93 @@
 			<xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
 			<variable CV="30" item="Reset error">
 				<enumVal>
-          <enumChoice choice="No error" value = "0">
-            <choice>Delete all errors</choice>
-						<choice xml:lang="de">Lösch alle Fehler </choice>
-						<choice xml:lang="nl">Verwijder alle fouten</choice>
-          </enumChoice>
 					<enumChoice choice="No error" value = "0">
-            <choice>Delete all errors</choice>
+						<choice>Delete all errors</choice>
 						<choice xml:lang="de">Lösch alle Fehler </choice>
 						<choice xml:lang="nl">Verwijder alle fouten</choice>
-          </enumChoice>
+					</enumChoice>
+					<enumChoice choice="No error" value = "0">
+						<choice>Delete all errors</choice>
+						<choice xml:lang="de">Lösch alle Fehler </choice>
+						<choice xml:lang="nl">Verwijder alle fouten</choice>
+						</enumChoice>
 				</enumVal>
 			</variable>
 			<variable CV="30" mask="XXXXXXXV" item="Output A error">
 				<enumVal>
-          <enumChoice choice="No error" value = "0">
-            <choice>No error detected</choice>
+					<enumChoice choice="No error" value = "0">
+						<choice>No error detected</choice>
 						<choice xml:lang="de">Kein Fehler erkannt</choice>
 						<choice xml:lang="nl">Geen fout gedetecteerd</choice>
-          </enumChoice>
-          <enumChoice choice="short circuit" value = "1">
-            <choice>Short circuit detected</choice>
+					</enumChoice>
+					<enumChoice choice="short circuit" value = "1">
+						<choice>Short circuit detected</choice>
 						<choice xml:lang="de">Kurzschluss festgestellt</choice>
 						<choice xml:lang="nl">Kortsluiting gedetecteerd</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Error on output A</label>
-      </variable>
+					</enumChoice>
+				</enumVal>
+				<label>Error on output A</label>
+			</variable>
 			<variable CV="30" mask="XXXXXXVX" item="Output B error">
 				<enumVal>
-          <enumChoice choice="No error" value = "0">
-            <choice>No error detected</choice>
+					<enumChoice choice="No error" value = "0">
+						<choice>No error detected</choice>
 						<choice xml:lang="de">Kein Fehler erkannt</choice>
 						<choice xml:lang="nl">Geen fout gedetecteerd</choice>
-          </enumChoice>
-          <enumChoice choice="short circuit" value = "1">
-            <choice>Short circuit detected</choice>
+					</enumChoice>
+					<enumChoice choice="short circuit" value = "1">
+						<choice>Short circuit detected</choice>
 						<choice xml:lang="de">Kurzschluss festgestellt</choice>
 						<choice xml:lang="nl">Kortsluiting gedetecteerd</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Error on output B</label>
-      </variable>
+					</enumChoice>
+				</enumVal>
+				<label>Error on output B</label>
+			</variable>
 			<variable CV="30" mask="XXXXXVXX" item="Output C error">
 				<enumVal>
-          <enumChoice choice="No error" value = "0">
-            <choice>No error detected</choice>
+					<enumChoice choice="No error" value = "0">
+						<choice>No error detected</choice>
 						<choice xml:lang="de">Kein Fehler erkannt</choice>
 						<choice xml:lang="nl">Geen fout gedetecteerd</choice>
-          </enumChoice>
-          <enumChoice choice="short circuit" value = "1">
-            <choice>Short circuit detected</choice>
+					</enumChoice>
+					<enumChoice choice="short circuit" value = "1">
+						<choice>Short circuit detected</choice>
 						<choice xml:lang="de">Kurzschluss festgestellt</choice>
 						<choice xml:lang="nl">Kortsluiting gedetecteerd</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Error on output C</label>
-      </variable>
+					</enumChoice>
+				</enumVal>
+				<label>Error on output C</label>
+			</variable>
 			<variable CV="30" mask="XXXXVXXX" item="Output D error">
 				<enumVal>
-          <enumChoice choice="No error" value = "0">
-            <choice>No error detected</choice>
+					<enumChoice choice="No error" value = "0">
+						<choice>No error detected</choice>
 						<choice xml:lang="de">Kein Fehler erkannt</choice>
 						<choice xml:lang="nl">Geen fout gedetecteerd</choice>
-          </enumChoice>
-          <enumChoice choice="short circuit" value = "1">
-            <choice>Short circuit detected</choice>
+					</enumChoice>
+					<enumChoice choice="short circuit" value = "1">
+						<choice>Short circuit detected</choice>
 						<choice xml:lang="de">Kurzschluss festgestellt</choice>
 						<choice xml:lang="nl">Kortsluiting gedetecteerd</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Error on output D</label>
-      </variable>
+					</enumChoice>
+				</enumVal>
+				<label>Error on output D</label>
+			</variable>
 			<variable CV="30" mask="VXXXXXXX" item="Modul error">
 				<enumVal>
-          <enumChoice choice="No error" value = "0">
-            <choice>No error detected</choice>
+					<enumChoice choice="No error" value = "0">
+						<choice>No error detected</choice>
 						<choice xml:lang="de">Kein Fehler erkannt</choice>
 						<choice xml:lang="nl">Geen fout gedetecteerd</choice>
-          </enumChoice>
-          <enumChoice choice="Over-temperature" value = "1">
-            <choice>Over-temperature detected</choice>
+					</enumChoice>
+					<enumChoice choice="Over-temperature" value = "1">
+						<choice>Over-temperature detected</choice>
 						<choice xml:lang="de">Übertemperatur festgestellt</choice>
 						<choice xml:lang="nl">Overtemperature gedetecteerd</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Modul error</label>
-      </variable>
+					</enumChoice>
+				</enumVal>
+				<label>Modul error</label>
+			</variable>
 			<variable CV="33" mask="XXXXXXXV" minOut="1" item="FL(f) controls output 1" default="1">
 				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 				<label>FL(f) controls output A</label>
@@ -381,7 +390,7 @@
 						<choice xml:lang="nl">Functie mapping (CV33... CV46) wordt teruggesteld</choice>
 					</enumChoice>
 				</enumVal>
-      </variable>
+			</variable>
 			<variable CV="120" mask="XXXXXXXV" default="0" item="output A">
 				<enumVal>
 					<enumChoice choice="Light output" value = "0">
@@ -396,14 +405,14 @@
 					</enumChoice>
 				</enumVal>
 				<label>output A</label>
-        <label xml:lang="de">Ausgang A</label>
-        <label xml:lang="nl">Uitgang A</label>
+				<label xml:lang="de">Ausgang A</label>
+				<label xml:lang="nl">Uitgang A</label>
 			</variable>
 			<variable CV="121" mask="XXXXVVVV" default="0" item="Dim value A">
 				<decVal min="0" max="15"/>
 				<label>output A Brightness, Dim value:</label>
-        <label xml:lang="de">Ausgang A Helligkeit, Dim Wert:</label>
-        <label xml:lang="nl">Uitgang A Helderheid, Dim waarde:</label>
+				<label xml:lang="de">Ausgang A Helligkeit, Dim Wert:</label>
+				<label xml:lang="nl">Uitgang A Helderheid, Dim waarde:</label>
 			</variable>
 			<variable CV="121" mask="XXXVXXXX" default="0" item="A working at">
 				<enumVal>
@@ -419,14 +428,14 @@
 					</enumChoice>
 				</enumVal>
 				<label>Output A working at</label>
-        <label xml:lang="de">Ausgang A werkt bei</label>
-        <label xml:lang="nl">Uitgang A werkt bij</label>
+				<label xml:lang="de">Ausgang A werkt bei</label>
+				<label xml:lang="nl">Uitgang A werkt bij</label>
 			</variable>
 			<variable CV="121" mask="XXVXXXXX" default="1" item="driving direction A">
 				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 				<label>Output A depends on the driving direction</label>
-        <label xml:lang="de">Ausgang A ist von der Fahrtrichtung abhängig</label>
-        <label xml:lang="nl">Uitgang A is van de rijrichting afhankelijk</label>
+				<label xml:lang="de">Ausgang A ist von der Fahrtrichtung abhängig</label>
+				<label xml:lang="nl">Uitgang A is van de rijrichting afhankelijk</label>
 			</variable>
 			<variable CV="121" mask="XVXXXXXX" default="0" item="DCC/Analogue A">
 				<enumVal>
@@ -440,8 +449,8 @@
 					</enumChoice>
 				</enumVal>
 				<label>Output A valid for</label>
-        <label xml:lang="de">Ausgang A gilt für</label>
-        <label xml:lang="nl">Uitgang A geld voor</label>
+				<label xml:lang="de">Ausgang A gilt für</label>
+				<label xml:lang="nl">Uitgang A geld voor</label>
 			</variable>
 			<variable CV="121" mask="VXXXXXXX" default="0" item="Driving/standstill A">
 				<enumVal>
@@ -457,8 +466,8 @@
 					</enumChoice>
 				</enumVal>
 				<label>Output A active when:</label>
-        <label xml:lang="de">Ausgang A aktiv bei:</label>
-        <label xml:lang="nl">Uitgang A werkt bij:</label>
+				<label xml:lang="de">Ausgang A aktiv bei:</label>
+				<label xml:lang="nl">Uitgang A werkt bij:</label>
 			</variable>
 			<variable CV="122" default="0" item="flashing on A">
 				<decVal min="0" max="255"/>
@@ -492,14 +501,14 @@
 					</enumChoice>
 				</enumVal>
 				<label>output B</label>
-        <label xml:lang="de">Ausgang B</label>
-        <label xml:lang="nl">Uitgang B</label>
+				<label xml:lang="de">Ausgang B</label>
+				<label xml:lang="nl">Uitgang B</label>
 			</variable>
 			<variable CV="131" mask="XXXXVVVV" default="1" item="Dim value B">
 				<decVal min="0" max="15"/>
 				<label>output B Brightness, Dim value:</label>
-        <label xml:lang="de">Ausgang B Helligkeit, Dim Wert:</label>
-        <label xml:lang="nl">Uitgang B Helderheid, Dim waarde:</label>
+				<label xml:lang="de">Ausgang B Helligkeit, Dim Wert:</label>
+				<label xml:lang="nl">Uitgang B Helderheid, Dim waarde:</label>
 			</variable>
 			<variable CV="131" mask="XXXVXXXX" default="1" item="B working at">
 				<enumVal>
@@ -515,14 +524,14 @@
 					</enumChoice>
 				</enumVal>
 				<label>Output B working at</label>
-        <label xml:lang="de">Ausgang B werkt bei</label>
-        <label xml:lang="nl">Uitgang B werkt bij</label>
+				<label xml:lang="de">Ausgang B werkt bei</label>
+				<label xml:lang="nl">Uitgang B werkt bij</label>
 			</variable>
 			<variable CV="131" mask="XXVXXXXX" default="1" item="driving direction B">
 				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 				<label>Output B depends on the driving direction</label>
-        <label xml:lang="de">Ausgang B ist von der Fahrtrichtung abhängig</label>
-        <label xml:lang="nl">Uitgang B is van de rijrichting afhankelijk</label>
+				<label xml:lang="de">Ausgang B ist von der Fahrtrichtung abhängig</label>
+				<label xml:lang="nl">Uitgang B is van de rijrichting afhankelijk</label>
 			</variable>
 			<variable CV="131" mask="XVXXXXXX" default="0" item="DCC/Analogue B">
 				<enumVal>
@@ -536,8 +545,8 @@
 					</enumChoice>
 				</enumVal>
 				<label>Output B valid for</label>
-        <label xml:lang="de">Ausgang B gilt für</label>
-        <label xml:lang="nl">Uitgang B geld voor</label>
+				<label xml:lang="de">Ausgang B gilt für</label>
+				<label xml:lang="nl">Uitgang B geld voor</label>
 			</variable>
 			<variable CV="131" mask="VXXXXXXX" default="0" item="Driving/standstill B">
 				<enumVal>
@@ -553,8 +562,8 @@
 					</enumChoice>
 				</enumVal>
 				<label>Output B active when:</label>
-        <label xml:lang="de">Ausgang B aktiv bei:</label>
-        <label xml:lang="nl">Uitgang B werkt bij:</label>
+				<label xml:lang="de">Ausgang B aktiv bei:</label>
+				<label xml:lang="nl">Uitgang B werkt bij:</label>
 			</variable>
 			<variable CV="132" default="0" item="flashing on B">
 				<decVal min="0" max="255"/>
@@ -588,14 +597,14 @@
 					</enumChoice>
 				</enumVal>
 				<label>output C</label>
-        <label xml:lang="de">Ausgang C</label>
-        <label xml:lang="nl">Uitgang C</label>
+				<label xml:lang="de">Ausgang C</label>
+				<label xml:lang="nl">Uitgang C</label>
 			</variable>
 			<variable CV="141" mask="XXXXVVVV" default="8" item="Dim value C">
 				<decVal min="0" max="15"/>
 				<label>output C Brightness, Dim value:</label>
-        <label xml:lang="de">Ausgang C Helligkeit, Dim Wert:</label>
-        <label xml:lang="nl">Uitgang C Helderheid, Dim waarde:</label>
+				<label xml:lang="de">Ausgang C Helligkeit, Dim Wert:</label>
+				<label xml:lang="nl">Uitgang C Helderheid, Dim waarde:</label>
 			</variable>
 			<variable CV="141" mask="XXXVXXXX" default="0" item="C working at">
 				<enumVal>
@@ -611,14 +620,14 @@
 					</enumChoice>
 				</enumVal>
 				<label>Output C working at</label>
-        <label xml:lang="de">Ausgang C werkt bei</label>
-        <label xml:lang="nl">Uitgang C werkt bij</label>
+				<label xml:lang="de">Ausgang C werkt bei</label>
+				<label xml:lang="nl">Uitgang C werkt bij</label>
 			</variable>
 			<variable CV="141" mask="XXVXXXXX" default="0" item="driving direction C">
 				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 				<label>Output C depends on the driving direction</label>
-        <label xml:lang="de">Ausgang C ist von der Fahrtrichtung abhängig</label>
-        <label xml:lang="nl">Uitgang C is van de rijrichting afhankelijk</label>
+				<label xml:lang="de">Ausgang C ist von der Fahrtrichtung abhängig</label>
+				<label xml:lang="nl">Uitgang C is van de rijrichting afhankelijk</label>
 			</variable>
 			<variable CV="141" mask="XVXXXXXX" default="0" item="DCC/Analogue C">
 				<enumVal>
@@ -632,8 +641,8 @@
 					</enumChoice>
 				</enumVal>
 				<label>Output C valid for</label>
-        <label xml:lang="de">Ausgang C gilt für</label>
-        <label xml:lang="nl">Uitgang C geld voor</label>
+				<label xml:lang="de">Ausgang C gilt für</label>
+				<label xml:lang="nl">Uitgang C geld voor</label>
 			</variable>
 			<variable CV="141" mask="VXXXXXXX" default="0" item="Driving/standstill C">
 				<enumVal>
@@ -649,8 +658,8 @@
 					</enumChoice>
 				</enumVal>
 				<label>Output C active when:</label>
-        <label xml:lang="de">Ausgang C aktiv bei:</label>
-        <label xml:lang="nl">Uitgang C werkt bij:</label>
+				<label xml:lang="de">Ausgang C aktiv bei:</label>
+				<label xml:lang="nl">Uitgang C werkt bij:</label>
 			</variable>
 			<variable CV="142" default="0" item="flashing on C">
 				<decVal min="0" max="255"/>
@@ -684,14 +693,14 @@
 					</enumChoice>
 				</enumVal>
 				<label>output D</label>
-        <label xml:lang="de">Ausgang D</label>
-        <label xml:lang="nl">Uitgang D</label>
+				<label xml:lang="de">Ausgang D</label>
+				<label xml:lang="nl">Uitgang D</label>
 			</variable>
 			<variable CV="151" mask="XXXXVVVV" default="8" item="Dim value D">
 				<decVal min="0" max="15"/>
 				<label>output D Brightness, Dim value:</label>
-        <label xml:lang="de">Ausgang D Helligkeit, Dim Wert:</label>
-        <label xml:lang="nl">Uitgang D Helderheid, Dim waarde:</label>
+				<label xml:lang="de">Ausgang D Helligkeit, Dim Wert:</label>
+				<label xml:lang="nl">Uitgang D Helderheid, Dim waarde:</label>
 			</variable>
 			<variable CV="151" mask="XXXVXXXX" default="0" item="D working at">
 				<enumVal>
@@ -707,14 +716,14 @@
 					</enumChoice>
 				</enumVal>
 				<label>Output D working at</label>
-        <label xml:lang="de">Ausgang D werkt bei</label>
-        <label xml:lang="nl">Uitgang D werkt bij</label>
+				<label xml:lang="de">Ausgang D werkt bei</label>
+				<label xml:lang="nl">Uitgang D werkt bij</label>
 			</variable>
 			<variable CV="151" mask="XXVXXXXX" default="0" item="driving direction D">
 				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 				<label>Output D depends on the driving direction</label>
-        <label xml:lang="de">Ausgang D ist von der Fahrtrichtung abhängig</label>
-        <label xml:lang="nl">Uitgang D is van de rijrichting afhankelijk</label>
+				<label xml:lang="de">Ausgang D ist von der Fahrtrichtung abhängig</label>
+				<label xml:lang="nl">Uitgang D is van de rijrichting afhankelijk</label>
 			</variable>
 			<variable CV="151" mask="XVXXXXXX" default="0" item="DCC/Analogue D">
 				<enumVal>
@@ -728,8 +737,8 @@
 					</enumChoice>
 				</enumVal>
 				<label>Output D valid for</label>
-        <label xml:lang="de">Ausgang D gilt für:</label>
-        <label xml:lang="nl">Uitgang D geld voor:</label>
+				<label xml:lang="de">Ausgang D gilt für:</label>
+				<label xml:lang="nl">Uitgang D geld voor:</label>
 			</variable>
 			<variable CV="151" mask="VXXXXXXX" default="0" item="Driving/standstill D">
 				<enumVal>
@@ -745,8 +754,8 @@
 					</enumChoice>
 				</enumVal>
 				<label>Output D active when:</label>
-        <label xml:lang="de">Ausgang D aktiv bei:</label>
-        <label xml:lang="nl">Uitgang D werkt bij:</label>
+				<label xml:lang="de">Ausgang D aktiv bei:</label>
+				<label xml:lang="nl">Uitgang D werkt bij:</label>
 			</variable>
 			<variable CV="152" default="0" item="flashing on D">
 				<decVal min="0" max="255"/>
@@ -1408,20 +1417,18 @@
 	<pane nameFmt="label"> <!-- Fleischmann -->
 		<name>Fleischmann</name>
 		<column>
-			<display item="RESET" format="radiobuttons"/>
-			<label>
-				<text>  </text>
-			</label>
-			<label>
-				<text>  </text>
-			</label>
-			<label>
-				<text>  </text>
-			</label>
+			<display item="Analog mode" format="radiobuttons"/>
 			<label>
 				<text>  </text>
 			</label>
 			<display item="Enable RailCom" format="radiobuttons"/>
+			<label>
+				<text>  </text>
+			</label>
+			<row>
+				<display item="Packet timeout"/>
+				<display item="Packet timeout" format="hslider" label=""/>
+			</row>
 		</column>
 		<column>
 			<display item="Output A error" format="onradiobutton"/>
@@ -1436,6 +1443,17 @@
 				<text>  </text>
 			</label>
 			<display item="Reset error" format="onradiobutton"/>
+			<label>
+				<text>  </text>
+			</label>
+			<label>
+				<text>  </text>
+			</label>
+			<label>
+				<text>  </text>
+			</label>
+			<display item="RESET" format="radiobuttons"/>
 		</column>
+		
 	</pane>
 </decoder-config>
