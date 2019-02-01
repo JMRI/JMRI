@@ -12,7 +12,7 @@ public class XNetStreamConnectionConfigTest extends jmri.jmrix.AbstractConnectio
     @Before
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
-        cc = new XNetStreamConnectionConfig();
+        cc = new XNetStreamConnectionConfig(new XNetStreamPortController());
     }
 
     @After
