@@ -123,6 +123,7 @@ public class CbusEvent {
         jmri.util.ThreadingUtil.runOnLayout( () -> { _tc.sendCanMessage(m, null); } );
     }
     
+    @Override
     public String toString() {
         StringBuilder addevbuf = new StringBuilder(50);
         if ( _nn > 0 ) {

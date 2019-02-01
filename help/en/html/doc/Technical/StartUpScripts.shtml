@@ -391,6 +391,15 @@
         the recommended way to override existing Java classes in
         JMRI. (since JMRI 4.5.7)</dd>
 
+        <dt><code>/noalt</code></dt>
+
+        <dd>If this option is set on the command line, the launcher
+        will no longer use the alternate launching behavior of using
+        a renamed java.exe from a temporary location and revert to the
+        standard java.exe. This means that the launched JMRI application
+        is no longer explicitly mentioned in Windows Task Manager. This
+        option is the default behavior with JDK 11. (since JMRI 4.15.3)</dd>
+
         <dt>Class Parameter (Required)</dt>
 
         <dd>The first parameter of LaunchJMRI.exe, after any of the

@@ -435,7 +435,6 @@
 
     <h3>Timetable</h3>
         <a id="Timetable" name="Timetable"/>
-        <span class="since">since 4.13.4</span>
         <ul>
             <li>New menu item: <strong>Export CSV File</strong> &mdash; Create a
             CSV file that can be imported into a spreadsheet program.  This can
@@ -478,5 +477,10 @@
             <li>All the PackageList test files were updated to JUnit4 form, without a separate main()</li>
             <li>The Windows "installer" and "launcher" have been updated to support 
                 Oracle's Java JDK 11 installation mechanisms on Windows platforms.</li>
+            <li>Starting with the release, 
+                <a href="http://jmri.org/help/en/html/setup/MigrateSystemPrefixes.shtml">legacy system prefixes</a>
+                will cause JMRI to issues a warning at startup.  This warning can't be suppressed
+                without migrating the prefix in the connection configuration (and any associated
+                panel files and scripts).
         </ul>
 
