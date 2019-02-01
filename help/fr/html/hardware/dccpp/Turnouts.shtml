@@ -1,0 +1,245 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<!-- UpDated by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-02-1 -->
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <!-- Copyright ($Author$) 2016 -->
+
+  <title>JMRI: DCC++ Turnouts</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <h1>Aiguillages et Sorties en DCC++</h1>
+      <h2 name="types" id="types">Types de Contr&#244;le Aiguillage en DCC++ </h2>
+      <p>Il y a trois fa&#231;ons de contr&#244;ler un Aiguillage via DCC++:</p>
+      <ul>
+          <li>Commande Directe Accessoire DCC (commande "a" )</li>
+          <li>Contr&#244;le index&#233; d'un Accessoire DCC via le tableau d'Aiguillage de la Centrale de Commande (commande "T")</li>
+          <li>Contr&#244;le index&#233; d'une E/S Arduino via le Tableau Sortie de la Centrale de Commande (commande "Z")</li>
+      </ul>
+      <p>Pour chaque m&#233;thode de contr&#244;le, il y a deux choses que vous devez configurer:</p>
+      <ul>
+          <li>Le Tableau Aiguillage de JMRI incluant le Nom Syst&#232;me assign&#233; &#224; l'aiguillage</li>
+          <li>Le tableau d'Aiguillage ou de Sortie de la Centrale de Commande</li>
+      </ul>
+      
+      <h2>Commande Directe Accessoire DCC</h2>
+      
+      <p>Avec la Commande Directe, vous pouvez contr&#244;ler directement un D&#233;codeur Fixe &#224; travers DCC++.  il n'y aura pas de r&#233;trosignalisation 
+      de la position actuelle de l'aiguilalge</p>
+      <p>Pour contr&#244;ler un D&#233;codeur Fixe ou autre accessoire contr&#244;l&#233; par DCC (utilisant la commande "a" de la Centrale de Commande), suivre ces &#233;tapes.</p>
+      
+      <h3>1: Choisir un Nom Syst&#232;me et un Nom Utilisateur </h3>
+      
+      <p>L'Adresse Mat&#233;rielle pour un accessoire Direct DCC doit &#234;tre l'adresse DCC de l'accessoire.
+          Par exemple, si l'adresse du commutateur de votre D&#233;codeur Fixe est r&#233;gl&#233;e sur 52, l'adresse Mat&#233;rielle pour cet aiguillage devrait &#234;tre 52.</p>
+      <p>Le Nom Utilisateur peut &#234;tre ce que vous voulez.</p>
+      
+      <h3>2: Ajouter l'Aiguillage  dans la Tableau d'Aiguillage JMRI</h3>
+      
+      <p>Dans la Tableau d'Aiguillage JMRI...</p>
+      <ol>
+          <li>Cliquez le bouton "Add"</li>
+          <li>Soyez s&#251;r que DCC++ est s&#233;lectionn&#233; dans le chois du Nom de Syst&#232;me</li>
+          <li>Entrez l'adresse DCC de l'Aiguillage dans la case Adresse Mat&#233;rielle</li>
+          <li>Entrez le Nom Utilisateur de l'aiguillage dans dans la case Nom Utilisateur</li>
+          <li>Cliquez "OK"</li>
+          <li>Cliquez le bouton "Modifier" sur  la nouvelle rang&#233;e d'Aiguillage</li>
+          <li>Cliquez l'onglet "R&#233;trosignalisation" dans la page Modifier Aiguillage</li>
+          <li>Choisir "DIRECT" dans le s&#233;lecteur de Mode R&#233;trosignalisation</li>
+          <li>Cliquez "OK"</li>
+      </ol>
+
+        <table>
+            <tbody><tr>
+                <th>Entr&#233;e</th>
+                <th>Signification</th>
+                <th>donner un Nom Syst&#232;me</th>
+                <th>Masquer</th>
+                <th>Equivalent</th>
+                <th>Minimum</th>
+                <th>Maximum</th>
+            </tr>
+            <tr>
+                <td>12</td>
+                <td>ID dans la table interne DCC++</td>
+                <td>DCCPP12</td>
+                <td>entier
+                <td> </td>
+                <td>0</td>
+                <td>32767</td>
+            </tr>
+            </tbody>
+        </table>
+        <!-- this table is an exceprt from the table in the help/en/html/doc/Technical/Names.shtml
+        based on information from the Hardware help pages
+        by Egbert Broerse @silverailscolo July 2017 -->
+
+      <h3>3: Configurer la Centrale de Commande</h3>
+      
+      <p>Pour le mode de contr&#244;le Direct, il n'est pas n&#233;cessaire de configurer la Centrale de Commande.</p>
+      
+      <h2>Contr&#244;le index&#233; d'Accessoire DCC</h2>
+
+      <p>Le contr&#244;le index&#233; est la m&#233;thode pr&#233;f&#233;r&#233;e pour contr&#244;ler des D&#233;codeurs Fixes avec DCC++.
+      <p>Avec le Contr&#244;le Index&#233;, vous pouvez contr&#244;ler un D&#233;codeur Fixe avec DCC++, en utilisant le tableau interne d'index des aiguillage de la Centrale de Commande </p>
+      <p>Chaque aiguillage a une entr&#233;e dans le Tableau Aiguillage de la Centrale de Commande.  La Centrale de Commande stocke en interne l'adresse de l'actuel D&#233;codeur Fixe DCC,
+       et vous assignez une valeur ID (comprise entre 0-32767) &#224; l'aiguillage. JMRI r&#233;f&#233;rence l'aiguillage en utilisant la valeur ID et non l'adresse du d&#233;codeur.</p>
+      <p>L'ID Aiguillage n'a pas besoin d'&#234;tre s&#233;quentielle. Chaque ID aiguillage peut avoir une valeur inutilis&#233;e entre 0 et32767.</p>
+      <p>Pour contr&#244;ler un D&#233;codeur Fixe ou un autre Accessoire contr&#244;l&#233; par DCC &#224; l'aide de la commande index&#233;e (en utilisant la commande "T" de la Centrale de Commande), 
+          suivez ces &#233;tapes</p>
+      
+      <h3>1: Choisir un Nom Syst&#232;me et un Nom Utilisateur</h3>
+      
+      <p>L'Adresse Mat&#233;rielle pour un accessoire DCC index&#233; est la ID assign&#233;e dans le tableau interne Aiguillage de la Centrale de Commande.
+          Par exemple, si pour  votre D&#233;codeur Fixe de commution son adresse est fix&#233;e &#224; 52, et qu'&#224; ce d&#233;codeur est assign&#233;e la valeur ID 13 
+          dans la Centrale de Commande, l'Adresse Mat&#233;rielle pour cet aiguillage  devra &#234;tre 13.</p>
+      <p>Le Nom Utilisateur peut &#234;tre tout ce que vous voulez</p>
+      
+      <h3>2: Ajouter l'Aiguillage au Tableau Aiguillage JMRI</h3>
+      
+      <p>Remarque: Les configurations Aiguillage stock&#233;es dans l'EEPROM de la Centrale de Commande seront ajout&#233;s automatiquement au Tableau Capteur de JMRI
+          au d&#233;marrage.</p>
+
+      <p>Dans le Tableau Aiguillage JMRI..</p>
+      <ol>
+          <li>Cliquez le bouton "Add"</li>
+          <li>Soyez s&#251;r que DCC++ est s&#233;lectionn&#233; dans le chois du Nom de Syst&#232;me</li>
+          <li>Entrez l'adresse DCC de l'Aiguillage dans la case Adresse Mat&#233;rielle</li>
+          <li>Entrez le Nom Utilisateur de l'aiguillage dans dans la case Nom Utilisateur</li>
+          <li>Cliquez "OK"</li>
+          <li>Cliquez le bouton "Modifier" sur la nouvelle rang&#233;e d'Aiguillage</li>
+          <li>Cliquez l'onglet "R&#233;trosignalisation" dans la page Modifier Aiguillage</li>
+          <li>Choisissez "BSTURNOUT" ("MONITEUR" in JMRI 4.6.x ou pr&#233;c&#233;dent) dans le s&#233;lecteur de Mode R&#233;trosignalisation</li>
+          <li>Cliquez "OK"</li>
+      </ol>
+      
+      <h3>3: Configurer la Centrale de Commande</h3>
+      
+      <p>Utilisez l'outil JMRI/DCC++ "Configurer Centrale de Commande" (4.6.x: "Configurer Capteurs & Aiguillages") pour stocker
+      les Id Aiguillage et les Adresses  DCC dans  la Centrale de Commande.</p>
+      <p>Remarque: DCC++ requi&#232;re l'usage d'une paire Adresse/Sous-adresse.  Si votre D&#233;codeur Fixe n'a pas de 
+			sous-adresse, prenez l'adresse et divisez la par 4. Le r&#233;sultat est l'adresse, le reste est la sous-adresse.
+          Par exemple, Adresse 51 (pas de Sous-adresse) est l'Adresse DCC++ 12, Sous-adresse 3.
+      <ol>
+          <li>Depuis le menu DCC++, choisissez "Configurer Centrale de Commande" (ou "Configurer Capteurs & Aiguillages")</li>
+          <li>Choisissez l'onglet Aiguillage</li>
+          <li>Cliquez le bouton "Ajouter Aiguillage". Ceci ajoutera une ligne dans le tableau.</li>
+          <li>Dans la nouvelle rang&#233;e, mettre dans l'"Index" la valeur ID pour le nouvel Aigillage</li>
+          <li>Dans la nouvelle rang&#233;e, mettre dans l'"Address" l'adresse DCC du nouvel aiguillage</li>
+          <li>Si l'aiguillage a une Sous-Adresse , mettre dans la case "Sous-Adresse" la valeurs correcte pour le nouvel aiguillage.
+          Autrement,assurez-vous  que la valeur de la Sous-Adresse est bien z&#233;ro(0)</li>
+          <li>Cliquez sur "Enregistrer les Aiguillages" ou "Fermer" et r&#233;pondez aux invites.</li>
+      </ol>
+      
+      <p>Remarque: Sur les versions JMRI 4.6.x et ant&#233;rieures, si vous choisissez "Enregistrer les Aiguillages" Il ne nous sera <em>pas</em> donn&#233; 
+      l'opportunit&#233; d'&#233;crire les changements dans l'EEPROM de la Centrale de Commande, vous devez choisir, 
+          "Fermer" <em>au lieu </em> de  "Enregistre les Changements".</p>
+      
+      <h2>Contr&#244;le des Broches de Sortie index&#233;es DCC ++</h2>
+
+      Le contr&#244;le des broches de sortie index&#233;es est le <em> seul </em> moyen de contr&#244;ler un aiguillage directement connect&#233; &#224; une broche E/S DCC ++ Arduino depuis JMRI.</p>
+       <p>Avec le contr&#244;le index&#233;, vous pouvez contr&#244;ler une broche d'E/S Arduino DCC ++ &#224; l'aide de la table d'index de sortie interne de la Centrale de Commande.</p>
+       <p>Chaque broche de sortie a une entr&#233;e dans le tableau de sortie de la Centrale de Commande. La Centrale de Commande stocke le num&#233;ro de broche Arduino E/S actuelle
+       en interne et vous affectez une valeur d’ID (comprise entre 0 et 32767) &#224; la sortie. JMRI r&#233;f&#233;rence l'aiguillage en utilisant la valeur ID,
+       pas le num&#233;ro de code Arduino. </p>
+      <p>Les valeurs d'ID de sortie n'ont pas besoin d'&#234;tre s&#233;quentielles. L'identifiant de chaque aiguillage peut &#234;tre toute valeur inutilis&#233;e dans la plage autoris&#233;e (0-32767).</P>
+       <p>Si vous utilisez des broches Arduino analogiques comme sorties num&#233;riques, utilisez le num&#233;ro de broche num&#233;rique de la broche. Par exemple, la broche analogique A0 est la broche num&#233;rique 14</p>
+       <p>Pour contr&#244;ler une broche E/S d'un Arduino &#224; l'aide du contr&#244;le index&#233; (&#224; l'aide de la commande "Z" de la station de base),
+           suivez ces &#233;tapes.</p>
+      
+      <h3>1: Choisissez un Nom Syst&#232;me et un Nom Utilisateur</h3>
+      
+      <p>L'adresse mat&#233;rielle d'une sortie index&#233;e est la valeur ID attribu&#233;e dans la table de sortie interne de la Centrale de Commande.
+           Par exemple, si votre commande d'aiguillage est connect&#233;e &#224; la broche 7 d'Arduino et que la sortie se voit attribuer la valeur 13 dans la
+           Centrale de Commande, l'adresse mat&#233;rielle de cet aiguillage doit &#234;tre 13.</P>
+       <p>Le nom d'utilisateur peut &#234;tre ce que vous voulez.</p>
+      
+      <h3>2: Ajouter l'Aiguillage au Tableau d'Aiguillage JMRI</h3>
+      
+      <p>REMARQUE: Les configurations de sortie stock&#233;es dans la m&#233;moire EEPROM de la Centrale de Commande seront automatiquement ajout&#233;es au tableau de capteurs JMRI,
+           au d&#233;marrage.</p>
+
+      <p>Dans le Tableau d'Aiguillage JMRI... </p>
+       <ol>
+           <li>Cliquez sur le bouton "Ajouter"</li>
+           <li>Assurez-vous que "DCC ++" est s&#233;lectionn&#233; dans le s&#233;lecteur de Nom de Syst&#232;me</li>
+           <li>Entrez l'ID de l'aiguillage dans la zone Adresse Mat&#233;rielle</li>
+           <li>Entrez le Nom Utilisateur de l'Aiguillage dans la zone Nom Utilisateur</li>
+           <li>Cliquez sur "OK"</li>
+           <li>Cliquez sur le bouton "Modifier" dans la nouvelle ligne d'Aiguillage</li>
+           <li>Cliquez sur l'onglet "R&#233;trosignalisation" dans la bo&#238;te de dialogue Modifier l'Aigullage</li>.
+           <li>Choisissez "BSOUTPUT" ("EXACT" dans JMRI 4.6.x ou pr&#233;c&#233;dent) dans le s&#233;lecteur de mode de R&#233;trosignalisation</li>
+           <li>Cliquez sur "OK"</li>
+      </ol>
+      
+      <h3>3: Configurez la Centrale de Commande</h3>
+      
+      <p>Utilisez l'outil JMRI / DCC ++ "Configurer la station de base" (4.6.x: "Configurer les capteurs et les aiguillages") pour stocker
+      l'identifiant et le num&#233;ro de broche Arduino de la station de base.</p>
+      <ol>
+          <li>Dans le menu DCC ++, choisissez "Configurer la Centrale de Commande" (ou "Configurer les capteurs et les aiguillages")</li>
+          <li>Choisissez l'onglet "Sorties"</li>
+          <li>Cliquez sur le bouton "Ajouter une Sortie". Cela va ajouter une nouvelle ligne au tableau.</li>
+          <li>Dans la nouvelle ligne, d&#233;finissez "Index" sur la valeur d'ID de la nouvelle sortie</li>
+          <li>Dans la nouvelle ligne, d&#233;finissez le "Pin #" sur le num&#233;ro de broche Arduino du nouveau branchement</li>
+          <li>Si la sortie des broches doit &#234;tre invers&#233;e, cochez la case "Inverser la sortie"</li>
+          <li>Cliquez sur "Enregistrer les sorties" ou "Fermer" et r&#233;pondez aux invites</li>
+      </ol>
+      
+      <p>Remarque: sur les versions JMRI 4.7.1 et ant&#233;rieures, si vous choisissez "Enregistrer les sorties", <em> pas </em> ne recevra
+          possibilit&#233; d'&#233;crire les modifications dans la m&#233;moire EEPROM de la station de base. Pour &#233;crire sur EEPROM, vous devez choisir
+          "Fermer" <em>au lieu</em> de "Enregistrer les modifications".</P>
+      <h2>Remarques g&#233;n&#233;rales </h2>
+      
+     <h3>Identifiants d'Aiguillage et de Sortie</h3>
+      
+       <p>Les identifiants d'Aiguillage et de Sortie ne doivent pas n&#233;cessairement &#234;tre s&#233;quentiels. Vous pouvez utiliser n'importe quelle valeur non utilis&#233;e
+           dans la plage autoris&#233;e (0-32767). La Centrale de Commande DCC ++ permettra &#233;galement qu'un Aiguillage
+           et une Sortie puisse avoir le m&#234;me ID et &#234;tre trait&#233;s comme des p&#233;riph&#233;riques distincts (ils sont stock&#233;es
+           dans des Tableaux s&#233;par&#233;es et accessibles via diff&#233;rentes commandes).</p>
+       <p> <em> Cependant</em>, JMRI exige que tous les Noms Syst&#232;me d'Aiguillage (JMRI) soient uniques, et par cons&#233;quent
+       Les adresses mat&#233;rielles affect&#233;es aux Aiguillages et aux Sorties doivent &#234;tre diff&#233;rentes. Par exemple,
+       alors que la Centrale de Commande autorisera un ID d'Aiguillaget 2 et un ID de Sortie 2, JMRI ne sera pas
+       en mesure de les traiter comme des p&#233;riph&#233;riques distincts, ce qui n'est pas autoris&#233;.</p>
+       <p> Pour la m&#234;me raison, vous devez choisir des valeurs d'ID d'Aiguillage/Sortie diff&#233;rentes de
+       toute entr&#233;e d'adresse DCC d'Aiguillage en mode direct accessible via la Centrale de Commande DCC ++.</p>
+
+      <p>Si vous avez plusieurs interfaces (par exemple, un r&#233;seau LocoNet autonome ou une seconde Centrale de Commande DCC ++),
+           chaque interface a son propre "espace de noms", de sorte que vous <em>puissez</em> avoir un ID d'Aiguillage 2 sur une interface de Centrale de Commande DCC ++
+            et un Aiguillage Adresse Directe  2 sur une Centrale de Commande DCC ++ <em> diff&#233;rente</em> et une adresse d'aiguillage 2 sur 
+            une interface LocoNet autonome.</p>
+       <p>Cela dit, ces espaces d'adresses qui se chevauchent peuvent &#234;tre tr&#232;s d&#233;routants. Nous vous recommandons donc d'attribuer certains
+           espaces d'adressage pour chaque interface afin qu'il n'y ait qu'un seul "Aiguillage # 42" sur l'ensemble du syst&#232;me</p>
+      
+      <h3>Activation de l'Inversion des Sorties (Aiguillages en mode BSOUTPUT)</h3>
+       <p>Le tableau Sortie de la Centrale de Commande DCC ++ permet d'inverser le signal de sortie. JMRI <em>&#233;galement</em>
+       permet aux aiguillages JMRI d'&#234;tre invers&#233;s dans les entr&#233;es du Tableau Aiguillage JMRI. Cela signifie qu'un Aiguillage en mode BSOUTPUT peut &#234;tre
+       <em>invers&#233; deux fois</em>. Assurez-vous de v&#233;rifier &#224; la fois les param&#232;tres de la Centrale de Commande et ceux du Tableau Aiguillage.
+       pour &#234;tre s&#251;r d'obtenir le r&#233;sultat souhait&#233;.</p>
+      
+      <h3>Utilisation de l'Outil "Configurer la Centrale de Commande" JMRI</h3>
+      
+       <p>L'outil "Configurer la Centrale de Commande" est un moyen pratique de programmer les Tableaux Capteur, Aiguillage et Sortie.
+        dans votre Centrale de Commande. Cependant, il n'est pas n&#233;cessaire de travailler avec DCC ++ dans JMRI. Vous pouvez,
+       Par exemple, configurez les Tableaux de votre Centrale de Commande &#224; l'aide de l'interface de commande s&#233;rie DCC ++ ou du
+       Logiciel DCC ++ Controller. Tant que les ID attribu&#233;s dans la Centrale de Commande correspondent &#224; l'adresse mat&#233;rielle
+       attribu&#233; dans le tableau Aiguillage JMRI, tout ira bien.</p>
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+</body>
+</html>
