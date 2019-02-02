@@ -101,12 +101,12 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
     private boolean dirty = false;
     private boolean loading = false;
     private boolean allowSave;
-    private ArrayList<String> simplePreferenceList = new ArrayList<>();
+    private final ArrayList<String> simplePreferenceList = new ArrayList<>();
     //sessionList is used for messages to be suppressed for the current JMRI session only
-    private ArrayList<String> sessionPreferenceList = new ArrayList<>();
+    private final ArrayList<String> sessionPreferenceList = new ArrayList<>();
     protected final HashMap<String, String> comboBoxLastSelection = new HashMap<>();
     private final HashMap<String, WindowLocations> windowDetails = new HashMap<>();
-    private HashMap<String, ClassPreferences> classPreferenceList = new HashMap<>();
+    private final HashMap<String, ClassPreferences> classPreferenceList = new HashMap<>();
     private File file;
 
     public JmriUserPreferencesManager() {
@@ -846,7 +846,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
         this.loading = true;
         File perNodeConfig = null;
         try {
-            perNodeConfig = FileUtil.getFile(FileUtil.PROFILE + Profile.PROFILE + "/" + NodeIdentity.networkIdentity() + "/" + Profile.UI_CONFIG); // NOI18N
+            perNodeConfig = FileUtil.getFile(FileUtil.PROFILE + Profile.PROFILE + "/" + NodeIdentity.storageIdentity() + "/" + Profile.UI_CONFIG); // NOI18N
             if (!perNodeConfig.canRead()) {
                 perNodeConfig = null;
                 log.trace("    sharedConfig can't be read");

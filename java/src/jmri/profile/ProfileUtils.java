@@ -3,11 +3,15 @@ package jmri.profile;
 import java.io.File;
 import java.io.IOException;
 import java.util.prefs.Preferences;
+import javax.annotation.Nonnull;
 import jmri.util.FileUtil;
 import jmri.util.FileUtilSupport;
+import jmri.util.node.NodeIdentity;
 import jmri.util.prefs.JmriConfigurationProvider;
 import jmri.util.prefs.JmriPreferencesProvider;
 import jmri.util.prefs.JmriUserInterfaceConfigurationProvider;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Utility methods to get information about {@link jmri.profile.Profile}s.
@@ -15,6 +19,8 @@ import jmri.util.prefs.JmriUserInterfaceConfigurationProvider;
  * @author Randall Wood 2015
  */
 public class ProfileUtils {
+
+    private final static Logger log = LoggerFactory.getLogger(ProfileUtils.class);
 
     /**
      * Get the XMl configuration container for a given configuration profile.
@@ -91,7 +97,7 @@ public class ProfileUtils {
      *                                  profile.
      * @throws IOException              If the copy cannot be completed.
      */
-    public static void copy(Profile source, Profile destination) throws IllegalArgumentException, IOException {
+    public static void copy(@Nonnull Profile source, @Nonnull Profile destination) throws IllegalArgumentException, IOException {
         if (destination.equals(ProfileManager.getDefault().getActiveProfile())) {
             throw new IllegalArgumentException("Target profile cannot be active profile.");
         }
@@ -108,4 +114,43 @@ public class ProfileUtils {
         destination.save();
     }
 
+    /**
+     * Copy the most recently modified former identity, if any, for the current computer
+     * in the given profile to the current storage identity of the current computer for
+     * the given profile.
+     *
+     * @param profile the profile containing identities to copy
+     * @return true if an existing identity is copied, false otherwise
+     * @throws IOException if unable to a copy an existing identity
+     */
+    public static boolean copyPrivateContentToCurrentIdentity(@Nonnull Profile profile) throws IOException {
+        String uniqueId = "-" + profile.getUniqueId();
+        File newPath = new File(new File(profile.getPath(), Profile.PROFILE), NodeIdentity.storageIdentity());
+        if (!newPath.exists()) {
+            File oldPath = null;
+            for (String identity : NodeIdentity.formerIdentities()) {
+                if (oldPath == null) {
+                    File path = new File(new File(profile.getPath(), Profile.PROFILE), identity + uniqueId);
+                    if (path.exists()) {
+                        oldPath = path;
+                    }
+                } else {
+                    File path = new File(new File(profile.getPath(), Profile.PROFILE), identity + uniqueId);
+                    if (path.exists() && path.lastModified() > oldPath.lastModified()) {
+                        oldPath = path;
+                    }
+                }
+            }
+            if (oldPath != null && oldPath.exists()) {
+                try {
+                    log.info("Copying from old node \"{}\" to new node \"{}\"", oldPath, newPath);
+                    FileUtil.copy(oldPath, newPath);
+                    return true;
+                } catch (IOException ex) {
+                    log.warn("Failed copying \"{}\" to \"{}\"", oldPath, newPath);
+                }
+            }
+        }
+        return false;
+    }
 }

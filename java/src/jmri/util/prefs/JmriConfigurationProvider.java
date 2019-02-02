@@ -21,7 +21,7 @@ import jmri.profile.Profile;
  * Railroad Name preference.</li>
  * <li><code>&lt;node-identity&gt;/profile.xml</code> preferences that are
  * specific to the profile running on a specific host (&lt;node-identity&gt; is
- * the identity returned by {@link jmri.util.node.NodeIdentity#networkIdentity()}). An
+ * the identity returned by {@link jmri.util.node.NodeIdentity#storageIdentity()}). An
  * example of such a preference would be a file location.</li>
  * </ul>
  * <p>

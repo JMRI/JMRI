@@ -1,8 +1,5 @@
 package jmri.util.node;
 
-import static java.time.ZonedDateTime.now;
-import static java.time.temporal.ChronoField.YEAR;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -12,18 +9,13 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.net.UnknownHostException;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 import java.util.UUID;
-import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import javax.annotation.Nonnull;
 import jmri.profile.ProfileManager;
 import jmri.util.FileUtil;
 import org.jdom2.Document;
@@ -36,28 +28,26 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Provide a unique network identity for JMRI. If a stored identity does not
- * exist, the identity is created by taking the MAC address of the first
- * {@link java.net.InetAddress}, generating a Type 1 UUID, storing it,
- * compressing it into a 22 character representation and prepending it with
- * "jmri-".
- * <p>
- * If a stored UUID is found, it is always used.
+ * Provide unique identities for JMRI.
  * <p>
  * A list of former identities is retained to aid in migrating from the former
  * identity to the new identity.
  * <p>
- * If a MAC address cannot be read, fall back on generating a random multicast
- * MAC address as per RFC 4122.
+ * Currently the storageIdentity is a randomly generated UUID, that is also used
+ * for backwards compatibility with JMRI 4.14. If we find a reliable cross-platform
+ * mechanism to tie that to the machine's unique identity (from the CPU or motherboard),
+ * not from a NIC, this may change. If a JMRI 4.14 generated UUID is available, it is
+ * retained and used as the storageIdentity.
  *
  * @author Randall Wood (C) 2013, 2014, 2016
  * @author Dave Heap (C) 2018
  */
 public class NodeIdentity {
 
-    private final ArrayList<String> formerIdentities = new ArrayList<>();
-    private String identity = null;
+    private final Set<String> formerIdentities = new HashSet<>();
     private UUID uuid = null;
+    private String networkIdentity = null;
+    private String storageIdentity = null;
 
     private static NodeIdentity instance = null;
     private static final Logger log = LoggerFactory.getLogger(NodeIdentity.class);
@@ -65,53 +55,88 @@ public class NodeIdentity {
     private static final String ROOT_ELEMENT = "nodeIdentityConfig"; // NOI18N
     private static final String UUID_ELEMENT = "uuid"; // NOI18N
     private static final String NODE_IDENTITY = "nodeIdentity"; // NOI18N
+    private static final String STORAGE_IDENTITY = "storageIdentity"; // NOI18N
     private static final String FORMER_IDENTITIES = "formerIdentities"; // NOI18N
     private static final String IDENTITY_PREFIX = "jmri-";
 
+    /**
+     * A string of 64 URL compatible characters.
+     * <p>
+     * Used by {@link #uuidToCompactString uuidToCompactString} and
+     * {@link #uuidFromCompactString uuidFromCompactString}.
+     */
+    protected static final String URL_SAFE_CHARACTERS
+            = "abcdefghijklmnopqrstuvwxyz_ABCDEFGHIJKLMNOPQRSTUVWXYZ-0123456789"; // NOI18N
+
     private NodeIdentity() {
-        init(); // init as a method so the init can be synchronized.
+        init(); // initialize as a method so the initialization can be synchronized.
     }
 
     private synchronized void init() {
         File identityFile = this.identityFile();
         if (identityFile.exists()) {
             try {
+                boolean save = false;
+                this.formerIdentities.clear();
                 Document doc = (new SAXBuilder()).build(identityFile);
-                Element uu = doc.getRootElement().getChild(UUID_ELEMENT);
-                if (uu != null) {
+                Element ue = doc.getRootElement().getChild(UUID_ELEMENT);
+                if (ue != null) {
                     try {
-                        this.uuid = UUID.fromString(uu.getAttributeValue(UUID_ELEMENT));
+                        String attr = ue.getAttributeValue(UUID_ELEMENT);
+                        this.uuid = uuidFromCompactString(attr);
+                        this.storageIdentity = this.uuid.toString(); // backwards compatible, see class docs
+                        this.formerIdentities.add(this.storageIdentity);
+                        this.formerIdentities.add(IDENTITY_PREFIX + attr);
                     } catch (IllegalArgumentException ex) {
-
+                        // do nothing
                     }
                 }
-                if (this.uuid == null) {
-                    this.getIdentity(true);
+                Element si = doc.getRootElement().getChild(STORAGE_IDENTITY);
+                if (si != null) {
+                    try {
+                        this.storageIdentity = si.getAttributeValue(STORAGE_IDENTITY);
+                        if (this.uuid == null || (this.storageIdentity != this.uuid.toString())) {
+                            this.uuid = UUID.fromString(this.storageIdentity);
+                            save = true; // updated UUID
+                        }
+                    } catch (IllegalArgumentException ex) {
+                        save = true; // save if attribute not available
+                    }
+                } else {
+                    save = true; // element missing, need to save
+                }
+                if (this.storageIdentity == null) {
+                    save = true;
+                    this.getStorageIdentity(false);
                 }
                 String id = doc.getRootElement().getChild(NODE_IDENTITY).getAttributeValue(NODE_IDENTITY);
-                this.formerIdentities.clear();
                 doc.getRootElement().getChild(FORMER_IDENTITIES).getChildren().stream().forEach((e) -> {
                     this.formerIdentities.add(e.getAttributeValue(NODE_IDENTITY));
                 });
-                if (!this.validateIdentity(id)) {
+                if (!this.validateNetworkIdentity(id)) {
                     log.warn("Node identity {} is invalid. Generating new node identity.", id);
-                    this.formerIdentities.add(id);
-                    this.getIdentity(true);
+                    save = true;
+                    this.getNetworkIdentity(false);
                 } else {
-                    this.getIdentity(true);
+                    this.networkIdentity = id;
+                }
+                // save if new identities were created or expected attribute did not exist
+                if (save) {
+                    this.saveIdentity();
                 }
             } catch (JDOMException | IOException ex) {
                 log.error("Unable to read node identities: {}", ex.getLocalizedMessage());
-                this.getIdentity(true);
+                this.getNetworkIdentity(true);
             }
         } else {
-            this.uuid = null;
-            this.getIdentity(true);
+            this.getNetworkIdentity(true);
         }
     }
 
     /**
-     * Return the node's current network identity.
+     * Return the node's current network identity. For historical purposes,
+     * the network identity is also referred to as the {@literal node} or
+     *  {@literal node identity}.
      *
      * @return A network identity. If this identity is not in the form
      * {@code jmri-MACADDRESS-profileId}, or if {@code MACADDRESS} is a 
@@ -127,9 +152,37 @@ public class NodeIdentity {
         }
         if (instance == null) {
             instance = new NodeIdentity();
-            log.info("Using {} as the JMRI Node identity", instance.getIdentity() + uniqueId);
+            log.info("Using {} as the JMRI Node identity", instance.getNetworkIdentity() + uniqueId);
         }
-        return instance.getIdentity() + uniqueId;
+        return instance.getNetworkIdentity() + uniqueId;
+    }
+
+    /**
+     * Return the node's current storage identity. This can be used in networked
+     * file systems to ensure per-computer storage is available.
+     * <p>
+     * <strong>Note</strong> this only ensure uniqueness if the preferences path is 
+     * not shared between multiple computers as documented in
+     * {@link jmri.util.FileUtil#getPreferencesPath()} (the most common cause of this
+     * would be sharing a user's home directory in its entirety between two computers
+     * with similar operating systems as noted in getPreferencesPath()).
+     *
+     * @return A storage identity. If this identity is not in the form
+     * {@code UUID-profileId}, this identity should be considered
+     * unreliable and subject to change across JMRI restarts.
+     */
+    public static synchronized String storageIdentity() {
+        String uniqueId = "-";
+        try {
+            uniqueId += ProfileManager.getDefault().getActiveProfile().getUniqueId();
+        } catch (NullPointerException ex) {
+            uniqueId += ProfileManager.createUniqueId();
+        }
+        if (instance == null) {
+            instance = new NodeIdentity();
+            log.info("Using {} as the JMRI Storage identity", instance.getStorageIdentity() + uniqueId);
+        }
+        return instance.getStorageIdentity() + uniqueId;
     }
 
     /**
@@ -140,7 +193,7 @@ public class NodeIdentity {
     public static synchronized List<String> formerIdentities() {
         if (instance == null) {
             instance = new NodeIdentity();
-            log.info("Using {} as the JMRI Node identity", instance.getIdentity());
+            log.info("Using {} as the JMRI Node identity", instance.getNetworkIdentity());
         }
         return instance.getFormerIdentities();
     }
@@ -148,13 +201,25 @@ public class NodeIdentity {
     /**
      * Verify that the current identity is a valid identity for this hardware.
      *
-     * @param ident an identity to check.
-     *
-     * @return true if the identity is based on the current UUID.
+     * @param identity the identity to validate
+     * @return true if the identity is based on this hardware; false otherwise
      */
-    private synchronized boolean validateIdentity(String ident) {
-        log.debug("Validating Node identity {}.", ident);
-        return (this.uuid != null && ((IDENTITY_PREFIX + this.uuid).equals(ident)));
+    private synchronized boolean validateNetworkIdentity(String identity) {
+        try {
+            Enumeration<NetworkInterface> enumeration = NetworkInterface.getNetworkInterfaces();
+            while (enumeration.hasMoreElements()) {
+                NetworkInterface nic = enumeration.nextElement();
+                if (!nic.isVirtual() && !nic.isLoopback()) {
+                    String nicIdentity = this.createNetworkIdentity(nic.getHardwareAddress());
+                    if (nicIdentity != null && nicIdentity.equals(identity)) {
+                        return true;
+                    }
+                }
+            }
+        } catch (SocketException ex) {
+            log.error("Error accessing interface: {}", ex.getLocalizedMessage(), ex);
+        }
+        return false;
     }
 
     /**
@@ -163,45 +228,67 @@ public class NodeIdentity {
      * @param save whether to save this identity or not
      * <p>
      */
-    private synchronized void getIdentity(boolean save) {
+    private synchronized void getNetworkIdentity(boolean save) {
         try {
             try {
                 try {
-                    this.identity = this.createIdentity(NetworkInterface.getByInetAddress(InetAddress.getLocalHost()).getHardwareAddress());
+                    this.networkIdentity = this.createNetworkIdentity(NetworkInterface.getByInetAddress(InetAddress.getLocalHost()).getHardwareAddress());
                 } catch (NullPointerException ex) {
                     // NetworkInterface.getByInetAddress(InetAddress.getLocalHost()).getHardwareAddress() failed
                     // this can be due to multiple reasons, most likely getLocalHost() failing on certain platforms.
                     // Only set this.identity = null, since the following null checks address all potential problems
                     // with getLocalHost() including some expected conditions (such as InetAddress.getLocalHost()
                     // returning the loopback interface).
-                    this.identity = null;
+                    this.networkIdentity = null;
                 }
-                if (this.identity == null) {
+                if (this.networkIdentity == null) {
                     Enumeration<NetworkInterface> nics = NetworkInterface.getNetworkInterfaces();
                     while (nics.hasMoreElements()) {
                         NetworkInterface nic = nics.nextElement();
                         if (!nic.isLoopback() && !nic.isVirtual()
                                 && (nic.getHardwareAddress() != null)) {
-                            this.identity = this.createIdentity(nic.getHardwareAddress());
-                            if (this.identity != null) {
+                            this.networkIdentity = this.createNetworkIdentity(nic.getHardwareAddress());
+                            if (this.networkIdentity != null) {
                                 break;
                             }
                         }
                     }
                 }
             } catch (SocketException ex) {
-                this.identity = null;
+                this.networkIdentity = null;
             }
         } catch (UnknownHostException ex) {
-            this.identity = null;
+            this.networkIdentity = null;
         }
-        if (this.identity == null) {
+        if (this.networkIdentity == null) {
             log.info("No MAC addresses found, generating a random multicast MAC address as per RFC 4122.");
             byte[] randBytes = new byte[6];
             Random randGen = new Random();
             randGen.nextBytes(randBytes);
             randBytes[0] = (byte) (randBytes[0] | 0x01); // set multicast bit in first octet
-            this.identity = this.createIdentity(randBytes);
+            this.networkIdentity = this.createNetworkIdentity(randBytes);
+        }
+        this.formerIdentities.add(this.networkIdentity);
+        if (save) {
+            this.saveIdentity();
+        }
+    }
+
+    /**
+     * Get a node identity from the current hardware.
+     *
+     * @param save whether to save this identity or not
+     * <p>
+     */
+    private synchronized void getStorageIdentity(boolean save) {
+        if (this.storageIdentity == null) {
+            // also generate UUID to protect against case where user
+            // migrates from JMRI < 4.14 to JMRI > 4.14 back to JMRI = 4.14
+            if (this.uuid == null) {
+                this.uuid = UUID.randomUUID();
+            }
+            this.storageIdentity = this.uuid.toString();
+            this.formerIdentities.add(this.storageIdentity);
         }
         if (save) {
             this.saveIdentity();
@@ -214,22 +301,36 @@ public class NodeIdentity {
     private void saveIdentity() {
         Document doc = new Document();
         doc.setRootElement(new Element(ROOT_ELEMENT));
-        Element uuidElement = new Element(UUID_ELEMENT);
-        Element identityElement = new Element(NODE_IDENTITY);
+        Element networkIdentityElement = new Element(NODE_IDENTITY);
+        Element storageIdentityElement = new Element(STORAGE_IDENTITY);
         Element formerIdentitiesElement = new Element(FORMER_IDENTITIES);
-        if (this.identity == null) {
-            this.getIdentity(false);
+        Element uuidElement = new Element(UUID_ELEMENT);
+        if (this.networkIdentity == null) {
+            this.getNetworkIdentity(false);
         }
-        uuidElement.setAttribute(UUID_ELEMENT, this.uuid.toString());
-        identityElement.setAttribute(NODE_IDENTITY, this.identity);
+        if (this.storageIdentity == null) {
+            this.getStorageIdentity(false);
+        }
+        // ensure formerIdentities contains current identities as well
+        this.formerIdentities.add(this.networkIdentity);
+        this.formerIdentities.add(this.storageIdentity);
+        if (this.uuid != null) {
+            this.formerIdentities.add(IDENTITY_PREFIX + uuidToCompactString(this.uuid));
+        }
+        networkIdentityElement.setAttribute(NODE_IDENTITY, this.networkIdentity);
+        storageIdentityElement.setAttribute(STORAGE_IDENTITY, this.storageIdentity);
         this.formerIdentities.stream().forEach((formerIdentity) -> {
             log.debug("Retaining former node identity {}", formerIdentity);
             Element e = new Element(NODE_IDENTITY);
             e.setAttribute(NODE_IDENTITY, formerIdentity);
             formerIdentitiesElement.addContent(e);
         });
-        doc.getRootElement().addContent(uuidElement);
-        doc.getRootElement().addContent(identityElement);
+        doc.getRootElement().addContent(networkIdentityElement);
+        doc.getRootElement().addContent(storageIdentityElement);
+        if (this.uuid != null) {
+            uuidElement.setAttribute(UUID_ELEMENT, uuidToCompactString(this.uuid));
+            doc.getRootElement().addContent(uuidElement);
+        }
         doc.getRootElement().addContent(formerIdentitiesElement);
         try (Writer w = new OutputStreamWriter(new FileOutputStream(this.identityFile()), "UTF-8")) { // NOI18N
             XMLOutputter fmt = new XMLOutputter();
@@ -248,17 +349,15 @@ public class NodeIdentity {
      * @param mac a byte array representing a MAC address.
      * @return An identity or null if input is null.
      */
-    private String createIdentity(byte[] mac) {
-        if (mac == null) {
+    private String createNetworkIdentity(byte[] mac) {
+        StringBuilder sb = new StringBuilder(IDENTITY_PREFIX); // NOI18N
+        try {
+            for (int i = 0; i < mac.length; i++) {
+                sb.append(String.format("%02X", mac[i])); // NOI18N
+            }
+        } catch (NullPointerException ex) {
             return null;
         }
-
-        if (this.uuid == null) {
-            this.uuid = generateUuid(mac);
-        }
-
-        StringBuilder sb = new StringBuilder(IDENTITY_PREFIX); // NOI18N
-        sb.append(this.uuid);
         return sb.toString();
     }
 
@@ -267,122 +366,96 @@ public class NodeIdentity {
     }
 
     /**
-     * Generates a Version 1 Variant 2 UUID for this installation.
-     * <p>
-     * Once generated, this should be stored in {@code nodeIdentity.xml} and
-     * always used for all profiles.
-     *
-     * @param seed a seed for UUID generation, typically the MAC address of any
-     *             interface on this computer.
-     * @return the UUID
+     * @return the network identity
      */
-    public static UUID generateUuid(@Nonnull byte[] seed) {
+    public synchronized String getNetworkIdentity() {
+        if (this.networkIdentity == null) {
+            this.getNetworkIdentity(false);
+        }
+        return this.networkIdentity;
+    }
+
+    /**
+     * @return the storage identity
+     */
+    public synchronized String getStorageIdentity() {
+        if (this.storageIdentity == null) {
+            this.getStorageIdentity(false);
+        }
+        return this.storageIdentity;
+    }
+
+    /**
+     * Encodes a UUID into a 22 character URL compatible string. This is
+     * used to store the UUID in a manner compatible with JMRI 4.14.
+     * <p>
+     * From an example by
+     * <a href="https://stackoverflow.com/">Tom Lobato</a>.
+     *
+     * @param uuid the UUID to encode
+     * @return the 22 character string
+     */
+    protected static String uuidToCompactString(UUID uuid) {
+        char[] c = new char[22];
+        long buffer = 0;
+        int val6;
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 1; i <= 22; i++) {
+            switch (i) {
+                case 1:
+                    buffer = uuid.getLeastSignificantBits();
+                    break;
+                case 12:
+                    buffer = uuid.getMostSignificantBits();
+                    break;
+                default:
+                    break;
+            }
+            val6 = (int) (buffer & 0x3F);
+            c[22 - i] = URL_SAFE_CHARACTERS.charAt(val6);
+            buffer = buffer >>> 6;
+        }
+        return sb.append(c).toString();
+    }
+
+    /**
+     * Decodes the original UUID from a 22 character string generated by
+     * {@link #uuidToCompactString uuidToCompactString}. This is used to
+     * store the UUID in a manner compatible with JMRI 4.14.
+     *
+     * @param compact the 22 character string
+     * @return the original UUID
+     */
+    protected static UUID uuidFromCompactString(String compact) {
         long mostSigBits = 0;
         long leastSigBits = 0;
-        long time;
-
-        if (seed == null) {
-            throw new IllegalArgumentException("Uuid seed cannot be null");
-        }
-
-        for (byte b : seed) {
-            leastSigBits = leastSigBits << 8;
-            leastSigBits = leastSigBits | (b & 0xFF);
-        }
-        leastSigBits = leastSigBits & Long.parseUnsignedLong("0000FFFFFFFFFFFF", 16); // just to be sure no overflow from node
-        leastSigBits = leastSigBits | Long.parseUnsignedLong("8000000000000000", 16); // variant 2
-
-        ZonedDateTime startDate;
-        startDate = ZonedDateTime.parse("1582-10-15T00:00:00Z");
-        try {
-            TimeUnit.SECONDS.sleep(1);
-        } catch (InterruptedException ex) {
-            java.util.logging.Logger.getLogger(NodeIdentity.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        ZonedDateTime endDate = now();
-        int midYear = (endDate.get(YEAR) + startDate.get(YEAR)) / 2; // need this to avoid overflow
-        ZonedDateTime midDate = ZonedDateTime.parse(midYear + "-01-01T00:00:00Z");
-        time = (ChronoUnit.NANOS.between(startDate, midDate)) / 100;
-        time = time + (ChronoUnit.NANOS.between(midDate, endDate)) / 100;
-        log.debug("Interval={}, Hex={}, now={}", time, Long.toHexString(time),
-                now().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.FULL)));
-
-        mostSigBits = mostSigBits | Long.parseUnsignedLong("1000", 16); // version 1
-        long temp = time;
-        mostSigBits = mostSigBits | ((temp & Long.parseUnsignedLong("FFFFFFFF", 16)) << 32); // time_low
-        temp = temp >>> 32;
-        mostSigBits = mostSigBits | ((temp & Long.parseUnsignedLong("FFFF", 16)) << 16); // time_mid
-        temp = temp >>> 16;
-        mostSigBits = mostSigBits | (temp & Long.parseUnsignedLong("FFF", 16)); // time_mid
-
-        log.debug("mostSigBits= {}", Long.toHexString(mostSigBits));
-        log.debug("leastSigBits= {}", Long.toHexString(leastSigBits));
-
-        UUID uu = new UUID(mostSigBits, leastSigBits);
-
-        log.debug("node= {}", Long.toHexString(uu.node()));
-        log.debug("version= {}", uu.version());
-        log.debug("variant= {}", uu.variant());
-        log.debug("Generated UUID= {}", uu.toString());
-        return uu;
-    }
-
-    /**
-     * Creates a copy of the last-used old node identity for use with the new
-     * identity.
-     *
-     * @param oldPath the old node identity folder
-     * @param newPath the new node identity folder
-     * @return true if successful
-     */
-    public static boolean copyFormerIdentity(File oldPath, File newPath) {
-        String uniqueId = "-";
-        try {
-            uniqueId += ProfileManager.getDefault().getActiveProfile().getUniqueId();
-        } catch (NullPointerException ex) { // because there is no active profile
-            uniqueId += ProfileManager.createUniqueId();
-            log.debug("created uniqueID \"{}\" because of there (probably) is no active profile", uniqueId);
-        }
-        List<String> formerIdList = NodeIdentity.formerIdentities();
-        int listSize = formerIdList.size();
-        if (listSize < 1) {
-            log.debug("Unable to copy from a former identity; no former identities found.");
-            return false;
-        }
-        log.debug("{} former identies found", listSize);
-        for (int i = (listSize - 1); i >= 0; i--) {
-            String theIdentity = formerIdList.get(i);
-            log.debug("Trying to copy former identity {}, \"{}\"", i + 1, theIdentity);
-            File theDir = new File(oldPath, theIdentity + uniqueId);
-            if (theDir.exists()) {
-                try {
-                    log.info("Copying from old node \"{}\"", theDir.toString());
-                    log.info("  to new node \"{}\"", newPath.toString());
-                    FileUtil.copy(theDir, newPath);
-                } catch (IOException ex) {
-                    log.warn("Unable to copy \"{}\" to \"{}\"", theDir.toString(), newPath.toString());
-                    return false;
-                }
-                return true;
-            } else {
-                log.warn("Non-existent old node \"{}\"", theDir);
+        long buffer = 0;
+        int val6;
+        
+        for (int i = 0; i <= 21; i++) {
+            switch (i) {
+                case 0:
+                    buffer = 0;
+                    break;
+                case 11:
+                    mostSigBits = buffer;
+                    buffer = 0;
+                    break;
+                default:
+                    buffer = buffer << 6;
+                    break;
             }
+            val6 = URL_SAFE_CHARACTERS.indexOf(compact.charAt(i));
+            buffer = buffer | (val6 & 0x3F);
         }
-        return false;
+        leastSigBits = buffer;
+        return new UUID(mostSigBits, leastSigBits);
     }
 
     /**
-     * @return the identity
-     */
-    public synchronized String getIdentity() {
-        if (this.identity == null) {
-            this.getIdentity(false);
-        }
-        return this.identity;
-    }
-
-    /**
-     * @return the formerIdentities
+     * @return the former identities; this is a combination of former
+     * network and storage identities
      */
     public List<String> getFormerIdentities() {
         return new ArrayList<>(this.formerIdentities);

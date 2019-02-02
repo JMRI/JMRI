@@ -80,7 +80,8 @@ public class ReportContext {
         addString("Profile location: " + profile.getPath().getPath() + "   ");
         addString("Profile ID: " + profile.getId() + "   ");
         
-        addString("JMRI Node ID: "+ jmri.util.node.NodeIdentity.networkIdentity() );
+        addString("JMRI Network ID: " + jmri.util.node.NodeIdentity.networkIdentity() );
+        addString("JMRI Storage ID: " + jmri.util.node.NodeIdentity.storageIdentity() );
 
         String prefs = FileUtil.getUserFilesPath();
         addString("Preferences directory: " + prefs + "   ");

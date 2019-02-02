@@ -23,5 +23,9 @@
  * {@link jmri.profile.Profile} be passed so that these are ready to (even
  * though nothing currently uses this capability) handle multiple profiles, or
  * non-profile-specific preferences or state.
+ * <p>
+ * <strong>Note</strong> the above implies that it is critical that no method
+ * in any class in this package refer to the results of
+{@link jmri.profile.ProfileManager#getActiveProfile()}.
  */
 package jmri.util.prefs;
