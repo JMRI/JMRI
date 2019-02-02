@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <!-- $Id$ -->
-<!-- UpDated by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2016-07-05 -->
+<!-- UpDated by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-02-02 -->
  <html lang="fr">
 <head>
     <TITLE>
@@ -39,47 +39,136 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>JMRI: Structure de l'Application</h1>Le programme
-      JmriDemo est juste un exemple, mais il est cens&eacute;
-      &ecirc;tre un bon.
+      <h1>JMRI: Structure de l'Application</h1>
+     
 
-Le programme JmriDemo est juste un exemple, mais il est cens&#233; &#234;tre un bon.
-<P>
-La source de la classe principale est actuellement dans apps/JmriDemo/JMRIdemo.java,
-qui d&#233;finit la classe principale apps.JmriDemo.JMRIdemo.
-<P>
-La d&#233;mo principale cr&#233;e juste la barre de menus, et la remplit avec les menus
-et les &#233;l&#233;ments  d&#233;sir&#233;s. Chaque &#233;l&#233;ment a comme une classe objet "Action" qui lui est associ&#233;e qui fera l'
-initialisation n&#233;cessaire en cas de besoin.
-<P>
-Parce que nous nous attendons &#224; avoir des interfaces diff&#233;rentes dans le paquet  <code>jmrix</code> package, les outils JMRI
-ne cr&#233;ent pas directement les objets d'interface dont ils ont besoin. Plut&#244;t, ils demandent des exemples
-d'interfaces. Pour les interfaces dans le package <code>jmri</code>, qui pourraient &#234;tre mises en œuvre par
-beaucoup de types de r&#233;seau diff&#233;rents, <code>jmri.InstanceManager</code> r&#233;pond &#224; ces demandes.
+Cette page discute de la structure des applications JMRI
+Pour la structure de la Librairie JMRI elle-m&#234;me voir le
+<a href="IntroStructure.shtml">Introduction &#224; la page Structure Librairieto JMRI</a>.
 
-<P>
-Plus d'informations sur la fa&#231;on dont les choses (par exemple des objets repr&#233;sentant les &#233;l&#233;ments sur le réseau)
-sont nomm&#233;s si disponibles sur <A HREF="Names.shtml">une page s&#233;par&#233;e </a>.
+JMRI est livr&#233; avec plusieurs"applications" principales:
+<dl>
+      <dt>DecoderPro</dt>
+        <dd>
+            Depuis <code>apps.gui3.dp3.DecoderPro3</code>: C'est un exemple d'une "nouvelle structure" d'application.
+        </dd>
+      <dt>PanelPro</dt>
+        <dd>
+            Depuis <code>apps.PanelPro.PanelPro</code>: C'est un exemple d'une application "structure originale".
+        </dd>
+      <dt>JmriFaceless</dt>
+        <dd>
+          Depuis <code> app.JmriFaceless </code>, il s'agit d'une version de PanelPro 
+          optimis&#233;e pour fonctionner avec des ordinateurs 
+          sans &#233;cran ni souris.
+             c'est-&#224;-dire un <a href="http://jmri.org/install/Raspbian.shtml"> Raspberry PI </a>.
+             Il utilise la structure d'origine.
+        </dd>
+      </dl>
+<a id="newApp" name="newApp"></a>
+    <h2>Nouvelle Structure d'Application</h2>
+    
+       Dans le formulaire de demande actuellement recommand&#233;, la classe d'application principale descendait de
+         la classe <code> <a href="http://jmri.org/JavaDoc/doc/apps/gui3/Apps3.html">apps.gui3.Apps3</a></code>.
+        
+         <p> La majeure partie de la personnalisation requise pour une nouvelle application consiste &#224; remplacer les m&#233;thodes apps.Apps qui
+         contr&#244;lent l'affichage au d&#233;marrage: fournir l'image principale, le nom et le lien du programme, etc.
+         <p> Au-del&#224;, la nouvelle classe d'application peut remplacer les impl&#233;mentations qui cr&#233;ent des menus, chargent
+         aide, configuration des pr&#233;f&#233;rences, etc.
+        
+         <p> La s&#233;quence de d&#233;marrage pour par exemple DecoderPro, commen&#231;ant par <code> DecoderPro # main (..) </code> est assez court:
 
-      <p>Parce que nous nous attendons &agrave; avoir des
-      interfaces diff&eacute;rentes dans le paquet jmrix, les
-      outils JMRI ne cr&eacute;ent pas directement les objets
-      d'interface dont ils ont besoin. Plut&ocirc;t, ils demandent
-      des exemples d'interfaces. Pour les interfaces dans le
-      package jmri, qui pourraient &ecirc;tre mises en &Aring;"uvre
-      par beaucoup de types de r&eacute;seau diff&eacute;rents,
-      jmri.InstanceManager r&eacute;pond &agrave; ces demandes.</p>
+<pre>
+    public static void main(String args[]) {
+        preInit(args);
+        DecoderPro3 app = new DecoderPro3(args);
+        app.start();
+    }
 
-      <p>Plus d'informations sur la fa&ccedil;on dont les choses
-      (par exemple des objets repr&eacute;sentant les
-      &eacute;l&eacute;ments sur le sch&eacute;ma) sont
-      nomm&eacute;s <a href="Names.shtml">sont disponibles sur une
-      page s&eacute;par&eacute;e</a> .</p>
+    static public void preInit(String[] args) {
+        apps.gui3.Apps3.preInit(applicationName);
+        setConfigFilename("DecoderProConfig3.xml", args);
+    }
+</pre>
 
-      <p>Voir aussi la page sur <a href=
-      "IntroStructure.shtml">Structure de la biblioth&egrave;que
-      JMRI</a>. <!--#include virtual="/Footer" --></p>
+        <ul>
+        <li><code><a href="http://jmri.org/JavaDoc/doc/apps/gui3/Apps3.html#preInit-java.lang.String-">apps.gui3.Apps3.preInit</a></code> initialise les conditions pour des ex&#233;cutions basiques:
+            configurer la journalisation, configurer la console, etc.
+        <li><code><a href="http://jmri.org/JavaDoc/doc/apps/AppsBase.html#setConfigFilename-java.lang.String-java.lang.String:A-">apps.gui3.Apps3.setConfigFilename</a></code>
+            d&#233;finit le nom de fichier (chemin d'acc&#232;s) du fichier de configuration, &#224; partir des propri&#233;t&#233;s du syst&#232;me, des arguments de lancement ou, si n&#233;cessaire, &#224; partir d'un argument par d&#233;faut.
+        <li>Le constructeur DecoderPro fait simplement r&#233;f&#233;rence au constructeur App3, qui g&#232;re &#224; son tour une initiatlisation de l'interface graphique
+             et s'appuie sur le constructeur AppsBase pour le reste.
+         <li> Apps3.start () est alors responsable de la dynamique du programme.
+         </ul>
+    
+      <p>Quelques rep&#232;res utiles:
+         <dl>
+         <dt> Fen&#234;tres, barres d'outils et menus </dt>
+             <dd> Le support Gui3 (voir la <a href="Swing.shtml"> page Swing JMRI </a>) est utilis&#233; pour
+                 d&#233;finir des barres d'outils et des menus. Par exemple, les charges apps.gui3.dp3.DecoderPro3 # getMenuFile ()
+                 &#224; partir de xml/config/parts/jmri/jmrit/roster/swing/RosterFrameMenu.xml et apps.gui3.dp3.DecoderPro3 # getToolbarFile ()
+                 charges depuis xml/config/parts/jmri/jmrit/roster/swing/RosterFrameToolBar.xml
+             </dd>
+            
+           <dt> Charger la configuration</dt>
+             <dd>
+                 <a id="load" name="load"> </a>
+                 <a href="http://jmri.org/JavaDoc/doc/apps/AppsBase.html#setAndLoadPreferenceFile--"> <code> apps.AppsBase.jmri.ConfigureManager () </code> </a>
+                 charge le fichier de configuration et, au cours du processus, charge et active la plupart des
+                 objets de niveau utilisateur dans le syst&#232;me. En particulier, c'est le d&#233;but du
+                 chargement des
+                 <a href="SystemStructure.shtml"> connexions au syst&#232;me </a>.
+             </dd>
+         </dl>
+         <p> Pour plus d'informations, consultez le <code> <a href="http://jmri.org/JavaDoc/doc/apps/gui3/Apps3.html"> apps.gui3.Apps3 </a> </ code > Javadoc.
+
+    
+    <a id="oldApp" name="oldApp"></a>
+    <h2>Ancienne structure d'application </h2>
+    
+        L'ancien formulaire de candidature original contenait la classe d'applications principale qui descendait de
+        la classe <code> <a href="http://jmri.org/JavaDoc/doc/apps/Apps.html"> apps.Apps </a> </code>.
+
+        <p> La majeure partie de la personnalisation requise pour une nouvelle application consiste &#224; remplacer les m&#233;thodes apps.Apps qui
+        contr&#244;ler l'affichage au d&#233;marrage: fournir l'image principale, le nom et le lien du programme, etc.
+        <p> Au-del&#224;, la nouvelle classe d'application peut remplacer les impl&#233;mentations qui cr&#233;ent des menus, chargent
+        aide, configuration des pr&#233;f&#233;rences, etc.
+
+        <p> La s&#233;quence de d&#233;marrage pour par exemple PanelPro, est alors:
+        <ol>
+        <li> <code> PanelPro # main (..) </code> d&#233;marre et effectue certaines interactions initiales en appelant des m&#233;thodes
+            <code> apps.Apps </code>
+        <li> Il construit ensuite un objet <code> PanelPro </code>, dont la plupart du comportement est h&#233;rit&#233;
+            <code> apps.Apps </code>.
+        <li> Enfin, il utilise la m&#233;thode <code> apps.Apps # createFrame </code> pour terminer la configuration.
+        </ol>
+       <p> Pour plus d'informations, reportez-vous &#224; la Javadoc <code> <a href="http://jmri.org/JavaDoc/doc/apps/Apps.html"> apps.Apps </a> </code>.
+
+     <a id="minApp" name="minApp"> </a>
+     <h2> Structure d'application minimale </h2>
+
+         (Ceci peut &#234;tre obsol&#232;te)
+       <p> La classe apps.SampleMinimalProgram fournit un minimum 
+       d'exemple de d&#233;marrage d'un programme utilisant JMRI. Il a un
+       configuration de configuration cod&#233;e en dur. Voir les commentaires internes
+       pour plus d'informations. </p>
+
+       <p> Il vaut mieux utiliser le syst&#232;me de configuration JMRI pour lire un
+       fichier de configuration et faire l'initialisation. Le
+        code comment&#233; dans apps.SampleMinimalProgram montre
+       comment faire cela. </p>
+
+       <p> Les applications JMRI utilisent elles-m&#234;mes un syst&#232;me plus puissant.
+       m&#233;canisme "de profil" qui a h&#233;rit&#233; des apps.Apps et
+       Classes apps.AppsBase.
+
+      <!--#include virtual="/Footer" --></p>
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>
 </html>
+
+
+
+
+
