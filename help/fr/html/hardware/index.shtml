@@ -1,6 +1,6 @@
 <<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <!-- $Id$ -->
-<!-- UpDated by Blorec Herv&#233;  2017-01-10-->
+<!-- UpDated by Blorec Herv&#233;  2019-02-02-->
 <html lang="fr">
 <head>
   <title>JMRI: Hardware Support</title>
@@ -99,6 +99,13 @@
 			<a href="dccpp/index.shtml">Centrale DCC++ Open Source Arduino
 			</a>.</p>
 	</dd>
+	
+	<dt><a href="dcc4pc/index.shtml">Dcc4Pc</a></dt>
+
+          <dd>
+            <p class="dl">Configurer: <a href=
+            "dcc4pc/index.shtml">Cartes de d\u00e9tection DCC 4 PC</a></p>
+          </dd>
 
 	<dt class="im">
 			<a href="http://www.dccspecialties.com">
@@ -126,19 +133,22 @@
 	        <p class="dl"><A HREF="loconet/Digitrax.shtml">Informations g&#233;n&#233;rales sur  <a href="loconet/Digitrax.shtml">la connexion de JMRI &#224; Digitrax LocoNet </a></p>
 			<p class="dl"> Configuration: Connexion &#224; un LocoNet via
 		    	<ul>
- 		    	<li><A HREF="loconet/PR3.shtml">Interface PR3Digitrax</a>
+ 		    	<li><A HREF="loconet/PR3.shtml">Interface Digitrax PR3 </a>
 		   	 	<li><A HREF="loconet/LocoBufferUSB.shtml">LocoBuffer-USB RR-CirKits</a>
 		   	 	<li>Le plus anciens 
 	   				<A HREF="loconet/LocoBufferII.shtml">LocoBuffer-II </a>,
  	  				<A HREF="loconet/LocoBuffer.shtml">LocoBuffer </a> et les interface	
 	   				<A HREF="loconet/MS100.shtml">MS100 </a>
+	   				<li><a href="loconet/BTLocoBridge.shtml">Bluetooth
+              LocoBridge</a></li>
+           
 	            </ul>
 		    </p>
 		<p class="dl"> Configurer:
 		<A HREF="loconet/LocoNetSim.shtml">LocoNet Simulator pour une utilisation en cas de d&#233;connexion d'un r&#233;seau </a>. </p>
-		<p class="dl">Configurer: connexion &#224; distance via un LocoNet
+		<p class="dl">Configurer: Connexion &#224; distance via un LocoNet
 		<A HREF="loconet/LocoNetServer.shtml"> Serveur LocoNet JMRI </a>. </p>
-		<p class="dl"> Configurer: connexion &#224; distance via un LocoNet
+		<p class="dl"> Configurer: Connexion &#224; distance via un LocoNet
 		<A HREF="loconet/LbServer.shtml">LbServer  </a>. </p>
 		<A HREF="loconet/LocoNetworking.shtml">Informations suppl&#233;mentaires sur la connexion de plusieurs ordinateurs &#224; un seul LocoNet </a>
 		<p class="dl">Configurer: programmation et test des d&#233;codeurs sans une centrale de commande au moyen d'une
@@ -167,6 +177,10 @@
     <dd><p class="dl">Configurer: (LocoNet)
         <a href="loconet/Fleischmann.shtml">Les communications Twin Centre</a></p> 
 	</dd>
+	<dd>
+            <p class="dl">Configurer: Fleischmann Z21 et z21 via
+            <a href="roco/z21/index.shtml">Ethernet</a>.</p>
+          </dd>
 
 	<dt class="im">
  			<a href="http://www.hornby.com/uk-en/">
@@ -222,11 +236,22 @@
      <dt><a href="can/cbus/index.shtml">MERG CBUS</a></dt>
     <dd><p class="dl">Configuration: <a href="can/cbus/index.shtml"> r&#233;seaux CBUS MERG</a></p>
 	</dd>
+	
+	 <dt class="im"><img src=
+          "http://www.modbus.org/images/logo_new.jpg" alt=
+          "Modbus logo" height="27" width="96"></dt>
 
-	<dt class="im"><a href="http://www.modelrec.com">
-	    <img src="http://www.modelrec.com/images/interface/MRCLogo.gif" alt="MRC logo" height="48" width="96"></a></dt>
+          <dt><a href="modbus/index.shtml">Modbus</a></dt>
+
+          <dd>
+            <p class="dl">Configure: <a href=
+            "modbus/index.shtml">R\u00e9seaux Modbus </a></p>
+          </dd>
+
+	<dt class="im"><a href="http://www.modelrectifier.com">
+	    <img src="http://www.modelrectifier.com/images/interface/MRCLogo.gif" alt="MRC logo" height="48" width="96"></a></dt>
     <dt><a href="mrc/index.shtml">Model Rectifier Corp</a> (MRC)</dt>
-    <dd><p class="dl">Les d&#233;codeurs MRCpeuvent &#234;tre configur&#233;s via DecoderPro en utilisant tou syst&#232;me DCC pris en charge.</p>
+    <dd><p class="dl">Les d&#233;codeurs MRC peuvent &#234;tre configur&#233;s via DecoderPro en utilisant tout syst&#232;me DCC pris en charge.</p>
 	    <p>Pour avoir plus d'information sur la connexion de JMRI &#224; une centrale MRC, voir la page<a href="mrc/index.shtml">syst&#232;me MRC</a>.
 	</dd>
 
@@ -294,6 +319,11 @@
 		</p>
 		<p>S'il vous pla&#238;t consulter les notes ci-dessus pour les restrictions que JMRI peut apporter &#224; ce syst&#232;me sp&#233;cifique</p>
 	</dd>
+	
+	<dd>
+            <p class="dl">Configurer: Roco Z21 et z21 via <a href=
+            "roco/z21/index.shtml">Ethernet</a>.</p>
+          </dd>
 
     <dt class="im"><a href="http://www.sprog-dcc.co.uk/"><img src="http://www.sprog-dcc.co.uk/images/SprogDCC300.jpg" alt="SPROG" height="41" width="150"></a></dt>
     <dt><a href="sprog/SPROG.shtml">SPROG</a></dt>
@@ -344,8 +374,8 @@
     <dt class="im"><a href="http://www.x10.com">X10</a></dt>
     <dt><a href="powerline/index.shtml">X10</a></dt>
     <dd>
-    <p>Connection: X10 contr&#244;leurs courant-porteur</p>
-	     <p class="dl">Configure: <a href="powerline/index.shtml">CM11 et contr&#244;leurs compatibles </a></p></dd>
+    <p>Connection: X10, Insteon contr&#244;leurs courant-porteur</p>
+	     <p class="dl">Configure: <a href="powerline/index.shtml">CM11, 2412S et contr&#244;leurs compatibles </a></p></dd>
 
     <dt class="im"><a href="http://w3.zimo.at/">Zimo</a></dt>
     <dt><a href="zimo/Zimo.shtml">ZIMO</a></dt>
@@ -387,10 +417,16 @@
 	<dd>
 		<p><a href="TerminalServer.shtml">EasyDCC via un Serveur Terminal Lantronix</a></p>
 	</dd>
+	
+	<dt class="left">Raspberry Pi</dt>
 
-	</dl>
+        <dd>
+          <p><a href="pi/index.shtml#connecting">Connexion aux broches GPIO Pi </a></p>
+        </dd>
+      </dl>
 
-        <h2>
+	
+	        <h2>
 		JMRI: Infos G&#233;n&#233;rales sur le mat&#233;riel
         </h2>
 	<dl>
@@ -405,7 +441,7 @@
 	</dd>
 
 	<dt class="left"><a href="PDA.shtml">PDA</a></dt>
-  <dd>Une fa&#231;on d'utiliser un PDA pour acc&#233;der &#224; JMRI ( obsol&#232;te ).</dd>
+  <dd>Une fa&#231;on d'utiliser un PDA pour acc&#233;der &#224; JMRI .</dd>
 </dl>
 
 <!--#include virtual="/Footer" -->
@@ -413,3 +449,4 @@
 	</div> <!-- closes #mBody-->
 </body>
 </html>
+
