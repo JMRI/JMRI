@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2014 All rights reserved                            -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2019</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Egbert</firstname>
+        <surname>Broerse</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2019-02-01</date>
+      <authorinitials>EB</authorinitials>
+      <revremark>Initial version as separate file, taken from Uhlenbrock/soundVars7outputs.xml</revremark>
+    </revision>
+        <!-- Valid only for Uhlenbrock decoders with IntelliDrive2, Piko Sound 4.1 -->
+  </revhistory>
+
+    <!-- Declaration of the "switch" CVs -->
+    <variable item="Bank switch 1" CV="31" default="0" tooltip="Reset to Off after programming">
+        <enumVal>
+            <enumChoice choice="Banks Off" value="0">
+                <choice>Banks Off</choice>
+                <choice xml:lang="de">Banks Aus</choice>
+            </enumChoice>
+            <enumChoice choice="Banks Program" value="8">
+                <choice>Program</choice>
+                <choice xml:lang="de">Programmieren</choice>
+            </enumChoice>
+            <enumChoice choice="Banks Unknown" value="1">
+                <choice>Unknown</choice>
+                <choice xml:lang="de">Unbekannt</choice>
+            </enumChoice>
+        </enumVal>
+        <label>State</label>
+        <label xml:lang="de">Zustand</label>
+    </variable>
+
+    <variable item="Bank switch 2" CV="32" default="255">
+        <enumVal>
+            <enumChoice choice="Extended Function Mapping 1-16" value="0">
+                <choice>1. Extended Function Mapping 1-16</choice>
+                <choice xml:lang="de">1. Erweitertes Fkt.-Mapping 1-16</choice>
+            </enumChoice>
+            <enumChoice choice="Extended Function Mapping 17-32" value="1">
+                <choice>2. Extended Function Mapping 17-32</choice>
+                <choice xml:lang="de">2. Erweitertes Fkt.-Mapping 17-32</choice>
+            </enumChoice>
+            <enumChoice choice="PWM Modulation 1-4" value="3">
+                <choice>3. PWM Modulation 1-4</choice>
+                <choice xml:lang="de">3. PWM Modulationen 1-4</choice>
+            </enumChoice>
+            <enumChoice choice="PWM Modulation 5-8" value="4">
+                <choice>4. PWM Modulation 5-8</choice>
+                <choice xml:lang="de">4. PWM Modulationen 5-8</choice>
+            </enumChoice>
+            <enumChoice choice="None" value="255">
+                <choice>None</choice>
+                <choice xml:lang="de">Keine</choice>
+            </enumChoice>
+        </enumVal>
+        <label>Bank</label>
+        <label xml:lang="de">Bank</label>
+    </variable>
+
+    <!-- Bank 1 - 4 variables -->
+
+    <!-- Bank 1 CVs Extended Function Mapping rows 1-16 (Index CV 32 = 0) -->
+    <!-- group hides/shows with CV 32 choice = 0 -->
+    <variable item="Bank1 On1" CV="257.0" default="144">
+        <decVal/>
+        <label>ON</label>
+        <label xml:lang="de">EIN</label>
+        <tooltip>Row 1, Condition On 1, value 0-255</tooltip>
+    </variable>
+    <variable item="Bank1 On2" CV="258.0" default="0">
+        <decVal/>
+        <label>ON</label>
+        <label xml:lang="de">EIN</label>
+        <tooltip>Row 1, Condition On 2, value 0-255</tooltip>
+    </variable>
+    <!-- Test with only 1 series TODO enter remaining CVs 259.0 - 512.0 -->
+    <variable item="Bank1 Off1" CV="263.0" default="0">
+        <decVal/>
+        <label>OFF</label>
+        <label xml:lang="de">AUS</label>
+        <tooltip>Row 1, Condition On 1, value 0-255</tooltip>
+    </variable>
+    <variable item="Bank1 Off2" CV="264.0" default="0">
+        <decVal/>
+        <label>OFF</label>
+        <label xml:lang="de">AUS</label>
+        <tooltip>Row 1, Condition On 2, value 0-255</tooltip>
+    </variable>
+    <!-- End Bank 1 -->
+
+    <!-- Bank 2 CVs Extended Function Mapping rows 17-32 (Index CV 32 = 1) -->
+    <!-- group hides/shows with CV 32 choice = 1 -->
+    <variable item="Bank2 On1" CV="257.1" default="0">
+        <decVal/>
+        <label>ON</label>
+        <label xml:lang="de">EIN</label>
+        <tooltip>Row 1, Condition On 1, value 0-255</tooltip>
+    </variable>
+    <variable item="Bank2 On2" CV="258.1" default="0">
+        <decVal/>
+        <label>ON</label>
+        <label xml:lang="de">EIN</label>
+        <tooltip>Row 1, Condition On 2, value 0-255</tooltip>
+    </variable>
+    <!-- Test with only 1 series TODO enter remaining CVs 259.1 - 512.1 -->
+    <variable item="Bank2 Off1" CV="263.1" default="0">
+        <decVal/>
+        <label>OFF</label>
+        <label xml:lang="de">AUS</label>
+        <tooltip>Row 1, Condition On 1, value 0-255</tooltip>
+    </variable>
+    <variable item="Bank2 Off2" CV="264.1" default="0">
+        <decVal/>
+        <label>OFF</label>
+        <label xml:lang="de">AUS</label>
+        <tooltip>Row 1, Condition On 2, value 0-255</tooltip>
+    </variable>
+    <!-- End Bank 2 -->
+
+    <!-- Bank 3 CVs PWM Modulation 1-4 (Index CV 32 = 3) -->
+    <!-- group hides/shows with CV 32 choice = 3 -->
+    <variable item="Bank3 PWM Seq1.1" CV="257.2" default="3">
+        <decVal min="0" max="63"/>
+        <label>Sq 1</label>
+        <tooltip>PWM Sequence 1 Box 1, value 0-63</tooltip>
+    </variable>
+    <variable item="Bank3 PWM Seq1.2" CV="258.2" default="8">
+        <decVal min="0" max="63"/>
+        <label>Sq 1</label>
+        <tooltip>PWM Sequence 1 Box 2, value 0-63</tooltip>
+    </variable>
+    <!-- Test with only 1 series TODO enter remaining CVs 259.2 - 512.2 -->
+    <variable item="Bank3 PWM Seq2.1" CV="273.2" default="0">
+        <decVal min="0" max="63"/>
+        <label>Sq 2</label>
+        <tooltip>PWM Sequence 2 Box 1, value 0-63</tooltip>
+    </variable>
+    <variable item="Bank3 PWM Seq2.2" CV="274.2" default="0">
+        <decVal min="0" max="63"/>
+        <label>Sq 2</label>
+        <tooltip>PWM Sequence 2 Box 2, value 0-63</tooltip>
+    </variable>
+    <!-- End Bank 3 -->
+
+    <!-- Bank 4 CVs PWM Modulation 5-8 (Index CV 32 = 4) -->
+    <!-- group hides/shows with CV 32 choice = 4 -->
+    <variable item="Bank4 PWM Seq5.1" CV="257.3" default="3">
+        <decVal min="0" max="63"/>
+        <label>Sq 5</label>
+        <tooltip>PWM Sequence 5 Box 1, value 0-63</tooltip>
+    </variable>
+    <variable item="Bank4 PWM Seq5.2" CV="258.3" default="8">
+        <decVal min="0" max="63"/>
+        <label>Sq 5</label>
+        <tooltip>PWM Sequence 5 Box 2, value 0-63</tooltip>
+    </variable>
+    <!-- Test with only 1 series TODO enter remaining CVs 259.3 - 512.3 -->
+    <variable item="Bank4 PWM Seq6.1" CV="273.3" default="0">
+        <decVal min="0" max="63"/>
+        <label>Sq 6</label>
+        <tooltip>PWM Sequence 6 Box 1, value 0-63</tooltip>
+    </variable>
+    <variable item="Bank4 PWM Seq6.2" CV="274.3" default="0">
+        <decVal min="0" max="63"/>
+        <label>Sq 6</label>
+        <tooltip>PWM Sequence 6 Box 2, value 0-63</tooltip>
+    </variable>
+    <!-- End Bank 4 -->
+
+</variables>

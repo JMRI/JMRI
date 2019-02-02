@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2005 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+    <version author="Egbert Broerse" version="1" lastUpdated="20190202"/>
+    <!-- Version 1 - Copied and adapted from Uhlenbrock_76560.xml -->
+    <!-- WARNING: output names fully linked to function mapping include file - do not change independently -->
+    <decoder>
+        <family name="IntelliDrive2" mfg="Uhlenbrock Elektronik" comment="Decoders not sorted (necessarily) in numerical order"><!-- to be checked by hardware owner -->
+            <model model="73105" numOuts="9" numFns="14" maxMotorCurrent="1.2A" formFactor="N" connector="Next18" productID="73105" comment="IntelliDrive2 Mini-Lokdecoder and RailCom(R) (Plus)">
+                <output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
+                <output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>
+                <output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="4" label=". A2 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="5" label=". A3 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="6" label=". A4 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="7" label=". A5 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="8" label=". A6 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="9" label=". A7 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="Shunting" label="mode"/>
+                <output name="Start/brake" label="inertia"/>
+                <size length="30.2" width="16" height="3.8" units="mm"/>
+            </model>
+            <model model="PIKO41RH2400" numOuts="9" numFns="14" maxMotorCurrent="1.2A" formFactor="N" connector="Next18" productID="PIKO41RH2400" comment="Piko SmartDecoder 4.1 Sound Dieselloco Rh2400 Next18 plug and RailCom(R) (Plus)">
+                <output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
+                <output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>
+                <output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="4" label=". A2 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="5" label=". A3 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="6" label=". A4 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="7" label=". A5 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="8" label=". A6 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="9" label=". A7 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="Shunting" label="mode"/>
+                <output name="Start/brake" label="inertia"/>
+                <size length="30.2" width="16" height="3.8" units="mm"/>
+            </model>
+        </family>
+        <programming direct="yes" paged="yes" register="yes" ops="yes">
+            <capability>
+                <name>Indexed CV access</name>
+                <parameter name="PI">1021</parameter>
+                <parameter name="SI">0</parameter> <!-- Not used, but need to be declared for cvFirst to be read -->
+                <parameter name="cvFirst">true</parameter>
+            </capability>
+        </programming>
+        <variables>
+            <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/><!-- CV1, 17, 18 -->
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/vStartHighMid-accelDecel.xml"/><!-- CV2-6 -->
+            <variable item="Decoder Version" CV="7" readOnly="yes" default="39">
+                <decVal/>
+                <label>Manufacturer Version No: </label>
+                <label xml:lang="it">Versione Decoder: </label>
+                <label xml:lang="fr">Version décodeur: </label>
+                <label xml:lang="de">Decoder Version: </label>
+                <label xml:lang="nl">Versie van decoder: </label>
+            </variable>
+            <variable item="Manufacturer" CV="8" readOnly="yes" default="162" include="PIKO41RH2400"><!-- Piko -->
+                <decVal/>
+                <label>Manufacturer ID: </label>
+                <label xml:lang="it">ID Costruttore: </label>
+                <label xml:lang="fr">ID constructeur: </label>
+                <label xml:lang="de">Hersteller ID: </label>
+                <label xml:lang="nl">Fabrikant-ID: </label>
+            </variable>
+            <variable item="Manufacturer" CV="8" readOnly="yes" default="85" include="73105, 73115, 73145, 73405, 73415"><!-- Uhlenbrock -->
+                <decVal/>
+                <label>Manufacturer ID: </label>
+                <label xml:lang="it">ID Costruttore: </label>
+                <label xml:lang="fr">ID constructeur: </label>
+                <label xml:lang="de">Hersteller ID: </label>
+                <label xml:lang="nl">Fabrikant-ID: </label>
+            </variable>
+            <variable item="DC Operation" CV="12" mask="XXXXXXXV">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>DC Operation</label>
+                <label xml:lang="de">Analogbetrieb Gleichstrom</label>
+            </variable>
+            <variable item="DCC Operation" CV="12" mask="XXXXXXVX">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>DCC Operation</label>
+                <label xml:lang="de">DCC Datenformat</label>
+            </variable>
+            <variable item="Motorola Operation" CV="12" mask="XXXXXVXX">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>Motorola Mode</label>
+                <label xml:lang="de">Motorola Datenformat</label>
+            </variable>
+            <variable item="Selectrix Operation" CV="12" mask="XXXXVXXX">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>Selectrix Mode</label>
+                <label xml:lang="de">Selectrix Datenformat</label>
+            </variable>
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv13analogfunction41.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv14analogfunction41.xml"/>
+            <variable CV="15" item="Decoder Lock ID" default="0" tooltip="Set this to match value below and decoder will unlock">
+                <decVal/>
+                <label>Decoder Lock ID</label>
+                <label xml:lang="de">Decoder Lock</label>
+                <label xml:lang="ca">Bloqueig decoder per ID</label>
+                <tooltip xml:lang="de">Setzen Sie diesen Wert auf den unten stehenden Wert und der Decoder wird entsperrt</tooltip>
+            </variable>
+            <variable CV="16" item="Decoder Lock Index" default="0" tooltip="Set this to decoder type: 1=motor, 2=sound, 3=function etc.">
+                <decVal/>
+                <label>Preset Lock ID</label>
+                <label xml:lang="de">Decoder-Typ Lock</label>
+                <label xml:lang="ca">ID locomotora per tipus</label>
+                <tooltip xml:lang="de">Setzen Sie diesen Wert auf Decoder-Typ: 1 = Motor, 2 = Sound, 3 = Funktion etc.</tooltip>
+            </variable>
+            <!-- Consisting Information follows -->
+            <variable CV="19" item="Consist Address" default="0" mask="XVVVVVVV" comment="Stores consist address. Range 0-127 (direction set in bit 7)">
+                <decVal max="127"/>
+                <label>Consist Address (0-127)</label>
+            </variable>
+            <variable CV="19" item="Consist Direction" label="Consist Direction" mask="VXXXXXXX">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-FwdRev.xml"/>
+                <label>Advanced Consist direction</label>
+                <label xml:lang="it">Direzione Consist Avanzati</label>
+            </variable>
+            <!-- CVs 27-30 TODO -->
+            <!-- CVs 31-32 Banks -->
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv31.32CvBanks.xml"/>
+            <!-- CVs 33-46 function mapping -->
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/functionmap7outputs.xml"/>
+
+            <!-- CV50-51 decoder configuration -->
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv50.51config.xml"/>
+            <!-- CVs 53-59 TODO -->
+            <variable item="Short circuit supervision" CV="60" readOnly="yes">
+                <decVal max="9"/>
+                <label>Motor and Function Output Short circuit supervision</label>
+                <label xml:lang="de">Kurzschlussüberwachung Motor- und Funktionsausgänge</label>
+                <label xml:lang="nl">Kortsluitbeveiliging Motor- und Functie-uitgangen</label>
+                <tooltip>Do not change! 0=deactivated - 137=activated</tooltip>
+            </variable>
+            <variable item="Shutdown Temperature" CV="61" readOnly="yes">
+                <decVal/>
+                <label>Shutdown Temperature</label>
+                <label xml:lang="de">Abschalttemperatur</label>
+                <label xml:lang="nl">Uitschakeltemperatuur</label>
+                <tooltip>in °C, different with each decoder</tooltip>
+            </variable>
+            <variable item="Function Outputs Short Constant" CV="62" readOnly="yes">
+                <decVal/>
+                <label>Function Outputs Short Constant</label>
+                <label xml:lang="de">Kurzschlussüberwachung Fkt.-Ausgänge</label>
+                <label xml:lang="nl">Kortsluitbeveiliging functieuitgangen</label>
+            </variable>
+            <variable item="Motor Output Short Constant" CV="63" readOnly="yes">
+                <decVal/>
+                <label>Motor Output Short Constant</label>
+                <label xml:lang="de">Kurzschlussüberwachung Motorausgang</label>
+                <label xml:lang="nl">Kortsluitbeveiliging motoruitgang</label>
+            </variable>
+
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv64.65registers.xml"/><!-- Piko -->
+            <xi:include href="http://jmri.org/xml/decoders/nmra/fwdTrim.xml"/><!-- CV66 -->
+            <xi:include href="http://jmri.org/xml/decoders/nmra/revTrim.xml"/><!-- CV95 -->
+            <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
+            <variable item="Advanced Function Mapping" CV="96" default="0"><!-- Piko -->
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+                <label>Advanced Function Mapping</label>
+                <label xml:lang="de">Art des Function Mappings</label>
+            </variable>
+            <variable item="ABC Braking" CV="97" default="8">
+                <decVal/>
+                <label>ABC voltage detection threshold</label>
+                <label xml:lang="de">ABC-Modus „Empfindlichkeit”</label>
+                <label xml:lang="nl">ABC Remdrempel</label>
+                <tooltip>Voltage drop in Diode block = CV-Wert * 0.12 Volts</tooltip>
+                <tooltip xml:lang="de">Spannungsdifferenz für Diodenstrecke ist ca. CV-Wert * 0,12V</tooltip>
+            </variable>
+            <variable item="ABC Slow Speed" CV="97" default="8">
+                <decVal/>
+                <label>ABC mode reduced speed</label>
+                <label xml:lang="de">ABC Modus „Langsamfahrt”</label>
+                <label xml:lang="ca">Velociatat limitada en mode ABC</label>
+                <label xml:lang="nl">ABC-modus Lage rijsnelheid</label>
+                <tooltip>Speed in ABC Slow block</tooltip>
+                <tooltip xml:lang="de">Geschwindigkeit in der ABC Langsamfahrstrecke</tooltip>
+            </variable>
+
+            <!-- CVs 116-118 (CVs 116-123 for Piko) -->
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/optionVars7outputs.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv124.129coupling.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv130.134smoke.xml"/>
+            <!-- SmartSound 4.1 variables, CVs 109 - 111 are on Lights tab -->
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/soundVars7outputs.xml"/>
+            <!-- TODO CVs 128-190 -->
+            <variable item="Motor Management 1" CV="200" default="10">
+                <decVal/>
+                <label>Minimum Speed Step</label>
+                <label xml:lang="de">minimale Fahrstufe</label>
+                <tooltip>Minimal speed step to which the Period = CV53 is set</tooltip>
+                <tooltip xml:lang="de">minimale Fahrstufe bis zu der die Periodendauer = CV53 gesetzt wird</tooltip>
+            </variable>
+            <variable item="Motor Management 2" CV="201" default="150">
+                <decVal/>
+                <label>Maximum Speed Step</label>
+                <label xml:lang="de">maximale Fahrstufe</label>
+                <tooltip>Maximal speed step from where the Period = CV202 is set</tooltip>
+                <tooltip xml:lang="de">maximale Fahrstufe ab der die Periodendauer = CV202 gesetzt wird</tooltip>
+            </variable>
+            <variable item="Motor Management 3" CV="202" default="250">
+                <decVal/>
+                <label>Maximum Period Length</label>
+                <label xml:lang="de">maximale Periodendauer</label>
+                <tooltip>Maximum Period length in 100μs steps (min = CV53)</tooltip>
+                <tooltip xml:lang="de">maximale Periodendauer in 100μs Schritten (min = CV53)</tooltip>
+            </variable>
+        </variables>
+
+        <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/factReset4.xml"/><!-- Piko -->
+    </decoder>
+    <!-- special panes -->
+    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/PaneUhlenbrock.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/PaneId2Advanced.xml"/><!-- IntelliDrive2 -->
+    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/fmapPane7outputs.xml"/>
+</decoder-config>

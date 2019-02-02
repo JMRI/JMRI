@@ -100,13 +100,15 @@
         <text>Errors or Information (Read-Only)</text>
         <text xml:lang="de">Fehler oder Information (Read-Only)</text>
         <text xml:lang="it">Informazioni o Errori (Solo-Lettura)</text>
-        <text xml:lang="nl">Fouten of Informatie (Alleen Lezen)</text>
+        <text xml:lang="nl">Fouten en ov. informatie (Alleen Lezen)</text>
       </label>
     <label>
       <text> </text>
     </label>
       <display item="Shutdown Temperature"/>	  
       <display item="Short circuit supervision"/>
+      <display item="Function Outputs Short Constant"/>
+      <display item="Motor Output Short Constant"/>
       <display item="Lights Short circuit supervision"/>
       <display item="Short circuit supervision 1" format="checkbox"/>
       <display item="Short circuit supervision 2" format="checkbox"/>

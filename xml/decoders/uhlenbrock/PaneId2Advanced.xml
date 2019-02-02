@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+    <copyright xmlns="http://docbook.org/ns/docbook">
+        <year>2018</year>
+        <holder>JMRI</holder>
+    </copyright>
+    <authorgroup xmlns="http://docbook.org/ns/docbook">
+        <author>
+            <personname>
+                <firstname>Egbert</firstname>
+                <surname>Broerse</surname>
+            </personname>
+        </author>
+    </authorgroup>
+    <revhistory xmlns="http://docbook.org/ns/docbook">
+        <revision>
+            <revnumber>1</revnumber>
+            <date>2019-02-02</date>
+            <authorinitials>EB</authorinitials>
+            <revremark>Initial version, adapted from Uhlenbrock/soundPane7outputs.xml</revremark>
+        </revision>
+        <!-- Valid only for certain Uhlenbrock decoders with IntelliDrive2, Piko Sound 4.1 (non exhaustive list) -->
+    </revhistory>
+
+    <name>IntelliDrive</name>
+    <column>
+        <row>
+            <column>
+                <display item="Advanced Function Mapping" format="checkbox"/>
+                <label>
+                    <text>Decoder Programming Lock</text>
+                    <text xml:lang="de">Decoder Programmierschloss</text>
+                </label>
+                <display item="Decoder Lock ID"/>
+                <display item="Decoder Lock Index"/>
+                <label><text>      </text></label>
+                <!-- CVs 50-51 -->
+                <display item="Use Motorola 2" format="checkbox"/>
+                <display item="Use Motorola 3" format="checkbox"/>
+                <display item="Flip Light Outputs" format="checkbox"/>
+                <display item="Light Frequency"/>
+                <display item="SUSI1 Task"/>
+                <display item="SUSI2 Task"/>
+                <display item="A8 Function"/>
+                <display item="Intellimatic" format="checkbox"/>
+                <label><text>      </text></label>
+                <display item="Motor Control" format="checkbox"/>
+                <display item="Motor Control PIDSX"/>
+                <display item="Dynamic Pulse Duration" format="checkbox"/>
+                <label><text>      </text></label>
+                <label>
+                    <text>Motor Management Settings</text>
+                    <text xml:lang="de">Motorregelung</text>
+                </label>
+                <display item="Motor Management 1"/>
+                <display item="Motor Management 2"/>
+                <display item="Motor Management 3"/>
+                <!-- CVs 97-98 -->
+                <label>
+                    <text>ABC Braking</text>
+                    <text xml:lang="de">ABC Bremsen</text>
+                </label>
+                <display item="ABC Braking"/>
+                <display item="ABC Slow Speed"/>
+            </column>
+
+            <column>
+                <label>
+                    <text>CV Banks</text>
+                    <text xml:lang="de">CV Banken</text>
+                </label>
+                <separator/>
+                <display item="Bank switch 1"/>
+                <display item="Bank switch 2"/>
+                <separator/>
+                <row>
+                    <group>
+                        <qualifier>
+                            <variableref>Bank switch 1</variableref>
+                            <relation>eq</relation>
+                            <value>8</value>
+                        </qualifier>
+                        <qualifier>
+                            <variableref>Bank switch 2</variableref>
+                            <relation>eq</relation>
+                            <value>0</value>
+                        </qualifier>
+                        <column>
+                            <label><text> </text></label>
+                            <display item="Bank1 On1"/>
+                            <display item="Bank1 On2"/>
+                            <label><text> </text></label>
+                        </column>
+                        <column><label><text>      </text></label></column>
+                        <column>
+                            <label><text> </text></label>
+                            <display item="Bank1 Off1"/>
+                            <display item="Bank1 Off2"/>
+                            <label><text> </text></label>
+                        </column>
+                    </group>
+                </row>
+
+                <row>
+                    <group>
+                        <qualifier>
+                            <variableref>Bank switch 1</variableref>
+                            <relation>eq</relation>
+                            <value>8</value>
+                        </qualifier>
+                        <qualifier>
+                            <variableref>Bank switch 2</variableref>
+                            <relation>eq</relation>
+                            <value>1</value>
+                        </qualifier>
+                        <column>
+                            <label><text> </text></label>
+                            <display item="Bank2 On1"/>
+                            <display item="Bank2 On2"/>
+                            <label><text> </text></label>
+                        </column>
+                        <column><label><text>      </text></label></column>
+                        <column>
+                            <label><text> </text></label>
+                            <display item="Bank2 Off1"/>
+                            <display item="Bank2 Off2"/>
+                            <label><text> </text></label>
+                        </column>
+                    </group>
+                </row>
+
+                <row>
+                    <group>
+                        <qualifier>
+                            <variableref>Bank switch 1</variableref>
+                            <relation>eq</relation>
+                            <value>8</value>
+                        </qualifier>
+                        <qualifier>
+                            <variableref>Bank switch 2</variableref>
+                            <relation>eq</relation>
+                            <value>3</value>
+                        </qualifier>
+                        <column>
+                            <label><text> </text></label>
+                            <display item="Bank3 PWM Seq1.1"/>
+                            <display item="Bank3 PWM Seq1.2"/>
+                            <label><text> </text></label>
+                        </column>
+                        <column><label><text>      </text></label></column>
+                        <column>
+                            <label><text> </text></label>
+                            <display item="Bank3 PWM Seq2.1"/>
+                            <display item="Bank3 PWM Seq2.2"/>
+                            <label><text> </text></label>
+                        </column>
+                    </group>
+                </row>
+
+                <row>
+                    <group>
+                        <qualifier>
+                            <variableref>Bank switch 1</variableref>
+                            <relation>eq</relation>
+                            <value>8</value>
+                        </qualifier>
+                        <qualifier>
+                            <variableref>Bank switch 2</variableref>
+                            <relation>eq</relation>
+                            <value>4</value>
+                        </qualifier>
+                        <column>
+                            <label><text> </text></label>
+                            <display item="Bank4 PWM Seq5.1"/>
+                            <display item="Bank4 PWM Seq5.2"/>
+                            <label><text> </text></label>
+                        </column>
+                        <column><label><text>      </text></label></column>
+                        <column>
+                            <label><text> </text></label>
+                            <display item="Bank4 PWM Seq6.1"/>
+                            <display item="Bank4 PWM Seq6.2"/>
+                            <label><text> </text></label>
+                        </column>
+                    </group>
+                </row>
+            </column>
+        </row>
+    </column>
+</pane>
