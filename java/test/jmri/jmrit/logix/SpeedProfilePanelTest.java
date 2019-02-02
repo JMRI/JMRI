@@ -19,7 +19,7 @@ public class SpeedProfilePanelTest {
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         RosterSpeedProfile rsp = new RosterSpeedProfile(new RosterEntry());
-        SpeedProfilePanel t = new SpeedProfilePanel(rsp, true);
+        SpeedProfilePanel t = new SpeedProfilePanel(rsp, true, null);
         Assert.assertNotNull("exists",t);
     }
 

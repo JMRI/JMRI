@@ -222,10 +222,7 @@ public class MergePrompt extends JDialog {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
         panel.add(new JLabel(Bundle.getMessage(title)));
-        SpeedProfilePanel speedPanel = new SpeedProfilePanel(profile, edit);
-        if (anomalies != null) {
-            speedPanel.setAnomalies(anomalies);
-        }
+        SpeedProfilePanel speedPanel = new SpeedProfilePanel(profile, edit, anomalies);
         panel.add(speedPanel);
         return panel;
     }
