@@ -137,9 +137,15 @@
         </li>
 
         <li>
-          <p><b>State</b> Shows the current state of the block,
-          Occupied or UnOccupied.<br>
-          Choose between textual and graphic display in the <a href="../../../apps/TabbedPreferences.shtml#Display">Display preferences</a>.
+          <p><b>State</b> Shows the current state of the block,</p>
+          <ul>
+          <li>Occupied</li>
+          <li>UnOccupied</li>          
+          <li>Unknown</li>          
+          <li>Inconsistent</li>          
+          </ul>
+          <p>Choose between textual and graphic display in the 
+          <a href="../../../apps/TabbedPreferences.shtml#Display">Display preferences</a>.
           </p>
         </li>
 

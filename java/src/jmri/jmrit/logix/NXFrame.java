@@ -848,7 +848,8 @@ public class NXFrame extends WarrantRoute {
         int deltaTime = _intervalTime;
         float upRampLength;
         float dnRampLength ;
-        if (deltaTime >= _speedUtil.getMomentumTime(increment, false)) {   // do longer ramp first
+        // do longer ramp first
+        if (deltaTime >= _speedUtil.getMomentumTime(increment, false)) { 
             dnRampLength = getDownRampLength();            
             upRampLength = getUpRampLength();            
         } else {

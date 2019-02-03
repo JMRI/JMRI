@@ -18,6 +18,8 @@ import org.junit.runners.Suite;
     StopTest.class,
     TimeTableDataManagerTest.class,
     TimeTableImportTest.class,
+    TimeTableCsvImportTest.class,
+    TimeTableCsvExportTest.class,
     TrainTest.class,
     TrainTypeTest.class,
     jmri.jmrit.timetable.configurexml.PackageTest.class,

@@ -100,6 +100,7 @@ abstract public class AbstractConnectionConfigXml extends AbstractXmlAdapter {
 
             if (shared.getAttribute("systemPrefix") != null) {
                 adapter.getSystemConnectionMemo().setSystemPrefix(shared.getAttribute("systemPrefix").getValue());
+                checkAndWarnPrefix(shared.getAttribute("systemPrefix").getValue()); // for removal after #4670 resolved
             }
         }
 
@@ -112,6 +113,41 @@ abstract public class AbstractConnectionConfigXml extends AbstractXmlAdapter {
                     adapter.setDisabled(true);
                 }
             }
+        }
+    }
+    
+    
+    /** 
+     * Check for a deprecated system prefix and warn if found
+     * @deprecated 4.15.3  part of #4670 migration to parsable prefixes
+     */
+    @Deprecated // part of #4670 migration to parsable prefixes
+    protected void checkAndWarnPrefix(String prefix) {
+        if (! jmri.Manager.isLegacySystemPrefix(prefix)) return;
+        // legacy, so warn
+        log.warn("Connection is using a legacy prefix that needs to be migrated: {}", prefix);
+        log.warn("See http://jmri.org/help/en/html/setup/MigrateSystemPrefixes.shtml for more information");
+        
+        // and show clickable dialog
+        if (!java.awt.GraphicsEnvironment.isHeadless()) {
+            javax.swing.JLabel message = new javax.swing.JLabel("<html><body>You have a connection with prefix \""
+                                                        +prefix+"\" that needs to migrated.<br>"
+                                                        +"See <a href=\"http://jmri.org/help/en/html/setup/MigrateSystemPrefixes.shtml\">"
+                                                            +"http://jmri.org/help/en/html/setup/MigrateSystemPrefixes.shtml</a>"
+                                                        +"<br>for more information.</body></html>"                 
+                );
+            message.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+            message.addMouseListener(new java.awt.event.MouseAdapter() {
+                @Override
+                public void mouseClicked(java.awt.event.MouseEvent e) {
+                    try {
+                        java.awt.Desktop.getDesktop().browse(new java.net.URI("http://jmri.org/help/en/html/setup/MigrateSystemPrefixes.shtml"));
+                    } catch (java.net.URISyntaxException | java.io.IOException ex) {
+                        log.error("couldn't open JMRI web site", ex);
+                    }
+                }
+             });
+            javax.swing.JOptionPane.showMessageDialog(null, message, "Migration Required", javax.swing.JOptionPane.WARNING_MESSAGE);
         }
     }
 

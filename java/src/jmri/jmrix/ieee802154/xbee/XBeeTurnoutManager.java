@@ -79,6 +79,7 @@ public class XBeeTurnoutManager extends AbstractTurnoutManager {
      * @param systemName Xbee id format with pins to be checked
      * @return 'true' if system name has a valid format, else returns 'false'
      */
+    @Override
     public NameValidity validSystemNameFormat(String systemName) {
         if (tc.getNodeFromName(addressFromSystemName(systemName)) == null
                 && tc.getNodeFromAddress(addressFromSystemName(systemName)) == null) {

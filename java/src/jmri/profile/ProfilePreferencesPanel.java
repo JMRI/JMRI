@@ -98,6 +98,7 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
         jScrollPane1 = new JScrollPane();
         profilesTbl = new JTable() {
             //Implement table cell tool tips.
+            @Override
             public String getToolTipText(MouseEvent e) {
                 try {
                     return getValueAt(rowAtPoint(e.getPoint()), -1).toString();
@@ -122,6 +123,7 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
             jScrollPane3 = new JScrollPane();
             searchPathsTbl = new JTable() {
                 //Implement table cell tool tips.
+                @Override
                 public String getToolTipText(MouseEvent e) {
                     try {
                         return getValueAt(rowAtPoint(e.getPoint()), -1).toString();

@@ -210,6 +210,7 @@ public class StreamConfigPane extends JmrixConfigPane {
         // to load the rest of the GUI
     }
 
+    @Override
     public void updateComboConnection() {
         modeBox.removeAllItems();
         modeBox.addItem(NONE_SELECTED);
@@ -275,6 +276,7 @@ public class StreamConfigPane extends JmrixConfigPane {
         repaint();
     }
 
+    @Override
     public String getConnectionName() {
         int current = modeBox.getSelectedIndex();
         if (current == 0) {
@@ -283,6 +285,7 @@ public class StreamConfigPane extends JmrixConfigPane {
         return classConnectionList[current].getConnectionName();
     }
 
+    @Override
     public String getCurrentManufacturerName() {
         int current = modeBox.getSelectedIndex();
         if (current == 0) {
@@ -291,6 +294,7 @@ public class StreamConfigPane extends JmrixConfigPane {
         return classConnectionList[current].getManufacturer();
     }
 
+    @Override
     public String getCurrentProtocolName() {
         int current = modeBox.getSelectedIndex();
         if (current == 0) {
@@ -299,6 +303,7 @@ public class StreamConfigPane extends JmrixConfigPane {
         return classConnectionList[current].name();
     }
 
+    @Override
     public String getCurrentProtocolInfo() {
         int current = modeBox.getSelectedIndex();
         if (current == 0) {
@@ -307,6 +312,7 @@ public class StreamConfigPane extends JmrixConfigPane {
         return classConnectionList[current].getInfo();
     }
 
+    @Override
     public ConnectionConfig getCurrentObject() {
         int current = modeBox.getSelectedIndex();
         if (current != 0) {
@@ -315,6 +321,7 @@ public class StreamConfigPane extends JmrixConfigPane {
         return null;
     }
 
+    @Override
     public boolean getDisabled() {
         int current = modeBox.getSelectedIndex();
         if (current == 0) {
@@ -323,6 +330,7 @@ public class StreamConfigPane extends JmrixConfigPane {
         return classConnectionList[current].getDisabled();
     }
 
+    @Override
     public void setDisabled(boolean disabled) {
         int current = modeBox.getSelectedIndex();
         if (current == 0) {
