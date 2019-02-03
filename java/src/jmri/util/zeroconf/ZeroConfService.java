@@ -1,6 +1,5 @@
 package jmri.util.zeroconf;
 
-import java.io.IOException;
 import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -221,7 +220,7 @@ public class ZeroConfService {
      * @param address the address associated with the ServiceInfo to add
      * @return the added ServiceInfo for the address
      */
-    ServiceInfo addServiceInfo(InetAddress address) throws IOException {
+    ServiceInfo addServiceInfo(InetAddress address) {
         if (!this.serviceInfos.containsKey(address)) {
             this.serviceInfos.put(address, this.getServiceInfo().clone());
         }
@@ -245,6 +244,7 @@ public class ZeroConfService {
      * not in public API.
      *
      * @param key the address associated with the ServiceInfo to check for
+     * @return true if the ServiceInfo exists; false otherwise
      */
     boolean containsServiceInfo(InetAddress key) {
         return serviceInfos.containsKey(key);

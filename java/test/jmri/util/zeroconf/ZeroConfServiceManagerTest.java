@@ -3,6 +3,7 @@ package jmri.util.zeroconf;
 import java.util.HashMap;
 import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
+import jmri.util.node.NodeIdentity;
 import jmri.web.server.WebServerPreferences;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -171,4 +172,23 @@ public class ZeroConfServiceManagerTest {
         Assert.assertEquals(1, manager.allServices().size());
     }
 
+    @Test
+    public void testHostNameString() {
+        Assert.assertEquals("Empty string to punycode", NodeIdentity.networkIdentity(), ZeroConfServiceManager.hostName(""));
+        Assert.assertEquals("Whitespace to punycode", NodeIdentity.networkIdentity(), ZeroConfServiceManager.hostName(""));
+        Assert.assertEquals("a b", "a-b", ZeroConfServiceManager.hostName("a b"));
+        Assert.assertEquals(".a.b", "a-b", ZeroConfServiceManager.hostName(".a.b"));
+        Assert.assertEquals("_a_b", "a-b", ZeroConfServiceManager.hostName("_a_b"));
+        Assert.assertEquals("My JMRI Railroad", "my-jmri-railroad", ZeroConfServiceManager.hostName("My JMRI Railroad"));
+        Assert.assertEquals("Very long name",
+                "my-jmri-railroad-my-jmri-railroad-my-jmri-railroad-my-jmri-rail",
+                ZeroConfServiceManager.hostName("My JMRI Railroad My JMRI Railroad My JMRI Railroad My JMRI Railroad My JMRI Railroad My JMRI Railroad"));
+        Assert.assertEquals("Single emojii is name", "xn--w68h", ZeroConfServiceManager.hostName("🚞"));
+        Assert.assertEquals("Single emojii in name", "xn--my--railroad-je87k", ZeroConfServiceManager.hostName("My 🚞 Railroad"));
+        Assert.assertEquals("Multiple emojii in name", "xn--my--railroad-4277khl", ZeroConfServiceManager.hostName("My 🚂🚞 Railroad"));
+        Assert.assertEquals("Lots of emojii", "xn--358haaaa8nbbbb", ZeroConfServiceManager.hostName("🚂🚞🚂🚞🚂🚞🚂🚞🚂🚞"));
+        Assert.assertEquals("Very long name with emojii",
+                "xn--my--railroad-my--railroad-my--railroad-my-5g025bnan64joao",
+                ZeroConfServiceManager.hostName("My 🚂🚞 Railroad My 🚂🚞 Railroad My 🚂🚞 Railroad My 🚂🚞 Railroad My 🚂🚞 Railroad My 🚂🚞 Railroad"));
+    }
 }

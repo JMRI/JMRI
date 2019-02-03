@@ -1,6 +1,7 @@
 package jmri.util.zeroconf;
 
 import java.io.IOException;
+import java.net.IDN;
 import java.net.Inet4Address;
 import java.net.Inet6Address;
 import java.net.InetAddress;
@@ -11,6 +12,7 @@ import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 import javax.annotation.Nonnull;
@@ -148,6 +150,7 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
      */
     public ZeroConfService create(String type, String name, int port, int weight, int priority, HashMap<String, String> properties) {
         ZeroConfService s;
+        name = hostName(name);
         String key = key(type, name);
         if (services.containsKey(key)) {
             s = services.get(key);
@@ -341,12 +344,7 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
     synchronized HashMap<InetAddress, JmDNS> getDNSes() {
         if (JMDNS_SERVICES.isEmpty()) {
             log.debug("JmDNS version: {}", JmDNS.VERSION);
-            String name = NodeIdentity.networkIdentity();
-            // make a DNS safe node identity
-            // truncate since hostnames are limited to 63 characters
-            if (name.length() > 63) {
-                name = name.substring(0, 63).toLowerCase();
-            }
+            String name = hostName(NodeIdentity.networkIdentity());
             try {
                 Enumeration<NetworkInterface> nis = NetworkInterface.getNetworkInterfaces();
                 while (nis.hasMoreElements()) {
@@ -446,6 +444,67 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
     }
 
     /**
+     * Return an RFC 1123 compliant host name in all lower-case punycode from a
+     * given string.
+     * <p>
+     * RFC 1123 mandates that host names contain only the ASCII characters a-z, digits,
+     * minus signs ("-") and that the host name be not longer than 63 characters.
+     * <p>
+     * Punycode converts non-ASCII characters into an ASCII encoding per RFC 3492, so
+     * this method repeatedly converts the name into punycode, shortening the name, until
+     * the punycode converted name is 63 characters or less in length.
+     * <p>
+     * If the input string cannot be converted to puny code, or is an empty string,
+     * the input is replaced with {@link jmri.util.node.NodeIdentity#networkIdentity()}.
+     * <p>
+     * The algorithm for converting the input is:
+     * <ol>
+     * <li>Convert to lower case using the {@link java.util.Locale#ROOT} locale.</li>
+     * <li>Remove any leading whitespace, dots ("."), underscores ("_"), and minus signs ("-")</li>
+     * <li>Truncate to 63 characters if necessary</li>
+     * <li>Convert whitespace, dots ("."), and underscores ("_") to minus signs ("-")</li>
+     * <li>Repeatedly convert to punycode, removing the last character as needed until
+     * the punycode is 63 characters or less</li>
+     * <li>Repeat process with NodeIdentity#networkIdentity() as input if above never
+     * yields a usable host name</li>
+     * </ul>
+     * 
+     * @param string String to convert to host name
+     * @return An RFC 1123 compliant host name
+     */
+    @Nonnull
+    public static String hostName(@Nonnull String string) {
+        String puny = null;
+        String name = string.toLowerCase(Locale.ROOT);
+        name = name.replaceFirst("^[_\\.\\s]+", "");
+        if (string.isEmpty()) {
+            name = NodeIdentity.networkIdentity();
+        }
+        if (name.length() > 63) {
+            name = name.substring(0, 63);
+        }
+        name = name.replaceAll("[_\\.\\s]", "-");
+        while (puny == null || puny.length() > 63) {
+            log.debug("name is \"{}\" prior to conversion", name);
+            try {
+                puny = IDN.toASCII(name, IDN.ALLOW_UNASSIGNED);
+                if (puny.isEmpty()) {
+                    name = NodeIdentity.networkIdentity();
+                    puny = null;
+                }
+            } catch (IllegalArgumentException ex) {
+                puny = null;
+            }
+            if (name.length() > 1) {
+                name = name.substring(0, name.length() - 2);
+            } else {
+                name = NodeIdentity.networkIdentity();
+            }
+        }
+        return puny;
+    }
+
+    /**
      * Return the system name or "computer" if the system name cannot be
      * determined. This method returns the first part of the fully qualified
      * domain name from {@link #FQDN}.
@@ -455,7 +514,7 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
      */
     public String hostName(InetAddress address) {
         String hostName = FQDN(address) + ".";
-        // we would have to check for the existance of . if we did not add .
+        // we would have to check for the existence of . if we did not add .
         // to the string above.
         return hostName.substring(0, hostName.indexOf('.'));
     }
