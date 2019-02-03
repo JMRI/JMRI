@@ -1,0 +1,106 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//fr"
+"http://www.w3.org/TR/html4/loose.dtd">
+<!-- UpDated by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-02-02 -->
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <!-- Copyright Bob Jacobsen 2008 -->
+  <!-- $Id$ -->
+
+  <title>JMRI: Examples of LDT Signaling</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <!-- Page Body -->
+
+      <h2>JMRI: Exemples de Signalisation LDT </h2>
+
+      <p>Ce fichier contient quelques exemples de configuration pour
+       le module signal LDT LS-DEC. Il y a des exemples de signaux de
+       plusieurs types de syst&egrave;mes de signalisation:</p>
+
+      <ul>
+        <li><a href="output1.shtml">Signaux type L de la SBB (Chemin de Fer F&eacute;d&eacute;raux Suisse)
+        </a></li>
+
+        <li><a href="output2.shtml">Signaux DB (Chemin de Fer F&eacute;d&eacute;raux Allemande )
+        </a></li>
+
+        <li><a href="output3.shtml">Signaux DR (Chemin de Fer National Allemand)
+        </a></li>
+
+        <li><a href="output4.shtml">Signaux NS (Nederlandse Spoorwegen,
+        Dutch National Railways)</a></li>
+
+        <li><a href="output5.shtml">Signaux OEBB (Chemin de Fer F&eacute;d&eacute;raux
+        Autrichien)</a></li>
+
+        <li><a href="output6.shtml">Signaux CSD/CD/ZSR </a></li>
+      </ul>Les exemples sont bas&eacute;s sur des exemples de connexion publi&eacute;s sur
+       site du fabricant.
+
+      <h3>Configuration JMRI </h3><a href="Panel.png"><img src=
+      "Panel.png" align="right" height="708" width="331" alt=
+      "LDT add panel"></a>
+
+      <p>Vous devez ajouter chaque signal LDT &agrave; l'aide du bouton
+      <a href="../../../../package/jmri/jmrit/beantable/SignalAddEdit.shtml">
+      Ajout/Edition des t&ecirc;tes de Signal</a> depuis le <a href=
+      "../../../../package/jmri/jmrit/beantable/SignalHeadTable.shtml">
+      Tableaux Signaux</a>. S&eacute;lectionnez "LDT LS-DEC" pour le type de connexion 
+      de signal et la fen&ecirc;tre affichera sept lignes pour la
+      configuration de la commande d'activation envoy&eacute;e par JMRI au d&eacute;codeur
+       pour chacune des apparences de signaux JMRI.</p>
+
+      <p> Les d&eacute;codeurs LDT pr&eacute;sentent un ensemble particulier de voyants de sortie
+       en fonction de la commande d'aiguillage re&ccedil;ue, donc ce panneau
+       vous permet de connecter ce que JMRI veut (par exemple, "vert", indiquant
+       clair pour continuer) avec l'apparence sp&eacute;cifique du chemin de fer sur le
+       D&eacute;codeur LDT ("1 d&eacute;vi&eacute;", qui allume l'aspect "1-proc&eacute;der"
+       pour les signaux &agrave; 7 lampes SBB, par exemple). </p>
+
+      <p> Les exemples de liens en haut de la page vous donnent des exemples sur 
+      la fa&ccedil;on de remplir ce formulaire pour obtenir les bonnes apparences pour
+       divers chemins de fer. </p>
+     <h3> D&eacute;codeurs pris en charge </h3>
+
+       <p> Les signaaux JMRI LDT LS-DEC peut &ecirc;tre configur&eacute;e pour
+       d&eacute;codeurs suivants. </p>
+
+       <h4> Littfinski DatenTechnik (LDT) </h4> Pour plus d'informations,
+       s'il vous pla&icirc;t voir <a href =
+       "http://www.ldt-infocenter.com/">http://www.ldt-infocenter.com/ </a>
+
+       <p> Le LS-DEC-DB 8 adresse 4 t&ecirc;tes de signaux </p>
+
+       <p> LS-DEC-DR 8 adresses 2 - 4 t&ecirc;tes de signaux </p>
+
+       <p> LS-DEC-OEBB 8 adresses 4 t&ecirc;tes de signaux </p>
+
+       <p> LS-DEC-SBB 4 ou 8 adresses 2 t&ecirc;tes de signaux </p>
+
+       <p> LS-DEC-NS 8 adresse 4 t&ecirc;tes de signal </p>
+
+       <h4> Mod&egrave;le Marathon </h4> Pour plus d'informations, veuillez consulter
+       <a href =
+       "http://www.marathonmodel.cz/">http://www.marathonmodel.cz/</a>
+
+       <p> DP2N 8 adresses 2 - 8 t&ecirc;tes de signaux </p>
+      <!--#include virtual="/Footer" -->
+    </div>
+  </div>
+</body>
+</html>
