@@ -45,15 +45,17 @@
       <text> </text>
     </label>
       <display item="Digital format"/>
+      <display item="Selectrix Operation" format="checkbox"/>
+      <display item="Mfx Operation" format="checkbox"/>
       <display item="Motorola address 2"/>	  
     <label>
       <text> </text>
     </label>
     <separator/>
     <label>
-      <text>Braking parameters</text>
-      <text xml:lang="de">Bremsparameter</text>
-      <text xml:lang="nl">Remparameters</text>
+      <text>Braking</text>
+      <text xml:lang="de">Bremsen</text>
+      <text xml:lang="nl">Remmen</text>
     </label>
     <label>
       <text> </text>
@@ -63,15 +65,39 @@
     <display item="End braking speed"/>
     </column>
     <column>
+      <label>
+        <text>Coupling</text>
+        <text xml:lang="de">Kupplungen</text>
+        <text xml:lang="nl">Elektr. koppeling</text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
       <display item="Coupling option 1"/>
       <display item="Coupling option 2"/>
       <display item="Coupling option 3"/>
       <display item="Coupling option 4"/>
       <display item="Coupling option 5"/>
       <display item="Coupling option 6"/>
+      <display item="Coupling option 7" format="checkbox"/>
+      <display item="Coupling option 8" format="checkbox"/>
+      <display item="Coupling option 9" format="checkbox"/>
+      <display item="Coupling option 10" format="checkbox"/>
+      <display item="Coupling option 11" format="checkbox"/>
+      <display item="Coupling option 12" format="checkbox"/>
+      <display item="Coupling option 13" format="checkbox"/>
+      <display item="Coupling option 14" format="checkbox"/>
     <label>
       <text> </text>
-    </label>  
+    </label>
+      <label>
+        <text>Smoke Generator</text>
+        <text xml:lang="de">Rauchgenerator</text>
+        <text xml:lang="nl">Rookgenerator</text>
+      </label>
+      <label>
+        <text> </text>
+      </label>
       <display item="Smoke generator option 1" format="checkbox"/>
       <display item="Smoke generator option 2" format="checkbox"/>
       <display item="Smoke generator option 3"/>

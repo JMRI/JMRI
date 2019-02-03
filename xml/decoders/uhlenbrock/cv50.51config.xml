@@ -23,6 +23,13 @@
     </revision>
   </revhistory>
 
+  <!-- IntelliDrive2 Decoder Configuration CV 29 -->
+  <variable item="Use Motorola 2" CV="50" default="0" mask="XXXXXXXV">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Use Motorola 2nd Address</label>
+    <label xml:lang="de">Motorola 2. Adresse nutzen</label>
+  </variable>
+
   <!-- IntelliDrive2 Decoder Configuration CV 50-51 -->
   <variable item="Use Motorola 2" CV="50" default="0" mask="XXXXXXXV">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>

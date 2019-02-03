@@ -176,6 +176,7 @@
         <tooltip xml:lang="de">in 100ms Schritten</tooltip>
         <tooltip xml:lang="nl">in stappen van 100ms</tooltip>
     </variable>
+
     <variable item="Global lighting option 3" CV="111" default="5">
         <decVal/>
         <label>Blink Generator On time</label>
@@ -185,6 +186,7 @@
         <tooltip xml:lang="de">in 100ms Schritten</tooltip>
         <tooltip xml:lang="nl">in stappen van 100ms</tooltip>
     </variable>
+
     <!-- CV 116 - 123 -->
     <variable item="Function F0F option 1" CV="116" default="32">
         <decVal min="0" max="32"/>
