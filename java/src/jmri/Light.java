@@ -63,7 +63,7 @@ import jmri.implementation.LightControl;
  * @author Ken Cameron Copyright (C) 2008
  * @author Bob Jacobsen Copyright (C) 2008
  */
-public interface Light extends DigitalIO {
+public interface Light extends DigitalIO, AnalogIO {
 
     /**
      * State value indicating output intensity is less than maxIntensity and
