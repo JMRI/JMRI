@@ -22,7 +22,7 @@ import jmri.InstanceManager;
 import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.swing.console.CbusConsolePane;
-import jmri.jmrix.can.cbus.swing.console.CbusEventHighlightFrame;
+import jmri.jmrix.can.cbus.swing.CbusEventHighlightFrame;
 import jmri.jmrix.can.cbus.swing.CbusFilterFrame;
 import jmri.jmrix.can.TrafficController;
 import jmri.jmrix.can.cbus.CbusMessage;
@@ -55,7 +55,7 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
     }
 
     public static int getConfigToolInstanceNum() {
-        log.warn("instance num {}",configtool_instance_num);
+        log.debug("instance num {}",configtool_instance_num);
         return configtool_instance_num;
     }
     

@@ -66,7 +66,6 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultFormatter;
 import javax.swing.text.Element;
 import javax.swing.text.Highlighter;
-import jmri.jmrix.can.cbus.CbusCommandStation;
 import jmri.jmrix.can.cbus.eventtable.CbusTableEvent;
 import jmri.jmrix.can.cbus.eventtable.CbusEventTableDataModel;
 import jmri.util.davidflanagan.HardcopyWriter;
@@ -126,12 +125,13 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel implements
     @Override
     public void initComponents(CanSystemConnectionMemo memo) {
         super.initComponents(memo);
-        CbusCommandStation cmndstat = (CbusCommandStation) memo.get(jmri.CommandStation.class);
-        eventModel = cmndstat.getEventTable();
-        if (eventModel == null ) {
+        try {
+            eventModel = jmri.InstanceManager.getDefault(jmri.jmrix.can.cbus.eventtable.CbusEventTableDataModel.class);
+        } catch (NullPointerException e) {
             eventModel = new CbusEventTableDataModel(memo, 10,
                 CbusEventTableDataModel.MAX_COLUMN); // controller, row, column
         }
+        
         fcuxmlfilter = new javax.swing.filechooser.FileNameExtensionFilter( "FCU xml", "xml");
         fc = new JFileChooser(FileUtil.getUserFilesPath());
         init();

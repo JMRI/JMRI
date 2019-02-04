@@ -1,6 +1,7 @@
-package jmri.jmrix.can.cbus.swing.console;
+package jmri.jmrix.can.cbus.swing;
 
 import java.awt.GraphicsEnvironment;
+import jmri.jmrix.can.cbus.swing.console.CbusConsolePane;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
