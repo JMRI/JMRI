@@ -106,7 +106,9 @@ public interface Light extends DigitalIO, AnalogIO {
     /** {@inheritDoc} */
     @Override
     default public boolean isConsistentState() {
-        return (getState() == DigitalIO.ON) || (getState() == DigitalIO.OFF);
+        return (getState() == DigitalIO.ON)
+                || (getState() == DigitalIO.OFF)
+                || (getState() == INTERMEDIATE);
     }
     
     /** {@inheritDoc} */
