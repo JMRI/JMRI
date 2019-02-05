@@ -20,7 +20,7 @@
 	<decoder>
 		<family name="Fleischmann function decoders" mfg="Fleischmann">
 			<model model="686401" lowVersionID="10" maxInputVolts="20V" maxTotalCurrent="0.80 A" formFactor="" connector="Wires" numOuts="4" numFns="9" productID="686401">
-			<output name="1" label="Output A">
+				<output name="1" label="Output A">
 					<label xml:lang="de">Ausgang A</label>
 					<label xml:lang="nl">Uitgang A</label>
 				</output>
@@ -39,7 +39,7 @@
 				<size length="28" width="12.2" height="2.6" units="mm"/>
 			</model>
 			<model model="686403" lowVersionID="11" maxInputVolts="20V" maxTotalCurrent="0.80 A" formFactor="" connector="Wires" numOuts="4" numFns="4" productID="686403">
-			<output name="1" label="Output A">
+				<output name="1" label="Output A">
 					<label xml:lang="de">Ausgang A</label>
 					<label xml:lang="nl">Uitgang A</label>
 				</output>
