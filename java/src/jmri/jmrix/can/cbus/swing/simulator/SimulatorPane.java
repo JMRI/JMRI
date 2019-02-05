@@ -18,11 +18,10 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.Timer;
 import jmri.jmrix.can.CanSystemConnectionMemo;
-import jmri.jmrix.can.cbus.CbusCommandStation;
 import jmri.jmrix.can.cbus.simulator.CbusSimulator;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+// import org.slf4j.Logger;
+// import org.slf4j.LoggerFactory;
 
 /**
  * Pane for viewing and setting simulated network objects.
@@ -36,14 +35,12 @@ import org.slf4j.LoggerFactory;
  */
 public class SimulatorPane extends jmri.jmrix.can.swing.CanPanel {
 
-    private CbusCommandStation cs;
     private CbusSimulator _sim;
 
     private JPanel p1;
     private JPanel _csPanes;
     private JPanel _ndPanes;
     private JPanel _evPanes;
-    private Timer _initTimer;
     private Boolean _disposeSimOnWindowClose;
     private JScrollPane mainScroll;
 
@@ -51,28 +48,14 @@ public class SimulatorPane extends jmri.jmrix.can.swing.CanPanel {
     public void initComponents(CanSystemConnectionMemo memo) {
         super.initComponents(memo);
         
-        cs = (CbusCommandStation) memo.get(jmri.CommandStation.class);
-        _sim = cs.getNetworkSim();
-        
-        if ( _sim == null ) {
-            log.info("No CBUS Simulation Tools are currently started");
-            // actual sim may be initializing so we'll wait for it
-            _initTimer = new Timer(50, new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    if ( _sim != null ) {
-                        _initTimer.stop();
-                        _initTimer = null;
-                        init();
-                    }
-                log.info("Waiting for CBUS Simulation Tools to start");
-                }
+        try {
+            _sim = jmri.InstanceManager.getDefault(jmri.jmrix.can.cbus.simulator.CbusSimulator.class);
+        } catch (NullPointerException e) {
+            jmri.util.ThreadingUtil.runOnLayout( ()->{
+                _sim = new CbusSimulator(memo);
             });
-            _initTimer.setRepeats(true);
-            _initTimer.start();
-        } else {
-            init();
         }
+        init();
     }
 
     @Override
@@ -229,7 +212,7 @@ public class SimulatorPane extends jmri.jmrix.can.swing.CanPanel {
     public void dispose() {
         super.dispose();
         if ( _disposeSimOnWindowClose ) {
-            cs.disposeNetworkSim();
+            _sim.dispose();
         }
     }
 
@@ -245,5 +228,5 @@ public class SimulatorPane extends jmri.jmrix.can.swing.CanPanel {
                     jmri.InstanceManager.getDefault(CanSystemConnectionMemo.class));
         }
     }
-    private final static Logger log = LoggerFactory.getLogger(SimulatorPane.class);
+    // private final static Logger log = LoggerFactory.getLogger(SimulatorPane.class);
 }

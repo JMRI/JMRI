@@ -1,4 +1,4 @@
-package jmri.jmrix.can.cbus.swing.console;
+package jmri.jmrix.can.cbus.swing;
 
 import java.awt.Color;
 import javax.swing.BorderFactory;
@@ -7,6 +7,7 @@ import javax.swing.WindowConstants;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.cbus.CbusEventHighlighter;
+import jmri.jmrix.can.cbus.swing.console.CbusConsolePane;
 import jmri.jmrix.can.cbus.swing.configtool.ConfigToolPane;
 import jmri.util.JmriJFrame;
 

@@ -289,6 +289,7 @@ public class StringUtilTest {
         Assert.assertEquals("F ABC123", 123, StringUtil.getFirstIntFromString("ABC123"));
         Assert.assertEquals("F 123", 123, StringUtil.getFirstIntFromString("123"));
         Assert.assertEquals("F 123ABC", 123, StringUtil.getFirstIntFromString("123ABC"));
+        Assert.assertEquals("F AB12 34ABC", 12, StringUtil.getFirstIntFromString("AB12 34ABC"));
         Assert.assertEquals("F 123 ABC ", 123, StringUtil.getFirstIntFromString("123 ABC"));
         Assert.assertEquals("F 123ABC456", 123, StringUtil.getFirstIntFromString("123ABC456"));
         Assert.assertEquals("F 123A654BC456", 123, StringUtil.getFirstIntFromString("123A654BC456"));
@@ -307,6 +308,7 @@ public class StringUtilTest {
         Assert.assertEquals("ABC123", 123, StringUtil.getLastIntFromString("ABC123"));
         Assert.assertEquals("123", 123, StringUtil.getLastIntFromString("123"));
         Assert.assertEquals("123ABC", 123, StringUtil.getLastIntFromString("123ABC"));
+        Assert.assertEquals("AB12 34ABC", 34, StringUtil.getLastIntFromString("AB12 34ABC"));
         Assert.assertEquals("123 ABC ", 123, StringUtil.getLastIntFromString("123 ABC "));
         Assert.assertEquals("123ABC456", 456, StringUtil.getLastIntFromString("123ABC456"));
         Assert.assertEquals("123A654BC456", 456, StringUtil.getLastIntFromString("123A654BC456"));
