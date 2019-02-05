@@ -1,18 +1,16 @@
 package jmri.managers;
 
 import jmri.IdTag;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-import org.junit.Assert;
+import org.junit.*;
 
 /**
  * Tests for the jmri.managers.DefaultIdTagManager class.
  *
  * @author	Matthew Harris Copyright (C) 2011
  */
-public class DefaultIdTagManagerTest extends TestCase {
+public class DefaultIdTagManagerTest {
 
+    @Test
     public void testIdTagCreation() {
         DefaultIdTagManager m = getManager();
         IdTag t = m.createNewIdTag("ID0413276BC1", "Test Tag");
@@ -20,6 +18,7 @@ public class DefaultIdTagManagerTest extends TestCase {
         Assert.assertNotNull("IdTag is not null", t);
     }
 
+    @Test
     public void testIdTagNames() {
         DefaultIdTagManager m = getManager();
         IdTag t = m.createNewIdTag("ID0413276BC1", "Test Tag");
@@ -29,6 +28,7 @@ public class DefaultIdTagManagerTest extends TestCase {
         Assert.assertEquals("IdTag tag id is '0413276BC1'", "0413276BC1", t.getTagID());
     }
 
+    @Test
     public void testIdTagSingleRetrieval() {
         DefaultIdTagManager m = getManager();
         IdTag t = m.newIdTag("ID0413276BC1", "Test Tag");
@@ -52,6 +52,7 @@ public class DefaultIdTagManagerTest extends TestCase {
         Assert.assertNull("Null Object returned from manager by tagID", m.getBySystemName("XXXXXXXXXX"));
     }
 
+    @Test
     public void testIdTagMultiRetrieval() {
         DefaultIdTagManager m = getManager();
         IdTag t1 = m.newIdTag("ID0413276BC1", "Test Tag 1");
@@ -76,6 +77,7 @@ public class DefaultIdTagManagerTest extends TestCase {
         Assert.assertFalse("Non-matching IdTag returned from manager via getRfidTag using tag id", t2.equals(m.getIdTag("0413276BC1")));
     }
 
+    @Test
     public void testIdTagProviderCreate() {
         DefaultIdTagManager m = getManager();
         IdTag t = m.provideIdTag("0413276BC1");
@@ -92,6 +94,7 @@ public class DefaultIdTagManagerTest extends TestCase {
         Assert.assertEquals("IdTag display name is user name", "Test Tag", t.getDisplayName());
     }
 
+    @Test
     public void testIdTagProviderGet() {
         DefaultIdTagManager m = getManager();
         IdTag t1 = m.newIdTag("ID0413276BC1", "Test Tag 1");
@@ -108,16 +111,10 @@ public class DefaultIdTagManagerTest extends TestCase {
         Assert.assertFalse("Non-matching IdTag returned via provideTag by tag ID", t1.equals(m.provideIdTag("0413275FCA")));
     }
 
-    // from here down is testing infrastructure
-    public DefaultIdTagManagerTest(String s) {
-        super(s);
-    }
-
     // The minimal setup for log4J
-    @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         jmri.util.JUnitUtil.setUp();
-        super.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
         jmri.util.JUnitUtil.initInternalTurnoutManager();
         jmri.util.JUnitUtil.initInternalLightManager();
@@ -125,21 +122,9 @@ public class DefaultIdTagManagerTest extends TestCase {
         jmri.util.JUnitUtil.initIdTagManager();
     }
 
-    @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         jmri.util.JUnitUtil.tearDown();
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", DefaultIdTagManagerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(DefaultIdTagManagerTest.class);
-        return suite;
     }
 
     // Override init method so as not to load file

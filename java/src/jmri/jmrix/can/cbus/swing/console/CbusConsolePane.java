@@ -38,6 +38,7 @@ import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.swing.configtool.ConfigToolPane;
 import jmri.jmrix.can.cbus.swing.CbusFilterFrame;
+import jmri.jmrix.can.cbus.swing.CbusEventHighlightFrame;
 import jmri.jmrix.can.TrafficController;
 import jmri.jmrix.can.cbus.CbusConstants;
 import jmri.jmrix.can.cbus.CbusMessage;

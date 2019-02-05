@@ -204,7 +204,7 @@ public class ThrottleOperator extends JFrameOperator {
         JToggleButtonOperator jbo = new JToggleButtonOperator(fb);
         jbo.clickForPopup();
         JPopupMenuOperator jpmo = new JPopupMenuOperator();
-	jpmo.pushMenu(Bundle.getMessage("MenuItemProperties"));
+	jpmo.pushMenuNoBlock(Bundle.getMessage("MenuItemProperties"));
    }
 
    public void toggleFunctionMomentary(int function){
@@ -270,7 +270,7 @@ public class ThrottleOperator extends JFrameOperator {
         JInternalFrameOperator jifo  = getControlPanelOperator();
         jifo.clickForPopup();
         JPopupMenuOperator jpmo = new JPopupMenuOperator();
-	jpmo.pushMenu(Bundle.getMessage("ControlPanelProperties"));
+	jpmo.pushMenuNoBlock(Bundle.getMessage("ControlPanelProperties"));
    }
 
    public void setSpeedStepDisplay(){

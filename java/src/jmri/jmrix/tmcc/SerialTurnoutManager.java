@@ -190,6 +190,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager implements Seri
      *
      * @return 'true' if system name has a valid format, else return 'false'
      */
+    @Override
     public NameValidity validSystemNameFormat(String systemName) {
         return (SerialAddress.validSystemNameFormat(systemName, 'T', prefix));
     }

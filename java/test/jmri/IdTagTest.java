@@ -1,17 +1,15 @@
 package jmri;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-import org.junit.Assert;
+import org.junit.*;
 
 /**
  * Tests for the IdTag class
  *
  * @author Matthew Harris Copyright (C) 2011
  */
-public class IdTagTest extends TestCase {
+public class IdTagTest {
 
+    @Test
     public void testStateConstants() {
 
         Assert.assertTrue("Seen and Unseen differ", (IdTag.SEEN != IdTag.UNSEEN));
@@ -25,29 +23,73 @@ public class IdTagTest extends TestCase {
 
     }
 
-    // from here down is testing infrastructure
-    public IdTagTest(String s) {
-        super(s);
+    @Test
+    public void testReportableIdTag() {
+       TestIdTag t = new TestIdTag("ID1234"); 
+       Assert.assertNotNull("default toReporterStringImplementation",t.toReportString());
+       Assert.assertEquals("default toReporterStringImplementation","ID1234",t.toReportString());
+
     }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {IdTagTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
+    class TestIdTag extends jmri.implementation.AbstractNamedBean implements IdTag,Reportable {
+
+       public TestIdTag(String systemName){
+           super(systemName);
+       }
+
+       @Override
+       public String getBeanType(){
+           return "IDTAG";
+       }
+
+       @Override
+       public int getState(){
+          return IdTag.UNSEEN;
+       }
+
+       @Override
+       public void setState(int state){
+       }
+
+       @Override
+       public String getTagID(){
+          return "1234";
+       }
+
+       @Override
+       public void setWhereLastSeen(Reporter reporter){
+       }
+
+       @Override
+       public Reporter getWhereLastSeen(){
+          return null;
+       }
+
+       @Override
+       public java.util.Date getWhenLastSeen(){
+          return null;
+       }
+
+       @Override
+       public org.jdom2.Element store(boolean storeState){
+          return null;
+       }
+  
+       @Override
+       public void load(org.jdom2.Element e){
+       }
+
+       // don't override toReporterString so we can test the default
+       // implementation. 
+
     }
 
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(IdTagTest.class);
-        return suite;
-    }
-
-    @Override
+    @Before
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
     }
 
-    @Override
+    @After
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }
