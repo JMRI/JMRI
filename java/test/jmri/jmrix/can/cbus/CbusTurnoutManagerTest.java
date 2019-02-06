@@ -369,6 +369,8 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
 
         Turnout t =  l.provideTurnout("MT+9");
         Turnout ta =  l.provideTurnout("MT+10");
+        Assert.assertNotNull("exists",t);
+        Assert.assertNotNull("exists",ta);
 
         try {
             Assert.assertEquals(" null +9 +10",null,l.getNextValidAddress("+9","M"));

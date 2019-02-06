@@ -418,6 +418,8 @@ public class CbusLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
         CbusLightManager l = new CbusLightManager(memo);
         Light t =  l.provideLight("ML+9");
         Light ta =  l.provideLight("ML+10");
+        Assert.assertNotNull("exists",t);
+        Assert.assertNotNull("exists",ta);
 
         try {
             Assert.assertEquals(" null +9 +10",null,l.getNextValidAddress("+9","M"));
@@ -427,7 +429,6 @@ public class CbusLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
             // JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
             Assert.assertTrue(false);
         }
-        
     }
 
     
@@ -480,6 +481,7 @@ public class CbusLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
         CbusLightManager l = new CbusLightManager(memo);
         try {
             Light t = l.createNewLight("", null);
+            Assert.assertNull("not exists",t);
             Assert.assertTrue(false);
         } catch (Exception e) {
             Assert.assertTrue(true);
@@ -496,7 +498,8 @@ public class CbusLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
         }
 
         try {
-            Boolean test = l.validSystemNameConfig("");
+            Boolean testbool = l.validSystemNameConfig("");
+            Assert.assertNull("exists",testbool);
             Assert.assertTrue(false);
         } catch (Exception e) {
             Assert.assertTrue(true);
