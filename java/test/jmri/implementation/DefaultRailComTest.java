@@ -44,7 +44,7 @@ public class DefaultRailComTest {
     @Test
     public void testRailComToReportString() {
         DefaultRailCom r = new DefaultRailCom("ID1234");
-        Assert.assertEquals("RailCom toReportString ", "Unknown Orientation Address 1234(S) ", r.toReportString());
+        Assert.assertEquals("RailCom toReportString ", "Unknown Orientation Address 1234(L) ", r.toReportString());
     }
 
     @Test
