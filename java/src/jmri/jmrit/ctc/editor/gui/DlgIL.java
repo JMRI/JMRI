@@ -1,0 +1,340 @@
+package gui;
+
+import code.AwtWindowProperties;
+import code.CheckJMRIObject;
+import code.CommonSubs;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
+import jmri.jmrit.ctcserialdata.CodeButtonHandlerData;
+import jmri.jmrit.ctcserialdata.ProjectsCommonSubs;
+
+/**
+ * @author Gregory J. Bedlek Copyright (C) 2018, 2019
+ */
+public class DlgIL extends javax.swing.JDialog {
+
+    /**
+     * Creates new form DlgIL
+     */
+    private static final String FORM_PROPERTIES = "DlgIL";
+    private static final String PREFIX = "_mIL_";
+    private final AwtWindowProperties _mAwtWindowProperties;
+    private boolean _mClosedNormally = false;
+    public boolean closedNormally() { return _mClosedNormally; }
+    private final CodeButtonHandlerData _mCodeButtonHandlerData;
+    private final CheckJMRIObject _mCheckJMRIObject;
+
+    
+    private ArrayList<String> _mSignalsArrayListOrig;
+    private void initOrig(ArrayList<String> signalsArrayList) {
+        _mSignalsArrayListOrig = new ArrayList<>();
+        for (int index = 0; index < signalsArrayList.size(); index++) {
+            _mSignalsArrayListOrig.add(signalsArrayList.get(index));
+        }
+    }
+    private boolean dataChanged() {
+        int tableLength = CommonSubs.compactDefaultTableModel(_mIL_TableOfExternalSignalNamesDefaultTableModel);
+        if (tableLength != _mSignalsArrayListOrig.size()) return true;
+        for (int index = 0; index < tableLength; index++) {
+            if (!_mSignalsArrayListOrig.get(index).equals(_mIL_TableOfExternalSignalNamesDefaultTableModel.getValueAt(index, 0))) return true;
+        }
+        return false;
+    }
+    
+    private final DefaultTableModel _mIL_TableOfExternalSignalNamesDefaultTableModel;
+    
+    public DlgIL(   java.awt.Frame parent, boolean modal, AwtWindowProperties awtWindowProperties,
+                    CodeButtonHandlerData codeButtonHandlerData,
+                    CheckJMRIObject checkJMRIObject) {
+        super(parent, modal);
+        initComponents();
+        _mAwtWindowProperties = awtWindowProperties;
+        _mCodeButtonHandlerData = codeButtonHandlerData;
+        _mCheckJMRIObject = checkJMRIObject;
+        _mIL_TableOfExternalSignalNamesDefaultTableModel = (DefaultTableModel)_mIL_TableOfExternalSignalNames.getModel();
+        ArrayList<String> signalsArrayList = ProjectsCommonSubs.getArrayListFromCSV(_mCodeButtonHandlerData._mIL_ListOfCSVSignalNames);
+        int signalsArrayLength = signalsArrayList.size();
+        if (signalsArrayLength > _mIL_TableOfExternalSignalNames.getRowCount()) { // Has more than default (100 as of this writing) rows:
+            _mIL_TableOfExternalSignalNamesDefaultTableModel.setRowCount(signalsArrayLength);
+        }
+        for (int index = 0; index < signalsArrayLength; index++) {
+            _mIL_TableOfExternalSignalNamesDefaultTableModel.setValueAt(signalsArrayList.get(index), index, 0);
+        }
+//  This is TYPICAL of the poor quality of Java coding by supposed advanced programmers.
+//  I searched the entire Oracle Web sites that publishes documentation on Java, and NOWHERE
+//  is this mentioned.  HOW IN THE HELL is anyone supposed to find out about this?
+//  And WHY would the default be the other way?  Why don't they just admit they are poor programmers!
+//  Where is a list of properties available and their corresponding functions?
+        _mIL_TableOfExternalSignalNames.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);
+        initOrig(signalsArrayList);
+        _mAwtWindowProperties.setWindowState((java.awt.Window)this, FORM_PROPERTIES);        
+        this.getRootPane().setDefaultButton(_mSaveAndClose);
+    }
+    
+    public static boolean dialogCodeButtonHandlerDataValid(CheckJMRIObject checkJMRIObject, CodeButtonHandlerData codeButtonHandlerData) {
+        if (!codeButtonHandlerData._mIL_Enabled) return true; // Not enabled, can be no error!
+//  Checks:        
+        if (ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mIL_ListOfCSVSignalNames)) return false;
+        for (String signalName : ProjectsCommonSubs.getArrayListFromCSV(codeButtonHandlerData._mIL_ListOfCSVSignalNames)) {
+            if (checkJMRIObject.checkSignal(signalName) == false) return false;
+        }
+        return checkJMRIObject.validClassWithPrefix(PREFIX, codeButtonHandlerData);
+    }
+
+//  Validate all internal fields as much as possible:
+    private ArrayList<String> formFieldsValid() {
+        ArrayList<String> errors = new ArrayList<>();
+//  Checks:        
+        if (CommonSubs.getCSVStringFromDefaultTableModel(_mIL_TableOfExternalSignalNamesDefaultTableModel).isEmpty()) {
+            errors.add("No entries in \"" + _mTableOfSignalNamesPrompt.getText() + "\"");
+        }
+        _mCheckJMRIObject.analyzeForm(PREFIX, this, errors);        
+        return errors;
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        _mSaveAndClose = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        _mIL_TableOfExternalSignalNames = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        _mTableOfSignalNamesPrompt = new javax.swing.JLabel();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setTitle("Edit indication locking");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
+
+        _mSaveAndClose.setText("Save and close");
+        _mSaveAndClose.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                _mSaveAndCloseActionPerformed(evt);
+            }
+        });
+
+        _mIL_TableOfExternalSignalNames.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null},
+                {null}
+            },
+            new String [] {
+                ""
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(_mIL_TableOfExternalSignalNames);
+
+        jButton1.setText("Compact");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setText("To remove signal(s), just blank out the line(s), then press:");
+
+        jLabel1.setText("If ANY of these signals are NON RED,");
+
+        jLabel5.setText("then this O.S. section is considered \"indication\" locked.");
+
+        jLabel6.setText("<- Compact is automatically done");
+
+        _mTableOfSignalNamesPrompt.setText("Signal names:");
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(_mTableOfSignalNamesPrompt))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel5)
+                    .addComponent(jButton1)
+                    .addComponent(jLabel4)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(_mSaveAndClose)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel6)))
+                .addContainerGap(40, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(_mTableOfSignalNamesPrompt, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addGap(46, 46, 46)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1)
+                        .addGap(65, 65, 65)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(_mSaveAndClose)
+                            .addComponent(jLabel6)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void _mSaveAndCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mSaveAndCloseActionPerformed
+        if (CommonSubs.missingFieldsErrorDialogDisplayed(this, formFieldsValid(), false)) {
+            return; // Do not allow exit or transfer of data.
+        }
+        _mCodeButtonHandlerData._mIL_ListOfCSVSignalNames = CommonSubs.getCSVStringFromDefaultTableModel(_mIL_TableOfExternalSignalNamesDefaultTableModel);
+        _mClosedNormally = true;
+        _mAwtWindowProperties.saveWindowState(this, FORM_PROPERTIES);
+        dispose();
+    }//GEN-LAST:event__mSaveAndCloseActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        _mAwtWindowProperties.saveWindowState(this, FORM_PROPERTIES);
+        if (CommonSubs.allowClose(this, dataChanged())) dispose();
+    }//GEN-LAST:event_formWindowClosing
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        CommonSubs.compactDefaultTableModel(_mIL_TableOfExternalSignalNamesDefaultTableModel);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable _mIL_TableOfExternalSignalNames;
+    private javax.swing.JButton _mSaveAndClose;
+    private javax.swing.JLabel _mTableOfSignalNamesPrompt;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JScrollPane jScrollPane1;
+    // End of variables declaration//GEN-END:variables
+}

@@ -1,0 +1,222 @@
+package code;
+
+import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Enumeration;
+import java.util.Vector;
+import javax.swing.AbstractButton;
+import javax.swing.ButtonGroup;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.text.NumberFormatter;
+import jmri.jmrit.ctcserialdata.CTCSerialData;
+import jmri.jmrit.ctcserialdata.CodeButtonHandlerData;
+import jmri.jmrit.ctcserialdata.ProjectsCommonSubs;
+
+/**
+ *
+ * @author Gregory J. Bedlek Copyright (C) 2018, 2019
+ */
+public class CommonSubs {
+
+//  For GUI editor routines that need this:    
+    public static void setMillisecondsEdit(JFormattedTextField formattedTextField) {
+        NumberFormatter numberFormatter = (NumberFormatter) formattedTextField.getFormatter();
+        numberFormatter.setMinimum(0);
+        numberFormatter.setMaximum(60000);
+        numberFormatter.setAllowsInvalid(false);
+    }
+
+//  This routine will return 0 if error encountered parsing string.  Since all GUI int fields that use this
+//  routine already should have a NumberFormatter attached to it already (see "setMillisecondsEdit" above),
+//  technically these should NEVER throw!
+    public static int getIntFromJTextFieldNoThrow(JTextField textField) { return ProjectsCommonSubs.getIntFromStringNoThrow(textField.getText(), 0); }
+    
+    public static boolean allowClose(Component parentComponent, boolean dataChanged) {
+        if (dataChanged) {
+            return JOptionPane.showConfirmDialog(parentComponent, "Data has been modified, do you really want to exit?", "Warning", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
+        }
+        return true;    // NO change, ok to exit
+    }
+
+//  If the table model value is null, that is the same as "".  This also "compacts"
+//  the entries also (i.e. blank line(s) between entries are removed):    
+    public static String getCSVStringFromDefaultTableModel(DefaultTableModel defaultTableModel) {
+        String returnString = "";
+        for (int sourceIndex = 0; sourceIndex < defaultTableModel.getRowCount(); sourceIndex++) {
+            Object object = defaultTableModel.getValueAt(sourceIndex, 0);
+            if (object != null) {
+                String entry = object.toString().trim();
+                if (!entry.isEmpty()) { // Do a "compact" on the fly:
+                    if (!returnString.isEmpty()) {
+                        returnString += ProjectsCommonSubs.CSV_SEPARATOR + entry;
+                    } else {
+                        returnString = entry;
+                    }
+                }
+            }
+        }
+        return returnString;
+    }
+
+    public static int compactDefaultTableModel(DefaultTableModel defaultTableModel) {
+        int destIndex = 0;
+        int lastSourceIndexNonEmpty = -1;   // Indicate none found
+        int count = 0;
+        for (int sourceIndex = 0; sourceIndex < defaultTableModel.getRowCount(); sourceIndex++) {
+            Object object = defaultTableModel.getValueAt(sourceIndex, 0);
+            if (object != null) {
+                String entry = object.toString().trim();
+                entry = entry.trim();
+                if (!entry.isEmpty()) {
+                    lastSourceIndexNonEmpty = sourceIndex;
+                    defaultTableModel.setValueAt(entry, destIndex++, 0);
+                    count++;
+                }
+            }
+        }
+        if (-1 != lastSourceIndexNonEmpty) { // Something in table, MAY need to clear out rows at end:
+            while (destIndex <= lastSourceIndexNonEmpty) {
+                defaultTableModel.setValueAt("", destIndex++, 0);
+            }
+        }
+        return count; // Return number of entries encountered.
+    }
+
+//  This creates a sorted ArrayList (so that we can easily load it into a "DefaultComboBoxModel") containing all
+//  Switch Direction Indicators:
+    public static ArrayList<String> getArrayListOfSelectableSwitchDirectionIndicators(ArrayList<CodeButtonHandlerData> codeButtonHandlerDataList) {
+        ArrayList<String> returnValue = new ArrayList<>();
+        for (CodeButtonHandlerData codeButtonHandlerData : codeButtonHandlerDataList) {
+            if (!codeButtonHandlerData._mSWDI_NormalInternalSensor.isEmpty()) {
+                returnValue.add(codeButtonHandlerData._mSWDI_NormalInternalSensor);
+            }
+            if (!codeButtonHandlerData._mSWDI_ReversedInternalSensor.isEmpty()) {
+                returnValue.add(codeButtonHandlerData._mSWDI_ReversedInternalSensor);
+            }
+        }
+//      Collections.sort(returnValue);
+        return returnValue;
+    }
+    
+    public static ArrayList<Integer> getArrayListOfSelectableOSSectionUniqueIDs(ArrayList<CodeButtonHandlerData> codeButtonHandlerDataList) {
+        ArrayList<Integer> returnValue = new ArrayList<>();
+        for (CodeButtonHandlerData codeButtonHandlerData : codeButtonHandlerDataList) {
+            returnValue.add(codeButtonHandlerData._mUniqueID);
+        }
+        return returnValue;
+    }
+
+    public static void populateJComboBoxWithColumnDescriptionsAndSelectViaUniqueID(JComboBox<String> jComboBox, CTCSerialData ctcSerialData, int uniqueID) {
+        populateJComboBoxWithColumnDescriptions(jComboBox, ctcSerialData);
+        setSelectedIndexOfJComboBoxViaUniqueID(jComboBox, ctcSerialData, uniqueID);
+    }
+    
+    public static void populateJComboBoxWithColumnDescriptions(JComboBox<String> jComboBox, CTCSerialData ctcSerialData) {
+        ArrayList<String> userDescriptions = new ArrayList<>();
+        userDescriptions.add("");   // None is specified.
+        ArrayList<Integer> arrayListOfSelectableOSSectionUniqueIDs = getArrayListOfSelectableOSSectionUniqueIDs(ctcSerialData.getCodeButtonHandlerDataArrayList());
+        for (Integer uniqueID : arrayListOfSelectableOSSectionUniqueIDs) {
+            userDescriptions.add(ctcSerialData.getMyShortStringNoCommaViaUniqueID(uniqueID));
+        }
+//      Collections.sort(userDescriptions);
+        jComboBox.setModel(new DefaultComboBoxModel<>(new Vector<>(userDescriptions)));
+    }
+    
+    public static void setSelectedIndexOfJComboBoxViaUniqueID(JComboBox<String> jComboBox, CTCSerialData ctcSerialData, int uniqueID) {
+        int index = ctcSerialData.getIndexOfUniqueID(uniqueID) + 1;   // Can be -1 if not found, index becomes 0, which is spaces!
+        jComboBox.setSelectedIndex(index);
+    }
+    
+/*  Someday I'll create a better "ButtonGroup" than provided.  Until then:
+    
+    Cheat: We know that the implementation of ButtonGroup uses a Vector when elements
+    are added to it.  Therefore the order is guaranteed.  Check your individual order
+    by searching for all X.add (where X is the ButtonGroup variable name).
+    This routine will "number" each button in order using the "setActionCommand".
+    Then you can switch on either this string by doing:
+    switch (getButtonSelectedString(X))
+        case "0":
+            break;
+        case "1":
+    ....
+    Or faster CPU wise:
+    switch (getButtonSelectedInt(X))
+        case 0:
+    ....
+*/
+    public static void numberButtonGroup(ButtonGroup buttonGroup) {
+        int entry = 0;
+        Enumeration<AbstractButton> buttons = buttonGroup.getElements();
+        while (buttons.hasMoreElements()) {
+            AbstractButton button = buttons.nextElement();
+            button.setActionCommand(Integer.toString(entry++));
+        }
+    }
+
+    public static void setButtonSelected(ButtonGroup buttonGroup, int selected) {
+        ArrayList<AbstractButton> buttons = Collections.list(buttonGroup.getElements());
+        if (buttons.isEmpty()) return;    // Safety: The moron forgot to put radio buttons into this group!  Don't select any!
+        if (selected < 0 || selected >= buttons.size()) selected = 0;   // Default is zero if you pass an out of range value.
+        AbstractButton buttonSelected = buttons.get(selected);
+        buttonSelected.setSelected(true);
+//  Be consistent, when set, do this also:        
+        ActionEvent actionEvent = new ActionEvent(buttonSelected, ActionEvent.ACTION_PERFORMED, buttonSelected.getActionCommand());
+        for (ActionListener actionListener : buttonSelected.getActionListeners()) {
+            actionListener.actionPerformed(actionEvent);
+        }
+    }
+    
+//  Or you can get the actual string that the user sees in the button (or null if you screwed up by
+//  allowing all buttons to be non-selected, for instance if you didn't select one by default).
+    public static String getButtonSelectedText(ButtonGroup buttonGroup) {
+        Enumeration<AbstractButton> buttons = buttonGroup.getElements();
+        while (buttons.hasMoreElements()) {
+            AbstractButton button = buttons.nextElement();
+            if (button.isSelected()) return button.getText();
+        }
+        return null;
+    }
+    
+//  If the passed errors array has entries, put up a dialog and return true, if not no dialog, and return false.    
+    public static boolean missingFieldsErrorDialogDisplayed(Component parentComponent, ArrayList<String> errors, boolean isCancel) {
+        if (errors.isEmpty()) return false;
+        String displayString = errors.size() > 1 ?  "The following field(s) are required:\n\n" : "The following field is required:\n\n";
+        for (String error : errors) {
+            displayString += error + "\n";
+        }
+        if (!isCancel) {
+            displayString += "\nPlease fix before pressing \"Save and close\"\nor you may exit the editor screen without saving.";
+        } else {
+            displayString += "\nPlease fix before pressing \"Save and close\"\nor you may press cancel.";
+        }
+        JOptionPane.showMessageDialog(parentComponent, displayString, "Error:", JOptionPane.ERROR_MESSAGE);
+        return true;
+    }
+    
+//  Simple sub to see if field is not empty.  If empty, then it takes the prompt text and adds it to then end of the errors array.    
+    public static void checkJTextFieldNotEmpty(javax.swing.JTextField field, javax.swing.JLabel promptName, ArrayList<String> errors) {
+        if (!isJTextFieldNotEmpty(field)) errors.add(promptName.getText());
+    }
+    
+    public static boolean isJTextFieldNotEmpty(javax.swing.JTextField field) {
+        return !(field.getText().trim().isEmpty());
+    }
+    
+//  Returns the directory only of a directory + filename combination.  The return
+//  string has a file separator at the end, so that filenames can just be appended to it.    
+    public static String getDirectoryOnly(String directoryAndFilename) {
+        File file = new File(directoryAndFilename);
+        String parent = file.getParent();   // Returns "null" if no parent.
+        if (ProjectsCommonSubs.isNullOrEmptyString(parent)) return "";
+        return file.getParent() + File.separator;
+    }
+}
