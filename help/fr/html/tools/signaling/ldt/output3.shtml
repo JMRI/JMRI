@@ -1,14 +1,14 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//FR"
 "http://www.w3.org/TR/html4/strict.dtd">
 
-<html lang="en">
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright Bob Jacobsen 2008 -->
   <!-- $Id$ -->
 
-  <title>JMRI: LDT Signaling for DR (German National Railways)
+  <title>JMRI: Signalisation LDT  pour la DR (Chemins de Fer Nationaux Allemands)
   Signals</title><!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
@@ -27,15 +27,14 @@
     <div id="mainContent">
       <!-- Page Body -->
 
-      <h2>JMRI: LDT Signaling for DR (German National Railways)
-      Signals</h2>
+      <h2>JMRI: Signalisation LDT  pour la DR (Chemins de Fer Nationaux Allemands)</h2>
 
-      <h2><b>Home signal with green and yellow light
+      <h2><b>Signal principal avec feux vert et jaune
       bar</b><b><img src="output3_html_258f4a97.png" name=
       "obr&#225;zky12" align="middle" width="9" height="23" border=
       "0"></b></h2>
 
-      <p style="margin-bottom: 0in">decoder: LS-DEC-DR</p>
+      <p style="margin-bottom: 0in">d&#233;codeur: LS-DEC-DR</p>
 
       <table width="100%" border="1" bordercolor="#000000"
       cellpadding="3" cellspacing="0">
@@ -46,29 +45,29 @@
 
         <tr valign="top">
           <td width="16%" bgcolor="#E6E6E6">
-            <p><b><span style="background: transparent">JMRI
-            aspect</span></b></p>
+            <p><b><span style="background: transparent">aspect JMRI
+            </span></b></p>
           </td>
 
           <td width="11%" bgcolor="#E6E6E6">
-            <p><b><span style="background: transparent">turnout
-            no.</span></b></p>
+            <p><b><span style="background: transparent">aiguillage n&#186;
+            </span></b></p>
           </td>
 
           <td width="13%" bgcolor="#E6E6E6">
-            <p><b><span style="background: transparent">turnout
-            state</span></b></p>
+            <p><b><span style="background: transparent">&#233;tat aiguillage
+            </span></b></p>
           </td>
 
           <td width="60%" bgcolor="#E6E6E6">
-            <p><b><span style="background: transparent">signal head
-            aspect</span></b></p>
+            <p><b><span style="background: transparent">aspect signal
+           </span></b></p>
           </td>
         </tr>
 
         <tr valign="top">
           <td width="16%">
-            <p>green</p>
+            <p>vert</p>
           </td>
 
           <td width="11%">
@@ -76,17 +75,17 @@
           </td>
 
           <td width="13%">
-            <p align="center">thrown</p>
+            <p align="center">d&#233;vi&#233;</p>
           </td>
 
           <td width="60%">
-            <p>HI 1 - proceed</p>
+            <p>HI 1 - poursuivre</p>
           </td>
         </tr>
 
         <tr valign="top">
           <td width="16%">
-            <p>yellow</p>
+            <p>jaune</p>
           </td>
 
           <td width="11%">
@@ -94,17 +93,17 @@
           </td>
 
           <td width="13%">
-            <p align="center">closed</p>
+            <p align="center">d&#233;vi&#233;</p>
           </td>
 
           <td width="60%">
-            <p>HI 3b - proceed with 60 km/h</p>
+            <p>HI 3b - poursuivre &#224; 60 km/h</p>
           </td>
         </tr>
 
         <tr valign="top">
           <td width="16%">
-            <p>red</p>
+            <p>rouge</p>
           </td>
 
           <td width="11%">
@@ -112,17 +111,17 @@
           </td>
 
           <td width="13%">
-            <p align="center">closed</p>
+            <p align="center">direct</p>
           </td>
 
           <td width="60%">
-            <p>HI 13 - train stop</p>
+            <p>HI 13 - arr&#234;t train</p>
           </td>
         </tr>
 
         <tr valign="top">
           <td width="16%">
-            <p>flash green</p>
+            <p>vert clign.</p>
           </td>
 
           <td width="11%">
@@ -130,17 +129,17 @@
           </td>
 
           <td width="13%">
-            <p align="center">thrown</p>
+            <p align="center">d&#233;vi&#233;</p>
           </td>
 
           <td width="60%">
-            <p>HI 2 - proceed with 100 km/h</p>
+            <p>HI 2 - poursuivre &#224; 100 km/h</p>
           </td>
         </tr>
 
         <tr valign="top">
           <td width="16%">
-            <p>flash yellow</p>
+            <p>jaune clign.</p>
           </td>
 
           <td width="11%">
@@ -148,17 +147,17 @@
           </td>
 
           <td width="13%">
-            <p align="center">closed</p>
+            <p align="center">direct</p>
           </td>
 
           <td width="60%">
-            <p>HI 3b - proceed with 60 km/h</p>
+            <p>HI 3b - poursuivre &#224; 60 km/h</p>
           </td>
         </tr>
 
         <tr valign="top">
           <td width="16%">
-            <p>flash red</p>
+            <p>rouge cligno.</p>
           </td>
 
           <td width="11%">
@@ -166,17 +165,17 @@
           </td>
 
           <td width="13%">
-            <p align="center">closed</p>
+            <p align="center">direct</p>
           </td>
 
           <td width="60%">
-            <p>HI 13 - train stop</p>
+            <p>HI 13 - arr&#234;t train</p>
           </td>
         </tr>
 
         <tr valign="top">
           <td width="16%">
-            <p>dark</p>
+            <p>&#233;teint</p>
           </td>
 
           <td width="11%">
@@ -184,22 +183,22 @@
           </td>
 
           <td width="13%">
-            <p align="center">closed</p>
+            <p align="center">direct</p>
           </td>
 
           <td width="60%">
-            <p>HI 13 - train stop</p>
+            <p>HI 13 - arr&#234;t train</p>
           </td>
         </tr>
       </table>
 
       <p style="margin-bottom: 0in"><br></p>
 
-      <h2><b>Home signal without light bar</b><b><img src=
+      <h2><b>Signal principal sans barre lumineuse</b><b><img src=
       "output3_html_11be9e7b.png" name="obr&#225;zky14" align=
       "middle" width="9" height="17" border="0"></b></h2>
 
-      <p style="margin-bottom: 0in">decoder: LS-DEC-DR</p>
+      <p style="margin-bottom: 0in">d&#233;codeur: LS-DEC-DR</p>
 
       <table width="100%" border="1" bordercolor="#000000"
       cellpadding="3" cellspacing="0">
@@ -210,29 +209,29 @@
 
         <tr valign="top">
           <td width="16%" bgcolor="#E6E6E6">
-            <p><b><span style="background: transparent">JMRI
-            aspect</span></b></p>
+            <p><b><span style="background: transparent">aspect JMRI
+            </span></b></p>
           </td>
 
           <td width="11%" bgcolor="#E6E6E6">
-            <p><b><span style="background: transparent">turnout
-            no.</span></b></p>
+            <p><b><span style="background: transparent">aiguillage n&#186;
+            </span></b></p>
           </td>
 
           <td width="13%" bgcolor="#E6E6E6">
-            <p><b><span style="background: transparent">turnout
-            state</span></b></p>
+            <p><b><span style="background: transparent">&#233;tat aiguillage
+            </span></b></p>
           </td>
 
           <td width="60%" bgcolor="#E6E6E6">
-            <p><b><span style="background: transparent">signal head
-            aspect</span></b></p>
+            <p><b><span style="background: transparent">aspect signal
+            </span></b></p>
           </td>
         </tr>
 
         <tr valign="top">
           <td width="16%">
-            <p>green</p>
+            <p>vert</p>
           </td>
 
           <td width="11%">
@@ -240,17 +239,17 @@
           </td>
 
           <td width="13%">
-            <p align="center">thrown</p>
+            <p align="center">d&#233;vi&#233;</p>
           </td>
 
           <td width="60%">
-            <p>HI 1 - proceed</p>
+            <p>HI 1 - poursuivre</p>
           </td>
         </tr>
 
         <tr valign="top">
           <td width="16%">
-            <p>yellow</p>
+            <p>jaune</p>
           </td>
 
           <td width="11%">
@@ -258,11 +257,11 @@
           </td>
 
           <td width="13%">
-            <p align="center">thrown</p>
+            <p align="center">d&#233;vi&#233;</p>
           </td>
 
           <td width="60%">
-            <p>HI 3a - proceed with 40 km/h</p>
+            <p>HI 3a - poursuivre &#224; 40 km/h</p>
           </td>
         </tr>
 
@@ -276,17 +275,17 @@
           </td>
 
           <td width="13%">
-            <p align="center">closed</p>
+            <p align="center">direct</p>
           </td>
 
           <td width="60%">
-            <p>HI 13 - train stop</p>
+            <p>HI 13 - arr&#234;t train</p>
           </td>
         </tr>
 
         <tr valign="top">
           <td width="16%">
-            <p>flash green</p>
+            <p>vert clign.</p>
           </td>
 
           <td width="11%">
@@ -294,17 +293,17 @@
           </td>
 
           <td width="13%">
-            <p align="center">thrown</p>
+            <p align="center">d&#233;vi&#233;</p>
           </td>
 
           <td width="60%">
-            <p>HI 1 - proceed</p>
+            <p>HI 1 - marche normale</p>
           </td>
         </tr>
 
         <tr valign="top">
           <td width="16%">
-            <p>flash yellow</p>
+            <p>jaune clign.</p>
           </td>
 
           <td width="11%">
@@ -312,17 +311,17 @@
           </td>
 
           <td width="13%">
-            <p align="center">thrown</p>
+            <p align="center">d&#233;vi&#233;</p>
           </td>
 
           <td width="60%">
-            <p>HI 3a - proceed with 40 km/h</p>
+            <p>HI 3a - poursuivre &#224; 40 km/h</p>
           </td>
         </tr>
 
         <tr valign="top">
           <td width="16%">
-            <p>flash red</p>
+            <p>rouge clign.</p>
           </td>
 
           <td width="11%">
@@ -330,17 +329,17 @@
           </td>
 
           <td width="13%">
-            <p align="center">closed</p>
+            <p align="center">direct</p>
           </td>
 
           <td width="60%">
-            <p>HI 13 - train stop</p>
+            <p>HI 13 - arr&#234;t train</p>
           </td>
         </tr>
 
         <tr valign="top">
           <td width="16%">
-            <p>dark</p>
+            <p>&#233;teint</p>
           </td>
 
           <td width="11%">
@@ -348,22 +347,22 @@
           </td>
 
           <td width="13%">
-            <p align="center">closed</p>
+            <p align="center">direct</p>
           </td>
 
           <td width="60%">
-            <p>HI 13 - train stop</p>
+            <p>HI 13 - arr&#234;t train</p>
           </td>
         </tr>
       </table>
 
       <p style="margin-bottom: 0in"><br></p>
 
-      <h2><b>Advance signal</b> <b><img src=
+      <h2><b>Signal avanc&#233;</b> <b><img src=
       "output3_html_40375239.png" name="obr&#225;zky11" align=
       "middle" width="9" height="17" border="0"></b></h2>
 
-      <p style="margin-bottom: 0in">decoder: LS-DEC-DR</p>
+      <p style="margin-bottom: 0in">d&#233;codeur: LS-DEC-DR</p>
 
       <table width="100%" border="1" bordercolor="#000000"
       cellpadding="3" cellspacing="0">
@@ -374,29 +373,29 @@
 
         <tr valign="top">
           <td width="16%" bgcolor="#E6E6E6">
-            <p><b><span style="background: transparent">JMRI
-            aspect</span></b></p>
+            <p><b><span style="background: transparent">Aspect JMRI
+            </span></b></p>
           </td>
 
           <td width="11%" bgcolor="#E6E6E6">
-            <p><b><span style="background: transparent">turnout
-            no.</span></b></p>
+            <p><b><span style="background: transparent">aiguillage n&#186;
+            n</span></b></p>
           </td>
 
           <td width="13%" bgcolor="#E6E6E6">
-            <p><b><span style="background: transparent">turnout
-            state</span></b></p>
+            <p><b><span style="background: transparent">&#233;tat aiguillage
+            </span></b></p>
           </td>
 
           <td width="60%" bgcolor="#E6E6E6">
-            <p><b><span style="background: transparent">signal head
-            aspect</span></b></p>
+            <p><b><span style="background: transparent">aspect signal
+            </span></b></p>
           </td>
         </tr>
 
         <tr valign="top">
           <td width="16%">
-            <p>green</p>
+            <p>vert</p>
           </td>
 
           <td width="11%">
@@ -404,17 +403,17 @@
           </td>
 
           <td width="13%">
-            <p align="center">thrown</p>
+            <p align="center">d&#233;vi&#233;</p>
           </td>
 
           <td width="60%">
-            <p>HI 1 - proceed</p>
+            <p>HI 1 - marche normale</p>
           </td>
         </tr>
 
         <tr valign="top">
           <td width="16%">
-            <p>yellow</p>
+            <p>jaune</p>
           </td>
 
           <td width="11%">
@@ -422,7 +421,7 @@
           </td>
 
           <td width="13%">
-            <p align="center">thrown</p>
+            <p align="center">d&#233;vi&#233;</p>
           </td>
 
           <td width="60%">
@@ -432,7 +431,7 @@
 
         <tr valign="top">
           <td width="16%">
-            <p>red</p>
+            <p>rouge</p>
           </td>
 
           <td width="11%">
@@ -440,17 +439,17 @@
           </td>
 
           <td width="13%">
-            <p align="center">closed</p>
+            <p align="center">direct</p>
           </td>
 
           <td width="60%">
-            <p>HI 10 - awaiting train stop</p>
+            <p>HI 10 - annonce arr&#234;t du train</p>
           </td>
         </tr>
 
         <tr valign="top">
           <td width="16%">
-            <p>flash green</p>
+            <p>vert clign.</p>
           </td>
 
           <td width="11%">
@@ -458,7 +457,7 @@
           </td>
 
           <td width="13%">
-            <p align="center">closed</p>
+            <p align="center">direct</p>
           </td>
 
           <td width="60%">
@@ -468,7 +467,7 @@
 
         <tr valign="top">
           <td width="16%">
-            <p>flash yellow</p>
+            <p>jaune clign.</p>
           </td>
 
           <td width="11%">
@@ -476,7 +475,7 @@
           </td>
 
           <td width="13%">
-            <p align="center">thrown</p>
+            <p align="center">d&#233;vi&#233;</p>
           </td>
 
           <td width="60%">
@@ -486,7 +485,7 @@
 
         <tr valign="top">
           <td width="16%">
-            <p>flash red</p>
+            <p>rouge clign</p>
           </td>
 
           <td width="11%">
@@ -494,17 +493,17 @@
           </td>
 
           <td width="13%">
-            <p align="center">closed</p>
+            <p align="center">direct</p>
           </td>
 
           <td width="60%">
-            <p>HI 10 - awaiting train stop</p>
+            <p>HI 10 - annonce arr&#234;t du train</p>
           </td>
         </tr>
 
         <tr valign="top">
           <td width="16%">
-            <p>dark</p>
+            <p>éteint</p>
           </td>
 
           <td width="11%">
@@ -512,11 +511,11 @@
           </td>
 
           <td width="13%">
-            <p align="center">closed</p>
+            <p align="center">direct</p>
           </td>
 
           <td width="60%">
-            <p>HI 10 - awaiting train stop</p>
+            <p>HI 10 - annonce arr&#234;t du train</p>
           </td>
         </tr>
       </table>
@@ -528,4 +527,4 @@
     </div>
   </div>
 </body>
-</html>
+</html
