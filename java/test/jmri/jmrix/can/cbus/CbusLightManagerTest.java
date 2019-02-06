@@ -414,6 +414,34 @@ public class CbusLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
     }
     
     @Test
+    public void testgetNextValidAddressPt4() {
+        CbusLightManager l = new CbusLightManager(memo);
+        Light t =  l.provideLight("ML+9");
+        Light ta =  l.provideLight("ML+10");
+
+        try {
+            Assert.assertEquals(" null +9 +10",null,l.getNextValidAddress("+9","M"));
+            // JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
+            Assert.assertTrue(true);
+        } catch (Exception e) {
+            // JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
+            Assert.assertTrue(false);
+        }
+        
+    }
+
+    
+    @Test
+    public void testProvideswhenNotNull() {
+        Light t = l.provideLight("+4");
+        Light ta = l.provideLight("+4");
+        Assert.assertTrue(t == ta);
+        t = null;
+        ta = null;
+    }
+    
+    
+    @Test
     public void testcreateSystemName() {
         
         CbusLightManager l = new CbusLightManager(memo);
@@ -443,6 +471,34 @@ public class CbusLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
             Assert.assertTrue(true);
         } catch (Exception e) {
             // JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
+            Assert.assertTrue(true);
+        }
+    }
+
+    @Test
+    public void testcreateNewLightException(){
+        CbusLightManager l = new CbusLightManager(memo);
+        try {
+            Light t = l.createNewLight("", null);
+            Assert.assertTrue(false);
+        } catch (Exception e) {
+            Assert.assertTrue(true);
+        }
+    }
+    
+    @Test
+    public void testvalidSystemNameConfig(){
+        CbusLightManager l = new CbusLightManager(memo);
+        try {
+            Assert.assertTrue(l.validSystemNameConfig("ML+123") );
+        } catch (Exception e) {
+            Assert.assertTrue(false);
+        }
+
+        try {
+            Boolean test = l.validSystemNameConfig("");
+            Assert.assertTrue(false);
+        } catch (Exception e) {
             Assert.assertTrue(true);
         }
     }
