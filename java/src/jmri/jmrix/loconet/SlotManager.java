@@ -1493,6 +1493,14 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         } else {
             m.setElement(2, 0);
         }
+        // if loconet 2. ask for full slot info
+        if (loconetProtocol == LnConstants.LOCONETPROTOCOL_TWO) {
+            // system slots less than 128 use short slot
+            if (!(_slots[slot].isSystemSlot() && slot < 128)) {
+                // get slot type to expanded
+                m.setElement(2, m.getElement(2) | 0x40) ;
+            }
+        }
         tc.sendLocoNetMessage(m);
     }
 

@@ -2476,9 +2476,10 @@ public class LocoNetMessageInterpret {
 
     private static String interpretOpcRqSlData(LocoNetMessage l) {
         int slot = l.getElement(1) + 128 * (l.getElement(2) & 0x07);
-
+        boolean expSlotRequ = (l.getElement(2) & 0x40) == 0X40 ? true : false;
         switch (slot) {
-            // Slots > 120 are all special, but these are the only ones we know to decode.
+         // Slots > 120 & < 128 are all special, but these are the only ones we know to decode.
+         // Extended System Slots 248 thru 251 delt with seperately, not here
             case LnConstants.FC_SLOT:
                 return Bundle.getMessage("LN_MSG_SLOT_REQ_SLOT_FC_SLOT");
             case LnConstants.CFG_SLOT:
@@ -2492,7 +2493,11 @@ public class LocoNetMessageInterpret {
             case 0x7d:
                 break;
             default:
-                return Bundle.getMessage("LN_MSG_SLOT_REQ_SLOT_LOCO_SLOT", slot);
+                if (expSlotRequ) {
+                    return Bundle.getMessage("LN_MSG_SLOT_REQ_SLOT_LOCO_EXP_SLOT", slot);
+                } else {
+                    return Bundle.getMessage("LN_MSG_SLOT_REQ_SLOT_LOCO_SLOT", slot);
+                }
         }
         return "";
     }
@@ -4689,6 +4694,9 @@ public class LocoNetMessageInterpret {
                 break;
             case LnConstants.RE_IPL_DIGITRAX_HOST_DCS210:
                 hwType = "DCS210";
+                break;
+            case LnConstants.RE_IPL_DIGITRAX_HOST_DCS52:
+                hwType = "DCS52";
                 break;
             case LnConstants.RE_IPL_DIGITRAX_HOST_BXP88:
                 hwType = "BXP88";

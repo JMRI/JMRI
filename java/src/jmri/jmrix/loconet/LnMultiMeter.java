@@ -38,12 +38,18 @@ public class LnMultiMeter extends jmri.implementation.AbstractMultiMeter impleme
             case LnConstants.RE_IPL_DIGITRAX_HOST_DCS210:
                 log.debug("Found Evolution CS Amps[{}] Max[{}]",msg.getElement(6) / 10.0f, (msg.getElement(7) / 10.0f));
                 setCurrent((msg.getElement(6) / 10.0f) / (msg.getElement(7) / 10.0f));
+                setVoltage((msg.getElement(4)) * 2.0f / 10.0f );
+                break;
+            case LnConstants.RE_IPL_DIGITRAX_HOST_DCS52:
+                log.debug("Found DCS52 Amps[{}]",msg.getElement(6) / 10.0f);
+                setCurrent((msg.getElement(6) / 10.0f) / 3.0f);   // fixed at 3amps
                 break;
             default:
                 // do nothing
         }
     }
 
+    @Override
     protected void requestUpdateFromLayout() {
         sm.sendReadSlot(249);
     }
@@ -66,7 +72,7 @@ public class LnMultiMeter extends jmri.implementation.AbstractMultiMeter impleme
 
     @Override
     public boolean hasVoltage() {
-        return false;
+        return true;
     }
 
     private final static Logger log = LoggerFactory.getLogger(LnMultiMeter.class);

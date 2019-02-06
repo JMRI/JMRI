@@ -929,8 +929,11 @@ public class LocoNetSlot {
                             + slot + ") " + l);
                 }
 
-                // a loconet type 1 slot read or write sets slot protocol to LOCONETPROTOCOL_ONE
-                loconetProtocol = LnConstants.LOCONETPROTOCOL_ONE;
+                if ((l.getElement(7) & 0b01000000) == 0b01000000) {
+                    loconetProtocol = LnConstants.LOCONETPROTOCOL_TWO;
+                } else {
+                    loconetProtocol = LnConstants.LOCONETPROTOCOL_ONE;
+                }
 
                 stat = l.getElement(3);
                 _pcmd = l.getElement(4);
