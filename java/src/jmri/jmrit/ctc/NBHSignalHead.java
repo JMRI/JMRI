@@ -13,7 +13,7 @@ import jmri.NamedBeanHandle;
 import jmri.NamedBeanHandleManager;
 import jmri.SignalHead;
 import jmri.SignalHeadManager;
-import jmri.jmrit.ctcserialdata.ProjectsCommonSubs;
+import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
 
 /**
  *

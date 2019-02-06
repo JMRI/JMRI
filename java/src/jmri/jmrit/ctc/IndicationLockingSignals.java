@@ -5,7 +5,7 @@ package jmri.jmrit.ctc;
 
 import java.util.ArrayList;
 import jmri.SignalHead;
-import jmri.jmrit.ctcserialdata.ProjectsCommonSubs;
+import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
 
 public class IndicationLockingSignals {
     private final ArrayList<NBHAbstractSignalCommon> _mListOfSignals = new ArrayList<>();

@@ -1,7 +1,7 @@
 // Warnings objectInputStream here about changes to this structure and how it will affect old/new programs:
 //https://howtodoinjava.com/java/serialization/a-mini-guide-for-implementing-serializable-interface-objectInputStream-java/
 
-package jmri.jmrit.ctcserialdata;
+package jmri.jmrit.ctc.ctcserialdata;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

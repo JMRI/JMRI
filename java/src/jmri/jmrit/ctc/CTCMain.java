@@ -11,14 +11,14 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import jmri.Sensor;
 import jmri.Turnout;
-import jmri.jmrit.ctcserialdata.CTCSerialData;
-import jmri.jmrit.ctcserialdata.CodeButtonHandlerData;
-import jmri.jmrit.ctcserialdata.OtherData;
+import jmri.jmrit.ctc.ctcserialdata.CTCSerialData;
+import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
+import jmri.jmrit.ctc.ctcserialdata.OtherData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class CTCMain {
-    private final static Logger LOG = LoggerFactory.getLogger(CTCFileModel.class);
+    private final static Logger LOG = LoggerFactory.getLogger(CTCMain.class);
     private final CTCSerialData _mCTCSerialData = new CTCSerialData();
     private final ArrayList<CodeButtonHandler> _mCodeButtonHandlersArrayList = new ArrayList<>();       // "Const" after initialization completes.
     private NBHSensor _mCTCDebugSystemReloadInternalSensor = null;

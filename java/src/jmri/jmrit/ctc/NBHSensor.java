@@ -14,7 +14,7 @@ import jmri.NamedBeanHandleManager;
 import jmri.Reporter;
 import jmri.Sensor;
 import jmri.SensorManager;
-import jmri.jmrit.ctcserialdata.ProjectsCommonSubs;
+import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
 
 /**
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019

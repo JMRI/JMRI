@@ -6,8 +6,9 @@ import jmri.util.swing.WindowInterface;
 
 /**
  * Swing action to create and register the CTC Run Time
+ * Replaces the original custom file opener.
  *
- * @author Dave Sand Copyright (C) 2018
+ * @author Dave Sand Copyright (C) 2019
  */
 public class CtcRunAction extends JmriAbstractAction {
 
@@ -26,8 +27,10 @@ public class CtcRunAction extends JmriAbstractAction {
             return;
         }
         CTCMain _mCTCMain = new CTCMain();
+        
+        // Set the default file path.  TODO: Implement a file selector if not found
         String filename = jmri.util.FileUtil.getUserFilesPath() + "ctc/CTCSystem.xml";
-        log.info("file name = {}", filename);
+
         _mCTCMain.readDataFromXMLFile(filename);
     }
 
@@ -36,5 +39,4 @@ public class CtcRunAction extends JmriAbstractAction {
     public jmri.util.swing.JmriPanel makePanel() {
         throw new IllegalArgumentException("Should not be invoked");  // NOI18N
     }
-    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CtcRunAction.class);
 }

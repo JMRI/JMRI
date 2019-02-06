@@ -15,7 +15,7 @@ import jmri.SignalAppearanceMap;
 import jmri.SignalHead;
 import jmri.implementation.AbstractSignalHead;
 import jmri.implementation.AbstractSignalMast;
-import jmri.jmrit.ctcserialdata.ProjectsCommonSubs;
+import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
 
 public final class SignalDirectionIndicators implements SignalDirectionIndicatorsInterface {
     static HashSet<NBHAbstractSignalCommon> _mSignalsUsed = new HashSet<NBHAbstractSignalCommon>();

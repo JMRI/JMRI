@@ -15,7 +15,7 @@ import jmri.Sensor;
 import jmri.Turnout;
 import jmri.TurnoutManager;
 import jmri.TurnoutOperation;
-import jmri.jmrit.ctcserialdata.ProjectsCommonSubs;
+import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
 
 /**
  *

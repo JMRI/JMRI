@@ -11,8 +11,8 @@ import jmri.SignalHeadManager;
 import jmri.SignalMastManager;
 import jmri.Turnout;
 import jmri.TurnoutManager;
-import jmri.jmrit.ctcserialdata.CodeButtonHandlerData;
-import jmri.jmrit.ctcserialdata.ProjectsCommonSubs;
+import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
+import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
 
 /**
  *

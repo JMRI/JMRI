@@ -1,4 +1,4 @@
-package jmri.jmrit.ctcserialdata;
+package jmri.jmrit.ctc.ctcserialdata;
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -1,4 +1,4 @@
-package jmri.jmrit.ctcserialdata;
+package jmri.jmrit.ctc.ctcserialdata;
 
 import java.lang.reflect.Field;
 import java.nio.file.Paths;

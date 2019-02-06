@@ -16,7 +16,7 @@ import jmri.SignalAppearanceMap;
 import jmri.SignalMast;
 import jmri.SignalMastManager;
 import jmri.SignalSystem;
-import jmri.jmrit.ctcserialdata.ProjectsCommonSubs;
+import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
 
 /**
  *

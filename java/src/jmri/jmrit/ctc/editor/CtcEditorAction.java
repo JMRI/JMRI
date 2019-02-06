@@ -25,10 +25,8 @@ public class CtcEditorAction extends JmriAbstractAction {
             // Prevent duplicate copies
             return;
         }
-//         jmri.jmrit.ctc.editor.gui.FrmMainForm f = new jmri.jmrit.ctc.editor.gui.FrmMainForm();
-        jmri.util.JmriJFrame f = new jmri.jmrit.ctc.editor.gui.FrmMainForm();
-//         jmri.util.JmriJFrame f = (javax.swing.JFrame) j;
-//         jmri.util.JmriJFrame f = j;
+//         jmri.util.JmriJFrame f = new jmri.jmrit.ctc.editor.gui.FrmMainForm();
+        jmri.util.JmriJFrame f = new jmri.jmrit.ctc.editor.CtcEditor();
         f.addHelpMenu("html.tools.TimeTable", true);  // NOI18N
         f.setVisible(true);
     }
