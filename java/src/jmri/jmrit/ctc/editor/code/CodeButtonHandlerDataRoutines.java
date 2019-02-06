@@ -1,6 +1,6 @@
-package code;
+package jmri.jmrit.ctc.editor.code;
 
-import jmri.jmrit.ctcserialdata.CodeButtonHandlerData;
+import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
 
 /**
  *

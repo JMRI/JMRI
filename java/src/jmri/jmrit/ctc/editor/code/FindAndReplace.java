@@ -1,11 +1,11 @@
-package code;
+package jmri.jmrit.ctc.editor.code;
 
 // https://stackoverflow.com/questions/5091057/how-to-find-a-whole-word-in-a-string-in-java
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import jmri.jmrit.ctcserialdata.CTCSerialData;
-import jmri.jmrit.ctcserialdata.CodeButtonHandlerData;
+import jmri.jmrit.ctc.ctcserialdata.CTCSerialData;
+import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
 
 /**
  *

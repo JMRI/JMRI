@@ -1,17 +1,17 @@
-package gui;
+package jmri.jmrit.ctc.editor.gui;
 
-import code.AwtWindowProperties;
-import code.CommonSubs;
-import code.FindAndReplace;
+import jmri.jmrit.ctc.editor.code.AwtWindowProperties;
+import jmri.jmrit.ctc.editor.code.CommonSubs;
+import jmri.jmrit.ctc.editor.code.FindAndReplace;
 import java.util.ArrayList;
 import javax.swing.JTable;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
-import jmri.jmrit.ctcserialdata.CTCSerialData;
-import jmri.jmrit.ctcserialdata.CodeButtonHandlerData;
-import jmri.jmrit.ctcserialdata.ProjectsCommonSubs;
+import jmri.jmrit.ctc.ctcserialdata.CTCSerialData;
+import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
+import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
 
 /**
  *

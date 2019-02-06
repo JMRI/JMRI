@@ -1,14 +1,14 @@
-package code;
+package jmri.jmrit.ctc.editor.code;
 
-import gui.DlgCB;
-import gui.DlgCO;
-import gui.DlgIL;
-import gui.DlgSIDI;
-import gui.DlgSIDL;
-import gui.DlgSWDI;
-import gui.DlgSWDL;
-import gui.DlgTRL;
-import gui.DlgTUL;
+import jmri.jmrit.ctc.editor.gui.DlgCB;
+import jmri.jmrit.ctc.editor.gui.DlgCO;
+import jmri.jmrit.ctc.editor.gui.DlgIL;
+import jmri.jmrit.ctc.editor.gui.DlgSIDI;
+import jmri.jmrit.ctc.editor.gui.DlgSIDL;
+import jmri.jmrit.ctc.editor.gui.DlgSWDI;
+import jmri.jmrit.ctc.editor.gui.DlgSWDL;
+import jmri.jmrit.ctc.editor.gui.DlgTRL;
+import jmri.jmrit.ctc.editor.gui.DlgTUL;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -17,10 +17,10 @@ import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
-import jmri.jmrit.ctcserialdata.CTCSerialData;
-import jmri.jmrit.ctcserialdata.CodeButtonHandlerData;
-import jmri.jmrit.ctcserialdata.ProjectsCommonSubs;
-import jmri.jmrit.ctcserialdata.TrafficLockingEntry;
+import jmri.jmrit.ctc.ctcserialdata.CTCSerialData;
+import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
+import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
+import jmri.jmrit.ctc.ctcserialdata.TrafficLockingEntry;
 
 /**
  *

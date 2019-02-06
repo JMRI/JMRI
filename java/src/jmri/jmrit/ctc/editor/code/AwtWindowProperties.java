@@ -1,4 +1,4 @@
-package code;
+package jmri.jmrit.ctc.editor.code;
 
 import java.awt.Rectangle;
 import java.io.BufferedReader;
@@ -8,7 +8,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Properties;
-import jmri.jmrit.ctcserialdata.ProjectsCommonSubs;
+import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
 
 /**
  *

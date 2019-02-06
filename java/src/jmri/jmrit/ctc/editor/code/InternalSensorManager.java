@@ -1,7 +1,7 @@
-package code;
+package jmri.jmrit.ctc.editor.code;
 
 import java.util.HashSet;
-import jmri.jmrit.ctcserialdata.CTCSerialData;
+import jmri.jmrit.ctc.ctcserialdata.CTCSerialData;
 
 /**
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019

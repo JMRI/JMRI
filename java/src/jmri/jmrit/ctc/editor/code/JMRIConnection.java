@@ -1,6 +1,6 @@
-package code;
+package jmri.jmrit.ctc.editor.code;
 
-import gui.FrmMainForm;
+import jmri.jmrit.ctc.editor.gui.FrmMainForm;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -13,7 +13,7 @@ import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import jmri.jmrit.ctcserialdata.CodeButtonHandlerData;
+import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
 
 /**
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019

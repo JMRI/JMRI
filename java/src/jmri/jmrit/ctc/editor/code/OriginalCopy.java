@@ -1,9 +1,9 @@
-package code;
+package jmri.jmrit.ctc.editor.code;
 
 import java.util.ArrayList;
-import jmri.jmrit.ctcserialdata.CTCSerialData;
-import jmri.jmrit.ctcserialdata.CodeButtonHandlerData;
-import jmri.jmrit.ctcserialdata.OtherData;
+import jmri.jmrit.ctc.ctcserialdata.CTCSerialData;
+import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
+import jmri.jmrit.ctc.ctcserialdata.OtherData;
 
 /**
  *

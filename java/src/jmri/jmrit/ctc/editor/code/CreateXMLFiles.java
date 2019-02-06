@@ -3,12 +3,12 @@
     copied into a JMRI .xml file to ease the creation of a CTC panel from
     scratch.
  */
-package code;
+package jmri.jmrit.ctc.editor.code;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import jmri.jmrit.ctcserialdata.CodeButtonHandlerData;
-import jmri.jmrit.ctcserialdata.OtherData;
+import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
+import jmri.jmrit.ctc.ctcserialdata.OtherData;
 
 /**
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019

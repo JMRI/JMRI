@@ -14,18 +14,18 @@ https://docs.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
 At runtime (dynamic):
 https://docs.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html#dynamic
 */
-package gui;
+package jmri.jmrit.ctc.editor.gui;
 
-import code.Columns;
-import code.CodeButtonHandlerDataRoutines;
-import code.AwtWindowProperties;
-import code.CheckJMRIObject;
-import code.CommonSubs;
-import code.CreateXMLFiles;
-import code.InternalSensorManager;
-import code.JMRIConnection;
-import code.OriginalCopy;
-import code.ProgramProperties;
+import jmri.jmrit.ctc.editor.code.Columns;
+import jmri.jmrit.ctc.editor.code.CodeButtonHandlerDataRoutines;
+import jmri.jmrit.ctc.editor.code.AwtWindowProperties;
+import jmri.jmrit.ctc.editor.code.CheckJMRIObject;
+import jmri.jmrit.ctc.editor.code.CommonSubs;
+import jmri.jmrit.ctc.editor.code.CreateXMLFiles;
+import jmri.jmrit.ctc.editor.code.InternalSensorManager;
+import jmri.jmrit.ctc.editor.code.JMRIConnection;
+import jmri.jmrit.ctc.editor.code.OriginalCopy;
+import jmri.jmrit.ctc.editor.code.ProgramProperties;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
@@ -37,15 +37,15 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import jmri.jmrit.ctcserialdata.CTCSerialData;
-import jmri.jmrit.ctcserialdata.CodeButtonHandlerData;
-import jmri.jmrit.ctcserialdata.ProjectsCommonSubs;
+import jmri.jmrit.ctc.ctcserialdata.CTCSerialData;
+import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
+import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
 
 /**
  *
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019
  */
-public class FrmMainForm extends javax.swing.JFrame {
+public class FrmMainForm extends jmri.util.JmriJFrame {
     
     private static final String FORM_PROPERTIES = "FrmMainForm";
     private CTCSerialData _mCTCSerialData;
@@ -59,6 +59,7 @@ public class FrmMainForm extends javax.swing.JFrame {
 
     @SuppressWarnings("LeakingThisInConstructor")   // Lazy, since this is NOT a multi-threaded program.
     public FrmMainForm() {
+        super(true, true);
         initComponents();
         _mAwtWindowProperties = new AwtWindowProperties((java.awt.Window)this, "AwtWindowProperties.txt", FORM_PROPERTIES);
         _mProgramProperties = new ProgramProperties();
@@ -74,7 +75,7 @@ public class FrmMainForm extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    public void initComponents() {
 
         _mOpen_Save_SaveAs = new javax.swing.JFileChooser();
         jMenuItem1 = new javax.swing.JMenuItem();

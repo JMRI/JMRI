@@ -1,4 +1,4 @@
-package code;
+package jmri.jmrit.ctc.editor.code;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -17,9 +17,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.NumberFormatter;
-import jmri.jmrit.ctcserialdata.CTCSerialData;
-import jmri.jmrit.ctcserialdata.CodeButtonHandlerData;
-import jmri.jmrit.ctcserialdata.ProjectsCommonSubs;
+import jmri.jmrit.ctc.ctcserialdata.CTCSerialData;
+import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
+import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
 
 /**
  *

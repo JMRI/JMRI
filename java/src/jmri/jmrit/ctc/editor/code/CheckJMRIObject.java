@@ -1,10 +1,10 @@
-package code;
+package jmri.jmrit.ctc.editor.code;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
-import jmri.jmrit.ctcserialdata.CodeButtonHandlerData;
-import jmri.jmrit.ctcserialdata.ProjectsCommonSubs;
+import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
+import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
 
 /**
  *

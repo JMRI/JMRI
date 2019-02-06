@@ -1,14 +1,14 @@
-package code;
+package jmri.jmrit.ctc.editor.code;
 
-import static code.CreateXMLFiles.generateEpilogue;
-import static code.CreateXMLFiles.generateProlog;
+import static jmri.jmrit.ctc.editor.code.CreateXMLFiles.generateEpilogue;
+import static jmri.jmrit.ctc.editor.code.CreateXMLFiles.generateProlog;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import jmri.jmrit.ctcserialdata.CodeButtonHandlerData;
-import jmri.jmrit.ctcserialdata.OtherData;
-import jmri.jmrit.ctcserialdata.ProjectsCommonSubs;
+import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
+import jmri.jmrit.ctc.ctcserialdata.OtherData;
+import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
 
 /**
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019

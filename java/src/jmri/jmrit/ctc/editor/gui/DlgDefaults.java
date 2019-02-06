@@ -1,9 +1,9 @@
-package gui;
+package jmri.jmrit.ctc.editor.gui;
 
-import code.AwtWindowProperties;
-import code.CommonSubs;
-import code.ProgramProperties;
-import jmri.jmrit.ctcserialdata.OtherData;
+import jmri.jmrit.ctc.editor.code.AwtWindowProperties;
+import jmri.jmrit.ctc.editor.code.CommonSubs;
+import jmri.jmrit.ctc.editor.code.ProgramProperties;
+import jmri.jmrit.ctc.ctcserialdata.OtherData;
 
 /**
  *

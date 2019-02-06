@@ -1,15 +1,15 @@
-package gui;
+package jmri.jmrit.ctc.editor.gui;
 
-import code.AwtWindowProperties;
-import code.CheckJMRIObject;
-import code.CommonSubs;
+import jmri.jmrit.ctc.editor.code.AwtWindowProperties;
+import jmri.jmrit.ctc.editor.code.CheckJMRIObject;
+import jmri.jmrit.ctc.editor.code.CommonSubs;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
-import jmri.jmrit.ctcserialdata.CTCSerialData;
-import jmri.jmrit.ctcserialdata.CodeButtonHandlerData;
-import jmri.jmrit.ctcserialdata.ProjectsCommonSubs;
-import jmri.jmrit.ctcserialdata.TrafficLockingEntry;
+import jmri.jmrit.ctc.ctcserialdata.CTCSerialData;
+import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
+import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
+import jmri.jmrit.ctc.ctcserialdata.TrafficLockingEntry;
 
 /**
  *

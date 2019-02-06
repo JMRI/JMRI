@@ -1,13 +1,13 @@
-package gui;
+package jmri.jmrit.ctc.editor.gui;
 
-import code.AwtWindowProperties;
-import code.CheckJMRIObject;
-import code.CodeButtonHandlerDataRoutines;
-import code.CommonSubs;
-import code.ProgramProperties;
+import jmri.jmrit.ctc.editor.code.AwtWindowProperties;
+import jmri.jmrit.ctc.editor.code.CheckJMRIObject;
+import jmri.jmrit.ctc.editor.code.CodeButtonHandlerDataRoutines;
+import jmri.jmrit.ctc.editor.code.CommonSubs;
+import jmri.jmrit.ctc.editor.code.ProgramProperties;
 import java.util.ArrayList;
-import jmri.jmrit.ctcserialdata.CodeButtonHandlerData;
-import jmri.jmrit.ctcserialdata.ProjectsCommonSubs;
+import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
+import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
 
 /**
  *

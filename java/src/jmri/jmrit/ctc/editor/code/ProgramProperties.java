@@ -1,4 +1,4 @@
-package code;
+package jmri.jmrit.ctc.editor.code;
 
 import java.io.File;
 import java.io.FileInputStream;

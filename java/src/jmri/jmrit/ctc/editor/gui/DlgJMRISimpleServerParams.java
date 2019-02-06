@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package gui;
+package jmri.jmrit.ctc.editor.gui;
 
-import code.AwtWindowProperties;
-import code.CommonSubs;
-import code.JMRIConnection;
+import jmri.jmrit.ctc.editor.code.AwtWindowProperties;
+import jmri.jmrit.ctc.editor.code.CommonSubs;
+import jmri.jmrit.ctc.editor.code.JMRIConnection;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
-import jmri.jmrit.ctcserialdata.OtherData;
+import jmri.jmrit.ctc.ctcserialdata.OtherData;
 
 /**
  *

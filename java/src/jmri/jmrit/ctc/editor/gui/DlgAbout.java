@@ -1,7 +1,7 @@
-package gui;
+package jmri.jmrit.ctc.editor.gui;
 
-import code.AwtWindowProperties;
-import jmri.jmrit.ctcserialdata.CTCSerialData;
+import jmri.jmrit.ctc.editor.code.AwtWindowProperties;
+import jmri.jmrit.ctc.ctcserialdata.CTCSerialData;
 
 /**
  *

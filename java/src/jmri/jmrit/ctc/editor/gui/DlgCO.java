@@ -1,22 +1,22 @@
 /*_mResultSoFar getCaretPosition
 http://www.coderslexicon.com/tracking-the-caret-in-a-jtextarea-with-java/
 */
-package gui;
+package jmri.jmrit.ctc.editor.gui;
 
-import code.AwtWindowProperties;
-import code.CheckJMRIObject;
-import code.CodeButtonHandlerDataRoutines;
-import code.CommonSubs;
-import code.ProgramProperties;
+import jmri.jmrit.ctc.editor.code.AwtWindowProperties;
+import jmri.jmrit.ctc.editor.code.CheckJMRIObject;
+import jmri.jmrit.ctc.editor.code.CodeButtonHandlerDataRoutines;
+import jmri.jmrit.ctc.editor.code.CommonSubs;
+import jmri.jmrit.ctc.editor.code.ProgramProperties;
 import java.util.ArrayList;
 import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
-import jmri.jmrit.ctcserialdata.CTCSerialData;
-import jmri.jmrit.ctcserialdata.CallOnEntry;
-import jmri.jmrit.ctcserialdata.CodeButtonHandlerData;
-import jmri.jmrit.ctcserialdata.ProjectsCommonSubs;
+import jmri.jmrit.ctc.ctcserialdata.CTCSerialData;
+import jmri.jmrit.ctc.ctcserialdata.CallOnEntry;
+import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
+import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
 
 /**
  *
