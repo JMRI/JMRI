@@ -162,7 +162,7 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="_mHelp">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Help"/>
+            <Property name="text" type="java.lang.String" value="About"/>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="_mHelpAbout">
