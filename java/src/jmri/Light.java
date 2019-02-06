@@ -113,6 +113,13 @@ public interface Light extends DigitalIO, AnalogIO {
     
     /** {@inheritDoc} */
     @Override
+    default public boolean isConsistentValue() {
+        // Assume that the value is consistent if the state is consistent.
+        return isConsistentState();
+    }
+    
+    /** {@inheritDoc} */
+    @Override
     @InvokeOnLayoutThread
     default public void setCommandedState(int s) {
         setState(s);
