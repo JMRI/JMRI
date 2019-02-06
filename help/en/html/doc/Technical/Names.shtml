@@ -884,7 +884,7 @@ SENSOR GROUP:my group:LS2
 
       <ul>
         <li>Logix - auto-generated 
-            <a href="http://www.jmri.org/JavaDoc/doc/java/src/jmri/Logix.html">Logix</a> 
+            <a href="http://jmri.org/JavaDoc/doc/jmri/Logix.html">Logix</a> 
             system names are of the form IX:AUTO:0001</li>
         <li>SENSOR GROUPS - <a href=
         "http://www.jmri.org/JavaDoc/doc/jmri/jmrit/sensorgroup/package-summary.html">
@@ -907,11 +907,11 @@ SENSOR GROUP:my group:LS2
         of more than one yet. The DCC programmer is the first
         example, but there may be others.</li>
 
-        <li><a href="http://www.jmri.org/JavaDoc/doc/java/src/jmri/Conditional.html">Conditionals</a>
+        <li><a href="http://jmri.org/JavaDoc/doc/jmri/Conditional.html">Conditionals</a>
         are a special case.  Although they have things called
         "System Names" and "User Names", they don't really obey the 
         conventions here.  See the 
-        <a href="http://www.jmri.org/JavaDoc/doc/java/src/jmri/ConditionalManager.html">ConditionalManager Javadoc</a>
+        <a href="http://jmri.org/JavaDoc/doc/jmri/ConditionalManager.html">ConditionalManager Javadoc</a>
         for more information.</li>
         
         <li>The system name convention doesn't provide a specific
