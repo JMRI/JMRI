@@ -80,15 +80,6 @@ public class DefaultRailCom extends DefaultIdTag implements jmri.RailCom {
         }
     }
 
-    @Override
-    public DccLocoAddress getDccLocoAddress() {
-        boolean longAddress = false;
-        if (addressTypeInt == LONG_ADDRESS) {
-            longAddress = true;
-        }
-        return new DccLocoAddress(Integer.parseInt(getTagID()), longAddress);
-    }
-
     int addressTypeInt = 0;
 
     @Override
