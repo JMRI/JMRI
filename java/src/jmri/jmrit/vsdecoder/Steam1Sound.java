@@ -60,7 +60,6 @@ class Steam1Sound extends EngineSound {
     float engine_gain;
 
     // Common variables
-    boolean is_looping = false;
     S1LoopThread _loopThread = null;
 
     private javax.swing.Timer rpmTimer;
@@ -76,15 +75,6 @@ class Steam1Sound extends EngineSound {
         _loopThread = new S1LoopThread(this, _soundName, top_speed, top_speed_reverse,
                 driver_diameter_float, num_cylinders, decel_trigger_rpms, true);
         log.debug("Loop Thread Started.  Sound name: {}", _soundName);
-    }
-
-    @Override
-    public void stop() {
-        // Stop the loop thread, in case it's running
-        if (_loopThread != null) {
-            _loopThread.setRunning(false);
-        }
-        is_looping = false;
     }
 
     // Responds to "CHANGE" trigger (float)
@@ -139,7 +129,7 @@ class Steam1Sound extends EngineSound {
     }
 
     // Called from thread
-    void startAccDecTimer() {
+    private void startAccDecTimer() {
         if (!rpmTimer.isRunning()) {
             rpmTimer.start();
             log.debug("timer {} started, delay: {}", rpmTimer, accdectime);
@@ -147,7 +137,7 @@ class Steam1Sound extends EngineSound {
     }
 
     // Called from thread
-    void stopAccDecTimer() {
+    private void stopAccDecTimer() {
         if (rpmTimer.isRunning()) {
             rpmTimer.stop();
             log.debug("timer {} stopped, delay: {}", rpmTimer, accdectime);
@@ -156,8 +146,10 @@ class Steam1Sound extends EngineSound {
 
     @Override
     public void startEngine() {
-        log.debug("startEngine. ID = {}", this.getName());
-        _loopThread.startEngine();
+        log.debug("startEngine. ID: {}", this.getName());
+        if (_loopThread != null) {
+            _loopThread.startEngine();
+        }
     }
 
     @Override
@@ -169,6 +161,8 @@ class Steam1Sound extends EngineSound {
     }
 
     @Override
+    // Called when deleting a VSDecoder or closing the VSDecoder Manager
+    // There is one thread for every VSDecoder
     public void shutdown() {
         for (VSDSound vs : trigger_sounds.values()) {
             log.debug(" Stopping trigger sound: {}", vs.getName());
@@ -177,7 +171,11 @@ class Steam1Sound extends EngineSound {
         if (rpmTimer != null) {
             stopAccDecTimer();
         }
-        this.stop(); // Stop loop thread
+
+        // Stop the loop thread, in case it's running
+        if (_loopThread != null) {
+            _loopThread.setRunning(false); // Kill the thread
+        }
     }
 
     @Override
@@ -763,79 +761,75 @@ class Steam1Sound extends EngineSound {
             is_running = r;
         }
 
-        public void setThrottle(float t) {
+        private void setThrottle(float t) {
             // Don't do anything, if engine is not started
             // Another required value is a S1Notch (should have been set at engine start)
             if (_parent.engine_started) {
                 if (t < 0.0f) {
                     // DO something to shut down
-                    _sound.stop();
-                    is_running = false;
-                    log.info("emergency Stop");
-                    //return; // klk: This will tear down VSD
-                    // probably should do something. Not sure what
-                    stopBraking();
-                    stopAutoCoasting();
-                    stopIdling();
-                    _throttle = 0.0f;
-                    log.info("Throttle set to {}", _throttle);
+                    setRpmNominal(0);
+                    _parent.accdectime = 0;
+                    _parent.startAccDecTimer();
+                    updateRpm();
                 } else {
                     _throttle = t;
-                }
 
-                if (is_half_speed) {
-                    _throttle = _throttle / 2;
-                }
-                // Calculate the nominal speed (Revolutions Per Minute)
-                setRpmNominal(calcRPM(_throttle));
-
-                // Speeding up or slowing down?
-                if (getRpmNominal() < lastRpm) {
-                    //
-                    // Slowing down.
-                    //
-                    _parent.accdectime = dec_time;
-                    log.debug("decelerate from {} to {}", lastRpm, getRpmNominal());
-
-                    if ((getRpmNominal() < 23) && is_auto_coasting && (count_pre_arrival > 0) && 
-                            _parent.trigger_sounds.containsKey("pre_arrival") && (dec_time < 250)) {
-                        _parent.trigger_sounds.get("pre_arrival").fadeIn();
-                        count_pre_arrival--;
+                    // handle half-speed
+                    if (is_half_speed) {
+                        _throttle = _throttle / 2;
                     }
 
-                    // Calculate how long it's been since we lastly checked speed
-                    long currentTime = System.currentTimeMillis();
-                    float timePassed = currentTime - timeOfLastSpeedCheck;
-                    timeOfLastSpeedCheck = currentTime;
-                    // Prove the trigger for decelerating actions (braking, coasting)
-                    if (((lastRpm - getRpmNominal()) > _decel_trigger_rpms) && (timePassed < 500.0f)) {
-                        log.debug("Time passed {}", timePassed);
-                        if ((getRpmNominal() < 30) && (dec_time < 250)) { // Braking sound only when speed is low (, but not to low)
-                            if (_parent.trigger_sounds.containsKey("brake")) {
-                                _parent.trigger_sounds.get("brake").fadeIn();
-                                is_braking = true;
-                                log.debug("braking activ!");
+                    // Calculate the nominal speed (Revolutions Per Minute)
+                    setRpmNominal(calcRPM(_throttle));
+
+                    // Speeding up or slowing down?
+                    if (getRpmNominal() < lastRpm) {
+                        //
+                        // Slowing down
+                        //
+                        _parent.accdectime = dec_time;
+                        log.debug("decelerate from {} to {}", lastRpm, getRpmNominal());
+
+                        if ((getRpmNominal() < 23) && is_auto_coasting && (count_pre_arrival > 0) && 
+                                _parent.trigger_sounds.containsKey("pre_arrival") && (dec_time < 250)) {
+                            _parent.trigger_sounds.get("pre_arrival").fadeIn();
+                            count_pre_arrival--;
+                        }
+
+                        // Calculate how long it's been since we lastly checked speed
+                        long currentTime = System.currentTimeMillis();
+                        float timePassed = currentTime - timeOfLastSpeedCheck;
+                        timeOfLastSpeedCheck = currentTime;
+                        // Prove the trigger for decelerating actions (braking, coasting)
+                        if (((lastRpm - getRpmNominal()) > _decel_trigger_rpms) && (timePassed < 500.0f)) {
+                            log.debug("Time passed {}", timePassed);
+                            if ((getRpmNominal() < 30) && (dec_time < 250)) { // Braking sound only when speed is low (, but not to low)
+                                if (_parent.trigger_sounds.containsKey("brake")) {
+                                    _parent.trigger_sounds.get("brake").fadeIn();
+                                    is_braking = true;
+                                    log.debug("braking activ!");
+                                }
+                            } else if (coast_notch.coast_bufs.size() > 0 && !is_key_coasting) {
+                                is_auto_coasting = true;
+                                log.debug("auto-coasting active");
                             }
-                        } else if (coast_notch.coast_bufs.size() > 0 && !is_key_coasting) {
-                            is_auto_coasting = true;
-                            log.debug("auto-coasting active");
+                        }
+                    } else {
+                        //
+                        // Speeding up.
+                        //
+                        _parent.accdectime = acc_time;
+                        log.debug("accelerate from {} to {}", lastRpm, getRpmNominal());
+                        if (is_braking) {
+                            stopBraking(); // Revoke possible brake sound
+                        }
+                        if (is_auto_coasting) {
+                            stopAutoCoasting(); // This makes chuff sound hearable again
                         }
                     }
-                } else {
-                    //
-                    // Speeding up.
-                    //
-                    _parent.accdectime = acc_time;
-                    log.debug("accelerate from {} to {}", lastRpm, getRpmNominal());
-                    if (is_braking) {
-                        stopBraking(); // Revoke possible brake sound
-                    }
-                    if (is_auto_coasting) {
-                        stopAutoCoasting(); // This makes chuff sound hearable again
-                    }
+                    _parent.startAccDecTimer(); // Start, if not already running
+                    lastRpm = getRpmNominal();
                 }
-                _parent.startAccDecTimer(); // Start, if not already running
-                lastRpm = getRpmNominal();
             }
         }
 
@@ -1059,7 +1053,8 @@ class Steam1Sound extends EngineSound {
                 // Note: if (is_running == false) we'll exit the endless while and the Thread will die
                 return;
             } catch (InterruptedException ie) {
-                is_running = false;
+                //Thread.currentThread().interrupt();
+                log.error("execption", ie);
                 return;
                 // probably should do something. Not sure what
             }

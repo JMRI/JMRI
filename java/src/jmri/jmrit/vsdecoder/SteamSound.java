@@ -143,35 +143,47 @@ class SteamSound extends EngineSound {
     public void changeThrottle(float t) {
         // Don't do anything, if engine is not started or auto-start is active.
         if (engine_started) {
-            RPMSound rps;
-            rps = getRPMSound(calcRPM(t)); // Get the rpm sound.
-            if (rps != null) {
-                // Yes, I'm checking to see if rps and current_rpm_sound are the *same object*
-                if (rps != current_rpm_sound) {
-                    // Stop the current sound
-                    if ((current_rpm_sound != null) && (current_rpm_sound.sound != null)) {
-                        current_rpm_sound.sound.fadeOut();
-                        if (current_rpm_sound.use_chuff) {
-                            current_rpm_sound.stopChuff();
+            if (t < 0.0f) {
+                // DO something to shut down
+                log.info("Emergency Stop");
+                //t = 0.0f;
+                current_rpm_sound.sound.fadeOut();
+                if (current_rpm_sound.use_chuff) {
+                    current_rpm_sound.stopChuff();
+                }
+                current_rpm_sound = getRPMSound(0);
+                current_rpm_sound.sound.loop();
+            } else {
+                RPMSound rps;
+                rps = getRPMSound(calcRPM(t)); // Get the rpm sound.
+                if (rps != null) {
+                    // Yes, I'm checking to see if rps and current_rpm_sound are the *same object*
+                    if (rps != current_rpm_sound) {
+                        // Stop the current sound
+                        if ((current_rpm_sound != null) && (current_rpm_sound.sound != null)) {
+                            current_rpm_sound.sound.fadeOut();
+                            if (current_rpm_sound.use_chuff) {
+                                current_rpm_sound.stopChuff();
+                            }
+                        }
+                        // Start the new sound.
+                        current_rpm_sound = rps;
+                        if (rps.use_chuff) {
+                            rps.setRPM(calcRPM(t));
+                            rps.startChuff();
+                        }
+                        rps.sound.fadeIn();
+                    } else {
+                        // *same object* - but possibly different rpm (speed) which affects the chuff interval
+                        if (rps.use_chuff) {
+                            rps.setRPM(calcRPM(t)); // Chuff interval need to be recalculated
                         }
                     }
-                    // Start the new sound.
-                    current_rpm_sound = rps;
-                    if (rps.use_chuff) {
-                        rps.setRPM(calcRPM(t));
-                        rps.startChuff();
-                    }
-                    rps.sound.fadeIn();
                 } else {
-                    // *same object* - but possibly different rpm (speed) which affects the chuff interval
-                    if (rps.use_chuff) {
-                        rps.setRPM(calcRPM(t)); // Chuff interval need to be recalculated
-                    }
+                    log.warn("No adequate sound file found for RPM = {}", calcRPM(t));
                 }
-            } else {
-                log.warn("No adequate sound file found for RPM = {}", calcRPM(t));
+                log.debug("RPS: {}, RPM: {}, current_RPM: {}", rps, calcRPM(t), current_rpm_sound);
             }
-            log.debug("RPS: {}, RPM: {}, current_RPM: {}", rps, calcRPM(t), current_rpm_sound);
         }
     }
 
@@ -213,17 +225,17 @@ class SteamSound extends EngineSound {
     public void setXml(Element e, VSDFile vf) {
         Element el;
         //int num_rpms;
-        String fn;
+        String fn, n;
         SoundBite sb;
 
         super.setXml(e, vf);
 
         log.debug("Steam EngineSound: {}, name: {}", e.getAttribute("name").getValue(), name);
-        String n = e.getChild("top-speed").getValue();
-        if (n != null) {
-            top_speed = Integer.parseInt(n);
-            log.debug("Top speed: {} MPH", top_speed);
-        }
+
+        // Required values
+        top_speed = Integer.parseInt(e.getChildText("top-speed"));
+        log.debug("top speed forward: {} MPH", top_speed);
+
         n = e.getChildText("driver-diameter");
         if (n != null) {
             driver_diameter = Integer.parseInt(n);

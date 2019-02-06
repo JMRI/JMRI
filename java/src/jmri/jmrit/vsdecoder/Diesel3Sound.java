@@ -53,11 +53,7 @@ class Diesel3Sound extends EngineSound {
     float engine_gain;
 
     // Common variables
-    Float throttle_setting; // used for handling speed changes
-
     int current_notch = 1;
-    boolean changing_speed = false;
-    boolean is_looping = false;
     D3LoopThread _loopThread = null;
 
     public Diesel3Sound(String name) {
@@ -70,15 +66,6 @@ class Diesel3Sound extends EngineSound {
     private void startThread() {
         _loopThread = new D3LoopThread(this, notch_sounds.get(current_notch), _soundName, true);
         log.debug("Loop Thread Started.  Sound name: {}", _soundName);
-    }
-
-    @Override
-    public void stop() {
-        // Stop the loop thread, in case it's running
-        if (_loopThread != null) {
-            _loopThread.setRunning(false);
-        }
-        is_looping = false;
     }
 
     // Responds to "CHANGE" trigger
@@ -106,7 +93,9 @@ class Diesel3Sound extends EngineSound {
     @Override
     public void startEngine() {
         log.debug("startEngine.  ID: {}", this.getName());
-        _loopThread.startEngine(start_buffer);
+        if (_loopThread != null) {
+            _loopThread.startEngine(start_buffer);
+        }
     }
 
     @Override
@@ -119,7 +108,10 @@ class Diesel3Sound extends EngineSound {
 
     @Override
     public void shutdown() {
-        this.stop();
+        // Stop the loop thread, in case it's running
+        if (_loopThread != null) {
+            _loopThread.setRunning(false);
+        }
     }
 
     @Override
@@ -149,7 +141,7 @@ class Diesel3Sound extends EngineSound {
         me.setAttribute("name", this.getName());
         me.setAttribute("type", "engine");
         // Do something, eventually...
-        return (me);
+        return me;
     }
 
     @Override
@@ -587,6 +579,9 @@ class Diesel3Sound extends EngineSound {
 
         public void setThrottle(float t) {
             if (_parent.engine_started) {
+                if (t < 0.0f) {
+                    t = 0.0f;
+                }
                 _throttle = t;
             }
             log.debug("Throttle set: {}", _throttle);
@@ -711,12 +706,6 @@ class Diesel3Sound extends EngineSound {
             int new_notch = _notch.getNotch();
 
             log.debug("D3Thread Change Throttle: {}, Accel Limit: {}, Decel Limit: {}", _throttle, _notch.getAccelLimit(), _notch.getDecelLimit());
-            if (_throttle < 0) {
-                // DO something to shut down
-                _sound.stop();
-                is_running = false;
-                return;
-            }
             if (_throttle > _notch.getAccelLimit()) {
                 // Too fast. Need to go to next notch up.
                 transition_buf = _notch.getAccelBuffer();
