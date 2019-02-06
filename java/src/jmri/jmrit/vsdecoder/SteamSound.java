@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author Mark Underwood Copyright (C) 2011
- * @author Klaus Killinger Copyright (C) 2018
+ * @author Klaus Killinger Copyright (C) 2018, 2019
  */
 // Usage:
 // SteamSound() : constructor
@@ -80,13 +80,21 @@ class SteamSound extends EngineSound {
     // Engine Sounds
     ArrayList<RPMSound> rpm_sounds;
     int top_speed;
-    int driver_diameter;
-    int num_cylinders;
+    private int driver_diameter;
+    private int num_cylinders;
     RPMSound current_rpm_sound;
-    float exponent;
+    private float exponent;
 
     public SteamSound(String name) {
         super(name);
+    }
+
+    // Responds to throttle loco direction key (see EngineSound.java and EngineSoundEvent.java)
+    @Override
+    public void changeLocoDirection(int d) {
+        // If loco direction was changed we need to set topspeed of the loco to new value 
+        // (this is necessary, when topspeed-forward and topspeed-reverse differs)
+        log.debug("loco direction: {}", d);
     }
 
     @Override
