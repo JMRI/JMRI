@@ -37,7 +37,7 @@ public interface AnalogIO extends NamedBean {
     default public boolean isConsistentValue() {
         return true;
     }
-
+    
     /**
      * Change the commanded value, which results in the relevant command(s)
      * being sent to the hardware. The exception is thrown if there are problems
