@@ -33,7 +33,12 @@ public class TranspondingTag extends jmri.implementation.DefaultIdTag implements
 
     @Override
     public String toString(){
-       return getTagID() + " " + getProperty("entryexit");
+       String exit = (String) getProperty("entryexit");
+       if(exit!=null) {
+          return getTagID() + " " + exit;
+       } else {
+          return getTagID();
+       }
     }
 
 }
