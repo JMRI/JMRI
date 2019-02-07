@@ -51,21 +51,19 @@ public class DefaultRailCom extends DefaultIdTag implements jmri.RailCom {
         return this.currentState;
     }
 
-    int orientation = Sensor.UNKNOWN;
-
     @Override
     public void setOrientation(int type) {
-        if (type == orientation) {
-            return;
-        }
-        int oldValue = orientation;
-        orientation = type;
-        firePropertyChange("orientation", oldValue, orientation);
+        setProperty("orientation",Integer.valueOf(type));
     }
 
     @Override
     public int getOrientation() {
-        return orientation;
+        Integer t = (Integer)getProperty("orientation");
+        if(t != null ){
+           return t.intValue();
+        } else {
+          return Sensor.UNKNOWN;
+        }
     }
 
     @Override
@@ -82,15 +80,6 @@ public class DefaultRailCom extends DefaultIdTag implements jmri.RailCom {
         }
     }
 
-    @Override
-    public DccLocoAddress getDccLocoAddress() {
-        boolean longAddress = false;
-        if (addressTypeInt == LONG_ADDRESS) {
-            longAddress = true;
-        }
-        return new DccLocoAddress(Integer.parseInt(getTagID()), longAddress);
-    }
-
     int addressTypeInt = 0;
 
     @Override
@@ -103,123 +92,109 @@ public class DefaultRailCom extends DefaultIdTag implements jmri.RailCom {
         return addressTypeInt;
     }
 
-    private int actualSpeed = -1;
-
     @Override
     public void setActualSpeed(int type) {
-        if (type == actualSpeed) {
-            return;
-        }
-        int oldValue = actualSpeed;
-        actualSpeed = type;
-        firePropertyChange("actualspeed", oldValue, actualSpeed);
+        setProperty("actualspeed",Integer.valueOf(type));
     }
 
     @Override
     public int getActualSpeed() {
-        return actualSpeed;
+        Integer t = (Integer)getProperty("actualspeed");
+        if(t != null ){
+           return t.intValue();
+        } else {
+          return -1;
+        }
     }
-
-    private int actualLoad = -1;
 
     @Override
     public void setActualLoad(int type) {
-        if (type == actualLoad) {
-            return;
-        }
-        int oldValue = actualLoad;
-        actualLoad = type;
-        firePropertyChange("actualload", oldValue, actualLoad);
+        setProperty("actualload",Integer.valueOf(type));
     }
 
     @Override
     public int getActualLoad() {
-        return actualLoad;
+        Integer t = (Integer)getProperty("actualload");
+        if(t != null ){
+           return t.intValue();
+        } else {
+          return -1;
+        }
     }
-
-    private int actualTemperature = -1;
 
     @Override
     public void setActualTemperature(int type) {
-        if (type == actualTemperature) {
-            return;
-        }
-        int oldValue = actualTemperature;
-        actualTemperature = type;
-        firePropertyChange("actualtemperature", oldValue, actualTemperature);
+        setProperty("actualtemperature",Integer.valueOf(type));
     }
 
     @Override
     public int getActualTemperature() {
-        return actualTemperature;
+        Integer t = (Integer)getProperty("actualtemperature");
+        if(t != null ){
+           return t.intValue();
+        } else {
+          return -1;
+        }
     }
-
-    private int waterLevel = -1;
 
     @Override
     public void setWaterLevel(int type) {
-        if (type == waterLevel) {
-            return;
-        }
-        int oldValue = waterLevel;
-        waterLevel = type;
-        firePropertyChange("waterlevel", oldValue, waterLevel);
+        setProperty("waterlevel",Integer.valueOf(type));
     }
 
     @Override
     public int getWaterLevel() {
-        return waterLevel;
+        Integer t = (Integer)getProperty("waterlevel");
+        if(t != null ){
+           return t.intValue();
+        } else {
+          return -1;
+        }
     }
-
-    private int fuelLevel = -1;
 
     @Override
     public void setFuelLevel(int type) {
-        if (type == fuelLevel) {
-            return;
-        }
-        int oldValue = fuelLevel;
-        fuelLevel = type;
-        firePropertyChange("fuellevel", oldValue, fuelLevel);
+        setProperty("fuellevel",Integer.valueOf(type));
     }
 
     @Override
     public int getFuelLevel() {
-        return fuelLevel;
+        Integer t = (Integer)getProperty("fuellevel");
+        if(t != null ){
+           return t.intValue();
+        } else {
+          return -1;
+        }
     }
-
-    private int location = -1;
 
     @Override
     public void setLocation(int type) {
-        if (type == location) {
-            return;
-        }
-        int oldValue = location;
-        location = type;
-        firePropertyChange("location", oldValue, location);
+        setProperty("location",Integer.valueOf(type));
     }
 
     @Override
     public int getLocation() {
-        return location;
+        Integer t = (Integer)getProperty("location");
+        if(t != null ){
+           return t.intValue();
+        } else {
+          return -1;
+        }
     }
-
-    private int routingNo = -1;
 
     @Override
     public void setRoutingNo(int type) {
-        if (type == routingNo) {
-            return;
-        }
-        int oldValue = routingNo;
-        routingNo = type;
-        firePropertyChange("routing", oldValue, routingNo);
+        setProperty("routing",Integer.valueOf(type));
     }
 
     @Override
     public int getRoutingNo() {
-        return routingNo;
+        Integer t = (Integer)getProperty("routing");
+        if(t != null ){
+           return t.intValue();
+        } else {
+          return -1;
+        }
     }
 
     private int expectedCV = -1;
