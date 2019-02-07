@@ -177,6 +177,7 @@ public class SimpleOperationsServerTest {
         jmri.util.JUnitUtil.initInternalTurnoutManager();
         jmri.util.JUnitUtil.initInternalLightManager();
         jmri.util.JUnitUtil.initInternalSensorManager();
+        jmri.util.JUnitUtil.initIdTagManager();
         jmri.util.JUnitUtil.initDebugThrottleManager();
         jmri.util.JUnitOperationsUtil.setupOperationsTests();
         jmri.util.JUnitOperationsUtil.initOperationsData();

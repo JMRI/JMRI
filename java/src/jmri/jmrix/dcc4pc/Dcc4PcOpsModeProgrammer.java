@@ -3,7 +3,7 @@ package jmri.jmrix.dcc4pc;
 import java.beans.PropertyChangeListener;
 import java.util.List;
 import javax.annotation.Nonnull;
-
+import jmri.RailCom;
 import jmri.AddressedProgrammer;
 import jmri.AddressedProgrammerManager;
 import jmri.ProgListener;
@@ -24,7 +24,7 @@ public class Dcc4PcOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer imple
     int pAddress = 0;
     boolean pLongAddress;
     int progState = 0;
-    jmri.RailCom rcTag;
+    RailCom rcTag;
     int value;
     int cv;
     jmri.ProgListener progListener = null;
@@ -39,7 +39,7 @@ public class Dcc4PcOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer imple
         defaultProgrammer = defaultManager.getAddressedProgrammer(pLongAddress, pAddress);
         this.pAddress = pAddress;
         this.pLongAddress = pLongAddress;
-        rcTag = jmri.InstanceManager.getDefault(jmri.RailComManager.class).provideIdTag("" + pAddress);
+        rcTag = (RailCom) jmri.InstanceManager.getDefault(jmri.RailComManager.class).provideIdTag("" + pAddress);
     }
 
     /** 
