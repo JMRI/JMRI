@@ -1,0 +1,20 @@
+<!-- Sidebar -->
+<!-- This is the common sidebar definition for html/apps/TrainCrew page(s) -->
+
+<hr class="hide">
+<div id="side"> <!-- Block of text on left side of page -->
+<div style="text-align: center">JMRI&reg; is...</div>
+<dl class="toc">
+
+    <dt><h3>TrainCrew Links</h3></dt>
+    <dd>
+    <ul>
+    <li><a href="http://traincrew.conrail1285.com">TrainCrew home</a></li>
+    <li><a href="https://github.com/ekapus/TrainCrew">TrainCrew GitHub</a></li>
+    </ul>
+    </dd>
+    
+</dl>
+
+	</div> <!-- closes #side -->
+<!-- /Sidebar -->

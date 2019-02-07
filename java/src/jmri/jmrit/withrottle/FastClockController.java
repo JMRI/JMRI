@@ -48,13 +48,8 @@ public class FastClockController extends AbstractController {
             }
         };
         
-        if (fastClock == null) {
-            log.info("No fast clock manager instance.");
-            isValid = false;
-            return;
-        } else {
-            isValid = true;
-        }
+        isValid = true;
+        
         updateMinsSetpoint = (short)(fastClock.userGetRate() * UPDATE_MINUTES);
         setReSyncSetpoint();
         // request callback to update time
@@ -68,7 +63,7 @@ public class FastClockController extends AbstractController {
     }
 
     @Override
-    void handleMessage(String message) {
+    void handleMessage(String message, DeviceServer deviceServer) {
         throw new UnsupportedOperationException("Not used.");
     }
 
@@ -103,8 +98,10 @@ public class FastClockController extends AbstractController {
     public void sendFastTime() {
         updateMinuteCount++;
         if (updateMinuteCount >= updateMinsSetpoint) {
-            for (ControllerInterface listener : listeners) {
-                listener.sendPacketToDevice("PFT" + getAdjustedTime());
+            if (listeners != null) {
+                for (ControllerInterface listener : listeners) {
+                    listener.sendPacketToDevice("PFT" + getAdjustedTime());
+                }
             }
             updateMinuteCount = 0;
         }
@@ -119,14 +116,16 @@ public class FastClockController extends AbstractController {
      */
     public void sendFastRate() {
         //  Send the time and run rate whether running or not
-        for (ControllerInterface listener : listeners) {
-            listener.sendPacketToDevice("PFT" + getAdjustedTime() + "<;>" + fastClock.userGetRate());
-        }
-        if (fastClock.getRun() == false) {
-            //  Not running, send rate of 0
-            //  This will stop a running clock without changing stored rate
+        if (listeners != null) {
             for (ControllerInterface listener : listeners) {
-                listener.sendPacketToDevice("PFT" + getAdjustedTime() + "<;>" + 0.0);
+                listener.sendPacketToDevice("PFT" + getAdjustedTime() + "<;>" + fastClock.userGetRate());
+            }
+            if (fastClock.getRun() == false) {
+                //  Not running, send rate of 0
+                //  This will stop a running clock without changing stored rate
+                for (ControllerInterface listener : listeners) {
+                    listener.sendPacketToDevice("PFT" + getAdjustedTime() + "<;>" + 0.0);
+                }
             }
         }
     }
@@ -135,5 +134,5 @@ public class FastClockController extends AbstractController {
         updateMinsSetpoint = (short)(fastClock.userGetRate() * UPDATE_MINUTES);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(FastClockController.class);
+    // private final static Logger log = LoggerFactory.getLogger(FastClockController.class);
 }

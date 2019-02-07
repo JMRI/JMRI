@@ -76,13 +76,6 @@ public class StatusPanel extends jmri.jmrix.tams.swing.TamsPanel implements Tams
 
     }
 
-    @SuppressWarnings("unused")
-    private void checkTC() throws JmriException {
-        if (tc == null) {
-            throw new JmriException("attempt to use TamsPowerManager after dispose");
-        }
-    }
-
     TamsTrafficController tc;
 
     // to listen for status changes from Tams system

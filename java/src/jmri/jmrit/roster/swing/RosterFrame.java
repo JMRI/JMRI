@@ -89,7 +89,6 @@ import jmri.jmrix.ConnectionConfigManager;
 import jmri.jmrix.ConnectionStatus;
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
-import jmri.progdebugger.ProgDebugger;
 import jmri.swing.JTablePersistenceManager;
 import jmri.swing.RowSorterUtil;
 import jmri.util.FileUtil;
@@ -108,7 +107,7 @@ import org.slf4j.LoggerFactory;
  * <p>
  * TODO: Several methods are copied from PaneProgFrame and should be refactored
  * No programmer support yet (dummy object below). Color only covering borders.
- * No reset toolbar support yet No glass pane support (See DecoderPro3Panes
+ * No reset toolbar support yet. No glass pane support (See DecoderPro3Panes
  * class and usage below). Special panes (Roster entry, attributes, graphics)
  * not included. How do you pick a programmer file? (hardcoded) Initialization
  * needs partial deferal, too for 1st pane to appear.
@@ -174,7 +173,6 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     JButton prog1Button = new JButton(Bundle.getMessage("Program"));
     JButton prog2Button = new JButton(Bundle.getMessage("BasicProgrammer"));
     ActionListener programModeListener;
-    transient ProgDebugger progDebugger = new ProgDebugger();
 
     // These are the names of the programmer _files_, not what should be displayed to the user
     String programmer1 = "Comprehensive"; // NOI18N
@@ -290,38 +288,19 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         panel.add(buttonHolder);
         prog1Button.setEnabled(false);
         prog1Button.addActionListener((ActionEvent e) -> {
-            if (log.isDebugEnabled()) {
-                log.debug("Open programmer pressed");
-            }
+            log.debug("Open programmer pressed");
             startProgrammer(null, re, programmer1);
         });
-        /*
-         * prog2Button.setEnabled(false); prog2Button.addActionListener( new
-         * ActionListener() { public void
-         * actionPerformed(java.awt.event.ActionEvent e) { if
-         * (log.isDebugEnabled()) log.debug("Open progDebugger pressed");
-         * startProgrammer(null, re, programmer2); } });
-         */
- /*
-         * throttleLabels.setEnabled(false); throttleLabels.addActionListener(
-         * new ActionListener() { public void
-         * actionPerformed(java.awt.event.ActionEvent e) { if
-         * (log.isDebugEnabled()) log.debug("Open progDebugger pressed");
-         * editMediaButton(); } });
-         */
+
         rosterMedia.setEnabled(false);
         rosterMedia.addActionListener((ActionEvent e) -> {
-            if (log.isDebugEnabled()) {
-                log.debug("Open programmer pressed");
-            }
+            log.debug("Open programmer pressed");
             edit.setSelected(true);
             startProgrammer(null, re, "dp3" + File.separator + "MediaPane");
         });
         throttleLaunch.setEnabled(false);
         throttleLaunch.addActionListener((ActionEvent e) -> {
-            if (log.isDebugEnabled()) {
-                log.debug("Launch Throttle pressed");
-            }
+            log.debug("Launch Throttle pressed");
             if (!checkIfEntrySelected()) {
                 return;
             }
@@ -639,6 +618,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     }
 
     /*=============== Getters and Setters for core properties ===============*/
+
     /**
      * @return Will closing the window quit JMRI?
      */
@@ -1149,9 +1129,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             re.removePropertyChangeListener(rosterEntryUpdateListener);
         }
         List<RosterEntry> l = Roster.getDefault().matchingList(null, null, Integer.toString(dccAddress), null, null, null, null);
-        if (log.isDebugEnabled()) {
-            log.debug("selectLoco found " + l.size() + " matches");
-        }
+        log.debug("selectLoco found {} matches", l.size());
         if (l.size() > 0) {
             if (l.size() > 1) {
                 //More than one possible loco, so check long flag
@@ -1167,15 +1145,19 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                     if (l2.isEmpty()) {
                         l2 = l;
                     }
-                    //Still more than one possible loco, so check against the decoder family
+                    // Still more than one possible loco, so check against the decoder family
+                    log.trace("Checking against decoder family with mfg {} model {}", mfgId, modelId);
                     List<RosterEntry> l3 = new ArrayList<>();
                     List<DecoderFile> temp = InstanceManager.getDefault(DecoderIndexFile.class).matchingDecoderList(null, null, "" + mfgId, "" + modelId, null, null);
+                    log.trace("found {}", temp.size());
                     ArrayList<String> decoderFam = new ArrayList<>();
                     for (DecoderFile f : temp) {
                         if (!decoderFam.contains(f.getModel())) {
                             decoderFam.add(f.getModel());
                         }
                     }
+                    log.trace("matched {} times", decoderFam.size());
+                    
                     for (RosterEntry _re : l2) {
                         if (decoderFam.contains(_re.getDecoderModel())) {
                             l3.add(_re);
@@ -1203,7 +1185,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     }
 
     /**
-     * Simple method to change over the progDebugger buttons.
+     * Simple method to change over the programmer buttons.
      * <p>
      * TODO This should be implemented with the buttons in their own class etc.
      * but this will work for now.
@@ -1505,7 +1487,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     }
 
     /**
-     * Handle setting up and updating the GUI for the types of progDebugger
+     * Handle setting up and updating the GUI for the types of programmer
      * available.
      *
      * @param evt the triggering event; if not null and if a removal of a
@@ -1526,6 +1508,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                 && evt.getPropertyName().equals(InstanceManager.getDefaultsPropertyName(GlobalProgrammerManager.class))
                 && evt.getNewValue() == null)) {
             gpm = InstanceManager.getNullableDefault(GlobalProgrammerManager.class);
+            log.trace("found global programming manager {}", gpm);
         }
         if (gpm != null) {
             String serviceModeProgrammerName = gpm.getUserName();
@@ -1563,9 +1546,10 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             });
         }
 
+        log.trace("start global check with {}, {}, {}", serModeProCon, gpm, (gpm != null ? gpm.isGlobalProgrammerAvailable() : "<none>"));
         if (serModeProCon != null && gpm != null && gpm.isGlobalProgrammerAvailable()) {
             if (ConnectionStatus.instance().isConnectionOk(serModeProCon.getConnectionName(), serModeProCon.getInfo())) {
-                log.debug("GPM Connection online");
+                log.debug("GPM Connection online 1");
                 serviceModeProgrammerLabel.setText(
                         Bundle.getMessage("ServiceModeProgOnline", serModeProCon.getConnectionName()));
                 serviceModeProgrammerLabel.setForeground(new Color(0, 128, 0));
@@ -1584,7 +1568,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             }
         } else if (gpm != null && gpm.isGlobalProgrammerAvailable()) {
             if (ConnectionStatus.instance().isSystemOk(gpm.getUserName())) {
-                log.debug("GPM Connection online");
+                log.debug("GPM Connection online 2");
                 serviceModeProgrammerLabel.setText(
                         Bundle.getMessage("ServiceModeProgOnline", gpm.getUserName()));
                 serviceModeProgrammerLabel.setForeground(new Color(0, 128, 0));
@@ -1603,6 +1587,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             }
         } else {
             // No service programmer available, disable interface sections not available
+            log.debug("no service programmer");
             serviceModeProgrammerLabel.setText(Bundle.getMessage("NoServiceProgrammerAvailable"));
             serviceModeProgrammerLabel.setForeground(Color.red);
             if (oldServMode != null) {

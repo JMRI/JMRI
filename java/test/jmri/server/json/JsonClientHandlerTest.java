@@ -7,6 +7,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Locale;
 import jmri.profile.NullProfile;
 import jmri.util.FileUtil;
 import jmri.util.JUnitAppender;
@@ -57,9 +58,9 @@ public class JsonClientHandlerTest {
         Assert.assertTrue("Response is an array", connection.getMessage().isArray());
         Assert.assertEquals("Response array contains two elements", 2, connection.getMessage().size());
         Assert.assertTrue("Response array element 0 is an object", connection.getMessage().get(0).isObject());
-        Assert.assertEquals("Response array element 0 is empty", 0, connection.getMessage().get(0).size());
+        Assert.assertEquals("Response array element 0 is a JSON message", 2, connection.getMessage().get(0).size());
         Assert.assertTrue("Response array element 1 is an object", connection.getMessage().get(1).isObject());
-        Assert.assertEquals("Response array element 1 is empty", 0, connection.getMessage().get(1).size());
+        Assert.assertEquals("Response array element 1 is a JSON message", 2, connection.getMessage().get(1).size());
         instance.onMessage("not a JSON object");
         Assert.assertNotNull("Expected warning not shown", JUnitAppender.checkForMessageStartingWith("Exception processing \"not a JSON object\""));
         Assert.assertTrue("Error response is an object", connection.getMessage().isObject());
@@ -85,21 +86,97 @@ public class JsonClientHandlerTest {
         Assert.assertTrue("Response is an array", connection.getMessage().isArray());
         Assert.assertEquals("Response array contains two elements", 2, connection.getMessage().size());
         Assert.assertTrue("Response array element 0 is an object", connection.getMessage().get(0).isObject());
-        Assert.assertEquals("Response array element 0 is empty", 0, connection.getMessage().get(0).size());
+        Assert.assertEquals("Response array element 0 is a JSON message", 2, connection.getMessage().get(0).size());
         Assert.assertTrue("Response array element 1 is an object", connection.getMessage().get(1).isObject());
-        Assert.assertEquals("Response array element 1 is empty", 0, connection.getMessage().get(1).size());
+        Assert.assertEquals("Response array element 1 is a JSON message", 2, connection.getMessage().get(1).size());
     }
 
     /**
-     * Test of onMessage method, of class JsonClientHandler.
+     * Test of onMessage method attempting to list an invalid type.
+     *
+     * @throws java.io.IOException if unable to pass message
      */
     @Test
-    public void testOnMessage_JsonNode_Method_get() throws Exception {
+    public void testOnMessage_JsonNode_Method_list_invalidType() throws Exception {
+        JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
+        connection.setLocale(Locale.ENGLISH);
+        JsonClientHandler instance = new TestJsonClientHandler(connection);
+        JsonNode node = connection.getObjectMapper().readTree("{\"type\":\"non-existant-type\",\"method\":\"list\"}");
+        instance.onMessage(node);
+        JUnitAppender.assertWarnMessage("Requested list type 'non-existant-type' unknown.");
+        Assert.assertTrue("Response is an object", connection.getMessage().isObject());
+        Assert.assertEquals("Response contains error code 404", 404, connection.getMessage().path(JSON.DATA).path(JsonException.CODE).asInt());
+    }
+
+    /**
+     * Test of onMessage method with an invalid type using the get method.
+     *
+     * @throws java.io.IOException if unable to pass message
+     */
+    @Test
+    public void testOnMessage_JsonNode_Method_get_invalidType() throws IOException {
+        JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
+        connection.setLocale(Locale.ENGLISH);
+        JsonClientHandler instance = new TestJsonClientHandler(connection);
+        JsonNode node = connection.getObjectMapper().readTree("{\"type\":\"non-existant-type\",\"method\":\"get\"}");
+        instance.onMessage(node);
+        JUnitAppender.assertWarnMessage("Requested type 'non-existant-type' unknown.");
+        Assert.assertTrue("Response is an object", connection.getMessage().isObject());
+        Assert.assertEquals("Response contains error code 404", 404, connection.getMessage().path(JSON.DATA).path(JsonException.CODE).asInt());
+    }
+
+    /**
+     * Test of onMessage method with valid type but missing data.
+     *
+     * @throws java.io.IOException if unable to pass message
+     */
+    @Test
+    public void testOnMessage_JsonNode_Method_post_missingData() throws IOException {
+        JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
+        connection.setLocale(Locale.ENGLISH);
+        JsonClientHandler instance = new TestJsonClientHandler(connection);
+        JsonNode node = connection.getObjectMapper().readTree("{\"type\":\"test\", \"method\":\"post\"}");
+        instance.onMessage(node);
+        JsonNode data = connection.getMessage().path(JSON.DATA);
+        Assert.assertTrue("Response is an object", connection.getMessage().isObject());
+        Assert.assertEquals("Response is an error", JsonException.ERROR, connection.getMessage().path(JSON.TYPE).asText());
+        Assert.assertEquals("Response contains error code 400", 400, data.path(JsonException.CODE).asInt());
+        Assert.assertEquals("Response contains error message", "Data portion of JSON message missing.", data.path(JsonException.MESSAGE).asText());
+    }
+
+    /**
+     * Test of onMessage method when service throws JmriException. A test
+     * message with the data property {@literal {"throws":"JmriException"} }
+     * will throw this exception for this test.
+     *
+     * @throws java.io.IOException if unable to pass message
+     */
+    @Test
+    public void testOnMessage_JsonNode_Method_service_throws_JmriException() throws IOException {
+        JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
+        connection.setLocale(Locale.ENGLISH);
+        JsonClientHandler instance = new TestJsonClientHandler(connection);
+        JsonNode node = connection.getObjectMapper().readTree("{\"type\":\"test\", \"data\":{\"throws\":\"JmriException\"}}");
+        instance.onMessage(node);
+        JsonNode data = connection.getMessage().path(JSON.DATA);
+        Assert.assertTrue("Response is an object", connection.getMessage().isObject());
+        Assert.assertEquals("Response is an error", JsonException.ERROR, connection.getMessage().path(JSON.TYPE).asText());
+        Assert.assertEquals("Response contains error code 500", 500, data.path(JsonException.CODE).asInt());
+        Assert.assertEquals("Response contains error message", "Unsupported operation attempted: null.", data.path(JsonException.MESSAGE).asText());
+    }
+
+    /**
+     * Test of onMessage method with valid messages containing the get method.
+     *
+     * @throws java.io.IOException if unable to pass messages
+     */
+    @Test
+    public void testOnMessage_JsonNode_Method_get() throws IOException {
         testOnMessage_JsonNode_Method_get("{\"type\":\"test\",\"data\":{\"name\":\"test\"},\"method\":\"get\"}");
         testOnMessage_JsonNode_Method_get("{\"type\":\"test\",\"data\":{\"name\":\"test\",\"method\":\"get\"}}");
     }
 
-    private void testOnMessage_JsonNode_Method_get(String message) throws Exception {
+    private void testOnMessage_JsonNode_Method_get(String message) throws IOException {
         JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
         JsonClientHandler instance = new TestJsonClientHandler(connection);
         JsonNode node = connection.getObjectMapper().readTree(message);
@@ -165,6 +242,21 @@ public class JsonClientHandlerTest {
         Assert.assertTrue("Error response is an object", root.isObject());
         Assert.assertEquals("Error response is an ERROR", JsonException.ERROR, root.path(JSON.TYPE).asText());
         Assert.assertEquals("Error response is type 400", 400, data.path(JsonException.CODE).asInt());
+    }
+
+    /**
+     * Test that locale on connection is set by handler.
+     *
+     * @throws IOException
+     */
+    @Test
+    public void testSetLocale() throws IOException {
+        JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
+        JsonClientHandler instance = new TestJsonClientHandler(connection);
+        connection.setLocale(Locale.ITALY);
+        Assert.assertEquals("Connection is IT Italian", Locale.ITALY, connection.getLocale());
+        instance.onMessage("{\"type\":\"locale\", \"data\":{\"locale\":\"en-US\"}}");
+        Assert.assertEquals("Connection is US English", Locale.US, connection.getLocale());
     }
 
     private static class TestJsonClientHandler extends JsonClientHandler {

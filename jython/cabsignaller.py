@@ -1,27 +1,30 @@
 #
 #  Outline cab signalling methods for JMRI
-#  Works with a Tethered DT402D (v14 firmware), but not in duplex wireless mode. 
-#  Info sought on whether a change to op-code is required to get radio transmission. 
-# 
+#  Works with a Tethered DT402D (v14 firmware), but not in duplex wireless mode.
+#  Info sought on whether a change to op-code is required to get radio transmission.
+#
 #  Copyright (c) 2011 by Nigel Cliffe,  23rd August 2011
 
 import jmri
 
-def locoNetCabSigMesg(loco, mast, vertical, diagonal, horizontal, blink):
-		# Message variables are Loco = Decimal loco address,  others are binary 1 or 0 
-		#  mast = 1 means show mast,  mast = 0 means hide mast.
-		#  vertical, diagonal, horizontal are the arms (1=show, 0=hide)
-		#  blink (1=blink, 0=no blink)
-		# Calculate the two byte loco address value 
-		locoD1 = loco / 128  # integer division, automatically rounds
-		locoD2 = loco % 128  # modulo division, gets the remainder. 
-		signalD3 = mast*16 + vertical*8 + diagonal*4 + horizontal*2 + blink*1
-		# values are in Decimal at this stage, some are clearer in Hex!
-		# thanks to BillyBob (on LocoNetHackers) for Op-code message format
-		sendLocoNetMsg(16,229,16,127,00,00,00, locoD1, locoD2, signalD3, 00,112,00,00,00,00,00)
-		return
+# set the intended LocoNet connection by its index; when you have just 1 connection index = 0
+connectionIndex = 0
 
-	# sendLocoNetMsg copied from elsewhere, extended to 15 ARGs
+def locoNetCabSigMesg(loco, mast, vertical, diagonal, horizontal, blink):
+        # Message variables are Loco = Decimal loco address,  others are binary 1 or 0
+        #  mast = 1 means show mast,  mast = 0 means hide mast.
+        #  vertical, diagonal, horizontal are the arms (1=show, 0=hide)
+        #  blink (1=blink, 0=no blink)
+        # Calculate the two byte loco address value
+        locoD1 = loco / 128  # integer division, automatically rounds
+        locoD2 = loco % 128  # modulo division, gets the remainder.
+        signalD3 = mast*16 + vertical*8 + diagonal*4 + horizontal*2 + blink*1
+        # values are in Decimal at this stage, some are clearer in Hex!
+        # thanks to BillyBob (on LocoNetHackers) for Op-code message format
+        sendLocoNetMsg(16,229,16,127,00,00,00, locoD1, locoD2, signalD3, 00,112,00,00,00,00,00)
+        return
+
+    # sendLocoNetMsg copied from elsewhere, extended to 15 ARGs
 def sendLocoNetMsg(msgLength,opcode,ARG1,ARG2,ARG3,ARG4,ARG5,ARG6,ARG7,ARG8,ARG9,ARG10,ARG11,ARG12,ARG13,ARG14,ARG15) :
      # format and send the specific LocoNet message
      # send up to 11 bytes in the message - includes checksum
@@ -47,19 +50,19 @@ def sendLocoNetMsg(msgLength,opcode,ARG1,ARG2,ARG3,ARG4,ARG5,ARG6,ARG7,ARG8,ARG9
         packet.setElement(13, ARG13)
         packet.setElement(14, ARG14)
         packet.setElement(15, ARG15)
-      
-     jmri.jmrix.loconet.LnTrafficController.instance().sendLocoNetMessage(packet)
+
+     jmri.InstanceManager.getList(jmri.jmrix.loconet.LocoNetSystemConnectionMemo).get(connectionIndex).getLnTrafficController().sendLocoNetMessage(packet)
      print "Packet", packet           # print packet to Script Output window
      return
 
 
-# User Interface follows 
+# User Interface follows
 
 import javax.swing
 
 def sendCabSignal(event):
-	locoNetCabSigMesg(int(locoAddr.text), showSignal.selected, vertSignal.selected, diagSignal.selected, horiSignal.selected, blinkSignal.selected)
-	return
+    locoNetCabSigMesg(int(locoAddr.text), showSignal.selected, vertSignal.selected, diagSignal.selected, horiSignal.selected, blinkSignal.selected)
+    return
 
 f = javax.swing.JFrame("DT402 Cab Signalling Tool")       # argument is the frames title
 f.contentPane.setLayout(javax.swing.BoxLayout(f.contentPane, javax.swing.BoxLayout.Y_AXIS))

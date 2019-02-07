@@ -29,27 +29,25 @@ public class JsonSchemaHttpServiceTest {
 
     /**
      * Test of doGet method, of class JsonSchemaHttpService.
+     *
+     * @throws jmri.server.json.JsonException on unexpected exception
      */
     @Test
-    public void testDoGet() {
+    public void testDoGet() throws JsonException {
         JsonSchemaHttpService instance = new JsonSchemaHttpService(new ObjectMapper());
-        try {
-            JsonNode result = instance.doGet(JSON.SCHEMA, JSON.JSON, Locale.ENGLISH);
-            Assert.assertTrue("Is an array", result.isArray());
-            Assert.assertEquals("Array has two elements", 2, result.size());
-            Assert.assertTrue("1st element is JsonObject", result.get(0).isObject());
-            Assert.assertTrue("2nd element is JsonObject", result.get(1).isObject());
-            this.testIsSchema(result.get(0));
-            this.testIsSchema(result.get(1));
-        } catch (JsonException ex) {
-            Assert.fail("Unexpected exception " + ex);
-        }
+        JsonNode result = instance.doGet(JSON.SCHEMA, JSON.JSON, Locale.ENGLISH);
+        Assert.assertTrue("Is an array", result.isArray());
+        Assert.assertEquals("Array has two elements", 2, result.size());
+        Assert.assertTrue("1st element is JsonObject", result.get(0).isObject());
+        Assert.assertTrue("2nd element is JsonObject", result.get(1).isObject());
+        this.testIsSchema(result.get(0));
+        this.testIsSchema(result.get(1));
         try {
             instance.doGet(JSON.JSON, JSON.JSON, Locale.ENGLISH);
             Assert.fail("Should have thrown exception");
         } catch (JsonException ex) {
-            Assert.assertEquals("Exception code is 405", 405, ex.getCode());
-            Assert.assertEquals("Error message", "Getting json is not allowed.", ex.getMessage());
+            Assert.assertEquals("Exception code is 400", 400, ex.getCode());
+            Assert.assertEquals("Error message", "Unknown object type json was requested.", ex.getMessage());
         }
     }
 

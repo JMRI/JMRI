@@ -8,7 +8,7 @@ import org.junit.Test;
 
 /**
  * Description:	tests for the jmri.jmrix.xpa.XpaSystemConnectionMemo class
- * <P>
+ * <p>
  * @author	Paul Bender
  */
 public class XpaSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {

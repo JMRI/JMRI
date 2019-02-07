@@ -33,7 +33,7 @@
         </xs:appinfo>
       </xs:annotation>
 
-      <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded"> <!-- any number, any order -->
         
         <xs:element name="audiobuffer" minOccurs="0" maxOccurs="unbounded">
           <xs:complexType>
@@ -119,7 +119,7 @@
                   <xs:attribute name="out" type="xs:integer" />
                 </xs:complexType>
               </xs:element>
-              <xs:element name="dopplerfactor" type="xs:float" minOccurs="1" maxOccurs="1">
+              <xs:element name="dopplerfactor" type="xs:float" minOccurs="0" maxOccurs="1">
                 <xs:annotation><xs:documentation>No longer written as of JMRI 4.11.4</xs:documentation></xs:annotation>
               </xs:element>
               <xs:element name="positionrelative" type="yesNoType" minOccurs="0" maxOccurs="1" />
@@ -133,7 +133,7 @@
           </xs:complexType>
         </xs:element>
             
-      </xs:sequence>
+      </xs:choice>
 
       <xs:attribute name="class" type="classType" use="required"/>
       <xs:attribute name="distanceattenuated" type="yesNoType"/>

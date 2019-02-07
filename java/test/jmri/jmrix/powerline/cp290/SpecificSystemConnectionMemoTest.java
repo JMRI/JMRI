@@ -31,7 +31,7 @@ public class SpecificSystemConnectionMemoTest extends jmri.jmrix.SystemConnectio
        SpecificSystemConnectionMemo memo = new SpecificSystemConnectionMemo();
        memo.setTrafficController(new SpecificTrafficController(memo){
           @Override
-          public void sendSerialMessage(SerialMessage m,SerialListener reply) {
+          public void sendSerialMessage(SerialMessage m, SerialListener reply) {
           }
           @Override
           public void transmitLoop(){

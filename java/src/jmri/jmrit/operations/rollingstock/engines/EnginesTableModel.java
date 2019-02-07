@@ -240,6 +240,9 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
         tcm.setColumnVisible(tcm.getColumnByModelIndex(RFID_WHEN_LAST_SEEN_COLUMN), false);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(RFID_WHERE_LAST_SEEN_COLUMN), false);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(LAST_COLUMN), false);
+        
+        // turn on default
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(MOVES_COLUMN), true);
     }
 
     @Override
@@ -306,7 +309,6 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
             case SET_COLUMN:
             case EDIT_COLUMN:
                 return JButton.class;
-            case HP_COLUMN:
             case LENGTH_COLUMN:
             case MOVES_COLUMN:
                 return Integer.class;
@@ -348,7 +350,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
             case MODEL_COLUMN:
                 return eng.getModel();
             case HP_COLUMN:
-                return eng.getHpInteger();
+                return eng.getHp();
             case TYPE_COLUMN: {
                 if (eng.isBunit()) {
                     return eng.getTypeName() + " " + Bundle.getMessage("(B)");
@@ -356,7 +358,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
                 return eng.getTypeName();
             }
             case CONSIST_COLUMN: {
-                if (eng.getConsist() != null && eng.getConsist().isLead(eng)) {
+                if (eng.isLead()) {
                     return eng.getConsistName() + "*";
                 }
                 return eng.getConsistName();
@@ -462,7 +464,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
                     public void run() {
                         engineEditFrame = new EngineEditFrame();
                         engineEditFrame.initComponents();
-                        engineEditFrame.loadEngine(engine);
+                        engineEditFrame.load(engine);
                     }
                 });
                 break;
@@ -501,11 +503,14 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
                 e.getPropertyName().equals(EngineManager.CONSISTLISTLENGTH_CHANGED_PROPERTY)) {
             updateList();
             fireTableDataChanged();
-        } // Engine lengths are based on model, so multiple changes
+        } 
+        // Engine length, type, and HP are based on model, so multiple changes
         else if (e.getPropertyName().equals(Engine.LENGTH_CHANGED_PROPERTY) ||
-                e.getPropertyName().equals(Engine.TYPE_CHANGED_PROPERTY)) {
+                e.getPropertyName().equals(Engine.TYPE_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(Engine.HP_CHANGED_PROPERTY)) {
             fireTableDataChanged();
-        } // must be a engine change
+        } 
+        // must be a engine change
         else if (e.getSource().getClass().equals(Engine.class)) {
             Engine engine = (Engine) e.getSource();
             int row = engineList.indexOf(engine);

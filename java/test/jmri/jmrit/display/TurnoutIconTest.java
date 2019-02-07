@@ -55,7 +55,7 @@ public class TurnoutIconTest extends PositionableIconTest {
         Assert.assertTrue("class type equality", to2.getClass().equals(to.getClass()));
     }
 
-
+    @Override
     @Test
     public void testShow() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -132,6 +132,7 @@ public class TurnoutIconTest extends PositionableIconTest {
     @Override
     public void setUp() {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
         if (!GraphicsEnvironment.isHeadless()) {
            editor = new jmri.jmrit.display.panelEditor.PanelEditor("Test TurnoutIcon Panel");
            Editor e = new EditorScaffold();

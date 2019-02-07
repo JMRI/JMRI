@@ -73,7 +73,7 @@
       "checkbox"> <strong>Show timestamps</strong>-Normally, the
       program just displays the data from the communication link..
       If you would like each message to be preceded by the time it
-      was sent or recieved, check this box.</p>
+      was sent or received, check this box.</p>
 
       <p align="left"><input name="a" type="checkbox"> <span style=
       "font-weight: bold;">Window always on Top</span> -- Always

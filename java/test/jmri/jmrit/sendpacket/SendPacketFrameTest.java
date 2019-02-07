@@ -34,6 +34,7 @@ public class SendPacketFrameTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
         JUnitUtil.initDebugCommandStation();
     }
 

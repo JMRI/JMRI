@@ -31,7 +31,9 @@
                         "description": "String value of property or null"
                     }
                 }
-            }
+            },
+            "additionalProperties": false,
+            "required": ["name", "value"]
         },
         "state": {
             "type": "integer",

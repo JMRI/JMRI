@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import javax.swing.Icon;
 import javax.swing.JLabel;
+import jmri.CatalogTreeManager;
 import jmri.InstanceManager;
 import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.catalog.NamedIcon;
@@ -104,28 +105,30 @@ public class DropJLabel extends JLabel implements DropTargetListener {
         DropTarget target = (DropTarget) e.getSource();
         DropJLabel label = (DropJLabel) target.getComponent();
         if (log.isDebugEnabled()) {
-            log.debug("accept drop for {}, {}", label.getName(),newIcon.getURL());
+            log.debug("accept drop of {} for {} name, {}", label.getClass().getName(), label.getName(),newIcon.getURL());
         }
         if (newIcon == null || newIcon.getIconWidth() < 1 || newIcon.getIconHeight() < 1) {
             label.setText(Bundle.getMessage("invisibleIcon"));
             label.setForeground(Color.lightGray);
         } else {
-            newIcon.reduceTo(100, 100, 0.2);
+//            newIcon.reduceTo(100, 100, 0.2);
             label.setText(null);
         }
         label.setIcon(newIcon);
-        if (newIcon != null) {
-            label.setToolTipText(newIcon.getName());
+        if (newIcon != null && label.getName() != null) {
+            _iconMap.put(label.getName(), newIcon);
+        } else {
+            log.error("Map key= {}, icon= {} ", label.getName(), (newIcon==null?"null":newIcon.getName()));
+            e.dropComplete(false);
+            return;
         }
-//        _catalog.setBackground(label);
-        _iconMap.put(label.getName(), newIcon);
         if (!_update) {  // only prompt for save from palette
-            InstanceManager.getDefault(ImageIndexEditor.class).indexChanged(true);
+            InstanceManager.getDefault(CatalogTreeManager.class).indexChanged(true);
         }
         e.dropComplete(true);
         if (log.isDebugEnabled()) {
             log.debug("DropJLabel.drop COMPLETED for {}, {}",
-                    label.getName(), (newIcon != null ? newIcon.getURL() : " newIcon==null "));
+                    label.getName(), newIcon.getURL());
         }
     }
 

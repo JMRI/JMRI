@@ -42,8 +42,10 @@ import org.junit.runners.Suite.SuiteClasses;
     jmri.server.json.util.PackageTest.class,
     JSONTest.class,
     JsonClientHandlerTest.class,
+    JsonConnectionTest.class,
     JsonExceptionTest.class,
     JsonHttpServiceTest.class,
+    JsonNamedBeanHttpServiceTest.class,
     JsonSocketServiceTest.class,
     JsonWebSocketTest.class
 })

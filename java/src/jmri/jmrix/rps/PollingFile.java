@@ -123,7 +123,6 @@ public class PollingFile extends XmlFile {
     /**
      * Get the transmitters from the file
      */
-    @SuppressWarnings("unchecked")
     public void getTransmitters(Engine engine) {
         List<Element> l = root.getChildren("transmitter");
 

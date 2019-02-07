@@ -1,9 +1,7 @@
 package jmri.server.json.memory;
 
-import static jmri.server.json.JSON.COMMENT;
 import static jmri.server.json.JSON.DATA;
 import static jmri.server.json.JSON.TYPE;
-import static jmri.server.json.JSON.USERNAME;
 import static jmri.server.json.JSON.VALUE;
 import static jmri.server.json.memory.JsonMemory.MEMORIES;
 import static jmri.server.json.memory.JsonMemory.MEMORY;
@@ -32,10 +30,8 @@ public class JsonMemoryHttpService extends JsonNamedBeanHttpService {
     @Override
     public JsonNode doGet(String type, String name, Locale locale) throws JsonException {
         Memory memory = InstanceManager.memoryManagerInstance().getMemory(name);
-        ObjectNode data = this.getNamedBean(memory, name, type, locale);
-        ObjectNode root = mapper.createObjectNode();
-        root.put(TYPE, MEMORY);
-        root.set(DATA, data);
+        ObjectNode root = this.getNamedBean(memory, name, type, locale);
+        ObjectNode data = root.with(DATA);
         if (memory != null) {
             if (memory.getValue() == null) {
                 data.putNull(VALUE);
@@ -52,12 +48,7 @@ public class JsonMemoryHttpService extends JsonNamedBeanHttpService {
         if (memory == null) {
             throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", MEMORY, name));
         }
-        if (data.path(USERNAME).isTextual()) {
-            memory.setUserName(data.path(USERNAME).asText());
-        }
-        if (data.path(COMMENT).isTextual()) {
-            memory.setComment(data.path(COMMENT).asText());
-        }
+        this.postNamedBean(memory, data, name, type, locale);
         if (!data.path(VALUE).isMissingNode()) {
             if (data.path(VALUE).isNull()) {
                 memory.setValue(null);
@@ -81,8 +72,8 @@ public class JsonMemoryHttpService extends JsonNamedBeanHttpService {
     @Override
     public ArrayNode doGetList(String type, Locale locale) throws JsonException {
         ArrayNode root = this.mapper.createArrayNode();
-        for (String name : InstanceManager.memoryManagerInstance().getSystemNameList()) {
-            root.add(this.doGet(MEMORY, name, locale));
+        for (Memory m : InstanceManager.memoryManagerInstance().getNamedBeanSet()) {
+            root.add(this.doGet(MEMORY, m.getSystemName(), locale));
         }
         return root;
 

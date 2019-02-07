@@ -114,7 +114,7 @@ public class DCCppSensor extends AbstractSensor implements DCCppListener {
     @Override
     public synchronized void message(DCCppReply l) {
         if (log.isDebugEnabled()) {
-            log.debug("recieved message: " + l);
+            log.debug("received message: " + l);
         }
 
         if (l.isSensorDefReply()) {

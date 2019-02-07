@@ -94,6 +94,8 @@ public class XBeeEditNodeFrame extends jmri.jmrix.ieee802154.swing.nodeconfig.Ed
         });
         contentPane.add(panel4);
 
+        contentPane.add(StreamConfigPane.createPanel((XBeeNode)curNode));
+
         // pack for display
         pack();
     }

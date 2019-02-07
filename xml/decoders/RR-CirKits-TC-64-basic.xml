@@ -27,7 +27,9 @@
     <family name="Tower Controller" mfg="RR-CirKits" type="stationary" comment="The Tower Controller is normally programmed in OPs mode">
       <model model="TC-64" comment="64 line I/O" lowVersionID="06"/>
     </family>
-    <programming direct="no" paged="yes" register="no" ops="yes"/>
+    <programming direct="no" paged="yes" register="no" ops="no">
+        <mode>LOCONETOPSBOARD</mode>
+    </programming>
     <variables>
       <variable item="P1 Base Address" CV="1" mask="VVVVVVVV" default="0">
         <splitVal highCV="2" upperMask="XXXXXVVV"/>

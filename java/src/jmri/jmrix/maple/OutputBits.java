@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Utility Class supporting output to Maple HMI's
- * <P>
+ * <p>
  * All of the Maple HMI panels receive the same output bits. This keeps them
  * synchronized. Output is sent in "broadcast" mode to Station Address 0. All
  * HMI's receive the output. Output is sent at the end of each polling cycle,
@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * the same output bits. Coil bits within Maple Systems HMI's are divided into
  * input (1-1000) and output (1001-9000), so input bits are read starting from
  * HMI address 1, and output bits are written starting at HMI address 1001.
- * <P>
+ *
  * @author Dave Duchamp, Copyright (C) 2009
  */
 public class OutputBits {
@@ -54,8 +54,10 @@ public class OutputBits {
     }
 
     /**
-     * Public method setting an output bit. Note: state = 'true' for 0, 'false'
-     * for 1 bits are numbered from 1 (not 0)
+     * Set an output bit.
+     * <p>
+     * Note: state = 'true' for 0, 'false' for 1.
+     * Bits are numbered from 1 (not 0)
      */
     public void setOutputBit(int bitNumber, boolean state) {
         // validate that this bitNumber is defined
@@ -75,8 +77,11 @@ public class OutputBits {
     }
 
     /**
-     * Public method get the current state of an output bit. Note: returns
-     * 'true' for 0, 'false' for 1 bits are numbered from 1 (not 0)
+     * Get the current state of an output bit.
+     * <p>
+     * Bits are numbered from 1 (not 0).
+     *
+     * @return 'true' for 0, 'false' for 1
      */
     public boolean getOutputBit(int bitNumber) {
         // locate in the outputArray
@@ -97,7 +102,7 @@ public class OutputBits {
     }
 
     /**
-     * Public Method to create an Transmit packet (SerialMessage)
+     * Create a Transmit packet (SerialMessage).
      */
     public SerialMessage createOutPacket(int startBitNum, int endBitNum) {
         int nBits = endBitNum - startBitNum + 1;
@@ -153,6 +158,5 @@ public class OutputBits {
     }
 
     private final static Logger log = LoggerFactory.getLogger(OutputBits.class);
+
 }
-
-

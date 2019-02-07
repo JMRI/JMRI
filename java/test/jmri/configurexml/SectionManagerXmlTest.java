@@ -17,7 +17,7 @@ import org.junit.Assert;
 
 /**
  * Tests for SectionManagerXml.
- * <P>
+ * <p>
  * Just tests Elements, not actual files.
  *
  * @author Bob Coleman Copyright 2012
@@ -551,6 +551,7 @@ public class SectionManagerXmlTest extends TestCase {
     @Override
     protected void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
     }
 
     @Override

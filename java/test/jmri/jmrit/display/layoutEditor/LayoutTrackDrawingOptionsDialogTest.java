@@ -1,11 +1,6 @@
 package jmri.jmrit.display.layoutEditor;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.*;
 import java.awt.GraphicsEnvironment;
 
 /**
@@ -28,6 +23,7 @@ public class LayoutTrackDrawingOptionsDialogTest {
     @Before
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
     }
 
     @After

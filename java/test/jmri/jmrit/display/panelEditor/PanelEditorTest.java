@@ -34,6 +34,7 @@ public class PanelEditorTest extends jmri.jmrit.display.AbstractEditorTestBase {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
         if (!GraphicsEnvironment.isHeadless()) {
             e = pe = new PanelEditor("Panel Editor Test");
         }
@@ -43,6 +44,7 @@ public class PanelEditorTest extends jmri.jmrit.display.AbstractEditorTestBase {
     public void tearDown() {
         if (pe != null) {
             JUnitUtil.dispose(pe);
+            JUnitUtil.dispose(pe.getTargetFrame());
             e = pe = null;
         }
         JUnitUtil.tearDown();

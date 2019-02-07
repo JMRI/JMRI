@@ -28,12 +28,12 @@ abstract public class AbstractMRMessage extends AbstractMessage {
     /**
      * Create a new AbstractMRMessage instance of a given byte size.
      *
-     * @param i number of elements
+     * @param i number of elements in message
      */
     public AbstractMRMessage(int i) {
         this();
         if (i < 1) {
-            log.error("invalid length in call to ctor");
+            log.error("invalid length {} in call to ctor", i);
             throw new IllegalArgumentException("invalid length in call to ctor");
         }
         _nDataChars = i;
@@ -104,7 +104,7 @@ abstract public class AbstractMRMessage extends AbstractMessage {
      * timeout is needed before the next message can be sent.
      * <p>
      * If this returns false, the transmit queue will immediately go on to
-     * transmitt the next message (if any).
+     * transmit the next message (if any).
      */
     public boolean replyExpected() {
         return true;

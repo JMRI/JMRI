@@ -29,6 +29,7 @@ public class DeleteRosterItemActionTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
     }
 
     @After

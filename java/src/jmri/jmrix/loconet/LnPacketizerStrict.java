@@ -1,9 +1,5 @@
 package jmri.jmrix.loconet;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import java.io.DataInputStream;
-import java.io.OutputStream;
-import java.util.LinkedList;
 import java.util.NoSuchElementException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,17 +9,16 @@ import org.slf4j.LoggerFactory;
  * side sends/receives LocoNetMessage objects. The connection to a
  * LnPortController is via a pair of *Streams, which then carry sequences of
  * characters for transmission.
- * <P>
+ * <p>
  * Messages come to this via the main GUI thread, and are forwarded back to
  * listeners in that same thread. Reception and transmission are handled in
  * dedicated threads by RcvHandler and XmtHandler objects. Those are internal
  * classes defined here. The thread priorities are:
- * <UL>
- * <LI> RcvHandler - at highest available priority
- * <LI> XmtHandler - down one, which is assumed to be above the GUI
- * <LI> (everything else)
- * </UL>
- * <P>
+ * <ul>
+ * <li> RcvHandler - at highest available priority
+ * <li> XmtHandler - down one, which is assumed to be above the GUI
+ * <li> (everything else)
+ * </ul>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
  * and used with permission as part of the JMRI project. That permission does
  * not extend to uses in other software products. If you wish to use this code,
@@ -31,12 +26,9 @@ import org.slf4j.LoggerFactory;
  * Inc for separate permission.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2018
- *
  */
 public class LnPacketizerStrict extends LnPacketizer {
 
-    // Defined this way to reduce new object creation
-    private byte[] rcvBuffer = new byte[1];
     // waiting for this echo
     private LocoNetMessage waitForMsg;
     // waiting on LACK
@@ -46,6 +38,10 @@ public class LnPacketizerStrict extends LnPacketizer {
     // retry required, lost echo, bad IMM, general busy
     private boolean reTryRequired;
 
+    public LnPacketizerStrict(LocoNetSystemConnectionMemo m) {
+        super(m);
+    }
+
     /**
      * Captive class to handle incoming characters. This is a permanent loop,
      * looking for input messages in character form on the stream connected to
@@ -54,7 +50,7 @@ public class LnPacketizerStrict extends LnPacketizer {
     protected class RcvHandlerStrict implements Runnable {
 
         /**
-         * Remember the LnPacketizer object
+         * Remember the LnPacketizer object.
          */
         LnTrafficController trafficController;
 
@@ -71,7 +67,7 @@ public class LnPacketizerStrict extends LnPacketizer {
         @Override
         public void run() {
             int opCode;
-            while (true) {   // loop permanently, program close will exit
+            while (true) {  // loop permanently, program close will exit
                 try {
                     // start by looking for command -  skip if bit not set
                     while (((opCode = (readByteProtected(istream) & 0xFF)) & 0x80) == 0) {
@@ -88,7 +84,7 @@ public class LnPacketizerStrict extends LnPacketizer {
                             int byte2 = readByteProtected(istream) & 0xFF;
                             if (log.isTraceEnabled()) {
                                 log.trace("Byte2: {}", Integer.toHexString(byte2)); // NOI18N
-                            }                            // Decide length
+                            }   // Decide length
                             int len = 2;
                             switch ((opCode & 0x60) >> 5) {
                                 case 0:
@@ -106,8 +102,8 @@ public class LnPacketizerStrict extends LnPacketizer {
                                 case 3:
                                     /* N byte message */
                                     if (byte2 < 2) {
-                                        log.error("LocoNet message length invalid: " + byte2
-                                                + " opcode: " + Integer.toHexString(opCode)); // NOI18N
+                                        log.error("LocoNet message length invalid: {} opcode: {}",
+                                                byte2, Integer.toHexString(opCode)); // NOI18N
                                     }
                                     len = byte2;
                                     break;
@@ -214,17 +210,17 @@ public class LnPacketizerStrict extends LnPacketizer {
 
         public RcvMemo(LocoNetMessage msg, LnTrafficController trafficController) {
             thisMsg = msg;
-            thisTC = trafficController;
+            thisTc = trafficController;
         }
         LocoNetMessage thisMsg;
-        LnTrafficController thisTC;
+        LnTrafficController thisTc;
 
         /**
          * {@inheritDoc}
          */
         @Override
         public void run() {
-            thisTC.notify(thisMsg);
+            thisTc.notify(thisMsg);
         }
     }
 
@@ -238,7 +234,6 @@ public class LnPacketizerStrict extends LnPacketizer {
          */
         @Override
         public void run() {
-            int immCount = 0;
             int waitCount;
             while (true) { // loop permanently
                 // any input?
@@ -280,7 +275,7 @@ public class LnPacketizerStrict extends LnPacketizer {
                                     try {
                                         Thread.sleep(waitTime);
                                     } catch (InterruptedException ee) {
-                                        log.warn("waitBusy sleep Interupted", ee); // NOI18N
+                                        log.warn("waitBusy sleep Interrupted", ee); // NOI18N
                                     }
                                 }
                                 ostream.write(msg);
@@ -296,18 +291,14 @@ public class LnPacketizerStrict extends LnPacketizer {
                                     try {
                                         Thread.sleep(1);
                                     } catch (InterruptedException ee) {
-                                        log.error("waitForMsg sleep Interupted", ee); // NOI18N
+                                        log.error("waitForMsg sleep Interrupted", ee); // NOI18N
                                     }
                                     waitCount++;
                                 }
                                 // Oh my lost the echo...
                                 if (waitCount > 19) {
-                                    try {
-                                        log.warn("Retry Send for Lost Packet [{}] Count[{}]", waitForMsg.toString(),
+                                    log.warn("Retry Send for Lost Packet [{}] Count[{}]", waitForMsg,
                                                 reTryCount); // NOI18N
-                                    } catch (NullPointerException npe) {
-                                        log.warn("Retry Send for waitingOnMsg null?  Count[{}]", reTryCount); // NOI18N
-                                    }
                                     if (reTryCount < 5) {
                                         reTryRequired = true;
                                         reTryCount++;
@@ -322,7 +313,7 @@ public class LnPacketizerStrict extends LnPacketizer {
                                         try {
                                             Thread.sleep(1);
                                         } catch (InterruptedException ee) {
-                                            log.error("waitingOnLack sleep Interupted", ee); // NOI18N
+                                            log.error("waitingOnLack sleep Interrupted", ee); // NOI18N
                                         }
                                         waitCount++;
                                     }
@@ -344,7 +335,7 @@ public class LnPacketizerStrict extends LnPacketizer {
                                     }
                                 }
                             }
-                            messageTransmited(msg);
+                            messageTransmitted(msg);
                         } else {
                             // no stream connected
                             log.warn("sendLocoNetMessage: no connection established"); // NOI18N
@@ -366,6 +357,7 @@ public class LnPacketizerStrict extends LnPacketizer {
     /**
      * Invoked at startup to start the threads needed here.
      */
+    @Override
     public void startThreads() {
         int priority = Thread.currentThread().getPriority();
         log.debug("startThreads current priority = {} max available = {} default = {} min available = {}", // NOI18N
@@ -397,4 +389,5 @@ public class LnPacketizerStrict extends LnPacketizer {
     }
 
     private final static Logger log = LoggerFactory.getLogger(LnPacketizerStrict.class);
+
 }

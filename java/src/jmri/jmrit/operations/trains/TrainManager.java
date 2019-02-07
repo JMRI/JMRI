@@ -22,6 +22,7 @@ import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.excel.TrainCustomManifest;
 import jmri.jmrit.operations.trains.excel.TrainCustomSwitchList;
+import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
 import jmri.script.JmriScriptEngineManager;
 import jmri.util.ColorUtil;
 import org.jdom2.Attribute;
@@ -38,7 +39,7 @@ import org.slf4j.LoggerFactory;
  */
 public class TrainManager implements InstanceManagerAutoDefault, InstanceManagerAutoInitialize, PropertyChangeListener {
 
-    private static final String NONE = "";
+    static final String NONE = "";
 
     // Train frame attributes
     private String _trainAction = TrainsTableFrame.MOVE; // Trains frame table button action
@@ -55,11 +56,9 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
     private String _rowColorTrainEnRoute = NONE; // row color when train is en route
     private String _rowColorTerminated = NONE; // row color when train is terminated
 
-    private String _trainScheduleActiveId = NONE;
-
     // Scripts
-    protected List<String> _startUpScripts = new ArrayList<String>(); // list of script pathnames to run at start up
-    protected List<String> _shutDownScripts = new ArrayList<String>(); // list of script pathnames to run at shut down
+    protected List<String> _startUpScripts = new ArrayList<>(); // list of script pathnames to run at start up
+    protected List<String> _shutDownScripts = new ArrayList<>(); // list of script pathnames to run at shut down
 
     // property changes
     public static final String LISTLENGTH_CHANGED_PROPERTY = "TrainsListLength"; // NOI18N
@@ -67,7 +66,7 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
     public static final String OPEN_FILE_CHANGED_PROPERTY = "TrainsOpenFile"; // NOI18N
     public static final String RUN_FILE_CHANGED_PROPERTY = "TrainsRunFile"; // NOI18N
     public static final String TRAIN_ACTION_CHANGED_PROPERTY = "TrainsAction"; // NOI18N
-    public static final String ACTIVE_TRAIN_SCHEDULE_ID = "ActiveTrainScheduleId"; // NOI18N
+//    public static final String ACTIVE_TRAIN_SCHEDULE_ID = "ActiveTrainScheduleId"; // NOI18N
     public static final String ROW_COLOR_NAME_CHANGED_PROPERTY = "TrainsRowColorChange"; // NOI18N
     public static final String TRAINS_BUILT_CHANGED_PROPERTY = "TrainsBuiltChange"; // NOI18N
 
@@ -85,6 +84,7 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
      */
     @Deprecated
     public static synchronized TrainManager instance() {
+        jmri.util.Log4JUtil.deprecationWarning(log, "instance");        
         return InstanceManager.getDefault(TrainManager.class);
     }
 
@@ -186,17 +186,22 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
      * Sets the selected schedule id
      *
      * @param id Selected schedule id
+     * Moved to TrainScheduleManager.java
+     * @deprecated at or before 4.13.7
      */
+    @Deprecated  // at or before 4.13.7
     public void setTrainSecheduleActiveId(String id) {
-        String old = _trainScheduleActiveId;
-        _trainScheduleActiveId = id;
-        if (!old.equals(id)) {
-            setDirtyAndFirePropertyChange(ACTIVE_TRAIN_SCHEDULE_ID, old, id);
-        }
+        InstanceManager.getDefault(TrainScheduleManager.class).setTrainScheduleActiveId(id);
     }
 
+    /**
+     * @deprecated at or before 4.13.7
+     * Moved to TrainScheduleManager.java
+     * @return active schedule id
+     */
+    @Deprecated // at or before 4.13.7
     public String getTrainScheduleActiveId() {
-        return _trainScheduleActiveId;
+        return InstanceManager.getDefault(TrainScheduleManager.class).getTrainScheduleActiveId();
     }
 
     /**
@@ -224,14 +229,22 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
     }
 
     public void runStartUpScripts() {
-        for (String scriptPathName : getStartUpScripts()) {
-            try {
-                JmriScriptEngineManager.getDefault()
-                        .runScript(new File(jmri.util.FileUtil.getExternalFilename(scriptPathName)));
-            } catch (Exception e) {
-                log.error("Problem with script: {}", scriptPathName);
+        // use thread to prevent object (Train) thread lock
+        Thread scripts = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (String scriptPathName : getStartUpScripts()) {
+                    try {
+                        JmriScriptEngineManager.getDefault()
+                                .runScript(new File(jmri.util.FileUtil.getExternalFilename(scriptPathName)));
+                    } catch (Exception e) {
+                        log.error("Problem with script: {}", scriptPathName);
+                    }
+                }
             }
-        }
+        });
+        scripts.setName("Startup Scripts"); // NOI18N
+        scripts.start();
     }
 
     /**
@@ -268,6 +281,24 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
             }
         }
     }
+    
+    public boolean hasRoadRestrictions() {
+        for (Train train : getList()) {
+            if (!train.getRoadOption().equals(Train.ALL_ROADS)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public boolean hasLoadRestrictions() {
+        for (Train train : getList()) {
+            if (!train.getLoadOption().equals(Train.ALL_LOADS)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     public void dispose() {
         _trainHashTable.clear();
@@ -275,7 +306,7 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
     }
 
     // stores known Train instances by id
-    private Hashtable<String, Train> _trainHashTable = new Hashtable<String, Train>();
+    private final Hashtable<String, Train> _trainHashTable = new Hashtable<>();
 
     /**
      * @param name The train's name.
@@ -527,7 +558,7 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
     }
 
     private List<Train> getTrainsByList(List<Train> sortList, int attribute) {
-        List<Train> out = new ArrayList<Train>();
+        List<Train> out = new ArrayList<>();
         for (Train train : sortList) {
             String trainAttribute = (String) getTrainAttribute(train, attribute);
             for (int j = 0; j < out.size(); j++) {
@@ -544,7 +575,7 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
     }
 
     private List<Train> getTrainsByIntList(List<Train> sortList, int attribute) {
-        List<Train> out = new ArrayList<Train>();
+        List<Train> out = new ArrayList<>();
         for (Train train : sortList) {
             int trainAttribute = (Integer) getTrainAttribute(train, attribute);
             for (int j = 0; j < out.size(); j++) {
@@ -597,7 +628,7 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
         if (!InstanceManager.getDefault(TrainManagerXml.class).isTrainFileLoaded()) {
             log.error("TrainManager getList called before trains completely loaded!");
         }
-        List<Train> out = new ArrayList<Train>();
+        List<Train> out = new ArrayList<>();
         Enumeration<Train> en = _trainHashTable.elements();
         while (en.hasMoreElements()) {
             out.add(en.nextElement());
@@ -715,8 +746,7 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
     }
 
     /**
-     * Makes a copy of an existing train. Only the train's description isn't
-     * copied.
+     * Makes a copy of an existing train.
      *
      * @param train     the train to copy
      * @param trainName the name of the new train
@@ -774,7 +804,7 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
         }
         // manifest options
         newTrain.setRailroadName(train.getRailroadName());
-        newTrain.setManifestLogoURL(train.getManifestLogoURL());
+        newTrain.setManifestLogoPathName(train.getManifestLogoPathName());
         newTrain.setShowArrivalAndDepartureTimes(train.isShowArrivalAndDepartureTimesEnabled());
         // build options
         newTrain.setAllowLocalMovesEnabled(train.isAllowLocalMovesEnabled());
@@ -800,8 +830,8 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
      */
     public List<Train> getTrainsArrivingThisLocationList(Location location) {
         // get a list of trains
-        List<Train> out = new ArrayList<Train>();
-        List<Integer> arrivalTimes = new ArrayList<Integer>();
+        List<Train> out = new ArrayList<>();
+        List<Integer> arrivalTimes = new ArrayList<>();
         for (Train train : getTrainsByTimeList()) {
             if (!train.isBuilt()) {
                 continue; // train wasn't built so skip
@@ -893,7 +923,7 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
         }
     }
 
-    public void buildSelectedTrains(final List<Train> trains) {
+    public void buildSelectedTrains(List<Train> trains) {
         // use a thread to allow table updates during build
         Thread build = new Thread(new Runnable() {
             @Override
@@ -1011,22 +1041,21 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
                 }
             }
 
-            e = options.getChild(Xml.TRAIN_SCHEDULE_OPTIONS);
+            // moved to train schedule manager
+            e = options.getChild(jmri.jmrit.operations.trains.schedules.Xml.TRAIN_SCHEDULE_OPTIONS);
             if (e != null) {
-                if ((a = e.getAttribute(Xml.ACTIVE_ID)) != null) {
-                    _trainScheduleActiveId = a.getValue();
+                if ((a = e.getAttribute(jmri.jmrit.operations.trains.schedules.Xml.ACTIVE_ID)) != null) {
+                    InstanceManager.getDefault(TrainScheduleManager.class).setTrainScheduleActiveId(a.getValue());
                 }
             }
             // check for scripts
             if (options.getChild(Xml.SCRIPTS) != null) {
-                @SuppressWarnings("unchecked")
                 List<Element> lm = options.getChild(Xml.SCRIPTS).getChildren(Xml.START_UP);
                 for (Element es : lm) {
                     if ((a = es.getAttribute(Xml.NAME)) != null) {
                         addStartUpScript(a.getValue());
                     }
                 }
-                @SuppressWarnings("unchecked")
                 List<Element> lt = options.getChild(Xml.SCRIPTS).getChildren(Xml.SHUT_DOWN);
                 for (Element es : lt) {
                     if ((a = es.getAttribute(Xml.NAME)) != null) {
@@ -1036,7 +1065,6 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
             }
         }
         if (root.getChild(Xml.TRAINS) != null) {
-            @SuppressWarnings("unchecked")
             List<Element> eTrains = root.getChild(Xml.TRAINS).getChildren(Xml.TRAIN);
             log.debug("readFile sees {} trains", eTrains.size());
             for (Element eTrain : eTrains) {
@@ -1072,11 +1100,6 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
         e.setAttribute(Xml.ROW_COLOR_TERMINATED, getRowColorNameForTerminated());
         options.addContent(e);
 
-        // now save train schedule options
-        e = new Element(Xml.TRAIN_SCHEDULE_OPTIONS);
-        e.setAttribute(Xml.ACTIVE_ID, getTrainScheduleActiveId());
-        options.addContent(e);
-
         if (getStartUpScripts().size() > 0 || getShutDownScripts().size() > 0) {
             // save list of shutdown scripts
             Element es = new Element(Xml.SCRIPTS);
@@ -1095,7 +1118,7 @@ public class TrainManager implements InstanceManagerAutoDefault, InstanceManager
         }
 
         InstanceManager.getDefault(TrainCustomManifest.class).store(options); // save custom manifest elements
-        InstanceManager.getDefault(TrainCustomSwitchList.class).store(options); // save custom manifest elements
+        InstanceManager.getDefault(TrainCustomSwitchList.class).store(options); // save custom switch list elements
 
         root.addContent(options);
 

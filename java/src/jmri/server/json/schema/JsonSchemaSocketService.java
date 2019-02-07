@@ -31,7 +31,7 @@ public class JsonSchemaSocketService extends JsonSocketService<JsonSchemaHttpSer
             case JSON.PUT:
                 throw new JsonException(HttpServletResponse.SC_METHOD_NOT_ALLOWED, Bundle.getMessage(locale, "PutNotAllowed"));
             case JSON.GET:
-                this.connection.sendMessage(this.service.doGet(type, data.path(JSON.NAME).asText(JSON.JSON), locale));
+                this.connection.sendMessage(this.service.doPost(type, data.path(JSON.NAME).asText(JSON.JSON), data, locale));
                 break;
             default:
                 throw new JsonException(HttpServletResponse.SC_METHOD_NOT_ALLOWED, Bundle.getMessage(locale, "MethodNotImplemented"));
@@ -40,7 +40,7 @@ public class JsonSchemaSocketService extends JsonSocketService<JsonSchemaHttpSer
 
     @Override
     public void onList(String type, JsonNode data, Locale locale) throws IOException, JmriException, JsonException {
-        throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(locale, "UnlistableService", type));
+        this.connection.sendMessage(this.service.doGetList(type, locale));
     }
 
     @Override

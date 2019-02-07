@@ -11,16 +11,22 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class SerialSensorTest {
+public class SerialSensorTest extends jmri.implementation.AbstractSensorTestBase {
 
     private GrapevineSystemConnectionMemo memo = null;
     private SerialTrafficControlScaffold tcis = null;
 
-    @Test
-    public void testCTor() {
-        SerialSensor t = new SerialSensor("GS1", memo);
-        Assert.assertNotNull("exists", t);
-    }
+    @Override
+    public int numListeners() {return 0;}
+
+    @Override
+    public void checkOnMsgSent() {}
+
+    @Override
+    public void checkOffMsgSent() {}
+
+    @Override
+    public void checkStatusRequestMsgSent() {}
 
     // The minimal setup for log4J
     @Before
@@ -29,15 +35,16 @@ public class SerialSensorTest {
         memo = new GrapevineSystemConnectionMemo();
         tcis = new SerialTrafficControlScaffold(memo);
         memo.setTrafficController(tcis);
+        t = new SerialSensor("GS1", memo);
     }
 
     // reset objects
     @After
     public void tearDown() {
+        t.dispose();
         tcis.terminateThreads();
         tcis = null;
         memo = null;
-        //t.dispose();
         JUnitUtil.tearDown();
     }
 

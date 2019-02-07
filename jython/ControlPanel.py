@@ -13,6 +13,7 @@
 import jmri
 
 import java
+import java.awt
 import javax.swing
 
 # create a frame to hold the button(s), put button in it, and display
@@ -37,7 +38,7 @@ def whenMyButtonClicked(event) :
 # window produced from the file, so we can show/hide the 
 # proper panel window.
 
-#loop, creating a button for each panel
+# loop, creating a button for each panel
 for panel in jmri.jmrit.display.PanelMenu.instance().getEditorPanelList() :
     # create a button for this panel
     b = javax.swing.JButton(panel.getTitle())
@@ -48,4 +49,3 @@ for panel in jmri.jmrit.display.PanelMenu.instance().getEditorPanelList() :
 # show the control panel frame
 f.pack()
 f.setVisible(True)
-

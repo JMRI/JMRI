@@ -18,7 +18,10 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.ServiceLoader;
 import javax.servlet.http.HttpServletResponse;
+import jmri.InstanceManager;
 import jmri.JmriException;
+import jmri.jmris.json.JsonServerPreferences;
+import jmri.server.json.schema.JsonSchemaServiceCache;
 import jmri.spi.JsonServiceFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,6 +36,8 @@ public class JsonClientHandler {
     public static final String HELLO_MSG = "{\"" + JSON.TYPE + "\":\"" + JSON.HELLO + "\"}";
     private final JsonConnection connection;
     private final HashMap<String, HashSet<JsonSocketService<?>>> services = new HashMap<>();
+    private final JsonServerPreferences preferences = InstanceManager.getDefault(JsonServerPreferences.class);
+    private final JsonSchemaServiceCache schemas = InstanceManager.getDefault(JsonSchemaServiceCache.class);
     private static final Logger log = LoggerFactory.getLogger(JsonClientHandler.class);
 
     public JsonClientHandler(JsonConnection connection) {
@@ -97,7 +102,11 @@ public class JsonClientHandler {
      * @throws java.io.IOException if communications with the client is broken
      */
     public void onMessage(String string) throws IOException {
-        log.debug("Received from client: {}", string);
+        if (string.equals("{\"type\":\"ping\"}")) { //turn down the noise a bit
+            log.trace("Received from client: '{}'", string);            
+        } else {
+            log.debug("Received from client: '{}'", string);
+        }
         try {
             this.onMessage(this.connection.getObjectMapper().readTree(string));
         } catch (JsonProcessingException pe) {
@@ -120,6 +129,9 @@ public class JsonClientHandler {
             String method = root.path(METHOD).asText(GET);
             String type = root.path(TYPE).asText();
             JsonNode data = root.path(DATA);
+            if (preferences.getValidateClientMessages()) {
+                this.schemas.validateMessage(root, false, this.connection.getLocale());
+            }
             if ((root.path(TYPE).isMissingNode() || type.equals(LIST))
                     && root.path(LIST).isValueNode()) {
                 type = root.path(LIST).asText();
@@ -144,7 +156,11 @@ public class JsonClientHandler {
                     method = data.path(METHOD).asText(JSON.POST);
                 }
             }
-            log.debug("Processing {} with {}", type, data);
+            if (type.equals(PING)) { //turn down the noise a bit
+                log.trace("Processing '{}' with '{}'", type, data);
+            } else {
+                log.debug("Processing '{}' with '{}'", type, data);                
+            }
             if (method.equals(LIST)) {
                 if (this.services.get(type) != null) {
                     for (JsonSocketService<?> service : this.services.get(type)) {

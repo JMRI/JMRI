@@ -30,6 +30,7 @@ public class JmriSRCPServerActionTest {
 
     @Before public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
     }
 
     @After public void tearDown() throws Exception {

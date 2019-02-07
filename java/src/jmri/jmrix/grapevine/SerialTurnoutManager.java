@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Implement turnout manager for Grapevine systems.
  * <p>
- * System names are "GiTnnn", where Gi is the (multichar) system connection prefix,
+ * System names are "GTnnn", where G is the (multichar) system connection prefix,
  * nnn is the turnout number without padding.
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
@@ -85,15 +85,15 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
             // Address format passed is in the form of node:cardOutput or node:card:address
             int separator = curAddress.indexOf(":");
             try {
-                nNode = Integer.valueOf(curAddress.substring(0, separator)).intValue();
+                nNode = Integer.parseInt(curAddress.substring(0, separator));
                 int nxSeparator = curAddress.indexOf(":", separator + 1);
                 if (nxSeparator == -1) {
                     //Address has been entered in the format node:cardOutput
-                    bitNum = Integer.valueOf(curAddress.substring(separator + 1)).intValue();
+                    bitNum = Integer.parseInt(curAddress.substring(separator + 1));
                 } else {
                     //Address has been entered in the format node:card:output
-                    nCard = Integer.valueOf(curAddress.substring(separator + 1, nxSeparator)).intValue() * 100;
-                    bitNum = Integer.valueOf(curAddress.substring(nxSeparator + 1)).intValue();
+                    nCard = Integer.parseInt(curAddress.substring(separator + 1, nxSeparator)) * 100;
+                    bitNum = Integer.parseInt(curAddress.substring(nxSeparator + 1));
                 }
             } catch (NumberFormatException ex) {
                 log.error("Unable to convert {} Hardware Address to a number", curAddress);
@@ -179,7 +179,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     }
 
     /**
-     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     * {@inheritDoc}
      */
     @Override
     public String getEntryToolTip() {

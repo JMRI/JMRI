@@ -29,6 +29,7 @@ public class AudioBufferFrameTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
     }
 
     @After

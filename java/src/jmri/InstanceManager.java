@@ -568,6 +568,7 @@ public final class InstanceManager {
      */
     @Deprecated
     static public BlockManager blockManagerInstance() {
+        jmri.util.Log4JUtil.deprecationWarning(log, "blockManagerInstance");        
         return getDefault(BlockManager.class);
     }
 
@@ -579,6 +580,7 @@ public final class InstanceManager {
      */
     @Deprecated
     static public PowerManager powerManagerInstance() {
+        jmri.util.Log4JUtil.deprecationWarning(log, "powerManagerInstance");        
         return getDefault(PowerManager.class);
     }
 
@@ -590,6 +592,7 @@ public final class InstanceManager {
      */
     @Deprecated
     static public ReporterManager reporterManagerInstance() {
+        jmri.util.Log4JUtil.deprecationWarning(log, "reporterManagerInstance");        
         return getDefault(ReporterManager.class);
     }
 
@@ -601,6 +604,7 @@ public final class InstanceManager {
      */
     @Deprecated
     static public RouteManager routeManagerInstance() {
+        jmri.util.Log4JUtil.deprecationWarning(log, "routeManagerInstance");        
         return getDefault(RouteManager.class);
     }
 
@@ -612,6 +616,7 @@ public final class InstanceManager {
      */
     @Deprecated
     static public SectionManager sectionManagerInstance() {
+        jmri.util.Log4JUtil.deprecationWarning(log, "sectionManagerInstance");        
         return getDefault(SectionManager.class);
     }
 
@@ -641,16 +646,6 @@ public final class InstanceManager {
     }
 
     /**
-     * @param p signal head manager to make default
-     * @deprecated Since 3.7.4, use
-     * {@link #setDefault(java.lang.Class, java.lang.Object)} directly.
-     */
-    @Deprecated
-    static public void setSignalHeadManager(SignalHeadManager p) {
-        setDefault(SignalHeadManager.class, p);
-    }
-
-    /**
      * @param p CommandStation to make default
      * @deprecated Since 4.9.5, use
      * {@link #store(java.lang.Object,java.lang.Class)} directly.
@@ -661,22 +656,13 @@ public final class InstanceManager {
     }
 
     /**
-     * @param p configure manager to make default
-     * @deprecated Since 3.7.4, use
-     * {@link #setDefault(java.lang.Class, java.lang.Object)} directly.
-     */
-    @Deprecated
-    static public void setConfigureManager(ConfigureManager p) {
-        log.debug(" setConfigureManager");
-        setDefault(ConfigureManager.class, p);
-    }
-
-    /**
      * @param p consist manager to make store
      * @deprecated Since 4.11.4, use
      * {@link #store(java.lang.Object, java.lang.Class)} directly.
      */
+    @Deprecated
     static public void setConsistManager(ConsistManager p) {
+        jmri.util.Log4JUtil.deprecationWarning(log, "setConsistManager");        
         store(p, ConsistManager.class);
     }
 
@@ -702,6 +688,7 @@ public final class InstanceManager {
      */
     @Deprecated
     static public void setAddressedProgrammerManager(AddressedProgrammerManager p) {
+        jmri.util.Log4JUtil.deprecationWarning(log, "setAddressedProgrammerManager");        
         store(p, AddressedProgrammerManager.class);
     }
 
@@ -732,6 +719,21 @@ public final class InstanceManager {
             ((jmri.managers.AbstractProxyManager<Sensor>) apm).addManager(p);
         } else {
             log.error("Incorrect setup: SensorManager default isn't an AbstractProxyManager<Sensor>");
+        }
+    }
+
+    // Needs to have proxy manager converted to work
+    // with current list of managers (and robust default
+    // management) before this can be deprecated in favor of
+    // store(p, IdTagManager.class)
+    @SuppressWarnings("unchecked") // AbstractProxyManager of the right type is type-safe by definition
+    static public void setIdTagManager(IdTagManager p) {
+        log.debug(" setIdTagManager");
+        IdTagManager apm = getDefault(IdTagManager.class);
+        if (apm instanceof jmri.managers.AbstractProxyManager<?>) { // <?> due to type erasure
+            ((jmri.managers.AbstractProxyManager<IdTag>) apm).addManager(p);
+        } else {
+            log.error("Incorrect setup: IdTagManager default isn't an AbstractProxyManager<IdTag>");
         }
     }
 
@@ -796,16 +798,28 @@ public final class InstanceManager {
     }
 
     /**
-     * Clear all managed instances from this InstanceManager.
+     * Clear all managed instances from the common instance manager, effectively
+     * installing a new one.
      */
     public void clearAll() {
         log.debug("Clearing InstanceManager");
+        if (traceFileActive) traceFileWriter.println("clearAll");
+        
+        // replace the instance manager, so future calls will invoke the new one
+        LazyInstanceManager.instanceManager = new InstanceManager();
+        
+        // continue to clean up this one
         new HashSet<>(managerLists.keySet()).forEach((type) -> {
             clear(type);
         });
         managerLists.keySet().forEach((type) -> {
+            if (getInitializationState(type) != InitializationState.NOTSET) {
+                log.warn("list of {} was reinitialized during clearAll", type, new Exception());
+                if (traceFileActive) traceFileWriter.println("WARN: list of "+type+" was reinitialized during clearAll");
+            }
             if (!managerLists.get(type).isEmpty()) {
-                log.warn("list of {} was not cleared", type, new Exception());
+                log.warn("list of {} was not cleared, {} entries", type, managerLists.get(type).size(), new Exception());
+                if (traceFileActive) traceFileWriter.println("WARN: list of "+type+" was not cleared, "+managerLists.get(type).size()+" entries");
             }
         });
         if (traceFileActive) {

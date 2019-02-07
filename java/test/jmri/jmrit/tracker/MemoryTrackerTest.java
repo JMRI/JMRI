@@ -39,4 +39,14 @@ public class MemoryTrackerTest extends TestCase {
         return suite;
     }
 
+    @Override
+    public void setUp() {
+        jmri.util.JUnitUtil.setUp();
+    }
+
+    @Override
+    public void tearDown() {
+        jmri.util.JUnitUtil.tearDown();
+    }
+
 }

@@ -48,8 +48,10 @@ public class NodeConfigFrameTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        new SerialTrafficControlScaffold();
+        jmri.util.JUnitUtil.resetProfileManager();
+
         memo = new SecsiSystemConnectionMemo();
+        new SerialTrafficControlScaffold(memo);
     }
 
     @After

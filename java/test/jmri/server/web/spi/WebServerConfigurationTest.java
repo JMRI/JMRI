@@ -1,6 +1,5 @@
 package jmri.server.web.spi;
 
-import apps.tests.Log4JFixture;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -31,12 +30,14 @@ public class WebServerConfigurationTest {
 
     @Before
     public void setUp() {
-        Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
+
     }
 
     @After
     public void tearDown() {
-        Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.tearDown();
+
     }
 
     /**

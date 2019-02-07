@@ -19,10 +19,9 @@ import jmri.InstanceManager;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.*;
+
 import org.netbeans.jemmy.operators.JLabelOperator;
 import org.netbeans.jemmy.ComponentChooser;
 
@@ -536,6 +535,7 @@ public class PositionableLabelTest extends PositionableTestBase {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
         JUnitUtil.initConfigureManager();
         JUnitUtil.initDefaultUserMessagePreferences();
         if(!GraphicsEnvironment.isHeadless()) {
@@ -544,6 +544,14 @@ public class PositionableLabelTest extends PositionableTestBase {
            NamedIcon icon = new NamedIcon("resources/icons/redTransparentBox.gif", "box"); // 13x13
            to.setIcon(icon);
         }
+    }
+
+    @Override
+    @After
+    public void tearDown() {
+        super.tearDown();
+        to = null;
+        JUnitUtil.tearDown();
     }
 
     // All of the Pixel enum, and related methods, below was copied from 

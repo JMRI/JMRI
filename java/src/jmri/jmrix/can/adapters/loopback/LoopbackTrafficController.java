@@ -52,6 +52,15 @@ public class LoopbackTrafficController extends jmri.jmrix.can.TrafficController 
     }
 
     /**
+     * Forward a preformatted reply to the actual interface.
+     */
+    @Override
+    public void sendCanReply(CanReply r, CanListener reply) {
+        log.debug("TrafficController sendCanReply() " + r.toString());
+        notifyReply(r, reply);
+    }
+
+    /**
      * Add trailer to the outgoing byte stream.
      *
      * @param msg    The output byte stream
@@ -143,6 +152,3 @@ public class LoopbackTrafficController extends jmri.jmrix.can.TrafficController 
 
     private final static Logger log = LoggerFactory.getLogger(LoopbackTrafficController.class);
 }
-
-
-

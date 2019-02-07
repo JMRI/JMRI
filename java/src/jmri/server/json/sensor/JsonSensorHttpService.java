@@ -30,12 +30,10 @@ public class JsonSensorHttpService extends JsonNamedBeanHttpService {
 
     @Override
     public JsonNode doGet(String type, String name, Locale locale) throws JsonException {
-        ObjectNode root = mapper.createObjectNode();
-        root.put(JSON.TYPE, SENSOR);
         Sensor sensor = InstanceManager.getDefault(SensorManager.class).getSensor(name);
-        ObjectNode data = this.getNamedBean(sensor, name, type, locale); // throws JsonException if sensor == null
+        ObjectNode root = this.getNamedBean(sensor, name, type, locale); // throws JsonException if sensor == null
+        ObjectNode data = root.with(JSON.DATA);
         if (sensor != null) {
-            root.set(JSON.DATA, data);
             switch (sensor.getKnownState()) {
                 case Sensor.ACTIVE:
                     data.put(JSON.STATE, JSON.ACTIVE);
@@ -62,14 +60,9 @@ public class JsonSensorHttpService extends JsonNamedBeanHttpService {
         if (sensor == null) {
             throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", SENSOR, name));
         }
-        if (data.path(JSON.USERNAME).isTextual()) {
-            sensor.setUserName(data.path(JSON.USERNAME).asText());
-        }
+        this.postNamedBean(sensor, data, name, type, locale);
         if (data.path(JSON.INVERTED).isBoolean()) {
             sensor.setInverted(data.path(JSON.INVERTED).asBoolean());
-        }
-        if (data.path(JSON.COMMENT).isTextual()) {
-            sensor.setComment(data.path(JSON.COMMENT).asText());
         }
         int state = data.path(JSON.STATE).asInt(JSON.UNKNOWN);
         try {
@@ -106,7 +99,8 @@ public class JsonSensorHttpService extends JsonNamedBeanHttpService {
     @Override
     public ArrayNode doGetList(String type, Locale locale) throws JsonException {
         ArrayNode root = this.mapper.createArrayNode();
-        for (String name : InstanceManager.getDefault(SensorManager.class).getSystemNameList()) {
+        for (Sensor s : InstanceManager.getDefault(SensorManager.class).getNamedBeanSet()) {
+            String name = s.getSystemName();
             root.add(this.doGet(SENSOR, name, locale));
         }
         return root;

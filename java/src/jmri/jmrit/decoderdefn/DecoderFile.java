@@ -42,6 +42,8 @@ public class DecoderFile extends XmlFile {
         _numOuts = numOuts;
         _element = decoder;
 
+        log.trace("Create DecoderFile with Family \"{}\" Model \"{}\"", family, model);
+        
         // store the default range of version id's
         setVersionRange(lowVersionID, highVersionID);
     }

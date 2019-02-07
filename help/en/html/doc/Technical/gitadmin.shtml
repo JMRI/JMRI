@@ -6,13 +6,13 @@
   <title>JMRI: GitHub Administration</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI Git Github">
-  <!--#include virtual="/Style" -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
-<!--#include virtual="/Header" -->
+<!--#include virtual="/Header.shtml" -->
 
 <body>
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+    <!--#include virtual="Sidebar.shtml" -->
 
     <div id="mainContent">
       <h1>JMRI Code: GitHub Administration</h1>
@@ -53,7 +53,7 @@
         <li>They have passed all the CI tests
         <li>They have no outstanding reviews
         <li>If in a new area, large or from a new contributor, 
-            they have been in-cue for at least a day or so to allow people to take a look at them
+            they have been in-queue for at least a day or so to allow people to take a look at them
         <li>Don't appear to have any un-resolved controversies in the comments
       </ul>
       
@@ -95,7 +95,7 @@
       When do we clean them out?
       
     
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

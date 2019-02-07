@@ -10,27 +10,27 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Implements SerialPortAdapter for the OpenLCB system network connection.
- * <P>
+ * <p>
  * This connects via a telnet connection. Normally controlled by the
  * NetworkDriverFrame class.
  *
  * @author Bob Jacobsen Copyright (C) 2010
-  */
+ */
 public class NetworkDriverAdapter extends jmri.jmrix.AbstractNetworkPortController {
 
     public NetworkDriverAdapter() {
         super(new CanSystemConnectionMemo());
         option1Name = "Gateway"; // NOI18N
-        options.put(option1Name, new Option("Gateway", new String[]{"Pass All", "Filtering"}));
+        options.put(option1Name, new Option(Bundle.getMessage("ConnectionGateway"), new String[]{"Pass All", "Filtering"}));
         option2Name = "Protocol"; // NOI18N
-        options.put(option2Name, new Option("Connection Protocol", jmri.jmrix.can.ConfigurationManager.getSystemOptions(), false));
-        this.getSystemConnectionMemo().setUserName("OpenLCB");
+        options.put(option2Name, new Option(Bundle.getMessage("ConnectionProtocol"), jmri.jmrix.can.ConfigurationManager.getSystemOptions(), false));
         setManufacturer(jmri.jmrix.openlcb.OlcbConnectionTypeList.OPENLCB);
+        allowConnectionRecovery = true;
     }
 
     /**
-     * set up all of the other objects to operate with the CAN bus connected via
-     * this TCP/IP link
+     * Set up all of the other objects to operate with the CAN bus connected via
+     * this TCP/IP link.
      */
     @Override
     public void configure() {
@@ -57,7 +57,7 @@ public class NetworkDriverAdapter extends jmri.jmrix.AbstractNetworkPortControll
         // do central protocol-specific configuration    
         this.getSystemConnectionMemo().configureManagers();
         if (socketConn != null) {
-            log.info("Connection complete with " + socketConn.getInetAddress());
+            log.info("Connection complete with {}", socketConn.getInetAddress());
         }
     }
 
@@ -69,6 +69,17 @@ public class NetworkDriverAdapter extends jmri.jmrix.AbstractNetworkPortControll
     @Override
     public CanSystemConnectionMemo getSystemConnectionMemo() {
         return (CanSystemConnectionMemo) super.getSystemConnectionMemo();
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void resetupConnection() {
+        log.info("reconnected to Network after lost connection");
+        if (opened) {
+            this.getSystemConnectionMemo().getTrafficController().connectPort(this);
+        }
     }
 
     private final static Logger log = LoggerFactory.getLogger(NetworkDriverAdapter.class);

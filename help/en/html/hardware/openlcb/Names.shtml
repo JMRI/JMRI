@@ -47,7 +47,8 @@
       names. For example, "00.01.02.03.04.05.06.07" can be typed as
       "0.1.2.3.4.5.6.7".
 
-      <h2>OpenLCB Configuration Memory</h2>DecoderPro accesses
+      <h2>OpenLCB Configuration Memory</h2>
+      DecoderPro accesses
       decoder memory via "CVs". For that purpose, the JMRI OpenLCB
       provides a CV syntax that can be used to access OpenLCB node
       configuration memory:
@@ -66,8 +67,16 @@
         in the 252 address space.</li>
       </ul>
 
+      <h2>OpenLCB Signal Masts</h2>
+
+      See the 
+      <a href="OlcbSignalMast.shtml">OpenLCB Signal Mast page</a>
+      for more information on OpenLCB Signal Mast names.
+      
       <p>Back to the <a href="index.shtml">main OpenLCB Help
-      page</a></p><!--#include virtual="/Footer" -->
+      page</a>
+      
+      </p><!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

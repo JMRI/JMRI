@@ -231,6 +231,11 @@ public class QsiTrafficControllerTest extends TestCase {
         }
     }
 
+    @Override
+    public void setUp() {
+        jmri.util.JUnitUtil.setUp();
+    }
+
     public QsiTrafficControllerTest(String s) {
         super(s);
     }

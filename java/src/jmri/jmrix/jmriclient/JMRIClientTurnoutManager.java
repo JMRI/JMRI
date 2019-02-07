@@ -28,7 +28,7 @@ public class JMRIClientTurnoutManager extends jmri.managers.AbstractTurnoutManag
     @Override
     public Turnout createNewTurnout(String systemName, String userName) {
         Turnout t;
-        int addr = Integer.valueOf(systemName.substring(prefix.length() + 1)).intValue();
+        int addr = Integer.parseInt(systemName.substring(prefix.length() + 1));
         t = new JMRIClientTurnout(addr, memo);
         t.setUserName(userName);
         return t;

@@ -31,8 +31,6 @@ public class SRCPTurnoutManagerXml extends jmri.managers.configurexml.AbstractTu
 
     @Override
     public boolean load(Element shared, Element perNode) {
-        // create the master object
-        SRCPTurnoutManager.instance();
         // load individual turnouts
         return loadTurnouts(shared, perNode);
     }

@@ -8,7 +8,8 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
    ConnectionConfigTest.class,
    jmri.jmrix.rfid.networkdriver.configurexml.PackageTest.class,
-   NetworkDriverAdapterTest.class
+   NetworkDriverAdapterTest.class,
+   BundleTest.class,
 })
 /**
  * Tests for the jmri.jmrix.pi package

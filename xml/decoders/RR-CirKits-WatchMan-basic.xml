@@ -23,7 +23,9 @@
     <family name="Decoders" mfg="RR-CirKits" type="stationary" comment="The WatchMan is normally programmed in OPs mode">
       <model model="WatchMan" comment="8 block detector plus 8 Line I/O Driver" lowVersionID="11"/>
     </family>
-    <programming direct="no" paged="yes" register="no" ops="yes"/>
+    <programming direct="no" paged="yes" register="no" ops="no">
+        <mode>LOCONETOPSBOARD</mode>
+    </programming>
     <variables>
       <variable item="Primary Address" CV="1" comment="Short address">
         <shortAddressVal/>

@@ -1,3 +1,7 @@
+# These are the normal settings used for the warnings and tests-warnings Ant targets
+# See the java/ecj.warning.options-ci file for those used during CI operations
+# The two files should be the same _except_ for warn vs err at start of lines with + signs
+
 -warn:-unusedImport
 
 -warn:+assertIdentifier
@@ -5,8 +9,6 @@
 -warn:+charConcat
 -warn:+conditionAssign
 -warn:+constructorName 
--warn:-dep-ann
--warn:+deprecation
 -warn:+discouraged
 -warn:+enumSwitch
 -warn:+fallthrough
@@ -49,7 +51,10 @@
 -warn:-paramAssign
 -warn:-unnecessaryElse
 
+-warn:+dep-ann
+-warn:+deprecation
 -warn:-allDeprecation
+
 -warn:-allJavadoc
 -warn:-javadoc
 -warn:-nls

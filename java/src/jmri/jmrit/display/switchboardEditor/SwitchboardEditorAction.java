@@ -9,7 +9,7 @@ import jmri.jmrit.display.PanelMenu;
  * Start a SwitchboardEditor.
  *
  * @author	Bob Jacobsen Copyright (C) 2002
- * @see jmri.jmrit.display.switchboardEditor.SwitchboardEditorAction
+ * @see jmri.jmrit.display.switchboardEditor.SwitchboardEditor
  */
 public class SwitchboardEditorAction extends AbstractAction {
 
@@ -38,5 +38,7 @@ public class SwitchboardEditorAction extends AbstractAction {
 
         frame.pack();
         frame.setVisible(true);
+        frame.newPanelDefaults();
     }
+
 }

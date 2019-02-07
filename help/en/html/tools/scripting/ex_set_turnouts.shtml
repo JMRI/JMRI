@@ -113,7 +113,12 @@ setStartup().start()          # create one of these, and start it running
 
         <p>It is VERY IMPORTANT that you keep the formatting of the
         script the way it is -- with leading tabs. The Python
-        language uses tabs as part of its command structure.</p>
+        language uses indentation as part of its command structure. 
+        [While this script is made with leading tabs, it is recommended
+        that scripts used with JMRI use four spaces instead as tabs sometimes
+        cause confusion.  And NEVER mix the use of tabs and spaces for
+        indentation as it will definitely cause confusion with program 
+        indentation and structure.] </p>
 
         <p>This first part of the script you should include "as
         is". No changes are necessary:</p>

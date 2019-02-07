@@ -13,7 +13,7 @@
             "description": "User name of the signalMast"
         },
         "comment": {
-            "type": "string",
+            "type": ["string", "null"],
             "description": "Comment for the signalMast"
         },
         "properties": {
@@ -30,7 +30,9 @@
                         "type": ["string", "null"],
                         "description": "String value of property or null"
                     }
-                }
+                },
+                "additionalProperties": false,
+                "required": ["name", "value"]
             }
         },
         "aspect": {
@@ -51,5 +53,5 @@
         }
     },
     "additionalProperties": false,
-    "required": ["name", "userName", "comment", "properties", "aspect", "lit", "held", "state"]
+    "required": ["name", "userName", "comment", "aspect", "lit", "held", "state"]
 }

@@ -1,9 +1,8 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
 import jmri.jmrit.operations.OperationsTestCase;
-import junit.framework.Test;
-import junit.framework.TestSuite;
 import org.junit.Assert;
+import org.junit.Test;
 
 /**
  * Tests for the Operations RollingStock Cars Kernel class Last manually cross-checked
@@ -15,6 +14,7 @@ import org.junit.Assert;
  */
 public class KernelTest extends OperationsTestCase {
 
+    @Test
     public void testKernel() {
         Kernel k1 = new Kernel("TESTKERNEL");
         Assert.assertEquals("Kernel Name", "TESTKERNEL", k1.getName());
@@ -38,30 +38,36 @@ public class KernelTest extends OperationsTestCase {
         Assert.assertEquals("Kernel Initial Length", 0, k1.getTotalLength());
         Assert.assertEquals("Kernel Initial Weight Tons", 0, k1.getAdjustedWeightTons());
 
-        k1.add(c1);
-        Assert.assertEquals("Kernel Car 1 Length", 40 + Car.COUPLER, k1.getTotalLength());
+        c1.setKernel(k1);
+        Assert.assertEquals("Kernel Car 1 Length", 40 + Car.COUPLERS, k1.getTotalLength());
         Assert.assertEquals("Kernel Car 1 Weight Tons", 10, k1.getAdjustedWeightTons());
+        Assert.assertTrue("Kernel Lead", k1.isLead(c1));
+        Assert.assertTrue("Kernel Lead", c1.isLead());
 
         k1.add(c2);
-        Assert.assertEquals("Kernel Car 2 Length", 40 + Car.COUPLER + 60 + Car.COUPLER, k1.getTotalLength());
+        Assert.assertEquals("Kernel Car 2 Length", 40 + Car.COUPLERS + 60 + Car.COUPLERS, k1.getTotalLength());
         Assert.assertEquals("Kernel Car 2 Weight Tons", 30, k1.getAdjustedWeightTons());
+        Assert.assertTrue("Kernel Lead", k1.isLead(c1));
+        Assert.assertTrue("Kernel Lead", c1.isLead());
 
         k1.add(c3);
-        Assert.assertEquals("Kernel Car 3 Length", 40 + Car.COUPLER + 60 + Car.COUPLER + 50 + Car.COUPLER, k1.getTotalLength());
+        Assert.assertEquals("Kernel Car 3 Length", 40 + Car.COUPLERS + 60 + Car.COUPLERS + 50 + Car.COUPLERS, k1.getTotalLength());
         // car 3 is empty, so only 5 tons, 15/3
         Assert.assertEquals("Kernel Car 3 Weight Tons", 35, k1.getAdjustedWeightTons());
+        Assert.assertTrue("Kernel Lead", k1.isLead(c1));
+        Assert.assertTrue("Kernel Lead", c1.isLead());
 
         k1.setLead(c2);
-        Assert.assertTrue("Kernel Lead Car 1", k1.isLead(c2));
-        Assert.assertFalse("Kernel Lead Car 2", k1.isLead(c1));
-        Assert.assertFalse("Kernel Lead Car 3", k1.isLead(c3));
+        Assert.assertTrue("Kernel Lead", k1.isLead(c2));
+        Assert.assertFalse("Kernel Lead", k1.isLead(c1));
+        Assert.assertFalse("Kernel Lead", k1.isLead(c3));
 
         k1.delete(c2);
-        Assert.assertEquals("Kernel Car Delete 2 Length", 40 + Car.COUPLER + 50 + Car.COUPLER, k1.getTotalLength());
+        Assert.assertEquals("Kernel Car Delete 2 Length", 40 + Car.COUPLERS + 50 + Car.COUPLERS, k1.getTotalLength());
         Assert.assertEquals("Kernel Car Delete 2 Weight Tons", 15, k1.getAdjustedWeightTons());
 
         k1.delete(c1);
-        Assert.assertEquals("Kernel Car Delete 1 Length", 50 + Car.COUPLER, k1.getTotalLength());
+        Assert.assertEquals("Kernel Car Delete 1 Length", 50 + Car.COUPLERS, k1.getTotalLength());
         Assert.assertEquals("Kernel Car Delete 1 Weight Tons", 5, k1.getAdjustedWeightTons());
 
         k1.delete(c3);
@@ -70,6 +76,7 @@ public class KernelTest extends OperationsTestCase {
 
     }
 
+    @Test
     public void testCarKernel() {
         Kernel kold = new Kernel("TESTKERNELOLD");
         Assert.assertEquals("Kernel Name old", "TESTKERNELOLD", kold.getName());
@@ -131,33 +138,5 @@ public class KernelTest extends OperationsTestCase {
         Assert.assertTrue("Kernel new Lead is Car 1 after3", knew.isLead(c1));
         Assert.assertFalse("Kernel new Lead is not Car 2 after3", knew.isLead(c2));
         Assert.assertFalse("Kernel new Lead is not Car 3 after3", knew.isLead(c3));
-    }
-
-    // from here down is testing infrastructure
-    // Ensure minimal setup for log4J
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-    }
-
-    public KernelTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", KernelTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(KernelTest.class);
-        return suite;
-    }
-
-    @Override
-    protected void tearDown() throws Exception {
-       super.tearDown();
     }
 }

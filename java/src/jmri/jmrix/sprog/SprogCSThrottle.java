@@ -8,7 +8,7 @@ import jmri.jmrix.AbstractThrottle;
 /**
  * An implementation of DccThrottle with code specific to a SPROG Command
  * Station connection.
- * <P>
+ * <p>
  * Updated by Andrew Crosland February 2012 to enable 28 step speed packets</P>
  *
  * @author	Andrew Crosland Copyright (C) 2006, 2012
@@ -103,7 +103,7 @@ public class SprogCSThrottle extends AbstractThrottle {
 
     /**
      * Set the speed {@literal &} direction.
-     * <P>
+     * <p>
      * This intentionally skips the emergency stop value of 1 in 128 step mode
      * and the stop and estop values 1-3 in 28 step mode.
      *

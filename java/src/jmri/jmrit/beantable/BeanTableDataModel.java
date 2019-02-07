@@ -100,6 +100,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         return propertyColumns.get(tgt);
     }
 
+    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations & generics
     protected synchronized void updateNameList() {
         // first, remove listeners from the individual objects
         if (sysNameList != null) {
@@ -114,7 +115,11 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         sysNameList = getManager().getSystemNameList();
         // and add them back in
         for (int i = 0; i < sysNameList.size(); i++) {
-            getBySystemName(sysNameList.get(i)).addPropertyChangeListener(this, null, "Table View");
+            // if object has been deleted, it's not here; ignore it
+            T b = getBySystemName(sysNameList.get(i));
+            if (b != null) {
+                b.addPropertyChangeListener(this, null, "Table View");
+            }
         }
     }
 
@@ -183,13 +188,13 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
     public String getColumnName(int col) {
         switch (col) {
             case SYSNAMECOL:
-                return Bundle.getMessage("ColumnSystemName"); //"System Name";
+                return Bundle.getMessage("ColumnSystemName"); // "System Name";
             case USERNAMECOL:
-                return Bundle.getMessage("ColumnUserName"); //"User Name";
+                return Bundle.getMessage("ColumnUserName");   // "User Name";
             case VALUECOL:
-                return Bundle.getMessage("ColumnState"); //"State";
+                return Bundle.getMessage("ColumnState");      // "State";
             case COMMENTCOL:
-                return Bundle.getMessage("ColumnComment"); //"Comment";
+                return Bundle.getMessage("ColumnComment");    // "Comment";
             case DELETECOL:
                 return "";
             default:
@@ -789,13 +794,14 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         fireTableRowsUpdated(row, row);
     }
 
+    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations & generics
     public void moveBean(int row, int column) {
         final T t = getBySystemName(sysNameList.get(row));
         String currentName = t.getUserName();
         T oldNameBean = getBySystemName(sysNameList.get(row));
 
         if ((currentName == null) || currentName.equals("")) {
-            JOptionPane.showMessageDialog(null, "Can not move an empty UserName");
+            JOptionPane.showMessageDialog(null, Bundle.getMessage("MoveDialogErrorMessage"));
             return;
         }
 
@@ -810,9 +816,10 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
         }
 
         int retval = JOptionPane.showOptionDialog(null,
-                "Move " + getBeanType() + " " + currentName + " from " + oldNameBean.getSystemName(), "Move UserName",
+                Bundle.getMessage("MoveDialog", getBeanType(), currentName, oldNameBean.getSystemName()),
+                Bundle.getMessage("MoveDialogTitle"),
                 0, JOptionPane.INFORMATION_MESSAGE, null,
-                new Object[]{Bundle.getMessage("ButtonCancel"), Bundle.getMessage("ButtonOK"), box}, null); // TODO I18N
+                new Object[]{Bundle.getMessage("ButtonCancel"), Bundle.getMessage("ButtonOK"), box}, null);
         log.debug("Dialog value {} selected {}:{}", retval, box.getSelectedIndex(), box.getSelectedItem());
         if (retval != 1) {
             return;
@@ -837,8 +844,9 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
             }
             fireTableRowsUpdated(row, row);
             InstanceManager.getDefault(UserPreferencesManager.class).
-                    showInfoMessage("Reminder", getBeanType() + " " + Bundle.getMessage("UpdateComplete"), getMasterClassName(), "remindSaveReLoad");
-            //JOptionPane.showMessageDialog(null, getBeanType() + " " + Bundle.getMessage("UpdateComplete"));
+                    showInfoMessage(Bundle.getMessage("ReminderTitle"),
+                            Bundle.getMessage("UpdateComplete", getBeanType()),
+                            getMasterClassName(), "remindSaveReLoad");
         }
     }
 
@@ -971,9 +979,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
                 message.append(e.getMessage());
             }
             int count = t.getNumPropertyChangeListeners();
-            if (log.isDebugEnabled()) {
-                log.debug("Delete with " + count);
-            }
+            log.debug("Delete with {}", count);
             if (getDisplayDeleteMsg() == 0x02 && message.toString().equals("")) {
                 doDelete(t);
             } else {

@@ -14,7 +14,6 @@ import org.junit.Assert;
  * @author	Bob Jacobsen Copyright 2003, 2007, 2008
  * @author	Dave Duchamp multi-node extensions 2003
  */
-@SuppressWarnings("null")
 public class SerialNodeTest extends TestCase {
 
     private GrapevineSystemConnectionMemo memo = null;

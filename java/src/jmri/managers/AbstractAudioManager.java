@@ -30,11 +30,13 @@ import org.slf4j.LoggerFactory;
 public abstract class AbstractAudioManager extends AbstractManager<Audio>
         implements AudioManager {
 
+    /** {@inheritDoc} */
     @Override
     public char typeLetter() {
         return 'A';
     }
 
+    /** {@inheritDoc} */
     @Override
     public Audio provideAudio(@Nonnull String name) throws AudioException {
         Audio t = getAudio(name);
@@ -48,6 +50,7 @@ public abstract class AbstractAudioManager extends AbstractManager<Audio>
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public Audio getAudio(@Nonnull String name) {
         Audio t = getByUserName(name);
@@ -58,6 +61,7 @@ public abstract class AbstractAudioManager extends AbstractManager<Audio>
         return getBySystemName(name);
     }
 
+    /** {@inheritDoc} */
     @Override
     public Audio getBySystemName(@Nonnull String key) {
         //return _tsys.get(key);
@@ -68,6 +72,7 @@ public abstract class AbstractAudioManager extends AbstractManager<Audio>
         return (rv);
     }
 
+    /** {@inheritDoc} */
     @Override
     public Audio getByUserName(String key) {
         //return key==null?null:_tuser.get(key);
@@ -81,6 +86,7 @@ public abstract class AbstractAudioManager extends AbstractManager<Audio>
         return (rv);
     }
 
+    /** {@inheritDoc} */
     @Override
     public Audio newAudio(@Nonnull String systemName, String userName) throws AudioException {
         Objects.requireNonNull(systemName, "SystemName cannot be null. UserName was "+ ((userName == null) ? "null" : userName));  // NOI18N
@@ -147,6 +153,7 @@ public abstract class AbstractAudioManager extends AbstractManager<Audio>
      */
     abstract protected Audio createNewAudio(@Nonnull String systemName, String userName) throws AudioException;
 
+    /** {@inheritDoc} */
     @Override
     @Nonnull 
     public String getBeanTypeHandled() {

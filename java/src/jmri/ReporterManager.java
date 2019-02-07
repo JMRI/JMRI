@@ -37,7 +37,7 @@ import javax.annotation.Nonnull;
  * @see jmri.Reporter
  * @see jmri.InstanceManager
  */
-public interface ReporterManager extends Manager<Reporter> {
+public interface ReporterManager extends ProvidingManager<Reporter> {
 
     /**
      * Locate via user name, then system name if needed. If that fails, create a
@@ -55,6 +55,10 @@ public interface ReporterManager extends Manager<Reporter> {
      */
     @Nonnull public
     Reporter provideReporter(@Nonnull String name);
+
+    @Override
+    /** {@inheritDoc} */
+    default public Reporter provide(@Nonnull String name) throws IllegalArgumentException { return provideReporter(name); }
 
     /**
      * Locate via user name, then system name if needed. If that fails, return
@@ -129,16 +133,6 @@ public interface ReporterManager extends Manager<Reporter> {
     Reporter newReporter(@Nonnull String systemName, String userName);
 
     /**
-     * Get a list of all Reporter system names.
-     *
-     * @return a list of reporter system names or an empty list if there are no
-     *         reporters
-     */
-    @Nonnull public
-    @Override
-    List<String> getSystemNameList();
-
-    /**
      * Determine if it is possible to add a range of reporters in numerical
      * order.
      *
@@ -159,7 +153,7 @@ public interface ReporterManager extends Manager<Reporter> {
     public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix);
 
     /**
-     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     * {@inheritDoc}
      */
     @Override
     public String getEntryToolTip();

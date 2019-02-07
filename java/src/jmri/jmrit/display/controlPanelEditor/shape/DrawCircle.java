@@ -18,8 +18,8 @@ public class DrawCircle extends DrawFrame {
 
     JTextField _diameterText;
 
-    public DrawCircle(String which, String title, PositionableShape ps) {
-        super(which, title, ps);
+    public DrawCircle(String which, String title, PositionableShape ps, Editor ed, boolean create) {
+        super(which, title, ps, ed, create);
     }
 
     @Override
@@ -42,12 +42,12 @@ public class DrawCircle extends DrawFrame {
 
             @Override
             public void mouseMoved(MouseEvent e) {
-                _shape.setWidth(Integer.parseInt(_diameterText.getText()));
+                _shape.setWidth(getInteger(_diameterText, _shape.getWidth()));
                 updateShape();
             }
         });
         _diameterText.addActionListener((ActionEvent e) -> {
-            _shape.setWidth(Integer.parseInt(_diameterText.getText()));
+            _shape.setWidth(getInteger(_diameterText, _shape.getWidth()));
             updateShape();
         });
         pp.add(new JLabel(Bundle.getMessage("circleRadius")));
@@ -57,18 +57,13 @@ public class DrawCircle extends DrawFrame {
     }
 
     @Override
-    protected void makeFigure(MouseEvent event, Editor ed) {
-        Rectangle r = ed.getSelectRect();
+    protected PositionableShape makeFigure(Rectangle r, Editor ed) {
         if (r != null) {
             int dia = Math.max(r.width, r.height);
             Ellipse2D.Double rr = new Ellipse2D.Double(0, 0, dia, dia);
             _shape = new PositionableCircle(ed, rr);
-            _shape.setLocation(r.x, r.y);
-            _shape.updateSize();
-            _shape.setEditFrame(this);
-            setDisplayParams();
-            ed.putItem(_shape);
         }
+        return _shape;
     }
 
     @Override

@@ -62,13 +62,13 @@ public class MaintainerCallSectionTest {
     @org.junit.Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
         JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initMemoryManager();  
         JUnitUtil.initShutDownManager();
-        JUnitUtil.resetProfileManager();
         
         mcLayoutTurnout = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT1"); mcLayoutTurnout.setUserName("Sec 1 MC output");
 

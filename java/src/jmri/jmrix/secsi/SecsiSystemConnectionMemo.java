@@ -1,6 +1,7 @@
 package jmri.jmrix.secsi;
 
 import java.util.ResourceBundle;
+import javax.annotation.Nonnull;
 import jmri.jmrix.SystemConnectionMemo;
 import jmri.LightManager;
 import jmri.TurnoutManager;
@@ -16,8 +17,8 @@ import org.slf4j.LoggerFactory;
  */
 public class SecsiSystemConnectionMemo extends SystemConnectionMemo {
 
-    public SecsiSystemConnectionMemo() {
-        super("V", "SECSI");
+    public SecsiSystemConnectionMemo(@Nonnull String prefix, @Nonnull String name) {
+        super(prefix, name);
         register(); // registers general type
         InstanceManager.store(this, SecsiSystemConnectionMemo.class); // also register as specific type
 
@@ -25,7 +26,12 @@ public class SecsiSystemConnectionMemo extends SystemConnectionMemo {
         InstanceManager.store(new jmri.jmrix.secsi.swing.SecsiComponentFactory(this),
                 jmri.jmrix.swing.ComponentFactory.class);
 
-        log.debug("Created SecsiSystemConnectionMemo");
+        log.debug("Created SecsiSystemConnectionMemo with prefix {}", prefix);
+    }
+
+    public SecsiSystemConnectionMemo() {
+        this("V", "SECSI");
+        log.debug("Created nameless SecsiSystemConnectionMemo");
     }
 
     private SerialTrafficController tc = null;
@@ -42,9 +48,9 @@ public class SecsiSystemConnectionMemo extends SystemConnectionMemo {
     /**
      * Get the traffic controller instance associated with this connection memo.
      */
-    public SerialTrafficController getTrafficController(){
+    public SerialTrafficController getTrafficController() {
         if (tc == null) {
-            setTrafficController(new SerialTrafficController());
+            setTrafficController(new SerialTrafficController(this));
             log.debug("Auto create of SerialTrafficController for initial configuration");
         }
         return tc;
@@ -55,12 +61,16 @@ public class SecsiSystemConnectionMemo extends SystemConnectionMemo {
         return null;
     }
 
-    public void configureManagers(){
+    public void configureManagers() {
         setTurnoutManager(new SerialTurnoutManager(this));
-        setLightManager(new SerialLightManager(this));
-        setSensorManager(new SerialSensorManager(this));
-    }
+        InstanceManager.setTurnoutManager(getTurnoutManager());
 
+        setLightManager(new SerialLightManager(this));
+        InstanceManager.setLightManager(getLightManager());
+
+        setSensorManager(new SerialSensorManager(this));
+        InstanceManager.setSensorManager(getSensorManager());
+    }
 
     /**
      * Provide access to the Sensor Manager for this particular connection.

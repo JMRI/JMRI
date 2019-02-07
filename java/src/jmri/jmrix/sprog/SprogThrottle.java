@@ -10,9 +10,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * An implementation of DccThrottle with code specific to an SPROG connection.
- * <P>
+ * <p>
  * Based on the {@link jmri.jmrix.nce.NceThrottle} implementation.
- * <P>
+ * <p>
  * Updated by Andrew Crosland February 2012 to enable 28 step speed packets</P>
  *
  * @author	Bob Jacobsen Copyright (C) 2003

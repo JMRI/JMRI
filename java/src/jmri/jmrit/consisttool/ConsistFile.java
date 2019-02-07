@@ -46,7 +46,6 @@ public class ConsistFile extends XmlFile {
      *
      * @param consist a JDOM element containing a consist
      */
-    @SuppressWarnings("unchecked")
     private void consistFromXml(Element consist) {
         Attribute type, cnumber, isCLong, cID;
         Consist newConsist;
@@ -227,7 +226,6 @@ public class ConsistFile extends XmlFile {
      * @throws org.jdom2.JDOMException if unable to parse consists
      * @throws java.io.IOException     if unable to read file
      */
-    @SuppressWarnings("unchecked")
     public void readFile(String fileName) throws JDOMException, IOException {
         if (checkFile(fileName)) {
             Element root = rootFromName(fileName);

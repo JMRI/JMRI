@@ -16,18 +16,13 @@ import org.junit.Test;
  *
  * @author	Paul Bender
  */
-public class XNetOpsModeProgrammerTest {
+public class XNetOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgrammerTestBase {
 
-    private XNetOpsModeProgrammer op = null;
-    private XNetInterfaceScaffold tc = null;
-    private jmri.ProgListener pl = null;
-    private int lastValue;
-    private int lastStatus;
-
-    @Test
-    public void testCtor() {
-        Assert.assertNotNull(op);
-    }
+    protected XNetOpsModeProgrammer op = null;
+    protected XNetInterfaceScaffold tc = null;
+    protected jmri.ProgListener pl = null;
+    protected int lastValue;
+    protected int lastStatus;
 
     @Test
     public void testSupportedModes(){
@@ -39,7 +34,8 @@ public class XNetOpsModeProgrammerTest {
     }
 
     @Test
-    public void testCanRead(){
+    @Override
+    public void testGetCanRead(){
        Assert.assertTrue("can read",op.getCanRead());
     }
 
@@ -60,7 +56,7 @@ public class XNetOpsModeProgrammerTest {
 
     @Test
     public void testWriteCV() throws jmri.ProgrammerException{
-        op.writeCV(29,5,pl);
+        op.writeCV("29",5,pl);
         XNetMessage m = XNetMessage.getWriteOpsModeCVMsg(0,5,29,5);
         Assert.assertEquals("outbound message sent",1,tc.outbound.size());
         Assert.assertEquals("outbound message",m,tc.outbound.elementAt(0));
@@ -72,7 +68,7 @@ public class XNetOpsModeProgrammerTest {
 
     @Test
     public void testReadCV() throws jmri.ProgrammerException{
-        op.readCV(29,pl);
+        op.readCV("29",pl);
         XNetMessage m = XNetMessage.getVerifyOpsModeCVMsg(0,5,29,0);
         Assert.assertEquals("outbound message sent",1,tc.outbound.size());
         Assert.assertEquals("outbound message",m,tc.outbound.elementAt(0));
@@ -88,7 +84,7 @@ public class XNetOpsModeProgrammerTest {
 
     @Test
     public void testConfirmCV() throws jmri.ProgrammerException{
-        op.confirmCV(29,5,pl);
+        op.confirmCV("29",5,pl);
         XNetMessage m = XNetMessage.getVerifyOpsModeCVMsg(0,5,29,5);
         Assert.assertEquals("outbound message sent",1,tc.outbound.size());
         Assert.assertEquals("outbound message",m,tc.outbound.elementAt(0));
@@ -104,7 +100,7 @@ public class XNetOpsModeProgrammerTest {
 
     @Test
     public void testWriteCVWithNotSupported() throws jmri.ProgrammerException{
-        op.writeCV(29,5,pl);
+        op.writeCV("29",5,pl);
         XNetMessage m = XNetMessage.getWriteOpsModeCVMsg(0,5,29,5);
         Assert.assertEquals("outbound message sent",1,tc.outbound.size());
         Assert.assertEquals("outbound message",m,tc.outbound.elementAt(0));
@@ -116,7 +112,7 @@ public class XNetOpsModeProgrammerTest {
 
     @Test
     public void testWriteCVWithRetransmittableError() throws jmri.ProgrammerException{
-        op.writeCV(29,5,pl);
+        op.writeCV("29",5,pl);
         XNetMessage m = XNetMessage.getWriteOpsModeCVMsg(0,5,29,5);
         Assert.assertEquals("outbound message sent",1,tc.outbound.size());
         Assert.assertEquals("outbound message",m,tc.outbound.elementAt(0));
@@ -136,7 +132,7 @@ public class XNetOpsModeProgrammerTest {
 
     @Test
     public void testWriteCVWithOtherError() throws jmri.ProgrammerException{
-        op.writeCV(29,5,pl);
+        op.writeCV("29",5,pl);
         XNetMessage m = XNetMessage.getWriteOpsModeCVMsg(0,5,29,5);
         Assert.assertEquals("outbound message sent",1,tc.outbound.size());
         Assert.assertEquals("outbound message",m,tc.outbound.elementAt(0));
@@ -149,7 +145,7 @@ public class XNetOpsModeProgrammerTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
         // infrastructure objects
         tc = new XNetInterfaceScaffold(new LenzCommandStation());
 
@@ -165,11 +161,16 @@ public class XNetOpsModeProgrammerTest {
 
         lastValue = -1;
         lastStatus = -1;
+        programmer = op;
 
     }
 
     @After
     public void tearDown() {
+        tc = null;
+        op = null;
+        pl = null;
+        programmer = null;
         JUnitUtil.tearDown();
     }
 

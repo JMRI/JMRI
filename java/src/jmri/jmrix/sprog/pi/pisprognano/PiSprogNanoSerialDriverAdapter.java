@@ -4,10 +4,10 @@ import jmri.jmrix.sprog.SprogConstants.SprogMode;
 
 /**
  * Implements SerialPortAdapter for the Sprog system.
- * <P>
+ * <p>
  * This connects an Pi-SPROG Nano via a serial com port or virtual USB serial 
  * com port.
- * <P>
+ * <p>
  * The current implementation only handles the 115,200 baud rate, and does not use
  * any other options at configuration time.
  *
@@ -36,7 +36,8 @@ public class PiSprogNanoSerialDriverAdapter
     /**
      * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
-    @Deprecated
+    @Deprecated  // will be removed when class converted to multi-system
+    @SuppressWarnings("deprecation")  // temporary implementation
     static public PiSprogNanoSerialDriverAdapter instance() {
         return null;
     }

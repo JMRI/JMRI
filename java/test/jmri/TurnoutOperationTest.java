@@ -14,6 +14,7 @@ import org.junit.Assert;
  */
 public class TurnoutOperationTest extends TestCase {
 
+    @SuppressWarnings("unlikely-arg-type") // String unrelated when testing Wrong type
     public void testEquals() {
         TurnoutOperation to1 = new TurnoutOperation("to1"){
             @Override
@@ -71,7 +72,7 @@ public class TurnoutOperationTest extends TestCase {
 
     @Override
     protected void setUp() throws Exception { 
-        apps.tests.Log4JFixture.setUp(); 
+        jmri.util.JUnitUtil.setUp(); 
         super.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalTurnoutManager();
@@ -80,9 +81,7 @@ public class TurnoutOperationTest extends TestCase {
     @Override
     protected void tearDown() throws Exception { 
         super.tearDown();
-        apps.tests.Log4JFixture.tearDown(); 
-        JUnitUtil.resetTurnoutOperationManager();
-        JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.tearDown(); 
     }
 
 }

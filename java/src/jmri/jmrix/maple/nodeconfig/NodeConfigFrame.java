@@ -4,8 +4,13 @@ import java.awt.Container;
 import java.awt.FlowLayout;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
+import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.border.Border;
 import jmri.jmrix.maple.InputBits;
 import jmri.jmrix.maple.MapleSystemConnectionMemo;
@@ -14,7 +19,7 @@ import jmri.jmrix.maple.SerialNode;
 
 /**
  * Frame for user configuration of Maple panel nodes.
- *
+ * <p>
  * Note: Currently anything to do with pulse width for pulsing a turnout is
  * commented out. This code from the C/MRI version was not deleted in case it is
  * needed in the future.
@@ -24,27 +29,27 @@ import jmri.jmrix.maple.SerialNode;
  */
 public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
-    protected javax.swing.JTextField nodeAddrField = new javax.swing.JTextField(3);
-    protected javax.swing.JLabel nodeAddrStatic = new javax.swing.JLabel("000");
-    protected javax.swing.JTextField pollTimeoutField = new javax.swing.JTextField(3);
-    protected javax.swing.JTextField sendDelayField = new javax.swing.JTextField(3);
-//    protected javax.swing.JTextField pulseWidthField = new javax.swing.JTextField(4);
-    protected javax.swing.JTextField numInputField = new javax.swing.JTextField(4);
-    protected javax.swing.JTextField numOutputField = new javax.swing.JTextField(4);
+    protected JSpinner nodeAddrSpinner;
+    protected JLabel nodeAddrStatic = new JLabel("000");
+    protected JTextField pollTimeoutField = new JTextField(3);
+    protected JTextField sendDelayField = new JTextField(3);
+//    protected JTextField pulseWidthField = new JTextField(4);
+    protected JTextField numInputField = new JTextField(4);
+    protected JTextField numOutputField = new JTextField(4);
 
-    protected javax.swing.JButton addButton = new javax.swing.JButton(Bundle.getMessage("ButtonAdd"));
-    protected javax.swing.JButton editButton = new javax.swing.JButton(Bundle.getMessage("ButtonEdit"));
-    protected javax.swing.JButton deleteButton = new javax.swing.JButton(Bundle.getMessage("ButtonDelete"));
-    protected javax.swing.JButton doneButton = new javax.swing.JButton(Bundle.getMessage("ButtonDone"));
-    protected javax.swing.JButton updateButton = new javax.swing.JButton(Bundle.getMessage("ButtonUpdate"));
-    protected javax.swing.JButton cancelButton = new javax.swing.JButton(Bundle.getMessage("ButtonCancel"));
+    protected JButton addButton = new JButton(Bundle.getMessage("ButtonAdd"));
+    protected JButton editButton = new JButton(Bundle.getMessage("ButtonEdit"));
+    protected JButton deleteButton = new JButton(Bundle.getMessage("ButtonDelete"));
+    protected JButton doneButton = new JButton(Bundle.getMessage("ButtonDone"));
+    protected JButton updateButton = new JButton(Bundle.getMessage("ButtonUpdate"));
+    protected JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
 
-    protected javax.swing.JLabel statusText1 = new javax.swing.JLabel();
-    protected javax.swing.JLabel statusText2 = new javax.swing.JLabel();
-    protected javax.swing.JLabel statusText3 = new javax.swing.JLabel();
+    protected JLabel statusText1 = new JLabel();
+    protected JLabel statusText2 = new JLabel();
+    protected JLabel statusText3 = new JLabel();
 
-    protected javax.swing.JPanel panel2 = new JPanel();
-    protected javax.swing.JPanel panel2a = new JPanel();
+    protected JPanel panel2 = new JPanel();
+    protected JPanel panel2a = new JPanel();
 
     protected boolean changedNode = false;  // true if a node was changed, deleted, or added
     protected boolean editMode = false;     // true if in edit mode
@@ -53,7 +58,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     protected int nodeAddress = 0;          // Node address
     protected int pollTimeoutTime = 2000;   // reply timeout time
     protected int sendDelay = 200;   // delay time after send commands
-// protected int pulseWidth = 500;   // pulse width for turnout control (milliseconds)
+    // protected int pulseWidth = 500;   // pulse width for turnout control (milliseconds)
     protected int inputBits = 40;   // maximum number of input bits - all nodes
     protected int outputBits = 40;   // maximum number of output bits - all nodes
 
@@ -98,9 +103,9 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         JPanel panel11 = new JPanel();
         panel11.setLayout(new FlowLayout());
         panel11.add(new JLabel(Bundle.getMessage("LabelNodeAddress") + " "));
-        panel11.add(nodeAddrField);
-        nodeAddrField.setToolTipText(Bundle.getMessage("TipNodeAddress"));
-        nodeAddrField.setText("1");
+        nodeAddrSpinner = new JSpinner(new SpinnerNumberModel(1, 1, 99, 1));
+        panel11.add(nodeAddrSpinner);
+        nodeAddrSpinner.setToolTipText(Bundle.getMessage("TipNodeAddress"));
         panel11.add(nodeAddrStatic);
         nodeAddrStatic.setVisible(false);
         JPanel panel12 = new JPanel();
@@ -248,7 +253,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Method to handle add button
+     * Handle Add button.
      */
     public void addButtonActionPerformed() {
         // Check that a node with this address does not exist
@@ -295,7 +300,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Method to handle edit button
+     * Handle Edit button.
      */
     public void editButtonActionPerformed() {
         // Find Serial Node address
@@ -314,9 +319,9 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         }
         // Set up static node address
         nodeAddrStatic.setText(Integer.toString(nodeAddress));
-        nodeAddrField.setVisible(false);
+        nodeAddrSpinner.setVisible(false);
         nodeAddrStatic.setVisible(true);
-//  // set up pulse width
+        // set up pulse width
 //        pulseWidth = curNode.getPulseWidth();
 //        pulseWidthField.setText(Integer.toString(pulseWidth));
         // set up number of input and output bits
@@ -344,7 +349,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Method to handle delete button
+     * Handle Delete button.
      */
     public void deleteButtonActionPerformed() {
         // Find Serial Node address
@@ -362,11 +367,11 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
             return;
         }
         // confirm deletion with the user
-        if (javax.swing.JOptionPane.OK_OPTION == javax.swing.JOptionPane.showConfirmDialog(
+        if (JOptionPane.OK_OPTION == JOptionPane.showConfirmDialog(
                 this, Bundle.getMessage("ConfirmDelete1") + " " + nodeAddress + "?",
                 Bundle.getMessage("ConfirmDeleteTitle"),
-                javax.swing.JOptionPane.OK_CANCEL_OPTION,
-                javax.swing.JOptionPane.WARNING_MESSAGE)) {
+                JOptionPane.OK_CANCEL_OPTION,
+                JOptionPane.WARNING_MESSAGE)) {
             // delete this node
             _memo.getTrafficController().deleteNode(nodeAddress);
             // provide user feedback
@@ -382,7 +387,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Method to handle done button
+     * Handle Done button.
      */
     public void doneButtonActionPerformed() {
         if (editMode) {
@@ -396,22 +401,22 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
             doneButton.setVisible(true);
             updateButton.setVisible(false);
             cancelButton.setVisible(false);
-            nodeAddrField.setVisible(true);
+            nodeAddrSpinner.setVisible(true);
             nodeAddrStatic.setVisible(false);
         }
         if (changedNode) {
             // Remind user to Save new configuration
-            javax.swing.JOptionPane.showMessageDialog(this,
+            JOptionPane.showMessageDialog(this,
                     Bundle.getMessage("ReminderNode1") + "\n" + Bundle.getMessage("Reminder2"),
                     Bundle.getMessage("ReminderTitle"),
-                    javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.INFORMATION_MESSAGE);
         }
         setVisible(false);
         dispose();
     }
 
     /**
-     * Method to handle update button
+     * Handle Update button.
      */
     public void updateButtonActionPerformed() {
         // get node information from window
@@ -421,7 +426,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         if (!readSendDelay()) {
             return;
         }
-//  if ( !readPulseWidth() ) return;
+        //  if ( !readPulseWidth() ) return;
         if (!readNumInputBits()) {
             return;
         }
@@ -442,7 +447,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         updateButton.setVisible(false);
         cancelButton.setVisible(false);
         // make node address editable again 
-        nodeAddrField.setVisible(true);
+        nodeAddrSpinner.setVisible(true);
         nodeAddrStatic.setVisible(false);
         // refresh notes panel
         statusText2.setText(stdStatus2);
@@ -454,7 +459,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Method to handle cancel button
+     * Handle Cancel button.
      */
     public void cancelButtonActionPerformed() {
         // Reset 
@@ -468,7 +473,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         updateButton.setVisible(false);
         cancelButton.setVisible(false);
         // make node address editable again 
-        nodeAddrField.setVisible(true);
+        nodeAddrSpinner.setVisible(true);
         nodeAddrStatic.setVisible(false);
         // refresh notes panel
         statusText1.setText(stdStatus1);
@@ -477,7 +482,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Method to close the window when the close box is clicked
+     * Close the window when the close box is clicked.
      */
     @Override
     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -486,7 +491,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Method to set node parameters The node must exist, and be in 'curNode'
+     * Set node parameters. The node must exist, and be in 'curNode'
      * Also, the node type must be set and in 'nodeType'
      */
     void setNodeParameters() {
@@ -499,7 +504,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Method to reset the notes error after error display
+     * Reset the notes error text after error display.
      */
     private void resetNotes() {
         if (errorInStatus1) {
@@ -514,7 +519,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Reset the second line of Notes area
+     * Reset the second line of Notes area.
      */
     private void resetNotes2() {
         if (errorInStatus2) {
@@ -528,35 +533,21 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Read node address and check for legal range If successful, a node address
-     * in the range 1-99 is returned. If not successful, -1 is returned and an
-     * appropriate error message is placed in statusText1.
+     * Read node address and check for legal range.
+     * Range is protected by JSpinner, error dialogs removed.
+     *
+     * @return a node address in the range 1-99.
      */
     private int readNodeAddress() {
-        int addr = -1;
-        try {
-            addr = Integer.parseInt(nodeAddrField.getText());
-        } catch (Exception e) {
-            statusText1.setText(Bundle.getMessage("Error5"));
-            statusText1.setVisible(true);
-            errorInStatus1 = true;
-            resetNotes2();
-            return -1;
-        }
-        if ((addr < 1) || (addr > 99)) {
-            statusText1.setText(Bundle.getMessage("Error6"));
-            statusText1.setVisible(true);
-            errorInStatus1 = true;
-            resetNotes2();
-            return -1;
-        }
-        return (addr);
+        return (Integer) nodeAddrSpinner.getValue();
     }
 
     /**
-     * Read receive poll reply timeout time from window Returns 'true' if
-     * successful, 'false' if an error was detected. If an error is detected, a
-     * suitable error message is placed in the Notes area
+     * Read receive poll reply timeout time from window.
+     * If an error is detected, a suitable error message is placed
+     * in the Notes area.
+     *
+     * @return 'true' if successful, 'false' if an error was detected
      */
     protected boolean readPollTimeout() {
         // get the timeout time
@@ -591,9 +582,11 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Read send delay time from window Returns 'true' if successful, 'false' if
-     * an error was detected. If an error is detected, a suitable error message
-     * is placed in the Notes area
+     * Read send delay time from window.
+     * If an error is detected, a suitable error message
+     * is placed in the Notes area.
+     *
+     * @return 'true' if successful, 'false' if an error was detected
      */
     protected boolean readSendDelay() {
         // get the timeout time
@@ -628,9 +621,11 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Read number of input bits from window Returns 'true' if successful,
-     * 'false' if an error was detected. If an error is detected, a suitable
-     * error message is placed in the Notes area
+     * Read number of input bits from window.
+     * If an error is detected, a suitable error message is
+     * placed in the Notes area.
+     *
+     * @return 'true' if successful, 'false' if an error was detected
      */
     protected boolean readNumInputBits() {
         // get the input bits
@@ -665,9 +660,11 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     }
 
     /**
-     * Read number of output bits from window Returns 'true' if successful,
-     * 'false' if an error was detected. If an error is detected, a suitable
-     * error message is placed in the Notes area
+     * Read number of output bits from window.
+     * If an error is detected, a suitable error message is placed
+     * in the Notes area.
+     *
+     * @return 'true' if successful, 'false' if an error was detected
      */
     protected boolean readNumOutputBits() {
         // get the output bits
@@ -702,10 +699,11 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     }
 
 //    /**
-//     * Read pulse width from window
-//     *    Returns 'true' if successful, 'false' if an error was detected.
-//     *    If an error is detected, a suitable error message is placed in the
-//     *        Notes area
+//     * Read pulse width from window.
+//     * If an error is detected, a suitable error message is placed in the
+//     * Notes area.
+//     *
+//     * @return 'true' if successful, 'false' if an error was detected
 //     */
 //    protected boolean readPulseWidth() {
 //        // get the pulse width
@@ -743,6 +741,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
 //        // successful
 //        return true;
 //    }
+
     // private final static Logger log = LoggerFactory.getLogger(NodeConfigFrame.class);
 
 }

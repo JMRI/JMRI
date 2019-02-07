@@ -6,9 +6,9 @@ import jmri.jmrix.secsi.SerialReply;
 import jmri.jmrix.secsi.SecsiSystemConnectionMemo;
 
 /**
- * Frame displaying (and logging) serial command messages
+ * Frame displaying (and logging) serial command messages.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2006, 2007, 2008
+ * @author Bob Jacobsen Copyright (C) 2001, 2006, 2007, 2008
  */
 public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements SerialListener {
 
@@ -21,7 +21,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
 
     @Override
     protected String title() {
-        return "SECSI Serial Command Monitor";
+        return Bundle.getMessage("MonitorXTitle", "SECSI");
     }
 
     @Override
@@ -30,9 +30,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
         memo.getTrafficController().addSerialListener(this);
     }
 
-    /**
-     * Define system-specific help item
-     */
+    @Override
     protected void setHelp() {
         addHelpMenu("package.jmri.jmrix.secsi.serialmon.SerialMonFrame", true);  // NOI18N
     }
@@ -47,7 +45,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
     public synchronized void message(SerialMessage l) {  // receive a message and log it
         // check for valid length
         if (l.getNumDataElements() < 5) {
-            nextLine("Truncated message of length " + l.getNumDataElements() + "\n",
+            nextLine("Truncated message of length " + l.getNumDataElements() + "\n", // TOD I18N
                     l.toString());
         } else if (l.isPoll()) {
             nextLine("Poll addr=" + l.getAddr() + "\n", l.toString());

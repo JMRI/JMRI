@@ -82,7 +82,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     List<Car> carList = null; // list of cars
     boolean showAllCars = true; // when true show all cars
     String locationName = null; // only show cars with this location
-    String trackName = null; // only show cars with this track
+    public String trackName = null; // only show cars with this track
     JTable _table;
     CarsTableFrame _frame;
 
@@ -198,15 +198,9 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         }
     }
 
-    // keep show checkboxes consistent during a session
-    private static boolean isSelectVisible = false;
-
-    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-            justification = "GUI ease of use") // NOI18N
     public void toggleSelectVisible() {
         XTableColumnModel tcm = (XTableColumnModel) _table.getColumnModel();
-        isSelectVisible = !tcm.isColumnVisible(tcm.getColumnByModelIndex(SELECT_COLUMN));
-        tcm.setColumnVisible(tcm.getColumnByModelIndex(SELECT_COLUMN), isSelectVisible);
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(SELECT_COLUMN), !tcm.isColumnVisible(tcm.getColumnByModelIndex(SELECT_COLUMN)));
     }
 
     public void resetCheckboxes() {
@@ -411,7 +405,6 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         _frame.loadTableDetails(_table);
 
         // turn off columns
-        tcm.setColumnVisible(tcm.getColumnByModelIndex(SELECT_COLUMN), isSelectVisible);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(COLOR_COLUMN), false);
 
         tcm.setColumnVisible(tcm.getColumnByModelIndex(FINAL_DESTINATION_COLUMN), false);
@@ -427,6 +420,11 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         tcm.setColumnVisible(tcm.getColumnByModelIndex(WAIT_COLUMN), false);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(PICKUP_COLUMN), false);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(LAST_COLUMN), false);
+        
+        // turn on defaults
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(LOAD_COLUMN), true);
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(DESTINATION_COLUMN), true);
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(MOVES_COLUMN), true);
     }
 
     @Override
@@ -562,7 +560,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
                 return car.getTypeName() + car.getTypeExtensions();
             }
             case KERNEL_COLUMN: {
-                if (car.getKernel() != null && car.getKernel().isLead(car)) {
+                if (car.isLead()) {
                     return car.getKernelName() + "*";
                 }
                 return car.getKernelName();
@@ -671,7 +669,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
                     public void run() {
                         cef = new CarEditFrame();
                         cef.initComponents();
-                        cef.loadCar(car);
+                        cef.load(car);
                     }
                 });
                 break;

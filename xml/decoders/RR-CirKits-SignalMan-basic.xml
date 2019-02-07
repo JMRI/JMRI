@@ -22,7 +22,9 @@
     <family name="Decoders" mfg="RR-CirKits" type="stationary" comment="The SignalMan is normally programmed in OPs mode">
       <model model="SignalMan" comment="Signal Mast Driver" lowVersionID="10"/>
     </family>
-    <programming direct="no" paged="yes" register="no" ops="yes"/>
+    <programming direct="no" paged="yes" register="no" ops="no">
+        <mode>LOCONETOPSBOARD</mode>
+    </programming>
     <variables>
       <!--		<variable label="Address" CV="9" item="Extended Address"  -->
       <variable item="Primary Address" CV="1" comment="Short address">
@@ -8490,7 +8492,7 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLMode.xml"/><label>LT27 Var2 Type</label></variable>
       <variable item="LT27 Var2 Event" CV="472" mask="XXXVXXXX" default="0">
         <qualifier>
-          <variableref>LT27 Var22 Mode</variableref>
+          <variableref>LT27 Var2 Mode</variableref>
           <relation>eq</relation>
           <value>0</value>
         </qualifier>

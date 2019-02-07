@@ -1,28 +1,25 @@
 package jmri.jmrix.direct;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import jmri.CommandStation;
 import jmri.DccLocoAddress;
 import jmri.LocoAddress;
 import jmri.jmrix.AbstractThrottle;
 
 /**
- * An implementation of DccThrottle with code specific to a direct serial
+ * An implementation of DccThrottle with code specific to a Direct serial
  * connection.
- * <P>
- * Addresses of 99 and below are considered short addresses, and over 100 are
- * considered long addresses.
- * <P>
  *
  * @author Bob Jacobsen Copyright (C) 2004
  */
 public class Throttle extends AbstractThrottle {
 
-    private jmri.CommandStation tcl = null;
+    private CommandStation tcl = null;
 
     /**
      * Constructor.
      */
-    public Throttle(int address,jmri.CommandStation tc) {
+    public Throttle(DccLocoAddress address, CommandStation tc) {
         super(null);
         tcl = tc;
 
@@ -43,17 +40,21 @@ public class Throttle extends AbstractThrottle {
         this.f12 = false;
         this.address = address;
         this.isForward = true;
-
     }
 
-    int address;  // store integer value for now, ignoring long/short
+    DccLocoAddress address;
+
+    @Override
+    public LocoAddress getLocoAddress() {
+        return address;
+    }
 
     /**
      * Send the message to set the state of functions F0, F1, F2, F3, F4.
      */
     @Override
     protected void sendFunctionGroup1() {
-        byte[] result = jmri.NmraPacket.function0Through4Packet(address, (address >= 100),
+        byte[] result = jmri.NmraPacket.function0Through4Packet(address.getNumber(), address.isLongAddress(),
                 getF0(), getF1(), getF2(), getF3(), getF4());
 
         tcl.sendPacket(result, 1);
@@ -65,7 +66,7 @@ public class Throttle extends AbstractThrottle {
     @Override
     protected void sendFunctionGroup2() {
 
-        byte[] result = jmri.NmraPacket.function5Through8Packet(address, (address >= 100),
+        byte[] result = jmri.NmraPacket.function5Through8Packet(address.getNumber(), address.isLongAddress(),
                 getF5(), getF6(), getF7(), getF8());
 
         tcl.sendPacket(result, 1);
@@ -77,7 +78,7 @@ public class Throttle extends AbstractThrottle {
     @Override
     protected void sendFunctionGroup3() {
 
-        byte[] result = jmri.NmraPacket.function9Through12Packet(address, (address >= 100),
+        byte[] result = jmri.NmraPacket.function9Through12Packet(address.getNumber(), address.isLongAddress(),
                 getF9(), getF10(), getF11(), getF12());
 
         tcl.sendPacket(result, 1);
@@ -85,7 +86,7 @@ public class Throttle extends AbstractThrottle {
 
     /**
      * Set the speed {@literal &} direction.
-     * <P>
+     * <p>
      * This intentionally skips the emergency stop value of 1.
      *
      * @param speed Number from 0 to 1; less than zero is emergency stop
@@ -95,15 +96,15 @@ public class Throttle extends AbstractThrottle {
     public void setSpeedSetting(float speed) {
         float oldSpeed = this.speedSetting;
         this.speedSetting = speed;
-        int value = (int) ((127 - 1) * speed);     // -1 for rescale to avoid estop
+        int value = (int) ((127 - 1) * speed); // -1 for rescale to avoid estop
         if (value > 0) {
-            value = value + 1;  // skip estop
+            value = value + 1; // skip estop
         }
         if (value > 127) {
-            value = 127;    // max possible speed
+            value = 127;       // max possible speed
         }
         if (value < 0) {
-            value = 1;        // emergency stop
+            value = 1;         // emergency stop
         }
         String step = "" + value;
 
@@ -133,12 +134,6 @@ public class Throttle extends AbstractThrottle {
         if (old != isForward) {
             notifyPropertyChangeListener("IsForward", old, isForward);
         }
-    }
-
-    @Override
-    public LocoAddress getLocoAddress() {
-        //log.error("getLocoAddress not fully implemented yet");
-        return new DccLocoAddress(address, address > 100);   // always short address if <100
     }
 
     @Override

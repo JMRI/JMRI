@@ -129,7 +129,7 @@ public class FnMapPanelESU extends JPanel {
      * Number of items per block
      */
     final int[] outBlockLength = new int[]{36, 16, 16, 24};
-    final int MAX_ITEMS = IntStream.of(outBlockLength).sum();
+    final int MAX_ITEMS = IntStream.of(outBlockLength).sum(); // total of entries
     /**
      * Number of bits per block item
      */
@@ -837,7 +837,14 @@ public class FnMapPanelESU extends JPanel {
      * clean up at end
      */
     public void dispose() {
-        removeAll();
+        _varModel = null; // kills GC cycles during test
+        for (int i = 0; i<rowButton.length; i++) rowButton[i] = null;
+        for (int i = 0; i < summaryLine.length; i++) {
+            for (int j = 0; j < summaryLine[i].length; j++) {
+                summaryLine[i][j] = null;
+            }
+        }
+        removeAll();  // JPanel call
     }
 
     // initialize logging

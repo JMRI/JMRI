@@ -1,4 +1,3 @@
-//JmrisTest.java
 package jmri.jmris;
 
 import org.junit.runner.RunWith;

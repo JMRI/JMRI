@@ -8,27 +8,27 @@ import jmri
 import time
 
 class AutomatonStopTest(jmri.jmrit.automat.AbstractAutomaton) :
-	
-	# init() is called exactly once at the beginning to do
-	# any necessary configuration.
-	def init(self):
-		return
-	
-	# sample subroutine
-	def mycode(self) :
-		# wait for some time
-		self.waitMsec(1000)
-		return
-	
-	# handle() is called repeatedly until it returns false.
-	#
-	# Modify this to do your calculation.
-	def handle(self):
-		# do the work
-		self.mycode()
-		# and continue around again forever
-		return 1	# to continue
-	
+
+    # init() is called exactly once at the beginning to do
+    # any necessary configuration.
+    def init(self):
+        return
+
+    # sample subroutine
+    def mycode(self) :
+        # wait for some time
+        self.waitMsec(1000)
+        return
+
+    # handle() is called repeatedly until it returns false.
+    #
+    # Modify this to do your calculation.
+    def handle(self):
+        # do the work
+        self.mycode()
+        # and continue around again forever
+        return 1    # to continue
+
 # end of class definition
 
 # create one of these
@@ -49,4 +49,4 @@ time.sleep(1.0) # wait 1 second
 for t in java.lang.Thread.getAllStackTraces().keySet() :
     if (t.getName() == name) :
         if (t.getState() != java.lang.Thread.State.TERMINATED) : raise AssertionError('thread did not TERMINATE')
- 
+

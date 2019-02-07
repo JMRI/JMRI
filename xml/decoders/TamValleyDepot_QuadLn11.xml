@@ -14,12 +14,14 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <!-- showEmptyPanes="no" -->
-  <version author="robin@n3ix.com" version="1.11.2" lastUpdated="20151215"/>
+  <version author="robin@n3ix.com" version="1.11.3" lastUpdated="20180410"/>
   <decoder>
     <family name="Quad-LN gen2" mfg="Tam Valley Depot" type="stationary" comment="The Quad-LN is programmed in OPs mode except for the address.">
       <model model="Quad-LNv1" comment="4 Servo Driver" lowVersionID="5"/>
     </family>
-    <programming direct="no" paged="yes" register="no" ops="yes"/>
+    <programming direct="no" paged="yes" register="no" ops="no">
+        <mode>LOCONETOPSBOARD</mode>
+    </programming>
     <variables>
       <variable CV="1" comment="Short address" item="Short Address" default="1">
         <shortAddressVal/>
@@ -4007,7 +4009,7 @@
       <row>
         <column>
           <label>
-            <text>Decoder Template File Version: 1.11.1</text>
+            <text>Decoder Template File Version: 1.11.3</text>
           </label>
           <label>
             <text>  </text>

@@ -1,6 +1,5 @@
 package jmri.util;
 
-import apps.tests.Log4JFixture;
 import java.awt.GraphicsEnvironment;
 import java.util.*;
 import org.apache.log4j.*;
@@ -62,6 +61,6 @@ public class JLogoutputFrameTest {
         }
 
         jmri.util.JUnitUtil.resetInstanceManager();
-        Log4JFixture.tearDown();
+        jmri.util.JUnitUtil.tearDown();
     }
 }

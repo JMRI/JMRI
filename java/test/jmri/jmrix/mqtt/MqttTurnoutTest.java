@@ -1,6 +1,6 @@
 package jmri.jmrix.mqtt;
 
-import jmri.util.JUnitUtil;
+import jmri.util.*;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -18,12 +18,13 @@ public class MqttTurnoutTest {
     public void ConstructorTest() {
         MqttAdapter a = new MqttAdapter();
         Assert.assertNotNull("constructor", new MqttTurnout(a, 2));
+        JUnitAppender.assertWarnMessage("Trying to subscribe before connect/configure is done");
     }
 
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.initDefaultUserMessagePreferences();
     }
 
     @After

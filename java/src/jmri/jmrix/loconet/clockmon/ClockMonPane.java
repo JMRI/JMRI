@@ -18,13 +18,13 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Pane displaying a LocoNet clock monitor.
- * <P>
+ * <p>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
  * and used with permission as part of the JMRI project. That permission does
  * not extend to uses in other software products. If you wish to use this code,
  * algorithm or these message formats outside of JMRI, please contact Digitrax
  * Inc for separate permission.
- * <P>
+ * <p>
  * The original module has been converted to a clock monitor by removing all
  * active items (Dave Duchamp 2007-2008).
  *
@@ -55,19 +55,22 @@ public class ClockMonPane extends LnPanel implements SlotListener {
         // add GUI items
         JPanel panel1 = new JPanel();
         panel1.setLayout(new FlowLayout());
-        panel1.add(new JLabel(" Day:"));
+        panel1.add(new JLabel(Bundle.getMessage("ClockDayLabel")));
         panel1.add(days);
-        panel1.add(new JLabel(" Time:"));
+        days.setPreferredSize(spacer.getPreferredSize());
+        panel1.add(new JLabel(Bundle.getMessage("ClockTimeLabel")));
         panel1.add(hours);
+        hours.setPreferredSize(spacer.getPreferredSize());
         panel1.add(new JLabel(":"));
         panel1.add(minutes);
+        minutes.setPreferredSize(spacer.getPreferredSize());
         panel1.add(new JLabel("."));
         panel1.add(frac_mins);
         add(panel1);
 
         JPanel panel2 = new JPanel();
         panel2.setLayout(new FlowLayout());
-        panel2.add(new JLabel(" Rate:"));
+        panel2.add(new JLabel(Bundle.getMessage("ClockRateLabel")));
         panel2.add(rate);
         add(panel2);
 
@@ -92,7 +95,6 @@ public class ClockMonPane extends LnPanel implements SlotListener {
         } else {
             log.error("No LocoNet connection available, can't function"); // NOI18N
         }
-
     }
 
     /**
@@ -118,7 +120,7 @@ public class ClockMonPane extends LnPanel implements SlotListener {
 
     @Override
     public void dispose() {
-        // Drop loconet connection
+        // Drop LocoNet connection
         if (memo.getSlotManager() != null) {
             memo.getSlotManager().removeSlotListener(this);
         }
@@ -134,7 +136,8 @@ public class ClockMonPane extends LnPanel implements SlotListener {
 
     JTextField rate = new JTextField(4);
 
-    JButton readButton = new JButton("Read");
+    JButton readButton = new JButton(Bundle.getMessage("ButtonRead"));
+    final static JTextField spacer = new JTextField("123");
 
     /**
      * Nested class to create one of these using old-style defaults

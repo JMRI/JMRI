@@ -13,7 +13,7 @@
             "description": "True if schema is for message from server, false is schema is for message from client"
         },
         "schema": {
-            "$ref": "http://json-schema.org/draft-06/schema",
+            "$ref": "http://json-schema.org/draft-04/schema#",
             "description": "A JSON Schema for the type of message requested"
         }
     },

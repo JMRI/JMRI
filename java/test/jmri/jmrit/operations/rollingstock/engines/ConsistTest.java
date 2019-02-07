@@ -2,10 +2,8 @@ package jmri.jmrit.operations.rollingstock.engines;
 
 import java.util.ArrayList;
 import java.util.List;
-import jmri.util.JUnitUtil;
-import org.junit.After;
+import jmri.jmrit.operations.OperationsTestCase;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -13,7 +11,7 @@ import org.junit.Test;
  * @author Paul Bender Copyright (C) 2017	
  * @author Bob Coleman Copyright (C) 2008, 2009
  */
-public class ConsistTest {
+public class ConsistTest extends OperationsTestCase {
 
     @Test
     public void testCTor() {
@@ -37,10 +35,12 @@ public class ConsistTest {
 
         Assert.assertEquals("Consist Initial Length", 0, c1.getTotalLength());
         Assert.assertFalse("Consist Lead Engine 0", c1.isLead(e1));
+        Assert.assertFalse("Consist Lead Engine 0", e1.isLead());
 
-        c1.add(e1);
+        e1.setConsist(c1);
         Assert.assertEquals("Consist Engine 1 Length", 56 + 4, c1.getTotalLength());
         Assert.assertTrue("Consist Lead Engine 1", c1.isLead(e1));
+        Assert.assertTrue("Consist Lead Engine 1", e1.isLead());
 
         c1.add(e2);
         Assert.assertEquals("Consist Engine 2 Length", 56 + 4 + 59 + 4, c1.getTotalLength());
@@ -60,7 +60,7 @@ public class ConsistTest {
         c1.setLead(e4);
         Assert.assertTrue("Consist Lead Engine 2 after 4c", c1.isLead(e2));
         Assert.assertFalse("Consist Lead Engine 4 after 4c", c1.isLead(e4));
-        List<Engine> tempengines = new ArrayList<Engine>();
+        List<Engine> tempengines = new ArrayList<>();
         tempengines = c1.getEngines();
         Assert.assertTrue("Consist Engine 2 after 4c", tempengines.contains(e2));
         Assert.assertFalse("Consist Engine 4 after 4c", tempengines.contains(e4));
@@ -137,17 +137,6 @@ public class ConsistTest {
         Assert.assertTrue("Consist new Lead is Engine 1 after3", cnew.isLead(e1));
         Assert.assertFalse("Consist new Lead is not Engine 2 after3", cnew.isLead(e2));
         Assert.assertFalse("Consist new Lead is not Engine 3 after3", cnew.isLead(e3));
-    }
-
-    // The minimal setup for log4J
-    @Before
-    public void setUp() {
-        JUnitUtil.setUp();
-    }
-
-    @After
-    public void tearDown() {
-        JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(ConsistTest.class);

@@ -87,7 +87,7 @@ public class ListFrame extends jmri.util.JmriJFrame {
     public void initComponents() {
 
         // set the frame's initial state
-        setTitle(Bundle.getMessage("WindowTitle"));
+        setTitle(Bundle.getMessage("WindowTitle") + Bundle.getMessage("WindowConnectionMemo") + _memo.getUserName()); // NOI18N
         setSize(500, 300);
         Container contentPane = getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
@@ -142,8 +142,7 @@ public class ListFrame extends jmri.util.JmriJFrame {
         panel1.add(panel11);
         panel1.add(panel12);
         Border panel1Border = BorderFactory.createEtchedBorder();
-        Border panel1Titled = BorderFactory.createTitledBorder(panel1Border,
-                Bundle.getMessage("NodePanelName") + " " + _memo.getUserName());
+        Border panel1Titled = BorderFactory.createTitledBorder(panel1Border," ");
         panel1.setBorder(panel1Titled);
         contentPane.add(panel1);
 

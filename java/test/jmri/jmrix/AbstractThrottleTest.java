@@ -730,15 +730,6 @@ public class AbstractThrottleTest {
      * Test of dispose method, of class AbstractThrottle.
      */
     @Test
-    public void testDispose_0args() {
-        instance.dispose();
-        jmri.util.JUnitAppender.assertWarnMessage("Dispose called without knowing the original throttle listener");
-    }
-
-    /**
-     * Test of dispose method, of class AbstractThrottle.
-     */
-    @Test
     public void testDispose_ThrottleListener() {
         ThrottleListener l = null;
         instance.dispose(l);
@@ -748,27 +739,9 @@ public class AbstractThrottleTest {
      * Test of dispatch method, of class AbstractThrottle.
      */
     @Test
-    public void testDispatch_0args() {
-        instance.dispatch();
-        jmri.util.JUnitAppender.assertWarnMessage("dispatch called without knowing the original throttle listener");
-    }
-
-    /**
-     * Test of dispatch method, of class AbstractThrottle.
-     */
-    @Test
     public void testDispatch_ThrottleListener() {
         ThrottleListener l = null;
         instance.dispatch(l);
-    }
-
-    /**
-     * Test of release method, of class AbstractThrottle.
-     */
-    @Test
-    public void testRelease_0args() {
-        instance.release();
-        jmri.util.JUnitAppender.assertWarnMessage("Release called without knowing the original throttle listener");
     }
 
     /**

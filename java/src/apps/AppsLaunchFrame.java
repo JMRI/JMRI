@@ -71,11 +71,16 @@ public class AppsLaunchFrame extends jmri.util.JmriJFrame {
         // handle window close
         setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
 
-        // pack and center this frame
+        // pack
         pack();
+        
+        // center as default
         Dimension screen = getToolkit().getScreenSize();
         Dimension size = getSize();
         setLocation((screen.width - size.width) / 2, (screen.height - size.height) / 2);
+        
+        // then try to load location and size from preferences
+        setFrameLocation();
     }
 
     /**
@@ -222,6 +227,11 @@ public class AppsLaunchFrame extends jmri.util.JmriJFrame {
 
         d.add(new JSeparator());
         d.add(new WiThrottleCreationAction());
+        
+        d.add(new JSeparator());
+        d.add(new apps.TrainCrew.InstallFromURL());
+        
+        // add final to menu bar
         menuBar.add(d);
 
     }

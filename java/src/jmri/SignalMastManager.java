@@ -31,8 +31,9 @@ public interface SignalMastManager extends Manager<SignalMast> {
     public void dispose();
 
     /**
-     * Locate via user name, then system name if needed. Does not create a new
-     * one if nothing found
+     * Get an existing SignalMast or return null if it doesn't exist. 
+     * 
+     * Locates via user name, then system name if needed.
      *
      * @param name User name or system name to match
      * @return null if no match found
@@ -40,8 +41,10 @@ public interface SignalMastManager extends Manager<SignalMast> {
     @CheckForNull public SignalMast getSignalMast(@Nonnull String name);
 
     /**
-     * Locate via user name, then system name if needed. Create new one from
-     * system name if needed
+     * Get the SignalMast with the user name, then system name if needed; if that fails, create a
+     * new SignalMast. 
+     * If the name is a valid system name, it will be used for the
+     * new SignalMast.
      *
      * @param name User name, system name, or address which can be promoted to
      *             system name
@@ -53,6 +56,20 @@ public interface SignalMastManager extends Manager<SignalMast> {
      */
     @Nonnull public SignalMast provideSignalMast(@Nonnull String name);
 
+    /**
+     * Retrieve or create a new signal mast with a given system name. If a new object is created,
+     * it is also registered in this manager.
+     * @param systemName the system name by which to look up the mast, or to create anew.
+     * @param mastClass specific signal mast class. Must have a single-argument string
+     *                  constructor to crete it by system name.
+     * @return a registered signal mast (might be newly created),
+     * @throws JmriException if a signal mast with the given system name is already registered
+     * but it is not of the correct class, or an internal error happens during construction.
+     */
+    @Nonnull public SignalMast provideCustomSignalMast(@Nonnull String systemName,
+                                                       Class<? extends SignalMast> mastClass)
+            throws JmriException;
+
     @Nonnull public SignalMast provideSignalMast(@Nonnull String prefix, // nominally IF$shsm
             @Nonnull String signalSystem,
             @Nonnull String mastName,
@@ -61,11 +78,5 @@ public interface SignalMastManager extends Manager<SignalMast> {
     @CheckForNull public SignalMast getByUserName(@Nonnull String s);
 
     @CheckForNull public SignalMast getBySystemName(@Nonnull String s);
-
-    /**
-     * Get a list of all SignalMast system names.
-     */
-    @Nonnull@Override
- public List<String> getSystemNameList();
 
 }

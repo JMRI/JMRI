@@ -58,24 +58,22 @@ public class JsonTurnoutSocketService extends JsonSocketService<JsonTurnoutHttpS
 
     @Override
     public void onList(String type, JsonNode data, Locale locale) throws IOException, JmriException, JsonException {
-        log.debug("adding TurnoutsListener");
         this.setLocale(locale);
         this.connection.sendMessage(this.service.doGetList(type, locale));
 
+        log.debug("adding TurnoutsListener");
         InstanceManager.getDefault(TurnoutManager.class).addPropertyChangeListener(turnoutsListener); //add parent listener
         addListenersToChildren();
 
     }
 
     private void addListenersToChildren() {
-        InstanceManager.getDefault(TurnoutManager.class).getSystemNameList().stream().forEach((tn) -> { //add listeners to each child (if not already)
+        InstanceManager.getDefault(TurnoutManager.class).getNamedBeanSet().stream().forEach((t) -> { //add listeners to each child (if not already)
+            String tn = t.getSystemName();
             if (!turnoutListeners.containsKey(tn)) {
                 log.debug("adding TurnoutListener for Turnout {}", tn);
-                Turnout t = InstanceManager.getDefault(TurnoutManager.class).getTurnout(tn);
-                if (t != null) {
-                    turnoutListeners.put(tn, new TurnoutListener(t));
-                    t.addPropertyChangeListener(this.turnoutListeners.get(tn));
-                }
+                turnoutListeners.put(tn, new TurnoutListener(t));
+                t.addPropertyChangeListener(this.turnoutListeners.get(tn));
             }
         });
     }

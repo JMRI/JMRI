@@ -41,7 +41,7 @@ public abstract class JsonNamedBeanHttpService extends JsonHttpService {
         data.put(JSON.NAME, bean.getSystemName());
         data.put(JSON.USERNAME, bean.getUserName());
         data.put(JSON.COMMENT, bean.getComment());
-        ArrayNode properties = root.putArray(JSON.PROPERTIES);
+        ArrayNode properties = data.putArray(JSON.PROPERTIES);
         bean.getPropertyKeys().stream().forEach((key) -> {
             Object value = bean.getProperty(key);
             if (value != null) {
@@ -50,7 +50,7 @@ public abstract class JsonNamedBeanHttpService extends JsonHttpService {
                 properties.add(mapper.createObjectNode().putNull(key));
             }
         });
-        return data;
+        return root;
     }
 
     /**
@@ -62,7 +62,7 @@ public abstract class JsonNamedBeanHttpService extends JsonHttpService {
      *
      * @param bean   the bean to modify
      * @param data   the JsonNode containing the JSON representation of bean
-     * @param name   the name of the bean; used only if the bean is null
+     * @param name   the system name of the bean
      * @param type   the JSON type of the bean
      * @param locale the locale used for any error messages
      * @throws JsonException if the bean is null
@@ -74,8 +74,9 @@ public abstract class JsonNamedBeanHttpService extends JsonHttpService {
         if (data.path(JSON.USERNAME).isTextual()) {
             bean.setUserName(data.path(JSON.USERNAME).asText());
         }
-        if (data.path(JSON.COMMENT).isTextual()) {
-            bean.setComment(data.path(JSON.COMMENT).asText());
+        if (!data.path(JSON.COMMENT).isMissingNode()) {
+            JsonNode comment = data.path(JSON.COMMENT);
+            bean.setComment(comment.isTextual() ? comment.asText() : null);
         }
     }
 }

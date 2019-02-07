@@ -23,7 +23,7 @@ public abstract class JsonHttpService {
 
     protected final ObjectMapper mapper;
 
-    protected JsonHttpService(ObjectMapper mapper) {
+    protected JsonHttpService(@Nonnull ObjectMapper mapper) {
         this.mapper = mapper;
     }
 
@@ -117,7 +117,7 @@ public abstract class JsonHttpService {
      * @throws JsonException may be thrown by concrete implementations
      */
     @Nonnull
-    public abstract ArrayNode doGetList(String type, Locale locale) throws JsonException;
+    public abstract ArrayNode doGetList(@Nonnull String type, @Nonnull Locale locale) throws JsonException;
 
     /**
      * Get the JSON Schema for the {@code data} property of the requested type
@@ -146,7 +146,7 @@ public abstract class JsonHttpService {
      *                       message "ErrorUnknownType"
      */
     @Nonnull
-    public abstract JsonNode doSchema(String type, boolean server, Locale locale) throws JsonException;
+    public abstract JsonNode doSchema(@Nonnull String type, boolean server, @Nonnull Locale locale) throws JsonException;
 
     /**
      * Helper to make implementing

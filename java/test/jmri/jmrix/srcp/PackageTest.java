@@ -27,6 +27,7 @@ import org.junit.runners.Suite;
         SRCPPortControllerTest.class,
         SRCPTrafficControllerTest.class,
         SRCPConnectionTypeListTest.class,
+        BundleTest.class,
 })
 
 /**

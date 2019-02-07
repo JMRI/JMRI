@@ -1,4 +1,3 @@
-//SimpleServerFrameTest.java
 package jmri.jmris.simpleserver;
 
 import java.awt.GraphicsEnvironment;
@@ -28,6 +27,7 @@ public class SimpleServerFrameTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
     }
 
     @After

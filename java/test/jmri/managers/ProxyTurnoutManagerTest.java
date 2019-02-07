@@ -1,10 +1,11 @@
 package jmri.managers;
 
 import java.beans.PropertyChangeListener;
-import jmri.InstanceManager;
-import jmri.Turnout;
-import jmri.TurnoutManager;
+import java.util.*;
+
+import jmri.*;
 import jmri.util.JUnitUtil;
+
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -13,7 +14,7 @@ import org.junit.Assert;
 /**
  * Test the ProxyTurnoutManager
  *
- * @author	Bob Jacobsen 2003, 2006, 2008, 2014
+ * @author	Bob Jacobsen 2003, 2006, 2008, 2014, 2018
   */
 public class ProxyTurnoutManagerTest extends TestCase {
 
@@ -196,7 +197,7 @@ public class ProxyTurnoutManagerTest extends TestCase {
     // The minimal setup for log4J
     @Override
     protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
         // create and register the manager object
         l = new InternalTurnoutManager() {
             @Override
@@ -204,7 +205,7 @@ public class ProxyTurnoutManagerTest extends TestCase {
                 return "J";
             }
         };
-        jmri.InstanceManager.setTurnoutManager(l);
+        InstanceManager.setTurnoutManager(l);
     }
 
     @Override

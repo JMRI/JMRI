@@ -402,7 +402,7 @@ public class MrcPacketizer extends MrcTrafficController {
                                     transmitLock.notify();
                                 }
                                 break;
-                            case MrcPackets.GOODCMDRECIEVEDCODE:      //Possibly shouldn't change the state, as we wait for further confirmation.
+                            case MrcPackets.GOODCMDRECEIVEDCODE:      //Possibly shouldn't change the state, as we wait for further confirmation.
                                 if (mCurrentState == CONFIRMATIONONLY) {
                                     synchronized (transmitLock) {
                                         mCurrentState = IDLESTATE;
@@ -411,7 +411,7 @@ public class MrcPacketizer extends MrcTrafficController {
                                 }
                                 msg = new MrcMessage(4);
                                 break;
-                            case MrcPackets.BADCMDRECIEVEDCODE:
+                            case MrcPackets.BADCMDRECEIVEDCODE:
                                 mCurrentState = BADCOMMAND;
                                 msg = new MrcMessage(4);
                                 break;
@@ -458,15 +458,15 @@ public class MrcPacketizer extends MrcTrafficController {
                     {
                         log.trace("queue message for notification: {}", msg);
                         final MrcMessage thisMsg = msg;
-                        final MrcPacketizer thisTC = trafficController;
+                        final MrcPacketizer thisTc = trafficController;
                         // return a notification via the queue to ensure end
                         Runnable r = new Runnable() {
                             MrcMessage msgForLater = thisMsg;
-                            MrcPacketizer myTC = thisTC;
+                            MrcPacketizer myTc = thisTc;
 
                             @Override
                             public void run() {
-                                myTC.notifyRcv(time, msgForLater);
+                                myTc.notifyRcv(time, msgForLater);
                             }
                         };
                         javax.swing.SwingUtilities.invokeLater(r);
@@ -546,7 +546,7 @@ public class MrcPacketizer extends MrcTrafficController {
                     }
                     ostream.write(msg);
                     ostream.flush();
-                    messageTransmited(m);
+                    messageTransmitted(m);
                     if (m.getMessageClass() != MrcInterface.POLL) {
                         if (log.isTraceEnabled()) { // avoid String building if not needed
                             log.trace("end write to stream: {}", jmri.util.StringUtil.hexStringFromBytes(msg));
@@ -666,11 +666,11 @@ public class MrcPacketizer extends MrcTrafficController {
 
     /**
      * When a message is finally transmitted, forward it to listeners if echoing
-     * is needed
-     * @param msg message to tag a transmitted message
+     * is needed.
      *
+     * @param msg message to tag a transmitted message
      */
-    protected void messageTransmited(MrcMessage msg) {
+    protected void messageTransmitted(MrcMessage msg) {
         //if (debug) log.debug("message transmitted");
         if (!echo) {
             return;

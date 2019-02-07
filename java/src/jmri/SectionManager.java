@@ -4,6 +4,7 @@ import java.beans.PropertyChangeListener;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.managers.AbstractManager;
 import org.slf4j.Logger;
@@ -187,14 +188,14 @@ public class SectionManager extends AbstractManager<Section> implements Property
      *         sections
      */
     public int validateAllSections(jmri.util.JmriJFrame frame, LayoutEditor lePanel) {
-        List<String> list = getSystemNameList();
+        Set<Section> set = getNamedBeanSet();
         int numSections = 0;
         int numErrors = 0;
-        if (list.size() <= 0) {
+        if (set.size() <= 0) {
             return -2;
         }
-        for (int i = 0; i < list.size(); i++) {
-            String s = getBySystemName(list.get(i)).validate(lePanel);
+        for (Section section : set) {
+            String s = section.validate(lePanel);
             if (!s.equals("")) {
                 log.error(s);
                 numErrors++;
@@ -216,14 +217,14 @@ public class SectionManager extends AbstractManager<Section> implements Property
         if (lePanel == null) {
             return -1;
         }
-        List<String> list = getSystemNameList();
+        Set<Section> set = getNamedBeanSet();
         int numSections = 0;
         int numErrors = 0;
-        if (list.size() <= 0) {
+        if (set.size() <= 0) {
             return -2;
         }
-        for (int i = 0; i < list.size(); i++) {
-            int errors = getBySystemName(list.get(i)).placeDirectionSensors(lePanel);
+        for (Section section : set) {
+            int errors = section.placeDirectionSensors(lePanel);
             numErrors = numErrors + errors;
             numSections++;
         }
@@ -243,14 +244,13 @@ public class SectionManager extends AbstractManager<Section> implements Property
             return -1;
         }
         jmri.jmrit.display.layoutEditor.ConnectivityUtil cUtil = lePanel.getConnectivityUtil();
-        List<String> list = getSystemNameList();
-        if (list.size() <= 0) {
+        Set<Section> set = getNamedBeanSet();
+        if (set.size() <= 0) {
             return -2;
         }
         int numErrors = 0;
-        ArrayList<String> sensorList = new ArrayList<>();
-        for (int i = 0; i < list.size(); i++) {
-            Section s = getBySystemName(list.get(i));
+        List<String> sensorList = new ArrayList<>();
+        for (Section s : set) {
             String name = s.getReverseBlockingSensorName();
             if ((name != null) && (!name.equals(""))) {
                 sensorList.add(name);
@@ -261,9 +261,7 @@ public class SectionManager extends AbstractManager<Section> implements Property
             }
         }
         jmri.SignalHeadManager shManager = InstanceManager.getDefault(jmri.SignalHeadManager.class);
-        List<String> signalList = shManager.getSystemNameList();
-        for (int j = 0; j < signalList.size(); j++) {
-            SignalHead sh = shManager.getBySystemName(signalList.get(j));
+        for (SignalHead sh : shManager.getNamedBeanSet()) {
             if (!cUtil.removeSensorsFromSignalHeadLogic(sensorList, sh)) {
                 numErrors++;
             }
@@ -275,9 +273,7 @@ public class SectionManager extends AbstractManager<Section> implements Property
      * Initialize all blocking sensors that exist - sets them to 'ACTIVE'
      */
     public void initializeBlockingSensors() {
-        List<String> list = getSystemNameList();
-        for (int i = 0; i < list.size(); i++) {
-            Section s = getBySystemName(list.get(i));
+        for (Section s : getNamedBeanSet()) {
             try {
                 if (s.getForwardBlockingSensor() != null) {
                     s.getForwardBlockingSensor().setState(Sensor.ACTIVE);

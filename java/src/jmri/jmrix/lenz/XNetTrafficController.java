@@ -37,29 +37,6 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
         highPriorityListeners = new LinkedBlockingQueue<>();
     }
 
-    /**
-     * Get the TrafficController instance to use.
-     *
-     * @return The registered TrafficController instance for general use, if
-     *         need be creating one.
-     * @deprecated - does not work with multi-system support, needs to have other classes migrated and then be removed
-     */
-    @Deprecated
-    static public XNetTrafficController instance() {
-        return self;
-    }
-
-    /**
-     * Set this object as the TrafficController instance to use.
-     */
-    @Override
-    @Deprecated
-    protected void setInstance() {
-        if (self == null) {
-            self = this;
-        }
-    }
-
     static XNetTrafficController self = null;
 
     // Abstract methods for the XNetInterface
@@ -172,7 +149,7 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
             highPriorityQueue.put(m);
             highPriorityListeners.put(reply);
         } catch (java.lang.InterruptedException ie) {
-            log.error("Interupted while adding High Priority Message to Queue");
+            log.error("Interrupted while adding High Priority Message to Queue");
         }
     }
 
@@ -185,7 +162,7 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
                 return highPriorityQueue.take();
             }
         } catch (java.lang.InterruptedException ie) {
-            log.error("Interupted while removing High Priority Message from Queue");
+            log.error("Interrupted while removing High Priority Message from Queue");
         }
         return null;
     }
@@ -199,7 +176,7 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
                 return highPriorityListeners.take();
             }
         } catch (java.lang.InterruptedException ie) {
-            log.error("Interupted while removing High Priority Message Listener from Queue");
+            log.error("Interrupted while removing High Priority Message Listener from Queue");
         }
         return null;
     }

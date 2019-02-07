@@ -69,8 +69,11 @@ public class MapleSystemConnectionMemo extends SystemConnectionMemo {
 
     public void configureManagers(){
         setTurnoutManager(new SerialTurnoutManager(this));
+        InstanceManager.setTurnoutManager(getTurnoutManager());
         setLightManager(new SerialLightManager(this));
+        InstanceManager.setLightManager(getLightManager());
         setSensorManager(new SerialSensorManager(this));
+        InstanceManager.setSensorManager(getSensorManager());
     }
 
     /**

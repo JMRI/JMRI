@@ -1,7 +1,9 @@
 package jmri.jmrix.loconet;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import java.util.ArrayList;
 import java.util.Vector;
+import javax.annotation.Nonnull;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,21 +17,44 @@ import org.slf4j.LoggerFactory;
 public abstract class LnTrafficController implements LocoNetInterface {
 
     /**
-     * Get the LnTrafficController instance to use.
-     *
-     * @return The registered LnTrafficController instance for general use, if
-     *         need be creating one.
-     * @deprecated 2.13.4 - does not work with multi-system support, needs to have other classes migrated and then be removed
+     * Reference to the system connection memo.
      */
-    @Deprecated
-    static public LnTrafficController instance() {
-        return self;
+    LocoNetSystemConnectionMemo memo = null;
+
+    /**
+     * Constructor without reference to a LocoNetSystemConnectionMemo.
+     */
+    public LnTrafficController() {
+        super();
     }
 
-    @SuppressFBWarnings(value = "MS_PKGPROTECT")
-    // SpotBugs wants this package protected, but we're removing it when multi-connection
-    // migration is complete
-    static protected LnTrafficController self = null;
+    /**
+     * Constructor. Gets a reference to the LocoNetSystemConnectionMemo.
+     *
+     * @param memo connection's memo
+     */
+    public LnTrafficController(LocoNetSystemConnectionMemo memo) {
+        super();
+        this.memo = memo;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setSystemConnectionMemo(LocoNetSystemConnectionMemo m) {
+        log.debug("LnTrafficController set memo to {}", m.getUserName());
+        memo = m;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public LocoNetSystemConnectionMemo getSystemConnectionMemo() {
+        log.debug("getSystemConnectionMemo {} called in LnTC", memo.getUserName());
+        return memo;
+    }
 
     // Abstract methods for the LocoNetInterface
     @Override
@@ -40,28 +65,27 @@ public abstract class LnTrafficController implements LocoNetInterface {
      * <p>
      * Implementations should update the transmit count statistic.
      *
-     * @param m Message to send; will be updated with CRC
+     * @param m message to send; will be updated with CRC
      */
     @Override
     abstract public void sendLocoNetMessage(LocoNetMessage m);
 
     // The methods to implement adding and removing listeners
 
+    // relies on Vector being a synchronized class
     protected Vector<LocoNetListener> listeners = new Vector<LocoNetListener>();
 
     @Override
-    public synchronized void addLocoNetListener(int mask, LocoNetListener l) {
-        // add only if not already registered
-        if (l == null) {
-            throw new java.lang.NullPointerException();
-        }
+    public synchronized void addLocoNetListener(int mask, @Nonnull LocoNetListener l) {
+        java.util.Objects.requireNonNull(l);
         if (!listeners.contains(l)) {
             listeners.addElement(l);
         }
     }
 
     @Override
-    public synchronized void removeLocoNetListener(int mask, LocoNetListener l) {
+    public synchronized void removeLocoNetListener(int mask, @Nonnull LocoNetListener l) {
+        java.util.Objects.requireNonNull(l);
         if (listeners.contains(l)) {
             listeners.removeElement(l);
         }
@@ -75,26 +99,23 @@ public abstract class LnTrafficController implements LocoNetInterface {
      * {@link jmri.jmrix.loconet.Intellibox.IBLnPacketizer} invoke it, but don't
      * inherit from it.
      *
-     * @param m Message to forward. Listeners should not modify it!
+     * @param m message to forward. Listeners should not modify it!
      */
-    @SuppressWarnings("unchecked")
     public void notify(LocoNetMessage m) {
         // record statistics
         receivedMsgCount++;
         receivedByteCount += m.getNumDataElements();
 
-        // make a copy of the listener vector to synchronized not needed for transmit
-        Vector<LocoNetListener> v;
+        // make a copy of the listener vector for notifications; synchronized not needed once copied
+        ArrayList<LocoNetListener> v;
         synchronized (this) {
-            v = (Vector<LocoNetListener>) listeners.clone();
+            v = new ArrayList<LocoNetListener>(listeners);
         }
-        if (log.isDebugEnabled()) {
-            log.debug("notify of incoming LocoNet packet: " + m.toString());
-        }
+
         // forward to all listeners
-        int cnt = v.size();
-        for (int i = 0; i < cnt; i++) {
-            LocoNetListener client = listeners.elementAt(i);
+        log.debug("notify of incoming LocoNet packet: {}", m);
+        for (LocoNetListener client : v) {
+            log.trace("  notify {} of incoming LocoNet packet: {}", client, m);
             client.message(m);
         }
     }
@@ -117,6 +138,13 @@ public abstract class LnTrafficController implements LocoNetInterface {
         transmittedMsgCount = 0;
         receivedByteCount = 0;
     }
+
+    /**
+     * Clean up any resources, particularly threads.
+     * <p>
+     * The object can't be used after this.
+     */
+    public void dispose() {}
 
     /**
      * Monitor the number of LocoNet messages received across the interface.

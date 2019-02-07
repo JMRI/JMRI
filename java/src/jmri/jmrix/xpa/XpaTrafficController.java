@@ -80,7 +80,6 @@ public class XpaTrafficController implements XpaInterface, Runnable {
      * @param m     the message to forward
      * @param notMe registered listener not to forward the message to
      */
-    @SuppressWarnings("unchecked")
     protected void notifyMessage(XpaMessage m, XpaListener notMe) {
         // make a copy of the listener vector to synchronized not needed for transmit
         ArrayList<XpaListener> v;
@@ -104,7 +103,6 @@ public class XpaTrafficController implements XpaInterface, Runnable {
 
     XpaListener lastSender = null;
 
-    @SuppressWarnings("unchecked")
     protected void notifyReply(XpaMessage r) {
         // make a copy of the listener vector to synchronized (not needed for transmit?)
         ArrayList<XpaListener> v;
@@ -207,19 +205,6 @@ public class XpaTrafficController implements XpaInterface, Runnable {
         controller = null;
     }
 
-    /**
-     * Static function returning the XpaTrafficController instance to use.
-     *
-     * @return The registered XpaTrafficController instance for general use, if
-     *         need be creating one.
-     * @deprecated since 4.3.6
-     */
-    @Deprecated
-    static public XpaTrafficController instance() {
-        log.error("Deprecated instance method called");
-        return null;
-    }
-
     // data members to hold the streams
     DataInputStream istream = null;
     OutputStream ostream = null;
@@ -261,16 +246,16 @@ public class XpaTrafficController implements XpaInterface, Runnable {
         }
         {
             final XpaMessage thisMsg = msg;
-            final XpaTrafficController thisTC = this;
+            final XpaTrafficController thisTc = this;
             // return a notification via the queue to ensure end
             Runnable r = new Runnable() {
                 XpaMessage msgForLater = thisMsg;
-                XpaTrafficController myTC = thisTC;
+                XpaTrafficController myTc = thisTc;
 
                 @Override
                 public void run() {
                     log.debug("Delayed notify starts");
-                    myTC.notifyReply(msgForLater);
+                    myTc.notifyReply(msgForLater);
                 }
             };
             javax.swing.SwingUtilities.invokeLater(r);

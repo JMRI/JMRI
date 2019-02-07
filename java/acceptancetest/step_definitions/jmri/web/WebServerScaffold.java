@@ -24,13 +24,14 @@ public class WebServerScaffold implements En {
         Before(tags, () -> {
             jmri.util.JUnitUtil.resetProfileManager();
             jmri.util.JUnitUtil.initShutDownManager();
+            jmri.util.JUnitUtil.initConnectionConfigManager();
             jmri.util.JUnitUtil.initDebugPowerManager();
             server = new WebServer(); // a webserver using default preferences.
             server.start();
             jmri.util.JUnitUtil.waitFor(() -> {
                 return server.isStarted();
             }, "Server Failed to Start in time");
-            jmri.util.JUnitOperationsUtil.resetOperationsManager();
+            jmri.util.JUnitOperationsUtil.setupOperationsTests();
         });
 
         After(tags, () -> {

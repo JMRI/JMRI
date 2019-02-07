@@ -114,6 +114,28 @@
           <text>  </text>
         </label>
       </column>
+      <column>
+        <display item="FX7 Effect Selection"/>
+        <display item="FX7 Phase Selection"/>
+        <display item="FX7 Grade Crossing Logic"/>
+        <display item="FX7 Rule 17 Mode"/>
+        <display item="FX7 Light Type"/>
+        <display item="FX7 Forward Directional Control" format="checkbox"/>
+        <display item="FX7 Reverse Directional Control" format="checkbox"/>
+        <label>
+          <text> </text>
+        </label>
+        <display item="FX8 Effect Selection"/>
+        <display item="FX8 Phase Selection"/>
+        <display item="FX8 Grade Crossing Logic"/>
+        <display item="FX8 Rule 17 Mode"/>
+        <display item="FX8 Light Type"/>
+        <display item="FX8 Forward Directional Control" format="checkbox"/>
+        <display item="FX8 Reverse Directional Control" format="checkbox"/>
+        <label>
+          <text> </text>
+        </label>
+      </column>
     </row>
     <separator/>
     <row>

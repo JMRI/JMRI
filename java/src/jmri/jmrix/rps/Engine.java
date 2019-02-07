@@ -103,7 +103,7 @@ public class Engine implements ReadingListener {
     }
 
     /**
-     * Get a particular reciever by address (starting at 1)
+     * Get a particular receiver by address (starting at 1)
      */
     public void setReceiver(int address, Receiver receiver) {
         if (receivers == null) {
@@ -167,7 +167,7 @@ public class Engine implements ReadingListener {
 
             Point3d p = getReceiverPosition(i);
             if (p != null) {
-                receivers[i].setLastTime((int) r.getValue(i));  // recievers numbered from 1
+                receivers[i].setLastTime((int) r.getValue(i));  // receivers numbered from 1
                 log.debug("    " + i + "th value min " + receivers[i].getMinTime() + " < time "
                         + r.getValue(i) + " < max "
                         + receivers[i].getMaxTime() + " at " + p);

@@ -12,7 +12,6 @@ import org.openlcb.EventID;
 import org.openlcb.EventState;
 import org.openlcb.Message;
 import org.openlcb.NodeID;
-import org.openlcb.OlcbInterface;
 import org.openlcb.ProducerConsumerEventReportMessage;
 import org.openlcb.IdentifyConsumersMessage;
 import org.openlcb.ConsumerIdentifiedMessage;
@@ -23,8 +22,10 @@ import org.openlcb.IdentifyEventsMessage;
 import org.jdom2.Element;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -35,6 +36,8 @@ import org.junit.Test;
  * @author   Bob Jacobsen Copyright (C) 2018
  */
 public class OlcbSignalMastXmlTest {
+        
+    static OlcbSystemConnectionMemo memo;
 
     @Test
     public void testCtor(){
@@ -43,7 +46,7 @@ public class OlcbSignalMastXmlTest {
 
     @Test
     public void testStore(){
-        OlcbSignalMast t = new OlcbSignalMast("MF$olm:AAR-1946:PL-1-high-abs(1)");
+        OlcbSignalMast t = new OlcbSignalMast("MF$olm:AAR-1946:PL-1-high-abs($1)");
         t.setLitEventId("1.2.3.4.5.6.7.1");
         t.setNotLitEventId("1.2.3.4.5.6.7.2");
         t.setHeldEventId("1.2.3.4.5.6.7.3");
@@ -58,29 +61,33 @@ public class OlcbSignalMastXmlTest {
         Element e = x.store(t);
         Assert.assertNotNull("Element", e);
         
-        Assert.assertEquals("x0102030405060701", e.getChild("lit").getChild("lit").getValue());
-        Assert.assertEquals("x0102030405060702", e.getChild("lit").getChild("notlit").getValue());
-        Assert.assertEquals("x0102030405060703", e.getChild("held").getChild("held").getValue());
-        Assert.assertEquals("x0102030405060704", e.getChild("held").getChild("notheld").getValue());
+        Assert.assertEquals("1.2.3.4.5.6.7.1", e.getChild("lit").getChild("lit").getValue());
+        Assert.assertEquals("1.2.3.4.5.6.7.2", e.getChild("lit").getChild("notlit").getValue());
+        Assert.assertEquals("1.2.3.4.5.6.7.3", e.getChild("held").getChild("held").getValue());
+        Assert.assertEquals("1.2.3.4.5.6.7.4", e.getChild("held").getChild("notheld").getValue());
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        JUnitUtil.setUp();
-
-        Connection connection = new AbstractConnection() {
-            @Override
-            public void put(Message msg, Connection sender) {
-            }
-        };
-
-        OlcbSystemConnectionMemo memo = OlcbTestInterface.createForLegacyTests();
-        //memo.setInterface(new OlcbInterface(new NodeID(new byte[]{1, 0, 0, 0, 0, 0}), connection));
     }
 
     @After
     public void tearDown() {
+    }
+
+    @BeforeClass
+    public static void preClassInit() {
+        JUnitUtil.setUp();
+        memo = OlcbTestInterface.createForLegacyTests();
+    }
+
+    @AfterClass
+    public static void postClassTearDown() {
+        if(memo != null && memo.getInterface() !=null ) {
+           memo.getInterface().dispose();
+        }
+        memo = null;
         JUnitUtil.tearDown();
     }
 

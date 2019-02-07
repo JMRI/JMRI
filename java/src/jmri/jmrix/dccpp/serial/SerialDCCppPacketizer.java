@@ -3,14 +3,19 @@
  */
 package jmri.jmrix.dccpp.serial;
 
-import jmri.jmrix.dccpp.DCCppPacketizer;
+import java.util.concurrent.DelayQueue;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import jmri.jmrix.dccpp.DCCppListener;
+import jmri.jmrix.dccpp.DCCppMessage;
+import jmri.jmrix.dccpp.DCCppPacketizer;
+
 /**
- * This is an extention of the DCCppPacketizer to handle the device specific
+ * This is an extension of the DCCppPacketizer to handle the device specific
  * requirements of the DCC++.
- * <P>
+ * <p>
  * In particular, SerialDCCppPacketizer adds functions to add and remove the
  * {@literal "<" and ">"} bytes that appear around any message read in.
  *
@@ -18,14 +23,25 @@ import org.slf4j.LoggerFactory;
  * a protocol thing, not an interface implementation thing. We'll come back to
  * that later.
  *
+ * What is however interface specific is the background refresh of functions.
+ * DCC++ sends the DCC commands exactly once. A background thread will
+ * repeat the last seen function commands to compensate for any momentary
+ * power loss or to recover from power off / power on events. It only makes
+ * sense to do this on the actual serial interface as it will be transparent for
+ * the
+ * network clients.
+ *
  * @author Paul Bender Copyright (C) 2005
  * @author Mark Underwood Copyright (C) 2015
+ * @author Costin Grigoras Copyright (C) 2018
  *
- * Based on LIUSBXNetPacketizer by Paul Bender
+ *         Based on LIUSBXNetPacketizer by Paul Bender
  */
 public class SerialDCCppPacketizer extends DCCppPacketizer {
 
-    public SerialDCCppPacketizer(jmri.jmrix.dccpp.DCCppCommandStation pCommandStation) {
+    final DelayQueue<DCCppMessage> resendFunctions = new DelayQueue<>();
+
+    public SerialDCCppPacketizer(final jmri.jmrix.dccpp.DCCppCommandStation pCommandStation) {
         super(pCommandStation);
         log.debug("Loading Serial Extention to DCCppPacketizer");
     }
@@ -38,13 +54,83 @@ public class SerialDCCppPacketizer extends DCCppPacketizer {
      * @return Number of bytes
      */
     @Override
-    protected int lengthOfByteStream(jmri.jmrix.AbstractMRMessage m) {
-        int len = m.getNumDataElements() + 2;
+    protected int lengthOfByteStream(final jmri.jmrix.AbstractMRMessage m) {
+        final int len = m.getNumDataElements() + 2;
         return len;
     }
 
+    /**
+     * this is the background thread that periodically refreshes the last known
+     * function settings
+     */
+    private Thread backgroundRefresh = null;
+
+    private final class RefreshThread extends Thread {
+        public RefreshThread() {
+            setDaemon(true);
+            setPriority(Thread.MIN_PRIORITY);
+            setName("SerialDCCppPacketizer.bkg_refresh");
+        }
+
+        @Override
+        public void run() {
+            while (true) {
+                try {
+                    final DCCppMessage message = resendFunctions.take();
+
+                    if (message != null) {
+                        message.setRetries(0);
+                        sendDCCppMessage(message, null);
+
+                        // At 115200 baud only ~1k messages/s can be sent.
+                        // The limit is however how many messages DCC++ BaseStation can process.
+                        // At more than 25Hz random functions get activated and replies go missing.
+                        // Further on, reading CVs on the programming track is much slower.
+                        // The lowest common denominator between all modes is 4Hz, at this rate everything seems to work fine.
+                        sleep(250);
+                    }
+
+                    setName("SerialDCCppPacketizer.bkg_refresh (" + resendFunctions.size() + " msg)");
+                } catch (final InterruptedException e) {
+                    // should exit if interrupted
+                }
+            }
+        }
+    }
+
+    private void enqueueFunction(final DCCppMessage m) {
+        /**
+         * Set again the same group function value 250ms later (or more,
+         * depending on the queue depth; limited to 1kHz of calls)
+         */
+        m.delayFor(250);
+        resendFunctions.offer(m);
+
+        synchronized (this) {
+            if (backgroundRefresh == null) {
+                backgroundRefresh = new RefreshThread();
+                backgroundRefresh.start();
+            }
+        }
+    }
+
+    @Override
+    public void sendDCCppMessage(final DCCppMessage m, final DCCppListener reply) {
+        final boolean isFunction = m.isFunctionMessage();
+
+        /**
+         * Remove a previous value for the same function (DCC address + function
+         * group) based on
+         * {@link jmri.jmrix.dccpp.DCCppMessage#equals(DCCppMessage)}
+         */
+        if (isFunction)
+            resendFunctions.remove(m);
+
+        super.sendDCCppMessage(m, reply);
+
+        if (isFunction)
+            enqueueFunction(m);
+    }
 
     private final static Logger log = LoggerFactory.getLogger(SerialDCCppPacketizer.class);
 }
-
-

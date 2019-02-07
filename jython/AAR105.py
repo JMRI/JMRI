@@ -39,6 +39,7 @@
 # and everything will slow right down....
 
 import java
+import java.beans
 import jmri
 
 #

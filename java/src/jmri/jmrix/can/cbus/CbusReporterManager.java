@@ -13,17 +13,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Manage the CBUS-specific Reporter implementation.
  * <p>
- * System names are "MRnnn", where nnn is the reporter number without padding.
- * <hr>
- * This file is part of JMRI.
- * <P>
- * JMRI is free software; you can redistribute it and/or modify it under the
- * terms of version 2 of the GNU General Public License as published by the Free
- * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * System names are "MRnnn", where M is the user-configurable system prefix,
+ * nnn is the reporter number without padding.
  *
  * @author Mark Riddoch Copyright (C) 2015
  */
@@ -98,9 +89,7 @@ public class CbusReporterManager extends AbstractReporterManager implements
     }
 
     /**
-     * Provide a manager-specific tool tip for the Add new item beantable pane.
-     *
-     * @return the tool tip
+     * {@inheritDoc}
      */
     @Override
     public String getEntryToolTip() {
@@ -116,11 +105,11 @@ public class CbusReporterManager extends AbstractReporterManager implements
     @Override
     public void message(CanMessage m) {
         // TODO Auto-generated method stub
-        log.debug("CbusReporterManager: handle message: {}", m.getOpCode());
         if (m.getOpCode() != CbusConstants.CBUS_DDES) {
             return;
         }
         // message type OK, check address
+        log.debug("CbusReporterManager: handle message: {}", m.getOpCode());
         int addr = CbusMessage.getNodeNumber(m);
 
         CbusReporter r = (CbusReporter) provideReporter("MR" + addr);
@@ -136,11 +125,11 @@ public class CbusReporterManager extends AbstractReporterManager implements
     @Override
     public void reply(CanReply m) {
         // TODO Auto-generated method stub
-        log.debug("CbusReporterManager: handle reply: {} node: {}", m.getOpCode(), CbusMessage.getNodeNumber(m));
         if (m.getOpCode() != CbusConstants.CBUS_DDES || m.getOpCode() != CbusConstants.CBUS_ACDAT) {
             return;
         }
         // message type OK, check address
+        log.debug("CbusReporterManager: handle reply: {} node: {}", m.getOpCode(), CbusMessage.getNodeNumber(m));
         int addr = m.getElement(1) * 256 + m.getElement(2);
 
         CbusReporter r = (CbusReporter) provideReporter("MR" + addr);

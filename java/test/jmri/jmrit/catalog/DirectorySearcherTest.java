@@ -16,6 +16,7 @@ public class DirectorySearcherTest {
     public void testInstance() {
         DirectorySearcher t = DirectorySearcher.instance();
         Assert.assertNotNull("exists",t);
+        t.close();
     }
 
     // The minimal setup for log4J

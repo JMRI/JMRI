@@ -4,6 +4,7 @@ package jmri.jmrix.loconet.locomon;
 import java.awt.GraphicsEnvironment;
 import jmri.jmrix.AbstractMonPaneScaffold;
 import jmri.jmrix.loconet.LocoNetMessage;
+import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import org.junit.After;
@@ -103,13 +104,35 @@ public class LocoMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
          f.dispose();
     }
 
-    
+    jmri.TurnoutManager l;
+    jmri.SensorManager s;
+    jmri.ReporterManager r;
+
     // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initDefaultUserMessagePreferences();
+
+        // prepare an interface, register
+        LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo("L", "LocoNet");
+        jmri.jmrix.loconet.LocoNetInterfaceScaffold lnis = new jmri.jmrix.loconet.LocoNetInterfaceScaffold(memo);
+        // create and register the manager object
+        jmri.util.JUnitUtil.initInternalTurnoutManager();
+        l = new jmri.jmrix.loconet.LnTurnoutManager(lnis, lnis, "L", false);
+        jmri.InstanceManager.setTurnoutManager(l);
+
+        jmri.util.JUnitUtil.initInternalSensorManager();
+        s = new jmri.jmrix.loconet.LnSensorManager(lnis, "L");
+        jmri.InstanceManager.setSensorManager(s);
+
+        jmri.util.JUnitUtil.initReporterManager();
+        r = new jmri.jmrix.loconet.LnReporterManager(lnis, "L");
+        jmri.InstanceManager.setReporterManager(r);
+
         // pane for AbstractMonFrameTestBase, panel for JmriPanelTest
         panel = pane = new LocoMonPane();
         helpTarget = "package.jmri.jmrix.loconet.locomon.LocoMonFrame";
@@ -121,6 +144,11 @@ public class LocoMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
     public void tearDown() {
         pane.dispose();
         
-        apps.tests.Log4JFixture.tearDown();
+        l.dispose();
+        s.dispose();
+        r.dispose();
+
+        jmri.util.JUnitUtil.tearDown();
     }
+
 }

@@ -1,5 +1,7 @@
 # Test the RosterCsvExport.py script
 
+import java
+import java.awt
 import java.awt.GraphicsEnvironment
 
 if (java.awt.GraphicsEnvironment.isHeadless()) :

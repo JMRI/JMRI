@@ -1,14 +1,17 @@
 package jmri.jmrix.dccpp;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
+import org.junit.*;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017	
  */
 public class DCCppMultiMeterTest extends jmri.implementation.AbstractMultiMeterTestBase{
+    @Test
+    public void testMethods() {
+        Assert.assertEquals("DCC++", mm.getHardwareMeterName());
+    }
 
     @Override
     @Before
@@ -21,11 +24,6 @@ public class DCCppMultiMeterTest extends jmri.implementation.AbstractMultiMeterT
         mm = new DCCppMultiMeter(memo);
     }
 
-    @After
-    public void tearDown() {
-        mm.dispose();
-        JUnitUtil.tearDown();
-    }
 
     // private final static Logger log = LoggerFactory.getLogger(DCCppMultiMeterTest.class);
 

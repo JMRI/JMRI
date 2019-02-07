@@ -7,10 +7,7 @@ import javax.swing.JPanel;
 import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
 import jmri.jmrit.catalog.NamedIcon;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * LinkingLabelTest.java
@@ -23,6 +20,7 @@ public class LinkingLabelTest extends PositionableTestBase {
 
     private LinkingLabel to = null;
 
+    @Override
     @Test
     public void testShow() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -61,16 +59,34 @@ public class LinkingLabelTest extends PositionableTestBase {
 
     }
 
+    @Test
+    public void testGetAndSetURL(){
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        LinkingLabel l = (LinkingLabel) p;
+        Assert.assertEquals("URL before set","http://jmri.org",l.getURL());
+        l.setULRL("bar");
+        Assert.assertEquals("URL after set","bar",l.getURL());
+    }
+
     // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
         if (!GraphicsEnvironment.isHeadless()) {
            editor = new jmri.jmrit.display.panelEditor.PanelEditor("LinkingLabel Test Panel");
            p = to = new LinkingLabel("JMRI Link", editor, "http://jmri.org");
            NamedIcon icon = new NamedIcon("resources/icons/redTransparentBox.gif", "box"); // 13x13
            to.setIcon(icon);
         }
+    }
+    
+    @Override
+    @After
+    public void tearDown() {
+        super.tearDown();
+        to = null;
+        JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(TurnoutIconTest.class);

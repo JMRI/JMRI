@@ -3,6 +3,7 @@ package jmri.jmrix.can;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import javax.annotation.Nonnull;
 import jmri.jmrix.AbstractMRReply;
+import jmri.util.StringUtil;
 
 /**
  * Base class for replies in a CANbus based message/reply protocol.
@@ -45,9 +46,17 @@ public class CanReply extends AbstractMRReply implements CanMutableFrame {
             _dataChars[i] = d[i];
         }
     }
+    
+    // create a new one from an array, with header
+    public CanReply(int[] d, int header) {
+        this(header);
+        _nDataChars = (d.length <= 8) ? d.length : 8;
+        for (int i = 0; i < _nDataChars; i++) {
+            _dataChars[i] = d[i];
+        }
+    }
 
     // copy one
-    @SuppressWarnings("null")
     public CanReply(@Nonnull CanReply m) {
         _header = m._header;
         _isExtended = m._isExtended;
@@ -61,7 +70,6 @@ public class CanReply extends AbstractMRReply implements CanMutableFrame {
     }
 
     // copy type
-    @SuppressWarnings("null")
     public CanReply(@Nonnull CanMessage m) {
         _header = m._header;
         _isExtended = m._isExtended;
@@ -177,6 +185,35 @@ public class CanReply extends AbstractMRReply implements CanMutableFrame {
     @Override
     public void setRtr(boolean b) {
         _isRtr = b;
+    }
+
+    /**
+     * {@inheritDoc}
+     * default toString does not contain the header
+     * this format matches @CanMessage
+     */
+    @Override
+    public String toString() {
+        String s = String.format("[%x] ", _header);
+        for (int i = 0; i < _nDataChars; i++) {
+            if (i != 0) {
+                s += " ";
+            }
+            s = StringUtil.appendTwoHexFromInt(_dataChars[i] & 255, s);
+        }
+        return s;
+    }
+
+    @Override
+    public String toMonitorString() {
+        StringBuffer buf = new StringBuffer();
+        buf.append("(" + Integer.toHexString(getHeader())
+                + (isExtended() ? " ext)" : ")"));
+        for (int i = 0; i < getNumDataElements(); i++) 
+        {
+            buf.append(" " + jmri.util.StringUtil.twoHexFromInt(getElement(i)));
+        }
+	return buf.toString();
     }
 
     // contents (package access)

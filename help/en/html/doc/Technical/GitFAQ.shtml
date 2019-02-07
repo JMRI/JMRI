@@ -26,11 +26,11 @@
   <link rel="stylesheet" type="text/css" href="/web/css/faq.css"
   media="screen">
   <!-- /FAQ-Head -->
-</head><!--#include virtual="/Header" -->
+</head><!--#include virtual="/Header.shtml" -->
 
 <body>
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+    <!--#include virtual="Sidebar.shtml" -->
 
     <div id="mainContent">
       <h1>JMRI Code: Git FAQ</h1>
@@ -1173,7 +1173,7 @@
           delete it (if it has somebody's name, you might want to
           add that to the copyright notice if there is one.)</p>
         </dd>
-      </dl><!--#include virtual="/Footer" -->
+      </dl><!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
   <!-- FAQ-Tail -->

@@ -45,7 +45,8 @@ import jmri.jmrit.beantable.beanedit.BlockEditAction;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.JmriJFrame;
 import jmri.util.MathUtil;
-import jmri.util.swing.ButtonSwatchColorChooserPanel;
+import jmri.util.swing.SplitButtonColorChooserPanel;
+import jmri.util.swing.JmriColorChooser;
 import jmri.util.swing.JmriBeanComboBox;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -121,7 +122,6 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     //constants
     public static final int OCCUPIED = Block.OCCUPIED;
     public static final int EMPTY = Block.UNOCCUPIED;
-    public static final int UNKNOWN = Sensor.UNKNOWN;  //must be a different bit
     //operational instance variables (not saved to disk)
     private int useCount = 0;
     private NamedBeanHandle<Sensor> occupancyNamedSensor = null;
@@ -160,8 +160,13 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     }
 
     /*
-     * Completes the creation of a LayoutBlock object by adding a Block to it
+     * Completes the creation of a LayoutBlock object by adding a Block to it.
+     *
+     * The block create process takes into account that the _bean register
+     * process considers IB1 and IB01 to be the same name which results in a
+     * silent failure.
      */
+    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations, generics
     protected void initializeLayoutBlock() {
         //get/create a Block object corresponding to this LayoutBlock
         block = null;   // assume failure (pessimist!)
@@ -169,35 +174,50 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
         if ((userName != null) && !userName.isEmpty()) {
             block = InstanceManager.getDefault(BlockManager.class).getByUserName(userName);
         }
-        if (block == null) {
-            //not found, create a new Block
-            String s = "";
 
-            //create a unique system name
-            for (boolean found = true; found;) {
+        if (block == null) {
+            // Not found, create a new Block
+            BlockManager bm = InstanceManager.getDefault(BlockManager.class);
+            String s = "";
+            while (true) {
+                if (jmriblknum > 50000) {
+                    throw new IndexOutOfBoundsException("Run away prevented while trying to create a block");
+                }
                 s = "IB" + jmriblknum;
                 jmriblknum++;
-                block = InstanceManager.getDefault(BlockManager.class).getBySystemName(s);
-                if (block == null) {
-                    found = false;
+
+                // Find an unused system name
+                block = bm.getBySystemName(s);
+                if (block != null) {
+                    log.debug("System name is already used: {}", s);
+                    continue;
                 }
+
+                // Create a new block.  User name is null to prevent user name checking.
+                block = bm.createNewBlock(s, null);
+                if (block == null) {
+                    log.debug("Null block returned: {}", s);
+                    continue;
+                }
+
+                // Verify registration
+                if (bm.getSystemNameList().contains(s)) {
+                    log.debug("Block is valid: {}", s);
+                    break;
+                }
+                log.debug("Registration failed: {}", s);
             }
-            block = InstanceManager.getDefault(BlockManager.class).createNewBlock(s, getUserName());
-            if (block == null) {
-                log.error("Failure to get/create Block: " + s + "," + getUserName());
-            }
+            block.setUserName(getUserName());
         }
 
-        if (block != null) {
-            //attach a listener for changes in the Block
-            mBlockListener = (PropertyChangeEvent e) -> {
-                handleBlockChange(e);
-            };
-            block.addPropertyChangeListener(mBlockListener,
-                    getUserName(), "Layout Block:" + getUserName());
-            if (occupancyNamedSensor != null) {
-                block.setNamedSensor(occupancyNamedSensor);
-            }
+        //attach a listener for changes in the Block
+        mBlockListener = (PropertyChangeEvent e) -> {
+            handleBlockChange(e);
+        };
+        block.addPropertyChangeListener(mBlockListener,
+                getUserName(), "Layout Block:" + getUserName());
+        if (occupancyNamedSensor != null) {
+            block.setNamedSensor(occupancyNamedSensor);
         }
     }
 
@@ -213,12 +233,6 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
         });
     }
 
-    // this should only be used for debugging...
-    @Override
-    public String toString() {
-        return "LayoutBlock " + getDisplayName();
-    }
-
     /*
      * Accessor methods
      */
@@ -232,6 +246,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
 
     public void setBlockTrackColor(Color color) {
         blockTrackColor = color;
+        JmriColorChooser.addRecentColor(color);
     }
 
     public Color getBlockOccupiedColor() {
@@ -240,6 +255,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
 
     public void setBlockOccupiedColor(Color color) {
         blockOccupiedColor = color;
+        JmriColorChooser.addRecentColor(color);
     }
 
     public Color getBlockExtraColor() {
@@ -248,6 +264,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
 
     public void setBlockExtraColor(Color color) {
         blockExtraColor = color;
+        JmriColorChooser.addRecentColor(color);
     }
 
     //TODO: @Deprecated // Java standard pattern for boolean getters is "UseExtraColor()"
@@ -1119,19 +1136,19 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
 
             trackColorChooser = new JColorChooser(blockTrackColor);
             trackColorChooser.setPreviewPanel(new JPanel()); // remove the preview panel
-            AbstractColorChooserPanel trackColorPanels[] = {new ButtonSwatchColorChooserPanel()};
+            AbstractColorChooserPanel trackColorPanels[] = {new SplitButtonColorChooserPanel()};
             trackColorChooser.setChooserPanels(trackColorPanels);
             layout.addItem(new BeanEditItem(trackColorChooser, Bundle.getMessage("TrackColor"), Bundle.getMessage("TrackColorHint")));
 
             occupiedColorChooser = new JColorChooser(blockOccupiedColor);
             occupiedColorChooser.setPreviewPanel(new JPanel()); // remove the preview panel
-            AbstractColorChooserPanel occupiedColorPanels[] = {new ButtonSwatchColorChooserPanel()};
+            AbstractColorChooserPanel occupiedColorPanels[] = {new SplitButtonColorChooserPanel()};
             occupiedColorChooser.setChooserPanels(occupiedColorPanels);
             layout.addItem(new BeanEditItem(occupiedColorChooser, Bundle.getMessage("OccupiedColor"), Bundle.getMessage("OccupiedColorHint")));
 
             extraColorChooser = new JColorChooser(blockExtraColor);
             extraColorChooser.setPreviewPanel(new JPanel()); // remove the preview panel
-            AbstractColorChooserPanel extraColorPanels[] = {new ButtonSwatchColorChooserPanel()};
+            AbstractColorChooserPanel extraColorPanels[] = {new SplitButtonColorChooserPanel()};
             extraColorChooser.setChooserPanels(extraColorPanels);
             layout.addItem(new BeanEditItem(extraColorChooser, Bundle.getMessage("ExtraColor"), Bundle.getMessage("ExtraColorHint")));
 
@@ -1156,18 +1173,21 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                     blockTrackColor = trackColorChooser.getColor();
                     if (oldColor != blockTrackColor) {
                         needsRedraw = true;
+                        JmriColorChooser.addRecentColor(blockTrackColor);
                     }
                     //check if occupied color changed
                     oldColor = blockOccupiedColor;
                     blockOccupiedColor = occupiedColorChooser.getColor();
                     if (oldColor != blockOccupiedColor) {
                         needsRedraw = true;
+                        JmriColorChooser.addRecentColor(blockOccupiedColor);
                     }
                     //check if extra color changed
                     oldColor = blockExtraColor;
                     blockExtraColor = extraColorChooser.getColor();
                     if (oldColor != blockExtraColor) {
                         needsRedraw = true;
+                        JmriColorChooser.addRecentColor(blockExtraColor);
                     }
                     //check if Memory changed
                     String newName = memoryComboBox.getDisplayName();
@@ -1903,7 +1923,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
         //Work our way backward through the list of neighbours
         //We need to work out which routes to remove first.
         //here we simply remove the routes which are advertised from the removed neighbour
-        List<Routes> tmpBlock = removeRouteRecievedFromNeighbour(removedBlock);
+        List<Routes> tmpBlock = removeRouteReceivedFromNeighbour(removedBlock);
 
         for (int i = neighbours.size() - 1; i > -1; i--) {
             //Use to check against direction but don't now.
@@ -1993,7 +2013,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
         notifyNeighboursOfRemoval(routesToRemove, srcblk);
     }
 
-    private List<Routes> removeRouteRecievedFromNeighbour(Block removedBlock) {
+    private List<Routes> removeRouteReceivedFromNeighbour(Block removedBlock) {
         List<Routes> tmpBlock = new ArrayList<>();
 
         //here we simply remove the routes which are advertised from the removed neighbour
@@ -2074,7 +2094,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
             neighLBlock.removePropertyChangeListener(this);
 
             //This should remove routes learned from our neighbour
-            List<Routes> tmpBlock = removeRouteRecievedFromNeighbour(neighBlock);
+            List<Routes> tmpBlock = removeRouteReceivedFromNeighbour(neighBlock);
 
             notifyNeighboursOfRemoval(tmpBlock, neighBlock);
 
@@ -3162,10 +3182,8 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
             LayoutBlock srcEvent = (LayoutBlock) e.getSource();
 
             if (e.getPropertyName().equals("NewRoute")) {
-                LayoutBlock lbkblock = (LayoutBlock) e.getNewValue();
-
                 if (enableUpdateRouteLogging) {
-                    log.info("==Event type {} New {}", e.getPropertyName(), lbkblock.getDisplayName());
+                    log.info("==Event type {} New {}", e.getPropertyName(), ((LayoutBlock) e.getNewValue()).getDisplayName());
                 }
             } else if (e.getPropertyName().equals("through-path-added")) {
                 if (enableUpdateRouteLogging) {
@@ -3396,7 +3414,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
            which would end up be rejected*/
 
         actedUponUpdates.add(update.getPacketId());
-        adj.addPacketRecievedFromNeighbour(update.getPacketId());
+        adj.addPacketReceivedFromNeighbour(update.getPacketId());
 
         int hopCount = update.getHopCount();
         int packetmetric = update.getMetric();
@@ -3920,8 +3938,8 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     /**
      * Get the flow of traffic to and from neighbouring block at index i RXTX -
      * Means Traffic can flow both ways between the blocks RXONLY - Means we can
-     * only recieve traffic from our neighbour, we can not send traffic to it
-     * TXONLY - Means we do not recieve traffic from our neighbour, but can send
+     * only receive traffic from our neighbour, we can not send traffic to it
+     * TXONLY - Means we do not receive traffic from our neighbour, but can send
      * traffic to it.
      *
      * @param i index in neighbors
@@ -4110,7 +4128,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
             return actedUponUpdates.contains(packetID);
         }
 
-        void addPacketRecievedFromNeighbour(Integer packetID) {
+        void addPacketReceivedFromNeighbour(Integer packetID) {
             actedUponUpdates.add(packetID);
             if (actedUponUpdates.size() > 500) {
                 actedUponUpdates.subList(0, 250).clear();
@@ -4576,7 +4594,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                         _turnouts.put(lt.getTurnout(), turnouts.get(i).getExpectedState());
                         lt.getTurnout().addPropertyChangeListener(this, lt.getTurnoutName(), "Layout Block Routing");
                     } else {
-                        log.error("{} has no physical turnout allocated", lt);
+                        log.error("{} has no physical turnout allocated, block = {}", lt, block.getDisplayName());
                     }
                 }
             }

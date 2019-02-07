@@ -35,10 +35,10 @@ public class NetworkDriverAdapter extends RfidNetworkPortController {
         option2Name = "Concentrator-Range"; // NOI18N
         option3Name = "Protocol"; // NOI18N
         option4Name = "Device"; // NOI18N
-        options.put(option1Name, new Option("Adapter:", new String[]{"Generic Stand-alone", "MERG Concentrator"}, false)); // NOI18N
-        options.put(option2Name, new Option("Concentrator range:", new String[]{"A-H", "I-P"}, false)); // NOI18N
-        options.put(option3Name, new Option("Protocol:", new String[]{"CORE-ID", "Olimex", "Parallax", "SeeedStudio"}, false)); // NOI18N
-        options.put(option4Name, new Option("Device Type:", new String[] {"MOD-RFID125", "MOD-RFID1356MIFARE"}, false)); // NOI18N
+        options.put(option1Name, new Option(Bundle.getMessage("ConnectionAdapter"), new String[]{"Generic Stand-alone", "MERG Concentrator"}, false)); // NOI18N
+        options.put(option2Name, new Option(Bundle.getMessage("ConnectionConcentratorRange"), new String[]{"A-H", "I-P"}, false)); // NOI18N
+        options.put(option3Name, new Option(Bundle.getMessage("ConnectionProtocol"), new String[]{"CORE-ID", "Olimex", "Parallax", "SeeedStudio"}, false)); // NOI18N
+        options.put(option4Name, new Option(Bundle.getMessage("ConnectionDeviceType"), new String[] {"MOD-RFID125", "MOD-RFID1356MIFARE"}, false)); // NOI18N
         setManufacturer(jmri.jmrix.rfid.RfidConnectionTypeList.RFID);
     }
 

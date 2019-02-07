@@ -35,8 +35,6 @@ import jmri.jmrit.throttle.StopAllButton;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.zeroconf.ZeroConfService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * UserInterface.java Create a window for WiThrottle information and
@@ -48,8 +46,6 @@ import org.slf4j.LoggerFactory;
  * @author Paul Bender Copyright (C) 2018
  */
 public class UserInterface extends JmriJFrame implements DeviceListener, RosterGroupSelector {
-
-    private final static Logger log = LoggerFactory.getLogger(UserInterface.class);
 
     JMenuBar menuBar;
     JMenuItem serverOnOff;
@@ -69,7 +65,6 @@ public class UserInterface extends JmriJFrame implements DeviceListener, RosterG
     private FacelessServer facelessServer;
 
     // Server iVars
-    int port;
     boolean isListen;
     private final ArrayList<DeviceServer> deviceList = new ArrayList<>();
 
@@ -81,10 +76,6 @@ public class UserInterface extends JmriJFrame implements DeviceListener, RosterG
                 return InstanceManager.setDefault(DeviceManager.class, new FacelessServer());
         });
 
-        port = facelessServer.getPort();
-
-        addIPAddressesToUI();
-
         // add ourselves as device listeners for any existing devices
         for(DeviceServer ds:facelessServer.getDeviceList()) {
            deviceList.add(ds);
@@ -93,11 +84,19 @@ public class UserInterface extends JmriJFrame implements DeviceListener, RosterG
 
         facelessServer.addDeviceListener(this);
 
+        //update the server with the currently selected roster group
+        facelessServer.setSelectedRosterGroup(rosterGroupSelector.getSelectedItem());
+
+        //show all IPv4 addresses in window, for use by manual connections
+        addIPAddressesToUI();
+
         createWindow();
 
     } // End of constructor
 
     private void addIPAddressesToUI() {
+        //get port# directly from prefs
+        int port = InstanceManager.getDefault(WiThrottlePreferences.class).getPort();
         //list the local IPv4 addresses on the UI, for manual connections
         List<InetAddress> has = ZeroConfService.hostAddresses(); //get list of local, non-loopback addresses
         String as = ""; //build multiline string of valid addresses
@@ -119,7 +118,7 @@ public class UserInterface extends JmriJFrame implements DeviceListener, RosterG
         con.weightx = 0.5;
         con.weighty = 0;
 
-        JLabel label = new JLabel(MessageFormat.format(Bundle.getMessage("LabelAdvertising"), new Object[]{DeviceServer.getWiTVersion()}));
+        JLabel label = new JLabel(MessageFormat.format(Bundle.getMessage("LabelListening"), new Object[]{DeviceServer.getWiTVersion()}));
         con.gridx = 0;
         con.gridy = 0;
         con.gridwidth = 2;
@@ -213,7 +212,7 @@ public class UserInterface extends JmriJFrame implements DeviceListener, RosterG
             @Override
             public void actionPerformed(ActionEvent e) {
                 String s = (String) ((JComboBox<String>) e.getSource()).getSelectedItem();
-                userPreferences.addComboBoxLastSelection(rosterGroupSelectorPreferencesName, s);
+                userPreferences.setComboBoxLastSelection(rosterGroupSelectorPreferencesName, s);
                 facelessServer.setSelectedRosterGroup(s);
 //              Send new selected roster group to all devices
                 for (DeviceServer device : deviceList) {
@@ -317,4 +316,5 @@ public class UserInterface extends JmriJFrame implements DeviceListener, RosterG
         return rosterGroupSelector.getSelectedRosterGroup();
     }
 
+    // private final static Logger log = LoggerFactory.getLogger(UserInterface.class);
 }

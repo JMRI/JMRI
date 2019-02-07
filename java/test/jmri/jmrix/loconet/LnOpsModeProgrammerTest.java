@@ -4,45 +4,54 @@ import jmri.ProgListenerScaffold;
 import jmri.ProgrammerException;
 import jmri.ProgrammingMode;
 import jmri.util.JUnitUtil;
-import junit.framework.TestCase;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
-public class LnOpsModeProgrammerTest extends TestCase {
+public class LnOpsModeProgrammerTest extends jmri.AddressedProgrammerTestBase{
 
     LocoNetInterfaceScaffold lnis;
     SlotManager sm;
     LocoNetSystemConnectionMemo memo;
     ProgListenerScaffold pl;
+    LnOpsModeProgrammer lnopsmodeprogrammer;
 
+    @Override
+    @Test
+    public void testGetCanWriteAddress() {
+        Assert.assertFalse("can write address", programmer.getCanWrite("1234"));
+    }    
+
+    @Test
     public void testSetMode() {
-        LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 1, true);
-
         try {
             lnopsmodeprogrammer.setMode(ProgrammingMode.PAGEMODE);
         } catch (IllegalArgumentException e) {
             return;
         }
         Assert.fail("No IllegalArgumentException thrown");
-
     }
 
+    @Test
     public void testGetMode() {
-        LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 1, true);
-
         ProgrammingMode intRet = lnopsmodeprogrammer.getMode();
         Assert.assertEquals("OpsByteMode", ProgrammingMode.OPSBYTEMODE, intRet);
     }
 
-    public void testGetCanRead() {
-        LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 1, true);
+    @Test
+    public void testGetCanReadWithTransponding() {
+        // allow transponding
+        sm.setTranspondingAvailable(true);
+        
+        lnopsmodeprogrammer = new LnOpsModeProgrammer(memo, 1, true);
 
-        Assert.assertEquals("ops mode always can read", true,
+        Assert.assertEquals("ops mode can read with transponding", true,
                 lnopsmodeprogrammer.getCanRead());
     }
 
+    @Test
     public void testSV2DataBytes() {
-        LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 1, true);
-
         LocoNetMessage m = new LocoNetMessage(15);
 
         // check data bytes
@@ -54,9 +63,8 @@ public class LnOpsModeProgrammerTest extends TestCase {
         Assert.assertEquals(0x12, m.getElement(14));
     }
 
+    @Test
     public void testSV2highBits() {
-        LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 1, true);
-
         LocoNetMessage m = new LocoNetMessage(15);
 
         // check high bits
@@ -96,8 +104,9 @@ public class LnOpsModeProgrammerTest extends TestCase {
         Assert.assertEquals(0x01, m.getElement(14));
     }
 
+    @Test
      public void testSOps16001Read() throws ProgrammerException {
-        LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 16001, true);
+        LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(memo, 16001, true);
 
         lnopsmodeprogrammer.readCV("2",pl);
 
@@ -109,9 +118,8 @@ public class LnOpsModeProgrammerTest extends TestCase {
 
      }
 
-      public void testSv1Write() throws ProgrammerException {
-        LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 1, true);
-
+     @Test
+     public void testSv1Write() throws ProgrammerException {
         int testVal = 120;
         lnopsmodeprogrammer.setMode(LnProgrammerManager.LOCONETSV1MODE);
         lnopsmodeprogrammer.writeCV("91",testVal,pl);
@@ -137,8 +145,9 @@ public class LnOpsModeProgrammerTest extends TestCase {
 
      }
 
+     @Test
      public void testBoardRead0() throws ProgrammerException {
-        LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 4, true);
+        lnopsmodeprogrammer = new LnOpsModeProgrammer(memo, 4, true);
 
         lnopsmodeprogrammer.setMode(LnProgrammerManager.LOCONETBDOPSWMODE);
         lnopsmodeprogrammer.readCV("113.6",pl);
@@ -171,8 +180,9 @@ public class LnOpsModeProgrammerTest extends TestCase {
 
      }
 
+     @Test
      public void testBoardRead1() throws ProgrammerException {
-        LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 4, true);
+        lnopsmodeprogrammer = new LnOpsModeProgrammer(memo, 4, true);
 
         lnopsmodeprogrammer.setMode(LnProgrammerManager.LOCONETBDOPSWMODE);
         lnopsmodeprogrammer.readCV("113.6",pl);
@@ -205,8 +215,9 @@ public class LnOpsModeProgrammerTest extends TestCase {
 
      }
 
+     @Test
      public void testBoardReadTimeout() throws ProgrammerException {
-        LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 4, true);
+        lnopsmodeprogrammer = new LnOpsModeProgrammer(memo, 4, true);
 
         lnopsmodeprogrammer.setMode(LnProgrammerManager.LOCONETBDOPSWMODE);
         lnopsmodeprogrammer.readCV("113.6",pl);
@@ -222,9 +233,9 @@ public class LnOpsModeProgrammerTest extends TestCase {
         Assert.assertTrue("Correct thread", pl.wasRightThread());
      }
 
-
+     @Test
      public void testBoardWrite() throws ProgrammerException {
-        LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 4, true);
+        lnopsmodeprogrammer = new LnOpsModeProgrammer(memo, 4, true);
 
         int testVal = 1;
 
@@ -257,8 +268,9 @@ public class LnOpsModeProgrammerTest extends TestCase {
 
      }
 
+     @Test
      public void testBoardWriteTimeout() throws ProgrammerException {
-        LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 4, true);
+        lnopsmodeprogrammer = new LnOpsModeProgrammer(memo, 4, true);
 
         int testVal = 1;
 
@@ -276,8 +288,9 @@ public class LnOpsModeProgrammerTest extends TestCase {
         Assert.assertTrue("Correct thread", pl.wasRightThread());
      }
 
+     @Test
      public void testSv1ARead() throws ProgrammerException {
-        LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 1, true);
+        lnopsmodeprogrammer = new LnOpsModeProgrammer(memo, 1, true);
 
         lnopsmodeprogrammer.setMode(LnProgrammerManager.LOCONETSV1MODE);
         lnopsmodeprogrammer.readCV("83",pl);
@@ -304,12 +317,10 @@ public class LnOpsModeProgrammerTest extends TestCase {
         Assert.assertEquals("Got programming reply", 1, pl.getRcvdInvoked());
         Assert.assertEquals("Reply status OK", 0, pl.getRcvdStatus());
         Assert.assertEquals("Reply value matches", testVal, pl.getRcvdValue());
-
      }
 
+     @Test
      public void testSv1BRead() throws ProgrammerException {
-        LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 1, true);
-
         lnopsmodeprogrammer.setMode(LnProgrammerManager.LOCONETSV1MODE);
         lnopsmodeprogrammer.readCV("83",pl);
 
@@ -331,12 +342,10 @@ public class LnOpsModeProgrammerTest extends TestCase {
         Assert.assertEquals("Got programming reply", 1, pl.getRcvdInvoked());
         Assert.assertEquals("Reply status OK", 0, pl.getRcvdStatus());
         Assert.assertEquals("Reply value matches", testVal, pl.getRcvdValue());
-
      }
 
+     @Test
      public void testSv2Write() throws ProgrammerException {
-        LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 1, true);
-
         lnopsmodeprogrammer.setMode(LnProgrammerManager.LOCONETSV2MODE);
         lnopsmodeprogrammer.writeCV("22",33,pl);
 
@@ -357,12 +366,10 @@ public class LnOpsModeProgrammerTest extends TestCase {
         Assert.assertEquals("still one message sent", 1, lnis.outbound.size());
         Assert.assertEquals("Got programming reply", 1, pl.getRcvdInvoked());
         Assert.assertEquals("Reply status OK", 0, pl.getRcvdStatus());
-
      }
 
+     @Test
      public void testSv2Read() throws ProgrammerException {
-        LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 1, true);
-
         lnopsmodeprogrammer.setMode(LnProgrammerManager.LOCONETSV2MODE);
         lnopsmodeprogrammer.readCV("22",pl);
 
@@ -388,36 +395,96 @@ public class LnOpsModeProgrammerTest extends TestCase {
         Assert.assertEquals("Got programming reply", 1, pl.getRcvdInvoked());
         Assert.assertEquals("Reply status OK", 0, pl.getRcvdStatus());
         Assert.assertEquals("Reply value matches", 130, pl.getRcvdValue());
+     }
+
+     @Test
+     public void testOpsReadDecoderTransponding() throws ProgrammerException {
+        // allow transponding
+        sm.setTranspondingAvailable(true);
+
+        LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(memo, 4, true);
+
+        lnopsmodeprogrammer.setMode(ProgrammingMode.OPSBYTEMODE);
+        lnopsmodeprogrammer.readCV("12", pl);
+
+        // should have written
+        Assert.assertEquals("one message sent", 1, lnis.outbound.size());
+        Assert.assertEquals("No programming reply", 0, pl.getRcvdInvoked());
+
+        Assert.assertEquals("sent", "EF 0E 7C 2F 00 00 04 00 00 0B 00 7F 7F 00", lnis.outbound.get(0).toString());
+
+        // check echo of sent message has no effect
+        LocoNetMessage m = lnis.outbound.get(0);
+        lnopsmodeprogrammer.message(m);
+        Assert.assertEquals("still one message sent", 1, lnis.outbound.size());
+        Assert.assertEquals("No programming reply", 0, pl.getRcvdInvoked());
+
+        // LACK followed by Known-good message in reply
+        m = new LocoNetMessage(new int[]{0xB4, 0x6F, 0x01, 0x25});
+        lnopsmodeprogrammer.message(m);
+        sm.message(m);
+        m = new LocoNetMessage(new int[]{0xE7, 0x0E, 0x7C, 0x2B, 0x00, 0x00, 0x02, 0x47, 0x00, 0x1C, 0x23, 0x7F, 0x7F, 0x3B});
+        lnopsmodeprogrammer.message(m);
+        sm.message(m);
+        JUnitUtil.waitFor(()->{return pl.getRcvdInvoked() == 1;},"getRcvdInvoked not set");
+        Assert.assertEquals("still one message sent", 1, lnis.outbound.size());
+        Assert.assertEquals("Reply status OK", 0, pl.getRcvdStatus());
+     }
+
+     @Test
+     public void testOpsReadLocoNetMode() throws ProgrammerException {
+        // allow transponding
+        sm.setTranspondingAvailable(false);
+
+        LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(memo, 4, true);
+
+        lnopsmodeprogrammer.setMode(LnProgrammerManager.LOCONETOPSBOARD);
+        lnopsmodeprogrammer.readCV("12", pl);
+
+        // should have written
+        Assert.assertEquals("one message sent", 1, lnis.outbound.size());
+        Assert.assertEquals("No programming reply", 0, pl.getRcvdInvoked());
+
+        Assert.assertEquals("sent", "EF 0E 7C 2F 00 00 04 00 00 0B 00 7F 7F 00", lnis.outbound.get(0).toString());
+
+        // check echo of sent message has no effect
+        LocoNetMessage m = lnis.outbound.get(0);
+        lnopsmodeprogrammer.message(m);
+        Assert.assertEquals("still one message sent", 1, lnis.outbound.size());
+        Assert.assertEquals("No programming reply", 0, pl.getRcvdInvoked());
+
+        // LACK followed by Known-good message in reply
+        m = new LocoNetMessage(new int[]{0xB4, 0x6F, 0x01, 0x25});
+        lnopsmodeprogrammer.message(m);
+        sm.message(m);
+
+        m = new LocoNetMessage(new int[]{0xE7, 0x0E, 0x7C, 0x2B, 0x00, 0x00, 0x02, 0x47, 0x00, 0x1C, 0x23, 0x7F, 0x7F, 0x3B});
+        lnopsmodeprogrammer.message(m);
+        sm.message(m);
+        JUnitUtil.waitFor(()->{return pl.getRcvdInvoked() == 1;},"getRcvdInvoked not set");
+        Assert.assertEquals("still one message sent", 1, lnis.outbound.size());
+        Assert.assertEquals("Reply status OK", 0, pl.getRcvdStatus());
 
      }
 
-
-    // from here down is testing infrastructure
-    public LnOpsModeProgrammerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {LnOpsModeProgrammerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // The minimal setup for log4J
-    @Override
-    protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+    @Before
+    public void setUp() {
+        JUnitUtil.setUp();
 
         lnis = new LocoNetInterfaceScaffold();
         sm = new SlotManager(lnis);
         memo = new LocoNetSystemConnectionMemo(lnis, sm);
         pl = new ProgListenerScaffold();
-
+        programmer = lnopsmodeprogrammer = new LnOpsModeProgrammer(memo, 1, true);
     }
 
-    @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         memo.dispose();
+        lnis = null;
+
+        programmer = lnopsmodeprogrammer = null;
         JUnitUtil.tearDown();
     }
+
 }

@@ -16,7 +16,7 @@ public class JsonSchemaServiceFactory implements JsonServiceFactory<JsonSchemaHt
 
     @Override
     public String[] getTypes() {
-        return new String[]{JSON.JSON, JSON.SCHEMA, JSON.TYPES};
+        return new String[]{JSON.JSON, JSON.SCHEMA, JSON.TYPE};
     }
 
     @Override

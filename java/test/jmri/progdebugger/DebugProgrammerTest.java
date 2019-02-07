@@ -29,29 +29,6 @@ public class DebugProgrammerTest extends TestCase {
                 readValue = value;
             }
         };
-        p.writeCV(4, 12, l);
-        waitReply();
-        log.debug("readValue is " + readValue);
-        p.readCV(4, l);
-        waitReply();
-        log.debug("readValue is " + readValue);
-        Assert.assertEquals("read back", 12, readValue);
-    }
-
-    // Test names ending with "String" are for the new writeCV(String, ...) 
-    // etc methods.  If you remove the older writeCV(int, ...) tests, 
-    // you can rename these. Note that not all (int,...) tests may have a 
-    // String(String, ...) test defined, in which case you should create those.
-    public void testWriteReadString() throws jmri.ProgrammerException, InterruptedException {
-        Programmer p = new ProgDebugger();
-        ProgListener l = new ProgListener() {
-            @Override
-            public void programmingOpReply(int value, int status) {
-                log.debug("callback value=" + value + " status=" + status);
-                replied = true;
-                readValue = value;
-            }
-        };
         p.writeCV("4", 12, l);
         waitReply();
         log.debug("readValue is " + readValue);
@@ -70,27 +47,6 @@ public class DebugProgrammerTest extends TestCase {
     }
 
     public void testKnowsWrite() throws jmri.ProgrammerException {
-        ProgDebugger p = new ProgDebugger();
-        ProgListener l = new ProgListener() {
-            @Override
-            public void programmingOpReply(int value, int status) {
-                log.debug("callback value=" + value + " status=" + status);
-                replied = true;
-                readValue = value;
-            }
-        };
-
-        Assert.assertTrue("initially not written", !p.hasBeenWritten(4));
-        p.writeCV(4, 12, l);
-        Assert.assertTrue("after 1st write", p.hasBeenWritten(4));
-        p.clearHasBeenWritten(4);
-        Assert.assertTrue("now longer written", !p.hasBeenWritten(4));
-        p.writeCV(4, 12, l);
-        Assert.assertTrue("after 2nd write", p.hasBeenWritten(4));
-
-    }
-
-    public void testKnowsWriteString() throws jmri.ProgrammerException {
         ProgDebugger p = new ProgDebugger();
         ProgListener l = new ProgListener() {
             @Override
@@ -130,10 +86,19 @@ public class DebugProgrammerTest extends TestCase {
 
     // test suite from all defined tests
     public static Test suite() {
-        apps.tests.AllTest.initLogging();
         TestSuite suite = new TestSuite(DebugProgrammerTest.class);
         return suite;
     }
+
+   @Override
+   public void setUp() {
+        jmri.util.JUnitUtil.setUp();
+   }
+
+   @Override
+   public void tearDown(){
+        jmri.util.JUnitUtil.tearDown();
+   }
 
     private final static Logger log = LoggerFactory.getLogger(DebugProgrammerTest.class);
 

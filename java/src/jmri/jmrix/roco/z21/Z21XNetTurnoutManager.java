@@ -9,22 +9,23 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implement turnout manager.
+ * Implement z21 turnout manager.
  * <p>
- * System names are "XTnnn", where nnn is the turnout number without padding.
+ * System names are "XTnnn", where X is the user-configurable system prefix,
+ * nnn is the turnout number without padding.
  *
  * @author	Paul Bender Copyright (C) 2016 
  */
 public class Z21XNetTurnoutManager extends XNetTurnoutManager implements XNetListener {
 
     public Z21XNetTurnoutManager(XNetTrafficController controller, String prefix) {
-        super(controller,prefix);
+        super(controller, prefix);
     }
 
     // XNet-specific methods
     @Override
     public Turnout createNewTurnout(String systemName, String userName) {
-        int addr = Integer.valueOf(systemName.substring(prefix.length() + 1)).intValue();
+        int addr = Integer.parseInt(systemName.substring(prefix.length() + 1));
         Turnout t = new Z21XNetTurnout(prefix, addr, tc);
         t.setUserName(userName);
         return t;
@@ -56,6 +57,20 @@ public class Z21XNetTurnoutManager extends XNetTurnoutManager implements XNetLis
         } else {
           super.message(l); // let the XpressNetTurnoutManager code
                             // handle any other replies.
+        }
+    }
+
+    @Override
+    protected void forwardMessageToTurnout(String s, XNetReply l){
+        Z21XNetTurnout t = (Z21XNetTurnout) getBySystemName(s);
+        if ( null == t ) {
+           // need to create a new one, and send the message on 
+           // to the newly created object.
+           ((Z21XNetTurnout) provideTurnout(s)).initMessageZ21(l);
+        } else {
+           // The turnout exists, forward this message to the 
+           // turnout
+           t.message(l);
         }
     }
 

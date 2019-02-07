@@ -68,6 +68,12 @@
 # JAVA imports
 
 import java
+import java.awt
+import java.awt.event
+import java.beans
+import java.io
+import java.util
+
 import jmri
 
 from java.beans import PropertyChangeListener
@@ -6999,7 +7005,7 @@ class ADpowerMonitor (PropertyChangeListener) :
     powerOffTime = -1L
     
     def __init__(self):
-        self.powerManager = InstanceManager.powerManagerInstance()
+        self.powerManager = InstanceManager.getDefault(jmri.PowerManager)
         if self.powerManager != None and not AutoDispatcher.lenzSimulation :
             ADpowerMonitor.powerOn = (self.powerManager.getPower()
               == PowerManager.ON)

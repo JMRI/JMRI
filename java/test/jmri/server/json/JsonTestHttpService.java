@@ -41,8 +41,8 @@ public class JsonTestHttpService extends JsonHttpService {
     @Override
     public ArrayNode doGetList(String type, Locale locale) throws JsonException {
         ArrayNode array = mapper.createArrayNode();
-        array.add(mapper.createObjectNode());
-        array.add(mapper.createObjectNode());
+        array.add(mapper.createObjectNode().put(JSON.TYPE, type).set(JSON.DATA, mapper.createObjectNode()));
+        array.add(mapper.createObjectNode().put(JSON.TYPE, type).set(JSON.DATA, mapper.createObjectNode()));
         return array;
     }
 

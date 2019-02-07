@@ -31,13 +31,27 @@
                         "description": "String value of property or null"
                     }
                 }
-            }
+            },
+            "additionalProperties": false,
+            "required": ["name", "value"]
+        },
+        "state": {
+            "type": "integer",
+            "description": "The state of the block"
         },
         "value": {
             "type": ["string", "null"],
             "description": "The value of the block"
+        },
+        "sensor": {
+            "type": ["string", "null"],
+            "description": "The system name of the sensor associated with the block"
+        },
+        "reporter": {
+            "type": ["string", "null"],
+            "description": "The system name of the reporter associated with the block"
         }
     },
     "additionalProperties": false,
-    "required": ["name", "userName", "comment", "value"]
+    "required": ["name", "userName", "comment", "sensor", "reporter", "value"]
 }

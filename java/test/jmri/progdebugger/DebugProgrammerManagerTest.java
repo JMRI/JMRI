@@ -1,8 +1,7 @@
 package jmri.progdebugger;
 
-import jmri.GlobalProgrammerManager;
-import jmri.InstanceManager;
-import jmri.Programmer;
+import jmri.*;
+
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -44,8 +43,7 @@ public class DebugProgrammerManagerTest extends TestCase {
      * ops mode request returns a programmer
      */
     public void testOpsModeRequest() {
-        InstanceManager.setAddressedProgrammerManager(
-                new DebugProgrammerManager());
+        InstanceManager.store(new DebugProgrammerManager(), AddressedProgrammerManager.class);
         Programmer p = InstanceManager.getDefault(jmri.AddressedProgrammerManager.class)
                 .getAddressedProgrammer(true, 777);
         Assert.assertTrue("got ops mode", p != null);
@@ -56,8 +54,7 @@ public class DebugProgrammerManagerTest extends TestCase {
      * Any identical ops mode request gets the same object
      */
     public void testOpsModeUnique() {
-        InstanceManager.setAddressedProgrammerManager(
-                new DebugProgrammerManager());
+        InstanceManager.store(new DebugProgrammerManager(), AddressedProgrammerManager.class);
         Programmer p = InstanceManager.getDefault(jmri.AddressedProgrammerManager.class)
                 .getAddressedProgrammer(true, 777);
         Assert.assertTrue("same ops mode programmer",
@@ -69,8 +66,7 @@ public class DebugProgrammerManagerTest extends TestCase {
      * Any identical ops mode request gets the same object
      */
     public void testOpsModeDistinct() {
-        InstanceManager.setAddressedProgrammerManager(
-                new DebugProgrammerManager());
+        InstanceManager.store(new DebugProgrammerManager(), AddressedProgrammerManager.class);
         Programmer p = InstanceManager.getDefault(jmri.AddressedProgrammerManager.class)
                 .getAddressedProgrammer(true, 777);
         Assert.assertTrue("different ops mode programmer",
@@ -94,9 +90,18 @@ public class DebugProgrammerManagerTest extends TestCase {
 
     // test suite from all defined tests
     public static Test suite() {
-        apps.tests.AllTest.initLogging();
         TestSuite suite = new TestSuite(DebugProgrammerManagerTest.class);
         return suite;
+    }
+
+    @Override
+    public void setUp() {
+        jmri.util.JUnitUtil.setUp();
+    }
+
+    @Override
+    public void tearDown(){
+        jmri.util.JUnitUtil.tearDown();
     }
 
 }

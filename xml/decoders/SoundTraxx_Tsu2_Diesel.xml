@@ -117,11 +117,48 @@
                        CV112,136,141,142,168,173,174,223,314,442,2.296,2.301-302,3.270-273.
                        Added CV123 selection for TSU-4400</revremark>
         </revision>
+        <revision>
+            <revnumber>10</revnumber>
+            <date>2018-08-14</date>
+            <authorinitials>MJM</authorinitials>
+            <revremark>Added EMD 2 decoders</revremark>
+        </revision>
     </revhistory>
     <!-- Decoder Model information follows -->
     <decoder>
         <family name="Tsunami2 Diesel" mfg="SoundTraxx (Throttle-Up)" comment="These are the -retail- version Econami Diesel decoders">
             <model model="TSU-1100 EMD Diesels" numOuts="4" numFns="30" maxMotorCurrent="1A" connector="other" productID="276" comment="Model 885001">
+                <versionCV lowVersionID="71"/>
+                <output name="3" label="  FX3  "/>
+                <output name="4" label="  FX4  "/>
+                <output name="5" label="Airhorn| ">
+                    <label xml:lang="it">Tromba| </label>
+                </output>
+                <output name="6" label="Bell| ">
+                    <label xml:lang="it">Campana| </label>
+                </output>
+                <output name="7" label="Dynamic|Brakes">
+                    <label xml:lang="it">Freni|Dinamici</label>
+                </output>
+                <output name="8" label="Short|Horn">
+                    <label xml:lang="it">Breve|Tromba</label>
+                </output>
+                <output name="9" label="Straight|to 8"/>
+                <output name="10" label="General|Service"/>
+                <output name="11" label="Dimming| ">
+                    <label xml:lang="it">Smorzam| </label>
+                </output>
+                <output name="12" label="Mute| ">
+                    <label xml:lang="it">Silenzio| </label>
+                </output>
+                <output name="13" label="HEP|Mode"/>
+                <output name="14" label="Ind/Train|Brake"/>
+                <output name="15" label="Coupler| ">
+                    <label xml:lang="it">Accoppiatore| </label>
+                </output>
+                <size length="27" width="10.5" height="5" units="mm"/>
+            </model>
+            <model model="TSU-1100 EMD-2 Diesels" numOuts="4" numFns="30" maxMotorCurrent="1A" connector="other" productID="310" comment="Model 885021">
                 <versionCV lowVersionID="71"/>
                 <output name="3" label="  FX3  "/>
                 <output name="4" label="  FX4  "/>
@@ -276,6 +313,37 @@
                 </output>
                 <size length="35" width="18" height="6" units="mm"/>
             </model>
+            <model model="TSU-2200 EMD-2 Diesels" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="311" comment="Model 885022">
+                <versionCV lowVersionID="71"/>
+                <output name="3" label="  FX3  "/>
+                <output name="4" label="  FX4  "/>
+                <output name="5" label="Airhorn| ">
+                    <label xml:lang="it">Tromba| </label>
+                </output>
+                <output name="6" label="Bell| ">
+                    <label xml:lang="it">Campana| </label>
+                </output>
+                <output name="7" label="Dynamic|Brakes">
+                    <label xml:lang="it">Freni|Dinamici</label>
+                </output>
+                <output name="8" label="Short|Horn">
+                    <label xml:lang="it">Breve|Tromba</label>
+                </output>
+                <output name="9" label="Straight|to 8"/>
+                <output name="10" label="General|Service"/>
+                <output name="11" label="Dimming| ">
+                    <label xml:lang="it">Smorzam| </label>
+                </output>
+                <output name="12" label="Mute| ">
+                    <label xml:lang="it">Silenzio| </label>
+                </output>
+                <output name="13" label="HEP|Mode"/>
+                <output name="14" label="Ind/Train|Brake"/>
+                <output name="15" label="Coupler| ">
+                    <label xml:lang="it">Accoppiatore| </label>
+                </output>
+                <size length="35" width="18" height="6" units="mm"/>
+            </model>
             <model model="TSU-2200 GE Diesels" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="281" comment="Model 885006">
                 <versionCV lowVersionID="71"/>
                 <output name="3" label="  FX3  "/>
@@ -370,6 +438,37 @@
                 <size length="35" width="18" height="6" units="mm"/>
             </model>
             <model model="TSU-21PNEM EMD Diesels" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="284" comment="Model 885009">
+                <versionCV lowVersionID="71"/>
+                <output name="3" label="  FX3  "/>
+                <output name="4" label="  FX4  "/>
+                <output name="5" label="Airhorn| ">
+                    <label xml:lang="it">Tromba| </label>
+                </output>
+                <output name="6" label="Bell| ">
+                    <label xml:lang="it">Campana| </label>
+                </output>
+                <output name="7" label="Dynamic|Brakes">
+                    <label xml:lang="it">Freni|Dinamici</label>
+                </output>
+                <output name="8" label="Short|Horn">
+                    <label xml:lang="it">Breve|Tromba</label>
+                </output>
+                <output name="9" label="Straight|to 8"/>
+                <output name="10" label="General|Service"/>
+                <output name="11" label="Dimming| ">
+                    <label xml:lang="it">Smorzam| </label>
+                </output>
+                <output name="12" label="Mute| ">
+                    <label xml:lang="it">Silenzio| </label>
+                </output>
+                <output name="13" label="HEP|Mode"/>
+                <output name="14" label="Ind/Train|Brake"/>
+                <output name="15" label="Coupler| ">
+                    <label xml:lang="it">Accoppiatore| </label>
+                </output>
+                <size length="35" width="18" height="6" units="mm"/>
+            </model>
+            <model model="TSU-21PNEM EMD-2 Diesels" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="312" comment="Model 885023">
                 <versionCV lowVersionID="71"/>
                 <output name="3" label="  FX3  "/>
                 <output name="4" label="  FX4  "/>
@@ -524,6 +623,37 @@
                 </output>
                 <size length="35" width="18" height="6" units="mm"/>
             </model>
+            <model model="TSU-4400 EMD-2 Diesels" numOuts="6" numFns="30" maxMotorCurrent="4A" connector="other" productID="314" comment="Model 885025">
+                <versionCV lowVersionID="71"/>
+                <output name="3" label="  FX3  "/>
+                <output name="4" label="  FX4  "/>
+                <output name="5" label="Airhorn| ">
+                    <label xml:lang="it">Tromba| </label>
+                </output>
+                <output name="6" label="Bell| ">
+                    <label xml:lang="it">Campana| </label>
+                </output>
+                <output name="7" label="Dynamic|Brakes">
+                    <label xml:lang="it">Freni|Dinamici</label>
+                </output>
+                <output name="8" label="Short|Horn">
+                    <label xml:lang="it">Breve|Tromba</label>
+                </output>
+                <output name="9" label="Straight|to 8"/>
+                <output name="10" label="General|Service"/>
+                <output name="11" label="Dimming| ">
+                    <label xml:lang="it">Smorzam| </label>
+                </output>
+                <output name="12" label="Mute| ">
+                    <label xml:lang="it">Silenzio| </label>
+                </output>
+                <output name="13" label="HEP|Mode"/>
+                <output name="14" label="Ind/Train|Brake"/>
+                <output name="15" label="Coupler| ">
+                    <label xml:lang="it">Accoppiatore| </label>
+                </output>
+                <size length="35" width="18" height="6" units="mm"/>
+            </model>
             <model model="TSU-4400 GE Diesels" numOuts="6" numFns="30" maxMotorCurrent="4A" connector="other" productID="293" comment="Model 885018">
                 <versionCV lowVersionID="71"/>
                 <output name="3" label="  FX3  "/>
@@ -618,6 +748,37 @@
                 <size length="35" width="18" height="6" units="mm"/>
             </model>
             <model model="TSU-PNP EMD Diesels" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="288" comment="Model 885013">
+                <versionCV lowVersionID="71"/>
+                <output name="3" label="  FX3  "/>
+                <output name="4" label="  FX4  "/>
+                <output name="5" label="Airhorn| ">
+                    <label xml:lang="it">Tromba| </label>
+                </output>
+                <output name="6" label="Bell| ">
+                    <label xml:lang="it">Campana| </label>
+                </output>
+                <output name="7" label="Dynamic|Brakes">
+                    <label xml:lang="it">Freni|Dinamici</label>
+                </output>
+                <output name="8" label="Short|Horn">
+                    <label xml:lang="it">Breve|Tromba</label>
+                </output>
+                <output name="9" label="Straight|to 8"/>
+                <output name="10" label="General|Service"/>
+                <output name="11" label="Dimming| ">
+                    <label xml:lang="it">Smorzam| </label>
+                </output>
+                <output name="12" label="Mute| ">
+                    <label xml:lang="it">Silenzio| </label>
+                </output>
+                <output name="13" label="HEP|Mode"/>
+                <output name="14" label="Ind/Train|Brake"/>
+                <output name="15" label="Coupler| ">
+                    <label xml:lang="it">Accoppiatore| </label>
+                </output>
+                <size length="35" width="18" height="6" units="mm"/>
+            </model>
+            <model model="TSU-PNP EMD-2 Diesels" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="313" comment="Model 885024">
                 <versionCV lowVersionID="71"/>
                 <output name="3" label="  FX3  "/>
                 <output name="4" label="  FX4  "/>
@@ -1309,7 +1470,13 @@
                 <label>Dynamic Brake Rate Sign</label>
             </variable>
             <!-- Sound Selection follows -->
-            <variable CV="120" mask="XXVVVVVV" item="Sound Option 6" default="0" tooltip="Selects which airhorn to use">
+            <variable CV="120" mask="XXVVVVVV" item="Sound Option 6" default="0" exclude="310,311,312,313,314" tooltip="Selects which airhorn to use">
+                <enumVal>
+                    <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumChoiceDieselAirHorn.xml"/>
+                </enumVal>
+                <label>Airhorn Select</label>
+            </variable>
+            <variable CV="120" mask="XXVVVVVV" item="Sound Option 6" default="10" include="310,311,312,313,314" tooltip="Selects which airhorn to use">
                 <enumVal>
                     <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumChoiceDieselAirHorn.xml"/>
                 </enumVal>
@@ -1325,6 +1492,10 @@
                 <label>Auxiliary Airhorn Select</label>
             </variable>
             <variable CV="122" mask="XXVVVVVV" item="Sound Option 8" include="276,280,284,288" default="18" tooltip="Bell sound effect and ring-rate">
+                <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumDieselBell.xml"/>
+                <label>Bell Select</label>
+            </variable>
+            <variable CV="122" mask="XXVVVVVV" item="Sound Option 8" include="310,311,312,313,314" default="14" tooltip="Bell sound effect and ring-rate">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumDieselBell.xml"/>
                 <label>Bell Select</label>
             </variable>
@@ -1368,6 +1539,35 @@
                     </enumChoice>
                     <enumChoice>
                         <choice>EMD 710 G3C-T2</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>Prime Mover Select</label>
+            </variable>
+            <variable CV="123" mask="XXXXVVVV" item="Sound Option 5" include="310,311,312,313,314" default="4" tooltip="Select one of prime mover sound effects">
+                <enumVal>
+                    <enumChoice>
+                        <choice>EMD 567 12 Cylinder No Transition</choice>
+                    </enumChoice>
+                    <enumChoice>
+                        <choice>EMD 567C 16 Cylinder Non-Turbo</choice>
+                    </enumChoice>
+                    <enumChoice>
+                        <choice>EMD 645E 12 Cylinder Non-Turbo</choice>
+                    </enumChoice>
+                    <enumChoice>
+                        <choice>EMD 645E 12 Cylinder Turbo</choice>
+                    </enumChoice>
+                    <enumChoice>
+                        <choice>EMD 645F 16 Cylinder</choice>
+                    </enumChoice>
+                    <enumChoice>
+                        <choice>EMD 645E 20 Cylinder</choice>
+                    </enumChoice>
+                    <enumChoice>
+                        <choice>EMD 710G 12 Cylinder</choice>
+                    </enumChoice>
+                    <enumChoice>
+                        <choice>EMD 710G 16 Cylinder</choice>
                     </enumChoice>
                 </enumVal>
                 <label>Prime Mover Select</label>
@@ -1478,7 +1678,7 @@
                         GTEL and GenSet only after Sept 2017 (SW version 1.2)&lt;br&gt;
                         &lt;/html&gt;</tooltip>
             </variable>
-            <variable CV="124" mask="XXXXXXVV" item="Sound Option 10" include="276,280,284,288" default="3" tooltip="Select one of air compressor sound effects">
+            <variable CV="124" mask="XXXXXXVV" item="Sound Option 10" include="276,280,284,288,310,311,312,313,314" default="3" tooltip="Select one of air compressor sound effects">
                 <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSU2enumDieselComp.xml"/>
                 <label>Air Compressor Select</label>
             </variable>

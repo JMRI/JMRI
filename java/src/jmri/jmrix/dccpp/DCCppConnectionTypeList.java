@@ -5,7 +5,7 @@ import org.openide.util.lookup.ServiceProvider;
 
 /**
  * Returns a list of valid lenz XPressNet Connection Types
- * <P>
+ * <p>
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Kevin Dickerson Copyright (C) 2010
  * @author Mark Underwood Copyright (C) 2015

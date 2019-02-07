@@ -55,23 +55,40 @@ public class RouteController extends AbstractController implements PropertyChang
         sysNameList = tempList;
     }
 
+    /**
+     * parse and process a route command message
+     * <p>
+     * Format: PRA[command][routename]
+     *   where command is always '2' for Toggle
+     *   routename is a complete system name
+     * Can return HM error messages to client
+     * @param message Command string to be parsed
+     * @param deviceServer client to send responses (error messages) back to
+     */
     @Override
-    void handleMessage(String message) {
+    void handleMessage(String message, DeviceServer deviceServer) {
+        String rName = message.substring(2);                
         try {
-            if (message.charAt(0) == 'A') {
-                if (message.charAt(1) == '2') {
-                    Route r = manager.getBySystemName(message.substring(2));
-                    if (r != null) {
-                        r.setRoute();
-                    } else {
-                        log.warn("Message \"{}\" contained invalid system name.", message);
-                    }
+            if (message.charAt(0) == 'A' && message.charAt(1) == '2') {
+                Route r = manager.getBySystemName(rName);
+                if (r != null) {
+                    r.setRoute();
+                    log.debug("Route '{}' set.", rName);
                 } else {
-                    log.warn("Message \"{}\" does not match a route.", message);
+                    String msg = Bundle.getMessage("ErrorRouteNotDefined", rName);                        
+                    log.warn(msg);
+                    deviceServer.sendAlertMessage(msg);
                 }
+            } else {
+                String msg = Bundle.getMessage("ErrorRouteBadMessage", message);                        
+                log.warn(msg);
+                deviceServer.sendAlertMessage(msg);
             }
+
         } catch (NullPointerException exb) {
-            log.warn("Message \"{}\" does not match a route.", message);
+            String msg = Bundle.getMessage("ErrorRouteOther", rName);                        
+            log.warn(msg);
+            deviceServer.sendAlertMessage(msg);
         }
     }
 

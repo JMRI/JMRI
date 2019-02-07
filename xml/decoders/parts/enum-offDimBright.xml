@@ -12,6 +12,7 @@
   </enumChoice>
   <enumChoice choice="Dim">
     <choice>Dim</choice>
+	<choice xml:lang="da">Dæmpet</choice>
     <choice xml:lang="cs">Tlumené</choice>
     <choice xml:lang="fr">Atténué</choice>
     <choice xml:lang="it">Smorzato</choice>

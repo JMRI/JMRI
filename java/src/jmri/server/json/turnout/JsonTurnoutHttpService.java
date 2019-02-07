@@ -1,13 +1,11 @@
 package jmri.server.json.turnout;
 
 import static jmri.server.json.JSON.CLOSED;
-import static jmri.server.json.JSON.COMMENT;
 import static jmri.server.json.JSON.INCONSISTENT;
 import static jmri.server.json.JSON.INVERTED;
 import static jmri.server.json.JSON.STATE;
 import static jmri.server.json.JSON.THROWN;
 import static jmri.server.json.JSON.UNKNOWN;
-import static jmri.server.json.JSON.USERNAME;
 import static jmri.server.json.turnout.JsonTurnoutServiceFactory.TURNOUT;
 import static jmri.server.json.turnout.JsonTurnoutServiceFactory.TURNOUTS;
 
@@ -35,11 +33,9 @@ public class JsonTurnoutHttpService extends JsonNamedBeanHttpService {
 
     @Override
     public JsonNode doGet(String type, String name, Locale locale) throws JsonException {
-        ObjectNode root = mapper.createObjectNode();
-        root.put(JSON.TYPE, TURNOUT);
         Turnout turnout = InstanceManager.turnoutManagerInstance().getTurnout(name);
-        ObjectNode data = this.getNamedBean(turnout, name, type, locale); // throws JsonException if turnout == null
-        root.set(JSON.DATA, data);
+        ObjectNode root = this.getNamedBean(turnout, name, type, locale); // throws JsonException if turnout == null
+        ObjectNode data = root.with(JSON.DATA);
         if (turnout != null) {
             data.put(INVERTED, turnout.getInverted());
             switch (turnout.getKnownState()) {
@@ -67,14 +63,9 @@ public class JsonTurnoutHttpService extends JsonNamedBeanHttpService {
         if (turnout == null) {
             throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", TURNOUT, name));
         }
-        if (data.path(USERNAME).isTextual()) {
-            turnout.setUserName(data.path(USERNAME).asText());
-        }
+        this.postNamedBean(turnout, data, name, type, locale);
         if (data.path(INVERTED).isBoolean()) {
             turnout.setInverted(data.path(INVERTED).asBoolean());
-        }
-        if (data.path(COMMENT).isTextual()) {
-            turnout.setComment(data.path(COMMENT).asText());
         }
         int state = data.path(STATE).asInt(UNKNOWN);
         switch (state) {
@@ -106,7 +97,8 @@ public class JsonTurnoutHttpService extends JsonNamedBeanHttpService {
     @Override
     public ArrayNode doGetList(String type, Locale locale) throws JsonException {
         ArrayNode root = this.mapper.createArrayNode();
-        for (String name : InstanceManager.turnoutManagerInstance().getSystemNameList()) {
+        for (Turnout turnout : InstanceManager.turnoutManagerInstance().getNamedBeanSet()) {
+            String name = turnout.getSystemName();
             root.add(this.doGet(TURNOUT, name, locale));
         }
         return root;

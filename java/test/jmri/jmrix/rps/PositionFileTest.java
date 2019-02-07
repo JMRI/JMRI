@@ -12,7 +12,7 @@ import org.junit.Assert;
 
 /**
  * JUnit tests for the rps.PositionFile class.
- * <P>
+ * <p>
  * Stores a PositionFileTest.xml file in the temp directory below current
  * working directory.
  *
@@ -94,6 +94,11 @@ public class PositionFileTest extends TestCase {
     // from here down is testing infrastructure
     public PositionFileTest(String s) {
         super(s);
+    }
+
+    @Override
+    public void setUp() {
+        jmri.util.JUnitUtil.setUp();
     }
 
     // Main entry point

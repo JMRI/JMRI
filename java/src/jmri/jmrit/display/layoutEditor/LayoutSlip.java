@@ -1115,6 +1115,24 @@ public class LayoutSlip extends LayoutTurnout {
         }
     }
 
+    /**
+     * Check if either turnout is inconsistent.
+     * This is used to create an alternate slip image.
+     *
+     * @return true if either turnout is inconsistent.
+     */
+    private boolean isTurnoutInconsistent() {
+        Turnout tA = getTurnout();
+        if (tA != null && tA.getKnownState() == INCONSISTENT) {
+            return true;
+        }
+        Turnout tB = getTurnoutB();
+        if (tB != null && tB.getKnownState() == INCONSISTENT) {
+            return true;
+        }
+        return false;
+    }
+
     @Override
     protected void draw1(Graphics2D g2, boolean drawMain, boolean isBlock) {
         if (isBlock && getLayoutBlock() == null) {
@@ -1167,6 +1185,29 @@ public class LayoutSlip extends LayoutTurnout {
 
         Point2D midPointAD = MathUtil.midPoint(oneThirdPointAC, twoThirdsPointBD);
         Point2D midPointBC = MathUtil.midPoint(oneThirdPointBD, twoThirdsPointAC);
+
+        if (isTurnoutInconsistent()) {
+            // If either turnout is inconsistent, draw an alternate slip image
+            // draw A<= =>C
+            if (drawMain == mainlineA) {
+                g2.setColor(colorA);
+                g2.draw(new Line2D.Double(pA, oneForthPointAC));
+            }
+            if (drawMain == mainlineC) {
+                g2.setColor(colorC);
+                g2.draw(new Line2D.Double(threeFourthsPointAC, pC));
+            }
+            // draw B<= =>D
+            if (drawMain == mainlineB) {
+                g2.setColor(colorB);
+                g2.draw(new Line2D.Double(pB, oneForthPointBD));
+            }
+            if (drawMain == mainlineD) {
+                g2.setColor(colorD);
+                g2.draw(new Line2D.Double(threeFourthsPointBD, pD));
+            }
+            return;
+        }
 
         int slipState = getSlipState();
 

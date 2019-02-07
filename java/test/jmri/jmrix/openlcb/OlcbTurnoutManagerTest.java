@@ -3,8 +3,10 @@ package jmri.jmrix.openlcb;
 import jmri.Turnout;
 import jmri.util.JUnitUtil;
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -13,6 +15,8 @@ import org.junit.Test;
  * @author	Bob Jacobsen Copyright 2008, 2010, 2011
  */
 public class OlcbTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBase {
+
+    private static OlcbSystemConnectionMemo m; 
 
     @Override
     public String getSystemName(int i) {
@@ -26,10 +30,18 @@ public class OlcbTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
 
     @Override
     @Test
-    public void testUpperLower() {
-        Turnout t = l.provideTurnout("MTX010203040506070" + getNumToTest2() + ";X010203040506070"
-                + (getNumToTest2() - 1));
+    public void testProvideName() {
+        // create
+        Turnout t = l.provide(getSystemName(getNumToTest1()));
+        // check
+        Assert.assertTrue("real object returned ", t != null);
+        Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
+    }
 
+    @Override
+    @Test
+    public void testUpperLower() {
+        Turnout t = l.provide(getSystemName(getNumToTest1()));
         Assert.assertNull(l.getTurnout(t.getSystemName().toLowerCase()));
     }
 
@@ -37,8 +49,7 @@ public class OlcbTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
     @Test
     public void testDefaultSystemName() {
         // create
-        Turnout t = l.provideTurnout("MTX010203040506070" + getNumToTest1() + ";X010203040506070"
-                + (getNumToTest1() - 1));
+        Turnout t = l.provide(getSystemName(getNumToTest1()));
         // check
         Assert.assertTrue("real object returned ", t != null);
         Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
@@ -48,17 +59,25 @@ public class OlcbTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
     @Override
     @Before
     public void setUp() {
-        JUnitUtil.setUp();
-
-        OlcbSystemConnectionMemo m = OlcbTestInterface.createForLegacyTests();
         l = new OlcbTurnoutManager(m);
-
+    }
+ 
+    @BeforeClass
+    public static void preClassInit() {
+        JUnitUtil.setUp();
+        m = OlcbTestInterface.createForLegacyTests();
     }
 
     @After
     public void tearDown() {
         l.dispose();
-        JUnitUtil.tearDown();
     }
 
+    @AfterClass
+    public static void postClassTearDown() {
+        if(m != null && m.getInterface() !=null ) {
+           m.getInterface().dispose();
+        }
+        JUnitUtil.tearDown();
+    } 
 }

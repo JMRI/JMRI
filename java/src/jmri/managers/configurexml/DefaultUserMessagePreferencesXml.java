@@ -64,7 +64,7 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
             for (int x = 0; x < comboItem.size(); x++) {
                 String combo = comboItem.get(x).getAttribute("name").getValue();
                 String setting = comboItem.get(x).getAttribute("lastSelected").getValue();
-                p.addComboBoxLastSelection(combo, setting);
+                p.setComboBoxLastSelection(combo, setting);
             }
         }
 
@@ -208,7 +208,7 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
                                 hidden = true;
                             }
 
-                            jtpm.setTableColumnPreferences(strTableName, strColumnName, order, width, sort, hidden);
+                            setTableColumnPreferences(jtpm, strTableName, strColumnName, order, width, sort, hidden);
                         }
                     }
                 }
@@ -218,5 +218,11 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
         return true;
     }
 
+    // separate routine to allow annotating deprecations
+    @SuppressWarnings("deprecation")  // JmriJTablePersistenceManager.setTableColumnPreferences is deprecated for new uses,
+                                      // but retained for here to handle old XML files.
+    private void setTableColumnPreferences(JmriJTablePersistenceManager jtpm, String table, String column, int order, int width, SortOrder sort, boolean hidden) {
+    }
+    
     private final static Logger log = LoggerFactory.getLogger(DefaultUserMessagePreferencesXml.class);
 }

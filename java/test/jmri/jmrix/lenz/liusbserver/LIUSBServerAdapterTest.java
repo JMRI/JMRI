@@ -7,10 +7,8 @@ import junit.framework.TestSuite;
 import org.junit.Assert;
 
 /**
- * LIUSBServerAdapterTest.java
- *
- * Description:	tests for the jmri.jmrix.lenz.liusbserver.LIUSBServerAdapter
- * class
+ * Tests for the jmri.jmrix.lenz.liusbserver.LIUSBServerAdapter
+ * class.
  *
  * @author	Paul Bender
  */

@@ -1,5 +1,7 @@
 package jmri.jmrix.dccpp;
 
+import java.util.concurrent.Delayed;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
@@ -16,6 +18,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2002
  * @author Paul Bender Copyright (C) 2003-2010
  * @author Mark Underwood Copyright (C) 2015
+ * @author Costin Grigoras Copyright (C) 2018
  *
  * Based on XNetMessage by Bob Jacobsen and Paul Bender
  */
@@ -36,7 +39,7 @@ import org.slf4j.LoggerFactory;
  * the higher level code from needing to know what order/format the actual message is
  * in.
  */
-public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
+public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delayed {
 
     static private int _nRetries = 5;
 
@@ -69,6 +72,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
         }
         _nDataChars = len;
         myRegex = "";
+	myMessage = new StringBuilder(len);
     }
 
     /**
@@ -83,6 +87,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
         setTimeout(DCCppMessageTimeout);
         myRegex = message.myRegex;
         myMessage = message.myMessage;
+        toStringCache = message.toStringCache;
     }
 
     /**
@@ -114,6 +119,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
         setRetries(_nRetries);
         setTimeout(DCCppMessageTimeout);
         myMessage = new StringBuilder(s); // yes, copy... or... maybe not.
+        toStringCache = s;
         // gather bytes in result
         setRegex();
         _nDataChars = myMessage.length();
@@ -308,37 +314,37 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
             case DCCppConstants.ACCESSORY_CMD:
                 myRegex = DCCppConstants.ACCESSORY_CMD_REGEX; break;
             case DCCppConstants.TURNOUT_CMD:
-                if ((match(myMessage.toString(), DCCppConstants.TURNOUT_ADD_REGEX, "ctor")) != null) {
+                if ((match(toString(), DCCppConstants.TURNOUT_ADD_REGEX, "ctor")) != null) {
                 myRegex = DCCppConstants.TURNOUT_ADD_REGEX;
-                } else if ((match(myMessage.toString(), DCCppConstants.TURNOUT_DELETE_REGEX, "ctor")) != null) {
+                } else if ((match(toString(), DCCppConstants.TURNOUT_DELETE_REGEX, "ctor")) != null) {
                     myRegex = DCCppConstants.TURNOUT_DELETE_REGEX;
-                } else if ((match(myMessage.toString(), DCCppConstants.TURNOUT_LIST_REGEX, "ctor")) != null) {
+                } else if ((match(toString(), DCCppConstants.TURNOUT_LIST_REGEX, "ctor")) != null) {
                     myRegex = DCCppConstants.TURNOUT_LIST_REGEX;
-                } else if ((match(myMessage.toString(), DCCppConstants.TURNOUT_CMD_REGEX, "ctor")) != null) {
+                } else if ((match(toString(), DCCppConstants.TURNOUT_CMD_REGEX, "ctor")) != null) {
                     myRegex = DCCppConstants.TURNOUT_CMD_REGEX;
                 } else {
                     myRegex = "";
                 }
                 break;
             case DCCppConstants.SENSOR_CMD:
-                if ((match(myMessage.toString(), DCCppConstants.SENSOR_ADD_REGEX, "ctor")) != null) {
+                if ((match(toString(), DCCppConstants.SENSOR_ADD_REGEX, "ctor")) != null) {
                 myRegex = DCCppConstants.SENSOR_ADD_REGEX;
-                } else if ((match(myMessage.toString(), DCCppConstants.SENSOR_DELETE_REGEX, "ctor")) != null) {
+                } else if ((match(toString(), DCCppConstants.SENSOR_DELETE_REGEX, "ctor")) != null) {
                     myRegex = DCCppConstants.SENSOR_DELETE_REGEX;
-                } else if ((match(myMessage.toString(), DCCppConstants.SENSOR_LIST_REGEX, "ctor")) != null) {
+                } else if ((match(toString(), DCCppConstants.SENSOR_LIST_REGEX, "ctor")) != null) {
                     myRegex = DCCppConstants.SENSOR_LIST_REGEX;
                 } else {
                     myRegex = "";
                 }
                 break;
             case DCCppConstants.OUTPUT_CMD:
-                if ((match(myMessage.toString(), DCCppConstants.OUTPUT_ADD_REGEX, "ctor")) != null) {
+                if ((match(toString(), DCCppConstants.OUTPUT_ADD_REGEX, "ctor")) != null) {
                 myRegex = DCCppConstants.OUTPUT_ADD_REGEX;
-                } else if ((match(myMessage.toString(), DCCppConstants.OUTPUT_DELETE_REGEX, "ctor")) != null) {
+                } else if ((match(toString(), DCCppConstants.OUTPUT_DELETE_REGEX, "ctor")) != null) {
                     myRegex = DCCppConstants.OUTPUT_DELETE_REGEX;
-                } else if ((match(myMessage.toString(), DCCppConstants.OUTPUT_LIST_REGEX, "ctor")) != null) {
+                } else if ((match(toString(), DCCppConstants.OUTPUT_LIST_REGEX, "ctor")) != null) {
                     myRegex = DCCppConstants.OUTPUT_LIST_REGEX;
-                } else if ((match(myMessage.toString(), DCCppConstants.OUTPUT_CMD_REGEX, "ctor")) != null) {
+                } else if ((match(toString(), DCCppConstants.OUTPUT_CMD_REGEX, "ctor")) != null) {
                     myRegex = DCCppConstants.OUTPUT_CMD_REGEX;
                 } else {
                     myRegex = "";
@@ -382,6 +388,8 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
         }
     }
     
+    private String toStringCache = null;
+    
     /**
      * Converts DCCppMessage to String format (without the {@code <>} brackets)
      * 
@@ -389,7 +397,10 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
      */
     @Override
     public String toString() {
-        return(myMessage.toString());
+        if (toStringCache==null)
+            toStringCache = myMessage.toString();
+        
+        return toStringCache;
         /*
         String s = Character.toString(opcode);
         for (int i = 0; i < valueList.size(); i++) {
@@ -574,6 +585,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
         } else if (n > 0) {
             myMessage.setCharAt(n,c);
         }
+        toStringCache = null;
     }
     // For DCC++, the opcode is the first character in the
     // command (after the < ).
@@ -589,6 +601,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
         }
         opcode = (char) (i & 0xFF);
         myMessage.setCharAt(0, opcode);
+        toStringCache = null;
     }
 
     @Override
@@ -607,12 +620,12 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     }
    
     private int getGroupCount(){
-        Matcher m = match(myMessage.toString(), myRegex, "gvs");
+        Matcher m = match(toString(), myRegex, "gvs");
         return m.groupCount();
     }
  
     public String getValueString(int idx) {
-        Matcher m = match(myMessage.toString(), myRegex, "gvs");
+        Matcher m = match(toString(), myRegex, "gvs");
         if (m == null) {
             log.error("No match!");
             return("");
@@ -625,7 +638,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     }
     
     public int getValueInt(int idx) {
-        Matcher m = match(myMessage.toString(), myRegex, "gvi");
+        Matcher m = match(toString(), myRegex, "gvi");
         if (m == null) {
             log.error("No match!");
             return(0);
@@ -638,8 +651,8 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     }
     
     public boolean getValueBool(int idx) {
-        log.debug("msg = {}, regex = {}", myMessage.toString(), myRegex);
-        Matcher m = match(myMessage.toString(), myRegex, "gvi");
+        log.debug("msg = {}, regex = {}", toString(), myRegex);
+        Matcher m = match(toString(), myRegex, "gvi");
         
         if (m == null) {
             log.error("No Match!");
@@ -2456,6 +2469,125 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
                    DCCppConstants.LIST_REGISTER_CONTENTS_REGEX));
     }
 
+    /**
+     * This implementation of equals is targeted to the background function refreshing in SerialDCCppPacketizer.
+     * To keep only one function group in the refresh queue the logic is as follows. Two messages are equal if they are:
+     * <ul>
+     * <li>actually identical, or</li>
+     * <li>a function call to the same address and same function group</li>
+     * </ul>
+     */
+    @Override
+    public boolean equals(final Object obj) {
+        if (obj == null)
+            return false;
+
+        if (!(obj instanceof DCCppMessage))
+            return false;
+
+        final DCCppMessage other = (DCCppMessage) obj;
+
+        final String myCmd = this.toString();
+        final String otherCmd = other.toString();
+
+        if (myCmd.equals(otherCmd))
+            return true;
+
+        if (!(myCmd.charAt(0) == DCCppConstants.FUNCTION_CMD) || !(otherCmd.charAt(0) == DCCppConstants.FUNCTION_CMD))
+            return false;
+
+        final int mySpace1 = myCmd.indexOf(' ', 2);
+        final int otherSpace1 = otherCmd.indexOf(' ', 2);
+
+        if (mySpace1 != otherSpace1)
+            return false;
+
+        if (!myCmd.subSequence(2, mySpace1).equals(otherCmd.subSequence(2, otherSpace1)))
+            return false;
+
+        int mySpace2 = myCmd.indexOf(' ', mySpace1 + 1);
+        if (mySpace2 < 0)
+            mySpace2 = myCmd.length();
+
+        int otherSpace2 = otherCmd.indexOf(' ', otherSpace1 + 1);
+        if (otherSpace2 < 0)
+            otherSpace2 = otherCmd.length();
+
+        final int myBaseFunction = Integer.parseInt(myCmd.substring(mySpace1 + 1, mySpace2));
+        final int otherBaseFunction = Integer.parseInt(otherCmd.substring(otherSpace1 + 1, otherSpace2));
+
+        if (myBaseFunction == otherBaseFunction)
+            return true;
+
+        return getFuncBaseByte1(myBaseFunction) == getFuncBaseByte1(otherBaseFunction);
+    }
+
+    @Override
+    public int hashCode() {
+        return toString().hashCode();
+    }
+    
+    /**
+     * Get the function group from the first byte of the function setting call.
+     * 
+     * @param byte1 first byte (mixed in with function bits for groups 1 to 3, or standalone value for groups 4 and 5)
+     * @return the base group
+     */
+    private static final int getFuncBaseByte1(final int byte1) {
+        if (byte1 == DCCppConstants.FUNCTION_GROUP4_BYTE1 || byte1 == DCCppConstants.FUNCTION_GROUP5_BYTE1)
+            return byte1;
+
+        if (byte1 < 160)
+            return 128;
+
+        if (byte1 < 176)
+            return 160;
+
+        return 176;
+    }
+
+    /**
+     * When is this message supposed to be resent.
+     * 
+     * @see SerialDCCppPacketizer
+     */
+    private long expireTime;
+
+    /**
+     * Before adding the message to the delay queue call this method to set when the message should be repeated.
+     * The only time guarantee is that it will be repeated after <u>at least</u> this much time, but it can be
+     * significantly longer until it is repeated, function of the message queue length.
+     * 
+     * @param millis milliseconds in the future
+     */
+    public void delayFor(final long millis) {
+        expireTime = System.currentTimeMillis() + millis;
+    }
+
+    /**
+     * Comparing two queued message for refreshing the function calls, based on their expected execution time.
+     */
+    @Override
+    public int compareTo(final Delayed o) {
+        final long diff = this.expireTime - ((DCCppMessage) o).expireTime;
+
+        if (diff < 0)
+            return -1;
+
+        if (diff > 0)
+            return 1;
+
+        return 0;
+    }
+
+    /**
+     * From the {@link Delayed} interface, how long this message still has until it should be executed.
+     */
+    @Override
+    public long getDelay(final TimeUnit unit) {
+        return unit.convert(expireTime - System.currentTimeMillis(), TimeUnit.MILLISECONDS);
+    }
+    
     // initialize logging    
     private final static Logger log = LoggerFactory.getLogger(DCCppMessage.class);
 

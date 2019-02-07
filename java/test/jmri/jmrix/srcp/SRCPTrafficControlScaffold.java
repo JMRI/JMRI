@@ -14,10 +14,6 @@ import org.slf4j.LoggerFactory;
 public class SRCPTrafficControlScaffold extends SRCPTrafficController {
 
     public SRCPTrafficControlScaffold() {
-        if (log.isDebugEnabled()) {
-            log.debug("setting instance: " + this);
-        }
-        self = this;
     }
 
     // override some SRCPTrafficController methods for test purposes

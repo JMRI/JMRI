@@ -46,7 +46,7 @@ pos&#233;es, elles sont &#233;galement disponibles ailleurs..
 	cr&#233;er votre propre fichier
 	<a href="CreateDecoder.shtml"></a>
 	ou demander sur la mailing list JmriUsers
-	<a href="http://groups.yahoo.com/group/jmriusers/">  </a>
+	<a href="https://groups.io/g/jmriusers">  </a>
 	Pour demander &#224; quelqu'un d'en cr&#233;er un pour vous.
 	</P>
 	<p>
@@ -93,18 +93,18 @@ pos&#233;es, elles sont &#233;galement disponibles ailleurs..
 <P>
 	Les mises &#224; jour se produisent en permanence entre les versions 
 	du programme. Comme les fichiers sont des contributions, nous les rendons disponibles 
-	sur notre page web<A HREF="http://jmri.org/xml/decoders">D&#233;finitions de d&#233;codeur collect&#233;es</a>
+	sur notre page web<a href="http://jmri.org/xml/decoders">D&#233;finitions de d&#233;codeur collect&#233;es</a>
  	Vous pouvez les t&#233;l&#233;charger depuis l&#224;, mais notez que la plupart des navigateurs web ne vous 
  	permettrons pas de les voir directement; Vous devez les t&#233;l&#233;charger.</p>
 <p>
 Bien des gens travaillent sur des d&#233;finitions d&#233;codeur, ils mettent souvent
 leurs d&#233;finitions dans la z&#244;ne  "Fichiers" du 
-<A HREF="http://groups.yahoo.com/group/jmriusers">jmriusers Yahoo group</a>.
+<a href="https://groups.io/g/jmriusers">jmriusers group</a>.
 Vous pouvez 
-<A HREF="http://groups.yahoo.com/group/jmriusers/files/Decoder%20files">Les t&#233;l&#233;charger depuis l&#224;</a>.
+<a href="https://groups.io/g/jmriusers/files/Decoder%20files">Les t&#233;l&#233;charger depuis l&#224;</a>.
 Notez que comme mesure anti-spam vous devrez probablement 
-<A HREF="http://groups.yahoo.com/group/jmriusers/join">joindre le groupe </a>
-pour pouvoir t&#233;l&#233;charger les fichiers; cela n&#233;cessite que vous ayez un compte Yahoo (gratuit).</p>
+<a HREF="https://groups.io/g/jmriusers/join">joindre le groupe </a>
+pour pouvoir t&#233;l&#233;charger les fichiers; cela n&#233;cessite que vous ayez un compte Groups.io (gratuit).</p>
 </dd>
 <dt class=left><a name="lb-xp"/>Pourquoi mon LocoBuffer-II ne travaille pas avec Windows XP?</dt></a>
 <dd class=first>Avec Windows XP, les param&#232;tres de votre port s&#233;rie peuvent ne 

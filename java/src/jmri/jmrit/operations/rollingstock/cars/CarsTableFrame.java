@@ -24,6 +24,8 @@ import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.schedules.ScheduleManager;
 import jmri.jmrit.operations.locations.tools.ModifyLocationsAction;
+import jmri.jmrit.operations.rollingstock.cars.tools.ResetCheckboxesCarsTableAction;
+import jmri.jmrit.operations.rollingstock.cars.tools.ShowCheckboxesCarsTableAction;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.tools.TrainsByCarTypeAction;
@@ -40,7 +42,7 @@ import org.slf4j.LoggerFactory;
  */
 public class CarsTableFrame extends OperationsFrame implements TableModelListener {
 
-    CarsTableModel carsTableModel;
+    public CarsTableModel carsTableModel;
     JTable carsTable;
     boolean showAllCars;
     String locationName;
@@ -109,9 +111,9 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
         cp1.add(sortByType);
 
         JPanel clp = new JPanel();
-        clp.setBorder(BorderFactory.createTitledBorder(""));
-        clp.add(sortByColor);
+        clp.setBorder(BorderFactory.createTitledBorder(""));  
         clp.add(sortByLoad);
+        clp.add(sortByColor);
         cp1.add(clp);
         cp1.add(sortByKernel);
         cp1.add(sortByLocation);

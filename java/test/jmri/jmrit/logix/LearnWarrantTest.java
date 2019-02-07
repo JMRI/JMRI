@@ -35,7 +35,7 @@ public class LearnWarrantTest {
     public RetryRule retryRule = new RetryRule(3);  // allow 3 retries
 
     private OBlockManager _OBlockMgr;
-@SuppressWarnings("unchecked") // For types from DialogFinder().findAll(..)
+
     @Test
     public void testLearnWarrant() throws Exception {
         if (GraphicsEnvironment.isHeadless()) {
@@ -68,8 +68,11 @@ public class LearnWarrantTest {
         String[] route = {"OB1", "OB2", "OB3", "OB4", "OB5"};
 
         JFrameOperator jfo = new JFrameOperator(frame);
-
         pressButton(jfo, Bundle.getMessage("Calculate"));
+        
+/*        JDialogOperator jdo = new JDialogOperator(jfo, Bundle.getMessage("DialogTitle"));
+        pressButton(jdo, Bundle.getMessage("ButtonSelect"));
+*/
         new org.netbeans.jemmy.QueueTool().waitEmpty(100);
         JUnitUtil.waitFor(() -> {
             return (frame.getOrders() != null);
@@ -91,6 +94,12 @@ public class LearnWarrantTest {
         // occupy starting block
         Sensor sensor = _OBlockMgr.getBySystemName(route[0]).getSensor();
         sensor.setState(Sensor.ACTIVE);
+        
+        OBlock blk = _OBlockMgr.getOBlock(route[0]);
+        JUnitUtil.waitFor(() -> {
+            int state = blk.getState();
+            return  state == (OBlock.ALLOCATED | OBlock.OCCUPIED);
+        }, "Train occupies block ");
         pressButton(jfo, Bundle.getMessage("Start"));
 
         JUnitUtil.waitFor(() -> {
@@ -127,6 +136,7 @@ public class LearnWarrantTest {
 
         // wait for done
         final String name =  w.getDisplayName();
+        warrant.getRunModeMessage(); //throw away one read to help waitFor
         jmri.util.JUnitUtil.waitFor(()->{return warrant.getRunModeMessage().equals(Bundle.getMessage("NotRunning",name));}, "warrant not done");
          
 //        JUnitUtil.waitFor(() -> {
@@ -153,7 +163,8 @@ public class LearnWarrantTest {
         JFrameOperator jfo2 = new JFrameOperator(tableFrame);
         jfo2.requestClose();
         ControlPanelEditor panel = (ControlPanelEditor)jmri.util.JmriJFrame.getFrame("LearnWarrantTest");
-        panel.dispose(true);    // disposing this way allows test to be rerun (i.e. reload panel file) multiple times
+        panel.dispose();    // disposing this way allows test to be rerun (i.e. reload panel file) multiple times
+//        jmri.util.JUnitAppender.assertWarnMessage("Path NorthToWest in block North has length zero. Cannot run NXWarrants or ramp speeds through blocks with zero length."); 
     }
 
     private void pressButton(WindowOperator frame, String text) {
@@ -222,6 +233,7 @@ public class LearnWarrantTest {
     @Before
     public void setUp() throws Exception {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
         JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();

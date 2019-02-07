@@ -18,7 +18,7 @@ public class EcosSystemConnectionMemoTest  extends jmri.jmrix.SystemConnectionMe
     @Override
     @Test
     public void testProvidesConsistManager(){
-       Assert.assertFalse("Provides ConsistManager",scm.provides(jmri.ConsistManager.class));
+       Assert.assertTrue("Provides ConsistManager",scm.provides(jmri.ConsistManager.class));
     }
 
     @Before

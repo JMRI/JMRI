@@ -9,6 +9,7 @@
 import jmri
 
 import java
+import java.awt
 import javax.swing
 
 class HeljanCrane(jmri.jmrit.automat.AbstractAutomaton) :

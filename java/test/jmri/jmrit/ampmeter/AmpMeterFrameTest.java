@@ -25,6 +25,7 @@ public class AmpMeterFrameTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
         jmri.InstanceManager.setDefault(jmri.MultiMeter.class,new TestMeter());
     }
 

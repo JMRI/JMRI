@@ -6,6 +6,7 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
+import org.netbeans.jemmy.operators.JFrameOperator;
 
 /**
  *
@@ -25,7 +26,14 @@ public class AbstractFrameActionTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         AbstractFrameAction t = new AbstractFrameAction("TestAction","jmri.util.JmriJFrame"){
         };
-        t.actionPerformed(new java.awt.event.ActionEvent(this,1,"test action event")); // set up verifies this does not generate an error.
+        t.actionPerformed(new java.awt.event.ActionEvent(this,1,"test action event")); 
+        // this test creates a JmriJFrame with no title.  find that
+        javax.swing.JFrame f = JFrameOperator.waitJFrame("", true, true);
+        Assert.assertNotNull("found output frame", f);
+        // then close the frame.
+        JFrameOperator fo = new JFrameOperator(f);
+        fo.close();
+
     }
 
     // The minimal setup for log4J

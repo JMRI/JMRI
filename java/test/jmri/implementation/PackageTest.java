@@ -9,7 +9,9 @@ import org.junit.runners.Suite;
         NamedBeanTest.class,
 
         // implementations
+        AbstractAudioTest.class,
         AbstractSensorTest.class,
+        AbstractStringIOTest.class,
         AccessoryOpsModeProgrammerFacadeTest.class,
         OpsModeDelayedProgrammerFacadeTest.class,
         AddressedHighCvProgrammerFacadeTest.class,
@@ -19,6 +21,7 @@ import org.junit.runners.Suite;
         DefaultConditionalActionTest.class,
         DefaultIdTagTest.class,
         DefaultLogixTest.class,
+        ActiveLogixTest.class,
         DefaultSignalSystemTest.class,
         DefaultSignalAppearanceMapTest.class,
         MultiIndexProgrammerFacadeTest.class,

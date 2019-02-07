@@ -4,6 +4,7 @@ import java.beans.PropertyChangeListener;
 import jmri.InstanceManager;
 import jmri.Light;
 import jmri.LightManager;
+import jmri.jmrix.internal.InternalLightManager;
 import jmri.util.JUnitUtil;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -197,7 +198,7 @@ public class ProxyLightManagerTest extends TestCase {
     // The minimal setup for log4J
     @Override
     protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
         // create and register the manager object
         l = new InternalLightManager() {
             @Override

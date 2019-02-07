@@ -379,10 +379,7 @@
         <label>F12 controls output 8</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/kickStart.xml"/>
-      <variable item="Speed Table" CV="67">
-        <speedTableVal/>
-        <label>Speed Table</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
       <!-- NCE-specific variables -->
       <variable CV="118" mask="VVVVVVVV" item="Global lighting option 1" default="20" tooltip="Value in 1/4 second increments after F2 goes off">
         <decVal/>

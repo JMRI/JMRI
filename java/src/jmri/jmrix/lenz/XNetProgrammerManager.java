@@ -22,8 +22,7 @@ public class XNetProgrammerManager extends DefaultProgrammerManager {
 
     /**
      * XpressNet command station does provide Ops Mode.
-     * @return we should make this return false based on what command station
-     * we're using but for now, we'll return true
+     * @return whether or not the command station supports Ops Mode.
      */
     @Override
     public boolean isAddressedModePossible() {

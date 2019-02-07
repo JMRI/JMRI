@@ -98,13 +98,6 @@ public class StatusPanel extends jmri.jmrix.ecos.swing.EcosPanel implements Ecos
         }
     }
 
-    @SuppressWarnings("unused")
-    private void checkTC() throws JmriException {
-        if (tc == null) {
-            throw new JmriException("attempt to use EcosPowerManager after dispose");
-        }
-    }
-
     EcosTrafficController tc;
 
     // to listen for status changes from Ecos system

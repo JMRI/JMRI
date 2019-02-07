@@ -1,5 +1,7 @@
 package jmri;
 
+import java.util.List;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -52,10 +54,19 @@ public interface ShutDownManager {
     public void deregister(@Nullable ShutDownTask task);
 
     /**
+     * Provide access to the current registered shutdown tasks.
+     */
+    public List<ShutDownTask> tasks();
+    
+    /**
      * Run the shutdown tasks, and then terminate the program with status 100 if
      * not aborted. Does not return under normal circumstances. Does return
      * false if the shutdown was aborted by the user, in which case the program
      * should continue to operate.
+     * <p>
+     * By exiting the program with status 100, the batch file (MS Windows) or
+     * shell script (Linux/Mac OS X/UNIX) can catch the exit status and restart
+     * the java program.
      * <p>
      * <b>NOTE</b> If the OS X {@literal application->quit} menu item is used,
      * this must return false to abort the shutdown.

@@ -416,7 +416,6 @@ public class LocationManager implements InstanceManagerAutoDefault, InstanceMana
 
     public void load(Element root) {
         if (root.getChild(Xml.LOCATIONS) != null) {
-            @SuppressWarnings("unchecked")
             List<Element> locs = root.getChild(Xml.LOCATIONS).getChildren(Xml.LOCATION);
             log.debug("readFile sees {} locations", locs.size());
             for (Element loc : locs) {

@@ -37,7 +37,6 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
 
     private boolean outputBufferEmpty = true;
     private boolean checkBuffer = true;
-    private boolean trackPowerState = false;
     private SprogMode operatingMode = SprogMode.SERVICE;
 
     // Simulator responses
@@ -203,6 +202,11 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
     }
 
     @Override
+    public String getCurrentPortName(){
+        return "";
+    }
+
+    @Override
     public void run() { // start a new thread
         // This thread has one task. It repeatedly reads from the input pipe
         // and writes an appropriate response to the output pipe. This is the heart
@@ -264,7 +268,6 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
      * Based on SPROG information from A. Crosland.
      * @see jmri.jmrix.sprog.SprogReply#value()
      */
-    @SuppressWarnings("fallthrough")
     private SprogReply generateReply(SprogMessage msg) {
         log.debug("Generate Reply to message type {} (string = {})", msg.toString().charAt(0), msg.toString());
 
@@ -302,13 +305,11 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
 
             case '+':
                 log.debug("TRACK_POWER_ON detected");
-                trackPowerState = true;
                 //reply = new SprogReply(SPR_PR);
                 break;
 
             case '-':
                 log.debug("TRACK_POWER_OFF detected");
-                trackPowerState = false;
                 //reply = new SprogReply(SPR_PR);
                 break;
 
@@ -325,7 +326,7 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
 
             case 'S':
                 log.debug("getStatus detected");
-                reply = new SprogReply("S\n");
+                reply = new SprogReply("OK\n");
                 break;
 
             default:

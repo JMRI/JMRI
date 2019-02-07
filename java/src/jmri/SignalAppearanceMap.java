@@ -98,4 +98,12 @@ public interface SignalAppearanceMap {
      */
     public String[] getValidAspectsForAdvancedAspect(String advancedAspect);
 
+    /**
+     * Provide a multi-line summary of the signal system content,
+     * typically for printing. Not intended for further parsing, 
+     * i.e. for persistance, as format likely to differ from type 
+     * to type, and to change often.
+     */
+    public String summary();
+
 }

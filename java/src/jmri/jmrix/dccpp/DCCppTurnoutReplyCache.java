@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Implement a feedback message cache for DCC++ turnouts.
- * <P>
+ * <p>
  *
  * @author Paul Bender Copyright (C) 2012
  * @author Mark Underwood Copyright (C) 2015
@@ -98,7 +98,7 @@ public class DCCppTurnoutReplyCache implements DCCppListener {
     @Override
     synchronized public void message(DCCppReply l) {
         if (log.isDebugEnabled()) {
-            log.debug("recieved message: " + l);
+            log.debug("received message: " + l);
         }
         if (l.isTurnoutReply()) {
      // cache the message for later requests

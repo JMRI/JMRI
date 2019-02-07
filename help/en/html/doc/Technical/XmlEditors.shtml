@@ -9,14 +9,14 @@
   <title>JMRI: XML Editors</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI technical code xml editors">
-  <!--#include virtual="/Style" -->
+  <!--#include virtual="/Style.shtml" -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+  <!--#include virtual="/Header.shtml" -->
 
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+    <!--#include virtual="Sidebar.shtml" -->
 
     <div id="mainContent">
       <h1>JMRI: XML Editors</h1>
@@ -36,7 +36,7 @@
       tools.</p>
 
       <p>This page lists XML editors that have been mentioned on
-      the <a href="http://groups.yahoo.com/group/jmriusers/">JMRI
+      the <a href="https://groups.io/g/jmriusers">JMRI
       users discussion group</a>.</p>
 
       <p>For more information on XML itself, please see our
@@ -134,7 +134,7 @@
         </dd>
       </dl>
 
-      <!--#include virtual="/Footer" -->
+      <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

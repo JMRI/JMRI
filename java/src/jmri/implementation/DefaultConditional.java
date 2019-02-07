@@ -74,11 +74,12 @@ public class DefaultConditional extends AbstractNamedBean
 
     // boolean expression of state variables
     private String _antecedent = "";
-    private int _logicType = Conditional.ALL_AND;
+    private Conditional.AntecedentOperator _logicType =
+            Conditional.AntecedentOperator.ALL_AND;
     // variables (antecedent) parameters
-    private ArrayList<ConditionalVariable> _variableList = new ArrayList<>();
+    private List<ConditionalVariable> _variableList = new ArrayList<>();
     // actions (consequent) parameters
-    protected ArrayList<ConditionalAction> _actionList = new ArrayList<>();
+    protected List<ConditionalAction> _actionList = new ArrayList<>();
 
     private int _currentState = NamedBean.UNKNOWN;
     private boolean _triggerActionsOnChange = true;
@@ -104,7 +105,7 @@ public class DefaultConditional extends AbstractNamedBean
      * Get type of operators in the antecedent statement.
      */
     @Override
-    public int getLogicType() {
+    public Conditional.AntecedentOperator getLogicType() {
         return _logicType;
     }
 
@@ -117,7 +118,7 @@ public class DefaultConditional extends AbstractNamedBean
      * @param antecedent non-localized (US-english) string description of antecedent
      */
     @Override
-    public void setLogicType(int type, String antecedent) {
+    public void setLogicType(Conditional.AntecedentOperator type, String antecedent) {
         _logicType = type;
         _antecedent = antecedent; // non-localised (universal) string description
         setState(NamedBean.UNKNOWN);
@@ -140,7 +141,7 @@ public class DefaultConditional extends AbstractNamedBean
      * This method assumes that all information has been validated.
      */
     @Override
-    public void setStateVariables(ArrayList<ConditionalVariable> arrayList) {
+    public void setStateVariables(List<ConditionalVariable> arrayList) {
         log.debug("Conditional \"{}\" ({}) updated ConditionalVariable list.",
                 getUserName(), getSystemName());  // NOI18N
         _variableList = arrayList;
@@ -175,7 +176,7 @@ public class DefaultConditional extends AbstractNamedBean
      *
      * @return the list of state variables
      */
-    public ArrayList<ConditionalVariable> getStateVariableList() {
+    public List<ConditionalVariable> getStateVariableList() {
         return _variableList;
     }
 
@@ -183,7 +184,7 @@ public class DefaultConditional extends AbstractNamedBean
      * Set list of actions.
      */
     @Override
-    public void setAction(ArrayList<ConditionalAction> arrayList) {
+    public void setAction(List<ConditionalAction> arrayList) {
         _actionList = arrayList;
     }
 
@@ -211,7 +212,7 @@ public class DefaultConditional extends AbstractNamedBean
      *
      * @return the list of actions
      */
-    public ArrayList<ConditionalAction> getActionList() {
+    public List<ConditionalAction> getActionList() {
         return _actionList;
     }
 
@@ -233,18 +234,18 @@ public class DefaultConditional extends AbstractNamedBean
         }
         boolean result = true;
         switch (_logicType) {
-            case Conditional.ALL_AND:
+            case ALL_AND:
                 for (int i = 0; (i < _variableList.size()) && result; i++) {
                     result = _variableList.get(i).evaluate();
                 }
                 break;
-            case Conditional.ALL_OR:
+            case ALL_OR:
                 result = false;
                 for (int k = 0; (k < _variableList.size()) && !result; k++) {
                     result = _variableList.get(k).evaluate();
                 }
                 break;
-            case Conditional.MIXED:
+            case MIXED:
                 char[] ch = _antecedent.toCharArray();
                 int n = 0;
                 for (int j = 0; j < ch.length; j++) {
@@ -347,7 +348,7 @@ public class DefaultConditional extends AbstractNamedBean
      * @return error message string if not well formed
      */
     @Override
-    public String validateAntecedent(String ant, ArrayList<ConditionalVariable> variableList) {
+    public String validateAntecedent(String ant, List<ConditionalVariable> variableList) {
         char[] ch = ant.toCharArray();
         int n = 0;
         for (int j = 0; j < ch.length; j++) {
@@ -409,7 +410,7 @@ public class DefaultConditional extends AbstractNamedBean
      *         variable indices used.
      * @throws jmri.JmriException if unable to compute the logic
      */
-    DataPair parseCalculate(String s, ArrayList<ConditionalVariable> variableList)
+    DataPair parseCalculate(String s, List<ConditionalVariable> variableList)
             throws JmriException {
 
         // for simplicity, we force the string to upper case before scanning
@@ -443,13 +444,9 @@ public class DefaultConditional extends AbstractNamedBean
                 }
                 i++;
                 argsUsed.set(k - 1);
-            } else if (Bundle.getMessage("LogicNOT").equals(s.substring(i, i + (Bundle.getMessage("LogicNOT").length()))) ||
-                    ("NOT").equals(s.substring(i, i + 3))) { // compare the right length with and without i18n  // NOI18N
-                if (("NOT").equals(s.substring(i, i + 3))) {
-                    i += 3;
-                } else {
-                    i += Bundle.getMessage("LogicNOT").length(); // NOI18N
-                }
+            } else if ("NOT".equals(s.substring(i, i + 3))) {  // NOI18N
+                i += 3;
+
                 // not leftArg
                 if (s.charAt(i) == '(') {
                     dp = parseCalculate(s.substring(++i), variableList);
@@ -483,21 +480,11 @@ public class DefaultConditional extends AbstractNamedBean
         while (i < s.length()) {
             if (s.charAt(i) != ')') {
                 // must be either AND or OR
-                if (Bundle.getMessage("LogicAND").equals(s.substring(i, i + (Bundle.getMessage("LogicAND").length()))) ||
-                        ("AND").equals(s.substring(i, i + 3))) { // compare the right length with and without i18n  // NOI18N
-                    if (("AND").equals(s.substring(i, i + 3))) {
-                        i += 3;
-                    } else {
-                        i += Bundle.getMessage("LogicAND").length(); // EN AND: 3;  // NOI18N
-                    }
+                if ("AND".equals(s.substring(i, i + 3))) {  // NOI18N
+                    i += 3;
                     oper = OPERATOR_AND;
-                } else if (Bundle.getMessage("LogicOR").equals(s.substring(i, i + (Bundle.getMessage("LogicOR").length()))) ||
-                        ("OR").equals(s.substring(i, i + 2))) { // compare the right length with and without i18n  // NOI18N
-                    if (("OR").equals(s.substring(i, i + 2))) {
-                        i += 2;
-                    } else {
-                        i += Bundle.getMessage("LogicOR").length(); // EN OR: 2;  // NOI18N
-                    }
+                } else if ("OR".equals(s.substring(i, i + 2))) {  // NOI18N
+                    i += 2;
                     oper = OPERATOR_OR;
                 } else {
                     throw new JmriException(java.text.MessageFormat.format(
@@ -523,13 +510,8 @@ public class DefaultConditional extends AbstractNamedBean
                         }
                         i++;
                         argsUsed.set(k - 1);
-                    } else if ((i + 3) < s.length() && (Bundle.getMessage("LogicNOT").equals(s.substring(i, i + (Bundle.getMessage("LogicNOT").length()))) ||
-                            ("NOT").equals(s.substring(i, i + 3)))) { // compare the right length with and without i18n  // NOI18N
-                        if (("NOT").equals(s.substring(i, i + 3))) {
-                            i += 3;
-                        } else {
-                            i += Bundle.getMessage("LogicNOT").length(); // EN NOT: 3;  // NOI18N
-                        }
+                    } else if ("NOT".equals(s.substring(i, i + 3))) {  // NOI18N
+                        i += 3;
                         // not rightArg
                         if (s.charAt(i) == '(') {
                             dp = parseCalculate(s.substring(++i), variableList);
@@ -582,8 +564,8 @@ public class DefaultConditional extends AbstractNamedBean
      * Only get here if a change in state has occurred when calculating this
      * Conditional
      */
-    @SuppressWarnings({"deprecation", "fallthrough"})  // NOI18N
-    @SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")  // NOI18N
+    @SuppressWarnings({"deprecation", "fallthrough"})
+    @SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")
     // it's unfortunate that this is such a huge method, because these annotation
     // have to apply to more than 500 lines of code - jake
     private void takeActionIfNeeded() {
@@ -621,7 +603,7 @@ public class DefaultConditional extends AbstractNamedBean
                 }
                 int value = 0;
                 Timer timer = null;
-                int type = action.getType();
+                Conditional.Action type = action.getType();
                 String devName = getDeviceName(action);
                 if (devName == null) {
                     errorList.add("invalid memory name in action - " + action);  // NOI18N
@@ -631,9 +613,9 @@ public class DefaultConditional extends AbstractNamedBean
                     log.debug("getDeviceName()=" + action.getDeviceName() + " devName= " + devName);  // NOI18N
                 }
                 switch (type) {
-                    case Conditional.ACTION_NONE:
+                    case NONE:
                         break;
-                    case Conditional.ACTION_SET_TURNOUT:
+                    case SET_TURNOUT:
                         Turnout t = (Turnout) nb;
                         if (t == null) {
                             errorList.add("invalid turnout name in action - " + action.getDeviceName());  // NOI18N
@@ -651,10 +633,10 @@ public class DefaultConditional extends AbstractNamedBean
                             actionCount++;
                         }
                         break;
-                    case Conditional.ACTION_RESET_DELAYED_TURNOUT:
+                    case RESET_DELAYED_TURNOUT:
                         action.stopTimer();
                     // fall through
-                    case Conditional.ACTION_DELAYED_TURNOUT:
+                    case DELAYED_TURNOUT:
                         if (!action.isTimerActive()) {
                             // Create a timer if one does not exist
                             timer = action.getTimer();
@@ -677,7 +659,7 @@ public class DefaultConditional extends AbstractNamedBean
                                     + devName);
                         }
                         break;
-                    case Conditional.ACTION_CANCEL_TURNOUT_TIMERS:
+                    case CANCEL_TURNOUT_TIMERS:
                         ConditionalManager cmg = jmri.InstanceManager.getDefault(jmri.ConditionalManager.class);
                         java.util.Iterator<String> iter = cmg.getSystemNameList().iterator();
                         while (iter.hasNext()) {
@@ -696,7 +678,7 @@ public class DefaultConditional extends AbstractNamedBean
                             }
                         }
                         break;
-                    case Conditional.ACTION_LOCK_TURNOUT:
+                    case LOCK_TURNOUT:
                         Turnout tl = (Turnout) nb;
                         if (tl == null) {
                             errorList.add("invalid turnout name in action - " + action.getDeviceName());  // NOI18N
@@ -717,7 +699,7 @@ public class DefaultConditional extends AbstractNamedBean
                             actionCount++;
                         }
                         break;
-                    case Conditional.ACTION_SET_SIGNAL_APPEARANCE:
+                    case SET_SIGNAL_APPEARANCE:
                         h = (SignalHead) nb;
                         if (h == null) {
                             errorList.add("invalid Signal Head name in action - " + action.getDeviceName());  // NOI18N
@@ -726,7 +708,7 @@ public class DefaultConditional extends AbstractNamedBean
                             actionCount++;
                         }
                         break;
-                    case Conditional.ACTION_SET_SIGNAL_HELD:
+                    case SET_SIGNAL_HELD:
                         h = (SignalHead) nb;
                         if (h == null) {
                             errorList.add("invalid Signal Head name in action - " + action.getDeviceName());  // NOI18N
@@ -735,7 +717,7 @@ public class DefaultConditional extends AbstractNamedBean
                             actionCount++;
                         }
                         break;
-                    case Conditional.ACTION_CLEAR_SIGNAL_HELD:
+                    case CLEAR_SIGNAL_HELD:
                         h = (SignalHead) nb;
                         if (h == null) {
                             errorList.add("invalid Signal Head name in action - " + action.getDeviceName());  // NOI18N
@@ -744,7 +726,7 @@ public class DefaultConditional extends AbstractNamedBean
                             actionCount++;
                         }
                         break;
-                    case Conditional.ACTION_SET_SIGNAL_DARK:
+                    case SET_SIGNAL_DARK:
                         h = (SignalHead) nb;
                         if (h == null) {
                             errorList.add("invalid Signal Head name in action - " + action.getDeviceName());  // NOI18N
@@ -753,7 +735,7 @@ public class DefaultConditional extends AbstractNamedBean
                             actionCount++;
                         }
                         break;
-                    case Conditional.ACTION_SET_SIGNAL_LIT:
+                    case SET_SIGNAL_LIT:
                         h = (SignalHead) nb;
                         if (h == null) {
                             errorList.add("invalid Signal Head name in action - " + action.getDeviceName());  // NOI18N
@@ -762,7 +744,7 @@ public class DefaultConditional extends AbstractNamedBean
                             actionCount++;
                         }
                         break;
-                    case Conditional.ACTION_TRIGGER_ROUTE:
+                    case TRIGGER_ROUTE:
                         Route r = (Route) nb;
                         if (r == null) {
                             errorList.add("invalid Route name in action - " + action.getDeviceName());  // NOI18N
@@ -771,7 +753,7 @@ public class DefaultConditional extends AbstractNamedBean
                             actionCount++;
                         }
                         break;
-                    case Conditional.ACTION_SET_SENSOR:
+                    case SET_SENSOR:
                         Sensor sn = (Sensor) nb;
                         if (sn == null) {
                             errorList.add("invalid Sensor name in action - " + action.getDeviceName());  // NOI18N
@@ -793,10 +775,10 @@ public class DefaultConditional extends AbstractNamedBean
                             }
                         }
                         break;
-                    case Conditional.ACTION_RESET_DELAYED_SENSOR:
+                    case RESET_DELAYED_SENSOR:
                         action.stopTimer();
                     // fall through
-                    case Conditional.ACTION_DELAYED_SENSOR:
+                    case DELAYED_SENSOR:
                         if (!action.isTimerActive()) {
                             // Create a timer if one does not exist
                             timer = action.getTimer();
@@ -819,7 +801,7 @@ public class DefaultConditional extends AbstractNamedBean
                                     + devName);
                         }
                         break;
-                    case Conditional.ACTION_CANCEL_SENSOR_TIMERS:
+                    case CANCEL_SENSOR_TIMERS:
                         ConditionalManager cm = jmri.InstanceManager.getDefault(jmri.ConditionalManager.class);
                         java.util.Iterator<String> itr = cm.getSystemNameList().iterator();
                         while (itr.hasNext()) {
@@ -838,7 +820,7 @@ public class DefaultConditional extends AbstractNamedBean
                             }
                         }
                         break;
-                    case Conditional.ACTION_SET_LIGHT:
+                    case SET_LIGHT:
                         lgt = (Light) nb;
                         if (lgt == null) {
                             errorList.add("invalid light name in action - " + action.getDeviceName());  // NOI18N
@@ -856,7 +838,7 @@ public class DefaultConditional extends AbstractNamedBean
                             actionCount++;
                         }
                         break;
-                    case Conditional.ACTION_SET_LIGHT_INTENSITY:
+                    case SET_LIGHT_INTENSITY:
                         lgt = (Light) nb;
                         if (lgt == null) {
                             errorList.add("invalid light name in action - " + action.getDeviceName());  // NOI18N
@@ -873,7 +855,7 @@ public class DefaultConditional extends AbstractNamedBean
                             }
                         }
                         break;
-                    case Conditional.ACTION_SET_LIGHT_TRANSITION_TIME:
+                    case SET_LIGHT_TRANSITION_TIME:
                         lgt = (Light) nb;
                         if (lgt == null) {
                             errorList.add("invalid light name in action - " + action.getDeviceName());  // NOI18N
@@ -890,7 +872,7 @@ public class DefaultConditional extends AbstractNamedBean
                             }
                         }
                         break;
-                    case Conditional.ACTION_SET_MEMORY:
+                    case SET_MEMORY:
                         Memory m = (Memory) nb;
                         if (m == null) {
                             errorList.add("invalid memory name in action - " + action.getDeviceName());  // NOI18N
@@ -899,7 +881,7 @@ public class DefaultConditional extends AbstractNamedBean
                             actionCount++;
                         }
                         break;
-                    case Conditional.ACTION_COPY_MEMORY:
+                    case COPY_MEMORY:
                         Memory mFrom = (Memory) nb;
                         if (mFrom == null) {
                             errorList.add("invalid memory name in action - " + action.getDeviceName());  // NOI18N
@@ -913,7 +895,7 @@ public class DefaultConditional extends AbstractNamedBean
                             }
                         }
                         break;
-                    case Conditional.ACTION_ENABLE_LOGIX:
+                    case ENABLE_LOGIX:
                         x = InstanceManager.getDefault(jmri.LogixManager.class).getLogix(devName);
                         if (x == null) {
                             errorList.add("invalid logix name in action - " + action.getDeviceName());  // NOI18N
@@ -922,7 +904,7 @@ public class DefaultConditional extends AbstractNamedBean
                             actionCount++;
                         }
                         break;
-                    case Conditional.ACTION_DISABLE_LOGIX:
+                    case DISABLE_LOGIX:
                         x = InstanceManager.getDefault(jmri.LogixManager.class).getLogix(devName);
                         if (x == null) {
                             errorList.add("invalid logix name in action - " + action.getDeviceName());  // NOI18N
@@ -931,7 +913,7 @@ public class DefaultConditional extends AbstractNamedBean
                             actionCount++;
                         }
                         break;
-                    case Conditional.ACTION_PLAY_SOUND:
+                    case PLAY_SOUND:
                         String path = getActionString(action);
                         if (!path.equals("")) {
                             Sound sound = action.getSound();
@@ -948,13 +930,13 @@ public class DefaultConditional extends AbstractNamedBean
                             actionCount++;
                         }
                         break;
-                    case Conditional.ACTION_RUN_SCRIPT:
+                    case RUN_SCRIPT:
                         if (!(getActionString(action).equals(""))) {
                             JmriScriptEngineManager.getDefault().runScript(new File(jmri.util.FileUtil.getExternalFilename(getActionString(action))));
                             actionCount++;
                         }
                         break;
-                    case Conditional.ACTION_SET_FAST_CLOCK_TIME:
+                    case SET_FAST_CLOCK_TIME:
                         Date date = InstanceManager.getDefault(jmri.Timebase.class).getTime();
                         date.setHours(action.getActionData() / 60);
                         date.setMinutes(action.getActionData() - ((action.getActionData() / 60) * 60));
@@ -962,15 +944,15 @@ public class DefaultConditional extends AbstractNamedBean
                         InstanceManager.getDefault(jmri.Timebase.class).userSetTime(date);
                         actionCount++;
                         break;
-                    case Conditional.ACTION_START_FAST_CLOCK:
+                    case START_FAST_CLOCK:
                         InstanceManager.getDefault(jmri.Timebase.class).setRun(true);
                         actionCount++;
                         break;
-                    case Conditional.ACTION_STOP_FAST_CLOCK:
+                    case STOP_FAST_CLOCK:
                         InstanceManager.getDefault(jmri.Timebase.class).setRun(false);
                         actionCount++;
                         break;
-                    case Conditional.ACTION_CONTROL_AUDIO:
+                    case CONTROL_AUDIO:
                         Audio audio = InstanceManager.getDefault(jmri.AudioManager.class).getAudio(devName);
                         if (audio == null) {
                             break;
@@ -1022,7 +1004,7 @@ public class DefaultConditional extends AbstractNamedBean
                             }
                         }
                         break;
-                    case Conditional.ACTION_JYTHON_COMMAND:
+                    case JYTHON_COMMAND:
                         if (!(getActionString(action).isEmpty())) {
                             // add the text to the output frame
                             ScriptOutput.writeScript(getActionString(action));
@@ -1035,19 +1017,19 @@ public class DefaultConditional extends AbstractNamedBean
                             actionCount++;
                         }
                         break;
-                    case Conditional.ACTION_ALLOCATE_WARRANT_ROUTE:
+                    case ALLOCATE_WARRANT_ROUTE:
                         w = (Warrant) nb;
                         if (w == null) {
                             errorList.add("invalid Warrant name in action - " + action.getDeviceName());  // NOI18N
                         } else {
-                            String msg = w.allocateRoute(null);
+                            String msg = w.allocateRoute(false, null);
                             if (msg != null) {
                                 log.info("Warrant " + action.getDeviceName() + " - " + msg);  // NOI18N
                             }
                             actionCount++;
                         }
                         break;
-                    case Conditional.ACTION_DEALLOCATE_WARRANT_ROUTE:
+                    case DEALLOCATE_WARRANT_ROUTE:
                         w = (Warrant) nb;
                         if (w == null) {
                             errorList.add("invalid Warrant name in action - " + action.getDeviceName());  // NOI18N
@@ -1056,22 +1038,22 @@ public class DefaultConditional extends AbstractNamedBean
                             actionCount++;
                         }
                         break;
-                    case Conditional.ACTION_SET_ROUTE_TURNOUTS:
+                    case SET_ROUTE_TURNOUTS:
                         w = (Warrant) nb;
                         if (w == null) {
                             errorList.add("invalid Warrant name in action - " + action.getDeviceName());  // NOI18N
                         } else {
-                            String msg = w.setRoute(0, null);
+                            String msg = w.setRoute(false, null);
                             if (msg != null) {
                                 log.info("Warrant " + action.getDeviceName() + " unable to Set Route - " + msg);  // NOI18N
                             }
                             actionCount++;
                         }
                         break;
-                    case Conditional.ACTION_THROTTLE_FACTOR:
+                    case THROTTLE_FACTOR:
                         log.info("Set warrant Throttle Factor deprecated - Use Warrrant Preferences");  // NOI18N
                         break;
-                    case Conditional.ACTION_SET_TRAIN_ID:
+                    case SET_TRAIN_ID:
                         w = (Warrant) nb;
                         if (w == null) {
                             errorList.add("invalid Warrant name in action - " + action.getDeviceName());  // NOI18N
@@ -1080,7 +1062,7 @@ public class DefaultConditional extends AbstractNamedBean
                             actionCount++;
                         }
                         break;
-                    case Conditional.ACTION_SET_TRAIN_NAME:
+                    case SET_TRAIN_NAME:
                         w = (Warrant) nb;
                         if (w == null) {
                             errorList.add("invalid Warrant name in action - " + action.getDeviceName());  // NOI18N
@@ -1089,7 +1071,7 @@ public class DefaultConditional extends AbstractNamedBean
                             actionCount++;
                         }
                         break;
-                    case Conditional.ACTION_AUTO_RUN_WARRANT:
+                    case AUTO_RUN_WARRANT:
                         w = (Warrant) nb;
                         if (w == null) {
                             errorList.add("invalid Warrant name in action - " + action.getDeviceName());  // NOI18N
@@ -1097,21 +1079,18 @@ public class DefaultConditional extends AbstractNamedBean
                             jmri.jmrit.logix.WarrantTableFrame frame = jmri.jmrit.logix.WarrantTableFrame.getDefault();
                             String err = frame.runTrain(w, Warrant.MODE_RUN);
                             if (err != null) {
-                                w.stopWarrant(true);
-                            }
-                            if (err != null) {
                                 errorList.add("runAutoTrain error - " + err);  // NOI18N
                                 w.stopWarrant(true);
                             }
                             actionCount++;
                         }
                         break;
-                    case Conditional.ACTION_MANUAL_RUN_WARRANT:
+                    case MANUAL_RUN_WARRANT:
                         w = (Warrant) nb;
                         if (w == null) {
                             errorList.add("invalid Warrant name in action - " + action.getDeviceName());  // NOI18N
                         } else {
-                            String err = w.setRoute(0, null);
+                            String err = w.setRoute(false, null);
                             if (err == null) {
                                 err = w.setRunMode(Warrant.MODE_MANUAL, null, null, null, false);
                             }
@@ -1121,7 +1100,7 @@ public class DefaultConditional extends AbstractNamedBean
                             actionCount++;
                         }
                         break;
-                    case Conditional.ACTION_CONTROL_TRAIN:
+                    case CONTROL_TRAIN:
                         w = (Warrant) nb;
                         if (w == null) {
                             errorList.add("invalid Warrant name in action - " + action.getDeviceName());  // NOI18N
@@ -1132,7 +1111,7 @@ public class DefaultConditional extends AbstractNamedBean
                             actionCount++;
                         }
                         break;
-                    case Conditional.ACTION_SET_SIGNALMAST_ASPECT:
+                    case SET_SIGNALMAST_ASPECT:
                         f = (SignalMast) nb;
                         if (f == null) {
                             errorList.add("invalid Signal Mast name in action - " + action.getDeviceName());  // NOI18N
@@ -1141,7 +1120,7 @@ public class DefaultConditional extends AbstractNamedBean
                             actionCount++;
                         }
                         break;
-                    case Conditional.ACTION_SET_SIGNALMAST_HELD:
+                    case SET_SIGNALMAST_HELD:
                         f = (SignalMast) nb;
                         if (f == null) {
                             errorList.add("invalid Signal Mast name in action - " + action.getDeviceName());  // NOI18N
@@ -1150,7 +1129,7 @@ public class DefaultConditional extends AbstractNamedBean
                             actionCount++;
                         }
                         break;
-                    case Conditional.ACTION_CLEAR_SIGNALMAST_HELD:
+                    case CLEAR_SIGNALMAST_HELD:
                         f = (SignalMast) nb;
                         if (f == null) {
                             errorList.add("invalid Signal Mast name in action - " + action.getDeviceName());  // NOI18N
@@ -1159,7 +1138,7 @@ public class DefaultConditional extends AbstractNamedBean
                             actionCount++;
                         }
                         break;
-                    case Conditional.ACTION_SET_SIGNALMAST_DARK:
+                    case SET_SIGNALMAST_DARK:
                         f = (SignalMast) nb;
                         if (f == null) {
                             errorList.add("invalid Signal Head name in action - " + action.getDeviceName());  // NOI18N
@@ -1168,7 +1147,7 @@ public class DefaultConditional extends AbstractNamedBean
                             actionCount++;
                         }
                         break;
-                    case Conditional.ACTION_SET_SIGNALMAST_LIT:
+                    case SET_SIGNALMAST_LIT:
                         f = (SignalMast) nb;
                         if (f == null) {
                             errorList.add("invalid Signal Head name in action - " + action.getDeviceName());  // NOI18N
@@ -1177,7 +1156,7 @@ public class DefaultConditional extends AbstractNamedBean
                             actionCount++;
                         }
                         break;
-                    case Conditional.ACTION_SET_BLOCK_VALUE:
+                    case SET_BLOCK_VALUE:
                         OBlock b = (OBlock) nb;
                         if (b == null) {
                             errorList.add("invalid Block name in action - " + action.getDeviceName());  // NOI18N
@@ -1186,7 +1165,7 @@ public class DefaultConditional extends AbstractNamedBean
                             actionCount++;
                         }
                         break;
-                    case Conditional.ACTION_SET_BLOCK_ERROR:
+                    case SET_BLOCK_ERROR:
                         b = (OBlock) nb;
                         if (b == null) {
                             errorList.add("invalid Block name in action - " + action.getDeviceName());  // NOI18N
@@ -1195,7 +1174,7 @@ public class DefaultConditional extends AbstractNamedBean
                             actionCount++;
                         }
                         break;
-                    case Conditional.ACTION_CLEAR_BLOCK_ERROR:
+                    case CLEAR_BLOCK_ERROR:
                         b = (OBlock) nb;
                         if (b == null) {
                             errorList.add("invalid Block name in action - " + action.getDeviceName());  // NOI18N
@@ -1203,7 +1182,7 @@ public class DefaultConditional extends AbstractNamedBean
                             b.setError(false);
                         }
                         break;
-                    case ACTION_DEALLOCATE_BLOCK:
+                    case DEALLOCATE_BLOCK:
                         b = (OBlock) nb;
                         if (b == null) {
                             errorList.add("invalid Block name in action - " + action.getDeviceName());  // NOI18N
@@ -1212,7 +1191,7 @@ public class DefaultConditional extends AbstractNamedBean
                             actionCount++;
                         }
                         break;
-                    case ACTION_SET_BLOCK_OUT_OF_SERVICE:
+                    case SET_BLOCK_OUT_OF_SERVICE:
                         b = (OBlock) nb;
                         if (b == null) {
                             errorList.add("invalid Block name in action - " + action.getDeviceName());  // NOI18N
@@ -1221,7 +1200,7 @@ public class DefaultConditional extends AbstractNamedBean
                             actionCount++;
                         }
                         break;
-                    case ACTION_SET_BLOCK_IN_SERVICE:
+                    case SET_BLOCK_IN_SERVICE:
                         b = (OBlock) nb;
                         if (b == null) {
                             errorList.add("invalid Block name in action - " + action.getDeviceName());  // NOI18N
@@ -1230,7 +1209,7 @@ public class DefaultConditional extends AbstractNamedBean
                             actionCount++;
                         }
                         break;
-                    case ACTION_SET_NXPAIR_ENABLED:
+                    case SET_NXPAIR_ENABLED:
                         DestinationPoints dp = jmri.InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class).getNamedBean(devName);
                         if (dp == null) {
                             errorList.add("Invalid NX Pair name in action - " + action.getDeviceName());  // NOI18N
@@ -1239,7 +1218,7 @@ public class DefaultConditional extends AbstractNamedBean
                             actionCount++;
                         }
                         break;
-                    case ACTION_SET_NXPAIR_DISABLED:
+                    case SET_NXPAIR_DISABLED:
                         dp = jmri.InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class).getNamedBean(devName);
                         if (dp == null) {
                             errorList.add("Invalid NX Pair name in action - " + action.getDeviceName());  // NOI18N
@@ -1248,7 +1227,7 @@ public class DefaultConditional extends AbstractNamedBean
                             actionCount++;
                         }
                         break;
-                    case ACTION_SET_NXPAIR_SEGMENT:
+                    case SET_NXPAIR_SEGMENT:
                         dp = jmri.InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class).getNamedBean(devName);
                         if (dp == null) {
                             errorList.add("Invalid NX Pair name in action - " + action.getDeviceName());  // NOI18N
@@ -1462,8 +1441,8 @@ public class DefaultConditional extends AbstractNamedBean
     public void cancelSensorTimer(String sname) {
         for (int i = 0; i < _actionList.size(); i++) {
             ConditionalAction action = _actionList.get(i);
-            if ((action.getType() == Conditional.ACTION_DELAYED_SENSOR)
-                    || (action.getType() == Conditional.ACTION_RESET_DELAYED_SENSOR)) {
+            if ((action.getType() == Conditional.Action.DELAYED_SENSOR)
+                    || (action.getType() == Conditional.Action.RESET_DELAYED_SENSOR)) {
                 if (action.isTimerActive()) {
                     String devName = getDeviceName(action);
                     // have active set sensor timer - is it for our sensor?
@@ -1494,8 +1473,8 @@ public class DefaultConditional extends AbstractNamedBean
     public void cancelTurnoutTimer(String sname) {
         for (int i = 0; i < _actionList.size(); i++) {
             ConditionalAction action = _actionList.get(i);
-            if ((action.getType() == Conditional.ACTION_DELAYED_TURNOUT)
-                    || (action.getType() == Conditional.ACTION_RESET_DELAYED_TURNOUT)) {
+            if ((action.getType() == Conditional.Action.DELAYED_TURNOUT)
+                    || (action.getType() == Conditional.Action.RESET_DELAYED_TURNOUT)) {
                 if (action.isTimerActive()) {
                     // have active set turnout timer - is it for our turnout?
                     String devName = getDeviceName(action);

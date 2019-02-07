@@ -41,8 +41,8 @@ public class JsonMessageHttpService extends JsonHttpService {
             case JsonMessage.CLIENT:
                 return doSchema(type,
                         server,
-                        "jmri/server/json/message/client-client.json",
-                        "jmri/server/json/message/client-server.json");
+                        "jmri/server/json/message/client-server.json",
+                        "jmri/server/json/message/client-client.json");
             case JsonMessage.MESSAGE:
                 if (server) {
                     try {
@@ -57,8 +57,8 @@ public class JsonMessageHttpService extends JsonHttpService {
             case JSON.HELLO:
                 return doSchema(type,
                         server,
-                        "jmri/server/json/util/hello-client.json",
-                        "jmri/server/json/util/hello-server.json");
+                        "jmri/server/json/util/hello-server.json",
+                        "jmri/server/json/util/hello-client.json");
             default:
                 throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type));
         }

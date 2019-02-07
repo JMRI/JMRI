@@ -42,6 +42,7 @@ public class TrafficRelayTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
         JUnitUtil.initConfigureManager();
         JUnitUtil.initMemoryManager();
     }

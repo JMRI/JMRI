@@ -17,7 +17,7 @@ public class JMRIClientPowerManagerTest extends jmri.jmrix.AbstractPowerManagerT
 
     private JMRIClientTrafficControlScaffold stc = null;
 
-    // service routines to simulate recieving on, off from interface
+    // service routines to simulate receiving on, off from interface
     @Override
     protected void hearOn() {
       stc.sendTestReply(new JMRIClientReply("POWER ON\n\r"));
@@ -37,6 +37,17 @@ public class JMRIClientPowerManagerTest extends jmri.jmrix.AbstractPowerManagerT
     protected void hearOff() {
        stc.sendTestReply(new JMRIClientReply("POWER OFF\n\r"));
     }
+
+    @Override
+    protected void sendIdleReply() {
+       stc.sendTestReply(new JMRIClientReply("POWER IDLE\n\r"));
+    }
+    
+    @Override
+    protected void hearIdle() {
+        stc.sendTestReply(new JMRIClientReply("POWER IDLE\n\r"));
+    }
+
     @Override
     protected int numListeners() {
         return stc.numListeners();
@@ -57,11 +68,16 @@ public class JMRIClientPowerManagerTest extends jmri.jmrix.AbstractPowerManagerT
         return ((stc.outbound.elementAt(index))).toString().equals("POWER OFF\n");
     }
 
+    @Override
+    protected boolean outboundIdleOK(int index) {
+        return ((stc.outbound.elementAt(index))).toString().equals("POWER IDLE\n");
+    }
+
     // The minimal setup for log4J
     @Before
     @Override
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
         stc = new JMRIClientTrafficControlScaffold();
         p = new JMRIClientPowerManager(new JMRIClientSystemConnectionMemo(stc));
     }

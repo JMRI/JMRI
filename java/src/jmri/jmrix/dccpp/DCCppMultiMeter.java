@@ -45,6 +45,7 @@ public class DCCppMultiMeter extends jmri.implementation.AbstractMultiMeter impl
     public void message(DCCppMessage m) {
     }
 
+    @Override
     protected void requestUpdateFromLayout() {
         tc.sendDCCppMessage(DCCppMessage.makeReadTrackCurrentMsg(), this);
     }

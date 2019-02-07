@@ -10,11 +10,10 @@ import org.slf4j.LoggerFactory;
 
 /**
  * An implementation of DccThrottle with code specific to an TAMS connection.
- * <P>
+ * <p>
  * Based on Glen Oberhauser's original LnThrottle implementation
  *
  * @author Kevin Dickerson Copyright (C) 2012
- * 
  */
 public class MarklinThrottle extends AbstractThrottle implements MarklinListener {
 
@@ -119,7 +118,7 @@ public class MarklinThrottle extends AbstractThrottle implements MarklinListener
 
     /**
      * Set the speed {@literal &} direction.
-     * <P>
+     * <p>
      * This intentionally skips the emergency stop value of 1.
      *
      * @param speed Number from 0 to 1; less than zero is emergency stop

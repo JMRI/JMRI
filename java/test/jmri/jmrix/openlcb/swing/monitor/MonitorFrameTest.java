@@ -79,6 +79,7 @@ public class MonitorFrameTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
         jmri.util.JUnitUtil.initConfigureManager();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
         tcs = new TrafficControllerScaffold();

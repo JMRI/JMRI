@@ -761,10 +761,7 @@
         <decVal/>
         <label>Dimming Brightness</label>
       </variable>
-      <variable item="Speed Table" CV="67">
-        <speedTableVal/>
-        <label>Speed Table</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
       <variable CV="112" default="1" item="Function F0F effect generated">
         <decVal min="1" max="5"/>

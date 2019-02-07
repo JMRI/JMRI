@@ -275,8 +275,4 @@ public class IEEE802154Reply extends jmri.jmrix.AbstractMRReply {
         return ((chksum & 0xFFFF) == ((getElement(len - 2) << 8) + getElement(len - 1)));
     }
 
-    public String toMonitorString() {
-        return toString();
-    }
-
 }

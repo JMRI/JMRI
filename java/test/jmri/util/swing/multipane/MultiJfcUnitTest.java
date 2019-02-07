@@ -122,6 +122,7 @@ public class MultiJfcUnitTest extends jmri.util.SwingTestCase {
     protected void setUp() throws Exception {
         super.setUp();
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
         //jmri.util.JUnitUtil.initInternalTurnoutManager();
         //jmri.util.JUnitUtil.initInternalSensorManager();
         jmri.util.swing.SamplePane.disposed = new java.util.ArrayList<>();

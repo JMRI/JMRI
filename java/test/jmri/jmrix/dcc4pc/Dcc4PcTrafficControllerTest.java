@@ -153,7 +153,7 @@ public class Dcc4PcTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
     @Override
     @Before
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        JUnitUtil.setUp();
         tc = new Dcc4PcTrafficController();
     }
 

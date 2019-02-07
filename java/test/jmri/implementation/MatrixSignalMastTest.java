@@ -157,12 +157,12 @@ public class MatrixSignalMastTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetInstanceManager();
     }
 
     @After
     public void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
-        JUnitUtil.resetInstanceManager();
+        JUnitUtil.tearDown();
     }
 
     private final static Logger log = LoggerFactory.getLogger(MatrixSignalMastTest.class);

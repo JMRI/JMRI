@@ -95,9 +95,14 @@ public class AbstractAutomatonTest {
         sensor2 = InstanceManager.getDefault(SensorManager.class).provideSensor("IS2");
         sensor3 = InstanceManager.getDefault(SensorManager.class).provideSensor("IS3");
         sensor4 = InstanceManager.getDefault(SensorManager.class).provideSensor("IS4");
+        Sensor sensor5 = InstanceManager.getDefault(SensorManager.class).provideSensor("IS5");
+        Sensor sensor6 = InstanceManager.getDefault(SensorManager.class).provideSensor("IS6");
+        Sensor sensor7 = InstanceManager.getDefault(SensorManager.class).provideSensor("IS7");
+        Sensor sensor8 = InstanceManager.getDefault(SensorManager.class).provideSensor("IS8");
         AbstractAutomaton a = new AbstractAutomaton(){
             public boolean handle() {
-                waitSensorChange(new Sensor[]{sensor1, sensor2, sensor3, sensor4});
+                waitSensorChange(new Sensor[]{sensor1, sensor2, sensor3, sensor4,
+                                              sensor5, sensor6, sensor7, sensor8});
                 done = true;
                 return false; // done
             }

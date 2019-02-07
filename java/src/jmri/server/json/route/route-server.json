@@ -9,11 +9,11 @@
             "description": "System name of the route"
         },
         "userName": {
-            "type": "string",
+            "type": ["string", "null"],
             "description": "User name of the route"
         },
         "comment": {
-            "type": "string",
+            "type": ["string", "null"],
             "description": "Comment for the route"
         },
         "properties": {
@@ -30,7 +30,9 @@
                         "type": ["string", "null"],
                         "description": "String value of property or null"
                     }
-                }
+                },
+                "additionalProperties": false,
+                "required": ["name", "value"]
             }
         },
         "state": {
@@ -40,5 +42,5 @@
         }
     },
     "additionalProperties": false,
-    "required": ["name", "userName", "comment", "properties", "state"]
+    "required": ["name", "userName", "comment", "state"]
 }

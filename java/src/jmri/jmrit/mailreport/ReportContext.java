@@ -75,13 +75,9 @@ public class ReportContext {
         addCommunicationPortInfo();
 
         Profile profile = ProfileManager.getDefault().getActiveProfile();
-        if (profile != null) {
-            addString("Active profile: " + profile.getName() + "   ");
-            addString("Profile location: " + profile.getPath().getPath() + "   ");
-            addString("Profile ID: " + profile.getId() + "   ");
-        } else {
-            addString("No profile present");
-        }
+        addString("Active profile: " + profile.getName() + "   ");
+        addString("Profile location: " + profile.getPath().getPath() + "   ");
+        addString("Profile ID: " + profile.getId() + "   ");
         
         addString("JMRI Node ID: "+ jmri.util.node.NodeIdentity.identity() );
 
@@ -293,7 +289,6 @@ public class ReportContext {
      * Add communication port information
      */
     private void addCommunicationPortInfo() {
-        @SuppressWarnings("unchecked")
         Enumeration<CommPortIdentifier> portIDs = CommPortIdentifier.getPortIdentifiers();
 
         ArrayList<CommPortIdentifier> ports = new ArrayList<>();

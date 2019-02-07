@@ -136,16 +136,6 @@ public interface IdTagManager extends Manager<IdTag> {
     public IdTag newIdTag(@Nonnull String systemName, @CheckForNull String userName);
 
     /**
-     * Get a list of all IdTag's system names.
-     *
-     * @return a list of system names or an empty list
-     */
-    @Override
-    @CheckReturnValue
-    @Nonnull
-    public List<String> getSystemNameList();
-
-    /**
      * Get a list of all IdTags seen by a specified Reporter within a specific
      * time threshold from the most recently seen.
      *

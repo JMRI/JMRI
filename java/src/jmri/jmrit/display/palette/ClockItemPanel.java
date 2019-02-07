@@ -32,7 +32,7 @@ public class ClockItemPanel extends IconItemPanel {
     }
 
     @Override
-    protected JPanel instructions(boolean isBackGround) {
+    protected JPanel instructions() {
         JPanel blurb = new JPanel();
         blurb.setLayout(new BoxLayout(blurb, BoxLayout.Y_AXIS));
         blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));

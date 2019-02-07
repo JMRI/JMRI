@@ -814,9 +814,10 @@ public final class MathUtil {
      * @deprecated since 4.9.4; use
      * {@link #rectangleToRectangle2D(java.awt.Rectangle)} instead
      */
-    @Deprecated
+    @Deprecated // 4.9.4
     @CheckReturnValue
     public static Rectangle2D rectangle2DForRectangle(@Nonnull Rectangle r) {
+        jmri.util.Log4JUtil.deprecationWarning(log, "rectangle2DForRectangle");        
         return rectangleToRectangle2D(r);
     }
 
@@ -839,9 +840,10 @@ public final class MathUtil {
      * @deprecated since 4.9.4; use
      * {@link #rectangle2DToRectangle(java.awt.geom.Rectangle2D)} instead
      */
-    @Deprecated
+    @Deprecated // 4.9.4
     @CheckReturnValue
     public static Rectangle rectangleForRectangle2D(@Nonnull Rectangle2D r) {
+        jmri.util.Log4JUtil.deprecationWarning(log, "rectangleForRectangle2D");        
         return rectangle2DToRectangle(r);
     }
 
@@ -1154,7 +1156,7 @@ public final class MathUtil {
         GeneralPath path = new GeneralPath();
         bezier1st = true;
         if (p.length == 4) {    // draw cubic bezier?
-            result = MathUtil.plotBezier(path, p[0], p[1], p[2], p[3], 0, displacement);
+            result = plotBezier(path, p[0], p[1], p[2], p[3], 0, displacement);
         } else {    // (nope)
             result = plotBezier(path, p, 0, displacement);
         }
@@ -1173,4 +1175,5 @@ public final class MathUtil {
         return drawBezier(g2, p, 0.0);
     }
     private static boolean bezier1st = false;
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MathUtil.class);
 }

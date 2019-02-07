@@ -1,40 +1,41 @@
 A LocoIO programmer, based loosely on Hans DeLoof's LocoIO/HDL programmer.
-Deprecated/No longer supported as of JMRI version 3: Please use DecoderPro3 with a Public Domain/DIY decoder (2015)
+Deprecated/No longer supported as of JMRI version 3: Please use DecoderPro with a Public Domain/DIY decoder (2015)
 
-JMRI jmrix.loconet.locoio - a loconet programmer for LocoIO 
-and HDL based loconet IO boards using the Jabour or Hand Deloof
+JMRI jmrix.loconet.locoio - a LocoNet programmer for LocoIO
+and HDL based LocoNet IO boards using the John Jabour or Hans Deloof
 firmware.
 
-Written by John Plocher during the last part of 2006 and the beginning of 2007
+Written by John Plocher during the last part of 2006 and the beginning of 2007.
 
 This version ONLY deals with SV1 & SV2 (address/subaddress) and
-SV3-SV50 (primary mode,value1 and value2 for ports 1-16.
+SV3-SV50 (primary mode, value1 and value2 for ports 1-16.
 In particular, it does NOT address SV0 (board level configuration),
 SV51-SV98 (alternate Opcodes) or SV101-124 (servo config).
 
 Usage model:
 
-    Enter a LocoIO address and sub-address
-    Click on <probe> button
-    If a locoIO is found at that address, its firmware version is displayed
-    (the Monitor Loconet window will show all the LocoIOs that responded
+    Enter a LocoIO address and sub-address.
+    Click the <probe> button.
+    If a LocoIO is found at that address, its firmware version is displayed
+    (the Monitor LocoNet window will show all the LocoIOs that responded
     to the probe request if you need to refresh your memory)
 
     <set address>
-    If you wish to change the address of a locoIO board, you MUST
-    ensure that it is the ONLY locoIO-based board connected to the
+    If you wish to change the address of a LocoIO board, you MUST
+    ensure that it is the ONLY LocoIO-based board connected to the
     LocoNet, as the address is set via a broadcast message.  A popup
-    will remind you of this.  If you ignore it, then ALL of the locoIOs
-    on your loconet will be reprogrammed with the same new address.
+    will remind you of this.  If you ignore it, then ALL of the LocoIOs
+    on your LocoNet will be reprogrammed with the same new address.
 
     <read all> reads all the CV values from the LocoIO specified.
-    <write all> writes them all out
+
+    <write all> writes them all out to that LocoIO board.
 
     The individual read/write buttons do the same, but for only one
     port at a time.
 
     <capture> extracts the address out of the next turnout or
-    occupancy sensor loconet message it sees and uses it as the
+    occupancy sensor LocoNet message it sees and uses it as the
     address of the selected port.
 
 ----
@@ -48,3 +49,6 @@ TODO: write a "change address" routine that takes both the
 TODO: write a set of config data out to a text file in the
     form used by Hans's programmer, and reread it back when
     requested.
+
+TODO: clear up function of tool compared to the Public Domain HDL
+    basic decoder definition available in DecoderPro

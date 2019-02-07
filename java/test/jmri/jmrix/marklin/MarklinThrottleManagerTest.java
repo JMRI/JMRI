@@ -1,10 +1,8 @@
 package jmri.jmrix.marklin;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import jmri.util.junit.annotations.*;
+import org.junit.*;
 
 /**
  *
@@ -13,8 +11,10 @@ import org.junit.Test;
 public class MarklinThrottleManagerTest extends jmri.managers.AbstractThrottleManagerTestBase {
 
     @Test
-    public void testCTor() {
-        Assert.assertNotNull("exists",tm);
+    @Override
+    @Ignore("test requires further setup")
+    @ToDo("finish test setup, then remove overriden test so that test in parent class can run.")
+    public void testGetThrottleInfo() {
     }
 
     // The minimal setup for log4J

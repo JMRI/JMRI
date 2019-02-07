@@ -171,7 +171,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
                 }
             }
         }
-        firePropertyChange("run", Boolean.valueOf(run), Boolean.valueOf(!run));
+        firePropertyChange("run", Boolean.valueOf(!run), Boolean.valueOf(run));  // old, then new
         handleAlarm();
     }
 
@@ -208,7 +208,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
         setTime(now);
         // notify listeners if internal master
         if (internalMaster) {
-            firePropertyChange("rate", Double.valueOf(factor), Double.valueOf(oldFactor));
+            firePropertyChange("rate", Double.valueOf(oldFactor), Double.valueOf(factor));  // old, then new
         }
         handleAlarm();
     }
@@ -239,7 +239,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
         // update memory
         updateMemory(factor);
         // notify listeners
-        firePropertyChange("rate", Double.valueOf(factor), Double.valueOf(oldFactor));
+        firePropertyChange("rate", Double.valueOf(oldFactor), Double.valueOf(factor)); // old, then new
         handleAlarm();
     }
 
@@ -379,13 +379,13 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
     }
 
     @Override
-    public void setStartStopped(boolean stopped) {
-        startStopped = stopped;
+    public void setClockInitialRunState(ClockInitialRunState state) {
+        initialState = state;
     }
 
     @Override
-    public boolean getStartStopped() {
-        return startStopped;
+    public ClockInitialRunState getClockInitialRunState() {
+        return initialState;
     }
 
     @Override
@@ -407,6 +407,31 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
     @Override
     public boolean getStartSetTime() {
         return startSetTime;
+    }
+
+    @Override
+    public void setStartRate(double factor) {
+        startupFactor = factor;
+        haveStartupFactor = true;
+    }
+
+    @Override
+    public double getStartRate() {
+        if (haveStartupFactor) {
+            return startupFactor;
+        } else {
+            return userGetRate();
+        }
+    }
+
+    @Override
+    public void setSetRateAtStart(boolean set) {
+        startSetRate = set;
+    }
+
+    @Override
+    public boolean getSetRateAtStart() {
+        return startSetRate;
     }
 
     @Override
@@ -455,6 +480,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
      */
     @Override
     public void initializeHardwareClock() {
+        boolean startStopped = (initialState == ClockInitialRunState.DO_STOP);
         if (synchronizeWithHardware || correctHardware) {
             if (startStopped) {
                 // Note if there are multiple hardware clocks, this should be a loop over all hardware clocks
@@ -505,6 +531,19 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
      */
     @Override
     public void dispose() {
+        if (timer!=null) {
+            // end this timer
+            timer.setRepeats(false); // just in case
+            timer.stop();
+            
+            java.awt.event.ActionListener listeners[] = timer.getListeners(java.awt.event.ActionListener.class);
+            for (java.awt.event.ActionListener listener : listeners) timer.removeActionListener(listener);            
+
+            timer = null;
+        }
+        
+        java.beans.PropertyChangeListener[] plisteners = pcMinutes.getPropertyChangeListeners();
+        for (java.beans.PropertyChangeListener plistener : plisteners) pcMinutes.removePropertyChangeListener(plistener);
     }
 
     /**
@@ -514,6 +553,11 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
     private double hardwareFactor = 1.0;  // this is the rate factor for the hardware clock
     //  The above is necessary to support hardware clock Time Sources that fiddle with mFactor to
     //      synchronize, instead of sending over a new time to synchronize.
+    private double startupFactor = 1.0;     // this is the rate requested at startup
+    private boolean startSetRate = true; // if true, the hardware rate will be set to
+    private boolean haveStartupFactor = false; // true if startup factor was ever set.
+    // startupFactor at startup.
+
     private Date startAtTime;
     private Date setTimeValue;
     private Date pauseTime;   // null value indicates clock is running
@@ -527,7 +571,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
     private boolean synchronizeWithHardware = false;  // true indicates need to synchronize
     private boolean correctHardware = false;    // true indicates hardware correction requested
     private boolean display12HourClock = false; // true if 12-hour clock display is requested
-    private boolean startStopped = false;    // true indicates start up with clock stopped requested
+    private ClockInitialRunState initialState = ClockInitialRunState.DO_START;    // what to do with the clock running state at startup
     private boolean startSetTime = false;    // true indicates set fast clock to specified time at
     //start up requested
     private Date startTime = new Date(); // specified time for setting fast clock at start up

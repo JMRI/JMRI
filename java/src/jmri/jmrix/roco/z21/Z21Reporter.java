@@ -67,12 +67,13 @@ public class Z21Reporter extends jmri.implementation.AbstractRailComReporter imp
                  // get the locomotive address from the message.
                  DccLocoAddress l = msg.getRailComLocoAddress(i);
                  // see if there is a tag for this address.
-                 RailCom tag = InstanceManager.getDefault(RailComManager.class).provideIdTag("" + l.getNumber());
+                 RailCom tag = (RailCom) InstanceManager.getDefault(RailComManager.class).provideIdTag("" + l.getNumber());
                  tag.setAddressType(l.isLongAddress()?RailCom.LONG_ADDRESS:RailCom.SHORT_ADDRESS);
                  tag.setActualSpeed(msg.getRailComSpeed(i));
-                 tag.setActualTemperature(msg.getRailComTemp(i));
-                 // set the tag report.
                  notify(tag);
+             }
+             if(tags == 0){
+                 notify(null); // clear the current report if no tags.
              }
          }
     }

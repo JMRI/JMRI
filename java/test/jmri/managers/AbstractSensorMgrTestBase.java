@@ -20,16 +20,14 @@ import org.junit.Test;
  * @author	Bob Jacobsen 2003, 2006, 2008, 2016
  * @author      Paul Bender Copyright(C) 2016
  */
-public abstract class AbstractSensorMgrTestBase {
+public abstract class AbstractSensorMgrTestBase extends AbstractManagerTestBase<SensorManager, Sensor> {
 
     // implementing classes must provide these abstract members:
     //
     @Before
-    abstract public void setUp();    	// load t with actual object; create scaffolds as needed
+    abstract public void setUp();    	// load l with actual object; create scaffolds as needed
 
     abstract public String getSystemName(int i);
-
-    protected SensorManager l = null;	// holds objects under test
 
     static protected boolean listenerResult = false;
 
@@ -44,6 +42,7 @@ public abstract class AbstractSensorMgrTestBase {
     // test creation - real work is in the setup() routine
     @Test
     public void testCreate() {
+       Assert.assertNotNull("Sensor Manager Exists",l);
     }
 
     @Test
@@ -61,18 +60,64 @@ public abstract class AbstractSensorMgrTestBase {
         Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
     }
 
+    // Quite a few tests overload this to create their own name process
+    @Test
+    public void testProvideName() {
+        // create
+        Sensor t = l.provide("" + getNumToTest1());
+        // check
+        Assert.assertTrue("real object returned ", t != null);
+        Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
+    }
+
+    @Test
+    public void testDelete() {
+        // create
+        Sensor t = l.provide(getSystemName(getNumToTest1()));
+        
+        // two-pass delete, details not really tested
+        
+        try {
+            l.deleteBean(t, "CanDelete");
+        } catch (java.beans.PropertyVetoException e) {}
+        try {
+            l.deleteBean(t, "DoDelete");
+        } catch (java.beans.PropertyVetoException e) {}
+        
+        // check for bean
+        Assert.assertNull("no bean", l.getBySystemName(getSystemName(getNumToTest1())));
+        // check for lengths
+        Assert.assertEquals(0, l.getNamedBeanList().size());
+        Assert.assertEquals(0, l.getNamedBeanSet().size());
+        Assert.assertEquals(0, l.getSystemNameAddedOrderList().size());
+        Assert.assertEquals(0, l.getSystemNameList().size());
+        Assert.assertEquals(0, l.getSystemNameArray().length);
+        jmri.util.JUnitAppender.suppressWarnMessage("Manager#getSystemNameArray() is deprecated");
+        Assert.assertEquals(0, l.getObjectCount());
+    }
+
+
     @Test
     public void testDefaultSystemName() {
         // create
         Sensor t = l.provideSensor("" + getNumToTest1());
         // check
         Assert.assertTrue("real object returned ", t != null);
-        Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
+        Assert.assertEquals("system name correct ", t,l.getBySystemName(getSystemName(getNumToTest1())));
     }
 
     @Test(expected=IllegalArgumentException.class)
     public void testProvideFailure() {
         l.provideSensor("");
+    }
+
+    @Test
+    public void testSettings() {
+        l.setDefaultSensorDebounceGoingActive(1234L);
+        Assert.assertEquals(1234L, l.getDefaultSensorDebounceGoingActive());
+
+        l.setDefaultSensorDebounceGoingInActive(12345L);
+        Assert.assertEquals(12345L, l.getDefaultSensorDebounceGoingInActive());
     }
 
     @Test
@@ -110,10 +155,14 @@ public abstract class AbstractSensorMgrTestBase {
     }
 
     @Test
-    public void testUpperLower() {
+    public void testUpperLower() {  // this is part of testing of (default) normalization
         Sensor t = l.provideSensor("" + getNumToTest2());
         String name = t.getSystemName();
-        Assert.assertNull(l.getSensor(name.toLowerCase()));
+        
+        int prefixLength = l.getSystemPrefix().length()+1;     // 1 for type letter
+        String lowerName = name.substring(0,prefixLength)+name.substring(prefixLength, name.length()).toLowerCase();
+        
+        Assert.assertEquals(t, l.getSensor(lowerName));
     }
 
     @Test
@@ -143,4 +192,5 @@ public abstract class AbstractSensorMgrTestBase {
     protected int getNumToTest2() {
         return 7;
     }
+
 }

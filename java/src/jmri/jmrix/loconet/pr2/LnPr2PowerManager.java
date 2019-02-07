@@ -13,26 +13,24 @@ import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.jmrix.loconet.SlotManager;
 
 /**
- * PowerManager implementation for controlling layout power via PR2
- * <P>
+ * PowerManager implementation for controlling layout power via PR2.
+ * <p>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
  * and used with permission as part of the JMRI project. That permission does
  * not extend to uses in other software products. If you wish to use this code,
  * algorithm or these message formats outside of JMRI, please contact Digitrax
  * Inc for separate permission.
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2001
  */
 public class LnPr2PowerManager extends LnPowerManager {
 
     public LnPr2PowerManager(LocoNetSystemConnectionMemo memo) {
         super(memo);
-        this.sm = memo.getSlotManager();
         this.tc = memo.getLnTrafficController();
         this.memo = memo;
     }
 
-    SlotManager sm;
     LnTrafficController tc;
     LocoNetSystemConnectionMemo memo;
 
@@ -45,7 +43,7 @@ public class LnPr2PowerManager extends LnPowerManager {
             // get current active address
             DccLocoAddress activeAddress = ((LnPr2ThrottleManager) InstanceManager.throttleManagerInstance()).getActiveAddress();
             if (activeAddress != null) {
-                pm = new LnOpsModeProgrammer(sm, memo, activeAddress.getNumber(), activeAddress.isLongAddress());
+                pm = new LnOpsModeProgrammer(memo, activeAddress.getNumber(), activeAddress.isLongAddress());
                 checkOpsProg();
 
                 // set bit 1 in CV 128
@@ -73,7 +71,7 @@ public class LnPr2PowerManager extends LnPowerManager {
             // get current active address
             DccLocoAddress activeAddress = ((LnPr2ThrottleManager) InstanceManager.throttleManagerInstance()).getActiveAddress();
             if (activeAddress != null) {
-                pm = new LnOpsModeProgrammer(sm, memo, activeAddress.getNumber(), activeAddress.isLongAddress());
+                pm = new LnOpsModeProgrammer(memo, activeAddress.getNumber(), activeAddress.isLongAddress());
                 checkOpsProg();
 
                 // reset bit 1 in CV 128
@@ -140,6 +138,15 @@ public class LnPr2PowerManager extends LnPowerManager {
                 }
             }
         }
+    }
+    
+    /**
+     * Returns false to indicate PR2 does not implement an "IDLE" power state.
+     * @return false
+     */
+    @Override
+    public boolean implementsIdle() {
+        return false;
     }
 
     // timer support to send updates & keep power alive

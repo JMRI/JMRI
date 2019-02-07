@@ -1,10 +1,3 @@
-/*
- * LocoIOData.java
- *
- * Created on January 28, 2007, 10:18 PM
- *
- * Data associated with a LocoIO device
- */
 package jmri.jmrix.loconet.locoio;
 
 import java.beans.PropertyChangeEvent;
@@ -18,8 +11,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- *
- * @author plocher
+ * Data associated with a LocoIO device.
+ * 
+ * @author John Plocher, January 28, 2007
  */
 public class LocoIOData
         implements LocoNetListener, java.beans.PropertyChangeListener {
@@ -37,18 +31,18 @@ public class LocoIOData
 
     /**
      * Define the number of rows in the table, which is also the number of
-     * "channels" in a signel LocoIO unit
+     * "channels" in a single LocoIO unit.
      */
     private int _numRows = 16;
     /**
-     * LocoBuffer is always address 0x01 0x50
+     * LocoBuffer always has address 0x01 0x50.
      */
     private static final int LocoBufferAddress = 0x0150;
-    private String locoBufferVersion = "<unknown>";
-    private String locoIOVersion = "<unknown>";
-    private String status = "<unknown>";  // LocoIO activity status
+    private String locoBufferVersion = Bundle.getMessage("StateUnknown");
+    private String locoIOVersion = Bundle.getMessage("StateUnknown");
+    private String status = Bundle.getMessage("StateUnknown");  // LocoIO activity status
     /**
-     * Per-port SV data
+     * Per-port SV data.
      */
     private LocoIOMode[] lim = new LocoIOMode[_numRows];
     private int[] addr = new int[_numRows];
@@ -59,7 +53,7 @@ public class LocoIOData
     private int[] writeState = new int[_numRows];
 
     /**
-     * Record whether this pin is looking to capture a value from the LocoNet
+     * Record whether this pin is looking to capture a value from the LocoNet.
      */
     private boolean[] capture = new boolean[_numRows];
     private String[] mode = new String[_numRows];
@@ -67,7 +61,7 @@ public class LocoIOData
     private LocoIOModeList validmodes;
 
     /**
-     * Creates a new instance of LocoIOData
+     * Create a new instance of LocoIOData.
      */
     public LocoIOData(int unitAddr, int unitSubAddr, LnTrafficController tc) {
         timeoutcounter = 0;
@@ -76,7 +70,7 @@ public class LocoIOData
         validmodes = new LocoIOModeList();
 
         for (int i = 0; i < _numRows; i++) {
-            setMode(i, "<none>");
+            setMode(i, "<none>"); // NOI18N
             lim[i] = null;
             setAddr(i, 0);
             setSV(i, 0);
@@ -106,23 +100,21 @@ public class LocoIOData
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        String s = "LocoIOData: " + evt.getPropertyName() // NOI18N
-                + " := " + evt.getNewValue() // NOI18N
-                + " from " + evt.getSource(); // NOI18N
-        System.out.println(s);
+        log.info("LocoIOData: {} := {} from {}", // NOI18N
+                evt.getPropertyName(), evt.getNewValue(), evt.getSource());
     }
 
     /**
-     * Address and SubAddress of this device
+     * Address and SubAddress of this device.
      * <p>
      * High byte of the Address is fixed to 0x01
-     * <p>
+     * <br>
      * Low byte Address must be in the range of 0x01 .. 0x4F, 0x51 .. 0x7F
-     * <P>
+     * <br>
      * 0x50 is reserved for the LocoBuffer
-     * <p>
+     * <br>
      * The subAddress is in the range of 0x01 .. 0x7E
-     * <p>
+     * <br>
      * 0x7f is reserved
      */
     public synchronized void setUnitAddress(int unit, int unitSub) {
@@ -149,19 +141,22 @@ public class LocoIOData
     }
 
     /**
-     * TODO: LocoIO Board level configuration
-     * <p>
-     * Bit 0: 0 =default, 1=Port Refresh<br>
-     * Bit 1: 0 = Fixed code PBs, 1= Alternated code PBs<br>
-     * Bit 2: 0 = default - Not used<br>
-     * Bit 3: 0 = default, 1 = Ports 5-12 are Servo Ports<br>
-     * Bit 4-7: Blink Rate<br>
+     * TODO: LocoIO Board level configuration.
+     * <pre>
+     * Bit 0: 0 = default, 1 = Port Refresh
+     * Bit 1: 0 = Fixed code PBs, 1 = Alternated code PBs
+     * Bit 2: 0 = default - Not used
+     * Bit 3: 0 = default, 1 = Ports 5-12 are Servo Ports
+     * Bit 4-7: Blink Rate
+     *
+     * If possibe add/support the additional config options for HDL boards
+     * </pre>
      */
     public void setUnitConfig(int portRefresh, int altCodePBs, int isServo, int blinkRate) {
-        int newsv0 = ((portRefresh & 0x01)) | // bit 0
+        int newsv0 = ((portRefresh & 0x01)) |   // bit 0
                 ((altCodePBs & 0x01) << 0x01) | // bit 1
-                // bit 2 left at zero
-                ((isServo & 0x01) << 0x03) | // bit 3
+                // bit 2 is left at zero
+                ((isServo & 0x01) << 0x03) |    // bit 3
                 ((blinkRate & 0x0F) << 0x04);   // bits 4-7
         dataListeners.firePropertyChange("UnitConfig", Integer.valueOf(sv0), Integer.valueOf(newsv0)); // NOI18N
         sv0 = newsv0;
@@ -234,10 +229,10 @@ public class LocoIOData
     }
 
     /**
-     * The addr field (for the address info used in each LocoIO channel)
+     * Set new value in addr field (for the address info used in each LocoIO channel).
      *
      * @param channel integer value of the addresses in use for this row
-     *                (0=invalid)
+     *                (0 = invalid)
      */
     public void setAddr(int channel, int value) {
         addr[channel] = value & 0x7FF;
@@ -293,10 +288,9 @@ public class LocoIOData
     }
 
     /**
-     * Start reading all rows back
+     * Start reading all rows back.
      */
     public void readAll() {
-        // System.out.println("readAll()");
         for (int row = 0; row < _numRows; row++) {
             readState[row] = READ;
         }
@@ -304,7 +298,7 @@ public class LocoIOData
     }
 
     /**
-     * Start writing all rows out
+     * Start writing all rows out.
      */
     public void writeAll() {
         for (int row = 0; row < _numRows; row++) {
@@ -318,8 +312,9 @@ public class LocoIOData
     }
 
     /**
-     * Code for read activity needed. See states NONE, READMODE, READINGMODE,
-     * READVALUE1, READINGVALUE1, READVALUE2, READINGVALUE2
+     * Code for read activity needed.
+     * See states NONE, READMODE, READINGMODE, READVALUE1,
+     * READINGVALUE1, READVALUE2, READINGVALUE2
      */
     // int[] needRead = new int[_numRows];
     protected final int NONE = 0;
@@ -380,12 +375,12 @@ public class LocoIOData
      * Listen to the LocoNet. We're listening for incoming OPC_PEER_XFR
      * messages, which might be part of a read or write sequence. We're also
      * _sometimes_ listening for commands as part of a "capture" operation.
-     * <P>
+     * <p>
      * The incoming LocoNet OPC_PEER_XFR messages don't retain any information
      * about the CV number or whether it was a read or write operation. We store
      * the data regardless of whether it was read or write, but we need to
      * remember the cv number in the lastOpCv member.
-     * <P>
+     *
      * @param m Incoming message
      */
     @Override
@@ -461,7 +456,7 @@ public class LocoIOData
                                         + "v2=" + Integer.toHexString(getV2(channel)) + ") " // NOI18N
                                         + "is " + getAddr(channel) + "(0x" + Integer.toHexString(getAddr(channel)) + ")"); // NOI18N
                             } else {
-                                log.warn("OPC_PEER_XFR: Type (" + type + ") is not {0,1,2} for channel " + channel); // NOI18N
+                                log.warn("OPC_PEER_XFR: Type ({}) is not {0,1,2} for channel {}", type, channel); // NOI18N
                             }
                         } else {
                             // log.error("last CV recorded is invalid: "+lastOpCv);
@@ -475,15 +470,11 @@ public class LocoIOData
                     return;
                 }
             case LnConstants.OPC_INPUT_REP: // Block Sensors and other general sensor codes
-                if (log.isDebugEnabled()) {
-                    log.debug(LnConstants.OPC_NAME(opCode) + " received"); // NOI18N
-                }
+                log.debug("{} received", LnConstants.OPC_NAME(opCode)); // NOI18N
                 // these might require capture
                 for (int i = 0; i < _numRows; i++) {
                     if (capture[i]) {
-                        if (log.isDebugEnabled()) {
-                            log.debug("row set for capture: " + i); // NOI18N
-                        }
+                        log.debug("row set for capture: {}", i); // NOI18N
                         // This is a capture request, get address bytes
                         int val1 = m.getElement(1);
                         int val2 = m.getElement(2);
@@ -497,15 +488,11 @@ public class LocoIOData
                 return;
 
             case LnConstants.OPC_SW_REQ:    // Turnout SWITCH Request
-                if (log.isDebugEnabled()) {
-                    log.debug(LnConstants.OPC_NAME(opCode) + " received"); // NOI18N
-                }
+                log.debug("{} received", LnConstants.OPC_NAME(opCode)); // NOI18N
                 // these might require capture
                 for (int i = 0; i < _numRows; i++) {
                     if (capture[i]) {
-                        if (log.isDebugEnabled()) {
-                            log.debug("row set for capture: " + i); // NOI18N
-                        }
+                        log.debug("row set for capture: {}", i); // NOI18N
                         // This is a capture request, get address bytes
                         int val1 = m.getElement(1);
                         int val2 = m.getElement(2);
@@ -516,7 +503,7 @@ public class LocoIOData
                     }
                 }
                 return;
-            default:    // we ignore all other loconet messages
+            default:    // we ignore all other LocoNet messages
             // if (log.isDebugEnabled()) {
             //     log.debug(LnConstants.OPC_NAME(opCode) + " received (ignored)");
             // }
@@ -546,7 +533,7 @@ public class LocoIOData
                 readState[currentPin] = NONE;
                 return;
             default:
-                log.error("Pin " + currentPin + " unexpected read state, can't advance " + readState[currentPin]); // NOI18N
+                log.error("Pin {} unexpected read state, can't advance {}", currentPin, readState[currentPin]); // NOI18N
                 readState[currentPin] = NONE;
                 return;
         }
@@ -567,7 +554,7 @@ public class LocoIOData
                 writeState[currentPin] = NONE;
                 return;
             default:
-                log.error("Pin " + currentPin + " unexpected write state, can't advance " + writeState[currentPin]); // NOI18N
+                log.error("Pin {} unexpected write state, can't advance {}", currentPin, writeState[currentPin]); // NOI18N
                 writeState[currentPin] = NONE;
                 return;
         }
@@ -585,15 +572,15 @@ public class LocoIOData
         for (int i = 0; i < _numRows; i++) {
             currentPin = i;
             if (readState[i] != NONE) {
-                // yes, needs read.  Find what kind
-                // System.out.println("iNO: readState[" + i + "] = " + readState[i]);
+                // yes, needs read. Find what kind
+                log.debug("iNO: readState[{}] = {}", i, readState[i]);
                 switch (readState[i]) {
                     case READVALUE1:
                     case READINGVALUE1:
                         // set new state, send read, then done
                         readState[i] = READINGVALUE1;
                         lastOpCv = i * 3 + 4;
-                        setStatus("read SV" + lastOpCv + " (port" + i + " v1)");
+                        setStatus(Bundle.getMessage("StatusReading", lastOpCv, i + 1, 1)); // number port like table
                         sendReadCommand(unitAddress, unitSubAddress, lastOpCv);
                         return;
                     case READVALUE2:
@@ -601,7 +588,7 @@ public class LocoIOData
                         // set new state, send read, then done
                         readState[i] = READINGVALUE2;
                         lastOpCv = i * 3 + 5;
-                        setStatus("read SV" + lastOpCv + " (port " + i + " v2)");
+                        setStatus(Bundle.getMessage("StatusReading", lastOpCv, i + 1, 2));
                         sendReadCommand(unitAddress, unitSubAddress, lastOpCv);
                         return;
                     case READMODE:
@@ -609,11 +596,11 @@ public class LocoIOData
                         // set new state, send read, then done
                         readState[i] = READINGMODE;
                         lastOpCv = i * 3 + 3;
-                        setStatus("read SV" + lastOpCv + " (port " + i + " mode)");
+                        setStatus(Bundle.getMessage("StatusReadMode", lastOpCv, i + 1));
                         sendReadCommand(unitAddress, unitSubAddress, lastOpCv);
                         return;
                     default:
-                        log.error("found an unexpected state: " + readState[1] + " on port " + i); // NOI18N
+                        log.error("found an unexpected state: {} on port {}", readState[1], i + 1); // NOI18N
                         return;
                 }
             }
@@ -623,14 +610,14 @@ public class LocoIOData
             currentPin = i;
             if (writeState[i] != NONE) {
                 // yes, needs read.  Find what kind
-                // System.out.println("iNO: writeState[" + i + "] = " + readState[i]);
+                log.debug("iNO: writeState[{}] = {}", i, readState[i]);
                 switch (writeState[i]) {
                     case WRITEVALUE1:
                     case WRITINGVALUE1:
                         // set new state, send read, then done
                         writeState[i] = WRITINGVALUE1;
                         lastOpCv = i * 3 + 4;
-                        setStatus("write SV" + lastOpCv + " ( port " + i + " v1)");
+                        setStatus(Bundle.getMessage("StatusWriting", lastOpCv, i + 1, 1));
                         sendWriteCommand(unitAddress, unitSubAddress, lastOpCv, getV1(i));
                         return;
                     case WRITEVALUE2:
@@ -638,7 +625,7 @@ public class LocoIOData
                         // set new state, send read, then done
                         writeState[i] = WRITINGVALUE2;
                         lastOpCv = i * 3 + 5;
-                        setStatus("write SV" + lastOpCv + " (port" + i + " v2)");
+                        setStatus(Bundle.getMessage("StatusWriting", lastOpCv, i + 1, 2));
                         sendWriteCommand(unitAddress, unitSubAddress, lastOpCv, getV2(i));
                         return;
                     case WRITEMODE:
@@ -646,19 +633,19 @@ public class LocoIOData
                         // set new state, send write, then done
                         writeState[i] = WRITINGMODE;
                         lastOpCv = i * 3 + 3;
-                        setStatus("write SV" + lastOpCv + " (port" + i + " mode)");
+                        setStatus(Bundle.getMessage("StatusWriteMode", lastOpCv, i + 1));
                         sendWriteCommand(unitAddress, unitSubAddress, lastOpCv, getSV(i));
                         return;
 
                     default:
-                        log.error("found an unexpected state: " + writeState[1] + " on port " + i); // NOI18N
+                        log.error("found an unexpected state: {} on port {}", writeState[1], i + 1); // NOI18N
                         return;
                 }
             }
         }
         // nothing of interest found, so just end gracefully
-        //  if (log.isDebugEnabled()) log.debug("No operation needed");
-        setStatus("OK");
+        log.debug("No operation needed");
+        setStatus(Bundle.getMessage("StatusOK"));
         lastOpCv = -1;
         currentPin = 0;
     }
@@ -676,17 +663,15 @@ public class LocoIOData
      * same operation.
      */
     synchronized protected void timeout() {
-        if (log.isDebugEnabled()) {
-            log.debug("timeout!"); // NOI18N
-        }
-        setStatus("Timeout");
+        log.debug("timeout!"); // NOI18N
+        setStatus(Bundle.getMessage("Timeout"));
         if (timeoutcounter++ == 5) {
             for (int i = 0; i < _numRows; i++) {
                 readState[i] = NONE;
                 writeState[i] = NONE;
             }
-            setStatus("Aborted");
-            setLIOVersion("<unknown>"); // NOI18N
+            setStatus(Bundle.getMessage("StateAborted"));
+            setLIOVersion(Bundle.getMessage("StateUnknown")); // NOI18N
             timeoutcounter = 0;
             stopTimer();
         } else {
@@ -702,7 +687,7 @@ public class LocoIOData
     }
 
     /**
-     * Internal routine to stop timer, as all is well
+     * Internal routine to stop timer, as all is well.
      */
     protected void stopTimer() {
         if (timer != null) {
@@ -711,7 +696,7 @@ public class LocoIOData
     }
 
     /**
-     * Internal routine to handle timer starts {@literal &} restarts
+     * Internal routine to handle timer starts {@literal &} restarts.
      */
     protected void restartTimer(int delay) {
         if (timer == null) {
@@ -729,29 +714,26 @@ public class LocoIOData
     }
 
     /**
-     * Read a SV from a given LocoIO device
+     * Read a SV from a given LocoIO device.
      *
      */
     void sendReadCommand(int locoIOAddress, int locoIOSubAddress, int cv) {
         // remember current op is read
         reading = true;
-        //writing = false;
-        // System.out.println("sendReadCommand(to " + Integer.toHexString(locoIOAddress) + "/" +
-        //        Integer.toHexString(locoIOSubAddress) + " SV" + cv);
-
+        log.debug("sendReadCommand(to {}/{} SV {}",
+                Integer.toHexString(locoIOAddress), Integer.toHexString(locoIOSubAddress), cv);
         tc.sendLocoNetMessage(
                 LocoIO.readCV(locoIOAddress, locoIOSubAddress, cv));
         startTimer();        // and set timeout on reply
     }
 
     /**
-     * Write an SV to a given LocoIO device
+     * Write an SV to a given LocoIO device.
      *
      */
     void sendWriteCommand(int locoIOAddress, int locoIOSubAddress, int cv, int data) {
         // remember current op is write
         reading = false;
-        //writing = true;
 
         tc.sendLocoNetMessage(
                 LocoIO.writeCV(locoIOAddress, locoIOSubAddress, cv, data));
@@ -759,9 +741,7 @@ public class LocoIOData
     }
 
     public void dispose() {
-        if (log.isDebugEnabled()) {
-            log.debug("dispose"); // NOI18N
-        }
+        log.debug("dispose"); // NOI18N
         // disconnect from future events
         stopTimer();
         tc.removeLocoNetListener(~0, this);
@@ -774,5 +754,7 @@ public class LocoIOData
         v2 = null;
         lim = null;
     }
+
     private final static Logger log = LoggerFactory.getLogger(LocoIOData.class);
+
 }

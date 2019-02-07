@@ -4,9 +4,8 @@ import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
-import junit.framework.Test;
-import junit.framework.TestSuite;
 import org.junit.Assert;
+import org.junit.Test;
 
 /**
  * Tests for the Operations RollingStock Engine class Last manually
@@ -22,6 +21,7 @@ import org.junit.Assert;
 public class EngineTest extends OperationsTestCase {
 
     // test constroctors.
+    @Test
     public void test2ParmCtor() {
         // test the constructor with roadname and roadnumer as parameters.
         Engine e1 = new Engine("TESTROAD", "TESTNUMBER1");
@@ -32,6 +32,7 @@ public class EngineTest extends OperationsTestCase {
         Assert.assertEquals("Engine ID", "TESTROAD" + "TESTNUMBER1", e1.getId());
     }
 
+    @Test
     public void testXmlConstructor() {
         // test the constructor loading this car from an XML element.
 
@@ -79,6 +80,7 @@ public class EngineTest extends OperationsTestCase {
 
     // test Engine Class
     // test Engine creation
+    @Test
     public void testCreate() {
         Engine e1 = new Engine("TESTROAD", "TESTNUMBER1");
         e1.setModel("TESTMODEL");
@@ -90,6 +92,7 @@ public class EngineTest extends OperationsTestCase {
         Assert.assertEquals("Engine Length", "TESTLENGTH", e1.getLength());
     }
 
+    @Test
     public void testSetLocation() {
         Engine e1 = new Engine("TESTROAD", "TESTNUMBER1");
         e1.setModel("TESTMODEL");
@@ -126,6 +129,7 @@ public class EngineTest extends OperationsTestCase {
 
     }
 
+    @Test
     public void testSetDestination() {
         Engine e1 = new Engine("TESTROAD", "TESTNUMBER1");
         e1.setModel("TESTMODEL");
@@ -162,33 +166,4 @@ public class EngineTest extends OperationsTestCase {
         // check for failure too.
         Assert.assertFalse("fail to set destination e1", Track.OKAY == e1.setDestination(l3, l1t1));
     }
-
-    // from here down is testing infrastructure
-    // Ensure minimal setup for log4J
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-    }
-
-    public EngineTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", EngineTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(EngineTest.class);
-        return suite;
-    }
-
-    @Override
-    protected void tearDown() throws Exception {
-        super.tearDown();
-    }
-
 }

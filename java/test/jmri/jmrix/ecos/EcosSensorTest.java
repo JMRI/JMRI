@@ -10,22 +10,32 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class EcosSensorTest {
+public class EcosSensorTest extends jmri.implementation.AbstractSensorTestBase {
 
-    @Test
-    public void testCTor() {
-        EcosSensor t = new EcosSensor("US1","Test");
-        Assert.assertNotNull("exists",t);
-    }
+    @Override
+    public int numListeners() {return 0;}
+
+    @Override
+    public void checkOnMsgSent() {}
+
+    @Override
+    public void checkOffMsgSent() {}
+
+    @Override
+    public void checkStatusRequestMsgSent() {}
 
     // The minimal setup for log4J
+    @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        t = new EcosSensor("US1","Test");
     }
 
+    @Override
     @After
     public void tearDown() {
+        t.dispose();
         JUnitUtil.tearDown();
     }
 

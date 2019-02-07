@@ -34,6 +34,7 @@ public class FacelessServer implements DeviceListener, DeviceManager, ZeroConfSe
     ServerSocket socket = null;
     final private ArrayList<DeviceServer> deviceList = new ArrayList<>();
     final private ArrayList<DeviceListener> deviceListenerList = new ArrayList<>();
+    private int threadNumber = 1;
 
     FacelessServer() {
         createServerThread();
@@ -66,11 +67,12 @@ public class FacelessServer implements DeviceListener, DeviceManager, ZeroConfSe
                 log.info("Creating new WiThrottle DeviceServer(socket) on port {}, waiting for incoming connection...", port);
                 device = new DeviceServer(socket.accept(), this);  //blocks here until a connection is made
 
-                Thread t = new Thread(device);
+                String threadName = "DeviceServer-" + threadNumber++;  // NOI18N
+                Thread t = new Thread(device, threadName);
                 for(DeviceListener dl:deviceListenerList){
                    device.addDeviceListener(dl);
                 }
-                log.debug("Starting DeviceListener thread");
+                log.debug("Starting thread '{}'", threadName);  // NOI18N
                 t.start();
             } catch (IOException e3) {
                 if (isListen) {

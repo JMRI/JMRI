@@ -58,7 +58,9 @@ public class RosterTableModelTest extends TestCase {
 
     @Override
     public void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        jmri.util.JUnitUtil.setUp();
+
+        jmri.util.JUnitUtil.resetProfileManager();
 
         // Create empty test instance
         InstanceManager.reset(Roster.class);

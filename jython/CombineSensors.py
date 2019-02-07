@@ -16,6 +16,7 @@
 
 import jmri
 import java
+import java.beans
 
 # Define the listener. 
 class CombineSensors(java.beans.PropertyChangeListener):

@@ -1,12 +1,14 @@
 package jmri.jmrix.loconet;
 
 import java.util.ResourceBundle;
+import javax.annotation.Nonnull;
 import jmri.AddressedProgrammerManager;
 import jmri.ClockControl;
 import jmri.CommandStation;
 import jmri.ConsistManager;
 import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
+import jmri.IdTagManager;
 import jmri.LightManager;
 import jmri.PowerManager;
 import jmri.ReporterManager;
@@ -14,6 +16,7 @@ import jmri.SensorManager;
 import jmri.ThrottleManager;
 import jmri.TurnoutManager;
 import jmri.jmrix.debugthrottle.DebugThrottleManager;
+import jmri.jmrix.SystemConnectionMemo;
 import jmri.jmrix.loconet.swing.LnComponentFactory;
 import jmri.jmrix.swing.ComponentFactory;
 import jmri.managers.DefaultProgrammerManager;
@@ -29,39 +32,58 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2010
  */
-public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
+public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
 
+    /**
+     * Must manually register() after construction is complete.
+     */
     public LocoNetSystemConnectionMemo(LnTrafficController lt, SlotManager sm) {
         super("L", "LocoNet"); // NOI18N
         this.lt = lt;
 
         this.sm = sm; // doesn't full register, but fine for this purpose.
 
-        register(); // registers general type
-        InstanceManager.store(this, LocoNetSystemConnectionMemo.class); // also register as specific type
+        // self-registration is deferred until the command station type is set below
+                
+        // create and register the ComponentFactory for the GUI
+        InstanceManager.store(cf = new LnComponentFactory(this),
+                ComponentFactory.class);
+    }
+
+    /**
+     * Must manually register() after construction is complete.
+     */
+    public LocoNetSystemConnectionMemo() {
+        this("L", "LocoNet"); // NOI18N
+    }
+
+    public LocoNetSystemConnectionMemo(@Nonnull String prefix, @Nonnull String name) {
+        super(prefix, name); // NOI18N
 
         // create and register the ComponentFactory for the GUI
         InstanceManager.store(cf = new LnComponentFactory(this),
                 ComponentFactory.class);
     }
 
-    public LocoNetSystemConnectionMemo() {
-        super("L", "LocoNet"); // NOI18N
-        register(); // registers general type
+    /**
+     * Do both the default parent
+     * {@link SystemConnectionMemo} registration,
+     * and register this specific type.
+     */
+    @Override
+    public void register() {
+        super.register(); // registers general type
         InstanceManager.store(this, LocoNetSystemConnectionMemo.class); // also register as specific type
-
-        // create and register the ComponentFactory for the GUI
-        InstanceManager.store(cf = new LnComponentFactory(this),
-                ComponentFactory.class);
     }
 
     ComponentFactory cf = null;
     private LnTrafficController lt;
+    protected LocoNetThrottledTransmitter tm;
     private SlotManager sm;
     private LnMessageManager lnm = null;
 
     /**
-     * Provides access to the SlotManager for this particular connection.
+     * Provide access to the SlotManager for this particular connection.
      *
      * @return the slot manager or null if no valid slot manager is available
      */
@@ -73,11 +95,15 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
     }
 
     /**
-     * Provides access to the TrafficController for this particular connection.
+     * Provide access to the TrafficController for this particular connection.
      *
      * @return the LocoNet-specific TrafficController
      */
     public LnTrafficController getLnTrafficController() {
+        if (lt == null) {
+            setLnTrafficController(new LnPacketizer(this)); // default to Packetizer TrafficController
+            log.debug("Auto create of LnTrafficController for initial configuration");
+        }
         return lt;
     }
 
@@ -97,7 +123,7 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
 
     public DefaultProgrammerManager getProgrammerManager() {
         if (programmerManager == null) {
-            programmerManager = new LnProgrammerManager(getSlotManager(), this);
+            programmerManager = new LnProgrammerManager(this);
         }
         return programmerManager;
     }
@@ -110,7 +136,7 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
     protected boolean mTurnoutExtraSpace = false;
 
     /**
-     * Configure the programming manager and "command station" objects
+     * Configure the programming manager and "command station" objects.
      *
      * @param type               Command station type, used to configure various
      *                           operations
@@ -118,8 +144,11 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
      *                           operation retries?
      * @param mTurnoutExtraSpace Is the user configuration set for extra time
      *                           between turnout operations?
+     * @param mTranspondingAvailable    Is the layout configured to provide
+     *                                  transponding reports
      */
-    public void configureCommandStation(LnCommandStationType type, boolean mTurnoutNoRetry, boolean mTurnoutExtraSpace) {
+    public void configureCommandStation(LnCommandStationType type, boolean mTurnoutNoRetry,
+                                            boolean mTurnoutExtraSpace, boolean mTranspondingAvailable) {
 
         // store arguments
         this.mTurnoutNoRetry = mTurnoutNoRetry;
@@ -135,11 +164,14 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
 
             sm.setCommandStationType(type);
             sm.setSystemConnectionMemo(this);
+            sm.setTranspondingAvailable(mTranspondingAvailable);
 
             // store as CommandStation object
             InstanceManager.store(sm, jmri.CommandStation.class);
         }
 
+        // register this SystemConnectionMemo to connect to rest of system
+        register();
     }
 
     /**
@@ -151,9 +183,11 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
             return false;
         }
         if (type.equals(GlobalProgrammerManager.class)) {
+            log.trace("provides GlobalProgrammerManager is {}", getProgrammerManager().isGlobalProgrammerAvailable());
             return getProgrammerManager().isGlobalProgrammerAvailable();
         }
         if (type.equals(AddressedProgrammerManager.class)) {
+            log.trace("provides AddressedProgrammerManager is {}", getProgrammerManager().isAddressedModePossible());
             return getProgrammerManager().isAddressedModePossible();
         }
 
@@ -184,6 +218,10 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
         if (type.equals(CommandStation.class)) {
             return true;
         }
+        if (type.equals(IdTagManager.class)) {
+            return true;
+        }
+
         return super.provides(type);
     }
 
@@ -197,9 +235,11 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
             return null;
         }
         if (T.equals(GlobalProgrammerManager.class)) {
+            log.trace("get GlobalProgrammerManager is {}", getProgrammerManager());
             return (T) getProgrammerManager();
         }
         if (T.equals(AddressedProgrammerManager.class)) {
+            log.trace("get AddressedProgrammerManager is {}", getProgrammerManager());
             return (T) getProgrammerManager();
         }
 
@@ -230,10 +270,11 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
         if (T.equals(CommandStation.class)) {
             return (T) getSlotManager();
         }
+        if (T.equals(IdTagManager.class)) {
+            return (T) getIdTagManager();
+        }
         return super.get(T);
     }
-
-    protected LocoNetThrottledTransmitter tm;
 
     /**
      * Configure the common managers for LocoNet connections. This puts the
@@ -242,7 +283,7 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
     public void configureManagers() {
 
         tm = new LocoNetThrottledTransmitter(getLnTrafficController(), mTurnoutExtraSpace);
-        log.debug("ThrottleTransmitted configured with :{}", mTurnoutExtraSpace);
+        log.debug("ThrottleTransmitted configured with: {}", mTurnoutExtraSpace);
         if (sm != null) {
             sm.setThrottledTransmitter(tm, mTurnoutNoRetry);
             log.debug("set turnout retry: {}", mTurnoutNoRetry);
@@ -278,6 +319,7 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
         // make sure InstanceManager knows about that
         InstanceManager.setDefault(ClockControl.class, cc);
 
+        getIdTagManager();
     }
 
     protected LnPowerManager powerManager;
@@ -334,7 +376,7 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
             return null;
         }
         if (clockControl == null) {
-            clockControl = new LnClockControl(getSlotManager(), getLnTrafficController());
+            clockControl = new LnClockControl(this);
         }
         return clockControl;
     }
@@ -380,27 +422,43 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
         return ResourceBundle.getBundle("jmri.jmrix.loconet.LocoNetActionListBundle");
     }
 
+    // yes, tagManager is static.  Tags can move between system connections.
+    // when readers are not all on the same LocoNet
+    // this manager is loaded on demand.
+    protected static TranspondingTagManager tagManager;
+
+    static public TranspondingTagManager getIdTagManager() {
+        if (tagManager == null) {
+            tagManager = new TranspondingTagManager();
+            InstanceManager.setIdTagManager(tagManager);
+        }
+        return tagManager;
+    }
+
     @Override
     public void dispose() {
-        lt = null;
-        sm = null;
         InstanceManager.deregister(this, LocoNetSystemConnectionMemo.class);
         if (cf != null) {
             InstanceManager.deregister(cf, ComponentFactory.class);
         }
         if (powerManager != null) {
+            powerManager.dispose();
             InstanceManager.deregister(powerManager, LnPowerManager.class);
         }
         if (turnoutManager != null) {
+            turnoutManager.dispose();
             InstanceManager.deregister(turnoutManager, LnTurnoutManager.class);
         }
         if (lightManager != null) {
+            lightManager.dispose();
             InstanceManager.deregister(lightManager, LnLightManager.class);
         }
         if (sensorManager != null) {
+            sensorManager.dispose();
             InstanceManager.deregister(sensorManager, LnSensorManager.class);
         }
         if (reporterManager != null) {
+            reporterManager.dispose();
             InstanceManager.deregister(reporterManager, LnReporterManager.class);
         }
         if (throttleManager != null) {
@@ -415,6 +473,12 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
         }
         if (tm != null){
             tm.dispose();
+        }
+        if (sm != null){
+            sm.dispose();
+        }
+        if (lt != null){
+            lt.dispose();
         }
         super.dispose();
     }

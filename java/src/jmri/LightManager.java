@@ -22,15 +22,16 @@ import javax.annotation.Nonnull;
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
+ *
  * @author Dave Duchamp Copyright (C) 2004
  */
-public interface LightManager extends Manager<Light> {
+public interface LightManager extends ProvidingManager<Light> {
 
     /**
-     * Locate via user name, then system name if needed. If that fails, create a
-     * new Light: If the name is a valid system name, it will be used for the
-     * new Light. Otherwise, the makeSystemName method will attempt to turn it
+     * Get the Light with the user name, then system name if needed; if that fails, create a
+     * new Light. 
+     * If the name is a valid system name, it will be used for the new Light.
+     * Otherwise, the {@link Manager#makeSystemName} method will attempt to turn it
      * into a valid system name.
      *
      * @param name User name, system name, or address which can be promoted to
@@ -40,13 +41,18 @@ public interface LightManager extends Manager<Light> {
     @Nonnull
     public Light provideLight(@Nonnull String name);
 
-    // to free resources when no longer used
+    /** {@inheritDoc} */
+    @Override
+    default public Light provide(@Nonnull String name) throws IllegalArgumentException { return provideLight(name); }
+
+    /** {@inheritDoc} */
     @Override
     public void dispose();
 
     /**
-     * Locate via user name, then system name if needed. Does not create a new
-     * one if nothing found
+     * Get an existing Light or return null if it doesn't exist. 
+     * 
+     * Locates via user name, then system name if needed.
      *
      * @param name User name, system name, or address which can be promoted to
      *             system name
@@ -61,7 +67,8 @@ public interface LightManager extends Manager<Light> {
     public Light getLight(@Nonnull String name);
 
     /**
-     * Return an instance with the specified system and user names. Note that
+     * Return a Light with the specified system and user names. 
+     * Note that
      * two calls with the same arguments will get the same instance; there is
      * only one Light object representing a given physical Light and therefore
      * only one with a specific system or user name.
@@ -156,16 +163,6 @@ public interface LightManager extends Manager<Light> {
     @CheckReturnValue
     @Nonnull
     public String convertSystemNameToAlternate(@Nonnull String systemName);
-
-    /**
-     * Get a list of all Light system names.
-     *
-     * @return a list of all system names
-     */
-    @CheckReturnValue
-    @Nonnull
-    @Override
-    public List<String> getSystemNameList();
 
     /**
      * Activate the control mechanism for each Light controlled by this

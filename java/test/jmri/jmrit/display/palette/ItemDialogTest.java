@@ -16,7 +16,7 @@ public class ItemDialogTest {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        ItemDialog t = new ItemDialog("Sensors","Sensors");
+        ItemDialog t = new ItemDialog("Sensors", "Icons", null);
         Assert.assertNotNull("exists",t);
         jmri.util.JUnitUtil.dispose(t);
     }

@@ -7,12 +7,13 @@ import java.io.IOException;
 import java.util.HashMap;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.event.ListSelectionEvent;
-import jmri.NamedBean;
+import jmri.Reporter;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.DisplayFrame;
 import jmri.jmrit.display.Editor;
@@ -22,7 +23,7 @@ import jmri.util.swing.ImagePanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ReporterItemPanel extends TableItemPanel {
+public class ReporterItemPanel extends TableItemPanel<Reporter> {
 
     ReporterIcon _reporter;
 
@@ -69,9 +70,11 @@ public class ReporterItemPanel extends TableItemPanel {
         if (doneAction != null) {
             addUpdateButtonToBottom(doneAction);
         }
-        initIconFamiliesPanel();
+ //       initIconFamiliesPanel();
         add(_iconFamilyPanel);
-    }
+        // ReporterItem extends FamilyItemPanel and needs a non-null _showIconsButton for setEditor call
+        _showIconsButton = new JButton(Bundle.getMessage("ShowIcons"));
+   }
 
     @Override
     protected void makeDndIconPanel(HashMap<String, NamedIcon> iconMap, String displayKey) {
@@ -91,15 +94,14 @@ public class ReporterItemPanel extends TableItemPanel {
         comp.setOpaque(false);
         comp.setToolTipText(Bundle.getMessage("ToolTipDragIcon"));
         panel.add(comp);
-        panel.revalidate();
         int width = Math.max(100, panel.getPreferredSize().width);
         panel.setPreferredSize(new java.awt.Dimension(width, panel.getPreferredSize().height));
         panel.setToolTipText(Bundle.getMessage("ToolTipDragIcon"));
         _dragIconPanel.add(panel);
         _dragIconPanel.setToolTipText(Bundle.getMessage("ToolTipDragIcon"));
-        _dragIconPanel.invalidate();
     }
 
+    @Override
     protected JPanel makeItemButtonPanel() {
         return new JPanel();
     }
@@ -119,7 +121,7 @@ public class ReporterItemPanel extends TableItemPanel {
                 _updateButton.setEnabled(true);
                 _updateButton.setToolTipText(null);
             }
-            NamedBean bean = getDeviceNamedBean();
+            Reporter bean = getDeviceNamedBean();
             _reporter.setReporter(bean.getDisplayName());
         } else {
             if (_updateButton != null) {
@@ -143,7 +145,7 @@ public class ReporterItemPanel extends TableItemPanel {
 
         @Override
         protected boolean okToDrag() {
-            NamedBean bean = getDeviceNamedBean();
+            Reporter bean = getDeviceNamedBean();
             if (bean == null) {
                 JOptionPane.showMessageDialog(this, Bundle.getMessage("noRowSelected"),
                         Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
@@ -157,7 +159,7 @@ public class ReporterItemPanel extends TableItemPanel {
             if (!isDataFlavorSupported(flavor)) {
                 return null;
             }
-            NamedBean bean = getDeviceNamedBean();
+            Reporter bean = getDeviceNamedBean();
             if (bean == null) {
                 return null;
             }

@@ -1,0 +1,53 @@
+@startuml
+
+package jmri #DDDDDD {
+
+    interface NewFunction
+
+}
+
+package jmri.swing #DDDDDD {
+
+    class NewFunctionPane {
+        NewFunctionPane(NewFunction ..)
+    }
+    note right: This is both a base for\nother classes, and the implementation\nfor generic NewFunctionPane references
+    NewFunction *-- NewFunctionPane : configures
+}
+
+package jmri.implementation #DDDDDD {
+
+    abstract class AbstractNewFunction
+    NewFunction <|-- AbstractNewFunction
+    
+    class NewFunctionTypeA
+    AbstractNewFunction <|-- NewFunctionTypeA
+ 
+}
+
+package jmri.implementation.swing #DDDDDD {
+
+    class NewFunctionTypeAPane {
+        NewFunctionTypeAPane(NewFunctionTypeA ..)
+    }
+    NewFunctionPane <|-- NewFunctionTypeAPane
+    NewFunctionTypeA *-- NewFunctionTypeAPane : configures
+}
+
+package jmri.jmrit.ToolB #DDDDDD {
+
+    class NewFunctionTypeB
+    
+    AbstractNewFunction <|-- NewFunctionTypeB
+}
+
+package jmri.jmrit.ToolB.swing #DDDDDD {
+
+    class NewFunctionTypeBPane {
+        NewFunctionTypeBPane(NewFunctionTypeB ..)
+    }
+    NewFunctionPane <|-- NewFunctionTypeBPane
+    NewFunctionTypeB *-- NewFunctionTypeBPane : configures
+}
+
+@enduml

@@ -93,6 +93,7 @@ public class JsonMemorySocketServiceTest {
     @Before
     public void setUp() throws Exception {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
         JUnitUtil.initMemoryManager();
     }
 

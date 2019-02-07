@@ -43,15 +43,6 @@ abstract public class SerialTrafficController extends AbstractMRTrafficControlle
     }
 
     /**
-     * instance use of the traffic controller is no longer used for multiple
-     * connections
-     */
-    @Deprecated
-    @Override
-    public void setInstance() {
-    }
-
-    /**
      * Send a sequence of X10 messages to an adapter.
      * <p>
      * Makes them into the local messages and then queues in order.

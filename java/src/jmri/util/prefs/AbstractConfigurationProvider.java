@@ -11,7 +11,7 @@ import jmri.util.node.NodeIdentity;
  * @author Randall Wood
  */
 public abstract class AbstractConfigurationProvider {
-    
+
     protected final Profile project;
     private boolean privateBackedUp = false;
     private boolean sharedBackedUp = false;
@@ -36,9 +36,15 @@ public abstract class AbstractConfigurationProvider {
         } else {
             dir = new File(this.project.getPath(), Profile.PROFILE);
             if (!shared) {
+                File nodeDir = new File(dir, NodeIdentity.identity());
+                if (!nodeDir.exists()) {
+                    boolean success = NodeIdentity.copyFormerIdentity(dir, nodeDir);
+                    if (! success) log.debug("copyFormerIdentity({}, {}) did not copy", dir, nodeDir);
+                }
                 dir = new File(dir, NodeIdentity.identity());
             }
         }
+        log.debug("createDirectory(\"{}\")", dir);
         FileUtil.createDirectory(dir);
         return dir;
     }
@@ -70,5 +76,6 @@ public abstract class AbstractConfigurationProvider {
     protected void setSharedBackedUp(boolean sharedBackedUp) {
         this.sharedBackedUp = sharedBackedUp;
     }
-    
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractConfigurationProvider.class);
 }

@@ -8,8 +8,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Implements SerialPortAdapter for the LocoNetOverTcp system network
  * connection.
- * <P>
- * This connects a Loconet via a telnet connection. Normally controlled by the
+ * <p>
+ * This connects a LocoNet via a telnet connection. Normally controlled by the
  * LnTcpDriverFrame class.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002, 2003
@@ -17,12 +17,19 @@ import org.slf4j.LoggerFactory;
  */
 public class LnTcpDriverAdapter extends LnNetworkPortController {
 
-    public LnTcpDriverAdapter() {
-        super(new LocoNetSystemConnectionMemo());
+    public LnTcpDriverAdapter(LocoNetSystemConnectionMemo m) {
+        super(m);
         option2Name = "CommandStation";
         option3Name = "TurnoutHandle";
         options.put(option2Name, new Option(Bundle.getMessage("CommandStationTypeLabel"), commandStationNames, false));
-        options.put(option3Name, new Option("Turnout command handling:", new String[]{"Normal", "Spread", "One Only", "Both"})); // TODO I18N
+        options.put(option3Name, new Option(Bundle.getMessage("TurnoutHandling"),
+                new String[]{Bundle.getMessage("HandleNormal"), Bundle.getMessage("HandleSpread"), Bundle.getMessage("HandleOneOnly"), Bundle.getMessage("HandleBoth")})); // I18N
+        options.put("TranspondingPresent", new Option(Bundle.getMessage("TranspondingPresent"),
+                new String[]{Bundle.getMessage("ButtonNo"), Bundle.getMessage("ButtonYes")} )); // NOI18N
+    }
+
+    public LnTcpDriverAdapter() {
+        this(new LocoNetSystemConnectionMemo());
     }
 
     /**
@@ -34,15 +41,17 @@ public class LnTcpDriverAdapter extends LnNetworkPortController {
 
         setCommandStationType(getOptionState(option2Name));
         setTurnoutHandling(getOptionState(option3Name));
+        setTranspondingAvailable(getOptionState("TranspondingPresent"));
+
         // connect to a packetizing traffic controller
-        LnOverTcpPacketizer packets = new LnOverTcpPacketizer();
+        LnOverTcpPacketizer packets = new LnOverTcpPacketizer(this.getSystemConnectionMemo());
         packets.connectPort(this);
 
         // create memo
         this.getSystemConnectionMemo().setLnTrafficController(packets);
         // do the common manager config
         this.getSystemConnectionMemo().configureCommandStation(commandStationType,
-                mTurnoutNoRetry, mTurnoutExtraSpace);
+                mTurnoutNoRetry, mTurnoutExtraSpace, mTranspondingAvailable);
         this.getSystemConnectionMemo().configureManagers();
 
         // start operation

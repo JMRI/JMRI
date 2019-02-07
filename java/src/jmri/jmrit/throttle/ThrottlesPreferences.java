@@ -71,7 +71,7 @@ public class ThrottlesPreferences {
             setUsingFunctionIcon(a.getValue().compareTo("true") == 0);
         }
         if (((a = e.getAttribute("windowDimensionWidth")) != null) && ((b = e.getAttribute("windowDimensionHeight")) != null)) {
-            setWindowDimension(new Dimension(Integer.valueOf(a.getValue()), Integer.valueOf(b.getValue())));
+            setWindowDimension(new Dimension(Integer.parseInt(a.getValue()), Integer.parseInt(b.getValue())));
         }
         if ((a = e.getAttribute("isSavingThrottleOnLayoutSave")) != null) {
             setSaveThrottleOnLayoutSave(a.getValue().compareTo("true") == 0);

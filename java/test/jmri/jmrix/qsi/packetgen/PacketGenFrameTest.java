@@ -1,17 +1,13 @@
-/**
- * PacketGenFrameTest.java
- *
- * Description:	tests for the jmri.jmrix.qsi.packetgen.PacketGenFrame class
- *
- * @author	Bob Jacobsen
- */
 package jmri.jmrix.qsi.packetgen;
 
 import java.awt.GraphicsEnvironment;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Test;
+import org.junit.*;
 
+/**
+ * Tests for the jmri.jmrix.qsi.packetgen.PacketGenFrame class
+ *
+ * @author	Bob Jacobsen
+ */
 public class PacketGenFrameTest {
 
     @Test
@@ -19,6 +15,11 @@ public class PacketGenFrameTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         PacketGenFrame packetGenFrame = new PacketGenFrame(new jmri.jmrix.qsi.QsiSystemConnectionMemo());
         Assert.assertNotNull(packetGenFrame);
+    }
+
+    @Before
+    public void setUp() {
+        jmri.util.JUnitUtil.setUp();
     }
 
 }

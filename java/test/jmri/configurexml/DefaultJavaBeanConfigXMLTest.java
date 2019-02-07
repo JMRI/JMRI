@@ -77,6 +77,7 @@ public class DefaultJavaBeanConfigXMLTest extends TestCase {
     @Override
     protected void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
     }
 
     @Override

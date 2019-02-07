@@ -13,28 +13,25 @@ import javax.annotation.Nonnull;
 import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.managers.AbstractManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Basic Implementation of a BlockManager.
- * <P>
+ * <p>
  * Note that this does not enforce any particular system naming convention.
- * <P>
+ * <p>
  * Note this is a concrete class, unlike the interface/implementation pairs of
  * most Managers, because there are currently only one implementation for
  * Blocks.
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
  *
  * @author Bob Jacobsen Copyright (C) 2006
  */
@@ -106,11 +103,10 @@ public class BlockManager extends AbstractManager<Block> implements PropertyChan
             return null;
         }
         // Block does not exist, create a new Block
-        String sName = systemName.toUpperCase();
-        r = new Block(sName, userName);
+        r = new Block(systemName, userName);
         // save in the maps
         register(r);
-        /*The following keeps trace of the last created auto system name.
+        /*The following keeps track of the last created auto system name.
          currently we do not reuse numbers, although there is nothing to stop the
          user from manually recreating them*/
         if (systemName.startsWith("IB:AUTO:")) {
@@ -228,13 +224,15 @@ public class BlockManager extends AbstractManager<Block> implements PropertyChan
      * {@inheritDoc}
      *
      * Forces upper case and trims leading and trailing whitespace.
-     * Does not check for valid prefix, hence doesn't throw NamedBean.BadSystemNameException.
+     * The IB prefix is added if necessary.
      */
     @CheckReturnValue
     @Override
     public @Nonnull
     String normalizeSystemName(@Nonnull String inputName) {
-        // does not check for valid prefix, hence doesn't throw NamedBean.BadSystemNameException
+        if (inputName.length() < 3 || !inputName.startsWith("IB")) {
+            inputName = "IB" + inputName;
+        }
         return inputName.toUpperCase().trim();
     }
 
@@ -246,6 +244,7 @@ public class BlockManager extends AbstractManager<Block> implements PropertyChan
     @Deprecated
     @CheckForNull
     static public BlockManager instance() {
+        jmri.util.Log4JUtil.deprecationWarning(log, "instance");        
         return InstanceManager.getDefault(BlockManager.class);
     }
 
@@ -301,13 +300,12 @@ public class BlockManager extends AbstractManager<Block> implements PropertyChan
     public List<Block> getBlocksOccupiedByRosterEntry(@Nonnull RosterEntry re) {
         List<Block> blockList = new ArrayList<>();
 
-        getSystemNameList().stream().forEach((sysName) -> {
-            Block b = getBySystemName(sysName);
-            Object o = b.getValue();
-            if (o != null) {
-                if (o instanceof RosterEntry && o == re) {
+        getNamedBeanSet().stream().forEach((b) -> {
+            Object obj;
+            if (b!= null && (obj = b.getValue()) != null) {
+                if (obj instanceof RosterEntry && obj == re) {
                     blockList.add(b);
-                } else if (o.toString().equals(re.getId()) || o.toString().equals(re.getDccAddress())) {
+                } else if (obj.toString().equals(re.getId()) || obj.toString().equals(re.getDccAddress())) {
                     blockList.add(b);
                 }
             }
@@ -356,8 +354,6 @@ public class BlockManager extends AbstractManager<Block> implements PropertyChan
         }
     }
 
-
-
     /**
      * Returns the amount of time since the layout was last powered up,
      * in milliseconds. If the layout has not been powered up as far as
@@ -372,6 +368,5 @@ public class BlockManager extends AbstractManager<Block> implements PropertyChan
         return Instant.now().toEpochMilli() - lastTimeLayoutPowerOn.toEpochMilli();
     }
 
-
-    private final static Logger log = LoggerFactory.getLogger(BlockManager.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BlockManager.class);
 }

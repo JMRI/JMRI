@@ -41,8 +41,8 @@
       given piece of model railroad equipment, it is possible to
       connect it to JMRI. If you don't see your particular system
       here, please ask about it on the <a href=
-      "https://groups.yahoo.com/neo/groups/jmriusers/info">JMRI
-      users Yahoo group</a>.</p>
+      "https://groups.io/g/jmriusers">JMRI
+      users</a>.</p>
 
       <div class="list">
         <dl>
@@ -236,6 +236,9 @@
 
             <p class="dl">Configure: Directly connecting to an
             <a href="loconet/Uhlenbrock.shtml">Intellibox</a>.</p>
+
+            <p class="dl">Configure: Connecting to a <a href=
+            "StandaloneLocoNet.shtml">Standalone LocoNet</a>.</p>
           </dd>
 
           <dt class="im"><a href=
@@ -370,6 +373,18 @@
           <dd>
             <p class="dl">Configure: <a href=
             "modbus/index.shtml">Modbus networks</a></p>
+          </dd>
+
+
+          <dt class="im"><img src=
+          "http://mqtt.org/new/wp-content/uploads/2012/02/mqtt-inside.png" 
+          alt="MQTT logo" height="60" width="60"></dt>
+
+          <dt><a href="mqtt/index.shtml">MQTT</a></dt>
+
+          <dd>
+            <p class="dl">Configure: <a href=
+            "mqtt/index.shtml">MQTT networks</a></p>
           </dd>
 
           <dt class="im"><a href="http://www.modelrectifier.com">
@@ -557,6 +572,13 @@
             <p class="dl">Configure connection to <a href=
             "tams/index.shtml">TAMS</a> Master Control command
             station.</p>
+          </dd>
+
+          <dt><a href="secsi/index.shtml">TracTronics SECSI</a></dt>
+
+          <dd>
+            <p class="dl">Configure: <a href=
+            "secsi/index.shtml">TracTronics SECSI connections</a></p>
           </dd>
 
           <dt class="im"><a href=

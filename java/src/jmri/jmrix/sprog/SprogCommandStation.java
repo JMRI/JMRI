@@ -1,5 +1,6 @@
 package jmri.jmrix.sprog;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Vector;
@@ -14,41 +15,41 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Controls a collection of slots, acting as a soft command station for SPROG
- * <P>
+ * Control a collection of slots, acting as a soft command station for SPROG
+ * <p>
  * A SlotListener can register to hear changes. By registering here, the
  * SlotListener is saying that it wants to be notified of a change in any slot.
  * Alternately, the SlotListener can register with some specific slot, done via
  * the SprogSlot object itself.
- * <P>
+ * <p>
  * This Programmer implementation is single-user only. It's not clear whether
  * the command stations can have multiple programming requests outstanding (e.g.
  * service mode and ops mode, or two ops mode) at the same time, but this code
  * definitely can't.
- * <P>
+ * <p>
  * Updated by Andrew Berridge, January 2010 - state management code now safer,
  * uses enum, etc. Amalgamated with Sprog Slot Manager into a single class -
- * reduces code duplication </P>
- * <P>
+ * reduces code duplication.
+ * <p>
  * Updated by Andrew Crosland February 2012 to allow slots to hold 28 step speed
- * packets</P>
- * <P>
+ * packets
+ * <p>
  * Re-written by Andrew Crosland to send the next packet as soon as a reply is 
  * notified. This removes a race between the old state machine running before 
  * the traffic controller despatches a reply, missing the opportunity to send a 
  * new packet to the layout until the next JVM time slot, which can be 15ms on 
- * Windows platforms.</P>
- * <P>
+ * Windows platforms.
+ * <p>
  * May-17 Moved status reply handling to the slot monitor. Monitor messages from
  * other sources and suppress messages from here to prevent queueing messages in
- * the traffic controller.</P>
- * <P>
+ * the traffic controller.
+ * <p>
  * Jan-18 Re-written again due to threading issues. Previous changes removed
  * activity from the slot thread, which could result in loading the swing thread
  * to the extent that the gui becomes very slow to respond.
  * Moved status message generation to the slot monitor.
  * Interact with power control as a way to allow the user to recover after a
- * timeout error due to loss of communication with the hardware.</P>
+ * timeout error due to loss of communication with the hardware.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
  * @author Andrew Crosland (C) 2006 ported to SPROG, 2012, 2016, 2018
@@ -66,7 +67,13 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
     private SprogTrafficController tc = null;
 
     final Object lock = new Object();
-    private SprogReply reply;
+    
+    // it's not at all clear what the following object does. It's only
+    // set, with a newly created copy of a reply, in notifyReply(SprogReply m);
+    // it's never referenced.
+    @SuppressWarnings("unused") // added april 2018; should be removed?
+    private SprogReply reply;  
+    
     private boolean waitingForReply = false;
     private boolean replyAvailable = false;
     private boolean sendSprogAddress = false;
@@ -99,7 +106,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
      * @param repeats number of times to repeat the packet
      */
     @Override
-    public void sendPacket(byte[] packet, int repeats) {
+    public boolean sendPacket(byte[] packet, int repeats) {
         if (packet.length <= 1) {
             log.error("Invalid DCC packet length: {}", packet.length);
         }
@@ -108,6 +115,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
         }
         final SprogMessage m = new SprogMessage(packet);
         sendMessage(m);
+        return true;
     }
 
     /**
@@ -138,6 +146,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
      * Clear all slots.
      */
     @SuppressWarnings("unused")
+    @SuppressFBWarnings(value = "UPM_UNCALLED_PRIVATE_METHOD", justification="was previously marked with @SuppressWarnings, reason unknown")
     private void clearAllSlots() {
         slots.stream().forEach((s) -> {
             s.clear();
@@ -388,7 +397,6 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
         });
     }
 
-    private int statusDue = 0;
     @Override
     /**
      * The run() method will only be called (from SprogSystemConnectionMemo
@@ -542,7 +550,10 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
             log.debug("Ignore reply with mismatched id {} looking for {}", m.getId(), lastId);
             return;
         } else {
+            // it's not at all clear what the following line does. The "reply"
+            // variable is only set here, and never referenced.
             reply = new SprogReply(m);
+            
             log.debug("Reply received [{}]", m.toString());
             // Log the reply and wake the slot thread
             synchronized (lock) {

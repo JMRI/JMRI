@@ -28,5 +28,5 @@ public class OakTreeComponentFactory extends jmri.jmrix.swing.ComponentFactory {
         }
         return new OakTreeMenu(memo);
     }
-}
 
+}

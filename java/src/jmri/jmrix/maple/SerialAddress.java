@@ -47,7 +47,7 @@ public class SerialAddress {
         // try to parse remaining system name part
         int num = 0;
         try {
-            num = Integer.valueOf(systemName.substring(prefix.length() + 1)).intValue(); // multi char prefix
+            num = Integer.parseInt(systemName.substring(prefix.length() + 1)); // multi char prefix
         } catch (NumberFormatException ex) {
             log.warn("invalid character in number field of system name: {}", systemName);
             return (0);
@@ -123,12 +123,12 @@ public class SerialAddress {
 
     /**
      * Public static method to normalize a system name.
-     * <P>
+     * <p>
      * This routine is used to ensure that each system name is uniquely linked
      * to a bit, by removing extra zeros inserted by the user.
      * It's not applied to sensors (whick might be addressed using the KS3:5 format.
      *
-     * @return If the supplied system name does not have a valid format, an empty string
+     * @return if the supplied system name does not have a valid format, an empty string
      * is returned. If the address in the system name is not within the legal
      * maximum range for the type of item (L, T, or S), an empty string is
      * returned. Otherwise a normalized name is returned in the same format as
@@ -162,7 +162,7 @@ public class SerialAddress {
     /**
      * Public static method to construct a system name from type character and
      * bit number.
-     * <P>
+     * <p>
      * This routine returns a system name in the KLxxxx, KTxxxx, or KSxxxx
      * format. The returned name is normalized.
      *

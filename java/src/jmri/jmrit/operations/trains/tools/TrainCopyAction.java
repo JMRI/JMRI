@@ -22,6 +22,7 @@ public class TrainCopyAction extends AbstractAction {
     public TrainCopyAction(String s, Train train) {
         super(s);
         _train = train;
+        setEnabled(train != null);
     }
 
     TrainCopyFrame f = null;

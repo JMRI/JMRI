@@ -1,6 +1,5 @@
 package jmri.server.json.light;
 
-import static jmri.server.json.JSON.COMMENT;
 import static jmri.server.json.JSON.DATA;
 import static jmri.server.json.JSON.INCONSISTENT;
 import static jmri.server.json.JSON.OFF;
@@ -8,7 +7,6 @@ import static jmri.server.json.JSON.ON;
 import static jmri.server.json.JSON.STATE;
 import static jmri.server.json.JSON.TYPE;
 import static jmri.server.json.JSON.UNKNOWN;
-import static jmri.server.json.JSON.USERNAME;
 import static jmri.server.json.light.JsonLight.LIGHT;
 import static jmri.server.json.light.JsonLight.LIGHTS;
 
@@ -35,11 +33,9 @@ public class JsonLightHttpService extends JsonNamedBeanHttpService {
 
     @Override
     public JsonNode doGet(String type, String name, Locale locale) throws JsonException {
-        ObjectNode root = mapper.createObjectNode();
-        root.put(TYPE, LIGHT);
         Light light = InstanceManager.lightManagerInstance().getLight(name);
-        ObjectNode data = this.getNamedBean(light, name, type, locale);
-        root.set(DATA, data);
+        ObjectNode root = this.getNamedBean(light, name, type, locale);
+        ObjectNode data = root.with(DATA);
         if (light != null) {
             switch (light.getState()) {
                 case Light.ON:
@@ -66,12 +62,7 @@ public class JsonLightHttpService extends JsonNamedBeanHttpService {
         if (light == null) {
             throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", LIGHT, name));
         }
-        if (data.path(USERNAME).isTextual()) {
-            light.setUserName(data.path(USERNAME).asText());
-        }
-        if (data.path(COMMENT).isTextual()) {
-            light.setComment(data.path(COMMENT).asText());
-        }
+        this.postNamedBean(light, data, name, type, locale);
         int state = data.path(STATE).asInt(UNKNOWN);
         switch (state) {
             case ON:
@@ -102,8 +93,8 @@ public class JsonLightHttpService extends JsonNamedBeanHttpService {
     @Override
     public ArrayNode doGetList(String type, Locale locale) throws JsonException {
         ArrayNode root = this.mapper.createArrayNode();
-        for (String name : InstanceManager.lightManagerInstance().getSystemNameList()) {
-            root.add(this.doGet(LIGHT, name, locale));
+        for (Light l : InstanceManager.lightManagerInstance().getNamedBeanSet()) {
+            root.add(this.doGet(LIGHT, l.getSystemName(), locale));
         }
         return root;
 

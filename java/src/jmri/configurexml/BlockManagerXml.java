@@ -50,6 +50,7 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
      * @return Element containing the complete info
      */
     @Override
+    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations
     public Element store(Object o) {
         Element blocks = new Element("blocks");
         setStoreElementClass(blocks);
@@ -218,10 +219,6 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
     }
 
     void addBeanSetting(Element e, BeanSetting bs) {
-        if (bs.getBean() == null) {
-            log.error("Invalid BeanSetting - did not save");
-            return;
-        }
         // persist bean name, type and value
         Element bse = new Element("beansetting");
         // for now, assume turnout
@@ -260,17 +257,22 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
         if (log.isDebugEnabled()) {
             log.debug("Found " + list.size() + " objects");
         }
-        //BlockManager tm = InstanceManager.getDefault(jmri.BlockManager.class);
 
-        // first pass don't load full contents (just create all the blocks)
-        for (Element block : list) {
-            loadBlock(block, false);
-        }
+        try {
+            InstanceManager.getDefault(jmri.BlockManager.class).setDataListenerMute(true);
+            // first pass don't load full contents (just create all the blocks)
+            for (Element block : list) {
+                loadBlock(block, false);
+            }
 
-        // second pass load full contents
-        for (Element block : list) {
-            loadBlock(block, true);
+            // second pass load full contents
+            for (Element block : list) {
+                loadBlock(block, true);
+            }
+        } finally {
+            InstanceManager.getDefault(jmri.BlockManager.class).setDataListenerMute(false);
         }
+        
         return result;
     }   // load
 

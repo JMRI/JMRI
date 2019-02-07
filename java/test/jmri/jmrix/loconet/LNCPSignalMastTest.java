@@ -18,14 +18,13 @@ public class LNCPSignalMastTest {
         Assert.assertNotNull("exists",t);
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
         LnTrafficController lnis = new LocoNetInterfaceScaffold();
-        jmri.InstanceManager.store(lnis,jmri.jmrix.loconet.LnTrafficController.class);
+        jmri.InstanceManager.store(lnis, jmri.jmrix.loconet.LnTrafficController.class);
         SlotManager s = new SlotManager(lnis);
-        jmri.InstanceManager.store(s,jmri.CommandStation.class);
+        jmri.InstanceManager.store(s, jmri.CommandStation.class);
     }
 
     @After

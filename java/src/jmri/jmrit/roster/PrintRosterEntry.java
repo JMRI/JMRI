@@ -58,8 +58,7 @@ public class PrintRosterEntry implements PaneContainer {
         _rMPane = new RosterMediaPane(rosterEntry);
         _parent = parent;
         JLabel progStatus = new JLabel(Bundle.getMessage("StateIdle"));
-        jmri.Programmer mProgrammer = null;
-        ResetTableModel resetModel = new ResetTableModel(progStatus, mProgrammer);
+        ResetTableModel resetModel = new ResetTableModel(progStatus, null);  // no programmer
 
         log.debug("Try PrintRosterEntry {} from file {}", _rosterEntry.getDisplayName(), filename);
         XmlFile pf = new XmlFile() {
@@ -81,28 +80,22 @@ public class PrintRosterEntry implements PaneContainer {
             return;
         }
 
-        CvTableModel cvModel = new CvTableModel(progStatus, mProgrammer);
+        CvTableModel cvModel = new CvTableModel(progStatus, null); // no programmer
 
         VariableTableModel variableModel = new VariableTableModel(progStatus, new String[]{"Name", "Value"}, cvModel); // NOI18N
 
         String decoderModel = _rosterEntry.getDecoderModel();
         String decoderFamily = _rosterEntry.getDecoderFamily();
 
-        if (log.isDebugEnabled()) {
-            log.debug("selected loco uses decoder {} {}", decoderFamily, decoderModel);
-        }
+        log.debug("selected loco uses decoder {} {}", decoderFamily, decoderModel);
         // locate a decoder like that.
         List<DecoderFile> l = InstanceManager.getDefault(DecoderIndexFile.class).matchingDecoderList(null, decoderFamily, null, null, null, decoderModel);
-        if (log.isDebugEnabled()) {
-            log.debug("found {} matches", l.size());
-        }
+        log.debug("found {} matches", l.size());
         if (l.isEmpty()) {
-            log.debug("Loco uses " + decoderFamily + " " + decoderModel + " decoder, but no such decoder defined");
+            log.debug("Loco uses {} {} decoder, but no such decoder defined", decoderFamily, decoderModel);
             // fall back to use just the decoder name, not family
             l = InstanceManager.getDefault(DecoderIndexFile.class).matchingDecoderList(null, null, null, null, null, decoderModel);
-            if (log.isDebugEnabled()) {
-                log.debug("found {} matches without family key", l.size());
-            }
+            log.debug("found {} matches without family key", l.size());
         }
         DecoderFile d = null;
         if (l.size() > 0) {
@@ -134,7 +127,6 @@ public class PrintRosterEntry implements PaneContainer {
         d.loadVariableModel(decoderRoot.getChild("decoder"), variableModel);
         d.loadResetModel(decoderRoot.getChild("decoder"), resetModel);
 
-        @SuppressWarnings("unchecked")
         List<Element> rawPaneList = base.getChildren("pane");
         log.debug("rawPaneList size = {}", rawPaneList.size());
         for (Element elPane : rawPaneList) {
@@ -263,7 +255,7 @@ public class PrintRosterEntry implements PaneContainer {
             final PaneProgPane pane = (PaneProgPane) _paneList.get(i);
             pane.includeInPrint(false);
             final JCheckBox item = new JCheckBox(_paneList.get(i).getName());
-            // Tab names _paneList.get(i).getName() show up when called from RosterFrame (are entered in line 164)
+            // Tab names _paneList.get(i).getName() show up when called from RosterFrame (are entered in line 146)
             printList.put(item, pane);
             item.addActionListener(new java.awt.event.ActionListener() {
                 @Override

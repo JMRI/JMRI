@@ -17,6 +17,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.TableCellEditor;
@@ -324,7 +325,7 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
             case EDITCOL:
                 return Bundle.getMessage("ButtonEdit");
             case PULLUPCOL:
-                JComboBox<Sensor.PullResistance> c = new JComboBox<>(Sensor.PullResistance.values());
+                PullResistanceComboBox c = new PullResistanceComboBox(Sensor.PullResistance.values());
                 c.setSelectedItem(s.getPullResistance());
                 c.addActionListener((ActionEvent e) -> {
                     comboBoxAction(e);
@@ -337,6 +338,13 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
             default:
                 return super.getValueAt(row, col);
         }
+    }
+    
+    /**
+     * Small class to ensure type-safety of references otherwise lost to type erasure
+     */
+    static private class PullResistanceComboBox extends JComboBox<Sensor.PullResistance> {
+        public PullResistanceComboBox(Sensor.PullResistance[] values) { super(values); }
     }
 
     /**
@@ -362,10 +370,28 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
                 s.setUseDefaultTimerSettings(((Boolean) value));
                 break;
             case ACTIVEDELAY:
-                s.setSensorDebounceGoingActiveTimer(Long.parseLong((String) value));
+                try {
+                    Long activeDeBounce = Long.parseLong((String) value);
+                    if (activeDeBounce < 0 || activeDeBounce > Sensor.MAX_DEBOUNCE) {
+                        JOptionPane.showMessageDialog(null, Bundle.getMessage("SensorDebounceActOutOfRange") + "\n\"" + (String) value + "\"", "Input Error", JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        s.setSensorDebounceGoingActiveTimer(Long.parseLong((String) value));
+                    }
+                } catch (NumberFormatException exActiveDeBounce) {
+                    JOptionPane.showMessageDialog(null, Bundle.getMessage("SensorDebounceActError") + "\n\"" + Long.toString(Sensor.MAX_DEBOUNCE) + "\"", "Input Error", JOptionPane.ERROR_MESSAGE);
+                }
                 break;
             case INACTIVEDELAY:
-                s.setSensorDebounceGoingInActiveTimer(Long.parseLong((String) value));
+                try {
+                    Long inactiveDeBounce = Long.parseLong((String) value);
+                    if (inactiveDeBounce < 0 || inactiveDeBounce > Sensor.MAX_DEBOUNCE) {
+                        JOptionPane.showMessageDialog(null, Bundle.getMessage("SensorDebounceInActOutOfRange") + "\n\"" + Long.toString(Sensor.MAX_DEBOUNCE) + "\"", "Input Error", JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        s.setSensorDebounceGoingInActiveTimer(Long.parseLong((String) value));
+                    }
+                } catch (NumberFormatException exActiveDeBounce) {
+                    JOptionPane.showMessageDialog(null, Bundle.getMessage("SensorDebounceInActError") + "\n\"" + (String) value + "\"", "Input Error", JOptionPane.ERROR_MESSAGE);
+                }
                 break;
             case EDITCOL:
                 javax.swing.SwingUtilities.invokeLater(() -> {
@@ -373,7 +399,7 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
                 });
                 break;
             case PULLUPCOL:
-                JComboBox<Sensor.PullResistance> cb = (JComboBox<Sensor.PullResistance>) value;
+                PullResistanceComboBox cb = (PullResistanceComboBox) value;
                 s.setPullResistance((Sensor.PullResistance) cb.getSelectedItem());
                 break;
             case FORGETCOL:

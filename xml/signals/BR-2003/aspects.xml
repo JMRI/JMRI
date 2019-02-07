@@ -5,7 +5,7 @@
     xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/aspecttable.xsd"
 >
-  <name>BR-2003</name>
+  <name>BR-2003-WE</name>
   <date>2003</date>
   <reference>As described in the June 2003 edition of Signals and indicators controlling train movements, GE/RT8000 - S1 Rule Book</reference>
 
@@ -16,7 +16,7 @@
   <authorgroup xmlns="http://docbook.org/ns/docbook">
     <author>
         <personname><firstname>Kevin</firstname><surname>Dickerson</surname></personname>
-    </author>    
+    </author>
   </authorgroup>
 
   <revhistory xmlns="http://docbook.org/ns/docbook">
@@ -32,7 +32,15 @@
         <authorinitials>KD</authorinitials>
         <revremark>Change position light signal names to "on" and "off", Remove Call-On and change to On</revremark>
     </revision> 
-  </revhistory>
+    <revision>
+        <revnumber>1.2</revnumber>
+        <date>2018-07-05</date>
+        <authorinitials>PB</authorinitials>
+        <revremark>Removed deprecated Approach aspect + corrected Speed Names as per latest JMRI usage</revremark>
+    </revision>
+
+
+    </revhistory>
 
   <aspects>
     <aspect>
@@ -41,105 +49,107 @@
       <description>Green Aspect Showing</description>
       <reference>Section 2.1, 2.2</reference>
       <comment></comment>
-      <speed>Approach</speed>
-      <speed2>Approach</speed2>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
     </aspect>
-    
+
     <aspect>
       <name>Preliminary Caution</name>
       <indication>Proceed: be prepared to find the next signal displaying one yellow aspect</indication>
       <description>Double Yellow Aspects Showing</description>
       <comment>4 Aspect Signals Only</comment>
-      <speed>Approach</speed>
-      <speed2>Approach</speed2>
+      <speed>Medium</speed>
+      <speed2>Medium</speed2>
     </aspect>
-    
+
      <aspect>
       <name>Flash Preliminary Caution</name>
       <indication>Proceed: be prepared to find the next signal displaying one flashing yellow aspect</indication>
       <description>Flashing Double Yellow Aspects Showing</description>
       <reference>Section 2.5</reference>
       <comment>4 Aspect Signals Only with a diverging route.</comment>
-      <speed>Approach</speed>
-      <speed2>Approach</speed2>
+      <speed>Medium</speed>
+      <speed2>Medium</speed2>
     </aspect>
-    
+
     <aspect>
       <name>Caution</name>
       <indication>Proceed: be prepared to stop at the next signal</indication>
       <description>Yellow Aspect Showing</description>
       <reference>Section 2.1, 2.2</reference>
       <comment></comment>
-      <speed>Approach</speed>
-      <speed2>Approach</speed2>
+      <speed>Slow</speed>
+      <speed2>Slow</speed2>
     </aspect>
-    
+
     <aspect>
       <name>Flash Caution</name>
       <indication>Proceed: the next signal will be at caution with a junction indicator showing</indication>
       <description>Flashing Yellow Aspect Showing</description>
       <reference>Section 2.5, 2.6</reference>
       <comment>3+4 Aspect Signals Only with a diverging route.</comment>
-      <speed>Approach</speed>
-      <speed2>Approach</speed2>
+      <speed>Slow</speed>
+      <speed2>Slow</speed2>
     </aspect>
-    
+
     <aspect>
       <name>Danger</name>
       <indication>Stop</indication>
       <description>On all Main Signals this is a Red Aspect Showing, on Semaphore the home signal arm is Horizontal.  Position Light Signals, will either display two red or yellow lights, a red or yellow and a white light.  Where a red lights are used, this indicates stop.  Where a yellow lights are used This indicates stop, if the points are set for a route that would take the movement onto a running line. Movements are allowed to pass the signal if it is being made towards a shunt neck or siding.</description>
       <reference>Section 2.1, 2.2, 2.7</reference>
       <comment></comment>
-      <speed>0</speed>
-      <speed2>0</speed2>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
     </aspect>
-    
+
     <aspect>
       <name>Off</name>
       <indication>Proceed at Caution</indication>
       <description>If the position-light signal displays two white lights at 45degrees, this authorises the driver to proceed at caution towards the next stop signal or buffer stop and be prepared to stop short of any obstruction.</description>
       <reference>Section 2.7</reference>
       <comment></comment>
-      <speed>0</speed>
-      <speed2>0</speed2>
+      <speed>RestrictedSlow</speed>
+      <speed2>RestrictedSlow</speed2>
     </aspect>
-    
+
     <aspect>
       <name>On</name>
       <indication>Stop</indication>
       <description>Position Light Signal, will either display two red or yellow lights, a red or yellow and a white light.  Where red lights are used, this indicates stop.  Where yellow lights are used This indicates stop, if the points are set for a route that would take the movement onto a running line. Movements are allowed to pass the signal if it is being made towards a shunt neck or siding.</description>
       <reference>Section 2.1, 2.2, 2.7</reference>
       <comment></comment>
-      <speed>0</speed>
-      <speed2>0</speed2>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
     </aspect>
 
   </aspects>
+
   <imagetypes>
     <imagetype type="large"/>
     <imagetype type="aspects"/>
-  </imagetypes>
-  <appearancefiles>
-    <appearancefile href="appearance-2-h-sema-sub.xml"/>
+   </imagetypes>
+  
+ <appearancefiles>
     <appearancefile href="appearance-2-d-sema.xml"/>
-    <appearancefile href="appearance-2-h-d-sema.xml"/>
-    <appearancefile href="appearance-2-h-sema.xml"/>
-    <appearancefile href="appearance-ply.xml"/>
-    <appearancefile href="appearance-plr.xml"/>
     <appearancefile href="appearance-2-d.xml"/>
-    <appearancefile href="appearance-2-h.xml"/>
     <appearancefile href="appearance-2-h-c.xml"/>
+    <appearancefile href="appearance-2-h-d-sema.xml"/>
     <appearancefile href="appearance-2-h-d.xml"/>
-    <appearancefile href="appearance-3.xml"/>
+    <appearancefile href="appearance-2-h-sema-sub.xml"/>
+    <appearancefile href="appearance-2-h-sema.xml"/>
+    <appearancefile href="appearance-2-h.xml"/>
     <appearancefile href="appearance-3-c.xml"/>
-    <appearancefile href="appearance-3-i.xml"/>
     <appearancefile href="appearance-3-i-c.xml"/>
-    <appearancefile href="appearance-4.xml"/>
+    <appearancefile href="appearance-3-i.xml"/>
+    <appearancefile href="appearance-3.xml"/>
     <appearancefile href="appearance-4-c.xml"/>
-    <appearancefile href="appearance-4-i.xml"/>
     <appearancefile href="appearance-4-i-c.xml"/>
+    <appearancefile href="appearance-4-i.xml"/>
+    <appearancefile href="appearance-4.xml"/>
     <appearancefile href="appearance-buffer-stop.xml"/>
     <appearancefile href="appearance-feather.xml"/>
+    <appearancefile href="appearance-plr.xml"/>
+    <appearancefile href="appearance-ply.xml"/>
   </appearancefiles>
 </aspecttable>
   

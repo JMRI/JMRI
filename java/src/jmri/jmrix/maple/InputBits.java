@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Utility Class supporting input from Maple HMI's
- * <P>
+ * <p>
  * All of the Maple HMI panels are configured with the same input bits. As each
  * HMI is polled, the results are ORed together in an input array that is
  * initialized to all 0 when a polling cycle is initiated. That way, if a bit is

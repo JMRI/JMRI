@@ -22,7 +22,7 @@ public class XBeeLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
 
     @Override
     public String getSystemName(int i) {
-        return "ABCL2:" + i;
+        return "AL2:" + i;
     }
 
 
@@ -31,20 +31,57 @@ public class XBeeLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
         Assert.assertNotNull("exists", l);
     }
 
+    @Test
+    @Override
+    public void testProvideName() {
+        // create
+        Light t = l.provide("" + getSystemName(getNumToTest1()));
+        // check
+        Assert.assertTrue("real object returned ", t != null);
+        Assert.assertEquals("system name correct ", t,l.getBySystemName(getSystemName(getNumToTest1())));
+    }
+
+    @Test
+    public void testProvideIdStringName() {
+        // create
+        Light t = l.provide("ALNode 1:2");
+        // check
+        Assert.assertTrue("real object returned ", t != null);
+        Assert.assertEquals("correct object returned ", t ,l.getBySystemName("ALNODE 1:2"));
+    }
+
+    @Test
+    public void testProvide16BitAddress() {
+        // create
+        Light t = l.provide("AL00 02:2");
+        // check
+        Assert.assertTrue("real object returned ", t != null);
+        Assert.assertEquals("system name correct ", t,l.getBySystemName("AL00 02:2"));
+    }
+
+    @Test
+    public void testProvide64BitAddress() {
+        // create
+        Light t = l.provide("AL00 13 A2 00 40 A0 4D 2D:2");
+        // check
+        Assert.assertTrue("real object returned ", t != null);
+        Assert.assertEquals("system name correct ", t , l.getBySystemName("AL00 13 A2 00 40 A0 4D 2D:2"));
+    }
+
     @Override
     @Test
     public void testDefaultSystemName() {
         // create
-        Light t = l.provideLight("ABCL2:" + getNumToTest1());
+        Light t = l.provideLight(getSystemName(getNumToTest1()));
         // check
         Assert.assertTrue("real object returned ", t != null);
-        Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
+        Assert.assertEquals("system name correct ", t,l.getBySystemName(getSystemName(getNumToTest1())));
     }
 
     @Override
     @Test
     public void testUpperLower() {
-        Light t = l.provideLight("ABCL2:" + getNumToTest2());
+        Light t = l.provideLight(getSystemName(getNumToTest2()));
         String name = t.getSystemName();
         Assert.assertNull(l.getLight(name.toLowerCase()));
     }
@@ -57,9 +94,9 @@ public class XBeeLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
         jmri.util.JUnitUtil.setUp();
         tc = new XBeeInterfaceScaffold();
         XBeeConnectionMemo m = new XBeeConnectionMemo();
-        m.setSystemPrefix("ABC");
+        m.setSystemPrefix("A");
         tc.setAdapterMemo(m);
-        l = new XBeeLightManager(tc, "ABC");
+        l = new XBeeLightManager(tc, "A");
         m.setLightManager(l);
         byte pan[] = {(byte) 0x00, (byte) 0x42};
         byte uad[] = {(byte) 0x00, (byte) 0x02};

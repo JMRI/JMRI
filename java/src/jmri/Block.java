@@ -3,12 +3,12 @@ package jmri;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.annotation.Nonnull;
-import java.time.Instant;
 import jmri.implementation.AbstractNamedBean;
 import jmri.implementation.SignalSpeedMap;
 import jmri.util.PhysicalLocation;
@@ -119,6 +119,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
 
     static final public int OCCUPIED = Sensor.ACTIVE;
     static final public int UNOCCUPIED = Sensor.INACTIVE;
+    // why isn't UNDETECTED == NamedBean.UNKNOWN?
     static final public int UNDETECTED = 0x100;  // bit coded, just in case; really should be enum
 
     // Curvature attributes
@@ -128,8 +129,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
     static final public int SEVERE = 0x04;
 
     // this should only be used for debugging...
-    @Override
-    public String toString() {
+    public String toDebugString() {
         String result = getFullyFormattedDisplayName() + " ";
         switch (getState()) {
             case UNDETECTED: {
@@ -156,7 +156,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
      * Set the sensor by name.
      *
      * @param pName the name of the Sensor to set
-     * @return true if a Sensor is set; false otherwise
+     * @return true if a Sensor is set and is not null; false otherwise
      */
     public boolean setSensor(String pName) {
         if (pName == null || pName.equals("")) {
@@ -318,7 +318,14 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
         int old = _current;
         _current = v;
         // notify
-        firePropertyChange("state", old, _current);
+
+        // It is rather unpleasant that the following needs to be done in a try-catch, but exceptions have been observed
+        try {
+            firePropertyChange("state", old, _current);
+        } catch (Exception e) {
+            log.error(getDisplayName()+" got exception during fireProperTyChange("+old+","+_current+") in thread "+
+                    Thread.currentThread().getName()+" "+Thread.currentThread().getId()+": ", e);
+        }
     }
 
     /**

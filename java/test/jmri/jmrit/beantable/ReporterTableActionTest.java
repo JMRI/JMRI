@@ -42,7 +42,10 @@ public class ReporterTableActionTest extends AbstractTableActionBase {
     @Override
     @Before
     public void setUp() {
-        JUnitUtil.setUp();        a = new ReporterTableAction();
+        JUnitUtil.setUp();
+        jmri.util.JUnitUtil.resetProfileManager();
+        helpTarget = "package.jmri.jmrit.beantable.ReporterTable"; 
+        a = new ReporterTableAction();
     }
 
     @Override

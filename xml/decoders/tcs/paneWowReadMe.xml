@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+    <name>Read Me - IMPORTANT</name>
+    <name xml:lang="de">Read Me - WICHTIG</name>
+    <column>
+        <label>
+            <text> </text>
+        </label>
+        <label>
+            <text>&lt;html&gt;&lt;strong&gt;JMRI 3.9.5 or later is required to use this definition.&lt;/strong&gt;&lt;/html&gt;</text>
+            <text xml:lang="it">&lt;html&gt;&lt;strong&gt;Richiesto JMRI 3.9.5 o seguenti per poter utilizzare queste definizioni.&lt;/strong&gt;&lt;/html&gt;</text>
+            <text xml:lang="de">&lt;html&gt;&lt;strong&gt;JMRI 3.9.5 oder später ist notwendig um diese Definiton verwenden zu können.&lt;/strong&gt;&lt;/html&gt;</text>
+            <text xml:lang="ca">&lt;html&gt;&lt;strong&gt;JMRI 3.9.5 o posterior necessiten aquestes definicions.&lt;/strong&gt;&lt;/html&gt;</text>
+        </label>
+        <label>
+            <text> </text>
+        </label>
+        <label>
+            <text>&lt;html&gt;&lt;h1&gt;TCS WOW Decoders Important Information&lt;/h1&gt;&lt;/html&gt;</text>
+        </label>
+        <label>
+            <text> </text>
+        </label>
+        <separator/>
+        <separator/>
+        <label>
+            <text>&lt;html&gt;&lt;h2&gt;JMRI Preferences&lt;/h2&gt;&lt;/html&gt;</text>
+        </label>
+        <label>
+            <text> </text>
+        </label>
+        <label>
+            <text>&lt;html&gt;In the &lt;strong&gt;Edit&lt;/strong&gt; menu, pick the &lt;strong&gt;Preferences&lt;/strong&gt; choice&lt;/html&gt;</text>
+        </label>
+        <label>
+            <text>&lt;html&gt;In the &lt;strong&gt;Preferences&lt;/strong&gt; window, pick the &lt;strong&gt;Roster&lt;/strong&gt; choice and then &lt;strong&gt;Programmer&lt;/strong&gt; tab&lt;/html&gt;</text>
+        </label>
+        <label>
+            <text>&lt;html&gt;Uncheck &lt;strong&gt;Allow caching when writing index CVs for read or write operations&lt;/strong&gt; option&lt;/html&gt;</text>
+        </label>
+        <label>
+            <text>&lt;html&gt;Uncheck &lt;strong&gt;When possible, confirm CV write by following them with a read&lt;/strong&gt; option&lt;/html&gt;</text>
+        </label>
+        <label>
+            <text>&lt;html&gt;Press the &lt;strong&gt;Save&lt;/strong&gt; button&lt;/html&gt;</text>
+        </label>
+        <label>
+            <text> </text>
+        </label>
+        <separator/>
+    </column>
+</pane>

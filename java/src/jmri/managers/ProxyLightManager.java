@@ -1,5 +1,7 @@
 package jmri.managers;
 
+import javax.annotation.Nonnull;
+
 import jmri.Light;
 import jmri.LightManager;
 
@@ -7,7 +9,7 @@ import jmri.LightManager;
  * Implementation of a LightManager that can serve as a proxy for multiple
  * system-specific implementations.
  *
- * @author	Bob Jacobsen Copyright (C) 2010
+ * @author	Bob Jacobsen Copyright (C) 2010, 2018
  * @author	Dave Duchamp Copyright (C) 2004
  */
 public class ProxyLightManager extends AbstractProxyManager<Light>
@@ -41,6 +43,10 @@ public class ProxyLightManager extends AbstractProxyManager<Light>
     protected Light makeBean(int i, String systemName, String userName) {
         return ((LightManager) getMgr(i)).newLight(systemName, userName);
     }
+
+    @Override
+    /** {@inheritDoc} */
+    public Light provide(@Nonnull String name) throws IllegalArgumentException { return provideLight(name); }
 
     /**
      * Locate via user name, then system name if needed. If that fails, create a
@@ -199,8 +205,7 @@ public class ProxyLightManager extends AbstractProxyManager<Light>
     /**
      * A method that determines if it is possible to add a range of lights in
      * numerical order eg 11 thru 18, primarily used to show/not show the add
-     * range box in the add Light window
-     *
+     * range box in the add Light window.
      */
     @Override
     public boolean allowMultipleAdditions(String systemName) {
@@ -210,8 +215,9 @@ public class ProxyLightManager extends AbstractProxyManager<Light>
         }
         return false;
     }
+
     /**
-     * Provide a connection system agnostic tooltip for the Add new item beantable pane.
+     * {@inheritDoc}
      */
     @Override
     public String getEntryToolTip() {

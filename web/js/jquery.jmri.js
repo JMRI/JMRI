@@ -246,6 +246,31 @@
                     });
                 }
             };
+            jmri.getReporter = function(name) {
+                if (jmri.socket) {
+                    jmri.socket.send("reporter", {name: name});
+                } else {
+                    $.getJSON(jmri.url + "reporter/" + name, function(json) {
+                        jmri.reporter(json.data.name, json.data.value, json.data);
+                    });
+                }
+            };
+            jmri.setReporter = function(name, value) {
+                if (jmri.socket) {
+                    jmri.socket.send("reporter", {name: name, value: value});
+                } else {
+                    $.ajax({
+                        url: jmri.url + "reporter/" + name,
+                        type: "POST",
+                        data: JSON.stringify({value: value}),
+                        contentType: "application/json; charset=utf-8",
+                        success: function(json) {
+                            jmri.reporter(json.data.name, json.data.report, json.data);
+                            jmri.getReporter(json.data.name, json.data.report);
+                        }
+                    });
+                }
+            };
             jmri.getBlock = function(name) {
                 if (jmri.socket) {
                     jmri.socket.send("block", {name: name});
@@ -319,6 +344,9 @@
                     case "memory":
                         jmri.getMemory(name);
                         break;
+                    case "reporter":
+                        jmri.getReporter(name);
+                        break;
                     case "rosterEntry":
                         jmri.getRosterEntry(name);
                         break;
@@ -354,6 +382,9 @@
                         break;
                     case "memory":
                         jmri.setMemory(name, state);
+                        break;
+                    case "reporter":
+                        jmri.setReporter(name, report);
                         break;
                     case "block":
                         jmri.setBlock(name, state);
@@ -770,11 +801,11 @@
             		reporters: function(e) {
             			jmri.reporters(e.data);
             		},
-            		roster: function(e) {
-            			jmri.roster(e.data);
-            		},
             		rosterEntry: function(e) {
             			jmri.rosterEntry(e.data.name, e.data);
+            		},
+            		roster: function(e) {
+            			jmri.roster(e.data);
             		},
             		rosterGroup: function(e) {
             			jmri.rosterGroup(e.data.name, e.data);
@@ -791,11 +822,20 @@
             		sensor: function(e) {
             			jmri.sensor(e.data.name, e.data.state, e.data);
             		},
+            		sensors: function(e) {
+            			jmri.sensors(e.data);
+            		},
             		signalHead: function(e) {
             			jmri.signalHead(e.data.name, e.data.state, e.data);
             		},
+            		signalHeads: function(e) {
+            			jmri.signalHeads(e.data);
+            		},
             		signalMast: function(e) {
             			jmri.signalMast(e.data.name, e.data.state, e.data);
+            		},
+            		signalMasts: function(e) {
+            			jmri.signalMasts(e.data);
             		},
             		systemConnection: function(e) {
             			jmri.systemConnection(e.data.name, e.data);
@@ -886,7 +926,9 @@
                 $("#no-websockets").addClass("show").removeClass("hidden");
             }
             $(window).unload(function() {
-                jmri.socket.close();
+                if (jmri.socket != null) { 
+                    jmri.socket.close();
+                }
                 jmri.socket = null;
                 jmri = null;
             });

@@ -1,10 +1,8 @@
 package jmri.jmrix.dccpp;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import jmri.util.junit.annotations.*;
+import org.junit.*;
 
 /**
  * DCCppReplyTest.java
@@ -14,25 +12,21 @@ import org.junit.Test;
  * @author	Bob Jacobsen
  * @author	Mark Underwood (C) 2015
  */
-public class DCCppReplyTest {
+public class DCCppReplyTest extends jmri.jmrix.AbstractMessageTestBase {
 
-    @Test
-    public void testCtor() {
-        DCCppReply m = new DCCppReply();
-        Assert.assertNotNull(m);
-    }
+    private DCCppReply msg = null;
 
     // Test the string constructor.
     @Test
     public void testStringCtor() {
-        DCCppReply m = DCCppReply.parseDCCppReply("H 23 1");
-        Assert.assertEquals("length", 6, m.getNumDataElements());
-        Assert.assertEquals("0th byte", 'H', m.getElement(0) & 0xFF);
-        Assert.assertEquals("1st byte", ' ', m.getElement(1) & 0xFF);
-        Assert.assertEquals("2nd byte", '2', m.getElement(2) & 0xFF);
-        Assert.assertEquals("3rd byte", '3', m.getElement(3) & 0xFF);
-        Assert.assertEquals("4th byte", ' ', m.getElement(4) & 0xFF);
-        Assert.assertEquals("5th byte", '1', m.getElement(5) & 0xFF);
+        msg = DCCppReply.parseDCCppReply("H 23 1");
+        Assert.assertEquals("length", 6, msg.getNumDataElements());
+        Assert.assertEquals("0th byte", 'H', msg.getElement(0) & 0xFF);
+        Assert.assertEquals("1st byte", ' ', msg.getElement(1) & 0xFF);
+        Assert.assertEquals("2nd byte", '2', msg.getElement(2) & 0xFF);
+        Assert.assertEquals("3rd byte", '3', msg.getElement(3) & 0xFF);
+        Assert.assertEquals("4th byte", ' ', msg.getElement(4) & 0xFF);
+        Assert.assertEquals("5th byte", '1', msg.getElement(5) & 0xFF);
     }
 
     // check is direct mode response
@@ -49,11 +43,13 @@ public class DCCppReplyTest {
 
     // check get service mode CV Number response code.
     @Test
+    @NotApplicable("Method under test is not implemented for DCC++")
     public void testGetServiceModeCVNumber() {
     }
 
     // check get service mode CV Value response code.
     @Test
+    @NotApplicable("Method under test is not implemented for DCC++")
     public void testGetServiceModeCVValue() {
     }
     
@@ -100,23 +96,52 @@ public class DCCppReplyTest {
     @Test
     public void testNamedCurrentReply() {
         DCCppReply l = DCCppReply.parseDCCppReply("a MAIN 0");
+        Assert.assertTrue(l.isCurrentReply());
         Assert.assertTrue(l.isNamedCurrentReply());
         Assert.assertEquals('a', l.getOpCodeChar());
         Assert.assertEquals("0", l.getCurrentString());
 
         l = DCCppReply.parseDCCppReply("a MAIN 100");
+        Assert.assertTrue(l.isCurrentReply());
         Assert.assertTrue(l.isNamedCurrentReply());
         Assert.assertEquals('a', l.getOpCodeChar());
         Assert.assertEquals("100", l.getCurrentString());
+
+        l = DCCppReply.parseDCCppReply("aMAIN0");
+        Assert.assertTrue(l.isCurrentReply());
+        Assert.assertTrue(l.isNamedCurrentReply());
+        Assert.assertEquals('a', l.getOpCodeChar());
+        Assert.assertEquals("0", l.getCurrentString());
+
+        l = DCCppReply.parseDCCppReply("aMAIN41");
+        Assert.assertTrue(l.isCurrentReply());
+        Assert.assertTrue(l.isNamedCurrentReply());
+        Assert.assertEquals('a', l.getOpCodeChar());
+        Assert.assertEquals("41", l.getCurrentString());
+
+        l = DCCppReply.parseDCCppReply("a41");
+        Assert.assertTrue(l.isCurrentReply());
+        Assert.assertFalse(l.isNamedCurrentReply());
+        Assert.assertEquals('a', l.getOpCodeChar());
+        Assert.assertEquals("41", l.getCurrentString());
+
+        l = DCCppReply.parseDCCppReply("a 41");
+        Assert.assertTrue(l.isCurrentReply());
+        Assert.assertFalse(l.isNamedCurrentReply());
+        Assert.assertEquals('a', l.getOpCodeChar());
+        Assert.assertEquals("41", l.getCurrentString());
     }
+
     // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        m = msg = new DCCppReply();
     }
 
     @After
     public void tearDown() {
+	m = msg = null;
         JUnitUtil.tearDown();
     }
 

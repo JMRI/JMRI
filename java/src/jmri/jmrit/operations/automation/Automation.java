@@ -139,6 +139,7 @@ public class Automation implements java.beans.PropertyChangeListener {
     public void run() {
         if (getSize() > 0) {
             log.debug("run automation ({})", getName());
+            _gotoAutomationItem = null;
             setCurrentAutomationItem(getItemsBySequenceList().get(0));
             setRunning(true);
             step();
@@ -217,8 +218,7 @@ public class Automation implements java.beans.PropertyChangeListener {
                 continue;
             }
             found = true;
-            automationItem.setActionRan(false);
-            automationItem.setActionSuccessful(false);
+            automationItem.reset();
         }
     }
 
@@ -227,6 +227,7 @@ public class Automation implements java.beans.PropertyChangeListener {
         if (getSize() > 0) {
             // goto?
             if (_gotoAutomationItem != null) {
+                getCurrentAutomationItem().setGotoBranched(true);
                 setCurrentAutomationItem(_gotoAutomationItem);
                 resetAutomationItems(_gotoAutomationItem);
                 _gotoAutomationItem = null;
@@ -291,13 +292,6 @@ public class Automation implements java.beans.PropertyChangeListener {
             return getLastAutomationItem().isActionSuccessful();
         }
         return false;
-    }
-
-    public String getLastActionResults() {
-        if (getLastAutomationItem() != null) {
-            return getLastAutomationItem().getStatus();
-        }
-        return "";
     }
 
     public void dispose() {
@@ -544,7 +538,6 @@ public class Automation implements java.beans.PropertyChangeListener {
             _comment = a.getValue();
         }
         if (e.getChildren(Xml.ITEM) != null) {
-            @SuppressWarnings("unchecked")
             List<Element> eAutomationItems = e.getChildren(Xml.ITEM);
             log.debug("automation: {} has {} items", getName(), eAutomationItems.size());
             for (Element eAutomationItem : eAutomationItems) {
@@ -620,7 +613,7 @@ public class Automation implements java.beans.PropertyChangeListener {
                 }
             }
             if (evt.getPropertyName().equals(Action.ACTION_GOTO_CHANGED_PROPERTY)) {
-                // the old property is used to control branch
+                // the old property value is used to control branch
                 // if old = null, then it is a unconditional branch
                 // if old = true, branch if success
                 // if old = false, branch if failure

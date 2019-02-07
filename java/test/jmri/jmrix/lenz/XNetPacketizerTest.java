@@ -97,7 +97,7 @@ public class XNetPacketizerTest extends XNetTrafficControllerTest {
         tc.connectPort(port);
 
         // We need three objects to receive messages.
-        // The first one recieves broadcast messages.
+        // The first one receives broadcast messages.
         // The others only receive directed messages.
         XNetListenerScaffold l = new XNetListenerScaffold();
         XNetListenerScaffold l1 = new XNetListenerScaffold();
