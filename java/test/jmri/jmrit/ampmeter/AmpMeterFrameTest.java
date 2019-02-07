@@ -29,6 +29,7 @@ public class AmpMeterFrameTest {
         ThreadingUtil.runOnLayout(() -> {
              jmri.InstanceManager.getDefault(jmri.MultiMeter.class).setCurrent(1.0f);
     	});
+        t.dispose();
     }
 
     @Test
@@ -38,6 +39,7 @@ public class AmpMeterFrameTest {
         ThreadingUtil.runOnLayout(() -> {
              jmri.InstanceManager.getDefault(jmri.MultiMeter.class).setCurrent(10.0f);
     	});
+        t.dispose();
     }
 
     @Test
@@ -47,6 +49,7 @@ public class AmpMeterFrameTest {
         ThreadingUtil.runOnLayout(() -> {
              jmri.InstanceManager.getDefault(jmri.MultiMeter.class).setCurrent(100.0f);
     	});
+        t.dispose();
     }
 
     // The minimal setup for log4J
