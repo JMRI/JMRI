@@ -9,13 +9,14 @@ import jmri.ConsistManager;
 import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
 import jmri.LightManager;
+import jmri.MultiMeter;
 import jmri.PowerManager;
 import jmri.ReporterManager;
 import jmri.SensorManager;
 import jmri.ThrottleManager;
 import jmri.TurnoutManager;
-import jmri.jmrix.debugthrottle.DebugThrottleManager;
 import jmri.jmrix.SystemConnectionMemo;
+import jmri.jmrix.debugthrottle.DebugThrottleManager;
 import jmri.jmrix.loconet.swing.LnComponentFactory;
 import jmri.jmrix.swing.ComponentFactory;
 import jmri.managers.DefaultProgrammerManager;
@@ -33,8 +34,11 @@ import org.slf4j.LoggerFactory;
  */
 public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
 
+
     /**
      * Must manually register() after construction is complete.
+     * @param lt Traffic controller to be used
+     * @param sm Slot Manager to be used
      */
     public LocoNetSystemConnectionMemo(LnTrafficController lt, SlotManager sm) {
         super("L", "LocoNet"); // NOI18N
@@ -144,7 +148,7 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
      * @param mTurnoutExtraSpace Is the user configuration set for extra time
      *                           between turnout operations?
      * @param mTranspondingAvailable    Is the layout configured to provide
-     *                                  transponding reports
+     *                                  transopnding reports
      */
     public void configureCommandStation(LnCommandStationType type, boolean mTurnoutNoRetry,
                                             boolean mTurnoutExtraSpace, boolean mTranspondingAvailable) {
@@ -217,6 +221,9 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
         if (type.equals(CommandStation.class)) {
             return true;
         }
+        if (type.equals(MultiMeter.class)) {
+            return true;
+        }
 
         return super.provides(type);
     }
@@ -266,6 +273,10 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
         if (T.equals(CommandStation.class)) {
             return (T) getSlotManager();
         }
+        if (T.equals(MultiMeter.class)) {
+            return (T) getMultiMeter();
+        }
+
         return super.get(T);
     }
 
@@ -309,8 +320,13 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
         setConsistManager(new LocoNetConsistManager(this));
 
         ClockControl cc = getClockControl();
+
         // make sure InstanceManager knows about that
         InstanceManager.setDefault(ClockControl.class, cc);
+
+        //MultiMeter mm = getMultiMeter();
+        jmri.InstanceManager.store(getMultiMeter(), jmri.MultiMeter.class);
+
     }
 
     protected LnPowerManager powerManager;
@@ -406,6 +422,18 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
             lightManager = new LnLightManager(getLnTrafficController(), getSystemPrefix());
         }
         return lightManager;
+    }
+
+    protected LnMultiMeter multiMeter;
+
+    public LnMultiMeter getMultiMeter() {
+        if (getDisabled()) {
+            return null;
+        }
+        if (multiMeter == null) {
+            multiMeter = new LnMultiMeter(this);
+        }
+        return multiMeter;
     }
 
     @Override
