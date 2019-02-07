@@ -470,7 +470,7 @@ public class LnPacketizer extends LnTrafficController {
         rcvThread.start();
 
         if (xmtHandler == null) {
-            xmtHandler = new RcvHandler(this);
+            xmtHandler = new XmtHandler();
         }
         // make sure that the xmt priority is no lower than the current priority
         int xmtpriority = (Thread.MAX_PRIORITY - 1 > priority ? Thread.MAX_PRIORITY - 1 : Thread.MAX_PRIORITY);
