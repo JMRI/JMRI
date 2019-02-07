@@ -31,7 +31,7 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         super(memo);
         InstanceManager.store(this, CbusConfigurationManager.class);
         InstanceManager.store(cf = new jmri.jmrix.can.cbus.swing.CbusComponentFactory(adapterMemo),
-                jmri.jmrix.swing.ComponentFactory.class);
+            jmri.jmrix.swing.ComponentFactory.class);
     }
 
     jmri.jmrix.swing.ComponentFactory cf = null;
@@ -62,6 +62,9 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         jmri.InstanceManager.setReporterManager(getReporterManager());
 
         jmri.InstanceManager.setLightManager(getLightManager());
+        
+        jmri.InstanceManager.store(getCbusPreferences(), CbusPreferences.class);
+        
     }
 
     /**
@@ -92,7 +95,12 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
             return true;
         } else if (type.equals(jmri.CommandStation.class)) {
             return true;
+      //  } else if (type.equals(jmri.MultiMeter.class)) {
+      //      return true;
+        } else if (type.equals(CbusPreferences.class)) {
+            return true;
         }
+        
         return false; // nothing, by default
     }
 
@@ -121,8 +129,11 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
             return (T) getLightManager();
         } else if (T.equals(jmri.CommandStation.class)) {
             return (T) getCommandStation();
+      //  } else if (T.equals(jmri.MultiMeter.class)) {
+      //      return (T) getMultiMeter();
+        } else if (T.equals(CbusPreferences.class)) {
+            return (T) getCbusPreferences();
         }
-
         return null; // nothing, by default
     }
 
@@ -227,6 +238,38 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         }
         return commandStation;
     }
+    
+   // protected CbusMultiMeter multiMeter;
+    
+   //  public void enableMultiMeter(){
+   //     jmri.InstanceManager.store( getMultiMeter(), jmri.MultiMeter.class );
+   // }
+    
+    
+    // created on demand
+  //  public CbusMultiMeter getMultiMeter() {
+  //      if (adapterMemo.getDisabled()) {
+  //          return null;
+  //      }
+  //      if (multiMeter == null) {
+  //          multiMeter = new CbusMultiMeter(adapterMemo);
+  //      }
+  //      jmri.InstanceManager.store( multiMeter, jmri.MultiMeter.class );
+   //     return multiMeter;
+   // }
+    
+    
+    private CbusPreferences cbusPreferences;
+
+    public CbusPreferences getCbusPreferences() {
+        if (adapterMemo.getDisabled()) {
+            return null;
+        }
+        if (cbusPreferences == null) {
+            cbusPreferences = new CbusPreferences();
+        }
+        return cbusPreferences;
+    }
 
     @Override
     public void dispose() {
@@ -250,6 +293,15 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         }
         if (throttleManager != null) {
             InstanceManager.deregister((CbusThrottleManager) throttleManager, jmri.jmrix.can.cbus.CbusThrottleManager.class);
+        }
+        if (commandStation != null) {
+            InstanceManager.deregister(commandStation, jmri.CommandStation.class);
+        }
+     //   if (multiMeter != null) {
+     //       InstanceManager.deregister(multiMeter, jmri.MultiMeter.class);
+     //   }
+        if (cbusPreferences != null) {
+            InstanceManager.deregister(cbusPreferences, jmri.jmrix.can.cbus.CbusPreferences.class);
         }
         InstanceManager.deregister(this, CbusConfigurationManager.class);
     }

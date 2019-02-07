@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="en">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <meta name="keywords" content="JMRI help MERG CBUS Preferences Options Reporter">
+  <title>JMRI: MERG CBUS Simulator</title>
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+     <h1>JMRI: MERG CBUS Preferences</h1>
+       
+        <p>This screen allows you to set options which are specific to MERG CBUS within JMRI.</p>
+        <p>Unless stated, these options are stored within the user profile.</p>
+        <p>Some options may require you to restart JMRI before they take effect.</p>
+      
+     <h2><a name="reporters" id="reporters">Reporters</a></h2>
+     
+        <p>Reporters can have an active or inactive status which can be used with sensors.</p>
+        <p>A tag can only be at one location so when it's heard by aother reporter the location is changed.</p>
+        <p>If a reporter has tags present at the location it's active, else it's inactive.</p>
+        <p>A sensor following this status can be used for block tracking, 
+            and will use the reporter device number as a short event senor number.</p>
+        <p>If updating is enabled and there is no existing sensor for the reporter, one will be created.</p>
+     
+        <ul>
+        <li>Do Not Update a Sensor - Default</li>
+        <li>Provide and Update Sensor status</li>
+        </ul>
+        
+        <p>Reporters act on the DDES ( and ACDAT ) OPCs.</p>
+        <p>As this data format is flexible, you can specify how your reporters behave here.</p>
+        <p>At present, the main distinction is between fixed ID RFID tags, and loco identifier formats.</p>
+        <p>For loco identifier formats, the 2 byte loco address is the uniqueness of the tag.</p>
+        <p>To report any extra Tag data, some options can provide a memory variable containing the data.</p>
+        <p>As some formats mean that RFID writing is enabled, 
+            an outbound DDES will not update the tag location when these are heard on the network.</p>
+        
+        <ul>
+        <li>Classic 5 byte RFID - for Reporters using fixed RFID tags - Default</li>
+        <li>2 byte Loco Number only</li>
+        <li>Loco Number with 3 byte Memory Variable</li>
+        </ul>
+
+
+     <h3>JMRI Help</h3>
+      
+        <p>You can view this help page within JMRI by selecting Help > Window Help in the top bar of the MERG CBUS Preferences window.</p>
+        <p><a href="../../../../../../../html/hardware/can/cbus/index.shtml">Main JMRI MERG CBUS Support page</a>.</p>
+
+      <!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+</body>
+</html>

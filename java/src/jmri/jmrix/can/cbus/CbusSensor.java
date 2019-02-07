@@ -228,6 +228,7 @@ public class CbusSensor extends AbstractSensor implements CanListener {
      */
     @Override
     public void dispose() {
+        reporter = null;
         tc.removeCanListener(this);
         super.dispose();
     }

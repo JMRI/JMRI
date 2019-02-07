@@ -8,6 +8,7 @@ import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.TrafficController;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,25 +27,59 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author Mark Riddoch Copyright (C) 2015
+ * @author Steve Young Copyright (c) 2019
  *
  */
 public class CbusReporter extends AbstractReporter implements CanListener {
 
     private final int _number;
+    private TrafficController _tc;
+    private CbusPreferences p;
+    private IdTagManager tagManager;
 
     @SuppressWarnings("LeakingThisInConstructor")
     public CbusReporter(int number, TrafficController tc, String prefix) {  // a human-readable Reporter number must be specified!
         super(prefix + "R" + number);  // can't use prefix here, as still in construction
         _number = number;
-        // At construction, register for messages
-        tc.addCanListener(this);
-        log.debug("Added new reporter " + prefix + "R" + number);
+        tagManager = InstanceManager.getDefault(IdTagManager.class);
+        p = InstanceManager.getDefault(jmri.jmrix.can.cbus.CbusPreferences.class);
+        if ( p.getAllowAutoSensorCreation() ) {
+            jmri.SensorManager sm = InstanceManager.getDefault(jmri.SensorManager.class);
+            jmri.Sensor sensor = sm.provideSensor("+" + _number);
+            if (sensor.getReporter()==null) {
+                sensor.setReporter(this);
+            }
+            checkForTagsAfterDelay();
+        }
+        // Register for messages
+        if (tc !=null) {
+            tc.addCanListener(this);
+        }
+        _tc=tc;
+        log.debug("Added new reporter {}R{}",prefix, number);
     }
+    
+    private void checkForTagsAfterDelay(){
+        
+        jmri.util.ThreadingUtil.runOnLayoutDelayed( () -> {
+            java.util.List<IdTag> list = tagManager.getTagsForReporter(this,999999999L);
+            log.debug("Reporter startup tag list is {}",list.toString() );
+            if ( list.size() < 1 ) {
+                setState(IdTag.UNSEEN);
+            } else {
+                setState(IdTag.SEEN);
+            }
+        },2000 );
+    }
+
+    // unseen = 2
+    // seen = 3
 
     private int state = UNKNOWN;
 
     @Override
     public void setState(int s) {
+        firePropertyChange("state", state, s);
         state = s;
     }
 
@@ -55,76 +90,106 @@ public class CbusReporter extends AbstractReporter implements CanListener {
 
     @Override
     public void message(CanMessage m) {
-        log.debug("CbusReporter: message " + m.getOpCode());
         if (m.getOpCode() == CbusConstants.CBUS_DDES) {
-            RFIDReport(m);
-        } // nothing
+            // if mode > 0 could be an RFID write command sent from JMRI
+            if ( p.getReporterMode()==0 ) { 
+                RFIDReport(m,false);
+            }
+        }
     }
 
     @Override
     public void reply(CanReply m) {
-        log.debug("CbusReporter: reply " + m.getOpCode());
         if (m.getOpCode() == CbusConstants.CBUS_DDES || m.getOpCode() == CbusConstants.CBUS_ACDAT) {
-            int addr = (m.getElement(1) << 8) + m.getElement(2);
-            if (addr != _number) {
-                log.debug("CBusReporter incorrect node number: " + addr + ", expected " + _number + "in reply");
-                return;
-            }
-            String buf;
-
-            buf = toTag(m.getElement(3), m.getElement(4), m.getElement(5), m.getElement(6), m.getElement(7));
-            log.debug("Report RFID tag read of tag: " + buf);
-            IdTag tag = InstanceManager.getDefault(IdTagManager.class).getIdTag(buf);
-            if (tag != null) {
-                CbusReporter r;
-                if ((r = (CbusReporter) tag.getWhereLastSeen()) != null) {
-                    log.debug("Previous reporter: " + r.mSystemName);
-                    if (r != this && r.getCurrentReport() == tag) {
-                        log.debug("Notify previous");
-                        r.clear();
-                    } else {
-                        log.debug("Current report was: " + r.getCurrentReport());
-                    }
-                }
-                tag.setWhereLastSeen(this);
-            } else {
-                log.error("Failed to find tag for RFID:" + buf);
-                InstanceManager.getDefault(IdTagManager.class).newIdTag(buf, null);
-            }
-            setReport(tag);
-            setState(tag != null ? IdTag.SEEN : IdTag.UNSEEN);
-        } // nothing
-
+            CanMessage l = new CanMessage(m);
+            RFIDReport(l,true);
+        }
     }
 
-    public void clear() {
-        setReport(null);
-        setState(IdTag.UNSEEN);
-    }
-
-    private void RFIDReport(CanMessage l) {
+    private void RFIDReport(CanMessage l, Boolean incoming) {
+        log.debug("CbusReporter: message " + l.getOpCode());
         // check address
-        int addr = CbusMessage.getNodeNumber(l);
+        int addr = (l.getElement(1) << 8) + l.getElement(2);
         if (addr != _number) {
-            log.debug("CBusReporter incorrect node number: " + addr + ", expected node number: " + _number);
+            log.debug("CBusReporter {} does not match node or device number: {}",_number,addr);
             return;
         }
         String buf;
-        buf = toTag(l.getElement(3), l.getElement(4), l.getElement(5), l.getElement(6), l.getElement(7));
-        log.debug("Report RFID tag read of tag: " + buf);
-        IdTag tag = InstanceManager.getDefault(IdTagManager.class).getIdTag(buf);
-        if (tag == null) {
-            log.error("Failed to find tag for RFID:" + buf);
+        if ( p.getReporterMode()==1 ) {
+            // may need changing from nmra dcc to number? may be ok as is.
+            buf = "" + (l.getElement(3) << 8) + l.getElement(4);
+            // l.getElement(5)
+            // l.getElement(6)
+            // l.getElement(7));
+        }
+        else if ( p.getReporterMode()==2 ) {
+            // may need changing from nmra dcc to number? may be ok as is.
+            buf = "" + (l.getElement(3) << 8) + l.getElement(4);
+            String tagdata = String.format("%02X", l.getElement(5)) + 
+                String.format("%02X", l.getElement(6)) + String.format("%02X", l.getElement(7));
+            InstanceManager.getDefault(jmri.MemoryManager.class).provideMemory("LOCO"+buf).setValue("" + tagdata);            
+        }
+        else { // default AND mode 0
+            buf = toTag(l.getElement(3), l.getElement(4), l.getElement(5), l.getElement(6), l.getElement(7));
+        }
+        log.debug("Report RFID tag read of tag: {}", buf);
+        IdTag tag = tagManager.getByTagID(buf);
+        if (tag != null) {
+            if (incoming) {
+                clearPreviousReporter(tag);
+            }
+            tag.setWhereLastSeen(this);
+        } else {
+            tag = tagManager.newIdTag(buf, null);
+            log.info("Failed to find tag for RFID: {}, creating new one {}.",buf,tag);
+            tag.setWhereLastSeen(this);
         }
         setReport(tag);
-        setState(tag != null ? IdTag.SEEN : IdTag.UNSEEN);
+        setState(IdTag.SEEN);
     }
 
+    private void clearPreviousReporter(IdTag tag) {
+        CbusReporter r;
+        if ((r = (CbusReporter) tag.getWhereLastSeen()) != null) {
+            if (r == this) {
+                return;
+            }
+            if ( r.getCurrentReport() == tag ) {
+                r.setReport(null);
+            }
+            
+            java.util.List<IdTag> list = tagManager.getTagsForReporter(r,999999999L);
+            log.debug("reporter {} now has {} tags with data {}",r.mSystemName,list.size(),list.toString());
+            
+            // if the list has just 1 tag, this tag is about to be removed
+            if ( list.size() < 2 ) {
+                log.debug("Reporter {} going unseen",r.mSystemName);
+                r.setState(IdTag.UNSEEN); 
+            }
+        }
+    }
+
+    /** 
+     * Converts 5x byte integers to a single string
+     */
     private String toTag(int b1, int b2, int b3, int b4, int b5) {
-        String rval;
-        rval = String.format("%02X", b1) + String.format("%02X", b2) + String.format("%02X", b3)
-                + String.format("%02X", b4) + String.format("%02X", b5);
-        return rval;
+        StringBuilder rval = new StringBuilder();
+        rval.append(String.format("%02X", b1));
+        rval.append(String.format("%02X", b2));
+        rval.append(String.format("%02X", b3));
+        rval.append(String.format("%02X", b4));
+        rval.append(String.format("%02X", b5));
+        return rval.toString();
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void dispose() {
+        if (_tc != null) {
+            _tc.removeCanListener(this);
+        }
     }
 
     private static final Logger log = LoggerFactory.getLogger(CbusReporter.class);
