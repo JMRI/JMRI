@@ -262,6 +262,8 @@
                 <tooltip>Maximum Period length in 100μs steps (min = CV53)</tooltip>
                 <tooltip xml:lang="de">maximale Periodendauer in 100μs Schritten (min = CV53)</tooltip>
             </variable>
+            <!--extended function mapping-->
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv257.512extendedmap.xml"/>
         </variables>
 
         <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/factReset4.xml"/><!-- Piko -->
@@ -271,4 +273,5 @@
     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/PaneUhlenbrock.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/PaneId2Advanced.xml"/><!-- IntelliDrive2, overrrides some CVs set above -->
     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/fmapPane7outputs.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/PaneExtendedFmap.xml"/>
 </decoder-config>
