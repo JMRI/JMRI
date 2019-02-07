@@ -430,6 +430,7 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
     static public TranspondingTagManager getIdTagManager() {
         if (tagManager == null) {
             tagManager = new TranspondingTagManager();
+            InstanceManager.setIdTagManager(tagManager);
         }
         return tagManager;
     }
