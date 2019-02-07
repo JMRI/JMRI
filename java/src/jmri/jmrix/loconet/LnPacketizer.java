@@ -75,7 +75,7 @@ public class LnPacketizer extends LnTrafficController {
      * XmtHandler (a local class) object to implement the transmit thread.
      * <p>
      * We create this object in startThreads() as each packetizer uses different handlers.
-     * So long as the object is created before using it to sync its fine.
+     * So long as the object is created before using it to sync it works.
      *
      */
     protected Runnable xmtHandler = null;
