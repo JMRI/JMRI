@@ -21,6 +21,26 @@ public class AmpMeterFrameTest {
         Assert.assertNotNull("exists",t);
     }
 
+    @Test
+    public void testCurrentChange1Digit() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        AmpMeterFrame t = new AmpMeterFrame();
+        jmri.InstanceManager.getDefault(jmri.MultiMeter.class).setCurrent(1.0f);
+    }
+    @Test
+    public void testCurrentChange2Digit() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        AmpMeterFrame t = new AmpMeterFrame();
+        jmri.InstanceManager.getDefault(jmri.MultiMeter.class).setCurrent(10.0f);
+    }
+
+    @Test
+    public void testCurrentChange3Digit() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        AmpMeterFrame t = new AmpMeterFrame();
+        jmri.InstanceManager.getDefault(jmri.MultiMeter.class).setCurrent(100.0f);
+    }
+
     // The minimal setup for log4J
     @Before
     public void setUp() {
@@ -49,7 +69,7 @@ public class AmpMeterFrameTest {
              }
              @Override
              public boolean hasCurrent(){
-                return false;
+                return true;
              }
              @Override
              public boolean hasVoltage(){
