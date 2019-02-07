@@ -722,6 +722,21 @@ public final class InstanceManager {
         }
     }
 
+    // Needs to have proxy manager converted to work
+    // with current list of managers (and robust default
+    // management) before this can be deprecated in favor of
+    // store(p, IdTagManager.class)
+    @SuppressWarnings("unchecked") // AbstractProxyManager of the right type is type-safe by definition
+    static public void setIdTagManager(IdTagManager p) {
+        log.debug(" setIdTagManager");
+        IdTagManager apm = getDefault(IdTagManager.class);
+        if (apm instanceof jmri.managers.AbstractProxyManager<?>) { // <?> due to type erasure
+            ((jmri.managers.AbstractProxyManager<IdTag>) apm).addManager(p);
+        } else {
+            log.error("Incorrect setup: IdTagManager default isn't an AbstractProxyManager<IdTag>");
+        }
+    }
+
     /* *************************************************************************** */
 
     /**

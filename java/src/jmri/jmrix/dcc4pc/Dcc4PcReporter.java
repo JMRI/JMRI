@@ -399,7 +399,7 @@ public class Dcc4PcReporter extends AbstractRailComReporter {
             log.debug(this.getDisplayName() + " Address part 2 " + addr_type + " " + addr);
             log.debug(this.getDisplayName() + " Create/Get id tag for " + addr);
         }
-        rcTag = jmri.InstanceManager.getDefault(jmri.RailComManager.class).provideIdTag("" + addr);
+        rcTag = (RailCom)jmri.InstanceManager.getDefault(jmri.RailComManager.class).provideIdTag("" + addr);
 
         rcTag.setAddressType(addr_type);
 
@@ -439,7 +439,7 @@ public class Dcc4PcReporter extends AbstractRailComReporter {
 
     RailCom provideTag(int address, int addr_type) {
         log.debug("provide Tag");
-        RailCom rcTag = jmri.InstanceManager.getDefault(jmri.RailComManager.class).provideIdTag("" + address);
+        RailCom rcTag = (RailCom) jmri.InstanceManager.getDefault(jmri.RailComManager.class).provideIdTag("" + address);
         notify(rcTag);
         return rcTag;
     }

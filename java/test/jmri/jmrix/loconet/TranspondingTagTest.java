@@ -1,9 +1,9 @@
-package jmri.implementation;
+package jmri.jmrix.loconet;
 
 import java.util.Calendar;
 import java.util.Date;
-import jmri.RailCom;
 import jmri.Reporter;
+import jmri.implementation.AbstractReporter;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -11,58 +11,60 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Tests for the DefaultRailCom class
+ * Tests for the TranspondingTag class
  *
  * @author Matthew Harris Copyright (C) 2011
  */
-public class DefaultRailComTest {
+public class TranspondingTagTest {
 
     @Test
-    public void testCreateRailCom() {
-        RailCom r = new DefaultRailCom("ID1234");
-        Assert.assertNotNull("RailCom not null", r);
+    public void testCreateTranspondingTag() {
+        TranspondingTag r = new TranspondingTag("ID1234");
+        Assert.assertNotNull("TranspondingTag not null", r);
     }
 
     @Test
-    public void testGetRailComUserName() {
-        RailCom r = new DefaultRailCom("ID1234", "Test Tag");
-        Assert.assertEquals("RailCom user name is 'Test Tag'", "Test Tag", r.getUserName());
+    public void testGetTranspondingTagUserName() {
+        TranspondingTag r = new TranspondingTag("ID1234", "Test Tag");
+        Assert.assertEquals("TranspondingTag user name is 'Test Tag'", "Test Tag", r.getUserName());
     }
 
     @Test
-    public void testGetRailComTagID() {
-        RailCom r = new DefaultRailCom("ID1234");
-        Assert.assertEquals("RailCom TagID is 1234", "1234", r.getTagID());
+    public void testGetTranspondingTagTagID() {
+        TranspondingTag r = new TranspondingTag("ID1234");
+        Assert.assertEquals("TranspondingTag TagID is 1234", "1234", r.getTagID());
     }
 
     @Test
-    public void testRailComToString() {
-        RailCom r = new DefaultRailCom("ID1234");
-        Assert.assertEquals("RailCom toString ", "ID1234", r.toString());
+    public void testTranspondingTagToString() {
+        TranspondingTag r = new TranspondingTag("ID1234");
+        // set the entryexit property
+        r.setProperty("entryexit","exits");
+        Assert.assertEquals("TranspondingTag toString ", "1234 exits", r.toString());
     }
 
     @Test
-    public void testRailComToReportString() {
-        DefaultRailCom r = new DefaultRailCom("ID1234");
-        Assert.assertEquals("RailCom toReportString ", "Unknown Orientation Address 1234(L) ", r.toReportString());
+    public void testTranspondingTagToReportString() {
+        TranspondingTag r = new TranspondingTag("LD1234");
+        Assert.assertEquals("TranspondingTag toReportString ", "1234", r.toReportString());
     }
 
     @Test
     public void testNotYetSeen() {
-        RailCom r = new DefaultRailCom("ID0413276BC1");
+        TranspondingTag r = new TranspondingTag("ID0413276BC1");
         Assert.assertNull("At creation, Reporter where seen is null", r.getWhereLastSeen());
         Assert.assertNull("At creation, Date when seen is null", r.getWhenLastSeen());
-        Assert.assertEquals("At creation, RailCom status is UNSEEN", RailCom.UNSEEN, r.getState());
+        Assert.assertEquals("At creation, TranspondingTag status is UNSEEN", TranspondingTag.UNSEEN, r.getState());
 
         r.setWhereLastSeen(null);
         Assert.assertNull("After setWhereLastSeen(null), Reporter where seen is null", r.getWhereLastSeen());
         Assert.assertNull("After setWhereLastSeen(null), Date when seen is null", r.getWhenLastSeen());
-        Assert.assertEquals("After setWhereLastSeen(null), RailCom status is UNSEEN", RailCom.UNSEEN, r.getState());
+        Assert.assertEquals("After setWhereLastSeen(null), TranspondingTag status is UNSEEN", TranspondingTag.UNSEEN, r.getState());
     }
 
     @Test
     public void testHasBeenSeen() throws InterruptedException {
-        RailCom r = new DefaultRailCom("ID0413276BC1");
+        TranspondingTag r = new TranspondingTag("ID0413276BC1");
         Reporter rep = new AbstractReporter("IR1") {
             @Override
             public int getState() {
@@ -84,14 +86,14 @@ public class DefaultRailComTest {
 
         Assert.assertEquals("Where last seen is 'IR1'", rep, r.getWhereLastSeen());
         Assert.assertNotNull("When last seen is not null", r.getWhenLastSeen());
-        Assert.assertEquals("Status is SEEN", RailCom.SEEN, r.getState());
+        Assert.assertEquals("Status is SEEN", TranspondingTag.SEEN, r.getState());
         Assert.assertTrue("Time when last seen is later than 'timeBefore'", r.getWhenLastSeen().after(timeBefore));
         Assert.assertTrue("Time when last seen is earlier than 'timeAfter'", r.getWhenLastSeen().before(timeAfter));
 
         r.setWhereLastSeen(null);
         Assert.assertNull("After setWhereLastSeen(null), Reporter where seen is null", r.getWhereLastSeen());
         Assert.assertNull("After setWhereLastSeen(null), Date when seen is null", r.getWhenLastSeen());
-        Assert.assertEquals("After setWhereLastSeen(null), RailCom status is UNSEEN", RailCom.UNSEEN, r.getState());
+        Assert.assertEquals("After setWhereLastSeen(null), TranspondingTag status is UNSEEN", TranspondingTag.UNSEEN, r.getState());
 
     }
 
@@ -102,7 +104,7 @@ public class DefaultRailComTest {
         jmri.util.JUnitUtil.initInternalTurnoutManager();
         jmri.util.JUnitUtil.initInternalLightManager();
         jmri.util.JUnitUtil.initInternalSensorManager();
-        jmri.util.JUnitUtil.initRailComManager();
+        new TranspondingTagManager();
     }
 
     @After

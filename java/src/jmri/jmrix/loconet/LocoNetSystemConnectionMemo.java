@@ -8,6 +8,7 @@ import jmri.CommandStation;
 import jmri.ConsistManager;
 import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
+import jmri.IdTagManager;
 import jmri.LightManager;
 import jmri.MultiMeter;
 import jmri.PowerManager;
@@ -227,6 +228,9 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
         if (type.equals(MultiMeter.class)) {
             return true;
         }
+        if (type.equals(IdTagManager.class)) {
+            return true;
+        }
 
         return super.provides(type);
     }
@@ -280,6 +284,9 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
             return (T) getMultiMeter();
         }
 
+        if (T.equals(IdTagManager.class)) {
+            return (T) getIdTagManager();
+        }
         return super.get(T);
     }
 
@@ -330,6 +337,7 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
         //MultiMeter mm = getMultiMeter();
         jmri.InstanceManager.store(getMultiMeter(), jmri.MultiMeter.class);
 
+        getIdTagManager();
     }
 
     protected LnPowerManager powerManager;
@@ -442,6 +450,19 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
     @Override
     protected ResourceBundle getActionModelResourceBundle() {
         return ResourceBundle.getBundle("jmri.jmrix.loconet.LocoNetActionListBundle");
+    }
+
+    // yes, tagManager is static.  Tags can move between system connections.
+    // when readers are not all on the same LocoNet
+    // this manager is loaded on demand.
+    protected static TranspondingTagManager tagManager;
+
+    static public TranspondingTagManager getIdTagManager() {
+        if (tagManager == null) {
+            tagManager = new TranspondingTagManager();
+            InstanceManager.setIdTagManager(tagManager);
+        }
+        return tagManager;
     }
 
     @Override
