@@ -25,7 +25,7 @@ import java.util.List;
  * @author Kevin Dickerson Copyright (C) 2012
  * @since 2.99.4
  */
-public interface RailCom extends IdTag {
+public interface RailCom extends AddressedIdTag {
 
     /**
      * Constant representing that we do not know the address type of the
@@ -68,32 +68,41 @@ public interface RailCom extends IdTag {
     public int getOrientation();
 
     /**
-     * Gets the address reported back as a {@link jmri.DccLocoAddress}.
+     * Gets the address reported back as a {@link jmri.LocoAddress}.
      *
      * @return current DCC loco address
+     * @deprecated since 4.15.4  Use getLocoAddress() instead.
      */
-    public DccLocoAddress getDccLocoAddress();
+    default public DccLocoAddress getDccLocoAddress(){
+       return (DccLocoAddress) getLocoAddress();
+    }
 
     /**
      * Method for a RailCom Reader to set the Address type reported back from a
      * device
      *
      * @param type set type of address
+     * @deprecated since 4.15.4  Use {@link jmri.LocoAddress.Protocol} instead.
      */
+    @Deprecated
     public void setAddressType(int type);
 
     /**
      * Gets the actual type of address reported back by the RailCom device
      *
      * @return -1 if not set.
+     * @deprecated since 4.15.4  Use {@link jmri.LocoAddress.Protocol} instead.
      */
+    @Deprecated
     public int getAddressType();
 
     /**
      * Gets the actual address type as a String.
      *
      * @return the address type
+     * @deprecated since 4.15.4  Use {@link jmri.LocoAddress.Protocol} instead.
      */
+    @Deprecated
     public String getAddressTypeAsString();
 
     /**
