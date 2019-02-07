@@ -5,7 +5,6 @@ import java.util.regex.Pattern;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.IdTag;
-import jmri.IdTagManager;
 import jmri.LocoAddress;
 import jmri.Reporter;
 import jmri.PhysicalLocationReporter;
@@ -91,7 +90,7 @@ public class LnReporter extends AbstractIdTagReporter implements LocoNetListener
             loco = l.getElement(3) * 128 + l.getElement(4);
         }
 
-        IdTag idTag = InstanceManager.getDefault(IdTagManager.class).provideIdTag(""+loco);
+        IdTag idTag = InstanceManager.getDefault(TranspondingTagManager.class).provideIdTag(""+loco);
         if(enter) {
            idTag.setProperty("entryexit","enter");
         } else {
@@ -118,8 +117,7 @@ public class LnReporter extends AbstractIdTagReporter implements LocoNetListener
         boolean north = ((l.getElement(3) & 0x20) == 0);
 
         // get loco address
-        //setReport("" + loco + " seen " + (north ? "northbound" : "southbound")); // NOI18N
-        IdTag idTag = InstanceManager.getDefault(IdTagManager.class).provideIdTag(""+loco);
+        IdTag idTag = InstanceManager.getDefault(TranspondingTagManager.class).provideIdTag(""+loco);
         if(north) {
            idTag.setProperty("seen","seen northbound");
         } else {
