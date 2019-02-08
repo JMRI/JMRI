@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
  * Pane to edit MERG CBUS Preferences
  * Based on ECoS preferences
  * @author Kevin Dickerson Copyright (C) 2009
- * @author Steve Young Copyright (C) 2009
+ * @author Steve Young Copyright (C) 2019
  * @see CbusPreferences
   */
 public class CbusPreferencesPane extends jmri.jmrix.can.swing.CanPanel implements PreferencesPanel {
