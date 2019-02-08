@@ -326,8 +326,6 @@ public class CbusAddress {
         CbusAddress a = new CbusAddress(address);
         CbusAddress[] v = a.split();
         switch (v.length) {
-            case 0:
-                throw new IllegalArgumentException("Did not find usable hardware address: " + address + " for a valid Cbus sensor address");
             case 1:
                 if ( address.startsWith("+") || address.startsWith("-") ) {
                     break;
@@ -385,7 +383,7 @@ public class CbusAddress {
             // ignoring anything starting with x or X as it may be a HEX value
             // which is checked by core CbusAddress
             try {
-                if ( (part.charAt(0) != 'x') && (part.charAt(0) != 'X') ) {
+                if ( (part.toUpperCase().charAt(0) != 'X') ) {
                     log.debug("not an int or hex {}",part);
                     
                     // it's got a string in somewhere, start by checking event number
