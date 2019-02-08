@@ -2,6 +2,7 @@ package jmri.jmrit.ampmeter;
 
 import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
+import jmri.util.ThreadingUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
@@ -19,6 +20,36 @@ public class AmpMeterFrameTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         AmpMeterFrame t = new AmpMeterFrame();
         Assert.assertNotNull("exists",t);
+    }
+
+    @Test
+    public void testCurrentChange1Digit() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        AmpMeterFrame t = new AmpMeterFrame();
+        ThreadingUtil.runOnLayout(() -> {
+             jmri.InstanceManager.getDefault(jmri.MultiMeter.class).setCurrent(1.0f);
+    	});
+        t.dispose();
+    }
+
+    @Test
+    public void testCurrentChange2Digit() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        AmpMeterFrame t = new AmpMeterFrame();
+        ThreadingUtil.runOnLayout(() -> {
+             jmri.InstanceManager.getDefault(jmri.MultiMeter.class).setCurrent(10.0f);
+    	});
+        t.dispose();
+    }
+
+    @Test
+    public void testCurrentChange3Digit() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        AmpMeterFrame t = new AmpMeterFrame();
+        ThreadingUtil.runOnLayout(() -> {
+             jmri.InstanceManager.getDefault(jmri.MultiMeter.class).setCurrent(100.0f);
+    	});
+        t.dispose();
     }
 
     // The minimal setup for log4J
@@ -49,7 +80,7 @@ public class AmpMeterFrameTest {
              }
              @Override
              public boolean hasCurrent(){
-                return false;
+                return true;
              }
              @Override
              public boolean hasVoltage(){
