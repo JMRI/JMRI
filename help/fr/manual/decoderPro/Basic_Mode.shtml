@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//fr"
+"http://www.w3.org/TR/html4/loose.dtd">
+<!-- Tranlation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-02-08 -->
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>DecoderPro&reg; Programming Modes</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
+
+    <div id="mainContent">
+      <a name="Top" id="Top"></a>
+
+      <h1>Modes de Programmation</h1>
+
+      <div align="right">
+        <p><a href="Basic_Start.shtml#ProgramModes">Retour</a></p>
+      </div>
+      <hr>
+
+      <p align="center"><img src="images/SetProgramMode.png" width=
+      "262" height="135" alt="program mode"></p>
+
+      <p>Quelques brefs commentaires sur les Modes de Programmation</p>
+
+      <p><strong>Mode Pagin&#233</strong> est une extension du mode
+      Registre qui donne un acc&#232s complet &#224 tous les CVs du D&#233codeur.</p>
+
+      <p><strong>Mode Registre</strong> est une forme d'extension du
+      Mode Adresse, et il est encore utilis&#233 par quelques d&#233codeurs ag&#233s ou 
+      bas de gamme, particuli&#232rement quelques uns de MRC et Wangrow. Il est
+      intrins&#232quement limit&#233 dans sa capacit&#233 &#224 acc&#233der &#224 tous les CV d'un
+      d&#233codeur.</p>
+
+      <p><strong>Octet Direct </strong> est une autre m&#233thode, pas encore
+       prise en charge par tous les d&#233codeurs, qui permet un acc&#232s complet. Il y a
+      deux  fa&#231ons de mettre en &#156;uvre le Mode Direct. Les m&#233thodes Octet Direct
+      prise en charge par votre station de commande seront activ&#233es.</p>
+
+      <p><strong>Mode Adresse</strong> est une programmation obsol&#232te.
+       La m&#233thode  est incluse ici pour la<br>
+       conformit&#233 totale &#224 la norme NMRA DCC.</p>
+
+      <p> Si vous rencontrez des difficult&#233s pour programmer un d&#233codeur en
+       Mode pagin&#233, essayez Direct Byte, puis<br>
+      t enfin le Mode Adresse. Le D&#233codeur Accessoire
+      EasyDCC AD4 ne peut &#234tre  <br>
+       programm&#233 qu'en octet direct.</p>
+      <hr>
+
+      <div align="right">
+        <p><a href="Basic_Start.shtml#ProgramModes">Retour</a></p>
+      </div><!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+</body>
+</html>
