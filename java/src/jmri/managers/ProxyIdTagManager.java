@@ -172,22 +172,44 @@ public class ProxyIdTagManager extends AbstractProxyManager<IdTag>
         return Bundle.getMessage("BeanNameIdTag");
     }
 
+    private boolean stateSaved = false;
+
     @Override
     public void setStateStored(boolean state) {
+        stateSaved = state;
+        for( Manager<IdTag> mgr: getManagerList()){
+            ((IdTagManager)mgr).setStateStored(state);
+        }
     }
 
     @Override
     public boolean isStateStored() {
-        return false;
+        for( Manager<IdTag> mgr: getManagerList()){
+            if(!((IdTagManager)mgr).isStateStored()){
+               return false;
+            }
+        }
+        return stateSaved;
     }
+
+    private boolean useFastClock = false;
 
     @Override
     public void setFastClockUsed(boolean fastClock) {
+        useFastClock = fastClock;
+        for( Manager<IdTag> mgr: getManagerList()){
+            ((IdTagManager)mgr).setFastClockUsed(fastClock);
+        }
     }
 
     @Override
     public boolean isFastClockUsed() {
-        return false;
+        for( Manager<IdTag> mgr: getManagerList()){
+            if(!((IdTagManager)mgr).isFastClockUsed()){
+               return false;
+            }
+        }
+        return useFastClock;
     }
 
     @Override

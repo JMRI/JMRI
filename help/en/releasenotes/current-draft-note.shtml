@@ -374,7 +374,10 @@
             <li>Fixed an issue where Reporters with a system letter of M
                 were erroneously tagged as 
                 <a href="http://jmri.org/help/en/html/setup/MigrateSystemPrefixes.shtml">requiring migration</a>.</li>
-        </ul>
+            <li>RailCom Tags now appear in the ID Tag table and are available to operations and other tools just like other Identifiable tags.</li>
+	    <li>LocoNet reporters now report a Transponding Tag object instead of a string.  This object allows extracting the address without further parsing.  As with RailCom tags, these also apear in the IdTag table and are available totools such as operations.</li>
+	    <li>Internal Reporters can now collect information.  An example showing how to use this feature is <a href="https://github.com/pabender/Sensys2014">available here</a>.</li>
+	</ul>
 
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"/>
