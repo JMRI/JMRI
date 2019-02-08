@@ -92,14 +92,14 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                 text += "\tDirection: " + getDirectionString();
                 break;
             case DCCppConstants.TURNOUT_REPLY:
-                if(isTurnoutDefReply()) {
+                if (isTurnoutDefReply()) {
                     text = "Turnout Reply: \n";
                     text += "\tT/O Number: " + getTOIDString() + "\n";
                     text += "\tT/O Address: " + getTOAddressString() + "\n";
                     text += "\tT/O Index: " + getTOAddressIndexString() + "\n";
                     // if we are able to parse the address and index we can convert it
                     // to a standard DCC address for display.
-                    if(getTOAddressInt() != -1 && getTOAddressIndexInt() != -1) {
+                    if (getTOAddressInt() != -1 && getTOAddressIndexInt() != -1) {
                         int boardAddr = getTOAddressInt();
                         int boardIndex = getTOAddressIndexInt();
                         int dccAddress = (((boardAddr - 1) * 4) + boardIndex) + 1;
