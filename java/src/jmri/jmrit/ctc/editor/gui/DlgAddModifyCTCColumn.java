@@ -10,7 +10,7 @@ import javax.swing.SpinnerNumberModel;
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019
  */
 public class DlgAddModifyCTCColumn extends javax.swing.JDialog {
-    
+
     private static final String FORM_PROPERTIES = "DlgAddModifyCTCColumn";
     private final AwtWindowProperties _mAwtWindowProperties;
     private final Columns _mColumns;
@@ -25,7 +25,7 @@ public class DlgAddModifyCTCColumn extends javax.swing.JDialog {
      */
     private boolean _mClosedNormally = false;
     public boolean closedNormally() { return _mClosedNormally; }
-    
+
     public DlgAddModifyCTCColumn(java.awt.Frame parent, boolean modal, AwtWindowProperties awtWindowProperties, Columns columns, boolean isModify, int existingSwitchNumber, int existingGUIColumnNumber, boolean existingGUIGeneratedAtLeastOnceAlready) {
         super(parent, modal);
         initComponents();
@@ -33,10 +33,10 @@ public class DlgAddModifyCTCColumn extends javax.swing.JDialog {
         _mColumns = columns;
         _mIsModify = isModify;
         if (!isModify) {    // Add:
-            this.setTitle("Add new switch and signal etc. #'s");
+            this.setTitle(Bundle.getMessage("TitleDlgAddModAdd"));
             _mInfo.setVisible(false);
         } else {    // Modify:
-            this.setTitle("Modify switch and signal etc. #'s");
+            this.setTitle(Bundle.getMessage("TitleDlgAddModChg"));
             _mInfo.setVisible(true);
         }
         _mGUIColumnNumber.setModel(new SpinnerNumberModel(existingGUIColumnNumber, 0, 32767, 1));
@@ -74,11 +74,11 @@ public class DlgAddModifyCTCColumn extends javax.swing.JDialog {
         });
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel1.setText("Switch #:");
+        jLabel1.setText(Bundle.getMessage("LabelDlgAddModSwitch"));
 
-        jLabel2.setText("The Signal # will always be one more than the switch #");
+        jLabel2.setText(Bundle.getMessage("InfoDlgAddModSignal"));
 
-        _mSaveAndClose.setText("Save and close");
+        _mSaveAndClose.setText(Bundle.getMessage("ButtonSaveClose"));
         _mSaveAndClose.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mSaveAndCloseActionPerformed(evt);
@@ -86,16 +86,23 @@ public class DlgAddModifyCTCColumn extends javax.swing.JDialog {
         });
 
         _mInfo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        _mInfo.setText("<html>NOTE: This ONLY modifies the entry in the list 'Presently defined CTC Columns'.  If you want the new numbers to be applied to all of the other data, then press 'Reapply patterns to  selected item' on the main screen, or go into the individual areas and SELECTIVELY modify them there.</html>");
+        _mInfo.setText(Bundle.getMessage("InfoDlgAddModNote")
+        );
         _mInfo.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         _mInfo.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         _mInfo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
-        jLabel4.setText("GUI column #:");
+        jLabel4.setText(Bundle.getMessage("LabelDlgAddModColumn"));
 
-        jLabel5.setText("0 = nothing generated");
+        jLabel5.setText(Bundle.getMessage("InfoDlgAddModGen"));
 
-        _mGUIGeneratedAtLeastOnceAlready.setText("GUI Generated before");
+        _mGUIGeneratedAtLeastOnceAlready.setText(Bundle.getMessage("LabelDlgAddModGen")
+        );
+        _mGUIGeneratedAtLeastOnceAlready.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                _mGUIGeneratedAtLeastOnceAlreadyActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -127,7 +134,7 @@ public class DlgAddModifyCTCColumn extends javax.swing.JDialog {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jLabel5))
                                     .addComponent(_mGUISwitchNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(0, 41, Short.MAX_VALUE))))
+                        .addGap(0, 136, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -164,7 +171,7 @@ public class DlgAddModifyCTCColumn extends javax.swing.JDialog {
         }
         _mNewSignalEtcNumber = _mNewSwitchNumber + 1;
         _mNewGUIGeneratedAtLeastOnceAlready = _mGUIGeneratedAtLeastOnceAlready.isSelected();
-        
+
         _mClosedNormally = true;
         _mAwtWindowProperties.saveWindowState(this, FORM_PROPERTIES);
         dispose();  // All valid, valid to exit out of form.
@@ -174,6 +181,10 @@ public class DlgAddModifyCTCColumn extends javax.swing.JDialog {
         _mAwtWindowProperties.saveWindowState(this, FORM_PROPERTIES);
         dispose();
     }//GEN-LAST:event_formWindowClosing
+
+    private void _mGUIGeneratedAtLeastOnceAlreadyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mGUIGeneratedAtLeastOnceAlreadyActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event__mGUIGeneratedAtLeastOnceAlreadyActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JSpinner _mGUIColumnNumber;

@@ -79,7 +79,7 @@ public class DlgCB extends javax.swing.JDialog {
         if (ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mOSSectionOccupiedExternalSensor)) return false;
         return checkJMRIObject.validClassWithPrefix(PREFIX, codeButtonHandlerData);
     }
-    
+  
 //  Validate all internal fields as much as possible:
     private ArrayList<String> formFieldsValid() {
         ArrayList<String> errors = new ArrayList<>();
@@ -121,30 +121,30 @@ public class DlgCB extends javax.swing.JDialog {
         jLabel10 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-        setTitle("Edit Code Button");
+        setTitle(Bundle.getMessage("TitleDlgCB"));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
             }
         });
 
-        _mCodeButtonInternalSensorPrompt.setText("Code button sensor:");
+        _mCodeButtonInternalSensorPrompt.setText(Bundle.getMessage("LabelDlgCBSensor"));
 
-        _mSaveAndClose.setText("Save and close");
+        _mSaveAndClose.setText(Bundle.getMessage("ButtonSaveClose"));
         _mSaveAndClose.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mSaveAndCloseActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Reapply patterns - this form ONLY!");
+        jButton2.setText(Bundle.getMessage("ButtonReapply"));
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
 
-        _mOSSectionOccupiedExternalSensorPrompt.setText("Primary O.S. section occupied sensor:");
+        _mOSSectionOccupiedExternalSensorPrompt.setText(Bundle.getMessage("LabelDlgCBPriSensor"));
 
         _mOSSectionSwitchSlavedToUniqueID.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -152,29 +152,29 @@ public class DlgCB extends javax.swing.JDialog {
             }
         });
 
-        jLabel3.setText("Switch slaved to O.S. section #:");
+        jLabel3.setText(Bundle.getMessage("LabelDlgCBSwitch"));
 
-        jLabel4.setText("Leave this blank if this is a normal O.S. section");
+        jLabel4.setText(Bundle.getMessage("InfoDlgCBNormal"));
 
-        jLabel9.setText("Selecting self forces blank!");
+        jLabel9.setText(Bundle.getMessage("InfoBlank"));
 
         _mCodeButtonDelayTime.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
 
-        jLabel5.setText("No code button delay in milliseconds:");
+        jLabel5.setText(Bundle.getMessage("LabelDlgCBDelay"));
 
-        jLabel6.setText("Enter 0 for normal code button");
+        jLabel6.setText(Bundle.getMessage("InfoDlgCBZero"));
 
-        jLabel7.setText("Enter >0 for tower O.S. section delay (no code button)");
+        jLabel7.setText(Bundle.getMessage("InfoDlgCBDelay"));
 
-        jLabel1.setText("Required");
+        jLabel1.setText(Bundle.getMessage("InfoRequired"));
 
-        _mOSSectionOccupiedExternalSensorPrompt1.setText("Secondary O.S. section occupied sensor:");
+        _mOSSectionOccupiedExternalSensorPrompt1.setText(Bundle.getMessage("LabelDlgCBSecSensor"));
 
-        jLabel2.setText("Optional");
+        jLabel2.setText(Bundle.getMessage("InfoOptional"));
 
-        jLabel8.setText("Locks everything");
+        jLabel8.setText(Bundle.getMessage("InfoDlgCBLockAll"));
 
-        jLabel10.setText("Prevents turnout change, turnout lock");
+        jLabel10.setText(Bundle.getMessage("InfoDlgCBLockTO"));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -204,8 +204,10 @@ public class DlgCB extends javax.swing.JDialog {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jLabel2))
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGap(10, 10, 10)
-                                        .addComponent(jLabel10))))
+                                        .addGap(6, 6, 6)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel8)
+                                            .addComponent(jLabel10)))))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(21, 21, 21)
                                 .addComponent(jLabel3)
@@ -218,22 +220,17 @@ public class DlgCB extends javax.swing.JDialog {
                                         .addComponent(jLabel9))))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGap(35, 35, 35)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel7)
                                     .addComponent(jLabel6)
                                     .addComponent(_mCodeButtonDelayTime, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(212, 212, 212)
-                        .addComponent(_mSaveAndClose))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(170, 170, 170)
-                        .addComponent(jButton2)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jLabel8)
-                .addGap(134, 134, 134))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(_mSaveAndClose)
+                            .addComponent(jButton2))))
+                .addContainerGap(125, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -247,9 +244,9 @@ public class DlgCB extends javax.swing.JDialog {
                     .addComponent(_mOSSectionOccupiedExternalSensor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(_mOSSectionOccupiedExternalSensorPrompt)
                     .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(_mOSSectionOccupiedExternalSensor2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(_mOSSectionOccupiedExternalSensorPrompt1)
@@ -271,7 +268,7 @@ public class DlgCB extends javax.swing.JDialog {
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel7)
-                .addGap(18, 18, 18)
+                .addGap(29, 29, 29)
                 .addComponent(_mSaveAndClose)
                 .addGap(18, 18, 18)
                 .addComponent(jButton2)

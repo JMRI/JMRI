@@ -173,41 +173,41 @@ public class DlgCO extends javax.swing.JDialog {
         _mSwitchIndicator5 = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-        setTitle("Edit call on");
+        setTitle(Bundle.getMessage("TitleDlgCO"));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
             }
         });
 
-        _mSaveAndClose.setText("Save and close");
+        _mSaveAndClose.setText(Bundle.getMessage("ButtonSaveClose"));
         _mSaveAndClose.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mSaveAndCloseActionPerformed(evt);
             }
         });
 
-        _mCO_CallOnToggleInternalSensorPrompt.setText("Toggle sensor:");
+        _mCO_CallOnToggleInternalSensorPrompt.setText(Bundle.getMessage("LabelDlgCOToggleSensor"));
 
-        _mGroupingsListPrompt.setText("Grouping list:");
+        _mGroupingsListPrompt.setText(Bundle.getMessage("LabelDlgCOGroupingList"));
 
-        jLabel5.setText("Based upon Signal Type selected, various values are needed below and enabled for editing:");
+        jLabel5.setText(Bundle.getMessage("InfoDlgCORow1"));
 
-        jLabel6.setText("Signal:");
+        jLabel6.setText(Bundle.getMessage("InfoDlgCORow2A"));
 
-        jLabel7.setText("Signal facing direction:");
+        jLabel7.setText(Bundle.getMessage("InfoDlgCORow3A"));
 
-        jLabel8.setText("Signal aspect to display:");
+        jLabel8.setText(Bundle.getMessage("InfoDlgCORow4A"));
 
-        jLabel10.setText("Called on sensor:");
+        jLabel10.setText(Bundle.getMessage("InfoDlgCORow5A"));
 
-        jLabel11.setText("A standard JMRI signal head or signal mast which will get the call on aspect.");
+        jLabel11.setText(Bundle.getMessage("InfoDlgCORow2B"));
 
-        jLabel12.setText("LEFTTRAFFIC or RIGHTTRAFFIC");
+        jLabel12.setText(Bundle.getMessage("InfoDlgCORow3B"));
 
-        jLabel13.setText("For Signal Heads: Dark, Red, Yellow (Semaphores), Green, Flashing Red (Signals), Flashing Yellow, Flashing Green, Lunar, Flashing Lunar");
+        jLabel13.setText(Bundle.getMessage("InfoDlgCORow4B"));
 
-        jLabel15.setText("For Signal Heads: required JMRI Sensor for occupancy in the direction indicated (i.e. the sensor where the train is ultimately GOING) which MUST be occupied.");
+        jLabel15.setText(Bundle.getMessage("InfoDlgCORow5B"));
 
         _mSignalFacingDirection.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "LEFTTRAFFIC", "RIGHTTRAFFIC", " " }));
 
@@ -220,30 +220,31 @@ public class DlgCO extends javax.swing.JDialog {
         });
         jScrollPane1.setViewportView(_mGroupingsList);
 
-        _mDelete.setText("Delete");
+        _mDelete.setText(Bundle.getMessage("ButtonDelete"));
         _mDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mDeleteActionPerformed(evt);
             }
         });
 
-        _mEditBelow.setText("Edit below");
+        _mEditBelow.setText(Bundle.getMessage("ButtonEditBelow"));
         _mEditBelow.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mEditBelowActionPerformed(evt);
             }
         });
 
-        _mAddNew.setText("Add new");
+        _mAddNew.setText(Bundle.getMessage("ButtonAddNew")
+        );
         _mAddNew.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mAddNewActionPerformed(evt);
             }
         });
 
-        jLabel1.setText("Signal:");
+        jLabel1.setText(Bundle.getMessage("LabelDlgCOSignal"));
 
-        jLabel3.setText("Called on sensor:");
+        jLabel3.setText(Bundle.getMessage("LabelDlgCOSensor"));
 
         _mGroupingListAddReplace.setText("      ");
         _mGroupingListAddReplace.setEnabled(false);
@@ -253,37 +254,48 @@ public class DlgCO extends javax.swing.JDialog {
             }
         });
 
-        jButton2.setText("Reapply patterns - this form ONLY!");
+        jButton2.setText(Bundle.getMessage("ButtonReapply"));
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
 
-        _mCancel.setText("Cancel");
+        _mCancel.setText(Bundle.getMessage("ButtonCancel"));
         _mCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mCancelActionPerformed(evt);
             }
         });
 
-        jLabel2.setText("Signal type:");
+        jLabel2.setText(Bundle.getMessage("LabelDlgCOSignalTYpe"));
 
         _mCO_SignalType.add(_mSignalHead);
-        _mSignalHead.setText("Signal Head");
+        _mSignalHead.setText(Bundle.getMessage("LabelDlgCOSignalHead"));
+        _mSignalHead.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                _mSignalHeadActionPerformed(evt);
+            }
+        });
 
         _mCO_SignalType.add(_mSignalMast);
-        _mSignalMast.setText("Signal Mast");
+        _mSignalMast.setText(Bundle.getMessage("LabelDlgCOSignalMast"));
 
-        jLabel4.setText("Block:");
+        jLabel4.setText(Bundle.getMessage("LabelDlgCOBLock"));
 
-        jLabel16.setText("Block:");
+        jLabel16.setText(Bundle.getMessage("InfoDlgCORow6A"));
 
-        jLabel17.setText("For Signal Masts: the \"Permissive\" aspect needs to be set in the specified block, and additionally the occupancy sensor associated with it MUST be occupied.");
+        jLabel17.setText(Bundle.getMessage("InfoDlgCORow6B"));
 
-        jLabel9.setText("--------------------------------------------------- ROUTE ---------------------------------------------------");
+        jLabel9.setText(Bundle.getMessage("InfoDlgCOSep"));
 
-        jLabel14.setText("Select up to 6 (all optional) switch direction indicators (when lit) to specify the route exactly:");
+        jLabel14.setText(Bundle.getMessage("InfoDlgCOSelect"));
+
+        _mSwitchIndicator1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                _mSwitchIndicator1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -345,31 +357,32 @@ public class DlgCO extends javax.swing.JDialog {
                             .addComponent(jLabel3)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(_mCalledOnExternalSensor, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
                             .addComponent(jLabel4)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(_mExternalBlock, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(_mSwitchIndicator1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(_mSwitchIndicator2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(_mSwitchIndicator3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(_mSwitchIndicator4, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(_mSwitchIndicator5, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(_mSwitchIndicator6, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addComponent(jLabel9)
-                                .addComponent(jLabel14))
+                                .addComponent(jLabel14)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(_mSwitchIndicator1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(_mSwitchIndicator2, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(_mSwitchIndicator3, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(_mSwitchIndicator4, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(_mSwitchIndicator5, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(_mSwitchIndicator6, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGap(18, 18, 18)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(_mCancel)
-                                .addComponent(_mGroupingListAddReplace, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(_mGroupingListAddReplace, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(0, 0, Short.MAX_VALUE))))
+                .addContainerGap(53, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -406,33 +419,32 @@ public class DlgCO extends javax.swing.JDialog {
                     .addComponent(jLabel7)
                     .addComponent(jLabel12))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel8)
-                            .addComponent(jLabel13))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel10)
-                            .addComponent(jLabel15))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel16)
-                            .addComponent(jLabel17))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(_mExternalSignal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(_mSignalFacingDirection, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(_mSignalAspectToDisplay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(_mCalledOnExternalSensor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4)
-                            .addComponent(_mExternalBlock, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel14))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(jLabel13))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(jLabel15))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel16)
+                    .addComponent(jLabel17))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(_mExternalSignal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(_mSignalFacingDirection, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(_mSignalAspectToDisplay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(_mCalledOnExternalSensor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4)
+                    .addComponent(_mExternalBlock, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel9)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel14)
                     .addComponent(_mCancel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -443,7 +455,7 @@ public class DlgCO extends javax.swing.JDialog {
                     .addComponent(_mSwitchIndicator5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(_mSwitchIndicator6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(_mGroupingListAddReplace))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(_mSaveAndClose)
                     .addComponent(jButton2))
@@ -587,6 +599,14 @@ public class DlgCO extends javax.swing.JDialog {
         _mEditBelow.setEnabled(true);   // MUST do this AFTER "_mGroupingListAddReplace.setEnabled(false)", to override it!
         _mGroupingsList.setEnabled(true);
     }//GEN-LAST:event__mCancelActionPerformed
+
+    private void _mSignalHeadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mSignalHeadActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event__mSignalHeadActionPerformed
+
+    private void _mSwitchIndicator1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mSwitchIndicator1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event__mSwitchIndicator1ActionPerformed
 
     private void enableTopPart(boolean enabled) {
         _mAddNew.setEnabled(enabled);
