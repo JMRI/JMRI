@@ -74,11 +74,11 @@ public class LnPacketizer extends LnTrafficController {
     /**
      * XmtHandler (a local class) object to implement the transmit thread.
      * <p>
-     * We create this at construction time so that we can synchronize on it
-     * even as the object is coming up.  But we don't initialize and start it
-     * until later.
+     * We create this object in startThreads() as each packetizer uses different handlers.
+     * So long as the object is created before using it to sync it works.
+     *
      */
-    protected Runnable xmtHandler = new XmtHandler();
+    protected Runnable xmtHandler = null;
 
     /**
      * RcvHandler (a local class) object to implement the receive thread
@@ -469,6 +469,9 @@ public class LnPacketizer extends LnTrafficController {
         rcvThread.setPriority(Thread.MAX_PRIORITY);
         rcvThread.start();
 
+        if (xmtHandler == null) {
+            xmtHandler = new XmtHandler();
+        }
         // make sure that the xmt priority is no lower than the current priority
         int xmtpriority = (Thread.MAX_PRIORITY - 1 > priority ? Thread.MAX_PRIORITY - 1 : Thread.MAX_PRIORITY);
         // start the XmtHandler in a thread of its own
