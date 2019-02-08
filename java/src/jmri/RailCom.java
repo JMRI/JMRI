@@ -73,6 +73,7 @@ public interface RailCom extends AddressedIdTag {
      * @return current DCC loco address
      * @deprecated since 4.15.4  Use getLocoAddress() instead.
      */
+    @Deprecated
     default public DccLocoAddress getDccLocoAddress(){
        return (DccLocoAddress) getLocoAddress();
     }
