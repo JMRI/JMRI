@@ -111,7 +111,7 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
             l.provideSensor("MSX;+N15E6");
             Assert.fail("X Should have thrown an exception");
         } catch (Exception e) {
-            JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: Did not find");
+            JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
             Assert.assertTrue(true);
         }
 
@@ -119,7 +119,7 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
             l.provideSensor("MSXA;+N15E6");
             Assert.fail("A Should have thrown an exception");
         } catch (Exception e) {
-            JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: Did not find");
+            JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
             Assert.assertTrue(true);
         }
 
@@ -127,7 +127,7 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
             l.provideSensor("MSXABC;+N15E6");
             Assert.fail("AC Should have thrown an exception");
         } catch (Exception e) {
-            JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: Did not find");
+            JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
             Assert.assertTrue(true);
         }
 
@@ -135,7 +135,7 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
             l.provideSensor("MSXABCDE;+N15E6");
             Assert.fail("ABCDE Should have thrown an exception");
         } catch (Exception e) {
-            JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: Did not find");
+            JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
             Assert.assertTrue(true);
         }
         
@@ -143,7 +143,7 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
             l.provideSensor("MSXABCDEF0;+N15E6");
             Assert.fail("ABCDEF0 Should have thrown an exception");
         } catch (Exception e) {
-            JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: Did not find");
+            JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
             Assert.assertTrue(true);
         }
 
@@ -212,7 +212,7 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
             l.provideSensor("MS++N156E77");
             Assert.fail("++ Should have thrown an exception");
         } catch (Exception e) {
-            JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: Did not find");
+            JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
             Assert.assertTrue(true);
         }
 
@@ -220,7 +220,7 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
             l.provideSensor("MS--N156E77");
             Assert.fail("-- Should have thrown an exception");
         } catch (Exception e) {
-            JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: Did not find");
+            JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
             Assert.assertTrue(true);
         }
 
@@ -228,7 +228,7 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
             l.provideSensor("MSN156E+77");
             Assert.fail("E+ Should have thrown an exception");
         } catch (Exception e) {
-            JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: Did not find");
+            JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
             Assert.assertTrue(true);
         }
 
@@ -236,7 +236,7 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
             l.provideSensor("MSN156+E77");
             Assert.fail("+E Should have thrown an exception");
         } catch (Exception e) {
-            JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: Did not find");
+            JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
             Assert.assertTrue(true);
         }
 
@@ -244,7 +244,7 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
             l.provideSensor("MSXLKJK;XLKJK");
             Assert.fail("LKJK Should have thrown an exception");
         } catch (Exception e) {
-            JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: Did not find");
+            JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
             Assert.assertTrue(true);
         }
 
@@ -436,6 +436,25 @@ public class CbusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
             Assert.assertTrue(false);
         }
     }
+    
+    @Test
+    public void testgetNextValidAddressPt4() {
+
+        Sensor t =  l.provideSensor("MS+9");
+        Sensor ta =  l.provideSensor("MS+10");
+        Assert.assertNotNull("exists",t);
+        Assert.assertNotNull("exists",ta);
+
+        try {
+            Assert.assertEquals(" null +9 +10",null,l.getNextValidAddress("+9","M"));
+            // JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
+            Assert.assertTrue(true);
+        } catch (Exception e) {
+            // JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
+            Assert.assertTrue(false);
+        }
+        
+    }    
 
     @Test
     public void testcreateSystemName() {

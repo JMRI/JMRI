@@ -4,6 +4,7 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Set;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -259,13 +260,28 @@ public abstract class AbstractNamedBean implements NamedBean {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     @OverridingMethodsMustInvokeSuper
-    public void setProperty(String key, Object value) {
-        if (parameters == null) {
-            parameters = new HashMap<>();
-        }
-        parameters.put(key, value);
+    public void setProperty(String key,Object value){
+         if (parameters == null) {
+             parameters = new HashMap<>();
+         }
+         Set<String> keySet = getPropertyKeys();
+         if(keySet.contains(key)){
+            // key already in the map, replace the value.
+            Object oldValue = getProperty(key);
+            if(!(oldValue.equals(value))){
+	          removeProperty(key); // make sure the old value is removed.
+              parameters.put(key, value);
+              firePropertyChange(key,oldValue,value);
+            }
+         } else {
+            parameters.put(key, value);
+            firePropertyChange(key,null,value);
+         }
     }
 
     @Override

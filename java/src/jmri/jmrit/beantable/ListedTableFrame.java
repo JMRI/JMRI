@@ -93,7 +93,7 @@ public class ListedTableFrame<E extends NamedBean> extends BeanTableFrame<E> {
             addTable("jmri.jmrit.beantable.SectionTableAction", Bundle.getMessage("MenuItemSectionTable"), true);
             addTable("jmri.jmrit.beantable.TransitTableAction", Bundle.getMessage("MenuItemTransitTable"), true);
             addTable("jmri.jmrit.beantable.AudioTableAction", Bundle.getMessage("MenuItemAudioTable"), false);
-            addTable("jmri.jmrit.beantable.IdTagTableAction", Bundle.getMessage("MenuItemIdTagTable"), true);
+            addTable("jmri.jmrit.beantable.IdTagTableTabAction", Bundle.getMessage("MenuItemIdTagTable"), false);
             addTable("jmri.jmrit.beantable.RailComTableAction", Bundle.getMessage("MenuItemRailComTable"), true);
             init = true;
         }

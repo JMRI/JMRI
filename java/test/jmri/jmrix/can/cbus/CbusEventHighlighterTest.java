@@ -90,9 +90,48 @@ public class CbusEventHighlighterTest {
 
         t.setType(CbusConstants.EVENT_ON);
         Assert.assertTrue("does highlight EVENT_ON ACON", (t.highlight(m)));
-        Assert.assertTrue("does highlight EVENT_ON ACON", (t.highlight(r))); 
+        Assert.assertTrue("does highlight EVENT_ON ACON", (t.highlight(r)));
+
+    }
+
+    @Test
+    public void testEventNodeNums() {
+        t.setNn(0);
+        t.setNnEnable(false);
+        t.setEv(0);
+        t.setEvEnable(false);
+        t.setType(CbusConstants.EVENT_EITHER);
+        t.setDir(CbusConstants.EVENT_DIR_EITHER);
         
-    }    
+        CanMessage m = new CanMessage( new int[]{CbusConstants.CBUS_ACON, 0x00, 0x00, 0x00, 0x01},0x12 );
+        CanReply r = new CanReply( new int[]{CbusConstants.CBUS_ACON, 0x00, 0x00, 0x00, 0x01},0x12 );
+        Assert.assertTrue("does highlight m CBUS_ACON", (t.highlight(m)));
+        Assert.assertTrue("does highlight r CBUS_ACON", (t.highlight(r)));
+        
+        t.setNnEnable(true);
+        Assert.assertTrue("node does highlight m nn0", (t.highlight(m)));
+        Assert.assertTrue("node does highlight r nn0", (t.highlight(r)));        
+        
+        m.setElement(2, 0xa4);
+        r.setElement(2, 0xa4);
+        
+        Assert.assertFalse("does not highlight node a4 EVENT_ON ACON", (t.highlight(m)));
+        Assert.assertFalse("does not highlight node a4 EVENT_ON ACON", (t.highlight(r)));        
+
+        t.setNn(0xa4);
+        Assert.assertTrue("does highlight node a4", (t.highlight(m)));
+        Assert.assertTrue("does highlight node a4", (t.highlight(r)));        
+        
+        
+        t.setNnEnable(false);
+        t.setEvEnable(true);
+        t.setEv(0xa4);
+        Assert.assertFalse("does not highlight event 1", (t.highlight(m)));
+        Assert.assertFalse("does not highlight event 1", (t.highlight(r)));          
+        t.setEv(1);
+        Assert.assertTrue("does highlight event 1", (t.highlight(m)));
+        Assert.assertTrue("does highlight event 1", (t.highlight(r)));         
+    }
     
     
 

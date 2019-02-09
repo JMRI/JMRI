@@ -3,15 +3,18 @@ package jmri.jmrix.loconet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import jmri.DccLocoAddress;
+import jmri.InstanceManager;
+import jmri.IdTag;
 import jmri.LocoAddress;
+import jmri.Reporter;
 import jmri.PhysicalLocationReporter;
-import jmri.implementation.AbstractReporter;
+import jmri.implementation.AbstractIdTagReporter;
 import jmri.util.PhysicalLocation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Extend jmri.AbstractReporter for LocoNet layouts.
+ * Extend jmri.AbstractIdTagReporter for LocoNet layouts.
  * <p>
  * This implementation reports Transponding messages.
  * <p>
@@ -36,7 +39,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2007
  */
-public class LnReporter extends AbstractReporter implements LocoNetListener, PhysicalLocationReporter {
+public class LnReporter extends AbstractIdTagReporter implements LocoNetListener, PhysicalLocationReporter {
 
     public LnReporter(int number, LnTrafficController tc, String prefix) {  // a human-readable Reporter number must be specified!
         super(prefix + "R" + number);  // can't use prefix here, as still in construction
@@ -87,8 +90,15 @@ public class LnReporter extends AbstractReporter implements LocoNetListener, Phy
             loco = l.getElement(3) * 128 + l.getElement(4);
         }
 
-        lastLoco = (enter ? loco : -1);
-        setReport("" + loco + (enter ? " enter" : " exits")); // NOI18N
+        IdTag idTag = InstanceManager.getDefault(TranspondingTagManager.class).provideIdTag(""+loco);
+        if(enter) {
+           idTag.setProperty("entryexit","enter");
+        } else {
+           idTag.setProperty("entryexit","exits");
+        }
+        log.debug("Tag: " + idTag);
+        notify(idTag);
+        setState(enter ? loco : -1);
     }
 
     /**
@@ -101,15 +111,21 @@ public class LnReporter extends AbstractReporter implements LocoNetListener, Phy
             return;
         }
 
-        // get loco address
         int loco = (l.getElement(6) & 0x7F) + 128 * (l.getElement(5) & 0x7F);
 
         // get direction
         boolean north = ((l.getElement(3) & 0x20) == 0);
 
         // get loco address
-        setReport("" + loco + " seen " + (north ? "northbound" : "southbound")); // NOI18N
-
+        IdTag idTag = InstanceManager.getDefault(TranspondingTagManager.class).provideIdTag(""+loco);
+        if(north) {
+           idTag.setProperty("seen","seen northbound");
+        } else {
+           idTag.setProperty("seen","seen southbound");
+        }
+        log.debug("Tag: " + idTag);
+        notify(idTag);
+        setState(loco);
     }
 
     /**
