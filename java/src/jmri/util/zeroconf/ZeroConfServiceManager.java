@@ -150,7 +150,6 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
      */
     public ZeroConfService create(String type, String name, int port, int weight, int priority, HashMap<String, String> properties) {
         ZeroConfService s;
-        name = hostName(name);
         String key = key(type, name);
         if (services.containsKey(key)) {
             s = services.get(key);
