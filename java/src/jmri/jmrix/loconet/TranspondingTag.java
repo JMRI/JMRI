@@ -32,7 +32,7 @@ public class TranspondingTag extends jmri.implementation.DefaultIdTag implements
     }
 
     @Override
-    public String toString(){
+    public String toReportString(){
        String exit = (String) getProperty("entryexit");
        if(exit!=null) {
           return getTagID() + " " + exit;
