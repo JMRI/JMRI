@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
+"http://www.w3.org/TR/html4/loose.dtd">
+<!-- Tranlation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-02-09 -->
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>Comprehensive Programmer - 4Advanced Features Pane</title>
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
+
+    <div id="mainContent">
+      <a name="Top" id="Top"></a>
+
+      <h1>DecoderPro&reg; Programmateur Complet</h1>
+
+      <h2>Volet Fonctions Avanc&#233;es</h2>
+
+      <div align="right">
+        <p><a href="Comp_Consist.shtml">Pr&#233;c&#233;dent |</a> <a href=
+        "Comp_SoundFX.shtml">Suivant</a></p>
+
+        <p><a href="index.shtml#Advanced%20Programmer">Retour &#224; 
+        l'Index</a></p>
+      </div>
+      <hr>
+
+      <p>La sous-fen&#234;tre <b> Fonctions Avanc&#233;es </b> couvre les CV qui ne 
+      tombent pas facilement dans l'une des autres cat&#233;gories et qui, 
+      plus important encore, ne font g&#233;n&#233;ralement pas partie de la norme NMRA DCC.
+       Cela ressemble un peu &#224; la guerre entre navigateurs Netscape/Microsoft, 
+       zones dans lesquelles le fabricant met ce qu'il veut,
+       le CV contrôle ici la fonction de transpondeur des nouveaux d&#233;codeurs Digitrax, 
+       ce qui leur permet de signaler leur emplacement et leur ID au Loconet.</p>
+
+      <p>Il peut y avoir un ou plusieurs de ces volets, en fonction de la complexit&#233; 
+      de la programmation du d&#233;codeur et du style de l'auteur du fichier de d&#233;finition 
+      pour votre d&#233;codeur particulier. </p
+
+       <p> Notez que le d&#233;codeur Tsunami est dot&#233; de fonctions avanc&#233;es d'&#233;clairage, 
+       d'&#233;galiseur, de r&#233;verb&#233;ration et de tabulation ASC, qui sont propres &#224; 
+       ce d&#233;codeur et ne seront pas d&#233;crites dans ce manuel..</p>
+
+      <h1><img style="width: 900px; height: 325px;" alt="advanced"
+      src="images/Comp_08_Advanced.png"><br></h1>
+      <hr>
+
+      <div align="right">
+        <p><a href="Comp_SoundFX.shtml"></a> <a href=
+        "Comp_Consist.shtml">Pr&#233;c&#233;dent |</a> <a href=
+        "Comp_SoundFX.shtml">Suivant</a></p>
+
+        <p><a href="index.shtml#Advanced%20Programmer">Retour &#224; l'Index</a></p>
+      </div><!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+</body>
+</html>
