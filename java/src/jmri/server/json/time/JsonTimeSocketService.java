@@ -35,7 +35,7 @@ public class JsonTimeSocketService extends JsonSocketService<JsonTimeHttpService
             manager.addPropertyChangeListener(this);
             this.listening = true;
         }
-        this.service.doPost(type, null, data, locale);
+        this.connection.sendMessage(this.service.doPost(type, null, data, locale));
     }
 
     @Override

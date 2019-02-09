@@ -16,6 +16,8 @@ import org.junit.runners.Suite;
     jmri.jmrix.can.cbus.swing.CbusFilterFrameTest.class,
     jmri.jmrix.can.cbus.swing.CbusFilterPanelTest.class,
     jmri.jmrix.can.cbus.swing.eventrequestmonitor.PackageTest.class,
+    jmri.jmrix.can.cbus.swing.CbusEventHighlightFrameTest.class,
+    jmri.jmrix.can.cbus.swing.CbusEventHighlightPanelTest.class,
     BundleTest.class
 })
 

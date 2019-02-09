@@ -4,6 +4,7 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Set;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -97,16 +98,11 @@ public abstract class AbstractNamedBean implements NamedBean {
         }
     }
 
-    /**
-     * <p>
-     * It would be good to eventually make this final to 
-     * keep it consistent system-wide, but 
-     * we have some existing classes to update first.
-     */
+    /** {@inheritDoc} */
     @Override
-    public String getFullyFormattedDisplayName() {
+    final public String getFullyFormattedDisplayName() {
         String name = getUserName();
-        if (name != null && name.length() > 0 && !name.equals(getSystemName())) {
+        if (name != null && !name.isEmpty() && !name.equals(getSystemName())) {
             name = getSystemName() + "(" + name + ")";
         } else {
             name = getSystemName();
@@ -203,6 +199,7 @@ public abstract class AbstractNamedBean implements NamedBean {
         return pcs.getPropertyChangeListeners();
     }
 
+    /** {@inheritDoc} */
     @Override
     final public String getSystemName() {
         return mSystemName;
@@ -257,13 +254,28 @@ public abstract class AbstractNamedBean implements NamedBean {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     @OverridingMethodsMustInvokeSuper
-    public void setProperty(String key, Object value) {
-        if (parameters == null) {
-            parameters = new HashMap<>();
-        }
-        parameters.put(key, value);
+    public void setProperty(String key,Object value){
+         if (parameters == null) {
+             parameters = new HashMap<>();
+         }
+         Set<String> keySet = getPropertyKeys();
+         if(keySet.contains(key)){
+            // key already in the map, replace the value.
+            Object oldValue = getProperty(key);
+            if(!(oldValue.equals(value))){
+	          removeProperty(key); // make sure the old value is removed.
+              parameters.put(key, value);
+              firePropertyChange(key,oldValue,value);
+            }
+         } else {
+            parameters.put(key, value);
+            firePropertyChange(key,null,value);
+         }
     }
 
     @Override

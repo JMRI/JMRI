@@ -95,7 +95,7 @@ public class WarrantShutdownTask extends AbstractShutDownTask {
         Iterator<java.util.Map.Entry<String, RosterSpeedProfile>> iter = _mergeProfiles.entrySet().iterator();
         while (iter.hasNext()) {
             java.util.Map.Entry<String, RosterSpeedProfile> entry = iter.next();
-            HashMap<Integer, Boolean> anomaly = MergePrompt.validateSpeedProfile(entry.getValue(), entry.getKey());
+            HashMap<Integer, Boolean> anomaly = MergePrompt.validateSpeedProfile(entry.getValue());
             if (anomaly.size() > 0) {
                 _anomalies.put(entry.getKey(), anomaly);
             }

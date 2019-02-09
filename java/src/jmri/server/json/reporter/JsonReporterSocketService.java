@@ -92,7 +92,8 @@ public class JsonReporterSocketService extends JsonSocketService<JsonReporterHtt
         }
 
         @Override
-        public void propertyChange(PropertyChangeEvent e) {
+        public void propertyChange(PropertyChangeEvent evt) {
+            log.debug("in ReporterListener for '{}' '{}' ('{}'=>'{}')", this.reporter.getSystemName(), evt.getPropertyName(), evt.getOldValue(), evt.getNewValue());            
 //            if (e.getPropertyName().equals("currentReport")) {
                 try {
                     try {

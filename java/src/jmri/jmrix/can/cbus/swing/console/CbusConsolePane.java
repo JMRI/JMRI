@@ -38,6 +38,7 @@ import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.swing.configtool.ConfigToolPane;
 import jmri.jmrix.can.cbus.swing.CbusFilterFrame;
+import jmri.jmrix.can.cbus.swing.CbusEventHighlightFrame;
 import jmri.jmrix.can.TrafficController;
 import jmri.jmrix.can.cbus.CbusConstants;
 import jmri.jmrix.can.cbus.CbusMessage;
@@ -1360,7 +1361,7 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
         
         output.append(decode(r, r.isExtended(), r.getHeader()) + " ");
 
-        if (showOpcExtraCheckBox.isSelected()) {
+        if (showOpcExtraCheckBox.isSelected() && !r.isExtended() ) {
             String cbusopc = "CTIP_" + decodeopc(r, r.isExtended(), r.getHeader());
             output.append(Bundle.getMessage(cbusopc)+ " ");
         }

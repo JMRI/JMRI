@@ -246,6 +246,31 @@
                     });
                 }
             };
+            jmri.getReporter = function(name) {
+                if (jmri.socket) {
+                    jmri.socket.send("reporter", {name: name});
+                } else {
+                    $.getJSON(jmri.url + "reporter/" + name, function(json) {
+                        jmri.reporter(json.data.name, json.data.value, json.data);
+                    });
+                }
+            };
+            jmri.setReporter = function(name, value) {
+                if (jmri.socket) {
+                    jmri.socket.send("reporter", {name: name, value: value});
+                } else {
+                    $.ajax({
+                        url: jmri.url + "reporter/" + name,
+                        type: "POST",
+                        data: JSON.stringify({value: value}),
+                        contentType: "application/json; charset=utf-8",
+                        success: function(json) {
+                            jmri.reporter(json.data.name, json.data.report, json.data);
+                            jmri.getReporter(json.data.name, json.data.report);
+                        }
+                    });
+                }
+            };
             jmri.getBlock = function(name) {
                 if (jmri.socket) {
                     jmri.socket.send("block", {name: name});
@@ -319,6 +344,9 @@
                     case "memory":
                         jmri.getMemory(name);
                         break;
+                    case "reporter":
+                        jmri.getReporter(name);
+                        break;
                     case "rosterEntry":
                         jmri.getRosterEntry(name);
                         break;
@@ -354,6 +382,9 @@
                         break;
                     case "memory":
                         jmri.setMemory(name, state);
+                        break;
+                    case "reporter":
+                        jmri.setReporter(name, report);
                         break;
                     case "block":
                         jmri.setBlock(name, state);
