@@ -1,0 +1,183 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//fr"
+"http://www.w3.org/TR/html4/loose.dtd">
+<!-- Tranlation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-02-08 -->
+<html lang="fr">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>Basic Programming</title><!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/"><!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
+
+    <div id="mainContent">
+      <h1>Le Programmeur Basique</h1>
+
+      <h2>Le  Panneau Entr&#233;e Inventaire</h2>
+
+      <div align="right">
+        <p><a href="Programmer_Setup.shtml">Pr&#233;c&#233;dent|</a> <a href=
+        "Basic_BasicPane.shtml">Suivant</a></p>
+
+        <p><a href="index.shtml#Basic%20Programmer"> Retour &#224; l'Index
+        </a></p>
+      </div>
+      <hr>
+
+      <p>La premi&#232;re action dans la programmation d'une locomotive avec
+      DecoderPro&reg; est de remplir l'&#233;cran de saisie de l'inventaire.</p>Un
+      <b>inventaire</b> est une base de donn&#233;e des locomotives que votre
+      installation de DecoderPro a programm&#233;e. Elle inclut l'information
+      vue dans l'&#233;cran ci-dessous:
+
+      <div align="center">
+        <img style="width: 636px; height: 556px;" src=
+        "images/Basic_Roster.png" alt="basic roster">
+      </div>
+
+      <p>La plupart de ces champs sont explicites. Cependant, notez
+       que le premier champ (<strong>ID</strong>) devient le nom de 
+       fichier dans l'inventaire pour la locomotive que vous programmez.
+      Configurez un sch&#233;ma pour identifier votre locomotive depuis son 
+      d&#233;codeur programm&#233;. C'est &#224; dire: Fabricant, Type de Loco, et Adresse (ex:
+      Kato_SD40-2_5645). Les espaces dans le champ ID seront chang&#233;s par
+      des underscores (_) quand le fichier sera &#233;crit. Dans un club
+     , les ID commencent souvent par le nom du propri&#233;taire, ou
+      le num&#233;ro de membre. Ceci fait que l'Inventaire (qui est tri&#233; par ordre 
+      alphab&#233;tique).</p>
+
+      <p>Le Champ <strong>D&#233;codeur</strong> <strong>Commentaire</strong>
+      est un bon endroit pour ajouter la date d'achat de la 
+      locomotive, le prix, ou  autre information que vous pensez &#234;tre 
+      importante &#224; enregistrer.</p>
+
+      <p>Le bouton <input name="Save to Roster" id="Save to Roster"
+      value="Enregistrer dans la liste" type="submit"> enregistre l'information
+      actuelle sur le disque dur de votre ordinateur et dans le r&#233;pertoire 
+      o&#249; votre fichier roster est localis&#233;. Le stockage par d&#233;faut
+       est le m&#234;me r&#233;pertoire o&#249; le programme est install&#233;.</p>
+
+      <p>Le bouton  <input name="button" id="button" value=
+      "R&#233;initialiser" type="submit"> peut &#234;tre utilis&#233; pour 
+      retourner au fichier Roster &#224; la condition d'un nouveau fichier 
+      pour le type et la version du d&#233;codeur list&#233; dans l'entr&#233;e inventaire.
+      Il ne change PAS les valeurs dans le fichier roster de votre disque
+     dur, sauf si vous enregistrez sp&#233;cifiquement apr&#232;s avoir utilis&#233; ce bouton 
+     de r&#233;initialisation. De plus, il n'est pas &#233;crit dans le d&#233;codeur tant 
+     que vous n'avez pas s&#233;lectionn&#233; une op&#233;ration d'&#233;criture. Il a &#233;t&#233; inclus 
+     dans DecoderPro afin que, si vous vous trompez en passant 
+     d'&#233;cran &#224; &#233;cran en s&#233;lectionnant les variables saisies, vous puissiez revenir 
+     au jeu de param&#232;tres de base par d&#233;faut du fabricant et recommencer.</p>
+
+      <p><br>
+      La plupart des d&#233;codeurs activent le <strong> menu R&#233;initialiser </strong> 
+      (&#224; c&#244;t&#233; du menu Fichier en haut de la page). Ceci r&#233;initialisera le d&#233;codeur 
+      aux param&#232;tres par d&#233;faut du fabricant pour
+       tous les CV, ou seulement quelques-uns d'entre eux si le fabricant a
+       plusieurs routines de r&#233;initialisation. Pour cela, il &#233;crit directement dans un
+       CV dans le d&#233;codeur, si le d&#233;codeur a cette fonctionnalit&#233;, CV8 dans
+       le cas de Digitrax. Tous les d&#233;codeurs peuvent ne pas prendre en charge la r&#233;initialisation et
+       leur fonctionnement d&#233;pend du fabricant et du d&#233;codeur.</p>
+
+      <p><br>
+     Un d&#233;codeur avec une longue liste de routines de r&#233;initialisation 
+     est le d&#233;codeur QSI Revolution, qui permet une liste d&#233;roulante d'options.
+       pour r&#233;initialiser le d&#233;codeur comme indiqu&#233; ci-dessous: </p>
+
+      <p style="text-align: center;"><img style=
+      "width: 652px; height: 601px;" src=
+      "images/Factory%20Reset.png" alt="factory reset"></p>
+
+      <p>Vous noterez que l'adresse du d&#233;codeur est affich&#233;e, mais estomp&#233;e 
+      (ou vide s'il s'agit d'une nouvelle locomotive dans la liste).
+       Ce champ est automatiquement renseign&#233; par le programme et est
+       d&#233;termin&#233; &#224; partir de l'adresse saisie &#224; l'aide de l'Onglet 
+       <strong> Basique </strong> auquel nous arriverons bient&#244;t. Cette
+       adresse est utilis&#233;e avec la fonction <strong> Ident </strong> sur
+       la page de d&#233;marrage si vous souhaitez rappeler une locomotive qui est
+       d&#233;j&#224; dans votre liste.</p>
+
+      <p><a name="ProgramModes" id="ProgramModes"></a>
+      Le mode de programmation peut &#234;tre modifi&#233; en s&#233;lectionnant 
+      le mode dans la liste d&#233;roulante en bas de la fen&#234;tre. &#193; gauche 
+      de la liste d&#233;roulante se trouve le mode de programmation actuel, 
+      qui est choisi</p>
+
+      <div align="center">
+        <img src="images/SetProgramMode.png" alt=
+        "Set program mode dialog" class="BOXIT" border="5">
+      </div>
+
+      <p>Il y a plusieurs <a href=
+      "Basic_Mode.shtml"><strong>modes de programmation</strong></a>.
+      JMRI s&#233;lectionne maintenant le meilleur mode pour vous. Cela est 
+      d&#233;termin&#233; &#224; partir du type de centrale de commande que vous utilisez 
+      et du mod&#232;le de d&#233;codeur que vous essayez de programmer. Habituellement ce sera OK.
+       Si vous rencontrez un probl&#232;me de programmation
+       vous pouvez essayer un mode diff&#233;rent.</p>
+
+      <p>Pour la plupart des d&#233;codeurs r&#233;cents, restez en <strong> mode Pagin&#233; </strong> 
+      ou selon le mode direct pris en charge par votre Centrale de Commande. 
+      La documentation de votre d&#233;codeur doit vous faire savoir si
+       la programmation dans un autre mode est n&#233;cessaire ... mais si vous 
+       rencontrez des probl&#232;mes, exp&#233;rimentez. Si un mode n'est pas pris en charge pour
+       le d&#233;codeur et le syst&#232;me s&#233;lectionn&#233;s, cette option est gris&#233;e.</p>
+
+      <p>Lorsque vous faites votre choix, le mode de programmation devrait
+       maintenant s'afficher &#224; gauche de la liste d&#233;roulante.</p>
+
+      <p>Configuration de la Programmation Basique  pour une Athearn FP45 
+      &#224; l'&#233;chelle n avec d&#233;codeur OEM Digitrax Tsunami Diesel Genesis.</p>
+
+      <p style="text-align: center;"><img style=
+      "width: 636px; height: 556px;" src=
+      "images/Basic_Roster01.png" alt="roster"></p>
+
+      <p>Maintenant que nous avons toutes les informations de l'inventaire en ordre, nous
+       pouvons continuer avec la programmation du d&#233;codeur.</p>
+
+      <p>Mais d'abord, parlons un peu de la gestion de l'Inventaire. 
+      La fen&#234;tre principale DecoderPro (celle dans laquelle nous avons s&#233;lectionn&#233; le
+       programmeur) et l'&#233;cran initial de pr&#233;sentation de DecoderPro ont un 
+       menu intitul&#233; <strong> Inventaire. </strong> Lorsque vous cliquez dessus, 
+       vous avez la possibilit&#233; de modifier, d'imprimer et de d&#233;placer vos fichiers d'Inventaire. 
+       <Strong> Exporter/Importer</strong> et <strong>Copier </strong> sont particuli&#232;rement int&#233;ressants.
+       Supposons que vous et un ami avez deux locomotives identiques et que 
+       vous souhaitez que les v&#244;tres soient configur&#233;es comme celles de votre ami.
+       Maintenant, vous pouvez mettre sa locomotive sur votre voie, lire tous les CV et 
+       les mettre dans la v&#244;tre, mais si il vit sur l'autre c&#244;t&#233; du pays, ce n’est pas pratique. 
+       Alors, demandez-lui d'utiliser DecoderPro pour exporter son fichier de locomotive et 
+       l'envoyer par e-mail. Vous l'importez dans DecoderPro, changez l'adresse 
+       si vous le souhaitez, puis utilisez cette entr&#233;e d'inventaire pour programmer votre locomotive. 
+       De m&#234;me, vous pouvez copier une entr&#233;e de l'inventaire pour dupliquer une de vos propres locomotives 
+       dans une deuxi&#232;me entr&#233;e de l'Inventaire avec sa propre adresse. D&#233;tails
+       &#224; propos du <strong> <a ref="Main_Roster.shtml"> Menu Inventaire </a> </strong> </p>
+
+      <p align="center"><img style="width: 456px; height: 334px;"
+      alt="roster edit" src="images/RosterEdit.png"><br></p>
+
+      <p>Passons au Programmeur de Base.</p>
+
+      <div align="right">
+        <p><a href="Programmer_Setup.shtml">Pr&#233;c&#233;dent |</a> <a href=
+        "Basic_BasicPane.shtml">Suivant</a></p>
+
+        <p><a href="index.shtml#Basic%20Programmer">Retour &#224; l'Index</a></p>
+      </div><!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+</body>
+</html>
