@@ -92,9 +92,25 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                 text += "\tDirection: " + getDirectionString();
                 break;
             case DCCppConstants.TURNOUT_REPLY:
-                text = "Turnout Reply: \n";
-                text += "\tT/O Number: " + getTOIDString() + "\n";
-                text += "\tDirection: " + getTOStateString();
+                if (isTurnoutDefReply()) {
+                    text = "Turnout Reply: \n";
+                    text += "\tT/O Number: " + getTOIDString() + "\n";
+                    text += "\tT/O Address: " + getTOAddressString() + "\n";
+                    text += "\tT/O Index: " + getTOAddressIndexString() + "\n";
+                    // if we are able to parse the address and index we can convert it
+                    // to a standard DCC address for display.
+                    if (getTOAddressInt() != -1 && getTOAddressIndexInt() != -1) {
+                        int boardAddr = getTOAddressInt();
+                        int boardIndex = getTOAddressIndexInt();
+                        int dccAddress = (((boardAddr - 1) * 4) + boardIndex) + 1;
+                        text += "\tT/O DCC Address: " + Integer.toString(dccAddress) + "\n";
+                    }
+                    text += "\tDirection: " + getTOStateString();
+                } else {
+                    text = "Turnout Reply: \n";
+                    text += "\tT/O Number: " + getTOIDString() + "\n";
+                    text += "\tDirection: " + getTOStateString();
+                }
                 break;
             case DCCppConstants.SENSOR_REPLY_H:
                 text = "Sensor Reply (Inactive): \n";
@@ -122,9 +138,9 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                 } else if (isOutputListReply()) {
                     text = "Output Command Reply: \n";
                     text += "\tOutput Number: " + getOutputNumString() + "\n";
-                    text += "\tOutputState: " + getOutputListPinString() + "\n";
-                    text += "\tOutputState: " + getOutputListIFlagString() + "\n";
-                    text += "\tOutputState: " + getOutputListStateString();
+                    text += "\tOutput Pin: " + getOutputListPinString() + "\n";
+                    text += "\tOutput Flags: " + getOutputListIFlagString() + "\n";
+                    text += "\tOutput State: " + getOutputListStateString();
                 } else {
                     text = "Invalid Output Reply Format: \n";
                     text += "\t" + toString();
@@ -244,10 +260,13 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                 }
                 return(r);
             case DCCppConstants.TURNOUT_REPLY:
-                if (s.matches(DCCppConstants.TURNOUT_REPLY_REGEX)) {
-                    r.myRegex = DCCppConstants.TURNOUT_REPLY_REGEX;
-                } else if (s.matches(DCCppConstants.TURNOUT_DEF_REPLY_REGEX)) {
+                // the order of checking the reply here is critical as both the TURNOUT_DEF_REPLY
+                // and TURNOUT_REPLY regex strings start with the same strings but have different
+                // meanings.
+                if (s.matches(DCCppConstants.TURNOUT_DEF_REPLY_REGEX)) {
                     r.myRegex = DCCppConstants.TURNOUT_DEF_REPLY_REGEX;
+                } else if (s.matches(DCCppConstants.TURNOUT_REPLY_REGEX)) {
+                    r.myRegex = DCCppConstants.TURNOUT_REPLY_REGEX;
                 } else if (s.matches(DCCppConstants.MADC_FAIL_REPLY_REGEX)) {
                     r.myRegex = DCCppConstants.MADC_FAIL_REPLY_REGEX;
                 }
@@ -454,9 +473,9 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
      * c : <a CURRENT>
      * s : Series of status messages...
      *     <p[0,1]>  Power state
-     *     <T ...>Throttle responses from all 12 registers
+     *     <T ...>Throttle responses from all registers
      *     <iDCC++ ... > Base station version and build date
-     *     <H ...> All turnout states.
+     *     <H ID ADDR INDEX THROW> All turnout states.
      *
      * Unsolicited Replies
      *   | <Q snum [0,1]> Sensor reply.
@@ -603,6 +622,38 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         }
     }
 
+    public String getTOAddressString() {
+        if (this.isTurnoutDefReply()) {
+            return(this.getValueString(2));
+        } else {
+            return("-1");
+        }
+    }
+
+    public int getTOAddressInt() {
+        if (this.isTurnoutDefReply()) {
+            return(this.getValueInt(2));
+        } else {
+            return(-1);
+        }
+    }
+
+    public String getTOAddressIndexString() {
+        if (this.isTurnoutDefReply()) {
+            return(this.getValueString(3));
+        } else {
+            return("-1");
+        }
+    }
+
+    public int getTOAddressIndexInt() {
+        if (this.isTurnoutDefReply()) {
+            return(this.getValueInt(3));
+        } else {
+            return(-1);
+        }
+    }
+
     public String getTOStateString() {
         // Will return human readable state. To get string value for command, use
         // getTOStateInt().toString()
@@ -616,7 +667,9 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
 
     public int getTOStateInt() {
         // Will return 1 (true - thrown) or 0 (false - closed)
-        if (this.isTurnoutReply()) {
+        if (this.isTurnoutDefReply()) { // turnout list response
+            return(this.getValueInt(4));
+        } else if (this.isTurnoutReply()) { // single turnout response
             return(this.getValueInt(2));
         } else {
             log.error("TurnoutReply Parser called on non-TurnoutReply message type {}", this.getOpCodeChar());

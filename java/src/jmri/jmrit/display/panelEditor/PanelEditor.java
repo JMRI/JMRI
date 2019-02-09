@@ -1315,7 +1315,7 @@ public class PanelEditor extends Editor implements ItemListener {
         if (SystemType.isWindows() || SystemType.isLinux()) {
             return SwingUtilities.isRightMouseButton(event);
         } else {
-            return isMetaDown(event);
+            return event.isMetaDown();
         }
     }
 

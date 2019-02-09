@@ -13,339 +13,1447 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <version author="Peter Mansvelder pman@mac.com" version="0.1" lastUpdated="20100825"/>
-  <!--
-     This decoder configuration file is based on ESU_LokPilotDCC.xml
-     V 4, dated 20050619, by Walter Thompson. Which also acknowledged
-     "the contribution of many others" including 'jake'.
-
-     Based on ....
-
-     This decoder XML is meant to be used with the "Comprehensive" programmer format.
-     Continued the practice of using unrelated "item" names to place ESU unique
-     variables on the proper pane of the Comprehensive programmer.
-
-     Any and all feedback on this file would be appreciated.
-
-     Version History:
-
-        0.1 - Initial release 25 August 2010
-
--->
-  <decoder>
-    <family name="Fleischmann function decoders" mfg="Fleischmann" lowVersionID="10" comment="Fleischmann 686401">
-      <model model="686401" maxInputVolts="25 V" maxTotalCurrent="0.80 A">
-      </model>
-    </family>
-    <programming direct="yes" paged="yes" register="yes" ops="yes"/>
-    <variables>
-      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
-      <variable CV="7" readOnly="yes" default="10" item="Decoder Version" tooltip="The decoder version number (read only)">
-        <decVal/>
-        <label>Software Version Number</label>
-        <label xml:lang="it">Versione Decoder: </label>
-        <label xml:lang="fr">Version décodeur: </label>
-        <label xml:lang="de">Decoder Version: </label>
-      </variable>
-      <variable CV="8" readOnly="yes" default="155" item="Manufacturer" tooltip="The manufacturer's ID number (read only)">
-        <decVal/>
-        <label>Manufacturer ID</label>
-        <label xml:lang="it">ID Costruttore: </label>
-        <label xml:lang="fr">ID constructeur: </label>
-        <label xml:lang="de">Hersteller ID: </label>
-      </variable>
-      <variable CV="12" default="1" item="Analog mode" tooltip="Analog Mode">
-        <enumVal>
-          <enumChoice choice="Digital Operation Only">
-            <choice>Digital Operation Only</choice>
-          </enumChoice>
-          <enumChoice choice="Digital + Analog Operation">
-            <choice>Digital + Analog Operation</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Analog Mode</label>
-      </variable>
-      <!-- CV=29 -->
-     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29RailCom.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>
-      <variable CV="30" readOnly="yes" item="Error Condition" tooltip="Decoder Error condition (read only)">
-        <decVal/>
-        <label>Error Information</label>
-      </variable>
-      <variable CV="33" mask="XXXXXXXV" default="1" item="Function F0F behavior">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>Active</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Light Forward</label>
-      </variable>
-      <variable CV="34" mask="XXXXXXVX" default="1" item="Function F0R behavior">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>Active</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Light Reverse</label>
-      </variable>
-      <variable CV="35" mask="XVXXXXXX" default="1" item="Delay on/off">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>Active</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Delay on/off</label>
-      </variable>
-      <variable CV="36" mask="VXXXXXXX" default="1" item="Shunt on/off">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>Active</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Shunting</label>
-      </variable>
-      <variable CV="37" default="16" item="Function F3">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>Active</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Function F3</label>
-      </variable>
-      <variable CV="38" default="4" item="Function F4">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>Active</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Function F4</label>
-      </variable>
-      <variable CV="39" default="8" item="Function F5">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>Active</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Function F5</label>
-      </variable>
-      <variable CV="40" default="16" item="Function F6">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>Active</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Function F6</label>
-      </variable>
-      <variable CV="49" mask="XXXXXXXV" default="1" item="Dither option">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="Active">
-            <choice>Active</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Load control</label>
-      </variable>
-      <variable CV="49" mask="XXXXXXVX" default="1" item="Total PWM Period">
-        <enumVal>
-          <enumChoice choice="20 kHz Tact frequency on">
-            <choice>20 kHz Tact frequency on</choice>
-          </enumChoice>
-          <enumChoice choice="40 kHz Tact frequency on">
-            <choice>40 kHz Tact frequency on</choice>
-          </enumChoice>
-        </enumVal>
-        <label>DC Motor PWM frequency</label>
-      </variable>
-      <variable item="Marklin Delta Mode" CV="49" mask="XXXXXVXX" default="0">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Marklin Delta Mode</label>
-      </variable>
-      <variable item="Marklin 2. address" CV="49" mask="XXXXVXXX" default="0">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Marklin 2. address</label>
-      </variable>
-      <variable item="Automatic speed step detection" CV="49" mask="XXXVXXXX" default="1">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Automatic speed step detection</label>
-      </variable>
-      <variable item="LGB Function button mode" CV="49" mask="XXVXXXXX" default="0">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
-        <label>LGB Function button mode</label>
-      </variable>
-      <variable item="ZIMO Manual function" CV="49" mask="XVXXXXXX" default="0">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
-        <label>ZIMO Manual function</label>
-      </variable>
-      <variable item="Function key triggered at each change of function status" CV="49" mask="VXXXXXXX" default="0">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Function key triggered at each change of function status</label>
-      </variable>
-      <variable item="BEMF on/off" CV="51" mask="XXXXXXXV" default="1">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
-        <label>BEMF on/off</label>
-      </variable>
-      <variable item="Motor Cycle Integration on/off" CV="51" mask="XXXXXXVX" default="1">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Motor Cycle Integration on/off</label>
-      </variable>
-      <variable item="Fleischmann Function #3" CV="51" mask="XXXXXVXX" default="0">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Fleischmann Function #3</label>
-      </variable>
-      <variable item="Fleischmann Function #4" CV="51" mask="XXXXVXXX" default="0">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Fleischmann Function #4</label>
-      </variable>
-      <variable item="Fleischmann Function #5" CV="51" mask="XXXVXXXX" default="0">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Fleischmann Function #5</label>
-      </variable>
-      <variable item="Fleischmann Function #6" CV="51" mask="XXVXXXXX" default="0">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Fleischmann Function #6</label>
-      </variable>
-      <variable item="Overload Light Blink" CV="51" mask="XVXXXXXX" default="0">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Overload Light Blink</label>
-      </variable>
-      <variable item="Fleischmann Function #8" CV="51" mask="VXXXXXXX" default="0">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Fleischmann Function #8</label>
-      </variable>
-      <variable CV="64" default="24" item="RESET" tooltip="Writing 1 in this CV will reset the decoder">
-        <decVal/>
-        <label>RESET</label>
-      </variable>
-    </variables>
-    <resets>
-      <factReset label="HARD RESET all CVs reset to default values" CV="64" default="1"/>
-    </resets>
-  </decoder>
+	<version author="Peter Mansvelder pman@mac.com" version="0.1" lastUpdated="20100825"/>
+	<version author="Wouter Kok" version="1.00" lastUpdated="20190131"/>
+	<!-- Version 0.10 - Initial release 25 August 2010 (is unusable) -->
+	<!-- Version 1.00 - Initial version total rewritten              -->
+	<decoder>
+		<family name="Fleischmann function decoders" mfg="Fleischmann">
+			<model model="686401" lowVersionID="10" maxInputVolts="20V" maxTotalCurrent="0.80 A" formFactor="" connector="Wires" numOuts="4" numFns="9" productID="686401">
+				<output name="1" label="Output A">
+					<label xml:lang="de">Ausgang A</label>
+					<label xml:lang="nl">Uitgang A</label>
+				</output>
+				<output name="2" label="Output B">
+					<label xml:lang="de">Ausgang B</label>
+					<label xml:lang="nl">Uitgang B</label>
+				</output>
+				<output name="3" label="Output C">
+					<label xml:lang="de">Ausgang C</label>
+					<label xml:lang="nl">Uitgang C</label>
+				</output>
+				<output name="4" label="Output D">
+					<label xml:lang="de">Ausgang D</label>
+					<label xml:lang="nl">Uitgang D</label>
+				</output>
+				<size length="28" width="12.2" height="2.6" units="mm"/>
+			</model>
+			<model model="686403" lowVersionID="11" maxInputVolts="20V" maxTotalCurrent="0.80 A" formFactor="" connector="Wires" numOuts="4" numFns="4" productID="686403">
+				<output name="1" label="Output A">
+					<label xml:lang="de">Ausgang A</label>
+					<label xml:lang="nl">Uitgang A</label>
+				</output>
+				<output name="2" label="Output B">
+					<label xml:lang="de">Ausgang B</label>
+					<label xml:lang="nl">Uitgang B</label>
+				</output>
+				<output name="3" label="Output C">
+					<label xml:lang="de">Ausgang C</label>
+					<label xml:lang="nl">Uitgang C</label>
+				</output>
+				<output name="4" label="Output D">
+					<label xml:lang="de">Ausgang D</label>
+					<label xml:lang="nl">Uitgang D</label>
+				</output>
+				<size length="24" width="10" height="2.3" units="mm"/>
+			</model>
+		</family>
+		<programming direct="yes" paged="yes" register="yes" ops="yes"/>
+		<variables>
+			<xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+			<variable CV="3" default="2" item="Acceleration">
+				<decVal/>
+				<label>Acceleration value on departure</label>
+				<label xml:lang="de">Verzögerungswert beim Anfahren</label>
+				<label xml:lang="nl">Vertragingswaarde bij wegrijden</label>
+			</variable>
+			<variable CV="4" default="2" item="Deceleration">
+				<decVal/>
+				<label>Deceleration value when breaking</label>
+				<label xml:lang="de">Verzögerungswert beim Bremsen</label>
+				<label xml:lang="nl">De vertragingswaarde bij het remmen.</label>
+			</variable>
+			<variable CV="7" readOnly="yes" default="10" item="Decoder Version" tooltip="The decoder version number (read only)">
+				<decVal/>
+				<label>Software Version Number</label>
+				<label xml:lang="it">Versione Decoder: </label>
+				<label xml:lang="fr">Version décodeur: </label>
+				<label xml:lang="de">Decoder Version: </label>
+				<label xml:lang="nl">Decoder versie: </label>
+				<tooltip>&lt;html&gt;Decoder Version&lt;br&gt;</tooltip>
+				<tooltip xml:lang="de">&lt;html&gt;Decoder Version&lt;br&gt;</tooltip>
+				<tooltip xml:lang="nl">&lt;html&gt;Decoder versie&lt;br&gt;</tooltip>
+			</variable>
+			<variable CV="8" item="Manufacturer" default="155" readOnly="yes">
+				<decVal/>
+				<label>Manufacturer ID:</label>
+				<label xml:lang="it">ID Costruttore: </label>
+				<label xml:lang="fr">ID constructeur: </label>
+				<label xml:lang="de">Hersteller ID: </label>
+				<label xml:lang="nl">Fabrikanten ID: </label>
+				<tooltip>&lt;html&gt;ID 155 = Fleischmann&lt;br&gt; https://https://www.fleischmann.de/en/home/index.html&lt;br&gt;</tooltip>
+				<tooltip xml:lang="de">&lt;html&gt;ID 155 = Fleischmann&lt;br&gt;https://www.fleischmann.de/de/home/index.html&lt;br&gt;</tooltip>
+				<tooltip xml:lang="nl">&lt;html&gt;ID 155 = Fleischmann&lt;br&gt;www.fleischmann.de/de/home/index.html&lt;br&gt;</tooltip>
+			</variable>
+			<variable CV="11" default="0" item="Packet timeout">
+				<decVal/>
+				<label>Packet timeout (0-255)</label>
+				<label xml:lang="de">Paket unterbrechung (0-255)</label>
+				<label xml:lang="nl">Pakket onderbreking (0-255)</label>
+				<tooltip>&lt;html&gt;Time after which a running loco without further running instructions is stopped.&lt;br&gt;Time = n *0,2s.&lt;br&gt;If 0, no timeout.&lt;br&gt;</tooltip>
+				<tooltip xml:lang="de">&lt;html&gt;Zeit, nach der eine fahrende Lok ohne weitere Geschwindigkeitsbefehle gestoppt wird.&lt;br&gt;Zeit = n *0,2s.&lt;br&gt;Bei 0 keine Zeitüberschreitung.&lt;br&gt;</tooltip>
+				<tooltip xml:lang="nl">&lt;html&gt;Tijd, na een rijdende Loc zonder snelheid opdrachten gestopt wordt.&lt;br&gt;Tijd = n *0,2s.&lt;br&gt;bij 0, geen Tijdoverschrijding.&lt;br&gt;</tooltip>
+			</variable>
+			<variable CV="12" mask="XXXXXXXV" default="1" item="Analog mode" tooltip="Analog Mode">
+				<enumVal>
+					<enumChoice choice="Digital Operation Only" value = "0">
+						<choice>Digital Operation Only</choice>
+						<choice xml:lang="de">Gleichstrombetrieb aus.</choice>
+						<choice xml:lang="nl">Gelijkstroombedrijf uit</choice>
+					</enumChoice>
+					<enumChoice choice="Digital + Analog Operation" value = "1">
+						<choice>Digital and Analog Operation</choice>
+						<choice xml:lang="de">Digital und Gleichstrombetrieb.</choice>
+						<choice xml:lang="nl">Digitale en Gelijkstroombedrijf</choice>
+					</enumChoice>
+				</enumVal>
+				<label>protocol  </label>
+				<label xml:lang="de">Protokoll  </label>
+				<label xml:lang="nl">protocol  </label>
+			</variable>
+			<!-- CV=29 -->
+			<xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+			<xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+			<variable item="Enable RailCom" CV="29" mask="XXXXVXXX" default="0" include="686403">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+				<label>Enable RailCom</label>
+				<label xml:lang="fr">RailCom</label>
+				<label xml:lang="de">RailCom</label>
+				<label xml:lang="it">Abilita RailCom</label>
+				<label xml:lang="cs">Zpřístupnit RailCom</label>
+				<label xml:lang="nl">RailCom</label>
+			</variable>
+			<xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
+			<variable CV="30" item="Reset error">
+				<enumVal>
+					<enumChoice choice="No error" value = "0">
+						<choice>Delete all errors</choice>
+						<choice xml:lang="de">Lösch alle Fehler </choice>
+						<choice xml:lang="nl">Verwijder alle fouten</choice>
+					</enumChoice>
+					<enumChoice choice="No error" value = "0">
+						<choice>Delete all errors</choice>
+						<choice xml:lang="de">Lösch alle Fehler </choice>
+						<choice xml:lang="nl">Verwijder alle fouten</choice>
+						</enumChoice>
+				</enumVal>
+			</variable>
+			<variable CV="30" mask="XXXXXXXV" item="Output A error">
+				<enumVal>
+					<enumChoice choice="No error" value = "0">
+						<choice>No error detected</choice>
+						<choice xml:lang="de">Kein Fehler erkannt</choice>
+						<choice xml:lang="nl">Geen fout gedetecteerd</choice>
+					</enumChoice>
+					<enumChoice choice="short circuit" value = "1">
+						<choice>Short circuit detected</choice>
+						<choice xml:lang="de">Kurzschluss festgestellt</choice>
+						<choice xml:lang="nl">Kortsluiting gedetecteerd</choice>
+					</enumChoice>
+				</enumVal>
+				<label>Error on output A</label>
+			</variable>
+			<variable CV="30" mask="XXXXXXVX" item="Output B error">
+				<enumVal>
+					<enumChoice choice="No error" value = "0">
+						<choice>No error detected</choice>
+						<choice xml:lang="de">Kein Fehler erkannt</choice>
+						<choice xml:lang="nl">Geen fout gedetecteerd</choice>
+					</enumChoice>
+					<enumChoice choice="short circuit" value = "1">
+						<choice>Short circuit detected</choice>
+						<choice xml:lang="de">Kurzschluss festgestellt</choice>
+						<choice xml:lang="nl">Kortsluiting gedetecteerd</choice>
+					</enumChoice>
+				</enumVal>
+				<label>Error on output B</label>
+			</variable>
+			<variable CV="30" mask="XXXXXVXX" item="Output C error">
+				<enumVal>
+					<enumChoice choice="No error" value = "0">
+						<choice>No error detected</choice>
+						<choice xml:lang="de">Kein Fehler erkannt</choice>
+						<choice xml:lang="nl">Geen fout gedetecteerd</choice>
+					</enumChoice>
+					<enumChoice choice="short circuit" value = "1">
+						<choice>Short circuit detected</choice>
+						<choice xml:lang="de">Kurzschluss festgestellt</choice>
+						<choice xml:lang="nl">Kortsluiting gedetecteerd</choice>
+					</enumChoice>
+				</enumVal>
+				<label>Error on output C</label>
+			</variable>
+			<variable CV="30" mask="XXXXVXXX" item="Output D error">
+				<enumVal>
+					<enumChoice choice="No error" value = "0">
+						<choice>No error detected</choice>
+						<choice xml:lang="de">Kein Fehler erkannt</choice>
+						<choice xml:lang="nl">Geen fout gedetecteerd</choice>
+					</enumChoice>
+					<enumChoice choice="short circuit" value = "1">
+						<choice>Short circuit detected</choice>
+						<choice xml:lang="de">Kurzschluss festgestellt</choice>
+						<choice xml:lang="nl">Kortsluiting gedetecteerd</choice>
+					</enumChoice>
+				</enumVal>
+				<label>Error on output D</label>
+			</variable>
+			<variable CV="30" mask="VXXXXXXX" item="Modul error">
+				<enumVal>
+					<enumChoice choice="No error" value = "0">
+						<choice>No error detected</choice>
+						<choice xml:lang="de">Kein Fehler erkannt</choice>
+						<choice xml:lang="nl">Geen fout gedetecteerd</choice>
+					</enumChoice>
+					<enumChoice choice="Over-temperature" value = "1">
+						<choice>Over-temperature detected</choice>
+						<choice xml:lang="de">Übertemperatur festgestellt</choice>
+						<choice xml:lang="nl">Overtemperature gedetecteerd</choice>
+					</enumChoice>
+				</enumVal>
+				<label>Modul error</label>
+			</variable>
+			<variable CV="33" mask="XXXXXXXV" minOut="1" item="FL(f) controls output 1" default="1">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>FL(f) controls output A</label>
+				<label xml:lang="de">FL(f) Steuert Ausgang A an</label>
+				<label xml:lang="nl">FL(f) stuurt uitgang A aan</label>
+			</variable>
+			<variable CV="33" mask="XXXXXXVX" minOut="2" item="FL(f) controls output 2">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>FL(f) controls output B</label>
+				<label xml:lang="de">FL(f) Steuert Ausgang B an</label>
+				<label xml:lang="nl">FL(f) stuurt uitgang B aan</label>
+			</variable>
+			<variable CV="33" mask="XXXXXVXX" minOut="3" item="FL(f) controls output 3">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>FL(f) controls output C</label>
+				<label xml:lang="de">FL(f) Steuert Ausgang C an</label>
+				<label xml:lang="nl">FL(f) stuurt uitgang C aan</label>
+			</variable>
+			<variable CV="33" mask="XXXXVXXX" minOut="4" item="FL(f) controls output 4">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>FL(f) controls output D</label>
+				<label xml:lang="de">FL(f) Steuert Ausgang D an</label>
+				<label xml:lang="nl">FL(f) stuurt uitgang D aan</label>
+			</variable>
+			<variable CV="34" mask="XXXXXXXV" minOut="1" item="FL(r) controls output 1">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>FL(r) controls output A</label>
+				<label xml:lang="de">FL(r) Steuert Ausgang A</label>
+				<label xml:lang="nl">FL(r) stuurt uitgang A</label>
+			</variable>
+			<variable CV="34" mask="XXXXXXVX" minOut="2" item="FL(r) controls output 2" default="1">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>FL(r) controls output B</label>
+				<label xml:lang="de">FL(r) Steuert Ausgang B</label>
+				<label xml:lang="nl">FL(r) stuurt uitgang B</label>
+			</variable>
+			<variable CV="34" mask="XXXXXVXX" minOut="3" item="FL(r) controls output 3">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>FL(r) controls output C</label>
+				<label xml:lang="de">FL(r) Steuert Ausgang C</label>
+				<label xml:lang="nl">FL(r) stuurt uitgang C</label>
+			</variable>
+			<variable CV="34" mask="XXXXVXXX" minOut="4" item="FL(r) controls output 4">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>FL(r) controls output D</label>
+				<label xml:lang="de">FL(r) Steuert Ausgang D</label>
+				<label xml:lang="nl">FL(r) stuurt uitgang D</label>
+			</variable>
+			<variable CV="35" mask="XXXXXXXV" minOut="1" minFn="1" item="F1 controls output 1">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F1 controls output A</label>
+				<label xml:lang="de">F1 Steuert Ausgang A</label>
+				<label xml:lang="nl">F1 stuurt uitgang A</label>
+			</variable>
+			<variable CV="35" mask="XXXXXXVX" minOut="2" minFn="1" item="F1 controls output 2">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F1 controls output B</label>
+				<label xml:lang="de">F1 Steuert Ausgang B</label>
+				<label xml:lang="nl">F1 stuurt uitgang B</label>
+			</variable>
+			<variable CV="35" mask="XXXXXVXX" minOut="3" minFn="1" item="F1 controls output 3" default="1">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F1 controls output C</label>
+				<label xml:lang="de">F1 Steuert Ausgang C</label>
+				<label xml:lang="nl">F1 stuurt uitgang C</label>
+			</variable>
+			<variable CV="35" mask="XXXXVXXX" minOut="4" minFn="1" item="F1 controls output 4">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F1 controls output D</label>
+				<label xml:lang="de">F1 Steuert Ausgang D</label>
+				<label xml:lang="nl">F1 stuurt uitgang D</label>
+			</variable>
+			<variable CV="36" mask="XXXXXXXV" minOut="1" minFn="2" item="F2 controls output 1">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F2 controls output A</label>
+				<label xml:lang="de">F2 Steuert Ausgang A</label>
+				<label xml:lang="nl">F2 stuurt uitgang A</label>
+			</variable>
+			<variable CV="36" mask="XXXXXXVX" minOut="2" minFn="2" item="F2 controls output 2">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F2 controls output B</label>
+				<label xml:lang="de">F2 Steuert Ausgang B</label>
+				<label xml:lang="nl">F2 stuurt uitgang B</label>
+			</variable>
+			<variable CV="36" mask="XXXXXVXX" minOut="3" minFn="2" item="F2 controls output 3">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F2 controls output C</label>
+				<label xml:lang="de">F2 Steuert Ausgang C</label>
+				<label xml:lang="nl">F2 stuurt uitgang C</label>
+			</variable>
+			<variable CV="36" mask="XXXXVXXX" minOut="4" minFn="2" item="F2 controls output 4" default="1">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F2 controls output D</label>
+				<label xml:lang="de">F2 Steuert Ausgang D</label>
+				<label xml:lang="nl">F2 stuurt uitgang D</label>
+			</variable>
+			<variable CV="37" mask="XXXXXXXV" minOut="1" minFn="3" item="F3 controls output 1">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F3 controls output A</label>
+				<label xml:lang="de">F3 Steuert Ausgang A</label>
+				<label xml:lang="nl">F3 stuurt uitgang A</label>
+			</variable>
+			<variable CV="37" mask="XXXXXXVX" minOut="2" minFn="3" item="F3 controls output 2">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F3 controls output B</label>
+				<label xml:lang="de">F3 Steuert Ausgang B</label>
+				<label xml:lang="nl">F3 stuurt uitgang B</label>
+			</variable>
+			<variable CV="37" mask="XXXXXXXV" minOut="3" minFn="3" item="F3 controls output 3">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F3 controls output C</label>
+				<label xml:lang="de">F3 Steuert Ausgang C</label>
+				<label xml:lang="nl">F3 stuurt uitgang C</label>
+			</variable>
+			<variable CV="37" mask="XXXXXXVX" minOut="4" minFn="3" item="F3 controls output 4">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F3 controls output D</label>
+				<label xml:lang="de">F3 Steuert Ausgang D</label>
+				<label xml:lang="nl">F3 stuurt uitgang D</label>
+			</variable>
+			<variable CV="38" mask="XXXXXXVX" minOut="4" minFn="4" item="F4 controls output 4">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F4 controls output D</label>
+				<label xml:lang="de">F4 Steuert Ausgang D</label>
+				<label xml:lang="nl">F4 stuurt uitgang D</label>
+			</variable>
+			<variable CV="38" mask="XXXXXXVX" minOut="4" minFn="5" item="F5 controls output 4">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F5 controls output D</label>
+				<label xml:lang="de">F5 Steuert Ausgang D</label>
+				<label xml:lang="nl">F5 stuurt uitgang D</label>
+			</variable>
+			<variable CV="40" mask="XXXXXXVX" minOut="4" minFn="6" item="F6 controls output 4">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F6 controls output D</label>
+				<label xml:lang="de">F6 Steuert Ausgang D</label>
+				<label xml:lang="nl">F6 stuurt uitgang D</label>
+			</variable>
+			<variable CV="40" mask="XXXXXXVX" minOut="4" minFn="7" item="F7 controls output 4">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>F7 controls output D</label>
+				<label xml:lang="de">F7 Steuert Ausgang D</label>
+				<label xml:lang="nl">F7 stuurt uitgang D</label>
+			</variable>
+			<variable CV="64" mask="XXXXXVVV" default="0" item="RESET">
+				<enumVal>
+					<enumChoice choice="No reset" value = "0">
+						<choice>No reset</choice>
+						<choice xml:lang="de">Kein reset</choice>
+						<choice xml:lang="nl">Geen reset</choice>
+					</enumChoice>
+					<enumChoice choice="factory values" value = "1">
+						<choice>Reset to factory values</choice>
+						<choice xml:lang="de">Reset auf Werks-werte</choice>
+						<choice xml:lang="nl">Reset op de fabriek waarde</choice>
+					</enumChoice>
+					<enumChoice choice="Address" value = "6">
+						<choice>Address (CV1, CV29, CV17) is reset to 3</choice>
+						<choice xml:lang="de">Adresse (CV1, CV29, CV17) wird auf 3 zurückgesetzt</choice>
+						<choice xml:lang="nl">Adres (CV1, CV29, CV17) word op 3 teruggesteld</choice>
+					</enumChoice>
+					<enumChoice choice="Mapping" value = "7">
+						<choice>Function Mapping (CV33 ..CV46) will be reset</choice>
+						<choice xml:lang="de">Function Mapping (CV33 ..CV46) wird zurückgesetzt</choice>
+						<choice xml:lang="nl">Functie mapping (CV33... CV46) wordt teruggesteld</choice>
+					</enumChoice>
+				</enumVal>
+			</variable>
+			<variable CV="120" mask="XXXXXXXV" default="0" item="output A">
+				<enumVal>
+					<enumChoice choice="Light output" value = "0">
+						<choice>Light output/ switching output</choice>
+						<choice xml:lang="de">Licht-/ Schaltausgang</choice>
+						<choice xml:lang="nl">Licht/ schakel uitgang</choice>
+					</enumChoice>
+					<enumChoice choice="flashing" value = "1">
+						<choice>Light output/ switching output with flashing function</choice>
+						<choice xml:lang="de">Licht-/ Schaltausgang mit Blinkfunktion</choice>
+						<choice xml:lang="nl">Licht/ schakel uitgang met knipper functie</choice>
+					</enumChoice>
+				</enumVal>
+				<label>output A</label>
+				<label xml:lang="de">Ausgang A</label>
+				<label xml:lang="nl">Uitgang A</label>
+			</variable>
+			<variable CV="121" mask="XXXXVVVV" default="0" item="Dim value A">
+				<decVal min="0" max="15"/>
+				<label>output A Brightness, Dim value:</label>
+				<label xml:lang="de">Ausgang A Helligkeit, Dim Wert:</label>
+				<label xml:lang="nl">Uitgang A Helderheid, Dim waarde:</label>
+			</variable>
+			<variable CV="121" mask="XXXVXXXX" default="0" item="A working at">
+				<enumVal>
+					<enumChoice choice="forward" value = "0">
+						<choice>forward</choice>
+						<choice xml:lang="de">Vorwärts</choice>
+						<choice xml:lang="nl">Voorwaarts</choice>
+					</enumChoice>
+					<enumChoice choice="backward" value = "1">
+						<choice>backward</choice>
+						<choice xml:lang="de">Rückwärts</choice>
+						<choice xml:lang="nl">Achteruit</choice>
+					</enumChoice>
+				</enumVal>
+				<label>Output A working at</label>
+				<label xml:lang="de">Ausgang A werkt bei</label>
+				<label xml:lang="nl">Uitgang A werkt bij</label>
+			</variable>
+			<variable CV="121" mask="XXVXXXXX" default="1" item="driving direction A">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>Output A depends on the driving direction</label>
+				<label xml:lang="de">Ausgang A ist von der Fahrtrichtung abhängig</label>
+				<label xml:lang="nl">Uitgang A is van de rijrichting afhankelijk</label>
+			</variable>
+			<variable CV="121" mask="XVXXXXXX" default="0" item="DCC/Analogue A">
+				<enumVal>
+					<enumChoice choice="DCC" value = "0">
+						<choice>DCC</choice>
+					</enumChoice>
+					<enumChoice choice="DCC and Analogue" value = "1">
+						<choice>DCC and Analogue</choice>
+						<choice xml:lang="de">DCC und Analog</choice>
+						<choice xml:lang="nl">DCC en analoog</choice>
+					</enumChoice>
+				</enumVal>
+				<label>Output A valid for</label>
+				<label xml:lang="de">Ausgang A gilt für</label>
+				<label xml:lang="nl">Uitgang A geld voor</label>
+			</variable>
+			<variable CV="121" mask="VXXXXXXX" default="0" item="Driving/standstill A">
+				<enumVal>
+					<enumChoice choice="Driving and standstill" value = "0">
+						<choice>Driving and at a standstill</choice>
+						<choice xml:lang="de">Fahrt und Stillstand</choice>
+						<choice xml:lang="nl">Onder het rijden en bij stilstand</choice>
+					</enumChoice>
+					<enumChoice choice="Only driving" value = "1">
+						<choice>Only driving</choice>
+						<choice xml:lang="de">Nur bei Fahrt</choice>
+						<choice xml:lang="nl">Alleen onder het rijden</choice>
+					</enumChoice>
+				</enumVal>
+				<label>Output A active when:</label>
+				<label xml:lang="de">Ausgang A aktiv bei:</label>
+				<label xml:lang="nl">Uitgang A werkt bij:</label>
+			</variable>
+			<variable CV="122" default="0" item="flashing on A">
+				<decVal min="0" max="255"/>
+				<label>Switch-on duration of output A in flashing function</label>
+				<label xml:lang="de">Einschaltdauer des Ausgangs A bei Blinkfunktion</label>
+				<label xml:lang="nl">Inschakeltijd van uitgang A bei de knipperfunctie</label>
+			</variable>
+			<variable CV="123" default="0" item="flashing off A">
+				<decVal min="0" max="255"/>
+				<label>Switch-off duration of output A in flashing function</label>
+				<label xml:lang="de">Ausschaltdauer des Ausgangs A bei Blinkfunktion</label>
+				<label xml:lang="nl">Uitschakeltijd van uitgang A bei de knipperfunctie</label>
+			</variable>
+			<variable CV="124" default="0" item="flashing A">
+				<decVal min="0" max="255"/>
+				<label>Number of flas-/switch-cycles at flashing-/switching function on output A</label>
+				<label xml:lang="de">Anzahl der Blink-/Schaltvorgänge bei Blinklicht-/Schaltfunktion auf Ausgang A</label>
+				<label xml:lang="nl">Aantal knipper-/ schakelfuncties van knipper-/ schakelfuncties op uitgang A</label>
+			</variable>
+			<variable CV="130" mask="XXXXXXXV" default="0" item="output B">
+				<enumVal>
+					<enumChoice choice="Light output" value = "0">
+						<choice>Light output/ switching output</choice>
+						<choice xml:lang="de">Licht-/ Schaltausgang</choice>
+						<choice xml:lang="nl">Licht/ schakel uitgang</choice>
+					</enumChoice>
+					<enumChoice choice="flashing" value = "1">
+						<choice>Light output/ switching output with flashing function</choice>
+						<choice xml:lang="de">Licht-/ Schaltausgang mit Blinkfunktion</choice>
+						<choice xml:lang="nl">Licht/ schakel uitgang met knipper functie</choice>
+					</enumChoice>
+				</enumVal>
+				<label>output B</label>
+				<label xml:lang="de">Ausgang B</label>
+				<label xml:lang="nl">Uitgang B</label>
+			</variable>
+			<variable CV="131" mask="XXXXVVVV" default="1" item="Dim value B">
+				<decVal min="0" max="15"/>
+				<label>output B Brightness, Dim value:</label>
+				<label xml:lang="de">Ausgang B Helligkeit, Dim Wert:</label>
+				<label xml:lang="nl">Uitgang B Helderheid, Dim waarde:</label>
+			</variable>
+			<variable CV="131" mask="XXXVXXXX" default="1" item="B working at">
+				<enumVal>
+					<enumChoice choice="forward" value = "0">
+						<choice>forward</choice>
+						<choice xml:lang="de">Vorwärts</choice>
+						<choice xml:lang="nl">Voorwaarts</choice>
+					</enumChoice>
+					<enumChoice choice="backward" value = "1">
+						<choice>backward</choice>
+						<choice xml:lang="de">Rückwärts</choice>
+						<choice xml:lang="nl">Achteruit</choice>
+					</enumChoice>
+				</enumVal>
+				<label>Output B working at</label>
+				<label xml:lang="de">Ausgang B werkt bei</label>
+				<label xml:lang="nl">Uitgang B werkt bij</label>
+			</variable>
+			<variable CV="131" mask="XXVXXXXX" default="1" item="driving direction B">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>Output B depends on the driving direction</label>
+				<label xml:lang="de">Ausgang B ist von der Fahrtrichtung abhängig</label>
+				<label xml:lang="nl">Uitgang B is van de rijrichting afhankelijk</label>
+			</variable>
+			<variable CV="131" mask="XVXXXXXX" default="0" item="DCC/Analogue B">
+				<enumVal>
+					<enumChoice choice="DCC" value = "0">
+						<choice>DCC</choice>
+					</enumChoice>
+					<enumChoice choice="DCC and Analogue" value = "1">
+						<choice>DCC and Analogue</choice>
+						<choice xml:lang="de">DCC und Analog</choice>
+						<choice xml:lang="nl">DCC en analoog</choice>
+					</enumChoice>
+				</enumVal>
+				<label>Output B valid for</label>
+				<label xml:lang="de">Ausgang B gilt für</label>
+				<label xml:lang="nl">Uitgang B geld voor</label>
+			</variable>
+			<variable CV="131" mask="VXXXXXXX" default="0" item="Driving/standstill B">
+				<enumVal>
+					<enumChoice choice="Driving and standstill" value = "0">
+						<choice>Driving and at a standstill</choice>
+						<choice xml:lang="de">Fahrt und Stillstand</choice>
+						<choice xml:lang="nl">Onder het rijden en bij stilstand</choice>
+					</enumChoice>
+					<enumChoice choice="Only driving" value = "1">
+						<choice>Only driving</choice>
+						<choice xml:lang="de">Nur bei Fahrt</choice>
+						<choice xml:lang="nl">Alleen onder het rijden</choice>
+					</enumChoice>
+				</enumVal>
+				<label>Output B active when:</label>
+				<label xml:lang="de">Ausgang B aktiv bei:</label>
+				<label xml:lang="nl">Uitgang B werkt bij:</label>
+			</variable>
+			<variable CV="132" default="0" item="flashing on B">
+				<decVal min="0" max="255"/>
+				<label>Switch-on duration of output B in flashing function</label>
+				<label xml:lang="de">Einschaltdauer des Ausgangs B bei Blinkfunktion</label>
+				<label xml:lang="nl">Inschakeltijd van uitgang B bei de knipperfunctie</label>
+			</variable>
+			<variable CV="133" default="0" item="flashing off B">
+				<decVal min="0" max="255"/>
+				<label>Switch-off duration of output B in flashing function</label>
+				<label xml:lang="de">Ausschaltdauer des Ausgangs B bei Blinkfunktion</label>
+				<label xml:lang="nl">Uitschakeltijd van uitgang B bei de knipperfunctie</label>
+			</variable>
+			<variable CV="134" default="0" item="flashing B">
+				<decVal min="0" max="255"/>
+				<label>Number of flas-/switch-cycles at flashing-/switching function on output B</label>
+				<label xml:lang="de">Anzahl der Blink-/Schaltvorgänge bei Blinklicht-/Schaltfunktion auf Ausgang B</label>
+				<label xml:lang="nl">Aantal knipper-/ schakelfuncties van knipper-/ schakelfuncties op uitgang B</label>
+			</variable>
+			<variable CV="140" mask="XXXXXXXV" default="0" item="output C">
+				<enumVal>
+					<enumChoice choice="Light output" value = "0">
+						<choice>Light output/ switching output</choice>
+						<choice xml:lang="de">Licht-/ Schaltausgang</choice>
+						<choice xml:lang="nl">Licht/ schakel uitgang</choice>
+					</enumChoice>
+					<enumChoice choice="flashing" value = "1">
+						<choice>Light output/ switching output with flashing function</choice>
+						<choice xml:lang="de">Licht-/ Schaltausgang mit Blinkfunktion</choice>
+						<choice xml:lang="nl">Licht/ schakel uitgang met knipper functie</choice>
+					</enumChoice>
+				</enumVal>
+				<label>output C</label>
+				<label xml:lang="de">Ausgang C</label>
+				<label xml:lang="nl">Uitgang C</label>
+			</variable>
+			<variable CV="141" mask="XXXXVVVV" default="8" item="Dim value C">
+				<decVal min="0" max="15"/>
+				<label>output C Brightness, Dim value:</label>
+				<label xml:lang="de">Ausgang C Helligkeit, Dim Wert:</label>
+				<label xml:lang="nl">Uitgang C Helderheid, Dim waarde:</label>
+			</variable>
+			<variable CV="141" mask="XXXVXXXX" default="0" item="C working at">
+				<enumVal>
+					<enumChoice choice="forward" value = "0">
+						<choice>forward</choice>
+						<choice xml:lang="de">Vorwärts</choice>
+						<choice xml:lang="nl">Voorwaarts</choice>
+					</enumChoice>
+					<enumChoice choice="backward" value = "1">
+						<choice>backward</choice>
+						<choice xml:lang="de">Rückwärts</choice>
+						<choice xml:lang="nl">Achteruit</choice>
+					</enumChoice>
+				</enumVal>
+				<label>Output C working at</label>
+				<label xml:lang="de">Ausgang C werkt bei</label>
+				<label xml:lang="nl">Uitgang C werkt bij</label>
+			</variable>
+			<variable CV="141" mask="XXVXXXXX" default="0" item="driving direction C">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>Output C depends on the driving direction</label>
+				<label xml:lang="de">Ausgang C ist von der Fahrtrichtung abhängig</label>
+				<label xml:lang="nl">Uitgang C is van de rijrichting afhankelijk</label>
+			</variable>
+			<variable CV="141" mask="XVXXXXXX" default="0" item="DCC/Analogue C">
+				<enumVal>
+					<enumChoice choice="DCC" value = "0">
+						<choice>DCC</choice>
+					</enumChoice>
+					<enumChoice choice="DCC and Analogue" value = "1">
+						<choice>DCC and Analogue</choice>
+						<choice xml:lang="de">DCC und Analog</choice>
+						<choice xml:lang="nl">DCC en analoog</choice>
+					</enumChoice>
+				</enumVal>
+				<label>Output C valid for</label>
+				<label xml:lang="de">Ausgang C gilt für</label>
+				<label xml:lang="nl">Uitgang C geld voor</label>
+			</variable>
+			<variable CV="141" mask="VXXXXXXX" default="0" item="Driving/standstill C">
+				<enumVal>
+					<enumChoice choice="Driving and standstill" value = "0">
+						<choice>Driving and at a standstill</choice>
+						<choice xml:lang="de">Fahrt und Stillstand</choice>
+						<choice xml:lang="nl">Onder het rijden en bij stilstand</choice>
+					</enumChoice>
+					<enumChoice choice="Only driving" value = "1">
+						<choice>Only driving</choice>
+						<choice xml:lang="de">Nur bei Fahrt</choice>
+						<choice xml:lang="nl">Alleen onder het rijden</choice>
+					</enumChoice>
+				</enumVal>
+				<label>Output C active when:</label>
+				<label xml:lang="de">Ausgang C aktiv bei:</label>
+				<label xml:lang="nl">Uitgang C werkt bij:</label>
+			</variable>
+			<variable CV="142" default="0" item="flashing on C">
+				<decVal min="0" max="255"/>
+				<label>Switch-on duration of output C in flashing function</label>
+				<label xml:lang="de">Einschaltdauer des Ausgangs C bei Blinkfunktion</label>
+				<label xml:lang="nl">Inschakeltijd van uitgang C bei de knipperfunctie</label>
+			</variable>
+			<variable CV="143" default="0" item="flashing off C">
+				<decVal min="0" max="255"/>
+				<label>Switch-off duration of output C in flashing function</label>
+				<label xml:lang="de">Ausschaltdauer des Ausgangs C bei Blinkfunktion</label>
+				<label xml:lang="nl">Uitschakeltijd van uitgang C bei de knipperfunctie</label>
+			</variable>
+			<variable CV="144" default="0" item="flashing C">
+				<decVal min="0" max="255"/>
+				<label>Number of flas-/switch-cycles at flashing-/switching function on output C</label>
+				<label xml:lang="de">Anzahl der Blink-/Schaltvorgänge bei Blinklicht-/Schaltfunktion auf Ausgang C</label>
+				<label xml:lang="nl">Aantal knipper-/ schakelfuncties van knipper-/ schakelfuncties op uitgang C</label>
+			</variable>
+			<variable CV="150" mask="XXXXXXXV" default="0" item="output D">
+				<enumVal>
+					<enumChoice choice="Light output" value = "0">
+						<choice>Light output/ switching output</choice>
+						<choice xml:lang="de">Licht-/ Schaltausgang</choice>
+						<choice xml:lang="nl">Licht/ schakel uitgang</choice>
+					</enumChoice>
+					<enumChoice choice="flashing" value = "1">
+						<choice>Light output/ switching output with flashing function</choice>
+						<choice xml:lang="de">Licht-/ Schaltausgang mit Blinkfunktion</choice>
+						<choice xml:lang="nl">Licht/ schakel uitgang met knipper functie</choice>
+					</enumChoice>
+				</enumVal>
+				<label>output D</label>
+				<label xml:lang="de">Ausgang D</label>
+				<label xml:lang="nl">Uitgang D</label>
+			</variable>
+			<variable CV="151" mask="XXXXVVVV" default="8" item="Dim value D">
+				<decVal min="0" max="15"/>
+				<label>output D Brightness, Dim value:</label>
+				<label xml:lang="de">Ausgang D Helligkeit, Dim Wert:</label>
+				<label xml:lang="nl">Uitgang D Helderheid, Dim waarde:</label>
+			</variable>
+			<variable CV="151" mask="XXXVXXXX" default="0" item="D working at">
+				<enumVal>
+					<enumChoice choice="forward" value = "0">
+						<choice>forward</choice>
+						<choice xml:lang="de">Vorwärts</choice>
+						<choice xml:lang="nl">Voorwaarts</choice>
+					</enumChoice>
+					<enumChoice choice="backward" value = "1">
+						<choice>backward</choice>
+						<choice xml:lang="de">Rückwärts</choice>
+						<choice xml:lang="nl">Achteruit</choice>
+					</enumChoice>
+				</enumVal>
+				<label>Output D working at</label>
+				<label xml:lang="de">Ausgang D werkt bei</label>
+				<label xml:lang="nl">Uitgang D werkt bij</label>
+			</variable>
+			<variable CV="151" mask="XXVXXXXX" default="0" item="driving direction D">
+				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+				<label>Output D depends on the driving direction</label>
+				<label xml:lang="de">Ausgang D ist von der Fahrtrichtung abhängig</label>
+				<label xml:lang="nl">Uitgang D is van de rijrichting afhankelijk</label>
+			</variable>
+			<variable CV="151" mask="XVXXXXXX" default="0" item="DCC/Analogue D">
+				<enumVal>
+					<enumChoice choice="DCC" value = "0">
+						<choice>DCC</choice>
+					</enumChoice>
+					<enumChoice choice="DCC and Analogue" value = "1">
+						<choice>DCC and Analogue</choice>
+						<choice xml:lang="de">DCC und Analog</choice>
+						<choice xml:lang="nl">DCC en analoog</choice>
+					</enumChoice>
+				</enumVal>
+				<label>Output D valid for</label>
+				<label xml:lang="de">Ausgang D gilt für:</label>
+				<label xml:lang="nl">Uitgang D geld voor:</label>
+			</variable>
+			<variable CV="151" mask="VXXXXXXX" default="0" item="Driving/standstill D">
+				<enumVal>
+					<enumChoice choice="Driving and standstill" value = "0">
+						<choice>Driving and at a standstill</choice>
+						<choice xml:lang="de">Fahrt und Stillstand</choice>
+						<choice xml:lang="nl">Onder het rijden en bij stilstand</choice>
+					</enumChoice>
+					<enumChoice choice="Only driving" value = "1">
+						<choice>Only driving</choice>
+						<choice xml:lang="de">Nur bei Fahrt</choice>
+						<choice xml:lang="nl">Alleen onder het rijden</choice>
+					</enumChoice>
+				</enumVal>
+				<label>Output D active when:</label>
+				<label xml:lang="de">Ausgang D aktiv bei:</label>
+				<label xml:lang="nl">Uitgang D werkt bij:</label>
+			</variable>
+			<variable CV="152" default="0" item="flashing on D">
+				<decVal min="0" max="255"/>
+				<label>Switch-on duration of output D in flashing function</label>
+				<label xml:lang="de">Einschaltdauer des Ausgangs D bei Blinkfunktion</label>
+				<label xml:lang="nl">Inschakeltijd van uitgang D bei de knipperfunctie</label>
+			</variable>
+			<variable CV="153" default="0" item="flashing off D">
+				<decVal min="0" max="255"/>
+				<label>Switch-off duration of output D in flashing function</label>
+				<label xml:lang="de">Ausschaltdauer des Ausgangs D bei Blinkfunktion</label>
+				<label xml:lang="nl">Uitschakeltijd van uitgang D bei de knipperfunctie</label>
+			</variable>
+			<variable CV="154" default="0" item="flashing D">
+				<decVal min="0" max="255"/>
+				<label>Number of flas-/switch-cycles at flashing-/switching function on output D</label>
+				<label xml:lang="de">Anzahl der Blink-/Schaltvorgänge bei Blinklicht-/Schaltfunktion auf Ausgang D</label>
+				<label xml:lang="nl">Aantal knipper-/ schakelfuncties van knipper-/ schakelfuncties op uitgang D</label>
+			</variable>
+		</variables>
+		<resets>
+			<factReset label="Reset All CVs - selected unit dependent" CV="64" default="1">
+				<label>Reset to factory values</label>
+				<label xml:lang="de">Reset auf Werks-werte</label>
+				<label xml:lang="nl">Reset op de fabriek waarde</label>
+			</factReset>
+			<factReset label="Reset address" CV="64" default="6">
+				<label>Address is reset to 3</label>
+				<label xml:lang="de">Adresse wird auf 3 zurückgesetzt</label>
+				<label xml:lang="nl">Adres word op 3 teruggesteld</label>
+			</factReset>
+			<factReset label="Reset F map" CV="64" default="7">
+				<label>Function Mapping will be reset</label>
+				<label xml:lang="de">Function Mapping wird zurückgesetzt</label>
+				<label xml:lang="nl">Functie mapping wordt teruggesteld</label>
+			</factReset>
+			<factReset label="Reset errors" CV="8" default="30">
+				<label>Error messages are deleted</label>
+				<label xml:lang="de">Fehlermeldungen werden gelöscht</label>
+				<label xml:lang="nl">Foutmeldingen worden gewist</label>
+			</factReset>
+		</resets>
+	</decoder>
+	<pane nameFmt="label"> <!-- Lights -->
+		<name>Lights</name>
+		<name xml:lang="ca">Llums</name>
+		<name xml:lang="cs">Osvětlení</name>
+		<name xml:lang="da">Lys</name>
+		<name xml:lang="de">Licht</name>
+		<name xml:lang="fr">Lumières</name>
+		<name xml:lang="it">Luci</name>
+		<name xml:lang="nl">Licht</name>
+		<column>
+			<row>
+				<column>
+					<label>
+						<text>  </text>
+					</label>
+					<grid gridy="NEXT" weightx="1" ipadx="10">
+						<griditem gridx="0" gridy="0" gridwidth="2">
+							<label>
+								<text>&lt;html&gt;&lt;u&gt;&lt;b&gt;Output A (F0v)</text>
+								<text xml:lang="de">&lt;html&gt;&lt;u&gt;&lt;b&gt;Ausgang A (F0v)</text>
+								<text xml:lang="nl">&lt;html&gt;&lt;u&gt;&lt;b&gt;Uitgang A (F0v)</text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="1" gridwidth="1">
+							<label>
+								<text>  </text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="2" gridwidth="2">
+							<display item="output A" label=""/>
+						</griditem>
+						<griditem gridx="0" gridy="3" gridwidth="1">
+							<label>
+								<text>  </text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="4" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>Brightness, Dim value: (0-15)</text>
+								<text xml:lang="de">Helligkeit, Dim Wert: (0-15)</text>
+								<text xml:lang="nl">Helderheid, Dim waarde: (0-15)</text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="4" gridwidth="1" anchor="LINE_START">
+							<row>
+								<display item="Dim value A" label=""/>
+								<display item="Dim value A" format="hslider" label=""/>
+							</row>
+						</griditem>
+						<griditem gridx="0" gridy="5" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>working at</text>
+								<text xml:lang="de">Werkt bei</text>
+								<text xml:lang="nl">Werkt bij</text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="5" gridwidth="1" anchor="LINE_START">
+							<display item="A working at" label=""/>
+						</griditem>
+						<griditem gridx="0" gridy="6" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>Depends on the driving direction</text>
+								<text xml:lang="de">Abhängig von der Fahrtrichtung</text>
+								<text xml:lang="nl">Afhankelijk van de rijrichting</text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="6" gridwidth="1" anchor="LINE_START">
+							<display item="driving direction A" label=""/>
+						</griditem>
+						<griditem gridx="0" gridy="7" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>Valid for:</text>
+								<text xml:lang="de">Gilt für:</text>
+								<text xml:lang="nl">Geld voor:</text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="7" gridwidth="1" anchor="LINE_START">
+							<display item="DCC/Analogue A" label=""/>
+						</griditem>
+						<griditem gridx="0" gridy="8" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>Aktiv when:</text>
+								<text xml:lang="de">Aktiv bei:</text>
+								<text xml:lang="nl">Actief bij:</text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="8" gridwidth="1" anchor="LINE_START">
+							<display item="Driving/standstill A" label=""/>
+						</griditem>
+						<griditem gridx="0" gridy="9" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>  </text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="10" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>Switch-on duration in flashing function</text>
+								<text xml:lang="de">Einschaltdauer bei Blinkfunktion</text>
+								<text xml:lang="nl">Inschakeltijd de knipperfunctie</text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="10" gridwidth="1" anchor="LINE_START">
+							<row>
+								<display item="flashing on A" label=""/>
+								<display item="flashing on A" format="hslider" label=""/>
+							</row>
+						</griditem>
+						<griditem gridx="0" gridy="11" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>Switch-off duration in flashing function</text>
+								<text xml:lang="de">Ausschaltdauer bei Blinkfunktion</text>
+								<text xml:lang="nl">Uitschakeltijd de knipperfunctie</text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="11" gridwidth="1" anchor="LINE_START">
+							<row>
+								<display item="flashing off A" label=""/>
+								<display item="flashing off A" format="hslider" label=""/>
+							</row>
+						</griditem>
+						<griditem gridx="0" gridy="12" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>Number of blink-/switch-cycles at blinking-/switching function</text>
+								<text xml:lang="de">Anzahl der Blink-/Schaltvorgänge bei Blinklicht-/Schaltfunktion</text>
+								<text xml:lang="nl">Aantal knipper-/ schakelfuncties van knipper-/ schakelfuncties</text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="12" gridwidth="1" anchor="LINE_START">
+							<row>
+								<display item="flashing A" label=""/>
+								<display item="flashing A" format="hslider" label=""/>
+							</row>
+						</griditem>
+						<griditem gridx="0" gridy="13" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>  </text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="14" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>error message:</text>
+								<text xml:lang="de">Fehler Meldung:</text>
+								<text xml:lang="nl">Foutmelding:</text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="14" gridwidth="1" anchor="LINE_START">
+								<display item="Output A error" label=""/>
+						</griditem>
+						<griditem gridx="0" gridy="15" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>  </text>
+							</label>
+						</griditem>
+					</grid>
+				</column>
+				<column>
+					<label>
+						<text>  </text>
+					</label>
+				</column>
+				<separator/>
+				<column>
+					<label>
+						<text>  </text>
+					</label>
+				</column>
+				<column>
+					<label>
+						<text>  </text>
+					</label>
+					<grid gridy="NEXT" weightx="1" ipadx="10">
+						<griditem gridx="0" gridy="0" gridwidth="2">
+							<label>
+								<text>&lt;html&gt;&lt;u&gt;&lt;b&gt;Output B (F0r)</text>
+								<text xml:lang="de">&lt;html&gt;&lt;u&gt;&lt;b&gt;Ausgang B (F0r)</text>
+								<text xml:lang="nl">&lt;html&gt;&lt;u&gt;&lt;b&gt;Uitgang B (F0r)</text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="1" gridwidth="1">
+							<label>
+								<text>  </text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="2" gridwidth="2">
+							<display item="output B" label=""/>
+						</griditem>
+						<griditem gridx="0" gridy="3" gridwidth="1">
+							<label>
+								<text>  </text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="4" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>Brightness, Dim value: (0-15)</text>
+								<text xml:lang="de">Helligkeit, Dim Wert: (0-15)</text>
+								<text xml:lang="nl">Helderheid, Dim waarde: (0-15)</text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="4" gridwidth="1" anchor="LINE_START">
+							<row>
+								<display item="Dim value B" label=""/>
+								<display item="Dim value B" format="hslider" label=""/>
+							</row>
+						</griditem>
+						<griditem gridx="0" gridy="5" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>working at</text>
+								<text xml:lang="de">Werkt bei</text>
+								<text xml:lang="nl">Werkt bij</text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="5" gridwidth="1" anchor="LINE_START">
+							<display item="B working at" label=""/>
+						</griditem>
+						<griditem gridx="0" gridy="6" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>Depends on the driving direction</text>
+								<text xml:lang="de">Abhängig von der Fahrtrichtung</text>
+								<text xml:lang="nl">Afhankelijk van de rijrichting</text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="6" gridwidth="1" anchor="LINE_START">
+							<display item="driving direction B" label=""/>
+						</griditem>
+						<griditem gridx="0" gridy="7" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>Valid for:</text>
+								<text xml:lang="de">Gilt für:</text>
+								<text xml:lang="nl">Geld voor:</text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="7" gridwidth="1" anchor="LINE_START">
+							<display item="DCC/Analogue B" label=""/>
+						</griditem>
+						<griditem gridx="0" gridy="8" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>Aktiv when:</text>
+								<text xml:lang="de">Aktiv bei:</text>
+								<text xml:lang="nl">Actief bij:</text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="8" gridwidth="1" anchor="LINE_START">
+							<display item="Driving/standstill B" label=""/>
+						</griditem>
+						<griditem gridx="0" gridy="9" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>  </text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="10" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>Switch-on duration in flashing function</text>
+								<text xml:lang="de">Einschaltdauer bei Blinkfunktion</text>
+								<text xml:lang="nl">Inschakeltijd de knipperfunctie</text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="10" gridwidth="1" anchor="LINE_START">
+							<row>
+								<display item="flashing on B" label=""/>
+								<display item="flashing on B" format="hslider" label=""/>
+							</row>
+						</griditem>
+						<griditem gridx="0" gridy="11" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>Switch-off duration in flashing function</text>
+								<text xml:lang="de">Ausschaltdauer bei Blinkfunktion</text>
+								<text xml:lang="nl">Uitschakeltijd de knipperfunctie</text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="11" gridwidth="1" anchor="LINE_START">
+							<row>
+								<display item="flashing off B" label=""/>
+								<display item="flashing off B" format="hslider" label=""/>
+							</row>
+						</griditem>
+						<griditem gridx="0" gridy="12" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>Number of blink-/switch-cycles at blinking-/switching function</text>
+								<text xml:lang="de">Anzahl der Blink-/Schaltvorgänge bei Blinklicht-/Schaltfunktion</text>
+								<text xml:lang="nl">Aantal knipper-/ schakelfuncties van knipper-/ schakelfuncties</text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="12" gridwidth="1" anchor="LINE_START">
+							<row>
+								<display item="flashing B" label=""/>
+								<display item="flashing B" format="hslider" label=""/>
+							</row>
+						</griditem>
+						<griditem gridx="0" gridy="13" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>  </text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="14" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>error message:</text>
+								<text xml:lang="de">Fehler Meldung:</text>
+								<text xml:lang="nl">Foutmelding:</text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="14" gridwidth="1" anchor="LINE_START">
+								<display item="Output B error" label=""/>
+						</griditem>
+						<griditem gridx="0" gridy="15" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>  </text>
+							</label>
+						</griditem>
+					</grid>
+				</column>
+			</row>
+			<separator/>
+			<row>
+				<column>
+					<label>
+						<text>  </text>
+					</label>
+					<grid gridy="NEXT" weightx="1" ipadx="10">
+						<griditem gridx="0" gridy="0" gridwidth="2">
+							<label>
+								<text>&lt;html&gt;&lt;u&gt;&lt;b&gt;Output C (F1, Aux 1)</text>
+								<text xml:lang="de">&lt;html&gt;&lt;u&gt;&lt;b&gt;Ausgang C ((F1, Aux 1)</text>
+								<text xml:lang="nl">&lt;html&gt;&lt;u&gt;&lt;b&gt;Uitgang C (F1, Aux 1)</text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="1" gridwidth="1">
+							<label>
+								<text>  </text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="2" gridwidth="2">
+							<display item="output C" label=""/>
+						</griditem>
+						<griditem gridx="0" gridy="3" gridwidth="1">
+							<label>
+								<text>  </text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="4" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>Brightness, Dim value: (0-15)</text>
+								<text xml:lang="de">Helligkeit, Dim Wert: (0-15)</text>
+								<text xml:lang="nl">Helderheid, Dim waarde: (0-15)</text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="4" gridwidth="1" anchor="LINE_START">
+							<row>
+								<display item="Dim value C" label=""/>
+								<display item="Dim value C" format="hslider" label=""/>
+							</row>
+						</griditem>
+						<griditem gridx="0" gridy="5" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>working at</text>
+								<text xml:lang="de">Werkt bei</text>
+								<text xml:lang="nl">Werkt bij</text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="5" gridwidth="1" anchor="LINE_START">
+							<display item="C working at" label=""/>
+						</griditem>
+						<griditem gridx="0" gridy="6" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>Depends on the driving direction</text>
+								<text xml:lang="de">Abhängig von der Fahrtrichtung</text>
+								<text xml:lang="nl">Afhankelijk van de rijrichting</text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="6" gridwidth="1" anchor="LINE_START">
+							<display item="driving direction C" label=""/>
+						</griditem>
+						<griditem gridx="0" gridy="7" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>Valid for:</text>
+								<text xml:lang="de">Gilt für:</text>
+								<text xml:lang="nl">Geld voor:</text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="7" gridwidth="1" anchor="LINE_START">
+							<display item="DCC/Analogue C" label=""/>
+						</griditem>
+						<griditem gridx="0" gridy="8" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>Aktiv when:</text>
+								<text xml:lang="de">Aktiv bei:</text>
+								<text xml:lang="nl">Actief bij:</text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="8" gridwidth="1" anchor="LINE_START">
+							<display item="Driving/standstill C" label=""/>
+						</griditem>
+						<griditem gridx="0" gridy="9" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>  </text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="10" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>Switch-on duration in flashing function</text>
+								<text xml:lang="de">Einschaltdauer bei Blinkfunktion</text>
+								<text xml:lang="nl">Inschakeltijd de knipperfunctie</text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="10" gridwidth="1" anchor="LINE_START">
+							<row>
+								<display item="flashing on C" label=""/>
+								<display item="flashing on C" format="hslider" label=""/>
+							</row>
+						</griditem>
+						<griditem gridx="0" gridy="11" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>Switch-off duration in flashing function</text>
+								<text xml:lang="de">Ausschaltdauer bei Blinkfunktion</text>
+								<text xml:lang="nl">Uitschakeltijd de knipperfunctie</text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="11" gridwidth="1" anchor="LINE_START">
+							<row>
+								<display item="flashing off C" label=""/>
+								<display item="flashing off C" format="hslider" label=""/>
+							</row>
+						</griditem>
+						<griditem gridx="0" gridy="12" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>Number of blink-/switch-cycles at blinking-/switching function</text>
+								<text xml:lang="de">Anzahl der Blink-/Schaltvorgänge bei Blinklicht-/Schaltfunktion</text>
+								<text xml:lang="nl">Aantal knipper-/ schakelfuncties van knipper-/ schakelfuncties</text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="12" gridwidth="1" anchor="LINE_START">
+							<row>
+								<display item="flashing C" label=""/>
+								<display item="flashing C" format="hslider" label=""/>
+							</row>
+						</griditem>
+						<griditem gridx="0" gridy="13" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>  </text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="14" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>error message:</text>
+								<text xml:lang="de">Fehler Meldung:</text>
+								<text xml:lang="nl">Foutmelding:</text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="14" gridwidth="1" anchor="LINE_START">
+								<display item="Output C error" label=""/>
+						</griditem>
+						<griditem gridx="0" gridy="15" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>  </text>
+							</label>
+						</griditem>
+					</grid>
+				</column>
+				<column>
+					<label>
+						<text>  </text>
+					</label>
+				</column>
+				<separator/>
+				<column>
+					<label>
+						<text>  </text>
+					</label>
+				</column>
+				<column>
+					<label>
+						<text>  </text>
+					</label>
+					<grid gridy="NEXT" weightx="1" ipadx="10">
+						<griditem gridx="0" gridy="0" gridwidth="2">
+							<label>
+								<text>&lt;html&gt;&lt;u&gt;&lt;b&gt;Output D (F2, Aux 2)</text>
+								<text xml:lang="de">&lt;html&gt;&lt;u&gt;&lt;b&gt;Ausgang D (F2, Aux 2)</text>
+								<text xml:lang="nl">&lt;html&gt;&lt;u&gt;&lt;b&gt;Uitgang D (F2, Aux 2)</text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="1" gridwidth="1">
+							<label>
+								<text>  </text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="2" gridwidth="2">
+							<display item="output D" label=""/>
+						</griditem>
+						<griditem gridx="0" gridy="3" gridwidth="1">
+							<label>
+								<text>  </text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="4" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>Brightness, Dim value: (0-15)</text>
+								<text xml:lang="de">Helligkeit, Dim Wert: (0-15)</text>
+								<text xml:lang="nl">Helderheid, Dim waarde: (0-15)</text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="4" gridwidth="1" anchor="LINE_START">
+							<row>
+								<display item="Dim value D" label=""/>
+								<display item="Dim value D" format="hslider" label=""/>
+							</row>
+						</griditem>
+						<griditem gridx="0" gridy="5" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>working at</text>
+								<text xml:lang="de">Werkt bei</text>
+								<text xml:lang="nl">Werkt bij</text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="5" gridwidth="1" anchor="LINE_START">
+							<display item="D working at" label=""/>
+						</griditem>
+						<griditem gridx="0" gridy="6" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>Depends on the driving direction</text>
+								<text xml:lang="de">Abhängig von der Fahrtrichtung</text>
+								<text xml:lang="nl">Afhankelijk van de rijrichting</text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="6" gridwidth="1" anchor="LINE_START">
+							<display item="driving direction D" label=""/>
+						</griditem>
+						<griditem gridx="0" gridy="7" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>Valid for:</text>
+								<text xml:lang="de">Gilt für:</text>
+								<text xml:lang="nl">Geld voor:</text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="7" gridwidth="1" anchor="LINE_START">
+							<display item="DCC/Analogue D" label=""/>
+						</griditem>
+						<griditem gridx="0" gridy="8" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>Aktiv when:</text>
+								<text xml:lang="de">Aktiv bei:</text>
+								<text xml:lang="nl">Actief bij:</text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="8" gridwidth="1" anchor="LINE_START">
+							<display item="Driving/standstill D" label=""/>
+						</griditem>
+						<griditem gridx="0" gridy="9" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>  </text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="10" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>Switch-on duration in flashing function</text>
+								<text xml:lang="de">Einschaltdauer bei Blinkfunktion</text>
+								<text xml:lang="nl">Inschakeltijd de knipperfunctie</text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="10" gridwidth="1" anchor="LINE_START">
+							<row>
+								<display item="flashing on D" label=""/>
+								<display item="flashing on D" format="hslider" label=""/>
+							</row>
+						</griditem>
+						<griditem gridx="0" gridy="11" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>Switch-off duration in flashing function</text>
+								<text xml:lang="de">Ausschaltdauer bei Blinkfunktion</text>
+								<text xml:lang="nl">Uitschakeltijd de knipperfunctie</text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="11" gridwidth="1" anchor="LINE_START">
+							<row>
+								<display item="flashing off D" label=""/>
+								<display item="flashing off D" format="hslider" label=""/>
+							</row>
+						</griditem>
+						<griditem gridx="0" gridy="12" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>Number of blink-/switch-cycles at blinking-/switching function</text>
+								<text xml:lang="de">Anzahl der Blink-/Schaltvorgänge bei Blinklicht-/Schaltfunktion</text>
+								<text xml:lang="nl">Aantal knipper-/ schakelfuncties van knipper-/ schakelfuncties</text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="12" gridwidth="1" anchor="LINE_START">
+							<row>
+								<display item="flashing D" label=""/>
+								<display item="flashing D" format="hslider" label=""/>
+							</row>
+						</griditem>
+						<griditem gridx="0" gridy="13" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>  </text>
+							</label>
+						</griditem>
+						<griditem gridx="0" gridy="14" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>error message:</text>
+								<text xml:lang="de">Fehler Meldung:</text>
+								<text xml:lang="nl">Foutmelding:</text>
+							</label>
+						</griditem>
+						<griditem gridx="1" gridy="14" gridwidth="1" anchor="LINE_START">
+								<display item="Output D error" label=""/>
+						</griditem>
+						<griditem gridx="0" gridy="15" gridwidth="1" anchor="LINE_END">
+							<label>
+								<text>  </text>
+							</label>
+						</griditem>
+					</grid>
+				</column>
+			</row>
+		</column>
+	</pane>
+	<pane nameFmt="label"> <!-- Fleischmann -->
+		<name>Fleischmann</name>
+		<column>
+			<display item="Analog mode" format="radiobuttons"/>
+			<label>
+				<text>  </text>
+			</label>
+			<display item="Enable RailCom" format="radiobuttons"/>
+			<label>
+				<text>  </text>
+			</label>
+			<row>
+				<display item="Packet timeout"/>
+				<display item="Packet timeout" format="hslider" label=""/>
+			</row>
+		</column>
+		<column>
+			<display item="Output A error" format="onradiobutton"/>
+			<display item="Output B error" format="onradiobutton"/>
+			<display item="Output C error" format="onradiobutton"/>
+			<display item="Output D error" format="onradiobutton"/>
+			<label>
+				<text>  </text>
+			</label>
+			<display item="Modul error" format="onradiobutton"/>
+			<label>
+				<text>  </text>
+			</label>
+			<display item="Reset error" format="onradiobutton"/>
+			<label>
+				<text>  </text>
+			</label>
+			<label>
+				<text>  </text>
+			</label>
+			<label>
+				<text>  </text>
+			</label>
+			<display item="RESET" format="radiobuttons"/>
+		</column>
+		
+	</pane>
 </decoder-config>

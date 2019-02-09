@@ -453,6 +453,7 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
      *<p>
      * This is intended to be used only by testing subclasses.
      */
+    @Override
     public void terminateThreads() {
         threadStopRequest = true;
         // ensure socket closed to end pending operations

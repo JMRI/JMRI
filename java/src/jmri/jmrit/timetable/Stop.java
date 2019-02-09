@@ -162,6 +162,7 @@ public class Stop {
         _stopNotes = newNotes;
     }
 
+    @Override
     public String toString() {
         TimeTableDataManager dataMgr = TimeTableDataManager.getDataManager();
         Station station = dataMgr.getStation(_stationId);
