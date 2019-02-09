@@ -467,7 +467,7 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
      * the punycode is 63 characters or less</li>
      * <li>Repeat process with NodeIdentity#networkIdentity() as input if above never
      * yields a usable host name</li>
-     * </ul>
+     * </ol>
      * 
      * @param string String to convert to host name
      * @return An RFC 1123 compliant host name
