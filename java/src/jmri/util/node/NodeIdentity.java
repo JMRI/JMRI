@@ -11,11 +11,14 @@ import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
+import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.util.FileUtil;
 import org.jdom2.Document;
@@ -48,6 +51,7 @@ public class NodeIdentity {
     private UUID uuid = null;
     private String networkIdentity = null;
     private String storageIdentity = null;
+    private final Map<Profile, String> profileStorageIdentities = new HashMap<>();
 
     private static NodeIdentity instance = null;
     private static final Logger log = LoggerFactory.getLogger(NodeIdentity.class);
@@ -141,14 +145,17 @@ public class NodeIdentity {
      * @return A network identity. If this identity is not in the form
      * {@code jmri-MACADDRESS-profileId}, or if {@code MACADDRESS} is a 
      * multicast MAC address, this identity should be considered
-     * unreliable and subject to change across JMRI restarts.
+     * unreliable and subject to change across JMRI restarts. Note that if
+     * the identity is in the form {@code jmri-MACADDRESS} the JMRI instance
+     * has not loaded a configuration profile, and the network identity will
+     * change once that a configuration profile is loaded.
      */
     public static synchronized String networkIdentity() {
         String uniqueId = "-";
         try {
             uniqueId += ProfileManager.getDefault().getActiveProfile().getUniqueId();
         } catch (NullPointerException ex) {
-            uniqueId += ProfileManager.createUniqueId();
+            uniqueId = "";
         }
         if (instance == null) {
             instance = new NodeIdentity();
@@ -158,6 +165,18 @@ public class NodeIdentity {
     }
 
     /**
+     * Return the node's current storage identity for the active profile. This is
+     * a convenience method that calls {@link #storageIdentity(Profile)} with the
+     * result of {@link jmri.profile.ProfileManager#getActiveProfile()}.
+     * 
+     * @return A storage identity.
+     * @see #storageIdentity(Profile)
+     */
+    public static synchronized String storageIdentity() {
+        return storageIdentity(ProfileManager.getDefault().getActiveProfile());
+    }
+    
+    /**
      * Return the node's current storage identity. This can be used in networked
      * file systems to ensure per-computer storage is available.
      * <p>
@@ -166,23 +185,44 @@ public class NodeIdentity {
      * {@link jmri.util.FileUtil#getPreferencesPath()} (the most common cause of this
      * would be sharing a user's home directory in its entirety between two computers
      * with similar operating systems as noted in getPreferencesPath()).
+     * 
+     * @param profile The profile to get the identity for. This is only needed to check
+     * that the identity should not be in an older format.
      *
      * @return A storage identity. If this identity is not in the form
-     * {@code UUID-profileId}, this identity should be considered
-     * unreliable and subject to change across JMRI restarts.
+     * of a UUID or {@code jmri-UUID-profileId}, this identity should
+     * be considered unreliable and subject to change across JMRI restarts. When
+     * generating a new storage ID, the form is always a UUID and other forms are used
+     * only to ensure continuity where other forms may have been used in the past.
      */
-    public static synchronized String storageIdentity() {
-        String uniqueId = "-";
-        try {
-            uniqueId += ProfileManager.getDefault().getActiveProfile().getUniqueId();
-        } catch (NullPointerException ex) {
-            uniqueId += ProfileManager.createUniqueId();
-        }
+    public static synchronized String storageIdentity(Profile profile) {
         if (instance == null) {
             instance = new NodeIdentity();
-            log.info("Using {} as the JMRI Storage identity", instance.getStorageIdentity() + uniqueId);
         }
-        return instance.getStorageIdentity() + uniqueId;
+        String id = instance.getStorageIdentity();
+        // this entire check is so that a JMRI 4.14 style identity string can be built
+        // and checked against the given profile to determine if that should be used
+        // instead of just returning the non-profile-specific machine identity
+        if (profile != null) {
+            // using a map to store profile-specific identities allows for the possibility
+            // that, although there is only one active profile at a time, other profiles
+            // may be manipulated by JMRI while that profile is active (this happens to a
+            // limited extent already in the profile configuration UI)
+            // (a map also allows for ensuring the info message is displayed once per profile)
+            if (!instance.profileStorageIdentities.containsKey(profile)) {
+                String uniqueId = "-" + profile.getUniqueId();
+                id = IDENTITY_PREFIX + uuidToCompactString(instance.uuid) + uniqueId;
+                File local = new File(new File(profile.getPath(), Profile.PROFILE), id);
+                if (local.exists() && local.isDirectory()) {
+                    instance.profileStorageIdentities.put(profile, id);
+                } else {
+                    instance.profileStorageIdentities.put(profile, instance.getStorageIdentity());
+                }
+                log.info("Using {} as the JMRI storage identity for profile id {}", id, profile.getUniqueId());
+            }
+            id = instance.profileStorageIdentities.get(profile);
+        }
+        return id;
     }
 
     /**
