@@ -96,15 +96,6 @@ public class NullAudioBuffer extends AbstractAudioBuffer {
         return 0;
     }
 
-    /**
-     * Internal method to return a string representation of the audio format
-     *
-     * @return string representation
-     */
-    private String parseFormat() {
-        return "unknown format";
-    }
-
     @Override
     protected void cleanup() {
         if (log.isDebugEnabled()) {
