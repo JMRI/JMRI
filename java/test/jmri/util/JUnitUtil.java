@@ -929,14 +929,11 @@ public class JUnitUtil {
     public static void resetNodeIdentity() {
         try {
             Class<?> c = jmri.util.node.NodeIdentity.class;
-            java.lang.reflect.Field f = c.getDeclaredField("networkInstance");
-            f.setAccessible(true);
-            f.set(c, null);
-            f = c.getDeclaredField("storageInstance");
+            java.lang.reflect.Field f = c.getDeclaredField("instance");
             f.setAccessible(true);
             f.set(c, null);
         } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException x) {
-            log.error("Failed to reset jmri.util.node.NodeIdentity static field", x);
+            log.error("Failed to reset jmri.util.node.NodeIdentity instance", x);
         }
     }
 
