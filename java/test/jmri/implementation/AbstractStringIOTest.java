@@ -45,8 +45,7 @@ public class AbstractStringIOTest {
         Assert.assertTrue("string is cut",
                 "8:20. Trai".equals(myStringIO.getKnownStringValue()));
         
-        Assert.assertTrue("toString() matches",
-                "jmri.implementation.AbstractStringIOTest$MyAbstractStringIO (MySystemName)".equals(myStringIO.toString()));
+        Assert.assertTrue("toString() matches", "MySystemName".equals(myStringIO.toString()));
         
         Assert.assertTrue("getBeanType() matches", "String I/O".equals(myStringIO.getBeanType()));
     }
