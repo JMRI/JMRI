@@ -1361,7 +1361,7 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
         
         output.append(decode(r, r.isExtended(), r.getHeader()) + " ");
 
-        if (showOpcExtraCheckBox.isSelected()) {
+        if (showOpcExtraCheckBox.isSelected() && !r.isExtended() ) {
             String cbusopc = "CTIP_" + decodeopc(r, r.isExtended(), r.getHeader());
             output.append(Bundle.getMessage(cbusopc)+ " ");
         }
