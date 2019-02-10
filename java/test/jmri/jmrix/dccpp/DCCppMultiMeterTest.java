@@ -8,9 +8,17 @@ import org.junit.*;
  * @author Paul Bender Copyright (C) 2017	
  */
 public class DCCppMultiMeterTest extends jmri.implementation.AbstractMultiMeterTestBase{
+
     @Test
     public void testMethods() {
         Assert.assertEquals("DCC++", mm.getHardwareMeterName());
+    }
+
+    @Test
+    @Ignore("Currently fails to parse input.  Working on a solution");
+    public void testCurrentReply(){
+        ((DCCppMultiMeter)mm).message(new DCCppReply("a10")); // a syntactically valid current reply
+	Assert.assertEquals("current level",10.0/DCCppConstants.MAX_CURRENT,mm.getCurrent(),0.05);
     }
 
     @Override
