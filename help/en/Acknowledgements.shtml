@@ -109,6 +109,10 @@
         counted.</li>
 
         <li>
+        Taylor Berg, <!-- tman0 -->
+        who worked on the DCC++ support.
+        
+        <li>
         Daniel Bergqvist, <!-- danielb987 -->
         who added the "ask before shutdown" code, 
         improved the Bundle code, added to the Swedish translation,
@@ -603,7 +607,10 @@
 
         <li>Tony Koester, who helped with signaling</li>
 
-        <li>W.D. Kok created and maintained some Umelec decoder definitions</li>
+        <li>W.D. Kok <!-- Re465 -->
+            created and maintained some Umelec decoder definitions
+            and updated the Fleischman definitions
+        </li>
         
         <li>James Koretsky, who contributed the Burlington Northern
         1989 signal definition</li>
