@@ -269,22 +269,35 @@
       <p>If you have any questions about this, please <a href=
       "mailto:jmri@pacbell.net">contact us</a> directly.</p>
 
-      <h2>JMRI Code Visualization</h2>
-      <p>To show how much work goes into making JMRI run and
-      provide help to users, the 
+      <h2>Visualizations of JMRI Development Activity</h2>
+
+      <p>You can see a summary of the JMRI developer activity 
+      on the GitHub project page for the
+      <a href="https://github.com/JMRI/JMRI/graphs/contributors">main code repository</a>
+      and 
+      <a href="https://github.com/JMRI/website/graphs/contributors">the website</a>.
+      
+      <p>The 
       <a href="/community/codeflower.shtml">JMRI CodeFlower</a>
       provides a dynamic view of the whole GitHub repository.
       It shows the relative size of the code in each file and the
       structure in which the files are stored.
-      </p>
-      <p>In 2009, Dennis Miller created a <a href=
-      "/community/codeswarm.shtml">Code Swarm of JMRI
-      development</a> from its inception up to January 2009. A Code
-      Swarm is a fascinating and dynamic visual representation of
-      change as developers come and go and make changes to the
-      files that make up a project. Take a look at the
-      <a href="/community/codeswarm.shtml">JMRI Code Swarm</a>.
-      </p>
+      
+      <p>More detailed metrics are available on the 
+      <a href="https://www.openhub.net/p/jmri">JMRI OpenHub</a> pages on
+      <a href="https://www.openhub.net/p/jmri/contributors/summary">contributors</a>
+      and
+      <a href="https://www.openhub.net/p/jmri/commits/summary">commits</a>.
+      
+      <p>Dennis Miller created a <a href=
+      "http://jmri.org/community/codeswarm.shtml">Code Swarm of
+      JMRI development</a> that represents activity from inception to January 2009. A
+      Code Swarm is a fascinating and dynamic visual representation
+      of change as developers come and go and make changes to the
+      files that make up a project. More information is available
+      on the <a href=
+      "http://jmri.org/community/codeswarm.shtml">Code Swarm</a>
+      page.</p>
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

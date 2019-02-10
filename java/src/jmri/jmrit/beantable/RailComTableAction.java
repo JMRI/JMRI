@@ -185,7 +185,7 @@ public class RailComTableAction extends AbstractTableAction<IdTag> {
                 }
                 switch (col) {
                     case VALUECOL:
-                        return t.getTagID() + " " + t.getAddressTypeAsString();
+                        return t.getLocoAddress().toString();
                     case WHERECOL:
                         Reporter r;
                         return (((r = t.getWhereLastSeen()) != null) ? r.getSystemName() : null);
