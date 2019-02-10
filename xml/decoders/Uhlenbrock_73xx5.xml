@@ -17,7 +17,7 @@
     <!-- WARNING: output names fully linked to function mapping include file - do not change independently -->
     <decoder>
         <family name="IntelliDrive2" mfg="Uhlenbrock Elektronik" comment="Decoders not sorted (necessarily) in numerical order"><!-- to be checked by hardware owner -->
-            <model model="73105" numOuts="9" numFns="14" maxMotorCurrent="1.2A" formFactor="N" connector="Next18" productID="73105" comment="IntelliDrive2 Mini-Lokdecoder and RailCom(R) (Plus)">
+            <model model="73105" numOuts="10" numFns="14" maxMotorCurrent="1.2A" formFactor="N" connector="Next18" productID="73105" comment="IntelliDrive2 Mini-Lokdecoder and RailCom(R) (Plus)">
                 <output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
                 <output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>
                 <output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA"/>
@@ -27,11 +27,12 @@
                 <output name="7" label=". A5 ." connection="plug" maxcurrent="400 mA"/>
                 <output name="8" label=". A6 ." connection="plug" maxcurrent="400 mA"/>
                 <output name="9" label=". A7 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="10" label=". A8 ." connection="plug" maxcurrent="400 mA"/>
                 <output name="Shunting" label="mode"/>
                 <output name="Start/brake" label="inertia"/>
                 <size length="30.2" width="16" height="3.8" units="mm"/>
             </model>
-            <model model="PIKO41RH2400" numOuts="9" numFns="14" maxMotorCurrent="1.2A" formFactor="N" connector="Next18" productID="PIKO41RH2400" comment="Piko SmartDecoder 4.1 Sound Dieselloco Rh2400 Next18 plug and RailCom(R) (Plus)">
+            <model model="PIKO41RH2400" numOuts="10" numFns="14" maxMotorCurrent="1.2A" formFactor="N" connector="Next18" productID="PIKO41RH2400" comment="Piko SmartDecoder 4.1 Sound Dieselloco Rh2400 Next18 plug and RailCom(R) (Plus)">
                 <output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
                 <output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>
                 <output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA"/>
@@ -41,6 +42,7 @@
                 <output name="7" label=". A5 ." connection="plug" maxcurrent="400 mA"/>
                 <output name="8" label=". A6 ." connection="plug" maxcurrent="400 mA"/>
                 <output name="9" label=". A7 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="10" label=". A8 ." connection="plug" maxcurrent="400 mA"/>
                 <output name="Shunting" label="mode"/>
                 <output name="Start/brake" label="inertia"/>
                 <size length="30.2" width="16" height="3.8" units="mm"/>
@@ -49,7 +51,7 @@
         <programming direct="yes" paged="yes" register="yes" ops="yes">
             <capability>
                 <name>Indexed CV access</name>
-                <parameter name="PI">1021</parameter>
+                <parameter name="PI">1021</parameter> <!--for audio on SUSI, add CV for Banks?-->
                 <parameter name="SI">0</parameter> <!-- Not used, but need to be declared for cvFirst to be read -->
                 <parameter name="cvFirst">true</parameter>
             </capability>
@@ -111,41 +113,67 @@
             <!-- CV 17-18 already in place with CV 1-->
             <!-- CV19 Consisting Information -->
             <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
-            <variable item="Direction Dependent stops with asymmetrical DCC" CV="27">
+            <variable item="ABC stop with asymmetrical DCC" CV="27" mask="XXXXXXVV">
                 <enumVal>
                     <enumChoice choice="Does Not Stop">
-                        <choice>Does Not Stop</choice>
+                        <choice>Inactive</choice>
                         <choice xml:lang="it">Non si ferma</choice>
                         <choice xml:lang="cs">Nezastavuje</choice>
                         <choice xml:lang="de">Kein Bremsen</choice>
                     </enumChoice>
-                    <enumChoice choice="Stops when Right rail is higher voltage">
-                        <choice>Stops when Right rail is higher voltage</choice>
+                    <enumChoice choice="When Right rail is higher voltage">
+                        <choice>When Right rail is higher voltage</choice>
                         <choice xml:lang="it">Si ferma se rotaia destra ha tensione più alta</choice>
                         <choice xml:lang="cs">Zastaví když pravá kolejnice má vyšší napětí</choice>
-                        <choice xml:lang="de">Bremsen, wenn rechte Schienenspannung höher</choice>
+                        <choice xml:lang="de">Wenn rechte Schienenspannung höher</choice>
                     </enumChoice>
-                    <enumChoice choice="Stops when Left rail is higher voltage">
-                        <choice>Stops when Left rail is higher voltage</choice>
+                    <enumChoice choice="When Left rail is higher voltage">
+                        <choice>When Left rail is higher voltage</choice>
                         <choice xml:lang="it">Si ferma se rotaia sinistra ha tensione più alta</choice>
                         <choice xml:lang="cs">Zastaví když levá kolejnice má vyšší napětí</choice>
-                        <choice xml:lang="de">Bremsen, wenn linke Schienenspannung höher</choice>
+                        <choice xml:lang="de">Wenn linke Schienenspannung höher</choice>
                     </enumChoice>
                     <enumChoice choice="Stops in Both Directions">
-                        <choice>Stops in Both Directions</choice>
+                        <choice>In Either Direction</choice>
                         <choice xml:lang="it">Si ferma in entrambe le direzioni</choice>
                         <choice xml:lang="cs">Zastaví v obou směrech</choice>
-                        <choice xml:lang="de">Bremsen in beiden Richtungen</choice>
+                        <choice xml:lang="de">In entweder Richtung</choice>
                     </enumChoice>
                 </enumVal>
-                <label>Direction Dependent stops with asymmetrical DCC</label>
-                <label xml:lang="it">Fermata dipendente da direzione con DCC asimmetrico</label>
-                <label xml:lang="cs">Směrově závislé zastavování při nesymetrickém DCC</label>
-                <label xml:lang="de">Bremskonfiguration</label>
-                <tooltip>Brake on DC detect</tooltip>
+                <label>ABC Braking</label>
+                <label xml:lang="it">Fermata ABC</label>
+                <label xml:lang="cs">Směrově ABC</label>
+                <label xml:lang="de">ABC Bremsen</label>
+                <tooltip>Brake on asymmetrical DCC detect</tooltip>
                 <tooltip xml:lang="de">Bremskonfiguration mittels asymmetrischer DCC-Digitalspannung</tooltip>
             </variable>
-            <!-- CV 27 bit 4-5 TODO -->
+            <!-- CV 27 bit 4-5 Märklin DC Braking -->
+            <variable item="Marklin Brake Mode" CV="27" mask="XXVVXXXX">
+                <enumVal>
+                    <enumChoice choice="Does Not Stop">
+                        <choice>Inactive</choice>
+                        <choice xml:lang="it">Non si ferma</choice>
+                        <choice xml:lang="cs">Nezastavuje</choice>
+                        <choice xml:lang="de">Kein Bremsen</choice>
+                    </enumChoice>
+                    <enumChoice choice="Stops on DC">
+                        <choice>Polarity against direction</choice>
+                        <choice xml:lang="de">Wenn Polarität entgegen der Fahrtrichtung</choice>
+                    </enumChoice>
+                    <enumChoice choice="Stops on opposite DC">
+                        <choice>Polarity in same direction</choice>
+                        <choice xml:lang="de">Wenn Polarität mit der Fahrtrichtung</choice>
+                    </enumChoice>
+                    <enumChoice choice="Stops in Both Directions">
+                        <choice>In Either Direction</choice>
+                        <choice xml:lang="de">In entweder Richtung</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>Märklin Brake mode</label>
+                <label xml:lang="de">Märklin Bremsmodus</label>
+                <tooltip>Brake on analog DC detect</tooltip>
+                <tooltip xml:lang="de">Bremsen mit analoge DC Gleichspannung</tooltip>
+            </variable>
             <variable item="RailCom channel 1 (Broadcast)" CV="28" mask="XXXXXXXV">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label>RailCom channel 1 (Broadcast)</label>
@@ -171,7 +199,7 @@
             <xi:include href="http://jmri.org/xml/decoders/nmra/cv29RailCom.xml"/>
             <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>
             <xi:include href="http://jmri.org/xml/decoders/nmra/cv29address.xml"/>
-            <!-- CV 30 TODO -->
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv30error.xml"/>
             <!-- CVs 31-32 Banks -->
             <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv31.32CvBanks.xml"/>
             <!-- CVs 33-46 function mapping -->

@@ -35,7 +35,7 @@
   <!-- 	valid for certain decoder types only  :              		-->
   <!-- 				73xx5, PIKO 4.1 RH2400  (not exhaustive)   		-->
   </revhistory>
-  <variable item="Digital format" CV="12" comment="DC, DCC, Motorola or Selectrix" default="255" mask="XXXXXXVV">
+  <variable item="Digital format" CV="12" comment="DC, AC, DCC, Motorola" default="15" mask="XXXXVVVV">
 	<enumVal>
         <enumChoice choice="Disabled">
             <choice>Disabled</choice>

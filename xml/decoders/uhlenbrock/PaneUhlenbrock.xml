@@ -63,8 +63,10 @@
     <display item="Braking condition"/>
     <display item="Braking End"/>
     <display item="End braking speed"/>
-    </column>
-    <column>
+    <display item="ABC stop with asymmetrical DCC"/>
+    <display item="Marklin Brake Mode"/>
+  </column>
+  <column>
       <label>
         <text>Coupling</text>
         <text xml:lang="de">Kupplungen</text>
@@ -105,8 +107,8 @@
       <display item="Smoke generator option 5"/>
       <display item="Smoke generator option 6"/>
       <display item="Smoke generator option 7"/>
-    </column>
-    <column>
+  </column>
+  <column>
       <separator/>
       <label>
         <text> </text>
