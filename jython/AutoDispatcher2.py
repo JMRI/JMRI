@@ -584,15 +584,13 @@ class AutoDispatcher(jmri.jmrit.automat.AbstractAutomaton) :
             return
             
         # Retrieve SignalHead names from JMRI (will be used to populate menus)
-        signalHeads = InstanceManager.signalHeadManagerInstance(
-          ).getSystemNameList()
+        signalHeads = InstanceManager.getDefault(SignalHeadManager).getNamedBeanSet()
         AutoDispatcher.signalHeadNames = [""]
         for s in signalHeads :
             # Use UserName (if available), otherwise SystemName
-            signalName = InstanceManager.signalHeadManagerInstance(
-              ).getSignalHead(s).getUserName()
+            signalName = s.getUserName()
             if signalName == None or signalName.strip() == "" :
-                signalName = s
+                signalName = s.getSystemName()
             AutoDispatcher.signalHeadNames.append(signalName)
         AutoDispatcher.signalHeadNames.sort()
 
@@ -611,7 +609,8 @@ class AutoDispatcher(jmri.jmrit.automat.AbstractAutomaton) :
               [signalIcon, signalIcon.getClickMode()])
 
         # Retrieve sections from JMRI
-        sections = InstanceManager.sectionManagerInstance().getSystemNameList()
+        # (it's unfortunate that this uses "sections" differently than the jmri_defaults style)
+        sections = InstanceManager.getDefault(jmri.SectionManager).getNamedBeanSet()
         if sections.size() < 1 :
             AutoDispatcher.chimeLog(ADsettings.ATTENTION_SOUND, 
               "Layout contains no sections, script" +
@@ -619,12 +618,11 @@ class AutoDispatcher(jmri.jmrit.automat.AbstractAutomaton) :
             
         # Create section and block instances
         for section in sections :
-            ADsection(section)
+            ADsection(section.getSystemName())
             
         if len(ADsection.getList()) == 0 :
             AutoDispatcher.chimeLog(ADsettings.ATTENTION_SOUND, 
-              "No valid section found, script" +
-              " cannot continue!")
+              "No valid section found, script cannot continue!")
             AutoDispatcher.error = True
             return
             
@@ -892,8 +890,7 @@ class AutoDispatcher(jmri.jmrit.automat.AbstractAutomaton) :
                 newName = "H" + s.getName() + extension[i]
                 # Check if a SignalMast or a SignalHead with such a name exists
                 newSignal = ADsignalMast.getByName(newName)
-                newHead = InstanceManager.signalHeadManagerInstance(
-                  ).getSignalHead(newName)
+                newHead = InstanceManager.getDefault(jmrix.SignalHeadManager).getSignalHead(newName)
                 # Assign a new SignalMast only if it was not yet assigned
                 # or it was automatically created in a previous call
                 # (provided we found a replacement!) Replacing signals
@@ -918,8 +915,7 @@ class AutoDispatcher(jmri.jmrit.automat.AbstractAutomaton) :
             if s.manualSensor == None :
                 sensorName = s.getName() + "man"
                 if sensorName in ADsection.sensorNames :
-                    s.manualSensor = InstanceManager.sensorManagerInstance(
-                      ).getSensor(sensorName)
+                    s.manualSensor = InstanceManager.sensorManagerInstance().getSensor(sensorName)
 
 # OPERATIONS ==============
 
@@ -1834,8 +1830,7 @@ class ADsection (PropertyChangeListener) :
                     section.manualSensor = None
                 elif sensorName.strip() != "" :
                     section.manualSensor = (
-                    InstanceManager.sensorManagerInstance(
-                    ).getSensor(sensorName))
+                    InstanceManager.sensorManagerInstance().getSensor(sensorName))
                 if len(i) > 7 :
                     section.stopAtBeginning = i[7]
                     if len(i) > 9 and ADsettings.autoRestart :
@@ -1952,7 +1947,7 @@ class ADsection (PropertyChangeListener) :
     def __init__(self, systemName):
         # Retrieve Section.java instance from JMRI
         self.jmriSection = (
-          InstanceManager.sectionManagerInstance().getBySystemName(systemName))
+          InstanceManager.getDefault(jmri.SectionManager).getBySystemName(systemName))
         # Get section name
         self.name = self.jmriSection.getUserName()
         if self.name == None or self.name.strip() == "" :
@@ -2063,19 +2058,16 @@ class ADsection (PropertyChangeListener) :
             # Remove from the list sensors associated with blocks
             # (this makes user selection easier and faster)
             # Get all blocks
-            blocks = InstanceManager.blockManagerInstance().getSystemNameList()
+            blocks = InstanceManager.getDefault(jmri.BlockManager).getNamedBeanSet()
             blockSensors = []
             for b in blocks :
-                sensor = InstanceManager.blockManagerInstance(
-                  ).getBlock(b).getSensor()
+                sensor = b.getSensor()
                 if sensor != None :
-                    blockSensors.append(sensor.getSystemName())
-            sensors = InstanceManager.sensorManagerInstance(
-              ).getSystemNameList()
+                    blockSensors.append(sensor)
+            sensors = InstanceManager.sensorManagerInstance().getNamedBeanSet()
             for s in sensors:
                 if not s in blockSensors :
-                    sensorName = InstanceManager.sensorManagerInstance(
-                      ).getSensor(s).getUserName()
+                    sensorName = s.getUserName()
                     if sensorName == None or sensorName.strip() == "" :
                         sensorName = s
                     if sensorName != "ISCLOCKRUNNING" :
@@ -5657,8 +5649,7 @@ class ADsignalHead :
         self.signalHead = None
         self.iconOnLayout = False
         if signalName.strip() != "" :
-            self.signalHead = InstanceManager.signalHeadManagerInstance(
-              ).getSignalHead(signalName)
+            self.signalHead = InstanceManager.signalHeadManagerInstance().getSignalHead(signalName)
             if self.signalHead != None :
                 self.setHeld(False)
                 self.iconOnLayout = signalName in AutoDispatcher.signalIcons
