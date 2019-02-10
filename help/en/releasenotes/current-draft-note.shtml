@@ -468,7 +468,9 @@
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"/>
         <ul>
-            <li></li>
+            <li>Klaus Killinger added functionality to handle a throttle direction change at speed &gt; 0:
+                slow down to 0, change the direction, ramp-up to the old speed.</li>
+            <li>The engine sound will continue after an Emergency Stop.</li>
         </ul>
 
     <h3>Miscellaneous</h3>
