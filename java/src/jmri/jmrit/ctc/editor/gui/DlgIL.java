@@ -112,14 +112,14 @@ public class DlgIL extends javax.swing.JDialog {
         _mTableOfSignalNamesPrompt = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-        setTitle("Edit indication locking");
+        setTitle(Bundle.getMessage("TitleDlgIL"));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
             }
         });
 
-        _mSaveAndClose.setText("Save and close");
+        _mSaveAndClose.setText(Bundle.getMessage("ButtonSaveClose"));
         _mSaveAndClose.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mSaveAndCloseActionPerformed(evt);
@@ -243,22 +243,22 @@ public class DlgIL extends javax.swing.JDialog {
         });
         jScrollPane1.setViewportView(_mIL_TableOfExternalSignalNames);
 
-        jButton1.setText("Compact");
+        jButton1.setText(Bundle.getMessage("ButtonDlgILCompact"));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
-        jLabel4.setText("To remove signal(s), just blank out the line(s), then press:");
+        jLabel4.setText(Bundle.getMessage("InfoDlgILRemove"));
 
-        jLabel1.setText("If ANY of these signals are NON RED,");
+        jLabel1.setText(Bundle.getMessage("InfoDlgILNonRed"));
 
-        jLabel5.setText("then this O.S. section is considered \"indication\" locked.");
+        jLabel5.setText(Bundle.getMessage("InfoDlgILLocked"));
 
-        jLabel6.setText("<- Compact is automatically done");
+        jLabel6.setText(Bundle.getMessage("InfoDlgILAutomatic"));
 
-        _mTableOfSignalNamesPrompt.setText("Signal names:");
+        _mTableOfSignalNamesPrompt.setText(Bundle.getMessage("LabelDlgILNames"));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -279,7 +279,7 @@ public class DlgIL extends javax.swing.JDialog {
                         .addComponent(_mSaveAndClose)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel6)))
-                .addContainerGap(40, Short.MAX_VALUE))
+                .addContainerGap(185, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

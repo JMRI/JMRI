@@ -129,7 +129,7 @@ public class DlgGUIDesign extends javax.swing.JDialog {
         _mGUIDesign_TurnoutsOnPanel = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-        setTitle("GUI Design:");
+        setTitle(Bundle.getMessage("TitleDlgGUI"));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
@@ -138,9 +138,9 @@ public class DlgGUIDesign extends javax.swing.JDialog {
 
         _mGUIDesign_NumberOfEmptyColumnsAtEnd.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
 
-        jLabel19.setText("Extra blank columns after last defined column to create:");
+        jLabel19.setText(Bundle.getMessage("LabelDlgGUIBlanks"));
 
-        _mSaveAndClose.setText("Save and close");
+        _mSaveAndClose.setText(Bundle.getMessage("ButtonSaveClose"));
         _mSaveAndClose.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mSaveAndCloseActionPerformed(evt);
@@ -148,59 +148,65 @@ public class DlgGUIDesign extends javax.swing.JDialog {
         });
 
         _mGUIDesign_SignalsOnPanel.add(_mAllSignals);
-        _mAllSignals.setText("All O.S. section signals");
+        _mAllSignals.setText(Bundle.getMessage("LableDlgGUIAllOS"));
 
         _mGUIDesign_SignalsOnPanel.add(_mGreenOffOnly);
-        _mGreenOffOnly.setText("Green/off only (Future feature)");
+        _mGreenOffOnly.setText(Bundle.getMessage("LableDlgGUIGreen"));
         _mGreenOffOnly.setEnabled(false);
 
-        jLabel1.setText("Prototype selections:");
+        jLabel1.setText(Bundle.getMessage("InfoDlgGUIPrototype"));
 
         _mGUIDesign_SignalsOnPanel.add(_mNone);
-        _mNone.setText("None");
+        _mNone.setText(Bundle.getMessage("LableDlgGUINone"));
 
         _mGUIDesign_CTCPanelType.add(jRadioButton1);
-        jRadioButton1.setText("USS");
+        jRadioButton1.setText(Bundle.getMessage("LabelDlgUSS"));
 
         _mGUIDesign_CTCPanelType.add(jRadioButton2);
-        jRadioButton2.setText("Other (Future)");
+        jRadioButton2.setText(Bundle.getMessage("LableDlgGUIOther"));
         jRadioButton2.setEnabled(false);
 
-        jLabel2.setText("Type of CTC panel:");
+        jLabel2.setText(Bundle.getMessage("InfoDlgGUITYpe"));
 
-        jLabel3.setText("Signals on panel:");
+        jLabel3.setText(Bundle.getMessage("InfoDlgGUISignals"));
 
-        _mGUIDesign_BuilderPlate.setText("Builder Plate");
+        _mGUIDesign_BuilderPlate.setText(Bundle.getMessage("LableDlgGUIBuilder"));
 
-        _mGUIDesign_ReloadCTCSystemButton.setText("Reload CTC system button");
+        _mGUIDesign_ReloadCTCSystemButton.setText(Bundle.getMessage("LableDlgGUIReload"));
 
-        _mGUIDesign_CTCDebugOnToggle.setText("CTC Debug on toggle");
+        _mGUIDesign_CTCDebugOnToggle.setText(Bundle.getMessage("LableDlgGUIDebug"));
 
-        _mGUIDesign_FleetingToggleSwitch.setText("Fleeting toggle switch (only if fleeting configured)");
+        _mGUIDesign_FleetingToggleSwitch.setText(Bundle.getMessage("LableDlgGUIFleeting"));
 
-        _mGUIDesign_AnalogClockEtc.setText("Analog clock and clock on toggle");
+        _mGUIDesign_AnalogClockEtc.setText(Bundle.getMessage("LableDlgGUIClock"));
+        _mGUIDesign_AnalogClockEtc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                _mGUIDesign_AnalogClockEtcActionPerformed(evt);
+            }
+        });
 
-        _mGUIDesign_CreateTrackPieces.setText("Create variety of track pieces");
+        _mGUIDesign_CreateTrackPieces.setText(Bundle.getMessage("LableDlgGUITrack")
+        );
         _mGUIDesign_CreateTrackPieces.setEnabled(false);
 
         _mGUIDesign_VerticalSize.add(jRadioButton3);
-        jRadioButton3.setText("718 pixels");
+        jRadioButton3.setText(Bundle.getMessage("LableDlgGUI718"));
 
         _mGUIDesign_VerticalSize.add(jRadioButton4);
-        jRadioButton4.setText("850 pixels");
+        jRadioButton4.setText(Bundle.getMessage("LableDlgGUI850"));
 
         _mGUIDesign_VerticalSize.add(jRadioButton5);
-        jRadioButton5.setText("900 pixels");
+        jRadioButton5.setText(Bundle.getMessage("LableDlgGUI900"));
 
-        jLabel4.setText("Vertical size:");
+        jLabel4.setText(Bundle.getMessage("InfoDlgGUISize"));
 
-        _mGUIDesign_OSSectionUnknownInconsistentRedBlink.setText("O.S. Occupancy sensor blinks red");
+        _mGUIDesign_OSSectionUnknownInconsistentRedBlink.setText(Bundle.getMessage("LableDlgGUIBlinkRed"));
 
-        jLabel5.setText("when unknow or inconsistent");
+        jLabel5.setText(Bundle.getMessage("InfoDlgGUIWhen"));
 
-        jLabel6.setText("Turnouts on panel:");
+        jLabel6.setText(Bundle.getMessage("InfoDlgGUITurnouts"));
 
-        _mGUIDesign_TurnoutsOnPanel.setText("Generate");
+        _mGUIDesign_TurnoutsOnPanel.setText(Bundle.getMessage("LableDlgGUIGenerate"));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -247,7 +253,7 @@ public class DlgGUIDesign extends javax.swing.JDialog {
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(21, 21, 21)
                                         .addComponent(jLabel5)))))
-                        .addGap(0, 41, Short.MAX_VALUE))
+                        .addGap(0, 99, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -341,6 +347,10 @@ public class DlgGUIDesign extends javax.swing.JDialog {
         _mAwtWindowProperties.saveWindowState(this, FORM_PROPERTIES);
         dispose();
     }//GEN-LAST:event__mSaveAndCloseActionPerformed
+
+    private void _mGUIDesign_AnalogClockEtcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mGUIDesign_AnalogClockEtcActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event__mGUIDesign_AnalogClockEtcActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JRadioButton _mAllSignals;
