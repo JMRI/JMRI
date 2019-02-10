@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.util.ArrayList;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -34,9 +35,7 @@ import org.slf4j.LoggerFactory;
 public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChangeListener {
 
     // GUI member declarations
-    JLabel d1;  // Decimal 1 (msb)
-    JLabel d2;  // Decimal 2
-    JLabel d3;  // Decimal 3 (lsb)
+    ArrayList<JLabel> digitIcons;
     JLabel percent;
     JLabel decimal;
 
@@ -79,28 +78,18 @@ public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChan
         meter.addPropertyChangeListener(this);
 
         // init GUI
-        d1 = new JLabel(digits[0]);
-        d2 = new JLabel(digits[0]);
-        d3 = new JLabel(digits[0]);
+        digitIcons = new ArrayList<JLabel>(3); // 1 decimal place precision.
+        for(int i = 0;i<3;i++) {
+           digitIcons.add(i,new JLabel(digits[0]));
+        }
         percent = new JLabel(percentIcon);
         decimal = new JLabel(decimalIcon);
 
-        getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.X_AXIS));
-        getContentPane().add(d1);
-        getContentPane().add(d2);
-        getContentPane().add(decimal);
-        getContentPane().add(d3);
-        getContentPane().add(percent);
-
-        getContentPane().add(b = new JButton(Bundle.getMessage("ButtonStop")));
-        b.addActionListener(new ButtonListener());
-        // since Run/Stop button looks crummy, don't display for now
-        b.setVisible(false);
+        buildContents();
 
         meter.enable();
 
         update();
-        pack();
 
         // request callback to update time
         // Again, adding updates.
@@ -143,18 +132,51 @@ public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChan
         decimalIcon.scale(scale,this);
     }
 
+    private void buildContents(){
+        // clear the contents
+        getContentPane().removeAll();
+
+        // build the actual multimeter display.
+        getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.X_AXIS));
+
+        for(int i=0;i<digitIcons.size()-1;i++){
+            getContentPane().add(digitIcons.get(i));
+        }
+        getContentPane().add(decimal);
+        getContentPane().add(digitIcons.get(digitIcons.size()-1));
+        getContentPane().add(percent);
+
+        getContentPane().add(b = new JButton(Bundle.getMessage("ButtonStop")));
+        b.addActionListener(new ButtonListener());
+        // since Run/Stop button looks crummy, don't display for now
+        b.setVisible(false);
+
+        pack();
+    }
+
     synchronized void update() {
-        float val = meter.getCurrent(); // should be a value between 0-99%
+        float val = meter.getCurrent();
 
-        int v1 = (int) (val * 10); // first decimal digit
-        int v2 = ((int) (val * 100)) % 10; // second decimal digit.
-        int v3 = ((int) (val * 1000)) % 10; // third decimal digit.
 
-        log.debug("Current update: val {} v1 {} v2 {} v3 {}", val, v1, v2, v3);
+        int value = (int)Math.floor(val *10); // keep one decimal place.
 
-        d1.setIcon(digits[v1]);
-        d2.setIcon(digits[v2]);
-        d3.setIcon(digits[v3]);
+        boolean scaleChanged = false;
+        // autoscale the array of labels.
+        while( (value) > (Math.pow(10,digitIcons.size()-1))) {
+           digitIcons.add(0,new JLabel(digits[0]));
+           scaleChanged = true;
+        }
+
+        if (scaleChanged){
+            // clear the content pane and rebuild it.
+            buildContents();
+        }
+
+        value = (int)Math.floor(val *10); // keep one decimal place.
+        for(int i = digitIcons.size()-1; i>=0; i--){
+            digitIcons.get(i).setIcon(digits[value%10]);
+            value = value / 10;
+        }
     }
 
     @Override
