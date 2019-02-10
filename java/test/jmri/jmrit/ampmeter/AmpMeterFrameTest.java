@@ -27,6 +27,7 @@ public class AmpMeterFrameTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         AmpMeterFrame t = new AmpMeterFrame();
         ThreadingUtil.runOnLayout(() -> {
+             t.initComponents();
              jmri.InstanceManager.getDefault(jmri.MultiMeter.class).setCurrent(2.1f);
     	});
         t.dispose();
@@ -37,6 +38,7 @@ public class AmpMeterFrameTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         AmpMeterFrame t = new AmpMeterFrame();
         ThreadingUtil.runOnLayout(() -> {
+             t.initComponents();
              jmri.InstanceManager.getDefault(jmri.MultiMeter.class).setCurrent(32.1f);
     	});
         t.dispose();
@@ -47,6 +49,7 @@ public class AmpMeterFrameTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         AmpMeterFrame t = new AmpMeterFrame();
         ThreadingUtil.runOnLayout(() -> {
+             t.initComponents();
              jmri.InstanceManager.getDefault(jmri.MultiMeter.class).setCurrent(432.1f);
     	});
         t.dispose();
@@ -57,6 +60,7 @@ public class AmpMeterFrameTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         AmpMeterFrame t = new AmpMeterFrame();
         ThreadingUtil.runOnLayout(() -> {
+             t.initComponents();
              jmri.InstanceManager.getDefault(jmri.MultiMeter.class).setCurrent(5432.1f);
     	});
         t.dispose();
