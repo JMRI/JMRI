@@ -12,15 +12,8 @@
             "type": "array",
             "description": "Prior node identities this node had",
             "items": {
-                "type": "object",
-                "properties": {
-                    "node": {
-                        "type": "string",
-                        "description": "The former node identity"
-                    }
-                },
-                "additionalProperties": false,
-                "required": ["node"]
+                "type": "string",
+                "uniqueItems": true
             }
         }
     },
