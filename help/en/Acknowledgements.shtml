@@ -382,7 +382,8 @@
         <li>Michael Dunn, who provided a decoder definition for the
         MRC 1645 decoder <a name="E" id="E"></a></li>
 
-        <li>Mike Dunston, who provided 
+        <li>Mike Dunston, <!-- atanisoft -->
+            who provided 
             <a href="https://github.com/JMRI/JMRI/pull/4533">several updates</a> 
             for the DCC++ code</li>
 
@@ -805,7 +806,8 @@
         <li>Mark Noble, who found some broken links 
 
         <a name="O" id="O"></a></li>
-        <li>John O'Duffy, who improved low-speed profiling</li>
+        <li>John O'Duffy, <!-- splitpin258 -->
+            who improved low-speed profiling</li>
         
         <li>Glen Oberhauser, who added LocoNet throttles</li>
 
