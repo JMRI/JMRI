@@ -9,13 +9,10 @@ import java.util.ArrayList;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import jmri.InstanceManager;
 import jmri.MultiMeter;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.util.JmriJFrame;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame providing a simple lcd-based display of track current.
@@ -219,5 +216,4 @@ public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChan
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AmpMeterFrame.class);
 }
