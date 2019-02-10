@@ -8,6 +8,7 @@ import java.awt.event.ComponentEvent;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import jmri.InstanceManager;
 import jmri.MultiMeter;
 import jmri.jmrit.catalog.NamedIcon;
@@ -42,39 +43,29 @@ public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChan
     double aspect;
     double iconAspect;
 
+    private int startWidth;
+    private int startHeight;
+
     MultiMeter meter;
 
     NamedIcon digits[] = new NamedIcon[10];
-    NamedIcon baseDigits[] = new NamedIcon[10];
     NamedIcon percentIcon;
-    NamedIcon basePercent;
     NamedIcon decimalIcon;
-    NamedIcon baseDecimal;
-    //"base" variables used to hold original gifs, other variables used with scaled images
 
     public AmpMeterFrame() {
         super(Bundle.getMessage("MenuItemAmpMeter"));
 
         meter = InstanceManager.getDefault(MultiMeter.class);
+    }
 
+    @Override
+    public void initComponents() {
         //Load the images (these are now the larger version of the original gifs
         for (int i = 0; i < 10; i++) {
-            baseDigits[i] = new NamedIcon("resources/icons/misc/LCD/Lcd_" + i + "b.GIF", "resources/icons/misc/LCD/Lcd_" + i + "b.GIF");
             digits[i] = new NamedIcon("resources/icons/misc/LCD/Lcd_" + i + "b.GIF", "resources/icons/misc/LCD/Lcd_" + i + "b.GIF");
         }
         percentIcon = new NamedIcon("resources/icons/misc/LCD/percentb.gif", "resources/icons/misc/LCD/percentb.gif");
-        basePercent = new NamedIcon("resources/icons/misc/LCD/percentb.gif", "resources/icons/misc/LCD/percentb.gif");
         decimalIcon = new NamedIcon("resources/icons/misc/LCD/decimalb.gif", "resources/icons/misc/LCD/decimalb.gif");
-        baseDecimal = new NamedIcon("resources/icons/misc/LCD/decimalb.gif", "resources/icons/misc/LCD/decimalb.gif");
-        // set initial size the same as the original gifs
-        for (int i = 0; i < 10; i++) {
-            Image scaledImage = baseDigits[i].getImage().getScaledInstance(23, 32, Image.SCALE_SMOOTH);
-            digits[i].setImage(scaledImage);
-        }
-        Image scaledImage = basePercent.getImage().getScaledInstance(23, 32, Image.SCALE_SMOOTH);
-        percentIcon.setImage(scaledImage);
-        scaledImage = baseDecimal.getImage().getScaledInstance(12, 32, Image.SCALE_SMOOTH);
-        decimalIcon.setImage(scaledImage);
 
         // determine aspect ratio of a single digit graphic
         iconAspect = 24. / 32.;
@@ -84,9 +75,8 @@ public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChan
         // enabled.  When the Run/Stop button is enabled, the layout will have to be changed
         aspect = (4.5 * 24.) / 32.; // used to be 4.5??
 
-        // listen for changes to the Timebase parameters
+        // listen for changes to the meter parameters
         meter.addPropertyChangeListener(this);
-        //clock.addPropertyChangeListener(this);
 
         // init GUI
         d1 = new JLabel(digits[0]);
@@ -131,44 +121,29 @@ public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChan
             }
         });
 
+        startHeight = this.getContentPane().getSize().height;
+        startWidth = this.getContentPane().getSize().width;
+
     }
 
     // Added method to scale the clock digit images to fit the
     // size of the display window
-    public void scaleImage() {
-        int iconHeight;
-        int iconWidth;
+    synchronized public void scaleImage() {
         int frameHeight = this.getContentPane().getSize().height;
         int frameWidth = this.getContentPane().getSize().width;
-        if ((double) frameWidth / (double) frameHeight > aspect) {
-            iconHeight = frameHeight;
-            iconWidth = (int) (iconAspect * iconHeight);
-        } else {
-            //this DOES NOT allow space for the Run/Stop button, if it is
-            //enabled.  When the Run/Stop button is enabled, the layout will have to be changed
-            iconWidth = (int) (frameWidth / 4.5);
-            iconHeight = (int) (iconWidth / iconAspect);
-        }
-        for (int i = 0; i < 10; i++) {
-            Image scaledImage = baseDigits[i].getImage().getScaledInstance(iconWidth, iconHeight, Image.SCALE_SMOOTH);
-            digits[i].setImage(scaledImage);
-        }
-        Image scaledImage = basePercent.getImage().getScaledInstance(iconWidth, iconHeight, Image.SCALE_SMOOTH);
-        percentIcon.setImage(scaledImage);
-        scaledImage = baseDecimal.getImage().getScaledInstance(iconWidth / 2, iconHeight, Image.SCALE_SMOOTH);
-        decimalIcon.setImage(scaledImage);
 
-//      Ugly hack to force frame to redo the layout.
-//      Without this the image is scaled but the label size and position doesn't change.
-//      doLayout() doesn't work either
-        this.setVisible(false);
-        this.remove(b);
-        this.getContentPane().add(b);
-        this.setVisible(true);
-        return;
+        double hscale = ((double)frameHeight)/((double)startHeight);
+        double wscale = ((double)frameWidth)/((double)startWidth);
+        double scale = hscale < wscale? hscale:wscale;
+
+        for (int i = 0; i < 10; i++) {
+            digits[i].scale(scale,this);
+        }
+        percentIcon.scale(scale,this);
+        decimalIcon.scale(scale,this);
     }
 
-    void update() {
+    synchronized void update() {
         float val = meter.getCurrent(); // should be a value between 0-99%
 
         int v1 = (int) (val * 10); // first decimal digit
