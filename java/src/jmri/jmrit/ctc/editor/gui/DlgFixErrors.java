@@ -41,7 +41,7 @@ public class DlgFixErrors extends javax.swing.JDialog {
         _mCancel = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-        setTitle("Fix errors:");
+        setTitle(Bundle.getMessage("TitleDlgFix"));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
@@ -54,14 +54,14 @@ public class DlgFixErrors extends javax.swing.JDialog {
         _mInfo.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         _mInfo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
-        jButton1.setText("Proceed");
+        jButton1.setText(Bundle.getMessage("ButtonProceed"));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
-        _mCancel.setText("Cancel");
+        _mCancel.setText(Bundle.getMessage("ButtonCancel"));
         _mCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mCancelActionPerformed(evt);
@@ -81,7 +81,7 @@ public class DlgFixErrors extends javax.swing.JDialog {
                 .addComponent(jButton1)
                 .addGap(54, 54, 54)
                 .addComponent(_mCancel)
-                .addContainerGap(112, Short.MAX_VALUE))
+                .addContainerGap(48, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -92,7 +92,7 @@ public class DlgFixErrors extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(_mCancel))
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         pack();

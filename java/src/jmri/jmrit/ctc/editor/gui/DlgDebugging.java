@@ -64,29 +64,29 @@ public class DlgDebugging extends javax.swing.JDialog {
         jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-        setTitle("Debugging:");
+        setTitle(Bundle.getMessage("TitleDlgDeb"));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
             }
         });
 
-        _mSaveAndClose.setText("Save and close");
+        _mSaveAndClose.setText(Bundle.getMessage("ButtonSaveClose"));
         _mSaveAndClose.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mSaveAndCloseActionPerformed(evt);
             }
         });
 
-        jLabel3.setText("CTC system reload sensor:");
+        jLabel3.setText(Bundle.getMessage("LabelDlgDebReload"));
 
-        jLabel4.setText("When the above sensor goes active, it triggers the CTC system to reload.  Leave blank for none.");
+        jLabel4.setText(Bundle.getMessage("InfoDlgDebReload"));
 
-        jLabel1.setText("CTC debug traffic locking rule triggered display sensor:");
+        jLabel1.setText(Bundle.getMessage("LabelDlgDebRules"));
 
-        jLabel2.setText("When this sensor is active: each time a traffic locking rule is valid, it logs to the JMRI System console which one was triggered");
+        jLabel2.setText(Bundle.getMessage("InfoDlgDebRules1"));
 
-        jLabel5.setText("Leave blank for none.");
+        jLabel5.setText(Bundle.getMessage("InfoDlgDebRules2"));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

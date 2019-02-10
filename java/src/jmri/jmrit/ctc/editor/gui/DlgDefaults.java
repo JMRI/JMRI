@@ -89,7 +89,7 @@ public class DlgDefaults extends javax.swing.JDialog {
         _mCodeButtonDelayTime = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-        setTitle("Defaults:");
+        setTitle(Bundle.getMessage("TitleDlgDef"));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
@@ -100,34 +100,34 @@ public class DlgDefaults extends javax.swing.JDialog {
 
         _mSIDI_CodingTimeInMilliseconds.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
 
-        jLabel19.setText("Coding and response time milliseconds:");
+        jLabel19.setText(Bundle.getMessage("LabelDlgDefSignalTime"));
 
         _mSIDI_TimeLockingTimeInMilliseconds.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
 
-        jLabel22.setText("Time locking interval milliseconds:");
+        jLabel22.setText(Bundle.getMessage("LabelDlgDefLockTime"));
 
-        jLabel27.setText("Coding and response time milliseconds:");
+        jLabel27.setText(Bundle.getMessage("LabelDlgDefSwitchTime"));
 
-        _mSaveAndClose.setText("Save and close");
+        _mSaveAndClose.setText(Bundle.getMessage("ButtonSaveClose"));
         _mSaveAndClose.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mSaveAndCloseActionPerformed(evt);
             }
         });
 
-        jLabel18.setText("----------------- Signal direction indicators ----------------");
+        jLabel18.setText(Bundle.getMessage("InfoDlgDefSignalSep"));
 
-        jLabel17.setText("All millisecond values are between 0 and 60000 inclusive");
+        jLabel17.setText(Bundle.getMessage("InfoDlgDefTimeRange"));
 
-        jLabel23.setText("--------------- Switch direction indicators ---------------");
+        jLabel23.setText(Bundle.getMessage("InfoDlgDefSwitchSep"));
 
-        jLabel1.setText("Turnout locks enabled at startup:");
+        jLabel1.setText(Bundle.getMessage("LabelDlgDefLockEnabled"));
 
-        jLabel2.setText("No code button delay in milliseconds:");
+        jLabel2.setText(Bundle.getMessage("LabelDlgDefCodeDelay"));
 
-        jLabel3.setText("Enter 0 for normal code button default for each O.S. section");
+        jLabel3.setText(Bundle.getMessage("InfoDlgDefCodeDelayZero"));
 
-        jLabel4.setText("Enter >0 for tower O.S. section delay (no code button)");
+        jLabel4.setText(Bundle.getMessage("InfoDlgDefCodeDelayMore"));
 
         _mCodeButtonDelayTime.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
 

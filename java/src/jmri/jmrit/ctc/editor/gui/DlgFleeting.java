@@ -66,27 +66,27 @@ public class DlgFleeting extends javax.swing.JDialog {
         jLabel29 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-        setTitle("Fleeting:");
+        setTitle(Bundle.getMessage("TitleDlgFleet"));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
             }
         });
 
-        _mSaveAndClose.setText("Save and close");
+        _mSaveAndClose.setText(Bundle.getMessage("ButtonSaveClose"));
         _mSaveAndClose.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mSaveAndCloseActionPerformed(evt);
             }
         });
 
-        jLabel21.setText("(Actual) Fleeting toggle sensor:");
+        jLabel21.setText(Bundle.getMessage("LabelDlgFleetSensor"));
 
-        jLabel26.setText("Fleeting information:");
+        jLabel26.setText(Bundle.getMessage("InfoDlgFleet"));
 
         _mDefaultFleetingEnabled.setText(" ");
 
-        jLabel29.setText("Fleeting enabled at start:");
+        jLabel29.setText(Bundle.getMessage("LabelDlgFleetEnabled"));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -107,7 +107,7 @@ public class DlgFleeting extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(_mDefaultFleetingEnabled)
                     .addComponent(_mFleetingToggleInternalSensor, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 67, Short.MAX_VALUE))
+                .addGap(0, 179, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(_mSaveAndClose)

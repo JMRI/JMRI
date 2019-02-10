@@ -102,51 +102,51 @@ public class DlgFindAndReplace extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-        setTitle("Search and Replace");
+        setTitle(Bundle.getMessage("TitleDlgFind"));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
             }
         });
 
-        jLabel1.setText("NOTE: This works ONLY on the data used by the JMRI program.  It does NOT search  or replace in the Patterns area for instance.");
+        jLabel1.setText(Bundle.getMessage("InfoDlgFindNote"));
 
-        jLabel3.setText("Search for:");
+        jLabel3.setText(Bundle.getMessage("LabelDlgFindSearch"));
 
-        _mCaseSensitive.setText("Case sensitive");
+        _mCaseSensitive.setText(Bundle.getMessage("LabelDlgFindCase"));
 
-        _mSearch.setText("Search");
+        _mSearch.setText(Bundle.getMessage("ButtonDlgFindSearch"));
         _mSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mSearchActionPerformed(evt);
             }
         });
 
-        jLabel4.setText("Results --- you may multi-select any entries, or press --->");
+        jLabel4.setText(Bundle.getMessage("InfoDlgFindResults"));
 
         _mHowSearch.add(_mExactWholeMatch);
-        _mExactWholeMatch.setText("Exact (whole) match");
+        _mExactWholeMatch.setText(Bundle.getMessage("LabelDlgFindExact"));
 
         _mHowSearch.add(_mContains);
-        _mContains.setText("Contains");
+        _mContains.setText(Bundle.getMessage("LabelDlgFindContains"));
 
         _mHowReplace.add(_mReplaceCompletely);
-        _mReplaceCompletely.setText("Replace completely");
+        _mReplaceCompletely.setText(Bundle.getMessage("LabelDlgFindComplete"));
 
         _mHowReplace.add(_mReplaceSearched);
-        _mReplaceSearched.setText("Replace searched for value only");
+        _mReplaceSearched.setText(Bundle.getMessage("LabelDlgFindSearched"));
 
         _mHowReplace.add(_mRescanAndReplaceWith);
-        _mRescanAndReplaceWith.setText("Rescan with below and substitute with above");
+        _mRescanAndReplaceWith.setText(Bundle.getMessage("LabelDlgFindRescan"));
 
-        _mReplace.setText("Replace");
+        _mReplace.setText(Bundle.getMessage("ButtonDlgFindReplace"));
         _mReplace.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mReplaceActionPerformed(evt);
             }
         });
 
-        jLabel8.setText("Replace with:");
+        jLabel8.setText(Bundle.getMessage("LabelDlgFindReplace"));
 
         _mResults.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -181,13 +181,13 @@ public class DlgFindAndReplace extends javax.swing.JDialog {
             }
         });
 
-        _mCountSelected.setText("Count selected: ?");
+        _mCountSelected.setText(Bundle.getMessage("LabelDlgFindCount"));
 
-        jLabel6.setText("This ONLY replaces the FIRST occurance in line:");
+        jLabel6.setText(Bundle.getMessage("InfoDlgFindOnly"));
 
-        jLabel7.setText("There is NO UNDO!  Don't press unless you are sure");
+        jLabel7.setText(Bundle.getMessage("InfoDlgFindUndo"));
 
-        jLabel2.setText("Changes each push between select and deselect.");
+        jLabel2.setText(Bundle.getMessage("InfoDlgFindChange"));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -237,7 +237,7 @@ public class DlgFindAndReplace extends javax.swing.JDialog {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel2)
                                 .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1015, Short.MAX_VALUE)))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1097, Short.MAX_VALUE)))
                     .addComponent(jLabel1))
                 .addContainerGap())
         );
