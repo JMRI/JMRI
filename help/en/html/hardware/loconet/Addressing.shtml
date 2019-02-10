@@ -154,7 +154,7 @@
 
       <h3>Adding an item to the table</h3>
       <p>From the Tables window, with the "object type" selected in the list at
-          the left ("Turnouts", for example), select the "Add" button which is
+          the left ("Turnouts", for example), select the "Add..." button which is
           found near the bottom of the window.  This opens a new window where you
           may enter the information for the new object.  If you are asked for a
           "Hardware Address", you should not specify a "System Name"; instead
@@ -165,7 +165,7 @@
       <p>As an example of manually adding a LocoNet turnout, consider adding
           turnout number 34, and assigning the object the "User Name" "Yard
           throat 3/4 track switch".  This may be done via the "Turnout Table" by
-          pressing the "Add" button at the bottom of the table, then entering the
+          pressing the "Add..." button at the bottom of the table, then entering the
           information shown here.</p>
       <p><img src="images/AddNewTurnout.png" alt="Adding a LocoNet Turnout" width="550"/></p>
       <p>Activate the "Create" button to add the new entry into the "Turnout Table".</p>
@@ -234,7 +234,6 @@
           to the JMRI turnout with System Name "LT123".</p>
 
       <a name="sensor" id="sensor"></a>
-
       <h2>Addressing LocoNet Sensors</h2>
 
       <p>Digitrax throttles and JMRI use identical numbering for LocoNet sensors.

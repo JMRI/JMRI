@@ -170,6 +170,7 @@ public class IndexedTreeSet<E> extends java.util.AbstractSet<E>
      *
      * @return an iterator over the elements in this set in ascending order
      */
+    @Override
     public Iterator<E> iterator() {
         return m.navigableKeySet().iterator();
     }
@@ -197,6 +198,7 @@ public class IndexedTreeSet<E> extends java.util.AbstractSet<E>
      *
      * @return the number of elements in this set (its cardinality)
      */
+    @Override
     public int size() {
         return m.size();
     }
@@ -206,6 +208,7 @@ public class IndexedTreeSet<E> extends java.util.AbstractSet<E>
      *
      * @return {@code true} if this set contains no elements
      */
+    @Override
     public boolean isEmpty() {
         return m.isEmpty();
     }
@@ -224,6 +227,7 @@ public class IndexedTreeSet<E> extends java.util.AbstractSet<E>
      *                              and this set uses natural ordering, or its comparator
      *                              does not permit null elements
      */
+    @Override
     public boolean contains(Object o) {
         return m.containsKey(o);
     }
@@ -245,6 +249,7 @@ public class IndexedTreeSet<E> extends java.util.AbstractSet<E>
      *                              and this set uses natural ordering, or its comparator
      *                              does not permit null elements
      */
+    @Override
     public boolean add(E e) {
         return m.put(e, PRESENT) == null;
     }
@@ -266,6 +271,7 @@ public class IndexedTreeSet<E> extends java.util.AbstractSet<E>
      *                              and this set uses natural ordering, or its comparator
      *                              does not permit null elements
      */
+    @Override
     public boolean remove(Object o) {
         return m.remove(o) == PRESENT;
     }
@@ -274,6 +280,7 @@ public class IndexedTreeSet<E> extends java.util.AbstractSet<E>
      * Removes all of the elements from this set.
      * The set will be empty after this call returns.
      */
+    @Override
     public void clear() {
         m.clear();
     }
@@ -289,6 +296,7 @@ public class IndexedTreeSet<E> extends java.util.AbstractSet<E>
      *                              if any element is null and this set uses natural ordering, or
      *                              its comparator does not permit null elements
      */
+    @Override
     @SuppressWarnings("unchecked") // package needs update to Java 1.8 generics for maps
     public boolean addAll(Collection<? extends E> c) {
         // Use linear-time version if applicable
@@ -464,6 +472,7 @@ public class IndexedTreeSet<E> extends java.util.AbstractSet<E>
      *
      * @return a shallow copy of this set
      */
+    @Override
     @SuppressWarnings("unchecked") // package needs update to Java 1.8 generics for maps
     public Object clone() {
         IndexedTreeSet<E> clone = null;

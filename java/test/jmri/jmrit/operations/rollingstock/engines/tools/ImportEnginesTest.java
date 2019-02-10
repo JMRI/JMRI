@@ -15,7 +15,6 @@ import jmri.util.swing.JemmyUtil;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Test;
-import org.netbeans.jemmy.operators.JFileChooserOperator;
 
 /**
  *
@@ -73,6 +72,7 @@ public class ImportEnginesTest extends OperationsTestCase {
 
         // do import      
         Thread mb = new ImportEngines(){
+            @Override
             protected File getFile() {
                 // replace JFileChooser with fixed file to avoid threading issues
                 return new File(OperationsXml.getFileLocation()+OperationsXml.getOperationsDirectoryName() + File.separator + ExportEngines.getOperationsFileName());
@@ -80,6 +80,10 @@ public class ImportEnginesTest extends OperationsTestCase {
         };
         mb.setName("Test Import Engines"); // NOI18N
         mb.start();
+        
+        jmri.util.JUnitUtil.waitFor(() -> {
+            return mb.getState().equals(Thread.State.WAITING);
+        }, "wait for dialog");
 
         // dialog windows should now open asking to add 2 models
         JemmyUtil.pressDialogButton(Bundle.getMessage("engineAddModel"), Bundle.getMessage("ButtonYes"));
@@ -160,6 +164,7 @@ public class ImportEnginesTest extends OperationsTestCase {
 
         // do import      
         Thread mb = new ImportEngines(){
+            @Override
             protected File getFile() {
                 // replace JFileChooser with fixed file to avoid threading issues
                 return new File(OperationsXml.getFileLocation()+OperationsXml.getOperationsDirectoryName() + File.separator + ExportEngines.getOperationsFileName());

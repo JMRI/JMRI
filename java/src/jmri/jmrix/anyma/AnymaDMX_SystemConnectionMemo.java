@@ -321,6 +321,7 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
     /**
      * {@inheritDoc}
      */
+    @Override
     public boolean provides(Class<?> c) {
         return (get(c) != null);
     }
