@@ -276,7 +276,7 @@ public class SRCPVisitor extends SRCPParserDefaultVisitor implements SRCPParserV
                         try {
                             String searchName = mgr.createSystemName(address,
                                     memo.getSystemPrefix());
-                            if (mgr.getSystemNameList().contains(searchName)) {
+                            if (mgr.getBySystemName(searchName) != null) {
                                 // add the initialization parameter list.
                                 // we don't expect parameters, so just return
                                 // the bus and address.
@@ -293,7 +293,7 @@ public class SRCPVisitor extends SRCPParserDefaultVisitor implements SRCPParserV
                         jmri.TurnoutManager mgr = memo.get(jmri.TurnoutManager.class);
                         try {
                             String searchName = mgr.createSystemName(address, memo.getSystemPrefix());
-                            if (mgr.getSystemNameList().contains(searchName)) {
+                            if (mgr.getBySystemName(searchName) != null) {
                                 // add the initialization parameter list.
                                 // the only other required parameter is
                                 // the protocol, and we treat all of our
