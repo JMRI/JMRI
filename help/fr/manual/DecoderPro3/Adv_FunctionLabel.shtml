@@ -1,11 +1,11 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//FR"
 "http://www.w3.org/TR/html4/strict.dtd">
 
-<html lang="en">
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+<!-- Tranlation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-02-10-->
   <title>Comprehensive Programmer - Advanced Features Pane</title>
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
@@ -27,113 +27,106 @@
     <div id="mainContent">
       <a name="Top"></a>
 
-      <h1>DecoderPro&#174; Advanced Feature</h1>
+      <h1>DecoderPro&#174; Fonctions Avanc&#233;es</h1>
 
-      <h2>Function Labels Pane</h2>
+      <h2>Volet &#201;tiquettes de fonctions</h2>
 
       <div align="right">
-        <p><a href="index.shtml">Back to Index</a></p>
+        <p><a href="index.shtml">Retour &#224; l'Index</a></p>
       </div>
       <hr>
 
-      <p>This pane is opened from the <strong>Labels &amp;
-      Media</strong> button the DecoderPro main window or from the
-      <strong>Actions</strong> menu.</p>
+      <p>Ce volet est ouvert avec le bouton <strong>M&#233;dia &amp;
+    &#201;tiquettes</strong> dans la fen&#234;tre principale DecoderPro ou 
+    depuis le menu <strong>Actions</strong>.</p>
 
       <p><img src="images/Adv_03_FunctionLabels.png" alt=
       "function labels" height="682" width="900"></p>
 
-      <p>This pane is more than a scratch pad to keep track of what
-      happens when function buttons are pushed. It also interacts
-      with the <a href="Throttle.shtml">JMRI throttle</a>.</p>
+      <p> Ce volet est plus qu'un bloc-notes pour garder une 
+      trace de ce qui se passe lorsque des boutons de fonction sont enfonc&#233;s. 
+      Il interagit aussi avec le <a href="Throttle.shtml">R&#233;gulateur JMRI</a>.</p>
 
-      <p wrap="">The <strong>Function Label</strong>s Tab makes
-      settings for the Software Throttles within JMRI. Primarily
-      the on-screen throttles, but some of the settings are
-      mirrored on smart-phones (iPhone/Android) using the
-      WiThrottle interface.</p>
+      <p wrap="">L'onglet <strong> Libell&#233; de la fonction </strong> permet 
+      de d&#233;finir les param&#232;tres des r&#233;gulateurs logiciels dans JMRI. Principalement les 
+      commandes &#224; l'&#233;cran, mais aussi certains param&#232;tres sont mis en miroir sur 
+      les smartphones (IPhone/Android) &#224; l'aide de l'interface WiThrottle. </P>
 
-      <p>When you use the roster pull-down on the JMRI throttle to
-      select a loco from your roster, the function buttons will be
-      marked with the descriptions you have entered for those
-      functions in this pane.</p>
+      <p>Lorsque vous utilisez le menu d&#233;roulant de la liste de r&#233;gulateur JMRI pour 
+      s&#233;lectionner une locomotive dans votre liste, les boutons de fonction sont 
+      marqu&#233;s avec les descriptions que vous avez saisies pour ces fonctions dans ce volet.</p>
 
-      <p>In this example, the Function keys on the Throttle will be
-      labeled for the FP-45 with Tsunami OEM Sound decoder with
-      sounds and lighting functions.</p>
+      <p>Dans cet exemple, les touches de fonction du r&#233;gulateur seront &#233;tiquet&#233;es 
+      pour le FP-45 avec d&#233;codeur de son OEM Tsunami avec fonctions de son et d'&#233;clairage..</p>
 
       <p><img src="images/Adv_03_FunctionOnThrottle.png" alt=
       "throttle functions" height="523" width="531"></p>
 
-      <p>Using the checkboxes, space holders and the radio button
-      to the right of each function may be set to:</p>
+      <p>&#201; l'aide des cases &#224; cocher, les espaces et le bouton radio &#224; droite de chaque fonction peuvent &#234;tre r&#233;gl&#233;s sur:</p>
 
       <table border="1" cellpadding="2" cellspacing="1" width=
       "80%">
         <tbody>
           <tr>
-            <td width="13%"><strong>lock</strong></td>
+            <td width="13%"><strong>verrou</strong></td>
 
             <td width="87%">
-              <p>Makes the function button "latching" or
-              "non-latching". When the box is checked the function
-              is "locked" or "latched".</p>
+              <p>Rend le bouton de fonction "verrouill&#233;" ou "non verrouill&#233;". 
+              Lorsque la case est coch&#233;e, la fonction est "verrouill&#233;e" .</p>
 
-              <p><strong>Latched Function</strong> when pressed
-              will stay on(down position) until pressed again i.e.
-              Function button labeled "Bell" would ring until
-              pressed again.</p>
+              <p><strong>La Fonction Verrouill&#233;e </strong> restera activ&#233;e 
+              (position abaiss&#233;e) jusqu'&#224; ce que vous appuyiez &#224; nouveau, 
+              c'est-&#224;-dire que le bouton de fonction &#233;tiquet&#233; «Cloche» sonnera 
+              jusqu'&#224; ce que vous appuyiez &#224; nouveau ( bouton &#224; bascule)</p>
 
-              <p><strong>Unlatched Function</strong> when pressed
-              toggles on and then off. i.e. Function Button labeled
-              "short horn", when pressed provides one blast of
-              horn.</p>
+              <p><strong>Fonction non verrouill&#233;e </strong> lorsque vous appuyez 
+              sur cette touche, vous l'activez/d&#233;sactivez. c'est &#224; dire que Le bouton 
+              de fonction &#233;tiquet&#233; "trompe courte", lorsqu'il est enfonc&#233; 
+              fournit un coup de trompe (bouton &#224; impulsion).</p>
             </td>
           </tr>
 
           <tr>
             <td><strong>off</strong></td>
 
-            <td>Place holder for icon that is displayed on Function
-            Button when it is in off state.</td>
+            <td>Caract&#232;re de remplacement pour l'ic&#244;ne qui est affich&#233;e sur 
+            le bouton de fonction lorsqu'il est &#224; l'&#233;tat d&#233;sactiv&#233;.</td>
           </tr>
 
           <tr>
             <td><strong>on</strong></td>
 
-            <td>Place holder for icon that is displayed on Function
-            Button when it is in on state.</td>
+            <td>Caract&#232;re de remplacement pour l'ic&#244;ne qui est affich&#233;e sur 
+            le bouton de fonction lorsqu'il est &#224; l'&#233;tat activ&#233;.</td>
           </tr>
 
           <tr>
-            <td><strong>shunt</strong></td>
+            <td><strong>Man&#156;uvre</strong></td>
 
-            <td>Sets "virtual" function key for software throttle.
-            The "lock" option also needs to be set simultaneously
-            with the "shunt" virtual function key activation. When
-            this Function key is pressed the throttle speed slider
-            on the software throttle changes to "center off" style
-            for shunting, rather than the "full-range with separate
-            direction key"</td>
+            <td>D&#233;finit la touche de fonction "virtuelle" pour la commande logicielle.
+			L'option "verrouiller" doit &#233;galement &#234;tre d&#233;finie simultan&#233;ment &#224; 
+			l'activation de la touche de fonction virtuelle "Man&#156;uvre". 
+			Lorsque cette touche de fonction est enfonc&#233;e, le r&#233;gulateur de la commande logicielle 
+			passe au style "z&#233;ro central d&#233;sactiv&#233;" pour la man&#156;uvre, au lieu de la position 
+			"gamme compl&#232;te avec touche de direction s&#233;par&#233;e"."</td>
           </tr>
         </tbody>
       </table>
 
-      <p>You may drag and drop icons into the off or on space
-      holder here or in the Throttle Function pane properties.</p>
-
-      <p>You may also edit the function button text in the <a href=
-      "dp3_Main_Throttle.shtml"><strong>JMRI Throttle</strong></a>
-      and save those changes to the selected Roster entry. To use
-      these changed entries in the future, make sure you click on
-      the <input name="button" id="button" value="Save to Roster"
-      type="submit"> to save these values into the Roster entry
-      that is in use.</p>
+      <p>Vous pouvez faire glisser et d&#233;poser des ic&#244;nes ici dans ou hors des espaces libres 
+      dans les propri&#233;t&#233;s de la sous-fen&#234;tre Fonction du R&#233;gulateur, 
+      . </P>
+      <p>Vous pouvez &#233;galement &#233;diter le texte du bouton de fonction dans <a href =
+       "dp3_Main_Throttle.shtml"> <strong> R&#233;gulateur JMRI </strong> </a> et 
+       enregistrez ces modifications dans l'entr&#233;e d'Inventaire s&#233;lectionn&#233;. 
+       Pour utiliser ces entr&#233;es modifi&#233;es &#224; l'avenir, assurez-vous de cliquer 
+       sur <input name = "button" id = "button" value = "Enregistrer dans la liste" type = "submit"> 
+       pour enregistrer ces valeurs dans l'entr&#233;e de l'inventaire en cours d'utilisation. </p>
       <hr>
 
       <div align="right">
         <p><a href="Comp_LightFX.shtml"></a><a href=
-        "index.shtml">Back to Index</a></p>
+        "index.shtml">Retour &#224; l'Index</a></p>
       </div><!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
