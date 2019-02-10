@@ -248,9 +248,12 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase {
         JsonNode result = instance.getNode(locale);
         this.validate(result);
         // We should have a single node with no history of nodes
+        // There are 3 "former" IDs when there is no history
         Assert.assertEquals(JSON.NODE, result.path(JSON.TYPE).asText());
         Assert.assertEquals(NodeIdentity.networkIdentity(), result.path(JSON.DATA).path(JSON.NODE).asText());
-        Assert.assertEquals(0, result.path(JSON.DATA).path(JSON.FORMER_NODES).size());
+        JsonNode nodes = result.path(JSON.DATA).path(JSON.FORMER_NODES);
+        Assert.assertTrue(nodes.isArray());
+        Assert.assertEquals(3, nodes.size());
     }
 
     /**
