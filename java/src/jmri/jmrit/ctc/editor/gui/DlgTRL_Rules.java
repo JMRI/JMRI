@@ -163,20 +163,21 @@ public class DlgTRL_Rules extends javax.swing.JDialog {
         _mOccupancyExternalSensor9 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setTitle(Bundle.getMessage("TitleDlgTRLRules"));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
             }
         });
 
-        _mSaveAndClose.setText("Save and close");
+        _mSaveAndClose.setText(Bundle.getMessage("ButtonSaveClose"));
         _mSaveAndClose.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mSaveAndCloseActionPerformed(evt);
             }
         });
 
-        jLabel2.setText("Rules:");
+        jLabel2.setText(Bundle.getMessage("LabelDlgTRLRulesRules"));
 
         _mTRL_TrafficLockingRulesSSVList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
@@ -185,28 +186,28 @@ public class DlgTRL_Rules extends javax.swing.JDialog {
         });
         jScrollPane1.setViewportView(_mTRL_TrafficLockingRulesSSVList);
 
-        _mAddNew.setText("Add new");
+        _mAddNew.setText(Bundle.getMessage("ButtonAddNew"));
         _mAddNew.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mAddNewActionPerformed(evt);
             }
         });
 
-        _mEditBelow.setText("Edit below");
+        _mEditBelow.setText(Bundle.getMessage("ButtonEditBelow"));
         _mEditBelow.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mEditBelowActionPerformed(evt);
             }
         });
 
-        _mDelete.setText("Delete");
+        _mDelete.setText(Bundle.getMessage("ButtonDelete"));
         _mDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mDeleteActionPerformed(evt);
             }
         });
 
-        _mGroupingListAddReplace.setText("      ");
+        _mGroupingListAddReplace.setText(Bundle.getMessage("ButtonDlgTRLRulesUpdate"));
         _mGroupingListAddReplace.setEnabled(false);
         _mGroupingListAddReplace.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -214,42 +215,42 @@ public class DlgTRL_Rules extends javax.swing.JDialog {
             }
         });
 
-        jLabel1.setText("-------------------------------------------------------------- ROUTE --------------------------------------------------------------");
+        jLabel1.setText(Bundle.getMessage("InfoDlgTRLRulesSep1"));
 
-        jLabel8.setText("Select up to 5 O.S.section(s) to specify the route exactly.  Below each are switch alignments (for those specified):");
+        jLabel8.setText(Bundle.getMessage("InfoDlgTRLRulesSection"));
 
-        jLabel7.setText("-------------------- Optional sensors that must be ACTIVE to be valid --------------------");
+        jLabel7.setText(Bundle.getMessage("InfoDlgTRLRulesSep2"));
 
-        _mRulesInfo.setText("If ANY of these rules are true, then the ? Traffic Direction Lever is allowed to be \\\"coded\\\".");
+        _mRulesInfo.setText(Bundle.getMessage("InfoDlgTRLRulesNote1"));
 
-        _mCancel.setText("Cancel");
+        _mCancel.setText(Bundle.getMessage("ButtonCancel"));
         _mCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mCancelActionPerformed(evt);
             }
         });
 
-        jLabel4.setText("Having NO rules (or no rules enabled) ALWAYS allows");
+        jLabel4.setText(Bundle.getMessage("InfoDlgTRLRulesNote2"));
 
-        jLabel10.setText("this direction.  For example: Where you go into staging and there is no O.S. section there controlling entry/exit from the staging area.");
+        jLabel10.setText(Bundle.getMessage("InfoDlgTRLRulesNote3"));
 
-        _mRuleEnabled.setText("This rule ENABLED");
+        _mRuleEnabled.setText(Bundle.getMessage("LabelDlgTRLRulesEnabled"));
 
-        _mEnableALLRules.setText("Enable ALL rules");
+        _mEnableALLRules.setText(Bundle.getMessage("ButtonDlgTRLRulesEnable"));
         _mEnableALLRules.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mEnableALLRulesActionPerformed(evt);
             }
         });
 
-        _mDisableALLRules.setText("Disable ALL rules");
+        _mDisableALLRules.setText(Bundle.getMessage("ButtonDlgTRLRulesDisable"));
         _mDisableALLRules.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mDisableALLRulesActionPerformed(evt);
             }
         });
 
-        jLabel5.setText("Occupancy sensors that must be unoccupied and not reserved by other routes for the route specified to be allowed.");
+        jLabel5.setText(Bundle.getMessage("InfoDlgTRLRulesSensor"));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -267,7 +268,7 @@ public class DlgTRL_Rules extends javax.swing.JDialog {
                                 .addGap(18, 18, 18)
                                 .addComponent(_mEnableALLRules, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(_mDisableALLRules, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(_mDisableALLRules, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(_mRulesInfo)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -289,9 +290,9 @@ public class DlgTRL_Rules extends javax.swing.JDialog {
                                         .addComponent(_mOptionalExternalSensor1, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
                                         .addComponent(_mOptionalExternalSensor2, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(51, 51, 51)
-                                        .addComponent(_mGroupingListAddReplace, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
+                                        .addGap(43, 43, 43)
+                                        .addComponent(_mGroupingListAddReplace, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(_mCancel))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(_mOS_NumberEntry1, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)

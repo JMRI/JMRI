@@ -93,6 +93,7 @@ public class DlgTRL extends javax.swing.JDialog {
         jLabel11 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle(Bundle.getMessage("TitleDlgTRL"));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
@@ -113,26 +114,26 @@ public class DlgTRL extends javax.swing.JDialog {
             }
         });
 
-        _mLeftNumberOfRulesPrompt.setText("Left traffic locking rules:");
+        _mLeftNumberOfRulesPrompt.setText(Bundle.getMessage("LabelDlgTRLLeft"));
 
-        _mRightNumberOfRulesPrompt.setText("Right traffic locking rules:");
+        _mRightNumberOfRulesPrompt.setText(Bundle.getMessage("LabelDlgTRLRight"));
 
-        _mOK.setText("OK");
+        _mOK.setText(Bundle.getMessage("ButtonOK"));
         _mOK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mOKActionPerformed(evt);
             }
         });
 
-        _mLeftNumberOfRules.setText("Rules: ?");
+        _mLeftNumberOfRules.setText(Bundle.getMessage("InfoDlgTRLRules"));
 
-        _mRightNumberOfRules.setText("Rules: ?");
+        _mRightNumberOfRules.setText(Bundle.getMessage("InfoDlgTRLRules"));
 
-        jLabel10.setText("For example: Where you go into staging and there is");
+        jLabel10.setText(Bundle.getMessage("InfoDlgTRLNote2"));
 
-        jLabel4.setText("NOTE: Having NO rules ALWAYS allows that direction.");
+        jLabel4.setText(Bundle.getMessage("InfoDlgTRLNote1"));
 
-        jLabel11.setText("no O.S. section there controlling entry/exit from the staging area.");
+        jLabel11.setText(Bundle.getMessage("InfoDlgTRLNote3"));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -167,7 +168,7 @@ public class DlgTRL extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(164, 164, 164)
                         .addComponent(_mOK)))
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addContainerGap(164, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

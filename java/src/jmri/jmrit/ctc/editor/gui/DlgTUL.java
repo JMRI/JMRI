@@ -155,50 +155,50 @@ public class DlgTUL extends javax.swing.JDialog {
         _mTUL_AdditionalExternalTurnout3FeedbackDifferent = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-        setTitle("Edit turnout locking");
+        setTitle(Bundle.getMessage("TitleDlgTUL"));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
             }
         });
 
-        _mSaveAndClose.setText("Save and close");
+        _mSaveAndClose.setText(Bundle.getMessage("ButtonSaveClose"));
         _mSaveAndClose.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mSaveAndCloseActionPerformed(evt);
             }
         });
 
-        jLabel2.setText("Dispatcher sensor lock toggle:");
+        jLabel2.setText(Bundle.getMessage("LabelDlgTULSensor"));
 
         _mTUL_ExternalTurnoutFeedbackDifferent.setText(" ");
 
-        jLabel4.setText("Feedbacks different:");
+        jLabel4.setText(Bundle.getMessage("InfoDlgTULFeedback"));
 
-        _mTUL_ActualTurnoutPrompt.setText("Actual turnout (required):");
+        _mTUL_ActualTurnoutPrompt.setText(Bundle.getMessage("LabelDlgTULToName"));
 
-        jLabel6.setText("Dispatcher sensor unlocked indicator:");
+        jLabel6.setText(Bundle.getMessage("LabelDlgTULInd"));
 
         _mTUL_NoDispatcherControlOfSwitch.setText(" ");
 
-        jLabel7.setText("No dispatcher control of switch:");
+        jLabel7.setText(Bundle.getMessage("LabelDlgTULNoDisp"));
 
         _mTUL_ndcos_WhenLockedSwitchStateIsClosed.setText(" ");
 
-        jLabel8.setText("When locked, switch state is closed:");
+        jLabel8.setText(Bundle.getMessage("LabelDlgTULClosed"));
 
-        jLabel9.setText("If this is checked, then:");
+        jLabel9.setText(Bundle.getMessage("InfoDlgTULChecked"));
 
-        jLabel10.setText("<-- this is important to configure properly");
+        jLabel10.setText(Bundle.getMessage("InfoDlgTULConfig"));
 
-        jButton2.setText("Reapply patterns - this form ONLY!");
+        jButton2.setText(Bundle.getMessage("ButtonReapply"));
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
 
-        jButton1.setText("\"Just\" a locked turnout");
+        jButton1.setText(Bundle.getMessage("ButtonDlgTULJust"));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -206,15 +206,15 @@ public class DlgTUL extends javax.swing.JDialog {
         });
 
         _mTUL_LockImplementation.add(jRadioButton1);
-        jRadioButton1.setText("Gregs");
+        jRadioButton1.setText(Bundle.getMessage("LabelDlgTULGregs"));
 
-        jLabel1.setText("Lock implementation:");
+        jLabel1.setText(Bundle.getMessage("InfoDlgTULLock"));
 
         _mTUL_LockImplementation.add(jRadioButton2);
-        jRadioButton2.setText("Other (unsupported)");
+        jRadioButton2.setText(Bundle.getMessage("LabelDlgTULOther"));
         jRadioButton2.setEnabled(false);
 
-        jLabel11.setText("Optional additional turnout(s):");
+        jLabel11.setText(Bundle.getMessage("LabelDlgTULToOpt"));
 
         _mTUL_AdditionalExternalTurnout1FeedbackDifferent.setText(" ");
 

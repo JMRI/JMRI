@@ -129,14 +129,14 @@ public class DlgSWDI extends javax.swing.JDialog {
         _mDoubleCrossover = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-        setTitle("Edit switch direction indicators");
+        setTitle(Bundle.getMessage("TitleSWDI"));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
             }
         });
 
-        _mSaveAndClose.setText("Save and close");
+        _mSaveAndClose.setText(Bundle.getMessage("ButtonSaveClose"));
         _mSaveAndClose.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mSaveAndCloseActionPerformed(evt);
@@ -144,36 +144,36 @@ public class DlgSWDI extends javax.swing.JDialog {
         });
 
         _mSWDI_NormalInternalSensorPrompt.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        _mSWDI_NormalInternalSensorPrompt.setText("Normal indicator sensor:");
+        _mSWDI_NormalInternalSensorPrompt.setText(Bundle.getMessage("LabelSWDINormal"));
 
         _mSWDI_ReversedInternalSensorPrompt.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        _mSWDI_ReversedInternalSensorPrompt.setText("Reverse indicator sensor:");
+        _mSWDI_ReversedInternalSensorPrompt.setText(Bundle.getMessage("LabelSWDIReverse"));
 
-        _mSWDI_ActualTurnoutPrompt.setText("Actual turnout:");
+        _mSWDI_ActualTurnoutPrompt.setText(Bundle.getMessage("LabelSWDIToName"));
 
-        jLabel19.setText("Coding and response time milliseconds:");
+        jLabel19.setText(Bundle.getMessage("LabelSWDITime"));
 
         _mSWDI_CodingTimeInMilliseconds.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
 
         _mSWDI_FeedbackDifferent.setText(" ");
 
-        jLabel2.setText("Feedback different:");
+        jLabel2.setText(Bundle.getMessage("LabelSWDIFeedback"));
 
-        jButton2.setText("Reapply patterns - this form ONLY!");
+        jButton2.setText(Bundle.getMessage("ButtonReapply"));
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
 
-        jLabel3.setText("Optional GUI parameters:");
+        jLabel3.setText(Bundle.getMessage("InfoSWDIGUI"));
 
-        _mSWDI_GUITurnoutLeftHand.setText("Left hand turnout");
+        _mSWDI_GUITurnoutLeftHand.setText(Bundle.getMessage("LabelSWDILeft"));
 
-        _mSWDI_GUICrossoverLeftHand.setText("Other turnout also left handed");
+        _mSWDI_GUICrossoverLeftHand.setText(Bundle.getMessage("LabelSWDIAlso"));
 
         _mSWDI_GUITurnoutType.add(_mTurnout);
-        _mTurnout.setText("Turnout");
+        _mTurnout.setText(Bundle.getMessage("LabelSWDITurnout"));
         _mTurnout.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mTurnoutActionPerformed(evt);
@@ -181,7 +181,7 @@ public class DlgSWDI extends javax.swing.JDialog {
         });
 
         _mSWDI_GUITurnoutType.add(_mCrossover);
-        _mCrossover.setText("Crossover");
+        _mCrossover.setText(Bundle.getMessage("LabelSWDIXOver"));
         _mCrossover.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mCrossoverActionPerformed(evt);
@@ -189,7 +189,7 @@ public class DlgSWDI extends javax.swing.JDialog {
         });
 
         _mSWDI_GUITurnoutType.add(_mDoubleCrossover);
-        _mDoubleCrossover.setText("Double crossover");
+        _mDoubleCrossover.setText(Bundle.getMessage("LabelSWDIDouble"));
         _mDoubleCrossover.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mDoubleCrossoverActionPerformed(evt);

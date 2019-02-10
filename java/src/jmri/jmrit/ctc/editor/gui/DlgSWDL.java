@@ -82,14 +82,14 @@ public class DlgSWDL extends javax.swing.JDialog {
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-        setTitle("Edit switch direction lever");
+        setTitle(Bundle.getMessage("TitleDlgSWDL"));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
             }
         });
 
-        _mSaveAndClose.setText("Save and close");
+        _mSaveAndClose.setText(Bundle.getMessage("ButtonSaveClose"));
         _mSaveAndClose.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mSaveAndCloseActionPerformed(evt);
@@ -97,9 +97,9 @@ public class DlgSWDL extends javax.swing.JDialog {
         });
 
         _mSWDL_InternalSensorPrompt.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        _mSWDL_InternalSensorPrompt.setText(" Lever sensor:");
+        _mSWDL_InternalSensorPrompt.setText(Bundle.getMessage("LabelDlgSWDLLever"));
 
-        jButton2.setText("Reapply patterns - this form ONLY!");
+        jButton2.setText(Bundle.getMessage("ButtonReapply"));
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -123,7 +123,7 @@ public class DlgSWDL extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(55, 55, 55)
                         .addComponent(jButton2)))
-                .addContainerGap(37, Short.MAX_VALUE))
+                .addContainerGap(124, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

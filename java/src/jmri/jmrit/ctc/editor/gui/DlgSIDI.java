@@ -203,14 +203,14 @@ public class DlgSIDI extends javax.swing.JDialog {
         jRadioButton2 = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-        setTitle("Edit signal direction indicators");
+        setTitle(Bundle.getMessage("TitleSIDI"));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
             }
         });
 
-        _mSaveAndClose.setText("Save and close");
+        _mSaveAndClose.setText(Bundle.getMessage("ButtonSaveClose"));
         _mSaveAndClose.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mSaveAndCloseActionPerformed(evt);
@@ -218,21 +218,21 @@ public class DlgSIDI extends javax.swing.JDialog {
         });
 
         _mSIDI_LeftInternalSensorPrompt.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        _mSIDI_LeftInternalSensorPrompt.setText("Left indicator sensor:");
+        _mSIDI_LeftInternalSensorPrompt.setText(Bundle.getMessage("LabelSIDILeft"));
 
         _mSIDI_NormalInternalSensorPrompt.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        _mSIDI_NormalInternalSensorPrompt.setText("Normal indicator sensor:");
+        _mSIDI_NormalInternalSensorPrompt.setText(Bundle.getMessage("LabelSIDINormal"));
 
         _mSIDI_RightInternalSensorPrompt.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        _mSIDI_RightInternalSensorPrompt.setText("Right indicator sensor:");
+        _mSIDI_RightInternalSensorPrompt.setText(Bundle.getMessage("LabelSIDIRight"));
 
-        jLabel19.setText("Coding and response time milliseconds:");
+        jLabel19.setText(Bundle.getMessage("LabelSIDICodeTime"));
 
         _mSIDI_CodingAndResponseTime.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
 
         _mSIDI_TimeLockingInterval.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
 
-        jLabel22.setText("Time locking interval milliseconds:");
+        jLabel22.setText(Bundle.getMessage("LabelSIDILockTime"));
 
         _mSIDI_TableOfLeftToRightTrafficExternalSignalNames.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -351,7 +351,7 @@ public class DlgSIDI extends javax.swing.JDialog {
         });
         jScrollPane1.setViewportView(_mSIDI_TableOfLeftToRightTrafficExternalSignalNames);
 
-        _mTableOfLeftToRightTrafficSignalNamesPrompt.setText("Left to right traffic:");
+        _mTableOfLeftToRightTrafficSignalNamesPrompt.setText(Bundle.getMessage("LabelSIDILRTraffic"));
 
         _mSIDI_TableOfRightToLeftTrafficExternalSignalNames.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -470,35 +470,35 @@ public class DlgSIDI extends javax.swing.JDialog {
         });
         jScrollPane2.setViewportView(_mSIDI_TableOfRightToLeftTrafficExternalSignalNames);
 
-        _mTableOfRightToLeftTrafficSignalNamesPrompt.setText("Right to left traffic:");
+        _mTableOfRightToLeftTrafficSignalNamesPrompt.setText(Bundle.getMessage("LabelSIDIRLTraffic"));
 
-        jButton1.setText("Compact both");
+        jButton1.setText(Bundle.getMessage("ButtonSIDIBoth"));
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
-        jLabel8.setText("To remove signal(s), just blank out the line(s), then press:");
+        jLabel8.setText(Bundle.getMessage("InfoSIDIRemove"));
 
-        jLabel9.setText("<- Compact is automatically done");
+        jLabel9.setText(Bundle.getMessage("InfoSIDICompact"));
 
-        jButton2.setText("Reapply patterns - this form ONLY!");
+        jButton2.setText(Bundle.getMessage("ButtonReapply"));
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
 
-        jLabel3.setText("Optional GUI parameters:");
+        jLabel3.setText(Bundle.getMessage("InfoSIDIGUI"));
 
-        jLabel1.setText("Create signals as:");
+        jLabel1.setText(Bundle.getMessage("InfoSIDICreate"));
 
         _mSIDI_GUISignalType.add(jRadioButton1);
-        jRadioButton1.setText("SignalHeads");
+        jRadioButton1.setText(Bundle.getMessage("LabelSIDIHeads"));
 
         _mSIDI_GUISignalType.add(jRadioButton2);
-        jRadioButton2.setText("SignalMasts");
+        jRadioButton2.setText(Bundle.getMessage("LabelSIDIMasts"));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
