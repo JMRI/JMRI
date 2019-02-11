@@ -7,7 +7,7 @@ import jmri.util.swing.WindowInterface;
 /**
  * Swing action to create and register a CtcEditor
  *
- * @author Dave Sand Copyright (C) 2018
+ * @author Dave Sand Copyright (C) 2019
  */
 public class CtcEditorAction extends JmriAbstractAction {
 
@@ -25,9 +25,7 @@ public class CtcEditorAction extends JmriAbstractAction {
             // Prevent duplicate copies
             return;
         }
-        jmri.util.JmriJFrame f = new jmri.jmrit.ctc.editor.gui.FrmMainForm();
-//         jmri.util.JmriJFrame f = new jmri.jmrit.ctc.editor.CtcEditor();
-        f.addHelpMenu("html.tools.TimeTable", true);  // NOI18N
+        javax.swing.JFrame f = new jmri.jmrit.ctc.editor.gui.FrmMainForm();
         f.setVisible(true);
     }
 

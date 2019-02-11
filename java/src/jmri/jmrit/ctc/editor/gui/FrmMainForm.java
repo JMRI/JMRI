@@ -36,6 +36,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
@@ -48,7 +50,8 @@ import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
  *
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019
  */
-public class FrmMainForm extends jmri.util.JmriJFrame {
+// public class FrmMainForm extends jmri.util.JmriJFrame {
+public class FrmMainForm extends JFrame {
 
     private static final String FORM_PROPERTIES = "FrmMainForm";
     private CTCSerialData _mCTCSerialData;
@@ -62,13 +65,30 @@ public class FrmMainForm extends jmri.util.JmriJFrame {
 
     @SuppressWarnings("LeakingThisInConstructor")   // Lazy, since this is NOT a multi-threaded program.
     public FrmMainForm() {
-        super(true, true);
+        super();
         initComponents();
+        addHelpMenu("index", true);  // NOI18N
         _mAwtWindowProperties = new AwtWindowProperties((java.awt.Window)this, "AwtWindowProperties.txt", FORM_PROPERTIES);
         _mProgramProperties = new ProgramProperties();
         _mJMRIConnection = new JMRIConnection(this);
         _mCheckJMRIObject = new CheckJMRIObject(_mJMRIConnection);
         newOrOpenFile(true);
+    }
+
+    /**
+     * Add a standard help menu, including window specific help item.
+     *
+     * @param ref    JHelp reference for the desired window-specific help page
+     * @param direct true if the help main-menu item goes directly to the help system,
+     *               such as when there are no items in the help menu
+     */
+    private void addHelpMenu(String ref, boolean direct) {
+        JMenuBar bar = getJMenuBar();
+        if (bar == null) {
+            bar = new JMenuBar();
+        }
+        jmri.util.HelpUtil.helpMenu(bar, ref, direct);
+        setJMenuBar(bar);
     }
 
     /**
@@ -89,7 +109,7 @@ public class FrmMainForm extends jmri.util.JmriJFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    public void initComponents() {
+    private void initComponents() {
 
         _mOpen_Save_SaveAs = new javax.swing.JFileChooser();
         jMenuItem1 = new javax.swing.JMenuItem();
