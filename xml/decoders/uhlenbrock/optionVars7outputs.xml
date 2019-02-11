@@ -31,7 +31,13 @@
       <authorinitials>EB</authorinitials>
       <revremark>Initial version as separate file, taken from Uhlenbrock_363xx.xml/365xx.xml</revremark>
     </revision>
-      <!-- Used in Uhlenbrock advanced decoders,
+    <revision>
+        <revnumber>2</revnumber>
+        <date>2019-02-10</date>
+        <authorinitials>EB</authorinitials>
+        <revremark>Additional variables for IntelliDrive2 73xx5</revremark>
+    </revision>
+    <!-- Used in Uhlenbrock advanced decoders,
            such as 36320, 36360 (IS3), 36520, 36560 (IS4) 73xx5 (ID2) Piko Sound 4.1 (non exhaustive list) -->
   </revhistory>
     <!-- CV 109 - 111 -->

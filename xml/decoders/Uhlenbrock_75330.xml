@@ -24,7 +24,7 @@
         <output name="4" label=". A2 ." connection="plug"/>
         <output name="5" label=". A3 ." connection="plug"/>
         <output name="6" label=". A4 ." connection="plug"/>
-	<output name="7" label=". A5 ." connection="plug"/>
+	    <output name="7" label=". A5 ." connection="plug"/>
         <output name="8" label=". A6 ." connection="plug"/>
         <output name="Shunting" label="mode"/>
         <output name="Start/brake" label="inertia"/>

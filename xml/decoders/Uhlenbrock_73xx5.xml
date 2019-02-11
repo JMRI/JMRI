@@ -17,7 +17,7 @@
     <!-- WARNING: output names fully linked to function mapping include file - do not change independently -->
     <decoder>
         <family name="IntelliDrive2" mfg="Uhlenbrock Elektronik" comment="Decoders not sorted (necessarily) in numerical order"><!-- to be checked by hardware owner -->
-            <model model="73105" numOuts="10" numFns="14" maxMotorCurrent="1.2A" formFactor="N" connector="Next18" productID="73105" comment="IntelliDrive2 Mini-Lokdecoder and RailCom(R) (Plus)">
+            <model model="73105" numOuts="12" numFns="12" maxMotorCurrent="1.2A" formFactor="N" connector="Next18" productID="73105" comment="IntelliDrive2 Mini-Lokdecoder and RailCom(R) (Plus)">
                 <output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
                 <output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>
                 <output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA"/>
@@ -32,7 +32,34 @@
                 <output name="Start/brake" label="inertia"/>
                 <size length="30.2" width="16" height="3.8" units="mm"/>
             </model>
-            <model model="PIKO41RH2400" numOuts="10" numFns="14" maxMotorCurrent="1.2A" formFactor="N" connector="Next18" productID="PIKO41RH2400" comment="Piko SmartDecoder 4.1 Sound Dieselloco Rh2400 Next18 plug and RailCom(R) (Plus)">
+            <model model="73235" numOuts="8" numFns="12" maxMotorCurrent="0.8A" formFactor="HO" connector="Next18" productID="73235" comment="IntelliDrive2 Lokdecoder and RailCom(R) (Plus)">
+                <output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
+                <output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>
+                <output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="4" label=". A2 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="5" label=". A3 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="6" label=". A4 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="Shunting" label="mode"/>
+                <output name="Start/brake" label="inertia"/>
+                <size length="14.7" width="8.6" height="2.9" units="mm"/>
+            </model>
+            <model model="73405" numOuts="6" numFns="12" maxMotorCurrent="0.7A" formFactor="N" connector="Wires" productID="73405" comment="IntelliDrive2 Mini-Lokdecoder and RailCom(R) (Plus)">
+                <output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
+                <output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>
+                <output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="4" label=". A2 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="Shunting" label="mode"/>
+                <output name="Start/brake" label="inertia"/>
+                <size length="9.5" width="7.8" height="2.4" units="mm"/>
+            </model>
+            <model model="73115" numOuts="4" numFns="12" maxMotorCurrent="0.8A" formFactor="HO" connector="NEM651" productID="73115" comment="IntelliDrive2 Mini-Lokdecoder and RailCom(R) (Plus)">
+                <output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
+                <output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>
+                <output name="Shunting" label="mode"/>
+                <output name="Start/brake" label="inertia"/>
+                <size length="9.5" width="7.8" height="2.4" units="mm"/>
+            </model>
+            <model model="PIKO41RH2400" numOuts="12" numFns="12" maxMotorCurrent="1.2A" formFactor="N" connector="Next18" productID="PIKO41RH2400" comment="Piko SmartDecoder 4.1 Sound Dieselloco Rh2400 Next18 plug and RailCom(R) (Plus)">
                 <output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
                 <output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>
                 <output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA"/>
@@ -75,7 +102,7 @@
                 <label xml:lang="de">Hersteller ID: </label>
                 <label xml:lang="nl">Fabrikant-ID: </label>
             </variable>
-            <variable item="Manufacturer" CV="8" readOnly="yes" default="85" include="73105, 73115, 73145, 73405, 73415"><!-- Uhlenbrock -->
+            <variable item="Manufacturer" CV="8" readOnly="yes" default="85" exclude="PIKO41RH2400"><!-- Uhlenbrock -->
                 <decVal/>
                 <label>Manufacturer ID: </label>
                 <label xml:lang="it">ID Costruttore: </label>
@@ -204,7 +231,6 @@
             <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv31.32CvBanks.xml"/>
             <!-- CVs 33-46 function mapping -->
             <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/functionmap7outputs.xml"/>
-
             <!-- CV50-51 decoder configuration -->
             <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv50.51config.xml"/>
             <!-- CVs 53-59 TODO -->
@@ -261,7 +287,7 @@
                 <tooltip>Speed in ABC Slow block</tooltip>
                 <tooltip xml:lang="de">Geschwindigkeit in der ABC Langsamfahrstrecke</tooltip>
             </variable>
-
+            <!-- TODO CVs 107-108 -->
             <!-- CVs 116-118 (CVs 116-123 for Piko) -->
             <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/optionVars7outputs.xml"/>
             <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv124.129coupling.xml"/>
@@ -290,7 +316,7 @@
                 <tooltip>Maximum Period length in 100μs steps (min = CV53)</tooltip>
                 <tooltip xml:lang="de">maximale Periodendauer in 100μs Schritten (min = CV53)</tooltip>
             </variable>
-            <!--extended function mapping-->
+            <!--extended function mapping on IntelliDrive2 and Piko 4.1-->
             <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv257.512extendedmap.xml"/>
         </variables>
 

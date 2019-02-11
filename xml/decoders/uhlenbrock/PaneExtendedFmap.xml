@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- Copyright (C) JMRI 2019 All rights reserved                        -->
-<!-- version 1 - For Uhlenbrock_73xx5.xml                               -->
-<!-- Egbert Broerse (2019)				                           		-->
-<!-- Valid for 731x0, 734x0, 764x0 families (non exhaustive list)       -->
-<!-- 																    -->
+<!-- Copyright (C) JMRI 2019 All rights reserved                    -->
+<!-- version 1 - For Uhlenbrock_73xx5.xml                           -->
+<!-- Egbert Broerse (2019)				                           	-->
+<!-- Valid for 73115, 73235, 73405 families (non exhaustive list)   -->
+<!-- 																-->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <name>Ext Function Map</name>
   <name xml:lang="de">Erw Funktionsmap</name>
@@ -148,10 +148,6 @@
               <griditem gridx="28" gridy="1" anchor="CENTER">
                   <display item="Z1 F28 Cond On" format="checkbox" label=""/>
               </griditem>
-              <!--Invert ON last item in line 1-->
-              <griditem gridx="29" gridy="1" gridwidth="1" anchor="CENTER">
-                <display item="Z1 On Invert" format="checkbox"/>
-              </griditem>
               <!-- BEGIN - Row 2 (Slot 1)-->
               <griditem gridx="0" gridy="2" anchor="LINE_END">
                   <display item="Z1 F0 Cond Off" format="checkbox">
@@ -243,10 +239,6 @@
               <griditem gridx="28" gridy="2" anchor="CENTER">
                   <display item="Z1 F28 Cond Off" format="checkbox" label=""/>
               </griditem>
-              <!--Invert OFF last item in line 2-->
-              <griditem gridx="29" gridy="2" anchor="CENTER">
-                  <display item="Z1 Off Invert" format="checkbox"/>
-              </griditem>
           </grid>
         <!--end Grid-->
     </row>
@@ -257,19 +249,22 @@
     </row>
     <row>
         <column>
-            <label>
-                <text>Additional conditions: </text>
-                <text xml:lang="de">Additionelle Bedingungen: </text>
-            </label>
-            <display item="Z1 Direction Fw" format="checkbox"/>
-            <display item="Z1 Direction Rv" format="checkbox"/>
-        </column>
-        <column>
-            <label>
-                <text>   </text>
-            </label>
-          <display item="Z1 Moving Yes" format="checkbox"/>
-          <display item="Z1 Moving No" format="checkbox"/>
+            <row>
+                <label>
+                    <text>Additional conditions: </text>
+                    <text xml:lang="de">Additionelle Bedingungen: </text>
+                </label>
+            </row>
+            <row>
+                <column>
+                    <display item="Z1 Direction Fw" format="checkbox"/>
+                    <display item="Z1 Direction Rv" format="checkbox"/>
+                </column>
+                <column>
+                  <display item="Z1 Moving Yes" format="checkbox"/>
+                  <display item="Z1 Moving No" format="checkbox"/>
+                </column>
+            </row>
         </column>
         <separator/>
         <!--Result-->
@@ -287,18 +282,20 @@
             <!-- BEGIN - Advanced Function Mapping Grid Out 1-4 -->
             <grid gridy="3" weightx="1" ipadx="4">
                 <!-- BEGIN - Row 1 (headers)-->
-                <griditem gridx="0" gridy="0" gridwidth="1" anchor="LINE_END">
-                    <label>
-                        <text>AUX1</text>
-                    </label>
-                </griditem>
-                <griditem gridx="1" gridy="0" gridwidth="1" anchor="CENTER"><label><text>AUX2</text></label></griditem>
-                <griditem gridx="2" gridy="0" gridwidth="1" anchor="CENTER"><label><text>AUX3</text></label></griditem>
-                <griditem gridx="3" gridy="0" gridwidth="1" anchor="CENTER"><label><text>AUX4</text></label></griditem>
-                <griditem gridx="4" gridy="0" gridwidth="1" anchor="CENTER"><label><text>AUX5</text></label></griditem>
-                <griditem gridx="5" gridy="0" gridwidth="1" anchor="CENTER"><label><text>AUX6</text></label></griditem>
-                <griditem gridx="6" gridy="0" gridwidth="1" anchor="CENTER"><label><text>AUX7</text></label></griditem>
-                <griditem gridx="7" gridy="0" gridwidth="1" anchor="CENTER"><label><text>AUX8</text></label></griditem>
+                <group exclude="73115">
+                    <griditem gridx="0" gridy="0" gridwidth="1" anchor="LINE_END"><label><text>AUX1</text></label></griditem>
+                    <griditem gridx="1" gridy="0" gridwidth="1" anchor="CENTER"><label><text>AUX2</text></label></griditem>
+                </group>
+                <group exclude="73115,73405">
+                    <griditem gridx="2" gridy="0" gridwidth="1" anchor="CENTER"><label><text>AUX3</text></label></griditem>
+                    <griditem gridx="3" gridy="0" gridwidth="1" anchor="CENTER"><label><text>AUX4</text></label></griditem>
+                </group>
+                <group exclude="73115,73405,73235">
+                    <griditem gridx="4" gridy="0" gridwidth="1" anchor="CENTER"><label><text>AUX5</text></label></griditem>
+                    <griditem gridx="5" gridy="0" gridwidth="1" anchor="CENTER"><label><text>AUX6</text></label></griditem>
+                    <griditem gridx="6" gridy="0" gridwidth="1" anchor="CENTER"><label><text>AUX7</text></label></griditem>
+                    <griditem gridx="7" gridy="0" gridwidth="1" anchor="CENTER"><label><text>AUX8</text></label></griditem>
+                </group>
                 <griditem gridx="8" gridy="0" gridwidth="1" anchor="CENTER">
                     <label>
                         <text>A0(f)</text>
@@ -308,7 +305,7 @@
                 <griditem gridx="9" gridy="0" gridwidth="1" anchor="CENTER">
                     <label>
                         <text>A0(r)</text>
-                        <text xml:lang="de">A0(h)</text>
+                        <text xml:lang="de">A0(r)</text>
                     </label>
                 </griditem>
                 <!-- BEGIN - Row 2 (Slot 1)-->
@@ -424,6 +421,6 @@
     </row>
     <!--end Mapping row 1-->
     <separator/>
-    <!--repeat line blocks 2-32-->
+    <!--repeat line above with adapted item names for Mapping blocks #2 - #32-->
   </column>
 </pane>
