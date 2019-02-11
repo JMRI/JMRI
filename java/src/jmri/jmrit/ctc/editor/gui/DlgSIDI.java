@@ -338,7 +338,7 @@ public class DlgSIDI extends javax.swing.JDialog {
                 {null}
             },
             new String [] {
-                "Signal names:"
+                ""
             }
         ) {
             Class[] types = new Class [] {
@@ -457,7 +457,7 @@ public class DlgSIDI extends javax.swing.JDialog {
                 {null}
             },
             new String [] {
-                "Signal names:"
+                ""
             }
         ) {
             Class[] types = new Class [] {
@@ -538,7 +538,7 @@ public class DlgSIDI extends javax.swing.JDialog {
                             .addGroup(layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(_mTableOfLeftToRightTrafficSignalNamesPrompt)
-                                .addGap(125, 125, 125)
+                                .addGap(82, 82, 82)
                                 .addComponent(_mTableOfRightToLeftTrafficSignalNamesPrompt)
                                 .addGap(117, 117, 117))
                             .addGroup(layout.createSequentialGroup()
