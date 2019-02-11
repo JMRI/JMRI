@@ -716,7 +716,7 @@
         <!-- Compile the java test code allowing lots of deprecations!-->
         <!-- The following is copied from the -java-compile-internal target -->
         <!-- Eventually, we want to turn deprecation warnings "on" and remove this target's Xmax parameters -->
-        <mkdir dir="${target}"/>
+        <mkdir dir="${testtarget}"/>
         <javac compiler="modern"
                srcdir="${test};${acceptancetest}"
                destdir="${testtarget}"
