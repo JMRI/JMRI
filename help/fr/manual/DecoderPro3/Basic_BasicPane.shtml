@@ -1,7 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Tranlation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-02-10 -->
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -26,193 +26,180 @@
     <div id="mainContent">
       <a name="Top" id="Top"></a>
 
-      <h1>The Basic Programmer</h1>
+      <h1>Le Programmateur Basique</h1>
 
-      <h2>Basic Pane</h2>
+      <h2>Volet Basique</h2>
 
       <div align="right">
-        <p><a href="Basic_Start.shtml">Previous |</a></p>
+        <p><a href="Basic_Start.shtml">Pr&#233;c&#233;dent|</a></p>
 
-        <p><a href="index.shtml#Basic%20Programmer">Back to
-        Index</a></p>
+        <p><a href="index.shtml#Basic%20Programmer">Retour &#224; l'Index</a></p>
       </div>
       <hr>
 
-      <p>You may have noticed that at the top of the window are Two
-      tabs: <strong>Roster Entry</strong> and
-      <strong>Basic</strong>. We have completed the <strong>Roster
-      Entry</strong> pane of the Program window, now, click on the
-      <strong>Basic</strong> tab to change panes to continue with
-      programming your decoder. The <strong>Basic</strong> pane
-      will be displayed and look similar to the following
-      illustration: Many panes in the programmer contain decoder
-      dependent features, as a result what you see may not exactly
-      agree with what you see here. Only those variables that your
-      decoder can implement will be shown.</p>
+      <p>Vous avez peut-&#234;tre remarqu&#233; qu'en haut de la fen&#234;tre se trouvent deux
+       onglets: <strong> Entr&#233;e Inventaire </strong> et <strong> Basique </strong>. 
+       Nous avons termin&#233; le volet <strong> Entr&#233;e Inventaire</strong> de la fen&#234;tre Programme. 
+       Cliquez maintenant sur l'onglet <strong> Basique </strong> pour changer 
+       de volet et poursuivre la programmation de votre d&#233;codeur. Le volet <strong> Basique </strong> 
+       s'affiche et se pr&#233;sente comme l'illustration suivante: De nombreux onglets du 
+       programmeur contiennent des fonctionnalit&#233;s d&#233;pendantes du d&#233;codeur. Par cons&#233;quent, 
+       ce que vous voyez peut ne pas correspondre exactement &#224; ce que vous voyez ici. 
+       Seules les variables que votre d&#233;codeur peut impl&#233;menter seront affich&#233;es..</p>
 
-      <p>Below is a screen for OEM decoder that is used in the
-      <strong>Athearn FP-45</strong> locomotive.shown in factory
-      settings, which is normally address 3<br>
+      <p>Vous trouverez ci-dessous un &#233;cran pour le d&#233;codeur OEM utilis&#233; dans la locomotive
+		<strong> Athearn FP-45 </strong>.Montrant les param&#232;tres d'usine, 
+		qui correspondent normalement &#224; l'adresse 3 <br> <br>
       .<img src="images/Basic_Program.png" alt="basic pane" height=
       "557" width="642"></p>
 
       <div align="center"></div>
 
-      <p>You will see three options you can change, highlighted in
-      yellow:</p>
+      <p>Vous verrez trois options que vous pouvez modifier, 
+      surlign&#233;es en jaune: </p>
 
-      <ol>
-        <li>The decoder address (should be unique among your
-        locomotives, unless you are operating several as a set)
-        often the locomotive number is used.</li>
+       <ol>
+         <li> L'adresse du d&#233;codeur (doit &#234;tre unique parmi vos locomotives, 
+         sauf si vous en utilisez plusieurs ensemble), souvent 
+         le num&#233;ro de la locomotive est utilis&#233;. </li>
 
-        <li>Two radio buttons that let you toggle between 2 digit
-        (one byte, "Normal") or 4 digit<br>
-        (two byte, "Extended") addressing</li>
+        <li>Deux boutons radio qui vous permettent de basculer 
+        entre un adressage &#224; 2 chiffres (un octet, "Court") ou 
+        &#224; 4 chiffres (deux octets, "&#201;tendu") </li>
 
-        <li>Analog operation (enables the decoder to run under
-        regular DC voltage/analog<br>
-        control) Enable Analog Operation with caution, as some
-        decoders will jump to full speed resulting in a "Runaway
-        locomotive" if they are enabled for Analog Operation and
-        encounter power spikes on a DCC digital signal. They seem
-        to get confused, and revert to Analog operation and use the
-        full track voltage DCC power to take off and GO! There is
-        no stopping them without removing layout power. Very
-        disturbing to your operating mates, but better than running
-        into them at full tilt.</li>
+        <li>Fonctionnement analogique (permet au d&#233;codeur de fonctionner sous
+         tension continue r&#233;guli&#232;re/analogique <br>
+         Activez le Fonctionnement Analogique avec pr&#233;caution, car certains
+         d&#233;codeurs vont &#224; pleine vitesse et il en r&#233;sultera une "
+         Locomotive Folle" s'ils sont activ&#233;s pour le fonctionnement analogique et
+         rencontreront des pics de tension sur un signal num&#233;rique DCC. Ils semblent
+         &#234;tre d&#233;sorient&#233;s et reviennent en mode analogique et utilisent la
+         tension compl&#232;te de la voie DCC pour d&#233;coller et rouler! On ne peut
+         les arr&#234;ter qu'en coupant l'alimentation du r&#233;seau. Tr&#232;s
+         pertubant pour vos compagnons d'exploitation, mais vous &#233;vitez les collisions.</li>
       </ol>
 
       <div style="margin-left: 2em">
-        <p>To enable Analog (old style DC, some vendors refer to
-        this as dual mode) Operation select the appropriate entry
-        from the drop-down list.</p>
+        <p>Pour activer le mode analogique (ancien DC, certains fournisseurs l'appellent mode dual).
+         Op&#233;ration: s&#233;lectionnez l'entr&#233;e appropri&#233;e dans la liste d&#233;roulante.</p>
       </div>
 
-      <p>The yellow highlighting indicates these options are
-      "probable" settings and have not been confirmed from the
-      decoder. Settings that have been changed by the user and have
-      not been written back to the decoder appear in a orange
-      color. You will see examples of<br>
-      this throughout the manual.</p><a name="ReadData" id=
-      "ReadData"></a> To read the actual settings for these options
-      (and IF your system and installed decoder will allow readback
-      of decoder values), click on the <strong><input name="button"
-      id="button" value="Read full sheet" type="button"></strong> .
-      The individual settings will turn red while they are in the
-      process of being read (clever, eh?), and will turn white once
-      the values have been read successfully from the decoder. Once
-      again, Decoder Pro must play "Twenty Questions" to get this
-      information, and sometimes even has to ask a couple of times.
+      <p>La surbrillance jaune indique que ces options sont des param&#232;tres "probables" 
+      et n'ont pas &#233;t&#233; confirm&#233;es par le d&#233;codeur. Les param&#232;tres modifi&#233;s par l'utilisateur 
+      et non r&#233;&#233;crits dans le d&#233;codeur apparaissent en orange. Vous en verrez des 
+      exemples dans le manuel. </P> <a name="ReadData" id= "ReadData"> </a> Pour lire les 
+      param&#232;tres actuels de ces options et (SI votre syst&#232;me et votre d&#233;codeur install&#233; 
+      permet la relecture des valeurs du d&#233;codeur), cliquez sur le bouton <strong> <input name = "button"
+       id = "button" value = "Lire la fiche compl&#232;te" type = "button"> </strong>.
+       Les param&#232;tres individuels deviennent rouges en cours de lecture (astucieux, non?) 
+       Et deviennent blancs une fois que les valeurs ont &#233;t&#233; lues avec succ&#232;s depuis le d&#233;codeur. 
+       Encore une fois, Decoder Pro doit jouer "Twenty Questions" pour obtenir 
+       cette information, et doit m&#234;me parfois le demander &#224; quelques reprises.
 
-      <p>Be patient, especially with older computers. At the very
-      bottom of the pane (where it says "idle") you will see a
-      running account of exactly what DecoderPro is doing, for
-      example, the specific CV being read.</p>
+      <p>Soyez patient, surtout avec les vieux ordinateurs. Tout en bas du 
+      volet (o&#249; il est indiqu&#233; "inactif"), vous verrez une ligne affichant 
+      exactement ce que fait DecoderPro, par exemple 
+      le CV sp&#233;cifique en cours de lecture. </P>
 
-      <p>Again, the <input name="button2" id="button2" value=
-      "Read full sheet" type="button"> and <strong><input name=
-      "button3" id="button3" value="Read all sheets" type=
-      "button"></strong> functions are dependent on your command
-      station. If your system does not have the capability to read
-      CVs, then these buttons will not be available.</p>
+       <p> Encore une fois, <input name = "button2" id = "button2" value = 
+              "Lire la fiche compl&#232;te" type = "button"> et <strong> <input name = 
+       "button3" id = "button3" value = " Lire toutes les feuilles "type =" button ">
+        </strong> les fonctions d&#233;pendent de votre centrale de commande. 
+       Si votre syst&#232;me n'a pas la capacit&#233; de lire les CV, ces boutons 
+       ne seront pas disponibles.</p>
 
-      <p><a name="EnterEditData" id="EnterEditData"></a>If you wish
-      to change the address of the locomotive, type in the new
-      address. To turn on or off 4 digit addressing, select the
-      desired radio button. . Be sure that the address type agrees
-      with the number of characters in the address.</p>
+      p> <a name="EnterEditData" id="EnterEditData"> </a> Si vous souhaitez 
+      modifier l'adresse de la locomotive, saisissez la nouvelle adresse. 
+      Pour activer ou d&#233;sactiver l'adressage &#224; 4 chiffres, s&#233;lectionnez 
+      le bouton radio souhait&#233;. . Assurez-vous que le type d'adresse correspond 
+      au nombre de caract&#232;res de l'adresse. </P>
 
-      <p>When you are finished, click on <input name="button4" id=
-      "button4" value="Write full sheet" type="button"> to write
-      the new values in the decoder.</p>
+       <p> Lorsque vous avez termin&#233;, cliquez sur <input name = "button4" id =
+       "button4" value = "&#201;crire la fiche compl&#232;te" type = "button"> pour 
+       &#233;crire les nouvelles valeurs dans le d&#233;codeur. </ p>
 
-      <p><a name="WriteData" id="WriteData"></a>Writing usually
-      takes much less time than reading, because the value can be
-      sent directly. As the write operation proceeds, the data will
-      change from yellow to white. If there is difficulty writing
-      to the decoder, the data will change to red. The software
-      will automatically keep trying until the write operation is
-      successful. In some instances the system will "time-out"
-      after a certain number of tries without an acknowledgement
-      from the decoder. This does not necessarily mean that the
-      values have not been written, just that the program has not
-      received an acknowledgement. This can be due to the
-      locomotive moving and getting on dirty track so that it can't
-      pulse back, or possibly because the command station or
-      decoder cannot read back. Try moving the loco and try again.
-      If it is a command station or decoder read-back issue, try
-      the loco on the mainline and see if the programming was
-      successful.</p>
+      <p><a name="WriteData" id="WriteData"></a>L'&#233;criture prend 
+      g&#233;n&#233;ralement beaucoup moins de temps que la lecture, car la 
+      valeur peut &#234;tre envoy&#233;e directement. Au fur et &#224; mesure que 
+      l'op&#233;ration d'&#233;criture se poursuit, les donn&#233;es passent du 
+      jaune au blanc. Si vous rencontrez des difficult&#233;s pour &#233;crire 
+      dans le d&#233;codeur, les donn&#233;es deviennent rouges. Le logiciel 
+      continuera automatiquement d'essayer jusqu'&#224; ce que l'op&#233;ration 
+      d'&#233;criture r&#233;ussisse. Dans certains cas, le syst&#232;me "expirera" 
+      apr&#232;s un certain nombre d'essais sans accus&#233; de r&#233;ception du 
+      d&#233;codeur. Cela ne signifie pas n&#233;cessairement que les valeurs 
+      n'ont pas &#233;t&#233; &#233;crites, mais simplement que le programme n'a pas 
+      re&#231;u d'accus&#233; de r&#233;ception. Cela peut &#234;tre d&#251; au fait que la 
+      locomotive se d&#233;place et se trouve sur une voie encrass&#233;e, 
+      emp&#234;chant ainsi le retour de l'info, ou peut-&#234;tre parce que la 
+      centrale de commande ou le d&#233;codeur ne peut pas relire. 
+      Essayez de d&#233;placer la loco et essayez &#224; nouveau.
+       S'il s'agit d'un probl&#232;me de relecture de la centrale de commande 
+       ou du d&#233;codeur, essayez la locomotive sur la ligne principale 
+       et voyez si la programmation a r&#233;ussi.</p>
 
-      <p><a name="SaveData" id="SaveData"></a> To finish this
-      "basic" programming of a decoder, click once more on the
-      <strong>Roster Entry</strong> tab, You will see that the
-      address field has now been filled in, so you can now click on
-      the <strong><input name="button5" id="button5" value=
-      "Save to roster" type="button"></strong> . Your new decoder
-      settings have now been written not only to the decoder, but
-      also saved to a computer file where they may be recalled in
-      the future.</p>
+      <p><a name="SaveData" id="SaveData"></a> Pour terminer cette programmation
+       "de base" d'un d&#233;codeur, cliquez une nouvelle fois sur l'onglet 
+       <strong>Entr&#233;e d'Inventaire</strong>. Vous verrez que le champ d'adresse 
+       est maintenant renseign&#233;. Vous pouvez donc cliquer sur <strong> 
+       <input name = "button5" id = "button5" value = "Enregistrer dans  l'inventaire" 
+       type = "button"> </strong>. Vos nouveaux param&#232;tres de d&#233;codeur ont 
+       maintenant &#233;t&#233; &#233;crits non seulement dans le d&#233;codeur, mais &#233;galement 
+       dans un fichier informatique d'o&#249; ils pourront &#234;tre rappel&#233;s ult&#233;rieurement. </P>
 
-      <p>I have programmed the address for this locomotive and
-      clicked on the Write full sheet button to send the address to
-      the command station to program the decoder. Note that the
-      status line keeps you updated as to what is writing and
-      should finish with OK, which is good or an error message
-      which usually meant the write was not completed. All the
-      entries are now in white color as they match the decoder.</p>
+      <p>J'ai programm&#233; l'adresse de cette locomotive et cliqu&#233; sur le bouton &#201;crire la 
+      feuille compl&#232;te pour envoyer l'adresse &#224; la centrale de commande afin de 
+      programmer le d&#233;codeur. Notez que la ligne d'&#233;tat vous tient au courant de ce 
+      qui est &#233;crit et devrait se terminer par OK, ce qui est correct ou par un 
+      message d'erreur indiquant que l'&#233;criture n'a pas &#233;t&#233; termin&#233;e. Toutes 
+      les entr&#233;es sont maintenant en blanc car elles correspondent au d&#233;codeur.</p>
 
       <p align="center"><img src="images/Basic_Address.png" alt=
       "basic address" height="556" width="636"><br></p>
 
-      <p>Now that we have entered the Roster data and set the
-      desired address, lets return to DecoderPro Main window by
-      closing the Programming window.</p>
+      <p>Maintenant que nous avons saisi les donn&#233;es du r&#233;pertoire et 
+      d&#233;fini l'adresse d&#233;sir&#233;e, revenons &#224; la fen&#234;tre principale de 
+      DecoderPro en fermant la fen&#234;tre de programmation. </P>
 
-      <p>Notice that we now have a list of all the locomotives
-      programmed so far that are in our roster.</p>
+       <p> Notez que nous avons maintenant une liste de toutes les locomotives
+        programm&#233;es jusqu'&#224; pr&#233;sent qui figurent dans notre inventaire.</p>
 
       <p><img style="width: 900px; height: 425px;" alt="main" src=
       "images/Main_01b_main.png"><br></p>
 
-      <p><a name="DoMore" id="DoMore"></a>What we've done so far is
-      what is available in the Basic mode of programming in
-      DecoderPro. Which is basically put Locomotive in the roster
-      and assign an address. A good place to start for new folks or
-      at a club. It's hard to go wrong, but you can change the loco
-      address and add it the roster, which are the two most often
-      needed actions with programming.<br>
+      <p><a name="DoMore" id="DoMore"></a>Ce que nous avons fait jusqu'&#224; pr&#233;sent, 
+      c'est ce qui est disponible dans le mode de programmation de Base de 
+      DecoderPro. Il est fondamentale de mettre une locomotive dans l'inventaire 
+      et de lui attribuer une adresse. C'est un bon endroit pour commencer pour les 
+      nouveaux venus ou dans un club. Il est difficile de se tromper, mais 
+      vous pouvez changer l'adresse de la locomotive et l'ajouter &#224; l'inventaire, 
+      qui sont les deux actions les plus souvent n&#233;cessaires avec programming.far 
+      qui figurent dans notre inventaire.<br>
       <br>
-      The classic DecoderPro offered a number of modes, most of
-      which were often redundant and confusing showing how the user
-      could edit the underlying file to make special application
-      programming modes. The Comprehensive Programmer was the most
-      popular for a long time until Advanced came along with added
-      features. So now they've been combined in DecoderPro. Thus
-      the Comprehensive Programmer with added Advanced features is
-      the only other programmer that DecoderPro offers.<br>
-      Since we've already covered <strong>Basic</strong>, let's
-      explore the DecoderPro <a href=
-      "Comp_Setup_Roster.shtml">Comprehensive Programmer</a>!</p>
+      DecoderPro classique proposait un certain nombre de modes, dont la plupart 
+      &#233;taient souvent redondants et d&#233;routants et montraient comment l'utilisateur 
+      pouvait &#233;diter le fichier sous-jacent pour cr&#233;er des modes de programmation 
+      d'applications sp&#233;ciaux. Le Programmeur Complet &#233;tait le plus populaire depuis 
+      longtemps jusqu'&#224; ce que le programeu Avanc&#233; int&#232;gre de nouvelles fonctionnalit&#233;s. 
+      Alors maintenant, ils ont &#233;t&#233; combin&#233;s dans DecoderPro. Ainsi, le programmeur 
+      complet avec des fonctionnalit&#233;s avanc&#233;es ajout&#233;es est le seul autre programmeur 
+      propos&#233; par DecoderPro. <br> Puisque nous avons d&#233;j&#224; pr&#233;sent&#233; le<strong> Basique </strong>, 
+      explorons le <a href="Comp_Setup_Roster.shtml">Programmeur Complet</a> DecoderPro!</p>
 
-      <p>Select the Locomotive that you want to program in
-      Comprehensive Programmer, then double click on selection to
-      open Programmer.</p>
+      <p>S&#233;lectionnez la locomotive que vous souhaitez programmer avec le Programmeur Complet, 
+      puis double-cliquez sur celle-ci pour ouvrir le programmeur. </P>
 
-      <p>At the bottom of the window is the <a href=
-      "RosterMedia.shtml">Labels &amp; Media</a> and<a href=
-      "dp3_Main_Throttle.shtml">Throttle</a> buttons. Use these
-      buttons to set up the Icon photos for your roster entries and
-      to set-up the Function Labels on the software throttle
-      included in JMRI. Click the links that we've included and
-      take a look.</p>
+       <p> Au bas de la fen&#234;tre se trouve les  boutons de commandes <a href =
+       "RosterMedia.shtml"> &#201;tiquettes &#38; M&#233;dia </a> et <a href =
+       "dp3_Main_Throttle.shtml"> Régulateur </a>. Utilisez ces boutons pour configurer les 
+       ic&#244;nes de photos pour les entr&#233;es de votre inventaire et pour configurer 
+       les &#233;tiquettes de fonction sur le r&#233;gulateur logiciel inclus dans JMRI. 
+       Cliquez sur les liens que nous avons inclus et jetez un coup d'oeil.</p>
 
       <div align="right">
-        <p><a href="Basic_Start.shtml">Previous |</a></p>
+        <p><a href="Basic_Start.shtml">Pr&#233;c&#233;dent|</a></p>
 
-        <p><a href="index.shtml#Basic%20Programmer">Back to
-        Index</a></p>
+        <p><a href="index.shtml#Basic%20Programmer">Retour &#224; l'Index</a></p>
       </div><!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
