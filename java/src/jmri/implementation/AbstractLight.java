@@ -4,7 +4,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.ArrayList;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
-
+import jmri.JmriException;
 import jmri.Light;
 
 /**
@@ -527,6 +527,43 @@ public abstract class AbstractLight extends AbstractNamedBean
             listCopy.add(lightControlList1);
         });
         return listCopy;
+    }
+
+    @Override
+    public void setCommandedAnalogValue(float value) throws JmriException {
+        float middle = (getMax() - getMin()) / 2 + getMin();
+        
+        if (value > middle) {
+            setCommandedState(ON);
+        } else {
+            setCommandedState(OFF);
+        }
+    }
+
+    @Override
+    public float getCommandedAnalogValue() {
+        return (float) getCurrentIntensity();
+    }
+
+    @Override
+    public float getMin() {
+        return (float) getMinIntensity();
+    }
+
+    @Override
+    public float getMax() {
+        return (float) getMaxIntensity();
+    }
+
+    @Override
+    public float getResolution() {
+        // AbstractLight is by default only ON or OFF
+        return (float) (getMaxIntensity() - getMinIntensity());
+    }
+
+    @Override
+    public AbsoluteOrRelative getAbsoluteOrRelative() {
+        return AbsoluteOrRelative.ABSOLUTE;
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractLight.class);

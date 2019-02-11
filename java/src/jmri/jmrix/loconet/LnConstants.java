@@ -263,7 +263,7 @@ public final class LnConstants {
 
     /** Fast CLock valid **/
     public final static int FC_VALID = 0X40;
-   
+ 
      /** This slot communicates with the programming track   */
     public final static int PRG_SLOT = 0x7c;
 

@@ -16,8 +16,8 @@ import jmri.ReporterManager;
 import jmri.SensorManager;
 import jmri.ThrottleManager;
 import jmri.TurnoutManager;
-import jmri.jmrix.debugthrottle.DebugThrottleManager;
 import jmri.jmrix.SystemConnectionMemo;
+import jmri.jmrix.debugthrottle.DebugThrottleManager;
 import jmri.jmrix.loconet.swing.LnComponentFactory;
 import jmri.jmrix.swing.ComponentFactory;
 import jmri.managers.DefaultProgrammerManager;
@@ -35,8 +35,11 @@ import org.slf4j.LoggerFactory;
  */
 public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
 
+
     /**
      * Must manually register() after construction is complete.
+     * @param lt Traffic controller to be used
+     * @param sm Slot Manager to be used
      */
     public LocoNetSystemConnectionMemo(LnTrafficController lt, SlotManager sm) {
         super("L", "LocoNet"); // NOI18N

@@ -537,7 +537,9 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
             addEvent(node,event,canid,state,"","","",on,off,in,out); // on off in out
         } else {
             setValueAt(state, existingRow, STATE_COLUMN);
-            setValueAt(1, existingRow, LATEST_TIMESTAMP_COLUMN);
+             if ( (state==CbusTableEvent.EvState.ON) || (state==CbusTableEvent.EvState.OFF) ) {
+                setValueAt(1, existingRow, LATEST_TIMESTAMP_COLUMN);
+            }
             setValueAt(canid, existingRow, CANID_COLUMN);
             if (state==CbusTableEvent.EvState.ON) { setValueAt(1, existingRow, SESSION_ON_COLUMN); }
             if (state==CbusTableEvent.EvState.OFF) { setValueAt(1, existingRow, SESSION_OFF_COLUMN); }

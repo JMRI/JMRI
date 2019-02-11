@@ -32,7 +32,7 @@ import org.slf4j.LoggerFactory;
 @javax.annotation.concurrent.Immutable
 public enum LnCommandStationType {
 
-    //  enum value(name, canRead, progEndOp, ThrottleManager, SlotManager, supportsIdle, supports Multimeter
+    //  enum value(name, canRead, progEndOp, ThrottleManager, SlotManager, supportsIdle, supportsMultimeter
     COMMAND_STATION_DCS100("DCS100 (Chief)", true, false, "LnThrottleManager", "SlotManager", true, false), // NOI18N
     COMMAND_STATION_DCS240("DCS240 (Advanced Command Station)", true, false, "LnThrottleManager", "SlotManager", true, true), // NOI18N
     COMMAND_STATION_DCS210("DCS210 (Evolution Command Station)", true, false, "LnThrottleManager", "SlotManager", true, true), // NOI18N

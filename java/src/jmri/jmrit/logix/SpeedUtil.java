@@ -236,7 +236,7 @@ public class SpeedUtil {
         if (_rosterId == null) {
             setDccAddress(getAddress());
         }
-        if (log.isDebugEnabled()) log.debug("makeSpeedTree for {}.", _rosterId);
+        if (log.isTraceEnabled()) log.debug("makeSpeedTree for {}.", _rosterId);
         WarrantManager manager = InstanceManager.getDefault(WarrantManager.class);
         _mergeProfile = manager.getMergeProfile(_rosterId);
         _sessionProfile = manager.getSessionProfile(_rosterId);
@@ -354,7 +354,7 @@ public class SpeedUtil {
                 num = 0;
             }
         }
-        if (log.isDebugEnabled()) log.debug("getMomentumFactor for cv {} {}, num= {}", 
+        if (log.isTraceEnabled()) log.debug("getMomentumFactor for cv {} {}, num= {}", 
                 cv.getAttribute("name"), attr, num);
         return num;
     }
@@ -374,7 +374,7 @@ public class SpeedUtil {
                 num = 0;
             }
         }
-        if (log.isDebugEnabled()) log.debug("getMomentumAdustment for cv {} {},  num= {}",
+        if (log.isTraceEnabled()) log.debug("getMomentumAdustment for cv {} {},  num= {}",
                 cv.getAttribute("name"), attr, num);
         return num;
     }
@@ -408,7 +408,7 @@ public class SpeedUtil {
         // adjust user's setting to be throttle speed step settings
         float stepIncrement = _throttle.getSpeedIncrement();
         _rampThrottleIncrement = stepIncrement * Math.round(_rampThrottleIncrement/stepIncrement);
-        if (log.isDebugEnabled()) log.debug("User's Ramp increment modified to {} ({} speed steps)",
+        if (log.isTraceEnabled()) log.debug("User's Ramp increment modified to {} ({} speed steps)",
                 _rampThrottleIncrement, Math.round(_rampThrottleIncrement/stepIncrement));
     }
     
@@ -728,10 +728,6 @@ public class SpeedUtil {
             return;
         }
         float stepIncrement = _throttle.getSpeedIncrement();
-        throttle = stepIncrement * Math.round(throttle/stepIncrement);
-        if (_numchanges == 0) {
-            setSpeed(_mergeProfile, throttle, measuredSpeed, isForward);
-        }
 
         aveSettings = stepIncrement * Math.round(aveSettings/stepIncrement);
         setSpeed(_sessionProfile, aveSettings, measuredSpeed, isForward);
@@ -739,6 +735,11 @@ public class SpeedUtil {
             int step = Math.round(aveSettings / stepIncrement);
             log.debug("Block \"{}\", train \"{}\", {} Profile setting= {} (speedStep= {}), measuredSpeed= {} {}",
                     fromBlock.getDisplayName(), _rosterId, _numchanges, aveSettings, step, measuredSpeed, (isForward?"forward":"reverse"));
+        }
+
+        throttle = stepIncrement * Math.round(throttle/stepIncrement);
+        if (_numchanges == 0 || _mergeProfile.getProfileSize() <= _sessionProfile.getProfileSize()) {
+            setSpeed(_mergeProfile, throttle, measuredSpeed, isForward);
         }
         clearStats();
     }

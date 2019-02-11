@@ -17,6 +17,7 @@ import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.NamedBean;
 import jmri.Reporter;
+import jmri.util.ConnectionNameFromSystemName;
 import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -320,24 +321,23 @@ public class IdTagTableAction extends AbstractTableAction<IdTag> {
 
     @Override
     public void addToPanel(AbstractTableTabAction<IdTag> f) {
-        String systemPrefix = tagManager.getSystemPrefix();
+        String systemPrefix = ConnectionNameFromSystemName.getConnectionName(tagManager.getSystemPrefix());
         if (tagManager instanceof jmri.managers.ProxyIdTagManager ) {
-            systemPrefix = "All"; // NOI18N
-        }
-        /* The following code fails to add the buttons to the "ALL tab".
-           the reason for the failure is unclear, but this needs to be
-           fixed.
-        f.addToBottomBox(isStateStored, systemPrefix );
-        isStateStored.setSelected(tagManager.isStateStored());
-        isStateStored.addActionListener((ActionEvent e) -> {
-            tagManager.setStateStored(isStateStored.isSelected());
-        });
-        f.addToBottomBox(isFastClockUsed, systemPrefix );
-        isFastClockUsed.setSelected(tagManager.isFastClockUsed());
-        isFastClockUsed.addActionListener((ActionEvent e) -> {
-            tagManager.setFastClockUsed(isFastClockUsed.isSelected());
-        });*/
-        log.debug("Added CheckBox in addToPanel method for system {}",systemPrefix);
+            systemPrefix = "All";
+        } else if (systemPrefix == null && (tagManager instanceof jmri.managers.DefaultRailComManager )) {
+                systemPrefix = "RailCom"; // NOI18N (proper name).
+       }
+       f.addToBottomBox(isStateStored, systemPrefix );
+       isStateStored.setSelected(tagManager.isStateStored());
+       isStateStored.addActionListener((ActionEvent e) -> {
+           tagManager.setStateStored(isStateStored.isSelected());
+       });
+       f.addToBottomBox(isFastClockUsed, systemPrefix );
+       isFastClockUsed.setSelected(tagManager.isFastClockUsed());
+       isFastClockUsed.addActionListener((ActionEvent e) -> {
+           tagManager.setFastClockUsed(isFastClockUsed.isSelected());
+       });
+       log.debug("Added CheckBox in addToPanel method for system {}",systemPrefix);
     }
 
     @Override
