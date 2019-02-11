@@ -558,8 +558,7 @@ public final class InstanceManager {
     /**
      * Deprecated, use @{link #getDefault} directly.
      *
-     * @return the default block manager. May not be the only instance. In use
-     *         by scripts.
+     * @return the default block manager. May not be the only instance. 
      * @deprecated 4.5.1 to be removed in 4.17.1
      */
     @Deprecated
