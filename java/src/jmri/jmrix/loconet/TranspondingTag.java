@@ -19,7 +19,7 @@ import jmri.IdTag;
  *
  * @author Matthew Harris Copyright (C) 2011
  * @author Paul Bender Copyright (C) 2019
- * @since 2.15.4
+ * @since 4.15.4
  */
 public class TranspondingTag extends jmri.implementation.DefaultIdTag implements jmri.AddressedIdTag {
 
@@ -31,6 +31,12 @@ public class TranspondingTag extends jmri.implementation.DefaultIdTag implements
         super(systemName.toUpperCase(), userName);
     }
 
+    /**
+     * @deprecated since 4.15.4.  Eventually will be removed in favor of
+     * the {@link jmri.implementation.AbstractNamedBean#toString()}, which 
+     * does not produce the same result. Use {@link #toReportString()} instead.
+     */
+    @Deprecated
     @Override
     public String toString(){
        String exit = (String) getProperty("entryexit");
