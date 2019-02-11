@@ -438,37 +438,7 @@ class AutoDispatcher(jmri.jmrit.automat.AbstractAutomaton) :
         start_new_thread(self.__setup__, ())
 
     def __setup__(self):
-    # The real setup.
-
-    #Check if we are running in simulation mode 
-    # (when running as statup script we must wait for connections 
-    # to be established)
-        for i in range(60) :
-            try :
-                if (Apps.getConnection1().upper().find("SIMULATOR") < 0 and
-                  Apps.getConnection2().upper().find("SIMULATOR") < 0 and
-                  Apps.getConnection3().upper().find("SIMULATOR") < 0 and
-                  Apps.getConnection4().upper().find("SIMULATOR") < 0) :
-                    AutoDispatcher.simulation = False
-                else :
-                    AutoDispatcher.simulation = True
-                    if (Apps.getConnection1().upper() != "XPRESSNETSIMULATOR" < 0 and
-                     Apps.getConnection2().upper() != "XPRESSNETSIMULATOR" and
-                     Apps.getConnection3().upper() != "XPRESSNETSIMULATOR" < 0 and
-                     Apps.getConnection4().upper() != "XPRESSNETSIMULATOR" < 0) :
-                        AutoDispatcher.lenzSimulation = False
-                    else :
-                        AutoDispatcher.lenzSimulation = True
-                retrieveError = False
-                break
-            except :
-                retrieveError = True
-            self.waitMsec(1000)
-        if retrieveError :
-            print ("Sorry, unable to run AutoDispatcher as startup script!" +
-              "Launch it manually.")
-            AutoDispatcher.error = True
-            return
+        # The real setup.
         
         # Now perform initialization
         # Display the main window
