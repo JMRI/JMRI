@@ -1,7 +1,7 @@
 package jmri.jmrix.ieee802154.swing.mon;
 
 import java.util.Locale;
-import junit.framework.Assert;
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
