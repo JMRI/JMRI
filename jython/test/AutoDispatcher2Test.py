@@ -3,4 +3,7 @@
 # Author: Bob Jacobsen, copyright 2019
 # Part of the JMRI distribution
 
-execfile("jython/AutoDispatcher2.py")
+import java
+
+if (not java.awt.GraphicsEnvironment.isHeadless()) : 
+    execfile("jython/AutoDispatcher2.py")
