@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!--Copyright (C) JMRI 2003, 2004, 2008 All rights reserved -->
-<!--$Id$  -->
+<!--$Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -853,7 +853,7 @@
 					<enumChoice choice="Speed Table" value = "3">
 						<choice>Speed step table CVs 67-95, trim values CVs 66, 95</choice>
 						<choice xml:lang="de">Fahrstufentabelle CVs 67...95, Trimwerte CVs 66, 95</choice>
-						<choice xml:lang="nl">Instelbare snelheid’s tabel CVs 67...95, Trimwerte CVs 66, 95</choice>
+						<choice xml:lang="nl">Instelbare snelheid’s tabel CVs 67...95, Trim waarden CVs 66, 95</choice>
 					</enumChoice>
 					<enumChoice choice="3-point-curve" value = "4">
 						<choice>3-point-curve CVs 2, 5, 6, trim values CVs 66, 95</choice>
@@ -865,11 +865,6 @@
 						<choice xml:lang="de">Adresse (CVs 1, 17, 18, 29) wird auf 3 zurückgesetzt</choice>
 						<choice xml:lang="nl">Adres (CVs 1, 17, 18, 29) word op 3 teruggesteld</choice>
 					</enumChoice>
-					<!--<enumChoice choice="Mapping" value = "7">
-						<choice>Function Mapping (CV33 ..CV46) will be reset</choice>
-						<choice xml:lang="de">Function Mapping (CV33 ..CV46) wird zurückgesetzt</choice>
-						<choice xml:lang="nl">Functie mapping (CV33... CV46) wordt teruggesteld</choice>
-					</enumChoice>-->
 				</enumVal>
 			</variable>
 			<variable CV="66" comment="Range 1-248" item="Forward Trim">

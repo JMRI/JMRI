@@ -265,7 +265,7 @@ public final class LnConstants {
 
     /** Fast CLock valid **/
     public final static int FC_VALID = 0X40;
-   
+ 
      /** This slot communicates with the programming track   */
     public final static int PRG_SLOT = 0x7c;
 
@@ -519,6 +519,7 @@ public final class LnConstants {
     public final static int RE_IPL_DIGITRAX_HOST_DB220 = 0x16;
     public final static int RE_IPL_DIGITRAX_HOST_DCS210 = 0x1b;
     public final static int RE_IPL_DIGITRAX_HOST_DCS240 = 0x1c;
+    public final static int RE_IPL_DIGITRAX_HOST_DCS52 = 0x34;
     public final static int RE_IPL_DIGITRAX_HOST_PR3 = 0x23;
     public final static int RE_IPL_DIGITRAX_HOST_PR4 = 0x24;
     public final static int RE_IPL_DIGITRAX_HOST_DT402 = 0x2A;

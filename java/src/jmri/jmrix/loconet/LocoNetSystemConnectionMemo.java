@@ -16,8 +16,8 @@ import jmri.ReporterManager;
 import jmri.SensorManager;
 import jmri.ThrottleManager;
 import jmri.TurnoutManager;
-import jmri.jmrix.debugthrottle.DebugThrottleManager;
 import jmri.jmrix.SystemConnectionMemo;
+import jmri.jmrix.debugthrottle.DebugThrottleManager;
 import jmri.jmrix.loconet.swing.LnComponentFactory;
 import jmri.jmrix.swing.ComponentFactory;
 import jmri.managers.DefaultProgrammerManager;
@@ -35,11 +35,11 @@ import org.slf4j.LoggerFactory;
  */
 public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
 
+
     /**
      * Must manually register() after construction is complete.
-     *
-     * @param lt - Traffic Controller
-     * @param sm - Slot Manager
+     * @param lt Traffic controller to be used
+     * @param sm Slot Manager to be used
      */
     public LocoNetSystemConnectionMemo(LnTrafficController lt, SlotManager sm) {
         super("L", "LocoNet"); // NOI18N
@@ -146,11 +146,9 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
      * @param mTurnoutNoRetry Is the user configuration set for no turnout
      *            operation retries?
      * @param mTurnoutExtraSpace Is the user configuration set for extra time
-     *            between turnout operations?
-     * @param mTranspondingAvailable Is the layout configured to provide
-     *            transopnding reports
-     * @param mLoconetProtocolAutoDetect Do we automatically detect the protocol
-     *            to use or force LocoNet 1.1
+     *                           between turnout operations?
+     * @param mTranspondingAvailable    Is the layout configured to provide
+     *                                  transopnding reports
      */
     public void configureCommandStation(LnCommandStationType type, boolean mTurnoutNoRetry,
             boolean mTurnoutExtraSpace, boolean mTranspondingAvailable,
@@ -435,16 +433,16 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
         return lightManager;
     }
 
-    protected LnMultiMeter Multimeter;
+    protected LnMultiMeter multiMeter;
 
     public LnMultiMeter getMultiMeter() {
         if (getDisabled()) {
             return null;
         }
-        if (Multimeter == null) {
-            Multimeter = new LnMultiMeter(this);
+        if (multiMeter == null) {
+            multiMeter = new LnMultiMeter(this);
         }
-        return Multimeter;
+        return multiMeter;
     }
 
     @Override

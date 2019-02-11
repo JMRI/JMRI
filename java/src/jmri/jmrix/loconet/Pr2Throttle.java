@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
  */
 public class Pr2Throttle extends AbstractThrottle {
 
-    private int addr;
+    private final int addr;
     DccLocoAddress address;
 
     /**
