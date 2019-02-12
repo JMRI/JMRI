@@ -1,7 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Tranlation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-02-12 -->
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -27,40 +27,35 @@
     <div id="mainContent">
       <a name="Top" id="Top"></a>
 
-      <h1>DecoderPro&reg; Comprehensive Programmer</h1>
+      <h1>DecoderPro&reg; Programmeur Complet</h1>
 
-      <h2>Advanced Features Pane</h2>
+      <h2>Volet Fonctions Avanc&#233;es</h2>
 
       <div align="right">
-        <p><a href="Comp_Consist.shtml">Previous |</a> <a href=
-        "Comp_SoundFX.shtml">Next</a></p>
+        <p><a href="Comp_Consist.shtml">Pr&#233;c&#233;dent |</a> <a href=
+        "Comp_SoundFX.shtml">Suivant</a></p>
 
-        <p><a href="index.shtml#Advanced%20Programmer">Back to
-        Index</a></p>
+        <p><a href="index.shtml#Advanced%20Programmer">Suivant</a></p>
       </div>
       <hr>
 
-      <p>The <b>Advanced Features</b> pane covers CVs that don't
-      fall readily into one of the other categories, and more
-      importantly are not generally part of the NMRA DCC standard.
-      This is a bit like the Netscape/Microsoft Browser Wars, areas
-      where the manufacturer is pushing the envelope. In this case,
-      the CV here controls the Transponding feature of newer
-      Digitrax decoders, which allows them to report their location
-      and engine number back to the Loconet.</p>
+      <p>La sous-fen&#234;tre <b>Fonctions Avanc&#233;es</b> couvre les CV qui ne tombent pas 
+      facilement dans l'une des autres cat&#233;gories et qui, plus important encore, 
+      ne font g&#233;n&#233;ralement pas partie de la norme NMRA DCC.
+       Cela ressemble un peu &#224; la guerre entre navigateurs Netscape/Microsoft. Dans ce 
+       cas, le CV contr&#244;le ici la fonction de transpondeur des nouveaux d&#233;codeurs 
+       Digitrax, ce qui leur permet de signaler leur emplacement et leur num&#233;ro de moteur au Loconet</p>
 
-      <p>There may be one or several of these panes, depending on
-      how complex the decoder programming is and the style of the
-      person who wrote the definition file for your particular
-      decoder.</p>
+      <p>Il peut y avoir un ou plusieurs de ces volets, en fonction de 
+      la complexit&#233; de la programmation du d&#233;codeur et du style de l'auteur 
+      du fichier de d&#233;finition pour votre d&#233;codeur particulier. </P>
 
-      <p>Simple Advanced pane for Digitrax decoder.</p>
+       <p> Volet Avanc&#233; Simple pour d&#233;codeur Digitrax.</p>
 
       <h1><img src="images/Comp_08_Advanced.png" width="787"
       height="308" alt="advance pane"></h1>
 
-      <p>Complex Advanced pane for Tsunami OEM of the FP-45
-      decoder.</p>
+      <p>Volet Avanc&#233; Complexe pour Tsunami OEM du d&#233;codeur de la FP-45.</p>
 
       <p><img src="images/Comp_08b_Advanced.png" width="1000"
       height="348" alt="advanced pane"></p>
@@ -68,11 +63,10 @@
 
       <div align="right">
         <p><a href="Comp_SoundFX.shtml"></a> <a href=
-        "Comp_Consist.shtml">Previous |</a> <a href=
-        "Comp_SoundFX.shtml">Next</a></p>
+        "Comp_Consist.shtml">Pr&#233;c&#233;dent |</a> <a href=
+        "Comp_SoundFX.shtml">Suivant</a></p>
 
-        <p><a href="index.shtml#Advanced%20Programmer">Back to
-        Index</a></p>
+        <p><a href="index.shtml#Advanced%20Programmer">Retour &#224; l'Index</a></p>
       </div><!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
