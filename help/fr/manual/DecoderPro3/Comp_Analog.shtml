@@ -1,7 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Tranlation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-02-12 -->
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -27,42 +27,38 @@
     <div id="mainContent">
       <a name="Top" id="Top"></a>
 
-      <h1>DecoderPro&reg; Comprehensive Programmer</h1>
+      <h1>DecoderPro&reg; Programmeur Complet</h1>
 
-      <h2>Analog Controls Pane</h2>
+      <h2>Onglet de Contr&#244;les en Analogiques</h2>
 
       <div align="right">
-        <p><a href="Comp_LightFX.shtml">Previous |</a> <a href=
-        "Comp_Consist.shtml">Next</a></p>
+        <p><a href="Comp_LightFX.shtml">Pr&#233;c&#233;dent |</a> <a href=
+        "Comp_Consist.shtml">Suivant</a></p>
 
-        <p><a href="index.shtml#Advanced%20Programmer">Back to
-        Index</a></p>
+        <p><a href="index.shtml#Advanced%20Programmer">Retour &#224; l'Index</a></p>
       </div>
       <hr>
 
-      <p>As discussed in the <a href=
-      "Comp_Basic.shtml"><strong>Expanded Basic Pane</strong></a>,
-      some decoders allow operation on Analog or Conventional DC
-      layouts. At the discretion of the manufacturer, some of the
-      non-motor responses may be changeable by setting CV's in the
-      decoder. This pane is where you would set these values.
-      Typical would be whether any of the various functions (such
-      as lights and bell) would be on or off when in DC mode.
-      Consult your decoders manual for options available.</p>
+      <p>Comme indiqu&#233; dans le <a href= "Comp_Basic.shtml"> <strong> Onglet de Base &#201;largi 
+      </strong> </a>, certains d&#233;codeurs autorisent les op&#233;rations sur les r&#233;seau analogiques 
+      ou conventionnels. &#193; la discr&#233;tion du fabricant, certaines fonctions non motrices peuvent 
+      être modifiables en d&#233;finissant des CV dans le d&#233;codeur. Ce volet vous permet de d&#233;finir ces valeurs.
+      En r&#232;gle g&#233;n&#233;rale, l'une ou l'autre des diverses fonctions (telles que les voyants et la sonnerie) 
+      serait activ&#233;e ou d&#233;sactiv&#233;e en mode DC. 
+      Consultez le manuel de votre d&#233;codeur pour conna&#238;tre les options disponibles.</p>
 
-      <p>Some decoders are Analog Controls pane are simple and
-      others such as the FP-45 are complicated. <img src=
+      <p>Certains d&#233;codeurs sont des panneaux de Commandes Analogiques simples et 
+      d'autres tels que le FP-45 sont compliqu&#233;s. <img src=
       "images/AnalogModeFunctions.png" width="935" height="405"
       alt="analog functions"></p>
       <hr>
 
       <div align="right">
         <p><a href="Comp_SoundFX.shtml"></a><a href=
-        "Comp_LightFX.shtml">Previous |</a> <a href=
-        "Comp_Consist.shtml">Next</a></p>
+        "Comp_LightFX.shtml">Pr&#233;c&#233;dent |</a> <a href=
+        "Comp_Consist.shtml">Suivant</a></p>
 
-        <p><a href="index.shtml#Advanced%20Programmer">Back to
-        Index</a></p>
+        <p><a href="index.shtml#Advanced%20Programmer">Retour &#224; l'Index</a></p>
       </div><!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
