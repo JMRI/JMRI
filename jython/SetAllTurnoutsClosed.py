@@ -10,9 +10,8 @@ toCnt = 0
 chgCnt = 0
 
 # loop thru all defined turnouts
-for toName in turnouts.getSystemNameList().toArray() :
+for to in turnouts.getNamedBeanSet():
   toCnt += 1
-  to = turnouts.getTurnout(toName)
   cs = to.getState()
   if (cs != CLOSED) :
     chgCnt += 1

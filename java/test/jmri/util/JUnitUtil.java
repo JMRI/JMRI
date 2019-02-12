@@ -743,7 +743,7 @@ public class JUnitUtil {
 
     public static void initDebugThrottleManager() {
         jmri.ThrottleManager m = new DebugThrottleManager();
-        InstanceManager.setThrottleManager(m);
+        InstanceManager.store(m, ThrottleManager.class);
     }
 
     public static void initDebugProgrammerManager() {
