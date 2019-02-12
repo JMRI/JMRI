@@ -1,7 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Tranlation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-02-12 --
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -24,168 +24,142 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>The Basic Programmer</h1>
+      <h1>Le Programmeur Basique</h1>
 
-      <h2>The Roster Entry Pane</h2>
+      <h2>Le Volet Entr&#233;e Inventaire</h2>
 
       <div align="right">
-        <p><a href="Programmer_Setup.shtml">Previous |</a> <a href=
-        "Basic_BasicPane.shtml">Next</a></p>
+        <p><a href="Programmer_Setup.shtml">Pr&#233;c&#233;dent |</a> <a href=
+        "Basic_BasicPane.shtml">Suivant</a></p>
 
-        <p><a href="index.shtml#Basic%20Programmer">Back to
-        Index</a></p>
+        <p><a href="index.shtml#Basic%20Programmer">Retour &#224; l'Index</a></p>
       </div>
       <hr>
 
-      <p>The Basic Programmer uses only the required panes to set
-      up the decoder for DCC operation and creating a Roster entry
-      and uses only the first two TABs. The first action in
-      programming a locomotive with DecoderPro&reg; is to fill out
-      the roster entry screen.</p>
+      <p>Le programmeur de base utilise uniquement les onglets requis pour configurer 
+      le d&#233;codeur pour le fonctionnement DCC et la cr&#233;ation d'une entr&#233;e d'Inventaire 
+      et utilise uniquement les deux premiers onglets. La premi&#232;re action dans la programmation 
+      d'une locomotive avec DecoderPro&reg; est de remplir l'&#233;cran de saisie de l'Inventaire.</p>
 
-      <p>A <b>roster</b> is a database of all locomotives that your
-      installation of DecoderPro has programmed. All of this
-      information will be contained in the list on the DecoderPro
-      main page. It includes the information seen in the screen
-      below:</p>
+      <p>Un <b>Inventaire</b> est une base de donn&#233;es de toutes les locomotives programm&#233;es 
+      par votre installation de DecoderPro. Toutes ces informations figureront dans la liste 
+      de la page principale de DecoderPro. Il comprend les informations affich&#233;es dans 
+      l'&#233;cran ci-dessous:</p>
 
       <div align="center">
         <img style="width: 642px; height: 602px;" alt=
         "Basic roster" src="images/Basic_Roster.png"><br>
       </div>
 
-      <p>Most of these fields are self-explanatory. However, note
-      that the first field (<strong>ID</strong>) becomes the file
-      name in the Roster for the locomotive you are programming.
-      Set up a schema to identify your locomotive to its decoder
-      program. i.e. Mfr, Loco Type, and Address (Kato_SD40-2_5645).
-      Spaces in the ID field will be changed to underscores (_)
-      when the file is written. In a club environment, often the ID
-      begins with the owner's name, or member number. This way the
-      Roster (which is sorted alphabetically) will keep all of an
-      owner's locomotives listed together. DecoderPro also allows
-      you to categorize roster entries into Groups, so you could
-      have a separate group for each member.</p>
+      <p>a plupart de ces champs sont explicites. Cependant, notez que le premier champ 
+      (<strong>ID</strong>) devient le nom du fichier dans l'Inventaire de la locomotive que 
+      vous programmez. Configurez un sch&#233;ma pour identifier votre locomotive dans son programme 
+      de d&#233;codeur. C'est-&#224;-dire le fabricant, le type de locomotive et l'adresse (Kato_SD40-2_5645).
+       Les espaces dans le champ ID seront remplac&#233;s par des traits de soulignement (_) lors de 
+       l'&#233;criture du fichier. Dans un club, l'identifiant commence souvent par le nom du propri&#233;taire 
+       ou son num&#233;ro de membre. De cette fa&#231;on, la liste (class&#233;e par ordre alphab&#233;tique) 
+       conservera la liste de toutes les locomotives du propri&#233;taire. DecoderPro vous permet 
+       &#233;galement de classer les entr&#233;es de l'Inventaire dans des Groupes, afin que vous puissiez 
+       avoir un groupe s&#233;par&#233; pour chaque membre..</p>
 
-      <p>We'll get to Groups and all the other neat stuff that can
-      be done with DecoderPro in a while. I just thought I'd give
-      you peek behind the curtain, and give you a chance to
-      mentally thank the JMRI developers for all their work on
-      DecoderPro version 3. Of course a message to that effect
-      posted to the JMRI Yahoo group would also be warmly
-      received.<br>
+      <p>Nous arriverons aux groupes et &#224; tous les autres trucs int&#233;ressants que l'on peut 
+      faire avec DecoderPro dans un moment. Je pensais juste que je vous jetterais un coup d'&#156;il 
+      derri&#232;re le rideau et vous donnerais la chance de remercier mentalement les d&#233;veloppeurs 
+      JMRI pour tout leur travail sur DecoderPro version 3. Bien s&#251;r, un message &#224; cet effet post&#233; 
+      sur le groupe JMRI Yahoo serait &#233;galement chaleureusement re&#231;u.<br>
       <br>
-      The DCC address will be filled in automatically when we get
-      to programming the address. The Decoder Family and Model are
-      entered automatically from the Selection page we just used to
-      get here.</p>
+      L'adresse DCC sera automatiquement renseign&#233;e lors de la programmation de l'adresse. 
+      La famille et le mod&#232;le de d&#233;codeur sont entr&#233;s automatiquement &#224; partir de la page de 
+      s&#233;lection que nous venons d'utiliser pour arriver ici..</p>
 
-      <p>The <strong>Decoder</strong> <strong>Comment</strong>
-      field is a good place to add the date you purchased the
-      locomotive, price, or any other information you might feel is
-      important to record.</p>
+      <p> Le champ <strong>Commentaire</strong> <strong>Decodeur</strong> est l'endroit id&#233;al 
+      pour ajouter la date d'achat de la locomotive, son prix ou toute autre information 
+      qu'il serait important d'enregistrer. </p>
 
-      <p>The <input name="SaveToRoster" value="Save to Roster"
-      type="submit"> button stores the current decoder information
-      to your computer hard drive and folder where your roster file
-      is located. The default storage is the same directory where
-      the program is installed.</p>
+      <p>Le bouton <input name = "SaveToRoster" value = "Enregistrer dans la liste" type = "submit"> 
+      stocke les informations actuelles du d&#233;codeur sur le disque dur et dans le dossier de votre 
+      ordinateur o&#249; se trouve votre fichier d'inventaire. Le stockage par d&#233;faut est le m&#234;me 
+      r&#233;pertoire o&#249; le programme est install&#233;.</p>
 
-      <p>The <input name="button" id="button" value=
-      "Reset to Defaults" type="submit"> button can be used to
-      return the Roster file to the condition of a new file for the
-      type and version of the decoder listed in the roster entry.
-      It does NOT change the values in the roster file on your hard
-      disk, unless you specifically save it after using this reset
-      button. It also is not written to the decoder until you
-      specifically select a write operation. It was included in
-      DecoderPro so that if you get hopelessly confused in
-      proceeding screen to screen entering variables, you can
-      return to the decoder manufacturers baseline default set and
-      start again.</p>
+      <p>e bouton <input name = "button" id = "button" value = "R&#233;initialiser" type = "submit"> 
+      peut &#234;tre utilis&#233; pour ramener le fichier d'Inventaire &#224; la condition d'un nouveau 
+      fichier pour le type et la version du d&#233;codeur &#233;num&#233;r&#233;s dans l'entr&#233;e de l'inventaire.
+       Il ne modifie pas les valeurs du fichier d'inventaire sur votre disque dur, 
+       sauf si vous enregistrez sp&#233;cifiquement apr&#232;s l'utilisation de ce bouton de 
+       r&#233;initialisation. De plus, il n'est pas &#233;crit dans le d&#233;codeur tant que vous 
+       n'avez pas s&#233;lectionn&#233; une op&#233;ration d'&#233;criture. Il a &#233;t&#233; inclus dans DecoderPro 
+       afin que, si vous vous trompez lors de la proc&#233;dure &#233;cran &#224; &#233;cran, vous pouvez revenir 
+       au jeu de param&#232;tres par d&#233;faut du fabricant du d&#233;codeur et recommencer..</p>
 
       <p><br>
-      Most decoders will activate the <strong>Reset Menu</strong>
-      (next to the File menu at the top of the page). This will
-      reset the decoder to the manufacturers default settings for
-      all the CVs, or just some of them if the manufacturer has
-      several reset routines. It does this by writing directly to a
-      CV in the decoder, if the decoder has that feature, CV8 in
-      the case of Digitrax. All decoders may not support reset and
-      how they work is manufacturer and decoder dependent.</p>
+      La plupart des d&#233;codeurs activent le <strong>Menu R&#233;initialiser</strong> (&#224; c&#244;t&#233; du menu 
+      Fichier en haut de la page). Cela r&#233;initialisera le d&#233;codeur aux param&#232;tres par d&#233;faut du 
+      fabricant pour tous les CV, ou seulement &#224; certains d'entre eux si le fabricant dispose de 
+      plusieurs routines de r&#233;initialisation. Pour ce faire, il &#233;crit directement dans un CV du d&#233;codeur, 
+      si le d&#233;codeur a cette fonctionnalit&#233;, CV8 dans le cas de Digitrax. Tous les d&#233;codeurs peuvent 
+      ne pas prendre en charge la r&#233;initialisation et leur fonctionnement d&#233;pend du fabricant et du d&#233;codeur.</p>
 
       <p><br>
-      One decoder with a lengthy list of reset routines is the QSI
-      Revolution decoder, which enables a drop-down list of options
-      for resetting the decoder as shown below:</p>
+      Un d&#233;codeur avec une longue liste de routines de r&#233;initialisation est le d&#233;codeur 
+      QSI Revolution, qui active une liste d&#233;roulante d'options pour r&#233;initialiser le 
+      d&#233;codeur, comme indiqu&#233; ci-dessous:
+</p>
 
       <p style="text-align: center;"><img src=
       "images/FactoryReset.jpg" alt="Factory reset" height="557"
       width="638"></p>
 
-      <p>You will note that the decoder address is shown but grayed
-      out (or blank if this is a new locomotive in the roster).
-      This field is automatically filled in by the program and is
-      determined from the address entered using the
-      <strong>Basic</strong> tab which we will get to shortly. This
-      address is used with the <strong>Ident</strong> function on
-      the start page if you wish to recall a locomotive that is
-      already in your roster.</p>
+      <p>Vous noterez que l'adresse du d&#233;codeur est affich&#233;e, mais estomp&#233;e (ou vide s'il 
+      s'agit d'une nouvelle locomotive dans la liste). Ce champ est automatiquement renseign&#233; 
+      par le programme et est d&#233;termin&#233; &#224; partir de l'adresse entr&#233;e &#224; l'aide de l'onglet 
+      <strong>Basique</strong> auquel nous arriverons bient&#244;t. Cette adresse est utilis&#233;e avec 
+      la fonction <strong>Ident</strong> de la page de d&#233;marrage si vous souhaitez rappeler une 
+      locomotive figurant d&#233;j&#224; sur votre liste..</p>
 
       <p><a name="ProgramModes" id="ProgramModes"></a>The
-      Programming mode can be changed by clicking on the drop down
-      box</p>
+      Le mode de programmation peut &#234;tre modifi&#233; en cliquant sur la liste d&#233;roulante </p>
 
       <div align="center">
         <img src="images/SetProgramMode.png" alt="set program mode"
         height="218" width="653">
       </div>
+		<p> Il existe des options pour plusieurs <a href= "Basic_Mode.shtml"> <strong> modes de 
+		programmation </strong> </a>. JMRI s&#233;lectionne maintenant le meilleur mode pour vous. 
+		Cela est d&#233;termin&#233; &#224; partir du type de centrale de commande que vous utilisez et 
+		du mod&#232;le de d&#233;codeur que vous essayez de programmer. Habituellement ce sera OK.
+       Si vous rencontrez des probl&#232;mes de programmation, vous pouvez essayer un autre mode. </P>
 
-      <p>There are options for several <a href=
-      "Basic_Mode.shtml"><strong>programming modes</strong></a>.
-      JMRI now selects the best mode for you. It determines this
-      from the command station type you are using and the decoder
-      model you are attempting to program. Usually this will be OK.
-      If you find that you are having a problem with programming
-      you may try a different mode.</p>
+       <p> Pour la plupart des nouveaux d&#233;codeurs, restez en <strong> mode Pagin&#233; </strong> ou selon 
+       le Mode Direct pris en charge par votre centrale de commande. La documentation de votre 
+       d&#233;codeur devrait vous indiquer si la programmation dans un autre mode est n&#233;cessaire ... mais 
+       si vous rencontrez des probl&#232;mes, exp&#233;rimentez. Si un mode n'est pas pris en charge pour 
+       le d&#233;codeur et le syst&#232;me s&#233;lectionn&#233;, cette option est gris&#233;e. Pour ce d&#233;codeur, je vais 
+       utiliser le mode Octet Direct. </P>
 
-      <p>For most newer decoders, stay with <strong>Paged
-      mode</strong> or whichever Direct mode your Command Station
-      supports. Your decoder documentation should let you know if
-      programming in some other mode is necessary... but if you are
-      having problems, experiment. If a mode is not supported for
-      the selected decoder and system, that option will be grayed
-      out. For this decoder I will use Direct Bye Mode.</p>
+      <p>Lorsque vous effectuez votre s&#233;lection, le mode de programmation doit maintenant appara&#238;tre 
+      &#224; gauche dans la liste d&#233;roulante. </P>
+       <p> Vous trouverez ci-dessous une configuration de base de l'inventaire de programmation pour 
+       la locomotive Athearn FP-45 &#224; l'&#233;chelle n avec le d&#233;codeur OEM (Tsunami 750). La note 
+       dans le statut en bas de l'onglet indique que le fichier a &#233;t&#233; enregistr&#233;. </P>
 
-      <p>When you make your selection, the programming mode should
-      now display to the left of the in the dropdown box.</p>
+       <p style = "text-align: center;"> <img src =
+       "images/Basic_Roster01.png" alt = "roster" height = "557" width = "642"> </p>
 
-      <p>Below is a Basic Programming Roster setup for Athearn
-      FP-45 locomotive in n scale with OEM decoder (Tsunami 750)
-      decoder. Note in the status at the bottom of pane indicates
-      that the file has been saved.</p>
+       <p> Maintenant que toutes les informations de la liste sont en ordre, 
+       nous pouvons continuer &#224; programmer le d&#233;codeur. </p>
 
-      <p style="text-align: center;"><img src=
-      "images/Basic_Roster01.png" alt="roster" height="557" width=
-      "642"></p>
+      <p>Maintenant il est temps de cliquer sur le bouton <strong>Enregistrer dans la liste</strong> 
+      pour enregistrer ces donn&#233;es. Notez qu'il y aura un bref message dans la barre d'&#233;tat en bas 
+      de l'&#233;cran indiquant que la liste a &#233;t&#233; sauvegard&#233;e. </P>
 
-      <p>Now that we have the Roster information all in order, we
-      can continue with programming the decoder.</p>
-
-      <p>Now it's time to click on the <strong>Save to
-      Roster</strong> button to save this data. Note that there
-      will be brief message in status bar at the bottom of the
-      screen that roster has been saved.</p>
-
-      <p>Let's move on to the Basic Programmer.</p>
+       <p> Passons au programmeur basique. </p>
       <hr>
 
       <div align="right">
-        <p><a href="Programmer_Setup.shtml">Previous |</a> <a href=
+        <p><a href="Programmer_Setup.shtml">Pr&#233;c&#233;dent |</a> <a href=
         "Basic_BasicPane.shtml">Next</a></p>
 
-        <p><a href="index.shtml#Basic%20Programmer">Back to
-        Index</a></p>
+        <p><a href="index.shtml#Basic%20Programmer">Retour &#224; l'Index</a></p>
       </div><!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
