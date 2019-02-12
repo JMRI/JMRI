@@ -718,6 +718,7 @@ public class FrmMainForm extends JFrame {
 
     public void shutdown() {
         _mJMRIConnection.close();
+        jmri.InstanceManager.reset(jmri.jmrit.ctc.editor.gui.FrmMainForm.class);
         dispose();
     }
 

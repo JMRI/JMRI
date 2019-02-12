@@ -22,13 +22,14 @@ public class CtcRunAction extends JmriAbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (jmri.InstanceManager.getNullableDefault(CtcRun.class) != null) {
+        if (jmri.InstanceManager.getNullableDefault(CTCMain.class) != null) {
             // Prevent duplicate copies
             return;
         }
         CTCMain _mCTCMain = new CTCMain();
-        
-        // Set the default file path.  TODO: Implement a file selector if not found
+        jmri.InstanceManager.setDefault(CTCMain.class, _mCTCMain);
+
+        // Set the file path.
         String filename = jmri.util.FileUtil.getUserFilesPath() + "ctc/CTCSystem.xml";
 
         _mCTCMain.readDataFromXMLFile(filename);

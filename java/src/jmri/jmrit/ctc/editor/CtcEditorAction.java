@@ -21,11 +21,12 @@ public class CtcEditorAction extends JmriAbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (jmri.InstanceManager.getNullableDefault(CtcEditor.class) != null) {
+        if (jmri.InstanceManager.getNullableDefault(jmri.jmrit.ctc.editor.gui.FrmMainForm.class) != null) {
             // Prevent duplicate copies
             return;
         }
-        javax.swing.JFrame f = new jmri.jmrit.ctc.editor.gui.FrmMainForm();
+        jmri.jmrit.ctc.editor.gui.FrmMainForm f = new jmri.jmrit.ctc.editor.gui.FrmMainForm();
+        jmri.InstanceManager.setDefault(jmri.jmrit.ctc.editor.gui.FrmMainForm.class, f);
         f.setVisible(true);
     }
 
