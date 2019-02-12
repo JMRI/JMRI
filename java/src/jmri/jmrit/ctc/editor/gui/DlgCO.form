@@ -99,7 +99,7 @@
                           <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="_mCalledOnExternalSensor" min="-2" pref="70" max="-2" attributes="0"/>
-                          <EmptySpace pref="46" max="32767" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                           <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="_mExternalBlock" min="-2" pref="177" max="-2" attributes="0"/>
