@@ -98,6 +98,8 @@ public class DlgCO extends javax.swing.JDialog {
         _mSwitchIndicator6.setModel(new DefaultComboBoxModel<>(arrayOfSelectableSwitchDirectionIndicators));
         _mAwtWindowProperties.setWindowState((java.awt.Window)this, FORM_PROPERTIES);       
         enableTopPart(true);
+        _mEditBelow.setEnabled(false);        
+        _mDelete.setEnabled(false);
     }
    
     public static boolean dialogCodeButtonHandlerDataValid(CheckJMRIObject checkJMRIObject, CodeButtonHandlerData codeButtonHandlerData) {
@@ -573,7 +575,6 @@ public class DlgCO extends javax.swing.JDialog {
         }
         else {
             _mDefaultListModel.set(_mGroupingsList.getSelectedIndex(), newValue);
-            _mEditBelow.setEnabled(true);   // MUST do this AFTER "enableTopPart(true)", to override it!
         }
         _mGroupingsList.setEnabled(true);
     }//GEN-LAST:event__mGroupingListAddReplaceActionPerformed
@@ -590,13 +591,17 @@ public class DlgCO extends javax.swing.JDialog {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void _mGroupingsListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event__mGroupingsListValueChanged
-        _mEditBelow.setEnabled(true);   // Something selected, ALLOW:
-        _mDelete.setEnabled(true);
+        if (_mGroupingsList.isSelectionEmpty()) {
+            _mEditBelow.setEnabled(false);        
+            _mDelete.setEnabled(false);
+        } else {
+            _mEditBelow.setEnabled(true);        
+            _mDelete.setEnabled(true);
+        }
     }//GEN-LAST:event__mGroupingsListValueChanged
 
     private void _mCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mCancelActionPerformed
         enableTopPart(true);
-        _mEditBelow.setEnabled(true);   // MUST do this AFTER "_mGroupingListAddReplace.setEnabled(false)", to override it!
         _mGroupingsList.setEnabled(true);
     }//GEN-LAST:event__mCancelActionPerformed
 
@@ -610,9 +615,6 @@ public class DlgCO extends javax.swing.JDialog {
 
     private void enableTopPart(boolean enabled) {
         _mAddNew.setEnabled(enabled);
-        _mEditBelow.setEnabled(false);        
-        _mDelete.setEnabled(false);
-        
         _mSignalHead.setEnabled(enabled);
         _mSignalMast.setEnabled(enabled);
         _mSwitchIndicator1.setEnabled(!enabled);

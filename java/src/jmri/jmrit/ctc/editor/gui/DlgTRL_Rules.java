@@ -110,6 +110,8 @@ public class DlgTRL_Rules extends javax.swing.JDialog {
         _mSwitchAlignment4.setModel(new javax.swing.DefaultComboBoxModel<>(normalAndReverse));
         _mSwitchAlignment5.setModel(new javax.swing.DefaultComboBoxModel<>(normalAndReverse));
         enableTopPart(true);
+        _mEditBelow.setEnabled(false);
+        _mDelete.setEnabled(false);
     }
     
     /**
@@ -436,8 +438,13 @@ public class DlgTRL_Rules extends javax.swing.JDialog {
     }//GEN-LAST:event_formWindowClosing
 
     private void _mTRL_TrafficLockingRulesSSVListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event__mTRL_TrafficLockingRulesSSVListValueChanged
-        _mEditBelow.setEnabled(true);   // Something selected, ALLOW:
-        _mDelete.setEnabled(true);
+        if (_mTRL_TrafficLockingRulesSSVList.isSelectionEmpty()) {
+            _mEditBelow.setEnabled(false);        
+            _mDelete.setEnabled(false);
+        } else {
+            _mEditBelow.setEnabled(true);        
+            _mDelete.setEnabled(true);
+        }
     }//GEN-LAST:event__mTRL_TrafficLockingRulesSSVListValueChanged
 
     private void _mAddNewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mAddNewActionPerformed
@@ -521,7 +528,6 @@ public class DlgTRL_Rules extends javax.swing.JDialog {
     }//GEN-LAST:event__mDeleteActionPerformed
 
     private void _mGroupingListAddReplaceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mGroupingListAddReplaceActionPerformed
-
         TrafficLockingEntry trafficLockingEntry = new TrafficLockingEntry(  _mRuleEnabled.isSelected() ? TrafficLockingEntry.RULE_ENABLED_STRING : TrafficLockingEntry.RULE_DISABLED_STRING,
                                                                             (String)_mSwitchAlignment1.getSelectedItem(),
                                                                             (String)_mSwitchAlignment2.getSelectedItem(),
@@ -587,7 +593,6 @@ public class DlgTRL_Rules extends javax.swing.JDialog {
             trafficLockingEntry._mUserRuleNumber = getRuleNumberString(selectedIndex + 1);
             String newValue = trafficLockingEntry.toCSVString();
             _mDefaultListModel.set(selectedIndex, newValue);
-            _mEditBelow.setEnabled(true);
         }
         _mTRL_TrafficLockingRulesSSVList.setEnabled(true);
     }//GEN-LAST:event__mGroupingListAddReplaceActionPerformed
@@ -605,7 +610,6 @@ public class DlgTRL_Rules extends javax.swing.JDialog {
     
     private void _mCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mCancelActionPerformed
         enableTopPart(true);
-        _mEditBelow.setEnabled(true);   // MUST do this AFTER "_mGroupingListAddReplace.setEnabled(false)", to override it!
         _mTRL_TrafficLockingRulesSSVList.setEnabled(true);
     }//GEN-LAST:event__mCancelActionPerformed
 
@@ -634,12 +638,6 @@ public class DlgTRL_Rules extends javax.swing.JDialog {
     
     private void enableTopPart(boolean enabled) {
         _mAddNew.setEnabled(enabled);
-        _mEditBelow.setEnabled(false);        
-        if (enabled && !_mTRL_TrafficLockingRulesSSVList.isSelectionEmpty()) {
-            _mDelete.setEnabled(true);
-        } else {
-            _mDelete.setEnabled(false);
-        }
         _mOccupancyExternalSensor1.setEnabled(!enabled);
         _mOccupancyExternalSensor2.setEnabled(!enabled);
         _mOccupancyExternalSensor3.setEnabled(!enabled);
