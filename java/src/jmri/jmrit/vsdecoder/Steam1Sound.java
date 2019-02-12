@@ -483,7 +483,6 @@ class Steam1Sound extends EngineSound {
         private ByteBuffer coastfiller_data;
         private List<AudioBuffer> bufs_helper = new ArrayList<>();
         private List<ByteBuffer> chuff_bufs_data = new ArrayList<>();
-        private List<ByteBuffer> chufflight_bufs_data = new ArrayList<>();
         private List<ByteBuffer> coast_bufs_data = new ArrayList<>();
 
         private S1Notch(int notch) {
@@ -609,7 +608,6 @@ class Steam1Sound extends EngineSound {
         private boolean is_key_coasting;
         private boolean is_idling;
         private boolean is_braking;
-        private boolean waitForFiller;
         private boolean is_half_speed;
         private boolean is_in_rampup_mode;
         private int lastRpm;
@@ -630,8 +628,6 @@ class Steam1Sound extends EngineSound {
         private int count_pre_arrival;
         private int queue_limit;
         private int wait_loops;
-        private int sbl_fill;
-        private int wait_notch;
         public static final int SLEEP_INTERVAL = 50;
 
         public S1LoopThread(Steam1Sound d, String s, int ts, int tsr, float dd, 
@@ -650,7 +646,6 @@ class Steam1Sound extends EngineSound {
             is_key_coasting = false;
             is_idling = false;
             is_braking = false;
-            waitForFiller = false;
             is_in_rampup_mode = false;
             lastRpm = 0;
             rpm_dirfn = 0;
@@ -662,8 +657,6 @@ class Steam1Sound extends EngineSound {
             count_pre_arrival = 1;
             queue_limit = 2;
             wait_loops = 0;
-            sbl_fill = 0;
-            wait_notch = 1;
             if (r) {
                 this.start();
             }
