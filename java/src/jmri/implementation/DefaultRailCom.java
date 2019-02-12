@@ -66,6 +66,10 @@ public class DefaultRailCom extends DefaultIdTag implements jmri.RailCom {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Deprecated
     @Override
     public String getAddressTypeAsString() {
         switch (addressTypeInt) {
@@ -80,22 +84,21 @@ public class DefaultRailCom extends DefaultIdTag implements jmri.RailCom {
         }
     }
 
-    @Override
-    public DccLocoAddress getDccLocoAddress() {
-        boolean longAddress = false;
-        if (addressTypeInt == LONG_ADDRESS) {
-            longAddress = true;
-        }
-        return new DccLocoAddress(Integer.parseInt(getTagID()), longAddress);
-    }
-
     int addressTypeInt = 0;
 
+    /**
+     * {@inheritDoc}
+     */
+    @Deprecated
     @Override
     public void setAddressType(int type) {
         addressTypeInt = type;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Deprecated
     @Override
     public int getAddressType() {
         return addressTypeInt;
@@ -285,7 +288,7 @@ public class DefaultRailCom extends DefaultIdTag implements jmri.RailCom {
                 comment = "Unknown Orientation ";
                 break;
         }
-        comment = comment + "Address " + getDccLocoAddress() + " ";
+        comment = comment + "Address " + getLocoAddress() + " ";
 
         if (getWaterLevel() != -1) {
             comment = comment + "Water " + getWaterLevel() + " ";

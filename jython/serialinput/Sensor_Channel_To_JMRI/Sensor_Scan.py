@@ -47,7 +47,7 @@ class SerialSensorMux(jmri.jmrit.automat.AbstractAutomaton) :
                 self.outputStream.write('!')
                 self.outputStream.write(0x0D)
                 ttest = 0
-        # get next character	
+        # get next character    
         if self.inputStream.read() != 65 :
                 return 1
         sensor_num = self.inputStream.read()

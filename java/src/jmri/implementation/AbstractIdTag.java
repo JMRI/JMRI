@@ -59,6 +59,11 @@ public abstract class AbstractIdTag extends AbstractNamedBean implements IdTag,R
         }
     }
 
+    /**
+     * The IDTag version of toReportString returns a string consisting
+     * of the user name (if defined) or Tag ID followed by the associated
+     * list of property values.
+     */
     @Override
     public String toReportString() {
         String userName = getUserName();
@@ -85,29 +90,6 @@ public abstract class AbstractIdTag extends AbstractNamedBean implements IdTag,R
     @Override
     public String getBeanType() {
         return Bundle.getMessage("BeanNameReporter");
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * This implementation fires property change listeners
-     * when properties change.
-     */
-    @Override
-    public void setProperty(String key,Object value){
-         Set<String> keySet = getPropertyKeys();
-         if(keySet.contains(key)){
-            // key already in the map, replace the value.
-            Object oldValue = getProperty(key);
-            if(!(oldValue.equals(value))){
-	       removeProperty(key); // make sure the old value is removed.
-	       super.setProperty(key,value); // then add the new one.
-               firePropertyChange(key,oldValue,value);
-            }
-         } else {
-	    super.setProperty(key,value);
-            firePropertyChange(key,null,value);
-         }
     }
 
 //    private static final Logger log = LoggerFactory.getLogger(AbstractIdTag.class);

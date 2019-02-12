@@ -31,6 +31,7 @@ public class AmpMeterAction extends AbstractAction {
     public void actionPerformed(ActionEvent e) {
 
         AmpMeterFrame f = new AmpMeterFrame();
+        f.initComponents();
         f.setVisible(true);
 
     }

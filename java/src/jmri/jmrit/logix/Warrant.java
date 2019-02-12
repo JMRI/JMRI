@@ -1890,11 +1890,11 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                     activeIdx, _idxCurrentOrder);
             return;
         }
+        setHeadOfTrain(block);
+        fireRunStatus("blockChange", getBlockAt(activeIdx - 1), block);
         if (_engineer != null) {
             _engineer.clearWaitForSync(); // Sync commands if train is faster than ET
         }
-        setHeadOfTrain(block);
-        fireRunStatus("blockChange", getBlockAt(activeIdx - 1), block);
         // _idxCurrentOrder has been incremented. Warranted train has entered this block.
         // Do signals, speed etc.
         if (_idxCurrentOrder < _orders.size() - 1) {
@@ -1980,12 +1980,16 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                         log.warn("block \"{}\" goingInactive. train has entered rogue occupied block {}! warrant {}",
                                 block.getDisplayName(), nextBlock.getDisplayName(), getDisplayName());
                    } else {
-                       OBlock prevBlock = getBlockAt(_idxCurrentOrder - 1);
-                       if ((prevBlock.getState() & OBlock.OCCUPIED) != 0 && this.equals(prevBlock.getWarrant())) {
-                           // assume nosed into block, then lost contact
-                           _idxCurrentOrder -= 1;  // set head to previous BlockOrder
-                       } else {
-                           // train is lost
+                       boolean lost = true;
+                       if (_idxCurrentOrder > 0) {
+                           OBlock prevBlock = getBlockAt(_idxCurrentOrder - 1);
+                           if ((prevBlock.getState() & OBlock.OCCUPIED) != 0 && this.equals(prevBlock.getWarrant())) {
+                               // assume nosed into block, then lost contact
+                               _idxCurrentOrder -= 1;  // set head to previous BlockOrder
+                               lost = false;
+                           }                         
+                       }
+                       if (lost) {
                            log.warn("block \"{}\" goingInactive. train is lost! warrant {}",
                                        block.getDisplayName(), getDisplayName());
                            fireRunStatus("blockChange", block, null);

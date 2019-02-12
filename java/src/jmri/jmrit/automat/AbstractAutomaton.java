@@ -974,7 +974,7 @@ public class AbstractAutomaton implements Runnable {
             @Override
             public void notifyStealThrottleRequired(jmri.LocoAddress address) {
                 // this is an automatically stealing impelementation.
-                InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, true);
+                InstanceManager.getDefault(ThrottleManager.class).stealThrottleRequest(address, this, true);
             }
         };
         boolean ok = InstanceManager.getDefault(ThrottleManager.class)
@@ -1044,10 +1044,10 @@ public class AbstractAutomaton implements Runnable {
             @Override
             public void notifyStealThrottleRequired(jmri.LocoAddress address) {
                 // this is an automatically stealing impelementation.
-                InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, true);
+                InstanceManager.getDefault(ThrottleManager.class).stealThrottleRequest(address, this, true);
             }
         };
-        boolean ok = InstanceManager.throttleManagerInstance()
+        boolean ok = InstanceManager.getDefault(ThrottleManager.class)
                 .requestThrottle(re, throttleListener);
 
         // check if reply is coming

@@ -10,11 +10,8 @@ import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
-import jmri.jmrix.can.cbus.CbusCommandStation;
 import jmri.jmrix.can.cbus.CbusMessage;
 import jmri.jmrix.can.cbus.CbusOpCodes;
-import jmri.jmrix.can.cbus.eventtable.CbusEventTableAction;
-import jmri.jmrix.can.cbus.eventtable.CbusTableEvent;
 import jmri.jmrix.can.TrafficController;
 import jmri.util.swing.TextAreaFIFO;
 import jmri.util.ThreadingUtil;
@@ -73,12 +70,9 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
         log.info("Starting MERG CBUS Event Table");
         _mainArray = new ArrayList<CbusTableEvent>();
         tablefeedback = new TextAreaFIFO(MAX_LINES);
-       // _memo = memo;
-        // register instance with command station
-        CbusCommandStation cmndstat = (CbusCommandStation) memo.get(jmri.CommandStation.class);
-        if ( cmndstat != null ) {
-            cmndstat.setEventTable(this);
-        }
+
+        jmri.InstanceManager.store(this,jmri.jmrix.can.cbus.eventtable.CbusEventTableDataModel.class);
+        
         // connect to the CanInterface
         tc = memo.getTrafficController();
         if (tc != null ) {
@@ -543,7 +537,9 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
             addEvent(node,event,canid,state,"","","",on,off,in,out); // on off in out
         } else {
             setValueAt(state, existingRow, STATE_COLUMN);
-            setValueAt(1, existingRow, LATEST_TIMESTAMP_COLUMN);
+             if ( (state==CbusTableEvent.EvState.ON) || (state==CbusTableEvent.EvState.OFF) ) {
+                setValueAt(1, existingRow, LATEST_TIMESTAMP_COLUMN);
+            }
             setValueAt(canid, existingRow, CANID_COLUMN);
             if (state==CbusTableEvent.EvState.ON) { setValueAt(1, existingRow, SESSION_ON_COLUMN); }
             if (state==CbusTableEvent.EvState.OFF) { setValueAt(1, existingRow, SESSION_OFF_COLUMN); }
@@ -597,7 +593,7 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
             }
         }
         return("");
-    }    
+    }
     
     /**
      * Register new event to table

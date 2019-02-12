@@ -1422,7 +1422,13 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         LocoNetMessage m = new LocoNetMessage(4);
         m.setOpCode(LnConstants.OPC_RQ_SL_DATA);
         m.setElement(1, slot & 0x7F);
-        m.setElement(2, 0);
+        if (slot > 127) {
+            m.setElement(2, (slot / 128 ) & 0b00000111 );
+            // and se t expanded format wanted
+            m.setElement(2, m.getElement(2) | 0x40) ;
+        } else {
+            m.setElement(2, 0);
+        }
         tc.sendLocoNetMessage(m);
     }
 

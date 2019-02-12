@@ -6,8 +6,6 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
      CbusConsolePaneTest.class,
-     CbusEventHighlightFrameTest.class,
-     CbusEventHighlightPanelTest.class,
      BundleTest.class
 })
 

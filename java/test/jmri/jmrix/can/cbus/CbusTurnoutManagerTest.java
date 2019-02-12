@@ -82,7 +82,7 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
             l.provideTurnout("MTX;+N15E6");
             Assert.fail("X Should have thrown an exception");
         } catch (Exception e) {
-            JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: Did not find");
+            JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
             Assert.assertTrue(true);
         }
 
@@ -90,7 +90,7 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
             l.provideTurnout("MTXA;+N15E6");
             Assert.fail("A Should have thrown an exception");
         } catch (Exception e) {
-            JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: Did not find");
+            JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
             Assert.assertTrue(true);
         }
 
@@ -98,7 +98,7 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
             l.provideTurnout("MTXABC;+N15E6");
             Assert.fail("AC Should have thrown an exception");
         } catch (Exception e) {
-            JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: Did not find");
+            JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
             Assert.assertTrue(true);
         }
 
@@ -106,7 +106,7 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
             l.provideTurnout("MTXABCDE;+N15E6");
             Assert.fail("ABCDE Should have thrown an exception");
         } catch (Exception e) {
-            JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: Did not find");
+            JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
             Assert.assertTrue(true);
         }
         
@@ -114,7 +114,7 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
             l.provideTurnout("MTXABCDEF0;+N15E6");
             Assert.fail("ABCDEF0 Should have thrown an exception");
         } catch (Exception e) {
-            JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: Did not find");
+            JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
             Assert.assertTrue(true);
         }
 
@@ -176,7 +176,7 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
             l.provideTurnout("T+N156E77;+N123E456");
             Assert.fail("S Should have thrown an exception");
         } catch (Exception e) {
-            JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: Did not find");
+            JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
             Assert.assertTrue(true);
         }
     }
@@ -187,7 +187,7 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
             l.provideTurnout("M+N156E77;+N15E60");
             Assert.fail("M Should have thrown an exception");
         } catch (Exception e) {
-            JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: Did not find usabl");
+            JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
             Assert.assertTrue(true);
         }
     }
@@ -363,7 +363,26 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
             Assert.assertTrue(false);
         }
     }
+    
+    @Test
+    public void testgetNextValidAddressPt4() {
 
+        Turnout t =  l.provideTurnout("MT+9");
+        Turnout ta =  l.provideTurnout("MT+10");
+        Assert.assertNotNull("exists",t);
+        Assert.assertNotNull("exists",ta);
+
+        try {
+            Assert.assertEquals(" null +9 +10",null,l.getNextValidAddress("+9","M"));
+            // JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
+            Assert.assertTrue(true);
+        } catch (Exception e) {
+            // JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
+            Assert.assertTrue(false);
+        }
+        
+    }
+    
     @Test
     public void testcreateSystemName() {
         
@@ -394,6 +413,16 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
             // JUnitAppender.assertErrorMessageStartsWith("java.lang.IllegalArgumentException: ");
             Assert.assertTrue(true);
         }
+    }
+    
+    
+    @Test
+    public void testProvideswhenNotNull() {
+        Turnout t = l.provideTurnout("+4");
+        Turnout ta = l.provideTurnout("+4");
+        Assert.assertTrue(t == ta);
+        t = null;
+        ta = null;
     }
     
     // The minimal setup for log4J
