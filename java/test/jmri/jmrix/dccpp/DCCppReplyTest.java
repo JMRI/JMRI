@@ -132,6 +132,14 @@ public class DCCppReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         Assert.assertEquals("41", l.getCurrentString());
     }
 
+    @Test
+    public void testMonitorStringNamedCurrentReply() {
+        DCCppReply l = DCCppReply.parseDCCppReply("a MAIN 0");
+        Assert.assertEquals("Monitor string","Current: 0 / 1024",l.toMonitorString());
+        l = DCCppReply.parseDCCppReply("a 41");
+        Assert.assertEquals("Monitor string","Current: 41 / 1024",l.toMonitorString());
+    }
+
     // The minimal setup for log4J
     @Before
     public void setUp() {
