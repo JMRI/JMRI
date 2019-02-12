@@ -555,16 +555,11 @@ public final class InstanceManager {
      *
      *                      Please don't create any more of these
      * ****************************************************************************/
-    // Simplification order - for each type, starting with those not in the jmri package:
-    //   1) Remove it from jmri.managers.DefaultInstanceInitializer, get tests to build & run
-    //   2) Remove the setter from here, get tests to build & run
-    //   3) Remove the accessor from here, get tests to build & run
     /**
      * Deprecated, use @{link #getDefault} directly.
      *
-     * @return the default block manager. May not be the only instance. In use
-     *         by scripts.
-     * @deprecated 4.5.1
+     * @return the default block manager. May not be the only instance. 
+     * @deprecated 4.5.1 to be removed in 4.17.1
      */
     @Deprecated
     static public BlockManager blockManagerInstance() {
@@ -573,10 +568,10 @@ public final class InstanceManager {
     }
 
     /**
-     * Deprecated, use @{link #getDefault} directly. In use by scripts.
+     * Deprecated, use @{link #getDefault} directly.
      *
      * @return the default power manager. May not be the only instance.
-     * @deprecated 4.5.1
+     * @deprecated 4.5.1 to be removed in 4.17.1
      */
     @Deprecated
     static public PowerManager powerManagerInstance() {
@@ -588,7 +583,7 @@ public final class InstanceManager {
      * Deprecated, use @{link #getDefault} directly.
      *
      * @return the default reporter manager. May not be the only instance.
-     * @deprecated 4.5.1
+     * @deprecated 4.5.1 to be removed in 4.17.1
      */
     @Deprecated
     static public ReporterManager reporterManagerInstance() {
@@ -600,7 +595,7 @@ public final class InstanceManager {
      * Deprecated, use @{link #getDefault} directly.
      *
      * @return the default route manager. May not be the only instance.
-     * @deprecated 4.5.1
+     * @deprecated 4.5.1 to be removed in 4.17.1
      */
     @Deprecated
     static public RouteManager routeManagerInstance() {
@@ -612,7 +607,7 @@ public final class InstanceManager {
      * Deprecated, use @{link #getDefault} directly.
      *
      * @return the default section manager. May not be the only instance.
-     * @deprecated 4.5.1
+     * @deprecated 4.5.1 to be removed in 4.17.1
      */
     @Deprecated
     static public SectionManager sectionManagerInstance() {
