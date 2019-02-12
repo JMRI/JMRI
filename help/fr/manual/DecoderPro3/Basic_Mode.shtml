@@ -1,7 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Tranlation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-02-11 -->
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -26,48 +26,46 @@
     <div id="mainContent">
       <a name="Top" id="Top"></a>
 
-      <h1>DecoderPro&reg; Programming</h1>
+      <h1>DecoderPro&reg; Programmation</h1>
 
-      <h2>Programming Modes</h2>
+      <h2>Modes de Programmation</h2>
 
       <div align="right">
-        <p><a href="Basic_Start.shtml#ProgramModes">Back</a></p>
+        <p><a href="Basic_Start.shtml#ProgramModes">Retour</a></p>
       </div>
       <hr>
 
       <p><img style="width: 757px; height: 220px;" src=
       "images/SetProgramMode.png" alt="program mode"></p>
 
-      <p>Some brief comments on Programming Modes</p>
+      <p>Quelques brefs commentaires sur les Modes de Programmation.</p>
 
-      <p><strong>Address Mode</strong> is an outdated programming
-      method that is included here for the sake of<br>
-      full compliance with the NMRA DCC standard.</p>
+      <p><strong>Mode Adresse</strong> est une m&#233;thode de 
+      programmation obsol&#232;te qui est incluse ici dans un souci 
+      de totale conformit&#233; avec la norme NMRA DCC.</p>
 
-      <p><strong>Register Mode</strong> is an expanded form of
-      Address Mode, and is still used by some older and/or lower
-      end decoders, particularly some from MRC and Wangrow. It is
-      inherently limited in its ability to access all CVs in a
-      decoder.</p>
+      <p><strong>Mode Registre</strong> est une forme d&#233;velopp&#233;e 
+      du mode adresse, et est toujours utilis&#233;e par certains d&#233;codeurs 
+      plus anciens et/ou d'entr&#233;e de gamme, en particulier par MRC et Wangrow. 
+      Il est intrins&#232;quement limit&#233; dans sa capacit&#233; &#224; acc&#233;der &#224; 
+      tous les CV d'un d&#233;codeur..</p>
 
-      <p><strong>Paged Mode</strong> is an expansion of Register
-      mode that gives full access to all decoder CVs.</p>
+      <p><strong>Mode Pagin&#233;</strong> est une extension du Mode Registre 
+      qui donne un acc&#232;s complet &#224; tous les CV du d&#233;codeurs.</p>
 
-      <p><strong>Direct Byte Mode</strong> is another method, not
-      yet supported by all decoders, that allows full access. There
-      are two ways of implementing Direct Mode. The radio button(s)
-      for the Direct Byte Mode method(s) your command station
-      supports will be activated.</p>
+      <p><strong>Mode Octet Direct</strong> est une autre m&#233;thode, pas encore 
+      support&#233;e par tous les d&#233;codeurs, qui permet un acc&#232;s complet. Il existe 
+      deux mani&#232;res de mettre en &#156;uvre le mode direct. Le (s) bouton (s) radio 
+      de la/des m&#233;thode (s) du mode Octet Direct (s) pris en charge par votre centrale seront activ&#233;s
+.</p>
 
-      <p>If you experience difficulty programming a decoder in
-      Paged Mode, try Direct Byte Mode, then<br>
-      Register Mode, and finally Address Mode. The EasyDCC AD4
-      Accessory Decoder can only be<br>
-      programmed in Direct Byte Mode.</p>
+      <p>Si vous rencontrez des difficult&#233;s pour programmer un d&#233;codeur en Mode Pagin&#233;, 
+      essayez le Mode Octet Direct, puis le Mode Registre, et enfin le Mode Adresse. 
+      Le d&#233;codeur d'accessoires EasyDCC AD4 ne peut &#234;tre programm&#233; qu'en Mode Octet Direct.</p>
       <hr>
 
       <div align="right">
-        <p><a href="Comp_Basic.shtml">Back</a></p>
+        <p><a href="Comp_Basic.shtml">Retour</a></p>
       </div><!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
