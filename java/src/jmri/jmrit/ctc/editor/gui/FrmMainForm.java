@@ -35,13 +35,14 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
-import javax.swing.JFileChooser;
+// import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import jmri.jmrit.ctc.CTCFiles;
 import jmri.jmrit.ctc.ctcserialdata.CTCSerialData;
 import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
 import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
@@ -157,9 +158,7 @@ public class FrmMainForm extends JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         _mFile = new javax.swing.JMenu();
         _mNew = new javax.swing.JMenuItem();
-        _mOpen = new javax.swing.JMenuItem();
         _mSave = new javax.swing.JMenuItem();
-        _mSaveAs = new javax.swing.JMenuItem();
         _mQuitWithoutSaving = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         _mFindAndReplace = new javax.swing.JMenuItem();
@@ -406,15 +405,6 @@ public class FrmMainForm extends JFrame {
         });
         _mFile.add(_mNew);
 
-        _mOpen.setAccelerator(getAccelerator(KeyEvent.VK_O));
-        _mOpen.setText(Bundle.getMessage("MenuOpen"));
-        _mOpen.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                _mOpenActionPerformed(evt);
-            }
-        });
-        _mFile.add(_mOpen);
-
         _mSave.setAccelerator(getAccelerator(KeyEvent.VK_S));
         _mSave.setText(Bundle.getMessage("MenuSave"));
         _mSave.addActionListener(new java.awt.event.ActionListener() {
@@ -423,14 +413,6 @@ public class FrmMainForm extends JFrame {
             }
         });
         _mFile.add(_mSave);
-
-        _mSaveAs.setText(Bundle.getMessage("MenuSaveAs"));
-        _mSaveAs.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                _mSaveAsActionPerformed(evt);
-            }
-        });
-        _mFile.add(_mSaveAs);
 
         _mQuitWithoutSaving.setAccelerator(getAccelerator(KeyEvent.VK_E));
         _mQuitWithoutSaving.setText(Bundle.getMessage("MenuExit"));
@@ -976,16 +958,6 @@ public class FrmMainForm extends JFrame {
         _mColumns.updateFrame();
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void _mOpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mOpenActionPerformed
-        final FileNameExtensionFilter filter = new FileNameExtensionFilter(".xml source files", "xml");
-        _mOpen_Save_SaveAs.setFileFilter(filter);
-        _mOpen_Save_SaveAs.setSelectedFile(new File(_mProgramProperties._mFilename));
-        if (_mOpen_Save_SaveAs.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-            _mProgramProperties._mFilename = ProjectsCommonSubs.addExtensionIfMissing(_mOpen_Save_SaveAs.getSelectedFile().getAbsolutePath(), ".xml");
-            newOrOpenFile(true);
-        }
-    }//GEN-LAST:event__mOpenActionPerformed
-
     private void newOrOpenFile(boolean openExisting) {
         _mCTCSerialData = new CTCSerialData();
         _mOriginalCopy = new OriginalCopy();
@@ -1020,19 +992,6 @@ public class FrmMainForm extends JFrame {
         _mCTCSerialData.writeDataToXMLFile(_mProgramProperties._mFilename);
         _mOriginalCopy.makeDeepCopy(_mCTCSerialData);
     }//GEN-LAST:event__mSaveActionPerformed
-
-    private void _mSaveAsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mSaveAsActionPerformed
-        if (!validToSaveAtThisTime("Save as", "")) return;
-        final FileNameExtensionFilter filter = new FileNameExtensionFilter(".xml source files", "xml");
-        _mOpen_Save_SaveAs.setFileFilter(filter);
-        _mOpen_Save_SaveAs.setSelectedFile(new File(_mProgramProperties._mFilename));
-        if (_mOpen_Save_SaveAs.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
-            _mProgramProperties._mFilename = ProjectsCommonSubs.addExtensionIfMissing(_mOpen_Save_SaveAs.getSelectedFile().getAbsolutePath(), ".xml");
-            _mCTCSerialData.writeDataToXMLFile(_mProgramProperties._mFilename);
-            _mOriginalCopy.makeDeepCopy(_mCTCSerialData);
-            setTitle("CTCEditor  " + _mProgramProperties._mFilename );
-        }
-    }//GEN-LAST:event__mSaveAsActionPerformed
 
     private boolean validToSaveAtThisTime(String whatIsTriggeringSave, String hint) {
         if (_mColumns.anyErrorsPresent()) {
@@ -1172,7 +1131,6 @@ public class FrmMainForm extends JFrame {
     private javax.swing.JButton _mMoveDown;
     private javax.swing.JButton _mMoveUp;
     private javax.swing.JMenuItem _mNew;
-    private javax.swing.JMenuItem _mOpen;
     private javax.swing.JFileChooser _mOpen_Save_SaveAs;
     private javax.swing.JMenuItem _mPatterns;
     private javax.swing.JList<String> _mPresentlyDefinedColumns;
@@ -1182,7 +1140,6 @@ public class FrmMainForm extends JFrame {
     private javax.swing.JCheckBox _mSWDI_Enabled;
     private javax.swing.JCheckBox _mSWDL_Enabled;
     private javax.swing.JMenuItem _mSave;
-    private javax.swing.JMenuItem _mSaveAs;
     private javax.swing.JCheckBox _mTRL_Enabled;
     private javax.swing.JCheckBox _mTUL_Enabled;
     private javax.swing.JButton addButton;

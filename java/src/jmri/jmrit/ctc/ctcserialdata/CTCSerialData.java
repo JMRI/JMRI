@@ -10,6 +10,7 @@ import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import jmri.jmrit.ctc.CTCFiles;
 
 /**
  *
@@ -19,7 +20,7 @@ public class CTCSerialData {
     public final static String CTCVersion = "V0.26";
     private OtherData _mOtherData;
     private ArrayList <CodeButtonHandlerData> _mCodeButtonHandlerDataArrayList;
-    
+
     public CTCSerialData() {
         _mOtherData = new OtherData();
         _mCodeButtonHandlerDataArrayList = new ArrayList<>();
@@ -61,7 +62,7 @@ public class CTCSerialData {
             Collections.swap(_mCodeButtonHandlerDataArrayList, index, index + 1);
         } catch (IndexOutOfBoundsException e) {}    // Do NOTHING in this case!  Technically should never happen, since buttons aren't enabled for such possibilities
     }
-    
+
 //  In case the user mixes up projects, or blows away "ProgramProperties.xml", we insure that the next
 //  number we return for the next unique ID will be one greater than the file just read in:
     private  void possiblyFixUniqueID() {
@@ -71,11 +72,11 @@ public class CTCSerialData {
         }
         _mOtherData.possiblySetToHighest(highestValue);
     }
-    
+
 //  In addition, variable "_mTRL_LeftTrafficLockingRulesSSVList" and "_mTRL_RightTrafficLockingRulesSSVList"
 //  have buried within them text strings for user viewing of the "CodeButtonHandlerData.myShortStringNoComma()"
 //  value.  That occurs at TRL_USERTEXT_TERMINATING_INDEX in all possible records, with TRL_UNIQUEID_TERMINATING_INDEX containing the
-//  textual representation of the UniqueID that we should look up and fix with.    
+//  textual representation of the UniqueID that we should look up and fix with.
     public void updateSwitchAndSignalEtcNumbersEverywhere(int index, int newSwitchNumber, int newSignalEtcNumber, int newGUIColumnNumber, boolean newGUIGeneratedAtLeastOnceAlready) {
         CodeButtonHandlerData codeButtonHandlerData = _mCodeButtonHandlerDataArrayList.get(index);
         codeButtonHandlerData._mSwitchNumber = newSwitchNumber;
@@ -91,7 +92,7 @@ public class CTCSerialData {
             }
         }
     }
-    
+
     private String commonCode1(String stringToFix, int uniqueIDBeingModified, String replacementString) {
         ArrayList<String> ssvArrayList = ProjectsCommonSubs.getArrayListFromSSV(stringToFix);
         boolean anyModified = false;
@@ -111,7 +112,7 @@ public class CTCSerialData {
         }
         return anyModified ? ProjectsCommonSubs.constructSSVStringFromArrayList(ssvArrayList) : stringToFix;
     }
-    
+
     private String lazy1(int uniqueIDBeingModified, String replacementString, String stringValueToCheck) {
         int uniqueID = ProjectsCommonSubs.getIntFromStringNoThrow(stringValueToCheck, -1);
         if (uniqueID == uniqueIDBeingModified) { // Fix it:
@@ -119,10 +120,10 @@ public class CTCSerialData {
         }
         return null;
     }
-    
+
     public void setCodeButtonHandlerData(int index, CodeButtonHandlerData codeButtonHandlerData) { _mCodeButtonHandlerDataArrayList.set(index, codeButtonHandlerData); }
-    
-//  If none are found, return -1 (which we'll then increment by 2 to 1, which is a good "add" default starting point):    
+
+//  If none are found, return -1 (which we'll then increment by 2 to 1, which is a good "add" default starting point):
     public int findHighestSwitchNumberUsedSoFar() {
         int highestSwitchNumber = -1;
         for (CodeButtonHandlerData codeButtonHandlerData : _mCodeButtonHandlerDataArrayList) {
@@ -130,8 +131,8 @@ public class CTCSerialData {
         }
         return highestSwitchNumber;
     }
-    
-//  If none are found, return 0 (which we'll then increment by 1 to 1, which is a good "add" default starting point):    
+
+//  If none are found, return 0 (which we'll then increment by 1 to 1, which is a good "add" default starting point):
     public int findHighestColumnNumberUsedSoFar() {
         int highestColumnNumber = 0;
         for (CodeButtonHandlerData codeButtonHandlerData : _mCodeButtonHandlerDataArrayList) {
@@ -139,8 +140,8 @@ public class CTCSerialData {
         }
         return highestColumnNumber;
     }
-    
-//  Duplicates get ONLY ONE entry in the set (obviously).    
+
+//  Duplicates get ONLY ONE entry in the set (obviously).
     public HashSet<String> getAllInternalSensors() {
         HashSet<String> returnValue = _mOtherData.getAllInternalSensors();
         for (CodeButtonHandlerData codeButtonHandlerData : _mCodeButtonHandlerDataArrayList) {
@@ -148,7 +149,7 @@ public class CTCSerialData {
         }
         return returnValue;
     }
-    
+
     @SuppressWarnings("unchecked") // See below comments:
     public boolean readDataFromXMLFile(String filename) {
         CodeButtonHandlerData.preprocessingUpgradeSelf(filename);
@@ -160,7 +161,7 @@ public class CTCSerialData {
             }
             returnValue = true;
         } catch (Exception e) {}
-// Safety:        
+// Safety:
         if (_mOtherData == null) _mOtherData = new OtherData();
         if (_mCodeButtonHandlerDataArrayList == null) _mCodeButtonHandlerDataArrayList = new ArrayList<>();
 
@@ -186,19 +187,19 @@ public class CTCSerialData {
 
 /*  This routine properly supports other programs that may poll for this shared
     files existance and attempt to read it at the same time.
-Problem:    
-    If this routine was writing this file while another program was polling for 
+Problem:
+    If this routine was writing this file while another program was polling for
     it's change and then attempted to immediately read it, that reading program
     could randomly at times get some form of I/O error.
 Solution:
     1.) Write the xml file to a temporary filename.
     2.) Delete the existing file.
     3.) Rename the temporary to the proper (formerly existing) filename.
-    
+
     In this way the file is totally stable when it finally appears in the directory
     with its proper filename that the other program is looking for.
  */
-    
+
     private static final String TEMPORARY_EXTENSION = ".xmlTMP";
     public void writeDataToXMLFile(String filename) {
         String temporaryFilename = ProjectsCommonSubs.changeExtensionTo(filename, TEMPORARY_EXTENSION);
@@ -207,7 +208,9 @@ Solution:
                 xmlEncoder.writeObject(_mOtherData);
                 xmlEncoder.writeObject(_mCodeButtonHandlerDataArrayList);
             }
+            CTCFiles.rotate(filename, false);
             File outputFile = new File(filename);
+
             outputFile.delete();    // Delete existing old file.
             (new File(temporaryFilename)).renameTo(outputFile);     // Rename temporary filename to proper final file.
         } catch (Exception e) {}

@@ -30,7 +30,7 @@ public class CtcRunAction extends JmriAbstractAction {
         jmri.InstanceManager.setDefault(CTCMain.class, _mCTCMain);
 
         // Set the file path.
-        String filename = jmri.util.FileUtil.getUserFilesPath() + "ctc/CTCSystem.xml";
+        String filename = CTCFiles.getFullName("CTCSystem.xml");  // NOI18N
 
         _mCTCMain.readDataFromXMLFile(filename);
     }
