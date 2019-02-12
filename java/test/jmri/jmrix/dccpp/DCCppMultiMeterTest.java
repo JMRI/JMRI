@@ -15,9 +15,8 @@ public class DCCppMultiMeterTest extends jmri.implementation.AbstractMultiMeterT
     }
 
     @Test
-    @Ignore("Currently fails to parse input.  Working on a solution");
     public void testCurrentReply(){
-        ((DCCppMultiMeter)mm).message(new DCCppReply("a10")); // a syntactically valid current reply
+        ((DCCppMultiMeter)mm).message(DCCppReply.parseDCCppReply("a10")); // a syntactically valid current reply
 	Assert.assertEquals("current level",10.0/DCCppConstants.MAX_CURRENT,mm.getCurrent(),0.05);
     }
 
