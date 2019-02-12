@@ -9,12 +9,12 @@
             <ul>
                 <li></li>
             </ul>
-
+		
 	    <h4>Bachrus Speedo</h4>
             <ul>
                 <li></li>
             </ul>
-
+		
         <h4>C/MRI</h4>
             <ul>
                 <li></li>
@@ -62,10 +62,7 @@
 
         <h4>MERG CBUS</h4>
             <ul>
-                <li>Turnouts now accept DIRECT and DELAYED feedback.</li>
-                <li>Querying a turnout will also query any feedback sensors for that turnout.<li>
-                <li>Event Request monitoring has moved from the Event Table to a stand-alone request monitoring table.</li>
-                <li>The CBUS console will attempt to lookup event ( and node ) names from the Event Table.</li>
+                <li></li>
             </ul>
 
         <h4>MQTT</h4>
@@ -262,7 +259,7 @@
             <ul>
                 <li></li>
             </ul>
-
+	    
 	    <h4>Team Digital</h4>
             <ul>
                 <li></li>
@@ -371,23 +368,13 @@
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"/>
         <ul>
-            <li>Fixed an issue where Reporters with a system letter of M
-                were erroneously tagged as 
-                <a href="http://jmri.org/help/en/html/setup/MigrateSystemPrefixes.shtml">requiring migration</a>.</li>
-            <li>RailCom Tags now appear in the ID Tag table and are available to operations and other tools just like other Identifiable tags.</li>
-	    <li>LocoNet reporters now report a Transponding Tag object instead of a string.  This object allows extracting the address without further parsing.  As with RailCom tags, these also apear in the IdTag table and are available totools such as operations.</li>
-	    <li>Internal Reporters can now collect information.  An example showing how to use this feature is <a href="https://github.com/pabender/Sensys2014">available here</a>.</li>
-	</ul>
+            <li></li>
+        </ul>
 
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"/>
         <ul>
-            <li>Geoff Bunza provided sample scripts supporting bulk 
-            <a href="http://jmri.org/jython/serialinput/Sensor_Channel_To_JMRI/Sensor_Channels_Readme.md">sensor channels</a>
-            and
-            <a href="http://jmri.org/jython/serialinput/Turnout_Channel_from_JMRI/Turnout_Channels_Readme.md">turnout channels</a>
-            via USB between JMRI Sensor and Turnout Tables and Arduino interfaces to hardware.</li>.
-            For more information, see the Readme files linked just above.
+            <li></li>
         </ul>
 
     <h3>Signals</h3>
@@ -402,14 +389,14 @@
 
         <h4>Signal Heads</h4>
             <ul>
-                <li>Fix an XML validation problem when reading files with RGB heads</li>
+                <li></li>
             </ul>
 
         <h4>Signal Masts</h4>
             <ul>
                 <li></li>
             </ul>
-
+            
     	<h4>Signal Groups</h4>
             <ul>
                 <li></li>
@@ -438,13 +425,9 @@
 
     <h3>Timetable</h3>
         <a id="Timetable" name="Timetable"/>
+        <span class="since">since 4.13.4</span>
         <ul>
-            <li>New menu item: <strong>Export CSV File</strong> &mdash; Create a
-            CSV file that can be imported into a spreadsheet program.  This can
-            be used to create a traditional timetable.</li>
-            <li>New menu item: <strong>Import CSV File</strong> &mash; Import a
-            CSV file that contains external timetable data to create a new
-            layout defintion or extend an existing layout definition.</li>
+            <li></li>
         </ul>
 
    <h3>Warrants</h3>
@@ -464,28 +447,16 @@
         <ul>
             <li></li>
         </ul>
-
+        
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"/>
         <ul>
-            <li>Klaus Killinger added functionality to handle a throttle direction change at speed &gt; 0:
-                slow down to 0, change the direction, ramp-up to the old speed.</li>
-            <li>The engine sound will continue after an Emergency Stop.</li>
+            <li></li>
         </ul>
 
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"/>
         <ul>
-            <li>We're building the release note a
-                <a href="/help/en/html/doc/Technical/gitdeveloper.shtml">different way</a>
-                starting with this release.</li>
-            <li>All the PackageList test files were updated to JUnit4 form, without a separate main()</li>
-            <li>The Windows "installer" and "launcher" have been updated to support 
-                Oracle's Java JDK 11 installation mechanisms on Windows platforms.</li>
-            <li>Starting with the release, 
-                <a href="http://jmri.org/help/en/html/setup/MigrateSystemPrefixes.shtml">legacy system prefixes</a>
-                will cause JMRI to issues a warning at startup.  This warning can't be suppressed
-                without migrating the prefix in the connection configuration (and any associated
-                panel files and scripts).
+            <li></li>
         </ul>
 
