@@ -133,6 +133,39 @@ public class MemoryIconTest extends PositionableTestBase {
 
     }
 
+    @Test
+    public void testShowRosterEntry() throws Exception {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        JFrame jf = new JmriJFrame();
+        jf.setTitle("Expect Roster Entry");
+        jf.getContentPane().setLayout(new java.awt.FlowLayout());
+        jf.getContentPane().setBackground(Color.white);
+
+        jf.getContentPane().add(to);
+        to.getPopupUtility().setBackgroundColor(Color.white);
+
+        jf.getContentPane().add(new javax.swing.JLabel("| Expect red X default icon: "));
+
+        jmri.InstanceManager.memoryManagerInstance().provideMemory("IM3");
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
+
+        to.setMemory("IM3");
+
+        jmri.jmrit.roster.RosterEntry re = jmri.jmrit.roster.RosterEntry.fromFile(new java.io.File("java/test/jmri/jmrit/roster/ACL1012.xml"));
+
+	jmri.InstanceManager.memoryManagerInstance().provideMemory("IM3").setValue(re);
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
+
+        jf.pack();
+        jf.setVisible(true);
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
+
+        if (System.getProperty("jmri.demo", "false").equals("false")) {
+            jf.setVisible(false);
+            JUnitUtil.dispose(jf);
+        }
+    }
+
     int[] getColor(String frameName, String label, int x, int y, int n) {
         // Find window by name
         JmriJFrame frame = JmriJFrame.getFrame(frameName);
