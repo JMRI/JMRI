@@ -13,7 +13,6 @@ import org.junit.runners.Suite;
     BundleTest.class,
     CtcRunActionTest.class,
     CtcRunStartupTest.class,
-    CtcRunTest.class,
     jmri.jmrit.ctc.editor.PackageTest.class
 })
 public class PackageTest{
