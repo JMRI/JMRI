@@ -1,7 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Tranlation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-02-13 -->
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -27,160 +27,140 @@
     <div id="mainContent">
       <a name="Top" id="Top"></a>
 
-      <h1>DecoderPro&reg; Comprehensive Programmer</h1>
+      <h1>DecoderPro&reg; Programmer Complet</h1>
 
-      <h2>Expanded Basic Pane</h2>
+      <h2>Volet Basique &#201;tendu</h2>
 
       <div align="right">
-        <a href="Comp_Setup_Roster.shtml">Previous</a> | <a href=
-        "Comp_Motor.shtml">Next</a><br>
+        <a href="Comp_Setup_Roster.shtml">Pr&#233;c&#233;dent</a> | <a href=
+        "Comp_Motor.shtml">Suivant</a><br>
         <a href="Comp_Motor.shtml"></a>
 
-        <p><a href="index.shtml#Advanced%20Programmer">Back to
-        Index</a></p>
+        <p><a href="index.shtml#Advanced%20Programmer">Retour &#224; l'Index</a></p>
       </div>
       <hr>
 
-      <p>One of the first things you will notice about the expanded
-      <strong>Basic</strong> Pane in the <strong>Comprehensive
-      Programmer</strong> is that there are a lot more options than
-      you found in the <strong>Basic Programmer</strong>. Now use
-      the Read full sheet button to read the values that the
-      locomotive is programmed to. Now you can determine if you
-      want to change any values.</p>
+      <p>L'une des premi&#232;res choses que vous remarquerez &#224; propos du 
+      volet <strong> Basique </strong> d&#233;velopp&#233; dans le <strong> Programmeur complet </strong> 
+      est qu'il existe beaucoup plus d'options que celles que vous avez 
+      trouv&#233;es dans le <strong> Programmeur de base </strong>. Utilisez 
+      maintenant le bouton Lire la fiche compl&#232;te pour lire les valeurs 
+      sur lesquelles la locomotive est programm&#233;e. Vous pouvez maintenant 
+      d&#233;terminer si vous souhaitez modifier les valeurs. </P>
 
       <p style="text-align: center;"><img style=
       "width: 903px; height: 582px;" alt="Extended Basic" src=
       "images/Extended_Basic_Program_Roster.png"><br></p>
 
-      <p>Select 2 or 4 digit <b>addressing</b> radio button to
-      select which mode of addressing you wish to be active</p>
+      <p>S&#233;lectionnez le bouton radio <b> adressage </b> &#224; 2 ou 4 chiffres 
+      pour s&#233;lectionner le mode d'adressage que vous souhaitez activer</p>.
 
-      <p>You can enter locomotive addresses in both the
-      <strong>Primary address</strong> and/or the <strong>Extended
-      address</strong>. The address of a decoder is the prefix for
-      the code it responds to. This is how you are able to run
-      multiple locomotives on a single line and keep all their
-      speeds and functions independent. Decoders originally could
-      have only a two digit address... after all, who could
-      possibly need more than 100 locomotives? Some lower-end
-      command stations and decoders still use only two digit
-      addressing. Newer decoders can have up to a four digit
-      address. The "<b>Addressing Mode</b>" option lets you choose
-      between two and four digit addresses. The addresses
-      themselves are input into the appropriate text boxes. The
-      "<b>Extended Addressing</b>" check box turns on and off the 4
-      digit address mode. This allows you to have two different
-      addresses stored in a decoder, and toggle between the
-      two.</p>
+      <p> Vous pouvez entrer les adresses de locomotive &#224; la fois dans 
+      <strong> Adresse principale </strong> et/ou dans la valeur <strong> Adresse &#233;tendue </strong>. 
+      L'adresse d'un d&#233;codeur est le pr&#233;fixe du code auquel il r&#233;pond. 
+      C'est ainsi que vous pourrez faire fonctionner plusieurs locomotives 
+      sur une m&#234;me ligne tout en conservant l'ind&#233;pendance de leurs vitesses 
+      et de leurs fonctions. &#193; l'origine, les d&#233;codeurs ne pouvaient avoir 
+      qu'une adresse &#224; deux chiffres ... apr&#232;s tout, qui pourrait avoir 
+      besoin de plus de 100 locomotives? Certaines centrales de commande 
+      et d&#233;codeurs bas de gamme utilisent encore un adressage &#224; deux chiffres. 
+      Les nouveaux d&#233;codeurs peuvent avoir une adresse allant jusqu'&#224; quatre chiffres.
+       L'option "<b> Mode d'adressage </b>" vous permet de choisir une adresse 
+       entre deux et quatre chiffres. Les adresses elles-m&#201;mes sont entr&#233;es 
+       dans les zones de texte appropri&#233;es. La case &#224; cocher "<b> Adresse &#233;tendue </b>" 
+       active et d&#233;sactive le mode d'adresse &#224; 4 chiffres. Cela vous permet 
+       d'avoir deux adresses diff&#233;rentes stock&#233;es dans un d&#233;codeur et 
+       de basculer entre les deux..</p>
 
-      <p><strong>Normal direction of motion</strong>: Set the
-      <strong>Locomotive direction: normal</strong> or
-      <strong>reverse</strong> from the drop-down list. The option
-      for <b>Normal direction of movement</b> is important for
-      people who model railroads like the NS, who ran diesel
-      locomotives long hood forward, or for the person who
-      occasionally makes a mistake and hooks the decoder up in
-      reverse. It lets you change the direction defined in the
-      decoder as "forward" (no disassembling and rewiring).</p>
+      <p> <strong> Sens normal de marche </strong>: d&#233;finissez la <strong> Direction 
+      de la locomotive: normale </strong> ou <strong> invers&#233;e </strong> dans la 
+      liste d&#233;roulante. L'option pour le <b> sens de d&#233;placement normal </b> 
+      est importante pour les mod&#233;listes comme la NS, les locomotives diesel 
+      &#224; capot long, ou pour la personne qui commet parfois une erreur et qui 
+      raccorde le d&#233;codeur en sens inverse. Il vous permet de changer 
+      la direction d&#233;finie dans le d&#233;codeur en "avant" 
+      (pas de d&#233;montage ni de rec&#226;blage). </P>
 
-      <p><strong>Speed Steps:</strong> Unless your command station
-      or decoder can only handle 14 speed steps,choose the 28/128
-      setting. If your decoder offers 128 speed step operation,
-      you'll find you get much finer control of your locomotives by
-      using the <strong>128 speed steps</strong> setting. You
-      choose between 128 or 28 with your throttle, when the
-      locomotive is ready to roll on the track.</p>
+      <p> <strong> Pas de vitesse: </strong>, choisissez le r&#233;glage 28/128,
+       &#224; moins que votre centrale de commande ou votre d&#233;codeur ne puisse 
+       g&#233;rer que 14 pas de vitesse. Si votre d&#233;codeur offre un fonctionnement 
+       &#224; 128 pas, vous obtiendrez un contr&#244;le beaucoup plus pr&#233;cis de vos locomotives 
+       en utilisant le r&#233;glage <strong> 128 crans de vitesse </strong>. Vous choisissez 
+       entre 128 et 28 avec votre r&#233;gulateur, lorsque la locomotive est pr&#234;te &#224; rouler sur la voie. </P>
 
-      <p><strong>Analog operation</strong> (enables the decoder to
-      run under regular DC voltage/analog<br>
-      control) Enable Analog Operation with caution, as some
-      decoders will jump to full speed resulting in a "Runaway
-      locomotive" if they are enabled for Analog Operation and
-      encounter power spikes on a DCC digital signal. They seem to
-      get confused, and revert to Analog operation and use the full
-      track voltage DCC power to take off and GO! There is no
-      stopping them without removing layout power. Very disturbing
-      to your operating mates, but better than running into them at
-      full tilt.</p>
+      <p> <strong>Fonctionnement analogique</strong> (permet au d&#233;codeur de fonctionner sous un 
+      contr&#244;le de tension continue/analogique standard) Activez le fonctionnement 
+      analogique avec pr&#233;caution, car certains d&#233;codeurs passeront &#224; la vitesse maximale, 
+      ce qui donnera une "locomotive Folle". s'ils sont activ&#233;s pour le fonctionnement analogique 
+      et rencontrent des pics de tensions sur un signal num&#233;rique DCC. Ils semblent pertub&#233;s 
+      et reviennent au fonctionnement analogique et utilisent le courant continu pleine 
+      tension DCC pour d&#233;coller et ROULER! Il n'est pas possible de les arr&#201;ter sans 
+      couper l'alimentation du r&#233;seau. Tr&#232;s d&#233;rangeant pour vos compagnons d'exploitation, 
+      mais cela vaut mieux que de percuter les locomotives &#224; pleine vitesse. </P>
 
-      <p>To enable Analog (old style DC, some vendors refer to this
-      as dual mode) Operation select the appropriate entry from the
-      drop-down list.</p>
+      <p> Pour activer le Mode Analogique (style ancien DC, certains fournisseurs 
+      l'appellent mode dual), s&#233;lectionnez l'entr&#233;e appropri&#233;e dans la liste d&#233;roulante. </p>
 
-      <p><strong>User ID #1</strong>" and <strong>User ID
-      #2</strong> (off to the right} there are two CVs that have
-      nothing to do with any function of the decoder. They simply
-      provide you with a method of electronically marking your
-      equipment. Use these CVs, even though you may have
-      custom-painted equipment for your own freelanced railroad -
-      it provides one more way to identify your decoders if they
-      are removed from the loco.</p>
+       <p> <strong>ID utilisateur n&#186; 1 </strong> "et <strong> ID utilisateur n&#186; 2 </strong> 
+       (&#224; droite}), ces deux CV n'ont rien &#224; voir avec une fonction du d&#233;codeur. Utilisez 
+       ces CV, m&#234;me si vous avez un &#233;quipement personnalis&#233; pour votre propre r&#233;seau - 
+       il offre un moyen &#233;lectronique d'identifier vos d&#233;codeurs s'ils sont retir&#233;s de la locomotive. </p>
 
       <div align="right"></div>
 
-      <h2>The Read and Write Buttons</h2>
+      <h2>Les boutons Lire et &#201;crire</h2>
 
-      <p>At the bottom of all the programmer panes you will find
-      three rows of buttons, as shown :</p>
+      <p> Au bas de tous les volets du programmateur, vous trouverez trois rang&#233;es de boutons, comme indiqu&#233;: </p>
 
-      <p align="center"><img src="images/Comp_03_Basic.png" alt=
-      "comp basic buttons" height="168" width="929"></p>
+       <p align = "center"> <img src = "images/Comp_03_Basic.png" alt = "boutons de base comp" height = "168" width = "929"> </p>
 
-      <p>The top row operates <span class=
-      "ACCENT"><strong>ONLY</strong></span> on the currently
-      visible pane. These buttons are:</p>
+       <p> La rang&#233;e sup&#233;rieure utilise <span class = "ACCENT"> <strong> UNIQUEMENT </strong> </span> 
+       dans le volet actuellement visible. Ces boutons sont: </p>
+       <ol>
+         
+         <li> <b> Lire les modifications sur la feuille </b> - Ce bouton vous permet 
+         de r&#233;cup&#233;rer des donn&#233;es du d&#233;codeur si vous les avez modifi&#233;es accidentellement 
+         sur votre ordinateur (sans vous rappeler les valeurs!), 
+         mais uniquement si vous ne les avez pas encore &#233;crites. </li>
+       
+        <li> <b> &#201;crire les modifications sur la feuille </b> - plus rapide que 
+        l'&#233;criture de toutes les donn&#233;es de la feuille et id&#233;al pour modifier 
+        les modifications en <b>Mode Ops </b>, la programmation sur la voie principale. </li >
 
-      <ol>
-        <li><b>Read changes on sheet</b> - an "Oops!" button that
-        lets you recover data from the decoder if you've changed it
-        accidentally on the computer (and don't remember what the
-        values were!), but only if you haven't written it yet.</li>
+         <li> <b> Lire la fiche compl&#232;te </b>: lisez toutes les donn&#233;es de ce volet 
+         &#224; partir du d&#233;codeur. Notez que cela peut prendre beaucoup de temps, 
+         en fonction de la vitesse de votre ordinateur et de la centrale de commande utilis&#233;e. </Li>
 
-        <li><b>Write changes on sheet</b> - faster than writing all
-        the data on the sheet, and ideal for tweaking changes in
-        <b>Ops mode</b>, programming on the main track.</li>
-
-        <li><b>Read full sheet</b> - read all data in this pane
-        from the decoder. Note this may take a great deal of time,
-        depending upon the speed of your computer and the
-        controller station in use.</li>
-
-        <li><b>Write full sheet</b> - writes all data in this pane
-        to the decoder.</li>
+         <li> <b> &#201;crire une feuille compl&#232;te </b> - &#233;crit toutes les donn&#233;es de cet 
+         onglet dans le d&#233;codeur. </li>
       </ol>
 
-      <p>The second row of buttons performs essentially the same
-      functions, but on the <strong>entire range</strong> of CVs
-      for the decoder. This allows you to read all CVs, for
-      example, or to make a series of changes across several panes,
-      and when done then write them all to the decoder. Again, you
-      have the option of reading/writing only the changed data, or
-      all data.</p>
+      <p> La deuxi&#232;me rang&#233;e de boutons remplit essentiellement les m&#234;mes fonctions, 
+      mais sur la <strong> plage enti&#232;re </strong> des CV du d&#233;codeur. Cela vous permet, 
+      par exemple, de lire tous les CV ou d'effectuer une s&#233;rie de modifications 
+      dans plusieurs onglets, puis de les &#233;crire dans le d&#233;codeur. Encore une fois,
+       vous avez la possibilit&#233; de lire/&#233;crire uniquement les donn&#233;es modifi&#233;es ou toutes les donn&#233;es. </P>
 
-      <p>Below the two rows of buttons is a text line that shows
-      what the current <b>programming mode</b> setting, and a
-      <b>Set</b><strong>...</strong> button that allows you to
-      change it without exiting the programmer. <a href=
-      "Basic_Mode.shtml"><strong>click here</strong></a> for
-      further information on Programming Modes.</p>
+       <p> Sous les deux rang&#233;es de boutons se trouve une ligne de texte 
+       indiquant le r&#233;glage actuel du <b> Mode de Programmation </b>, 
+       ainsi qu'un bouton <b> D&#233;finir </b> <strong> ... </strong>. 
+       cela vous permet de le changer sans quitter le programmeur. 
+       <a href= "Basic_Mode.shtml"> <strong> cliquez ici </strong> </a> pour plus d'informations sur les Modes de Programmation. </p>
+       
+		<p> Enfin, la derni&#232;re ligne du volet est une barre d'&#233;tat qui vous indique 
+		exactement ce que fait le syst&#232;me. Il indique <strong> inactif </strong> dans ces captures d'&#233;cran, 
+		car le syst&#232;me ne programmait pas activement les d&#233;codeurs au moment de la capture d'&#233;cran
+        </p>
 
-      <p>Finally, the bottom line of the pane is a status bar that
-      tells you exactly what the system is doing. It shows
-      <strong>idle</strong> in these screen shots because the
-      system was not actively programming decoders when they were
-      made.</p>
-
-      <p>Now Lets go to the Motor Tab.</p>
+       <p> Maintenant, allons &#224; l'onglet Moteur. </p> </p>
       <hr>
 
       <div align="right">
         <p><a href="Comp_Motor.shtml"></a><a href=
-        "Comp_Setup_Roster.shtml">Previous |</a> <a href=
-        "Comp_Motor.shtml">Next<br></a></p>
+        "Comp_Setup_Roster.shtml">Pr&#233;c&#233;dent| |</a> <a href=
+        "Comp_Motor.shtml">Suivant<br></a></p>
 
-        <p><a href="index.shtml#Advanced%20Programmer">Back to
-        Index</a></p>
+        <p><a href="index.shtml#Advanced%20Programmer">Retour &#224; l'Index </a></p>
       </div><!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
