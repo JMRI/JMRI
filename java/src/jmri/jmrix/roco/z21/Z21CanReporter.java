@@ -133,7 +133,6 @@ public class Z21CanReporter extends jmri.implementation.AbstractRailComReporter 
           log.debug("reporting tag for address 1 {}",l);
           // see if there is a tag for this address.
           RailCom tag = (RailCom) InstanceManager.getDefault(RailComManager.class).provideIdTag("" + l.getNumber());
-          tag.setAddressType(l.isLongAddress()?RailCom.LONG_ADDRESS:RailCom.SHORT_ADDRESS);
           int direction = (0xC000&value);
           switch (direction) {
              case 0x8000:
