@@ -287,7 +287,8 @@
                 <tooltip>Speed in ABC Slow block</tooltip>
                 <tooltip xml:lang="de">Geschwindigkeit in der ABC Langsamfahrstrecke</tooltip>
             </variable>
-            <!-- TODO CVs 107-108 -->
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv107.108indepOutputs.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv115lissy.xml"/>
             <!-- CVs 116-118 (CVs 116-123 for Piko) -->
             <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/optionVars7outputs.xml"/>
             <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv124.129coupling.xml"/>
