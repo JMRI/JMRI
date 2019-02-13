@@ -690,7 +690,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     // Helper methods for Program Replies
 
     public String getCallbackNumString() {
-        if (this.isProgramReply()) {
+        if (this.isProgramReply() || isProgramBitReply() ) {
             return(this.getValueString(1));
         } else {
             log.error("ProgramReply Parser called on non-ProgramReply message type {}", this.getOpCodeChar());
@@ -699,7 +699,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     }
 
     public int getCallbackNumInt() {
-        if (this.isProgramReply()) {
+        if (this.isProgramReply() || isProgramBitReply() ) {
             return(this.getValueInt(1));
         } else {
             log.error("ProgramReply Parser called on non-ProgramReply message type {}", this.getOpCodeChar());
@@ -708,7 +708,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     }
 
     public String getCallbackSubString() {
-        if (this.isProgramReply()) {
+        if (this.isProgramReply() || isProgramBitReply() ) {
             return(this.getValueString(2));
         } else {
             log.error("ProgramReply Parser called on non-ProgramReply message type {}", this.getOpCodeChar());
@@ -717,7 +717,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     }
 
     public int getCallbackSubInt() {
-        if (this.isProgramReply()) {
+        if (this.isProgramReply() || isProgramBitReply() ) {
             return(this.getValueInt(2));
         } else {
             log.error("ProgramReply Parser called on non-ProgramReply message type {}", this.getOpCodeChar());
@@ -726,7 +726,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     }
 
     public String getCVString() {
-        if (this.isProgramReply()) {
+        if (this.isProgramReply() || isProgramBitReply() ) {
             return(this.getValueString(3));
         } else {
             log.error("ProgramReply Parser called on non-ProgramReply message type {}", this.getOpCodeChar());
@@ -735,7 +735,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     }
 
     public int getCVInt() {
-        if (this.isProgramReply()) {
+        if (this.isProgramReply() || isProgramBitReply() ) {
             return(this.getValueInt(3));
         } else {
             log.error("ProgramReply Parser called on non-ProgramReply message type {}", this.getOpCodeChar());
@@ -762,7 +762,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     }
 
     public String getReadValueString() {
-        if (this.isProgramReply()) {
+        if (this.isProgramReply() || isProgramBitReply() ) {
             if (this.matches(DCCppConstants.PROGRAM_BIT_REPLY_REGEX)) {
                 return(this.getValueString(5));
             } else {
