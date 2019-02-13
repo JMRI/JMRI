@@ -66,6 +66,17 @@ public class DlgCO extends javax.swing.JDialog {
                     CTCSerialData ctcSerialData, CheckJMRIObject checkJMRIObject) {
         super(parent, modal);
         initComponents();
+        _mSignalFacingDirection.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {  Bundle.getMessage("InfoDlgCOLeftTraffic"),          // NOI18N
+                                                                                                Bundle.getMessage("InfoDlgCORightTraffic") }));     // NOI18N
+        _mSignalAspectToDisplay.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {  Bundle.getMessage("InfoDlgCODark"),                 // NOI18N
+                                                                                                Bundle.getMessage("InfoDlgCORed"),                  // NOI18N
+                                                                                                Bundle.getMessage("InfoDlgCOYellow"),               // NOI18N
+                                                                                                Bundle.getMessage("InfoDlgCOGreen"),                // NOI18N
+                                                                                                Bundle.getMessage("InfoDlgCOFlashingRed"),          // NOI18N
+                                                                                                Bundle.getMessage("InfoDlgCOFlashingYellow"),       // NOI18N
+                                                                                                Bundle.getMessage("InfoDlgCOFlashingGreen"),        // NOI18N
+                                                                                                Bundle.getMessage("InfoDlgCOLunar"),                // NOI18N
+                                                                                                Bundle.getMessage("InfoDlgCOFlashingLunar") }));    // NOI18N
         _mAwtWindowProperties = awtWindowProperties;
         _mCodeButtonHandlerData = codeButtonHandlerData;
         _mProgramProperties = programProperties;
@@ -211,10 +222,6 @@ public class DlgCO extends javax.swing.JDialog {
 
         jLabel15.setText(Bundle.getMessage("InfoDlgCORow5B"));
 
-        _mSignalFacingDirection.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "LEFTTRAFFIC", "RIGHTTRAFFIC", " " }));
-
-        _mSignalAspectToDisplay.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Dark", "Red", "Yellow", "Green", "Flashing Red", "Flasing Yellow", "Flashing Green", "Lunar", "Flashing Lunar", " " }));
-
         _mGroupingsList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
                 _mGroupingsListValueChanged(evt);
@@ -359,7 +366,7 @@ public class DlgCO extends javax.swing.JDialog {
                             .addComponent(jLabel3)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(_mCalledOnExternalSensor, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel4)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(_mExternalBlock, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE))

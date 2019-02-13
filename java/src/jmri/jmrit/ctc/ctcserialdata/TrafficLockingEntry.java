@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package jmri.jmrit.ctc.ctcserialdata;
 
 import java.util.ArrayList;
@@ -13,11 +8,6 @@ import java.util.Arrays;
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019
  */
 public class TrafficLockingEntry {
-    public static final String RULE_ENABLED_STRING = "Enabled";
-    public static final String RULE_DISABLED_STRING = "Disabled";
-    public static final String NORMAL_STRING = "Normal";
-    public static final String REVERSE_STRING = "Reverse";
-
     public String _mUserRuleNumber;
     public String _mRuleEnabled;
     public String _mUserText1;
