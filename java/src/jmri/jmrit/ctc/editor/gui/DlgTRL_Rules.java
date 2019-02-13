@@ -103,7 +103,7 @@ public class DlgTRL_Rules extends javax.swing.JDialog {
         CommonSubs.populateJComboBoxWithColumnDescriptions(_mOS_NumberEntry3, _mCTCSerialData);
         CommonSubs.populateJComboBoxWithColumnDescriptions(_mOS_NumberEntry4, _mCTCSerialData);
         CommonSubs.populateJComboBoxWithColumnDescriptions(_mOS_NumberEntry5, _mCTCSerialData);
-        String[] normalAndReverse = new String[] { TrafficLockingEntry.NORMAL_STRING, TrafficLockingEntry.REVERSE_STRING };
+        String[] normalAndReverse = new String[] { Bundle.getMessage("TLE_Normal"), Bundle.getMessage("TLE_Reverse") }; // NOI18N
         _mSwitchAlignment1.setModel(new javax.swing.DefaultComboBoxModel<>(normalAndReverse));
         _mSwitchAlignment2.setModel(new javax.swing.DefaultComboBoxModel<>(normalAndReverse));
         _mSwitchAlignment3.setModel(new javax.swing.DefaultComboBoxModel<>(normalAndReverse));
@@ -515,7 +515,7 @@ public class DlgTRL_Rules extends javax.swing.JDialog {
         _mSwitchAlignment5.setSelectedItem(trafficLockingEntry._mSwitchAlignment5);
         _mGroupingListAddReplace.setText("Update selected item in the Rules list above");
         _mGroupingListAddReplace.setEnabled(true);
-        _mRuleEnabled.setSelected(!trafficLockingEntry._mRuleEnabled.equals(TrafficLockingEntry.RULE_DISABLED_STRING));  // Default if invalid is ENABLED
+        _mRuleEnabled.setSelected(!trafficLockingEntry._mRuleEnabled.equals(Bundle.getMessage("TLE_RuleDisabled")));  // NOI18N  Default if invalid is ENABLED
         _mOS_NumberEntry1.requestFocusInWindow();
     }//GEN-LAST:event__mEditBelowActionPerformed
 
@@ -528,7 +528,7 @@ public class DlgTRL_Rules extends javax.swing.JDialog {
     }//GEN-LAST:event__mDeleteActionPerformed
 
     private void _mGroupingListAddReplaceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mGroupingListAddReplaceActionPerformed
-        TrafficLockingEntry trafficLockingEntry = new TrafficLockingEntry(  _mRuleEnabled.isSelected() ? TrafficLockingEntry.RULE_ENABLED_STRING : TrafficLockingEntry.RULE_DISABLED_STRING,
+        TrafficLockingEntry trafficLockingEntry = new TrafficLockingEntry(  _mRuleEnabled.isSelected() ? Bundle.getMessage("TLE_RuleEnabled") : Bundle.getMessage("TLE_RuleDisabled"),  // NOI18N
                                                                             (String)_mSwitchAlignment1.getSelectedItem(),
                                                                             (String)_mSwitchAlignment2.getSelectedItem(),
                                                                             (String)_mSwitchAlignment3.getSelectedItem(),
@@ -616,7 +616,7 @@ public class DlgTRL_Rules extends javax.swing.JDialog {
     private void _mEnableALLRulesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mEnableALLRulesActionPerformed
         for (int index = 0; index < _mDefaultListModel.getSize(); index++) {
             TrafficLockingEntry trafficLockingEntry = new TrafficLockingEntry(_mDefaultListModel.get(index));
-            trafficLockingEntry._mRuleEnabled = TrafficLockingEntry.RULE_ENABLED_STRING;
+            trafficLockingEntry._mRuleEnabled = Bundle.getMessage("TLE_RuleEnabled");   // NOI18N
             _mDefaultListModel.set(index, trafficLockingEntry.toCSVString());
         }
     }//GEN-LAST:event__mEnableALLRulesActionPerformed
@@ -624,7 +624,7 @@ public class DlgTRL_Rules extends javax.swing.JDialog {
     private void _mDisableALLRulesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mDisableALLRulesActionPerformed
         for (int index = 0; index < _mDefaultListModel.getSize(); index++) {
             TrafficLockingEntry trafficLockingEntry = new TrafficLockingEntry(_mDefaultListModel.get(index));
-            trafficLockingEntry._mRuleEnabled = TrafficLockingEntry.RULE_DISABLED_STRING;
+            trafficLockingEntry._mRuleEnabled = Bundle.getMessage("TLE_RuleDisabled");  // NOI18N
             _mDefaultListModel.set(index, trafficLockingEntry.toCSVString());
         }
     }//GEN-LAST:event__mDisableALLRulesActionPerformed

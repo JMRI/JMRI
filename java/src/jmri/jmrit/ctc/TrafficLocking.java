@@ -98,7 +98,7 @@ public class TrafficLocking {
             _mOccupancyExternalSensor9 = new NBHSensor("TrafficLocking", userIdentifier, parameter + " occupancyExternalSensor9", occupancyExternalSensor9, true);
             _mOptionalSensor1 = new NBHSensor("TrafficLocking", userIdentifier, parameter + " optionalSensor1", optionalSensor1, true);
             _mOptionalSensor2 = new NBHSensor("TrafficLocking", userIdentifier, parameter + " optionalSensor2", optionalSensor2, true);
-            _mRuleEnabled = !ruleEnabled.equals(TrafficLockingEntry.RULE_DISABLED_STRING); // Any problem, default is ENABLED!
+            _mRuleEnabled = !ruleEnabled.equals(Bundle.getMessage("TLE_RuleDisabled")); // NOI18N  Any problem, default is ENABLED!
         }
         
         public boolean isEnabled() { return _mRuleEnabled; }
@@ -266,7 +266,7 @@ public class TrafficLocking {
     
     private NBHSensor getSwitchDirectionIndicatorSensor(int uniqueID, String switchAlignment, HashMap<Integer, SwitchDirectionIndicators> swdiHashMap) {
         if (uniqueID < 0) return null;
-        boolean isNormalAlignment = !switchAlignment.equals(TrafficLockingEntry.REVERSE_STRING);
+        boolean isNormalAlignment = !switchAlignment.equals(Bundle.getMessage("TLE_Reverse"));  // NOI18N
         SwitchDirectionIndicators switchDirectionIndicators = swdiHashMap.get(uniqueID);
         if (switchDirectionIndicators == null) return null;     // Safety, technically shouldn't happen....
         return switchDirectionIndicators.getProperIndicatorSensor(isNormalAlignment);

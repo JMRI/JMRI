@@ -322,11 +322,7 @@
     <Component class="javax.swing.JComboBox" name="_mSignalFacingDirection">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="3">
-            <StringItem index="0" value="LEFTTRAFFIC"/>
-            <StringItem index="1" value="RIGHTTRAFFIC"/>
-            <StringItem index="2" value=" "/>
-          </StringArray>
+          <StringArray count="0"/>
         </Property>
       </Properties>
       <AuxValues>
@@ -336,18 +332,7 @@
     <Component class="javax.swing.JComboBox" name="_mSignalAspectToDisplay">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="10">
-            <StringItem index="0" value="Dark"/>
-            <StringItem index="1" value="Red"/>
-            <StringItem index="2" value="Yellow"/>
-            <StringItem index="3" value="Green"/>
-            <StringItem index="4" value="Flashing Red"/>
-            <StringItem index="5" value="Flasing Yellow"/>
-            <StringItem index="6" value="Flashing Green"/>
-            <StringItem index="7" value="Lunar"/>
-            <StringItem index="8" value="Flashing Lunar"/>
-            <StringItem index="9" value=" "/>
-          </StringArray>
+          <StringArray count="0"/>
         </Property>
       </Properties>
       <AuxValues>

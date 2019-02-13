@@ -71,7 +71,7 @@ public class CallOn {
 //  NOTE: When calling this constructor, ALL values MUST BE VALID!  NO check is done!
         public GroupingData(NBHAbstractSignalCommon signal, String signalHeadFaces, int callOnAspect, NBHSensor calledOnExternalSensor, NamedBeanHandle<Block> namedBeanHandleBlock, SwitchIndicatorsRoute route) {
             _mSignal = signal;
-            _mSignalHeadFaces = signalHeadFaces.equals("LEFTTRAFFIC") ? CTCConstants.LEFTTRAFFIC : CTCConstants.RIGHTTRAFFIC;
+            _mSignalHeadFaces = signalHeadFaces.equals(Bundle.getMessage("InfoDlgCOLeftTraffic")) ? CTCConstants.LEFTTRAFFIC : CTCConstants.RIGHTTRAFFIC;   // NOI18N
             _mCallOnAspect = callOnAspect;
             _mCalledOnExternalSensor = calledOnExternalSensor;
             _mNamedBeanHandleBlock = namedBeanHandleBlock;
@@ -87,18 +87,18 @@ public class CallOn {
     public CallOn(LockedRoutesManager lockedRoutesManager, String userIdentifier, String callOnToggleSensor, String groupingsListString, CodeButtonHandlerData.SIGNAL_TYPE signalType) {
         _mLockedRoutesManager = lockedRoutesManager;
         _mSignalHeadSelected = (signalType == CodeButtonHandlerData.SIGNAL_TYPE.SIGNALHEAD);
-        _mCallOnToggleSensor = new NBHSensor("CallOn", userIdentifier, "callOnToggleSensor", callOnToggleSensor, false);
+        _mCallOnToggleSensor = new NBHSensor("CallOn", userIdentifier, "callOnToggleSensor", callOnToggleSensor, false);    // NOI18N
         if (!ProjectsCommonSubs.isNullOrEmptyString(groupingsListString)) {
             ArrayList<String> groupingList = ProjectsCommonSubs.getArrayListFromSSV(groupingsListString);
             for (String groupingString : groupingList) {
                 CallOnEntry callOnEntry = new CallOnEntry(groupingString);
                 try {
-                    NBHAbstractSignalCommon signal = NBHAbstractSignalCommon.getExistingSignal("CallOn", userIdentifier, "groupingString" + " " + groupingString, callOnEntry._mExternalSignal);
+                    NBHAbstractSignalCommon signal = NBHAbstractSignalCommon.getExistingSignal("CallOn", userIdentifier, "groupingString" + " " + groupingString, callOnEntry._mExternalSignal);    // NOI18N
                     String trafficDirection = callOnEntry._mSignalFacingDirection;
-                    if (!trafficDirection.equals("LEFTTRAFFIC") && !trafficDirection.equals("RIGHTTRAFFIC")) {
-                        throw new CTCException("CallOn", userIdentifier, "groupingString", groupingString + " not LEFTTRAFFIC or RIGHTTRAFFIC.");
+                    if (!trafficDirection.equals(Bundle.getMessage("InfoDlgCOLeftTraffic")) && !trafficDirection.equals(Bundle.getMessage("InfoDlgCORightTraffic"))) {  // NOI18N
+                        throw new CTCException("CallOn", userIdentifier, "groupingString", groupingString + " not " + Bundle.getMessage("InfoDlgCOLeftTraffic") + " or " + Bundle.getMessage("InfoDlgCORightTraffic") + ".");   // NOI18N
                     }
-                    SwitchIndicatorsRoute route = new SwitchIndicatorsRoute("CallOn", userIdentifier, "groupingString",
+                    SwitchIndicatorsRoute route = new SwitchIndicatorsRoute("CallOn", userIdentifier, "groupingString", // NOI18N
                                                                             callOnEntry._mSwitchIndicator1,
                                                                             callOnEntry._mSwitchIndicator2,
                                                                             callOnEntry._mSwitchIndicator3,
@@ -108,7 +108,7 @@ public class CallOn {
                     if (_mSignalHeadSelected) {
 //  Technically, I'd have liked to call this only once, but in reality, each signalhead could have a different value list:
                         String[] validStateNames = signal.getValidStateNames();
-                        int validStateNamesIndex = arrayFind(validStateNames, callOnEntry._mSignalAspectToDisplay);
+                        int validStateNamesIndex = arrayFind(validStateNames, convertFromForeignLanguageColor(callOnEntry._mSignalAspectToDisplay));
                         if (validStateNamesIndex == -1) { // Not found:
                             throw new CTCException("CallOn", userIdentifier, "groupingString", groupingString + " not valid aspect indication for this signal.");
                         }
@@ -218,6 +218,25 @@ NOTE:
         }
         return -1;
     }
+    
+//  When we went to foreign language support, I had to convert to English here, so that these lines worked above:
+//  String[] validStateNames = signal.getValidStateNames();    
+//  int validStateNamesIndex = arrayFind(validStateNames, convertFromForeignLanguageColor(callOnEntry._mSignalAspectToDisplay));
+//  I SUSPECT (not verified) that "signal.getValidStateNames()" ALWAYS returns English no matter what language is selected.
+//  If I AM WRONG, then this routine can be removed, and the call to it removed:
+    private String convertFromForeignLanguageColor(String foreignLanguageColor) {
+        if (foreignLanguageColor.equals(Bundle.getMessage("InfoDlgCODark"))) return "Dark"; // NOI18N
+        if (foreignLanguageColor.equals(Bundle.getMessage("InfoDlgCORed"))) return "Red";   // NOI18N
+        if (foreignLanguageColor.equals(Bundle.getMessage("InfoDlgCOYellow"))) return "Yellow"; // NOI18N
+        if (foreignLanguageColor.equals(Bundle.getMessage("InfoDlgCOGreen"))) return "Green";   // NOI18N
+        if (foreignLanguageColor.equals(Bundle.getMessage("InfoDlgCOFlashingRed"))) return "FlashingRed";   // NOI18N
+        if (foreignLanguageColor.equals(Bundle.getMessage("InfoDlgCOFlashingYellow"))) return "FlashingYellow"; // NOI18N
+        if (foreignLanguageColor.equals(Bundle.getMessage("InfoDlgCOFlashingGreen"))) return "FlashingGreen";   // NOI18N
+        if (foreignLanguageColor.equals(Bundle.getMessage("InfoDlgCOLunar"))) return "Lunar";   // NOI18N
+        if (foreignLanguageColor.equals(Bundle.getMessage("InfoDlgCOFlashingLunar"))) return "FlashingLunar";   // NOI18N
+        return "Red";   // NOI18N    Should NEVER happen, but if programmers screw up, default to some "sane" value.
+    }
+    
     private static final NamedBeanHandleManager NAMED_BEAN_HANDLE_MANAGER = InstanceManager.getDefault(NamedBeanHandleManager.class);
     private static final BlockManager blockManager = InstanceManager.getDefault(BlockManager.class);
 }
