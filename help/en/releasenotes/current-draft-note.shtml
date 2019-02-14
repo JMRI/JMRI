@@ -100,7 +100,7 @@
 
         <h4>Roco z21/Z21</h4>
             <ul>
-                <li></li>
+                <li>Fixed Delay in throttle message processing</li>
             </ul>
 
         <h4>Secsi</h4>
