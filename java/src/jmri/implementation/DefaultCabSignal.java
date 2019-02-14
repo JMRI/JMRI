@@ -98,7 +98,7 @@ public class DefaultCabSignal implements CabSignal {
      *
      * @param listener is a PropertyChangeListener object
      */
-    public void addPropertyChangeListener(java.beans.PropertyChangeListener l){
+    public void addPropertyChangeListener(java.beans.PropertyChangeListener listener){
     }
 
     /**
@@ -106,7 +106,7 @@ public class DefaultCabSignal implements CabSignal {
      *
      * @param listener is a PropertyChangeListener object
      */
-    public void removePropertyChangeListener(java.beans.PropertyChangeListener l){
+    public void removePropertyChangeListener(java.beans.PropertyChangeListener listener){
     }
 
 }
