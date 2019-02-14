@@ -1,11 +1,11 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
 
-<html lang="en">
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
+<!-- Translation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-02-14 -->
   <title>Comprehensive Programmer - Consisting Functions
   Pane</title><!-- Style -->
   <meta http-equiv="Content-Type" content=
@@ -27,109 +27,92 @@
     <div id="mainContent">
       <a name="Top" id="Top"></a>
 
-      <h1>DecoderPro&reg; Comprehensive Programmer</h1>
+      <h1>DecoderPro&reg; Programmeur Complet</h1>
 
-      <h2>Consisting Functions Pane</h2>
+      <h2>Onglet Fonctions Couplage</h2>
 
       <div align="right">
-        <p><a href="Comp_Analog.shtml">Previous |</a> <a href=
-        "Comp_Advanced.shtml">Next</a></p>
+        <p><a href="Comp_Analog.shtml">Pr&#233;c&#233;dent |</a> <a href=
+        "Comp_Advanced.shtml">Suivant</a></p>
 
-        <p><a href="index.shtml#Advanced%20Programmer">Back to
-        Index</a></p>
+        <p><a href="index.shtml#Advanced%20Programmer">Retour &#224; l'Index</a></p>
       </div>
       <hr>
 
-      <p>Consisting is a means to have two or more locomotives
-      respond to orders from the command station, and do it
-      together in unison. There are a number of terms used to
-      describe consisting, and the manufacturers don't agree what
-      those terms should be. The NMRA has adopted terminology, so
-      that is what will be used in this discussion.</p>
+      <p>Le couplage est un moyen de faire en sorte que deux locomotives 
+      ou plus r&#233;pondent aux ordres de la centrale de commande et le fassent 
+      ensemble &#224; l'unisson. Un certain nombre de termes sont utilis&#233;s 
+      pour d&#233;crire le couplage et les fabricants ne sont pas d'accord 
+      sur ce que ces termes devraient &#234;tre. Le NMRA a adopt&#233; la 
+      terminologie, c'est donc celle-ci qui sera utilis&#233;e dans cette discussion.</p>
 
-      <p>Address Consisting. You merely set the address of every
-      locomotive to be the same, and we can use the Basic
-      Programmer pane to do this. Then a DCC instruction sent to a
-      locomotive with address XX will cause all the locomotives
-      with address XX to respond. It works well for locomotives
-      that are always run together, and is portable from one layout
-      to the other. The disadvantage is that it's a pain to keep
-      re-addressing your locomotives if you don't always run them
-      together.</p>
+      <p>Adresse Couplage. Vous d&#233;finissez simplement l'adresse de chaque 
+      locomotive pour qu'elle soit identique, et nous pouvons utiliser 
+      l'onglet Programmateur de base pour le faire. Ensuite, une instruction 
+      DCC envoy&#233;e &#224; une locomotive d'adresse XX fera r&#233;agir toutes les 
+      locomotives d'adresse XX. Cela fonctionne bien pour les locomotives 
+      qui roulent toujours ensemble et est portable d'un r&#233;seau &#224; 
+      l'autre. L'inconv&#233;nient est qu'il est difficile de r&#233;-adresser 
+      vos locomotives si vous ne les utilisez pas toujours ensemble..</p>
 
-      <p>So, the NMRA came up with two additional means of
-      consisting. One is set up in, and remembered by the command
-      station, and the other is set in the decoders.</p>
+      <p>Ainsi, le NMRA a propos&#233; deux moyens suppl&#233;mentaires de couplage. 
+      L'une est configur&#233;e et m&#233;moris&#233;e par la centrale de commande, 
+      l'autre dans les d&#233;codeurs..</p>
 
-      <p>The NMRA calls the command station based system Basic
-      Consisting. The command station keeps a list of all the locos
-      in the consist. When an action is needed the command station
-      sends an individual packet to every locomotive in the
-      consist, which causes them to then act together. Since this
-      method is command station based the consist is not portable
-      to another system. Also, since it does not need to be
-      programmed into the decoders, DecoderPro doesn't need to deal
-      with it.</p>
+      <p> Le NMRA appelle le syst&#232;me bas&#233; sur la centrale de commande. 
+      La centrale de commande conserve une liste de toutes les locomotives 
+      du couplage. Lorsqu'une action est n&#233;cessaire, la centrale de 
+      commande envoie un paquet individuel &#224; chaque locomotive du couplage, 
+      ce qui les force ensuite &#224; agir ensemble. Comme cette m&#233;thode est 
+      bas&#233;e sur la centrale de commande, le couplage n'est pas portable 
+      sur un autre syst&#232;me. De plus, puisqu'il n'a pas besoin d'&#234;tre 
+      programm&#233; dans les d&#233;codeurs, DecoderPro n'a pas besoin de s'en occuper.</p>
 
-      <p>The NMRA calls the decoder based system Advanced
-      Consisting. To implement this system the decoder has to have
-      a special memory space (CV19) which is used to store a
-      consist address. This type of consisting is portable between
-      layouts, since the information that the loco is part of a
-      consist, and the address information for that consist is
-      carried in the decoder. The disadvantage is that once the
-      locomotive is assigned to a consist it will only respond to
-      the consist address. If you forget to 'break' the consist at
-      the end of an operation, you will be puzzled as to why your
-      locomotive won't respond to requests for motion, even though
-      it will respond to some of the lighting functions.</p>
+      <p>DecoderPro utilise le volet Couplage pour configurer Les Couplages 
+      Avanc&#233;s NMRA et la r&#233;ponse de la locomotive aux demandes de 
+      fonction envoy&#233;es &#224; l'adresse de couplage. </P>
 
-      <p>DecoderPro utilizes the Consisting Pane to set up NMRA
-      Advanced Consists and the response of the locomotive to
-      function requests sent to the consist address.</p>
-
-      <h1><img src="images/Comp_07_Consisting.png" width="920"
+       <h1><img src="images/Comp_07_Consisting.png" width="920"
       height="799" alt="Consist panel"></h1>
+      
+      <p> L'adresse de coh&#233;rence avanc&#233;e est destin&#233;e &#224; l'option <strong> EPF </strong> 
+      (<strong> format de paquet &#233;tendu </strong>, telle que d&#233;finie par les 
+      pratiques recommand&#233;es de la NMRA pour DCC). Si l'adresse de couplage 
+      est <strong> une valeur autre que z&#233;ro </strong>, la locomotive est 
+      consid&#233;r&#233;e comme &#233;tant dans un couplage et ne r&#233;pondra qu'aux instructions 
+      envoy&#233;es &#224; l'adresse de couplage. Nous d&#233;finissons donc ici 
+      une adresse courte pour cr&#233;er un groupe de machines multiples qui 
+      r&#233;pondront toutes &#224; la m&#234;me adresse. Voyez cela comme une adresse de 
+      locomotive sp&#233;cifique &#224; l'UM. &#201;tant donn&#233; que l'adresse est dans la 
+      m&#234;me plage que les locomotives non coupl&#233;es avec des adresses courtes, 
+      nous devons nous assurer que l'adresse est unique sur le r&#233;seau. 
+      Pour ce faire, utilisez une extr&#233;mit&#233; sup&#233;rieure de la plage d'adresses 
+      courte &#224; partir de 127 et plus bas. La plupart des gens qui travaillent 
+      avec des locomotives simples avec des adresses courtes ont tendance &#224; 
+      utiliser les valeurs par d&#233;faut d&#233;finies par le fabricant, soit 3, 
+      ou d'autres valeurs faibles, g&#233;n&#233;ralement pour leurs locomotives.</p>
 
-      <p>The Advanced Consist Address is for <strong>EPF</strong>
-      (<strong>Extended Packet Format</strong>, as defined by the
-      NMRA Recommended Practices for DCC). If the consist address
-      is <strong>any value other than zero</strong>, the locomotive
-      is considered to be in a consist and will only respond to
-      instructions sent to the consist address. Thus we set a short
-      address here to create a multiple engine group that will all
-      respond to the same address. Think of it as an MU specific
-      locomotive address. Since the address is in the same range as
-      non-consisted locomotives with short addresses, we need to be
-      sure the address is unique on the layout. A way of doing this
-      is to use higher end of the short address range starting from
-      127 and going down. Most folks working with single
-      locomotives with short addresses tend to be using the
-      manufacturer's default of 3, or other low values, typically
-      for their logging locomotives.</p>
+      <p>Cet onglet permet &#233;galement d'indiquer au d&#233;codeur quels effets doivent 
+      &#234;tre activ&#233;s lorsque la locomotive est dans un couplage, en supposant 
+      que le d&#233;codeur soit capable de r&#233;pondre de mani&#232;re appropri&#233;e. &#193; titre 
+      d'exemple, cela vous permet de sp&#233;cifier si les phares et les autres 
+      fonctions d'&#233;clairage doivent &#234;tre toujours &#233;teints si la locomotive 
+      est au milieu ou &#224; l'arri&#232;re. Cela peut &#234;tre pratique si seulement 
+      l'unit&#233; "B" a un son. Vous pouvez r&#233;gler ses lumi&#232;res de mani&#232;re &#224; 
+      ce qu'elles soient &#233;teintes, mais le klaxon peut sonner, m&#234;me si 
+      elles sont dans le couplage. </P>
 
-      <p>This Pane also allows one to instruct the decoder what
-      effects are to be active when the locomotive is in a consist,
-      assuming the decoder is capable of responding appropriately.
-      As an example, this allows you to specify if the headlights
-      and other lighting functions are to be always off if the
-      locomotive is in the middle, or tail end. This can be handy
-      if only the "B" unit has sound. You can set it's lights to be
-      off in a consist, but it can sound it's horn even though it's
-      in the consist.</p>
-
-      <p>If you've had your locomotives on another layout and ran
-      them together, but can't get them to run separately on your
-      home system, check this to see if it's consist address has
-      been set.</p>
+       <p> Si vos locomotives se trouvent sur une autre structure et 
+       que vous les avez exploit&#233;es ensemble, mais que vous ne parvenez
+        pas &#224; les faire fonctionner s&#233;par&#233;ment sur votre syst&#232;me d'origine, 
+        v&#233;rifiez si l'adresse correspondante a &#233;t&#233; d&#233;finie.</p>
       <hr>
 
       <div align="right">
-        <p><a href="Comp_Analog.shtml">Previous |</a> <a href=
-        "Comp_Advanced.shtml">Next</a></p>
+        <p><a href="Comp_Analog.shtml">Pr&#233;c&#233;dent |</a> <a href=
+        "Comp_Advanced.shtml">Suivant</a></p>
 
-        <p><a href="index.shtml#Advanced%20Programmer">Back to
-        Index</a></p>
+        <p><a href="index.shtml#Advanced%20Programmer">Retour &#224; l'Index</a></p>
       </div><!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
