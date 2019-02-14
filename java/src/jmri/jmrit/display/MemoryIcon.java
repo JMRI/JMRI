@@ -15,6 +15,7 @@ import javax.swing.JTextField;
 import jmri.InstanceManager;
 import jmri.Memory;
 import jmri.NamedBeanHandle;
+import jmri.Reportable;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterIconFactory;
@@ -386,6 +387,11 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
                     _icon = false;
                     _text = true;
                     setText(val.toString());
+                    setIcon(null);
+                } else if (val instanceof Reportable) {
+                    _icon = false;
+                    _text = true;
+                    setText(((Reportable)val).toReportString());
                     setIcon(null);
                 } else {
                     log.warn("can't display current value of " + getNameString()

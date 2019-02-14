@@ -72,7 +72,12 @@ public class PR3Adapter extends LocoBufferAdapter {
             // PR3 standalone case
             // connect to a packetizing traffic controller
             // that does echoing
-            jmri.jmrix.loconet.pr2.LnPr2Packetizer packets = new jmri.jmrix.loconet.pr2.LnPr2Packetizer();
+            //
+            // Note - already created a LocoNetSystemConnectionMemo, so re-use 
+            // it when creating a PR2 Packetizer.  (If create a new one, will
+            // end up with two "LocoNet" menus...)
+            jmri.jmrix.loconet.pr2.LnPr2Packetizer packets = 
+                    new jmri.jmrix.loconet.pr2.LnPr2Packetizer(this.getSystemConnectionMemo());
             packets.connectPort(this);
 
             // create memo
