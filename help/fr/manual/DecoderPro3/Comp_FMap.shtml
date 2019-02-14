@@ -1,7 +1,6 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Translation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-02-14 -->
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -27,50 +26,47 @@
     <div id="mainContent">
       <a name="Top" id="Top"></a>
 
-      <h1>DecoderPro&reg; Comprehensive Programmer</h1>
+      <h1>DecoderPro&reg; Programmeur Complet</h1>
 
-      <h2>Function Mapping Pane</h2>
+      <h2>Onglet Mapping Fonction</h2>
 
       <div align="right">
-        <p><a href="Comp_Speed_Talble.shtml">Previous |</a>
-        <a href="Comp_LightFX.shtml">Next</a></p>
+        <p><a href="Comp_Speed_Talble.shtml">Pr&#233;c&#233;dent |</a>
+        <a href="Comp_LightFX.shtml">Suivant</a></p>
 
-        <p><a href="index.shtml#Advanced%20Programmer">Back to
-        Index</a></p>
+        <p><a href="index.shtml#Advanced%20Programmer">Retour &#224; l'Index </a></p>
       </div>
       <hr>
 
-      <p>Some decoders allow you to change the function assigned to
-      each set of output wires (or pads). Multiple choices for
-      function assignments are shown by several check boxes. This
-      is more common in decoders with more than four functions, and
-      in sound decoders.</p>
+      <p>Certains d&#233;codeurs vous permettent de modifier la fonction attribu&#233;e &#224; 
+      chaque ensemble de fils de sortie (ou pads). Les choix multiples pour les 
+      attributions de fonctions sont indiqu&#233;s par plusieurs cases &#224; cocher. 
+      Ceci est plus courant dans les d&#233;codeurs ayant plus de quatre fonctions 
+      et dans les d&#233;codeurs sonores..</p>
 
-      <p>Some of the new sound decoders may have up to 28
-      functions, and your throttle may have a limited function
-      capability. So, here's your opportunity to pick which ones
-      you can operate from your throttle.</p>
+      p> Certains nouveaux d&#233;codeurs sonores peuvent avoir jusqu'&#224; 28 fonctions et 
+      votre r&#233;gulateur peut avoir une capacit&#233; de fonction limit&#233;e. Alors, voici 
+      une opportunit&#233; pour choisir celles que vous pouvez utiliser avec votre r&#233;gulateur. </P>
 
-      <p>When this capability is present, the check boxes as shown
-      in the window below are active and allow you to choose to
-      which function key on the throttle each output responds.
-      <img src="images/Comp_05_FMap.png" width="818" height="701"
-      alt="Function map"></p>
+       <p> Lorsque cette fonctionnalit&#233; est pr&#233;sente, les cases &#224; cocher, 
+       comme indiqu&#233; dans la fen&#234;tre ci-dessous, sont actives et vous permettent 
+       de choisir la touche de fonction du r&#233;gulateur &#224; laquelle r&#233;pond chaque sortie.
+       <img src = "images/Comp_05_FMap.png" width = "818" height = "701"
+       alt = "Function map"> </p>
 
-      <p>If a checkbox is dimmed that indicates that no changes in
-      function assignments are possible. Not all decoders allow you
-      to remap the functions and others have very limited
-      functions. Only remap functions if you are sure you know what
-      you are doing.</p>
+       <p> Si une case &#224; cocher est gris&#233;e, cela indique qu'aucun changement 
+       dans l'affectation des fonctions n'est possible. Tous les d&#233;codeurs 
+       ne vous permettent pas le remapping des fonctions et d'autres ont des 
+       fonctions tr&#232;s limit&#233;es. Ne remappez les fonctions que si vous &#234;tes 
+       certain de savoir ce que vous faites. </P>
       <hr>
 
       <div align="right">
         <p><a href="Comp_FunctionLabel.shtml"></a> <a href=
-        "Comp_Speed_Talble.shtml">Previous |</a> <a href=
-        "Comp_LightFX.shtml">Next</a></p>
+        "Comp_Speed_Talble.shtml">Pr&#233;c&#233;dent |</a> <a href=
+        "Comp_LightFX.shtml">Suivant</a></p>
 
-        <p><a href="index.shtml#Advanced%20Programmer">Back to
-        Index</a></p>
+        <p><a href="index.shtml#Advanced%20Programmer">Retour &#224; l'Index</a></p>
       </div><!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
