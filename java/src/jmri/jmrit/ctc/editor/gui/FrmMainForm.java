@@ -23,7 +23,6 @@ import jmri.jmrit.ctc.editor.code.CheckJMRIObject;
 import jmri.jmrit.ctc.editor.code.CommonSubs;
 import jmri.jmrit.ctc.editor.code.CreateXMLFiles;
 import jmri.jmrit.ctc.editor.code.InternalSensorManager;
-import jmri.jmrit.ctc.editor.code.JMRIConnection;
 import jmri.jmrit.ctc.editor.code.OriginalCopy;
 import jmri.jmrit.ctc.editor.code.ProgramProperties;
 import java.awt.Toolkit;
@@ -61,7 +60,6 @@ public class FrmMainForm extends JFrame {
     private DefaultListModel<String> _mDefaultListModel;
     private ProgramProperties _mProgramProperties;
     private AwtWindowProperties _mAwtWindowProperties;
-    private JMRIConnection _mJMRIConnection;
     private CheckJMRIObject _mCheckJMRIObject;
 
     @SuppressWarnings("LeakingThisInConstructor")   // Lazy, since this is NOT a multi-threaded program.
@@ -71,8 +69,7 @@ public class FrmMainForm extends JFrame {
         addHelpMenu("index", true);  // NOI18N
         _mAwtWindowProperties = new AwtWindowProperties((java.awt.Window)this, "AwtWindowProperties.txt", FORM_PROPERTIES);
         _mProgramProperties = new ProgramProperties();
-        _mJMRIConnection = new JMRIConnection(this);
-        _mCheckJMRIObject = new CheckJMRIObject(_mJMRIConnection);
+        _mCheckJMRIObject = new CheckJMRIObject();
         newOrOpenFile(true);
     }
 
@@ -152,8 +149,6 @@ public class FrmMainForm extends JFrame {
         jButton2 = new javax.swing.JButton();
         _mMoveUp = new javax.swing.JButton();
         _mMoveDown = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
-        _mJMRIConnectionStatus = new javax.swing.JLabel();
         _mCheckEverythingWithJMRI = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         _mFile = new javax.swing.JMenu();
@@ -169,7 +164,6 @@ public class FrmMainForm extends JFrame {
         _mFleeting = new javax.swing.JMenuItem();
         _mPatterns = new javax.swing.JMenuItem();
         _mGUIDesign = new javax.swing.JMenuItem();
-        _mJMRIServerParams = new javax.swing.JMenuItem();
         _mHelp = new javax.swing.JMenu();
         _mHelpAbout = new javax.swing.JMenuItem();
 
@@ -383,10 +377,6 @@ public class FrmMainForm extends JFrame {
             }
         });
 
-        jLabel2.setText("JMRI Connection status:");
-
-        _mJMRIConnectionStatus.setText("Unknown");
-
         _mCheckEverythingWithJMRI.setText(Bundle.getMessage("ButtonCheck"));
         _mCheckEverythingWithJMRI.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -488,14 +478,6 @@ public class FrmMainForm extends JFrame {
         });
         jMenu1.add(_mGUIDesign);
 
-        _mJMRIServerParams.setText("JMRI Simple Server");
-        _mJMRIServerParams.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                _mJMRIServerParamsActionPerformed(evt);
-            }
-        });
-        jMenu1.add(_mJMRIServerParams);
-
         jMenuBar1.add(jMenu1);
 
         _mHelp.setText(Bundle.getMessage("MenuAbout"));
@@ -569,10 +551,6 @@ public class FrmMainForm extends JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel1)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(_mJMRIConnectionStatus)
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jScrollPane1)
@@ -597,11 +575,7 @@ public class FrmMainForm extends JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(_mJMRIConnectionStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel1)
-                        .addComponent(jLabel2)))
+                .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 334, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -668,38 +642,7 @@ public class FrmMainForm extends JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public void updateJMRIStatus(final JMRIConnection.ConnectionStatus connectionStatus) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-            switch (connectionStatus) {
-                case UNKNOWN:
-                    _mJMRIConnectionStatus.setText("<html><font color='orange'>Unknown</font></html>");
-                    _mCheckEverythingWithJMRI.setEnabled(false);
-                    break;
-                case NOT_CONNECTED:
-                    _mJMRIConnectionStatus.setText("<html><font color='red'>Not connected</font></html>");
-                    _mCheckEverythingWithJMRI.setEnabled(false);
-                    break;
-                case CONNECTED:
-                    _mJMRIConnectionStatus.setText("<html><font color='green'>Connected</font></html>");
-                    _mCheckEverythingWithJMRI.setEnabled(true);
-                    break;
-                case CONNECTED_WRONG_VERSION:
-                    _mJMRIConnectionStatus.setText("<html><font color='red'>Connected - wrong version</font></html>");
-                    _mCheckEverythingWithJMRI.setEnabled(false);
-                    break;
-                case NOT_RUNNING:
-                    _mJMRIConnectionStatus.setText("<html><font color='red'><b>Polling thread not running</b></font></html>");
-                    _mCheckEverythingWithJMRI.setEnabled(false);
-                    break;
-                }
-            }
-        });
-    }
-
     public void shutdown() {
-        _mJMRIConnection.close();
         jmri.InstanceManager.reset(jmri.jmrit.ctc.editor.gui.FrmMainForm.class);
         dispose();
     }
@@ -966,7 +909,6 @@ public class FrmMainForm extends JFrame {
             _mOriginalCopy.makeDeepCopy(_mCTCSerialData);
         } else _mProgramProperties._mFilename = ProgramProperties.FILENAME_DEFAULT;
         setTitle(Bundle.getMessage("TitleMainForm") + "   " + _mProgramProperties._mFilename );
-        _mJMRIConnection.start(_mCTCSerialData.getOtherData()._mJMRI_Host, _mCTCSerialData.getOtherData()._mJMRI_Port);
         _mDefaultListModel = new DefaultListModel<>();
         _mPresentlyDefinedColumns.setModel(_mDefaultListModel);
         _mColumns = new Columns(_mCTCSerialData, _mCheckJMRIObject, _mDefaultListModel,
@@ -1071,11 +1013,6 @@ public class FrmMainForm extends JFrame {
         InternalSensorManager.doDialog(dialog, _mCTCSerialData);    // Technically don't modify anything, but for consistency
     }//GEN-LAST:event__mHelpAboutActionPerformed
 
-    private void _mJMRIServerParamsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mJMRIServerParamsActionPerformed
-        DlgJMRISimpleServerParams dialog = new DlgJMRISimpleServerParams(this, true, _mAwtWindowProperties, _mCTCSerialData.getOtherData(), _mJMRIConnection);
-        InternalSensorManager.doDialog(dialog, _mCTCSerialData);
-    }//GEN-LAST:event__mJMRIServerParamsActionPerformed
-
     private void _mCheckEverythingWithJMRIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mCheckEverythingWithJMRIActionPerformed
         boolean showErrors = JOptionPane.showConfirmDialog(this, "If there are errors, do you want to see them?", "Info", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
         _mColumns.updateFrame();    // Sets ERROR_STRING at the end of each line.
@@ -1126,8 +1063,6 @@ public class FrmMainForm extends JFrame {
     private javax.swing.JMenu _mHelp;
     private javax.swing.JMenuItem _mHelpAbout;
     private javax.swing.JCheckBox _mIL_Enabled;
-    private javax.swing.JLabel _mJMRIConnectionStatus;
-    private javax.swing.JMenuItem _mJMRIServerParams;
     private javax.swing.JButton _mMoveDown;
     private javax.swing.JButton _mMoveUp;
     private javax.swing.JMenuItem _mNew;
@@ -1147,7 +1082,6 @@ public class FrmMainForm extends JFrame {
     private javax.swing.JButton deleteButton;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;

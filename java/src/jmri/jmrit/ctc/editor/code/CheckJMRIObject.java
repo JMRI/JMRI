@@ -3,6 +3,12 @@ package jmri.jmrit.ctc.editor.code;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
+import jmri.BlockManager;
+import jmri.InstanceManager;
+import jmri.SensorManager;
+import jmri.SignalHeadManager;
+import jmri.SignalMastManager;
+import jmri.TurnoutManager;
 import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
 import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
 
@@ -17,30 +23,28 @@ import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
  * If so, that variable's contents then is passed to the JMRIConnection object
  * to see if it is valid.
  * 
- * Therefore this module is the "interface" between "JMRIConnection" and the
- * rest of the Editor's external JMRI variable name checking "system".
- * 
- * NOTE:
- * If the JMRI Simple Server is NOT running, then method "JMRIConnection/JMRIQueryAndResponse"
- * will ALWAYS return "true" to us, thus faking us out into thinking that the
- * object exists. This is the proper behavior when we can't verify it.
- * 
  */
 public class CheckJMRIObject {
+    private static final SensorManager SENSOR_MANAGER = InstanceManager.sensorManagerInstance();
+    private static final TurnoutManager TURNOUT_MANAGER = InstanceManager.turnoutManagerInstance(); //????
+    private static final SignalHeadManager SIGNAL_HEAD_MANAGER = InstanceManager.getDefault(jmri.SignalHeadManager.class);
+    private static final SignalMastManager SIGNAL_MAST_MANAGER = InstanceManager.getDefault(jmri.SignalMastManager.class);
+    private static final BlockManager BLOCK_MANAGER = InstanceManager.getDefault(BlockManager.class);
+    
 //  Putting these strings ANYWHERE in a string variable definition (with EXACT case!)
 //  will cause this routine to try to validate it against JMRI Simple Server:
-    public static final String EXTERNAL_TURNOUT = "ExternalTurnout";
-    public static final String EXTERNAL_SENSOR = "ExternalSensor";
-    public static final String EXTERNAL_BLOCK =  "ExternalBlock";
-    public static final String EXTERNAL_SIGNAL = "ExternalSignal";
-    
-    private final JMRIConnection _mJMRIConnection;
+    public static final String EXTERNAL_TURNOUT = "ExternalTurnout";    // NOI18N
+    public static final String EXTERNAL_SENSOR = "ExternalSensor";      // NOI18N
+    public static final String EXTERNAL_BLOCK =  "ExternalBlock";       // NOI18N
+    public static final String EXTERNAL_SIGNAL = "ExternalSignal";      // NOI18N
 
+    public static enum OBJECT_TYPE { SENSOR, TURNOUT, SIGNAL, BLOCK };
+   
     public class VerifyClassReturnValue {
         public final String  _mFieldContents;                                // The contents
-        public final CodeButtonHandlerData.objectTypeToCheck _mObjectType;   // What it is.
+        public final OBJECT_TYPE _mObjectType;   // What it is.
         
-        public VerifyClassReturnValue(String fieldContents, CodeButtonHandlerData.objectTypeToCheck objectType) {
+        public VerifyClassReturnValue(String fieldContents, OBJECT_TYPE objectType) {
             _mFieldContents = fieldContents;
             _mObjectType = objectType;
         }
@@ -48,25 +52,23 @@ public class CheckJMRIObject {
         public String toString() {
             switch(_mObjectType) {
                 case SENSOR:
-                    return "JMRI Sensor " + _mFieldContents + " doesn't exist.";
+                    return Bundle.getMessage("CJMRIO_Sensor") + " " + _mFieldContents + " " + Bundle.getMessage("CJMRIO_DoesntExist");  // NOI18N
                 case TURNOUT:
-                    return "JMRI Turnout " + _mFieldContents + " doesn't exist.";
+                    return Bundle.getMessage("CJMRIO_Turnout") + " " + _mFieldContents + " " + Bundle.getMessage("CJMRIO_DoesntExist"); // NOI18N
                 case SIGNAL:
-                    return "JMRI Signal " + _mFieldContents + " doesn't exist.";
+                    return Bundle.getMessage("CJMRIO_Signal") + " " + _mFieldContents + " " + Bundle.getMessage("CJMRIO_DoesntExist");  // NOI18N
                 case BLOCK:
-                    return "JMRI Block " + _mFieldContents + " doesn't exist.";
+                    return Bundle.getMessage("CJMRIO_Block") + " " + _mFieldContents + " " + Bundle.getMessage("CJMRIO_DoesntExist");   // NOI18N
             }
             return "";
         }
     }
     
-    public CheckJMRIObject(JMRIConnection jmriConnection) {
-        _mJMRIConnection = jmriConnection;
-    }
-    
 //  Quick and dirty routine for signals only:    
     public boolean checkSignal(String signalName) {
-        return _mJMRIConnection.JMRIQueryAndResponse(CodeButtonHandlerData.objectTypeToCheck.SIGNAL, signalName);  // Valid, OK.
+        if (SIGNAL_HEAD_MANAGER.getSignalHead(signalName) != null) return true; // Try BOTH:
+        if (SIGNAL_MAST_MANAGER.getSignalMast(signalName) != null) return true;
+        return false;
     }
     
 //  NOTE below on function prefix naming conventions:
@@ -148,11 +150,11 @@ public class CheckJMRIObject {
             else if (fieldType == javax.swing.JTable.class) { // JTable: need to check variable name:
                 String fieldName;
                 if ((fieldName = field.getName()).startsWith(prefix)) {
-                    CodeButtonHandlerData.objectTypeToCheck itemTypeToCheck;
-                    if (fieldName.contains(EXTERNAL_TURNOUT)) itemTypeToCheck = CodeButtonHandlerData.objectTypeToCheck.TURNOUT;
-                    else if (fieldName.contains(EXTERNAL_SENSOR)) itemTypeToCheck = CodeButtonHandlerData.objectTypeToCheck.SENSOR;
-                    else if (fieldName.contains(EXTERNAL_BLOCK)) itemTypeToCheck = CodeButtonHandlerData.objectTypeToCheck.BLOCK;
-                    else if (fieldName.contains(EXTERNAL_SIGNAL)) itemTypeToCheck = CodeButtonHandlerData.objectTypeToCheck.SIGNAL;
+                    OBJECT_TYPE objectType;
+                    if (fieldName.contains(EXTERNAL_TURNOUT)) objectType = OBJECT_TYPE.TURNOUT;
+                    else if (fieldName.contains(EXTERNAL_SENSOR)) objectType = OBJECT_TYPE.SENSOR;
+                    else if (fieldName.contains(EXTERNAL_BLOCK)) objectType = OBJECT_TYPE.BLOCK;
+                    else if (fieldName.contains(EXTERNAL_SIGNAL)) objectType = OBJECT_TYPE.SIGNAL;
                     else continue;   // Nothing to check in this field, skip it.
                     DefaultTableModel defaultTableModel;
                     try {
@@ -164,8 +166,8 @@ public class CheckJMRIObject {
                         if (object != null) {
                             if (ProjectsCommonSubs.isNullOrEmptyString(object.toString())) continue;    // Skip blank fields
                             String jmriObjectName = object.toString().trim();
-                            if (!_mJMRIConnection.JMRIQueryAndResponse(itemTypeToCheck, jmriObjectName)) { // Invalid:
-                                errors.add(new VerifyClassReturnValue(jmriObjectName, itemTypeToCheck).toString());
+                            if (!lowLevelCheck(objectType, jmriObjectName)) { // Invalid:
+                                errors.add(new VerifyClassReturnValue(jmriObjectName, objectType).toString());
                             }
                         }
                     }
@@ -175,14 +177,29 @@ public class CheckJMRIObject {
     }
     
     private VerifyClassReturnValue processField(String fieldName, String fieldContent) {
-        CodeButtonHandlerData.objectTypeToCheck itemTypeToCheck;
-        if (fieldName.contains(EXTERNAL_TURNOUT)) itemTypeToCheck = CodeButtonHandlerData.objectTypeToCheck.TURNOUT;
-        else if (fieldName.contains(EXTERNAL_SENSOR)) itemTypeToCheck = CodeButtonHandlerData.objectTypeToCheck.SENSOR;
-        else if (fieldName.contains(EXTERNAL_BLOCK)) itemTypeToCheck = CodeButtonHandlerData.objectTypeToCheck.BLOCK;
-        else if (fieldName.contains(EXTERNAL_SIGNAL)) itemTypeToCheck = CodeButtonHandlerData.objectTypeToCheck.SIGNAL;
+        OBJECT_TYPE objectType;
+        if (fieldName.contains(EXTERNAL_TURNOUT)) objectType = OBJECT_TYPE.TURNOUT;
+        else if (fieldName.contains(EXTERNAL_SENSOR)) objectType = OBJECT_TYPE.SENSOR;
+        else if (fieldName.contains(EXTERNAL_BLOCK)) objectType = OBJECT_TYPE.BLOCK;
+        else if (fieldName.contains(EXTERNAL_SIGNAL)) objectType = OBJECT_TYPE.SIGNAL;
         else return null;   // Nothing to check in this field, OK.
-        if (_mJMRIConnection.JMRIQueryAndResponse(itemTypeToCheck, fieldContent)) return null;  // Valid, OK.
+        if (lowLevelCheck(objectType, fieldContent)) return null;  // Valid, OK.
 //  OOPPSS, JMRI don't know about it (at this time):
-        return new VerifyClassReturnValue(fieldContent, itemTypeToCheck);
+        return new VerifyClassReturnValue(fieldContent, objectType);
+    }
+    
+    private boolean lowLevelCheck(OBJECT_TYPE objectType, String JMRIObjectName) {
+        switch(objectType) {
+            case SENSOR:
+                if (SENSOR_MANAGER.getSensor(JMRIObjectName) != null) return true;
+            case TURNOUT:
+                if (TURNOUT_MANAGER.getTurnout(JMRIObjectName) != null) return true;
+            case SIGNAL:
+                if (SIGNAL_HEAD_MANAGER.getSignalHead(JMRIObjectName) != null) return true; // Try BOTH:
+                if (SIGNAL_MAST_MANAGER.getSignalMast(JMRIObjectName) != null) return true;
+            case BLOCK:
+                if (BLOCK_MANAGER.getBlock(JMRIObjectName) != null) return true;
+        }
+        return false;   // Either bad objectType or object doesn't exist in JMRI
     }
 }

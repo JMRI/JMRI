@@ -27,8 +27,6 @@ import javax.swing.ButtonGroup;
 public class CodeButtonHandlerData implements Serializable, Comparable<CodeButtonHandlerData> {
     private final static int FILE_VERSION = 5;
     public static final int SWITCH_NOT_SLAVED = -1;
-    public static enum objectTypeToCheck { SENSOR, TURNOUT, SIGNAL, BLOCK, KEEP_ALIVE };  // For JMRIConnection, SimpleValidationServer
-    public static final String COMMAND_PREFIX = "VALIDATE";                                     // For SimpleValidationServer
 
     public enum LOCK_IMPLEMENTATION {
 // The values in paren's are the RadioGroup values set by "CommonSubs.numberButtonGroup",

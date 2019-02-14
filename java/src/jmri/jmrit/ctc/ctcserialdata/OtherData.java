@@ -99,9 +99,6 @@ variable name and declared as type String.
     public VERTICAL_SIZE _mGUIDesign_VerticalSize;
     public boolean  _mGUIDesign_OSSectionUnknownInconsistentRedBlink;
     public boolean  _mGUIDesign_TurnoutsOnPanel;
-//  JMRI Server Parameters:    
-    public String   _mJMRI_Host;
-    public int      _mJMRI_Port;
     
     public OtherData() {
         _mFleetingToggleInternalSensor = "IS:FLEETING";
@@ -120,8 +117,6 @@ variable name and declared as type String.
         _mGUIDesign_VerticalSize = VERTICAL_SIZE.SMALL;
         _mGUIDesign_OSSectionUnknownInconsistentRedBlink = false;
         _mGUIDesign_TurnoutsOnPanel = true;
-        _mJMRI_Host = "localhost";
-        _mJMRI_Port = 2048;
     }
     public int getNextUniqueNumber() { return _mNextUniqueNumber++; }
     public void possiblySetToHighest(int value) { if (value + 1 > _mNextUniqueNumber) _mNextUniqueNumber = value + 1; }
