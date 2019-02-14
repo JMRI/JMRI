@@ -134,7 +134,7 @@ public class Z21XNetMessage extends jmri.jmrix.lenz.XNetMessage implements Seria
      * Generate a Z21 message to change the speed/direction of a locomotive.
      *
      * @param address the locomotive address
-     * @param speedStepMode the speedstep mode see @jmri.DccThrottle
+     * @param speedMode the speedstep mode see @jmri.DccThrottle
      *                       for possible values.
      * @param speed a normalized speed value (a floating point number between 0
      *              and 1).  A negative value indicates emergency stop.
