@@ -1,8 +1,5 @@
 package jmri.managers;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -21,12 +18,7 @@ import jmri.ShutDownManager;
 import jmri.ShutDownTask;
 import jmri.implementation.AbstractInstanceInitializer;
 import jmri.implementation.DefaultIdTag;
-import jmri.jmrit.XmlFile;
-import jmri.util.FileUtil;
-import org.jdom2.Document;
-import org.jdom2.Element;
-import org.jdom2.JDOMException;
-import org.jdom2.ProcessingInstruction;
+import jmri.managers.configurexml.DefaultIdTagManagerXml;
 import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,7 +32,7 @@ import org.slf4j.LoggerFactory;
  */
 public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTagManager, Disposable {
 
-    private boolean dirty = false;
+    protected boolean dirty = false;
     private boolean initialised = false;
     private boolean loading = false;
     private boolean storeState = false;
@@ -68,8 +60,9 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
             log.debug("Initialising");
             // Load when created
             loading = true;
-            new IdTagManagerXml().load();
+            readIdTagDetails();
             loading = false;
+            dirty = false;
 
             // Create shutdown task to save
             log.debug("Register ShutDown task");
@@ -81,8 +74,7 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
                             // Save IdTag details prior to exit, if necessary
                             log.debug("Start writing IdTag details...");
                             try {
-                                ((DefaultIdTagManager) InstanceManager.getDefault(IdTagManager.class)).writeIdTagDetails();
-                                //new jmri.managers.DefaultIdTagManager().writeIdTagDetails();
+                                writeIdTagDetails();
                             } catch (java.io.IOException ioe) {
                                 log.error("Exception writing IdTags: {}", (Object) ioe);
                             }
@@ -175,11 +167,11 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
     }
 
     protected IdTag createNewIdTag(String systemName, String userName) {
-        // we've decided to enforce that IdTag system
-        // names start with ID by prepending if not present
-        if (!systemName.startsWith("ID")) // NOI18N
+        // Names start with the system prefix followed by D.
+        // Add the prefix if not present.
+        if (!systemName.startsWith(getSystemPrefix() + typeLetter() )) // NOI18N
         {
-            systemName = "ID" + systemName; // NOI18N
+            systemName = getSystemPrefix() + typeLetter() + systemName; // NOI18N
         }
         return new DefaultIdTag(systemName, userName);
     }
@@ -243,11 +235,19 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
 
     public void writeIdTagDetails() throws java.io.IOException {
         if (this.dirty) {
-            new IdTagManagerXml().store();
+            new DefaultIdTagManagerXml(this,"IdTags.xml").store();  //NOI18N
             this.dirty = false;
             log.debug("...done writing IdTag details");
         }
     }
+
+    public void readIdTagDetails() {
+        log.debug("reading idTag Details");
+        new DefaultIdTagManagerXml(this,"IdTags.xml").load();  //NOI18N
+        this.dirty = false;
+        log.debug("...done reading IdTag details");
+    }
+
 
     @Override
     public void setStateStored(boolean state) {
@@ -323,181 +323,6 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
     }
 
     private static final Logger log = LoggerFactory.getLogger(DefaultIdTagManager.class);
-
-    /**
-     * Concrete implementation of abstract {@link jmri.jmrit.XmlFile} for
-     * internal use
-     */
-    class IdTagManagerXml extends XmlFile {
-
-        protected void load() {
-            log.debug("Loading...");
-            try {
-                readFile(getDefaultIdTagFileName());
-                setDirty(false);
-            } catch (JDOMException | IOException ex) {
-                log.error("Exception during IdTag file reading: {}", (Object) ex);
-            }
-        }
-
-        protected void store() throws java.io.IOException {
-            if (dirty) {
-                log.debug("Storing...");
-                log.debug("Using file: {}", getDefaultIdTagFileName());
-                createFile(getDefaultIdTagFileName(), true);
-                try {
-                    writeFile(getDefaultIdTagFileName());
-                } catch (FileNotFoundException ex) {
-                    log.error("File not found while writing IdTag file, may not be complete: {}", (Object) ex);
-                }
-            } else {
-                log.debug("Not dirty - no need to store");
-            }
-        }
-
-        private File createFile(String fileName, boolean backup) {
-            if (backup) {
-                makeBackupFile(fileName);
-            }
-
-            File file = null;
-            try {
-                if (!checkFile(fileName)) {
-                    // The file does not exist, create it before writing
-                    file = new File(fileName);
-                    File parentDir = file.getParentFile();
-                    if (!parentDir.exists()) {
-                        if (!parentDir.mkdir()) {
-                            log.error("Directory wasn't created");
-                        }
-                    }
-                    if (file.createNewFile()) {
-                        log.debug("New file created");
-                    }
-                } else {
-                    file = new File(fileName);
-                }
-            } catch (java.io.IOException ex) {
-                log.error("Exception while creating IdTag file, may not be complete: {}", (Object) ex);
-            }
-            return file;
-        }
-
-        private void writeFile(String fileName) throws FileNotFoundException, java.io.IOException {
-            log.debug("writeFile {}", fileName);
-            // This is taken in large part from "Java and XML" page 368
-            File file = findFile(fileName);
-            if (file == null) {
-                file = new File(fileName);
-            }
-            // Create root element
-            Element root = new Element("idtagtable");              // NOI18N
-            root.setAttribute("noNamespaceSchemaLocation", // NOI18N
-                    "http://jmri.org/xml/schema/idtags.xsd", // NOI18N
-                    org.jdom2.Namespace.getNamespace("xsi", // NOI18N
-                            "http://www.w3.org/2001/XMLSchema-instance")); // NOI18N
-            Document doc = newDocument(root);
-
-            // add XSLT processing instruction
-            java.util.Map<String, String> m = new java.util.HashMap<>();
-            m.put("type", "text/xsl");                                                // NOI18N
-            m.put("href", xsltLocation + "idtags.xsl");                                 // NOI18N
-            ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m); // NOI18N
-            doc.addContent(0, p);
-
-            IdTagManager manager = InstanceManager.getDefault(IdTagManager.class);
-
-            Element values;
-
-            // Store configuration
-            root.addContent(values = new Element("configuration"));                                              // NOI18N
-            values.addContent(new Element("storeState").addContent(manager.isStateStored() ? "yes" : "no"));     // NOI18N
-            values.addContent(new Element("useFastClock").addContent(manager.isFastClockUsed() ? "yes" : "no")); // NOI18N
-
-            // Loop through RfidTags
-            root.addContent(values = new Element("idtags")); // NOI18N
-            for (IdTag t : manager.getNamedBeanSet()) {
-                log.debug("Writing IdTag: {}", t.getSystemName());
-                values.addContent(t.store(manager.isStateStored()));
-            }
-            writeXML(file, doc);
-        }
-
-        private void readFile(String fileName) throws org.jdom2.JDOMException, java.io.IOException, IllegalArgumentException {
-            // Check file exists
-            if (findFile(fileName) == null) {
-                log.debug("{} file could not be found", fileName);
-                return;
-            }
-
-            // Find root
-            Element root = rootFromName(fileName);
-            if (root == null) {
-                log.debug("{} file could not be read", fileName);
-                return;
-            }
-
-            IdTagManager manager = InstanceManager.getDefault(IdTagManager.class);
-
-            // First read configuration
-            if (root.getChild("configuration") != null) { // NOI18N
-                List<Element> l = root.getChild("configuration").getChildren(); // NOI18N
-                log.debug("readFile sees {} configurations", l.size());
-                for (int i = 0; i < l.size(); i++) {
-                    Element e = l.get(i);
-                    log.debug("Configuration {} value {}", e.getName(), e.getValue());
-                    if (e.getName().equals("storeState")) { // NOI18N
-                        manager.setStateStored(e.getValue().equals("yes")); // NOI18N
-                    }
-                    if (e.getName().equals("useFastClock")) { // NOI18N
-                        manager.setFastClockUsed(e.getValue().equals("yes")); // NOI18N
-                    }
-                }
-            }
-
-            // Now read tag information
-            if (root.getChild("idtags") != null) { // NOI18N
-                List<Element> l = root.getChild("idtags").getChildren("idtag"); // NOI18N
-                log.debug("readFile sees {} idtags", l.size());
-                for (int i = 0; i < l.size(); i++) {
-                    Element e = l.get(i);
-                    String systemName = e.getChild("systemName").getText(); // NOI18N
-                    IdTag t = manager.provideIdTag(systemName);
-                    t.load(e);
-                }
-            }
-        }
-
-        public String getDefaultIdTagFileName() {
-            return getFileLocation() + getIdTagDirectoryName() + File.separator + getIdTagFileName();
-        }
-
-        private static final String IDTAG_DIRECTORY_NAME = "idtags"; // NOI18N
-
-        public String getIdTagDirectoryName() {
-            return IDTAG_DIRECTORY_NAME;
-        }
-
-        private static final String IDTAG_BASE_FILENAME = "IdTags.xml"; // NOI18N
-
-        public String getIdTagFileName() {
-            return Application.getApplicationName() + IDTAG_BASE_FILENAME;
-        }
-
-        /**
-         * Absolute path to location of IdTag files.
-         *
-         * @return path to location
-         */
-        public String getFileLocation() {
-            return FILE_LOCATION;
-        }
-
-        private final String FILE_LOCATION = FileUtil.getUserFilesPath();
-
-        private final Logger log = LoggerFactory.getLogger(DefaultIdTagManager.IdTagManagerXml.class);
-
-    }
 
     @ServiceProvider(service = InstanceInitializer.class)
     public static class Initializer extends AbstractInstanceInitializer {

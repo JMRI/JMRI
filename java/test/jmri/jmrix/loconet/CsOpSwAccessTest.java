@@ -17,28 +17,6 @@ import jmri.ProgrammingMode;
  */
 public class CsOpSwAccessTest {
 
-    LocoNetInterfaceScaffold lnis;
-    SlotManager sm;
-    LocoNetSystemConnectionMemo memo;
-    ProgListenerScaffold pl;
-
-    @Before
-    public void setUp() {
-        // The minimal setup for log4J
-        jmri.util.JUnitUtil.setUp();
-        lnis = new LocoNetInterfaceScaffold();
-        sm = new SlotManager(lnis);
-        memo = new LocoNetSystemConnectionMemo(lnis, sm);
-        pl = new ProgListenerScaffold();
-        sm.setSystemConnectionMemo(memo);
-    }
-
-    @After
-    public void tearDown() {
-        memo.dispose();
-        JUnitUtil.tearDown();
-    }
-
     @Test
     public void testCommandStationRead1() throws ProgrammerException {
 
@@ -286,7 +264,7 @@ public class CsOpSwAccessTest {
         Assert.assertEquals("should get a programming reply", 24, pl.getRcvdInvoked());
         Assert.assertEquals("Reply status OK", 0, pl.getRcvdStatus());
         Assert.assertEquals("Reply value matches", 0, pl.getRcvdValue());
-     }
+    }
 
     @Test
     public void testCommandStationReadTimeout() throws ProgrammerException {
@@ -302,7 +280,7 @@ public class CsOpSwAccessTest {
         Assert.assertEquals("still one message sent", 1, lnis.outbound.size());
         Assert.assertEquals("Reply status Not OK", jmri.ProgListener.FailedTimeout, pl.getRcvdStatus());
         Assert.assertTrue("Correct thread", pl.wasRightThread());
-     }
+    }
 
     @Test
     public void testCommandStationRead2() throws ProgrammerException {
@@ -916,7 +894,7 @@ public class CsOpSwAccessTest {
 
         jmri.util.JUnitAppender.assertWarnMessage("Cannot perform Cs OpSw access of OpSw 65 account out-of-range for this command station.");
 
-     }
+    }
 
     @Test
     public void testCommandStationReadOutOfBounds1() throws ProgrammerException {
@@ -980,7 +958,7 @@ public class CsOpSwAccessTest {
         Assert.assertEquals("Reply status Not Implemented", 8, pl.getRcvdStatus());
         jmri.util.JUnitAppender.assertWarnMessage("Cannot perform Cs OpSw access: parts.length=1, parts[]=[cs]");
 
-     }
+    }
 
     @Test
     public void testCommandStationWriteOutOfBounds1() throws ProgrammerException {
@@ -1031,10 +1009,10 @@ public class CsOpSwAccessTest {
         Assert.assertEquals("Reply status Not Implemented", 8, pl.getRcvdStatus());
         jmri.util.JUnitAppender.assertWarnMessage("Cannot perform Cs OpSw access: parts.length=2, parts[]=[csOpSw, 1], val=2");
 
-     }
+    }
 
-     @Test
-     public void testCmdStnOpSwWrite() throws ProgrammerException {
+    @Test
+    public void testCmdStnOpSwWrite() throws ProgrammerException {
         CsOpSwAccess csosa = new CsOpSwAccess(memo,pl);
 
         csosa.writeCsOpSw("csOpSw.5", 1, pl);
@@ -1244,10 +1222,10 @@ public class CsOpSwAccessTest {
         Assert.assertEquals("six programming replies", 6, pl.getRcvdInvoked());
         Assert.assertEquals("Reply status bad", 1, pl.getRcvdStatus());
         jmri.util.JUnitAppender.assertWarnMessage("Cannot program OpSw56 account LocoNet encoding limitations.");
-     }
+    }
 
-@Test
-     public void testCmdStnExtendedOpSwWrite() throws ProgrammerException {
+    @Test
+    public void testCmdStnExtendedOpSwWrite() throws ProgrammerException {
         int obIndex=0;
         CsOpSwAccess csosa = new CsOpSwAccess(memo,pl);
 
@@ -1300,7 +1278,7 @@ public class CsOpSwAccessTest {
 
         // No reply message, wait for timeout
         jmri.util.JUnitUtil.waitFor(()->{return lnis.outbound.size() == 3;},"programming reply not received");
-//        csosa.message(m); // propagate reply
+        // csosa.message(m); // propagate reply
 
         Assert.assertEquals("three messages sent", 3, obIndex = lnis.outbound.size());
         Assert.assertEquals("No programming reply", 0, pl.getRcvdInvoked());
@@ -1480,6 +1458,29 @@ public class CsOpSwAccessTest {
         Assert.assertEquals("six programming replies", 7, pl.getRcvdInvoked());
         Assert.assertEquals("Reply status bad", 8, pl.getRcvdStatus());
         jmri.util.JUnitAppender.assertWarnMessage("Cannot perform Cs OpSw access: parts.length=2, parts[]=[csOpSw, 129], val=1");
-     }
-     
+    }
+
+    private LocoNetInterfaceScaffold lnis;
+    private SlotManager sm;
+    private LocoNetSystemConnectionMemo memo;
+    private ProgListenerScaffold pl;
+
+    @Before
+    public void setUp() {
+        // The minimal setup for log4J
+        jmri.util.JUnitUtil.setUp();
+        lnis = new LocoNetInterfaceScaffold();
+        sm = new SlotManager(lnis);
+        memo = new LocoNetSystemConnectionMemo(lnis, sm);
+        pl = new ProgListenerScaffold();
+        sm.setSystemConnectionMemo(memo);
+    }
+
+    @After
+    public void tearDown() {
+        memo.dispose();
+        lnis = null;
+        JUnitUtil.tearDown();
+    }
+
 }

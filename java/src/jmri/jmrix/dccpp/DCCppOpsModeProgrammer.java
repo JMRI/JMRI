@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Provides an Ops mode programming interface for DCC++. Currently only Byte
- * mode is implemented, though XPressNet also supports bit mode writes for POM
+ * mode is implemented, though DCC++ also supports bit mode writes for POM
  *
  * @see jmri.Programmer
  * @author Paul Bender Copyright (C) 2003-2010
@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
  *
  * Based on XNetOpsModeProgrammer by Paul Bender and Girgio Terdina
  */
-public class DCCppOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implements DCCppListener, AddressedProgrammer {
+public class DCCppOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implements AddressedProgrammer {
 
     int mAddressHigh;
     int mAddressLow;
@@ -44,8 +44,6 @@ public class DCCppOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implem
         if (log.isDebugEnabled()) {
             log.debug("High Address: " + mAddressHigh + " Low Address: " + mAddressLow);
         }
-        // register as a listener
-        tc.addDCCppListener(DCCppInterface.COMMINFO | DCCppInterface.CS_INFO, this);
     }
 
     /** 
@@ -57,7 +55,7 @@ public class DCCppOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implem
     synchronized public void writeCV(String CVname, int val, ProgListener p) throws ProgrammerException {
         final int CV = Integer.parseInt(CVname);
         DCCppMessage msg = DCCppMessage.makeWriteOpsModeCVMsg(mAddress, CV, val);
-        tc.sendDCCppMessage(msg, this);
+        tc.sendDCCppMessage(msg, null);
         /* we need to save the programer and value so we can send messages 
          back to the screen when the programming screen when we receive
          something from the command station */
@@ -89,12 +87,7 @@ public class DCCppOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implem
      */
     @Override
     synchronized public void readCV(String CVname, ProgListener p) throws ProgrammerException {
-        final int CV = Integer.parseInt(CVname);
-        //DCCppMessage msg = DCCppMessage.getVerifyOpsModeCVMsg(mAddressHigh, mAddressLow, CV, value);
-        //tc.sendDCCppMessage(msg, this);
-        /* We can trigger a read to an LRC120, but the information is not
-         currently sent back to us via the XPressNet */
-        notifyProgListenerEnd(p,CV,ProgListener.NotImplemented);
+        notifyProgListenerEnd(p,Integer.parseInt(CVname),ProgListener.NotImplemented);
     }
 
     /** 
@@ -102,10 +95,6 @@ public class DCCppOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implem
      */
     @Override
     public void confirmCV(String CV, int val, ProgListener p) throws ProgrammerException {
-        //DCCppMessage msg = DCCppMessage.getVerifyOpsModeCVMsg(mAddressHigh, mAddressLow, CV, val);
-        //tc.sendDCCppMessage(msg, this);
-        /* We can trigger a read to an LRC120, but the information is not
-         currently sent back to us via the XPressNet */
         notifyProgListenerEnd(p,val,ProgListener.NotImplemented);
     }
 
@@ -121,42 +110,6 @@ public class DCCppOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implem
         ret.add(ProgrammingMode.OPSBYTEMODE);
         ret.add(ProgrammingMode.OPSBITMODE);
         return ret;
-    }
-
-    /** 
-     * {@inheritDoc}
-     *
-     * This method is leftover from the initial implementation based on
-     * XPressNet.  This always sends a NotImplemented message to the progammer
-     * listener, regardless of the reply.  Does the DCC++ command station 
-     * really send a response to Ops Mode programming instructions?  If the 
-     * answer is no, this should be removed.
-     */
-    @Override
-    synchronized public void message(DCCppReply l) {
-        notifyProgListenerEnd(progListener,value,ProgListener.NotImplemented);
-        if (progState == DCCppProgrammer.NOTPROGRAMMING) {
-            // We really don't care about any messages unless we send a 
-            // request, so just ignore anything that comes in
-            return;
-        } else if (progState == DCCppProgrammer.REQUESTSENT) {
-     
-            if (l.isProgramReply()) {
-                // Before we set the programmer state to not programming, 
-                // delay for a short time to give the decoder a chance to 
-                // process the request.
-                try {
-                    this.wait(250);
-                } catch (java.lang.InterruptedException ie) {
-                    log.debug("Interrupted During Delay");
-                }
-                progState = DCCppProgrammer.NOTPROGRAMMING;
-                stopTimer();
-                notifyProgListenerEnd(progListener,value,ProgListener.OK);
-            } else {
-                return;
-            }
-        }
     }
 
     /** 
@@ -181,23 +134,6 @@ public class DCCppOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implem
     @Override
     public String getAddress() {
         return "" + getAddressNumber() + " " + getLongAddress();
-    }
-
-    /** 
-     * {@inheritDoc}
-     */
-    @Override
-    public synchronized void message(DCCppMessage l) {
-    }
-
-    /** 
-     * {@inheritDoc}
-     */
-    @Override
-    public void notifyTimeout(DCCppMessage msg) {
-        if (log.isDebugEnabled()) {
-            log.debug("Notified of timeout on message" + msg.toString());
-        }
     }
 
     /** 

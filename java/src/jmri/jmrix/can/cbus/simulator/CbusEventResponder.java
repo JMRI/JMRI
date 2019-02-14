@@ -2,7 +2,6 @@ package jmri.jmrix.can.cbus.simulator;
 
 import java.util.ArrayList;
 import java.util.Random;
-import jmri.jmrix.can.CanFrame;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
@@ -10,7 +9,6 @@ import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.cbus.CbusConstants;
 import jmri.jmrix.can.cbus.CbusOpCodes;
 import jmri.jmrix.can.cbus.CbusSend;
-import jmri.jmrix.can.cbus.simulator.CbusSimulator;
 import jmri.jmrix.can.TrafficController;
 
 import org.slf4j.Logger;
@@ -134,7 +132,7 @@ public class CbusEventResponder implements CanListener {
         return _node;
     }
 
-    private void processEventforResponse(CanFrame m) {
+    private void processEventforResponse(CanMessage m) {
         
         if (!CbusOpCodes.isEventRequest(m.getElement(0))) {
             return;
@@ -146,7 +144,7 @@ public class CbusEventResponder implements CanListener {
         
         int opc = m.getElement(0);
         int nn = ( m.getElement(1) * 256 ) + m.getElement(2);
-        log.debug("canframe {} received node {} spinner {} to process with mode {}",m,nn,_node,_mode); 
+        // log.debug("canframe {} received node {} spinner {} to process with mode {}",m,nn,_node,_mode); 
         
         if ( ( _node == -1 ) || ( _node == nn ) ) {
             Boolean sendOn = false;
@@ -198,16 +196,15 @@ public class CbusEventResponder implements CanListener {
     @Override
     public void message(CanMessage m) {
         if ( _processOut ) {
-            CanFrame test = m;
-            processEventforResponse(test);
+            processEventforResponse(m);
         }
     }
 
     @Override
     public void reply(CanReply r) {
         if ( _processIn ) {
-            CanFrame test = r;
-            processEventforResponse(test);
+            CanMessage m = new CanMessage(r);
+            processEventforResponse(m);
         }
     }
 

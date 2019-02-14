@@ -261,6 +261,9 @@ public final class LnConstants {
     /** Fast clock is in this slot                           */
     public final static int FC_SLOT = 0x7b;
 
+    /** Fast CLock valid **/
+    public final static int FC_VALID = 0X40;
+ 
      /** This slot communicates with the programming track   */
     public final static int PRG_SLOT = 0x7c;
 
@@ -375,12 +378,36 @@ public final class LnConstants {
     public final static int OPC_ALM_READ = 0xe6; // Undocumented name
     public final static int OPC_SL_RD_DATA = 0xe7;
     public final static int OPC_IMM_PACKET = 0xed;
+    //TODO Conflicts with OPC_EXP_WR_SL_DATA - or maybe length?
     public final static int OPC_IMM_PACKET_2 = 0xee;
     public final static int OPC_WR_SL_DATA = 0xef;
-    public final static int OPC_WR_SL_DATA_EXP = 0xee;
+    //TODO Conflicts with OPC_EXP_WR_SL_DATA - or maybe length?
     public final static int OPC_ALM_WRITE = 0xee; // Undocumented name
     public final static int OPC_MASK = 0x7f;  /* mask for acknowledge opcodes */
 
+    /* protocol level */
+
+    /** The protocol has not been established */
+    public final static int LOCONETPROTOCOL_UNKNOWN = 0;
+    /** Supports loconet 1.1 */
+    public final static int LOCONETPROTOCOL_ONE = 1;
+    /** Supports the protocol introduced to DCS240, DCS210 */
+    public final static int LOCONETPROTOCOL_TWO = 2;
+
+    /* Expanded slot codes */
+    public final static int OPC_EXP_REQ_SLOT = 0xbe;
+    public final static int OPC_EXP_SLOT_MOVE = 0xd4;
+    public final static int OPC_EXP_RD_SL_DATA = 0xe6;
+    public final static int OPC_EXP_WR_SL_DATA = 0xee;
+    public final static int OPC_EXP_SEND_SUB_CODE_MASK_SPEED = 0b11110000;
+    public final static int OPC_EXP_SEND_SUB_CODE_MASK_FUNCTION = 0b11111000;
+    public final static int OPC_EXP_SEND_FUNCTION_OR_SPEED_AND_DIR = 0xd5;
+    public final static int OPC_EXP_SEND_SPEED_AND_DIR_MASK = 0b00010000;
+    public final static int OPC_EXP_SEND_FUNCTION_GROUP_F0F6_MASK = 0b00010000;
+    public final static int OPC_EXP_SEND_FUNCTION_GROUP_F7F13_MASK = 0b00011000;
+    public final static int OPC_EXP_SEND_FUNCTION_GROUP_F14F20_MASK = 0b00100000;
+    public final static int OPC_EXP_SEND_FUNCTION_GROUP_F21F28_F28OFF_MASK = 0b00101000;
+    public final static int OPC_EXP_SEND_FUNCTION_GROUP_F21F28_F28ON_MASK =  0b00110000;
 
     /**
      * Encode LocoNet Opcode as a string
@@ -428,6 +455,9 @@ public final class LnConstants {
     }
 
 // start of values not from llnmon.c
+
+// Multimeter polling interval
+    public final static int METER_INTERVAL_MS = 30000;
 
 // Expanded slot index values
     public final static int EXP_MAST = 0;
@@ -487,6 +517,7 @@ public final class LnConstants {
     public final static int RE_IPL_DIGITRAX_HOST_DB220 = 0x16;
     public final static int RE_IPL_DIGITRAX_HOST_DCS210 = 0x1b;
     public final static int RE_IPL_DIGITRAX_HOST_DCS240 = 0x1c;
+    public final static int RE_IPL_DIGITRAX_HOST_DCS52 = 0x34;
     public final static int RE_IPL_DIGITRAX_HOST_PR3 = 0x23;
     public final static int RE_IPL_DIGITRAX_HOST_PR4 = 0x24;
     public final static int RE_IPL_DIGITRAX_HOST_DT402 = 0x2A;

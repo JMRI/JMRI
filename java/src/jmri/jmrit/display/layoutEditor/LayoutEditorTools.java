@@ -5808,9 +5808,9 @@ public class LayoutEditorTools {
                 log.error("Trouble creating conditional " + cName + " while setting up Logix.");
                 return "";
             }
-            int type = Conditional.TYPE_TURNOUT_THROWN;
+            Conditional.Type type = Conditional.Type.TURNOUT_THROWN;
             if (!continuing) {
-                type = Conditional.TYPE_TURNOUT_CLOSED;
+                type = Conditional.Type.TURNOUT_CLOSED;
             }
             List<ConditionalVariable> variableList = c.getCopyOfStateVariables();
             variableList.add(new ConditionalVariable(false, Conditional.Operator.AND,
@@ -5818,10 +5818,10 @@ public class LayoutEditorTools {
             c.setStateVariables(variableList);
             List<ConditionalAction> actionList = c.getCopyOfActions();
             actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE,
-                    Conditional.ACTION_SET_SENSOR, sensorName,
+                    Conditional.Action.SET_SENSOR, sensorName,
                     Sensor.ACTIVE, ""));
             actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_FALSE,
-                    Conditional.ACTION_SET_SENSOR, sensorName,
+                    Conditional.Action.SET_SENSOR, sensorName,
                     Sensor.INACTIVE, ""));
             c.setAction(actionList);		  // string data
             x.addConditional(cName, -1);
@@ -13303,27 +13303,27 @@ public class LayoutEditorTools {
                 return "";
             }
         }
-        int type = Conditional.TYPE_TURNOUT_THROWN;
+        Conditional.Type type = Conditional.Type.TURNOUT_THROWN;
         if (nearState == Turnout.CLOSED) {
-            type = Conditional.TYPE_TURNOUT_CLOSED;
+            type = Conditional.Type.TURNOUT_CLOSED;
         }
         ArrayList<ConditionalVariable> variableList = new ArrayList<>();
         variableList.add(new ConditionalVariable(false, Conditional.Operator.AND,
                 type, turnoutName, true));
 
-        type = Conditional.TYPE_TURNOUT_THROWN;
+        type = Conditional.Type.TURNOUT_THROWN;
         if (farState == Turnout.CLOSED) {
-            type = Conditional.TYPE_TURNOUT_CLOSED;
+            type = Conditional.Type.TURNOUT_CLOSED;
         }
         variableList.add(new ConditionalVariable(false, Conditional.Operator.AND,
                 type, farTurnoutName, true));
         c.setStateVariables(variableList);
         ArrayList<ConditionalAction> actionList = new ArrayList<>();
         actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE,
-                Conditional.ACTION_SET_SENSOR, sensorName,
+                Conditional.Action.SET_SENSOR, sensorName,
                 Sensor.INACTIVE, ""));
         actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_FALSE,
-                Conditional.ACTION_SET_SENSOR, sensorName,
+                Conditional.Action.SET_SENSOR, sensorName,
                 Sensor.ACTIVE, ""));
         c.setAction(actionList);		// string data
         if (newConditional) {

@@ -45,7 +45,7 @@
     means sensor, "1" is the board address, and "01" is the port on that board.</p>
 
       <h3>Reporters</h3>
-      <p>Reporters are automatically created when sensors are added as the two are tide together, there is no
+      <p>Reporters are automatically created when sensors are added as the two are tied together, there is no
       requirement to manually create these.
       
       <h3>Programming</h3>

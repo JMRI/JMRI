@@ -73,7 +73,7 @@ public class AudioUtil {
         try {
             ALut.alutLoadWAVFile(stream, format, data, size, freq, loop);
         } catch (ALException e) {
-            log.warn("Error loading JoalAudioBuffer: {}", e.getMessage());
+            log.warn("Error loading JoalAudioBuffer", e);
             return null;
         }
 
@@ -98,7 +98,6 @@ public class AudioUtil {
         return rlist;
     }
 
-    // steam1 helper 1
     static public ByteBuffer getWavData(InputStream stream) {
         int[] format = new int[1];
         int[] size = new int[1];
@@ -117,29 +116,32 @@ public class AudioUtil {
         return data[0];
     }
 
-    // steam1 helper 2
-    static public int getWavFormat(InputStream stream) {
+    static public int[] getWavFormats(InputStream stream) {
         int[] format = new int[1];
         int[] size = new int[1];
         ByteBuffer[] data = new ByteBuffer[1];
         int[] freq = new int[1];
         int[] loop = new int[1];
 
+        int[] formats = new int[3];
+
         // Pull the WAV data into the "data" buffer.
         try {
             ALut.alutLoadWAVFile(stream, format, data, size, freq, loop);
         } catch (ALException e) {
             log.warn("Error loading JoalAudioBuffer from stream", e);
-            return 0;
+            return formats;
         }
         // OK, for now, we're only going to support 8-bit and 16-bit Mono data.
         // I'll have to figure out later how to extend this to multiple data formats.
         if ((format[0] != AL.AL_FORMAT_MONO8) && (format[0] != AL.AL_FORMAT_MONO16)) {
             log.warn("Invalid Format! Failing out.{}", parseFormat(format[0]));
-            return 0;
+            return formats;
         }
-        log.debug("WAV format: {}", parseFormat(format[0]));
-        return format[0];
+        formats[0] = format[0];
+        formats[1] = freq[0];
+        formats[2] = frameSize(format[0]);
+        return formats;
     }
 
     /**
@@ -178,7 +180,7 @@ public class AudioUtil {
                 }
                 rlist.add(buf);
             } catch (AudioException | IllegalArgumentException e) {
-                log.warn("Error on provideAudio! {}", (Object) e);
+                log.warn("Error on provideAudio", e);
                 if (log.isDebugEnabled()) {
                     jmri.InstanceManager.getDefault(jmri.AudioManager.class).getSystemNameList(Audio.BUFFER).stream().forEach((s) -> {
                         log.debug("\tBuffer: {}", s);
