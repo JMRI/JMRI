@@ -1,7 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Translation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-02-14 -->
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -27,90 +27,89 @@
     <div id="mainContent">
       <a name="Top" id="Top"></a>
 
-      <h1>DecoderPro&reg; Comprehensive Programmer</h1>
+      <h1>DecoderPro&reg; Programmeur Complet</h1>
 
-      <h2>Global CV Listing Pane</h2>
+      <h2>Onglet Global Liste CV</h2>
 
       <div align="right">
-        <p><a href="Comp_SoundLevels.shtml">Previous</a> | <a href=
-        "Comp_ManfSpecific.shtml">Next</a></p>
+        <p><a href="Comp_SoundLevels.shtml">Pr&#233;c&#233;dent</a> | <a href=
+        "Comp_ManfSpecific.shtml">Suivant</a></p>
 
-        <p><a href="index.shtml#Advanced%20Programmer">Back to
-        Index</a></p>
+        <p><a href="index.shtml#Advanced%20Programmer">Retour &#224; l'Index</a></p>
       </div>
       <hr>
 
-      <p>For the hard-core programmer, this pane is a listing of
-      the raw CV data by CV number, with data in <span class=
-      "ACCENT">decimal format</span>. You may change data by typing
-      new numbers into the <b>Values</b> window. <b>State</b> shows
-      the validity of the data, whether it was taken <b>From
-      file</b> (the decoder information saved in the
-      <b>Roster</b>), <b>Edited</b>, <b>Read</b> directly from the
-      decoder, <b>Stored</b> to the decoder or if the status is
-      <b>Unknown</b>. Note the <b>scroll bar</b> on the right side
-      of the listings. You may scroll up or down to access all of
-      the CV listings.</p>
+      <p>Pour le programmeur exp&#233;riment&#233;, ce volet est une liste 
+      des donn&#233;es brutes du CV par num&#233;ro de CV, avec les donn&#233;es 
+      au format <span class = "ACCENT"> format d&#233;cimal </span>. 
+      Vous pouvez modifier les donn&#233;es en saisissant de nouveaux num&#233;ros 
+      dans la fen&#234;tre <b>Valeurs</b>. <b>&#201;tat </b> indique la validit&#233; 
+      des donn&#233;es, qu'elles aient &#233;t&#233; ou non extraites <b>du fichier</b> 
+      (informations <b>modifi&#233;es</b> du d&#233;codeur enregistr&#233;es dans 
+      <b>l'inventaire</b>), <b>Lue</b> directement &#224; partir du d&#233;codeur, 
+      <b>Stock&#233;e</b> dans le d&#233;codeur ou si l'&#233;tat est <b>Inconnue</b>. 
+      Notez la <b>barre de d&#233;filement</b> situ&#233;e &#224; droite des listes. 
+      Vous pouvez faire d&#233;filer vers le haut ou le bas pour acc&#233;der &#224; 
+      toutes la liste de CV.</p>
+      
+      <h4> Verrouillage du D&#233;codeur </h4>
 
-      <h4>Decoder Locking</h4>
+      <p> Vous avez essay&#233; de lire une valeur de CV et obtenez "Erreur 308, Non
+      Accus&#233; de r&#233;ception du d&#233;codeur ", le d&#233;codeur peut &#234;tre
+      verrouill&#233;. Les CV 15 et 16 traitent du verrouillage, si votre fabricant
+      impl&#233;mente cette fonctionnalit&#233; (et les fabricants ont une l&#233;g&#232;re
+      diff&#233;rences quant &#224; la mani&#232;re dont ils le mettent en &#156;uvre). 
+      Si le d&#233;codeur est verrouill&#233;, vous ne pourrez pas  lire ou 
+      &#233;crire des donn&#233;es . Pour d&#233;verrouiller le d&#233;codeur, vous 
+      devez entrer une valeur dans CV15 (le seul CV pouvant &#234;tre 
+      &#233;crit lorsque le d&#233;codeur est verrouill&#233;), ce qui est &#233;gal 
+      &#224; la valeur qui est actuellement en CV16. Maintenant je 
+      vous entends penser "mais je ne peux pas lire le CV16 pour savoir
+      quoi mettre dans CV15 ". Eh bien, vous devrez essayer tous les valeurs possibles
+      , ce qui n'est pas si difficile car il ne peut avoir que 8
+      valeurs possibles 0 &#224; 7. Apr&#232;s chaque &#233;criture, essayez de lire CV16.
+      C'est la lecture la plus rapide puisqu'elle ne peut avoir que 8 valeurs possibles
+      . Si JMRI r&#233;pond avec l'erreur no-ack, essayez la
+      valeur suivante. S'il renvoie la valeur dans CV16, vous avez d&#233;verrouill&#233;
+      le d&#233;codeur et vous y &#234;tes. Si vous avez essay&#233; sans succ&#232;s toutes les 
+      8 possibilit&#233;s, v&#233;rifiez votre connexion du r&#233;seau et les roues de la 
+      loco pour &#233;liminer les mauvaises connexions, puis essayez &#224; nouveau. 
+      Maintenant, vous vous dites: "J'ai parcouru la liste plusieurs fois 
+      et le CV 15 n'appara&#239;t pas". C'est fait expr&#232;s, pour minimiser 
+      le verrouillage par inadvertance par une &#233;criture de toutes les 
+      feuilles. Vous devrez utiliser le <a href="Programmer_SingleCV.shtml"> programmeur &#224; CV unique </a> 
+      pour &#233;crire le CV15. Vous le trouverez dans le menu Outils 
+      de la page principale, sous Programmeurs. </P>
+      
+     <p> Si vous avez plusieurs d&#233;codeurs dans votre locomotive, 
+     vous avez probablement un sch&#233;ma de verrouillage de d&#233;codeur mis 
+     en place pour pouvoir acc&#233;der &#224; chacun d'eux individuellement 
+     pour la programmation. </p>
 
-      <p>You tried to read a CV value and get "Error 308, No
-      Acknowledgement from Decoder", well the decoder may be
-      locked. CV 15 and 16 deal with locking, if your manufacturer
-      implements this feature (and manufacturers have slight
-      differences as to how they implement it). If the decoder is
-      locked, then you will not be able to read data from it or
-      write to it. To unlock the decoder, you must enter a value
-      into CV15 (the only CV that can be written when the decoder
-      is locked), that is equal to the value that is currently in
-      CV16. Now I hear you thinking "but I can't read CV16 to know
-      what to put into CV15". Well, you'll have to try all possible
-      values, which isn't that hard since it can only have 8
-      possible values 0 thru 7. After each write, try to read CV16.
-      It's the fastest read since it can only have 8 possible
-      values. If JMRI responds with the no-ack error, then try the
-      next value. If it returns the value in CV16, you've unlocked
-      the decoder and you're in. If you have unsuccessfully tried
-      all the 8 possibilities, then check your layout connection
-      and the loco's wheels for poor connections and try again. Now
-      you say, "I've looked thru the list several times and CV 15
-      doesn't appear". That's on purpose, to minimize inadvertent
-      locking by a Write All Sheets. You will have to use the
-      <a href="Programmer_SingleCV.shtml">Single CV Programmer</a>
-      to write CV15. It can be found in the Tools menu on the Main
-      Page, under Programmers.</p>
+      <p> Vous pouvez <b>Lire</b> ou <b>&#201;crire</b> des CV individuels 
+      &#224; l'aide des boutons de leur rang&#233;e. Sur cette page, une op&#233;ration 
+      <b>Lire une feuille</b> ou <b>&#201;crire une feuille</b> est identique 
+      &#224; une op&#233;ration <b>Tout lire</b> ou <b>Tout &#233;crire </b>. 
+      <span class = "ACCENT"> Encore un rappel: vous ne pouvez lire 
+      les CV que si votre centrale de commande en est capable. </span> </p>
 
-      <p>If you have more than one decoder in your locomotive, you
-      probably have a decoder locking scheme implemented to be able
-      to access each one individually for programming.</p>
+      <p align = "center"> <img src = "images/Comp_11_CV.png" width =
+      "923" height = "799" alt = "CV pane"> </ p>
 
-      <p>You may <b>Read</b> or <b>Write</b> individual CVs using
-      the buttons in their row. On this page, a <b>Read sheet</b>
-      or <b>Write sheet</b> operation is the same as a <b>Read
-      all</b> or <b>Write all</b>. <span class="ACCENT">Again, a
-      reminder: you can only read CVs if your command station has
-      that capability.</span></p>
-
-      <p align="center"><img src="images/Comp_11_CV.png" width=
-      "923" height="799" alt="CV pane"></p>
-
-      <p>One thing to keep in mind about the <b>CV</b> listing on
-      this pane - anything you can do here you can do from one of
-      the other panes in Decoder Pro, without having to know the
-      <b>CV</b> number or how to compile the values to get the
-      desired effect. This pane is meant for advanced users of DCC
-      used to crunching the numbers themselves. Those new to DCC
-      can safely ignore this panel without losing any capability at
-      all.</p>
-      <hr>
+      <p> Une chose &#224; garder &#224; l'esprit sur la liste <b>CV</b> de cet onglet - 
+      vous pouvez effectuer tout ce que vous pouvez faire ici &#224; partir d'un 
+      des autres onglets de Decoder Pro, sans avoir &#224; conna&#239;tre le <b>CV</b> 
+      ou comment compiler les valeurs pour obtenir l'effet souhait&#233;. Cet onglet 
+      est destin&#233; aux utilisateurs exp&#233;riment&#233;s de DCC, habitu&#233;s &#224; traiter 
+      eux-m&#234;mes les chiffres. Les nouveaux utilisateurs de DCC peuvent en 
+      toute s&#233;curit&#233; ignorer ce panneau sans aucune perte de capacit&#233;. </P>
 
       <div align="right">
         <p><a href="Comp_ManfSpecific.shtml"></a> <a href=
-        "Comp_SoundLevels.shtml">Previous</a> | <a href=
-        "Comp_ManfSpecific.shtml">Next</a></p>
+        "Comp_SoundLevels.shtml">Pr&#233;c&#233;dent</a> | <a href=
+        "Comp_ManfSpecific.shtml">Suivant</a></p>
 
-        <p><a href="index.shtml#Advanced%20Programmer">Back to
-        Index</a></p>
+        <p><a href="index.shtml#Advanced%20Programmer">Retour &#224; l'Index</a></p>
       </div><!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
