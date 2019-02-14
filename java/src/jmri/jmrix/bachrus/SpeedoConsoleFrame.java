@@ -450,9 +450,13 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
 
         // Listen to selection of scale
         scaleList.addActionListener(e -> {
-            JComboBox<String> cb = (JComboBox<String>) e.getSource();
-            selectedScale = scales[cb.getSelectedIndex()];
-            checkCustomScale();
+            try {
+                JComboBox<String> cb = (JComboBox<String>) e.getSource();
+                selectedScale = scales[cb.getSelectedIndex()];
+                checkCustomScale();
+            } catch (ClassCastException ce) {
+                log.error(ce.getLocalizedMessage());
+            }
         });
 
         scaleLabel.setText(Bundle.getMessage("Scale"));
@@ -1252,7 +1256,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         }
 
         //start speed matching
-        if ((speedMatchState == speedMatchState.IDLE) && (profileState == ProfileState.IDLE)) {
+        if ((speedMatchState == SpeedMatchState.IDLE) && (profileState == ProfileState.IDLE)) {
             speedMatchState = SpeedMatchState.WAIT_FOR_THROTTLE;
             speedMatchButton.setText(Bundle.getMessage("btnStopSpeedMatch"));
 
@@ -1392,7 +1396,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                 statusLabel.setText(Bundle.getMessage("StatForwardWarmUp", 240 - speedMatchDuration));
 
                 if (speedMatchDuration >= 240) {
-                    speedMatchState = speedMatchState.FORWARD_SPEED_MATCH_STEP_1;
+                    speedMatchState = SpeedMatchState.FORWARD_SPEED_MATCH_STEP_1;
                     setupSpeedMatchTimer(true, 0, 5000);
                     speedMatchDuration = 0;
                     speedMatchTimer.start();
