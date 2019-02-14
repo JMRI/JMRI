@@ -761,8 +761,8 @@ public class VSDecoderManager implements PropertyChangeListener {
             PhysicalLocationReporter arp = (PhysicalLocationReporter) event.getSource();
             // Need to decide which reporter it is, so we can use different methods
             // to extract the address and the location.
-            if (event.getNewValue() instanceof String) {
-                String newValue = (String) event.getNewValue();
+            if (event.getNewValue() instanceof jmri.Reportable) {
+                String newValue = ((jmri.Reportable) event.getNewValue()).toReportString();
                 if (arp.getDirection(newValue) == PhysicalLocationReporter.Direction.ENTER) {
                     setDecoderPositionByAddr(arp.getLocoAddress(newValue), arp.getPhysicalLocation(newValue));
                 }
@@ -792,8 +792,8 @@ public class VSDecoderManager implements PropertyChangeListener {
             PhysicalLocationReporter arp = (PhysicalLocationReporter) event.getSource();
             // Need to decide which reporter it is, so we can use different methods
             // to extract the address and the location.
-            if (event.getNewValue() instanceof String) {
-                String newValue = (String) event.getNewValue(); // e.g. "1709 enter"
+            if (event.getNewValue() instanceof jmri.Reportable) {
+                String newValue = ((jmri.Reportable) event.getNewValue()).toReportString(); // e.g. "1709 enter"
                 LocoAddress xa = arp.getLocoAddress(newValue); // e.g. 1709(D)
                 // 1) is loco address valid?
                 if (decoderInBlock.containsKey(xa.getNumber())) {
