@@ -11,18 +11,19 @@ import jmri.SignalMastManager;
 import jmri.TurnoutManager;
 import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
 import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
+import jmri.jmrit.ctc.editor.gui.FrmMainForm;
 
 /**
  *
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019
- * 
+ *
  * The purpose of this object is to take a passed class and by using reflection
  * see if any of the public class Strings in the class has specific patterns in
  * their name(s).
- * 
+ *
  * If so, that variable's contents then is passed to the JMRIConnection object
  * to see if it is valid.
- * 
+ *
  */
 public class CheckJMRIObject {
     private static final SensorManager SENSOR_MANAGER = InstanceManager.sensorManagerInstance();
@@ -30,7 +31,8 @@ public class CheckJMRIObject {
     private static final SignalHeadManager SIGNAL_HEAD_MANAGER = InstanceManager.getDefault(jmri.SignalHeadManager.class);
     private static final SignalMastManager SIGNAL_MAST_MANAGER = InstanceManager.getDefault(jmri.SignalMastManager.class);
     private static final BlockManager BLOCK_MANAGER = InstanceManager.getDefault(BlockManager.class);
-    
+    private static final FrmMainForm MAIN_FORM = InstanceManager.getDefault(FrmMainForm.class);
+
 //  Putting these strings ANYWHERE in a string variable definition (with EXACT case!)
 //  will cause this routine to try to validate it against JMRI Simple Server:
     public static final String EXTERNAL_TURNOUT = "ExternalTurnout";    // NOI18N
@@ -39,16 +41,16 @@ public class CheckJMRIObject {
     public static final String EXTERNAL_SIGNAL = "ExternalSignal";      // NOI18N
 
     public static enum OBJECT_TYPE { SENSOR, TURNOUT, SIGNAL, BLOCK };
-   
+
     public class VerifyClassReturnValue {
         public final String  _mFieldContents;                                // The contents
         public final OBJECT_TYPE _mObjectType;   // What it is.
-        
+
         public VerifyClassReturnValue(String fieldContents, OBJECT_TYPE objectType) {
             _mFieldContents = fieldContents;
             _mObjectType = objectType;
         }
-        
+
         public String toString() {
             switch(_mObjectType) {
                 case SENSOR:
@@ -63,31 +65,31 @@ public class CheckJMRIObject {
             return "";
         }
     }
-    
-//  Quick and dirty routine for signals only:    
+
+//  Quick and dirty routine for signals only:
     public boolean checkSignal(String signalName) {
         return lowLevelCheck(OBJECT_TYPE.SIGNAL, signalName);
     }
-    
+
 //  NOTE below on function prefix naming conventions:
 //  "valid" just returns boolean if the entire object is valid (true) or not (false).  It stops scanning on first error.
 //  "verify" returns a "VerifyClassReturnValue" (invalid) or null (valid) against the entire object.  It stops scanning on first error.
-//  "analyze" adds entry(s) to the end of a passed errors array for ALL invalid entries.  No return value.    
+//  "analyze" adds entry(s) to the end of a passed errors array for ALL invalid entries.  No return value.
 //  All of these work with String fields ONLY.  If the field is blank or null, it is ignored, it is up to other code
 //  to determine whether that is valid or not.
-    
+
     public boolean validClass(Object object) {
         return verifyClassCommon("", object) == null;
     }
-    
+
     public boolean validClassWithPrefix(String prefix, Object object) {
         return verifyClassCommon(prefix, object) == null;
     }
-    
+
     public VerifyClassReturnValue verifyClass(Object object) {
         return verifyClassCommon("", object);
     }
-    
+
     public void analyzeClass(Object object, ArrayList<String> errors) {
         Field[] objFields = object.getClass().getDeclaredFields();
         for (Field field : objFields) { // For all fields in the class
@@ -102,7 +104,7 @@ public class CheckJMRIObject {
             }
         }
     }
-    
+
     private VerifyClassReturnValue verifyClassCommon(String prefix, Object object) {
         String fieldName;
         Field[] objFields = object.getClass().getDeclaredFields();
@@ -121,7 +123,7 @@ public class CheckJMRIObject {
         }
         return null;    // All fields pass.
     }
-    
+
 //  Function similar to the above, EXCEPT that it is used for form processing.
 //  Only JTextField's and JTable's are checked.
 //  A LIST of errors is returned, i.e. it checks ALL fields.
@@ -129,7 +131,7 @@ public class CheckJMRIObject {
     public void analyzeForm(String prefix, javax.swing.JDialog dialog, ArrayList<String> errors) {
         Field[] objFields = dialog.getClass().getDeclaredFields();
         for (Field field : objFields) { // For all fields in the class
-            Class<?> fieldType = field.getType(); 
+            Class<?> fieldType = field.getType();
             if (fieldType == javax.swing.JTextField.class) { // JTextField: need to check variable name:
                 String fieldName;
                 if ((fieldName = field.getName()).startsWith(prefix)) {
@@ -173,7 +175,7 @@ public class CheckJMRIObject {
             }
         }
     }
-    
+
     private VerifyClassReturnValue processField(String fieldName, String fieldContent) {
         OBJECT_TYPE objectType;
         if (fieldName.contains(EXTERNAL_TURNOUT)) objectType = OBJECT_TYPE.TURNOUT;
@@ -185,8 +187,9 @@ public class CheckJMRIObject {
 //  OOPPSS, JMRI don't know about it (at this time):
         return new VerifyClassReturnValue(fieldContent, objectType);
     }
-    
+
     private boolean lowLevelCheck(OBJECT_TYPE objectType, String JMRIObjectName) {
+        if (!MAIN_FORM._mPanelLoaded) return true;
         switch(objectType) {
             case SENSOR:
                 if (SENSOR_MANAGER.getSensor(JMRIObjectName) != null) return true;
