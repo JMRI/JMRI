@@ -219,7 +219,7 @@ public class CbusEventTableAction {
                 //    log.warn(" 1173 eventnum is {} nodenum is {} ",eventnum, nodenum);
                 int row = _model.seeIfEventOnTable(nodenum,eventnum);
                 if ( row < 0 ) {
-                    _model.addEvent(nodenum,eventnum,0,CbusTableEvent.EvState.ON,eventName,nodeName,null,0,0,0,0);
+                    _model.addEvent(nodenum,eventnum,0,CbusTableEvent.EvState.UNKNOWN,eventName,nodeName,null,0,0,0,0);
                     addedtotable++;
                 } else {
                     

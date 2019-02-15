@@ -3,6 +3,7 @@ package jmri.implementation;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Date;
 import jmri.InstanceManager;
+import jmri.JmriException;
 import jmri.Timebase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -411,6 +412,51 @@ public abstract class AbstractVariableLight extends AbstractLight {
         } else {
             return false;
         }
+    }
+
+    @Override
+    public void setCommandedAnalogValue(float value) throws JmriException {
+        int origState = mState;
+        double origCurrent = mCurrentIntensity;
+        
+        if (mCurrentIntensity >= getMaxIntensity()) {
+            mState = ON;
+            mCurrentIntensity = getMaxIntensity();
+        } else if (mCurrentIntensity <= getMinIntensity()) {
+            mState = OFF;
+            mCurrentIntensity = getMinIntensity();
+        } else {
+            mState = INTERMEDIATE;
+            mCurrentIntensity = value;
+        }
+        
+        mTransitionTargetIntensity = mCurrentIntensity;
+        
+        // first, send the on command
+        sendOnOffCommand(mState);
+        
+        // command new intensity
+        sendIntensity(mCurrentIntensity);
+        if (log.isDebugEnabled()) {
+            log.debug("set analog value: " + value);
+        }
+        
+        firePropertyChange("CurrentIntensity", origCurrent, mCurrentIntensity);
+        if (log.isDebugEnabled()) {
+            log.debug("firePropertyChange intensity " + origCurrent + " -> " + mCurrentIntensity);
+        }
+        
+        if (origState != mState) {
+            firePropertyChange("KnownState", origState, mState);
+            if (log.isDebugEnabled()) {
+                log.debug("firePropertyChange intensity " + origCurrent + " -> " + mCurrentIntensity);
+            }
+        }
+    }
+
+    @Override
+    public float getResolution() {
+        return (float) 1.0 / getNumberOfSteps();
     }
 
 }

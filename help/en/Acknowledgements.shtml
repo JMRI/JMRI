@@ -109,6 +109,10 @@
         counted.</li>
 
         <li>
+        Taylor Berg, <!-- tman0 -->
+        who worked on the DCC++ support.
+        
+        <li>
         Daniel Bergqvist, <!-- danielb987 -->
         who added the "ask before shutdown" code, 
         improved the Bundle code, added to the Swedish translation,
@@ -378,7 +382,8 @@
         <li>Michael Dunn, who provided a decoder definition for the
         MRC 1645 decoder <a name="E" id="E"></a></li>
 
-        <li>Mike Dunston, who provided 
+        <li>Mike Dunston, <!-- atanisoft -->
+            who provided 
             <a href="https://github.com/JMRI/JMRI/pull/4533">several updates</a> 
             for the DCC++ code</li>
 
@@ -603,7 +608,10 @@
 
         <li>Tony Koester, who helped with signaling</li>
 
-        <li>W.D. Kok created and maintained some Umelec decoder definitions</li>
+        <li>W.D. Kok <!-- Re465 -->
+            created and maintained some Umelec decoder definitions
+            and updated the Fleischman definitions
+        </li>
         
         <li>James Koretsky, who contributed the Burlington Northern
         1989 signal definition</li>
@@ -798,7 +806,8 @@
         <li>Mark Noble, who found some broken links 
 
         <a name="O" id="O"></a></li>
-        <li>John O'Duffy, who improved low-speed profiling</li>
+        <li>John O'Duffy, <!-- splitpin258 -->
+            who improved low-speed profiling</li>
         
         <li>Glen Oberhauser, who added LocoNet throttles</li>
 
@@ -1145,18 +1154,36 @@
         definitions.</li>
       </ul>
 
-      <h2>Developer Code Swarm</h2>
+      <h2>Visualizations of JMRI Development Activity</h2>
 
-      <p>We have created a <a href=
+      <p>The 
+      <a href="/community/codeflower.shtml">JMRI CodeFlower</a>
+      provides a dynamic view of the structure of whole GitHub source code repository.
+      It shows the relative size of the code in each file and the
+      structure in which the files are stored.
+
+      <p>You can see a summary of the JMRI developer activity 
+      on the GitHub project page for the
+      <a href="https://github.com/JMRI/JMRI/graphs/contributors">main code repository</a>
+      and 
+      <a href="https://github.com/JMRI/website/graphs/contributors">the website</a>.
+      
+      <p>More detailed metrics are available on the 
+      <a href="https://www.openhub.net/p/jmri">JMRI OpenHub</a> pages on
+      <a href="https://www.openhub.net/p/jmri/contributors/summary">contributors</a>
+      and
+      <a href="https://www.openhub.net/p/jmri/commits/summary">commits</a>.
+      
+      <p>Dennis Miller created a <a href=
       "http://jmri.org/community/codeswarm.shtml">Code Swarm of
-      JMRI development</a> from its inception to January 2009. A
+      JMRI development</a> that represents activity from inception to January 2009. A
       Code Swarm is a fascinating and dynamic visual representation
       of change as developers come and go and make changes to the
       files that make up a project. More information is available
       on the <a href=
       "http://jmri.org/community/codeswarm.shtml">Code Swarm</a>
       page.</p>
-      
+            
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
