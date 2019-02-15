@@ -41,9 +41,13 @@ import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import jmri.InstanceManager;
+import jmri.Sensor;
+import jmri.SensorManager;
 import jmri.jmrit.ctc.CTCFiles;
 import jmri.jmrit.ctc.ctcserialdata.CTCSerialData;
 import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
+import jmri.jmrit.ctc.ctcserialdata.OtherData;
 import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
 
 /**
@@ -62,15 +66,20 @@ public class FrmMainForm extends JFrame {
     private AwtWindowProperties _mAwtWindowProperties;
     private CheckJMRIObject _mCheckJMRIObject;
 
+    public boolean _mPanelLoaded = false;
+
     @SuppressWarnings("LeakingThisInConstructor")   // Lazy, since this is NOT a multi-threaded program.
     public FrmMainForm() {
         super();
+        InstanceManager.setDefault(jmri.jmrit.ctc.editor.gui.FrmMainForm.class, this);
         initComponents();
         addHelpMenu("index", true);  // NOI18N
         _mAwtWindowProperties = new AwtWindowProperties((java.awt.Window)this, "AwtWindowProperties.txt", FORM_PROPERTIES);
         _mProgramProperties = new ProgramProperties();
         _mCheckJMRIObject = new CheckJMRIObject();
         newOrOpenFile(true);
+        PanelCheck pc = new PanelCheck();
+        pc.start();
     }
 
     /**
@@ -97,6 +106,40 @@ public class FrmMainForm extends JFrame {
     private KeyStroke getAccelerator(int keycode) {
         int modifier = Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
         return KeyStroke.getKeyStroke(keycode, modifier);
+    }
+
+    /**
+     * Set the panel status:  true: CTC enabled panel loaded, false = no CTC enabled panel loaded.
+     * The presence of the debug and reload sensors is used to test for a potential CTC panel xml file.
+     * Runs as a thread and checks every 5 seconds.
+     */
+    class PanelCheck extends java.lang.Thread {
+        OtherData data = _mCTCSerialData.getOtherData();
+        SensorManager sm = InstanceManager.getDefault(SensorManager.class);
+
+        public void run() {
+            while (true) {
+                _mPanelLoaded = false;
+
+                // Are two specific sensors present
+                Sensor chkReload = sm.getSensor(data._mCTCDebugSystemReloadInternalSensor);
+                Sensor chkDebug = sm.getSensor(data._mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor);
+
+                if (chkReload == null || chkDebug == null) {
+                    // No CTC panel loaded
+                    _mJMRIValidationStatus.setText("<html><font color='red'>" + Bundle.getMessage("LabelDisabled") + "</font></html>");
+                    _mCheckEverythingWithJMRI.setEnabled(false);
+                } else {
+                    _mPanelLoaded = true;
+                    _mJMRIValidationStatus.setText("<html><font color='green'>" + Bundle.getMessage("LabelEnabled") + "</font></html>");
+                    _mCheckEverythingWithJMRI.setEnabled(true);
+                }
+
+                try {
+                    Thread.sleep(5000L);
+                } catch (InterruptedException e) {}
+            }
+        }
     }
 
     /**
@@ -150,6 +193,8 @@ public class FrmMainForm extends JFrame {
         _mMoveUp = new javax.swing.JButton();
         _mMoveDown = new javax.swing.JButton();
         _mCheckEverythingWithJMRI = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        _mJMRIValidationStatus = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         _mFile = new javax.swing.JMenu();
         _mNew = new javax.swing.JMenuItem();
@@ -384,6 +429,11 @@ public class FrmMainForm extends JFrame {
             }
         });
 
+        jLabel2.setText(Bundle.getMessage("LabelValidation"));
+
+        _mJMRIValidationStatus.setText("Unknown");
+        _mJMRIValidationStatus.setName("_mJMRIValidationStatus"); // NOI18N
+
         _mFile.setText(Bundle.getMessage("MenuFile"));
 
         _mNew.setAccelerator(getAccelerator(KeyEvent.VK_N));
@@ -551,6 +601,10 @@ public class FrmMainForm extends JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel1)
+                                .addGap(172, 172, 172)
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(_mJMRIValidationStatus)
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jScrollPane1)
@@ -575,7 +629,10 @@ public class FrmMainForm extends JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2)
+                    .addComponent(_mJMRIValidationStatus))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 334, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -907,6 +964,7 @@ public class FrmMainForm extends JFrame {
         if (openExisting) {
             _mCTCSerialData.readDataFromXMLFile(_mProgramProperties._mFilename);
             _mOriginalCopy.makeDeepCopy(_mCTCSerialData);
+//             setPanelStatus();
         } else _mProgramProperties._mFilename = ProgramProperties.FILENAME_DEFAULT;
         setTitle(Bundle.getMessage("TitleMainForm") + "   " + _mProgramProperties._mFilename );
         _mDefaultListModel = new DefaultListModel<>();
@@ -1063,6 +1121,7 @@ public class FrmMainForm extends JFrame {
     private javax.swing.JMenu _mHelp;
     private javax.swing.JMenuItem _mHelpAbout;
     private javax.swing.JCheckBox _mIL_Enabled;
+    private javax.swing.JLabel _mJMRIValidationStatus;
     private javax.swing.JButton _mMoveDown;
     private javax.swing.JButton _mMoveUp;
     private javax.swing.JMenuItem _mNew;
@@ -1082,6 +1141,7 @@ public class FrmMainForm extends JFrame {
     private javax.swing.JButton deleteButton;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
@@ -1090,4 +1150,5 @@ public class FrmMainForm extends JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton reapplyPatternsButton;
     // End of variables declaration//GEN-END:variables
+
 }

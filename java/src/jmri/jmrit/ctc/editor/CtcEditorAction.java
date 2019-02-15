@@ -26,7 +26,6 @@ public class CtcEditorAction extends JmriAbstractAction {
             return;
         }
         jmri.jmrit.ctc.editor.gui.FrmMainForm f = new jmri.jmrit.ctc.editor.gui.FrmMainForm();
-        jmri.InstanceManager.setDefault(jmri.jmrit.ctc.editor.gui.FrmMainForm.class, f);
         f.setVisible(true);
     }
 
