@@ -78,13 +78,13 @@ public interface CabSignal {
      *
      * @param listener is a PropertyChangeListener object
      */
-    public void addPropertyChangeListener(java.beans.PropertyChangeListener l);
+    public void addPropertyChangeListener(java.beans.PropertyChangeListener listener);
 
     /**
      * Remove a listener for cab signal events
      *
      * @param listener is a PropertyChangeListener object
      */
-    public void removePropertyChangeListener(java.beans.PropertyChangeListener l);
+    public void removePropertyChangeListener(java.beans.PropertyChangeListener listener);
 
 }

@@ -19,7 +19,7 @@ public class DefaultCabSignal implements CabSignal {
     private int _direction;
     private Block _currentBlock;
     private Block _nextBlock;
-    private SignalMast _nextSignal;
+    private SignalMast _nextMast;
 
     public DefaultCabSignal(LocoAddress address){
        _address = address;
@@ -32,7 +32,7 @@ public class DefaultCabSignal implements CabSignal {
        _address = null;
        _currentBlock = null;
        _nextBlock = null;
-       _nextSignal = null;
+       _nextMast = null;
     }
 
     /**
@@ -50,7 +50,7 @@ public class DefaultCabSignal implements CabSignal {
      * @return 1 for forward, 0 for reverse.
      */
     public int getLocoDirection(){
-          return _direction
+          return _direction;
     }
 
     /**
@@ -98,7 +98,7 @@ public class DefaultCabSignal implements CabSignal {
      *
      * @param listener is a PropertyChangeListener object
      */
-    public void addPropertyChangeListener(java.beans.PropertyChangeListener l){
+    public void addPropertyChangeListener(java.beans.PropertyChangeListener listener){
     }
 
     /**
@@ -106,7 +106,7 @@ public class DefaultCabSignal implements CabSignal {
      *
      * @param listener is a PropertyChangeListener object
      */
-    public void removePropertyChangeListener(java.beans.PropertyChangeListener l){
+    public void removePropertyChangeListener(java.beans.PropertyChangeListener listener){
     }
 
 }
