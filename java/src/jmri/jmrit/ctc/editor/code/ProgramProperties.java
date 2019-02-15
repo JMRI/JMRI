@@ -5,17 +5,19 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Properties;
+import  jmri.util.FileUtil;
+import jmri.jmrit.ctc.CTCFiles;
 
 /**
  *
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019
- * 
+ *
  * This just maintains all of the properties a user can create.  Stupid simple.
  */
 public class ProgramProperties {
     private static final String PROPERTIES_FILENAME = "ProgramProperties.xml";
-    
-    public static final String FILENAME_DEFAULT = "CTCSystem.xml";
+
+    public static final String FILENAME_DEFAULT = "preference:ctc/CTCSystem.xml";
     private static final String FILENAME_KEY = "_mFilename";
     public String _mFilename = FILENAME_DEFAULT;
     private static final String CODE_BUTTON_INTERNAL_SENSOR_PATTERN = "_mCodeButtonInternalSensorPattern";
@@ -45,7 +47,7 @@ public class ProgramProperties {
     private static final String SIDL_RIGHT_INTERNAL_SENSOR_PATTERN = "_mSIDL_RightInternalSensorPattern";
     private static final String SIDL_RIGHT_INTERNAL_SENSOR_PATTERN_DEFAULT = "IS#:RDGL";
     public String _mSIDL_RightInternalSensorPattern = SIDL_RIGHT_INTERNAL_SENSOR_PATTERN_DEFAULT;
-    private static final String SWDI_CODING_TIME_IN_MILLISECONDS = "_mSWDI_CodingTimeInMilliseconds";    
+    private static final String SWDI_CODING_TIME_IN_MILLISECONDS = "_mSWDI_CodingTimeInMilliseconds";
     private static final String SWDI_CODING_TIME_IN_MILLISECONDS_DEFAULT = Integer.toString(2000);
     public int _mSWDI_CodingTimeInMilliseconds = Integer.parseInt(SWDI_CODING_TIME_IN_MILLISECONDS_DEFAULT);
     private static final String SWDI_NORMAL_INTERNAL_SENSOR_PATTERN = "_mSWDI_NormalInternalSensorPattern";
@@ -69,14 +71,19 @@ public class ProgramProperties {
     private static final String NO_CODE_BUTTON_DELAY_TIME_IN_MILLISECONDS = "_mCodeButtonDelayTime";
     private static final String NO_CODE_BUTTON_DELAY_TIME_IN_MILLISECONDS_DEFAULT = Integer.toString(0);
     public int _mCodeButtonDelayTime = Integer.parseInt(NO_CODE_BUTTON_DELAY_TIME_IN_MILLISECONDS_DEFAULT);
-    
+
     public ProgramProperties() {
         try {
-            File file = new File(PROPERTIES_FILENAME);
+            File file = CTCFiles.getFile(PROPERTIES_FILENAME);
             FileInputStream fileInputStream = new FileInputStream(file);
             Properties properties = new Properties();
             properties.loadFromXML(fileInputStream);
-            _mFilename = properties.getProperty(FILENAME_KEY, FILENAME_DEFAULT);
+
+            // Migrate file name if necessary
+            String tempName = properties.getProperty(FILENAME_KEY, FILENAME_DEFAULT);
+            String fileName = (tempName.startsWith("preference:") ? tempName : "preference:ctc/" + tempName);
+            _mFilename = FileUtil.getExternalFilename(fileName);
+
             _mCodeButtonInternalSensorPattern = properties.getProperty(CODE_BUTTON_INTERNAL_SENSOR_PATTERN, CODE_BUTTON_INTERNAL_SENSOR_PATTERN_DEFAULT);
             _mSIDI_CodingTimeInMilliseconds = Integer.valueOf(properties.getProperty(SIDI_CODING_TIME_IN_MILLISECONDS, SIDI_CODING_TIME_IN_MILLISECONDS_DEFAULT));
             _mSIDI_LeftInternalSensorPattern = properties.getProperty(SIDI_LEFT_INTERNAL_SENSOR_PATTERN, SIDI_LEFT_INTERNAL_SENSOR_PATTERN_DEFAULT);
@@ -96,7 +103,7 @@ public class ProgramProperties {
             _mCodeButtonDelayTime = Integer.valueOf(properties.getProperty(NO_CODE_BUTTON_DELAY_TIME_IN_MILLISECONDS, NO_CODE_BUTTON_DELAY_TIME_IN_MILLISECONDS_DEFAULT));
         }
         catch (IOException | NumberFormatException e) {
-            _mFilename = FILENAME_DEFAULT;
+            _mFilename = FileUtil.getExternalFilename(FILENAME_DEFAULT);
             _mCodeButtonInternalSensorPattern = CODE_BUTTON_INTERNAL_SENSOR_PATTERN_DEFAULT;
             _mSIDI_CodingTimeInMilliseconds = Integer.valueOf(SIDI_CODING_TIME_IN_MILLISECONDS_DEFAULT);
             _mSIDI_LeftInternalSensorPattern = SIDI_LEFT_INTERNAL_SENSOR_PATTERN_DEFAULT;
@@ -116,15 +123,15 @@ public class ProgramProperties {
             _mCodeButtonDelayTime = Integer.valueOf(NO_CODE_BUTTON_DELAY_TIME_IN_MILLISECONDS_DEFAULT);
         }
     }
-    
+
     static public boolean programPropertiesFileExists() {
         return (new File(PROPERTIES_FILENAME)).isFile();
     }
-    
+
     public void close() {
         try {
             Properties properties = new Properties();
-            properties.setProperty(FILENAME_KEY, _mFilename);
+            properties.setProperty(FILENAME_KEY, FileUtil.getPortableFilename(_mFilename));
             properties.setProperty(CODE_BUTTON_INTERNAL_SENSOR_PATTERN, _mCodeButtonInternalSensorPattern);
             properties.setProperty(SIDI_CODING_TIME_IN_MILLISECONDS, Integer.toString(_mSIDI_CodingTimeInMilliseconds));
             properties.setProperty(SIDI_LEFT_INTERNAL_SENSOR_PATTERN, _mSIDI_LeftInternalSensorPattern);
@@ -140,12 +147,13 @@ public class ProgramProperties {
             properties.setProperty(SWDL_INTERNAL_SENSOR_PATTERN, _mSWDL_InternalSensorPattern);
             properties.setProperty(CO_CALL_ON_TOGGLE_INTERNAL_SENSOR_PATTERN, _mCO_CallOnToggleInternalSensorPattern);
             properties.setProperty(TUL_DISPATCHER_INTERNAL_SENSOR_LOCK_TOGGLE_PATTERN, _mTUL_DispatcherInternalSensorLockTogglePattern);
-            properties.setProperty(TUL_DISPATCHER_INTERNAL_SENSOR_UNLOCKED_INDICATOR_PATTERN, _mTUL_DispatcherInternalSensorUnlockedIndicatorPattern);  
+            properties.setProperty(TUL_DISPATCHER_INTERNAL_SENSOR_UNLOCKED_INDICATOR_PATTERN, _mTUL_DispatcherInternalSensorUnlockedIndicatorPattern);
             properties.setProperty(NO_CODE_BUTTON_DELAY_TIME_IN_MILLISECONDS, Integer.toString(_mCodeButtonDelayTime));
-            File file = new File(PROPERTIES_FILENAME);
+            CTCFiles.rotate(PROPERTIES_FILENAME, true);
+            File file = CTCFiles.getFile(PROPERTIES_FILENAME);
             try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
                 properties.storeToXML(fileOutputStream, PROPERTIES_FILENAME);
-            }            
+            }
         } catch (IOException e) {}
     }
 }

@@ -26,12 +26,12 @@ public class CtcEditorStartupTest {
         Assert.assertEquals("Open CTC Editor", new CtcEditorStartup().getTitle(CtcEditorAction.class, Locale.US));  // NOI18N
     }
 
-    @Test
-    public void testGetTitleException() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        thrown.expect(IllegalArgumentException.class);
-        Assert.assertEquals("Open Ctc Editor Exception", new CtcEditorStartup().getTitle(CtcEditor.class, Locale.US));  // NOI18N
-    }
+//     @Test
+//     public void testGetTitleException() {
+//         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+//         thrown.expect(IllegalArgumentException.class);
+//         Assert.assertEquals("Open Ctc Editor Exception", new CtcEditorStartup().getTitle(CtcEditor.class, Locale.US));  // NOI18N
+//     }
 
     @Test
     public void testGetClass() {

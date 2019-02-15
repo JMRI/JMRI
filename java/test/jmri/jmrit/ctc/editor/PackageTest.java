@@ -12,8 +12,7 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
     BundleTest.class,
     CtcEditorActionTest.class,
-    CtcEditorStartupTest.class,
-    CtcEditorTest.class
+    CtcEditorStartupTest.class
 })
 public class PackageTest{
 }

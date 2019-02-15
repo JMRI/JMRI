@@ -19,12 +19,12 @@ public class CtcRunActionTest {
         new CtcRunAction();
     }
 
-    @Test
-    public void testAction() {
-//         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        new CtcRunAction().actionPerformed(null);
-        new CtcRunAction().actionPerformed(null);
-    }
+//     @Test
+//     public void testAction() {
+// //         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+//         new CtcRunAction().actionPerformed(null);
+//         new CtcRunAction().actionPerformed(null);
+//     }
 
     @Test
     public void testMakePanel() {
