@@ -130,6 +130,7 @@ public class EngineSoundEvent extends SoundEvent implements PropertyChangeListen
         }
     }
 
+    @Override
     public void propertyChange(PropertyChangeEvent event) {
         super.propertyChange(event);
         if (event.getPropertyName().equals("SpeedSetting")) {

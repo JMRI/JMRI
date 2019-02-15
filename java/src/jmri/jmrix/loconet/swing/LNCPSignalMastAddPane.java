@@ -37,16 +37,19 @@ public class LNCPSignalMastAddPane extends jmri.jmrit.beantable.signalmast.DccSi
     }
 
     /** {@inheritDoc} */
+    @Override
     protected String getNamePrefix() {
         return "F$lncpsm:";
     }
 
     /** {@inheritDoc} */
+    @Override
     protected DccSignalMast constructMast(String name) {
         return new LNCPSignalMast(name);
     }
 
     /** {@inheritDoc} */
+    @Override
     protected boolean usableCommandStation(CommandStation cs) {
         return cs instanceof jmri.jmrix.loconet.SlotManager;
     }

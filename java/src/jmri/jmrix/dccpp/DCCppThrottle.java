@@ -173,7 +173,7 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
         }
     }
 
-    /* Since xpressnet has a seperate Opcode for emergency stop,
+    /* Since DCC++ has a seperate Opcode for emergency stop,
      * We're setting this up as a seperate protected function
      */
     protected void sendEmergencyStop() {

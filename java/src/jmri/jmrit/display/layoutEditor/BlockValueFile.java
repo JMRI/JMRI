@@ -60,6 +60,7 @@ public class BlockValueFile extends XmlFile {
      * @throws JDOMException on rootFromName if all methods fail
      * @throws IOException   if an I/O error occurs while reading a file
      */
+    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations
     public void readBlockValues() throws JDOMException, IOException {
         log.debug("entered readBlockValues");
         List<String> blocks = blockManager.getSystemNameList();
@@ -152,6 +153,7 @@ public class BlockValueFile extends XmlFile {
      *
      * @throws IOException
      */
+    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations & generics
     public void writeBlockValues() throws IOException {
         log.debug("entered writeBlockValues");
         List<String> blocks = blockManager.getSystemNameList();

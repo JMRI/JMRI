@@ -38,7 +38,7 @@ public class CbusDccOpsModeProgrammer extends CbusDccProgrammer implements Addre
     @Override
     synchronized public void writeCV(String CVname, int val, ProgListener p) throws ProgrammerException {
         final int CV = Integer.parseInt(CVname);
-        log.debug("ops mode write CV=" + CV + " val=" + val);
+        log.debug("ops mode write CV={} val={}", CV, val);
 
         // record state.  COMMANDSENT is just waiting for a reply...
         useProgrammer(p);
@@ -57,11 +57,7 @@ public class CbusDccOpsModeProgrammer extends CbusDccProgrammer implements Addre
      */
     @Override
     synchronized public void readCV(String CVname, ProgListener p) throws ProgrammerException {
-        final int CV = Integer.parseInt(CVname);
-        if (log.isDebugEnabled()) {
-            log.debug("read CV=" + CV);
-        }
-        log.error("readCV not available in this protocol");
+        log.error("readCV {} not available for MERG CBUS, a query to track would return all locos",CVname);
         throw new ProgrammerException();
     }
 
@@ -70,10 +66,7 @@ public class CbusDccOpsModeProgrammer extends CbusDccProgrammer implements Addre
      */
     @Override
     synchronized public void confirmCV(String CV, int val, ProgListener p) throws ProgrammerException {
-        if (log.isDebugEnabled()) {
-            log.debug("confirm CV=" + CV);
-        }
-        log.error("confirmCV not available in this protocol");
+        log.error("confirmCV {} not available for MERG CBUS, a query to track would return all locos",CV);
         throw new ProgrammerException();
     }
 

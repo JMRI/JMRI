@@ -27,10 +27,7 @@ public class CbusPowerManager implements PowerManager, CanListener {
 
     @Override
     public String getUserName() {
-        if (memo != null) {
-            return memo.getUserName();
-        }
-        return "CBUS";
+        return memo.getUserName();
     }
 
     int power = ON;
@@ -42,19 +39,11 @@ public class CbusPowerManager implements PowerManager, CanListener {
         if (v == ON) {
             // send "Enable main track"
             tc.sendCanMessage(CbusMessage.getRequestTrackOn(tc.getCanid()), this);
-        } else if (v == OFF) {
+        }
+        if (v == OFF) {
             // send "Kill main track"
             tc.sendCanMessage(CbusMessage.getRequestTrackOff(tc.getCanid()), this);
         }
-    }
-
-    /*
-     * Used to update power state after service mode programming operation
-     * without sending a message to the SPROG
-     */
-    public void notePowerState(int v) {
-        power = v;
-        firePropertyChange("Power", null, null);
     }
 
     @Override
@@ -65,7 +54,9 @@ public class CbusPowerManager implements PowerManager, CanListener {
     // to free resources when no longer used
     @Override
     public void dispose() throws JmriException {
-        tc.removeCanListener(this);
+        if (tc !=null) {
+            tc.removeCanListener(this);
+        }
         tc = null;
     }
 

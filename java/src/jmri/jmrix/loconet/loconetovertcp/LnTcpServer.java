@@ -35,7 +35,7 @@ public class LnTcpServer {
     private LnTrafficController tc;
 
     private LnTcpServer(LocoNetSystemConnectionMemo memo) {
-        tc = memo.getLnTrafficController(); // store tc in order to known where to send messages
+        tc = memo.getLnTrafficController(); // store tc in order to know where to send messages
         LnTcpPreferences pm = LnTcpPreferences.getDefault();
         portNumber = pm.getPort();
         pm.addPropertyChangeListener((PropertyChangeEvent evt) -> {

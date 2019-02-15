@@ -1,13 +1,13 @@
 package jmri.jmrix.loconet.duplexgroup.swing;
 
+import jmri.jmrix.loconet.LocoNetInterfaceScaffold;
+import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import jmri.jmrix.loconet.LocoNetMessage;
-
 
 /**
  * Test simple functioning of LnIPLImplementation
@@ -25,17 +25,16 @@ public class LnIPLImplementationTest {
     public void testCtor() {
         Assert.assertNotNull("exists", iplImplementation);
         memo.dispose();
-        jmri.InstanceManager.deregister(memo,jmri.jmrix.loconet.LocoNetSystemConnectionMemo.class);
+        jmri.InstanceManager.deregister(memo, jmri.jmrix.loconet.LocoNetSystemConnectionMemo.class);
         memo = new jmri.jmrix.loconet.LocoNetSystemConnectionMemo();
         memo.setLnTrafficController(lnis);
 
 //        memo.configureManagers();
 //        memo.configureCommandStation(jmri.jmrix.loconet.LnCommandStationType.COMMAND_STATION_DCS100,false,false,false);
 
-        jmri.InstanceManager.store(memo,jmri.jmrix.loconet.LocoNetSystemConnectionMemo.class);
+        jmri.InstanceManager.store(memo, jmri.jmrix.loconet.LocoNetSystemConnectionMemo.class);
 
         iplImplementation = new LnIPLImplementation(memo);
-
     }
 
     @Test
@@ -1489,8 +1488,8 @@ public class LnIPLImplementationTest {
                     equivSn,
                     (long)LnIPLImplementation.extractIplIdentitySlaveSerialNumber(msg));
         }
-
     }
+
     @Test
     public void testConnectMethod() {
         java.beans.PropertyChangeListener l = new java.beans.PropertyChangeListener() {
@@ -1559,9 +1558,6 @@ public class LnIPLImplementationTest {
         propChangeQueryFlag = false;
         Assert.assertNull("extracting slave device from GPON message", LnIPLImplementation.extractInterpretedIplSlaveDevice(m));
 
-
-
-
         iplImplementation.removePropertyChangeListener(l);
     }
 
@@ -1600,8 +1596,8 @@ public class LnIPLImplementationTest {
 
         JUnitUtil.resetProfileManager();
 
-        jmri.jmrix.loconet.LocoNetInterfaceScaffold lnis = new jmri.jmrix.loconet.LocoNetInterfaceScaffold();
         memo = new jmri.jmrix.loconet.LocoNetSystemConnectionMemo();
+        LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold(memo);
         memo.setLnTrafficController(lnis);
 
         memo.configureCommandStation(jmri.jmrix.loconet.LnCommandStationType.COMMAND_STATION_DCS100,false,false,false);
@@ -1610,12 +1606,10 @@ public class LnIPLImplementationTest {
         jmri.InstanceManager.store(memo,jmri.jmrix.loconet.LocoNetSystemConnectionMemo.class);
 
         iplImplementation = new LnIPLImplementation(memo);
-
-
     }
 
     @After
-    public void tearDown() {        
+    public void tearDown() {
         memo.dispose();
         JUnitUtil.tearDown();
     }

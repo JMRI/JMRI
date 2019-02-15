@@ -68,6 +68,7 @@ public class ConditionalTest {
         Assert.assertEquals(Conditional.TYPE_SIGNAL_MAST_LIT, 31);
         Assert.assertEquals(Conditional.TYPE_SIGNAL_MAST_HELD, 32);
         Assert.assertEquals(Conditional.TYPE_SIGNAL_HEAD_APPEARANCE_EQUALS, 33);
+        // This item is never used
         Assert.assertEquals(Conditional.TYPE_BLOCK_STATUS_EQUALS, 34);
 
         //Entry Exit Rules
@@ -159,7 +160,7 @@ public class ConditionalTest {
         Assert.assertEquals(Conditional.ACTION_SET_NXPAIR_ENABLED, 51);
         Assert.assertEquals(Conditional.ACTION_SET_NXPAIR_DISABLED, 52);
         Assert.assertEquals(Conditional.ACTION_SET_NXPAIR_SEGMENT, 53);
-        Assert.assertEquals(Conditional.NUM_ACTION_TYPES, 53);
+//        Assert.assertEquals(Conditional.NUM_ACTION_TYPES, 53);
 
         /**
          * ***********************************************************************************
@@ -182,106 +183,120 @@ public class ConditionalTest {
         Assert.assertEquals(Conditional.ITEM_TYPE_CLOCK, 9);
         Assert.assertEquals(Conditional.ITEM_TYPE_OBLOCK, 10);
         Assert.assertEquals(Conditional.ITEM_TYPE_ENTRYEXIT, 11);
-        Assert.assertEquals(Conditional.ITEM_TYPE_LAST_STATE_VAR, 11);
+//        Assert.assertEquals(Conditional.ITEM_TYPE_LAST_STATE_VAR, 11);
 
         Assert.assertEquals(Conditional.ITEM_TYPE_AUDIO, 12);
         Assert.assertEquals(Conditional.ITEM_TYPE_SCRIPT, 13);
         Assert.assertEquals(Conditional.ITEM_TYPE_OTHER, 14);
-        Assert.assertEquals(Conditional.ITEM_TYPE_LAST_ACTION, 14);
+//        Assert.assertEquals(Conditional.ITEM_TYPE_LAST_ACTION, 14);
     }
     
     @Test
     public void testArrays() {
-        // These arrays has @SuppressFBWarnings so it might be good to refactor the code,
-        // for example by using enums.
-        
-        Assert.assertEquals(Conditional.TYPE_NONE, Conditional.TEST_TO_ITEM[Conditional.TYPE_NONE]);
-        Assert.assertEquals(Conditional.ITEM_TYPE_SENSOR, Conditional.TEST_TO_ITEM[Conditional.TYPE_SENSOR_ACTIVE]);
-        Assert.assertEquals(Conditional.ITEM_TYPE_SENSOR, Conditional.TEST_TO_ITEM[Conditional.TYPE_SENSOR_INACTIVE]);
-        Assert.assertEquals(Conditional.ITEM_TYPE_TURNOUT, Conditional.TEST_TO_ITEM[Conditional.TYPE_TURNOUT_THROWN]);
-        Assert.assertEquals(Conditional.ITEM_TYPE_TURNOUT, Conditional.TEST_TO_ITEM[Conditional.TYPE_TURNOUT_CLOSED]);
-        Assert.assertEquals(Conditional.ITEM_TYPE_CONDITIONAL, Conditional.TEST_TO_ITEM[Conditional.TYPE_CONDITIONAL_TRUE]);
-        Assert.assertEquals(Conditional.ITEM_TYPE_CONDITIONAL, Conditional.TEST_TO_ITEM[Conditional.TYPE_CONDITIONAL_FALSE]);
-        Assert.assertEquals(Conditional.ITEM_TYPE_LIGHT, Conditional.TEST_TO_ITEM[Conditional.TYPE_LIGHT_ON]);
-        Assert.assertEquals(Conditional.ITEM_TYPE_LIGHT, Conditional.TEST_TO_ITEM[Conditional.TYPE_LIGHT_OFF]);
-        Assert.assertEquals(Conditional.ITEM_TYPE_MEMORY, Conditional.TEST_TO_ITEM[Conditional.TYPE_MEMORY_EQUALS]);
-        Assert.assertEquals(Conditional.ITEM_TYPE_CLOCK, Conditional.TEST_TO_ITEM[Conditional.TYPE_FAST_CLOCK_RANGE]);
-        Assert.assertEquals(Conditional.ITEM_TYPE_SIGNALHEAD, Conditional.TEST_TO_ITEM[Conditional.TYPE_SIGNAL_HEAD_RED]);
-        Assert.assertEquals(Conditional.ITEM_TYPE_SIGNALHEAD, Conditional.TEST_TO_ITEM[Conditional.TYPE_SIGNAL_HEAD_YELLOW]);
-        Assert.assertEquals(Conditional.ITEM_TYPE_SIGNALHEAD, Conditional.TEST_TO_ITEM[Conditional.TYPE_SIGNAL_HEAD_GREEN]);
-        Assert.assertEquals(Conditional.ITEM_TYPE_SIGNALHEAD, Conditional.TEST_TO_ITEM[Conditional.TYPE_SIGNAL_HEAD_DARK]);
-        Assert.assertEquals(Conditional.ITEM_TYPE_SIGNALHEAD, Conditional.TEST_TO_ITEM[Conditional.TYPE_SIGNAL_HEAD_FLASHRED]);
-        Assert.assertEquals(Conditional.ITEM_TYPE_SIGNALHEAD, Conditional.TEST_TO_ITEM[Conditional.TYPE_SIGNAL_HEAD_FLASHYELLOW]);
-        Assert.assertEquals(Conditional.ITEM_TYPE_SIGNALHEAD, Conditional.TEST_TO_ITEM[Conditional.TYPE_SIGNAL_HEAD_FLASHGREEN]);
-        Assert.assertEquals(Conditional.ITEM_TYPE_SIGNALHEAD, Conditional.TEST_TO_ITEM[Conditional.TYPE_SIGNAL_HEAD_LIT]);
-        Assert.assertEquals(Conditional.ITEM_TYPE_SIGNALHEAD, Conditional.TEST_TO_ITEM[Conditional.TYPE_SIGNAL_HEAD_HELD]);
-        Assert.assertEquals(Conditional.ITEM_TYPE_MEMORY, Conditional.TEST_TO_ITEM[Conditional.TYPE_MEMORY_COMPARE]);
-        Assert.assertEquals(Conditional.ITEM_TYPE_SIGNALHEAD, Conditional.TEST_TO_ITEM[Conditional.TYPE_SIGNAL_HEAD_LUNAR]);
-        Assert.assertEquals(Conditional.ITEM_TYPE_SIGNALHEAD, Conditional.TEST_TO_ITEM[Conditional.TYPE_SIGNAL_HEAD_FLASHLUNAR]);
-        Assert.assertEquals(Conditional.ITEM_TYPE_MEMORY, Conditional.TEST_TO_ITEM[Conditional.TYPE_MEMORY_EQUALS_INSENSITIVE]);
-        Assert.assertEquals(Conditional.ITEM_TYPE_MEMORY, Conditional.TEST_TO_ITEM[Conditional.TYPE_MEMORY_COMPARE_INSENSITIVE]);
-        Assert.assertEquals(Conditional.ITEM_TYPE_WARRANT, Conditional.TEST_TO_ITEM[Conditional.TYPE_ROUTE_FREE]);
-        Assert.assertEquals(Conditional.ITEM_TYPE_WARRANT, Conditional.TEST_TO_ITEM[Conditional.TYPE_ROUTE_OCCUPIED]);
-        Assert.assertEquals(Conditional.ITEM_TYPE_WARRANT, Conditional.TEST_TO_ITEM[Conditional.TYPE_ROUTE_ALLOCATED]);
-        Assert.assertEquals(Conditional.ITEM_TYPE_WARRANT, Conditional.TEST_TO_ITEM[Conditional.TYPE_ROUTE_SET]);
-        Assert.assertEquals(Conditional.ITEM_TYPE_WARRANT, Conditional.TEST_TO_ITEM[Conditional.TYPE_TRAIN_RUNNING]);
-        Assert.assertEquals(Conditional.ITEM_TYPE_SIGNALMAST, Conditional.TEST_TO_ITEM[Conditional.TYPE_SIGNAL_MAST_ASPECT_EQUALS]);
-        Assert.assertEquals(Conditional.ITEM_TYPE_SIGNALMAST, Conditional.TEST_TO_ITEM[Conditional.TYPE_SIGNAL_MAST_LIT]);
-        Assert.assertEquals(Conditional.ITEM_TYPE_SIGNALMAST, Conditional.TEST_TO_ITEM[Conditional.TYPE_SIGNAL_MAST_HELD]);
-        Assert.assertEquals(Conditional.ITEM_TYPE_SIGNALHEAD, Conditional.TEST_TO_ITEM[Conditional.TYPE_SIGNAL_HEAD_APPEARANCE_EQUALS]);
-        Assert.assertEquals(Conditional.ITEM_TYPE_OBLOCK, Conditional.TEST_TO_ITEM[Conditional.TYPE_BLOCK_STATUS_EQUALS]);
-        Assert.assertEquals(Conditional.ITEM_TYPE_ENTRYEXIT, Conditional.TEST_TO_ITEM[Conditional.TYPE_ENTRYEXIT_ACTIVE]);
-        Assert.assertEquals(Conditional.ITEM_TYPE_ENTRYEXIT, Conditional.TEST_TO_ITEM[Conditional.TYPE_ENTRYEXIT_INACTIVE]);
-        
         // Map SignalHead comboBox items to SignalHead Conditional variable types
-        Assert.assertEquals(Conditional.TYPE_NONE, Conditional.ITEM_TO_SIGNAL_HEAD_TEST[0]);
-        Assert.assertEquals(Conditional.TYPE_SIGNAL_HEAD_APPEARANCE_EQUALS, Conditional.ITEM_TO_SIGNAL_HEAD_TEST[1]);
-        Assert.assertEquals(Conditional.TYPE_SIGNAL_HEAD_LIT, Conditional.ITEM_TO_SIGNAL_HEAD_TEST[2]);
-        Assert.assertEquals(Conditional.TYPE_SIGNAL_HEAD_HELD, Conditional.ITEM_TO_SIGNAL_HEAD_TEST[3]);
+        Assert.assertEquals(Conditional.Type.NONE, Conditional.Type.getSignalHeadStateMachineItems().get(0));
+        Assert.assertEquals(Conditional.Type.SIGNAL_HEAD_APPEARANCE_EQUALS, Conditional.Type.getSignalHeadStateMachineItems().get(1));
+        Assert.assertEquals(Conditional.Type.SIGNAL_HEAD_LIT, Conditional.Type.getSignalHeadStateMachineItems().get(2));
+        Assert.assertEquals(Conditional.Type.SIGNAL_HEAD_HELD, Conditional.Type.getSignalHeadStateMachineItems().get(3));
 
         // Map SignalMAst comboBox items to SignalMast Conditional variable types
-        Assert.assertEquals(Conditional.TYPE_NONE, Conditional.ITEM_TO_SIGNAL_MAST_TEST[0]);
-        Assert.assertEquals(Conditional.TYPE_SIGNAL_MAST_ASPECT_EQUALS, Conditional.ITEM_TO_SIGNAL_MAST_TEST[1]);
-        Assert.assertEquals(Conditional.TYPE_SIGNAL_MAST_LIT, Conditional.ITEM_TO_SIGNAL_MAST_TEST[2]);
-        Assert.assertEquals(Conditional.TYPE_SIGNAL_MAST_HELD, Conditional.ITEM_TO_SIGNAL_MAST_TEST[3]);
+        Assert.assertEquals(Conditional.Type.NONE, Conditional.Type.getSignalMastItems().get(0));
+        Assert.assertEquals(Conditional.Type.SIGNAL_MAST_ASPECT_EQUALS, Conditional.Type.getSignalMastItems().get(1));
+        Assert.assertEquals(Conditional.Type.SIGNAL_MAST_LIT, Conditional.Type.getSignalMastItems().get(2));
+        Assert.assertEquals(Conditional.Type.SIGNAL_MAST_HELD, Conditional.Type.getSignalMastItems().get(3));
         
         // Map Sensor state comboBox items to Sensor Conditional variable types
-        Assert.assertEquals(Conditional.TYPE_SENSOR_ACTIVE, Conditional.ITEM_TO_SENSOR_TEST[0]);
-        Assert.assertEquals(Conditional.TYPE_SENSOR_INACTIVE, Conditional.ITEM_TO_SENSOR_TEST[1]);
+        Assert.assertEquals(Conditional.Type.SENSOR_ACTIVE, Conditional.Type.getSensorItems().get(0));
+        Assert.assertEquals(Conditional.Type.SENSOR_INACTIVE, Conditional.Type.getSensorItems().get(1));
 
         // Map Turnout state comboBox items to Turnout Conditional variable types
-        Assert.assertEquals(Conditional.TYPE_TURNOUT_THROWN, Conditional.ITEM_TO_TURNOUT_TEST[0]);
-        Assert.assertEquals(Conditional.TYPE_TURNOUT_CLOSED, Conditional.ITEM_TO_TURNOUT_TEST[1]);
+        Assert.assertEquals(Conditional.Type.TURNOUT_THROWN, Conditional.Type.getTurnoutItems().get(0));
+        Assert.assertEquals(Conditional.Type.TURNOUT_CLOSED, Conditional.Type.getTurnoutItems().get(1));
 
         // Map Conditional state comboBox items to  Condition ConditionalVvariable types
-        Assert.assertEquals(Conditional.TYPE_CONDITIONAL_TRUE, Conditional.ITEM_TO_CONDITIONAL_TEST[0]);
-        Assert.assertEquals(Conditional.TYPE_CONDITIONAL_FALSE, Conditional.ITEM_TO_CONDITIONAL_TEST[1]);
+        Assert.assertEquals(Conditional.Type.CONDITIONAL_TRUE, Conditional.Type.getConditionalItems().get(0));
+        Assert.assertEquals(Conditional.Type.CONDITIONAL_FALSE, Conditional.Type.getConditionalItems().get(1));
 
         // Map Memory state comboBox items to Light ConditionalVariable types
-        Assert.assertEquals(Conditional.TYPE_LIGHT_ON, Conditional.ITEM_TO_LIGHT_TEST[0]);
-        Assert.assertEquals(Conditional.TYPE_LIGHT_OFF, Conditional.ITEM_TO_LIGHT_TEST[1]);
+        Assert.assertEquals(Conditional.Type.LIGHT_ON, Conditional.Type.getLightItems().get(0));
+        Assert.assertEquals(Conditional.Type.LIGHT_OFF, Conditional.Type.getLightItems().get(1));
 
         // Map Warrant state comboBox items to Warrant ConditionalVariable types
-        Assert.assertEquals(Conditional.TYPE_ROUTE_FREE, Conditional.ITEM_TO_WARRANT_TEST[0]);
-        Assert.assertEquals(Conditional.TYPE_ROUTE_SET, Conditional.ITEM_TO_WARRANT_TEST[1]);
-        Assert.assertEquals(Conditional.TYPE_ROUTE_ALLOCATED, Conditional.ITEM_TO_WARRANT_TEST[2]);
-        Assert.assertEquals(Conditional.TYPE_ROUTE_OCCUPIED, Conditional.ITEM_TO_WARRANT_TEST[3]);
-        Assert.assertEquals(Conditional.TYPE_TRAIN_RUNNING, Conditional.ITEM_TO_WARRANT_TEST[4]);
+        Assert.assertEquals(Conditional.Type.ROUTE_FREE, Conditional.Type.getWarrantItems().get(0));
+        Assert.assertEquals(Conditional.Type.ROUTE_SET, Conditional.Type.getWarrantItems().get(1));
+        Assert.assertEquals(Conditional.Type.ROUTE_ALLOCATED, Conditional.Type.getWarrantItems().get(2));
+        Assert.assertEquals(Conditional.Type.ROUTE_OCCUPIED, Conditional.Type.getWarrantItems().get(3));
+        Assert.assertEquals(Conditional.Type.TRAIN_RUNNING, Conditional.Type.getWarrantItems().get(4));
 
         // Map Memory Compare Type comboBox items to Memory ConditionalVariable types
-        Assert.assertEquals(Conditional.TYPE_MEMORY_EQUALS, Conditional.ITEM_TO_MEMORY_TEST[0]);
-        Assert.assertEquals(Conditional.TYPE_MEMORY_EQUALS_INSENSITIVE, Conditional.ITEM_TO_MEMORY_TEST[1]);
-        Assert.assertEquals(Conditional.TYPE_MEMORY_COMPARE, Conditional.ITEM_TO_MEMORY_TEST[2]);
-        Assert.assertEquals(Conditional.TYPE_MEMORY_COMPARE_INSENSITIVE, Conditional.ITEM_TO_MEMORY_TEST[3]);
+        Assert.assertEquals(Conditional.Type.MEMORY_EQUALS, Conditional.Type.getMemoryItems().get(0));
+        Assert.assertEquals(Conditional.Type.MEMORY_EQUALS_INSENSITIVE, Conditional.Type.getMemoryItems().get(1));
+        Assert.assertEquals(Conditional.Type.MEMORY_COMPARE, Conditional.Type.getMemoryItems().get(2));
+        Assert.assertEquals(Conditional.Type.MEMORY_COMPARE_INSENSITIVE, Conditional.Type.getMemoryItems().get(3));
 
-        Assert.assertEquals(Conditional.TYPE_BLOCK_STATUS_EQUALS, Conditional.ITEM_TO_OBLOCK_TEST[0]);
+//        Assert.assertEquals(Conditional.TYPE_BLOCK_STATUS_EQUALS, Conditional.Type.getOBlockItems().get(0));
 
-        Assert.assertEquals(Conditional.TYPE_ENTRYEXIT_ACTIVE, Conditional.ITEM_TO_ENTRYEXIT_TEST[0]);
-        Assert.assertEquals(Conditional.TYPE_ENTRYEXIT_INACTIVE, Conditional.ITEM_TO_ENTRYEXIT_TEST[1]);
+        Assert.assertEquals(Conditional.Type.ENTRYEXIT_ACTIVE, Conditional.Type.getEntryExitItems().get(0));
+        Assert.assertEquals(Conditional.Type.ENTRYEXIT_INACTIVE, Conditional.Type.getEntryExitItems().get(1));
 
         /**
          * *************** ConditionalAction Maps *******************************
          */
+        // Map action type to the item type
+        Assert.assertEquals(Conditional.ItemType.NONE, Conditional.Action.NONE.getItemType());
+        Assert.assertEquals(Conditional.ItemType.TURNOUT, Conditional.Action.SET_TURNOUT.getItemType());
+        Assert.assertEquals(Conditional.ItemType.SIGNALHEAD, Conditional.Action.SET_SIGNAL_APPEARANCE.getItemType());
+        Assert.assertEquals(Conditional.ItemType.SIGNALHEAD, Conditional.Action.SET_SIGNAL_HELD.getItemType());
+        Assert.assertEquals(Conditional.ItemType.SIGNALHEAD, Conditional.Action.CLEAR_SIGNAL_HELD.getItemType());
+        Assert.assertEquals(Conditional.ItemType.SIGNALHEAD, Conditional.Action.SET_SIGNAL_DARK.getItemType());
+        Assert.assertEquals(Conditional.ItemType.SIGNALHEAD, Conditional.Action.SET_SIGNAL_LIT.getItemType());
+        Assert.assertEquals(Conditional.ItemType.OTHER, Conditional.Action.TRIGGER_ROUTE.getItemType());
+        Assert.assertEquals(Conditional.ItemType.SENSOR, Conditional.Action.SET_SENSOR.getItemType());
+        Assert.assertEquals(Conditional.ItemType.SENSOR, Conditional.Action.DELAYED_SENSOR.getItemType());
+        Assert.assertEquals(Conditional.ItemType.LIGHT, Conditional.Action.SET_LIGHT.getItemType());
+        Assert.assertEquals(Conditional.ItemType.MEMORY, Conditional.Action.SET_MEMORY.getItemType());
+        Assert.assertEquals(Conditional.ItemType.LOGIX, Conditional.Action.ENABLE_LOGIX.getItemType());
+        Assert.assertEquals(Conditional.ItemType.LOGIX, Conditional.Action.DISABLE_LOGIX.getItemType());
+        Assert.assertEquals(Conditional.ItemType.AUDIO, Conditional.Action.PLAY_SOUND.getItemType());
+        Assert.assertEquals(Conditional.ItemType.SCRIPT, Conditional.Action.RUN_SCRIPT.getItemType());
+        Assert.assertEquals(Conditional.ItemType.TURNOUT, Conditional.Action.DELAYED_TURNOUT.getItemType());
+        Assert.assertEquals(Conditional.ItemType.TURNOUT, Conditional.Action.LOCK_TURNOUT.getItemType());
+        Assert.assertEquals(Conditional.ItemType.SENSOR, Conditional.Action.RESET_DELAYED_SENSOR.getItemType());
+        Assert.assertEquals(Conditional.ItemType.SENSOR, Conditional.Action.CANCEL_SENSOR_TIMERS.getItemType());
+        Assert.assertEquals(Conditional.ItemType.TURNOUT, Conditional.Action.RESET_DELAYED_TURNOUT.getItemType());
+        Assert.assertEquals(Conditional.ItemType.TURNOUT, Conditional.Action.CANCEL_TURNOUT_TIMERS.getItemType());
+        Assert.assertEquals(Conditional.ItemType.CLOCK, Conditional.Action.SET_FAST_CLOCK_TIME.getItemType());
+        Assert.assertEquals(Conditional.ItemType.CLOCK, Conditional.Action.START_FAST_CLOCK.getItemType());
+        Assert.assertEquals(Conditional.ItemType.CLOCK, Conditional.Action.STOP_FAST_CLOCK.getItemType());
+        Assert.assertEquals(Conditional.ItemType.MEMORY, Conditional.Action.COPY_MEMORY.getItemType());
+        Assert.assertEquals(Conditional.ItemType.LIGHT, Conditional.Action.SET_LIGHT_INTENSITY.getItemType());
+        Assert.assertEquals(Conditional.ItemType.LIGHT, Conditional.Action.SET_LIGHT_TRANSITION_TIME.getItemType());
+        Assert.assertEquals(Conditional.ItemType.AUDIO, Conditional.Action.CONTROL_AUDIO.getItemType());
+        Assert.assertEquals(Conditional.ItemType.SCRIPT, Conditional.Action.JYTHON_COMMAND.getItemType());
+        Assert.assertEquals(Conditional.ItemType.WARRANT, Conditional.Action.ALLOCATE_WARRANT_ROUTE.getItemType());
+        Assert.assertEquals(Conditional.ItemType.WARRANT, Conditional.Action.DEALLOCATE_WARRANT_ROUTE.getItemType());
+        Assert.assertEquals(Conditional.ItemType.WARRANT, Conditional.Action.SET_ROUTE_TURNOUTS.getItemType());
+        Assert.assertEquals(Conditional.ItemType.WARRANT, Conditional.Action.AUTO_RUN_WARRANT.getItemType());
+        Assert.assertEquals(Conditional.ItemType.WARRANT, Conditional.Action.CONTROL_TRAIN.getItemType());
+        Assert.assertEquals(Conditional.ItemType.WARRANT, Conditional.Action.SET_TRAIN_ID.getItemType());
+        Assert.assertEquals(Conditional.ItemType.SIGNALMAST, Conditional.Action.SET_SIGNALMAST_ASPECT.getItemType());
+        Assert.assertEquals(Conditional.ItemType.WARRANT, Conditional.Action.THROTTLE_FACTOR.getItemType());
+        Assert.assertEquals(Conditional.ItemType.SIGNALMAST, Conditional.Action.SET_SIGNALMAST_HELD.getItemType());
+        Assert.assertEquals(Conditional.ItemType.SIGNALMAST, Conditional.Action.CLEAR_SIGNALMAST_HELD.getItemType());
+        Assert.assertEquals(Conditional.ItemType.SIGNALMAST, Conditional.Action.SET_SIGNALMAST_DARK.getItemType());
+        Assert.assertEquals(Conditional.ItemType.SIGNALMAST, Conditional.Action.SET_SIGNALMAST_LIT.getItemType());
+        Assert.assertEquals(Conditional.ItemType.OBLOCK, Conditional.Action.SET_BLOCK_ERROR.getItemType());
+        Assert.assertEquals(Conditional.ItemType.OBLOCK, Conditional.Action.CLEAR_BLOCK_ERROR.getItemType());
+        Assert.assertEquals(Conditional.ItemType.OBLOCK, Conditional.Action.DEALLOCATE_BLOCK.getItemType());
+        Assert.assertEquals(Conditional.ItemType.OBLOCK, Conditional.Action.SET_BLOCK_OUT_OF_SERVICE.getItemType());
+        Assert.assertEquals(Conditional.ItemType.OBLOCK, Conditional.Action.SET_BLOCK_IN_SERVICE.getItemType());
+        Assert.assertEquals(Conditional.ItemType.WARRANT, Conditional.Action.MANUAL_RUN_WARRANT.getItemType());
+        Assert.assertEquals(Conditional.ItemType.WARRANT, Conditional.Action.SET_TRAIN_NAME.getItemType());
+        Assert.assertEquals(Conditional.ItemType.OBLOCK, Conditional.Action.SET_BLOCK_VALUE.getItemType());
+        Assert.assertEquals(Conditional.ItemType.ENTRYEXIT, Conditional.Action.SET_NXPAIR_ENABLED.getItemType());
+        Assert.assertEquals(Conditional.ItemType.ENTRYEXIT, Conditional.Action.SET_NXPAIR_DISABLED.getItemType());
+        Assert.assertEquals(Conditional.ItemType.ENTRYEXIT, Conditional.Action.SET_NXPAIR_SEGMENT.getItemType());
+/*
         // Map action type to the item type
         Assert.assertEquals(Conditional.TYPE_NONE, Conditional.ACTION_TO_ITEM[Conditional.ACTION_NONE]);
         Assert.assertEquals(Conditional.ITEM_TYPE_TURNOUT, Conditional.ACTION_TO_ITEM[Conditional.ACTION_SET_TURNOUT]);
@@ -336,90 +351,186 @@ public class ConditionalTest {
         Assert.assertEquals(Conditional.ITEM_TYPE_ENTRYEXIT, Conditional.ACTION_TO_ITEM[Conditional.ACTION_SET_NXPAIR_ENABLED]);
         Assert.assertEquals(Conditional.ITEM_TYPE_ENTRYEXIT, Conditional.ACTION_TO_ITEM[Conditional.ACTION_SET_NXPAIR_DISABLED]);
         Assert.assertEquals(Conditional.ITEM_TYPE_ENTRYEXIT, Conditional.ACTION_TO_ITEM[Conditional.ACTION_SET_NXPAIR_SEGMENT]);
+*/
+        // Map Sensor Type comboBox items to Sensor action types
+        Assert.assertEquals(Conditional.Action.SET_SENSOR, Conditional.Action.getSensorItems().get(0));
+        Assert.assertEquals(Conditional.Action.DELAYED_SENSOR, Conditional.Action.getSensorItems().get(1));
+        Assert.assertEquals(Conditional.Action.RESET_DELAYED_SENSOR, Conditional.Action.getSensorItems().get(2));
+        Assert.assertEquals(Conditional.Action.CANCEL_SENSOR_TIMERS, Conditional.Action.getSensorItems().get(3));
 
         // Map Sensor Type comboBox items to Sensor action types
-        Assert.assertEquals(Conditional.ACTION_SET_SENSOR, Conditional.ITEM_TO_SENSOR_ACTION[0]);
-        Assert.assertEquals(Conditional.ACTION_DELAYED_SENSOR, Conditional.ITEM_TO_SENSOR_ACTION[1]);
-        Assert.assertEquals(Conditional.ACTION_RESET_DELAYED_SENSOR, Conditional.ITEM_TO_SENSOR_ACTION[2]);
-        Assert.assertEquals(Conditional.ACTION_CANCEL_SENSOR_TIMERS, Conditional.ITEM_TO_SENSOR_ACTION[3]);
+//        Assert.assertEquals(Conditional.ACTION_SET_SENSOR, Conditional.ITEM_TO_SENSOR_ACTION[0]);
+//        Assert.assertEquals(Conditional.ACTION_DELAYED_SENSOR, Conditional.ITEM_TO_SENSOR_ACTION[1]);
+//        Assert.assertEquals(Conditional.ACTION_RESET_DELAYED_SENSOR, Conditional.ITEM_TO_SENSOR_ACTION[2]);
+//        Assert.assertEquals(Conditional.ACTION_CANCEL_SENSOR_TIMERS, Conditional.ITEM_TO_SENSOR_ACTION[3]);
 
         // Map Turnout Type comboBox items to Turnout action types
-        Assert.assertEquals(Conditional.ACTION_SET_TURNOUT, Conditional.ITEM_TO_TURNOUT_ACTION[0]);
-        Assert.assertEquals(Conditional.ACTION_DELAYED_TURNOUT, Conditional.ITEM_TO_TURNOUT_ACTION[1]);
-        Assert.assertEquals(Conditional.ACTION_LOCK_TURNOUT, Conditional.ITEM_TO_TURNOUT_ACTION[2]);
-        Assert.assertEquals(Conditional.ACTION_CANCEL_TURNOUT_TIMERS, Conditional.ITEM_TO_TURNOUT_ACTION[3]);
-        Assert.assertEquals(Conditional.ACTION_RESET_DELAYED_TURNOUT, Conditional.ITEM_TO_TURNOUT_ACTION[4]);
+        Assert.assertEquals(Conditional.Action.SET_TURNOUT, Conditional.Action.getTurnoutItems().get(0));
+        Assert.assertEquals(Conditional.Action.DELAYED_TURNOUT, Conditional.Action.getTurnoutItems().get(1));
+        Assert.assertEquals(Conditional.Action.LOCK_TURNOUT, Conditional.Action.getTurnoutItems().get(2));
+        Assert.assertEquals(Conditional.Action.CANCEL_TURNOUT_TIMERS, Conditional.Action.getTurnoutItems().get(3));
+        Assert.assertEquals(Conditional.Action.RESET_DELAYED_TURNOUT, Conditional.Action.getTurnoutItems().get(4));
+
+        // Map Turnout Type comboBox items to Turnout action types
+//        Assert.assertEquals(Conditional.ACTION_SET_TURNOUT, Conditional.ITEM_TO_TURNOUT_ACTION[0]);
+//        Assert.assertEquals(Conditional.ACTION_DELAYED_TURNOUT, Conditional.ITEM_TO_TURNOUT_ACTION[1]);
+//        Assert.assertEquals(Conditional.ACTION_LOCK_TURNOUT, Conditional.ITEM_TO_TURNOUT_ACTION[2]);
+//        Assert.assertEquals(Conditional.ACTION_CANCEL_TURNOUT_TIMERS, Conditional.ITEM_TO_TURNOUT_ACTION[3]);
+//        Assert.assertEquals(Conditional.ACTION_RESET_DELAYED_TURNOUT, Conditional.ITEM_TO_TURNOUT_ACTION[4]);
 
         // Map Memory Type comboBox items to Memory action types
-        Assert.assertEquals(12, Conditional.ITEM_TO_MEMORY_ACTION[0]);
-        Assert.assertEquals(Conditional.ACTION_SET_MEMORY, Conditional.ITEM_TO_MEMORY_ACTION[0]);
-        Assert.assertEquals(26, Conditional.ITEM_TO_MEMORY_ACTION[1]);
-        Assert.assertEquals(Conditional.ACTION_COPY_MEMORY, Conditional.ITEM_TO_MEMORY_ACTION[1]);
+        Assert.assertEquals(Conditional.Action.SET_MEMORY, Conditional.Action.getMemoryItems().get(0));
+        Assert.assertEquals(Conditional.Action.COPY_MEMORY, Conditional.Action.getMemoryItems().get(1));
+
+        // Map Memory Type comboBox items to Memory action types
+//        Assert.assertEquals(12, Conditional.ITEM_TO_MEMORY_ACTION[0]);
+//        Assert.assertEquals(Conditional.ACTION_SET_MEMORY, Conditional.ITEM_TO_MEMORY_ACTION[0]);
+//        Assert.assertEquals(26, Conditional.ITEM_TO_MEMORY_ACTION[1]);
+//        Assert.assertEquals(Conditional.ACTION_COPY_MEMORY, Conditional.ITEM_TO_MEMORY_ACTION[1]);
 
         // Map Light Type comboBox items to Light action types
-        Assert.assertEquals(Conditional.ACTION_SET_LIGHT, Conditional.ITEM_TO_LIGHT_ACTION[0]);
-        Assert.assertEquals(Conditional.ACTION_SET_LIGHT_INTENSITY, Conditional.ITEM_TO_LIGHT_ACTION[1]);
-        Assert.assertEquals(Conditional.ACTION_SET_LIGHT_TRANSITION_TIME, Conditional.ITEM_TO_LIGHT_ACTION[2]);
+        Assert.assertEquals(Conditional.Action.SET_LIGHT, Conditional.Action.getLightItems().get(0));
+        Assert.assertEquals(Conditional.Action.SET_LIGHT_INTENSITY, Conditional.Action.getLightItems().get(1));
+        Assert.assertEquals(Conditional.Action.SET_LIGHT_TRANSITION_TIME, Conditional.Action.getLightItems().get(2));
+
+        // Map Light Type comboBox items to Light action types
+//        Assert.assertEquals(Conditional.ACTION_SET_LIGHT, Conditional.ITEM_TO_LIGHT_ACTION[0]);
+//        Assert.assertEquals(Conditional.ACTION_SET_LIGHT_INTENSITY, Conditional.ITEM_TO_LIGHT_ACTION[1]);
+//        Assert.assertEquals(Conditional.ACTION_SET_LIGHT_TRANSITION_TIME, Conditional.ITEM_TO_LIGHT_ACTION[2]);
 
         // Map FastClock Type comboBox items to FastClock action types
-        Assert.assertEquals(Conditional.ACTION_SET_FAST_CLOCK_TIME, Conditional.ITEM_TO_CLOCK_ACTION[0]);
-        Assert.assertEquals(Conditional.ACTION_START_FAST_CLOCK, Conditional.ITEM_TO_CLOCK_ACTION[1]);
-        Assert.assertEquals(Conditional.ACTION_STOP_FAST_CLOCK, Conditional.ITEM_TO_CLOCK_ACTION[2]);
+        Assert.assertEquals(Conditional.Action.SET_FAST_CLOCK_TIME, Conditional.Action.getClockItems().get(0));
+        Assert.assertEquals(Conditional.Action.START_FAST_CLOCK, Conditional.Action.getClockItems().get(1));
+        Assert.assertEquals(Conditional.Action.STOP_FAST_CLOCK, Conditional.Action.getClockItems().get(2));
+
+        // Map FastClock Type comboBox items to FastClock action types
+//        Assert.assertEquals(Conditional.ACTION_SET_FAST_CLOCK_TIME, Conditional.ITEM_TO_CLOCK_ACTION[0]);
+//        Assert.assertEquals(Conditional.ACTION_START_FAST_CLOCK, Conditional.ITEM_TO_CLOCK_ACTION[1]);
+//        Assert.assertEquals(Conditional.ACTION_STOP_FAST_CLOCK, Conditional.ITEM_TO_CLOCK_ACTION[2]);
 
         // Map Logix Type comboBox items to Logix action types
-        Assert.assertEquals(Conditional.ACTION_ENABLE_LOGIX, Conditional.ITEM_TO_LOGIX_ACTION[0]);
-        Assert.assertEquals(Conditional.ACTION_DISABLE_LOGIX, Conditional.ITEM_TO_LOGIX_ACTION[1]);
+        Assert.assertEquals(Conditional.Action.ENABLE_LOGIX, Conditional.Action.getLogixItems().get(0));
+        Assert.assertEquals(Conditional.Action.DISABLE_LOGIX, Conditional.Action.getLogixItems().get(1));
+
+        // Map Logix Type comboBox items to Logix action types
+//        Assert.assertEquals(Conditional.ACTION_ENABLE_LOGIX, Conditional.ITEM_TO_LOGIX_ACTION[0]);
+//        Assert.assertEquals(Conditional.ACTION_DISABLE_LOGIX, Conditional.ITEM_TO_LOGIX_ACTION[1]);
 
         // Map Warrant Type comboBox items to Warrant action types
-        Assert.assertEquals(Conditional.ACTION_ALLOCATE_WARRANT_ROUTE, Conditional.ITEM_TO_WARRANT_ACTION[0]);
-        Assert.assertEquals(Conditional.ACTION_DEALLOCATE_WARRANT_ROUTE, Conditional.ITEM_TO_WARRANT_ACTION[1]);
-        Assert.assertEquals(Conditional.ACTION_SET_ROUTE_TURNOUTS, Conditional.ITEM_TO_WARRANT_ACTION[2]);
-        Assert.assertEquals(Conditional.ACTION_AUTO_RUN_WARRANT, Conditional.ITEM_TO_WARRANT_ACTION[3]);
-        Assert.assertEquals(Conditional.ACTION_MANUAL_RUN_WARRANT, Conditional.ITEM_TO_WARRANT_ACTION[4]);
-        Assert.assertEquals(Conditional.ACTION_CONTROL_TRAIN, Conditional.ITEM_TO_WARRANT_ACTION[5]);
-        Assert.assertEquals(Conditional.ACTION_SET_TRAIN_ID, Conditional.ITEM_TO_WARRANT_ACTION[6]);
-        Assert.assertEquals(Conditional.ACTION_SET_TRAIN_NAME, Conditional.ITEM_TO_WARRANT_ACTION[7]);
-        Assert.assertEquals(Conditional.ACTION_THROTTLE_FACTOR, Conditional.ITEM_TO_WARRANT_ACTION[8]);
+        Assert.assertEquals(Conditional.Action.ALLOCATE_WARRANT_ROUTE, Conditional.Action.getWarrantItems().get(0));
+        Assert.assertEquals(Conditional.Action.DEALLOCATE_WARRANT_ROUTE, Conditional.Action.getWarrantItems().get(1));
+        Assert.assertEquals(Conditional.Action.SET_ROUTE_TURNOUTS, Conditional.Action.getWarrantItems().get(2));
+        Assert.assertEquals(Conditional.Action.AUTO_RUN_WARRANT, Conditional.Action.getWarrantItems().get(3));
+        Assert.assertEquals(Conditional.Action.MANUAL_RUN_WARRANT, Conditional.Action.getWarrantItems().get(4));
+        Assert.assertEquals(Conditional.Action.CONTROL_TRAIN, Conditional.Action.getWarrantItems().get(5));
+        Assert.assertEquals(Conditional.Action.SET_TRAIN_ID, Conditional.Action.getWarrantItems().get(6));
+        Assert.assertEquals(Conditional.Action.SET_TRAIN_NAME, Conditional.Action.getWarrantItems().get(7));
+        Assert.assertEquals(Conditional.Action.THROTTLE_FACTOR, Conditional.Action.getWarrantItems().get(8));
 
-        Assert.assertEquals(Conditional.ACTION_DEALLOCATE_BLOCK, Conditional.ITEM_TO_OBLOCK_ACTION[0]);
-        Assert.assertEquals(Conditional.ACTION_SET_BLOCK_VALUE, Conditional.ITEM_TO_OBLOCK_ACTION[1]);
-        Assert.assertEquals(Conditional.ACTION_SET_BLOCK_ERROR, Conditional.ITEM_TO_OBLOCK_ACTION[2]);
-        Assert.assertEquals(Conditional.ACTION_CLEAR_BLOCK_ERROR, Conditional.ITEM_TO_OBLOCK_ACTION[3]);
-        Assert.assertEquals(Conditional.ACTION_SET_BLOCK_OUT_OF_SERVICE, Conditional.ITEM_TO_OBLOCK_ACTION[4]);
-        Assert.assertEquals(Conditional.ACTION_SET_BLOCK_IN_SERVICE, Conditional.ITEM_TO_OBLOCK_ACTION[5]);
+        // Map Warrant Type comboBox items to Warrant action types
+//        Assert.assertEquals(Conditional.ACTION_ALLOCATE_WARRANT_ROUTE, Conditional.ITEM_TO_WARRANT_ACTION[0]);
+//        Assert.assertEquals(Conditional.ACTION_DEALLOCATE_WARRANT_ROUTE, Conditional.ITEM_TO_WARRANT_ACTION[1]);
+//        Assert.assertEquals(Conditional.ACTION_SET_ROUTE_TURNOUTS, Conditional.ITEM_TO_WARRANT_ACTION[2]);
+//        Assert.assertEquals(Conditional.ACTION_AUTO_RUN_WARRANT, Conditional.ITEM_TO_WARRANT_ACTION[3]);
+//        Assert.assertEquals(Conditional.ACTION_MANUAL_RUN_WARRANT, Conditional.ITEM_TO_WARRANT_ACTION[4]);
+//        Assert.assertEquals(Conditional.ACTION_CONTROL_TRAIN, Conditional.ITEM_TO_WARRANT_ACTION[5]);
+//        Assert.assertEquals(Conditional.ACTION_SET_TRAIN_ID, Conditional.ITEM_TO_WARRANT_ACTION[6]);
+//        Assert.assertEquals(Conditional.ACTION_SET_TRAIN_NAME, Conditional.ITEM_TO_WARRANT_ACTION[7]);
+//        Assert.assertEquals(Conditional.ACTION_THROTTLE_FACTOR, Conditional.ITEM_TO_WARRANT_ACTION[8]);
+
+        Assert.assertEquals(Conditional.Action.DEALLOCATE_BLOCK, Conditional.Action.getOBlockItems().get(0));
+        Assert.assertEquals(Conditional.Action.SET_BLOCK_VALUE, Conditional.Action.getOBlockItems().get(1));
+        Assert.assertEquals(Conditional.Action.SET_BLOCK_ERROR, Conditional.Action.getOBlockItems().get(2));
+        Assert.assertEquals(Conditional.Action.CLEAR_BLOCK_ERROR, Conditional.Action.getOBlockItems().get(3));
+        Assert.assertEquals(Conditional.Action.SET_BLOCK_OUT_OF_SERVICE, Conditional.Action.getOBlockItems().get(4));
+        Assert.assertEquals(Conditional.Action.SET_BLOCK_IN_SERVICE, Conditional.Action.getOBlockItems().get(5));
+
+//        Assert.assertEquals(Conditional.ACTION_DEALLOCATE_BLOCK, Conditional.ITEM_TO_OBLOCK_ACTION[0]);
+//        Assert.assertEquals(Conditional.ACTION_SET_BLOCK_VALUE, Conditional.ITEM_TO_OBLOCK_ACTION[1]);
+//        Assert.assertEquals(Conditional.ACTION_SET_BLOCK_ERROR, Conditional.ITEM_TO_OBLOCK_ACTION[2]);
+//        Assert.assertEquals(Conditional.ACTION_CLEAR_BLOCK_ERROR, Conditional.ITEM_TO_OBLOCK_ACTION[3]);
+//        Assert.assertEquals(Conditional.ACTION_SET_BLOCK_OUT_OF_SERVICE, Conditional.ITEM_TO_OBLOCK_ACTION[4]);
+//        Assert.assertEquals(Conditional.ACTION_SET_BLOCK_IN_SERVICE, Conditional.ITEM_TO_OBLOCK_ACTION[5]);
 
         // Map Signal Head Type comboBox items to Signal Head action types
-        Assert.assertEquals(Conditional.ACTION_SET_SIGNAL_APPEARANCE, Conditional.ITEM_TO_SIGNAL_HEAD_ACTION[0]);
-        Assert.assertEquals(Conditional.ACTION_SET_SIGNAL_HELD, Conditional.ITEM_TO_SIGNAL_HEAD_ACTION[1]);
-        Assert.assertEquals(Conditional.ACTION_CLEAR_SIGNAL_HELD, Conditional.ITEM_TO_SIGNAL_HEAD_ACTION[2]);
-        Assert.assertEquals(Conditional.ACTION_SET_SIGNAL_DARK, Conditional.ITEM_TO_SIGNAL_HEAD_ACTION[3]);
-        Assert.assertEquals(Conditional.ACTION_SET_SIGNAL_LIT, Conditional.ITEM_TO_SIGNAL_HEAD_ACTION[4]);
+        Assert.assertEquals(Conditional.Action.SET_SIGNAL_APPEARANCE, Conditional.Action.getSignalHeadItems().get(0));
+        Assert.assertEquals(Conditional.Action.SET_SIGNAL_HELD, Conditional.Action.getSignalHeadItems().get(1));
+        Assert.assertEquals(Conditional.Action.CLEAR_SIGNAL_HELD, Conditional.Action.getSignalHeadItems().get(2));
+        Assert.assertEquals(Conditional.Action.SET_SIGNAL_DARK, Conditional.Action.getSignalHeadItems().get(3));
+        Assert.assertEquals(Conditional.Action.SET_SIGNAL_LIT, Conditional.Action.getSignalHeadItems().get(4));
+
+        // Map Signal Head Type comboBox items to Signal Head action types
+//        Assert.assertEquals(Conditional.ACTION_SET_SIGNAL_APPEARANCE, Conditional.ITEM_TO_SIGNAL_HEAD_ACTION[0]);
+//        Assert.assertEquals(Conditional.ACTION_SET_SIGNAL_HELD, Conditional.ITEM_TO_SIGNAL_HEAD_ACTION[1]);
+//        Assert.assertEquals(Conditional.ACTION_CLEAR_SIGNAL_HELD, Conditional.ITEM_TO_SIGNAL_HEAD_ACTION[2]);
+//        Assert.assertEquals(Conditional.ACTION_SET_SIGNAL_DARK, Conditional.ITEM_TO_SIGNAL_HEAD_ACTION[3]);
+//        Assert.assertEquals(Conditional.ACTION_SET_SIGNAL_LIT, Conditional.ITEM_TO_SIGNAL_HEAD_ACTION[4]);
 
         // Map Signal Mast Type comboBox items to Signal Mast action types
-        Assert.assertEquals(Conditional.ACTION_SET_SIGNALMAST_ASPECT, Conditional.ITEM_TO_SIGNAL_MAST_ACTION[0]);
-        Assert.assertEquals(Conditional.ACTION_SET_SIGNALMAST_HELD, Conditional.ITEM_TO_SIGNAL_MAST_ACTION[1]);
-        Assert.assertEquals(Conditional.ACTION_CLEAR_SIGNALMAST_HELD, Conditional.ITEM_TO_SIGNAL_MAST_ACTION[2]);
-        Assert.assertEquals(Conditional.ACTION_SET_SIGNALMAST_DARK, Conditional.ITEM_TO_SIGNAL_MAST_ACTION[3]);
-        Assert.assertEquals(Conditional.ACTION_SET_SIGNALMAST_LIT, Conditional.ITEM_TO_SIGNAL_MAST_ACTION[4]);
+        Assert.assertEquals(Conditional.Action.SET_SIGNALMAST_ASPECT, Conditional.Action.getSignalMastItems().get(0));
+        Assert.assertEquals(Conditional.Action.SET_SIGNALMAST_HELD, Conditional.Action.getSignalMastItems().get(1));
+        Assert.assertEquals(Conditional.Action.CLEAR_SIGNALMAST_HELD, Conditional.Action.getSignalMastItems().get(2));
+        Assert.assertEquals(Conditional.Action.SET_SIGNALMAST_DARK, Conditional.Action.getSignalMastItems().get(3));
+        Assert.assertEquals(Conditional.Action.SET_SIGNALMAST_LIT, Conditional.Action.getSignalMastItems().get(4));
+
+        // Map Signal Mast Type comboBox items to Signal Mast action types
+//        Assert.assertEquals(Conditional.ACTION_SET_SIGNALMAST_ASPECT, Conditional.ITEM_TO_SIGNAL_MAST_ACTION[0]);
+//        Assert.assertEquals(Conditional.ACTION_SET_SIGNALMAST_HELD, Conditional.ITEM_TO_SIGNAL_MAST_ACTION[1]);
+//        Assert.assertEquals(Conditional.ACTION_CLEAR_SIGNALMAST_HELD, Conditional.ITEM_TO_SIGNAL_MAST_ACTION[2]);
+//        Assert.assertEquals(Conditional.ACTION_SET_SIGNALMAST_DARK, Conditional.ITEM_TO_SIGNAL_MAST_ACTION[3]);
+//        Assert.assertEquals(Conditional.ACTION_SET_SIGNALMAST_LIT, Conditional.ITEM_TO_SIGNAL_MAST_ACTION[4]);
 
         // Map Audio Type comboBox items to Audio action types
-        Assert.assertEquals(Conditional.ACTION_PLAY_SOUND, Conditional.ITEM_TO_AUDIO_ACTION[0]);
-        Assert.assertEquals(Conditional.ACTION_CONTROL_AUDIO, Conditional.ITEM_TO_AUDIO_ACTION[1]);
+        Assert.assertEquals(Conditional.Action.PLAY_SOUND, Conditional.Action.getAudioItems().get(0));
+        Assert.assertEquals(Conditional.Action.CONTROL_AUDIO, Conditional.Action.getAudioItems().get(1));
+
+        // Map Audio Type comboBox items to Audio action types
+//        Assert.assertEquals(Conditional.ACTION_PLAY_SOUND, Conditional.ITEM_TO_AUDIO_ACTION[0]);
+//        Assert.assertEquals(Conditional.ACTION_CONTROL_AUDIO, Conditional.ITEM_TO_AUDIO_ACTION[1]);
 
         // Map Script Type comboBox items to Script action types
-        Assert.assertEquals(Conditional.ACTION_RUN_SCRIPT, Conditional.ITEM_TO_SCRIPT_ACTION[0]);
-        Assert.assertEquals(Conditional.ACTION_JYTHON_COMMAND, Conditional.ITEM_TO_SCRIPT_ACTION[1]);
+        Assert.assertEquals(Conditional.Action.RUN_SCRIPT, Conditional.Action.getScriptItems().get(0));
+        Assert.assertEquals(Conditional.Action.JYTHON_COMMAND, Conditional.Action.getScriptItems().get(1));
+
+        // Map Script Type comboBox items to Script action types
+//        Assert.assertEquals(Conditional.ACTION_RUN_SCRIPT, Conditional.ITEM_TO_SCRIPT_ACTION[0]);
+//        Assert.assertEquals(Conditional.ACTION_JYTHON_COMMAND, Conditional.ITEM_TO_SCRIPT_ACTION[1]);
 
         // Map EntryExit Type comboBox items to EntryExit action types
-        Assert.assertEquals(Conditional.ACTION_SET_NXPAIR_ENABLED, Conditional.ITEM_TO_ENTRYEXIT_ACTION[0]);
-        Assert.assertEquals(Conditional.ACTION_SET_NXPAIR_DISABLED, Conditional.ITEM_TO_ENTRYEXIT_ACTION[1]);
-        Assert.assertEquals(Conditional.ACTION_SET_NXPAIR_SEGMENT, Conditional.ITEM_TO_ENTRYEXIT_ACTION[2]);
+        Assert.assertEquals(Conditional.Action.SET_NXPAIR_ENABLED, Conditional.Action.getEntryExitItems().get(0));
+        Assert.assertEquals(Conditional.Action.SET_NXPAIR_DISABLED, Conditional.Action.getEntryExitItems().get(1));
+        Assert.assertEquals(Conditional.Action.SET_NXPAIR_SEGMENT, Conditional.Action.getEntryExitItems().get(2));
+
+        // Map EntryExit Type comboBox items to EntryExit action types
+//        Assert.assertEquals(Conditional.ACTION_SET_NXPAIR_ENABLED, Conditional.ITEM_TO_ENTRYEXIT_ACTION[0]);
+//        Assert.assertEquals(Conditional.ACTION_SET_NXPAIR_DISABLED, Conditional.ITEM_TO_ENTRYEXIT_ACTION[1]);
+//        Assert.assertEquals(Conditional.ACTION_SET_NXPAIR_SEGMENT, Conditional.ITEM_TO_ENTRYEXIT_ACTION[2]);
 
         // Map Misc Type comboBox items to Misc action types
-        Assert.assertEquals(Conditional.ACTION_TRIGGER_ROUTE, Conditional.ITEM_TO_OTHER_ACTION[0]);
+        Assert.assertEquals(Conditional.Action.TRIGGER_ROUTE, Conditional.Action.getOtherItems().get(0));
+
+        // Map Misc Type comboBox items to Misc action types
+//        Assert.assertEquals(Conditional.ACTION_TRIGGER_ROUTE, Conditional.ITEM_TO_OTHER_ACTION[0]);
     }
-    
-    
+/*    
+    @Test
+    public void testEnums() {
+        
+        // This is a temporary test to check the new enums
+        for (Conditional.Type type : Conditional.Type.values()) {
+            Conditional.ItemType itemType = type.getItemType();
+            
+            int typeInt = type.getIntValue();
+            int itemTypeInt = type.getItemType().getIntValue();
+            
+            String message = String.format("type %s has correct itemType %s", type.name(), itemType.name());
+            
+            if (typeInt != -1) {
+                Assert.assertTrue(message, Conditional.TEST_TO_ITEM[typeInt] == itemTypeInt);
+            }
+        }
+    }
+*/    
     
     // from here down is testing infrastructure
 

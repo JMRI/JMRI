@@ -94,7 +94,7 @@ public class CbusMessage {
      * @return the node number
      */
     public static int getNodeNumber(CanMessage m) {
-        if (isEvent(m)) {
+        if (isEvent(m) && !isShort(m) ) {
             return m.getElement(1) * 256 + m.getElement(2);
         } else {
             return 0;
@@ -165,7 +165,7 @@ public class CbusMessage {
      */
     public static void setId(CanMessage m, int id) {
         if (m.isExtended()) {
-            if ((id & ~0x1ffffff) != 0) {
+            if ((id & ~0x1fffff) != 0) {
                 throw new IllegalArgumentException("invalid extended ID value: " + id);
             }
             int update = m.getHeader();
@@ -187,7 +187,7 @@ public class CbusMessage {
      */
     public static void setPri(CanMessage m, int pri) {
         if ((pri & ~0x0F) != 0) {
-            throw new IllegalArgumentException("invalid CBUS Pri value: " + pri);
+            throw new IllegalArgumentException("Invalid CBUS Priority value: " + pri);
         }
         int update = m.getHeader();
         if (m.isExtended()) {
@@ -305,7 +305,7 @@ public class CbusMessage {
      * @return the node number
      */
     public static int getNodeNumber(CanReply r) {
-        if (isEvent(r)) {
+        if (isEvent(r) && !isShort(r) ) {
             return r.getElement(1) * 256 + r.getElement(2);
         } else {
             return 0;

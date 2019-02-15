@@ -135,8 +135,8 @@ public class JsonBlockHttpService extends JsonNamedBeanHttpService {
     @Override
     public ArrayNode doGetList(String type, Locale locale) throws JsonException {
         ArrayNode root = this.mapper.createArrayNode();
-        for (String name : InstanceManager.getDefault(BlockManager.class).getSystemNameList()) {
-            root.add(this.doGet(BLOCK, name, locale));
+        for (Block block : InstanceManager.getDefault(BlockManager.class).getNamedBeanSet()) {
+            root.add(this.doGet(BLOCK, block.getSystemName(), locale));
         }
         return root;
 

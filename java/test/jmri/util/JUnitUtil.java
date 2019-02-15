@@ -136,6 +136,16 @@ public class JUnitUtil {
      */
     static boolean checkRemnantThreads =    Boolean.getBoolean("jmri.util.JUnitUtil.checkRemnantThreads"); // false unless set true
 
+    /**
+     * Check for tests that take an excessive time
+     * <p>
+     * Set from the jmri.util.JUnitUtil.checkTestDuration environment variable.
+     */
+    static boolean checkTestDuration =      Boolean.getBoolean("jmri.util.JUnitUtil.checkTestDuration"); // false unless set true
+    static long    checkTestDurationMax =   Long.getLong("jmri.util.JUnitUtil.checkTestDurationMax", 5000); // milliseconds
+
+    static long    checkTestDurationStartTime = 0;  // working value
+    
     static private int threadCount = 0;
     
     static private boolean didSetUp = false;
@@ -169,10 +179,15 @@ public class JUnitUtil {
             // ensure logging of deprecated method calls;
             // individual tests can turn off as needed
             Log4JUtil.setDeprecatedLogging(true);
-            
+ 
         } catch (Throwable e) {
             System.err.println("Could not start JUnitAppender, but test continues:\n" + e);
         }
+            
+        // reset the UnexpectedMessageFlags so that errors from a 
+        // previous test doesn't interfere with the current test.
+        JUnitAppender.resetUnexpectedMessageFlags(Level.INFO); 
+
 
         // do not set the UncaughtExceptionHandler while unit testing
         // individual tests can explicitly set it after calling this method
@@ -217,6 +232,9 @@ public class JUnitUtil {
                 if (checkSequenceDumpsStack) lastSetUpStackTrace = Thread.currentThread().getStackTrace();
             }
         }
+        
+        // checking time?
+        if (checkTestDuration) checkTestDurationStartTime = System.currentTimeMillis();
     }
     
     /**
@@ -225,6 +243,14 @@ public class JUnitUtil {
      */
     public static void tearDown() {
 
+        // checking time?
+        if (checkTestDuration) {
+            long duration = System.currentTimeMillis() - checkTestDurationStartTime;
+            if (duration > checkTestDurationMax) {
+                // test too long, log that
+                log.warn("Test in {} duration {} msec exceeded limit {}", getTestClassName(), duration, checkTestDurationMax);
+            }
+        }
         // Log and/or check the use of setUp and tearDown
         if (checkSetUpTearDownSequence || printSetUpTearDownNames) {
             lastTearDownClassName = getTestClassName();
@@ -722,7 +748,7 @@ public class JUnitUtil {
 
     public static void initDebugThrottleManager() {
         jmri.ThrottleManager m = new DebugThrottleManager();
-        InstanceManager.setThrottleManager(m);
+        InstanceManager.store(m, ThrottleManager.class);
     }
 
     public static void initDebugProgrammerManager() {

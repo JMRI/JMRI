@@ -120,9 +120,8 @@ public class TrainsByCarTypeFrame extends OperationsFrame implements java.beans.
         JMenuBar menuBar = new JMenuBar();
         JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
         toolMenu.add(
-                new PrintTrainsByCarTypesAction(Bundle.getMessage("MenuItemPrintByType"), false, this));
-        toolMenu.add(new PrintTrainsByCarTypesAction(Bundle.getMessage("MenuItemPreviewByType"), true,
-                this));
+                new PrintTrainsByCarTypesAction(Bundle.getMessage("MenuItemPrintByType"), false));
+        toolMenu.add(new PrintTrainsByCarTypesAction(Bundle.getMessage("MenuItemPreviewByType"), true));
         menuBar.add(toolMenu);
         setJMenuBar(menuBar);
         addHelpMenu("package.jmri.jmrit.operations.Operations_ModifyTrainsByCarType", true); // NOI18N

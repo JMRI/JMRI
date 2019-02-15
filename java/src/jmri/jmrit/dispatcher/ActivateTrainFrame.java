@@ -772,13 +772,10 @@ public class ActivateTrainFrame {
     }
 
     private void initializeFreeTransitsCombo(List<Transit> transitList) {
-        List<String> allTransits = _TransitManager.getSystemNameList();
         transitSelectBox.removeAllItems();
         transitBoxList.clear();
         if (transitList.isEmpty()) {
-            for (int i = 0; i < allTransits.size(); i++) {
-                String tName = allTransits.get(i);
-                Transit t = _TransitManager.getBySystemName(tName);
+            for (Transit t : _TransitManager.getNamedBeanSet()) {
                 transitList.add(t);
             }
 

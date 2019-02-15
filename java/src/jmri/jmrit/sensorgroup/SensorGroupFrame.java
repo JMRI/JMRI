@@ -59,6 +59,7 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
     JList<String> _sensorGroupList;
 
     @Override
+    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations
     public void initComponents() {
         addHelpMenu("package.jmri.jmrit.sensorgroup.SensorGroupFrame", true);
 
@@ -217,9 +218,9 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
                     sensor = (String) _sensorModel.getValueAt(i, BeanTableModel.SNAME_COLUMN);
                 }
                 variableList.add(new ConditionalVariable(false, Conditional.Operator.OR,
-                        Conditional.TYPE_SENSOR_ACTIVE, sensor, true));
+                        Conditional.Type.SENSOR_ACTIVE, sensor, true));
                 actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE,
-                        Conditional.ACTION_SET_SENSOR, sensor,
+                        Conditional.Action.SET_SENSOR, sensor,
                         Sensor.INACTIVE, ""));
                 count++;
             }
@@ -231,7 +232,7 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
         }
         Conditional c = new SensorGroupConditional(cSystemName, cUserName);
         c.setStateVariables(variableList);
-        c.setLogicType(Conditional.ALL_OR, "");
+        c.setLogicType(Conditional.AntecedentOperator.ALL_OR, "");
         c.setAction(actionList);
         logix.addConditional(cSystemName, 0);       // Update the Logix Conditional names list
         logix.addConditional(cSystemName, c);       // Update the Logix Conditional hash map
@@ -254,12 +255,11 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
         _nameField.setText(group);
         // Look for Sensor group in Route table
         RouteManager rm = InstanceManager.getDefault(jmri.RouteManager.class);
-        List<String> l = rm.getSystemNameList();
         String prefix = (namePrefix + group + nameDivider).toUpperCase();
         boolean isRoute = false;
         int setRow = 0;
-        for (int i = 0; i < l.size(); i++) {
-            String name = l.get(i);
+        for (Route r : rm.getNamedBeanSet()) {
+            String name = r.getSystemName();
             if (name.startsWith(prefix)) {
                 isRoute = true;
                 String sensor = name.substring(prefix.length());
@@ -347,13 +347,10 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
 
         // remove the old routes
         RouteManager rm = InstanceManager.getDefault(jmri.RouteManager.class);
-        List<String> l = rm.getSystemNameList();
-
-        for (int i = 0; i < l.size(); i++) {
-            String name = l.get(i);
+        for (Route r : rm.getNamedBeanSet()) {
+            String name = r.getSystemName();
             if (name.startsWith(prefix)) {
                 // OK, kill this one
-                Route r = rm.getBySystemName(l.get(i));
                 r.deActivateRoute();
                 rm.deleteRoute(r);
             }
