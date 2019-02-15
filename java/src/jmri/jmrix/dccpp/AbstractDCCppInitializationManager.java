@@ -69,7 +69,7 @@ abstract public class AbstractDCCppInitializationManager {
             
             initTimer = setupInitTimer();
             
-            // Register as an XPressNet Listener
+            // Register as an DCCppListener Listener
             systemMemo.getDCCppTrafficController().addDCCppListener(DCCppInterface.CS_INFO, this);
             
             //Send Information request to the Base Station

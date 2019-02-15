@@ -690,7 +690,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     // Helper methods for Program Replies
 
     public String getCallbackNumString() {
-        if (this.isProgramReply()) {
+        if (this.isProgramReply() || isProgramBitReply() ) {
             return(this.getValueString(1));
         } else {
             log.error("ProgramReply Parser called on non-ProgramReply message type {}", this.getOpCodeChar());
@@ -699,7 +699,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     }
 
     public int getCallbackNumInt() {
-        if (this.isProgramReply()) {
+        if (this.isProgramReply() || isProgramBitReply() ) {
             return(this.getValueInt(1));
         } else {
             log.error("ProgramReply Parser called on non-ProgramReply message type {}", this.getOpCodeChar());
@@ -708,7 +708,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     }
 
     public String getCallbackSubString() {
-        if (this.isProgramReply()) {
+        if (this.isProgramReply() || isProgramBitReply() ) {
             return(this.getValueString(2));
         } else {
             log.error("ProgramReply Parser called on non-ProgramReply message type {}", this.getOpCodeChar());
@@ -717,7 +717,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     }
 
     public int getCallbackSubInt() {
-        if (this.isProgramReply()) {
+        if (this.isProgramReply() || isProgramBitReply() ) {
             return(this.getValueInt(2));
         } else {
             log.error("ProgramReply Parser called on non-ProgramReply message type {}", this.getOpCodeChar());
@@ -726,7 +726,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     }
 
     public String getCVString() {
-        if (this.isProgramReply()) {
+        if (this.isProgramReply() || isProgramBitReply() ) {
             return(this.getValueString(3));
         } else {
             log.error("ProgramReply Parser called on non-ProgramReply message type {}", this.getOpCodeChar());
@@ -735,7 +735,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     }
 
     public int getCVInt() {
-        if (this.isProgramReply()) {
+        if (this.isProgramReply() || isProgramBitReply() ) {
             return(this.getValueInt(3));
         } else {
             log.error("ProgramReply Parser called on non-ProgramReply message type {}", this.getOpCodeChar());
@@ -762,7 +762,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     }
 
     public String getReadValueString() {
-        if (this.isProgramReply()) {
+        if (this.isProgramReply() || isProgramBitReply() ) {
             if (this.matches(DCCppConstants.PROGRAM_BIT_REPLY_REGEX)) {
                 return(this.getValueString(5));
             } else {
@@ -1127,84 +1127,6 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
             return(true);
         } else {
             return(false);
-        }
-    }
-
-    // decode messages of a particular form
-    /*
-     * The next group of routines are used by Feedback and/or turnout
-     * control code.  These are used in multiple places within the code,
-     * so they appear here.
-     */
-
-    // NOTE: Methods below here are holdovers from XpressNet implementation
-    // They should be removed when/if possible.
-
-    /**
-     * Is this a feedback response message?
-     * @return true for feedback response
-     */
-    public boolean isFeedbackMessage() {
-        //return (this.getOpCodeChar() == XNetConstants.ACC_INFO_RESPONSE);
-        return false;
-    }
-
-    /**
-     * Is this a feedback broadcast message?
-     * @return true for feedback broadcast
-     */
-    public boolean isFeedbackBroadcastMessage() {
-        return(this.isTurnoutReply());
-    }
-
-    /**
-     * <p>
-     * Extract the feedback message type from a feedback message this is the
-     * middle two bits of the upper byte of the second data byte.
-     * </p>
-     *
-     * @return message type, values are:
-     * <ul>
-     * <li>0 for a turnout with no feedback</li>
-     * <li>1 for a turnout with feedback</li>
-     * <li>2 for a feedback encoder</li>
-     * <li>3 is reserved by Lenz for future use.</li>
-     * </ul>
-     */
-    public int getFeedbackMessageType() {
-        if (this.isFeedbackMessage()) {
-            int a2 = this.getElement(2);
-            return ((a2 & 0x60) / 32);
-        } else {
-            return -1;
-        }
-    }
-
-    /**
-     * <p>
-     * Extract the feedback message type from the data byte of associated with
-     * the specified address byte specified by startByte.
-     * </p>
-     * <p>
-     * The return value is the middle two bits of the upper byte of the data
-     * byte of an address byte/data byte pair.
-     * </p>
-     *
-     * @param startByte The address byte for this address byte data byte pair.
-     * @return message type, values are:
-     * <ul>
-     * <li>0 for a turnout with no feedback</li>
-     * <li>1 for a turnout with feedback</li>
-     * <li>2 for a feedback encoder</li>
-     * <li>3 is reserved by Lenz (?) for future use.</li>
-     * </ul>
-     */
-    public int getFeedbackMessageType(int startByte) {
-        if (this.isFeedbackBroadcastMessage()) {
-            int a2 = this.getElement(startByte + 1);
-            return ((a2 & 0x60) / 32);
-        } else {
-            return -1;
         }
     }
 

@@ -59,6 +59,11 @@ public abstract class AbstractIdTag extends AbstractNamedBean implements IdTag,R
         }
     }
 
+    /**
+     * The IDTag version of toReportString returns a string consisting
+     * of the user name (if defined) or Tag ID followed by the associated
+     * list of property values.
+     */
     @Override
     public String toReportString() {
         String userName = getUserName();

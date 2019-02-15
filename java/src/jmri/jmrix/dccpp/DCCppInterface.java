@@ -97,7 +97,7 @@ public interface DCCppInterface {
     public static final int PROGRAMMING = 4;
 
     /**
-     * Mask value to request notification of XPressNet FeedBack (i.e. sensor)
+     * Mask value to request notification of FeedBack (i.e. sensor)
      * related messages
      */
     public static final int FEEDBACK = 8;
