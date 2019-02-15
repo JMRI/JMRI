@@ -47,7 +47,7 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li></li>
+                <li>"PR3 Standalone Programmer" mode has been updated so that only one LocoNet menu will be displayed, instead of displaying two menus.</li>
             </ul>
 
         <h4>Maple</h4>
@@ -100,7 +100,7 @@
 
         <h4>Roco z21/Z21</h4>
             <ul>
-                <li></li>
+                <li>Fixed Delay in throttle message processing</li>
             </ul>
 
         <h4>Secsi</h4>
