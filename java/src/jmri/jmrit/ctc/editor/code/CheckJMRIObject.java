@@ -66,9 +66,7 @@ public class CheckJMRIObject {
     
 //  Quick and dirty routine for signals only:    
     public boolean checkSignal(String signalName) {
-        if (SIGNAL_HEAD_MANAGER.getSignalHead(signalName) != null) return true; // Try BOTH:
-        if (SIGNAL_MAST_MANAGER.getSignalMast(signalName) != null) return true;
-        return false;
+        return lowLevelCheck(OBJECT_TYPE.SIGNAL, signalName);
     }
     
 //  NOTE below on function prefix naming conventions:
