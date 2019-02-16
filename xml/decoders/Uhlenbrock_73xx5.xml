@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- Copyright (C) JMRI 2005 All rights reserved -->
+<!-- Copyright (C) JMRI 2019 All rights reserved -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -12,12 +12,37 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-    <version author="Egbert Broerse" version="1" lastUpdated="20190202"/>
-    <!-- Version 1 - Copied and adapted from Uhlenbrock_76560.xml -->
+    <version author="Egbert Broerse" version="1" lastUpdated="20190215"/>
+    <!-- Version 1 - For new 2017-18 decoders. Copied and adapted from Uhlenbrock_76560.xml -->
     <!-- WARNING: output names fully linked to function mapping include file - do not change independently -->
     <decoder>
         <family name="IntelliDrive2" mfg="Uhlenbrock Elektronik" comment="Decoders not sorted (necessarily) in numerical order"><!-- to be checked by hardware owner -->
-            <model model="73105" numOuts="12" numFns="12" maxMotorCurrent="1.2A" formFactor="N" connector="Next18" productID="73105" comment="IntelliDrive2 Mini-Lokdecoder and RailCom(R) (Plus)">
+            <model model="73105" numOuts="4" numFns="14" maxMotorCurrent="0.8A" formFactor="N" connector="Next18" productID="73105" comment="IntelliDrive2 Mini-Lokdecoder and RailCom(R) (Plus)">
+                <output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
+                <output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>
+                <output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="4" label=". A2 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="Shunting" label="mode"/>
+                <output name="Start/brake" label="inertia"/>
+                <size length="14.7" width="8.6" height="2.9" units="mm"/>
+            </model>
+            <model model="73115" numOuts="2" numFns="14" maxMotorCurrent="0.8A" formFactor="HO" connector="NEM651" productID="73115" comment="IntelliDrive2 Mini-Lokdecoder and RailCom(R) (Plus)">
+                <output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
+                <output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>
+                <output name="Shunting" label="mode"/>
+                <output name="Start/brake" label="inertia"/>
+                <size length="9.5" width="7.8" height="2.4" units="mm"/>
+            </model>
+            <model model="73145" numOuts="4" numFns="14" maxMotorCurrent="0.8A" formFactor="HO" connector="PluX12" productID="73145" comment="IntelliDrive2 Mini-Lokdecoder and RailCom(R) (Plus)">
+                <output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
+                <output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>
+                <output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="4" label=". A2 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="Shunting" label="mode"/>
+                <output name="Start/brake" label="inertia"/>
+                <size length="15" width="8.6" height="3.2" units="mm"/>
+            </model>
+            <model model="73235" numOuts="10" numFns="14" maxMotorCurrent="1.2A" formFactor="HO" connector="Next18" productID="73235" comment="IntelliDrive2 Lokdecoder and RailCom(R) (Plus)">
                 <output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
                 <output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>
                 <output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA"/>
@@ -32,18 +57,7 @@
                 <output name="Start/brake" label="inertia"/>
                 <size length="30.2" width="16" height="3.8" units="mm"/>
             </model>
-            <model model="73235" numOuts="8" numFns="12" maxMotorCurrent="0.8A" formFactor="HO" connector="Next18" productID="73235" comment="IntelliDrive2 Lokdecoder and RailCom(R) (Plus)">
-                <output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
-                <output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>
-                <output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA"/>
-                <output name="4" label=". A2 ." connection="plug" maxcurrent="400 mA"/>
-                <output name="5" label=". A3 ." connection="plug" maxcurrent="400 mA"/>
-                <output name="6" label=". A4 ." connection="plug" maxcurrent="400 mA"/>
-                <output name="Shunting" label="mode"/>
-                <output name="Start/brake" label="inertia"/>
-                <size length="14.7" width="8.6" height="2.9" units="mm"/>
-            </model>
-            <model model="73405" numOuts="6" numFns="12" maxMotorCurrent="0.7A" formFactor="N" connector="Wires" productID="73405" comment="IntelliDrive2 Mini-Lokdecoder and RailCom(R) (Plus)">
+            <model model="73405" numOuts="4" numFns="14" maxMotorCurrent="0.7A" formFactor="N" connector="Wires" productID="73405" comment="IntelliDrive2 Mini-Lokdecoder and RailCom(R) (Plus)">
                 <output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
                 <output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>
                 <output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA"/>
@@ -52,14 +66,16 @@
                 <output name="Start/brake" label="inertia"/>
                 <size length="9.5" width="7.8" height="2.4" units="mm"/>
             </model>
-            <model model="73115" numOuts="4" numFns="12" maxMotorCurrent="0.8A" formFactor="HO" connector="NEM651" productID="73115" comment="IntelliDrive2 Mini-Lokdecoder and RailCom(R) (Plus)">
+            <model model="73415" numOuts="4" numFns="14" maxMotorCurrent="0.7A" formFactor="N" connector="NEM651" productID="73415" comment="IntelliDrive2 Mini-Lokdecoder and RailCom(R) (Plus)">
                 <output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
                 <output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>
+                <output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="4" label=". A2 ." connection="plug" maxcurrent="400 mA"/>
                 <output name="Shunting" label="mode"/>
                 <output name="Start/brake" label="inertia"/>
                 <size length="9.5" width="7.8" height="2.4" units="mm"/>
             </model>
-            <model model="PIKO41RH2400" numOuts="12" numFns="12" maxMotorCurrent="1.2A" formFactor="N" connector="Next18" productID="PIKO41RH2400" comment="Piko SmartDecoder 4.1 Sound Dieselloco Rh2400 Next18 plug and RailCom(R) (Plus)">
+            <model model="PIKO41RH2400" numOuts="10" numFns="14" maxMotorCurrent="1.2A" formFactor="N" connector="Next18" productID="PIKO41RH2400" comment="Piko SmartDecoder 4.1 Sound Dieselloco Rh2400 Next18 plug and RailCom(R) (Plus)">
                 <output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
                 <output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>
                 <output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA"/>
@@ -94,16 +110,9 @@
                 <label xml:lang="de">Decoder Version: </label>
                 <label xml:lang="nl">Versie van decoder: </label>
             </variable>
-            <variable item="Manufacturer" CV="8" readOnly="yes" default="162" include="PIKO41RH2400"><!-- Piko -->
+            <variable item="Manufacturer" CV="8" readOnly="yes" default="85"><!-- Uhlenbrock -->
                 <decVal/>
-                <label>Manufacturer ID: </label>
-                <label xml:lang="it">ID Costruttore: </label>
-                <label xml:lang="fr">ID constructeur: </label>
-                <label xml:lang="de">Hersteller ID: </label>
-                <label xml:lang="nl">Fabrikant-ID: </label>
-            </variable>
-            <variable item="Manufacturer" CV="8" readOnly="yes" default="85" exclude="PIKO41RH2400"><!-- Uhlenbrock -->
-                <decVal/>
+                <defaultItem default="162" include="PIKO41RH2400"/><!-- Piko -->
                 <label>Manufacturer ID: </label>
                 <label xml:lang="it">ID Costruttore: </label>
                 <label xml:lang="fr">ID constructeur: </label>
@@ -167,10 +176,8 @@
                         <choice xml:lang="de">In entweder Richtung</choice>
                     </enumChoice>
                 </enumVal>
-                <label>ABC Braking</label>
-                <label xml:lang="it">Fermata ABC</label>
-                <label xml:lang="cs">Směrově ABC</label>
-                <label xml:lang="de">ABC Bremsen</label>
+                <label>ABC Braking Setup</label>
+                <label xml:lang="de">ABC Bremseinstellung</label>
                 <tooltip>Brake on asymmetrical DCC detect</tooltip>
                 <tooltip xml:lang="de">Bremskonfiguration mittels asymmetrischer DCC-Digitalspannung</tooltip>
             </variable>
@@ -231,6 +238,22 @@
             <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv31.32CvBanks.xml"/>
             <!-- CVs 33-46 function mapping -->
             <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/functionmap7outputs.xml"/>
+            <!--Motorola addresses - read only-->
+            <variable item="Motorola 1" CV="47" readOnly="yes" default="12">
+                <decVal/>
+                <label>Motorola 1st Trinary Address</label>
+                <label xml:lang="de">Motorola 1. trinäre adresse</label>
+            </variable>
+            <variable item="Motorola 2" CV="48" readOnly="yes">
+                <decVal/>
+                <label>Motorola 2nd Trinary Address</label>
+                <label xml:lang="de">Motorola 2. trinäre adresse</label>
+            </variable>
+            <variable item="Motorola 3" CV="49" readOnly="yes">
+                <decVal/>
+                <label>Motorola 3rd Trinary Address</label>
+                <label xml:lang="de">Motorola 3. trinäre adresse</label>
+            </variable>
             <!-- CV50-51 decoder configuration -->
             <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv50.51config.xml"/>
             <!-- CVs 53-59 TODO -->
@@ -260,7 +283,6 @@
                 <label xml:lang="de">Kurzschlussüberwachung Motorausgang</label>
                 <label xml:lang="nl">Kortsluitbeveiliging motoruitgang</label>
             </variable>
-
             <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv64.65registers.xml"/><!-- Piko -->
             <xi:include href="http://jmri.org/xml/decoders/nmra/fwdTrim.xml"/><!-- CV66 -->
             <xi:include href="http://jmri.org/xml/decoders/nmra/revTrim.xml"/><!-- CV95 -->
@@ -270,15 +292,15 @@
                 <label>Advanced Function Mapping</label>
                 <label xml:lang="de">Art des Function Mappings</label>
             </variable>
-            <variable item="ABC Braking" CV="97" default="8">
+            <variable item="ABC Braking Value" CV="97" default="8">
                 <decVal/>
-                <label>ABC voltage detection threshold</label>
+                <label>ABC detection threshold</label>
                 <label xml:lang="de">ABC-Modus „Empfindlichkeit”</label>
                 <label xml:lang="nl">ABC Remdrempel</label>
                 <tooltip>Voltage drop in Diode block = CV-Wert * 0.12 Volts</tooltip>
                 <tooltip xml:lang="de">Spannungsdifferenz für Diodenstrecke ist ca. CV-Wert * 0,12V</tooltip>
             </variable>
-            <variable item="ABC Slow Speed" CV="97" default="8">
+            <variable item="ABC Slow Speed" CV="98" default="30">
                 <decVal/>
                 <label>ABC mode reduced speed</label>
                 <label xml:lang="de">ABC Modus „Langsamfahrt”</label>
@@ -287,7 +309,134 @@
                 <tooltip>Speed in ABC Slow block</tooltip>
                 <tooltip xml:lang="de">Geschwindigkeit in der ABC Langsamfahrstrecke</tooltip>
             </variable>
+
             <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv107.108indepOutputs.xml"/>
+            <variable item="Fn Map Shift F1" CV="100" default="0" mask="XXXXXXXV">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            </variable>
+            <variable item="Fn Map Shift F2" CV="100" default="0" mask="XXXXXXVX">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            </variable>
+            <variable item="Fn Map Shift F3" CV="100" default="0" mask="XXXXXVXX">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            </variable>
+            <variable item="Fn Map Shift F4" CV="100" default="0" mask="XXXXVXXX">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            </variable>
+            <variable item="Fn Map Shift F0f" CV="100" default="0" mask="XXXVXXXX">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            </variable>
+            <variable item="Fn Map Shift F0r" CV="100" default="0" mask="XXVXXXXX">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            </variable>
+            <variable item="Fn Map Shift F5" CV="101" default="0" mask="XXXXXXXV">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            </variable>
+            <variable item="Fn Map Shift F6" CV="101" default="0" mask="XXXXXXVX">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            </variable>
+            <variable item="Fn Map Shift F7" CV="101" default="0" mask="XXXXXVXX">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            </variable>
+            <variable item="Fn Map Shift F8" CV="101" default="0" mask="XXXXVXXX">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            </variable>
+            <variable item="Fn Map Shift F9" CV="101" default="0" mask="XXXVXXXX">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            </variable>
+            <variable item="Fn Map Shift F10" CV="101" default="0" mask="XXVXXXXX">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            </variable>
+            <variable item="Fn Map Shift F11" CV="101" default="0" mask="XVXXXXXX">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            </variable>
+            <variable item="Fn Map Shift F12" CV="101" default="0" mask="VXXXXXXX">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+            </variable>
+            <variable item="Function Map Option 1" CV="101">
+                <decVal/>
+                <label>Set Fn Mapping Shift on tab Uhlenbrock to map F0-F12 to A2-A7</label>
+                <tooltip>instead of to A0-A4 (don't edit here)</tooltip>
+            </variable>
+
+            <variable item="Analog Control option 1" CV="102" default="2" mask="XXXXXXVV">
+                <enumVal>
+                    <enumChoice choice="Inactive">
+                        <choice>Inactive</choice>
+                        <choice xml:lang="it">Non si ferma</choice>
+                        <choice xml:lang="cs">Nezastavuje</choice>
+                        <choice xml:lang="de">Keine Regelung</choice>
+                    </enumChoice>
+                    <enumChoice choice="Max CV106">
+                        <choice>Max. speed from CV106</choice>
+                        <choice xml:lang="de">max. Geschw. wie CV106</choice>
+                    </enumChoice>
+                    <enumChoice choice="Compare voltage to CV103-104">
+                        <choice>Compare voltage to CV103-104</choice>
+                        <choice xml:lang="de">Trafospng. messen und CV103-104</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>Analog Operation Max Speed</label>
+                <label xml:lang="de">Analogbetrieb Max Speed</label>
+                <tooltip>uses CVs 103-106 below</tooltip>
+                <tooltip xml:lang="de">benutzt unterstehende CVs 103-106</tooltip>
+            </variable>
+            <variable item="Analog Control option 2" CV="102" default="3" mask="XXXXVVXX">
+                <enumVal>
+                    <enumChoice choice="Control Off">
+                        <choice>Inactive</choice>
+                        <choice xml:lang="it">Non si ferma</choice>
+                        <choice xml:lang="cs">Nezastavuje</choice>
+                        <choice xml:lang="de">Keine Regelung</choice>
+                    </enumChoice>
+                    <enumChoice choice="PID Control" value="1">
+                        <choice>PID Control</choice>
+                        <choice xml:lang="de">PID Regler</choice>
+                    </enumChoice>
+                    <enumChoice choice="SX Control" value="3">
+                        <choice>SX Control</choice>
+                        <choice xml:lang="de">SX-Regler</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>Analog Operation Control</label>
+                <label xml:lang="de">Analogbetrieb Regelung</label>
+                <tooltip>uses CVs 103-106 below</tooltip>
+                <tooltip xml:lang="de">benutzt unterstehende CVs 103-106</tooltip>
+            </variable>
+            <variable CV="102" item="Analog Control check 1" default="1" mask="XXXVXXXX">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label>Dynamic repeat rate</label>
+                <label xml:lang="de">dynamische Wiederholrate</label>
+            </variable>
+            <variable item="Analog Control slider 1" CV="103" default="150">
+                <decVal/>
+                <label>Minimum Voltage</label>
+                <label xml:lang="de">Mindest Trafospannung</label>
+                <tooltip>for V = 0</tooltip>
+                <tooltip xml:lang="de">für Vsoll = 0</tooltip>
+            </variable>
+            <variable item="Analog Control slider 2" CV="104" default="180">
+                <decVal/>
+                <label>Maximum Voltage</label>
+                <label xml:lang="de">Maximale Trafospannung</label>
+                <tooltip>for V = Vmax</tooltip>
+                <tooltip xml:lang="de">für Vsoll = Vmax</tooltip>
+            </variable>
+            <variable item="Analog Control slider 3" CV="105" default="30">
+                <decVal/>
+                <label>Hysteresis</label>
+                <label xml:lang="de">Hysterese</label>
+                <tooltip>in analog mode</tooltip>
+                <tooltip xml:lang="de">in Analogmudus</tooltip>
+            </variable>
+            <variable item="Analog Control slider 4" CV="106" default="200">
+                <decVal/>
+                <label>Vmax</label>
+                <label xml:lang="de">Vmax</label>
+                <tooltip>in analog mode</tooltip>
+                <tooltip xml:lang="de">in Analogmudus</tooltip>
+            </variable>
+            <!-- TODO CVs 103-106 -->
             <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv115lissy.xml"/>
             <!-- CVs 116-118 (CVs 116-123 for Piko) -->
             <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/optionVars7outputs.xml"/>
@@ -295,7 +444,179 @@
             <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv130.134smoke.xml"/>
             <!-- SmartSound 4.1 variables, CVs 109 - 111 are on Lights tab -->
             <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/soundVars7outputs.xml"/>
-            <!-- TODO CVs 135-190 -->
+            <!-- TODO CVs 135-149 -->
+            <!-- CVs 150-157 are in optionVars7outputs.xml include -->
+            <!-- CV159 pass Function Key to SUSI-->
+            <variable item="SUSI F22" CV="159" mask="XXXXXXXV" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label>Pass F Key to SUSI</label>
+            </variable>
+            <variable item="SUSI F23" CV="159" mask="XXXXXXVX" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+            </variable>
+            <variable item="SUSI F24" CV="159" mask="XXXXXVXX" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+            </variable>
+            <variable item="SUSI F25" CV="159" mask="XXXXVXXX" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+            </variable>
+            <variable item="SUSI F26" CV="159" mask="XXXVXXXX" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+            </variable>
+            <variable item="SUSI F27" CV="159" mask="XXVXXXXX" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+            </variable>
+            <variable item="SUSI F28" CV="159" mask="XVXXXXXX" default="0">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+            </variable>
+            <!-- TODO CVs 160-168 -->
+            <variable item="PWM Modulation on A0" CV="170" mask="XVVVVVVV">
+                <decVal max="8"/>
+                <label>PWM Modulation on A0</label>
+                <label xml:lang="de">PWM-Verlauf auf A0</label>
+                <label xml:lang="nl">PWM Modulatie op A0</label>
+                <tooltip>Select one of the 8 available pulse modulations to be used on output A0</tooltip>
+                <tooltip xml:lang="de">Zuordnung eines der 8 PWM-Verläufe für Lichtausgang A0</tooltip>
+            </variable>
+            <variable item="PWM Cross on A0" CV="170" mask="VXXXXXXX">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label>On CROSS</label>
+                <label xml:lang="de">mit CROSS</label>
+                <label xml:lang="nl">met CROSS</label>
+                <tooltip>only when CROSS-bit is set</tooltip>
+                <tooltip xml:lang="de">nur aktif wenn CROSS-Ausgabebit gesetzt</tooltip>
+            </variable>
+            <variable item="PWM Modulation on A1" CV="171" mask="XVVVVVVV" minOut="3">
+                <decVal max="8"/>
+                <label>PWM Modulation on A1</label>
+                <label xml:lang="de">PWM-Verlauf auf A1</label>
+                <label xml:lang="nl">PWM Modulatie op A1</label>
+                <tooltip>Select one of the 8 available pulse modulations to be used on output A1</tooltip>
+                <tooltip xml:lang="de">Zuordnung eines der 8 PWM-Verläufe für Lichtausgang A1</tooltip>
+            </variable>
+            <variable item="PWM Cross on A1" CV="171" mask="VXXXXXXX" minOut="3">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label>On CROSS</label>
+                <label xml:lang="de">mit CROSS</label>
+                <label xml:lang="nl">met CROSS</label>
+                <tooltip>only when CROSS-bit is set</tooltip>
+                <tooltip xml:lang="de">nur aktif wenn CROSS-Ausgabebit gesetzt</tooltip>
+            </variable>
+            <variable item="PWM Modulation on A2" CV="172" mask="XVVVVVVV" minOut="4">
+                <decVal max="8"/>
+                <label>PWM Modulation on A2</label>
+                <label xml:lang="de">PWM-Verlauf auf A2</label>
+                <label xml:lang="nl">PWM Modulatie op A2</label>
+                <tooltip>Select one of the 8 available pulse modulations to be used on output A2</tooltip>
+                <tooltip xml:lang="de">Zuordnung eines der 8 PWM-Verläufe für Lichtausgang A2</tooltip>
+            </variable>
+            <variable item="PWM Cross on A2" CV="172" mask="VXXXXXXX" minOut="4">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label>On CROSS</label>
+                <label xml:lang="de">mit CROSS</label>
+                <label xml:lang="nl">met CROSS</label>
+                <tooltip>only when CROSS-bit is set</tooltip>
+                <tooltip xml:lang="de">nur aktif wenn CROSS-Ausgabebit gesetzt</tooltip>
+            </variable>
+            <variable item="PWM Modulation on A3" CV="173" mask="XVVVVVVV" minOut="5">
+                <decVal max="8"/>
+                <label>PWM Modulation on A3</label>
+                <label xml:lang="de">PWM-Verlauf auf A3</label>
+                <label xml:lang="nl">PWM Modulatie op A3</label>
+                <tooltip>Select one of the 8 available pulse modulations to be used on output A3</tooltip>
+                <tooltip xml:lang="de">Zuordnung eines der 8 PWM-Verläufe für Lichtausgang A3</tooltip>
+            </variable>
+            <variable item="PWM Cross on A3" CV="173" mask="VXXXXXXX" minOut="5">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label>On CROSS</label>
+                <label xml:lang="de">mit CROSS</label>
+                <label xml:lang="nl">met CROSS</label>
+                <tooltip>only when CROSS-bit is set</tooltip>
+                <tooltip xml:lang="de">nur aktif wenn CROSS-Ausgabebit gesetzt</tooltip>
+            </variable>
+            <variable item="PWM Modulation on A4" CV="174" mask="XVVVVVVV" minOut="6">
+                <decVal max="8"/>
+                <label>PWM Modulation on A4</label>
+                <label xml:lang="de">PWM-Verlauf auf A4</label>
+                <label xml:lang="nl">PWM Modulatie op A4</label>
+                <tooltip>Select one of the 8 available pulse modulations to be used on output A4</tooltip>
+                <tooltip xml:lang="de">Zuordnung eines der 8 PWM-Verläufe für Lichtausgang A4</tooltip>
+            </variable>
+            <variable item="PWM Cross on A4" CV="174" mask="VXXXXXXX" minOut="6">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label>On CROSS</label>
+                <label xml:lang="de">mit CROSS</label>
+                <label xml:lang="nl">met CROSS</label>
+                <tooltip>only when CROSS-bit is set</tooltip>
+                <tooltip xml:lang="de">nur aktif wenn CROSS-Ausgabebit gesetzt</tooltip>
+            </variable>
+            <variable item="PWM Modulation on A5" CV="175" mask="XVVVVVVV" minOut="7">
+                <decVal max="8"/>
+                <label>PWM Modulation on A5</label>
+                <label xml:lang="de">PWM-Verlauf auf A5</label>
+                <label xml:lang="nl">PWM Modulatie op A5</label>
+                <tooltip>Select one of the 8 available pulse modulations to be used on output A5</tooltip>
+                <tooltip xml:lang="de">Zuordnung eines der 8 PWM-Verläufe für Lichtausgang A5</tooltip>
+            </variable>
+            <variable item="PWM Cross on A5" CV="175" mask="VXXXXXXX" minOut="7">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label>On CROSS</label>
+                <label xml:lang="de">mit CROSS</label>
+                <label xml:lang="nl">met CROSS</label>
+                <tooltip>only when CROSS-bit is set</tooltip>
+                <tooltip xml:lang="de">nur aktif wenn CROSS-Ausgabebit gesetzt</tooltip>
+            </variable>
+            <variable item="PWM Modulation on A6" CV="176" mask="XVVVVVVV" minOut="8">
+                <decVal max="8"/>
+                <label>PWM Modulation on A6</label>
+                <label xml:lang="de">PWM-Verlauf auf A6</label>
+                <label xml:lang="nl">PWM Modulatie op A6</label>
+                <tooltip>Select one of the 8 available pulse modulations to be used on output A6</tooltip>
+                <tooltip xml:lang="de">Zuordnung eines der 8 PWM-Verläufe für Lichtausgang A6</tooltip>
+            </variable>
+            <variable item="PWM Cross on A6" CV="176" mask="VXXXXXXX" minOut="8">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label>On CROSS</label>
+                <label xml:lang="de">mit CROSS</label>
+                <label xml:lang="nl">met CROSS</label>
+                <tooltip>only when CROSS-bit is set</tooltip>
+                <tooltip xml:lang="de">nur aktif wenn CROSS-Ausgabebit gesetzt</tooltip>
+            </variable>
+            <variable item="PWM Modulation on A7" CV="177" mask="XVVVVVVV" minOut="9">
+                <decVal max="8"/>
+                <label>PWM Modulation on A7</label>
+                <label xml:lang="de">PWM-Verlauf auf A7</label>
+                <label xml:lang="nl">PWM Modulatie op A7</label>
+                <tooltip>Select one of the 8 available pulse modulations to be used on output A7</tooltip>
+                <tooltip xml:lang="de">Zuordnung eines der 8 PWM-Verläufe für Lichtausgang A7</tooltip>
+            </variable>
+            <variable item="PWM Cross on A7" CV="177" mask="VXXXXXXX" minOut="9">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label>On CROSS</label>
+                <label xml:lang="de">mit CROSS</label>
+                <label xml:lang="nl">met CROSS</label>
+                <tooltip>only when CROSS-bit is set</tooltip>
+                <tooltip xml:lang="de">nur aktif wenn CROSS-Ausgabebit gesetzt</tooltip>
+            </variable>
+            <variable item="PWM Duration" CV="178" default="15">
+                <decVal/>
+                <label>PWM Duration</label>
+                <label xml:lang="de">PWM Periodendauer</label>
+                <label xml:lang="nl">PWM-duur</label>
+                <tooltip>Period display duration (value * 64 Milliseconds)</tooltip>
+                <tooltip xml:lang="de">Periodendauer der Wiedergabe (Wert * 64 ms)</tooltip>
+            </variable>
+
+            <variable item="PWM Wait" CV="180">
+                <decVal/>
+                <label>PWM Wait</label>
+                <label xml:lang="de">PWM Haltezeit</label>
+                <label xml:lang="nl">PWM-pauze</label>
+                <tooltip>Wait time after CROSS-bit off (value * 100 Milliseconds)</tooltip>
+                <tooltip xml:lang="de">Haltezeit nach dem CROSS-Ausgabebit aus (Wert * 100 ms)</tooltip>
+            </variable>
+
+            <!-- TODO CVs 178-190 -->
             <variable item="Motor Management 1" CV="200" default="10">
                 <decVal/>
                 <label>Minimum Speed Step</label>
@@ -326,7 +647,7 @@
     <!-- special panes -->
     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/PaneRailcom.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/PaneUhlenbrock.xml"/>
-    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/PaneId2Advanced.xml"/><!-- IntelliDrive2, overrrides some CVs set above -->
+    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/PaneId2Advanced.xml"/><!-- IntelliDrive2, overrides some CVs set above -->
     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/fmapPane7outputs.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/PaneExtendedFmap.xml"/>
 </decoder-config>

@@ -529,5 +529,20 @@
     </display>
     <display item="Analog Mode Automatic Effects - REVS" format="checkbox" tooltip="Check to enable automatic effects when stopped in reverse direction in analog power mode">
     </display>
+    <label>
+      <text> </text>
+    </label>
+    <display item="Analog Control option 1"/>
+    <display item="Analog Control option 2"/>
+    <display item="Analog Control option 3"/>
+    <display item="Analog Control option 4"/>
+    <display item="Analog Control check 1" format="checkbox"/>
+    <display item="Analog Control check 2" format="checkbox"/>
+    <display item="Analog Control check 3" format="checkbox"/>
+    <display item="Analog Control check 4" format="checkbox"/>
+    <display item="Analog Control slider 1" format="hslider"/>
+    <display item="Analog Control slider 2" format="hslider"/>
+    <display item="Analog Control slider 3" format="hslider"/>
+    <display item="Analog Control slider 4" format="hslider"/>
   </column>
 </pane>

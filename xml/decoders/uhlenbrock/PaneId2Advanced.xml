@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
     <copyright xmlns="http://docbook.org/ns/docbook">
-        <year>2018</year>
+        <year>2019</year>
         <holder>JMRI</holder>
     </copyright>
     <authorgroup xmlns="http://docbook.org/ns/docbook">
@@ -15,7 +15,7 @@
     <revhistory xmlns="http://docbook.org/ns/docbook">
         <revision>
             <revnumber>1</revnumber>
-            <date>2019-02-02</date>
+            <date>2019-02-15</date>
             <authorinitials>EB</authorinitials>
             <revremark>Initial version, adapted from Uhlenbrock/soundPane7outputs.xml</revremark>
         </revision>
@@ -30,6 +30,7 @@
                 <label>
                     <text>Decoder Programming Lock</text>
                     <text xml:lang="de">Decoder Programmierschloss</text>
+                    <text xml:lang="nl">Decoder Programmeerslot</text>
                 </label>
                 <display item="Decoder Lock ID"/>
                 <display item="Decoder Lock Index"/>
@@ -51,17 +52,11 @@
                 <label>
                     <text>Motor Management Settings</text>
                     <text xml:lang="de">Motorregelung</text>
+                    <text xml:lang="nl">Motorregeling</text>
                 </label>
                 <display item="Motor Management 1"/>
                 <display item="Motor Management 2"/>
                 <display item="Motor Management 3"/>
-                <!-- CVs 97-98 -->
-                <label>
-                    <text>ABC Braking</text>
-                    <text xml:lang="de">ABC Bremsen</text>
-                </label>
-                <display item="ABC Braking"/>
-                <display item="ABC Slow Speed"/>
             </column>
 
             <column>
