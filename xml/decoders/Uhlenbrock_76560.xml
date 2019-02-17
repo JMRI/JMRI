@@ -92,8 +92,8 @@
         <decVal max="63"/>
         <label>Control Reference</label>
         <label xml:lang="de">Regelreferenz</label>
-        <tooltip>Lower Value if top speed to low, Raise Value if Speed at Step 1 too fast"</tooltip>
-        <tooltip xml:lang="de">verkleinern, wenn Höchstgeschwindigkeit zu geringer - vergrößern, wenn geschwindigkeit Schritt 1 zu schnell"</tooltip>
+        <tooltip>Lower Value if top speed too low, Raise Value if Speed at Step 1 too fast</tooltip>
+        <tooltip xml:lang="de">verkleinern, wenn Höchstgeschwindigkeit zu geringer - vergrößern, wenn geschwindigkeit Schritt 1 zu schnell</tooltip>
       </variable>
       <variable item="EMF Droop Config" CV="57" default="2">
         <decVal max="63"/>

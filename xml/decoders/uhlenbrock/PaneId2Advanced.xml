@@ -22,7 +22,7 @@
         <!-- Valid only for certain Uhlenbrock decoders with IntelliDrive2, Piko Sound 4.1 (non exhaustive list) -->
     </revhistory>
 
-    <name>IntelliDrive</name>
+    <name>IntelliDrive2</name>
     <column>
         <row>
             <column>
@@ -61,124 +61,11 @@
 
             <column>
                 <label>
-                    <text>CV Banks</text>
-                    <text xml:lang="de">CV Banken</text>
+                    <text>More to come</text>
+                    <text xml:lang="de">Mehr in Vorbereitung</text>
                 </label>
                 <separator/>
-                <display item="Bank switch 1"/>
-                <display item="Bank switch 2"/>
-                <separator/>
-                <row>
-                    <group>
-                        <qualifier>
-                            <variableref>Bank switch 1</variableref>
-                            <relation>eq</relation>
-                            <value>8</value>
-                        </qualifier>
-                        <qualifier>
-                            <variableref>Bank switch 2</variableref>
-                            <relation>eq</relation>
-                            <value>0</value>
-                        </qualifier>
-                        <column>
-                            <label><text> </text></label>
-                            <display item="Bank1 On1"/>
-                            <display item="Bank1 On2"/>
-                            <label><text> </text></label>
-                        </column>
-                        <column><label><text>      </text></label></column>
-                        <column>
-                            <label><text> </text></label>
-                            <display item="Bank1 Off1"/>
-                            <display item="Bank1 Off2"/>
-                            <label><text> </text></label>
-                        </column>
-                    </group>
-                </row>
-
-                <row>
-                    <group>
-                        <qualifier>
-                            <variableref>Bank switch 1</variableref>
-                            <relation>eq</relation>
-                            <value>8</value>
-                        </qualifier>
-                        <qualifier>
-                            <variableref>Bank switch 2</variableref>
-                            <relation>eq</relation>
-                            <value>1</value>
-                        </qualifier>
-                        <column>
-                            <label><text> </text></label>
-                            <display item="Bank2 On1"/>
-                            <display item="Bank2 On2"/>
-                            <label><text> </text></label>
-                        </column>
-                        <column><label><text>      </text></label></column>
-                        <column>
-                            <label><text> </text></label>
-                            <display item="Bank2 Off1"/>
-                            <display item="Bank2 Off2"/>
-                            <label><text> </text></label>
-                        </column>
-                    </group>
-                </row>
-
-                <row>
-                    <group>
-                        <qualifier>
-                            <variableref>Bank switch 1</variableref>
-                            <relation>eq</relation>
-                            <value>8</value>
-                        </qualifier>
-                        <qualifier>
-                            <variableref>Bank switch 2</variableref>
-                            <relation>eq</relation>
-                            <value>3</value>
-                        </qualifier>
-                        <column>
-                            <label><text> </text></label>
-                            <display item="Bank3 PWM Seq1.1"/>
-                            <display item="Bank3 PWM Seq1.2"/>
-                            <label><text> </text></label>
-                        </column>
-                        <column><label><text>      </text></label></column>
-                        <column>
-                            <label><text> </text></label>
-                            <display item="Bank3 PWM Seq2.1"/>
-                            <display item="Bank3 PWM Seq2.2"/>
-                            <label><text> </text></label>
-                        </column>
-                    </group>
-                </row>
-
-                <row>
-                    <group>
-                        <qualifier>
-                            <variableref>Bank switch 1</variableref>
-                            <relation>eq</relation>
-                            <value>8</value>
-                        </qualifier>
-                        <qualifier>
-                            <variableref>Bank switch 2</variableref>
-                            <relation>eq</relation>
-                            <value>4</value>
-                        </qualifier>
-                        <column>
-                            <label><text> </text></label>
-                            <display item="Bank4 PWM Seq5.1"/>
-                            <display item="Bank4 PWM Seq5.2"/>
-                            <label><text> </text></label>
-                        </column>
-                        <column><label><text>      </text></label></column>
-                        <column>
-                            <label><text> </text></label>
-                            <display item="Bank4 PWM Seq6.1"/>
-                            <display item="Bank4 PWM Seq6.2"/>
-                            <label><text> </text></label>
-                        </column>
-                    </group>
-                </row>
+                <!--More vars here-->
             </column>
         </row>
     </column>

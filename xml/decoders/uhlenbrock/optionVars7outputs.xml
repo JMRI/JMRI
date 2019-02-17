@@ -49,9 +49,9 @@
     </variable>
     <variable item="Function F0F check 2" CV="110" mask="XXXXXXXV" include="73105,73115,73145,73405,73415,73235,PIKO41RH2400">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>Blink generator Phase 2</label>
-        <label xml:lang="de">Blinkgenerator Phase 2</label>
-        <label xml:lang="nl">Knippergenerator Fase 2</label>
+        <label>Blink generator Phase 2 - Lights</label>
+        <label xml:lang="de">Blinkgenerator Phase 2 - Licht</label>
+        <label xml:lang="nl">Knippergenerator Fase 2 - Licht</label>
     </variable>
     <variable item="Function F0F check 3" CV="113" mask="XXXXXXXV" include="73105,73115,73145,73405,73415,73235,PIKO41RH2400">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>

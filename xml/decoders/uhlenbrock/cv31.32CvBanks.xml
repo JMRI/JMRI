@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- Copyright (C) JMRI 2014 All rights reserved                            -->
+<!-- Copyright (C) JMRI 2019 All rights reserved                            -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -27,7 +27,7 @@
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
       <revnumber>1</revnumber>
-      <date>2019-02-01</date>
+      <date>2019-02-17</date>
       <authorinitials>EB</authorinitials>
       <revremark>Initial version as separate file, taken from Uhlenbrock/soundVars7outputs.xml</revremark>
     </revision>
@@ -35,23 +35,27 @@
   </revhistory>
 
     <!-- Declaration of the "switch" CVs -->
-    <variable item="Bank switch 1" CV="31" default="0" tooltip="Reset to Off after programming">
+    <variable item="Bank switch 1" CV="31" default="0">
         <enumVal>
             <enumChoice choice="Banks Off" value="0">
                 <choice>Banks Off</choice>
                 <choice xml:lang="de">Banks Aus</choice>
+                <choice xml:lang="nl">Banken UIT</choice>
             </enumChoice>
             <enumChoice choice="Banks Program" value="8">
                 <choice>Program</choice>
                 <choice xml:lang="de">Programmieren</choice>
+                <choice xml:lang="nl">Programmeren</choice>
             </enumChoice>
             <enumChoice choice="Banks Unknown" value="1">
                 <choice>Unknown</choice>
                 <choice xml:lang="de">Unbekannt</choice>
+                <choice xml:lang="nl">Onbekend</choice>
             </enumChoice>
         </enumVal>
         <label>State</label>
         <label xml:lang="de">Zustand</label>
+        <tooltip>Reset to Off after programming</tooltip>
     </variable>
 
     <variable item="Bank switch 2" CV="32" default="255">
@@ -81,7 +85,7 @@
         <label xml:lang="de">Bank</label>
     </variable>
 
-    <!-- Bank 1 - 4 variables -->
+    <!-- Bank 1 - 5 variables -->
 
     <!-- Bank 1 CVs Extended Function Mapping rows 1-16 (Index CV 32 = 0) -->
     <!-- group hides/shows with CV 32 choice = 0 -->
@@ -97,7 +101,7 @@
         <label xml:lang="de">EIN</label>
         <tooltip>Row 1, Condition On 2, value 0-255</tooltip>
     </variable>
-    <!-- Test with only 1 series TODO enter remaining CVs 259.0 - 512.0 -->
+    <!-- Test with only 1 series TODO enter remaining CVs 289.0 - 512.0 on Ext Mapping Pane-->
     <variable item="Bank1 Off1" CV="263.0" default="0">
         <decVal/>
         <label>OFF</label>
@@ -190,5 +194,30 @@
         <tooltip>PWM Sequence 6 Box 2, value 0-63</tooltip>
     </variable>
     <!-- End Bank 4 -->
+
+    <!-- Bank 5 CVs Intellimatic (Index CV 32 = 5) -->
+    <!-- group hides/shows with CV 32 choice = 5 -->
+    <variable item="Bank5 Intellimatic Seq1.1" CV="257.4" default="3">
+        <decVal min="0" max="63"/>
+        <label>Sq 5</label>
+        <tooltip>PWM Sequence 5 Box 1, value 0-63</tooltip>
+    </variable>
+    <variable item="Bank5 Intellimatic Seq1.2" CV="258.4" default="8">
+        <decVal min="0" max="63"/>
+        <label>Sq 5</label>
+        <tooltip>PWM Sequence 5 Box 2, value 0-63</tooltip>
+    </variable>
+    <!-- Test with only 1 series TODO enter remaining CVs 259.4 - 512.4 -->
+    <variable item="Bank5 Intellimatic Seq2.1" CV="273.4" default="0">
+        <decVal min="0" max="63"/>
+        <label>Sq 6</label>
+        <tooltip>PWM Sequence 6 Box 1, value 0-63</tooltip>
+    </variable>
+    <variable item="Bank5 Intellimatic Seq2.2" CV="274.4" default="0">
+        <decVal min="0" max="63"/>
+        <label>Sq 6</label>
+        <tooltip>PWM Sequence 6 Box 2, value 0-63</tooltip>
+    </variable>
+    <!-- End Bank 5 -->
 
 </variables>

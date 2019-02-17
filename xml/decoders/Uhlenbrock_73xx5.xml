@@ -234,8 +234,7 @@
             <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>
             <xi:include href="http://jmri.org/xml/decoders/nmra/cv29address.xml"/>
             <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv30error.xml"/>
-            <!-- CVs 31-32 Banks -->
-            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv31.32CvBanks.xml"/>
+            <!-- CVs 31-32 Banks are on cv257.512extendedmap include -->
             <!-- CVs 33-46 function mapping -->
             <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/functionmap7outputs.xml"/>
             <!--Motorola addresses - read only-->
@@ -256,7 +255,44 @@
             </variable>
             <!-- CV50-51 decoder configuration -->
             <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv50.51config.xml"/>
-            <!-- CVs 53-59 TODO -->
+            <!-- CVs 53-58  Motor Control-->
+            <variable item="EMF Option 1" CV="53" default="40">
+                <decVal max="255"/>
+                <label>Repetition rate</label>
+                <label xml:lang="de">Wiederholrate der Motorregelung</label>
+                <tooltip>Lower if the locomotive does not run smoothly - Value * 0.1 sec</tooltip>
+                <tooltip xml:lang="de">verkleinern, wenn Lok ungleichmäßig läuft - Wert * 0.1 S</tooltip>
+            </variable>
+            <variable item="EMF Static Config" CV="54" default="100">
+                <decVal max="255"/>
+                <label>Motor regulation P Constant</label>
+                <label xml:lang="de">Motorregelung P-Konstante</label>
+            </variable>
+            <variable item="EMF Dynamic Config" CV="55" default="40">
+                <decVal max="255"/>
+                <label>Motor regulation I Constant</label>
+                <label xml:lang="de">Motorregelung I-Konstante</label>
+            </variable>
+            <variable item="EMF Droop Config" CV="56" default="32">
+                <decVal max="255"/>
+                <label>Motor regulation D Constant</label>
+                <label xml:lang="de">Motorregelung D-Konstante</label>
+            </variable>
+            <variable item="EMF Option 3" CV="57" default="6">
+                <decVal max="255"/>
+                <label>Control Offset</label>
+                <label xml:lang="de">Regeler Offset</label>
+                <tooltip>Lower Value if top speed too low, Raise Value if Speed at Step 1 too fast</tooltip>
+                <tooltip xml:lang="de">verkleinern, wenn Höchstgeschwindigkeit zu geringer - vergrößern, wenn geschwindigkeit Schritt 1 zu schnell</tooltip>
+            </variable>
+            <variable item="EMF Option 2" CV="58" default="8">
+                <decVal max="255"/>
+                <label>Time slot for AD measurement</label>
+                <label xml:lang="de">Zeitschlitz für AD Wandlermessung</label>
+                <tooltip>Increase if loc does not run smoothly at low speeds - Decrease if the top speed is too low after CV53 has been lowered</tooltip>
+                <tooltip xml:lang="de">vergrößern, wenn Lok bei geringer Geschwindigkeit ungleichmäßig läuft; verkleinern, wenn bei heruntergesetztem CV 53 Höchstgeschwindigkeit der Lok zu gering ist</tooltip>
+            </variable>
+            <!--CV59 Reset incl at the bottom-->
             <variable item="Short circuit supervision" CV="60" readOnly="yes">
                 <decVal max="9"/>
                 <label>Motor and Function Output Short circuit supervision</label>
@@ -444,7 +480,7 @@
             <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv130.134smoke.xml"/>
             <!-- SmartSound 4.1 variables, CVs 109 - 111 are on Lights tab -->
             <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/soundVars7outputs.xml"/>
-            <!-- TODO CVs 135-149 -->
+            <!-- TODO CVs 135-149 Rangiertango-->
             <!-- CVs 150-157 are in optionVars7outputs.xml include -->
             <!-- CV159 pass Function Key to SUSI-->
             <variable item="SUSI F22" CV="159" mask="XXXXXXXV" default="0">
@@ -469,9 +505,9 @@
             <variable item="SUSI F28" CV="159" mask="XVXXXXXX" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
             </variable>
-            <!-- TODO CVs 160-168 -->
+            <!-- TODO CVs 160-168 Servossteuerung -->
             <variable item="PWM Modulation on A0" CV="170" mask="XVVVVVVV">
-                <decVal max="8"/>
+                <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumPwm.xml"/>
                 <label>PWM Modulation on A0</label>
                 <label xml:lang="de">PWM-Verlauf auf A0</label>
                 <label xml:lang="nl">PWM Modulatie op A0</label>
@@ -487,7 +523,7 @@
                 <tooltip xml:lang="de">nur aktif wenn CROSS-Ausgabebit gesetzt</tooltip>
             </variable>
             <variable item="PWM Modulation on A1" CV="171" mask="XVVVVVVV" minOut="3">
-                <decVal max="8"/>
+                <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumPwm.xml"/>
                 <label>PWM Modulation on A1</label>
                 <label xml:lang="de">PWM-Verlauf auf A1</label>
                 <label xml:lang="nl">PWM Modulatie op A1</label>
@@ -503,7 +539,7 @@
                 <tooltip xml:lang="de">nur aktif wenn CROSS-Ausgabebit gesetzt</tooltip>
             </variable>
             <variable item="PWM Modulation on A2" CV="172" mask="XVVVVVVV" minOut="4">
-                <decVal max="8"/>
+                <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumPwm.xml"/>
                 <label>PWM Modulation on A2</label>
                 <label xml:lang="de">PWM-Verlauf auf A2</label>
                 <label xml:lang="nl">PWM Modulatie op A2</label>
@@ -519,7 +555,7 @@
                 <tooltip xml:lang="de">nur aktif wenn CROSS-Ausgabebit gesetzt</tooltip>
             </variable>
             <variable item="PWM Modulation on A3" CV="173" mask="XVVVVVVV" minOut="5">
-                <decVal max="8"/>
+                <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumPwm.xml"/>
                 <label>PWM Modulation on A3</label>
                 <label xml:lang="de">PWM-Verlauf auf A3</label>
                 <label xml:lang="nl">PWM Modulatie op A3</label>
@@ -535,7 +571,7 @@
                 <tooltip xml:lang="de">nur aktif wenn CROSS-Ausgabebit gesetzt</tooltip>
             </variable>
             <variable item="PWM Modulation on A4" CV="174" mask="XVVVVVVV" minOut="6">
-                <decVal max="8"/>
+                <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumPwm.xml"/>
                 <label>PWM Modulation on A4</label>
                 <label xml:lang="de">PWM-Verlauf auf A4</label>
                 <label xml:lang="nl">PWM Modulatie op A4</label>
@@ -551,7 +587,7 @@
                 <tooltip xml:lang="de">nur aktif wenn CROSS-Ausgabebit gesetzt</tooltip>
             </variable>
             <variable item="PWM Modulation on A5" CV="175" mask="XVVVVVVV" minOut="7">
-                <decVal max="8"/>
+                <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumPwm.xml"/>
                 <label>PWM Modulation on A5</label>
                 <label xml:lang="de">PWM-Verlauf auf A5</label>
                 <label xml:lang="nl">PWM Modulatie op A5</label>
@@ -567,7 +603,7 @@
                 <tooltip xml:lang="de">nur aktif wenn CROSS-Ausgabebit gesetzt</tooltip>
             </variable>
             <variable item="PWM Modulation on A6" CV="176" mask="XVVVVVVV" minOut="8">
-                <decVal max="8"/>
+                <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumPwm.xml"/>
                 <label>PWM Modulation on A6</label>
                 <label xml:lang="de">PWM-Verlauf auf A6</label>
                 <label xml:lang="nl">PWM Modulatie op A6</label>
@@ -583,7 +619,7 @@
                 <tooltip xml:lang="de">nur aktif wenn CROSS-Ausgabebit gesetzt</tooltip>
             </variable>
             <variable item="PWM Modulation on A7" CV="177" mask="XVVVVVVV" minOut="9">
-                <decVal max="8"/>
+                <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumPwm.xml"/>
                 <label>PWM Modulation on A7</label>
                 <label xml:lang="de">PWM-Verlauf auf A7</label>
                 <label xml:lang="nl">PWM Modulatie op A7</label>
@@ -606,7 +642,46 @@
                 <tooltip>Period display duration (value * 64 Milliseconds)</tooltip>
                 <tooltip xml:lang="de">Periodendauer der Wiedergabe (Wert * 64 ms)</tooltip>
             </variable>
-
+            <variable item="PWM Phase A0" CV="179" mask="XXXXXXXV">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <tooltip>Unchecked/normal = 0 deg Checked/reversed = 180 deg</tooltip>
+                <tooltip xml:lang="de">Normal = 0 Grad Ausgewählt/umgekehrt = 180 Grad</tooltip>
+            </variable>
+            <variable item="PWM Phase A1" CV="179" mask="XXXXXXVX">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <tooltip>Unchecked/normal = 0 deg Checked/reversed = 180 deg</tooltip>
+                <tooltip xml:lang="de">Normal = 0 Grad Ausgewählt/umgekehrt = 180 Grad</tooltip>
+            </variable>
+            <variable item="PWM Phase A2" CV="179" mask="XXXXXVXX">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <tooltip>Unchecked/normal = 0 deg Checked/reversed = 180 deg</tooltip>
+                <tooltip xml:lang="de">Normal = 0 Grad Ausgewählt/umgekehrt = 180 Grad</tooltip>
+            </variable>
+            <variable item="PWM Phase A3" CV="179" mask="XXXXVXXX">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <tooltip>Unchecked/normal = 0 deg Checked/reversed = 180 deg</tooltip>
+                <tooltip xml:lang="de">Normal = 0 Grad Ausgewählt/umgekehrt = 180 Grad</tooltip>
+            </variable>
+            <variable item="PWM Phase A4" CV="179" mask="XXXVXXXX">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <tooltip>Unchecked/normal = 0 deg Checked/reversed = 180 deg</tooltip>
+                <tooltip xml:lang="de">Normal = 0 Grad Ausgewählt/umgekehrt = 180 Grad</tooltip>
+            </variable>
+            <variable item="PWM Phase A5" CV="179" mask="XXVXXXXX">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <tooltip>Unchecked/normal = 0 deg Checked/reversed = 180 deg</tooltip>
+                <tooltip xml:lang="de">Normal = 0 Grad Ausgewählt/umgekehrt = 180 Grad</tooltip>
+            </variable>
+            <variable item="PWM Phase A6" CV="179" mask="XVXXXXXX">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <tooltip>Unchecked/normal = 0 deg Checked/reversed = 180 deg</tooltip>
+                <tooltip xml:lang="de">Normal = 0 Grad Ausgewählt/umgekehrt = 180 Grad</tooltip>
+            </variable>
+            <variable item="PWM Phase A7" CV="179" mask="VXXXXXXX">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <tooltip>Unchecked/normal = 0 deg Checked/reversed = 180 deg</tooltip>
+                <tooltip xml:lang="de">Normal = 0 Grad Ausgewählt/umgekehrt = 180 Grad</tooltip>
+            </variable>
             <variable item="PWM Wait" CV="180">
                 <decVal/>
                 <label>PWM Wait</label>
@@ -615,8 +690,7 @@
                 <tooltip>Wait time after CROSS-bit off (value * 100 Milliseconds)</tooltip>
                 <tooltip xml:lang="de">Haltezeit nach dem CROSS-Ausgabebit aus (Wert * 100 ms)</tooltip>
             </variable>
-
-            <!-- TODO CVs 178-190 -->
+            <!-- TODO CVs 181-190 -->
             <variable item="Motor Management 1" CV="200" default="10">
                 <decVal/>
                 <label>Minimum Speed Step</label>
@@ -638,7 +712,7 @@
                 <tooltip>Maximum Period length in 100μs steps (min = CV53)</tooltip>
                 <tooltip xml:lang="de">maximale Periodendauer in 100μs Schritten (min = CV53)</tooltip>
             </variable>
-            <!--extended function mapping on IntelliDrive2 and Piko 4.1-->
+            <!--extended function mapping on IntelliDrive2 and Piko 4.1, includes cv 31-32 bank switches-->
             <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv257.512extendedmap.xml"/>
         </variables>
 
