@@ -44,8 +44,8 @@ public class DlgCB extends javax.swing.JDialog {
     }
     private boolean dataChanged() {
         if (!_mCodeButtonInternalSensorOrig.equals(_mCodeButtonInternalSensor.getText())) return true;
-        if (!_mOSSectionOccupiedExternalSensorOrig.equals(_mOSSectionOccupiedExternalSensor.getText())) return true;
-        if (!_mOSSectionOccupiedExternalSensor2Orig.equals(_mOSSectionOccupiedExternalSensor2.getText())) return true;
+        if (!_mOSSectionOccupiedExternalSensorOrig.equals((String) _mOSSectionOccupiedExternalSensor.getSelectedItem())) return true;
+        if (!_mOSSectionOccupiedExternalSensor2Orig.equals((String) _mOSSectionOccupiedExternalSensor2.getSelectedItem())) return true;
         if (_mOSSectionSwitchSlavedToUniqueIDIndexOrig != _mOSSectionSwitchSlavedToUniqueID.getSelectedIndex()) return true;
         if (CommonSubs.getIntFromJTextFieldNoThrow(_mCodeButtonDelayTime) != _mCodeButtonDelayTimeOrig) return true;
         return false;
@@ -63,8 +63,8 @@ public class DlgCB extends javax.swing.JDialog {
         _mCheckJMRIObject = checkJMRIObject;
         _mArrayListOfSelectableOSSectionUniqueIDs = CommonSubs.getArrayListOfSelectableOSSectionUniqueIDs(_mCTCSerialData.getCodeButtonHandlerDataArrayList());
         _mCodeButtonInternalSensor.setText(_mCodeButtonHandlerData._mCodeButtonInternalSensor);
-        _mOSSectionOccupiedExternalSensor.setText(_mCodeButtonHandlerData._mOSSectionOccupiedExternalSensor);
-        _mOSSectionOccupiedExternalSensor2.setText(_mCodeButtonHandlerData._mOSSectionOccupiedExternalSensor2);
+        CommonSubs.populateJComboBoxWithBeans(_mOSSectionOccupiedExternalSensor, "Sensor", _mCodeButtonHandlerData._mOSSectionOccupiedExternalSensor, false);
+        CommonSubs.populateJComboBoxWithBeans(_mOSSectionOccupiedExternalSensor2, "Sensor", _mCodeButtonHandlerData._mOSSectionOccupiedExternalSensor2, true);
         CommonSubs.populateJComboBoxWithColumnDescriptionsAndSelectViaUniqueID(_mOSSectionSwitchSlavedToUniqueID, _mCTCSerialData, _mCodeButtonHandlerData._mOSSectionSwitchSlavedToUniqueID);
         CommonSubs.setMillisecondsEdit(_mCodeButtonDelayTime);
         _mCodeButtonDelayTime.setText(Integer.toString(_mCodeButtonHandlerData._mCodeButtonDelayTime));
@@ -85,7 +85,7 @@ public class DlgCB extends javax.swing.JDialog {
         ArrayList<String> errors = new ArrayList<>();
 //  Checks:        
         CommonSubs.checkJTextFieldNotEmpty(_mCodeButtonInternalSensor, _mCodeButtonInternalSensorPrompt, errors);
-        CommonSubs.checkJTextFieldNotEmpty(_mOSSectionOccupiedExternalSensor, _mOSSectionOccupiedExternalSensorPrompt, errors);
+        CommonSubs.checkJComboBoxNotEmpty(_mOSSectionOccupiedExternalSensor, _mOSSectionOccupiedExternalSensorPrompt, errors);
         _mCheckJMRIObject.analyzeForm(PREFIX, this, errors);
         return errors;
     }
@@ -104,7 +104,6 @@ public class DlgCB extends javax.swing.JDialog {
         _mSaveAndClose = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         _mOSSectionOccupiedExternalSensorPrompt = new javax.swing.JLabel();
-        _mOSSectionOccupiedExternalSensor = new javax.swing.JTextField();
         _mOSSectionSwitchSlavedToUniqueID = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -114,11 +113,12 @@ public class DlgCB extends javax.swing.JDialog {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        _mOSSectionOccupiedExternalSensor2 = new javax.swing.JTextField();
         _mOSSectionOccupiedExternalSensorPrompt1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
+        _mOSSectionOccupiedExternalSensor = new javax.swing.JComboBox<>();
+        _mOSSectionOccupiedExternalSensor2 = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle(Bundle.getMessage("TitleDlgCB"));
@@ -176,6 +176,10 @@ public class DlgCB extends javax.swing.JDialog {
 
         jLabel10.setText(Bundle.getMessage("InfoDlgCBLockTO"));
 
+        _mOSSectionOccupiedExternalSensor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        _mOSSectionOccupiedExternalSensor2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -192,22 +196,21 @@ public class DlgCB extends javax.swing.JDialog {
                                     .addComponent(_mOSSectionOccupiedExternalSensorPrompt)
                                     .addComponent(_mCodeButtonInternalSensorPrompt))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(_mCodeButtonInternalSensor, javax.swing.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE)
-                                            .addComponent(_mOSSectionOccupiedExternalSensor))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jLabel1))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(_mOSSectionOccupiedExternalSensor2, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jLabel2))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(6, 6, 6)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel8)
-                                            .addComponent(jLabel10)))))
+                                            .addComponent(jLabel10)))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(_mOSSectionOccupiedExternalSensor2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(_mCodeButtonInternalSensor, javax.swing.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE)
+                                            .addComponent(_mOSSectionOccupiedExternalSensor, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)))))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(21, 21, 21)
                                 .addComponent(jLabel3)
@@ -241,16 +244,16 @@ public class DlgCB extends javax.swing.JDialog {
                     .addComponent(_mCodeButtonInternalSensor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(_mOSSectionOccupiedExternalSensor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(_mOSSectionOccupiedExternalSensorPrompt)
-                    .addComponent(jLabel1))
+                    .addComponent(jLabel1)
+                    .addComponent(_mOSSectionOccupiedExternalSensor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(_mOSSectionOccupiedExternalSensor2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(_mOSSectionOccupiedExternalSensorPrompt1)
-                    .addComponent(jLabel2))
+                    .addComponent(jLabel2)
+                    .addComponent(_mOSSectionOccupiedExternalSensor2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel10)
                 .addGap(18, 18, 18)
@@ -283,8 +286,8 @@ public class DlgCB extends javax.swing.JDialog {
             return; // Do not allow exit or transfer of data.
         }
         _mCodeButtonHandlerData._mCodeButtonInternalSensor = _mCodeButtonInternalSensor.getText();
-        _mCodeButtonHandlerData._mOSSectionOccupiedExternalSensor = _mOSSectionOccupiedExternalSensor.getText();
-        _mCodeButtonHandlerData._mOSSectionOccupiedExternalSensor2 = _mOSSectionOccupiedExternalSensor2.getText();
+        _mCodeButtonHandlerData._mOSSectionOccupiedExternalSensor = (String) _mOSSectionOccupiedExternalSensor.getSelectedItem();
+        _mCodeButtonHandlerData._mOSSectionOccupiedExternalSensor2 = (String) _mOSSectionOccupiedExternalSensor2.getSelectedItem();
         int selectedIndex = _mOSSectionSwitchSlavedToUniqueID.getSelectedIndex();
         if (selectedIndex > 0) { // None and skip blank entry
             _mCodeButtonHandlerData._mOSSectionSwitchSlavedToUniqueID = _mArrayListOfSelectableOSSectionUniqueIDs.get(selectedIndex - 1);  // Correct for blank entry
@@ -306,8 +309,8 @@ public class DlgCB extends javax.swing.JDialog {
         CodeButtonHandlerData temp = _mCodeButtonHandlerData.deepCopy();
         temp = CodeButtonHandlerDataRoutines.uECBHDWSD_CodeButton(_mProgramProperties, temp);
         _mCodeButtonInternalSensor.setText(temp._mCodeButtonInternalSensor);
-        _mOSSectionOccupiedExternalSensor.setText(temp._mOSSectionOccupiedExternalSensor);
-        _mOSSectionOccupiedExternalSensor2.setText(temp._mOSSectionOccupiedExternalSensor2);
+        _mOSSectionOccupiedExternalSensor.setSelectedItem(temp._mOSSectionOccupiedExternalSensor);
+        _mOSSectionOccupiedExternalSensor2.setSelectedItem(temp._mOSSectionOccupiedExternalSensor2);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void _mOSSectionSwitchSlavedToUniqueIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mOSSectionSwitchSlavedToUniqueIDActionPerformed
@@ -325,8 +328,8 @@ public class DlgCB extends javax.swing.JDialog {
     private javax.swing.JFormattedTextField _mCodeButtonDelayTime;
     private javax.swing.JTextField _mCodeButtonInternalSensor;
     private javax.swing.JLabel _mCodeButtonInternalSensorPrompt;
-    private javax.swing.JTextField _mOSSectionOccupiedExternalSensor;
-    private javax.swing.JTextField _mOSSectionOccupiedExternalSensor2;
+    private javax.swing.JComboBox<String> _mOSSectionOccupiedExternalSensor;
+    private javax.swing.JComboBox<String> _mOSSectionOccupiedExternalSensor2;
     private javax.swing.JLabel _mOSSectionOccupiedExternalSensorPrompt;
     private javax.swing.JLabel _mOSSectionOccupiedExternalSensorPrompt1;
     private javax.swing.JComboBox<String> _mOSSectionSwitchSlavedToUniqueID;

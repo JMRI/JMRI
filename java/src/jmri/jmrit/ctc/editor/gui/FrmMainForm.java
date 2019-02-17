@@ -59,6 +59,7 @@ public class FrmMainForm extends JFrame {
 
     private static final String FORM_PROPERTIES = "FrmMainForm";
     private CTCSerialData _mCTCSerialData;
+    private OtherData _mOtherData;
     private OriginalCopy _mOriginalCopy;
     private Columns _mColumns;
     private DefaultListModel<String> _mDefaultListModel;
@@ -78,8 +79,8 @@ public class FrmMainForm extends JFrame {
         _mProgramProperties = new ProgramProperties();
         _mCheckJMRIObject = new CheckJMRIObject();
         newOrOpenFile(true);
-        PanelCheck pc = new PanelCheck();
-        pc.start();
+        checkPanelStatus.actionPerformed(null);
+        new javax.swing.Timer(5000, checkPanelStatus).start();
     }
 
     /**
@@ -111,36 +112,29 @@ public class FrmMainForm extends JFrame {
     /**
      * Set the panel status:  true: CTC enabled panel loaded, false = no CTC enabled panel loaded.
      * The presence of the debug and reload sensors is used to test for a potential CTC panel xml file.
-     * Runs as a thread and checks every 5 seconds.
+     * Runs as a swing timer event and checks every 5 seconds.
      */
-    class PanelCheck extends java.lang.Thread {
-        OtherData data = _mCTCSerialData.getOtherData();
+    java.awt.event.ActionListener checkPanelStatus = new java.awt.event.ActionListener() {
         SensorManager sm = InstanceManager.getDefault(SensorManager.class);
+        @Override
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            _mPanelLoaded = false;
 
-        public void run() {
-            while (true) {
-                _mPanelLoaded = false;
+            // Are two specific sensors present
+            Sensor chkReload = sm.getSensor(_mOtherData._mCTCDebugSystemReloadInternalSensor);
+            Sensor chkDebug = sm.getSensor(_mOtherData._mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor);
 
-                // Are two specific sensors present
-                Sensor chkReload = sm.getSensor(data._mCTCDebugSystemReloadInternalSensor);
-                Sensor chkDebug = sm.getSensor(data._mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor);
-
-                if (chkReload == null || chkDebug == null) {
-                    // No CTC panel loaded
-                    _mJMRIValidationStatus.setText("<html><font color='red'>" + Bundle.getMessage("LabelDisabled") + "</font></html>");
-                    _mCheckEverythingWithJMRI.setEnabled(false);
-                } else {
-                    _mPanelLoaded = true;
-                    _mJMRIValidationStatus.setText("<html><font color='green'>" + Bundle.getMessage("LabelEnabled") + "</font></html>");
-                    _mCheckEverythingWithJMRI.setEnabled(true);
-                }
-
-                try {
-                    Thread.sleep(5000L);
-                } catch (InterruptedException e) {}
+            if (chkReload == null || chkDebug == null) {
+                // No CTC panel loaded
+                _mJMRIValidationStatus.setText("<html><font color='red'>" + Bundle.getMessage("LabelDisabled") + "</font></html>");
+                _mCheckEverythingWithJMRI.setEnabled(false);
+            } else {
+                _mPanelLoaded = true;
+                _mJMRIValidationStatus.setText("<html><font color='green'>" + Bundle.getMessage("LabelEnabled") + "</font></html>");
+                _mCheckEverythingWithJMRI.setEnabled(true);
             }
         }
-    }
+    };
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -961,6 +955,7 @@ public class FrmMainForm extends JFrame {
     private void newOrOpenFile(boolean openExisting) {
         _mCTCSerialData = new CTCSerialData();
         _mOriginalCopy = new OriginalCopy();
+        _mOtherData = _mCTCSerialData.getOtherData();
         if (openExisting) {
             _mCTCSerialData.readDataFromXMLFile(_mProgramProperties._mFilename);
             _mOriginalCopy.makeDeepCopy(_mCTCSerialData);
