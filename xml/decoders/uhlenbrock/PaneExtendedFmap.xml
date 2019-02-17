@@ -10,24 +10,34 @@
   <name xml:lang="de">Erw Funktionsmap</name>
   <name xml:lang="nl">Uitgebr Functiemap</name>
   <column>
-    <row>
+      <row>
+        <column>
+            <display item="Advanced Function Mapping" format="checkbox"/>
+        </column>
         <column>
             <label>
-                <text>Extended Function Mapping - still under development</text>
-                <text xml:lang="de">Erweiterte Funktionsmapping - nur teilweise implementiert</text>
-                <text xml:lang="nl">Uitgebreide Functiemapping - nog in ontwikkeling</text>
+                <text>   </text>
             </label>
-            <separator/>
+        </column>
+        <column>
             <label>
                 <text>CV Banks</text>
                 <text xml:lang="de">CV Banken</text>
+                <text xml:lang="nl">CV Banken</text>
             </label>
             <display item="Bank switch 1"/>
             <display item="Bank switch 2"/>
-            <separator/>
+            <label>
+                <text>Extended Function Mapping - under development</text>
+                <text xml:lang="de">Erweiterte Funktionsmapping - nur teilweise implementiert</text>
+                <text xml:lang="nl">Uitgebreide Functiemapping - in ontwikkeling</text>
+            </label>
+            <label>
+                <text>   </text>
+            </label>
         </column>
-    </row>
-
+      </row>
+      <separator/>
       <group>
           <qualifier>
               <variableref>Bank switch 1</variableref>
@@ -309,15 +319,15 @@
                 <!-- BEGIN - Advanced Function Mapping Grid Out 1-4 -->
                 <grid gridy="3" weightx="1" ipadx="4">
                     <!-- BEGIN - Row 1 (headers)-->
-                    <group minOut="4"> <!--exclude="73115">-->
+                    <group exclude="73115">
                         <griditem gridx="0" gridy="0" gridwidth="1" anchor="LINE_END"><label><text>AUX1</text></label></griditem>
                         <griditem gridx="1" gridy="0" gridwidth="1" anchor="CENTER"><label><text>AUX2</text></label></griditem>
                     </group>
-                    <group minOut="6"> <!--exclude="73115,73145,73405,73415">-->
+                    <group exclude="73115,73145,73405,73415">
                         <griditem gridx="2" gridy="0" gridwidth="1" anchor="CENTER"><label><text>AUX3</text></label></griditem>
                         <griditem gridx="3" gridy="0" gridwidth="1" anchor="CENTER"><label><text>AUX4</text></label></griditem>
                     </group>
-                    <group minOut="10"> <!--exclude="73105,73115,73145,73405,73415">-->
+                    <group exclude="73105,73115,73145,73405,73415">
                         <griditem gridx="4" gridy="0" gridwidth="1" anchor="CENTER"><label><text>AUX5</text></label></griditem>
                         <griditem gridx="5" gridy="0" gridwidth="1" anchor="CENTER"><label><text>AUX6</text></label></griditem>
                         <griditem gridx="6" gridy="0" gridwidth="1" anchor="CENTER"><label><text>AUX7</text></label></griditem>
@@ -723,15 +733,15 @@
                   <!-- BEGIN - Advanced Function Mapping Grid Out 1-4 -->
                   <grid gridy="3" weightx="1" ipadx="4">
                       <!-- BEGIN - Row 1 (headers)-->
-                      <group minOut="4"> <!--exclude="73115">-->
+                      <group exclude="73115">
                           <griditem gridx="0" gridy="0" gridwidth="1" anchor="LINE_END"><label><text>AUX1</text></label></griditem>
                           <griditem gridx="1" gridy="0" gridwidth="1" anchor="CENTER"><label><text>AUX2</text></label></griditem>
                       </group>
-                      <group minOut="6"> <!--exclude="73115,73145,73405,73415">-->
+                      <group exclude="73115,73145,73405,73415">
                           <griditem gridx="2" gridy="0" gridwidth="1" anchor="CENTER"><label><text>AUX3</text></label></griditem>
                           <griditem gridx="3" gridy="0" gridwidth="1" anchor="CENTER"><label><text>AUX4</text></label></griditem>
                       </group>
-                      <group minOut="10"> <!--exclude="73105,73115,73145,73405,73415">-->
+                      <group exclude="73105,73115,73145,73405,73415">
                           <griditem gridx="4" gridy="0" gridwidth="1" anchor="CENTER"><label><text>AUX5</text></label></griditem>
                           <griditem gridx="5" gridy="0" gridwidth="1" anchor="CENTER"><label><text>AUX6</text></label></griditem>
                           <griditem gridx="6" gridy="0" gridwidth="1" anchor="CENTER"><label><text>AUX7</text></label></griditem>
@@ -908,17 +918,230 @@
                 <value>3</value>
             </qualifier>
             <column>
-                <label><text> </text></label>
-                <display item="Bank3 PWM Seq1.1"/>
-                <display item="Bank3 PWM Seq1.2"/>
-                <label><text> </text></label>
-            </column>
-            <column><label><text>      </text></label></column>
-            <column>
-                <label><text> </text></label>
-                <display item="Bank3 PWM Seq2.1"/>
-                <display item="Bank3 PWM Seq2.2"/>
-                <label><text> </text></label>
+                <row>
+                    <label>
+                        <text>PWM Sequence 1</text>
+                        <text xml:lang="de">Modulation 1</text>
+                        <text xml:lang="nl">Serie 1</text>
+                    </label>
+                    <!--1-16-->
+                    <column>
+                        <!--<display item="Bank3 PWM Seq1.1" layout="above" label=""/>-->
+                        <display item="Bank3 PWM Seq1.1" layout="above" format="vslider" label=""/>
+                    </column>
+                    <column>
+                        <!--<display item="Bank3 PWM Seq1.2" layout="above" label=""/>-->
+                        <display item="Bank3 PWM Seq1.2" layout="above" format="vslider" label=""/>
+                    </column>
+                    <column>
+                        <!--<display item="Bank3 PWM Seq1.3" layout="above" label=""/>-->
+                        <display item="Bank3 PWM Seq1.3" layout="above" format="vslider" label=""/>
+                    </column>
+                    <column>
+                        <!--<display item="Bank3 PWM Seq1.4" layout="above" label=""/>-->
+                        <display item="Bank3 PWM Seq1.4" layout="above" format="vslider" label=""/>
+                    </column>
+                    <column>
+                        <!--<display item="Bank3 PWM Seq1.5" layout="above" label=""/>-->
+                        <display item="Bank3 PWM Seq1.5" layout="above" format="vslider" label=""/>
+                    </column>
+                    <column>
+                        <!--<display item="Bank3 PWM Seq1.6" layout="above" label=""/>-->
+                        <display item="Bank3 PWM Seq1.6" layout="above" format="vslider" label=""/>
+                    </column>
+                    <column>
+                        <!--<display item="Bank3 PWM Seq1.7" layout="above" label=""/>-->
+                        <display item="Bank3 PWM Seq1.7" layout="above" format="vslider" label=""/>
+                    </column>
+                    <column>
+                        <!--<display item="Bank3 PWM Seq1.8" layout="above" label=""/>-->
+                        <display item="Bank3 PWM Seq1.8" layout="above" format="vslider" label=""/>
+                    </column>
+                    <column>
+                        <!--<display item="Bank3 PWM Seq1.9" layout="above" label=""/>-->
+                        <display item="Bank3 PWM Seq1.9" layout="above" format="vslider" label=""/>
+                    </column>
+                    <column>
+                        <!--<display item="Bank3 PWM Seq1.10" layout="above" label=""/>-->
+                        <display item="Bank3 PWM Seq1.10" layout="above" format="vslider" label=""/>
+                    </column>
+                    <separator/>
+                    <column>
+                        <!--<display item="Bank3 PWM Seq1.11" layout="above" label=""/>-->
+                        <display item="Bank3 PWM Seq1.11" layout="above" format="vslider" label=""/>
+                    </column>
+                    <column>
+                        <!--<display item="Bank3 PWM Seq1.12" layout="above" label=""/>-->
+                        <display item="Bank3 PWM Seq1.12" layout="above" format="vslider" label=""/>
+                    </column>
+                    <column>
+                        <!--<display item="Bank3 PWM Seq1.13" layout="above" label=""/>-->
+                        <display item="Bank3 PWM Seq1.13" layout="above" format="vslider" label=""/>
+                    </column>
+                    <column>
+                        <!--<display item="Bank3 PWM Seq1.14" layout="above" label=""/>-->
+                        <display item="Bank3 PWM Seq1.14" layout="above" format="vslider" label=""/>
+                    </column>
+                    <column>
+                        <!--<display item="Bank3 PWM Seq1.15" layout="above" label=""/>-->
+                        <display item="Bank3 PWM Seq1.15" layout="above" format="vslider" label=""/>
+                    </column>
+                    <column>
+                        <!--<display item="Bank3 PWM Seq1.16" layout="above" label=""/>-->
+                        <display item="Bank3 PWM Seq1.16" layout="above" format="vslider" label=""/>
+                    </column>
+                    <!--17-32-->
+                    <column>
+                        <!--<display item="Bank3 PWM Seq1.17" layout="above" label=""/>-->
+                        <display item="Bank3 PWM Seq1.17" layout="above" format="vslider" label=""/>
+                    </column>
+                    <column>
+                        <!--<display item="Bank3 PWM Seq1.18" layout="above" label=""/>-->
+                        <display item="Bank3 PWM Seq1.18" layout="above" format="vslider" label=""/>
+                    </column>
+                    <column>
+                        <!--<display item="Bank3 PWM Seq1.19" layout="above" label=""/>-->
+                        <display item="Bank3 PWM Seq1.19" layout="above" format="vslider" label=""/>
+                    </column>
+                    <column>
+                        <!--<display item="Bank3 PWM Seq1.20" layout="above" label=""/>-->
+                        <display item="Bank3 PWM Seq1.20" layout="above" format="vslider" label=""/>
+                    </column>
+                    <separator/>
+                    <column>
+                        <!--<display item="Bank3 PWM Seq1.21" layout="above" label=""/>-->
+                        <display item="Bank3 PWM Seq1.21" layout="above" format="vslider" label=""/>
+                    </column>
+                    <column>
+                        <!--<display item="Bank3 PWM Seq1.22" layout="above" label=""/>-->
+                        <display item="Bank3 PWM Seq1.22" layout="above" format="vslider" label=""/>
+                    </column>
+                    <column>
+                        <!--<display item="Bank3 PWM Seq1.23" layout="above" label=""/>-->
+                        <display item="Bank3 PWM Seq1.23" layout="above" format="vslider" label=""/>
+                    </column>
+                    <column>
+                        <!--<display item="Bank3 PWM Seq1.24" layout="above" label=""/>-->
+                        <display item="Bank3 PWM Seq1.24" layout="above" format="vslider" label=""/>
+                    </column>
+                    <column>
+                        <!--<display item="Bank3 PWM Seq1.25" layout="above" label=""/>-->
+                        <display item="Bank3 PWM Seq1.25" layout="above" format="vslider" label=""/>
+                    </column>
+                    <column>
+                        <!--<display item="Bank3 PWM Seq1.26" layout="above" label=""/>-->
+                        <display item="Bank3 PWM Seq1.26" layout="above" format="vslider" label=""/>
+                    </column>
+                    <column>
+                        <!--<display item="Bank3 PWM Seq1.27" layout="above" label=""/>-->
+                        <display item="Bank3 PWM Seq1.27" layout="above" format="vslider" label=""/>
+                    </column>
+                    <column>
+                        <!--<display item="Bank3 PWM Seq1.28" layout="above" label=""/>-->
+                        <display item="Bank3 PWM Seq1.28" layout="above" format="vslider" label=""/>
+                    </column>
+                    <column>
+                        <!--<display item="Bank3 PWM Seq1.29" layout="above" label=""/>-->
+                        <display item="Bank3 PWM Seq1.29" layout="above" format="vslider" label=""/>
+                    </column>
+                    <column>
+                        <!--<display item="Bank3 PWM Seq1.30" layout="above" label=""/>-->
+                        <display item="Bank3 PWM Seq1.30" layout="above" format="vslider" label=""/>
+                    </column>
+                    <separator/>
+                    <column>
+                        <!--<display item="Bank3 PWM Seq1.31" layout="above" label=""/>-->
+                        <display item="Bank3 PWM Seq1.31" layout="above" format="vslider" label=""/>
+                    </column>
+                    <column>
+                        <!--<display item="Bank3 PWM Seq1.32" layout="above" label=""/>-->
+                        <display item="Bank3 PWM Seq1.32" layout="above" format="vslider" label=""/>
+                    </column>
+                    <!--33-48-->
+                    <column>
+                        <!--<display item="Bank3 PWM Seq1.33" layout="above" label=""/>-->
+                        <display item="Bank3 PWM Seq1.33" layout="above" format="vslider" label=""/>
+                    </column>
+                    <column>
+                        <!--<display item="Bank3 PWM Seq1.34" layout="above" label=""/>-->
+                        <display item="Bank3 PWM Seq1.34" layout="above" format="vslider" label=""/>
+                    </column>
+                    <column>
+                        <!--<display item="Bank3 PWM Seq1.35" layout="above" label=""/>-->
+                        <display item="Bank3 PWM Seq1.35" layout="above" format="vslider" label=""/>
+                    </column>
+                    <column>
+                        <!--<display item="Bank3 PWM Seq1.36" layout="above" label=""/>-->
+                        <display item="Bank3 PWM Seq1.36" layout="above" format="vslider" label=""/>
+                    </column>
+                    <column>
+                        <!--<display item="Bank3 PWM Seq1.37" layout="above" label=""/>-->
+                        <display item="Bank3 PWM Seq1.37" layout="above" format="vslider" label=""/>
+                    </column>
+                    <column>
+                        <!--<display item="Bank3 PWM Seq1.38" layout="above" label=""/>-->
+                        <display item="Bank3 PWM Seq1.38" layout="above" format="vslider" label=""/>
+                    </column>
+                    <column>
+                        <!--<display item="Bank3 PWM Seq1.39" layout="above" label=""/>-->
+                        <display item="Bank3 PWM Seq1.39" layout="above" format="vslider" label=""/>
+                    </column>
+                    <column>
+                        <!--<display item="Bank3 PWM Seq1.40" layout="above" label=""/>-->
+                        <display item="Bank3 PWM Seq1.40" layout="above" format="vslider" label=""/>
+                    </column>
+                    <separator/>
+                    <column>
+                        <!--<display item="Bank3 PWM Seq1.41" layout="above" label=""/>-->
+                        <display item="Bank3 PWM Seq1.41" layout="above" format="vslider" label=""/>
+                    </column>
+                    <column>
+                        <!--<display item="Bank3 PWM Seq1.42" layout="above" label=""/>-->
+                        <display item="Bank3 PWM Seq1.42" layout="above" format="vslider" label=""/>
+                    </column>
+                    <column>
+                        <!--<display item="Bank3 PWM Seq1.43" layout="above" label=""/>-->
+                        <display item="Bank3 PWM Seq1.43" layout="above" format="vslider" label=""/>
+                    </column>
+                    <column>
+                        <!--<display item="Bank3 PWM Seq1.44" layout="above" label=""/>-->
+                        <display item="Bank3 PWM Seq1.44" layout="above" format="vslider" label=""/>
+                    </column>
+                    <column>
+                        <!--<display item="Bank3 PWM Seq1.45" layout="above" label=""/>-->
+                        <display item="Bank3 PWM Seq1.45" layout="above" format="vslider" label=""/>
+                    </column>
+                    <column>
+                        <!--<display item="Bank3 PWM Seq1.46" layout="above" label=""/>-->
+                        <display item="Bank3 PWM Seq1.46" layout="above" format="vslider" label=""/>
+                    </column>
+                    <column>
+                        <!--<display item="Bank3 PWM Seq1.47" layout="above" label=""/>-->
+                        <display item="Bank3 PWM Seq1.47" layout="above" format="vslider" label=""/>
+                    </column>
+                    <column>
+                        <!--<display item="Bank3 PWM Seq1.48" layout="above" label=""/>-->
+                        <display item="Bank3 PWM Seq1.48" layout="above" format="vslider" label=""/>
+                    </column>
+                    <label><text> </text></label>
+                </row>
+                <label><text>      </text></label>
+                <row>
+                    <label>
+                        <text>PWM Sequence 2</text>
+                        <text xml:lang="de">Modulation 2</text>
+                        <text xml:lang="nl">Serie 2</text>
+                    </label>
+                    <column>
+                        <display item="Bank3 PWM Seq2.1" layout="above" label=""/>
+                        <display item="Bank3 PWM Seq2.1" layout="above" format="vslider" label=""/>
+                    </column>
+                    <column>
+                        <display item="Bank3 PWM Seq2.2" layout="above" label=""/>
+                        <display item="Bank3 PWM Seq2.2" layout="above" format="vslider" label=""/>
+                    </column>
+                    <label><text> </text></label>
+                </row>
             </column>
         </group>
 
@@ -934,17 +1157,39 @@
                 <value>4</value>
             </qualifier>
             <column>
-                <label><text> </text></label>
-                <display item="Bank4 PWM Seq5.1"/>
-                <display item="Bank4 PWM Seq5.2"/>
-                <label><text> </text></label>
-            </column>
-            <column><label><text>      </text></label></column>
-            <column>
-                <label><text> </text></label>
-                <display item="Bank4 PWM Seq6.1"/>
-                <display item="Bank4 PWM Seq6.2"/>
-                <label><text> </text></label>
+                <row>
+                    <label>
+                        <text>PWM Sequence 5</text>
+                        <text xml:lang="de">Modulation 5</text>
+                        <text xml:lang="nl">Serie 5</text>
+                    </label>
+                    <column>
+                        <display item="Bank4 PWM Seq5.1" layout="above" label=""/>
+                        <display item="Bank4 PWM Seq5.1" layout="above" format="vslider" label=""/>
+                    </column>
+                    <column>
+                        <display item="Bank4 PWM Seq5.2" layout="above" label=""/>
+                        <display item="Bank4 PWM Seq5.2" layout="above" format="vslider" label=""/>
+                    </column>
+                    <label><text> </text></label>
+                </row>
+                <label><text>      </text></label>
+                <row>
+                    <label>
+                        <text>PWM Sequence 6</text>
+                        <text xml:lang="de">Modulation 6</text>
+                        <text xml:lang="nl">Serie 6</text>
+                    </label>
+                    <column>
+                        <display item="Bank4 PWM Seq6.1" layout="above" label=""/>
+                        <display item="Bank4 PWM Seq6.1" layout="above" format="vslider" label=""/>
+                    </column>
+                    <column>
+                        <display item="Bank4 PWM Seq6.2" layout="above" label=""/>
+                        <display item="Bank4 PWM Seq6.2" layout="above" format="vslider" label=""/>
+                    </column>
+                    <label><text> </text></label>
+                </row>
             </column>
         </group>
 

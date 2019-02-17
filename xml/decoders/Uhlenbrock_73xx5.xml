@@ -325,8 +325,9 @@
             <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
             <variable item="Advanced Function Mapping" CV="96" default="0"><!-- Piko -->
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-                <label>Advanced Function Mapping</label>
-                <label xml:lang="de">Art des Function Mappings</label>
+                <label>Use Advanced Function Mapping</label>
+                <label xml:lang="de">Erweiterte Funktionsmapping aktiv</label>
+                <label xml:lang="nl">Uitgebreide Functiemapping actief</label>
             </variable>
             <variable item="ABC Braking Value" CV="97" default="8">
                 <decVal/>
@@ -647,37 +648,37 @@
                 <tooltip>Unchecked/normal = 0 deg Checked/reversed = 180 deg</tooltip>
                 <tooltip xml:lang="de">Normal = 0 Grad Ausgewählt/umgekehrt = 180 Grad</tooltip>
             </variable>
-            <variable item="PWM Phase A1" CV="179" mask="XXXXXXVX">
+            <variable item="PWM Phase A1" CV="179" mask="XXXXXXVX" minOut="3">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <tooltip>Unchecked/normal = 0 deg Checked/reversed = 180 deg</tooltip>
                 <tooltip xml:lang="de">Normal = 0 Grad Ausgewählt/umgekehrt = 180 Grad</tooltip>
             </variable>
-            <variable item="PWM Phase A2" CV="179" mask="XXXXXVXX">
+            <variable item="PWM Phase A2" CV="179" mask="XXXXXVXX" minOut="4">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <tooltip>Unchecked/normal = 0 deg Checked/reversed = 180 deg</tooltip>
                 <tooltip xml:lang="de">Normal = 0 Grad Ausgewählt/umgekehrt = 180 Grad</tooltip>
             </variable>
-            <variable item="PWM Phase A3" CV="179" mask="XXXXVXXX">
+            <variable item="PWM Phase A3" CV="179" mask="XXXXVXXX" minOut="5">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <tooltip>Unchecked/normal = 0 deg Checked/reversed = 180 deg</tooltip>
                 <tooltip xml:lang="de">Normal = 0 Grad Ausgewählt/umgekehrt = 180 Grad</tooltip>
             </variable>
-            <variable item="PWM Phase A4" CV="179" mask="XXXVXXXX">
+            <variable item="PWM Phase A4" CV="179" mask="XXXVXXXX" minOut="6">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <tooltip>Unchecked/normal = 0 deg Checked/reversed = 180 deg</tooltip>
                 <tooltip xml:lang="de">Normal = 0 Grad Ausgewählt/umgekehrt = 180 Grad</tooltip>
             </variable>
-            <variable item="PWM Phase A5" CV="179" mask="XXVXXXXX">
+            <variable item="PWM Phase A5" CV="179" mask="XXVXXXXX" minOut="7">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <tooltip>Unchecked/normal = 0 deg Checked/reversed = 180 deg</tooltip>
                 <tooltip xml:lang="de">Normal = 0 Grad Ausgewählt/umgekehrt = 180 Grad</tooltip>
             </variable>
-            <variable item="PWM Phase A6" CV="179" mask="XVXXXXXX">
+            <variable item="PWM Phase A6" CV="179" mask="XVXXXXXX" minOut="8">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <tooltip>Unchecked/normal = 0 deg Checked/reversed = 180 deg</tooltip>
                 <tooltip xml:lang="de">Normal = 0 Grad Ausgewählt/umgekehrt = 180 Grad</tooltip>
             </variable>
-            <variable item="PWM Phase A7" CV="179" mask="VXXXXXXX">
+            <variable item="PWM Phase A7" CV="179" mask="VXXXXXXX" minOut="9">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <tooltip>Unchecked/normal = 0 deg Checked/reversed = 180 deg</tooltip>
                 <tooltip xml:lang="de">Normal = 0 Grad Ausgewählt/umgekehrt = 180 Grad</tooltip>

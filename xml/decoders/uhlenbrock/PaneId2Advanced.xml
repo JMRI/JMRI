@@ -26,7 +26,6 @@
     <column>
         <row>
             <column>
-                <display item="Advanced Function Mapping" format="checkbox"/>
                 <label>
                     <text>Decoder Programming Lock</text>
                     <text xml:lang="de">Decoder Programmierschloss</text>
@@ -60,11 +59,115 @@
             </column>
 
             <column>
+                <row>
+                    <group exclude="76560">
+                        <!-- BEGIN - Function Mapping Shift Grid in IntelliDrive2-->
+                        <grid gridy="3" weightx="1" ipadx="1">
+                            <!-- BEGIN - Row 1 (headers)-->
+                            <griditem gridx="0" gridy="0" gridwidth="1" anchor="LINE_END"><label><text>F0f</text></label></griditem>
+                            <griditem gridx="1" gridy="0" gridwidth="1" anchor="CENTER"><label><text>F0r</text></label></griditem>
+                            <griditem gridx="2" gridy="0" gridwidth="1" anchor="CENTER"><label><text>F1</text></label></griditem>
+                            <griditem gridx="3" gridy="0" gridwidth="1" anchor="CENTER"><label><text>F2</text></label></griditem>
+                            <griditem gridx="4" gridy="0" gridwidth="1" anchor="CENTER"><label><text>F3</text></label></griditem>
+                            <griditem gridx="5" gridy="0" gridwidth="1" anchor="CENTER"><label><text>F4</text></label></griditem>
+                            <griditem gridx="6" gridy="0" gridwidth="1" anchor="CENTER"><label><text>F5</text></label></griditem>
+                            <griditem gridx="7" gridy="0" gridwidth="1" anchor="CENTER"><label><text>F6</text></label></griditem>
+                            <griditem gridx="8" gridy="0" gridwidth="1" anchor="CENTER"><label><text>F7</text></label></griditem>
+                            <griditem gridx="9" gridy="0" gridwidth="1" anchor="CENTER"><label><text>F8</text></label></griditem>
+                            <griditem gridx="10" gridy="0" gridwidth="1" anchor="CENTER"><label><text>F9</text></label></griditem>
+                            <griditem gridx="11" gridy="0" gridwidth="1" anchor="CENTER"><label><text>F10</text></label></griditem>
+                            <griditem gridx="12" gridy="0" gridwidth="1" anchor="CENTER"><label><text>F11</text></label></griditem>
+                            <griditem gridx="13" gridy="0" gridwidth="1" anchor="CENTER"><label><text>F12</text></label></griditem>
+                            <!-- BEGIN - Row 2 (Slot 1)-->
+                            <griditem gridx="0" gridy="1" anchor="LINE_END">
+                                <display item="Fn Map Shift F0f" format="checkbox">
+                                    <label>Fn Mapping Shift:</label>
+                                    <label xml:lang="de">Fn Mapping Shift:</label>
+                                </display>
+                            </griditem>
+                            <griditem gridx="1" gridy="1" anchor="CENTER">
+                                <display item="Fn Map Shift F0r" format="checkbox" label=""/>
+                            </griditem>
+                            <griditem gridx="2" gridy="1" anchor="CENTER">
+                                <display item="Fn Map Shift F1" format="checkbox" label=""/>
+                            </griditem>
+                            <griditem gridx="3" gridy="1" anchor="CENTER">
+                                <display item="Fn Map Shift F2" format="checkbox" label=""/>
+                            </griditem>
+                            <griditem gridx="4" gridy="1" anchor="CENTER">
+                                <display item="Fn Map Shift F3" format="checkbox" label=""/>
+                            </griditem>
+                            <griditem gridx="5" gridy="1" anchor="CENTER">
+                                <display item="Fn Map Shift F4" format="checkbox" label=""/>
+                            </griditem>
+                            <griditem gridx="6" gridy="1" anchor="CENTER">
+                                <display item="Fn Map Shift F5" format="checkbox" label=""/>
+                            </griditem>
+                            <griditem gridx="7" gridy="1" anchor="CENTER">
+                                <display item="Fn Map Shift F6" format="checkbox" label=""/>
+                            </griditem>
+                            <griditem gridx="8" gridy="1" anchor="CENTER">
+                                <display item="Fn Map Shift F7" format="checkbox" label=""/>
+                            </griditem>
+                            <griditem gridx="9" gridy="1" anchor="CENTER">
+                                <display item="Fn Map Shift F8" format="checkbox" label=""/>
+                            </griditem>
+                            <griditem gridx="10" gridy="1" anchor="CENTER">
+                                <display item="Fn Map Shift F9" format="checkbox" label=""/>
+                            </griditem>
+                            <griditem gridx="11" gridy="1" anchor="CENTER">
+                                <display item="Fn Map Shift F10" format="checkbox" label=""/>
+                            </griditem>
+                            <griditem gridx="12" gridy="1" anchor="CENTER">
+                                <display item="Fn Map Shift F12" format="checkbox" label=""/>
+                            </griditem>
+                            <griditem gridx="13" gridy="1" anchor="CENTER">
+                                <display item="Fn Map Shift F12" format="checkbox" label=""/>
+                            </griditem>
+                            <!--SUSI Function Key header-->
+                            <griditem gridx="0" gridy="2" gridwidth="1" anchor="LINE_END"><label><text>F22</text></label></griditem>
+                            <griditem gridx="1" gridy="2" gridwidth="1" anchor="CENTER"><label><text>F23</text></label></griditem>
+                            <griditem gridx="2" gridy="2" gridwidth="1" anchor="CENTER"><label><text>F24</text></label></griditem>
+                            <griditem gridx="3" gridy="2" gridwidth="1" anchor="CENTER"><label><text>F25</text></label></griditem>
+                            <griditem gridx="4" gridy="2" gridwidth="1" anchor="CENTER"><label><text>F26</text></label></griditem>
+                            <griditem gridx="5" gridy="2" gridwidth="1" anchor="CENTER"><label><text>F27</text></label></griditem>
+                            <griditem gridx="6" gridy="2" gridwidth="1" anchor="CENTER"><label><text>F28</text></label></griditem>
+                            <!--SUSI Function Key checkboxes-->
+                            <griditem gridx="0" gridy="4" gridwidth="1" anchor="LINE_END">
+                                <display item="SUSI F22" format="checkbox">
+                                    <label>Activate in SUSI:</label>
+                                    <label xml:lang="de">Aktiviere in SUSI:</label>
+                                    <label xml:lang="nl">Activeer in SUSI:</label>
+                                </display>
+                            </griditem>
+                            <griditem gridx="1" gridy="4" gridwidth="1" anchor="CENTER">
+                                <display item="SUSI F23" format="checkbox" label=""/>
+                            </griditem>
+                            <griditem gridx="2" gridy="4" gridwidth="1" anchor="CENTER">
+                                <display item="SUSI F24" format="checkbox" label=""/>
+                            </griditem>
+                            <griditem gridx="3" gridy="4" gridwidth="1" anchor="CENTER">
+                                <display item="SUSI F25" format="checkbox" label=""/>
+                            </griditem>
+                            <griditem gridx="4" gridy="4" gridwidth="1" anchor="CENTER">
+                                <display item="SUSI F26" format="checkbox" label=""/>
+                            </griditem>
+                            <griditem gridx="5" gridy="4" gridwidth="1" anchor="CENTER">
+                                <display item="SUSI F27" format="checkbox" label=""/>
+                            </griditem>
+                            <griditem gridx="6" gridy="4" gridwidth="1" anchor="CENTER">
+                                <display item="SUSI F28" format="checkbox" label=""/>
+                            </griditem>
+                            <!--end Grid-->
+                        </grid>
+                    </group>
+                </row>
+                <label><text>      </text></label>
+                <separator/>
                 <label>
                     <text>More to come</text>
                     <text xml:lang="de">Mehr in Vorbereitung</text>
                 </label>
-                <separator/>
                 <!--More vars here-->
             </column>
         </row>
