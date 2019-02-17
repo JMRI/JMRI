@@ -79,6 +79,7 @@ public class FrmMainForm extends JFrame {
         _mProgramProperties = new ProgramProperties();
         _mCheckJMRIObject = new CheckJMRIObject();
         newOrOpenFile(true);
+        checkPanelStatus.actionPerformed(null);
         new javax.swing.Timer(5000, checkPanelStatus).start();
     }
 

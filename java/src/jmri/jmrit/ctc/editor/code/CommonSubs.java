@@ -17,6 +17,12 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.NumberFormatter;
+import jmri.InstanceManager;
+import jmri.BlockManager;
+import jmri.SensorManager;
+import jmri.SignalHeadManager;
+import jmri.SignalMastManager;
+import jmri.TurnoutManager;
 import jmri.jmrit.ctc.ctcserialdata.CTCSerialData;
 import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
 import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
@@ -27,7 +33,7 @@ import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
  */
 public class CommonSubs {
 
-//  For GUI editor routines that need this:    
+//  For GUI editor routines that need this:
     public static void setMillisecondsEdit(JFormattedTextField formattedTextField) {
         NumberFormatter numberFormatter = (NumberFormatter) formattedTextField.getFormatter();
         numberFormatter.setMinimum(0);
@@ -39,7 +45,7 @@ public class CommonSubs {
 //  routine already should have a NumberFormatter attached to it already (see "setMillisecondsEdit" above),
 //  technically these should NEVER throw!
     public static int getIntFromJTextFieldNoThrow(JTextField textField) { return ProjectsCommonSubs.getIntFromStringNoThrow(textField.getText(), 0); }
-    
+
     public static boolean allowClose(Component parentComponent, boolean dataChanged) {
         if (dataChanged) {
             return JOptionPane.showConfirmDialog(parentComponent, "Data has been modified, do you really want to exit?", "Warning", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
@@ -48,7 +54,7 @@ public class CommonSubs {
     }
 
 //  If the table model value is null, that is the same as "".  This also "compacts"
-//  the entries also (i.e. blank line(s) between entries are removed):    
+//  the entries also (i.e. blank line(s) between entries are removed):
     public static String getCSVStringFromDefaultTableModel(DefaultTableModel defaultTableModel) {
         String returnString = "";
         for (int sourceIndex = 0; sourceIndex < defaultTableModel.getRowCount(); sourceIndex++) {
@@ -106,7 +112,7 @@ public class CommonSubs {
 //      Collections.sort(returnValue);
         return returnValue;
     }
-    
+
     public static ArrayList<Integer> getArrayListOfSelectableOSSectionUniqueIDs(ArrayList<CodeButtonHandlerData> codeButtonHandlerDataList) {
         ArrayList<Integer> returnValue = new ArrayList<>();
         for (CodeButtonHandlerData codeButtonHandlerData : codeButtonHandlerDataList) {
@@ -119,7 +125,7 @@ public class CommonSubs {
         populateJComboBoxWithColumnDescriptions(jComboBox, ctcSerialData);
         setSelectedIndexOfJComboBoxViaUniqueID(jComboBox, ctcSerialData, uniqueID);
     }
-    
+
     public static void populateJComboBoxWithColumnDescriptions(JComboBox<String> jComboBox, CTCSerialData ctcSerialData) {
         ArrayList<String> userDescriptions = new ArrayList<>();
         userDescriptions.add("");   // None is specified.
@@ -130,14 +136,78 @@ public class CommonSubs {
 //      Collections.sort(userDescriptions);
         jComboBox.setModel(new DefaultComboBoxModel<>(new Vector<>(userDescriptions)));
     }
-    
+
+    /**
+     * Populate a combo box with bean names using getDisplayName().
+     * <p>
+     * If a panel xml file has not been loaded, the combo box will behave as a
+     * text field (editable), otherwise it will behave as standard combo box (not editable).
+     * @param jComboBox The string based combo box to be populated.
+     * @param beanType The bean type to be loaded.  It has to be in the switch list.
+     * @param currentSelection The current item to be selected, none if null.
+     * @param firstRowBlank True to create a blank row. If the selection is null or empty, the blank row will be selected.
+     */
+    public static void populateJComboBoxWithBeans(JComboBox<String> jComboBox, String beanType, String currentSelection, boolean firstRowBlank) {
+        boolean panelLoaded = InstanceManager.getDefault(jmri.jmrit.ctc.editor.gui.FrmMainForm.class)._mPanelLoaded;
+        jComboBox.removeAllItems();
+        if (!panelLoaded) {
+            // Configure combo box as a pseudo text field
+            jComboBox.setEditable(true);
+            jComboBox.addItem(currentSelection == null ? "" : currentSelection);
+            return;
+        }
+        jComboBox.setEditable(false);
+        ArrayList<String> list = new ArrayList<>();
+        switch (beanType) {
+            case "Sensor":
+                InstanceManager.getDefault(SensorManager.class).getNamedBeanSet().forEach((s) -> {
+                    list.add(s.getDisplayName());
+                });
+                break;
+            case "Turnout":
+                InstanceManager.getDefault(TurnoutManager.class).getNamedBeanSet().forEach((t) -> {
+                    list.add(t.getDisplayName());
+                });
+                break;
+            case "SignalHead":
+                InstanceManager.getDefault(SignalHeadManager.class).getNamedBeanSet().forEach((h) -> {
+                    list.add(h.getDisplayName());
+                });
+                break;
+            case "SignalMast":
+                InstanceManager.getDefault(SignalMastManager.class).getNamedBeanSet().forEach((m) -> {
+                    list.add(m.getDisplayName());
+                });
+                break;
+            case "Block":
+                InstanceManager.getDefault(BlockManager.class).getNamedBeanSet().forEach((b) -> {
+                    list.add(b.getDisplayName());
+                });
+                break;
+            default:
+                log.error("Bean type, '{}', is not valid", beanType);
+        }
+        list.sort(new jmri.util.AlphanumComparator());
+        list.forEach((item) -> {
+            jComboBox.addItem(item);
+        });
+        jmri.util.swing.JComboBoxUtil.setupComboBoxMaxRows(jComboBox);
+        jComboBox.setSelectedItem(currentSelection);
+        if (firstRowBlank) {
+            jComboBox.insertItemAt("", 0);
+            if (currentSelection == null || currentSelection.isEmpty()) {
+                jComboBox.setSelectedIndex(0);
+            }
+        }
+    }
+
     public static void setSelectedIndexOfJComboBoxViaUniqueID(JComboBox<String> jComboBox, CTCSerialData ctcSerialData, int uniqueID) {
         int index = ctcSerialData.getIndexOfUniqueID(uniqueID) + 1;   // Can be -1 if not found, index becomes 0, which is spaces!
         jComboBox.setSelectedIndex(index);
     }
-    
+
 /*  Someday I'll create a better "ButtonGroup" than provided.  Until then:
-    
+
     Cheat: We know that the implementation of ButtonGroup uses a Vector when elements
     are added to it.  Therefore the order is guaranteed.  Check your individual order
     by searching for all X.add (where X is the ButtonGroup variable name).
@@ -168,13 +238,13 @@ public class CommonSubs {
         if (selected < 0 || selected >= buttons.size()) selected = 0;   // Default is zero if you pass an out of range value.
         AbstractButton buttonSelected = buttons.get(selected);
         buttonSelected.setSelected(true);
-//  Be consistent, when set, do this also:        
+//  Be consistent, when set, do this also:
         ActionEvent actionEvent = new ActionEvent(buttonSelected, ActionEvent.ACTION_PERFORMED, buttonSelected.getActionCommand());
         for (ActionListener actionListener : buttonSelected.getActionListeners()) {
             actionListener.actionPerformed(actionEvent);
         }
     }
-    
+
 //  Or you can get the actual string that the user sees in the button (or null if you screwed up by
 //  allowing all buttons to be non-selected, for instance if you didn't select one by default).
     public static String getButtonSelectedText(ButtonGroup buttonGroup) {
@@ -185,8 +255,8 @@ public class CommonSubs {
         }
         return null;
     }
-    
-//  If the passed errors array has entries, put up a dialog and return true, if not no dialog, and return false.    
+
+//  If the passed errors array has entries, put up a dialog and return true, if not no dialog, and return false.
     public static boolean missingFieldsErrorDialogDisplayed(Component parentComponent, ArrayList<String> errors, boolean isCancel) {
         if (errors.isEmpty()) return false;
         String displayString = errors.size() > 1 ?  "The following field(s) are required:\n\n" : "The following field is required:\n\n";
@@ -201,22 +271,34 @@ public class CommonSubs {
         JOptionPane.showMessageDialog(parentComponent, displayString, "Error:", JOptionPane.ERROR_MESSAGE);
         return true;
     }
-    
-//  Simple sub to see if field is not empty.  If empty, then it takes the prompt text and adds it to then end of the errors array.    
+
+//  Simple sub to see if field is not empty.  If empty, then it takes the prompt text and adds it to the end of the errors array.
     public static void checkJTextFieldNotEmpty(javax.swing.JTextField field, javax.swing.JLabel promptName, ArrayList<String> errors) {
         if (!isJTextFieldNotEmpty(field)) errors.add(promptName.getText());
     }
-    
+
     public static boolean isJTextFieldNotEmpty(javax.swing.JTextField field) {
         return !(field.getText().trim().isEmpty());
     }
-    
+
+//  Simple sub to see if combo selection is not empty.  If empty, then it takes the prompt text and adds it to the end of the errors array.
+    public static void checkJComboBoxNotEmpty(javax.swing.JComboBox<String> combo, javax.swing.JLabel promptName, ArrayList<String> errors) {
+        if (!isJComboBoxNotEmpty(combo)) errors.add(promptName.getText());
+    }
+
+    public static boolean isJComboBoxNotEmpty(javax.swing.JComboBox<String> combo) {
+        return !((String) combo.getSelectedItem()).trim().isEmpty();
+    }
+
 //  Returns the directory only of a directory + filename combination.  The return
-//  string has a file separator at the end, so that filenames can just be appended to it.    
+//  string has a file separator at the end, so that filenames can just be appended to it.
     public static String getDirectoryOnly(String directoryAndFilename) {
         File file = new File(directoryAndFilename);
         String parent = file.getParent();   // Returns "null" if no parent.
         if (ProjectsCommonSubs.isNullOrEmptyString(parent)) return "";
         return file.getParent() + File.separator;
     }
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CommonSubs.class);
+
 }
