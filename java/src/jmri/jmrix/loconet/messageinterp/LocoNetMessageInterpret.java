@@ -4491,7 +4491,6 @@ public class LocoNetMessageInterpret {
             if (result.length() > 0) {
                 return result;
             }
-<<<<<<< HEAD
         }
         return "";
 
