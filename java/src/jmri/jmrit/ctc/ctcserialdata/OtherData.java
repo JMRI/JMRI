@@ -73,7 +73,7 @@ Because of "getAllInternalSensorStringFields", ANY JMRI sensor object that we
 create should have "InternalSensor" (case sensitive) as ANY PART of their
 variable name and declared as type String.
 */    
-    private static final String INTERNAL_SENSOR = "InternalSensor";
+    private static final String INTERNAL_SENSOR = "InternalSensor";             // NOI18N
 //  Version of this file for supporting upgrade paths from prior versions:
     public int      _mFileVersion;
 //  Fleeting:
@@ -101,10 +101,10 @@ variable name and declared as type String.
     public boolean  _mGUIDesign_TurnoutsOnPanel;
     
     public OtherData() {
-        _mFleetingToggleInternalSensor = "IS:FLEETING";
+        _mFleetingToggleInternalSensor = "IS:FLEETING";                                 // NOI18N
         _mDefaultFleetingEnabled = false;
-        _mCTCDebugSystemReloadInternalSensor = "IS:RELOADCTC";
-        _mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor = "IS:DEBUGCTC";
+        _mCTCDebugSystemReloadInternalSensor = "IS:RELOADCTC";                          // NOI18N
+        _mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor = "IS:DEBUGCTC";    // NOI18N
         _mGUIDesign_NumberOfEmptyColumnsAtEnd = 0;
         _mGUIDesign_CTCPanelType = CTC_PANEL_TYPE.USS;
         _mGUIDesign_BuilderPlate = false;

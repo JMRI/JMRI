@@ -200,7 +200,7 @@ Solution:
     with its proper filename that the other program is looking for.
  */
 
-    private static final String TEMPORARY_EXTENSION = ".xmlTMP";
+    private static final String TEMPORARY_EXTENSION = ".xmlTMP";        // NOI18N
     public void writeDataToXMLFile(String filename) {
         String temporaryFilename = ProjectsCommonSubs.changeExtensionTo(filename, TEMPORARY_EXTENSION);
         try { // Write temporary file:

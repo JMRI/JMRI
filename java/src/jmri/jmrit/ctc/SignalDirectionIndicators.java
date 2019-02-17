@@ -37,7 +37,7 @@ public final class SignalDirectionIndicators implements SignalDirectionIndicator
     public void SetCodeButtonHandler(CodeButtonHandler codeButtonHandler) { _mCodeButtonHandler = codeButtonHandler; }
     
     private LinkedList<SignalHeadPropertyChangeListenerMaintainer> _mSignalHeadPropertyChangeListenerLinkedList = new LinkedList<>();
-    @SuppressWarnings("LeakingThisInConstructor")
+    @SuppressWarnings("LeakingThisInConstructor")   // NOI18N
     private class SignalHeadPropertyChangeListenerMaintainer {
         private final NBHAbstractSignalCommon _mSignal;
         private final PropertyChangeListener _mPropertyChangeListener = (PropertyChangeEvent e) -> { handleSignalChange(e); };
@@ -80,31 +80,31 @@ public final class SignalDirectionIndicators implements SignalDirectionIndicator
         _mCodingTimeTimer = new Timer(codingTimeInMilliseconds, _mCodingTimeTimerActionListener);
         _mCodingTimeTimer.setRepeats(false);
         try {
-            _mLeftSensor = new NBHSensor("SignalDirectionIndicators",  userIdentifier, "leftSensor", leftSensor, true);
-            _mNormalSensor = new NBHSensor("SignalDirectionIndicators", userIdentifier, "normalSensor", normalSensor, false);
-            _mRightSensor = new NBHSensor("SignalDirectionIndicators", userIdentifier, "rightSensor", rightSensor, true);
+            _mLeftSensor = new NBHSensor("SignalDirectionIndicators",  userIdentifier, Bundle.getMessage("SignalDirectionIndicatorsLeftSensor"), leftSensor, true);         // NOI18N
+            _mNormalSensor = new NBHSensor("SignalDirectionIndicators", userIdentifier, Bundle.getMessage("SignalDirectionIndicatorsNormalSensor"), normalSensor, false);   // NOI18N
+            _mRightSensor = new NBHSensor("SignalDirectionIndicators", userIdentifier, Bundle.getMessage("SignalDirectionIndicatorsRightSensor"), rightSensor, true);       // NOI18N
 //  Partially plagerized from GUI code:           
             boolean leftInternalSensorPresent = _mLeftSensor.valid();
             boolean entriesInLeftRightTrafficSignalsCSVList = !signalListLeftRightCSV.isEmpty();
             boolean rightInternalSensorPresent = _mRightSensor.valid();
             boolean entriesInRightLeftTrafficSignalsCSVList = !signalListRightLeftCSV.isEmpty();
-            if (!leftInternalSensorPresent && !rightInternalSensorPresent) { throw new CTCException("SignalDirectionIndicators", userIdentifier, "must have one", "One or both leftSensor and rightSensor must exist"); }
-            if (leftInternalSensorPresent && !entriesInRightLeftTrafficSignalsCSVList) { throw new CTCException("SignalDirectionIndicators", userIdentifier, "invalid combination", "Left sensor exists but no entries in right to left signals."); }
-            if (rightInternalSensorPresent && !entriesInLeftRightTrafficSignalsCSVList) { throw new CTCException("SignalDirectionIndicators", userIdentifier, "invalid combination", "Right sensor exists but no entries in left to right signals."); }
-            if (!leftInternalSensorPresent && entriesInRightLeftTrafficSignalsCSVList) { throw new CTCException("SignalDirectionIndicators", userIdentifier, "invalid combination", "leftSensor is not specified, but there are entry(s) in right to left signals."); }
-            if (!rightInternalSensorPresent && entriesInLeftRightTrafficSignalsCSVList) { throw new CTCException("SignalDirectionIndicators", userIdentifier, "invalid combination", "rightSensor is not specified, but there are entry(s) in left to right signals."); }
+            if (!leftInternalSensorPresent && !rightInternalSensorPresent) { throw new CTCException("SignalDirectionIndicators", userIdentifier, Bundle.getMessage("SignalDirectionIndicatorsMustHaveOne"), Bundle.getMessage("SignalDirectionIndicatorsError1")); }                        // NOI18N
+            if (leftInternalSensorPresent && !entriesInRightLeftTrafficSignalsCSVList) { throw new CTCException("SignalDirectionIndicators", userIdentifier, Bundle.getMessage("SignalDirectionIndicatorsInvalidCombination"), Bundle.getMessage("SignalDirectionIndicatorsError2")); }     // NOI18N
+            if (rightInternalSensorPresent && !entriesInLeftRightTrafficSignalsCSVList) { throw new CTCException("SignalDirectionIndicators", userIdentifier, Bundle.getMessage("SignalDirectionIndicatorsInvalidCombination"), Bundle.getMessage("SignalDirectionIndicatorsError3")); }    // NOI18N
+            if (!leftInternalSensorPresent && entriesInRightLeftTrafficSignalsCSVList) { throw new CTCException("SignalDirectionIndicators", userIdentifier, Bundle.getMessage("SignalDirectionIndicatorsInvalidCombination"), Bundle.getMessage("SignalDirectionIndicatorsError4")); }      // NOI18N
+            if (!rightInternalSensorPresent && entriesInLeftRightTrafficSignalsCSVList) { throw new CTCException("SignalDirectionIndicators", userIdentifier, Bundle.getMessage("SignalDirectionIndicatorsInvalidCombination"), Bundle.getMessage("SignalDirectionIndicatorsError5")); }    // NOI18N
 
             ArrayList<String> listOfSignals;
             listOfSignals = ProjectsCommonSubs.getArrayListFromCSV(signalListLeftRightCSV);
             for (String signalText : listOfSignals) {
-                NBHAbstractSignalCommon signal = NBHAbstractSignalCommon.getExistingSignal("SignalDirectionIndicators", userIdentifier, "signalListLeftRightCSV" + " " + signalListLeftRightCSV, signalText);
+                NBHAbstractSignalCommon signal = NBHAbstractSignalCommon.getExistingSignal("SignalDirectionIndicators", userIdentifier, "signalListLeftRightCSV" + " " + signalListLeftRightCSV, signalText);   // NOI18N
                 new SignalHeadPropertyChangeListenerMaintainer(signal); // Lazy, constructor does EVERYTHING and leaves a bread crumb trail to this object.
                 _mSignalListLeftRight.add(signal);
                 addSignal(userIdentifier, signal);
             }
             listOfSignals = ProjectsCommonSubs.getArrayListFromCSV(signalListRightLeftCSV);
             for (String signalText : listOfSignals) {
-                NBHAbstractSignalCommon signal = NBHAbstractSignalCommon.getExistingSignal("SignalDirectionIndicators", userIdentifier, "signalListRightLeftCSV" + " " + signalListRightLeftCSV, signalText);
+                NBHAbstractSignalCommon signal = NBHAbstractSignalCommon.getExistingSignal("SignalDirectionIndicators", userIdentifier, "signalListRightLeftCSV" + " " + signalListRightLeftCSV, signalText);   // NOI18N
                 new SignalHeadPropertyChangeListenerMaintainer(signal); // Lazy, constructor does EVERYTHING and leaves a bread crumb trail to this object.
                 _mSignalListRightLeft.add(signal);
                 addSignal(userIdentifier, signal);
@@ -201,7 +201,7 @@ public final class SignalDirectionIndicators implements SignalDirectionIndicator
             if (!signal.isDanger()) { RLCanGo = true; break; }
         }
         if (LRCanGo && RLCanGo) {
-            CTCException.logError("Signals are non red in both directions");
+            CTCException.logError(Bundle.getMessage("SignalDirectionIndicatorsError6"));    // NOI18N
             setSignalDirectionIndicatorsToOUTOFCORRESPONDENCE();    // ooppss!
             return CTCConstants.OUTOFCORRESPONDENCE;
         }
@@ -216,7 +216,7 @@ public final class SignalDirectionIndicators implements SignalDirectionIndicator
     }
     
     private void addSignal(String userIdentifier, NBHAbstractSignalCommon signal) throws CTCException {
-        if (!_mSignalsUsed.add(signal)) { throw new CTCException("SignalDirectionIndicators", userIdentifier, signal.getDisplayName(), "Duplicate home signal defined in more than one SignalDirectionIndicators object"); }
+        if (!_mSignalsUsed.add(signal)) { throw new CTCException("SignalDirectionIndicators", userIdentifier, signal.getDisplayName(), Bundle.getMessage("SignalDirectionIndicatorsDuplicateHomeSignal")); }    // NOI18N
     }
     
     private void setSignalsHeldTo(int direction) {
@@ -364,11 +364,11 @@ public final class SignalDirectionIndicators implements SignalDirectionIndicator
     private boolean changedToUniversalRed(PropertyChangeEvent e) {
         Object source = e.getSource();
         if (source instanceof AbstractSignalHead) {
-            if (e.getPropertyName().equals("Appearance")) {
+            if (e.getPropertyName().equals("Appearance")) { // NOI18N
                 return SignalHead.RED == (int)e.getNewValue();
             }
         } else if (source instanceof AbstractSignalMast) {
-            if (e.getPropertyName().equals("Aspect")) {
+            if (e.getPropertyName().equals("Aspect")) { // NOI18N
                 AbstractSignalMast source2 = (AbstractSignalMast)source;
                 return source2.getAspect().equals(source2.getAppearanceMap().getSpecificAppearance(SignalAppearanceMap.DANGER));
             }

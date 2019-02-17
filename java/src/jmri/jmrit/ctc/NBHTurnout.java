@@ -38,7 +38,7 @@ public class NBHTurnout implements Turnout {
     public static final int DEFAULT_INT_RV = 0;                // For any function that returns int.
     public static final long DEFAULT_LONG_RV = 0;              // For any function that returns long.
     public static final float DEFAULT_FLOAT_RV = (float)0.0;   // For any function that returns float.
-    public static final String DEFAULT_STRING_RV = "UNKNOWN";  // For any function that returns String.
+    public static final String DEFAULT_STRING_RV = "UNKNOWN";  // NOI18N  For any function that returns String.
     
     private static final TurnoutManager TURNOUT_MANAGER = InstanceManager.turnoutManagerInstance();
     private static final NamedBeanHandleManager NAMED_BEAN_HANDLE_MANAGER = InstanceManager.getDefault(NamedBeanHandleManager.class);
@@ -67,9 +67,9 @@ public class NBHTurnout implements Turnout {
     static private Turnout getExistingJMRITurnout(String module, String userIdentifier, String parameter, String turnout) throws CTCException {
         if (!ProjectsCommonSubs.isNullOrEmptyString(turnout)) {
             Turnout returnValue = TURNOUT_MANAGER.getTurnout(turnout.trim());
-            if (returnValue == null) { throw new CTCException(module, userIdentifier, parameter, "Turnout does not exist: " + turnout); }
+            if (returnValue == null) { throw new CTCException(module, userIdentifier, parameter, Bundle.getMessage("NBHTurnoutDoesNotExist") + " " + turnout); }    // NOI18N
             return returnValue;
-        } else { throw new CTCException(module, userIdentifier, parameter, "Required turnout missing"); }
+        } else { throw new CTCException(module, userIdentifier, parameter, Bundle.getMessage("RequiredTurnoutMissing")); }    // NOI18N
     }
     
     @Override

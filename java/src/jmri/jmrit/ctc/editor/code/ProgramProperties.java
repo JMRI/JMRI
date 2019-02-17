@@ -15,60 +15,60 @@ import jmri.jmrit.ctc.CTCFiles;
  * This just maintains all of the properties a user can create.  Stupid simple.
  */
 public class ProgramProperties {
-    private static final String PROPERTIES_FILENAME = "ProgramProperties.xml";
+    private static final String PROPERTIES_FILENAME = "ProgramProperties.xml";  // NOI18N
 
-    public static final String FILENAME_DEFAULT = "preference:ctc/CTCSystem.xml";
-    private static final String FILENAME_KEY = "_mFilename";
+    public static final String FILENAME_DEFAULT = "preference:ctc/CTCSystem.xml";   // NOI18N
+    private static final String FILENAME_KEY = "_mFilename";    // NOI18N
     public String _mFilename = FILENAME_DEFAULT;
-    private static final String CODE_BUTTON_INTERNAL_SENSOR_PATTERN = "_mCodeButtonInternalSensorPattern";
-    private static final String CODE_BUTTON_INTERNAL_SENSOR_PATTERN_DEFAULT = "IS#:CB";
+    private static final String CODE_BUTTON_INTERNAL_SENSOR_PATTERN = "_mCodeButtonInternalSensorPattern";  // NOI18N
+    private static final String CODE_BUTTON_INTERNAL_SENSOR_PATTERN_DEFAULT = "IS#:CB"; // NOI18N
     public String _mCodeButtonInternalSensorPattern = CODE_BUTTON_INTERNAL_SENSOR_PATTERN_DEFAULT;
-    private static final String SIDI_CODING_TIME_IN_MILLISECONDS = "_mSIDI_CodingAndResponseTime";
+    private static final String SIDI_CODING_TIME_IN_MILLISECONDS = "_mSIDI_CodingAndResponseTime";  // NOI18N
     private static final String SIDI_CODING_TIME_IN_MILLISECONDS_DEFAULT = Integer.toString(2000);
     public int _mSIDI_CodingTimeInMilliseconds = Integer.parseInt(SIDI_CODING_TIME_IN_MILLISECONDS_DEFAULT);
-    private static final String SIDI_LEFT_INTERNAL_SENSOR_PATTERN = "_mSIDI_LeftInternalSensorPattern";
-    private static final String SIDI_LEFT_INTERNAL_SENSOR_PATTERN_DEFAULT = "IS#:LDGK";
+    private static final String SIDI_LEFT_INTERNAL_SENSOR_PATTERN = "_mSIDI_LeftInternalSensorPattern"; // NOI18N
+    private static final String SIDI_LEFT_INTERNAL_SENSOR_PATTERN_DEFAULT = "IS#:LDGK";// NOI18N
     public String _mSIDI_LeftInternalSensorPattern = SIDI_LEFT_INTERNAL_SENSOR_PATTERN_DEFAULT;
-    private static final String SIDI_NORMAL_INTERNAL_SENSOR_PATTERN = "_mSIDI_NormalInternalSensorPattern";
-    private static final String SIDI_NORMAL_INTERNAL_SENSOR_PATTERN_DEFAULT = "IS#:NGK";
+    private static final String SIDI_NORMAL_INTERNAL_SENSOR_PATTERN = "_mSIDI_NormalInternalSensorPattern";// NOI18N
+    private static final String SIDI_NORMAL_INTERNAL_SENSOR_PATTERN_DEFAULT = "IS#:NGK";// NOI18N
     public String _mSIDI_NormalInternalSensorPattern = SIDI_NORMAL_INTERNAL_SENSOR_PATTERN_DEFAULT;
-    private static final String SIDI_RIGHT_INTERNAL_SENSOR_PATTERN = "_mSIDI_RightInternalSensorPattern";
-    private static final String SIDI_RIGHT_INTERNAL_SENSOR_PATTERN_DEFAULT = "IS#:RDGK";
+    private static final String SIDI_RIGHT_INTERNAL_SENSOR_PATTERN = "_mSIDI_RightInternalSensorPattern";// NOI18N
+    private static final String SIDI_RIGHT_INTERNAL_SENSOR_PATTERN_DEFAULT = "IS#:RDGK";// NOI18N
     public String _mSIDI_RightInternalSensorPattern = SIDI_RIGHT_INTERNAL_SENSOR_PATTERN_DEFAULT;
-    private static final String SIDI_TIME_LOCKING_TIME_IN_MILLISECONDS = "_mSIDI_TimeLockingTimeInMilliseconds";
+    private static final String SIDI_TIME_LOCKING_TIME_IN_MILLISECONDS = "_mSIDI_TimeLockingTimeInMilliseconds";// NOI18N
     private static final String SIDI_TIME_LOCKING_TIME_IN_MILLISECONDS_DEFAULT = Integer.toString(3000);
     public int _mSIDI_TimeLockingTimeInMilliseconds = Integer.parseInt(SIDI_TIME_LOCKING_TIME_IN_MILLISECONDS_DEFAULT);
-    private static final String SIDL_LEFT_INTERNAL_SENSOR_PATTERN = "_mSIDL_LeftInternalSensorPattern";
-    private static final String SIDL_LEFT_INTERNAL_SENSOR_PATTERN_DEFAULT = "IS#:LDGL";
+    private static final String SIDL_LEFT_INTERNAL_SENSOR_PATTERN = "_mSIDL_LeftInternalSensorPattern";// NOI18N
+    private static final String SIDL_LEFT_INTERNAL_SENSOR_PATTERN_DEFAULT = "IS#:LDGL";// NOI18N
     public String _mSIDL_LeftInternalSensorPattern = SIDL_LEFT_INTERNAL_SENSOR_PATTERN_DEFAULT;
-    private static final String SIDL_NORMAL_INTERNAL_SENSOR_PATTERN = "_mSIDL_NormalInternalSensorPattern";
-    private static final String SIDL_NORMAL_INTERNAL_SENSOR_PATTERN_DEFAULT = "IS#:NGL";
+    private static final String SIDL_NORMAL_INTERNAL_SENSOR_PATTERN = "_mSIDL_NormalInternalSensorPattern";// NOI18N
+    private static final String SIDL_NORMAL_INTERNAL_SENSOR_PATTERN_DEFAULT = "IS#:NGL";// NOI18N
     public String _mSIDL_NormalInternalSensorPattern = SIDL_NORMAL_INTERNAL_SENSOR_PATTERN_DEFAULT;
-    private static final String SIDL_RIGHT_INTERNAL_SENSOR_PATTERN = "_mSIDL_RightInternalSensorPattern";
-    private static final String SIDL_RIGHT_INTERNAL_SENSOR_PATTERN_DEFAULT = "IS#:RDGL";
+    private static final String SIDL_RIGHT_INTERNAL_SENSOR_PATTERN = "_mSIDL_RightInternalSensorPattern";// NOI18N
+    private static final String SIDL_RIGHT_INTERNAL_SENSOR_PATTERN_DEFAULT = "IS#:RDGL";// NOI18N
     public String _mSIDL_RightInternalSensorPattern = SIDL_RIGHT_INTERNAL_SENSOR_PATTERN_DEFAULT;
-    private static final String SWDI_CODING_TIME_IN_MILLISECONDS = "_mSWDI_CodingTimeInMilliseconds";
+    private static final String SWDI_CODING_TIME_IN_MILLISECONDS = "_mSWDI_CodingTimeInMilliseconds";// NOI18N
     private static final String SWDI_CODING_TIME_IN_MILLISECONDS_DEFAULT = Integer.toString(2000);
     public int _mSWDI_CodingTimeInMilliseconds = Integer.parseInt(SWDI_CODING_TIME_IN_MILLISECONDS_DEFAULT);
-    private static final String SWDI_NORMAL_INTERNAL_SENSOR_PATTERN = "_mSWDI_NormalInternalSensorPattern";
-    private static final String SWDI_NORMAL_INTERNAL_SENSOR_PATTERN_DEFAULT = "IS#:SWNI";
+    private static final String SWDI_NORMAL_INTERNAL_SENSOR_PATTERN = "_mSWDI_NormalInternalSensorPattern";// NOI18N
+    private static final String SWDI_NORMAL_INTERNAL_SENSOR_PATTERN_DEFAULT = "IS#:SWNI";// NOI18N
     public String _mSWDI_NormalInternalSensorPattern = SWDI_NORMAL_INTERNAL_SENSOR_PATTERN_DEFAULT;
-    private static final String SWDI_REVERSED_INTERNAL_SENSOR_PATTERN = "_mSWDI_ReversedInternalSensorPattern";
-    private static final String SWDI_REVERSED_INTERNAL_SENSOR_PATTERN_DEFAULT = "IS#:SWRI";
+    private static final String SWDI_REVERSED_INTERNAL_SENSOR_PATTERN = "_mSWDI_ReversedInternalSensorPattern";// NOI18N
+    private static final String SWDI_REVERSED_INTERNAL_SENSOR_PATTERN_DEFAULT = "IS#:SWRI";// NOI18N
     public String _mSWDI_ReversedInternalSensorPattern = SWDI_REVERSED_INTERNAL_SENSOR_PATTERN_DEFAULT;
-    private static final String SWDL_INTERNAL_SENSOR_PATTERN = "_mSWDL_InternalSensorPattern";
-    private static final String SWDL_INTERNAL_SENSOR_PATTERN_DEFAULT = "IS#:LEVER";
+    private static final String SWDL_INTERNAL_SENSOR_PATTERN = "_mSWDL_InternalSensorPattern";// NOI18N
+    private static final String SWDL_INTERNAL_SENSOR_PATTERN_DEFAULT = "IS#:LEVER";// NOI18N
     public String _mSWDL_InternalSensorPattern = SWDL_INTERNAL_SENSOR_PATTERN_DEFAULT;
-    private static final String CO_CALL_ON_TOGGLE_INTERNAL_SENSOR_PATTERN = "_mCO_CallOnToggleInternalSensorPattern";
-    private static final String CO_CALL_ON_TOGGLE_INTERNAL_SENSOR_PATTERN_DEFAULT = "IS#:CALLON";
+    private static final String CO_CALL_ON_TOGGLE_INTERNAL_SENSOR_PATTERN = "_mCO_CallOnToggleInternalSensorPattern";// NOI18N
+    private static final String CO_CALL_ON_TOGGLE_INTERNAL_SENSOR_PATTERN_DEFAULT = "IS#:CALLON";// NOI18N
     public String _mCO_CallOnToggleInternalSensorPattern = CO_CALL_ON_TOGGLE_INTERNAL_SENSOR_PATTERN_DEFAULT;
-    private static final String TUL_DISPATCHER_INTERNAL_SENSOR_LOCK_TOGGLE_PATTERN = "_mTUL_DispatcherInternalSensorLockTogglePattern";
-    private static final String TUL_DISPATCHER_INTERNAL_SENSOR_LOCK_TOGGLE_PATTERN_DEFAULT = "IS#:LOCKTOGGLE";
+    private static final String TUL_DISPATCHER_INTERNAL_SENSOR_LOCK_TOGGLE_PATTERN = "_mTUL_DispatcherInternalSensorLockTogglePattern";// NOI18N
+    private static final String TUL_DISPATCHER_INTERNAL_SENSOR_LOCK_TOGGLE_PATTERN_DEFAULT = "IS#:LOCKTOGGLE";// NOI18N
     public String _mTUL_DispatcherInternalSensorLockTogglePattern = TUL_DISPATCHER_INTERNAL_SENSOR_LOCK_TOGGLE_PATTERN_DEFAULT;
-    private static final String TUL_DISPATCHER_INTERNAL_SENSOR_UNLOCKED_INDICATOR_PATTERN = "_mTUL_DispatcherInternalSensorUnlockedIndicatorPattern";
-    private static final String TUL_DISPATCHER_INTERNAL_SENSOR_UNLOCKED_INDICATOR_PATTERN_DEFAULT = "IS#:UNLOCKEDINDICATOR";
+    private static final String TUL_DISPATCHER_INTERNAL_SENSOR_UNLOCKED_INDICATOR_PATTERN = "_mTUL_DispatcherInternalSensorUnlockedIndicatorPattern";// NOI18N
+    private static final String TUL_DISPATCHER_INTERNAL_SENSOR_UNLOCKED_INDICATOR_PATTERN_DEFAULT = "IS#:UNLOCKEDINDICATOR";// NOI18N
     public String _mTUL_DispatcherInternalSensorUnlockedIndicatorPattern = TUL_DISPATCHER_INTERNAL_SENSOR_UNLOCKED_INDICATOR_PATTERN_DEFAULT;
-    private static final String NO_CODE_BUTTON_DELAY_TIME_IN_MILLISECONDS = "_mCodeButtonDelayTime";
+    private static final String NO_CODE_BUTTON_DELAY_TIME_IN_MILLISECONDS = "_mCodeButtonDelayTime";// NOI18N
     private static final String NO_CODE_BUTTON_DELAY_TIME_IN_MILLISECONDS_DEFAULT = Integer.toString(0);
     public int _mCodeButtonDelayTime = Integer.parseInt(NO_CODE_BUTTON_DELAY_TIME_IN_MILLISECONDS_DEFAULT);
 
@@ -81,7 +81,7 @@ public class ProgramProperties {
 
             // Migrate file name if necessary
             String tempName = properties.getProperty(FILENAME_KEY, FILENAME_DEFAULT);
-            String fileName = (tempName.startsWith("preference:") ? tempName : "preference:ctc/" + tempName);
+            String fileName = (tempName.startsWith("preference:") ? tempName : "preference:ctc/" + tempName);   // NOI18N
             _mFilename = FileUtil.getExternalFilename(fileName);
 
             _mCodeButtonInternalSensorPattern = properties.getProperty(CODE_BUTTON_INTERNAL_SENSOR_PATTERN, CODE_BUTTON_INTERNAL_SENSOR_PATTERN_DEFAULT);

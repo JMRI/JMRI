@@ -18,11 +18,11 @@ public class CreateInternalSensorsXMLFile {
     public static void writeInternalSensors(String directoryToCreateThemIn, OtherData otherData, ArrayList <CodeButtonHandlerData> codeButtonHandlerDataArrayList) {
         PrintWriter printWriter;
         try {
-            printWriter = new PrintWriter(new FileWriter(directoryToCreateThemIn + "InternalSensors.xml"));
+            printWriter = new PrintWriter(new FileWriter(directoryToCreateThemIn + "InternalSensors.xml")); // NOI18N
         } catch (IOException e) { return; }
         generateProlog(printWriter);
-        printWriter.println("  <sensors class=\"jmri.jmrix.internal.configurexml.InternalSensorManagerXml\">");
-        printWriter.println("    <defaultInitialState>unknown</defaultInitialState>");
+        printWriter.println("  <sensors class=\"jmri.jmrix.internal.configurexml.InternalSensorManagerXml\">"); // NOI18N
+        printWriter.println("    <defaultInitialState>unknown</defaultInitialState>");  // NOI18N
 //  Create all internal sensors:
         ArrayList<Field> internalSensorStringFields = OtherData.getAllInternalSensorStringFields();
         for (Field field : internalSensorStringFields) {
@@ -41,7 +41,7 @@ public class CreateInternalSensorsXMLFile {
                 } catch (IllegalAccessException e) {} // Should never happen, print nothing for this entry if so.
             }
         }
-        printWriter.println("  </sensors>");
+        printWriter.println("  </sensors>");    // NOI18N
         generateEpilogue(printWriter);
         printWriter.close();
     }
@@ -53,8 +53,8 @@ public class CreateInternalSensorsXMLFile {
 */    
     private static void writeInternalSensor(String value, PrintWriter printWriter) {
         value = ProjectsCommonSubs.getSafeTrimmedString(value);
-        printWriter.println("    <sensor inverted=\"false\">");
-        printWriter.println("      <systemName>" + value + "</systemName>");
-        printWriter.println("    </sensor>");
+        printWriter.println("    <sensor inverted=\"false\">");                 // NOI18N
+        printWriter.println("      <systemName>" + value + "</systemName>");    // NOI18N
+        printWriter.println("    </sensor>");                                   // NOI18N
     }
 }

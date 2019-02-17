@@ -110,7 +110,7 @@ public class CallOn {
                         String[] validStateNames = signal.getValidStateNames();
                         int validStateNamesIndex = arrayFind(validStateNames, convertFromForeignLanguageColor(callOnEntry._mSignalAspectToDisplay));
                         if (validStateNamesIndex == -1) { // Not found:
-                            throw new CTCException("CallOn", userIdentifier, "groupingString", groupingString + " not valid aspect indication for this signal.");
+                            throw new CTCException("CallOn", userIdentifier, "groupingString", groupingString + " " + Bundle.getMessage("CallOnNotValidAspect"));   // NOI18N
                         }
                         NBHSensor calledOnExternalSensor = new NBHSensor("CallOn", userIdentifier, "groupingString", callOnEntry._mCalledOnExternalSensor, false);
                         int[] correspondingValidStates = signal.getValidStates();   // I ASSUME it's a coorelated 1 for 1 with "getValidStateNames", via tests it seems to be.
@@ -118,11 +118,11 @@ public class CallOn {
                     } else {
                         String externalBlockName = callOnEntry._mExternalBlock;
                         if (ProjectsCommonSubs.isNullOrEmptyString(externalBlockName)) {
-                            throw new CTCException("CallOn", userIdentifier, "groupingString", groupingString + " Signal Mast selected and Block name missing.");
+                            throw new CTCException("CallOn", userIdentifier, "groupingString", groupingString + " " + Bundle.getMessage("CallOnSignalMastBlockError")); // NOI18N
                         }
                         Block externalBlock = blockManager.getBlock(externalBlockName);
                         if (externalBlock == null) {
-                            throw new CTCException("CallOn", userIdentifier, "groupingString", groupingString + " Signal Mast selected Block name does not exist.");
+                            throw new CTCException("CallOn", userIdentifier, "groupingString", groupingString + " " + Bundle.getMessage("CallOnSignalMastBlockError2"));    // NOI18N
                         }
                         NamedBeanHandle<Block> namedBeanHandleExternalBlock = NAMED_BEAN_HANDLE_MANAGER.getNamedBeanHandle(externalBlockName, externalBlock);
                         _mGroupingDataArrayList.add(new GroupingData(signal, trafficDirection, 0, null, namedBeanHandleExternalBlock, route));

@@ -45,10 +45,10 @@ public class CreateGUIObjectsXMLFile {
 
         PrintWriter printWriter;
         try {
-            printWriter = new PrintWriter(new FileWriter(directoryToCreateThemIn + "GUIObjects.xml"));
+            printWriter = new PrintWriter(new FileWriter(directoryToCreateThemIn + "GUIObjects.xml"));  // NOI18N
         } catch (IOException e) { return; }
         generateProlog(printWriter);
-        printWriter.println("  <paneleditor class=\"jmri.jmrit.display.panelEditor.configurexml.PanelEditorXml\" name=\"Panel \" x=\"857\" y=\"437\" height=\"437\" width=\"527\" editable=\"yes\" positionable=\"no\" showtooltips=\"yes\" controlling=\"yes\" hide=\"yes\" panelmenu=\"yes\" scrollable=\"both\" redBackground=\"255\" greenBackground=\"255\" blueBackground=\"255\">");
+        printWriter.println("  <paneleditor class=\"jmri.jmrit.display.panelEditor.configurexml.PanelEditorXml\" name=\"Panel \" x=\"857\" y=\"437\" height=\"437\" width=\"527\" editable=\"yes\" positionable=\"no\" showtooltips=\"yes\" controlling=\"yes\" hide=\"yes\" panelmenu=\"yes\" scrollable=\"both\" redBackground=\"255\" greenBackground=\"255\" blueBackground=\"255\">"); // NOI18N
 
 //  Create "one of" objects:
 
@@ -71,39 +71,39 @@ public class CreateGUIObjectsXMLFile {
         }
         
         if (otherData._mGUIDesign_AnalogClockEtc) {
-            printWriter.println("    <fastclock x=\"26\" y=\"" + (oneOfItemsBottomEdge - 186) + "\" scale=\"1.0\" color=\"black\" class=\"jmri.jmrit.display.configurexml.AnalogClock2DisplayXml\" />");
-            generateToggle(96, oneOfItemsBottomEdge - 223, "ISCLOCKRUNNING", printWriter);
-            generateTextPositionableLabel(87, oneOfItemsBottomEdge - 244, "Clock On", printWriter);
+            printWriter.println("    <fastclock x=\"26\" y=\"" + (oneOfItemsBottomEdge - 186) + "\" scale=\"1.0\" color=\"black\" class=\"jmri.jmrit.display.configurexml.AnalogClock2DisplayXml\" />");    // NOI18N
+            generateToggle(96, oneOfItemsBottomEdge - 223, "ISCLOCKRUNNING", printWriter);  // NOI18N
+            generateTextPositionableLabel(87, oneOfItemsBottomEdge - 244, Bundle.getMessage("CreateGUIObjectsXMLFileClockOn"), printWriter);    // NOI18N
         }
         if (otherData._mGUIDesign_FleetingToggleSwitch) {
             if (!ProjectsCommonSubs.isNullOrEmptyString(otherData._mFleetingToggleInternalSensor)) {
                 generateToggle(226, oneOfItemsBottomEdge - 36, otherData._mFleetingToggleInternalSensor, printWriter);
-                generateTextPositionableLabel(215, oneOfItemsBottomEdge - 54, "Fleeting ON", printWriter);
+                generateTextPositionableLabel(215, oneOfItemsBottomEdge - 54, Bundle.getMessage("CreateGUIObjectsXMLFileFleetingOn"), printWriter); // NOI18N
             }
         }
         if (otherData._mGUIDesign_ReloadCTCSystemButton) {
             if (!ProjectsCommonSubs.isNullOrEmptyString(otherData._mCTCDebugSystemReloadInternalSensor)) {
                 generatePushButton(291, oneOfItemsBottomEdge - 36, otherData._mCTCDebugSystemReloadInternalSensor, printWriter);
-                generateTextPositionableLabel(277, oneOfItemsBottomEdge - 54, "Reload CTC", printWriter);
+                generateTextPositionableLabel(277, oneOfItemsBottomEdge - 54, Bundle.getMessage("CreateGUIObjectsXMLFileReloadCTC"), printWriter);  // NOI18N
             }
         }
         if (otherData._mGUIDesign_CTCDebugOnToggle) {
             if (!ProjectsCommonSubs.isNullOrEmptyString(otherData._mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor)) {
                 generateToggle(358, oneOfItemsBottomEdge - 36, otherData._mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor, printWriter);
-                generateTextPositionableLabel(339, oneOfItemsBottomEdge - 54, "CTC Debug On", printWriter);
+                generateTextPositionableLabel(339, oneOfItemsBottomEdge - 54, Bundle.getMessage("CreateGUIObjectsXMLFileCTCDebugOn"), printWriter); // NOI18N
             }
         }
 
 //  Create all GUI objects:
         if (!codeButtonHandlerDataArrayListDeepCopy.isEmpty()) {
-            generatePanel(0, 0, otherData._mGUIDesign_VerticalSize, "Panel-left", printWriter);
+            generatePanel(0, 0, otherData._mGUIDesign_VerticalSize, "Panel-left", printWriter); // NOI18N
             int lastHorizontalPosition = START_OFFSET;        // Where we are now.
             int thisObjectHorizontalPosition = START_OFFSET;
             for (CodeButtonHandlerData codeButtonHandlerData : codeButtonHandlerDataArrayListDeepCopy) {
                 thisObjectHorizontalPosition = (codeButtonHandlerData._mGUIColumnNumber - 1) * GIF_HORIZONTAL_SIZE + START_OFFSET;
 //  Put in possible blank panels between where we left off last and the next one:
                 for ( ; lastHorizontalPosition < thisObjectHorizontalPosition; lastHorizontalPosition += GIF_HORIZONTAL_SIZE) {
-                    generatePanel(lastHorizontalPosition, 0, otherData._mGUIDesign_VerticalSize, "Panel-blank", printWriter);
+                    generatePanel(lastHorizontalPosition, 0, otherData._mGUIDesign_VerticalSize, "Panel-blank", printWriter);   // NOI18N
                 }
                 lastHorizontalPosition = thisObjectHorizontalPosition + GIF_HORIZONTAL_SIZE;
                 
@@ -112,9 +112,9 @@ public class CreateGUIObjectsXMLFile {
                 boolean generateSignal = (codeButtonHandlerData._mSIDI_Enabled || codeButtonHandlerData._mSIDL_Enabled);
 //  4 possibilities: Blank again, switch, signal, switch and signal:
                 String filename = "Panel-blank";  // Default if not next 3 below:
-                if (generateSwitch && generateSignal) filename = "Panel-sw-sig";
-                else if (!generateSwitch && generateSignal) filename = "Panel-signal";
-                else if (generateSwitch && !generateSignal) filename = "Panel-switch";
+                if (generateSwitch && generateSignal) filename = "Panel-sw-sig";    // NOI18N
+                else if (!generateSwitch && generateSignal) filename = "Panel-signal";  // NOI18N
+                else if (generateSwitch && !generateSignal) filename = "Panel-switch";  // NOI18N
                 generatePanel(thisObjectHorizontalPosition, 0, otherData._mGUIDesign_VerticalSize, filename, printWriter);
 //  CB:
                 if (!ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mCodeButtonInternalSensor)) { // Always exists, but for safety:
@@ -124,19 +124,19 @@ public class CreateGUIObjectsXMLFile {
                 }
 //  O.S. occupancy sensor:                
                 if (!ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mOSSectionOccupiedExternalSensor)) {
-                    generateSensorIndicator(thisObjectHorizontalPosition + 21, 78, codeButtonHandlerData._mOSSectionOccupiedExternalSensor, "Red", otherData._mGUIDesign_OSSectionUnknownInconsistentRedBlink, printWriter);
+                    generateSensorIndicator(thisObjectHorizontalPosition + 21, 78, codeButtonHandlerData._mOSSectionOccupiedExternalSensor, "Red", otherData._mGUIDesign_OSSectionUnknownInconsistentRedBlink, printWriter);    // NOI18N
                 }
                 if (!ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mOSSectionOccupiedExternalSensor2)) {
-                    generateSensorIndicator(thisObjectHorizontalPosition + 21, 108, codeButtonHandlerData._mOSSectionOccupiedExternalSensor2, "Red", otherData._mGUIDesign_OSSectionUnknownInconsistentRedBlink, printWriter);
+                    generateSensorIndicator(thisObjectHorizontalPosition + 21, 108, codeButtonHandlerData._mOSSectionOccupiedExternalSensor2, "Red", otherData._mGUIDesign_OSSectionUnknownInconsistentRedBlink, printWriter);  // NOI18N
                 }
 //  SWDI:
                 if (codeButtonHandlerData._mSWDI_Enabled) { // Switch Indicators:
                     int y = adjustSwitchItemsYBySize(340, otherData._mGUIDesign_VerticalSize);
                     if (!ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mSWDI_NormalInternalSensor)) {
-                        generateSensorIndicator(thisObjectHorizontalPosition + 4, y, codeButtonHandlerData._mSWDI_NormalInternalSensor, "green", false, printWriter);
+                        generateSensorIndicator(thisObjectHorizontalPosition + 4, y, codeButtonHandlerData._mSWDI_NormalInternalSensor, "green", false, printWriter);   // NOI18N
                     }
                     if (!ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mSWDI_ReversedInternalSensor)) {
-                        generateSensorIndicator(thisObjectHorizontalPosition + 38, y, codeButtonHandlerData._mSWDI_ReversedInternalSensor, "amber", false, printWriter);
+                        generateSensorIndicator(thisObjectHorizontalPosition + 38, y, codeButtonHandlerData._mSWDI_ReversedInternalSensor, "amber", false, printWriter);    // NOI18N
                     }
                     if (otherData._mGUIDesign_TurnoutsOnPanel) {
                         if (!ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mSWDI_ExternalTurnout)) {
@@ -170,13 +170,13 @@ public class CreateGUIObjectsXMLFile {
                 if (codeButtonHandlerData._mSIDI_Enabled) { // Signal Indicators:
                     int y = adjustSignalItemsYBySize(454, otherData._mGUIDesign_VerticalSize);
                     if (!ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mSIDI_LeftInternalSensor)) {
-                        generateSensorIndicator(thisObjectHorizontalPosition + 4, y, codeButtonHandlerData._mSIDI_LeftInternalSensor, "green", false, printWriter);
+                        generateSensorIndicator(thisObjectHorizontalPosition + 4, y, codeButtonHandlerData._mSIDI_LeftInternalSensor, "green", false, printWriter); // NOI18N
                     }
                     if (!ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mSIDI_NormalInternalSensor)) { // Should always be present, but for safety:
                         generateSensorIndicator(thisObjectHorizontalPosition + 22, adjustSignalItemsYBySize(440, otherData._mGUIDesign_VerticalSize), codeButtonHandlerData._mSIDI_NormalInternalSensor, "red", false, printWriter);
                     }
                     if (!ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mSIDI_RightInternalSensor)) {
-                        generateSensorIndicator(thisObjectHorizontalPosition + 38, y, codeButtonHandlerData._mSIDI_RightInternalSensor, "green", false, printWriter);
+                        generateSensorIndicator(thisObjectHorizontalPosition + 38, y, codeButtonHandlerData._mSIDI_RightInternalSensor, "green", false, printWriter);   // NOI18N
                     }
                     if (otherData._mGUIDesign_SignalsOnPanel == OtherData.SIGNALS_ON_PANEL.ALL) {
                         ArrayList<String> signalsArrayListLR = ProjectsCommonSubs.getArrayListFromCSV(codeButtonHandlerData._mSIDI_LeftRightTrafficSignalsCSVList);
@@ -220,32 +220,32 @@ public class CreateGUIObjectsXMLFile {
                 if (codeButtonHandlerData._mCO_Enabled) { // Call On:
                     if (!ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mCO_CallOnToggleInternalSensor)) {
                         generateToggle(thisObjectHorizontalPosition + 21, adjustCallOnItemsYBySize(582, otherData._mGUIDesign_VerticalSize), codeButtonHandlerData._mCO_CallOnToggleInternalSensor, printWriter);
-                        generateTextPositionableLabel(thisObjectHorizontalPosition + 48, adjustCallOnItemsYBySize(590, otherData._mGUIDesign_VerticalSize), "Call On", printWriter);
+                        generateTextPositionableLabel(thisObjectHorizontalPosition + 48, adjustCallOnItemsYBySize(590, otherData._mGUIDesign_VerticalSize), Bundle.getMessage("CreateGUIObjectsXMLFileCallOn"), printWriter);   // NOI18N
                     }
                 }
 //  TUL:
                 if (codeButtonHandlerData._mTUL_Enabled) { // Turnout Locking:
                     if (!ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mTUL_DispatcherInternalSensorLockToggle)) {
                         generateToggle(thisObjectHorizontalPosition + 21, adjustLockedItemsYBySize(541, otherData._mGUIDesign_VerticalSize), codeButtonHandlerData._mTUL_DispatcherInternalSensorLockToggle, printWriter);
-                        generateTextPositionableLabel(thisObjectHorizontalPosition + 48, adjustLockedItemsYBySize(536, otherData._mGUIDesign_VerticalSize), "Local", printWriter);
-                        generateTextPositionableLabel(thisObjectHorizontalPosition + 48, adjustLockedItemsYBySize(560, otherData._mGUIDesign_VerticalSize), "Locked", printWriter);
+                        generateTextPositionableLabel(thisObjectHorizontalPosition + 48, adjustLockedItemsYBySize(536, otherData._mGUIDesign_VerticalSize), Bundle.getMessage("CreateGUIObjectsXMLFileLocal"), printWriter);    // NOI18N
+                        generateTextPositionableLabel(thisObjectHorizontalPosition + 48, adjustLockedItemsYBySize(560, otherData._mGUIDesign_VerticalSize), Bundle.getMessage("CreateGUIObjectsXMLFileLocked"), printWriter);   // NOI18N
                     }
                     if (!ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mTUL_DispatcherInternalSensorUnlockedIndicator)) {
-                        generateSensorIndicator(thisObjectHorizontalPosition + 22, 200, codeButtonHandlerData._mTUL_DispatcherInternalSensorUnlockedIndicator, "red", false, printWriter);
-                        generateTextPositionableLabel(thisObjectHorizontalPosition + 9, 230, "Unlocked", printWriter);
+                        generateSensorIndicator(thisObjectHorizontalPosition + 22, 200, codeButtonHandlerData._mTUL_DispatcherInternalSensorUnlockedIndicator, "red", false, printWriter);  // NOI18N
+                        generateTextPositionableLabel(thisObjectHorizontalPosition + 9, 230, Bundle.getMessage("CreateGUIObjectsXMLFileUnlocked"), printWriter);    // NOI18N
                     }
                 }
                 thisObjectHorizontalPosition += GIF_HORIZONTAL_SIZE;   // In case this is the LAST object, and we fall out of the loop to the next line:
             }
 
             for (int i = 0; i < otherData._mGUIDesign_NumberOfEmptyColumnsAtEnd; i++) {
-                generatePanel(thisObjectHorizontalPosition, 0, otherData._mGUIDesign_VerticalSize, "Panel-blank", printWriter);
+                generatePanel(thisObjectHorizontalPosition, 0, otherData._mGUIDesign_VerticalSize, "Panel-blank", printWriter); // NOI18N
                 thisObjectHorizontalPosition += GIF_HORIZONTAL_SIZE;
             }
-            generatePanel(thisObjectHorizontalPosition, 0, otherData._mGUIDesign_VerticalSize, "Panel-right", printWriter);
+            generatePanel(thisObjectHorizontalPosition, 0, otherData._mGUIDesign_VerticalSize, "Panel-right", printWriter); // NOI18N
         }
         
-        printWriter.println("  </paneleditor>");
+        printWriter.println("  </paneleditor>");    // NOI18N
         generateEpilogue(printWriter);
         printWriter.close();
     }
@@ -260,12 +260,12 @@ public class CreateGUIObjectsXMLFile {
 
 */
     private static void generateBuilderPlate(PrintWriter printWriter) {
-        printWriter.println("    <positionablelabel x=\"55\" y=\"323\" level=\"3\" forcecontroloff=\"false\" hidden=\"no\" positionable=\"true\" showtooltip=\"true\" editable=\"true\" icon=\"yes\" class=\"jmri.jmrit.display.configurexml.PositionableLabelXml\">");
-        printWriter.println("      <tooltip>Icon</tooltip>");
-        printWriter.println("      <icon url=\"program:resources/icons/USS/plate/base-plates/misc/USS-plate.gif\" degrees=\"0\" scale=\"1.0\">");
-        printWriter.println("        <rotation>0</rotation>");
-        printWriter.println("      </icon>");
-        printWriter.println("    </positionablelabel>");
+        printWriter.println("    <positionablelabel x=\"55\" y=\"323\" level=\"3\" forcecontroloff=\"false\" hidden=\"no\" positionable=\"true\" showtooltip=\"true\" editable=\"true\" icon=\"yes\" class=\"jmri.jmrit.display.configurexml.PositionableLabelXml\">"); // NOI18N
+        printWriter.println("      <tooltip>Icon</tooltip>");   // NOI18N
+        printWriter.println("      <icon url=\"program:resources/icons/USS/plate/base-plates/misc/USS-plate.gif\" degrees=\"0\" scale=\"1.0\">");   // NOI18N
+        printWriter.println("        <rotation>0</rotation>");  // NOI18N
+        printWriter.println("      </icon>");   // NOI18N
+        printWriter.println("    </positionablelabel>");    // NOI18N
     }
 
 /*  As of 4.13.4ish:
@@ -273,11 +273,11 @@ public class CreateGUIObjectsXMLFile {
       <tooltip>Text Label</tooltip>
     </positionablelabel>
 */
-    private static final String DIALOG_USED = "Dialog.plain";
+    private static final String DIALOG_USED = "Dialog.plain";   // NOI18N
     private static void generateTextPositionableLabel(int x, int y, String text, PrintWriter printWriter) {
-        printWriter.println("    <positionablelabel x=\"" + x + "\" y=\"" + y + "\" level=\"4\" forcecontroloff=\"false\" hidden=\"no\" positionable=\"true\" showtooltip=\"true\" editable=\"true\" text=\"" + text + "\" fontname=\"" + DIALOG_USED + "\" size=\"11\" style=\"0\" red=\"255\" green=\"255\" blue=\"255\" hasBackground=\"no\" justification=\"centre\" class=\"jmri.jmrit.display.configurexml.PositionableLabelXml\">");
-        printWriter.println("      <tooltip>Text Label</tooltip>");    
-        printWriter.println("    </positionablelabel>");    
+        printWriter.println("    <positionablelabel x=\"" + x + "\" y=\"" + y + "\" level=\"4\" forcecontroloff=\"false\" hidden=\"no\" positionable=\"true\" showtooltip=\"true\" editable=\"true\" text=\"" + text + "\" fontname=\"" + DIALOG_USED + "\" size=\"11\" style=\"0\" red=\"255\" green=\"255\" blue=\"255\" hasBackground=\"no\" justification=\"centre\" class=\"jmri.jmrit.display.configurexml.PositionableLabelXml\">"); // NOI18N
+        printWriter.println("      <tooltip>Text Label</tooltip>");         // NOI18N
+        printWriter.println("    </positionablelabel>");        // NOI18N
     }
     private static void generateTextPositionableLabelCentered(int x, int y, String text, PrintWriter printWriter) {
         generateTextPositionableLabel(centerText(x, text), y, text, printWriter);
@@ -302,21 +302,21 @@ public class CreateGUIObjectsXMLFile {
 //      I use other defaults here for both positionable and showtooltip = false:
         switch(verticalSize) {
             case SMALL:
-                resourceFilename += "-7.gif";
+                resourceFilename += "-7.gif";   // NOI18N
                 break;
             case MEDIUM:
-                resourceFilename += "-8.gif";
+                resourceFilename += "-8.gif";   // NOI18N
                 break;
             case LARGE:
-                resourceFilename += "-9.gif";
+                resourceFilename += "-9.gif";   // NOI18N
                 break;
         }
-        printWriter.println("    <positionablelabel x=\"" + x + "\" y=\"" + y + "\" level=\"1\" forcecontroloff=\"false\" hidden=\"no\" positionable=\"false\" showtooltip=\"false\" editable=\"true\" icon=\"yes\" class=\"jmri.jmrit.display.configurexml.PositionableLabelXml\">");
+        printWriter.println("    <positionablelabel x=\"" + x + "\" y=\"" + y + "\" level=\"1\" forcecontroloff=\"false\" hidden=\"no\" positionable=\"false\" showtooltip=\"false\" editable=\"true\" icon=\"yes\" class=\"jmri.jmrit.display.configurexml.PositionableLabelXml\">");  // NOI18N
 //      I don't use Tooltip, since it's false anyways...
-        printWriter.println("      <icon url=\"program:resources/icons/USS/background/" + resourceFilename + "\" degrees=\"0\" scale=\"1.0\">");
-        printWriter.println("        <rotation>0</rotation>");
-        printWriter.println("      </icon>");
-        printWriter.println("    </positionablelabel>");
+        printWriter.println("      <icon url=\"program:resources/icons/USS/background/" + resourceFilename + "\" degrees=\"0\" scale=\"1.0\">");    // NOI18N
+        printWriter.println("        <rotation>0</rotation>");  // NOI18N
+        printWriter.println("      </icon>");   // NOI18N
+        printWriter.println("    </positionablelabel>");    // NOI18N
     }
     
 /*  As of 4.13.4ish:
@@ -338,24 +338,24 @@ public class CreateGUIObjectsXMLFile {
     </sensoricon>
 */
     private static void generateSensorIndicator(int x, int y, String sensor, String color, boolean unknownInconsistentRedBlink, PrintWriter printWriter) {
-        String unknown = unknownInconsistentRedBlink ? "blink/red-b" : "s-unknown";
-        String inconsistent = unknownInconsistentRedBlink ? "blink/red-b" : "s-inconsistent";
-        printWriter.println("    <sensoricon sensor=\"" + sensor + "\" x=\"" + x + "\" y=\"" + y + "\" level=\"10\" forcecontroloff=\"false\" hidden=\"no\" positionable=\"true\" showtooltip=\"true\" editable=\"true\" momentary=\"false\" icon=\"yes\" class=\"jmri.jmrit.display.configurexml.SensorIconXml\">");
-        printWriter.println("      <tooltip>" + sensor + "</tooltip>");
-        printWriter.println("      <active url=\"program:resources/icons/USS/sensor/" + color + "-on.gif\" degrees=\"0\" scale=\"1.0\">");
-        printWriter.println("        <rotation>0</rotation>");
-        printWriter.println("      </active>");
-        printWriter.println("      <inactive url=\"program:resources/icons/USS/sensor/" + color + "-off.gif\" degrees=\"0\" scale=\"1.0\">");
-        printWriter.println("        <rotation>0</rotation>");
-        printWriter.println("      </inactive>");
-        printWriter.println("      <unknown url=\"program:resources/icons/USS/sensor/" + unknown + ".gif\" degrees=\"0\" scale=\"1.0\">");
-        printWriter.println("        <rotation>0</rotation>");
-        printWriter.println("      </unknown>");
-        printWriter.println("      <inconsistent url=\"program:resources/icons/USS/sensor/" + inconsistent + ".gif\" degrees=\"0\" scale=\"1.0\">");
-        printWriter.println("        <rotation>0</rotation>");
-        printWriter.println("      </inconsistent>");
-        printWriter.println("      <iconmaps />");
-        printWriter.println("    </sensoricon>");
+        String unknown = unknownInconsistentRedBlink ? "blink/red-b" : "s-unknown"; // NOI18N
+        String inconsistent = unknownInconsistentRedBlink ? "blink/red-b" : "s-inconsistent";   // NOI18N
+        printWriter.println("    <sensoricon sensor=\"" + sensor + "\" x=\"" + x + "\" y=\"" + y + "\" level=\"10\" forcecontroloff=\"false\" hidden=\"no\" positionable=\"true\" showtooltip=\"true\" editable=\"true\" momentary=\"false\" icon=\"yes\" class=\"jmri.jmrit.display.configurexml.SensorIconXml\">");   // NOI18N
+        printWriter.println("      <tooltip>" + sensor + "</tooltip>"); // NOI18N
+        printWriter.println("      <active url=\"program:resources/icons/USS/sensor/" + color + "-on.gif\" degrees=\"0\" scale=\"1.0\">");  // NOI18N
+        printWriter.println("        <rotation>0</rotation>");  // NOI18N
+        printWriter.println("      </active>"); // NOI18N
+        printWriter.println("      <inactive url=\"program:resources/icons/USS/sensor/" + color + "-off.gif\" degrees=\"0\" scale=\"1.0\">");   // NOI18N
+        printWriter.println("        <rotation>0</rotation>");  // NOI18N
+        printWriter.println("      </inactive>");   // NOI18N
+        printWriter.println("      <unknown url=\"program:resources/icons/USS/sensor/" + unknown + ".gif\" degrees=\"0\" scale=\"1.0\">");  // NOI18N
+        printWriter.println("        <rotation>0</rotation>");  // NOI18N
+        printWriter.println("      </unknown>");    // NOI18N
+        printWriter.println("      <inconsistent url=\"program:resources/icons/USS/sensor/" + inconsistent + ".gif\" degrees=\"0\" scale=\"1.0\">");// NOI18N
+        printWriter.println("        <rotation>0</rotation>");  // NOI18N
+        printWriter.println("      </inconsistent>");   // NOI18N
+        printWriter.println("      <iconmaps />");  // NOI18N
+        printWriter.println("    </sensoricon>");   // NOI18N
     }
     
 /*  As of 4.13.4ish:
@@ -381,24 +381,24 @@ Right:
         <closed url="program:resources/icons/USS/track/turnout/right/east/os-r-e-closed.gif" degrees="0" scale="1.0">
 */    
     private static void generateTurnoutIcon(int x, int y, String turnout, boolean isTurnoutLeftHanded, PrintWriter printWriter) {
-        String partialFilename = isTurnoutLeftHanded ? "left/west/os-l-w" : "right/east/os-r-e";
-        printWriter.println("    <turnouticon turnout=\"" + turnout + "\" x=\"" + x + "\" y=\"" + y + "\" level=\"7\" forcecontroloff=\"true\" hidden=\"no\" positionable=\"true\" showtooltip=\"false\" editable=\"true\" tristate=\"false\" momentary=\"false\" directControl=\"false\" class=\"jmri.jmrit.display.configurexml.TurnoutIconXml\">");
-        printWriter.println("      <icons>");
-        printWriter.println("        <closed url=\"program:resources/icons/USS/track/turnout/" + partialFilename + "-closed.gif\" degrees=\"0\" scale=\"1.0\">");
-        printWriter.println("          <rotation>0</rotation>");
-        printWriter.println("        </closed>");
-        printWriter.println("        <thrown url=\"program:resources/icons/USS/track/turnout/" + partialFilename + "-thrown.gif\" degrees=\"0\" scale=\"1.0\">");
-        printWriter.println("          <rotation>0</rotation>");
-        printWriter.println("        </thrown>");
-        printWriter.println("        <unknown url=\"program:resources/icons/USS/track/turnout/" + partialFilename + "-unknown.gif\" degrees=\"0\" scale=\"1.0\">");
-        printWriter.println("          <rotation>0</rotation>");
-        printWriter.println("        </unknown>");
-        printWriter.println("        <inconsistent url=\"program:resources/icons/USS/track/turnout/" + partialFilename + "-inconsistent.gif\" degrees=\"0\" scale=\"1.0\">");
-        printWriter.println("          <rotation>0</rotation>");
-        printWriter.println("        </inconsistent>");
-        printWriter.println("      </icons>");
-        printWriter.println("      <iconmaps />");
-        printWriter.println("    </turnouticon>");
+        String partialFilename = isTurnoutLeftHanded ? "left/west/os-l-w" : "right/east/os-r-e";    // NOI18N
+        printWriter.println("    <turnouticon turnout=\"" + turnout + "\" x=\"" + x + "\" y=\"" + y + "\" level=\"7\" forcecontroloff=\"true\" hidden=\"no\" positionable=\"true\" showtooltip=\"false\" editable=\"true\" tristate=\"false\" momentary=\"false\" directControl=\"false\" class=\"jmri.jmrit.display.configurexml.TurnoutIconXml\">");  // NOI18N
+        printWriter.println("      <icons>");   // NOI18N
+        printWriter.println("        <closed url=\"program:resources/icons/USS/track/turnout/" + partialFilename + "-closed.gif\" degrees=\"0\" scale=\"1.0\">");   // NOI18N
+        printWriter.println("          <rotation>0</rotation>");    // NOI18N
+        printWriter.println("        </closed>");   // NOI18N
+        printWriter.println("        <thrown url=\"program:resources/icons/USS/track/turnout/" + partialFilename + "-thrown.gif\" degrees=\"0\" scale=\"1.0\">");   // NOI18N
+        printWriter.println("          <rotation>0</rotation>");    // NOI18N
+        printWriter.println("        </thrown>");   // NOI18N
+        printWriter.println("        <unknown url=\"program:resources/icons/USS/track/turnout/" + partialFilename + "-unknown.gif\" degrees=\"0\" scale=\"1.0\">"); // NOI18N
+        printWriter.println("          <rotation>0</rotation>");    // NOI18N
+        printWriter.println("        </unknown>");  // NOI18N
+        printWriter.println("        <inconsistent url=\"program:resources/icons/USS/track/turnout/" + partialFilename + "-inconsistent.gif\" degrees=\"0\" scale=\"1.0\">");   // NOI18N
+        printWriter.println("          <rotation>0</rotation>");    // NOI18N
+        printWriter.println("        </inconsistent>"); // NOI18N
+        printWriter.println("      </icons>");  // NOI18N
+        printWriter.println("      <iconmaps />");  // NOI18N
+        printWriter.println("    </turnouticon>");  // NOI18N
     }
     
 /*  As of 4.13.4ish:
@@ -423,27 +423,27 @@ Right:
     private static void generateTurnoutCrossoverIcon(int x, int y, String turnout, boolean isDoubleCrossover, boolean isTurnoutLeftHanded, PrintWriter printWriter) {
         String partialFilename;
         if (isDoubleCrossover) { // No left or right
-            partialFilename = "double/os-dc";
+            partialFilename = "double/os-dc";   // NOI18N
         } else {
-            partialFilename = isTurnoutLeftHanded ? "left/os-l-sc" : "right/os-r-sc";
+            partialFilename = isTurnoutLeftHanded ? "left/os-l-sc" : "right/os-r-sc";   // NOI18N
         }
-        printWriter.println("    <turnouticon turnout=\"" + turnout + "\" x=\"" + x + "\" y=\"" + y + "\" level=\"7\" forcecontroloff=\"true\" hidden=\"no\" positionable=\"true\" showtooltip=\"false\" editable=\"true\" tristate=\"false\" momentary=\"false\" directControl=\"false\" class=\"jmri.jmrit.display.configurexml.TurnoutIconXml\">");
-        printWriter.println("      <icons>");
-        printWriter.println("        <closed url=\"program:resources/icons/USS/track/crossover/" + partialFilename + "-closed.gif\" degrees=\"0\" scale=\"1.0\">");
-        printWriter.println("          <rotation>0</rotation>");
-        printWriter.println("        </closed>");
-        printWriter.println("        <thrown url=\"program:resources/icons/USS/track/crossover/" + partialFilename + "-thrown.gif\" degrees=\"0\" scale=\"1.0\">");
-        printWriter.println("          <rotation>0</rotation>");
-        printWriter.println("        </thrown>");
-        printWriter.println("        <unknown url=\"program:resources/icons/USS/track/crossover/" + partialFilename + "-unknown.gif\" degrees=\"0\" scale=\"1.0\">");
-        printWriter.println("          <rotation>0</rotation>");
-        printWriter.println("        </unknown>");
-        printWriter.println("        <inconsistent url=\"program:resources/icons/USS/track/crossover/" + partialFilename + "-inconsistent.gif\" degrees=\"0\" scale=\"1.0\">");
-        printWriter.println("          <rotation>0</rotation>");
-        printWriter.println("        </inconsistent>");
-        printWriter.println("      </icons>");
-        printWriter.println("      <iconmaps />");
-        printWriter.println("    </turnouticon>");
+        printWriter.println("    <turnouticon turnout=\"" + turnout + "\" x=\"" + x + "\" y=\"" + y + "\" level=\"7\" forcecontroloff=\"true\" hidden=\"no\" positionable=\"true\" showtooltip=\"false\" editable=\"true\" tristate=\"false\" momentary=\"false\" directControl=\"false\" class=\"jmri.jmrit.display.configurexml.TurnoutIconXml\">");  // NOI18N
+        printWriter.println("      <icons>");   // NOI18N
+        printWriter.println("        <closed url=\"program:resources/icons/USS/track/crossover/" + partialFilename + "-closed.gif\" degrees=\"0\" scale=\"1.0\">"); // NOI18N
+        printWriter.println("          <rotation>0</rotation>");    // NOI18N
+        printWriter.println("        </closed>");   // NOI18N
+        printWriter.println("        <thrown url=\"program:resources/icons/USS/track/crossover/" + partialFilename + "-thrown.gif\" degrees=\"0\" scale=\"1.0\">"); // NOI18N
+        printWriter.println("          <rotation>0</rotation>");    // NOI18N
+        printWriter.println("        </thrown>");   // NOI18N
+        printWriter.println("        <unknown url=\"program:resources/icons/USS/track/crossover/" + partialFilename + "-unknown.gif\" degrees=\"0\" scale=\"1.0\">");   // NOI18N
+        printWriter.println("          <rotation>0</rotation>");    // NOI18N
+        printWriter.println("        </unknown>");  // NOI18N
+        printWriter.println("        <inconsistent url=\"program:resources/icons/USS/track/crossover/" + partialFilename + "-inconsistent.gif\" degrees=\"0\" scale=\"1.0\">"); // NOI18N
+        printWriter.println("          <rotation>0</rotation>");    // NOI18N
+        printWriter.println("        </inconsistent>"); // NOI18N
+        printWriter.println("      </icons>");  // NOI18N
+        printWriter.println("      <iconmaps />");  // NOI18N
+        printWriter.println("    </turnouticon>");  // NOI18N
     }
     
 /*
@@ -479,29 +479,29 @@ Right:
     </signalheadicon>
 */    
     private static void generateSignalHead(int x, int y, String signalHead, boolean isRightToLeft, PrintWriter printWriter) {
-        String direction = isRightToLeft ? "left" : "right";
-        printWriter.println("    <signalheadicon signalhead=\"" + signalHead + "\" x=\"" + x + "\" y=\"" + y + "\" level=\"9\" forcecontroloff=\"false\" hidden=\"no\" positionable=\"true\" showtooltip=\"true\" editable=\"true\" clickmode=\"3\" litmode=\"false\" class=\"jmri.jmrit.display.configurexml.SignalHeadIconXml\">");
-        printWriter.println("      <tooltip>" + signalHead + "</tooltip>");
-        printWriter.println("      <icons>");
-        generateSignalBlock(direction, "held", printWriter);
-        generateSignalBlock(direction, "dark", printWriter);
-        generateSignalBlock(direction, "red", printWriter);
-        generateSignalBlock(direction, "yellow", printWriter);
-        generateSignalBlock(direction, "green", printWriter);
-        generateSignalBlock(direction, "flashred", printWriter);
-        generateSignalBlock(direction, "flashyellow", printWriter);
-        generateSignalBlock(direction, "flashgreen", printWriter);
-        printWriter.println("      </icons>");
-        printWriter.println("      <iconmaps />");
-        printWriter.println("    </signalheadicon>");
+        String direction = isRightToLeft ? "left" : "right";    // NOI18N
+        printWriter.println("    <signalheadicon signalhead=\"" + signalHead + "\" x=\"" + x + "\" y=\"" + y + "\" level=\"9\" forcecontroloff=\"false\" hidden=\"no\" positionable=\"true\" showtooltip=\"true\" editable=\"true\" clickmode=\"3\" litmode=\"false\" class=\"jmri.jmrit.display.configurexml.SignalHeadIconXml\">");   // NOI18N
+        printWriter.println("      <tooltip>" + signalHead + "</tooltip>"); // NOI18N
+        printWriter.println("      <icons>");   // NOI18N
+        generateSignalBlock(direction, "held", printWriter);    // NOI18N
+        generateSignalBlock(direction, "dark", printWriter);    // NOI18N
+        generateSignalBlock(direction, "red", printWriter); // NOI18N
+        generateSignalBlock(direction, "yellow", printWriter);  // NOI18N
+        generateSignalBlock(direction, "green", printWriter);   // NOI18N
+        generateSignalBlock(direction, "flashred", printWriter);    // NOI18N
+        generateSignalBlock(direction, "flashyellow", printWriter); // NOI18N
+        generateSignalBlock(direction, "flashgreen", printWriter);  // NOI18N
+        printWriter.println("      </icons>");  // NOI18N
+        printWriter.println("      <iconmaps />");  // NOI18N
+        printWriter.println("    </signalheadicon>");   // NOI18N
     }
     private static void generateSignalBlock(String direction, String color, PrintWriter printWriter) {
         printWriter.println(generateSignalLineStart(direction, color));
-        printWriter.println("          <rotation>0</rotation>");
+        printWriter.println("          <rotation>0</rotation>");    // NOI18N
         printWriter.println(generateSignalLineEnd(color));
     }
     private static String generateSignalLineStart(String direction, String color) {
-        return "        <" + color + " url=\"program:resources/icons/smallschematics/searchlights/" + direction + "-" + color + "-short.gif\" degrees=\"0\" scale=\"1.0\">";
+        return "        <" + color + " url=\"program:resources/icons/smallschematics/searchlights/" + direction + "-" + color + "-short.gif\" degrees=\"0\" scale=\"1.0\">";    // NOI18N
     }
     private static String generateSignalLineEnd(String color) {
         return "        </" + color + ">";
@@ -513,10 +513,10 @@ Right:
     </signalmasticon>
 */    
     private static void generateSignalMast(int x, int y, String signalMast, boolean isRightToLeft, PrintWriter printWriter) {
-        String degrees = isRightToLeft ? "180" : "0";
-        printWriter.println("    <signalmasticon signalmast=\"" + signalMast + "\" x=\"" + x + "\" y=\"" + y + "\" level=\"9\" forcecontroloff=\"false\" hidden=\"no\" positionable=\"true\" showtooltip=\"true\" editable=\"true\" clickmode=\"0\" litmode=\"false\" degrees=\"" + degrees + "\" scale=\"1.0\" imageset=\"default\" class=\"jmri.jmrit.display.configurexml.SignalMastIconXml\">");
-        printWriter.println("      <tooltip>" + signalMast + "</tooltip>");
-        printWriter.println("    </signalmasticon>");
+        String degrees = isRightToLeft ? "180" : "0";   // NOI18N
+        printWriter.println("    <signalmasticon signalmast=\"" + signalMast + "\" x=\"" + x + "\" y=\"" + y + "\" level=\"9\" forcecontroloff=\"false\" hidden=\"no\" positionable=\"true\" showtooltip=\"true\" editable=\"true\" clickmode=\"0\" litmode=\"false\" degrees=\"" + degrees + "\" scale=\"1.0\" imageset=\"default\" class=\"jmri.jmrit.display.configurexml.SignalMastIconXml\">");    // NOI18N
+        printWriter.println("      <tooltip>" + signalMast + "</tooltip>"); // NOI18N
+        printWriter.println("    </signalmasticon>");   // NOI18N
     }
     
 /*  As of 4.13.4ish:
@@ -538,22 +538,22 @@ Right:
     </sensoricon>
 */    
     public static void generateTurnoutLever(int x, int y, String lever, PrintWriter printWriter) {
-        printWriter.println("    <sensoricon sensor=\"" + lever + "\" x=\"" + x + "\" y=\"" + y + "\" level=\"10\" forcecontroloff=\"false\" hidden=\"no\" positionable=\"true\" showtooltip=\"true\" editable=\"true\" momentary=\"false\" icon=\"yes\" class=\"jmri.jmrit.display.configurexml.SensorIconXml\">");
-        printWriter.println("      <tooltip>" + lever + "</tooltip>");
-        printWriter.println("      <active url=\"program:resources/icons/USS/plate/levers/lever-left-wide.gif\" degrees=\"0\" scale=\"1.0\">");
-        printWriter.println("        <rotation>0</rotation>");
-        printWriter.println("      </active>");
-        printWriter.println("      <inactive url=\"program:resources/icons/USS/plate/levers/lever-right-wide.gif\" degrees=\"0\" scale=\"1.0\">");
-        printWriter.println("        <rotation>0</rotation>");
-        printWriter.println("      </inactive>");
-        printWriter.println("      <unknown url=\"program:resources/icons/USS/plate/levers/lever-unknown-wide.gif\" degrees=\"0\" scale=\"1.0\">");
-        printWriter.println("        <rotation>0</rotation>");
-        printWriter.println("      </unknown>");
-        printWriter.println("      <inconsistent url=\"program:resources/icons/USS/plate/levers/lever-inconsistent-wide.gif\" degrees=\"0\" scale=\"1.0\">");
-        printWriter.println("        <rotation>0</rotation>");
-        printWriter.println("      </inconsistent>");
-        printWriter.println("      <iconmaps />");
-        printWriter.println("    </sensoricon>");
+        printWriter.println("    <sensoricon sensor=\"" + lever + "\" x=\"" + x + "\" y=\"" + y + "\" level=\"10\" forcecontroloff=\"false\" hidden=\"no\" positionable=\"true\" showtooltip=\"true\" editable=\"true\" momentary=\"false\" icon=\"yes\" class=\"jmri.jmrit.display.configurexml.SensorIconXml\">");    // NOI18N
+        printWriter.println("      <tooltip>" + lever + "</tooltip>");  // NOI18N
+        printWriter.println("      <active url=\"program:resources/icons/USS/plate/levers/lever-left-wide.gif\" degrees=\"0\" scale=\"1.0\">"); // NOI18N
+        printWriter.println("        <rotation>0</rotation>");  // NOI18N
+        printWriter.println("      </active>"); // NOI18N
+        printWriter.println("      <inactive url=\"program:resources/icons/USS/plate/levers/lever-right-wide.gif\" degrees=\"0\" scale=\"1.0\">");  // NOI18N
+        printWriter.println("        <rotation>0</rotation>");  // NOI18N
+        printWriter.println("      </inactive>");   // NOI18N
+        printWriter.println("      <unknown url=\"program:resources/icons/USS/plate/levers/lever-unknown-wide.gif\" degrees=\"0\" scale=\"1.0\">"); // NOI18N
+        printWriter.println("        <rotation>0</rotation>");  // NOI18N
+        printWriter.println("      </unknown>");    // NOI18N
+        printWriter.println("      <inconsistent url=\"program:resources/icons/USS/plate/levers/lever-inconsistent-wide.gif\" degrees=\"0\" scale=\"1.0\">");   // NOI18N
+        printWriter.println("        <rotation>0</rotation>");  // NOI18N
+        printWriter.println("      </inconsistent>");   // NOI18N
+        printWriter.println("      <iconmaps />");  // NOI18N
+        printWriter.println("    </sensoricon>");   // NOI18N
     }
     
 /*  As of 4.13.4ish:
@@ -580,31 +580,31 @@ Right:
     </multisensoricon>
 */    
     public static void generateSignalLever(int x, int y, String left, String vertical, String right, PrintWriter printWriter ) {
-        printWriter.println("    <multisensoricon x=\"" + x + "\" y=\"" + y + "\" level=\"10\" forcecontroloff=\"false\" hidden=\"no\" positionable=\"true\" showtooltip=\"true\" editable=\"true\" updown=\"false\" class=\"jmri.jmrit.display.configurexml.MultiSensorIconXml\">");
-        printWriter.println("      <tooltip>" + left + "," + vertical + "," + right + "</tooltip>");
+        printWriter.println("    <multisensoricon x=\"" + x + "\" y=\"" + y + "\" level=\"10\" forcecontroloff=\"false\" hidden=\"no\" positionable=\"true\" showtooltip=\"true\" editable=\"true\" updown=\"false\" class=\"jmri.jmrit.display.configurexml.MultiSensorIconXml\">");   // NOI18N
+        printWriter.println("      <tooltip>" + left + "," + vertical + "," + right + "</tooltip>");// NOI18N
         if (!left.trim().isEmpty()) {
-            printWriter.println("      <active url=\"program:resources/icons/USS/plate/levers/lever-left-wide.gif\" degrees=\"0\" scale=\"1.0\" sensor=\"" + left + "\">");
-            printWriter.println("        <rotation>0</rotation>");
-            printWriter.println("      </active>");
+            printWriter.println("      <active url=\"program:resources/icons/USS/plate/levers/lever-left-wide.gif\" degrees=\"0\" scale=\"1.0\" sensor=\"" + left + "\">");// NOI18N
+            printWriter.println("        <rotation>0</rotation>");  // NOI18N
+            printWriter.println("      </active>"); // NOI18N
         }
-        printWriter.println("      <active url=\"program:resources/icons/USS/plate/levers/lever-vertical-wide.gif\" degrees=\"0\" scale=\"1.0\" sensor=\"" + vertical + "\">");
-        printWriter.println("        <rotation>0</rotation>");
-        printWriter.println("      </active>");
+        printWriter.println("      <active url=\"program:resources/icons/USS/plate/levers/lever-vertical-wide.gif\" degrees=\"0\" scale=\"1.0\" sensor=\"" + vertical + "\">"); // NOI18N
+        printWriter.println("        <rotation>0</rotation>");  // NOI18N
+        printWriter.println("      </active>"); // NOI18N
         if (!right.trim().isEmpty()) {
-            printWriter.println("      <active url=\"program:resources/icons/USS/plate/levers/lever-right-wide.gif\" degrees=\"0\" scale=\"1.0\" sensor=\"" + right + "\">");
-            printWriter.println("        <rotation>0</rotation>");
-            printWriter.println("      </active>");
+            printWriter.println("      <active url=\"program:resources/icons/USS/plate/levers/lever-right-wide.gif\" degrees=\"0\" scale=\"1.0\" sensor=\"" + right + "\">");// NOI18N
+            printWriter.println("        <rotation>0</rotation>");// NOI18N
+            printWriter.println("      </active>");// NOI18N
         }
-        printWriter.println("      <inactive url=\"program:resources/icons/USS/plate/levers/lever-inactive-wide.gif\" degrees=\"0\" scale=\"1.0\">");
-        printWriter.println("        <rotation>0</rotation>");
-        printWriter.println("      </inactive>");
-        printWriter.println("      <unknown url=\"program:resources/icons/USS/plate/levers/lever-unknown-wide.gif\" degrees=\"0\" scale=\"1.0\">");
-        printWriter.println("        <rotation>0</rotation>");
-        printWriter.println("      </unknown>");
-        printWriter.println("      <inconsistent url=\"program:resources/icons/USS/plate/levers/lever-inconsistent-wide.gif\" degrees=\"0\" scale=\"1.0\">");
-        printWriter.println("        <rotation>0</rotation>");
-        printWriter.println("      </inconsistent>");
-        printWriter.println("    </multisensoricon>");
+        printWriter.println("      <inactive url=\"program:resources/icons/USS/plate/levers/lever-inactive-wide.gif\" degrees=\"0\" scale=\"1.0\">");   // NOI18N
+        printWriter.println("        <rotation>0</rotation>");// NOI18N
+        printWriter.println("      </inactive>");// NOI18N
+        printWriter.println("      <unknown url=\"program:resources/icons/USS/plate/levers/lever-unknown-wide.gif\" degrees=\"0\" scale=\"1.0\">"); // NOI18N
+        printWriter.println("        <rotation>0</rotation>");  // NOI18N
+        printWriter.println("      </unknown>");    // NOI18N
+        printWriter.println("      <inconsistent url=\"program:resources/icons/USS/plate/levers/lever-inconsistent-wide.gif\" degrees=\"0\" scale=\"1.0\">");   // NOI18N
+        printWriter.println("        <rotation>0</rotation>");// NOI18N
+        printWriter.println("      </inconsistent>");// NOI18N
+        printWriter.println("    </multisensoricon>");// NOI18N
     }
     
 /*  As of 4.13.4ish:
@@ -626,22 +626,22 @@ Right:
     </sensoricon>
 */    
     public static void generateToggle(int x, int y, String sensor, PrintWriter printWriter) {
-        printWriter.println("    <sensoricon sensor=\"" + sensor + "\" x=\"" + x + "\" y=\"" + y + "\" level=\"10\" forcecontroloff=\"false\" hidden=\"no\" positionable=\"true\" showtooltip=\"true\" editable=\"true\" momentary=\"false\" icon=\"yes\" class=\"jmri.jmrit.display.configurexml.SensorIconXml\">");
-        printWriter.println("      <tooltip>" + sensor + "</tooltip>");
-        printWriter.println("      <active url=\"program:resources/icons/USS/plate/levers/switch-on.gif\" degrees=\"0\" scale=\"1.0\">");
-        printWriter.println("        <rotation>0</rotation>");
-        printWriter.println("      </active>");
-        printWriter.println("      <inactive url=\"program:resources/icons/USS/plate/levers/switch-off.gif\" degrees=\"0\" scale=\"1.0\">");
-        printWriter.println("        <rotation>0</rotation>");
-        printWriter.println("      </inactive>");
-        printWriter.println("      <unknown url=\"program:resources/icons/USS/plate/levers/switch-unknown.gif\" degrees=\"0\" scale=\"1.0\">");
-        printWriter.println("        <rotation>0</rotation>");
-        printWriter.println("      </unknown>");
-        printWriter.println("      <inconsistent url=\"program:resources/icons/USS/plate/levers/switch-inconsistent.gif\" degrees=\"0\" scale=\"1.0\">");
-        printWriter.println("        <rotation>0</rotation>");
-        printWriter.println("      </inconsistent>");
-        printWriter.println("      <iconmaps />");
-        printWriter.println("    </sensoricon>");
+        printWriter.println("    <sensoricon sensor=\"" + sensor + "\" x=\"" + x + "\" y=\"" + y + "\" level=\"10\" forcecontroloff=\"false\" hidden=\"no\" positionable=\"true\" showtooltip=\"true\" editable=\"true\" momentary=\"false\" icon=\"yes\" class=\"jmri.jmrit.display.configurexml.SensorIconXml\">");   // NOI18N
+        printWriter.println("      <tooltip>" + sensor + "</tooltip>");// NOI18N
+        printWriter.println("      <active url=\"program:resources/icons/USS/plate/levers/switch-on.gif\" degrees=\"0\" scale=\"1.0\">");// NOI18N
+        printWriter.println("        <rotation>0</rotation>");// NOI18N
+        printWriter.println("      </active>");// NOI18N
+        printWriter.println("      <inactive url=\"program:resources/icons/USS/plate/levers/switch-off.gif\" degrees=\"0\" scale=\"1.0\">");// NOI18N
+        printWriter.println("        <rotation>0</rotation>");// NOI18N
+        printWriter.println("      </inactive>");// NOI18N
+        printWriter.println("      <unknown url=\"program:resources/icons/USS/plate/levers/switch-unknown.gif\" degrees=\"0\" scale=\"1.0\">");// NOI18N
+        printWriter.println("        <rotation>0</rotation>");// NOI18N
+        printWriter.println("      </unknown>");// NOI18N
+        printWriter.println("      <inconsistent url=\"program:resources/icons/USS/plate/levers/switch-inconsistent.gif\" degrees=\"0\" scale=\"1.0\">");// NOI18N
+        printWriter.println("        <rotation>0</rotation>");// NOI18N
+        printWriter.println("      </inconsistent>");// NOI18N
+        printWriter.println("      <iconmaps />");// NOI18N
+        printWriter.println("    </sensoricon>");// NOI18N
     }
     
 /*  As of 4.13.4ish:
@@ -663,22 +663,22 @@ Right:
     </sensoricon>
 */    
     public static void generatePushButton(int x, int y, String sensor, PrintWriter printWriter) {
-        printWriter.println("    <sensoricon sensor=\"" + sensor + "\" x=\"" + x + "\" y=\"" + y + "\" level=\"10\" forcecontroloff=\"false\" hidden=\"no\" positionable=\"true\" showtooltip=\"true\" editable=\"true\" momentary=\"true\" icon=\"yes\" class=\"jmri.jmrit.display.configurexml.SensorIconXml\">");
-        printWriter.println("      <tooltip>" + sensor + "</tooltip>");
-        printWriter.println("      <active url=\"program:resources/icons/USS/plate/levers/code-press.gif\" degrees=\"0\" scale=\"1.0\">");
-        printWriter.println("        <rotation>0</rotation>");
-        printWriter.println("      </active>");
-        printWriter.println("      <inactive url=\"program:resources/icons/USS/plate/levers/code.gif\" degrees=\"0\" scale=\"1.0\">");
-        printWriter.println("        <rotation>0</rotation>");
-        printWriter.println("      </inactive>");
-        printWriter.println("      <unknown url=\"program:resources/icons/USS/plate/levers/code-unknown.gif\" degrees=\"0\" scale=\"1.0\">");
-        printWriter.println("        <rotation>0</rotation>");
-        printWriter.println("      </unknown>");
-        printWriter.println("      <inconsistent url=\"program:resources/icons/USS/plate/levers/code-inconsistent.gif\" degrees=\"0\" scale=\"1.0\">");
-        printWriter.println("        <rotation>0</rotation>");
-        printWriter.println("      </inconsistent>");
-        printWriter.println("      <iconmaps />");
-        printWriter.println("    </sensoricon>");
+        printWriter.println("    <sensoricon sensor=\"" + sensor + "\" x=\"" + x + "\" y=\"" + y + "\" level=\"10\" forcecontroloff=\"false\" hidden=\"no\" positionable=\"true\" showtooltip=\"true\" editable=\"true\" momentary=\"true\" icon=\"yes\" class=\"jmri.jmrit.display.configurexml.SensorIconXml\">");// NOI18N
+        printWriter.println("      <tooltip>" + sensor + "</tooltip>");// NOI18N
+        printWriter.println("      <active url=\"program:resources/icons/USS/plate/levers/code-press.gif\" degrees=\"0\" scale=\"1.0\">");// NOI18N
+        printWriter.println("        <rotation>0</rotation>");// NOI18N
+        printWriter.println("      </active>");// NOI18N
+        printWriter.println("      <inactive url=\"program:resources/icons/USS/plate/levers/code.gif\" degrees=\"0\" scale=\"1.0\">");// NOI18N
+        printWriter.println("        <rotation>0</rotation>");// NOI18N
+        printWriter.println("      </inactive>");// NOI18N
+        printWriter.println("      <unknown url=\"program:resources/icons/USS/plate/levers/code-unknown.gif\" degrees=\"0\" scale=\"1.0\">");// NOI18N
+        printWriter.println("        <rotation>0</rotation>");// NOI18N
+        printWriter.println("      </unknown>");// NOI18N
+        printWriter.println("      <inconsistent url=\"program:resources/icons/USS/plate/levers/code-inconsistent.gif\" degrees=\"0\" scale=\"1.0\">");// NOI18N
+        printWriter.println("        <rotation>0</rotation>");// NOI18N
+        printWriter.println("      </inconsistent>");// NOI18N
+        printWriter.println("      <iconmaps />");// NOI18N
+        printWriter.println("    </sensoricon>");// NOI18N
     }
 
     private static int adjustSwitchItemsYBySize(int y, OtherData.VERTICAL_SIZE verticalSize) {

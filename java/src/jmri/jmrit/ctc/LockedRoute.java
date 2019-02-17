@@ -69,7 +69,7 @@ public class LockedRoute {
             if (returnString.isEmpty()) returnString = sensor.getDisplayName();
             else returnString += ", " + sensor.getDisplayName();
         }
-        return "O.S. " + _mOSSectionDescription + _mRuleDescription + " Sensor(s) still allocated list: " + returnString;
+        return "O.S. " + _mOSSectionDescription + _mRuleDescription + " " + Bundle.getMessage("LockedRouteSensorsStillAllocatedList") + " " + returnString; // NOI18N
     }
     
 /**
@@ -77,7 +77,7 @@ public class LockedRoute {
  * resource list:
  */    
     private void occupancyStateChange(PropertyChangeEvent e) {
-        if (e.getPropertyName().equals("KnownState") && (int)e.getNewValue() == Sensor.INACTIVE) {  // Went inactive, prune us:
+        if (e.getPropertyName().equals("KnownState") && (int)e.getNewValue() == Sensor.INACTIVE) {  // NOI18N  Went inactive, prune us:
             Sensor sensor = (Sensor)e.getSource();
             sensor.removePropertyChangeListener(_mSensorPropertyChangeListener);    // Not watching this one anymore.
             _mSensors.remove(sensor);           // Free this resource.

@@ -25,12 +25,12 @@ public class SwitchIndicatorsRoute {
                                     String switchIndicator4,
                                     String switchIndicator5,
                                     String switchIndicator6 ) {
-        _mSwitchIndicator1 = new NBHSensor(module, userIdentifier, parameter + " switchIndicator1", switchIndicator1, true);
-        _mSwitchIndicator2 = new NBHSensor(module, userIdentifier, parameter + " switchIndicator2", switchIndicator2, true);
-        _mSwitchIndicator3 = new NBHSensor(module, userIdentifier, parameter + " switchIndicator3", switchIndicator3, true);
-        _mSwitchIndicator4 = new NBHSensor(module, userIdentifier, parameter + " switchIndicator4", switchIndicator4, true);
-        _mSwitchIndicator5 = new NBHSensor(module, userIdentifier, parameter + " switchIndicator5", switchIndicator5, true);
-        _mSwitchIndicator6 = new NBHSensor(module, userIdentifier, parameter + " switchIndicator6", switchIndicator6, true);
+        _mSwitchIndicator1 = new NBHSensor(module, userIdentifier, parameter + " switchIndicator1", switchIndicator1, true);    // NOI18N
+        _mSwitchIndicator2 = new NBHSensor(module, userIdentifier, parameter + " switchIndicator2", switchIndicator2, true);    // NOI18N
+        _mSwitchIndicator3 = new NBHSensor(module, userIdentifier, parameter + " switchIndicator3", switchIndicator3, true);    // NOI18N   
+        _mSwitchIndicator4 = new NBHSensor(module, userIdentifier, parameter + " switchIndicator4", switchIndicator4, true);    // NOI18N
+        _mSwitchIndicator5 = new NBHSensor(module, userIdentifier, parameter + " switchIndicator5", switchIndicator5, true);    // NOI18N
+        _mSwitchIndicator6 = new NBHSensor(module, userIdentifier, parameter + " switchIndicator6", switchIndicator6, true);    // NOI18N
     }
     
     public SwitchIndicatorsRoute(NBHSensor switchIndicator1, NBHSensor switchIndicator2, NBHSensor switchIndicator3, NBHSensor switchIndicator4, NBHSensor switchIndicator5, NBHSensor switchIndicator6) {

@@ -27,11 +27,11 @@ public class SignalDirectionLever {
     
     private SignalDirectionLever() {}
     public SignalDirectionLever(String userIdentifier, String leftSensor, String normalSensor, String rightSensor) {
-        _mLeftSensor = new NBHSensor("SignalDirectionLever", userIdentifier, "leftSensor", leftSensor, true);
-        _mNormalSensor = new NBHSensor("SignalDirectionLever", userIdentifier, "normalSensor", normalSensor, false);
-        _mRightSensor = new NBHSensor("SignalDirectionLever", userIdentifier, "rightSensor", rightSensor, true);
+        _mLeftSensor = new NBHSensor("SignalDirectionLever", userIdentifier, "leftSensor", leftSensor, true);           // NOI18N
+        _mNormalSensor = new NBHSensor("SignalDirectionLever", userIdentifier, "normalSensor", normalSensor, false);    // NOI18N
+        _mRightSensor = new NBHSensor("SignalDirectionLever", userIdentifier, "rightSensor", rightSensor, true);        // NOI18N
         if (!_mLeftSensor.valid() && !_mRightSensor.valid()) {
-            new CTCException("SignalDirectionLever", userIdentifier, "must have one", "One or both leftSensor and rightSensor must exist").logError();
+            new CTCException("SignalDirectionLever", userIdentifier, Bundle.getMessage("SignalDirectionLeverMustHaveOne"), Bundle.getMessage("SignalDirectionLeverOneOrBoth")).logError();
         }
         _mLeftSensor.setKnownState(Sensor.INACTIVE);
         _mNormalSensor.setKnownState(Sensor.ACTIVE);

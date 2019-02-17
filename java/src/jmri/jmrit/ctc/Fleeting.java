@@ -12,7 +12,7 @@ public class Fleeting {
     private boolean _mDefaultFleetingEnabled;
     private Fleeting () {}
     public Fleeting (String fleetingToggleInternalSensor, boolean defaultFleetingEnabled) {
-        _mFleetingToggleInternalSensor = new NBHSensor("Fleeting", "", "fleetingToggleInternalSensor", fleetingToggleInternalSensor, true);
+        _mFleetingToggleInternalSensor = new NBHSensor("Fleeting", "", "fleetingToggleInternalSensor", fleetingToggleInternalSensor, true); // NOI18N
         _mDefaultFleetingEnabled = defaultFleetingEnabled;
         _mFleetingToggleInternalSensor.setKnownState(_mDefaultFleetingEnabled ? Sensor.ACTIVE : Sensor.INACTIVE);
     }

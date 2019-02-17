@@ -17,10 +17,10 @@ public class CreateVirtualSignalsXMLFile {
     public static void writeVirtualSignals(String directoryToCreateThemIn, OtherData otherData, ArrayList <CodeButtonHandlerData> codeButtonHandlerDataArrayList) {
         PrintWriter printWriter;
         try {
-            printWriter = new PrintWriter(new FileWriter(directoryToCreateThemIn + "VirtualSignals.xml"));
+            printWriter = new PrintWriter(new FileWriter(directoryToCreateThemIn + "VirtualSignals.xml"));  // NOI18N
         } catch (IOException e) { return; }
         generateProlog(printWriter);
-        printWriter.println("  <signalheads class=\"jmri.managers.configurexml.AbstractSignalHeadManagerXml\">");
+        printWriter.println("  <signalheads class=\"jmri.managers.configurexml.AbstractSignalHeadManagerXml\">");   // NOI18N
         for (CodeButtonHandlerData codeButtonHandlerData : codeButtonHandlerDataArrayList) {
             if (codeButtonHandlerData._mSIDI_Enabled) { // Signal Indicators:
                 if (otherData._mGUIDesign_SignalsOnPanel == OtherData.SIGNALS_ON_PANEL.ALL) {
@@ -35,14 +35,14 @@ public class CreateVirtualSignalsXMLFile {
                 }
             }
         }
-        printWriter.println("  </signalheads>");
+        printWriter.println("  </signalheads>");    // NOI18N
         generateEpilogue(printWriter);
         printWriter.close();
     }
     
     private static void generateSignalHead(String signalHead, PrintWriter printWriter) {
-        printWriter.println("    <signalhead class=\"jmri.implementation.configurexml.VirtualSignalHeadXml\">");
-        printWriter.println("      <systemName>" + signalHead + "</systemName>");
-        printWriter.println("    </signalhead>");
+        printWriter.println("    <signalhead class=\"jmri.implementation.configurexml.VirtualSignalHeadXml\">");    // NOI18N
+        printWriter.println("      <systemName>" + signalHead + "</systemName>");   // NOI18N
+        printWriter.println("    </signalhead>");   // NOI18N
     }
 }

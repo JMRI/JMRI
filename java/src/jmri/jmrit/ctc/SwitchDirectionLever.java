@@ -9,7 +9,7 @@ public class SwitchDirectionLever {
     private NBHSensor _mSwitchLeverSensor;
     public SwitchDirectionLever(String userIdentifier,
                                 String switchLeverSensor) {
-        _mSwitchLeverSensor = new NBHSensor("SwitchDirectionLever", userIdentifier, "switchLeverSensor", switchLeverSensor, false);
+        _mSwitchLeverSensor = new NBHSensor("SwitchDirectionLever", userIdentifier, "switchLeverSensor", switchLeverSensor, false); // NOI18N
         _mSwitchLeverSensor.setKnownState(Sensor.ACTIVE);
     }
     

@@ -30,7 +30,7 @@ public class NBHSignalMast extends NBHAbstractSignalCommon implements SignalMast
     public static final int DEFAULT_INT_RV = 0;                // For any function that returns int.
     public static final long DEFAULT_LONG_RV = 0;              // For any function that returns long.
     public static final float DEFAULT_FLOAT_RV = (float)0.0;   // For any function that returns float.
-    public static final String DEFAULT_STRING_RV = "UNKNOWN";  // For any function that returns String.
+    public static final String DEFAULT_STRING_RV = "UNKNOWN";  // NOI18N  For any function that returns String.
 
     private static final SignalMastManager SIGNAL_MAST_MANAGER = InstanceManager.getDefault(jmri.SignalMastManager.class);
     private static final NamedBeanHandleManager NAMED_BEAN_HANDLE_MANAGER = InstanceManager.getDefault(NamedBeanHandleManager.class);

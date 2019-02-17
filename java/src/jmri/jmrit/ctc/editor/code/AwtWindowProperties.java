@@ -41,7 +41,7 @@ public class AwtWindowProperties {
         try {
             File file = CTCFiles.getFile(_mFilename);
             BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file));
-            _mProperties.store(bufferedWriter, "All Ant Windows Properties");
+            _mProperties.store(bufferedWriter, "All Ant Windows Properties");           // NOI18N
         } catch (IOException e) {}
     }
 
@@ -51,22 +51,22 @@ public class AwtWindowProperties {
 //  If the "default" window size as created by the programmer is larger than what the user specified the size as from the
 //  last time they closed this window, they we will override that users smaller value.  This is in case the programmer
 //  increased it's size between versions of the program:
-        int windowWidth = ProjectsCommonSubs.getIntFromStringNoThrow(_mProperties.getProperty(windowName + ".Width"), currentWindowRectangle.width);
-        int windowHeight = ProjectsCommonSubs.getIntFromStringNoThrow(_mProperties.getProperty(windowName + ".Height"), currentWindowRectangle.height);
+        int windowWidth = ProjectsCommonSubs.getIntFromStringNoThrow(_mProperties.getProperty(windowName + ".Width"), currentWindowRectangle.width);    // NOI18N
+        int windowHeight = ProjectsCommonSubs.getIntFromStringNoThrow(_mProperties.getProperty(windowName + ".Height"), currentWindowRectangle.height); // NOI18N
         if (currentWindowRectangle.width > windowWidth) windowWidth = currentWindowRectangle.width;
         if (currentWindowRectangle.height > windowHeight) windowHeight = currentWindowRectangle.height;
-        window.setBounds(new Rectangle( ProjectsCommonSubs.getIntFromStringNoThrow(_mProperties.getProperty(windowName + ".X"), _mMasterWindow.getX()),
-                                        ProjectsCommonSubs.getIntFromStringNoThrow(_mProperties.getProperty(windowName + ".Y"), _mMasterWindow.getY()),
+        window.setBounds(new Rectangle( ProjectsCommonSubs.getIntFromStringNoThrow(_mProperties.getProperty(windowName + ".X"), _mMasterWindow.getX()), // NOI18N
+                                        ProjectsCommonSubs.getIntFromStringNoThrow(_mProperties.getProperty(windowName + ".Y"), _mMasterWindow.getY()), // NOI18N
                                         windowWidth,
                                         windowHeight));
     }
 
     public void saveWindowState(java.awt.Window window, String windowName) {
         Rectangle rectangle = window.getBounds();
-        _mProperties.setProperty(windowName + ".X", Integer.toString((int)rectangle.getX()));
-        _mProperties.setProperty(windowName + ".Y", Integer.toString((int)rectangle.getY()));
-        _mProperties.setProperty(windowName + ".Width", Integer.toString((int)rectangle.getWidth()));
-        _mProperties.setProperty(windowName + ".Height", Integer.toString((int)rectangle.getHeight()));
+        _mProperties.setProperty(windowName + ".X", Integer.toString((int)rectangle.getX()));           // NOI18N
+        _mProperties.setProperty(windowName + ".Y", Integer.toString((int)rectangle.getY()));           // NOI18N
+        _mProperties.setProperty(windowName + ".Width", Integer.toString((int)rectangle.getWidth()));   // NOI18N
+        _mProperties.setProperty(windowName + ".Height", Integer.toString((int)rectangle.getHeight())); // NOI18N
     }
 
     public void saveWindowStateAndClose(java.awt.Window window, String windowName) {

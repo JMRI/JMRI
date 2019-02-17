@@ -48,7 +48,7 @@ public class CommonSubs {
 
     public static boolean allowClose(Component parentComponent, boolean dataChanged) {
         if (dataChanged) {
-            return JOptionPane.showConfirmDialog(parentComponent, "Data has been modified, do you really want to exit?", "Warning", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
+            return JOptionPane.showConfirmDialog(parentComponent, Bundle.getMessage("CommonSubsDataModified"), Bundle.getMessage("Warning"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;  // NOI18N
         }
         return true;    // NO change, ok to exit
     }
@@ -159,33 +159,33 @@ public class CommonSubs {
         jComboBox.setEditable(false);
         ArrayList<String> list = new ArrayList<>();
         switch (beanType) {
-            case "Sensor":
+            case "Sensor":  // NOI18N
                 InstanceManager.getDefault(SensorManager.class).getNamedBeanSet().forEach((s) -> {
                     list.add(s.getDisplayName());
                 });
                 break;
-            case "Turnout":
+            case "Turnout": // NOI18N
                 InstanceManager.getDefault(TurnoutManager.class).getNamedBeanSet().forEach((t) -> {
                     list.add(t.getDisplayName());
                 });
                 break;
-            case "SignalHead":
+            case "SignalHead":  // NOI18N
                 InstanceManager.getDefault(SignalHeadManager.class).getNamedBeanSet().forEach((h) -> {
                     list.add(h.getDisplayName());
                 });
                 break;
-            case "SignalMast":
+            case "SignalMast":  // NOI18N
                 InstanceManager.getDefault(SignalMastManager.class).getNamedBeanSet().forEach((m) -> {
                     list.add(m.getDisplayName());
                 });
                 break;
-            case "Block":
+            case "Block":   // NOI18N
                 InstanceManager.getDefault(BlockManager.class).getNamedBeanSet().forEach((b) -> {
                     list.add(b.getDisplayName());
                 });
                 break;
             default:
-                log.error("Bean type, '{}', is not valid", beanType);
+                log.error(Bundle.getMessage("CommonSubsBeanType"), beanType);   // NOI18N
         }
         list.sort(new jmri.util.AlphanumComparator());
         list.forEach((item) -> {
@@ -259,16 +259,16 @@ public class CommonSubs {
 //  If the passed errors array has entries, put up a dialog and return true, if not no dialog, and return false.
     public static boolean missingFieldsErrorDialogDisplayed(Component parentComponent, ArrayList<String> errors, boolean isCancel) {
         if (errors.isEmpty()) return false;
-        String displayString = errors.size() > 1 ?  "The following field(s) are required:\n\n" : "The following field is required:\n\n";
+        String displayString = errors.size() > 1 ? Bundle.getMessage("CommonSubsFieldsPlural") : Bundle.getMessage("CommonSubsFieldSingular");  // NOI18N
         for (String error : errors) {
-            displayString += error + "\n";
+            displayString += error + "\n";  // NOI18N
         }
         if (!isCancel) {
-            displayString += "\nPlease fix before pressing \"Save and close\"\nor you may exit the editor screen without saving.";
+            displayString += Bundle.getMessage("CommonSubsPleaseFix1"); // NOI18N
         } else {
-            displayString += "\nPlease fix before pressing \"Save and close\"\nor you may press cancel.";
+            displayString += Bundle.getMessage("CommonSubsPleaseFix2"); // NOI18N
         }
-        JOptionPane.showMessageDialog(parentComponent, displayString, "Error:", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(parentComponent, displayString, Bundle.getMessage("Error"), JOptionPane.ERROR_MESSAGE);   // NOI18N
         return true;
     }
 

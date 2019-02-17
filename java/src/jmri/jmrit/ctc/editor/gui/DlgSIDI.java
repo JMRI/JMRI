@@ -19,8 +19,8 @@ public class DlgSIDI extends javax.swing.JDialog {
     /**
      * Creates new form dlgSIDI
      */
-    private static final String FORM_PROPERTIES = "DlgSIDI";
-    private static final String PREFIX = "_mSIDI_";
+    private static final String FORM_PROPERTIES = "DlgSIDI";    // NOI18N
+    private static final String PREFIX = "_mSIDI_";             // NOI18N
     private final AwtWindowProperties _mAwtWindowProperties;
     private boolean _mClosedNormally = false;
     public boolean closedNormally() { return _mClosedNormally; }
@@ -117,8 +117,8 @@ public class DlgSIDI extends javax.swing.JDialog {
 //  is this mentioned.  HOW IN THE HELL is anyone supposed to find out about this?
 //  And WHY would the default be the other way?  Why don't they just admit they are poor programmers!
 //  Where is a list of properties available and their corresponding functions?
-        _mSIDI_TableOfLeftToRightTrafficExternalSignalNames.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);
-        _mSIDI_TableOfRightToLeftTrafficExternalSignalNames.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);
+        _mSIDI_TableOfLeftToRightTrafficExternalSignalNames.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);    // NOI18N
+        _mSIDI_TableOfRightToLeftTrafficExternalSignalNames.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);    // NOI18N
         initOrig(signalsArrayList1, signalsArrayList2);
         _mAwtWindowProperties.setWindowState((java.awt.Window)this, FORM_PROPERTIES);        
         this.getRootPane().setDefaultButton(_mSaveAndClose);
@@ -157,11 +157,11 @@ public class DlgSIDI extends javax.swing.JDialog {
         boolean entriesInRightLeftTrafficSignalsCSVList = !CommonSubs.getCSVStringFromDefaultTableModel(_mSIDI_TableOfRightToLeftTrafficExternalSignalNamesDefaultTableModel).isEmpty();
 //  Checks:        
         CommonSubs.checkJTextFieldNotEmpty(_mSIDI_NormalInternalSensor, _mSIDI_NormalInternalSensorPrompt, errors);
-        if (!leftInternalSensorPresent && !rightInternalSensorPresent) errors.add("One or both of \"" + _mSIDI_LeftInternalSensorPrompt.getText() + "\" and \"" + _mSIDI_RightInternalSensorPrompt.getText() + "\" must be present.");
-        if (leftInternalSensorPresent && !entriesInRightLeftTrafficSignalsCSVList) errors.add("\"" + _mSIDI_LeftInternalSensorPrompt.getText() + "\" defined but no entries in \"" + _mTableOfRightToLeftTrafficSignalNamesPrompt.getText() + "\"");
-        if (rightInternalSensorPresent && !entriesInLeftRightTrafficSignalsCSVList) errors.add("\"" + _mSIDI_RightInternalSensorPrompt.getText() + "\" defined but no entries in \"" + _mTableOfLeftToRightTrafficSignalNamesPrompt.getText() + "\"");
-        if (!leftInternalSensorPresent && entriesInRightLeftTrafficSignalsCSVList) errors.add("\"" + _mSIDI_LeftInternalSensorPrompt.getText() + "\" not defined with entries in \"" + _mTableOfRightToLeftTrafficSignalNamesPrompt.getText() + "\"");
-        if (!rightInternalSensorPresent && entriesInLeftRightTrafficSignalsCSVList) errors.add("\"" + _mSIDI_RightInternalSensorPrompt.getText() + "\" not defined with entries in \"" + _mTableOfLeftToRightTrafficSignalNamesPrompt.getText() + "\"");
+        if (!leftInternalSensorPresent && !rightInternalSensorPresent) errors.add(Bundle.getMessage("OneOrBothOf") + " \"" + _mSIDI_LeftInternalSensorPrompt.getText() + "\" " + Bundle.getMessage("And") + " \"" + _mSIDI_RightInternalSensorPrompt.getText() + "\" " + Bundle.getMessage("MustBePresent"));   // NOI18N
+        if (leftInternalSensorPresent && !entriesInRightLeftTrafficSignalsCSVList) errors.add("\"" + _mSIDI_LeftInternalSensorPrompt.getText() + "\" " + Bundle.getMessage("ErrorDlgSIDIDefineButNoEntriesIn") + " \"" + _mTableOfRightToLeftTrafficSignalNamesPrompt.getText() + "\"");    // NOI18N
+        if (rightInternalSensorPresent && !entriesInLeftRightTrafficSignalsCSVList) errors.add("\"" + _mSIDI_RightInternalSensorPrompt.getText() + "\" " + Bundle.getMessage("ErrorDlgSIDIDefineButNoEntriesIn") + " \"" + _mTableOfLeftToRightTrafficSignalNamesPrompt.getText() + "\"");  // NOI18N
+        if (!leftInternalSensorPresent && entriesInRightLeftTrafficSignalsCSVList) errors.add("\"" + _mSIDI_LeftInternalSensorPrompt.getText() + "\" " + Bundle.getMessage("ErrorDlgSIDINotDefinedWithEntriesIn") + " \"" + _mTableOfRightToLeftTrafficSignalNamesPrompt.getText() + "\""); // NOI18N
+        if (!rightInternalSensorPresent && entriesInLeftRightTrafficSignalsCSVList) errors.add("\"" + _mSIDI_RightInternalSensorPrompt.getText() + "\" " + Bundle.getMessage("ErrorDlgSIDINotDefinedWithEntriesIn") + " \"" + _mTableOfLeftToRightTrafficSignalNamesPrompt.getText() + "\"");   // NOI18N
         _mCheckJMRIObject.analyzeForm(PREFIX, this, errors);        
         return errors;
     }
@@ -171,7 +171,7 @@ public class DlgSIDI extends javax.swing.JDialog {
      * WARNING: Do NOT modify this code. The content of this method is always
      * regenerated by the Form Editor.
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked")  // NOI18N
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 

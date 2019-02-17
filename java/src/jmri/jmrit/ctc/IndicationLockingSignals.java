@@ -12,7 +12,7 @@ public class IndicationLockingSignals {
     public IndicationLockingSignals(String userIdentifier, String listOfCSVSignalNames) {
         ArrayList<String> listOfSignalNames = ProjectsCommonSubs.getArrayListFromCSV(listOfCSVSignalNames);
         for (String SignalName : listOfSignalNames) {
-            _mListOfSignals.add(NBHAbstractSignalCommon.getExistingSignal("IndicationLockingSignals", userIdentifier, "SignalName " + listOfCSVSignalNames, SignalName));
+            _mListOfSignals.add(NBHAbstractSignalCommon.getExistingSignal("IndicationLockingSignals", userIdentifier, "SignalName " + listOfCSVSignalNames, SignalName));   // NOI18N
         }
     }
     

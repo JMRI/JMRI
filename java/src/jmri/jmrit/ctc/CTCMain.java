@@ -41,13 +41,13 @@ public class CTCMain {
     }
     
     private void handleCTCDebugSystemReload(PropertyChangeEvent e) {
-        if (e.getPropertyName().equals("KnownState") && (int)e.getNewValue() == Sensor.ACTIVE) {
+        if (e.getPropertyName().equals("KnownState") && (int)e.getNewValue() == Sensor.ACTIVE) {    // NOI18N
             rereadXMLFile();
         }
     }
     
     private void handleLogging(PropertyChangeEvent e) {
-        if (e.getPropertyName().equals("KnownState")) {
+        if (e.getPropertyName().equals("KnownState")) {         // NOI18N
             CTCJythonAccessInstanceManager._mCTCDebug_TrafficLockingRuleTriggeredDisplayLoggingEnabled = (int)e.getNewValue() == Sensor.ACTIVE;
             if (CTCJythonAccessInstanceManager._mCTCDebug_TrafficLockingRuleTriggeredDisplayLoggingEnabled) _mLockedRoutesManager.dump();
         }
@@ -55,14 +55,14 @@ public class CTCMain {
     
     public void rereadXMLFile() {
         if (_mFilenameRead != null) { // Safety check that someone loaded a file before.
-            LOG.info("Shutting down existing CTC system");
+            LOG.info(Bundle.getMessage("CTCMainSuttingDown"));          // NOI18N
             shutdown();
             startup();
-            LOG.info("CTC " + CTCSerialData.CTCVersion + " Reloaded file {}", _mFilenameRead);
+            LOG.info("CTC " + CTCSerialData.CTCVersion + " " + Bundle.getMessage("CTCMainReloadedFile") + " {}", _mFilenameRead);   // NOI18N
         }
         else
         {
-            LOG.warn("No file has been loaded!");
+            LOG.warn(Bundle.getMessage("CTCMainNoFileLoaded")); // NOI18N
         }
     }
 
@@ -80,7 +80,7 @@ public class CTCMain {
         _mLockedRoutesManager.clearAllLockedRoutes();
         SignalDirectionIndicators.resetSignalsUsed();
         if (!_mCTCSerialData.readDataFromXMLFile(_mFilenameRead)) {
-            CTCException e = new CTCException("CTCMain", "", "readDataFromXMLFile", "Failed to read: " + _mFilenameRead);
+            CTCException e = new CTCException("CTCMain", "", "readDataFromXMLFile", Bundle.getMessage("CTCMainFailedToRead") + " " + _mFilenameRead);   // NOI18N
             e.logError();
         }
         
@@ -212,10 +212,10 @@ public class CTCMain {
             _mCodeButtonHandlersArrayList.add(codeButtonHandler);
             _mCBHashMap.put(codeButtonHandlerData._mUniqueID, codeButtonHandler);
         });
-        _mCTCDebugSystemReloadInternalSensor = new NBHSensor("CTCMain", "", "_mCTCDebugSystemReloadInternalSensor", otherData._mCTCDebugSystemReloadInternalSensor, true);
+        _mCTCDebugSystemReloadInternalSensor = new NBHSensor("CTCMain", "", "_mCTCDebugSystemReloadInternalSensor", otherData._mCTCDebugSystemReloadInternalSensor, true);  // NOI18N
         _mCTCDebugSystemReloadInternalSensor.setKnownState(Sensor.INACTIVE);
         _mCTCDebugSystemReloadInternalSensor.addPropertyChangeListener(_mCTCDebugSystemReloadInternalSensorPropertyChangeListener);
-        _mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor = new NBHSensor("CTCMain", "", "_mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor", otherData._mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor, true);
+        _mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor = new NBHSensor("CTCMain", "", "_mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor", otherData._mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor, true); // NOI18N
         _mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor.setKnownState(Sensor.INACTIVE);
         _mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor.addPropertyChangeListener(_mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensorPropertyChangeListener);
         

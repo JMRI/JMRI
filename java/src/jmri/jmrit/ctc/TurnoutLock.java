@@ -70,15 +70,15 @@ public class TurnoutLock {
                         boolean additionalTurnout2FeebackReversed,
                         String additionalTurnout3,
                         boolean additionalTurnout3FeebackReversed) {
-        _mDispatcherSensorLockToggle = new NBHSensor("TurnoutLock", userIdentifier, "dispatcherSensorLockToggle", dispatcherSensorLockToggle, true);
+        _mDispatcherSensorLockToggle = new NBHSensor("TurnoutLock", userIdentifier, "dispatcherSensorLockToggle", dispatcherSensorLockToggle, true);    // NOI18N
         addTurnoutMonitored(userIdentifier, "actualTurnout", actualTurnout, actualTurnoutFeedbackDifferent, true);
-        _mDispatcherSensorUnlockedIndicator = new NBHSensor("TurnoutLock", userIdentifier, "dispatcherSensorUnlockedIndicator", dispatcherSensorUnlockedIndicator, true); 
+        _mDispatcherSensorUnlockedIndicator = new NBHSensor("TurnoutLock", userIdentifier, "dispatcherSensorUnlockedIndicator", dispatcherSensorUnlockedIndicator, true);   // NOI18N
         _mDispatcherSensorLockToggle.setKnownState(turnoutLocksEnabledAtStartup ? Sensor.INACTIVE : Sensor.ACTIVE);
         _mNoDispatcherControlOfSwitch = noDispatcherControlOfSwitch;
         _m_ndcos_WhenLockedSwitchState = ndcos_WhenLockedSwitchState;
-        addTurnoutMonitored(userIdentifier, "additionalTurnout1", additionalTurnout1, additionalTurnout1FeebackReversed, false);
-        addTurnoutMonitored(userIdentifier, "additionalTurnout2", additionalTurnout2, additionalTurnout2FeebackReversed, false);
-        addTurnoutMonitored(userIdentifier, "additionalTurnout3", additionalTurnout3, additionalTurnout3FeebackReversed, false);
+        addTurnoutMonitored(userIdentifier, "additionalTurnout1", additionalTurnout1, additionalTurnout1FeebackReversed, false);    // NOI18N
+        addTurnoutMonitored(userIdentifier, "additionalTurnout2", additionalTurnout2, additionalTurnout2FeebackReversed, false);    // NOI18N
+        addTurnoutMonitored(userIdentifier, "additionalTurnout3", additionalTurnout3, additionalTurnout3FeebackReversed, false);    // NOI18N
         updateDispatcherSensorIndicator(turnoutLocksEnabledAtStartup);
         _mTurnoutsMonitoredPropertyChangeListener = (PropertyChangeEvent e) -> { handleTurnoutChange(e); };
         for (NBHTurnout tempTurnout : _mTurnoutsMonitored) {
@@ -98,18 +98,18 @@ public class TurnoutLock {
     private void addTurnoutMonitored(String userIdentifier, String parameter, String actualTurnout, boolean FeedbackDifferent, boolean required) {
         boolean actualTurnoutPresent = !ProjectsCommonSubs.isNullOrEmptyString(actualTurnout);
         if (required && !actualTurnoutPresent) {
-            (new CTCException("TurnoutLock", userIdentifier, parameter, "Required turnout missing")).logError();
+            (new CTCException("TurnoutLock", userIdentifier, parameter, Bundle.getMessage("RequiredTurnoutMissing"))).logError();   // NOI18N
             return;
         }
         if (actualTurnoutPresent) { // IF there is something there, try it:
-            NBHTurnout tempTurnout = new NBHTurnout("TurnoutLock", userIdentifier, parameter, actualTurnout, FeedbackDifferent);
+            NBHTurnout tempTurnout = new NBHTurnout("TurnoutLock", userIdentifier, parameter, actualTurnout, FeedbackDifferent);    // NOI18N
             if (tempTurnout.valid()) _mTurnoutsMonitored.add(tempTurnout);
         }
     }
     
 //  Was propertyChange:
     private void handleTurnoutChange(PropertyChangeEvent e) {
-        if (e.getPropertyName().equals("KnownState")) {
+        if (e.getPropertyName().equals("KnownState")) { // NOI18N
             if (_mLocked) {                                                 // Act on locked only!
                 NBHTurnout turnout = null;  // Not found.
                 for (int index = 0; index < _mTurnoutsMonitored.size(); index++) { // Find matching entry:

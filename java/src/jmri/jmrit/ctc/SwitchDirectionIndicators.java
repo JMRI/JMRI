@@ -39,13 +39,13 @@ public class SwitchDirectionIndicators {
                                         String actualTurnout,
                                         int codingTimeInMilliseconds,           // Instead of "CodingDistrict"
                                         boolean feedbackDifferent) {
-        _mNormalIndicatorSensor = new NBHSensor("SwitchDirectionIndicators", userIdentifier, "normalIndicatorSensor", normalIndicatorSensor, false);
-        _mReversedIndicatorSensor = new NBHSensor("SwitchDirectionIndicators", userIdentifier, "reveresedIndicatorSensor", reveresedIndicatorSensor, false);
-        _mActualTurnout = new NBHTurnout("SwitchDirectionIndicators", userIdentifier, "actualTurnout", actualTurnout, feedbackDifferent);
+        _mNormalIndicatorSensor = new NBHSensor("SwitchDirectionIndicators", userIdentifier, "normalIndicatorSensor", normalIndicatorSensor, false);            // NOI18N
+        _mReversedIndicatorSensor = new NBHSensor("SwitchDirectionIndicators", userIdentifier, "reveresedIndicatorSensor", reveresedIndicatorSensor, false);    // NOI18N
+        _mActualTurnout = new NBHTurnout("SwitchDirectionIndicators", userIdentifier, "actualTurnout", actualTurnout, feedbackDifferent);                       // NOI18N
         _mActualTurnoutHasFeedback = _mActualTurnout.getFeedbackMode() != Turnout.DIRECT && _mActualTurnout.getFeedbackMode() != Turnout.MONITORING;
         
         if (_mActualTurnoutHasFeedback) { // Let real sensor that drives turnout feedback set indicators:
-            _mActualTurnoutPropertyChangeListener = (PropertyChangeEvent e) -> { if (e.getPropertyName().equals("KnownState")) setSwitchIndicationSensorsToPresentState(); };
+            _mActualTurnoutPropertyChangeListener = (PropertyChangeEvent e) -> { if (e.getPropertyName().equals("KnownState")) setSwitchIndicationSensorsToPresentState(); };   // NOI18N
             _mActualTurnout.addPropertyChangeListener(_mActualTurnoutPropertyChangeListener);
         } else { // Simulate feedback delay if any:
             _mSimulatedTurnoutFeedbackTimerActionListener = (ActionEvent) -> { setSwitchIndicationSensorsToPresentState(); };

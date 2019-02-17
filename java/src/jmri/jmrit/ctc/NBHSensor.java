@@ -73,7 +73,7 @@ public class NBHSensor implements Sensor {
     public static final boolean DEFAULT_BOOLEAN_RV = false;    // For any function that returns boolean.
     public static final int DEFAULT_INT_RV = 0;                // For any function that returns int.
     public static final long DEFAULT_LONG_RV = 0;              // For any function that returns long.
-    public static final String DEFAULT_STRING_RV = "UNKNOWN";  // For any function that returns String.
+    public static final String DEFAULT_STRING_RV = "UNKNOWN";  // NOI18N  For any function that returns String.
 //  Functions that don't return any of the above have specific implementations.  Ex: PropertyChangeListener[] or ArrayList<>
     
     private static final SensorManager SENSOR_MANAGER = InstanceManager.sensorManagerInstance();
@@ -116,15 +116,15 @@ public class NBHSensor implements Sensor {
     private static Sensor getExistingJMRISensor(String module, String userIdentifier, String parameter, String sensor) throws CTCException {
         if (!ProjectsCommonSubs.isNullOrEmptyString(sensor)) {
             Sensor returnValue = SENSOR_MANAGER.getSensor(sensor.trim());
-            if (returnValue == null) { throw new CTCException(module, userIdentifier, parameter, "Sensor does not exist: " + sensor); }
+            if (returnValue == null) { throw new CTCException(module, userIdentifier, parameter, Bundle.getMessage("NBHSensorDoesNotExist") + " " + sensor); }  // NOI18N
             return returnValue;
-        } else { throw new CTCException(module, userIdentifier, parameter, "Required sensor missing"); }
+        } else { throw new CTCException(module, userIdentifier, parameter, Bundle.getMessage("NBHSensorRequiredSensorMissing")); }  // NOI18N
     }
 //  sensor is optional, but must exist if given.  Raises Exception in ALL error cases.    
     private static Sensor getOptionalJMRISensor(String module, String userIdentifier, String parameter, String sensor) throws CTCException {
         if (!ProjectsCommonSubs.isNullOrEmptyString(sensor)) {
             Sensor returnValue = SENSOR_MANAGER.getSensor(sensor.trim());
-            if (returnValue == null) { throw new CTCException(module, userIdentifier, parameter, "Sensor does not exist: " + sensor); }
+            if (returnValue == null) { throw new CTCException(module, userIdentifier, parameter, Bundle.getMessage("NBHSensorDoesNotExist") + " " + sensor); }  // NOI18N
             return returnValue;
         } else { return null; }
     }
@@ -216,13 +216,13 @@ public class NBHSensor implements Sensor {
     @Override
     //  Deprecated 4.9.2
     public void useDefaultTimerSettings(boolean flag) {
-        throw new UnsupportedOperationException("Deprecated since JMRI 4.9.2");
+        throw new UnsupportedOperationException("Deprecated since JMRI 4.9.2"); // NOI18N
     }
 
     @Override
     //  Deprecated 4.9.2
     public boolean useDefaultTimerSettings() {
-        throw new UnsupportedOperationException("Deprecated since JMRI 4.9.2");
+        throw new UnsupportedOperationException("Deprecated since JMRI 4.9.2"); // NOI18N
     }
 
     @Override

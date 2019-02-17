@@ -87,17 +87,17 @@ public class TrafficLocking {
             _mOSSignalDirectionIndicatorsInterfaceInterface3 = osSignalDirectionIndicatorsInterface3;
             _mOSSignalDirectionIndicatorsInterfaceInterface4 = osSignalDirectionIndicatorsInterface4;
             _mOSSignalDirectionIndicatorsInterfaceInterface5 = osSignalDirectionIndicatorsInterface5;
-            _mOccupancyExternalSensor1 = new NBHSensor("TrafficLocking", userIdentifier, parameter + " occupancyExternalSensor1", occupancyExternalSensor1, true);
-            _mOccupancyExternalSensor2 = new NBHSensor("TrafficLocking", userIdentifier, parameter + " occupancyExternalSensor2", occupancyExternalSensor2, true);
-            _mOccupancyExternalSensor3 = new NBHSensor("TrafficLocking", userIdentifier, parameter + " occupancyExternalSensor3", occupancyExternalSensor3, true);
-            _mOccupancyExternalSensor4 = new NBHSensor("TrafficLocking", userIdentifier, parameter + " occupancyExternalSensor4", occupancyExternalSensor4, true);
-            _mOccupancyExternalSensor5 = new NBHSensor("TrafficLocking", userIdentifier, parameter + " occupancyExternalSensor5", occupancyExternalSensor5, true);
-            _mOccupancyExternalSensor6 = new NBHSensor("TrafficLocking", userIdentifier, parameter + " occupancyExternalSensor6", occupancyExternalSensor6, true);
-            _mOccupancyExternalSensor7 = new NBHSensor("TrafficLocking", userIdentifier, parameter + " occupancyExternalSensor7", occupancyExternalSensor7, true);
-            _mOccupancyExternalSensor8 = new NBHSensor("TrafficLocking", userIdentifier, parameter + " occupancyExternalSensor8", occupancyExternalSensor8, true);
-            _mOccupancyExternalSensor9 = new NBHSensor("TrafficLocking", userIdentifier, parameter + " occupancyExternalSensor9", occupancyExternalSensor9, true);
-            _mOptionalSensor1 = new NBHSensor("TrafficLocking", userIdentifier, parameter + " optionalSensor1", optionalSensor1, true);
-            _mOptionalSensor2 = new NBHSensor("TrafficLocking", userIdentifier, parameter + " optionalSensor2", optionalSensor2, true);
+            _mOccupancyExternalSensor1 = new NBHSensor("TrafficLocking", userIdentifier, parameter + " occupancyExternalSensor1", occupancyExternalSensor1, true);  // NOI18N
+            _mOccupancyExternalSensor2 = new NBHSensor("TrafficLocking", userIdentifier, parameter + " occupancyExternalSensor2", occupancyExternalSensor2, true);  // NOI18N
+            _mOccupancyExternalSensor3 = new NBHSensor("TrafficLocking", userIdentifier, parameter + " occupancyExternalSensor3", occupancyExternalSensor3, true);  // NOI18N
+            _mOccupancyExternalSensor4 = new NBHSensor("TrafficLocking", userIdentifier, parameter + " occupancyExternalSensor4", occupancyExternalSensor4, true);  // NOI18N
+            _mOccupancyExternalSensor5 = new NBHSensor("TrafficLocking", userIdentifier, parameter + " occupancyExternalSensor5", occupancyExternalSensor5, true);  // NOI18N
+            _mOccupancyExternalSensor6 = new NBHSensor("TrafficLocking", userIdentifier, parameter + " occupancyExternalSensor6", occupancyExternalSensor6, true);  // NOI18N
+            _mOccupancyExternalSensor7 = new NBHSensor("TrafficLocking", userIdentifier, parameter + " occupancyExternalSensor7", occupancyExternalSensor7, true);  // NOI18N
+            _mOccupancyExternalSensor8 = new NBHSensor("TrafficLocking", userIdentifier, parameter + " occupancyExternalSensor8", occupancyExternalSensor8, true);  // NOI18N
+            _mOccupancyExternalSensor9 = new NBHSensor("TrafficLocking", userIdentifier, parameter + " occupancyExternalSensor9", occupancyExternalSensor9, true);  // NOI18N
+            _mOptionalSensor1 = new NBHSensor("TrafficLocking", userIdentifier, parameter + " optionalSensor1", optionalSensor1, true); // NOI18N
+            _mOptionalSensor2 = new NBHSensor("TrafficLocking", userIdentifier, parameter + " optionalSensor2", optionalSensor2, true); // NOI18N
             _mRuleEnabled = !ruleEnabled.equals(Bundle.getMessage("TLE_RuleDisabled")); // NOI18N  Any problem, default is ENABLED!
         }
         
@@ -182,8 +182,8 @@ public class TrafficLocking {
 //  Since the user may specify "forward referenced" O/S sections (i.e. an entry references an O.S. section that hasn't been read in and created yet),
 //  we delay processing of everything until after the file has been completely read in.  Here we do the real work:    
     public void fileReadComplete(HashMap<Integer, CodeButtonHandler> cbHashMap, HashMap<Integer, SignalDirectionIndicatorsInterface> sidiHashMap, HashMap<Integer, SwitchDirectionIndicators> swdiHashMap) {
-        addAllTrafficLockingEntries(_mUserIdentifier, _mLeftTrafficLockingRulesSSVList, "leftTrafficLockingRulesSSVList", cbHashMap, sidiHashMap, swdiHashMap, _mLeftTrafficLockingRulesArrayList);
-        addAllTrafficLockingEntries(_mUserIdentifier, _mRightTrafficLockingRulesSSVList, "rightTrafficLockingRulesSSVList", cbHashMap, sidiHashMap, swdiHashMap, _mRightTrafficLockingRulesArrayList);
+        addAllTrafficLockingEntries(_mUserIdentifier, _mLeftTrafficLockingRulesSSVList, "leftTrafficLockingRulesSSVList", cbHashMap, sidiHashMap, swdiHashMap, _mLeftTrafficLockingRulesArrayList);     // NOI18N
+        addAllTrafficLockingEntries(_mUserIdentifier, _mRightTrafficLockingRulesSSVList, "rightTrafficLockingRulesSSVList", cbHashMap, sidiHashMap, swdiHashMap, _mRightTrafficLockingRulesArrayList);  // NOI18N
     }
     
     private void addAllTrafficLockingEntries(   String                                                  userIdentifier,

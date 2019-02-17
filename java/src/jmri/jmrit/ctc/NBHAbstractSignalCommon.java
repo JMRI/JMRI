@@ -28,7 +28,7 @@ public abstract class NBHAbstractSignalCommon {
         if (signalMast.valid()) return signalMast;
         NBHSignalHead signalHead = new NBHSignalHead(signal);
         if (signalHead.valid()) return signalHead;
-        (new CTCException(module, userIdentifier, parameter, "Signal does not exist: " + signal + " in either SignalHeads or SignalMasts")).logError();
+        (new CTCException(module, userIdentifier, parameter, Bundle.getMessage("NBHAbstractSignalCommonException1") + " " + signal + " " + Bundle.getMessage("NBHAbstractSignalCommonException2"))).logError(); // NOI18N
         return signalHead;      // Neither, just return this, it works in "hobbled" mode.  Nothing will crash using it!
     }
     

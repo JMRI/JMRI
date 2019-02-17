@@ -12,8 +12,8 @@ import javax.swing.ButtonGroup;
  */
 
 public class ProjectsCommonSubs {
-    static final public String CSV_SEPARATOR = ",";
-    static final public String SSV_SEPARATOR = ";";
+    static final public String CSV_SEPARATOR = ","; // NOI18N
+    static final public String SSV_SEPARATOR = ";"; // NOI18N
     
     static public ArrayList<String> getArrayListFromCSV(String csvString) { return helper1(csvString, CSV_SEPARATOR);}
     static public ArrayList<String> getArrayListFromSSV(String ssvString) { return helper1(ssvString, SSV_SEPARATOR); }

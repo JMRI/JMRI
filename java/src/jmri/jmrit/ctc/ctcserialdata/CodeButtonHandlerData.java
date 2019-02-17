@@ -97,7 +97,7 @@ public class CodeButtonHandlerData implements Serializable, Comparable<CodeButto
 //  Used by the Editor only:    
     public int _mSwitchNumber;         // Switch Indicators and lever #
     public int _mSignalEtcNumber;      // Signal Indicators, lever, locktoggle, callon and code button number
-    public String myString() { return "Switch # " + _mSwitchNumber + ", Signal Etc. #: " + _mSignalEtcNumber + ", Col #: " + _mGUIColumnNumber + (String)(_mGUIGeneratedAtLeastOnceAlready ? "*" : "") + ", [" + _mUniqueID + "]"; }
+    public String myString() { return Bundle.getMessage("CBHD_SwitchNumber") + " " + _mSwitchNumber + Bundle.getMessage("CBHD_SignalNumberEtc") + " " + _mSignalEtcNumber + Bundle.getMessage("CBHD_ColumnNumber") + " " + _mGUIColumnNumber + (String)(_mGUIGeneratedAtLeastOnceAlready ? "*" : "") + ", [" + _mUniqueID + "]"; }  // NOI18N
     public String myShortStringNoComma() { return _mSwitchNumber + "/" + _mSignalEtcNumber; }
 //  PRESENTLY (as of 10/18/18) these are ONLY used by the edit routines to TEMPORARILY get a copy.  The
 //  data is NEVER stored anywhere.  I say this because "_mUniqueID" MUST have another unique number if it is EVER
@@ -169,7 +169,7 @@ that as part of their variable name (ex: _mOSSectionOccupiedExternalSensor).
 Also, see CheckJMRIObject's "public static final String EXTERNAL_xxx" definitions
 at the top for "automatic" JMRI object verification.
 */    
-    private static final String INTERNAL_SENSOR = "InternalSensor";
+    private static final String INTERNAL_SENSOR = "InternalSensor";     // NOI18N
 //  Version of this file for supporting upgrade paths from prior versions:
     public int                  _mFileVersion;
 //  Data used by the runtime (JMRI) and Editor systems:
@@ -263,9 +263,9 @@ at the top for "automatic" JMRI object verification.
     So if you want to do BOTH, then you need to increase file version by 2, and insure that the
     first increment is processed by this:
 */    
-    private final static String FILE_VERSION_STRING = "<string>_mFileVersion</string>";
-    private final static String LESS_THAN_SIGN = "<";
-    private static final String TEMPORARY_EXTENSION = ".xmlTMP";
+    private final static String FILE_VERSION_STRING = "<string>_mFileVersion</string>"; // NOI18N
+    private final static String LESS_THAN_SIGN = "<";                                   // NOI18N
+    private static final String TEMPORARY_EXTENSION = ".xmlTMP";                        // NOI18N
             
     static public void preprocessingUpgradeSelf(String filename) {
 //  First, get the existing _mFileVersion from the file to see if we need to work on it:
@@ -276,7 +276,7 @@ at the top for "automatic" JMRI object verification.
             bufferedReader.readLine();  // Ignore <void method="set">
             bufferedReader.readLine();  // Ignore <object idref="CodeButtonHandlerData18"/>
             aLine = bufferedReader.readLine().trim();  // Get something like <int>4</int>
-            if (aLine.startsWith("<int>")) {
+            if (aLine.startsWith(INT_START_STRING)) {
                 aLine = aLine.substring(5);     // Get rid of it.
                 fileVersion = Integer.parseInt(aLine.substring(0, aLine.indexOf(LESS_THAN_SIGN)));
             }
@@ -296,15 +296,15 @@ at the top for "automatic" JMRI object verification.
             String aLine = null;
             while ((aLine = bufferedReader.readLine()) != null) { // Not EOF:
                 if ((aLine = checkFileVersion(bufferedReader, bufferedWriter, aLine, "4", "5")) == null) { hadAChange = true; continue; } // Was processed.
-                if ((aLine = checkForRefactor(bufferedWriter, aLine, "_mSWDI_ActualTurnout",                      "_mSWDI_ExternalTurnout")) == null) { hadAChange = true; continue; }  // Was processed.
-                if ((aLine = checkForRefactor(bufferedWriter, aLine, "_mTUL_ActualTurnout",                       "_mTUL_ExternalTurnout")) == null) { hadAChange = true; continue; }  // Was processed.
-                if ((aLine = checkForRefactor(bufferedWriter, aLine, "_mTUL_ActualTurnoutFeedbackDifferent",      "_mTUL_ExternalTurnoutFeedbackDifferent")) == null) { hadAChange = true; continue; }  // Was processed.
-                if ((aLine = checkForRefactor(bufferedWriter, aLine, "_mTUL_AdditionalTurnout1",                  "_mTUL_AdditionalExternalTurnout1")) == null) { hadAChange = true; continue; }  // Was processed.
-                if ((aLine = checkForRefactor(bufferedWriter, aLine, "_mTUL_AdditionalTurnout1FeedbackDifferent", "_mTUL_AdditionalExternalTurnout1FeedbackDifferent")) == null) { hadAChange = true; continue; }  // Was processed.
-                if ((aLine = checkForRefactor(bufferedWriter, aLine, "_mTUL_AdditionalTurnout2",                  "_mTUL_AdditionalExternalTurnout2")) == null) { hadAChange = true; continue; }  // Was processed.
-                if ((aLine = checkForRefactor(bufferedWriter, aLine, "_mTUL_AdditionalTurnout2FeedbackDifferent", "_mTUL_AdditionalExternalTurnout2FeedbackDifferent")) == null) { hadAChange = true; continue; }  // Was processed.
-                if ((aLine = checkForRefactor(bufferedWriter, aLine, "_mTUL_AdditionalTurnout3",                  "_mTUL_AdditionalExternalTurnout3")) == null) { hadAChange = true; continue; }  // Was processed.
-                if ((aLine = checkForRefactor(bufferedWriter, aLine, "_mTUL_AdditionalTurnout3FeedbackDifferent", "_mTUL_AdditionalExternalTurnout3FeedbackDifferent")) == null) { hadAChange = true; continue; }  // Was processed.
+                if ((aLine = checkForRefactor(bufferedWriter, aLine, "_mSWDI_ActualTurnout",                      "_mSWDI_ExternalTurnout")) == null) { hadAChange = true; continue; }  // NOI18N Was processed.
+                if ((aLine = checkForRefactor(bufferedWriter, aLine, "_mTUL_ActualTurnout",                       "_mTUL_ExternalTurnout")) == null) { hadAChange = true; continue; }  // NOI18N Was processed.
+                if ((aLine = checkForRefactor(bufferedWriter, aLine, "_mTUL_ActualTurnoutFeedbackDifferent",      "_mTUL_ExternalTurnoutFeedbackDifferent")) == null) { hadAChange = true; continue; }  // NOI18N Was processed.
+                if ((aLine = checkForRefactor(bufferedWriter, aLine, "_mTUL_AdditionalTurnout1",                  "_mTUL_AdditionalExternalTurnout1")) == null) { hadAChange = true; continue; }  // NOI18N Was processed.
+                if ((aLine = checkForRefactor(bufferedWriter, aLine, "_mTUL_AdditionalTurnout1FeedbackDifferent", "_mTUL_AdditionalExternalTurnout1FeedbackDifferent")) == null) { hadAChange = true; continue; }  // NOI18N Was processed.
+                if ((aLine = checkForRefactor(bufferedWriter, aLine, "_mTUL_AdditionalTurnout2",                  "_mTUL_AdditionalExternalTurnout2")) == null) { hadAChange = true; continue; }  // NOI18N Was processed.
+                if ((aLine = checkForRefactor(bufferedWriter, aLine, "_mTUL_AdditionalTurnout2FeedbackDifferent", "_mTUL_AdditionalExternalTurnout2FeedbackDifferent")) == null) { hadAChange = true; continue; }  // NOI18N Was processed.
+                if ((aLine = checkForRefactor(bufferedWriter, aLine, "_mTUL_AdditionalTurnout3",                  "_mTUL_AdditionalExternalTurnout3")) == null) { hadAChange = true; continue; }  // NOI18N Was processed.
+                if ((aLine = checkForRefactor(bufferedWriter, aLine, "_mTUL_AdditionalTurnout3FeedbackDifferent", "_mTUL_AdditionalExternalTurnout3FeedbackDifferent")) == null) { hadAChange = true; continue; }  // NOI18N Was processed.
                 writeLine(bufferedWriter, aLine);
             }
             if (aLine == null && hadAChange) { // Do the two step:
@@ -323,8 +323,8 @@ at the top for "automatic" JMRI object verification.
         or
                 The original aLine passed and NOTHING written, so that other(s) can check it further.
 */    
-    private final static String INT_START_STRING = "<int>";
-    private final static String INT_END_STRING = "</int>";
+    private final static String INT_START_STRING = "<int>"; // NOI18N
+    private final static String INT_END_STRING = "</int>";  // NOI18N
     static private String checkFileVersion(BufferedReader bufferedReader, BufferedWriter bufferedWriter, String aLine, String oldVersion, String newVersion) throws IOException {
         if (aLine.contains(FILE_VERSION_STRING)) {
             writeLine(bufferedWriter, aLine);
@@ -342,8 +342,8 @@ at the top for "automatic" JMRI object verification.
         return aLine;   // Line wasn't for us!
     }
     
-    private final static String STRING_START_STRING = "<string>";
-    private final static String STRING_END_STRING = "</string>";
+    private final static String STRING_START_STRING = "<string>";   // NOI18N
+    private final static String STRING_END_STRING = "</string>";    // NOI18N
     static private String checkForRefactor(BufferedWriter bufferedWriter, String aLine, String oldName, String newName) throws IOException {
         int intStart = aLine.indexOf(STRING_START_STRING + oldName + STRING_END_STRING);
         if (intStart >= 0) { // Found, replace:
