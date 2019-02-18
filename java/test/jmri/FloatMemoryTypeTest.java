@@ -53,7 +53,7 @@ public class FloatMemoryTypeTest {
         try {
             m.setValue("A string");
         } catch (IllegalArgumentException ex) {
-            if (ex.getMessage().equals("Type java.lang.Double cannot be stored in a Memory of type Float")) {
+            if (ex.getMessage().equals("Type java.lang.String cannot be stored in a Memory of type Float")) {
                 threw = true;
             } else {
                 Assert.fail("Failed to set Memory due to wrong reason: " + ex);
