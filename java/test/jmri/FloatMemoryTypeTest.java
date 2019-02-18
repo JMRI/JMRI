@@ -40,7 +40,7 @@ public class FloatMemoryTypeTest {
         try {
             m.setValue(10);
         } catch (IllegalArgumentException ex) {
-            if (ex.getMessage().equals("Type java.lang.Integer cannot be stored in a Memory of type String")) {
+            if (ex.getMessage().equals("Type java.lang.Integer cannot be stored in a Memory of type Float")) {
                 threw = true;
             } else {
                 Assert.fail("Failed to set Memory due to wrong reason: " + ex);
@@ -53,7 +53,7 @@ public class FloatMemoryTypeTest {
         try {
             m.setValue("A string");
         } catch (IllegalArgumentException ex) {
-            if (ex.getMessage().equals("Type java.lang.Double cannot be stored in a Memory of type String")) {
+            if (ex.getMessage().equals("Type java.lang.Double cannot be stored in a Memory of type Float")) {
                 threw = true;
             } else {
                 Assert.fail("Failed to set Memory due to wrong reason: " + ex);
@@ -66,7 +66,7 @@ public class FloatMemoryTypeTest {
         try {
             m.setValue(new Object());
         } catch (IllegalArgumentException ex) {
-            if (ex.getMessage().equals("Type java.lang.Object cannot be stored in a Memory of type String")) {
+            if (ex.getMessage().equals("Type java.lang.Object cannot be stored in a Memory of type Float")) {
                 threw = true;
             } else {
                 Assert.fail("Failed to set Memory due to wrong reason: " + ex);
