@@ -1,6 +1,7 @@
 package jmri.implementation;
 
 import jmri.Memory;
+import jmri.MemoryType;
 
 /**
  * Base for the Memory interface.
@@ -31,18 +32,37 @@ public abstract class AbstractMemory extends AbstractNamedBean implements Memory
         return _current;
     }
 
-    /**
-     * Provide a general method for updating the report.
-     */
+    /** {@inheritDoc} */
     @Override
     public void setValue(Object v) {
+        MemoryType memoryType = getMemoryType();
+        if (memoryType != null) {
+            v = memoryType.validate(v);
+        }
         Object old = _current;
         _current = v;
         // notify
         firePropertyChange("value", old, _current);
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public MemoryType getMemoryType() {
+        return _memoryType;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void setMemoryType(MemoryType memoryType) {
+        _memoryType = memoryType;
+        Object initialValue = _memoryType.getInitialValue();
+        if (initialValue != null) {
+            _current = _memoryType.validate(initialValue);
+        }
+    }
+
     // internal data members
     private Object _current = null;
+    private MemoryType _memoryType = null;
 
 }

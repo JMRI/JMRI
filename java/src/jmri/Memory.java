@@ -15,6 +15,13 @@ package jmri;
  * and can be used for any purpose. The "system" name is provided by the
  * system-specific implementations, and provides a unique mapping to the layout
  * control system (for example LocoNet or NCE) and address within that system.
+ * <P>
+ * The MemoryType defines the type of data that can be stored in this Memory.
+ * If the method getMemoryType() returns null, any type of data can be stored.
+ * If not, the method getMemoryType().validate() must be called by implementation
+ * classes of Memory to ensure that the value to be stored in the Memory is
+ * valid. If the value is not valid, the method setValue() must throw an
+ * IllegalArgumentException.
  * <BR>
  * <hr>
  * This file is part of JMRI.
@@ -45,9 +52,32 @@ public interface Memory extends NamedBean {
     /**
      * Set the value. Any type of Object can be stored, but various utilities
      * use the toString method of the stored Object.
+     * <P>
+     * If the memory has a type, the value is validated before it's set.
      *
      * @param value the value to store
+     * @throws IllegalArgumentException if the value is invalid
      */
     public void setValue(Object value);
+
+    /**
+     * Returns the MemoryType of this Memory.
+     * 
+     * @return the MemoryType of the Memory or null if the Memory can store any type of data.
+     */
+    default public MemoryType getMemoryType() {
+        return null;
+    }
+
+    /**
+     * Sets the MemoryType of this Memory.
+     * <P>
+     * This will also set the initial value of the Memory if the initial value
+     * is not null.
+     * 
+     * @param memoryType the MemoryType of the Memory or null if the Memory can store any type of data.
+     */
+    default public void setMemoryType(MemoryType memoryType) {
+    }
 
 }
