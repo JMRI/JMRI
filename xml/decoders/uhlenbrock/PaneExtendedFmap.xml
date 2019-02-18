@@ -1206,15 +1206,61 @@
           </qualifier>
           <column>
               <label><text> </text></label>
-              <display item="Bank5 Intellimatic 1.1"/>
-              <display item="Bank5 Intellimatic 1.2"/>
+              <label>
+                  <text>Macro 1:</text>
+                  <text xml:lang="de">Ablauf 1:</text>
+                  <text xml:lang="nl">Actiereeks 1:</text>
+              </label>
+              <row>
+                  <display item="Bank5 Intellimatic 1.1"/>
+                  <display item="Bank5 Intellimatic 1.1 enum" label=""/>
+              </row>
+              <row>
+                <display item="Bank5 Intellimatic 1.2"/>
+                <display item="Bank5 Intellimatic 1.2 enum" label=""/>
+              </row>
+              <row>
+                  <display item="Bank5 Intellimatic 1.3"/>
+                  <display item="Bank5 Intellimatic 1.3 enum" label=""/>
+              </row>
+              <row>
+                  <display item="Bank5 Intellimatic 1.4"/>
+                  <display item="Bank5 Intellimatic 1.4 enum" label=""/>
+              </row>
+              <row>
+                  <display item="Bank5 Intellimatic 1.5"/>
+                  <display item="Bank5 Intellimatic 1.5 enum" label=""/>
+              </row>
+              <row>
+                  <display item="Bank5 Intellimatic 1.6"/>
+                  <display item="Bank5 Intellimatic 1.6 enum" label=""/>
+              </row>
+              <row>
+                  <display item="Bank5 Intellimatic 1.7"/>
+                  <display item="Bank5 Intellimatic 1.7 enum" label=""/>
+              </row>
+              <row>
+                  <display item="Bank5 Intellimatic 1.8"/>
+                  <display item="Bank5 Intellimatic 1.8 enum" label=""/>
+              </row>
               <label><text> </text></label>
           </column>
           <column><label><text>      </text></label></column>
           <column>
               <label><text> </text></label>
-              <display item="Bank5 Intellimatic 2.1"/>
-              <display item="Bank5 Intellimatic 2.2"/>
+              <label>
+                  <text>Macro 2:</text>
+                  <text xml:lang="de">Ablauf 2:</text>
+                  <text xml:lang="nl">Actiereeks 2:</text>
+              </label>
+              <row>
+                <display item="Bank5 Intellimatic 2.1"/>
+                <display item="Bank5 Intellimatic 2.1 enum" label=""/>
+              </row>
+              <row>
+                <display item="Bank5 Intellimatic 2.2"/>
+                <display item="Bank5 Intellimatic 2.2 enum" label=""/>
+              </row>
               <label><text> </text></label>
           </column>
       </group>

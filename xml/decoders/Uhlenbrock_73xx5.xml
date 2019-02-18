@@ -334,7 +334,7 @@
                 <label>ABC detection threshold</label>
                 <label xml:lang="de">ABC-Modus „Empfindlichkeit”</label>
                 <label xml:lang="nl">ABC Remdrempel</label>
-                <tooltip>Voltage drop in Diode block = CV-Wert * 0.12 Volts</tooltip>
+                <tooltip>Voltage drop in Diode block = CV value * 0.12 Volts</tooltip>
                 <tooltip xml:lang="de">Spannungsdifferenz für Diodenstrecke ist ca. CV-Wert * 0,12V</tooltip>
             </variable>
             <variable item="ABC Slow Speed" CV="98" default="30">
