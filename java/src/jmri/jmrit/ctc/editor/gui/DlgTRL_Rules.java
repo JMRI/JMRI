@@ -87,17 +87,28 @@ public class DlgTRL_Rules extends javax.swing.JDialog {
         initOrig();
         _mAwtWindowProperties.setWindowState((java.awt.Window)this, FORM_PROPERTIES);        
         
-        _mOccupancyExternalSensor1.setText("");
-        _mOccupancyExternalSensor2.setText("");
-        _mOccupancyExternalSensor3.setText("");
-        _mOccupancyExternalSensor4.setText("");
-        _mOccupancyExternalSensor5.setText("");
-        _mOccupancyExternalSensor6.setText("");
-        _mOccupancyExternalSensor7.setText("");
-        _mOccupancyExternalSensor8.setText("");
-        _mOccupancyExternalSensor9.setText("");
-        _mOptionalExternalSensor1.setText("");
-        _mOptionalExternalSensor2.setText("");
+//        _mOccupancyExternalSensor1.setText("");
+//        _mOccupancyExternalSensor2.setText("");
+//        _mOccupancyExternalSensor3.setText("");
+//        _mOccupancyExternalSensor4.setText("");
+//        _mOccupancyExternalSensor5.setText("");
+//        _mOccupancyExternalSensor6.setText("");
+//        _mOccupancyExternalSensor7.setText("");
+//        _mOccupancyExternalSensor8.setText("");
+//        _mOccupancyExternalSensor9.setText("");
+//        _mOptionalExternalSensor1.setText("");
+//        _mOptionalExternalSensor2.setText("");
+        CommonSubs.populateJComboBoxWithBeans(_mOccupancyExternalSensor1, "Sensor", null, true);
+        CommonSubs.populateJComboBoxWithBeans(_mOccupancyExternalSensor2, "Sensor", null, true);
+        CommonSubs.populateJComboBoxWithBeans(_mOccupancyExternalSensor3, "Sensor", null, true);
+        CommonSubs.populateJComboBoxWithBeans(_mOccupancyExternalSensor4, "Sensor", null, true);
+        CommonSubs.populateJComboBoxWithBeans(_mOccupancyExternalSensor5, "Sensor", null, true);
+        CommonSubs.populateJComboBoxWithBeans(_mOccupancyExternalSensor6, "Sensor", null, true);
+        CommonSubs.populateJComboBoxWithBeans(_mOccupancyExternalSensor7, "Sensor", null, true);
+        CommonSubs.populateJComboBoxWithBeans(_mOccupancyExternalSensor8, "Sensor", null, true);
+        CommonSubs.populateJComboBoxWithBeans(_mOccupancyExternalSensor9, "Sensor", null, true);
+        CommonSubs.populateJComboBoxWithBeans(_mOptionalExternalSensor1, "Sensor", null, true);
+        CommonSubs.populateJComboBoxWithBeans(_mOptionalExternalSensor2, "Sensor", null, true);
         CommonSubs.populateJComboBoxWithColumnDescriptions(_mOS_NumberEntry1, _mCTCSerialData);
         CommonSubs.populateJComboBoxWithColumnDescriptions(_mOS_NumberEntry2, _mCTCSerialData);
         CommonSubs.populateJComboBoxWithColumnDescriptions(_mOS_NumberEntry3, _mCTCSerialData);
@@ -133,8 +144,6 @@ public class DlgTRL_Rules extends javax.swing.JDialog {
         _mGroupingListAddReplace = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        _mOptionalExternalSensor1 = new javax.swing.JTextField();
-        _mOptionalExternalSensor2 = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         _mRulesInfo = new javax.swing.JLabel();
         _mCancel = new javax.swing.JButton();
@@ -154,15 +163,17 @@ public class DlgTRL_Rules extends javax.swing.JDialog {
         _mSwitchAlignment4 = new javax.swing.JComboBox<>();
         _mSwitchAlignment5 = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
-        _mOccupancyExternalSensor2 = new javax.swing.JTextField();
-        _mOccupancyExternalSensor1 = new javax.swing.JTextField();
-        _mOccupancyExternalSensor3 = new javax.swing.JTextField();
-        _mOccupancyExternalSensor4 = new javax.swing.JTextField();
-        _mOccupancyExternalSensor5 = new javax.swing.JTextField();
-        _mOccupancyExternalSensor6 = new javax.swing.JTextField();
-        _mOccupancyExternalSensor7 = new javax.swing.JTextField();
-        _mOccupancyExternalSensor8 = new javax.swing.JTextField();
-        _mOccupancyExternalSensor9 = new javax.swing.JTextField();
+        _mOccupancyExternalSensor1 = new javax.swing.JComboBox<>();
+        _mOccupancyExternalSensor2 = new javax.swing.JComboBox<>();
+        _mOccupancyExternalSensor3 = new javax.swing.JComboBox<>();
+        _mOccupancyExternalSensor4 = new javax.swing.JComboBox<>();
+        _mOccupancyExternalSensor5 = new javax.swing.JComboBox<>();
+        _mOccupancyExternalSensor6 = new javax.swing.JComboBox<>();
+        _mOccupancyExternalSensor7 = new javax.swing.JComboBox<>();
+        _mOccupancyExternalSensor8 = new javax.swing.JComboBox<>();
+        _mOccupancyExternalSensor9 = new javax.swing.JComboBox<>();
+        _mOptionalExternalSensor1 = new javax.swing.JComboBox<>();
+        _mOptionalExternalSensor2 = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle(Bundle.getMessage("TitleDlgTRLRules"));
@@ -287,15 +298,7 @@ public class DlgTRL_Rules extends javax.swing.JDialog {
                                     .addComponent(_mDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(3, 3, 3)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(_mOptionalExternalSensor1, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(_mOptionalExternalSensor2, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(43, 43, 43)
-                                        .addComponent(_mGroupingListAddReplace, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(_mCancel))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(_mOS_NumberEntry1, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
@@ -307,6 +310,9 @@ public class DlgTRL_Rules extends javax.swing.JDialog {
                                         .addGap(18, 18, 18)
                                         .addComponent(_mOS_NumberEntry5, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(jLabel8)
+                                    .addComponent(jLabel7)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jLabel5)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(_mSwitchAlignment1, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
@@ -317,33 +323,40 @@ public class DlgTRL_Rules extends javax.swing.JDialog {
                                         .addComponent(_mSwitchAlignment4, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
                                         .addComponent(_mSwitchAlignment5, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jLabel7)
-                                    .addComponent(jLabel1)
-                                    .addComponent(jLabel5)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(_mOccupancyExternalSensor1, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(_mOccupancyExternalSensor1, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(_mOccupancyExternalSensor2, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(_mOccupancyExternalSensor6, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(_mOccupancyExternalSensor7, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                         .addGap(18, 18, 18)
-                                        .addComponent(_mOccupancyExternalSensor2, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(_mOccupancyExternalSensor3, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(_mOccupancyExternalSensor8, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGap(18, 18, 18)
-                                        .addComponent(_mOccupancyExternalSensor3, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(_mOccupancyExternalSensor4, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(_mOccupancyExternalSensor5, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(_mOccupancyExternalSensor4, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(_mOccupancyExternalSensor5, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(_mOccupancyExternalSensor9, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(_mOccupancyExternalSensor6, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(_mOptionalExternalSensor1, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
-                                        .addComponent(_mOccupancyExternalSensor7, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(_mOccupancyExternalSensor8, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(_mOccupancyExternalSensor9, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                        .addComponent(_mOptionalExternalSensor2, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(36, 36, 36)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(_mSaveAndClose)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(_mGroupingListAddReplace, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(_mCancel))))))
                             .addComponent(jLabel10))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(_mSaveAndClose)
-                .addGap(397, 397, 397))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -387,7 +400,7 @@ public class DlgTRL_Rules extends javax.swing.JDialog {
                     .addComponent(_mSwitchAlignment3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(_mSwitchAlignment4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(_mSwitchAlignment5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, Short.MAX_VALUE)
+                .addGap(18, 19, Short.MAX_VALUE)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -396,7 +409,7 @@ public class DlgTRL_Rules extends javax.swing.JDialog {
                     .addComponent(_mOccupancyExternalSensor3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(_mOccupancyExternalSensor4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(_mOccupancyExternalSensor5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(5, 5, 5)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(_mOccupancyExternalSensor6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(_mOccupancyExternalSensor7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -406,10 +419,10 @@ public class DlgTRL_Rules extends javax.swing.JDialog {
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(_mOptionalExternalSensor1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(_mOptionalExternalSensor2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(_mGroupingListAddReplace)
-                    .addComponent(_mCancel))
+                    .addComponent(_mCancel)
+                    .addComponent(_mOptionalExternalSensor1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(_mOptionalExternalSensor2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(_mSaveAndClose)
                 .addGap(13, 13, 13))
@@ -452,17 +465,28 @@ public class DlgTRL_Rules extends javax.swing.JDialog {
         enableTopPart(false);
         _mTRL_TrafficLockingRulesSSVList.setEnabled(false);
         _mTRL_TrafficLockingRulesSSVList.clearSelection();
-        _mOptionalExternalSensor1.setText("");
-        _mOptionalExternalSensor2.setText("");
-        _mOccupancyExternalSensor1.setText("");
-        _mOccupancyExternalSensor2.setText("");
-        _mOccupancyExternalSensor3.setText("");
-        _mOccupancyExternalSensor4.setText("");
-        _mOccupancyExternalSensor5.setText("");
-        _mOccupancyExternalSensor6.setText("");
-        _mOccupancyExternalSensor7.setText("");
-        _mOccupancyExternalSensor8.setText("");
-        _mOccupancyExternalSensor9.setText("");
+//        _mOptionalExternalSensor1.setText("");
+//        _mOptionalExternalSensor2.setText("");
+//        _mOccupancyExternalSensor1.setText("");
+//        _mOccupancyExternalSensor2.setText("");
+//        _mOccupancyExternalSensor3.setText("");
+//        _mOccupancyExternalSensor4.setText("");
+//        _mOccupancyExternalSensor5.setText("");
+//        _mOccupancyExternalSensor6.setText("");
+//        _mOccupancyExternalSensor7.setText("");
+//        _mOccupancyExternalSensor8.setText("");
+//        _mOccupancyExternalSensor9.setText("");
+        CommonSubs.populateJComboBoxWithBeans(_mOccupancyExternalSensor1, "Sensor", null, true);
+        CommonSubs.populateJComboBoxWithBeans(_mOccupancyExternalSensor2, "Sensor", null, true);
+        CommonSubs.populateJComboBoxWithBeans(_mOccupancyExternalSensor3, "Sensor", null, true);
+        CommonSubs.populateJComboBoxWithBeans(_mOccupancyExternalSensor4, "Sensor", null, true);
+        CommonSubs.populateJComboBoxWithBeans(_mOccupancyExternalSensor5, "Sensor", null, true);
+        CommonSubs.populateJComboBoxWithBeans(_mOccupancyExternalSensor6, "Sensor", null, true);
+        CommonSubs.populateJComboBoxWithBeans(_mOccupancyExternalSensor7, "Sensor", null, true);
+        CommonSubs.populateJComboBoxWithBeans(_mOccupancyExternalSensor8, "Sensor", null, true);
+        CommonSubs.populateJComboBoxWithBeans(_mOccupancyExternalSensor9, "Sensor", null, true);
+        CommonSubs.populateJComboBoxWithBeans(_mOptionalExternalSensor1, "Sensor", null, true);
+        CommonSubs.populateJComboBoxWithBeans(_mOptionalExternalSensor2, "Sensor", null, true);
         _mOS_NumberEntry1.setSelectedIndex(0);
         _mOS_NumberEntry2.setSelectedIndex(0);
         _mOS_NumberEntry3.setSelectedIndex(0);
@@ -486,17 +510,28 @@ public class DlgTRL_Rules extends javax.swing.JDialog {
         _mTRL_TrafficLockingRulesSSVList.setEnabled(false);
         
         TrafficLockingEntry trafficLockingEntry = new TrafficLockingEntry(_mDefaultListModel.get(selectedIndex));
-        _mOccupancyExternalSensor1.setText(trafficLockingEntry._mOccupancyExternalSensor1);
-        _mOccupancyExternalSensor2.setText(trafficLockingEntry._mOccupancyExternalSensor2);
-        _mOccupancyExternalSensor3.setText(trafficLockingEntry._mOccupancyExternalSensor3);
-        _mOccupancyExternalSensor4.setText(trafficLockingEntry._mOccupancyExternalSensor4);
-        _mOccupancyExternalSensor5.setText(trafficLockingEntry._mOccupancyExternalSensor5);
-        _mOccupancyExternalSensor6.setText(trafficLockingEntry._mOccupancyExternalSensor6);
-        _mOccupancyExternalSensor7.setText(trafficLockingEntry._mOccupancyExternalSensor7);
-        _mOccupancyExternalSensor8.setText(trafficLockingEntry._mOccupancyExternalSensor8);
-        _mOccupancyExternalSensor9.setText(trafficLockingEntry._mOccupancyExternalSensor9);
-        _mOptionalExternalSensor1.setText(trafficLockingEntry._mOptionalExternalSensor1);
-        _mOptionalExternalSensor2.setText(trafficLockingEntry._mOptionalExternalSensor2);
+//        _mOccupancyExternalSensor1.setText(trafficLockingEntry._mOccupancyExternalSensor1);
+//        _mOccupancyExternalSensor2.setText(trafficLockingEntry._mOccupancyExternalSensor2);
+//        _mOccupancyExternalSensor3.setText(trafficLockingEntry._mOccupancyExternalSensor3);
+//        _mOccupancyExternalSensor4.setText(trafficLockingEntry._mOccupancyExternalSensor4);
+//        _mOccupancyExternalSensor5.setText(trafficLockingEntry._mOccupancyExternalSensor5);
+//        _mOccupancyExternalSensor6.setText(trafficLockingEntry._mOccupancyExternalSensor6);
+//        _mOccupancyExternalSensor7.setText(trafficLockingEntry._mOccupancyExternalSensor7);
+//        _mOccupancyExternalSensor8.setText(trafficLockingEntry._mOccupancyExternalSensor8);
+//        _mOccupancyExternalSensor9.setText(trafficLockingEntry._mOccupancyExternalSensor9);
+//        _mOptionalExternalSensor1.setText(trafficLockingEntry._mOptionalExternalSensor1);
+//        _mOptionalExternalSensor2.setText(trafficLockingEntry._mOptionalExternalSensor2);
+        CommonSubs.populateJComboBoxWithBeans(_mOccupancyExternalSensor1, "Sensor", trafficLockingEntry._mOccupancyExternalSensor1, true);
+        CommonSubs.populateJComboBoxWithBeans(_mOccupancyExternalSensor2, "Sensor", trafficLockingEntry._mOccupancyExternalSensor2, true);
+        CommonSubs.populateJComboBoxWithBeans(_mOccupancyExternalSensor3, "Sensor", trafficLockingEntry._mOccupancyExternalSensor3, true);
+        CommonSubs.populateJComboBoxWithBeans(_mOccupancyExternalSensor4, "Sensor", trafficLockingEntry._mOccupancyExternalSensor4, true);
+        CommonSubs.populateJComboBoxWithBeans(_mOccupancyExternalSensor5, "Sensor", trafficLockingEntry._mOccupancyExternalSensor5, true);
+        CommonSubs.populateJComboBoxWithBeans(_mOccupancyExternalSensor6, "Sensor", trafficLockingEntry._mOccupancyExternalSensor6, true);
+        CommonSubs.populateJComboBoxWithBeans(_mOccupancyExternalSensor7, "Sensor", trafficLockingEntry._mOccupancyExternalSensor7, true);
+        CommonSubs.populateJComboBoxWithBeans(_mOccupancyExternalSensor8, "Sensor", trafficLockingEntry._mOccupancyExternalSensor8, true);
+        CommonSubs.populateJComboBoxWithBeans(_mOccupancyExternalSensor9, "Sensor", trafficLockingEntry._mOccupancyExternalSensor9, true);
+        CommonSubs.populateJComboBoxWithBeans(_mOptionalExternalSensor1, "Sensor", trafficLockingEntry._mOptionalExternalSensor1, true);
+        CommonSubs.populateJComboBoxWithBeans(_mOptionalExternalSensor2, "Sensor", trafficLockingEntry._mOptionalExternalSensor2, true);
         int uniqueID;
         uniqueID = ProjectsCommonSubs.getIntFromStringNoThrow(trafficLockingEntry._mUniqueID1, -1);   // Technically should NEVER throw or return default, but for safety.  Default will NEVER be found!
         CommonSubs.setSelectedIndexOfJComboBoxViaUniqueID(_mOS_NumberEntry1, _mCTCSerialData, uniqueID);
@@ -534,17 +569,17 @@ public class DlgTRL_Rules extends javax.swing.JDialog {
                                                                             (String)_mSwitchAlignment3.getSelectedItem(),
                                                                             (String)_mSwitchAlignment4.getSelectedItem(),
                                                                             (String)_mSwitchAlignment5.getSelectedItem(),
-                                                                            _mOccupancyExternalSensor1.getText(),
-                                                                            _mOccupancyExternalSensor2.getText(),
-                                                                            _mOccupancyExternalSensor3.getText(),
-                                                                            _mOccupancyExternalSensor4.getText(),
-                                                                            _mOccupancyExternalSensor5.getText(),
-                                                                            _mOccupancyExternalSensor6.getText(),
-                                                                            _mOccupancyExternalSensor7.getText(),
-                                                                            _mOccupancyExternalSensor8.getText(),
-                                                                            _mOccupancyExternalSensor9.getText(),
-                                                                            _mOptionalExternalSensor1.getText(),
-                                                                            _mOptionalExternalSensor2.getText());
+                                                                            (String)_mOccupancyExternalSensor1.getSelectedItem(),
+                                                                            (String)_mOccupancyExternalSensor2.getSelectedItem(),
+                                                                            (String)_mOccupancyExternalSensor3.getSelectedItem(),
+                                                                            (String)_mOccupancyExternalSensor4.getSelectedItem(),
+                                                                            (String)_mOccupancyExternalSensor5.getSelectedItem(),
+                                                                            (String)_mOccupancyExternalSensor6.getSelectedItem(),
+                                                                            (String)_mOccupancyExternalSensor7.getSelectedItem(),
+                                                                            (String)_mOccupancyExternalSensor8.getSelectedItem(),
+                                                                            (String)_mOccupancyExternalSensor9.getSelectedItem(),
+                                                                            (String)_mOptionalExternalSensor1.getSelectedItem(),
+                                                                            (String)_mOptionalExternalSensor2.getSelectedItem());
         
         CheckJMRIObject.VerifyClassReturnValue verifyClassReturnValue = _mCheckJMRIObject.verifyClass(trafficLockingEntry);
         if (verifyClassReturnValue != null) { // Error:
@@ -692,17 +727,17 @@ public class DlgTRL_Rules extends javax.swing.JDialog {
     private javax.swing.JComboBox<String> _mOS_NumberEntry3;
     private javax.swing.JComboBox<String> _mOS_NumberEntry4;
     private javax.swing.JComboBox<String> _mOS_NumberEntry5;
-    private javax.swing.JTextField _mOccupancyExternalSensor1;
-    private javax.swing.JTextField _mOccupancyExternalSensor2;
-    private javax.swing.JTextField _mOccupancyExternalSensor3;
-    private javax.swing.JTextField _mOccupancyExternalSensor4;
-    private javax.swing.JTextField _mOccupancyExternalSensor5;
-    private javax.swing.JTextField _mOccupancyExternalSensor6;
-    private javax.swing.JTextField _mOccupancyExternalSensor7;
-    private javax.swing.JTextField _mOccupancyExternalSensor8;
-    private javax.swing.JTextField _mOccupancyExternalSensor9;
-    private javax.swing.JTextField _mOptionalExternalSensor1;
-    private javax.swing.JTextField _mOptionalExternalSensor2;
+    private javax.swing.JComboBox<String> _mOccupancyExternalSensor1;
+    private javax.swing.JComboBox<String> _mOccupancyExternalSensor2;
+    private javax.swing.JComboBox<String> _mOccupancyExternalSensor3;
+    private javax.swing.JComboBox<String> _mOccupancyExternalSensor4;
+    private javax.swing.JComboBox<String> _mOccupancyExternalSensor5;
+    private javax.swing.JComboBox<String> _mOccupancyExternalSensor6;
+    private javax.swing.JComboBox<String> _mOccupancyExternalSensor7;
+    private javax.swing.JComboBox<String> _mOccupancyExternalSensor8;
+    private javax.swing.JComboBox<String> _mOccupancyExternalSensor9;
+    private javax.swing.JComboBox<String> _mOptionalExternalSensor1;
+    private javax.swing.JComboBox<String> _mOptionalExternalSensor2;
     private javax.swing.JCheckBox _mRuleEnabled;
     private javax.swing.JLabel _mRulesInfo;
     private javax.swing.JButton _mSaveAndClose;

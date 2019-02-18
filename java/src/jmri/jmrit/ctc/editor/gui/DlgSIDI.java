@@ -6,6 +6,8 @@ import jmri.jmrit.ctc.editor.code.CodeButtonHandlerDataRoutines;
 import jmri.jmrit.ctc.editor.code.CommonSubs;
 import jmri.jmrit.ctc.editor.code.ProgramProperties;
 import java.util.ArrayList;
+import javax.swing.JComboBox;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
 import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
@@ -27,14 +29,14 @@ public class DlgSIDI extends javax.swing.JDialog {
     private final CodeButtonHandlerData _mCodeButtonHandlerData;
     private final ProgramProperties _mProgramProperties;
     private final CheckJMRIObject _mCheckJMRIObject;
-    
+
     private String _mSIDI_LeftInternalSensorOrig;
     private String _mSIDI_NormalInternalSensorOrig;
     private String _mSIDI_RightInternalSensorOrig;
     private int _mSIDI_CodingAndResponseTimeOrig;
     private int _mSIDI_TimeLockingIntervalOrig;
     private CodeButtonHandlerData.SIGNAL_TYPE _mSIDI_GUISignalTypeOrig;
-    
+
     private ArrayList<String> _mLeftRightTrafficSignalsArrayListOrig = new ArrayList<>();
     private ArrayList<String> _mRightLeftTrafficSignalsArrayListOrig = new ArrayList<>();
     private void initOrig(ArrayList<String> signalArrayList1, ArrayList<String> signalArrayList2) {
@@ -51,7 +53,7 @@ public class DlgSIDI extends javax.swing.JDialog {
         }
         _mSIDI_GUISignalTypeOrig = _mCodeButtonHandlerData._mSIDI_GUISignalType;
     }
-        
+
     private boolean dataChanged() {
         if (!_mSIDI_LeftInternalSensorOrig.equals(_mSIDI_LeftInternalSensor.getText())) return true;
         if (!_mSIDI_NormalInternalSensorOrig.equals(_mSIDI_NormalInternalSensor.getText())) return true;
@@ -71,10 +73,10 @@ public class DlgSIDI extends javax.swing.JDialog {
         if (_mSIDI_GUISignalTypeOrig != CodeButtonHandlerData.SIGNAL_TYPE.getSignalType(_mSIDI_GUISignalType)) return true;
         return false;
     }
-    
+
     private final DefaultTableModel _mSIDI_TableOfLeftToRightTrafficExternalSignalNamesDefaultTableModel;
     private final DefaultTableModel _mSIDI_TableOfRightToLeftTrafficExternalSignalNamesDefaultTableModel;
-    
+
     public DlgSIDI( java.awt.Frame parent, boolean modal,
                     AwtWindowProperties awtWindowProperties, CodeButtonHandlerData codeButtonHandlerData,
                     ProgramProperties programProperties, CheckJMRIObject checkJMRIObject) {
@@ -111,7 +113,7 @@ public class DlgSIDI extends javax.swing.JDialog {
         for (int index = 0; index < signalsArrayListSize2; index++) {
             _mSIDI_TableOfRightToLeftTrafficExternalSignalNamesDefaultTableModel.setValueAt(signalsArrayList2.get(index), index, 0);
         }
-        
+
 //  This is TYPICAL of the poor quality of Java coding by supposed advanced programmers.
 //  I searched the entire Oracle Web sites that publishes documentation on Java, and NOWHERE
 //  is this mentioned.  HOW IN THE HELL is anyone supposed to find out about this?
@@ -120,18 +122,21 @@ public class DlgSIDI extends javax.swing.JDialog {
         _mSIDI_TableOfLeftToRightTrafficExternalSignalNames.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);    // NOI18N
         _mSIDI_TableOfRightToLeftTrafficExternalSignalNames.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);    // NOI18N
         initOrig(signalsArrayList1, signalsArrayList2);
-        _mAwtWindowProperties.setWindowState((java.awt.Window)this, FORM_PROPERTIES);        
+        _mAwtWindowProperties.setWindowState((java.awt.Window)this, FORM_PROPERTIES);
         this.getRootPane().setDefaultButton(_mSaveAndClose);
+
+        enableSignalListComboBox(_mSIDI_TableOfLeftToRightTrafficExternalSignalNames);
+        enableSignalListComboBox(_mSIDI_TableOfRightToLeftTrafficExternalSignalNames);
     }
 
     public static boolean dialogCodeButtonHandlerDataValid(CheckJMRIObject checkJMRIObject, CodeButtonHandlerData codeButtonHandlerData) {
         if (!codeButtonHandlerData._mSIDI_Enabled) return true; // Not enabled, can be no error!
-//  For interrelationship(s) checks:        
+//  For interrelationship(s) checks:
         boolean leftInternalSensorPresent = !ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mSIDI_LeftInternalSensor);
         boolean entriesInLeftRightTrafficSignalsCSVList = !codeButtonHandlerData._mSIDI_LeftRightTrafficSignalsCSVList.isEmpty();
         boolean rightInternalSensorPresent = !ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mSIDI_RightInternalSensor);
         boolean entriesInRightLeftTrafficSignalsCSVList = !codeButtonHandlerData._mSIDI_RightLeftTrafficSignalsCSVList.isEmpty();
-//  Checks:        
+//  Checks:
         if (ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mSIDI_NormalInternalSensor)) return false;
         if (!leftInternalSensorPresent && !rightInternalSensorPresent) return false;
         if (leftInternalSensorPresent && !entriesInRightLeftTrafficSignalsCSVList) return false;
@@ -146,26 +151,53 @@ public class DlgSIDI extends javax.swing.JDialog {
         }
         return checkJMRIObject.validClassWithPrefix(PREFIX, codeButtonHandlerData);
     }
-    
+
 //  Validate all internal fields as much as possible:
     private ArrayList<String> formFieldsValid() {
         ArrayList<String> errors = new ArrayList<>();
-//  For interrelationship(s) checks:        
+//  For interrelationship(s) checks:
         boolean leftInternalSensorPresent = CommonSubs.isJTextFieldNotEmpty(_mSIDI_LeftInternalSensor);
         boolean entriesInLeftRightTrafficSignalsCSVList = !CommonSubs.getCSVStringFromDefaultTableModel(_mSIDI_TableOfLeftToRightTrafficExternalSignalNamesDefaultTableModel).isEmpty();
         boolean rightInternalSensorPresent = CommonSubs.isJTextFieldNotEmpty(_mSIDI_RightInternalSensor);
         boolean entriesInRightLeftTrafficSignalsCSVList = !CommonSubs.getCSVStringFromDefaultTableModel(_mSIDI_TableOfRightToLeftTrafficExternalSignalNamesDefaultTableModel).isEmpty();
-//  Checks:        
+//  Checks:
         CommonSubs.checkJTextFieldNotEmpty(_mSIDI_NormalInternalSensor, _mSIDI_NormalInternalSensorPrompt, errors);
+// <<<<<<< Updated upstream
         if (!leftInternalSensorPresent && !rightInternalSensorPresent) errors.add(Bundle.getMessage("OneOrBothOf") + " \"" + _mSIDI_LeftInternalSensorPrompt.getText() + "\" " + Bundle.getMessage("And") + " \"" + _mSIDI_RightInternalSensorPrompt.getText() + "\" " + Bundle.getMessage("MustBePresent"));   // NOI18N
         if (leftInternalSensorPresent && !entriesInRightLeftTrafficSignalsCSVList) errors.add("\"" + _mSIDI_LeftInternalSensorPrompt.getText() + "\" " + Bundle.getMessage("ErrorDlgSIDIDefineButNoEntriesIn") + " \"" + _mTableOfRightToLeftTrafficSignalNamesPrompt.getText() + "\"");    // NOI18N
         if (rightInternalSensorPresent && !entriesInLeftRightTrafficSignalsCSVList) errors.add("\"" + _mSIDI_RightInternalSensorPrompt.getText() + "\" " + Bundle.getMessage("ErrorDlgSIDIDefineButNoEntriesIn") + " \"" + _mTableOfLeftToRightTrafficSignalNamesPrompt.getText() + "\"");  // NOI18N
         if (!leftInternalSensorPresent && entriesInRightLeftTrafficSignalsCSVList) errors.add("\"" + _mSIDI_LeftInternalSensorPrompt.getText() + "\" " + Bundle.getMessage("ErrorDlgSIDINotDefinedWithEntriesIn") + " \"" + _mTableOfRightToLeftTrafficSignalNamesPrompt.getText() + "\""); // NOI18N
         if (!rightInternalSensorPresent && entriesInLeftRightTrafficSignalsCSVList) errors.add("\"" + _mSIDI_RightInternalSensorPrompt.getText() + "\" " + Bundle.getMessage("ErrorDlgSIDINotDefinedWithEntriesIn") + " \"" + _mTableOfLeftToRightTrafficSignalNamesPrompt.getText() + "\"");   // NOI18N
-        _mCheckJMRIObject.analyzeForm(PREFIX, this, errors);        
+        _mCheckJMRIObject.analyzeForm(PREFIX, this, errors);
+// =======
+//         if (!leftInternalSensorPresent && !rightInternalSensorPresent) errors.add("One or both of \"" + _mSIDI_LeftInternalSensorPrompt.getText() + "\" and \"" + _mSIDI_RightInternalSensorPrompt.getText() + "\" must be present.");
+//         if (leftInternalSensorPresent && !entriesInRightLeftTrafficSignalsCSVList) errors.add("\"" + _mSIDI_LeftInternalSensorPrompt.getText() + "\" defined but no entries in \"" + _mTableOfRightToLeftTrafficSignalNamesPrompt.getText() + "\"");
+//         if (rightInternalSensorPresent && !entriesInLeftRightTrafficSignalsCSVList) errors.add("\"" + _mSIDI_RightInternalSensorPrompt.getText() + "\" defined but no entries in \"" + _mTableOfLeftToRightTrafficSignalNamesPrompt.getText() + "\"");
+//         if (!leftInternalSensorPresent && entriesInRightLeftTrafficSignalsCSVList) errors.add("\"" + _mSIDI_LeftInternalSensorPrompt.getText() + "\" not defined with entries in \"" + _mTableOfRightToLeftTrafficSignalNamesPrompt.getText() + "\"");
+//         if (!rightInternalSensorPresent && entriesInLeftRightTrafficSignalsCSVList) errors.add("\"" + _mSIDI_RightInternalSensorPrompt.getText() + "\" not defined with entries in \"" + _mTableOfLeftToRightTrafficSignalNamesPrompt.getText() + "\"");
+//         _mCheckJMRIObject.analyzeForm(PREFIX, this, errors);
+// >>>>>>> Stashed changes
         return errors;
     }
-    
+
+    /**
+     * Add a signal head/mast combo box as the default cell editor.
+     * @param table The signal table to be modified.
+     */
+    public void enableSignalListComboBox(JTable table) {
+        // Create the signals combo box
+        JComboBox<String> comboBox = new JComboBox<>();
+        if (_mCodeButtonHandlerData._mSIDI_GUISignalType == CodeButtonHandlerData.SIGNAL_TYPE.SIGNALHEAD) {
+            CommonSubs.populateJComboBoxWithBeans(comboBox, "SignalHead", null, true);
+        } else {
+            CommonSubs.populateJComboBoxWithBeans(comboBox, "SignalMast", null, true);
+        }
+
+        // Update the signal list cell editor
+        table.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        table.getColumnModel().getColumn(0).setCellEditor(new javax.swing.DefaultCellEditor(comboBox));
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

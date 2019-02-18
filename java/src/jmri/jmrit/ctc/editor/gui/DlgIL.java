@@ -4,6 +4,8 @@ import jmri.jmrit.ctc.editor.code.AwtWindowProperties;
 import jmri.jmrit.ctc.editor.code.CheckJMRIObject;
 import jmri.jmrit.ctc.editor.code.CommonSubs;
 import java.util.ArrayList;
+import javax.swing.JComboBox;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
 import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
@@ -24,7 +26,7 @@ public class DlgIL extends javax.swing.JDialog {
     private final CodeButtonHandlerData _mCodeButtonHandlerData;
     private final CheckJMRIObject _mCheckJMRIObject;
 
-    
+
     private ArrayList<String> _mSignalsArrayListOrig;
     private void initOrig(ArrayList<String> signalsArrayList) {
         _mSignalsArrayListOrig = new ArrayList<>();
@@ -40,9 +42,9 @@ public class DlgIL extends javax.swing.JDialog {
         }
         return false;
     }
-    
+
     private final DefaultTableModel _mIL_TableOfExternalSignalNamesDefaultTableModel;
-    
+
     public DlgIL(   java.awt.Frame parent, boolean modal, AwtWindowProperties awtWindowProperties,
                     CodeButtonHandlerData codeButtonHandlerData,
                     CheckJMRIObject checkJMRIObject) {
@@ -67,13 +69,15 @@ public class DlgIL extends javax.swing.JDialog {
 //  Where is a list of properties available and their corresponding functions?
         _mIL_TableOfExternalSignalNames.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);    // NOI18N
         initOrig(signalsArrayList);
-        _mAwtWindowProperties.setWindowState((java.awt.Window)this, FORM_PROPERTIES);        
+        _mAwtWindowProperties.setWindowState((java.awt.Window)this, FORM_PROPERTIES);
         this.getRootPane().setDefaultButton(_mSaveAndClose);
+
+        enableSignalListComboBox(_mIL_TableOfExternalSignalNames);
     }
-    
+
     public static boolean dialogCodeButtonHandlerDataValid(CheckJMRIObject checkJMRIObject, CodeButtonHandlerData codeButtonHandlerData) {
         if (!codeButtonHandlerData._mIL_Enabled) return true; // Not enabled, can be no error!
-//  Checks:        
+//  Checks:
         if (ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mIL_ListOfCSVSignalNames)) return false;
         for (String signalName : ProjectsCommonSubs.getArrayListFromCSV(codeButtonHandlerData._mIL_ListOfCSVSignalNames)) {
             if (checkJMRIObject.checkSignal(signalName) == false) return false;
@@ -84,12 +88,31 @@ public class DlgIL extends javax.swing.JDialog {
 //  Validate all internal fields as much as possible:
     private ArrayList<String> formFieldsValid() {
         ArrayList<String> errors = new ArrayList<>();
-//  Checks:        
+//  Checks:
         if (CommonSubs.getCSVStringFromDefaultTableModel(_mIL_TableOfExternalSignalNamesDefaultTableModel).isEmpty()) {
             errors.add(Bundle.getMessage("InfoDlgILNoEntriesIn") + " \"" + _mTableOfSignalNamesPrompt.getText() + "\"");    // NOI18N
         }
-        _mCheckJMRIObject.analyzeForm(PREFIX, this, errors);        
+        _mCheckJMRIObject.analyzeForm(PREFIX, this, errors);
         return errors;
+    }
+
+    /**
+     * Add a signal head/mast combo box as the default cell editor.
+     * @param table The signal table to be modified.
+     */
+    public void enableSignalListComboBox(JTable table) {
+        // Create the signals combo box
+        JComboBox<String> comboBox = new JComboBox<>();
+        // Since IL does not have a signal type field, use the SIDI signal type
+        if (_mCodeButtonHandlerData._mSIDI_GUISignalType == CodeButtonHandlerData.SIGNAL_TYPE.SIGNALHEAD) {
+            CommonSubs.populateJComboBoxWithBeans(comboBox, "SignalHead", null, true);
+        } else {
+            CommonSubs.populateJComboBoxWithBeans(comboBox, "SignalMast", null, true);
+        }
+
+        // Update the signal list cell editor
+        table.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        table.getColumnModel().getColumn(0).setCellEditor(new javax.swing.DefaultCellEditor(comboBox));
     }
 
     /**

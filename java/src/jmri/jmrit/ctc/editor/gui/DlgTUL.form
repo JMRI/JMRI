@@ -87,26 +87,23 @@
                       <Component id="jRadioButton2" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="_mTUL_AdditionalExternalTurnout3" min="-2" pref="71" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                          <Component id="_mTUL_AdditionalExternalTurnout3" pref="133" max="32767" attributes="0"/>
+                          <Component id="_mTUL_AdditionalExternalTurnout2" max="32767" attributes="0"/>
+                          <Component id="_mTUL_AdditionalExternalTurnout1" max="32767" attributes="0"/>
+                          <Component id="_mTUL_ExternalTurnout" max="32767" attributes="0"/>
+                      </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="_mTUL_AdditionalExternalTurnout3FeedbackDifferent" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" attributes="0">
-                      <Component id="_mTUL_ExternalTurnout" min="-2" pref="71" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="_mTUL_ExternalTurnoutFeedbackDifferent" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="_mTUL_AdditionalExternalTurnout2" min="-2" pref="71" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="_mTUL_AdditionalExternalTurnout2FeedbackDifferent" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="_mTUL_AdditionalExternalTurnout1" min="-2" pref="71" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="_mTUL_AdditionalExternalTurnout1FeedbackDifferent" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="_mTUL_ExternalTurnoutFeedbackDifferent" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="_mTUL_AdditionalExternalTurnout1FeedbackDifferent" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="_mTUL_AdditionalExternalTurnout2FeedbackDifferent" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="_mTUL_AdditionalExternalTurnout3FeedbackDifferent" alignment="0" min="-2" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
@@ -121,31 +118,31 @@
                   <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="_mTUL_DispatcherInternalSensorLockToggle" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="_mTUL_ActualTurnoutPrompt" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="_mTUL_ExternalTurnout" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="_mTUL_ExternalTurnoutFeedbackDifferent" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="_mTUL_ExternalTurnout" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="_mTUL_AdditionalExternalTurnout1" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel11" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="_mTUL_AdditionalExternalTurnout1FeedbackDifferent" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="_mTUL_AdditionalExternalTurnout1" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="_mTUL_AdditionalExternalTurnout2" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="_mTUL_AdditionalExternalTurnout2FeedbackDifferent" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="_mTUL_AdditionalExternalTurnout2" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="_mTUL_AdditionalExternalTurnout3" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="_mTUL_AdditionalExternalTurnout3FeedbackDifferent" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="_mTUL_AdditionalExternalTurnout3" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="_mTUL_DispatcherInternalSensorUnlockedIndicator" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -208,8 +205,6 @@
           <Connection code="Bundle.getMessage(&quot;InfoDlgTULFeedback&quot;)" type="code"/>
         </Property>
       </Properties>
-    </Component>
-    <Component class="javax.swing.JTextField" name="_mTUL_ExternalTurnout">
     </Component>
     <Component class="javax.swing.JLabel" name="_mTUL_ActualTurnoutPrompt">
       <Properties>
@@ -313,12 +308,6 @@
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="_mTUL_AdditionalExternalTurnout1">
-    </Component>
-    <Component class="javax.swing.JTextField" name="_mTUL_AdditionalExternalTurnout2">
-    </Component>
-    <Component class="javax.swing.JTextField" name="_mTUL_AdditionalExternalTurnout3">
-    </Component>
     <Component class="javax.swing.JLabel" name="jLabel11">
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
@@ -340,6 +329,46 @@
       <Properties>
         <Property name="text" type="java.lang.String" value=" "/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="_mTUL_ExternalTurnout">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="0"/>
+        </Property>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="_mTUL_AdditionalExternalTurnout1">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="0"/>
+        </Property>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="_mTUL_AdditionalExternalTurnout2">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="0"/>
+        </Property>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JComboBox" name="_mTUL_AdditionalExternalTurnout3">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="0"/>
+        </Property>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+      </AuxValues>
     </Component>
   </SubComponents>
 </Form>

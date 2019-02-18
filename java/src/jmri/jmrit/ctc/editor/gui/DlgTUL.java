@@ -58,17 +58,17 @@ public class DlgTUL extends javax.swing.JDialog {
     }
     private boolean dataChanged() {
         if (!_mTUL_DispatcherInternalSensorLockToggleOrig.equals(_mTUL_DispatcherInternalSensorLockToggle.getText())) return true;
-        if (!_mTUL_ExternalTurnoutOrig.equals(_mTUL_ExternalTurnout.getText())) return true;
+        if (!_mTUL_ExternalTurnoutOrig.equals((String) _mTUL_ExternalTurnout.getSelectedItem())) return true;
         if (_mTUL_ExternalTurnoutFeedbackDifferentOrig != _mTUL_ExternalTurnoutFeedbackDifferent.isSelected()) return true;
         if (!_mTUL_DispatcherInternalSensorUnlockedIndicatorOrig.equals(_mTUL_DispatcherInternalSensorUnlockedIndicator.getText())) return true;
         if (_mTUL_NoDispatcherControlOfSwitchOrig != _mTUL_NoDispatcherControlOfSwitch.isSelected()) return true;
         if (_mTUL_ndcos_WhenLockedSwitchStateIsClosedOrig != _mTUL_ndcos_WhenLockedSwitchStateIsClosed.isSelected()) return true;
         if (_mTUL_LockImplementationOrig != CodeButtonHandlerData.LOCK_IMPLEMENTATION.getLockImplementation(_mTUL_LockImplementation)) return true;
-        if (!_mTUL_AdditionalExternalTurnout1Orig.equals(_mTUL_AdditionalExternalTurnout1.getText())) return true;
+        if (!_mTUL_AdditionalExternalTurnout1Orig.equals((String) _mTUL_AdditionalExternalTurnout1.getSelectedItem())) return true;
         if (_mTUL_AdditionalExternalTurnout1FeedbackDifferentOrig != _mTUL_AdditionalExternalTurnout1FeedbackDifferent.isSelected()) return true;
-        if (!_mTUL_AdditionalExternalTurnout2Orig.equals(_mTUL_AdditionalExternalTurnout2.getText())) return true;
+        if (!_mTUL_AdditionalExternalTurnout2Orig.equals((String) _mTUL_AdditionalExternalTurnout2.getSelectedItem())) return true;
         if (_mTUL_AdditionalExternalTurnout2FeedbackDifferentOrig != _mTUL_AdditionalExternalTurnout2FeedbackDifferent.isSelected()) return true;
-        if (!_mTUL_AdditionalExternalTurnout3Orig.equals(_mTUL_AdditionalExternalTurnout3.getText())) return true;
+        if (!_mTUL_AdditionalExternalTurnout3Orig.equals((String) _mTUL_AdditionalExternalTurnout3.getSelectedItem())) return true;
         if (_mTUL_AdditionalExternalTurnout3FeedbackDifferentOrig != _mTUL_AdditionalExternalTurnout3FeedbackDifferent.isSelected()) return true;
         return false;
     }
@@ -84,16 +84,16 @@ public class DlgTUL extends javax.swing.JDialog {
         CommonSubs.numberButtonGroup(_mTUL_LockImplementation);
         CommonSubs.setButtonSelected(_mTUL_LockImplementation, _mCodeButtonHandlerData._mTUL_LockImplementation.getInt());
         _mTUL_DispatcherInternalSensorLockToggle.setText(_mCodeButtonHandlerData._mTUL_DispatcherInternalSensorLockToggle);
-        _mTUL_ExternalTurnout.setText(_mCodeButtonHandlerData._mTUL_ExternalTurnout);
+        CommonSubs.populateJComboBoxWithBeans(_mTUL_ExternalTurnout, "Turnout", _mCodeButtonHandlerData._mTUL_ExternalTurnout, false);
         _mTUL_ExternalTurnoutFeedbackDifferent.setSelected(_mCodeButtonHandlerData._mTUL_ExternalTurnoutFeedbackDifferent);
         _mTUL_DispatcherInternalSensorUnlockedIndicator.setText(_mCodeButtonHandlerData._mTUL_DispatcherInternalSensorUnlockedIndicator);
         _mTUL_NoDispatcherControlOfSwitch.setSelected(_mCodeButtonHandlerData._mTUL_NoDispatcherControlOfSwitch);
         _mTUL_ndcos_WhenLockedSwitchStateIsClosed.setSelected(_mCodeButtonHandlerData._mTUL_ndcos_WhenLockedSwitchStateIsClosed);
-        _mTUL_AdditionalExternalTurnout1.setText(_mCodeButtonHandlerData._mTUL_AdditionalExternalTurnout1);
+        CommonSubs.populateJComboBoxWithBeans(_mTUL_AdditionalExternalTurnout1, "Turnout", _mCodeButtonHandlerData._mTUL_AdditionalExternalTurnout1, true);
         _mTUL_AdditionalExternalTurnout1FeedbackDifferent.setSelected(_mCodeButtonHandlerData._mTUL_AdditionalExternalTurnout1FeedbackDifferent);
-        _mTUL_AdditionalExternalTurnout2.setText(_mCodeButtonHandlerData._mTUL_AdditionalExternalTurnout2);
+        CommonSubs.populateJComboBoxWithBeans(_mTUL_AdditionalExternalTurnout2, "Turnout", _mCodeButtonHandlerData._mTUL_AdditionalExternalTurnout2, true);
         _mTUL_AdditionalExternalTurnout2FeedbackDifferent.setSelected(_mCodeButtonHandlerData._mTUL_AdditionalExternalTurnout2FeedbackDifferent);
-        _mTUL_AdditionalExternalTurnout3.setText(_mCodeButtonHandlerData._mTUL_AdditionalExternalTurnout3);
+        CommonSubs.populateJComboBoxWithBeans(_mTUL_AdditionalExternalTurnout3, "Turnout", _mCodeButtonHandlerData._mTUL_AdditionalExternalTurnout3, true);
         _mTUL_AdditionalExternalTurnout3FeedbackDifferent.setSelected(_mCodeButtonHandlerData._mTUL_AdditionalExternalTurnout3FeedbackDifferent);
         initOrig();
         _mAwtWindowProperties.setWindowState((java.awt.Window)this, FORM_PROPERTIES);        
@@ -111,7 +111,7 @@ public class DlgTUL extends javax.swing.JDialog {
     private ArrayList<String> formFieldsValid() {
         ArrayList<String> errors = new ArrayList<>();
 //  Checks:        
-        CommonSubs.checkJTextFieldNotEmpty(_mTUL_ExternalTurnout, _mTUL_ActualTurnoutPrompt, errors);
+        CommonSubs.checkJComboBoxNotEmpty(_mTUL_ExternalTurnout, _mTUL_ActualTurnoutPrompt, errors);
         _mCheckJMRIObject.analyzeForm(PREFIX, this, errors);        
         return errors;
     }
@@ -131,7 +131,6 @@ public class DlgTUL extends javax.swing.JDialog {
         _mTUL_DispatcherInternalSensorLockToggle = new javax.swing.JTextField();
         _mTUL_ExternalTurnoutFeedbackDifferent = new javax.swing.JCheckBox();
         jLabel4 = new javax.swing.JLabel();
-        _mTUL_ExternalTurnout = new javax.swing.JTextField();
         _mTUL_ActualTurnoutPrompt = new javax.swing.JLabel();
         _mTUL_DispatcherInternalSensorUnlockedIndicator = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
@@ -146,13 +145,14 @@ public class DlgTUL extends javax.swing.JDialog {
         jRadioButton1 = new javax.swing.JRadioButton();
         jLabel1 = new javax.swing.JLabel();
         jRadioButton2 = new javax.swing.JRadioButton();
-        _mTUL_AdditionalExternalTurnout1 = new javax.swing.JTextField();
-        _mTUL_AdditionalExternalTurnout2 = new javax.swing.JTextField();
-        _mTUL_AdditionalExternalTurnout3 = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         _mTUL_AdditionalExternalTurnout1FeedbackDifferent = new javax.swing.JCheckBox();
         _mTUL_AdditionalExternalTurnout2FeedbackDifferent = new javax.swing.JCheckBox();
         _mTUL_AdditionalExternalTurnout3FeedbackDifferent = new javax.swing.JCheckBox();
+        _mTUL_ExternalTurnout = new javax.swing.JComboBox<>();
+        _mTUL_AdditionalExternalTurnout1 = new javax.swing.JComboBox<>();
+        _mTUL_AdditionalExternalTurnout2 = new javax.swing.JComboBox<>();
+        _mTUL_AdditionalExternalTurnout3 = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle(Bundle.getMessage("TitleDlgTUL"));
@@ -268,23 +268,20 @@ public class DlgTUL extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jRadioButton2))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(_mTUL_AdditionalExternalTurnout3, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(_mTUL_AdditionalExternalTurnout3, 0, 133, Short.MAX_VALUE)
+                            .addComponent(_mTUL_AdditionalExternalTurnout2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(_mTUL_AdditionalExternalTurnout1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(_mTUL_ExternalTurnout, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(_mTUL_AdditionalExternalTurnout3FeedbackDifferent))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(_mTUL_ExternalTurnout, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(_mTUL_ExternalTurnoutFeedbackDifferent)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel4))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(_mTUL_AdditionalExternalTurnout2, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(_mTUL_AdditionalExternalTurnout2FeedbackDifferent))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(_mTUL_AdditionalExternalTurnout1, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(_mTUL_AdditionalExternalTurnout1FeedbackDifferent)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(_mTUL_ExternalTurnoutFeedbackDifferent)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel4))
+                            .addComponent(_mTUL_AdditionalExternalTurnout1FeedbackDifferent)
+                            .addComponent(_mTUL_AdditionalExternalTurnout2FeedbackDifferent)
+                            .addComponent(_mTUL_AdditionalExternalTurnout3FeedbackDifferent))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -294,27 +291,27 @@ public class DlgTUL extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(_mTUL_DispatcherInternalSensorLockToggle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(8, 8, 8)
+                .addGap(9, 9, 9)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(_mTUL_ActualTurnoutPrompt)
-                    .addComponent(_mTUL_ExternalTurnout, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(_mTUL_ExternalTurnoutFeedbackDifferent)
-                    .addComponent(jLabel4))
+                    .addComponent(jLabel4)
+                    .addComponent(_mTUL_ExternalTurnout, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(_mTUL_AdditionalExternalTurnout1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel11)
-                    .addComponent(_mTUL_AdditionalExternalTurnout1FeedbackDifferent))
+                    .addComponent(_mTUL_AdditionalExternalTurnout1FeedbackDifferent)
+                    .addComponent(_mTUL_AdditionalExternalTurnout1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(_mTUL_AdditionalExternalTurnout2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1)
-                    .addComponent(_mTUL_AdditionalExternalTurnout2FeedbackDifferent))
+                    .addComponent(_mTUL_AdditionalExternalTurnout2FeedbackDifferent)
+                    .addComponent(_mTUL_AdditionalExternalTurnout2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(_mTUL_AdditionalExternalTurnout3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(_mTUL_AdditionalExternalTurnout3FeedbackDifferent))
-                .addGap(7, 7, 7)
+                    .addComponent(_mTUL_AdditionalExternalTurnout3FeedbackDifferent)
+                    .addComponent(_mTUL_AdditionalExternalTurnout3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(5, 5, 5)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(_mTUL_DispatcherInternalSensorUnlockedIndicator, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6))
@@ -348,17 +345,17 @@ public class DlgTUL extends javax.swing.JDialog {
             return; // Do not allow exit or transfer of data.
         }
         _mCodeButtonHandlerData._mTUL_DispatcherInternalSensorLockToggle = _mTUL_DispatcherInternalSensorLockToggle.getText();
-        _mCodeButtonHandlerData._mTUL_ExternalTurnout = _mTUL_ExternalTurnout.getText();
+        _mCodeButtonHandlerData._mTUL_ExternalTurnout = (String) _mTUL_ExternalTurnout.getSelectedItem();
         _mCodeButtonHandlerData._mTUL_ExternalTurnoutFeedbackDifferent = _mTUL_ExternalTurnoutFeedbackDifferent.isSelected();
         _mCodeButtonHandlerData._mTUL_DispatcherInternalSensorUnlockedIndicator = _mTUL_DispatcherInternalSensorUnlockedIndicator.getText();
         _mCodeButtonHandlerData._mTUL_NoDispatcherControlOfSwitch = _mTUL_NoDispatcherControlOfSwitch.isSelected();
         _mCodeButtonHandlerData._mTUL_ndcos_WhenLockedSwitchStateIsClosed = _mTUL_ndcos_WhenLockedSwitchStateIsClosed.isSelected();
         _mCodeButtonHandlerData._mTUL_LockImplementation = CodeButtonHandlerData.LOCK_IMPLEMENTATION.getLockImplementation(_mTUL_LockImplementation);
-        _mCodeButtonHandlerData._mTUL_AdditionalExternalTurnout1 = _mTUL_AdditionalExternalTurnout1.getText();
+        _mCodeButtonHandlerData._mTUL_AdditionalExternalTurnout1 = (String) _mTUL_AdditionalExternalTurnout1.getSelectedItem();
         _mCodeButtonHandlerData._mTUL_AdditionalExternalTurnout1FeedbackDifferent = _mTUL_AdditionalExternalTurnout1FeedbackDifferent.isSelected();
-        _mCodeButtonHandlerData._mTUL_AdditionalExternalTurnout2 = _mTUL_AdditionalExternalTurnout2.getText();
+        _mCodeButtonHandlerData._mTUL_AdditionalExternalTurnout2 = (String) _mTUL_AdditionalExternalTurnout2.getSelectedItem();
         _mCodeButtonHandlerData._mTUL_AdditionalExternalTurnout2FeedbackDifferent = _mTUL_AdditionalExternalTurnout2FeedbackDifferent.isSelected();
-        _mCodeButtonHandlerData._mTUL_AdditionalExternalTurnout3 = _mTUL_AdditionalExternalTurnout3.getText();
+        _mCodeButtonHandlerData._mTUL_AdditionalExternalTurnout3 = (String) _mTUL_AdditionalExternalTurnout3.getSelectedItem();
         _mCodeButtonHandlerData._mTUL_AdditionalExternalTurnout3FeedbackDifferent = _mTUL_AdditionalExternalTurnout3FeedbackDifferent.isSelected();
         _mClosedNormally = true;
         _mAwtWindowProperties.saveWindowState(this, FORM_PROPERTIES);
@@ -385,15 +382,15 @@ public class DlgTUL extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton _mSaveAndClose;
     private javax.swing.JLabel _mTUL_ActualTurnoutPrompt;
-    private javax.swing.JTextField _mTUL_AdditionalExternalTurnout1;
+    private javax.swing.JComboBox<String> _mTUL_AdditionalExternalTurnout1;
     private javax.swing.JCheckBox _mTUL_AdditionalExternalTurnout1FeedbackDifferent;
-    private javax.swing.JTextField _mTUL_AdditionalExternalTurnout2;
+    private javax.swing.JComboBox<String> _mTUL_AdditionalExternalTurnout2;
     private javax.swing.JCheckBox _mTUL_AdditionalExternalTurnout2FeedbackDifferent;
-    private javax.swing.JTextField _mTUL_AdditionalExternalTurnout3;
+    private javax.swing.JComboBox<String> _mTUL_AdditionalExternalTurnout3;
     private javax.swing.JCheckBox _mTUL_AdditionalExternalTurnout3FeedbackDifferent;
     private javax.swing.JTextField _mTUL_DispatcherInternalSensorLockToggle;
     private javax.swing.JTextField _mTUL_DispatcherInternalSensorUnlockedIndicator;
-    private javax.swing.JTextField _mTUL_ExternalTurnout;
+    private javax.swing.JComboBox<String> _mTUL_ExternalTurnout;
     private javax.swing.JCheckBox _mTUL_ExternalTurnoutFeedbackDifferent;
     private javax.swing.ButtonGroup _mTUL_LockImplementation;
     private javax.swing.JCheckBox _mTUL_NoDispatcherControlOfSwitch;

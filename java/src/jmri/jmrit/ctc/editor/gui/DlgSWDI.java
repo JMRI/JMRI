@@ -46,7 +46,7 @@ public class DlgSWDI extends javax.swing.JDialog {
     private boolean dataChanged() {
         if (!_mSWDI_NormalInternalSensorOrig.equals(_mSWDI_NormalInternalSensor.getText())) return true;
         if (!_mSWDI_ReversedInternalSensorOrig.equals(_mSWDI_ReversedInternalSensor.getText())) return true;
-        if (!_mSWDI_ExternalTurnoutOrig.equals(_mSWDI_ExternalTurnout.getText())) return true;
+        if (!_mSWDI_ExternalTurnoutOrig.equals((String) _mSWDI_ExternalTurnout.getSelectedItem())) return true;
         if (CommonSubs.getIntFromJTextFieldNoThrow(_mSWDI_CodingTimeInMilliseconds) != _mSWDI_CodingTimeInMillisecondsOrig) return true;
         if (_mSWDI_FeedbackDifferentOrig != _mSWDI_FeedbackDifferent.isSelected()) return true;
         if (_mSWDI_GUITurnoutTypeOrig != CodeButtonHandlerData.TURNOUT_TYPE.getTurnoutType(_mSWDI_GUITurnoutType)) return true;
@@ -69,7 +69,7 @@ public class DlgSWDI extends javax.swing.JDialog {
         CommonSubs.setMillisecondsEdit(_mSWDI_CodingTimeInMilliseconds);
         _mSWDI_NormalInternalSensor.setText(_mCodeButtonHandlerData._mSWDI_NormalInternalSensor);
         _mSWDI_ReversedInternalSensor.setText(_mCodeButtonHandlerData._mSWDI_ReversedInternalSensor);
-        _mSWDI_ExternalTurnout.setText(_mCodeButtonHandlerData._mSWDI_ExternalTurnout);
+        CommonSubs.populateJComboBoxWithBeans(_mSWDI_ExternalTurnout, "Turnout", _mCodeButtonHandlerData._mSWDI_ExternalTurnout, false);
         _mSWDI_CodingTimeInMilliseconds.setText(Integer.toString(_mCodeButtonHandlerData._mSWDI_CodingTimeInMilliseconds));
         _mSWDI_FeedbackDifferent.setSelected(_mCodeButtonHandlerData._mSWDI_FeedbackDifferent);
         _mSWDI_GUITurnoutLeftHand.setSelected(_mCodeButtonHandlerData._mSWDI_GUITurnoutLeftHand);
@@ -94,7 +94,7 @@ public class DlgSWDI extends javax.swing.JDialog {
 //  Checks:        
         CommonSubs.checkJTextFieldNotEmpty(_mSWDI_NormalInternalSensor, _mSWDI_NormalInternalSensorPrompt, errors);
         CommonSubs.checkJTextFieldNotEmpty(_mSWDI_ReversedInternalSensor, _mSWDI_ReversedInternalSensorPrompt, errors);
-        CommonSubs.checkJTextFieldNotEmpty(_mSWDI_ExternalTurnout, _mSWDI_ActualTurnoutPrompt, errors);
+        CommonSubs.checkJComboBoxNotEmpty(_mSWDI_ExternalTurnout, _mSWDI_ActualTurnoutPrompt, errors);
         _mCheckJMRIObject.analyzeForm(PREFIX, this, errors);
         return errors;
     }
@@ -114,7 +114,6 @@ public class DlgSWDI extends javax.swing.JDialog {
         _mSWDI_NormalInternalSensor = new javax.swing.JTextField();
         _mSWDI_ReversedInternalSensorPrompt = new javax.swing.JLabel();
         _mSWDI_ReversedInternalSensor = new javax.swing.JTextField();
-        _mSWDI_ExternalTurnout = new javax.swing.JTextField();
         _mSWDI_ActualTurnoutPrompt = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         _mSWDI_CodingTimeInMilliseconds = new javax.swing.JFormattedTextField();
@@ -127,6 +126,7 @@ public class DlgSWDI extends javax.swing.JDialog {
         _mTurnout = new javax.swing.JRadioButton();
         _mCrossover = new javax.swing.JRadioButton();
         _mDoubleCrossover = new javax.swing.JRadioButton();
+        _mSWDI_ExternalTurnout = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle(Bundle.getMessage("TitleSWDI"));
@@ -196,6 +196,8 @@ public class DlgSWDI extends javax.swing.JDialog {
             }
         });
 
+        _mSWDI_ExternalTurnout.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -210,13 +212,17 @@ public class DlgSWDI extends javax.swing.JDialog {
                             .addComponent(_mSWDI_ReversedInternalSensorPrompt, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(_mSWDI_NormalInternalSensorPrompt, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(_mSWDI_CodingTimeInMilliseconds, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(_mSWDI_ExternalTurnout, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(_mSWDI_ReversedInternalSensor, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(_mSWDI_NormalInternalSensor, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(_mSWDI_FeedbackDifferent)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(108, 108, 108)
+                                .addComponent(_mSWDI_FeedbackDifferent))
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(_mSWDI_CodingTimeInMilliseconds, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(_mSWDI_NormalInternalSensor)
+                                    .addComponent(_mSWDI_ReversedInternalSensor)
+                                    .addComponent(_mSWDI_ExternalTurnout, 0, 113, Short.MAX_VALUE)))))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -249,8 +255,8 @@ public class DlgSWDI extends javax.swing.JDialog {
                     .addComponent(_mSWDI_ReversedInternalSensor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(_mSWDI_ExternalTurnout, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(_mSWDI_ActualTurnoutPrompt))
+                    .addComponent(_mSWDI_ActualTurnoutPrompt)
+                    .addComponent(_mSWDI_ExternalTurnout, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(_mSWDI_CodingTimeInMilliseconds, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -262,8 +268,8 @@ public class DlgSWDI extends javax.swing.JDialog {
                 .addGap(22, 22, 22)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(_mTurnout)
-                    .addComponent(_mSWDI_GUITurnoutLeftHand))
+                    .addComponent(_mSWDI_GUITurnoutLeftHand)
+                    .addComponent(_mTurnout))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(_mCrossover)
@@ -286,7 +292,7 @@ public class DlgSWDI extends javax.swing.JDialog {
         }
         _mCodeButtonHandlerData._mSWDI_NormalInternalSensor = _mSWDI_NormalInternalSensor.getText();
         _mCodeButtonHandlerData._mSWDI_ReversedInternalSensor = _mSWDI_ReversedInternalSensor.getText();
-        _mCodeButtonHandlerData._mSWDI_ExternalTurnout = _mSWDI_ExternalTurnout.getText();
+        _mCodeButtonHandlerData._mSWDI_ExternalTurnout = (String) _mSWDI_ExternalTurnout.getSelectedItem();
         _mCodeButtonHandlerData._mSWDI_CodingTimeInMilliseconds = CommonSubs.getIntFromJTextFieldNoThrow(_mSWDI_CodingTimeInMilliseconds);
         _mCodeButtonHandlerData._mSWDI_FeedbackDifferent = _mSWDI_FeedbackDifferent.isSelected();
         _mCodeButtonHandlerData._mSWDI_GUITurnoutType = CodeButtonHandlerData.TURNOUT_TYPE.getTurnoutType(_mSWDI_GUITurnoutType);
@@ -329,7 +335,7 @@ public class DlgSWDI extends javax.swing.JDialog {
     private javax.swing.JRadioButton _mDoubleCrossover;
     private javax.swing.JLabel _mSWDI_ActualTurnoutPrompt;
     private javax.swing.JFormattedTextField _mSWDI_CodingTimeInMilliseconds;
-    private javax.swing.JTextField _mSWDI_ExternalTurnout;
+    private javax.swing.JComboBox<String> _mSWDI_ExternalTurnout;
     private javax.swing.JCheckBox _mSWDI_FeedbackDifferent;
     private javax.swing.JCheckBox _mSWDI_GUICrossoverLeftHand;
     private javax.swing.JCheckBox _mSWDI_GUITurnoutLeftHand;
