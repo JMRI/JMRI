@@ -218,7 +218,7 @@ git push github
 
     cd ../website/releasenotes
     git commit -m"updated 4.15.3 release note" jmri4.15.3.shtml
-    git push
+    git push github
     git pull
     cd ../../JMRI
 
@@ -237,7 +237,7 @@ where the date at the end should be the date (and optionally time) of the last r
         git checkout master
         git status
         (commit as needed)
-        git push
+        git push github
         git pull
 ```
 
@@ -405,7 +405,7 @@ Note: Once a GitHub Release is created it is *not* possible to change it to refe
 
    - "tag version field" gets v4.15.3 (e.g. leading lower-case "v")
    - @ branch: select the release-4.15.3 release branch
-   - "Release title" field gets "Test/Prod Release 4.15.3"
+   - "Release title" field gets "Prod/Test Release 4.15.3"
    - Description should contain text like (the releasesummary script above provided the correct filenames and hashes):
 
 ```   
