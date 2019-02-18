@@ -166,9 +166,10 @@ public class WarrantFrame extends WarrantRoute {
         _warrant.setTrainName(warrant.getTrainName());
         
         SpeedUtil spU = warrant.getSpeedUtil();
-        String trainId = spU.getRosterId();
-        setTrainInfo(trainId);
-        _warrant.getSpeedUtil().setDccAddress(trainId);
+        setSpeedUtil(_warrant.getSpeedUtil());
+        _speedUtil.setRosterId(spU.getRosterId());
+        _speedUtil.setDccAddress(spU.getDccAddress());
+        setTrainInfo(warrant.getTrainName());
     }
 
     private void init() {

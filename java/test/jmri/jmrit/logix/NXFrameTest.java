@@ -28,9 +28,7 @@ import org.netbeans.jemmy.operators.JRadioButtonOperator;
 public class NXFrameTest {
 
     OBlockManager _OBlockMgr;
-//    PortalManager _portalMgr;
     SensorManager _sensorMgr;
-//    TurnoutManager _turnoutMgr;
 
     @Test
     public void testGetDefault() {
@@ -79,10 +77,10 @@ public class NXFrameTest {
 
         JFrameOperator nfo = new JFrameOperator(nxFrame);
 
-        // if _origin.blockBox and _destination.blockBox were labeled,
-        // we could use jemmy to find these and fill in the text.
-        nxFrame._origin.blockBox.setText("OB0");
-        nxFrame._destination.blockBox.setText("OB10");
+        nxFrame.mouseClickedOnBlock(_OBlockMgr.getBySystemName("OB0"));
+        nxFrame._origin.portalBox.setSelectedItem("Enter");
+        nxFrame.mouseClickedOnBlock(_OBlockMgr.getBySystemName("OB10"));
+        nxFrame._destination.portalBox.setSelectedItem("Exit");
 
         JemmyUtil.pressButton(nfo, Bundle.getMessage("Calculate"));
 
@@ -115,8 +113,8 @@ public class NXFrameTest {
         JemmyUtil.pressButton(nfo, Bundle.getMessage("ButtonRunNX"));
         JemmyUtil.confirmJOptionPane(nfo, Bundle.getMessage("WarningTitle"), Bundle.getMessage("BadDccAddress", ""), "OK");
 
-        nxFrame.setTrainInfo("666");
-        nxFrame.setTrainName("Nick");
+        nxFrame._speedUtil.setDccAddress("666");
+        nxFrame.setTrainInfo("Nick");
         JemmyUtil.pressButton(nfo, Bundle.getMessage("ButtonRunNX"));
 
         // we may want to use jemmy to close the panel as well.
@@ -143,10 +141,10 @@ public class NXFrameTest {
 
         JFrameOperator nfo = new JFrameOperator(nxFrame);
 
-        // if _origin.blockBox and _destination.blockBox were labeled,
-        // we could use jemmy to find these and fill in the text.
-        nxFrame._origin.blockBox.setText("OB0");
-        nxFrame._destination.blockBox.setText("OB10");
+        nxFrame.mouseClickedOnBlock(block);
+        nxFrame._origin.portalBox.setSelectedItem("Enter");
+        nxFrame.mouseClickedOnBlock(_OBlockMgr.getBySystemName("OB10"));
+        nxFrame._destination.portalBox.setSelectedItem("Exit");
 
         JemmyUtil.pressButton(nfo, Bundle.getMessage("Calculate"));
 
@@ -171,8 +169,8 @@ public class NXFrameTest {
 
         nxFrame.setThrottleIncrement(0.05f);     
         nxFrame.setMaxSpeed(0.6f);
-        nxFrame.setTrainInfo("666");
-        nxFrame.setTrainName("Nick");
+        nxFrame._speedUtil.setDccAddress("666");
+        nxFrame.setTrainInfo("Nick");
         JemmyUtil.pressButton(nfo, Bundle.getMessage("ButtonRunNX"));
 
         WarrantTableFrame tableFrame = WarrantTableFrame.getDefault();
@@ -182,10 +180,10 @@ public class NXFrameTest {
         Assert.assertNotNull("tableFrame model", model);
         
         JUnitUtil.waitFor(() -> {
-            return model.getWarrantAt(0) != null;
+            return model.getRowCount() > 1;
         }, "NXWarrant loaded into table");
         
-        Warrant warrant = tableFrame.getModel().getWarrantAt(0);
+        Warrant warrant = tableFrame.getModel().getWarrantAt(1);
 
         Assert.assertNotNull("warrant", warrant);
         Assert.assertNotNull("warrant.getBlockOrders(", warrant.getBlockOrders());
@@ -250,6 +248,54 @@ public class NXFrameTest {
         panel.dispose();    // disposing this way allows test to be rerun (i.e. reload panel file) multiple times
     }
 
+    @Test
+    public void testWarrantLoopRun() throws Exception {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        // load and display
+        File f = new File("java/test/jmri/jmrit/logix/valid/NXWarrantTest.xml");
+        InstanceManager.getDefault(ConfigureManager.class).load(f);
+        _OBlockMgr = InstanceManager.getDefault(OBlockManager.class);
+        _sensorMgr = InstanceManager.getDefault(SensorManager.class);
+
+        Sensor sensor3 = _sensorMgr.getBySystemName("IS3");
+        Assert.assertNotNull("Senor IS3 not found", sensor3);
+
+        jmri.util.ThreadingUtil.runOnLayout(() -> {
+            try {
+                sensor3.setState(Sensor.ACTIVE);
+            } catch (jmri.JmriException e) {
+                Assert.fail("Unexpected Exception: " + e);
+            }
+        });
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause light sensor
+
+        WarrantTableFrame tableFrame = WarrantTableFrame.getDefault();
+        Assert.assertNotNull("tableFrame", tableFrame);
+
+        Warrant warrant = tableFrame.getModel().getWarrantAt(0);
+        Assert.assertNotNull("warrant", warrant);
+       
+        tableFrame.runTrain(warrant, Warrant.MODE_RUN);
+        jmri.util.JUnitUtil.waitFor(() -> {
+            String m =  warrant.getRunningMessage();
+            return m.endsWith("Cmd #3.");
+        }, "Train is moving at 3rd command");
+
+       // OBlock sensor names
+        String[] route = {"OB3", "OB4", "OB5", "OB10", "OB0", "OB1", "OB2", "OB3"};
+        OBlock block = _OBlockMgr.getOBlock("OB3");
+        // runtimes() in next line runs the train, then checks location
+        Assert.assertEquals("Train in last block", block.getSensor().getDisplayName(), runtimes(route).getDisplayName());
+
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for to finish run
+
+        // passed test - cleanup.  Do it here so failure leaves traces.
+        JFrameOperator jfo = new JFrameOperator(tableFrame);
+        jfo.requestClose();
+        // we may want to use jemmy to close the panel as well.
+        ControlPanelEditor panel = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("NXWarrantTest");
+        panel.dispose();    // disposing this way allows test to be rerun (i.e. reload panel file) multiple times
+    }    
 
     /**
      * Simulates the movement of a warranted train over its route.
