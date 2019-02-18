@@ -481,7 +481,107 @@
             <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv130.134smoke.xml"/>
             <!-- SmartSound 4.1 variables, CVs 109 - 111 are on Lights tab -->
             <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/soundVars7outputs.xml"/>
-            <!-- TODO CVs 135-149 Rangiertango-->
+            <!--Rangiertango-->
+            <variable item="Rangiertango Step" CV="135" default="0">
+                <decVal/>
+                <label>Shunting Speed</label>
+                <label xml:lang="de">Rangierstufe</label>
+                <label xml:lang="nl">Rangeersnelheid</label>
+                <tooltip>Autom. shunting speed (0 = Tango Off)</tooltip>
+                <tooltip xml:lang="de">Fahrtgeschwindigkeit in Automatikbetrieb (0 = Tango Aus)</tooltip>
+                <tooltip xml:lang="nl">Rangeersnelheid (0 = Tango Uit)</tooltip>
+            </variable>
+            <variable item="Rangiertango Pushtime" CV="136" default="10">
+                <decVal/>
+                <label>Push Duration</label>
+                <label xml:lang="de">Andrückzeit</label>
+                <label xml:lang="nl">Aanduwtijd</label>
+                <tooltip>Coupling Push Duration T1 * 0.1 Sec</tooltip>
+                <tooltip xml:lang="de">Andrückzeit T1 * 0,1 Sek</tooltip>
+                <tooltip xml:lang="nl">Aanduwtijd T1 * 0,1 Sek</tooltip>
+            </variable>
+            <variable item="Rangiertango Pulltime" CV="137" default="10">
+                <decVal/>
+                <label>Retract Duration</label>
+                <label xml:lang="de">Abrückzeit</label>
+                <label xml:lang="nl">Wegrijtijd</label>
+                <tooltip>Decoupling Pull Duration T1 * 0.1 Sec</tooltip>
+                <tooltip xml:lang="de">Abrückzeit T2 * 0,1 Sek</tooltip>
+                <tooltip xml:lang="nl">Terugrijtijd T2 * 0,1 s</tooltip>
+            </variable>
+            <!-- TODO CVs 138-143 Bremsweg-->
+            <variable CV="144" item="Accel2" default="12" comment="Range 0-255">
+                <decVal max="255"/>
+                <label>Acceleration Rate 2</label>
+                <label xml:lang="it">Accellerazione 2</label>
+                <label xml:lang="cs">Míra zrychlení 2</label>
+                <label xml:lang="fr">2ème Accelération</label>
+                <label xml:lang="de">2. Anfahrverzögerung</label>
+                <label xml:lang="nl">2e Wegrijvertraging</label>
+                <comment>Range 0-255</comment>
+                <comment xml:lang="it">Valori 0-255</comment>
+                <comment xml:lang="cs">Meze 0-255</comment>
+                <comment xml:lang="fr">Valeur 0-255</comment>
+                <comment xml:lang="de">Wert 0-255</comment>
+                <comment xml:lang="nl">Waarde van 0-255</comment>
+            </variable>
+            <variable CV="145" item="Decel2" default="12" comment="Range 0-255">
+                <decVal max="255"/>
+                <label>Deceleration Rate 2</label>
+                <label xml:lang="it">Decellerazione 2</label>
+                <label xml:lang="cs">Míra zpomalení 2</label>
+                <label xml:lang="fr">2ème Décélération</label>
+                <label xml:lang="de">2. Bremszeit</label>
+                <label xml:lang="nl">2e Remvertraging</label>
+                <comment>Range 0-255</comment>
+                <comment xml:lang="it">Valori 0-255</comment>
+                <comment xml:lang="cs">Meze 0-255</comment>
+                <comment xml:lang="fr">Valeur 0-255</comment>
+                <comment xml:lang="de">Wert 0-255</comment>
+                <comment xml:lang="nl">Waarde van 0-255</comment>
+            </variable>
+            <variable CV="144" item="Accel3" default="12" comment="Range 0-255">
+                <decVal max="255"/>
+                <label>Acceleration Rate 3</label>
+                <label xml:lang="it">Accellerazione 3</label>
+                <label xml:lang="cs">Míra zrychlení 3</label>
+                <label xml:lang="fr">3ème Accelération</label>
+                <label xml:lang="de">3. Anfahrverzögerung</label>
+                <label xml:lang="nl">3e Wegrijvertraging</label>
+                <comment>Range 0-255</comment>
+                <comment xml:lang="it">Valori 0-255</comment>
+                <comment xml:lang="cs">Meze 0-255</comment>
+                <comment xml:lang="fr">Valeur 0-255</comment>
+                <comment xml:lang="de">Wert 0-255</comment>
+                <comment xml:lang="nl">Waarde van 0-255</comment>
+            </variable>
+            <variable CV="145" item="Decel3" default="12" comment="Range 0-255">
+                <decVal max="255"/>
+                <label>Deceleration Rate 3</label>
+                <label xml:lang="it">Decellerazione 3 (0-255)</label>
+                <label xml:lang="cs">Míra zpomalení 3</label>
+                <label xml:lang="fr">3ème Décélération (0-255)</label>
+                <label xml:lang="de">3. Bremszeit</label>
+                <label xml:lang="nl">3e Remvertraging</label>
+                <comment>Range 0-255</comment>
+                <comment xml:lang="it">Valori 0-255</comment>
+                <comment xml:lang="cs">Meze 0-255</comment>
+                <comment xml:lang="fr">Valeur 0-255</comment>
+                <comment xml:lang="de">Wert 0-255</comment>
+                <comment xml:lang="nl">Waarde van 0-255</comment>
+            </variable>
+            <variable item="ABV2 F Key" CV="148" default="255">
+                <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumFunctionChoice.xml"/>
+                <label>Key to activate ABV2</label>
+                <label xml:lang="de">ABV2 Funktionstaste</label>
+                <label xml:lang="nl">ABV2 Functietoets</label>
+            </variable>
+            <variable item="ABV3 F Key" CV="149" default="255">
+                <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumFunctionChoice.xml"/>
+                <label>Key to activate ABV3</label>
+                <label xml:lang="de">ABV3 Funktionstaste</label>
+                <label xml:lang="nl">ABV3 Functietoets</label>
+            </variable>
             <!-- CVs 150-157 are in optionVars7outputs.xml include -->
             <!-- CV159 pass Function Key to SUSI-->
             <variable item="SUSI F22" CV="159" mask="XXXXXXXV" default="0">

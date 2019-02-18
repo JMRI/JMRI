@@ -59,24 +59,28 @@
   <variable item="SUSI1 Task" CV="50" default="0" mask="XXXVXXXX">
     <enumVal>
       <enumChoice>
-        <choice>SUSI</choice>
+        <choice>As SUSI</choice>
+        <choice xml:lang="de">Als SUSI</choice>
+        <choice xml:lang="nl">Als SUSI</choice>
       </enumChoice>
       <enumChoice>
         <choice>A3/A4 Output Function Mapping Table</choice>
         <choice xml:lang="de">A3/A4 Ausgabe Function Mapping-Tabelle</choice>
-        <choice xml:lang="nl">A3/A4 Uitgangen Function Mappingtabel</choice>
+        <choice xml:lang="nl">A3/A4 Uitgangen Functie-mappingtabel</choice>
       </enumChoice>
     </enumVal>
   </variable>
   <variable item="SUSI2 Task" CV="50" default="0" mask="XXVXXXXX" include="PIKO41RH2400">
     <enumVal>
       <enumChoice>
-        <choice>SUSI</choice>
+        <choice>As SUSI</choice>
+        <choice xml:lang="de">Als SUSI</choice>
+        <choice xml:lang="nl">Als SUSI</choice>
       </enumChoice>
       <enumChoice>
-        <choice>DATA = Input 1 CLK = Input 2</choice>
-        <choice xml:lang="de">DATA = Eingang 1 CLK = Eingang 2</choice>
-        <choice xml:lang="nl">DATA = Ingang 1 CLK = Ingang 2</choice>
+        <choice>SUSI DATA = Input 1, CLK = Input 2</choice>
+        <choice xml:lang="de">SUSI DATA = Eingang 1, CLK = Eingang 2</choice>
+        <choice xml:lang="nl">SUSI DATA = Ingang 1, CLK = Ingang 2</choice>
       </enumChoice>
     </enumVal>
   </variable>
@@ -84,7 +88,7 @@
     <enumVal>
       <enumChoice>
         <choice>Output with Logic Level</choice>
-        <choice xml:lang="de">Ausgang mot Logikpegel</choice>
+        <choice xml:lang="de">Ausgang mit Logikpegel</choice>
       </enumChoice>
       <enumChoice>
         <choice>Input 3</choice>
@@ -95,13 +99,16 @@
   </variable>
   <variable item="Intellimatic" CV="50" default="0" mask="VXXXXXXX">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-    <label>Intellimatic</label>
+    <label>Intellimatic active</label>
+    <label xml:lang="de">Intellimatic aktiviert</label>
+    <label xml:lang="nl">Intellimatic ingeschakeld</label>
   </variable>
 
   <variable item="Motor Control" CV="51" default="1" mask="XXXXXXXV">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-    <label>Motor Control</label>
-    <label xml:lang="de">Motorregelung</label>
+    <label>Motor Control active</label>
+    <label xml:lang="de">Motorregelung aktiv</label>
+    <label xml:lang="nl">Motorregeling ingeschakeld</label>
   </variable>
   <variable item="Motor Control PIDSX" CV="51" default="1" mask="XXXXXXVX">
     <enumVal>

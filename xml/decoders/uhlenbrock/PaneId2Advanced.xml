@@ -165,6 +165,36 @@
                 <label><text>      </text></label>
                 <separator/>
                 <label>
+                    <text> </text>
+                </label>
+                <label>
+                    <text>Switching Tango</text>
+                    <text xml:lang="de">Rangiertango</text>
+                    <text xml:lang="nl">Rangeertango</text>
+                </label>
+                <display item="Rangiertango Step"/>
+                <display item="Rangiertango Pushtime"/>
+                <display item="Rangiertango Pulltime"/>
+                <separator/>
+                <label>
+                    <text> </text>
+                </label>
+                <label>
+                    <text>Accell/Decell Delays</text>
+                    <text xml:lang="de">Anfahrt-/Bremsverzögerung</text>
+                    <text xml:lang="nl">Wegrij-/Remvertraging</text>
+                </label>
+                <display item="Accel2"/>
+                <display item="Decel2"/>
+                <display item="Accel3"/>
+                <display item="Decel3"/>
+                <display item="ABV2 F Key"/>
+                <display item="ABV3 F Key"/>
+                <separator/>
+                <label>
+                    <text> </text>
+                </label>
+                <label>
                     <text>More to come</text>
                     <text xml:lang="de">Mehr in Vorbereitung</text>
                 </label>

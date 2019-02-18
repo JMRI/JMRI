@@ -13,6 +13,10 @@
       <row>
         <column>
             <display item="Advanced Function Mapping" format="checkbox"/>
+            <label>
+                <text>   </text>
+            </label>
+            <display item="Intellimatic" format="checkbox"/>
         </column>
         <column>
             <label>

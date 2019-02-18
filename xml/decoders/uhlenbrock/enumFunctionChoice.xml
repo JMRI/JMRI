@@ -131,9 +131,14 @@
 	<choice>F28</choice>
 	<choice xml:lang="de">F28</choice>
   </enumChoice>
-  <enumChoice choice="Always On" value="31">
+  <enumChoice choice="Always On" value="31" exclude="73105,73145,73405,73415,73235,PIKO41RH2400">
 	<choice>Always On</choice>
 	<choice xml:lang="de">immer aktiv</choice>
+  </enumChoice>
+  <enumChoice choice="Off" value="255" include="73105,73145,73405,73415,73235,PIKO41RH2400">
+    <choice>Off</choice>
+    <choice xml:lang="de">Aus</choice>
+    <choice xml:lang="nl">Uit</choice>
   </enumChoice>
 </enumVal>
 

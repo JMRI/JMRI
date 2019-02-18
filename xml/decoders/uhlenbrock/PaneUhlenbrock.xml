@@ -118,14 +118,6 @@
       <display item="Smoke generator option 5"/>
       <display item="Smoke generator option 6"/>
       <display item="Smoke generator option 7"/>
-      <group exclude="76560">
-          <label>
-              <text> </text>
-          </label>
-          <label>
-              <text>Switching Tango (coming up)</text>
-          </label>
-      </group>
   </column>
   <column>
       <separator/>
