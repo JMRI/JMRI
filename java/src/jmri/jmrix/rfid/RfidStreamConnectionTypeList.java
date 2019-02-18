@@ -1,5 +1,6 @@
 package jmri.jmrix.rfid;
 
+import jmri.jmrix.ConnectionTypeList;
 import jmri.jmrix.StreamConnectionTypeList;
 import org.openide.util.lookup.ServiceProvider;
 
@@ -11,7 +12,7 @@ import org.openide.util.lookup.ServiceProvider;
  * @author Matthew Harris Copyright (C) 2011
  * @since 2.11.4
  */
-@ServiceProvider(service = StreamConnectionTypeList.class)
+@ServiceProvider(service = ConnectionTypeList.class)
 public class RfidStreamConnectionTypeList implements jmri.jmrix.StreamConnectionTypeList {
 
     public static final String RFID = "RFID";

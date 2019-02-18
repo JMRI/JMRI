@@ -10,7 +10,7 @@ import org.openide.util.lookup.ServiceProvider;
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Kevin Dickerson Copyright (C) 2010
  */
-@ServiceProvider(service = StreamConnectionTypeList.class)
+@ServiceProvider(service = ConnectionTypeList.class)
 public class SprogStreamConnectionTypeList implements jmri.jmrix.StreamConnectionTypeList {
 
     public static final String SPROG = "SPROG DCC";

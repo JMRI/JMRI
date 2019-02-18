@@ -1,5 +1,6 @@
 package jmri.jmrix.dccpp;
 
+import jmri.jmrix.ConnectionTypeList;
 import jmri.jmrix.StreamConnectionTypeList;
 import org.openide.util.lookup.ServiceProvider;
 
@@ -12,7 +13,7 @@ import org.openide.util.lookup.ServiceProvider;
   *
  * Based on jmri.jmrix.lenz.LenzConnectionTypeList
  */
-@ServiceProvider(service = StreamConnectionTypeList.class)
+@ServiceProvider(service = ConnectionTypeList.class)
 public class DCCppStreamConnectionTypeList implements jmri.jmrix.StreamConnectionTypeList {
 
     public static final String DCCPP = "DCC++";

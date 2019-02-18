@@ -11,7 +11,7 @@ import org.openide.util.lookup.ServiceProvider;
  * @author Kevin Dickerson Copyright (C) 2010
   *
  */
-@ServiceProvider(service = StreamConnectionTypeList.class)
+@ServiceProvider(service = ConnectionTypeList.class)
 public class LnStreamConnectionTypeList implements jmri.jmrix.StreamConnectionTypeList {
 
     public static final String DIGITRAX = "Digitrax"; // NOI18N
