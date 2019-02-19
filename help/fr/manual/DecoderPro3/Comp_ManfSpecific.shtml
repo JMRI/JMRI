@@ -1,7 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Translation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-02-19 -->
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -27,27 +27,25 @@
     <div id="mainContent">
       <a name="Top" id="Top"></a>
 
-      <h1>DecoderPro&reg; Comprehensive Programmer</h1>
+      <h1>DecoderPro&reg; Programmeur Complet</h1>
 
-      <h2>Manufacturer Specific Data Pane</h2>
+      <h2>Onglet Donn&#233;es Sp&#233;cifiques Constructeur</h2>
 
       <div align="right">
-        <p><a href="Comp_GlobalCVs.shtml">Previous</a> | <a href=
-        "Comp_PrintData.shtml">Next</a></p>
+        <p><a href="Comp_GlobalCVs.shtml">Pr&#233;c&#233;dent</a> | <a href=
+        "Comp_PrintData.shtml">Suivant</a></p>
 
-        <p><a href="index.shtml#Advanced%20Programmer">Back to
-        Index</a></p>
+        <p><a href="index.shtml#Advanced%20Programmer">Retour &#224; l’Index</a></p>
       </div>
       <hr>
 
-      <p>This pane in the <b>Comprehensive Programmer</b> provides
-      programming for functions that are specific to an individual
-      manufacturer, but outside the realm of the DCC standard.
-      While items like <b>Transponding</b> may eventually find a
-      place in the NMRA DCC standard, and are therefore in the
-      Advanced pane, these items are obviously beyond that
-      category. This pane will be manufacturer dependent and
-      decoder family dependent</p>
+      <p>Cet onglet du <b>Programmeur Complet</b> permet de programmer 
+      des fonctions propres &#224; un fabricant, mais ne relevant pas de la 
+      norme DCC. Bien que des &#233;l&#233;ments tels que <b>Transpondeur</b> puissent 
+      &#233;ventuellement trouver une place dans la norme NMRA DCC et, par 
+      cons&#233;quent, dans l'onglet Avanc&#233;, ces &#233;l&#233;ments ne rel&#232;vent manifestement 
+      pas de cette cat&#233;gorie. Cet onglet d&#233;pend du fabricant et de la famille 
+      de d&#233;codeurs.</p>
 
       <h1><img src="images/Comp_12_Manufacturer.png" width="922"
       height="799" alt="Manufacturers pane"></h1>
@@ -55,19 +53,18 @@
       <p align="center"><img src="images/Comp_12A_Manufacturer.png"
       width="922" height="739" alt="Extended mfr panes"></p>
 
-      <p>These items will, by definition, vary greatly between
-      manufacturers. Once again, your best resource is the
-      documentation for the specific decoder you are programming
-      and this pane in the programmer for that decoder.</p>
+      <p></p> Ces &#233;l&#233;ments, par d&#233;finition, varieront beaucoup d’un fabricant 
+      &#224; l’autre. Encore une fois, votre meilleure ressource est la 
+      documentation du d&#233;codeur sp&#233;cifique que vous programmez et 
+      de cet onglet dans le programmeur de ce d&#233;codeur.</p>
       <hr>
 
       <div align="right">
         <p><a href="Comp_PrintData.shtml"></a> <a href=
-        "Comp_GlobalCVs.shtml">Previous</a> | <a href=
-        "Comp_PrintData.shtml">Next</a></p>
+        "Comp_GlobalCVs.shtml">Pr&#233;c&#233;den</a> | <a href=
+        "Comp_PrintData.shtml">Suivant</a></p>
 
-        <p><a href="index.shtml#Advanced%20Programmer">Back to
-        Index</a></p>
+        <p><a href="index.shtml#Advanced%20Programmer">Retour &#224; l’Index</a></p>
       </div><!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
