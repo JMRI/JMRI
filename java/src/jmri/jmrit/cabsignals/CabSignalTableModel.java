@@ -521,17 +521,17 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
             }
         
             if ( routelist.size()==1 ) {
-                setValueAt("", row, NEXT_BLOCK);
+                cabSignalManager.getCabSignalArray()[row].setNextBlock(null);
             } else {
                 if ( routelist.get(1)==null) {
-                    setValueAt("", row, NEXT_BLOCK);
+                    cabSignalManager.getCabSignalArray()[row].setNextBlock(null);
                 } else {
-                    setValueAt(routelist.get(1).getUserName(), row, NEXT_BLOCK);
+                    cabSignalManager.getCabSignalArray()[row].setNextBlock(routelist.get(1));
                 }
             }
         } else {
             // no direction
-            setValueAt("", row, NEXT_BLOCK);
+            cabSignalManager.getCabSignalArray()[row].setNextBlock(null);
         }
         
         calculatecabsig(row);
@@ -629,7 +629,6 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
     private void calculatecabsig(int row){
         SignalMast mast = cabSignalManager.getCabSignalArray()[row].getNextMast();
         if (mast!=null) {
-            String aspect = mast.getAspect();
             sendcabsig(row);
         }
         
@@ -647,70 +646,10 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
         
         LocoAddress locoaddr = cabSignalManager.getCabSignalArray()[row].getCabSignalAddress();
         SignalMast mast = cabSignalManager.getCabSignalArray()[row].getNextMast();
-        
         // TODO: implement forwarding cab signal data 
-
         log.debug("cab {} aspect {}",locoaddr,mast.getAspect());
-        
     }
 
-    public void debugcabsig(int val){// aspect2 hi, aspect1 low
-        
-        StringBuilder buf = new StringBuilder();        
-        // buf.append("debugcabsig debugging val: " + val);
-        
-        int aspectone = ( val >> 8);
-        int aspecttwo = ( val >> 16);
-        int speed = ( val & 0xff);
-        
-        buf.append(" Aspect 1:" + aspectone);
-        buf.append(" Aspect 2:" + aspecttwo);
-        buf.append(" speed:" + speed);  
-        
-        buf.append(" \n Aspect 1 ");
-        buf.append("bit0:");
-        buf.append(((aspectone >> 0 ) & 1)); // bit0
-        buf.append(" bit1:");        
-        buf.append(((aspectone >> 1 ) & 1)); // bit1  
-        buf.append(" bit2:");        
-        buf.append(((aspectone >> 2 ) & 1)); // bit2
-        buf.append(" bit3:");        
-        buf.append(((aspectone >> 3 ) & 1)); // bit3       
-        buf.append(" bit4:");        
-        buf.append(((aspectone >> 4 ) & 1)); // bit4      
-        buf.append(" bit5:");        
-        buf.append(((aspectone >> 5 ) & 1)); // bit5
-        buf.append(" bit6:");        
-        buf.append(((aspectone >> 6 ) & 1)); // bit6
-        buf.append(" bit7:");
-        buf.append(((aspectone >> 7 ) & 1)); // bit7
-        
-        buf.append(" 2bit aspect code:");
-        buf.append(((aspectone >> 1 ) & 1)); // bit1  
-        buf.append(((aspectone >> 0 ) & 1)); // bit0
-        
-        buf.append(" \n Aspect 2");
-        buf.append("bit0:");
-        buf.append(((aspecttwo >> 0 ) & 1)); // bit0
-        buf.append(" bit1:");        
-        buf.append(((aspecttwo >> 1 ) & 1)); // bit1  
-        buf.append(" bit2:");        
-        buf.append(((aspecttwo >> 2 ) & 1)); // bit2
-        buf.append(" bit3:");        
-        buf.append(((aspecttwo >> 3 ) & 1)); // bit3       
-        buf.append(" bit4:");        
-        buf.append(((aspecttwo >> 4 ) & 1)); // bit4      
-        buf.append(" bit5:");        
-        buf.append(((aspecttwo >> 5 ) & 1)); // bit5
-        buf.append(" bit6:");        
-        buf.append(((aspecttwo >> 6 ) & 1)); // bit6
-        buf.append(" bit7:");
-        buf.append(((aspecttwo >> 7 ) & 1)); // bit7   
-
-        addToLog(0,buf.toString());
-
-    }
-    
     public int getSigType(String aspect) {
         // look for the opcode
         if (cabSigMap.get(aspect)==null){

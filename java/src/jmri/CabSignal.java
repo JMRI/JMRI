@@ -63,6 +63,15 @@ public interface CabSignal {
     public Block getBlock();
 
     /**
+     * Set the Next Block the locomotive is expected to enter.
+     * This value is may be calculated from the current block and direction 
+     * of travel.
+     *
+     * @param position is a Block the locomotive is in.
+     */
+    public void setNextBlock(Block position);
+
+    /**
      * Get the Next Block the locomotive is expected to enter.
      * This value is calculated from the current block and direction 
      * of travel.
