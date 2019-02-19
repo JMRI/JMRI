@@ -1,4 +1,4 @@
-package jmri.jmrit.ctc;
+package jmri.jmrit.ctc.editor.gui;
 
 import java.util.Locale;
 import org.junit.*;
@@ -11,7 +11,7 @@ public class BundleTest {
 
     @Test
     public void testGoodKeyMessage() {
-        Assert.assertEquals("Start CTC Runtime", Bundle.getMessage("CtcRunAction"));  // NOI18N
+        Assert.assertEquals("Open CTC Editor", Bundle.getMessage("CtcEditorAction"));  // NOI18N
     }
 
     @Test
@@ -26,8 +26,7 @@ public class BundleTest {
 
     @Test
     public void testGoodKeyMessageArg() {
-        Assert.assertEquals("Start CTC Runtime", Bundle.getMessage("CtcRunAction", new Object[]{}));  // NOI18N
-//         Assert.assertEquals("One -- Two", Bundle.getMessage("LabelTrain", "One", "Two"));  // NOI18N
+        Assert.assertEquals("Open CTC Editor", Bundle.getMessage("CtcEditorAction", new Object[]{}));  // NOI18N
     }
 
     @Test

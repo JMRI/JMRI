@@ -1,4 +1,4 @@
-package jmri.jmrit.ctc;
+package jmri.jmrit.ctc.ctcserialdata;
 
 import java.util.Locale;
 import org.junit.*;

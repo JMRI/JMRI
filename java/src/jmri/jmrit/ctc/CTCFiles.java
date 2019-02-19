@@ -17,7 +17,7 @@ public class CTCFiles {
     /**
      * Verify that the standard file path is valid.
      * Create the ctc directory if needed.
-     * @param filename The name of the file
+     * @param fileName The name of the file
      * @return the requested file object or null if the path is not valid.
      */
     public static File getFile(String fileName) {

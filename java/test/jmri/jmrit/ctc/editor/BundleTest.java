@@ -5,7 +5,7 @@ import org.junit.*;
 
 /**
  * Tests for the Bundle Class
- * @author Dave Sand Copyright (C) 2018
+ * @author Dave Sand Copyright (C) 2019
  */
 public class BundleTest {
 

@@ -7,7 +7,7 @@ import org.junit.rules.ExpectedException;
 
 /**
  * Tests for the CtcRunStartup Class
- * @author Dave Sand Copyright (C) 2018
+ * @author Dave Sand Copyright (C) 2019
  */
 public class CtcRunStartupTest {
 

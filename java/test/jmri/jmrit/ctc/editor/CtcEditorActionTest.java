@@ -3,10 +3,11 @@ package jmri.jmrit.ctc.editor;
 import java.awt.GraphicsEnvironment;
 import org.junit.*;
 import org.junit.rules.ExpectedException;
+import org.netbeans.jemmy.EventTool;
 
 /**
  * Tests for the CtcEditorAction Class
- * @author Dave Sand Copyright (C) 2018
+ * @author Dave Sand Copyright (C) 2019
  */
 public class CtcEditorActionTest {
 
@@ -17,13 +18,15 @@ public class CtcEditorActionTest {
     public void testCreate() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         new CtcEditorAction();
+// new EventTool().waitNoEvent(1000);
     }
 
     @Test
     public void testAction() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         new CtcEditorAction().actionPerformed(null);
-        new CtcEditorAction().actionPerformed(null);
+//         new CtcEditorAction().actionPerformed(null);
+// new EventTool().waitNoEvent(1000);
     }
 
     @Test
@@ -31,6 +34,7 @@ public class CtcEditorActionTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         thrown.expect(IllegalArgumentException.class);
         new CtcEditorAction().makePanel();
+// new EventTool().waitNoEvent(1000);
     }
 
     @Before
