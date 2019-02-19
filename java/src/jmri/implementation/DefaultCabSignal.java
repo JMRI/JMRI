@@ -35,7 +35,6 @@ public class DefaultCabSignal implements CabSignal {
        _nextBlock = null;
        _nextMast = null;
        _cabSignalActive = true;
-       _sendCabSignal = false;
     }
 
     /**
