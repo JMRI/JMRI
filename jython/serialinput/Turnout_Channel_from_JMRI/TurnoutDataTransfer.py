@@ -61,7 +61,7 @@ class Datatransfer(java.beans.PropertyChangeListener):
       if (event.newValue == THROWN and event.oldValue != THROWN) :
         print "set THROWN for", event.source.userName
         outputStream.write(event.source.userName)
-        outputStream.write(",1")		
+        outputStream.write(",1")        
     return
 
 # The olloewing will set up 68 listeers for Turnouts AT2 though AT69 (by username)

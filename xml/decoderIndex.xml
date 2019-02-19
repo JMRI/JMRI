@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!--Written by JMRI version 4.15.2ish+jake+20190113T0106Z+R39dd784b65 on Sat Jan 12 17:07:49 PST 2019-->
-  <decoderIndex version="924">
+  <!--Written by JMRI version 4.15.3ish+jake+20190212T1417Z+R342025162a on Tue Feb 12 06:18:40 PST 2019-->
+  <decoderIndex version="926">
     <mfgList nmraListDate="2015-03-06" updated="2015-03-25" lastadd="107,124,126,128,134">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -7864,6 +7864,146 @@
           </protocols>
         </model>
       </family>
+      <family name="Fl decoders Train-Navigation" mfg="Fleischmann" file="Fl_decoders_Train-Navigation.xml">
+        <model model="685301" maxInputVolts="20V" maxTotalCurrent="1.00 A" formFactor="N" connector="NEM651" numOuts="9" numFns="14" productID="685301">
+          <output name="1" label="Light forwards">
+            <label xml:lang="de">Licht vorwärts</label>
+            <label xml:lang="nl">Licht vooruit</label>
+          </output>
+          <output name="2" label="Light backwards">
+            <label xml:lang="de">Licht rückwärts</label>
+            <label xml:lang="nl">Licht achteruit</label>
+          </output>
+          <output name="7" label="Acceleration off">
+            <label xml:lang="de">Beschleunigung aus</label>
+            <label xml:lang="nl">Acceleratie uit</label>
+          </output>
+          <output name="8" label="Shunting-gear">
+            <label xml:lang="de">Rangier-gang</label>
+            <label xml:lang="nl">Rangeer-stand</label>
+          </output>
+          <output name="9" label="Train-Navigation">
+            <label xml:lang="de">Zug-navigation</label>
+            <label xml:lang="nl">Trein-navigatie</label>
+          </output>
+          <size length="12.9" width="9" height="3.4" units="mm" />
+        </model>
+        <model model="685401" maxInputVolts="20V" maxTotalCurrent="1.00 A" formFactor="N" connector="NEM651" numOuts="9" numFns="14" productID="685401">
+          <output name="1" label="Light forwards">
+            <label xml:lang="de">Licht vorwärts</label>
+            <label xml:lang="nl">Licht vooruit</label>
+          </output>
+          <output name="2" label="Light backwards">
+            <label xml:lang="de">Licht rückwärts</label>
+            <label xml:lang="nl">Licht achteruit</label>
+          </output>
+          <output name="7" label="Acceleration off">
+            <label xml:lang="de">Beschleunigung aus</label>
+            <label xml:lang="nl">Acceleratie uit</label>
+          </output>
+          <output name="8" label="Shunting-gear">
+            <label xml:lang="de">Rangier-gang</label>
+            <label xml:lang="nl">Rangeer-stand</label>
+          </output>
+          <output name="9" label="Train-Navigation">
+            <label xml:lang="de">Zug-navigation</label>
+            <label xml:lang="nl">Trein-navigatie</label>
+          </output>
+          <size length="12.9" width="9" height="3.4" units="mm" />
+        </model>
+        <model model="685501" maxInputVolts="20V" maxTotalCurrent="1.00 A" formFactor="N" connector="NEM651" numOuts="9" numFns="14" productID="685501">
+          <output name="1" label="Light forwards">
+            <label xml:lang="de">Licht vorwärts</label>
+            <label xml:lang="nl">Licht vooruit</label>
+          </output>
+          <output name="2" label="Light backwards">
+            <label xml:lang="de">Licht rückwärts</label>
+            <label xml:lang="nl">Licht achteruit</label>
+          </output>
+          <output name="7" label="Acceleration off">
+            <label xml:lang="de">Beschleunigung aus</label>
+            <label xml:lang="nl">Acceleratie uit</label>
+          </output>
+          <output name="8" label="Shunting-gear">
+            <label xml:lang="de">Rangier-gang</label>
+            <label xml:lang="nl">Rangeer-stand</label>
+          </output>
+          <output name="9" label="Train-Navigation">
+            <label xml:lang="de">Zug-navigation</label>
+            <label xml:lang="nl">Trein-navigatie</label>
+          </output>
+          <size length="12.9" width="9" height="3.4" units="mm" />
+        </model>
+        <model model="687301" maxInputVolts="20V" maxTotalCurrent="1.80 A" formFactor="H0" connector="NEM651" numOuts="9" numFns="14" productID="687301">
+          <output name="1" label="Light forwards">
+            <label xml:lang="de">Licht vorwärts</label>
+            <label xml:lang="nl">Licht vooruit</label>
+          </output>
+          <output name="2" label="Light backwards">
+            <label xml:lang="de">Licht rückwärts</label>
+            <label xml:lang="nl">Licht achteruit</label>
+          </output>
+          <output name="7" label="Acceleration off">
+            <label xml:lang="de">Massen simulation aus</label>
+            <label xml:lang="nl">Massa simulatie uit</label>
+          </output>
+          <output name="8" label="Shunting-gear">
+            <label xml:lang="de">Rangier-gang</label>
+            <label xml:lang="nl">Rangeer-stand</label>
+          </output>
+          <output name="9" label="Train-Navigation">
+            <label xml:lang="de">Zug-navigation</label>
+            <label xml:lang="nl">Trein-navigatie</label>
+          </output>
+          <size length="16.3" width="9.5" height="3.4" units="mm" />
+        </model>
+        <model model="687401" maxInputVolts="20V" maxTotalCurrent="1.80 A" formFactor="H0" connector="NEM651" numOuts="9" numFns="14" productID="687401">
+          <output name="1" label="Light forwards">
+            <label xml:lang="de">Licht vorwärts</label>
+            <label xml:lang="nl">Licht vooruit</label>
+          </output>
+          <output name="2" label="Light backwards">
+            <label xml:lang="de">Licht rückwärts</label>
+            <label xml:lang="nl">Licht achteruit</label>
+          </output>
+          <output name="7" label="Acceleration off">
+            <label xml:lang="de">Massen simulation aus</label>
+            <label xml:lang="nl">Massa simulatie uit</label>
+          </output>
+          <output name="8" label="Shunting-gear">
+            <label xml:lang="de">Rangier-gang</label>
+            <label xml:lang="nl">Rangeer-stand</label>
+          </output>
+          <output name="9" label="Train-Navigation">
+            <label xml:lang="de">Zug-navigation</label>
+            <label xml:lang="nl">Trein-navigatie</label>
+          </output>
+          <size length="16.3" width="9.5" height="3.4" units="mm" />
+        </model>
+        <model model="687501" maxInputVolts="20V" maxTotalCurrent="1.80 A" formFactor="H0" connector="NEM651" numOuts="9" numFns="14" productID="687501">
+          <output name="1" label="Light forwards">
+            <label xml:lang="de">Licht vorwärts</label>
+            <label xml:lang="nl">Licht vooruit</label>
+          </output>
+          <output name="2" label="Light backwards">
+            <label xml:lang="de">Licht rückwärts</label>
+            <label xml:lang="nl">Licht achteruit</label>
+          </output>
+          <output name="7" label="Acceleration off">
+            <label xml:lang="de">Massen simulation aus</label>
+            <label xml:lang="nl">Massa simulatie uit</label>
+          </output>
+          <output name="8" label="Shunting-gear">
+            <label xml:lang="de">Rangier-gang</label>
+            <label xml:lang="nl">Rangeer-stand</label>
+          </output>
+          <output name="9" label="Train-Navigation">
+            <label xml:lang="de">Zug-navigation</label>
+            <label xml:lang="nl">Trein-navigatie</label>
+          </output>
+          <size length="16.3" width="9.5" height="3.4" units="mm" />
+        </model>
+      </family>
       <family name="Fleischmann Loco Decoders" mfg="Fleischmann" file="Fleischmann_FMZ_DCC.xml">
         <model model="FMZ/Selectrix/DCC decoder" numOuts="2" numFns="8" maxMotorCurrent=".6A" formFactor="HO, N">
           <versionCV lowVersionID="41" highVersionID="52" />
@@ -7874,11 +8014,61 @@
           <size length="16.5" width="9.0" height="4.0" units="mm" />
         </model>
       </family>
-      <family name="Fleischmann function decoders" mfg="Fleischmann" lowVersionID="10" comment="Fleischmann 686401" file="Fleischmann_Function.xml">
-        <model model="686401" maxInputVolts="25 V" maxTotalCurrent="0.80 A" />
+      <family name="Fleischmann function decoders" mfg="Fleischmann" file="Fleischmann_Function.xml">
+        <model model="686401" lowVersionID="10" maxInputVolts="20V" maxTotalCurrent="0.80 A" formFactor="" connector="Wires" numOuts="4" numFns="9" productID="686401">
+          <output name="1" label="Output A">
+            <label xml:lang="de">Ausgang A</label>
+            <label xml:lang="nl">Uitgang A</label>
+          </output>
+          <output name="2" label="Output B">
+            <label xml:lang="de">Ausgang B</label>
+            <label xml:lang="nl">Uitgang B</label>
+          </output>
+          <output name="3" label="Output C">
+            <label xml:lang="de">Ausgang C</label>
+            <label xml:lang="nl">Uitgang C</label>
+          </output>
+          <output name="4" label="Output D">
+            <label xml:lang="de">Ausgang D</label>
+            <label xml:lang="nl">Uitgang D</label>
+          </output>
+          <size length="28" width="12.2" height="2.6" units="mm" />
+        </model>
+        <model model="686403" lowVersionID="11" maxInputVolts="20V" maxTotalCurrent="0.80 A" formFactor="" connector="Wires" numOuts="4" numFns="4" productID="686403">
+          <output name="1" label="Output A">
+            <label xml:lang="de">Ausgang A</label>
+            <label xml:lang="nl">Uitgang A</label>
+          </output>
+          <output name="2" label="Output B">
+            <label xml:lang="de">Ausgang B</label>
+            <label xml:lang="nl">Uitgang B</label>
+          </output>
+          <output name="3" label="Output C">
+            <label xml:lang="de">Ausgang C</label>
+            <label xml:lang="nl">Uitgang C</label>
+          </output>
+          <output name="4" label="Output D">
+            <label xml:lang="de">Ausgang D</label>
+            <label xml:lang="nl">Uitgang D</label>
+          </output>
+          <size length="24" width="10" height="2.3" units="mm" />
+        </model>
       </family>
       <family name="Fleischmann function decoders" mfg="Fleischmann" file="Fleischmann_Function_Leig.xml">
-        <model model="Leig Einheit: 2 specific decoders" />
+        <model model="Leig Einheit: 2 specific decoders" lowVersionID="110" highVersionID="110" maxInputVolts="20V" formFactor="N" numOuts="3" numFns="22">
+          <output name="6" label="Light inside">
+            <label xml:lang="de">Licht innen</label>
+            <label xml:lang="nl">Binnenligt</label>
+          </output>
+          <output name="7" label="Door right">
+            <label xml:lang="de">Tür rechts</label>
+            <label xml:lang="nl">Rechter deur</label>
+          </output>
+          <output name="8" label="Door left">
+            <label xml:lang="de">Tür links</label>
+            <label xml:lang="nl">Linker deur</label>
+          </output>
+        </model>
       </family>
       <family name="Fleischmann Loco Decoders" mfg="Fleischmann" file="Fleischmann_Twin_DCC.xml">
         <model model="DCC Twin mode decoder" numOuts="2" numFns="6" maxMotorCurrent="1.0A" formFactor="HO, N">
@@ -14645,7 +14835,75 @@
             <label xml:lang="it">Accoppiatore| </label>
           </output>
         </model>
+        <model model="ECO-RTR SD40 w/gyra" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="863" comment="Model E????.???">
+          <versionCV lowVersionID="70" />
+          <output name="3" label="  FX3  " />
+          <output name="4" label="  FX4  " />
+          <output name="5" label="Airhorn| ">
+            <label xml:lang="it">Tromba| </label>
+          </output>
+          <output name="6" label="Bell| ">
+            <label xml:lang="it">Campana| </label>
+          </output>
+          <output name="7" label="Dynamic|Brakes">
+            <label xml:lang="it">Freni|Dinamici</label>
+          </output>
+          <output name="8" label="Short|Horn">
+            <label xml:lang="it">Breve|Tromba</label>
+          </output>
+          <output name="9" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="10" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="11" label="Dimming| ">
+            <label xml:lang="it">Smorzam| </label>
+          </output>
+          <output name="12" label="Mute| ">
+            <label xml:lang="it">Silenzio| </label>
+          </output>
+          <output name="13" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="14" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="15" label="Coupler| ">
+            <label xml:lang="it">Accoppiatore| </label>
+          </output>
+        </model>
         <model model="ECO-RTR SD40-2 w/DB" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="789" comment="Model E0102.002B">
+          <versionCV lowVersionID="70" />
+          <output name="3" label="  FX3  " />
+          <output name="4" label="  FX4  " />
+          <output name="5" label="Airhorn| ">
+            <label xml:lang="it">Tromba| </label>
+          </output>
+          <output name="6" label="Bell| ">
+            <label xml:lang="it">Campana| </label>
+          </output>
+          <output name="7" label="Dynamic|Brakes">
+            <label xml:lang="it">Freni|Dinamici</label>
+          </output>
+          <output name="8" label="Short|Horn">
+            <label xml:lang="it">Breve|Tromba</label>
+          </output>
+          <output name="9" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="10" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="11" label="Dimming| ">
+            <label xml:lang="it">Smorzam| </label>
+          </output>
+          <output name="12" label="Mute| ">
+            <label xml:lang="it">Silenzio| </label>
+          </output>
+          <output name="13" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="14" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="15" label="Coupler| ">
+            <label xml:lang="it">Accoppiatore| </label>
+          </output>
+        </model>
+        <model model="ECO-RTR SD40T-2 w/gyra" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="864" comment="Model E????.???">
           <versionCV lowVersionID="70" />
           <output name="3" label="  FX3  " />
           <output name="4" label="  FX4  " />
@@ -14714,6 +14972,41 @@
           </output>
         </model>
         <model model="ECO-200 SD45 w/DB" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="773" comment="Model E9901.001B">
+          <versionCV lowVersionID="70" />
+          <output name="3" label="  FX3  " />
+          <output name="4" label="  FX4  " />
+          <output name="5" label="Airhorn| ">
+            <label xml:lang="it">Tromba| </label>
+          </output>
+          <output name="6" label="Bell| ">
+            <label xml:lang="it">Campana| </label>
+          </output>
+          <output name="7" label="Dynamic|Brakes">
+            <label xml:lang="it">Freni|Dinamici</label>
+          </output>
+          <output name="8" label="Short|Horn">
+            <label xml:lang="it">Breve|Tromba</label>
+          </output>
+          <output name="9" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="10" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="11" label="Dimming| ">
+            <label xml:lang="it">Smorzam| </label>
+          </output>
+          <output name="12" label="Mute| ">
+            <label xml:lang="it">Silenzio| </label>
+          </output>
+          <output name="13" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="14" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="15" label="Coupler| ">
+            <label xml:lang="it">Accoppiatore| </label>
+          </output>
+          <size length="35" width="18" height="6" units="mm" />
+        </model>
+        <model model="ECO-RTR SD50 w/beacon" numOuts="4" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="846" comment="Model E???">
           <versionCV lowVersionID="70" />
           <output name="3" label="  FX3  " />
           <output name="4" label="  FX4  " />
@@ -16955,6 +17248,36 @@
             <label xml:lang="it">Accoppiatore| </label>
           </output>
         </model>
+        <model model="TSU-GN2208 GP7u" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="870" comment="Model 8T??">
+          <versionCV lowVersionID="71" />
+          <output name="3" label="  FX3  " />
+          <output name="4" label="  FX4  " />
+          <output name="5" label="Airhorn| ">
+            <label xml:lang="it">Tromba| </label>
+          </output>
+          <output name="6" label="Bell| ">
+            <label xml:lang="it">Campana| </label>
+          </output>
+          <output name="7" label="Dynamic|Brakes">
+            <label xml:lang="it">Freni|Dinamici</label>
+          </output>
+          <output name="8" label="Short|Horn">
+            <label xml:lang="it">Breve|Tromba</label>
+          </output>
+          <output name="9" label="Straight|to 8" />
+          <output name="10" label="General|Service" />
+          <output name="11" label="Dimming| ">
+            <label xml:lang="it">Smorzam| </label>
+          </output>
+          <output name="12" label="Mute| ">
+            <label xml:lang="it">Silenzio| </label>
+          </output>
+          <output name="13" label="HEP|Mode" />
+          <output name="14" label="Ind/Train|Brake" />
+          <output name="15" label="Coupler| ">
+            <label xml:lang="it">Accoppiatore| </label>
+          </output>
+        </model>
         <model model="TSU-GN2200 GP7 w/DB" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="771" comment="Model T0102.002B">
           <versionCV lowVersionID="71" />
           <output name="3" label="  FX3  " />
@@ -17736,6 +18059,36 @@
           </output>
         </model>
         <model model="TSU-GN2208 SD60E" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="835" comment="Model 8T0302.005">
+          <versionCV lowVersionID="71" />
+          <output name="3" label="  FX3  " />
+          <output name="4" label="  FX4  " />
+          <output name="5" label="Airhorn| ">
+            <label xml:lang="it">Tromba| </label>
+          </output>
+          <output name="6" label="Bell| ">
+            <label xml:lang="it">Campana| </label>
+          </output>
+          <output name="7" label="Dynamic|Brakes">
+            <label xml:lang="it">Freni|Dinamici</label>
+          </output>
+          <output name="8" label="Short|Horn">
+            <label xml:lang="it">Breve|Tromba</label>
+          </output>
+          <output name="9" label="Straight|to 8" />
+          <output name="10" label="General|Service" />
+          <output name="11" label="Dimming| ">
+            <label xml:lang="it">Smorzam| </label>
+          </output>
+          <output name="12" label="Mute| ">
+            <label xml:lang="it">Silenzio| </label>
+          </output>
+          <output name="13" label="HEP|Mode" />
+          <output name="14" label="Ind/Train|Brake" />
+          <output name="15" label="Coupler| ">
+            <label xml:lang="it">Accoppiatore| </label>
+          </output>
+        </model>
+        <model model="TSU-GN2208 SD60E 2" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="884" comment="Model 8T0302.?">
           <versionCV lowVersionID="71" />
           <output name="3" label="  FX3  " />
           <output name="4" label="  FX4  " />
