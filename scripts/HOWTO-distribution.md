@@ -182,10 +182,6 @@ git push github
 - Create a [new milestone](https://github.com/JMRI/JMRI/milestones) with the _next_ release number, dated the 2nd Saturday of the month (might be already there, we've been posting them a few in advance)
 
 - Merge all relevant [PRs in the JMRI/website repository](https://github.com/JMRI/website/pulls) to ensure release note draft is up to date
-
-- Copy the release note body from help/en/releasenotes/current-draft-note.shtml in the JMRI/JMRI repository into the actual release note in website repository:
-     JMRI/help/en/releasenotes/current-draft-note.shtml
-     website/releasenote/jmri4.15.4.shtml
      
 - Create the _next_ release note, so that people will document new (overlapping) changes there. Best way to do this is to copy the current release note now, before you prune out all the headers and other info where changes weren't made. (We need to work through automation of version number values below) (If you're creating a production version, its release note is made from a merge of the features of all the test releases; also create the *.*.1 note for the next test release)
 
@@ -203,7 +199,28 @@ git push github
         cd (local JMRI copy)
 ```
 
-- Pull back to make sure your repository is fully up to date
+- Check if any section headings were added to the release-note fragment
+
+    diff help/en/releasenotes/current-draft-note.shtml help/en/releasenotes/jmri4.15-master.shtml
+    
+    If there were, update the master
+
+- Merge the release note body from help/en/releasenotes/current-draft-note.shtml in the JMRI/JMRI repository into the actual release note in website repository:
+     bbedit help/en/releasenotes/current-draft-note.shtml ../website/releasenotes/jmri4.15.3.shtml
+     
+- Clean out the unneeded sections from the release note
+
+- Create the new draft note section
+
+    cp help/en/releasenotes/jmri4.15-master.shtml help/en/releasenotes/current-draft-note.shtml
+
+- Commit release note, push and pull back
+
+    cd ../website/releasenotes
+    git commit -m"updated 4.15.3 release note" jmri4.15.3.shtml
+    git push github
+    git pull
+    cd ../../JMRI
 
 - Check that the correct milestone is on all merged pulls. This is needed for the release note. Start with the list of PRs merged since the last test release was started:
 ```
@@ -214,10 +231,19 @@ where the date at the end should be the date (and optionally time) of the last r
 ================================================================================
 ## Create the Release Branch
 
-- Start the release by creating a new "release branch" using Ant.  (If you need to make a "branch from a branch", such as nearing the end of the development cycle, this will need to be done manually rather than via ant.) (Also, you should _not_ have any modified and added (e.g. green) files showing in `git status`, which might interfere) (There's a summary of the steps involved in this at the bottom)
+- one more check that everything is committed (you should _not_ have any modified and added (e.g. green) files showing in `git status`, which might interfere)
 
 ```
         git checkout master
+        git status
+        (commit as needed)
+        git push github
+        git pull
+```
+
+- Start the release by creating a new "release branch" using Ant.  (If you need to make a "branch from a branch", such as nearing the end of the development cycle, this will need to be done manually rather than via ant.)  (There's a summary of the steps involved in this at the bottom)
+
+```
         ant make-test-release-branch
 ```
 
@@ -238,8 +264,6 @@ git push github
 ```
 The release-4.15.3 branch has been created. 
 
-From now on, please document your changes in the [jmri4.15.4.shtml](https://github.com/JMRI/website/blob/master/releasenotes/jmri4.15.4.shtml) release note file.
-
 Maintainers, please set the 4.15.4 milestone on pulls from now on, as that will be the next test release from the HEAD of the master branch.
 
 Jenkins will be creating files shortly at the [CI server](http://builds.jmri.org/jenkins/job/TestReleases/job/4.15.3/)
@@ -258,15 +282,6 @@ Jenkins will be creating files shortly at the [CI server](http://builds.jmri.org
 
 If you're developing any additional (post-4.15.3) changes that you want in the JMRI 4.16 production release, please start from this branch, i.e. do `git checkout -b release-4.15.3` to start your work.
 ```
-
-- Copy the release note body from help/en/releasenotes/current-draft-note.shtml in the JMRI/JMRI repository into the actual release note in website repository:
-     JMRI/help/en/releasenotes/current-draft-note.shtml
-     website/releasenote/jmri4.15.4.shtml
-
-- Create a new current-draft-note
-     cp help/en/releasenotes/jmri4.15-master.shtml help/en/releasenotes/current-draft-note.shtml
-     
-- Commit the release note changes on both repositories and push directly
 
 - Pull back to make sure your repository is fully up to date
 
@@ -359,6 +374,7 @@ find classes -name \*.properties | zip -@ properties.4.15.3.zip
 cd ..
 mkdir release
 mv target/properties.4.15.3.zip release/
+ls -lt release/
 ```
 
 ====================================================================================
@@ -369,7 +385,7 @@ Run a script to download the created files, create checksums and create text for
 ./scripts/releasesummary 4.15.3
 ```
 
-This will print a bunch of text in several sections. Save that for later.
+This will print a bunch of text in several sections. Save that for later (or edit it into the website/releaselist, release note files and GitHub info below)
 
 ====================================================================================
 ## Create GitHub Release and upload files
@@ -389,10 +405,8 @@ Note: Once a GitHub Release is created it is *not* possible to change it to refe
 
    - "tag version field" gets v4.15.3 (e.g. leading lower-case "v")
    - @ branch: select the release-4.15.3 release branch
-```
-"Release title" field gets "Test/Prod Release 4.15.3"
-```
-   - Description should contain (the releasesummary script above proposed this!):
+   - "Release title" field gets "Prod/Test Release 4.15.3"
+   - Description should contain text like (the releasesummary script above provided the correct filenames and hashes):
 
 ```   
 [Release notes](http://jmri.org/releasenotes/jmri4.15.3.shtml)
@@ -401,14 +415,14 @@ Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.4.15.3+Rfda0762.dmg](https://github.com/JMRI/JMRI/releases/download/v4.15.3/JMRI.4.15.3+Rfda0762.dmg) | 3a9bf1dc406e9e22a49dad149d9eda5f514bde046730e2de6f78bc391827bddd
-[JMRI.4.15.3+Rfda0762.exe](https://github.com/JMRI/JMRI/releases/download/v4.15.3/JMRI.4.15.3+Rfda0762.exe) | 9ef30f469a5390dfa9586c3a8c7174f5a224f2091f2e95011c80dd8a603856a4
-[JMRI.4.15.3+Rfda0762.tgz](https://github.com/JMRI/JMRI/releases/download/v4.15.3/JMRI.4.15.3+Rfda0762.tgz) | e03646519f020ad1421bc78c22ed85ce082191b8f91c40d7d722105d1d6f0633
+[JMRI.4.15.3+R7949343.dmg](https://github.com/JMRI/JMRI/releases/download/v4.15.3/JMRI.4.15.3+R7949343.dmg) | d50b409510b9a2c244b2e812b936bde152f23ae97ead64dba6ffcce45a4a35f4
+[JMRI.4.15.3+R7949343.exe](https://github.com/JMRI/JMRI/releases/download/v4.15.3/JMRI.4.15.3+R7949343.exe) | 1c8b7c46700ab50d542dfb44d0df3d82eb72c9d11da7f206bce951a3b232a95f
+[JMRI.4.15.3+R7949343.tgz](https://github.com/JMRI/JMRI/releases/download/v4.15.3/JMRI.4.15.3+R7949343.tgz) | 2bee2360617c48d80187ed53bdf3fb45bb7fd7f265efa1d142f5fecb71fb629b
 ```
 
 - Attach files by selecting them or dragging them in. Make sure that the Linux one is .tgz, not .tar.
 
-- [ ] it's slow to upload from a typical home connection,; we wish we had a way to cross-load them from Jenkins
+- [ ] it's slow to upload from a typical home connection,; we wish we had a way to cross-load them from Jenkins (see below)
 
 Note there's a little progress bar that has to go across & "Uploading your release now..." has to complete before you publish; make sure all four files (three installers plus properties) are there.
     
