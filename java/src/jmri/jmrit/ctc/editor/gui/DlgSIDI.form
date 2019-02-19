@@ -252,6 +252,7 @@
                 <Column editable="true" title="" type="java.lang.String"/>
               </Table>
             </Property>
+            <Property name="rowHeight" type="int" value="18"/>
           </Properties>
         </Component>
       </SubComponents>
@@ -277,6 +278,7 @@
                 <Column editable="true" title="" type="java.lang.String"/>
               </Table>
             </Property>
+            <Property name="rowHeight" type="int" value="18"/>
           </Properties>
         </Component>
       </SubComponents>
