@@ -16,10 +16,11 @@ import jmri.SignalMast;
 public class DefaultCabSignal implements CabSignal {
 
     private LocoAddress _address;
-    private int _direction;
+    private boolean _direction;
     private Block _currentBlock;
     private Block _nextBlock;
     private SignalMast _nextMast;
+    private boolean _cabSignalActive;
 
     public DefaultCabSignal(LocoAddress address){
        _address = address;
@@ -33,6 +34,8 @@ public class DefaultCabSignal implements CabSignal {
        _currentBlock = null;
        _nextBlock = null;
        _nextMast = null;
+       _cabSignalActive = true;
+       _sendCabSignal = false;
     }
 
     /**
@@ -47,9 +50,18 @@ public class DefaultCabSignal implements CabSignal {
     /**
      * Direction the locomotive is running.
      *
-     * @return 1 for forward, 0 for reverse.
+     * @param isForward true for Forward false for Reverse.
      */
-    public int getLocoDirection(){
+    public void setLocoDirection(boolean isForward){
+          _direction = isForward;
+    }
+
+    /**
+     * Direction the locomotive is running.
+     *
+     * @return true for Forward false for Reverse.
+     */
+    public boolean getLocoDirection(){
           return _direction;
     }
 
@@ -83,6 +95,17 @@ public class DefaultCabSignal implements CabSignal {
     }
 
     /**
+     * Set the Next Signal Mast the locomotive is expected to pass.
+     * This value may be calculated from the current block and direction 
+     * of travel.
+     *
+     * @param mast The next SignalMast position
+     */
+    public void setNextMast(SignalMast mast){
+        _nextMast = mast;
+    }
+
+    /**
      * Get the Next Signal Mast the locomotive is expected to pass.
      * This value is calculated from the current block and direction 
      * of travel.
@@ -91,6 +114,24 @@ public class DefaultCabSignal implements CabSignal {
      */
     public SignalMast getNextMast(){
         return _nextMast;
+    }
+
+    /*
+     * get whether this cab signal is on or off
+     *
+     * @return true if on, false if off
+     */
+    public boolean isCabSignalActive(){
+        return _cabSignalActive;
+    }
+
+    /*
+     * set whether this cab signal is on or off
+     *
+     * @param active true if on, false if off
+     */
+    public void setCabSignalActive(boolean active){
+        _cabSignalActive = active;
     }
 
     /**
