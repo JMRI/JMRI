@@ -1,12 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Translation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-02-19 -->
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>DecoderPro&reg; Comprehensive Programmer</title>
+  <title>DecoderPro&reg; Programmer Complet</title>
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
@@ -25,76 +25,73 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>DecoderPro&reg; Comprehensive Programmer</h1>
+      <h1>DecoderPro&reg; Programmer Complet</h1>
 
-      <h2>Motor Control Pane</h2>
+      <h2>Onglet Contr&#244;le Moteur</h2>
 
       <div align="right">
-        <p><a href="Comp_Basic.shtml">Previous |</a> <a href=
-        "Comp_Speed.shtml">Next</a></p>
+        <p><a href="Comp_Basic.shtml">Pr&#233;c&#233;dent |</a> <a href=
+        "Comp_Speed.shtml">Suivant</a></p>
 
-        <p><a href="index.shtml#Advanced%20Programmer">Back to
-        Index</a></p>
+        <p><a href="index.shtml#Advanced%20Programmer">Retour &#224; l'Index</a></p>
       </div>
       <hr>
 
-      <p><strong>Motor</strong> control is divided into three
-      separate panes. The <strong>Motor Control pane</strong> deals
-      with CV's for simulating locomotive weight or inertia. The
-      <a href="Comp_Speed.shtml" target="_parent"><strong>Basic
-      Speed Control pane</strong></a><a href="Comp_Basic.shtml"
-      target="_parent"></a> deals with basic motor control CV's and
-      the third <a href="Comp_Speed_Talble.shtml" target=
-      "_parent"><strong>Speed Table pane</strong></a> covers those
-      dealing with the <strong>Speed Table</strong> method of
-      controlling the motor. These last two methods of motor
-      control are mutually exclusive. The selection is made with a
-      radio button at the top of each of those two panes. The
-      default selection is <strong>Basic Speed
-      Control.</strong></p>
+      <p>Le contr&#244;le <strong> Moteur </strong> est divis&#233; en trois onglets 
+      distincts. L'<strong>onglet Contr&#244;le du moteur</strong> traite 
+      les CV pour simuler le poids ou l'inertie de la locomotive. 
+      <a href="Comp_Speed.shtml" target="_parent"> <strong>onglet de 
+      contr&#244;le basique de vitesse</strong> </a> 
+      <a href="Comp_Basic.shtml" target="_parent"> </a> traite des 
+      CV de contr&#244;le basique du moteur et le troisi&#232;me <a href="Comp_Speed_Talble.shtml" 
+      target= "_parent"><strong>Onglet Table de vitesse</strong> </a> 
+      couvre les utilisations du <strong>Tableau de vitesse</strong> 
+      m&#233;thode forte de contr&#244;le du moteur. Ces deux derni&#232;res m&#233;thodes
+       de contr&#244;le moteur s'excluent mutuellement. La s&#233;lection se 
+       fait avec un bouton radio en haut de chacun de ces deux onglets. 
+       La s&#233;lection par d&#233;faut est <strong>Contr&#244;le basique vitesse.</Strong></p>
 
-      <p><strong>The Motor Pane</strong></p>
+      <p><strong>L'Onglet Moteur</strong></p>
 
       <h1><img src="images/Comp_03_Motor.png" width="804" height=
       "478" alt="motor"></h1>
 
-      <p>The contents of the Motor pane will vary significantly
-      between different brands and models of decoders. In the case
-      of the decoder shown in the illustration:</p>
+      <p>Le contenu du volet Moteur variera consid&#233;rablement entre 
+      les diff&#233;rentes marques et mod&#232;les de d&#233;codeurs. Dans le cas 
+      du d&#233;codeur illustr&#233; dans l'exemple: </p>
 
-      <p><strong>Acceleration Rate</strong> and
-      <strong>Deceleration Rate</strong> help simulate a locomotive
-      under load - but don't use them unless you have very clean
-      track, because an interruption of power can make a locomotive
-      stop and cycle through the acceleration curve again! On the
-      latest Tsunami Diesel sound decoders the firmware has been
-      changed. The decoder now returns to the last speed setting
-      before the power interruption but it has no knowledge of
-      where it was in the acceleration curve. So if you have been
-      in the habit of using lots of momentum and setting speed to
-      maximum to get the sound of a notch 8 motor, be aware that if
-      the loco loses power for just an instant from a dirt spot on
-      the rails, it will resume at the top speed step and appear to
-      be running away.</p>
+      <p> L'<strong>Acc&#233;l&#233;ration </strong> et la <strong>D&#233;c&#233;l&#233;ration 
+      </strong> permettent de simuler une locomotive sous charge, mais 
+      ne l'utilisez pas &#224; moins que votre voie ne soit tr&#232;s propre, 
+      car une coupure de courant peut arr&#234;ter de la locomotive et 
+      reparcourir la courbe d'acc&#233;l&#233;ration! Sur les derniers d&#233;codeurs 
+      sonores Tsunami Diesel, le micrologiciel a &#233;t&#233; modifi&#233;. Le 
+      d&#233;codeur revient maintenant au dernier r&#233;glage de vitesse avant 
+      l'interruption de l'alimentation, mais il ne sait pas o&#249; il 
+      se trouvait dans la courbe d'acc&#233;l&#233;ration. Donc, si vous avez 
+      pris l'habitude d'utiliser beaucoup de vitesse et de r&#233;gler 
+      la vitesse au maximum pour obtenir le son d'un moteur &#224; cran 8, 
+      sachez que si la loco perd son alimentation pendant un instant &#224; 
+      cause d'un point de salet&#233; sur les rails, elle reprendre &#224; 
+      la vitesse sup&#233;rieure et semblent folle. </p>
 
-      <p>High deceleration rates can make station stops and
-      switching realistic, but very challenging!</p>
-
-      <p><strong>Back EMF</strong> or <strong>Speed
-      stabilization</strong> is implemented differently by each
-      manufacturer.. See your decoder documentation for the best
-      ways to implement these variables, and be prepared to do a
-      lot of experimenting! However they do it and whatever they
-      call it, you should find it in this pane.</p>
-      <hr>
+      <p> Des d&#233;c&#233;l&#233;ration &#233;lev&#233;s peuvent rendre les arr&#234;ts en gares 
+      et les man&#156;uvres r&#233;alistes, mais tr&#232;s difficiles! </p>
+      
+      <p> <strong>La FCEM</strong> ( Force Contre &#201;lectroMotrice) ou 
+      la <strong>stabilisation de la vitesse</strong> est impl&#233;ment&#233;e 
+      diff&#233;remment par chaque fabricant. 
+      Consultez la documentation de votre d&#233;codeur pour conna&#238;tre 
+      les meilleurs moyens d'impl&#233;menter ces variables et soyez pr&#234;t 
+      &#224; en faire beaucoup. d'exp&#233;rimenter! Quoi qu'ils fassent et 
+      quel qu'ils soient, vous devriez le trouver dans ce volet. </P>
 
       <div align="right">
         <p><a href="Comp_Speed.shtml"></a> <a href=
-        "Comp_Basic.shtml">Previous |</a> <a href=
-        "Comp_Speed.shtml">Next</a></p>
+        "Comp_Basic.shtml">Pr&#233;c&#233;dent |</a> <a href=
+        "Comp_Speed.shtml">Suivant</a></p>
 
-        <p><a href="index.shtml#Advanced%20Programmer">Back to
-        Index</a></p>
+        <p><a href="index.shtml#Advanced%20Programmer">Retour &#224; l'Index</a></p>
       </div><!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
