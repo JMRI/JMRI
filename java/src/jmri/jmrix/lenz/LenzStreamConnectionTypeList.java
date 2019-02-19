@@ -20,7 +20,7 @@ public class LenzStreamConnectionTypeList implements jmri.jmrix.StreamConnection
     @Override
     public String[] getAvailableProtocolClasses() {
         return new String[]{
-            "jmri.jmrix.lenz.XnetStreamConnectionConfig",
+            "jmri.jmrix.lenz.XNetStreamConnectionConfig",
         };
     }
 

@@ -21,7 +21,7 @@ public class DCCppStreamConnectionTypeList implements jmri.jmrix.StreamConnectio
     @Override
     public String[] getAvailableProtocolClasses() {
         return new String[]{
-            "jmri.jmrix.dccpp.DCcppStreamConnectionConfig",
+            "jmri.jmrix.dccpp.DCCppStreamConnectionConfig",
         };
     }
 
