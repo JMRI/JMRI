@@ -1,7 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Translation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-02-18 -->
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -27,103 +27,101 @@
     <div id="mainContent">
       <a name="Top" id="Top"></a>
 
-      <h1>DecoderPro&reg; Comprehensive Programmer</h1>
+      <h1>DecoderPro&reg; Programmeur Complet</h1>
 
-      <h2>Lighting and FX Functions Pane</h2>
+      <h2>Onglet Fontions &#201;clairages et FX</h2>
 
       <div align="right">
-        <p><a href="Comp_FMap.shtml">Previous |</a> <a href=
-        "Comp_Analog.shtml">Next</a></p>
+        <p><a href="Comp_FMap.shtml">Pr&#233;c&#233;dent |</a> <a href=
+        "Comp_Analog.shtml">Suivant</a></p>
 
-        <p><a href="index.shtml#Advanced%20Programmer">Back to
-        Index</a></p>
+        <p><a href="index.shtml#Advanced%20Programmer">Retour &#224; l'Index</a></p>
       </div>
       <hr>
 
-      <p>This pane provides for control of some of the most
-      "gee-whiz" functions on the decoder. While fine-tuning the
-      motor is important, and speed tables help add to the realism
-      of operation, everyone notices the lights - especially when
-      they change intensity, flicker, flash, or fade. They attract
-      even more attention when, for example, the ditch lights that
-      were steadily shining as the locomotive approached the
-      crossing suddenly begin flashing alternately, then return to
-      a steady glow; or when a locomotive pulls into a siding,
-      stops, and dims its headlight for the approaching train. All
-      these effects are possible with the right decoder and proper
-      set-up, and set-up is what DecderPro is all about.</p>
+      <p>Ce volet permet de contr&#244;ler certaines des fonctions les plus 
+     "g&#233;niales" du d&#233;codeur. Bien que le r&#233;glage du moteur soit important 
+      et que les tableaux de vitesse contribuent au r&#233;alisme du fonctionnement, 
+      tout le monde remarque les lumi&#232;res, en particulier lorsqu'elles 
+      changent d'intensit&#233;, clignotent, clignotent ou s'estompent. 
+     Elles attirent encore plus l'attention lorsque, par exemple, 
+      les feux de foss&#233; qui brillaient r&#233;guli&#232;rement lorsque la locomotive
+      s'approche du passage &#224; niveau se mettent &#224; clignoter en alternance, 
+      puis &#224; redevenir &#233;tincelants; ou lorsqu'une locomotive tire sur une 
+      voie de garage, s'arr&#234;te et att&#233;nue son phare pour ne pas g&#234;ner le train qui 
+      s'approche. Tous ces effets sont possibles avec le bon d&#233;codeur 
+      et la bonne configuration, et DecoderPro est l'installation id&#233;ale. </p>
 
-      <p>Every Manufacturer and decoder family handles the lighting
-      in a unique manner, so there are many versions of this
-      pane.</p>
+      <p>Chaque Fabricants et familles de d&#233;codeurs g&#232;re l'&#233;clairage de mani&#232;re 
+      unique. Il existe donc de nombreuses versions de cet onglet..</p>
 
       <p align="center"><img src="images/Comp_06_Lights.png" alt=
       "light pane" height="799" width="918"></p>
 
-      <p>The specific effects available differ widely between
-      manufacturers, and even between different "families" of
-      decoders from the same maker. The above example is from a
-      Digitrax FX decoder. Some of the advanced features you will
-      see in many decoders (though they may go by different but
-      similar names)</p>
+      <p>Les effets sp&#233;cifiques disponibles diff&#232;rent consid&#233;rablement 
+      entre les fabricants, et m&#234;me entre les diff&#233;rentes "familles" de 
+      d&#233;codeurs du m&#234;me fabricant. L'exemple ci-dessus provient d'un 
+      d&#233;codeur Digitrax FX. Vous verrez certaines des fonctionnalit&#233;s avanc&#233;es 
+      dans de nombreux d&#233;codeurs (bien qu'elles puissent porter des noms 
+      diff&#233;rents mais similaires) </p>
 
-      <p>The <b>Lamp keep-alive voltage</b> determines how dark a
-      light gets between "full on" moments. This can let you adjust
-      effects to give the impression of, for example, a marker
-      light that also has a rotary beacon in the same housing. Play
-      with this value and see what kind of results you get for your
-      specific decoder.</p>
+       <p> La <b>tension de maintien de la lampe</b> d&#233;termine le degr&#233; 
+       d'obscurit&#233; d'une lumi&#232;re entre des instants "allum&#233;s". Cela peut 
+       vous permettre d'ajuster les effets pour donner l'impression, par 
+       exemple, d'un feu de position qui poss&#232;de &#233;galement une balise 
+       rotative dans le m&#234;me bo&#238;tier. Jouez avec cette valeur et voyez 
+       quel type de r&#233;sultats vous obtenez pour votre d&#233;codeur sp&#233;cifique.</p>
 
-      <p><b>FX rate adjust</b> controls how fast an FX effect
-      operates. The higher the number, the slower the frequency of
-      flash or "rotation" of the effect. This can be used to set
-      subtle differences between locomotives. As you can see from
-      the panel above, there are twin alternating strobe lights on
-      the engines.If you vary the setting for the <b>FX Rate</b>
-      slightly, the locomotives flash at slightly different rates.
-      This keeps MU units from looking <u>too</u> coordinated!</p>
+      <p><b>Le r&#233;glage du taux d'effet</b> d&#233;termine la vitesse &#224; laquelle 
+      un effet FX fonctionne. Plus le nombre est &#233;lev&#233;, plus la 
+      fr&#233;quence du flash ou de la "rotation" de l'effet est 
+      lente. Ceci peut &#234;tre utilis&#233; pour d&#233;finir des diff&#233;rences 
+      subtiles entre les locomotives. Comme vous pouvez le voir sur 
+      le panneau ci-dessus, il y a deux feux stroboscopiques 
+      alternatifs sur les machines. Si vous modifiez l&#233;g&#232;rement 
+      le r&#233;glage du <b>Taux FX</b>, les locomotives clignotent 
+      &#224; des vitesses l&#233;g&#232;rement diff&#233;rentes. Cela emp&#234;che 
+      les unit&#233;s UM de sembler <u>trop</u> coordonn&#233;e! </P>
 
-      <p><b>Ditch light hold-over time</b> CV establishes how long
-      the ditch light effect (alternating flashing) stays activated
-      after you hit the <b>F2</b> function key. Since the <b>F2</b>
-      key is non-latching (think of it as a momentary contact
-      switch) that normally turns off when it is released. By
-      raising the value of this CV you can make them stay on for up
-      to 30 seconds from a single momentary activation.</p>
+       <p>Le CV <b>Dur&#233;e de maintien de la lumi&#232;re de foss&#233;</b>  
+       d&#233;termine la dur&#233;e pendant laquelle l'effet de lumi&#232;re de 
+       foss&#233; (clignotement altern&#233;) reste activ&#233; une fois que vous 
+       avez appuy&#233; sur la touche de fonction <b>F2 </b>. &#201;tant donn&#233; 
+       que la touche <b>F2</b> ne se verrouille pas (consid&#233;rez-la 
+       comme un bouton poussoir), elle s'&#233;teint normalement lorsqu'elle 
+       est rel&#226;ch&#233;e. En augmentant la valeur de ce CV, vous pouvez les 
+       faire rester jusqu'&#224; 30 secondes apr&#232;s une activation momentan&#233;e</p>
 
       <p align="center"><img src="images/Comp_06A_Lights.png" alt=
       "lignt pane" height="800" width="923"></p>
 
-      <p>Sound decoders such as the Tsunami in our OEM FP-45 has an
-      extremely complicated Lighting progam pane.</p>
+      <p>Les d&#233;codeurs sonores tels que le tsunami dans notre OEM FP-45 
+      ont un onglet de programme d'&#233;clairage extr&#234;mement compliqu&#233;..</p>
 
       <p><img style="width: 900px; height: 594px;" alt=
       "Tsunami lighting" src="images/Comp_06B_Lights.png"><br></p>
 
-      <p>Note that some of the lighting functions can be tied to a
-      sound function which is unique to sound decoders. Sound
-      decoders have many more functions than normal motor control
-      decoders.</p>
+      <p>Notez que certaines fonctions d'&#233;clairage peuvent &#234;tre li&#233;es &#224; 
+      une fonction sonore propre aux d&#233;codeurs sonores. Les d&#233;codeurs 
+      sonores ont beaucoup plus de fonctions que les d&#233;codeurs de commande moteur normaux. </P>
 
-      <p>The other lighting effects are highly variable between
-      decoders. Check your specific decoder documentation for what
-      the decoder is supposed to be capable of doing, and have fun
-      playing with them. They are the most visually satisfying of
-      all the capabilities of the decoders!</p>
+       <p> Les autres effets d'&#233;clairage varient fortement d'un d&#233;codeur 
+       &#224; l'autre. Consultez la documentation de votre d&#233;codeur pour savoir 
+       ce qu'il est suppos&#233; &#234;tre capable de faire et amusez-vous avec eux. 
+       Ceux sont les posibilit&#233;s les plus satisfaisantes visuellement des 
+      d&#233;codeurs!</p>
 
-      <p>Even if the function and effect are available, you may
-      have to add the lighting to your locomotive in order to be
-      able to use that function, such as adding ditch lights,
-      beacons, etc.</p>
+      <p>M&#234;me si la fonction et l'effet sont disponibles, vous devrez 
+      peut-&#234;tre ajouter un &#233;clairage &#224; votre locomotive pour pouvoir 
+      utiliser cette fonction, comme l'ajout de feux de foss&#233;, de balises, etc. </p>.
       <hr>
 
       <div align="right">
         <p><a href="Comp_Consist.shtml"></a><a href=
-        "Comp_FMap.shtml">Previous |</a> <a href=
-        "Comp_Analog.shtml">Next</a></p>
+        "Comp_FMap.shtml">Pr&#233;c&#233;dent |</a> <a href=
+        "Comp_Analog.shtml">Suivant</a></p>
 
-        <p><a href="index.shtml#Advanced%20Programmer">Back to
-        Index</a></p>
+        <p><a href="index.shtml#Advanced%20Programmer">Retour &#224; l'Index</a></p>
       </div><!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
