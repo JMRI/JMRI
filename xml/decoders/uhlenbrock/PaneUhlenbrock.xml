@@ -68,14 +68,22 @@
       <!-- CVs 97-98 -->
     <display item="ABC Braking Value" format="hslider"/> <!--IntelliDrive2-->
     <display item="ABC Slow Speed" format="hslider"/>    <!--IntelliDrive2-->
-      <group>
+      <group exclude="76560">
         <label>
             <text> </text>
         </label>
-        <label exclude="76560">
-            <text>Constant Distance (coming up)</text>
+        <label>
+            <text>Constant Distance</text>
+            <text xml:lang="de">Konstanter Bremsweg</text>
+            <text xml:lang="nl">Vaste Remweg</text>
         </label>
       </group>
+          <display item="Constant Brakedist Threshold"/>
+          <display item="Constant Brakedist 1"/>
+          <display item="Constant Brakedist 2"/>
+          <display item="Constant Brakedist Max"/>
+          <display item="Constant Brakedist Rest"/>
+          <display item="Constant Brakedist Trigger"/>
   </column>
   <column>
       <label>
@@ -254,12 +262,6 @@
                   <display item="PWM Phase A7" format="checkbox" label=""/>
               </griditem>
           </grid>
-          <label>
-              <text> </text>
-          </label>
-          <label>
-              <text>Special Light Effects (coming up)</text>
-          </label>
       </group>
   </column>
 </pane>

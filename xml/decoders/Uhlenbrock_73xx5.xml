@@ -473,7 +473,6 @@
                 <tooltip>in analog mode</tooltip>
                 <tooltip xml:lang="de">in Analogmudus</tooltip>
             </variable>
-            <!-- TODO CVs 103-106 -->
             <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv115lissy.xml"/>
             <!-- CVs 116-118 (CVs 116-123 for Piko) -->
             <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/optionVars7outputs.xml"/>
@@ -509,9 +508,140 @@
                 <tooltip xml:lang="de">Abrückzeit T2 * 0,1 Sek</tooltip>
                 <tooltip xml:lang="nl">Terugrijtijd T2 * 0,1 s</tooltip>
             </variable>
-            <!-- TODO CVs 138-143 Bremsweg-->
+            <!-- CVs 138-143 Bremsweg-->
+            <variable item="Constant Brakedist Threshold" CV="138" default="0">
+                <decVal/>
+                <label>Speed Step Threshold</label>
+                <label xml:lang="de">Fahrstufenschwellwert</label>
+                <label xml:lang="nl">Snelheidsdrempel</label>
+                <tooltip>Only above this speed step is constant distance braking applied. 0 = Off</tooltip>
+                <tooltip xml:lang="de">Erst oberhalb wird mit konstanter Bremsweg gebremst. 0 = Aus</tooltip>
+                <tooltip xml:lang="nl">Pas vanaf deze snelheid werkt vaste remweg. 0 = Uit</tooltip>
+            </variable>
+            <variable item="Constant Brakedist 1" CV="139" default="50">
+                <decVal/>
+                <label>Brake Distance</label>
+                <label xml:lang="de">Bremsweg</label>
+                <label xml:lang="nl">Remafstand</label>
+                <tooltip>First brake distance (in cm)</tooltip>
+                <tooltip xml:lang="de">Erster Bremweg (in cm)</tooltip>
+                <tooltip xml:lang="nl">1e Remweg (in cm)</tooltip>
+            </variable>
+            <variable item="Constant Brakedist 2" CV="140" default="25">
+                <decVal/>
+                <label>Brake Distance w/CROSS</label>
+                <label xml:lang="de">Bremsweg mit CROSS</label>
+                <label xml:lang="nl">Remafstand met CROSS</label>
+                <tooltip>Alternative brake distance (in cm), activated by CROSS-bit</tooltip>
+                <tooltip xml:lang="de">Alternativer Bremsweg (in cm), aktiviert durch CROSS-bit</tooltip>
+                <tooltip xml:lang="nl">Alternatieve Remweg (in cm), geactiveerd door CROSS-bit</tooltip>
+            </variable>
+            <variable item="Constant Brakedist Max" CV="141" default="40">
+                <decVal/>
+                <label>Max. Speed</label>
+                <label xml:lang="de">Max. Geschwindigkeit</label>
+                <label xml:lang="nl">Max. snelheid</label>
+                <tooltip>Maximum speed of loco (in cm/sec)</tooltip>
+                <tooltip xml:lang="de">Maximalgeschwindigkeit der Modellok (in cm/S)</tooltip>
+                <tooltip xml:lang="nl">Maximumsnelheid van lok (in cm/s)</tooltip>
+            </variable>
+            <variable item="Constant Brakedist Rest" CV="142" default="0">
+                <decVal/>
+                <label>Rest Speed</label>
+                <label xml:lang="de">Rest. Geschwindigkeit</label>
+                <label xml:lang="nl">Restsnelheid</label>
+                <tooltip>Remainder of calculated max. speed (255 = 100%)</tooltip>
+                <tooltip xml:lang="de">Restwert der ermittelten Maximalgeschwindigkeit (255 = 100%)</tooltip>
+                <tooltip xml:lang="nl">Restant van berekende maximum (255 = 100%)</tooltip>
+            </variable>
+            <variable item="Constant Brakedist Trigger" CV="143">
+                <enumVal>
+                    <enumChoice choice="Off">
+                        <choice>Inactive</choice>
+                        <choice xml:lang="it">Non si ferma</choice>
+                        <choice xml:lang="cs">Nezastavuje</choice>
+                        <choice xml:lang="de">Ausgeschaltet</choice>
+                        <choice xml:lang="nl">Uitgeschakeld</choice>
+                    </enumChoice>
+                    <enumChoice choice="ALL" value="15">
+                        <choice>All Types</choice>
+                        <choice xml:lang="de">Alle Bremstypen</choice>
+                        <choice xml:lang="nl">Alle methodes</choice>
+                    </enumChoice>
+                    <enumChoice choice="Step 0" value="1">
+                        <choice>Speed Step 0</choice>
+                        <choice xml:lang="de">Sollfahrstufe 0</choice>
+                        <choice xml:lang="nl">Snelheidsstap 0</choice>
+                    </enumChoice>
+                    <enumChoice choice="ABC" value="2">
+                        <choice>ABC Braking</choice>
+                        <choice xml:lang="de">ABC  Bremsen</choice>
+                        <choice xml:lang="nl">ABC Remmen</choice>
+                    </enumChoice>
+                    <enumChoice choice="DC" value="4">
+                        <choice>DC Braking</choice>
+                        <choice xml:lang="de">DC Bremsen</choice>
+                        <choice xml:lang="nl">DC Remmen</choice>
+                    </enumChoice>
+                    <enumChoice choice="DCC" value="8">
+                        <choice>DCC Brake Signal</choice>
+                        <choice xml:lang="de">DCC Bremssignal</choice>
+                        <choice xml:lang="nl">DCC Remsignaal</choice>
+                    </enumChoice>
+                    <enumChoice choice="Step 0 ABC" value="3">
+                        <choice>Step 0 and ABC Braking</choice>
+                        <choice xml:lang="de">Stufe 0 u. ABC Bremsen</choice>
+                        <choice xml:lang="nl">Stap 0 en ABC Remmen</choice>
+                    </enumChoice>
+                    <enumChoice choice="Step 0 DC" value="5">
+                        <choice>Step 0 and DC Braking</choice>
+                        <choice xml:lang="de">Stufe 0 u. DC Bremsen</choice>
+                        <choice xml:lang="nl">Stap 0 en DC Remmen</choice>
+                    </enumChoice>
+                    <enumChoice choice="Step 0 DCC" value="9">
+                        <choice>Step 0 and DCC Braking</choice>
+                        <choice xml:lang="de">Stufe 0 u. DCC Bremsen</choice>
+                        <choice xml:lang="nl">Stap 0 en DCC Remmen</choice>
+                    </enumChoice>
+                    <enumChoice choice="Step 0 ABC DC" value="10">
+                        <choice>Step 0, ABC and DC Braking</choice>
+                        <choice xml:lang="de">Stufe 0, ABC u. DC Bremsen</choice>
+                        <choice xml:lang="nl">Stap 0, ABC en DC Remmen</choice>
+                    </enumChoice>
+                    <enumChoice choice="Step 0 ABC DCC" value="11">
+                        <choice>Step 0, ABC and DCC Braking</choice>
+                        <choice xml:lang="de">Stufe 0, ABC u. DCC Bremsen</choice>
+                        <choice xml:lang="nl">Stap 0, ABC en DCC Remmen</choice>
+                    </enumChoice>
+                    <enumChoice choice="ABC DC" value="6">
+                        <choice>ABC and DC Braking</choice>
+                        <choice xml:lang="de">ABC u. DC Bremsen</choice>
+                        <choice xml:lang="nl">ABC en DC Remmen</choice>
+                    </enumChoice>
+                    <enumChoice choice="ABC DCC" value="10">
+                        <choice>ABC and DCC Braking Signal</choice>
+                        <choice xml:lang="de">ABC u. DCC Bremssignal</choice>
+                        <choice xml:lang="nl">ABC en DCC Remsignal</choice>
+                    </enumChoice>
+                    <enumChoice choice="DC DCC" value="12">
+                        <choice>DC and DCC Braking Signal</choice>
+                        <choice xml:lang="de">DC u. DCC Bremssignal</choice>
+                        <choice xml:lang="nl">DC en DCC Remsignal</choice>
+                    </enumChoice>
+                    <enumChoice choice="ABC DC DCC" value="14">
+                        <choice>ABC, DC and DCC Braking</choice>
+                        <choice xml:lang="de">ABC, DC u. DCC Bremsen</choice>
+                        <choice xml:lang="nl">ABC, DC en DCC Remmen</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>Constant Braking Trigger</label>
+                <label xml:lang="de">Aktiviert durch</label>
+                <tooltip>Select which (combination of) methods activates CB</tooltip>
+                <tooltip xml:lang="de">Welche Bremstypen aktievieren Konstanter Bremweg?</tooltip>
+                <tooltip xml:lang="nl">Welke remmethoden activeren constante Remweg?</tooltip>
+            </variable>
             <variable CV="144" item="Accel2" default="12" comment="Range 0-255">
-                <decVal max="255"/>
+                <decVal/>
                 <label>Acceleration Rate 2</label>
                 <label xml:lang="it">Accellerazione 2</label>
                 <label xml:lang="cs">Míra zrychlení 2</label>
@@ -526,7 +656,7 @@
                 <comment xml:lang="nl">Waarde van 0-255</comment>
             </variable>
             <variable CV="145" item="Decel2" default="12" comment="Range 0-255">
-                <decVal max="255"/>
+                <decVal/>
                 <label>Deceleration Rate 2</label>
                 <label xml:lang="it">Decellerazione 2</label>
                 <label xml:lang="cs">Míra zpomalení 2</label>
@@ -540,8 +670,8 @@
                 <comment xml:lang="de">Wert 0-255</comment>
                 <comment xml:lang="nl">Waarde van 0-255</comment>
             </variable>
-            <variable CV="144" item="Accel3" default="12" comment="Range 0-255">
-                <decVal max="255"/>
+            <variable CV="144" item="Accel3" default="24" comment="Range 0-255">
+                <decVal/>
                 <label>Acceleration Rate 3</label>
                 <label xml:lang="it">Accellerazione 3</label>
                 <label xml:lang="cs">Míra zrychlení 3</label>
@@ -555,12 +685,12 @@
                 <comment xml:lang="de">Wert 0-255</comment>
                 <comment xml:lang="nl">Waarde van 0-255</comment>
             </variable>
-            <variable CV="145" item="Decel3" default="12" comment="Range 0-255">
-                <decVal max="255"/>
+            <variable CV="145" item="Decel3" default="24" comment="Range 0-255">
+                <decVal/>
                 <label>Deceleration Rate 3</label>
-                <label xml:lang="it">Decellerazione 3 (0-255)</label>
+                <label xml:lang="it">Decellerazione 3</label>
                 <label xml:lang="cs">Míra zpomalení 3</label>
-                <label xml:lang="fr">3ème Décélération (0-255)</label>
+                <label xml:lang="fr">3ème Décélération</label>
                 <label xml:lang="de">3. Bremszeit</label>
                 <label xml:lang="nl">3e Remvertraging</label>
                 <comment>Range 0-255</comment>
@@ -571,13 +701,13 @@
                 <comment xml:lang="nl">Waarde van 0-255</comment>
             </variable>
             <variable item="ABV2 F Key" CV="148" default="255">
-                <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumFunctionChoice.xml"/>
+                <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumFunctionChoiceOff255.xml"/>
                 <label>Key to activate ABV2</label>
                 <label xml:lang="de">ABV2 Funktionstaste</label>
                 <label xml:lang="nl">ABV2 Functietoets</label>
             </variable>
             <variable item="ABV3 F Key" CV="149" default="255">
-                <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumFunctionChoice.xml"/>
+                <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumFunctionChoiceOff255.xml"/>
                 <label>Key to activate ABV3</label>
                 <label xml:lang="de">ABV3 Funktionstaste</label>
                 <label xml:lang="nl">ABV3 Functietoets</label>
