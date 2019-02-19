@@ -264,6 +264,7 @@ public class DlgIL extends javax.swing.JDialog {
                 return types [columnIndex];
             }
         });
+        _mIL_TableOfExternalSignalNames.setRowHeight(18);
         jScrollPane1.setViewportView(_mIL_TableOfExternalSignalNames);
 
         jButton1.setText(Bundle.getMessage("ButtonDlgILCompact"));

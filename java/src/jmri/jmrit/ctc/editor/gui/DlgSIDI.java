@@ -381,6 +381,7 @@ public class DlgSIDI extends javax.swing.JDialog {
                 return types [columnIndex];
             }
         });
+        _mSIDI_TableOfLeftToRightTrafficExternalSignalNames.setRowHeight(18);
         jScrollPane1.setViewportView(_mSIDI_TableOfLeftToRightTrafficExternalSignalNames);
 
         _mTableOfLeftToRightTrafficSignalNamesPrompt.setText(Bundle.getMessage("LabelSIDILRTraffic"));
@@ -500,6 +501,7 @@ public class DlgSIDI extends javax.swing.JDialog {
                 return types [columnIndex];
             }
         });
+        _mSIDI_TableOfRightToLeftTrafficExternalSignalNames.setRowHeight(18);
         jScrollPane2.setViewportView(_mSIDI_TableOfRightToLeftTrafficExternalSignalNames);
 
         _mTableOfRightToLeftTrafficSignalNamesPrompt.setText(Bundle.getMessage("LabelSIDIRLTraffic"));
