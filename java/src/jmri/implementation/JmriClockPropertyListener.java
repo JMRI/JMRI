@@ -35,7 +35,7 @@ public class JmriClockPropertyListener extends JmriSimplePropertyListener {
     int _currentMinutes;
 
     @SuppressWarnings("deprecation")
-    JmriClockPropertyListener(String propName, int type, String name, int varType,
+    JmriClockPropertyListener(String propName, int type, String name, Conditional.Type varType,
             Conditional client, int beginTime, int endTime) {
         super(propName, type, name, varType, client);
         _beginTimes[0] = fixMidnight(beginTime);

@@ -101,7 +101,7 @@ public class CbusThrottle extends AbstractThrottle {
      * Set initial throttle values as taken from PLOC reply from hardware
      *
      */
-    public void throttleInit(int speed, int f0f4, int f5f8, int f9f12) {
+    protected void throttleInit(int speed, int f0f4, int f5f8, int f9f12) {
 
         log.debug("Setting throttle initial values");
 
@@ -410,7 +410,7 @@ public class CbusThrottle extends AbstractThrottle {
      */
     @Override
     public void setSpeedSetting(float speed) {
-        if (log.isDebugEnabled()) log.debug("setSpeedSetting({}) ", speed);
+        // if (log.isDebugEnabled()) log.debug("setSpeedSetting({}) ", speed);
         float oldSpeed = this.speedSetting;
         this.speedSetting = speed;
         if (speed < 0) {
@@ -421,12 +421,14 @@ public class CbusThrottle extends AbstractThrottle {
         if (this.isForward) {
             new_spd = new_spd | 0x80;
         }
-        if (log.isDebugEnabled()) log.debug("Sending speed/dir for speed: " + new_spd);
+        // if (log.isDebugEnabled()) log.debug("Sending speed/dir for speed: " + new_spd);
         // reset timeout
         mRefreshTimer.stop();
         mRefreshTimer.setRepeats(true);
         mRefreshTimer.start();
-        cs.setSpeedDir(_handle, new_spd);
+        if (cs != null ) {
+            cs.setSpeedDir(_handle, new_spd);
+        }
         if (Math.abs(oldSpeed - this.speedSetting) > 0.0001) {
             notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting);
         }
@@ -447,11 +449,11 @@ public class CbusThrottle extends AbstractThrottle {
             this.speedSetting = -1.f;
         }
 
-        int new_spd = speed;
-        if (this.isForward) {
-            new_spd = new_spd | 0x80;
-        }
-        log.debug("Updated speed/dir for speed: " + new_spd);
+        // int new_spd = speed;
+        // if (this.isForward) {
+        //     new_spd = new_spd | 0x80;
+        // }
+        // log.debug("Updated speed/dir for speed: " + new_spd);
 
         if (Math.abs(oldSpeed - this.speedSetting) > 0.0001) {
             notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting);
@@ -526,19 +528,21 @@ public class CbusThrottle extends AbstractThrottle {
         log.debug("dispose");
 
         // stop timeout
-        mRefreshTimer.stop();
-
-        cs.releaseSession(_handle);
+        if ( mRefreshTimer != null ) {
+            mRefreshTimer.stop();
+        }
+        if ( cs != null ) {
+            cs.releaseSession(_handle);
+        }
         _handle = -1;
         cs = null;
-
         mRefreshTimer = null;
         finishRecord();
     }
 
     javax.swing.Timer mRefreshTimer = null;
 
-    // CBUS command station expect DSPD every 4s
+    // CBUS command stations expect DSPD per sesison every 4s
     protected void startRefresh() {
         mRefreshTimer = new javax.swing.Timer(4000, new java.awt.event.ActionListener() {
             @Override

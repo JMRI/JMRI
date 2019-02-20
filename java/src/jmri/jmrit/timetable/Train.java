@@ -151,6 +151,7 @@ public class Train {
         _trainNotes = newNotes;
     }
 
+    @Override
     public String toString() {
         return _trainName;
     }

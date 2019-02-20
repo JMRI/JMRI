@@ -440,16 +440,33 @@ public interface Manager<E extends NamedBean> {
                             public boolean execute() {
                                 if (legacyNameSet.size() == 0) return true;
                                 
+                                // as an extremely ugly hack, handle the special case of 
+                                // Reporters-with-an-M-system letter, e.g. from MERG
+                                //
+                                // We couldn't do this earlier because the name might be checked
+                                // before the bean is created
+                                ReporterManager rm = InstanceManager.getDefault(ReporterManager.class);
+                                java.util.SortedSet<String> tempSet = new java.util.TreeSet<>(); 
+                                for (String name : legacyNameSet) {
+                                    // The legacy MR name for MRC can't do Reporters
+                                    if (name.startsWith("MR") && rm.getReporter(name) != null) continue;
+                                    tempSet.add(name);
+                                }
+                                if (tempSet.size() == 0) return true;
+                                
                                 org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Manager.class);
                                 log.warn("The following legacy names need to be migrated:");
-                                for (String name : legacyNameSet) log.warn("    {}", name);
+                                for (String name : tempSet) log.warn("    {}", name);
                                 
                                 // now create the legacy.csv file
                                 try (java.io.PrintWriter writer = new java.io.PrintWriter(jmri.util.FileUtil.getUserFilesPath()+java.io.File.separator+"legacy_bean_names.csv");) {
-                                    for (String name : legacyNameSet) writer.println(name);
+                                    for (String name : tempSet) writer.println(name);
                                 } catch (java.io.IOException e) {
                                     log.error("Failed to write legacy name file", e);
                                 }
+                                
+                                // clean up in case invoked twice
+                                legacyNameSet.clear();
                                 return true;
                             }
                 };
@@ -477,17 +494,17 @@ public interface Manager<E extends NamedBean> {
      * that are being removed during the JMRI 4.11 cycle.
      *
      * @param prefix the system prefix
-     * @deprecated to make sure we remember to remove this post-4.11
+     * @deprecated 4.11.2 to make sure we remember to remove this post-migration
      * @since 4.11.2
      * @return true if a legacy prefix, hence non-parsable
      */
-    @Deprecated
+    @Deprecated // 4.11.2 to make sure we remember to remove this post-migration
     @CheckReturnValue
     public static boolean isLegacySystemPrefix(@Nonnull String prefix) {
         return LEGACY_PREFIXES.contains(prefix);
     }
 
-    @Deprecated
+    @Deprecated // 4.11.2 to make sure we remember to remove this post-migration
     static final TreeSet<String> LEGACY_PREFIXES = new TreeSet<>(Arrays.asList(
             new String[]{
                 "DX", "DCCPP", "DP", "MR", "MC", "PI", "TM"
@@ -500,11 +517,11 @@ public interface Manager<E extends NamedBean> {
      * This is a slightly-expensive operation, and should be used sparingly
      *
      * @param prefix the system prefix
-     * @deprecated to make sure we remember to remove this post-4.11
+     * @deprecated // 4.11.2 to make sure we remember to remove this post-migration
      * @since 4.11.2
      * @return length of a legacy prefix, if present, otherwise -1
      */
-    @Deprecated
+    @Deprecated // 4.11.2 to make sure we remember to remove this post-migration
     @CheckReturnValue
     public static int startsWithLegacySystemPrefix(@Nonnull String prefix) {
         // implementation replies on legacy suffix length properties to gain a bit of speed...
@@ -630,6 +647,7 @@ public interface Manager<E extends NamedBean> {
          *
          * @return the event source
          */
+        @Override
         public Manager<E> getSource() { return source; }
   
         /**
@@ -667,6 +685,7 @@ public interface Manager<E extends NamedBean> {
          * 
          * @return A string.
          */
+         @Override
          public String toString() {
             return getClass().getName() + "[type=" + type + ",index0=" + index0 + ",index1=" + index1 + "]";
         }

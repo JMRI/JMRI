@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
@@ -89,7 +90,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
     private final JTextField _dccNumBox = new JTextField();
     private final JTextField _trainNameBox = new JTextField(6);
     private final JButton _viewProfile = new JButton(Bundle.getMessage("ViewProfile"));
-    private SpeedProfileTable _spTable = null;
+    private JmriJFrame _spTable = null;
     private JmriJFrame _pickListFrame;
 
 
@@ -239,13 +240,55 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         if (_spTable != null) {
             _spTable.dispose();
         }
-        RosterSpeedProfile speedProfile = _speedUtil.getSpeedProfile();
-        if (speedProfile.hasForwardSpeeds() || speedProfile.hasReverseSpeeds()) {
-            _spTable = new SpeedProfileTable(speedProfile, _speedUtil.getRosterId());
+        _spTable = makeSessionProfileTable();
+        if (_spTable != null) {
             _spTable.setVisible(true);
             return;
+        } else {
+            RosterEntry re = _speedUtil.getRosterEntry();
+            if (re != null) {
+                RosterSpeedProfile speedProfile = re.getSpeedProfile();
+                if (speedProfile != null && (speedProfile.hasForwardSpeeds() || speedProfile.hasReverseSpeeds())) {
+                    _spTable = new SpeedProfileTable(speedProfile, _speedUtil.getRosterId());
+                    _spTable.setVisible(true);
+                    return;
+                }
+            }
         }
         JOptionPane.showMessageDialog(null, Bundle.getMessage("NoSpeedProfile"));
+    }
+    
+    private JmriJFrame makeSessionProfileTable() {
+        RosterSpeedProfile speedProfile = _speedUtil.getSpeedProfile();
+        if (!speedProfile.hasForwardSpeeds() && !speedProfile.hasReverseSpeeds()) {
+            return null;
+        }
+        JmriJFrame frame = new JmriJFrame(false, true);
+        JPanel framePanel = new JPanel();
+        framePanel.setLayout(new BoxLayout(framePanel, BoxLayout.PAGE_AXIS));
+        framePanel.add(Box.createGlue());
+        framePanel.add(new JLabel(Bundle.getMessage("viewTitle", _speedUtil.getRosterId())));
+        framePanel.add(MergePrompt.makeEditInfoPanel());
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
+        panel.add(Box.createGlue());
+
+        HashMap<Integer, Boolean> an = MergePrompt.validateSpeedProfile(speedProfile);
+        if (an != null && an.size() > 0) {
+            framePanel.add(MergePrompt.makeAnomalyPanel());
+        }
+        panel.add(MergePrompt.makeSpeedProfilePanel("mergedSpeedProfile", speedProfile, true, an));
+        panel.add(Box.createGlue());
+
+        speedProfile = _speedUtil.getSessionProfile();
+        if (speedProfile.hasForwardSpeeds() || speedProfile.hasReverseSpeeds()) {
+            panel.add(MergePrompt.makeSpeedProfilePanel("sessionSpeedProfile", speedProfile, false, null));
+            panel.add(Box.createGlue());
+        }
+        framePanel.add(panel);
+        frame.getContentPane().add(framePanel);
+        frame.pack();
+        return frame;
     }
 
     protected String setTrainInfo(String name) {

@@ -54,8 +54,8 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
     public LIUSBServerAdapter() {
         super();
         option1Name = "BroadcastPort"; // NOI18N
-        options.put(option1Name, new Option(Bundle.getMessage("BroadcastPortLabel")
-                , new String[]{String.valueOf(LIUSBServerAdapter.BROADCAST_TCP_PORT), ""}));
+        options.put(option1Name, new Option(Bundle.getMessage("BroadcastPortLabel"),
+                new String[]{String.valueOf(LIUSBServerAdapter.BROADCAST_TCP_PORT), ""}));
         this.manufacturerName = jmri.jmrix.lenz.LenzConnectionTypeList.LENZ;
     }
 
@@ -404,13 +404,13 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
                         //puts the command station into service mode.
                         log.error("Communications port dropped", ex);
                     }
-                }
+                }   
             };
         }
         else {
            keepAliveTimer.cancel();
         }
-        new java.util.Timer("LIUSB Keepalive Timer").schedule(keepAliveTimer,keepAliveTimeoutValue,keepAliveTimeoutValue);
+        jmri.util.TimerUtil.schedule(keepAliveTimer,keepAliveTimeoutValue,keepAliveTimeoutValue);
     }
 
     private final static Logger log = LoggerFactory.getLogger(LIUSBServerAdapter.class);

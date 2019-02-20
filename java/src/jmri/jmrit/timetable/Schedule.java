@@ -113,6 +113,7 @@ public class Schedule {
         }
     }
 
+    @Override
     public String toString() {
         return _scheduleName;
     }

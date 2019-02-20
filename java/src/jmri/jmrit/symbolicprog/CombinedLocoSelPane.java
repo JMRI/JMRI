@@ -392,7 +392,7 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
             locoBox.setSelectedItem(r);
         } else {
             log.warn("Read address {}, but no such loco in roster", dccAddress);
-            _statusLabel.setText(Bundle.getMessage("READ ADDRESS ") + dccAddress + Bundle.getMessage(", BUT NO SUCH LOCO IN ROSTER"));
+            _statusLabel.setText(Bundle.getMessage("ReadNoSuchLoco",dccAddress));
         }
     }
 

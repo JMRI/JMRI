@@ -864,7 +864,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             if (_drawMenu != null) {
                 _menuBar.remove(_drawMenu);
             }
-            if (InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getSystemNameList().size() > 1) {
+            if (InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getNamedBeanSet().size() > 1) {
                 makeWarrantMenu(edit);
             }
             if (_markerMenu == null) {

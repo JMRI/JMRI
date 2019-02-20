@@ -6,9 +6,9 @@ import jmri.util.JUnitUtil;
 import org.junit.*;
 
 /**
- * Tests for the jmri.jmrix.roco.z21.Z21RMBusSensorManager class.
+ * Tests for the jmri.jmrix.roco.z21.Z21SensorManager class for RMBus sensors.
  *
- * @author	Paul Bender Copyright (c) 2003
+ * @author	Paul Bender Copyright (c) 2018,2019
  */
 public class Z21RMBusSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBase {
 
@@ -87,11 +87,6 @@ public class Z21RMBusSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
         Assert.assertTrue(l.allowMultipleAdditions("foo"));
     }
 
-    @Test
-    public void testProvideAddressAndPin() {
-        Assert.assertNotNull("Sensor ZS19:3 provided",l.provideSensor("ZS19:3"));
-    }
-
     @Override
     @Before
     public void setUp() {
@@ -102,7 +97,7 @@ public class Z21RMBusSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
         memo.setTrafficController(znis);
         memo.setRocoZ21CommandStation(new RocoZ21CommandStation());
         // create and register the manager object
-        l = new Z21RMBusSensorManager(memo);
+        l = new Z21SensorManager(memo);
     }
 
     @After

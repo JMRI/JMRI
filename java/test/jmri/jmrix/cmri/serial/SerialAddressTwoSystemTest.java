@@ -89,8 +89,12 @@ public class SerialAddressTwoSystemTest extends TestCase {
     protected void tearDown() throws Exception {
         super.tearDown();
         JUnitUtil.tearDown();
+        if (stcs1 != null) stcs1.terminateThreads();
         stcs1 = null;
         memo1 = null;
+        if (stcs2 != null) stcs2.terminateThreads();
+        stcs2 = null;
+        memo2 = null;
     }
 
     public void testValidateSystemNameFormat() {

@@ -192,6 +192,7 @@ public class Layout implements VetoableChangeListener {
         }
     }
 
+    @Override
     public String toString() {
         return _layoutName;
     }

@@ -22,13 +22,38 @@ public abstract class LnTrafficController implements LocoNetInterface {
     LocoNetSystemConnectionMemo memo = null;
 
     /**
-     * Set the system connection memo associated with this traffic controller.
-     *
-     * @param m associated systemConnectionMemo object
+     * Constructor without reference to a LocoNetSystemConnectionMemo.
      */
+    public LnTrafficController() {
+        super();
+    }
+
+    /**
+     * Constructor. Gets a reference to the LocoNetSystemConnectionMemo.
+     *
+     * @param memo connection's memo
+     */
+    public LnTrafficController(LocoNetSystemConnectionMemo memo) {
+        super();
+        this.memo = memo;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void setSystemConnectionMemo(LocoNetSystemConnectionMemo m) {
         log.debug("LnTrafficController set memo to {}", m.getUserName());
         memo = m;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public LocoNetSystemConnectionMemo getSystemConnectionMemo() {
+        log.debug("getSystemConnectionMemo {} called in LnTC", memo.getUserName());
+        return memo;
     }
 
     // Abstract methods for the LocoNetInterface
@@ -113,6 +138,13 @@ public abstract class LnTrafficController implements LocoNetInterface {
         transmittedMsgCount = 0;
         receivedByteCount = 0;
     }
+
+    /**
+     * Clean up any resources, particularly threads.
+     * <p>
+     * The object can't be used after this.
+     */
+    public void dispose() {}
 
     /**
      * Monitor the number of LocoNet messages received across the interface.

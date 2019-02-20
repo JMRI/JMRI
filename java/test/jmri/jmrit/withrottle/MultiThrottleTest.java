@@ -1,7 +1,10 @@
 package jmri.jmrit.withrottle;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import jmri.InstanceManager;
 import jmri.NamedBeanHandleManager;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 
@@ -146,6 +149,29 @@ public class MultiThrottleTest {
        // function "on" from withrottle represents a button click event.
        throttle.handleMessage("AL1234<;>Q");
        Assert.assertEquals("outgoing message after quit", "MA-L1234<;>",cis.getLastPacket() );
+    }
+    
+    @Test
+    public void testIsValidAddress() throws NoSuchMethodException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+        Method m = throttle.getClass().getDeclaredMethod("isValidAddr", String.class);
+        m.setAccessible(true);
+        Assert.assertFalse((Boolean)m.invoke(throttle, "hjs"));
+        JUnitAppender.assertWarnMessage("JMRI: address 'hjs' must have a letter S or L and then digit(s)");
+        Assert.assertFalse((Boolean)m.invoke(throttle, "s13"));
+        JUnitAppender.assertWarnMessage("JMRI: address 's13' must have a letter S or L and then digit(s)");
+        Assert.assertFalse((Boolean)m.invoke(throttle, "l13"));
+        JUnitAppender.assertWarnMessage("JMRI: address 'l13' must have a letter S or L and then digit(s)");
+        Assert.assertFalse((Boolean)m.invoke(throttle, "S"));
+        JUnitAppender.assertWarnMessage("JMRI: address 'S' must have a letter S or L and then digit(s)");
+        Assert.assertFalse((Boolean)m.invoke(throttle, "L"));
+        JUnitAppender.assertWarnMessage("JMRI: address 'L' must have a letter S or L and then digit(s)");
+        Assert.assertFalse((Boolean)m.invoke(throttle, "7"));
+        JUnitAppender.assertWarnMessage("JMRI: address '7' must have a letter S or L and then digit(s)");
+        Assert.assertTrue((Boolean)m.invoke(throttle, "S32"));
+        Assert.assertFalse((Boolean)m.invoke(throttle, "S320"));
+        JUnitAppender.assertWarnMessage("JMRI: address 'S320' not allowed as Short");
+        Assert.assertTrue((Boolean)m.invoke(throttle, "L32"));
+        Assert.assertTrue((Boolean)m.invoke(throttle, "L320"));
     }
 
     @Before

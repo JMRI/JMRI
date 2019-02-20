@@ -455,26 +455,16 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
         _mastAspectsList = null;
 
         SignalHeadManager shm = InstanceManager.getDefault(SignalHeadManager.class);
-        List<String> systemNameList = shm.getSystemNameList();
-        _signalHeadsList = new ArrayList<SignalGroupSignalHead>(systemNameList.size());
+        _signalHeadsList = new ArrayList<SignalGroupSignalHead>();
         // create list of all available Single Output Signal Heads to choose from
-        Iterator<String> iter = systemNameList.iterator();
-        // int i = 1; // for debug of iter next
-        while (iter.hasNext()) {
-            String systemName = iter.next();
-            SignalHead sh = shm.getBySystemName(systemName);
-            // log.debug("Iteration {} of : Looking for Signal Head {}", i, systemNameList.size(), systemName);
-            // debug using i & sysnamelist.size
-            if (sh != null) {
-                if (sh.getClass().getName().contains("SingleTurnoutSignalHead")) {
-                    String userName = sh.getUserName();
-                    // add every single output signal head item to the list
-                    _signalHeadsList.add(new SignalGroupSignalHead(systemName, userName));
-                } else {
-                    log.debug("Signal Head {} is not a Single Output Controlled Signal Head", systemName);
-                }
-            } else { // this is not an error and the value of systemName mentioned is actually from the last head that was indeed loaded
-                log.error("Failed to get signal head {} (SGTA)", systemName);
+        for (SignalHead sh : shm.getNamedBeanSet()) {
+            String systemName = sh.getSystemName();
+            if (sh.getClass().getName().contains("SingleTurnoutSignalHead")) {
+                String userName = sh.getUserName();
+                // add every single output signal head item to the list
+                _signalHeadsList.add(new SignalGroupSignalHead(systemName, userName));
+            } else {
+                log.debug("Signal Head {} is not a Single Output Controlled Signal Head", systemName);
             }
         }
 
@@ -916,7 +906,7 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
         if (_autoSystemName.isSelected() && !inEditMode) {
             // create new Signal Group with auto system name
             log.debug("SignalGroupTableAction checkNamesOK new autogroup");
-            g = InstanceManager.getDefault(jmri.SignalGroupManager.class).newSignalGroup(uName);
+            g = InstanceManager.getDefault(jmri.SignalGroupManager.class).newSignaGroupWithUserName(uName);
         } else {
             if (sName.length() == 0) { // show warning in status bar
                 status1.setText(Bundle.getMessage("AddBeanStatusEnter"));

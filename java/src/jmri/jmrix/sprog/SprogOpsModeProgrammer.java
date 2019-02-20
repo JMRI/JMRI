@@ -8,8 +8,6 @@ import jmri.AddressedProgrammer;
 import jmri.ProgListener;
 import jmri.ProgrammerException;
 import jmri.ProgrammingMode;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Provide an Ops Mode Programmer via a wrapper what works with the SPROG
@@ -33,12 +31,14 @@ public class SprogOpsModeProgrammer extends SprogProgrammer implements Addressed
         _memo = memo;
     }
 
-    /**
+    /** 
+     * {@inheritDoc}
+     *
      * Forward a write request to an ops-mode write operation
      */
     @Override
-    @Deprecated // 4.1.1
-    synchronized public void writeCV(int CV, int val, ProgListener p) throws ProgrammerException {
+    synchronized public void writeCV(String CVname, int val, ProgListener p) throws ProgrammerException {
+        final int CV = Integer.parseInt(CVname);
         log.debug("write CV=" + CV + " val=" + val);
 
         // record state.  COMMANDSENT is just waiting for a reply...
@@ -60,20 +60,28 @@ public class SprogOpsModeProgrammer extends SprogProgrammer implements Addressed
         }
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
-    @Deprecated // 4.1.1
-    synchronized public void readCV(int CV, ProgListener p) throws ProgrammerException {
+    synchronized public void readCV(String CVname, ProgListener p) throws ProgrammerException {
+        // final int CV = Integer.parseInt(CVname);
         log.error("readCV not available in this protocol");
         throw new ProgrammerException();
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     synchronized public void confirmCV(String CV, int val, ProgListener p) throws ProgrammerException {
         log.error("confirmCV not available in this protocol");
         throw new ProgrammerException();
     }
 
-    /**
+    /** 
+     * {@inheritDoc}
+     *
      * Types implemented here.
      */
     @Override
@@ -84,12 +92,17 @@ public class SprogOpsModeProgrammer extends SprogProgrammer implements Addressed
         return ret;
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     synchronized public void notifyReply(SprogReply m) {
         // We will not see any replies
     }
 
-    /**
+    /** 
+     * {@inheritDoc}
+     *
      * Can this ops-mode programmer read back values? For now, no, but maybe
      * later.
      *
@@ -100,16 +113,25 @@ public class SprogOpsModeProgrammer extends SprogProgrammer implements Addressed
         return false;
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public boolean getLongAddress() {
         return mLongAddr;
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public int getAddressNumber() {
         return mAddress;
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public String getAddress() {
         return "" + getAddressNumber() + " " + getLongAddress();
@@ -125,6 +147,6 @@ public class SprogOpsModeProgrammer extends SprogProgrammer implements Addressed
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(SprogOpsModeProgrammer.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SprogOpsModeProgrammer.class);
 
 }

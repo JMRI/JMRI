@@ -13,6 +13,7 @@ import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficController;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,6 +35,10 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
         super(memo);
         tc = memo.getTrafficController();
         tc.addCanListener(this);
+    }
+    
+    public void dispose() {
+        tc.removeCanListener(this);
     }
 
     TrafficController tc;
@@ -85,19 +90,22 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
      * Called when track stopped message received. Sets all JMRI managed
      * throttles to speed zero
      */
-    void stopAll() {
+    private void stopAll() {
         // Get set of handles for JMRI managed throttles and
         // iterate over them setting the speed of each throttle to 0
-        log.debug("stopAll() setting all speeds to emergency stop");
+        // log.info("stopAll() setting all speeds to emergency stop");
         Iterator<Integer> itr = softThrottles.keySet().iterator();
         while (itr.hasNext()) {
             CbusThrottle throttle = softThrottles.get(itr.next());
-            throttle.setSpeedSetting(0.0F);
+            throttle.setSpeedSetting(-1.0f);
         }
     }
 
     @Override
     public void message(CanMessage m) {
+        if ( m.isExtended() ) {
+            return;
+        }
         int opc = m.getElement(0);
         int handle;
         switch (opc) {
@@ -137,6 +145,9 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
 
     @Override
     synchronized public void reply(CanReply m) {
+        if ( m.isExtended() ) {
+            return;
+        }
         int opc = m.getElement(0);
         int rcvdIntAddr = (m.getElement(2) & 0x3f) * 256 + m.getElement(3);
         boolean rcvdIsLong = (m.getElement(2) & 0xc0) != 0;
@@ -281,7 +292,7 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
                     CbusThrottle throttle = softThrottles.get(itr.next());
                     if (throttle.getHandle() == handle) {
                         // Set the throttle session to match the DFUN packet received
-                        log.debug("DFUN group: " + m.getElement(2) + " Fns: " + m.getElement(3) + " for session: " + m.getElement(1));
+                        // log.debug("DFUN group: " + m.getElement(2) + " Fns: " + m.getElement(3) + " for session: " + m.getElement(1));
                         switch (m.getElement(2)) {
                             case 1:
                                 throttle.updateFunctionGroup1(m.getElement(3));
@@ -415,14 +426,11 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
     @Override
     public boolean disposeThrottle(DccThrottle t, jmri.ThrottleListener l) {
         log.debug("disposeThrottle called for " + t);
-        if (super.disposeThrottle(t, l)) {
-            try {
+        if (t instanceof CbusThrottle) {
+            if (super.disposeThrottle(t, l)) {
                 CbusThrottle lnt = (CbusThrottle) t;
                 lnt.throttleDispose();
                 return true;
-            }
-            catch(java.lang.ClassCastException cce){
-                log.error("{} is not a CbusThrottle",t);
             }
         }
         return false;

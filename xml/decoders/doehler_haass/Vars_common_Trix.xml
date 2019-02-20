@@ -58,6 +58,12 @@
       <authorinitials>PB</authorinitials>
       <revremark>Spelling change to match new DH def pane for start and brake options.</revremark>
     </revision>
+    <revision>
+      <revnumber>6</revnumber>
+      <date>2019-01-03</date>
+      <authorinitials>ALM</authorinitials>
+      <revremark>CV9 as enum</revremark>
+    </revision>
   </revhistory>
   <!-- Calls to std NMRA templates   -->
   <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
@@ -863,8 +869,16 @@
     <label xml:lang="de">Bremsverzögerung</label>
     <label xml:lang="ca">DEsacceleració</label>
   </variable>
-  <variable CV="9" default="1" item="Motor PWM Frequency" comment="0:32KHz, 1:16KHz, 2:low" tooltip="0:32KHz, 1:16KHz, 2:low">
-    <decVal min="0" max="2"/>
+  <variable CV="9" default="1" item="Motor PWM Frequency" comment="0:32KHz, 1:16KHz, 2:low">
+    <enumVal>
+        <enumChoice choice="32KHz"/>
+        <enumChoice choice="16KHz"/>
+        <enumChoice choice="low">
+            <choice>Low frequency</choice>
+            <choice xml:lang="de">Niederfrequent</choice>
+            <choice xml:lang="fr">Basse fréquence</choice>
+        </enumChoice>
+    </enumVal>
     <label>Motor frequency</label>
     <label xml:lang="it">Frequenza Motore</label>
     <label xml:lang="fr">Fréquence moteur</label>

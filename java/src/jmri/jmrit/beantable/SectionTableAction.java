@@ -359,7 +359,7 @@ public class SectionTableAction extends AbstractTableAction<Section> {
     @Override
     protected void addPressed(ActionEvent e) {
         editMode = false;
-        if ((blockManager.getSystemNameList().size()) > 0) {
+        if ((blockManager.getNamedBeanSet().size()) > 0) {
             addEditPressed();
         } else {
             JOptionPane.showMessageDialog(null, rbx
@@ -975,39 +975,32 @@ public class SectionTableAction extends AbstractTableAction<Section> {
      * Build a combo box to select Blocks for this Section.
      */
     private void initializeBlockCombo() {
-        List<String> allBlocks = blockManager.getSystemNameList();
         blockBox.removeAllItems();
         for (int j = blockBoxList.size(); j > 0; j--) {
             blockBoxList.remove(j - 1);
         }
         if (blockList.size() == 0) {
             // No blocks selected, all blocks are eligible
-            for (int i = 0; i < allBlocks.size(); i++) {
-                String bName = allBlocks.get(i);
-                Block b = blockManager.getBySystemName(bName);
-                if (b != null) {
+            for (Block b : blockManager.getNamedBeanSet()) {
+                String bName = b.getSystemName();
+                String uname = b.getUserName();
+                if ((uname != null) && (!uname.equals(""))) {
+                    bName = bName + " ( " + uname + " )";
+                }
+                blockBox.addItem(bName);
+                blockBoxList.add(b);
+            }
+        } else {
+            // limit combo list to Blocks bonded to the currently selected Block that are not already in the Section
+            for (Block b : blockManager.getNamedBeanSet()) {
+                String bName = b.getSystemName();
+                if ((!inSection(b)) && connected(b, endBlock)) {
                     String uname = b.getUserName();
                     if ((uname != null) && (!uname.equals(""))) {
                         bName = bName + " ( " + uname + " )";
                     }
                     blockBox.addItem(bName);
                     blockBoxList.add(b);
-                }
-            }
-        } else {
-            // limit combo list to Blocks bonded to the currently selected Block that are not already in the Section
-            for (int i = 0; i < allBlocks.size(); i++) {
-                String bName = allBlocks.get(i);
-                Block b = blockManager.getBySystemName(bName);
-                if (b != null) {
-                    if ((!inSection(b)) && connected(b, endBlock)) {
-                        String uname = b.getUserName();
-                        if ((uname != null) && (!uname.equals(""))) {
-                            bName = bName + " ( " + uname + " )";
-                        }
-                        blockBox.addItem(bName);
-                        blockBoxList.add(b);
-                    }
                 }
             }
         }

@@ -395,56 +395,6 @@ public interface Throttle {
     public Vector<java.beans.PropertyChangeListener> getListeners();
 
     /**
-     * Not for general use, see {@link #release()} and {@link #dispatch()}.
-     * <p>
-     * Dispose of object when finished it. This does not free any hardware
-     * resources used; rather, it just cleans up the software implementation.
-     * <P>
-     * Used for handling certain internal error conditions, where the object
-     * still exists but hardware is not associated with it.
-     * <P>
-     * After this, further usage of this Throttle object will result in a
-     * JmriException.
-     *
-     * @deprecated Calls to dispose of a throttle should now be made via the
-     * throttle manager or by using {@link #dispose(ThrottleListener l)}.
-     */
-    @Deprecated
-    public void dispose();
-
-    /**
-     * Finished with this Throttle, tell the layout that the locomotive is
-     * available for reuse/reallocation by somebody else.
-     * <P>
-     * After this, further usage of this Throttle object will result in a
-     * JmriException. Do not call dispose after release.
-     * <P>
-     * Normally, release ends with a call to dispose.
-     *
-     * @deprecated Calls to dispose of a throttle should now be made via the
-     * throttle manager or by using {@link #release(ThrottleListener l)}
-     */
-    @Deprecated
-    public void release();
-
-    /**
-     * Finished with this Throttle, tell the layout that the locomotive is
-     * available for reuse/reallocation by somebody else. If possible, tell the
-     * layout that this locomotive has been dispatched to another user. Not all
-     * layouts will implement this, in which case it is synomous with release();
-     * <P>
-     * After this, further usage of this Throttle object will result in a
-     * JmriException.
-     * <P>
-     * Normally, dispatch ends with a call to dispose.
-     *
-     * @deprecated Calls to dispose of a throttle should now be made via the
-     * throttle manager, or by using {@link #dispatch(ThrottleListener l)}
-     */
-    @Deprecated
-    public void dispatch();
-
-    /**
      * Not for general use, see {@link #release(ThrottleListener l)} and
      * {@link #dispatch(ThrottleListener l)}.
      * <p>

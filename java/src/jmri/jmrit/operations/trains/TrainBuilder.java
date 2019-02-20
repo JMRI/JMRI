@@ -388,12 +388,18 @@ public class TrainBuilder extends TrainCommon {
             addLine(_buildReport, FIVE, rb.getString("BorderLayoutSwitcherService") + ":");
             if (Setup.isLocalInterchangeMovesEnabled()) {
                 addLine(_buildReport, FIVE, rb.getString("AllowLocalInterchange"));
+            } else {
+                addLine(_buildReport, FIVE, rb.getString("NoAllowLocalInterchange"));
             }
             if (Setup.isLocalSpurMovesEnabled()) {
                 addLine(_buildReport, FIVE, rb.getString("AllowLocalSpur"));
+            } else {
+                addLine(_buildReport, FIVE, rb.getString("NoAllowLocalSpur"));
             }
             if (Setup.isLocalYardMovesEnabled()) {
                 addLine(_buildReport, FIVE, rb.getString("AllowLocalYard"));
+            } else {
+                addLine(_buildReport, FIVE, rb.getString("NoAllowLocalYard"));
             }
         }
         // show staging options

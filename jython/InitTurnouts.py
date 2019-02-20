@@ -10,12 +10,11 @@
 
 import jmri
 
-def initTurnout(turnout):
-    to = turnouts.provideTurnout(turnout)
+def initTurnout(to):
     to.setState(to.getKnownState())
     return
 
 # invoke for all defined turnouts
-for x in turnouts.getSystemNameList().toArray() :
-  initTurnout(x)
+for to in turnouts.getNamedBeanSet() :
+  initTurnout(to)
 

@@ -78,7 +78,7 @@ public class LnSensorTest extends jmri.implementation.AbstractSensorTestBase {
     @Override
     public void tearDown() {
         t.dispose();
-	lnis = null;
+	    lnis = null;
         JUnitUtil.tearDown();
     }
 

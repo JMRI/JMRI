@@ -512,9 +512,9 @@ public class LocoNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         m.setElement(9, 0x01);
         slotmanager.slot(4).setSlot(m);
 
-        memo = new LocoNetSystemConnectionMemo(lnis,slotmanager);
+        memo = new LocoNetSystemConnectionMemo(lnis, slotmanager);
         memo.setThrottleManager(new LnThrottleManager(memo));
-        jmri.InstanceManager.setDefault(jmri.ThrottleManager.class,memo.getThrottleManager());
+        jmri.InstanceManager.setDefault(jmri.ThrottleManager.class, memo.getThrottleManager());
 
         instance = new LocoNetThrottle(memo, new LocoNetSlot(0));
     }
@@ -524,6 +524,7 @@ public class LocoNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     public void tearDown() {
         ((LnThrottleManager)memo.getThrottleManager()).dispose();
         memo.dispose();
+        lnis = null;
         JUnitUtil.tearDown();
     }
 

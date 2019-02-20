@@ -109,22 +109,24 @@ public final class JmriScriptEngineManager {
             this.names.put(factory.getLanguageName(), factory.getEngineName());
             this.factories.put(factory.getEngineName(), factory);
         });
+        
+        // this should agree with jmri_bindings.py and help/en/html/tools/scripting/Start.shtml
         Bindings bindings = new SimpleBindings();
-        bindings.put("turnouts", InstanceManager.getNullableDefault(TurnoutManager.class));
         bindings.put("sensors", InstanceManager.getNullableDefault(SensorManager.class));
+        bindings.put("turnouts", InstanceManager.getNullableDefault(TurnoutManager.class));
+        bindings.put("lights", InstanceManager.getNullableDefault(LightManager.class));
         bindings.put("signals", InstanceManager.getNullableDefault(SignalHeadManager.class));
         bindings.put("masts", InstanceManager.getNullableDefault(SignalMastManager.class));
-        bindings.put("lights", InstanceManager.getNullableDefault(LightManager.class));
-        bindings.put("dcc", InstanceManager.getNullableDefault(CommandStation.class));
-        bindings.put("reporters", InstanceManager.getNullableDefault(ReporterManager.class));
-        bindings.put("memories", InstanceManager.getNullableDefault(MemoryManager.class));
         bindings.put("routes", InstanceManager.getNullableDefault(RouteManager.class));
         bindings.put("blocks", InstanceManager.getNullableDefault(BlockManager.class));
+        bindings.put("reporters", InstanceManager.getNullableDefault(ReporterManager.class));
+        bindings.put("memories", InstanceManager.getNullableDefault(MemoryManager.class));
         bindings.put("powermanager", InstanceManager.getNullableDefault(PowerManager.class));
         bindings.put("addressedProgrammers", InstanceManager.getNullableDefault(AddressedProgrammerManager.class));
         bindings.put("globalProgrammers", InstanceManager.getNullableDefault(GlobalProgrammerManager.class));
-        bindings.put("shutdown", InstanceManager.getNullableDefault(ShutDownManager.class));
+        bindings.put("dcc", InstanceManager.getNullableDefault(CommandStation.class));
         bindings.put("audio", InstanceManager.getNullableDefault(AudioManager.class));
+        bindings.put("shutdown", InstanceManager.getNullableDefault(ShutDownManager.class));
         bindings.put("layoutblocks", InstanceManager.getNullableDefault(LayoutBlockManager.class));
         bindings.put("warrants", InstanceManager.getNullableDefault(WarrantManager.class));
         bindings.put("CLOSED", Turnout.CLOSED);

@@ -64,14 +64,12 @@ public class JsonSignalMastSocketService extends JsonSocketService<JsonSignalMas
     }
 
     private void addListenersToChildren() {
-        InstanceManager.getDefault(SignalMastManager.class).getSystemNameList().stream().forEach((smn) -> { //add listeners to each child (if not already)
+        InstanceManager.getDefault(SignalMastManager.class).getNamedBeanSet().stream().forEach((sm) -> { //add listeners to each child (if not already)
+            String smn = sm.getSystemName();
             if (!signalMastListeners.containsKey(smn)) {
                 log.debug("adding SignalMastListener for SignalMast '{}'", smn);
-                SignalMast sm = InstanceManager.getDefault(SignalMastManager.class).getSignalMast(smn);
-                if (sm != null) {
-                    signalMastListeners.put(smn, new SignalMastListener(sm));
-                    sm.addPropertyChangeListener(this.signalMastListeners.get(smn));
-                }
+                signalMastListeners.put(smn, new SignalMastListener(sm));
+                sm.addPropertyChangeListener(this.signalMastListeners.get(smn));
             }
         });
     }    

@@ -176,120 +176,6 @@ public class StringUtilTest {
     }
 
     @Test
-    public void testSort1() {
-        String input[] = new String[]{"A", "B", "C"};
-        String output[] = new String[]{"A", "B", "C"};
-        StringUtil.sort(input);
-        Assert.assertArrayEquals(input, output);
-    }
-
-    @Test
-    public void testSort2() {
-        String input[] = new String[]{"A", "b", "C"};
-        String output[] = new String[]{"A", "C", "b"};
-        StringUtil.sort(input);
-        Assert.assertArrayEquals(input, output);
-    }
-
-    @Test
-    public void testSort3() {
-        String input[] = new String[]{"B", "C", "A"};
-        String output[] = new String[]{"A", "B", "C"};
-        StringUtil.sort(input);
-        Assert.assertArrayEquals(input, output);
-    }
-
-    @Test
-    public void testSort4() {
-        String input[] = new String[]{"c", "b", "a"};
-        String output[] = new String[]{"a", "b", "c"};
-        StringUtil.sort(input);
-        Assert.assertArrayEquals(input, output);
-    }
-
-    @Test
-    public void testSort5() {
-        String input[] = new String[]{"A", "c", "b"};
-        String output[] = new String[]{"A", "b", "c"};
-        StringUtil.sort(input);
-        Assert.assertArrayEquals(input, output);
-    }
-
-    @Test
-    public void testSort6() {
-        String input[] = new String[]{"A", "A", "b"};
-        String output[] = new String[]{"A", "A", "b"};
-        StringUtil.sort(input);
-        Assert.assertArrayEquals(input, output);
-    }
-
-    @Test
-    public void testArraySort() {
-        String[] str = new String[]{"8567", "8456"};
-        jmri.util.StringUtil.sort(str);
-        Assert.assertEquals("first ", "8456", str[0]);
-    }
-
-    @Test
-    public void testSplit1() {
-        Log4JUtil.setDeprecatedLogging(false); // testing deprecated method
-        String input = "abc.cdf";
-        String[] result = jmri.util.StringUtil.split(input, ".");
-        Assert.assertEquals("length", 2, result.length);
-        Assert.assertEquals("item 0", "abc", result[0]);
-        Assert.assertEquals("item 1", "cdf", result[1]);
-    }
-
-    @Test
-    public void testSplit2() {
-        Log4JUtil.setDeprecatedLogging(false); // testing deprecated method
-        String input = "abcxcdf";
-        String[] result = jmri.util.StringUtil.split(input, ".");
-        Assert.assertEquals("length", 1, result.length);
-        Assert.assertEquals("item 0", "abcxcdf", result[0]);
-    }
-
-    @Test
-    public void testSplit3() {
-        Log4JUtil.setDeprecatedLogging(false); // testing deprecated method
-        String input = "abc.cdf.";
-        String[] result = jmri.util.StringUtil.split(input, ".");
-        Assert.assertEquals("length", 3, result.length);
-        Assert.assertEquals("item 0", "abc", result[0]);
-        Assert.assertEquals("item 1", "cdf", result[1]);
-        Assert.assertEquals("item 2", "", result[2]);
-    }
-
-    @Test
-    public void testSplit4() {
-        String input = "abc.cdf.ert";
-        String[] result = jmri.util.StringUtil.split(input, ".");
-        Assert.assertEquals("length", 3, result.length);
-        Assert.assertEquals("item 0", "abc", result[0]);
-        Assert.assertEquals("item 1", "cdf", result[1]);
-        Assert.assertEquals("item 2", "ert", result[2]);
-    }
-
-    @Test
-    public void testSplit5() {
-        String input = "abc..cdf";
-        String[] result = jmri.util.StringUtil.split(input, ".");
-        Assert.assertEquals("length", 3, result.length);
-        Assert.assertEquals("item 0", "abc", result[0]);
-        Assert.assertEquals("item 1", "", result[1]);
-        Assert.assertEquals("item 2", "cdf", result[2]);
-    }
-
-    @Test
-    public void testSplit6() {
-        String input = "abcxcdf.";
-        String[] result = jmri.util.StringUtil.split(input, ".");
-        Assert.assertEquals("length", 2, result.length);
-        Assert.assertEquals("item 0", "abcxcdf", result[0]);
-        Assert.assertEquals("item 1", "", result[1]);
-    }
-
-    @Test
     public void testparenQuote() {
         String sample;
 
@@ -391,4 +277,55 @@ public class StringUtilTest {
         int[] d = new int[]{1, 2, 3};
         Assert.assertEquals("Object", "[1],[2],[3]", StringUtil.arrayToString(d));
     }
+
+    @Test
+    public void testGetFirstIntFromString() {
+        Assert.assertEquals("F aABC123DEFb", 123, StringUtil.getFirstIntFromString("aABC123DEFb"));
+        Assert.assertEquals("F no val", -1, StringUtil.getFirstIntFromString(""));
+        Assert.assertEquals("F 0", 0, StringUtil.getFirstIntFromString("0"));
+        Assert.assertEquals("F +2", 2, StringUtil.getFirstIntFromString("+2"));
+        Assert.assertEquals("F -5", 5, StringUtil.getFirstIntFromString("-5"));
+        Assert.assertEquals("F ABC123DEF", 123,StringUtil.getFirstIntFromString("ABC123DEF"));
+        Assert.assertEquals("F ABC123", 123, StringUtil.getFirstIntFromString("ABC123"));
+        Assert.assertEquals("F 123", 123, StringUtil.getFirstIntFromString("123"));
+        Assert.assertEquals("F 123ABC", 123, StringUtil.getFirstIntFromString("123ABC"));
+        Assert.assertEquals("F AB12 34ABC", 12, StringUtil.getFirstIntFromString("AB12 34ABC"));
+        Assert.assertEquals("F 123 ABC ", 123, StringUtil.getFirstIntFromString("123 ABC"));
+        Assert.assertEquals("F 123ABC456", 123, StringUtil.getFirstIntFromString("123ABC456"));
+        Assert.assertEquals("F 123A654BC456", 123, StringUtil.getFirstIntFromString("123A654BC456"));
+        Assert.assertEquals("F XD+123ABC-456", 123, StringUtil.getFirstIntFromString("XD+123ABC-456"));
+        Assert.assertEquals("F A c456fg123ABC789jh", 456, StringUtil.getFirstIntFromString("A c456fg123ABC789jh"));
+    }
+    
+    @Test
+    public void testGetLastIntFromString() {
+        Assert.assertEquals("aABC123DEFb", 123, StringUtil.getLastIntFromString("aABC123DEFb"));
+        Assert.assertEquals("no val", -1, StringUtil.getLastIntFromString(""));
+        Assert.assertEquals("0", 0, StringUtil.getLastIntFromString("0"));
+        Assert.assertEquals("+2", 2, StringUtil.getLastIntFromString("+2"));
+        Assert.assertEquals("-5", 5, StringUtil.getLastIntFromString("-5"));
+        Assert.assertEquals("ABC123DEF", 123,StringUtil.getLastIntFromString("ABC123DEF"));
+        Assert.assertEquals("ABC123", 123, StringUtil.getLastIntFromString("ABC123"));
+        Assert.assertEquals("123", 123, StringUtil.getLastIntFromString("123"));
+        Assert.assertEquals("123ABC", 123, StringUtil.getLastIntFromString("123ABC"));
+        Assert.assertEquals("AB12 34ABC", 34, StringUtil.getLastIntFromString("AB12 34ABC"));
+        Assert.assertEquals("123 ABC ", 123, StringUtil.getLastIntFromString("123 ABC "));
+        Assert.assertEquals("123ABC456", 456, StringUtil.getLastIntFromString("123ABC456"));
+        Assert.assertEquals("123A654BC456", 456, StringUtil.getLastIntFromString("123A654BC456"));
+        Assert.assertEquals("XD+123ABC-456", 456, StringUtil.getLastIntFromString("XD+123ABC-456"));
+        Assert.assertEquals("Ac456fg123ABC789jh", 789, StringUtil.getLastIntFromString("Ac456fg123ABC789jh"));
+    }
+    
+    @Test
+    public void testReplaceLast() {
+        Assert.assertEquals("no vals", "", StringUtil.replaceLast("","",""));
+        Assert.assertEquals("D4F5gaz", "D4F5gaz", StringUtil.replaceLast("D4F5gaz","",""));
+        Assert.assertEquals("D4F5gaz F5 S1", "D4S1gaz", StringUtil.replaceLast("D4F5gaz","F5","S1"));
+        Assert.assertEquals("D4F5g1234", "D4F5g1234", StringUtil.replaceLast("D4F5g123","123","1234"));
+        Assert.assertEquals("77YYYzz", "77YYYzz", StringUtil.replaceLast("xxYYYzz","xx","77"));
+        Assert.assertEquals("xxAA77YYYzz", "xxAA77YYYzz", StringUtil.replaceLast("xxAAxxYYYzz","xx","77"));
+        Assert.assertEquals("122", "122", StringUtil.replaceLast("121","1","2"));
+        Assert.assertEquals("122 Z", "121", StringUtil.replaceLast("121","Z","2"));
+    }
+    
 }
