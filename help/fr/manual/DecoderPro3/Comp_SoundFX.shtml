@@ -1,12 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Translation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-02-20 -->
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>Comprehensive Programmer - Sound FX Pane</title>
+  <title>Programmer Complet- Sound FX Pane</title>
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
@@ -24,51 +24,48 @@
   <div id="mainContent">
     <a name="Top" id="Top"></a>
 
-    <h1>DecoderPro&reg; Comprehensive Programmer</h1>
+    <h1>DecoderPro&reg; Programmeur Complet</h1>
 
-    <h2>Sound FX Pane</h2>
+    <h2>Onglet Fonction Son</h2>
 
     <div align="right">
-      <p><a href="Comp_Analog.shtml">Previous |</a> <a href=
+      <p><a href="Comp_Analog.shtml">Pr&#233;c&#233;dent |</a> <a href=
       "Comp_SoundLevels.shtml">Next</a></p>
 
-      <p><a href="index.shtml#Advanced%20Programmer">Back to
-      Index</a></p>
+      <p><a href="index.shtml#Advanced%20Programmer">Retour &#224; l'Index</a></p>
     </div>
     <hr>
 
-    <p>This pane will only be displayed for Sound decoders.</p>
+    <p>Cet onglet ne sera affich&#233; que pour les d&#233;codeurs sonores.</P>
 
-    <p>Several manufacturers now offer decoders that include sound
-    functions. This pane is designed to control those CVs. The
-    screen shot below is from a programmer for Tsunami OEM FP-45
-    sound decoder. There are also steam sound decoders
-    available.</p>
+     <p>Plusieurs fabricants proposent d&#233;sormais des d&#233;codeurs incluant 
+     des fonctions sonores. Ce volet est con&#231;u pour contr&#244;ler ces CV. 
+     La capture d'&#233;cran ci-dessous est celle d'un programmeur pour le 
+     d&#233;codeur de son OEM Tsunami FP-45. Des d&#233;codeurs de son vapeur 
+     sont &#233;galement disponibles. </P>
 
-    <p>These sounds can be coordinated with the mechanism of the
-    locomotive, and appropriate sounds can be triggered from the
-    function keys of the throttle. Others can be set to be
-    triggered at startup or to run in the background.</p>
+     <p>Ces sons peuvent &#234;tre coordonn&#233;s avec le m&#233;canisme de la locomotive 
+     et les sons appropri&#233;s peuvent &#234;tre d&#233;clench&#233;s &#224; partir des touches de 
+     fonction du r&#233;gulateur. D'autres peuvent &#234;tre configur&#233;s pour &#234;tre 
+     d&#233;clench&#233;s au d&#233;marrage ou pour s'ex&#233;cuter en arri&#232;re-plan. </P>
 
-    <p>This pane allows for the selection of sound effects from
-    sound decoders, and the <a href=
-    "Comp_SoundLevels.shtml"><strong>Sound Levels Pane</strong></a>
-    allows for setting the loudness levels of those sounds when
-    they play back.</p>
+     <p>Cet onglet permet de s&#233;lectionner les effets sonores &#224; partir 
+     de d&#233;codeurs sonores. L'onglet <a href= "Comp_SoundLevels.shtml"> <strong>  
+		 Niveaux sonores </strong> </a> </a> permet de d&#233;finir les niveaux 
+		 des sons lorsqu'ils sont lus. </ p>
 
     <h1><img src="images/Comp_09_Sound.png" width="852" height=
     "503" alt="sound pane"></h1>
 
-    <p>For specific function options, see your decoder
-    documentation and the programmer for the specific decoder.
-    Sometimes (depending on the volunteer that wrote the decoder
-    definition file) there are "tool tips" that appear if you hover
-    over a selection entry box.</p>
+    <p>Pour des options de fonction sp&#233;cifiques, consultez la 
+    documentation de votre d&#233;codeur et le programmeur correspondant.
+     Parfois (en fonction du volontaire qui a &#233;crit le fichier de 
+     d&#233;finition du d&#233;codeur), des "info-bulles" apparaissent si vous 
+     survolez une zone de s&#233;lection. </P>
 
-    <p>Here are is a sampling of sound functions on some other
-    decoders:</p>
+     <p>Voici un &#233;chantillon des fonctions sonores sur certains autres d&#233;codeurs: </p>
 
-    <p><strong>Athearn N Scale Big Boy and Challenger</strong></p>
+     <p> <strong> Big Boy et Challenger Athearn N Scale </strong> </p>
 
     <h1><img src="images/Comp_09a_Sound.png" alt="Athearn Sound"
     width="798" height="178" border="5"></h1>
@@ -81,11 +78,10 @@
 
     <div align="right">
       <p><a href="Comp_SoundLevels.shtml"></a> <a href=
-      "Comp_Analog.shtml">Previous |</a> <a href=
-      "Comp_SoundLevels.shtml">Next</a></p>
+      "Comp_Analog.shtml">Pr&#233;c&#233;dent |</a> <a href=
+      "Comp_SoundLevels.shtml">Suivant</a></p>
 
-      <p><a href="index.shtml#Advanced%20Programmer">Back to
-      Index</a></p>
+      <p><a href="index.shtml#Advanced%20Programmer">Retour &#224; l'Index</a></p>
     </div><!--#include virtual="/Footer" -->
   </div><!-- closes #mainContent-->
   <!-- closes #mBody-->
