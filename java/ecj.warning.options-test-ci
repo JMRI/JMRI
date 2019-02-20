@@ -2,9 +2,9 @@
 #
 # We relax certain requirements for the test code; this handles that
 
--warn:-dep-ann
--warn:-deprecation
--warn:-allDeprecation
+-err:-dep-ann
+-err:-deprecation
+-err:-allDeprecation
 
--warn:-allOver-ann
--warn:-over-ann
+-err:-allOver-ann
+-err:-over-ann
