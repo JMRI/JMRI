@@ -171,9 +171,6 @@
       </label>
       <group exclude="76560"> <!-- only for IntelliDrive2 2017 and later-->
           <label>
-              <text> </text>
-          </label>
-          <label>
               <text>PWM</text>
           </label>
           <row>
@@ -214,7 +211,7 @@
               <display item="PWM Modulation on A7"/>
               <display item="PWM Cross on A7" format="checkbox"/>
           </row>
-
+          <label><text>      </text></label>
           <!-- BEGIN - PWM Phase Grid -->
           <grid gridy="2" weightx="1" ipadx="1">
               <!-- BEGIN - Row 1 (headers)-->

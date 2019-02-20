@@ -702,15 +702,15 @@
             </variable>
             <variable item="ABV2 F Key" CV="148" default="255">
                 <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumFunctionChoiceOff255.xml"/>
-                <label>Key to activate ABV2</label>
-                <label xml:lang="de">ABV2 Funktionstaste</label>
-                <label xml:lang="nl">ABV2 Functietoets</label>
+                <label>Key to activate Rate 2:</label>
+                <label xml:lang="de">ABV2 Funktionstaste:</label>
+                <label xml:lang="nl">ABV2 Functietoets:</label>
             </variable>
             <variable item="ABV3 F Key" CV="149" default="255">
                 <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumFunctionChoiceOff255.xml"/>
-                <label>Key to activate ABV3</label>
-                <label xml:lang="de">ABV3 Funktionstaste</label>
-                <label xml:lang="nl">ABV3 Functietoets</label>
+                <label>Key to activate Rate 3:</label>
+                <label xml:lang="de">ABV3 Funktionstaste:</label>
+                <label xml:lang="nl">ABV3 Functietoets:</label>
             </variable>
             <!-- CVs 150-157 are in optionVars7outputs.xml include -->
             <!-- CV159 pass Function Key to SUSI-->
@@ -736,7 +736,106 @@
             <variable item="SUSI F28" CV="159" mask="XVXXXXXX" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
             </variable>
-            <!-- TODO CVs 160-168 Servossteuerung -->
+            <!-- CVs 160-168 Servossteuerung -->
+            <variable item="Servo 1 Pos 1" CV="160" default="20">
+                <decVal/>
+                <label>Servo 1 - Position 1</label>
+                <label xml:lang="de">Servo 1 - Stellung 1</label>
+                <label xml:lang="nl">Servo 1 - Positie 1</label>
+                <tooltip>Function key Off</tooltip>
+                <tooltip xml:lang="de">Funktionstaste Aus</tooltip>
+                <tooltip xml:lang="nl">Functietoets Uit</tooltip>
+            </variable>
+            <variable item="Servo 1 Pos 2" CV="161" default="200">
+                <decVal/>
+                <label>Position 2</label>
+                <label xml:lang="de">Stellung 2</label>
+                <label xml:lang="nl">Positie 2</label>
+                <tooltip>Function key On</tooltip>
+                <tooltip xml:lang="de">Funktionstaste Ein</tooltip>
+                <tooltip xml:lang="nl">Functietoets Aan</tooltip>
+            </variable>
+            <variable item="Servo 1 Speed" CV="162" default="30">
+                <decVal/>
+                <label>Speed</label>
+                <label xml:lang="de">Umlaufzeit</label>
+                <label xml:lang="nl">Omlooptijd</label>
+                <tooltip>Duration of full Servo 1 rotation (Value * 0.1 sec)</tooltip>
+                <tooltip xml:lang="de">Umlaufzeit Servo 1 (Wert * 0.1 sec)</tooltip>
+                <tooltip xml:lang="nl">Duur van hele rotatie Servo 1 (waarde * 0.1 sec)</tooltip>
+            </variable>
+            <variable item="Servo 2 Pos 1" CV="163" default="20">
+                <decVal/>
+                <label>Servo 2 - Position 1</label>
+                <label xml:lang="de">Servo 2 - Stellung 1</label>
+                <label xml:lang="nl">Servo 2 - Positie 1</label>
+                <tooltip>Function key Off</tooltip>
+                <tooltip xml:lang="de">Funktionstaste Aus</tooltip>
+                <tooltip xml:lang="nl">Functietoets Uit</tooltip>
+            </variable>
+            <variable item="Servo 2 Pos 2" CV="164" default="200">
+                <decVal/>
+                <label>Position 2</label>
+                <label xml:lang="de">Stellung 2</label>
+                <label xml:lang="nl">Positie 2</label>
+                <tooltip>Function key On</tooltip>
+                <tooltip xml:lang="de">Funktionstaste Ein</tooltip>
+                <tooltip xml:lang="nl">Functietoets Aan</tooltip>
+            </variable>
+            <variable item="Servo 2 Speed" CV="165" default="30">
+                <decVal/>
+                <label>Speed</label>
+                <label xml:lang="de">Umlaufzeit</label>
+                <label xml:lang="nl">Omlooptijd</label>
+                <tooltip>Duration of full Servo 2 rotation (Value * 0.1 sec)</tooltip>
+                <tooltip xml:lang="de">Umlaufzeit Servo 2 (Wert * 0.1 sec)</tooltip>
+                <tooltip xml:lang="nl">Duur van hele rotatie Servo 2 (waarde * 0.1 sec)</tooltip>
+            </variable>
+            <variable item="Servo Connection" CV="166" default="0">
+                <enumVal>
+                    <enumChoice choice="Off" value="0">
+                        <choice>Inactive</choice>
+                        <choice xml:lang="it">Non si ferma</choice>
+                        <choice xml:lang="cs">Nezastavuje</choice>
+                        <choice xml:lang="de">Ausgeschaltet</choice>
+                        <choice xml:lang="nl">Uitgeschakeld</choice>
+                    </enumChoice>
+                    <enumChoice choice="SUSI" value="1">
+                        <choice>SUSI</choice>
+                    </enumChoice>
+                    <enumChoice choice="A6" value="64">
+                        <choice>A6</choice>
+                        <choice xml:lang="de">AUX6</choice>
+                        <choice xml:lang="nl">A6</choice>
+                    </enumChoice>
+                    <enumChoice choice="A7" value="128">
+                        <choice>A7</choice>
+                        <choice xml:lang="de">AUX7</choice>
+                        <choice xml:lang="nl">A7</choice>
+                    </enumChoice>
+                    <enumChoice choice="A6 A7" value="192">
+                        <choice>A6 and A7</choice>
+                        <choice xml:lang="de">AUX6 and AUX 7</choice>
+                        <choice xml:lang="nl">A6 en A7</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>Servo Control on:</label>
+                <label xml:lang="de">Servosteuerung über:</label>
+                <label xml:lang="nl">Servobesturing op:</label>
+            </variable>
+            <variable item="Servo 1 F Key" CV="167" default="7">
+                <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumFunctionChoice.xml"/>
+                <label>Key on SUSI-CLK:</label>
+                <label xml:lang="de">Taste an SUSI-CLK:</label>
+                <label xml:lang="nl">Toets op SUSI-CLK:</label>
+            </variable>
+            <variable item="Servo 2 F Key" CV="168" default="8">
+                <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumFunctionChoice.xml"/>
+                <label>Key on SUSI-Data:</label>
+                <label xml:lang="de">Taste an SUSI-Data:</label>
+                <label xml:lang="nl">Toets op SUSI-Data:</label>
+            </variable>
+            <!--PWM-->
             <variable item="PWM Modulation on A0" CV="170" mask="XVVVVVVV">
                 <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumPwm.xml"/>
                 <label>PWM Modulation on A0</label>
@@ -921,7 +1020,177 @@
                 <tooltip>Wait time after CROSS-bit off (value * 100 Milliseconds)</tooltip>
                 <tooltip xml:lang="de">Haltezeit nach dem CROSS-Ausgabebit aus (Wert * 100 ms)</tooltip>
             </variable>
-            <!-- TODO CVs 181-190 -->
+            <!-- Light Effects CVs 181-190 -->
+            <variable item="Light Flicker A0" CV="181" mask="XXXXXXXV">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+            </variable>
+            <variable item="Light Flicker A1" CV="181" mask="XXXXXXVX" minOut="3">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+            </variable>
+            <variable item="Light Flicker A2" CV="181" mask="XXXXXVXX" minOut="4">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+            </variable>
+            <variable item="Light Flicker A3" CV="181" mask="XXXXVXXX" minOut="5">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+            </variable>
+            <variable item="Light Flicker A4" CV="181" mask="XXXVXXXX" minOut="6">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+            </variable>
+            <variable item="Light Flicker A5" CV="181" mask="XXVXXXXX" minOut="7">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+            </variable>
+            <variable item="Light Flicker A6" CV="181" mask="XVXXXXXX" minOut="8">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+            </variable>
+            <variable item="Light Flicker A7" CV="181" mask="VXXXXXXX" minOut="9">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+            </variable>
+            <variable item="Light Flicker Rythm" CV="182" default="0" mask="XXXXVVVV">
+                <decVal max="15"/>
+                <label>Flicker Effect - Rythm</label>
+                <label xml:lang="de">Flackereffekt - Rythmus</label>
+                <label xml:lang="nl">Flakkeren - Tempo</label>
+                <tooltip>Flicker Effect Speed Variation (0-15)</tooltip>
+                <tooltip xml:lang="de">Flackereffekt Rythmusvariation (0-15)</tooltip>
+                <tooltip xml:lang="nl">Tempovariatie (0-15)</tooltip>
+            </variable>
+            <variable item="Light Flicker Change" CV="182" default="0" mask="XVVVXXXX">
+                <decVal max="7"/>
+                <label>Variation</label>
+                <label xml:lang="de">Abwechslung</label>
+                <label xml:lang="nl">Helderheidswissel</label>
+                <tooltip>Flicker Effect brightness variation (0-7)</tooltip>
+                <tooltip xml:lang="de">Flackereffekt Helligkeitsabwechslung (0-7)</tooltip>
+                <tooltip xml:lang="nl">Helderheidsvariatie (0-7)</tooltip>
+            </variable>
+            <variable item="Light Flicker Bright" CV="182" mask="VXXXXXXX">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+                <label>Full Brightness</label>
+                <label xml:lang="de">Immer hell</label>
+                <label xml:lang="nl">Continu helder</label>
+                <tooltip>Output always full brightness</tooltip>
+                <tooltip xml:lang="de">Ausgang immer hell</tooltip>
+                <tooltip xml:lang="nl">Flakkeren zonder variatie, steeds op volle helderheid</tooltip>
+            </variable>
+            <variable item="Light Energy A0" CV="183" mask="XXXXXXXV">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+            </variable>
+            <variable item="Light Energy A1" CV="183" mask="XXXXXXVX" minOut="3">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+            </variable>
+            <variable item="Light Energy A2" CV="183" mask="XXXXXVXX" minOut="4">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+            </variable>
+            <variable item="Light Energy A3" CV="183" mask="XXXXVXXX" minOut="5">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+            </variable>
+            <variable item="Light Energy A4" CV="183" mask="XXXVXXXX" minOut="6">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+            </variable>
+            <variable item="Light Energy A5" CV="183" mask="XXVXXXXX" minOut="7">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+            </variable>
+            <variable item="Light Energy A6" CV="183" mask="XVXXXXXX" minOut="8">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+            </variable>
+            <variable item="Light Energy Start" CV="184" default="10">
+                <decVal max="63"/>
+                <label>Energy Save - Initial brightness</label>
+                <label xml:lang="de">Energiespar - Grundhelligkeit</label>
+                <label xml:lang="nl">Spaarlamp - Beginhelderheid</label>
+                <tooltip>(Value 0-63)</tooltip>
+                <tooltip xml:lang="de">(Wert 0-63)</tooltip>
+                <tooltip xml:lang="nl">(Bereik 0-63)</tooltip>
+            </variable>
+            <variable item="Light Energy Time" CV="185" default="100">
+                <decVal/>
+                <label>Warm Up Time</label>
+                <label xml:lang="de">Aufheizdauer</label>
+                <label xml:lang="nl">Opwarmtijd</label>
+                <tooltip>Energy Save - Time to reach full brightness - Value * 5 millisec</tooltip>
+                <tooltip xml:lang="de">Energiespar - Zeit bis maximale Helligkeit erreicht ist - Wert * 5 mSek</tooltip>
+                <tooltip xml:lang="nl">Spaarlamp - Duur totdat max. helderheid is bereikt - waarde * 5 ms</tooltip>
+            </variable>
+
+            <variable item="Light Energy A7" CV="183" mask="VXXXXXXX" minOut="9">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+            </variable>
+            <variable item="Light Blend A0" CV="186" mask="XXXXXXXV">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+            </variable>
+            <variable item="Light Blend A1" CV="186" mask="XXXXXXVX" minOut="3">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+            </variable>
+            <variable item="Light Blend A2" CV="186" mask="XXXXXVXX" minOut="4">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+            </variable>
+            <variable item="Light Blend A3" CV="186" mask="XXXXVXXX" minOut="5">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+            </variable>
+            <variable item="Light Blend A4" CV="186" mask="XXXVXXXX" minOut="6">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+            </variable>
+            <variable item="Light Blend A5" CV="186" mask="XXVXXXXX" minOut="7">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+            </variable>
+            <variable item="Light Blend A6" CV="186" mask="XVXXXXXX" minOut="8">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+            </variable>
+            <variable item="Light Blend A7" CV="186" mask="VXXXXXXX" minOut="9">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+            </variable>
+            <variable item="Light Blend Time" CV="187" default="30">
+                <decVal/>
+                <label>Blend In/Blend Out - Duration</label>
+                <label xml:lang="de">Ein-/Ausblenden - Blendzeit</label>
+                <label xml:lang="nl">In-/Uitfaden - Duur</label>
+                <tooltip>Blend Effect Duration - Value * 5 millisec</tooltip>
+                <tooltip xml:lang="de">Dauer des Blendes - Wert * 5 mSek</tooltip>
+                <tooltip xml:lang="nl">Duur van het verloop - waarde * 5 ms</tooltip>
+            </variable>
+            <variable item="Light Neon A0" CV="188" mask="XXXXXXXV">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+            </variable>
+            <variable item="Light Neon A1" CV="188" mask="XXXXXXVX" minOut="3">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+            </variable>
+            <variable item="Light Neon A2" CV="188" mask="XXXXXVXX" minOut="4">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+            </variable>
+            <variable item="Light Neon A3" CV="188" mask="XXXXVXXX" minOut="5">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+            </variable>
+            <variable item="Light Neon A4" CV="188" mask="XXXVXXXX" minOut="6">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+            </variable>
+            <variable item="Light Neon A5" CV="188" mask="XXVXXXXX" minOut="7">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+            </variable>
+            <variable item="Light Neon A6" CV="188" mask="XVXXXXXX" minOut="8">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+            </variable>
+            <variable item="Light Neon A7" CV="188" mask="VXXXXXXX" minOut="9">
+                <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+            </variable>
+            <variable item="Light Neon Time" CV="189" default="20">
+                <decVal/>
+                <label>Neon - Flash Time</label>
+                <label xml:lang="de">Neonlicht - Blitzzeit</label>
+                <label xml:lang="nl">Neon - Knippertijd</label>
+                <tooltip>Start Flash Duration - Value * 5 millisec</tooltip>
+                <tooltip xml:lang="de">Dauer des Blitzen - Wert * 5 mSek</tooltip>
+                <tooltip xml:lang="nl">Duur van het knipperen - waarde * 5 ms</tooltip>
+            </variable>
+            <variable item="Light Neon Flashes" CV="190" default="20">
+                <decVal/>
+                <label>Max. no. of Flashes</label>
+                <label xml:lang="de">Max. Blitsanzahl</label>
+                <label xml:lang="nl">Max. aantal flitsen</label>
+                <tooltip>Maximum number of flashes on startup</tooltip>
+                <tooltip xml:lang="de">maximale Blitzanzahl</tooltip>
+                <tooltip xml:lang="nl">Maximum aantal keer knipperen na inschakelen</tooltip>
+            </variable>
+
             <variable item="Motor Management 1" CV="200" default="10">
                 <decVal/>
                 <label>Minimum Speed Step</label>
