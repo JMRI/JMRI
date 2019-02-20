@@ -1,7 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Translation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-02-20 -->
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -25,80 +25,78 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>DecoderPro&reg; Comprehensive Programmer</h1>
+      <h1>DecoderPro&reg; Programmeur Complet</h1>
 
-      <h2>Printing Decoder Data</h2>
+      <h2>Impression Donn&#233;e du D&#233;codeur</h2>
 
       <div align="right">
-        <p><a href="Comp_ManfSpecific.shtml">Previous</a></p>
+        <p><a href="Comp_ManfSpecific.shtml">Pr&#233;c&#233;dent</a></p>
 
-        <p><a href="index.shtml#Advanced%20Programmer">Back to
-        Index</a></p>
+        <p><a href="index.shtml#Advanced%20Programmer">Retour &#224; l'Index</a></p>
       </div>
       <hr>
 
-      <p><strong>Print Data:</strong> DecoderPro provides the
-      capability to print out a full list of the decoder CV data or
-      selected data. To print, select the <strong>File</strong>
-      menu of any Comprehensive Programmer Pane, then select the
-      Print or Print Preview options.</p>
+      <p><strong>Imprimer les donn&#233;es</strong>: DecoderPro permet d'imprimer 
+      une liste compl&#232;te des donn&#233;es CV du d&#233;codeur ou des donn&#233;es s&#233;lectionn&#233;es. 
+      Pour imprimer, s&#233;lectionnez le menu <strong>Fichier</strong> du
+      volet du programmeur complet, puis s&#233;lectionnez les options 
+      Imprimer ou Aper&#231;u avant impression. </P>
 
-      <ul>
-        <li><strong>Print all..., Preview all...</strong> Displays
-        <strong>Select Items to Print</strong> dialog box</li>
+       <ul>
+         <li><strong>Imprimer tout ..., tout afficher ... </strong> afficher 
+         <strong>Bo&#238;te de dialogue S&#233;lectionner les &#233;l&#233;ments &#224; imprimer </strong> <//li>
 
         <li style="list-style: none">
           <p><img src="images/Comp_09d_PrintData.png" width="254"
           height="459" alt="print items"><br>
-          Select each or all of the decoder items that you want to
-          print</p>
+          S&#233;lectionnez chacun ou tous les &#233;l&#233;ments du d&#233;codeur que vous 
+          souhaitez imprimer</p>
 
-          <p>Click <input type="button" name="button" id="button"
-          value="Okay"> to print then Print dialog for your
-          computer system is displayed.</p>
-        </li>
+          <p>Cliquez <input type="button" name="button" id="button"
+          value="Okay"> pour imprimer, la bo&#238;te de dialogue Imprimer de 
+          votre ordinateur s'affiche. </p>
+         </li>
 
-        <li><strong>Print CVs...,Preview CVs..</strong>.Displays
-        <strong>Select Items to Print</strong> Dialog box or
-        Preview screen</li>
+         <li><strong>Imprimer les CV ..., Aper&#231;u des CV ..</strong> .
+         Afficher <strong>&#201;l&#233;ments &#224; imprimer </strong>: Bo&#238;te de dialogue 
+         ou &#233;cran de pr&#233;visualisation </li> </ul>
+
+       <p> Ces impressions montrent les variables par nom dans chaque 
+       cat&#233;gorie s&#233;lectionn&#233;e (comme indiqu&#233; dans les panneaux de DecoderPro), 
+       ainsi que leur num&#233;ro de CV et leur valeur. Une r&#233;f&#233;rence pratique 
+       pour l'avenir.<//P>
+
+       <p>L'aper&#231;u avant impression ressemblera &#224; celui sur le point 
+       d'imprimer la liste et demandera quelle imprimante utiliser. 
+       Ne paniquez pas !, c'est uniquement pour que l'aper&#231;u fonctionne. 
+       Allez-y, s&#233;lectionnez l'imprimante et vous n'obtiendrez que l'aper&#231;u.</P>
+
+       <p><strong>Importer des donn&#233;es: </strong> vous pouvez importer la 
+       liste depuis un autre ordinateur au format de fichier PR1. Ainsi, 
+       les fonctionnalit&#233;s d'exportation et d'importation vous permettent 
+       de transf&#233;rer les donn&#233;es d'un syst&#232;me informatique &#224; un autre.</P>
+
+     <p> <strong>Exporter des donn&#233;es:</strong>, vous pouvez exporter 
+     la liste sous l'un des types de fichier suivants: </p>
+
+       <ul>
+         <li> fichier CSV ... (variables s&#233;par&#233;es par des virgules) </li>
+
+        <li>Fichier PR1DOS ...</li>
+
+        <li>Fichier PR1WIN...</li>
       </ul>
 
-      <p>These printouts show the variables by name in each
-      category that is selectected.(as shown on the DecoderPro
-      panes) along with their CV number and Value. A handy
-      reference for the future.</p>
-
-      <p>Print preview will look like it's about to print the list,
-      and ask for which printer to use. Don't panic!, that's only
-      to get the preview to work. Go ahead and select the printer
-      and you'll only get the preview.</p>
-
-      <p><strong>Import Data:</strong> You may import the list from
-      another computer in the PR1 file format. Thus, the Export and
-      Import capability allows you to take the data from one
-      computer system to another.</p>
-
-      <p><strong>Export Data:</strong> you may export the list as
-      one of several file types :</p>
-
-      <ul>
-        <li>CSV file... (Comma separated variables)</li>
-
-        <li>PR1DOS file...</li>
-
-        <li>PR1WIN file...</li>
-      </ul>
-
-      <p>All are two columns, CV#, and Value in Decimal and
-      Hexadecimal <img src="images/Comp_09_Print_Data.png" width=
+      <p>Toutes sont sur deux colonnes, CV # et Valeur en d&#233;cimal et 
+      hexad&#233;cimal <img src="images/Comp_09_Print_Data.png" width=
       "333" height="206" alt="print data"><img src=
       "images/Comp_09_Print_Data01.png" width="673" height="526"
       alt="print"></p>
 
-      <p>The three images below are samples of the "<b>All</b>"
-      printout from the SD40-2 that has been used as an example in
-      many places in this manual. Click on the page to see a larger
-      image in a new window.</p>
+      <p>Les trois images ci-dessous sont des exemples de l'impression 
+      "<b>Toutes</b>" du SD40-2 qui a &#233;t&#233; utilis&#233;e &#224; plusieurs reprises 
+      dans ce manuel. Cliquez sur la page pour voir une image plus grande
+       dans une nouvelle fen&#234;tre.</p>
 
       <div align="center">
         <a name="Print" id="Print"></a><a href=
@@ -116,16 +114,16 @@
         height="63%" width="25%"></a>
       </div>
 
-      <p>OK! That's it! You now know how to use DecoderPro to
-      program your decoders, and document the results.. Now let's
-      run trains!</p>
+      <p>D'ACCORD! C'est tout! Vous savez maintenant comment utiliser
+       DecoderPro pour programmer vos d&#233;codeurs et documenter les r&#233;sultats. 
+       Maintenant faisons rouler les trains!
+	</p>
       <hr>
 
       <div align="right">
-        <p><a href="Comp_ManfSpecific.shtml">Previous</a></p>
+        <p><a href="Comp_ManfSpecific.shtml">Pr&#233;c&#233;dent</a></p>
 
-        <p><a href="index.shtml#Advanced%20Programmer">Back to
-        Index</a></p>
+        <p><a href="index.shtml#Advanced%20Programmer">Retour &#224; l'Index</a></p>
       </div><!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
