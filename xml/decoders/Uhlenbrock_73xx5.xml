@@ -13,7 +13,7 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
     <version author="Egbert Broerse" version="1" lastUpdated="20190215"/>
-    <!-- Version 1 - For new 2017-18 decoders. Copied and adapted from Uhlenbrock_76560.xml -->
+    <!-- Version 1 - For new 2017-18 decoders. Copied and adapted from Uhlenbrock_76560.xml Uses common parts -->
     <!-- WARNING: output names fully linked to function mapping include file - do not change independently -->
     <decoder>
         <family name="IntelliDrive2" mfg="Uhlenbrock Elektronik" comment="Decoders not sorted (necessarily) in numerical order"><!-- to be checked by hardware owner -->
@@ -94,13 +94,13 @@
         <programming direct="yes" paged="yes" register="yes" ops="yes">
             <capability>
                 <name>Indexed CV access</name>
-                <parameter name="PI">1021</parameter> <!--for audio on SUSI-->
+                <parameter name="PI">1021</parameter> <!-- for audio on SUSI -->
                 <parameter name="SI">0</parameter> <!-- Not used, but need to be declared for cvFirst to be read -->
                 <parameter name="cvFirst">true</parameter>
             </capability>
             <capability>
-                <name>Indexed CV access</name>
-                <parameter name="PI">31</parameter> <!--for Banks-->
+                <name>Indexed CV access 2</name>
+                <parameter name="PI">31</parameter> <!--for Banks -->
                 <parameter name="SI">0</parameter> <!-- Not used, but need to be declared for cvFirst to be read -->
                 <parameter name="cvFirst">true</parameter>
             </capability>
@@ -116,9 +116,17 @@
                 <label xml:lang="de">Decoder Version: </label>
                 <label xml:lang="nl">Versie van decoder: </label>
             </variable>
-            <variable item="Manufacturer" CV="8" readOnly="yes" default="85"><!-- Uhlenbrock -->
+            <variable item="Manufacturer" CV="8" readOnly="yes" default="85" exclude="PIKO41RH2400"><!-- Uhlenbrock -->
                 <decVal/>
-                <defaultItem default="162" include="PIKO41RH2400"/><!-- Piko -->
+                <!--<defaultItem default="162" include="PIKO41RH2400"/> somehow not validating -->
+                <label>Manufacturer ID: </label>
+                <label xml:lang="it">ID Costruttore: </label>
+                <label xml:lang="fr">ID constructeur: </label>
+                <label xml:lang="de">Hersteller ID: </label>
+                <label xml:lang="nl">Fabrikant-ID: </label>
+            </variable>
+            <variable item="Manufacturer" CV="8" readOnly="yes" default="162" include="PIKO41RH2400"><!-- Piko -->
+                <decVal/>
                 <label>Manufacturer ID: </label>
                 <label xml:lang="it">ID Costruttore: </label>
                 <label xml:lang="fr">ID constructeur: </label>
