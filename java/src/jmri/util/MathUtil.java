@@ -1144,7 +1144,7 @@ public final class MathUtil {
      * Draw a Bezier curve
      *
      * @param g2  the Graphics2D to draw to
-     * @param p[] control points
+     * @param p control points
      * @param displacement right/left to draw a line parallel to the Bezier
      * @return the length of the Bezier curve
      */
@@ -1168,7 +1168,7 @@ public final class MathUtil {
      * Draw a Bezier curve
      *
      * @param g2  the Graphics2D to draw to
-     * @param p[] control points
+     * @param p control points
      * @return the length of the Bezier curve
      */
     public static double drawBezier(Graphics2D g2, @Nonnull Point2D p[]) {
