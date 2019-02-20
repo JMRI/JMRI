@@ -1,4 +1,4 @@
-package jmri.jmrit.ctc;
+package jmri.jmrit.ctc.setup;
 
 
 import java.io.File;
@@ -141,9 +141,7 @@ public class CreateTestObjects {
             fromFile = new File(SOURCE_PATH + PROP_FILE);
             toPath = toFile.toPath();
             fromPath = fromFile.toPath();
-            log.warn("from = {}, to = {}", fromPath, toPath);
             try {
-//                 Files.copy(fromPath, toPath.resolve(fromPath.getFileName()), StandardCopyOption.REPLACE_EXISTING);
                 Files.copy(fromPath, toPath, StandardCopyOption.REPLACE_EXISTING);
             } catch (IOException ex) {
                 log.error("Copy CTC Poperties demo file failed", ex);  // NOI18N
@@ -156,9 +154,7 @@ public class CreateTestObjects {
             fromFile = new File(SOURCE_PATH + SYS_FILE);
             toPath = toFile.toPath();
             fromPath = fromFile.toPath();
-            log.warn("from = {}, to = {}", fromPath, toPath);
             try {
-//                 Files.copy(fromPath, toPath.resolve(fromPath.getFileName()), StandardCopyOption.REPLACE_EXISTING);
                 Files.copy(fromPath, toPath, StandardCopyOption.REPLACE_EXISTING);
             } catch (IOException ex) {
                 log.error("Copy CTC Poperties demo file failed", ex);  // NOI18N
