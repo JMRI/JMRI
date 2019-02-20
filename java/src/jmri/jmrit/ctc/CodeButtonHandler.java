@@ -52,7 +52,7 @@ public class CodeButtonHandler {
                                 TrafficLocking trafficLocking,
                                 TurnoutLock turnoutLock,
                                 IndicationLockingSignals indicationLockingSignals) {            // Needed for check of adjacent OS Section(s), and optionally turnoutLock.
-        signalDirectionIndicators.SetCodeButtonHandler(this);
+        signalDirectionIndicators.setCodeButtonHandler(this);
         _mTurnoutLockingOnlyEnabled = turnoutLockingOnlyEnabled;
         _mLockedRoutesManager = lockedRoutesManager;
         _mUserIdentifier = userIdentifier;

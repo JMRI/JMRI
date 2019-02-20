@@ -1,7 +1,9 @@
 package jmri.jmrit.ctc.ctcserialdata;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
@@ -58,6 +60,7 @@ public class OtherData implements Serializable {
     }
     
 //  Duplicates get ONLY ONE entry in the set (obviously).    
+    @SuppressFBWarnings(value = "DE_MIGHT_IGNORE", justification = "Just skip problem fields is fine")
     public HashSet<String> getAllInternalSensors() {
         HashSet<String> returnValue = new HashSet<>();
         ArrayList<Field> fields = getAllInternalSensorStringFields();
@@ -129,16 +132,18 @@ variable name and declared as type String.
             ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(byteArrayOutputStream.toByteArray());
             ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);
             return (OtherData)objectInputStream.readObject();
-        } catch (Exception e) { return null;}
+        } catch (IOException | ClassNotFoundException ex) { return null;}
     }
 
-//  Figure out if we need to convert from prior verion(s):
+//  Figure out if we need to convert from prior verion(s) (As of 2/20/19, no):
     public void upgradeSelf() {
+/*        
         for (int oldVersion = _mFileVersion; oldVersion < FILE_VERSION; oldVersion++) {
             switch(oldVersion) {
                 case 0:
                     break;
             }
         }
+*/
     }
 }

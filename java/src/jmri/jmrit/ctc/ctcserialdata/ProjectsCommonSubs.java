@@ -1,5 +1,6 @@
 package jmri.jmrit.ctc.ctcserialdata;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.lang.reflect.Field;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -39,6 +40,7 @@ public class ProjectsCommonSubs {
 
     static public String constructCSVStringFromArrayList(ArrayList<String> stringArrayList) { return constructSeparatorStringFromArray(stringArrayList, CSV_SEPARATOR); }
     static public String constructSSVStringFromArrayList(ArrayList<String> stringArrayList) { return constructSeparatorStringFromArray(stringArrayList, ProjectsCommonSubs.SSV_SEPARATOR); }
+    @SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION", justification = "I don't want to introduce bugs, CPU no big deal here.")
     static private String constructSeparatorStringFromArray(ArrayList<String> stringArrayList, String separator) {
         String returnString = "";
         if (stringArrayList.size() > 0) { // Safety:
@@ -58,6 +60,11 @@ public class ProjectsCommonSubs {
         return lastIndexOf >= 1 ? filename.substring(0, lastIndexOf) : filename;  
     }
 
+//  Regarding "SuppressFBWarn":    
+//  Nothing I can find says it returns "null" in any of these lines.
+//  So either Java's documentation is wrong, or SpotBugs is wrong.  I'll let
+//  someone in the future deal with this, since it should never happen:    
+    @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "Nothing is documented as returning null")
     public static String getFilenameOnly(String path) {
         return Paths.get(path).getFileName().toString(); 
     }

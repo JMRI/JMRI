@@ -3,6 +3,7 @@
 
 package jmri.jmrit.ctc.ctcserialdata;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
@@ -67,6 +68,7 @@ public class CodeButtonHandlerData implements Serializable, Comparable<CodeButto
         public static SIGNAL_TYPE getSignalType(ButtonGroup buttonGroup) { return (SIGNAL_TYPE)map.get(ProjectsCommonSubs.getButtonSelectedInt(buttonGroup)); }
     }
     
+    @SuppressFBWarnings(value = "EQ_COMPARETO_USE_OBJECT_EQUALS", justification = "The code works fine as is, I have no idea why it is whining about this.")
     @Override
     public int compareTo(CodeButtonHandlerData codeButtonHandlerData) {
         return this._mGUIColumnNumber - codeButtonHandlerData._mGUIColumnNumber;
@@ -111,7 +113,7 @@ public class CodeButtonHandlerData implements Serializable, Comparable<CodeButto
             ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(byteArrayOutputStream.toByteArray());
             ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);
             return (CodeButtonHandlerData)objectInputStream.readObject();
-        } catch (Exception e) { return null;}
+        } catch (IOException | ClassNotFoundException e) { return null;}
     }
 
     public static ArrayList <Field> getAllStringFields() {
@@ -136,7 +138,7 @@ public class CodeButtonHandlerData implements Serializable, Comparable<CodeButto
         for (Field field : fields) {
             try {
                 returnValue.add((String)field.get(this));
-            } catch (IllegalArgumentException | IllegalAccessException ex) {}
+             } catch (IllegalArgumentException | IllegalAccessException ex) { continue; }
         }
         return returnValue;
     }
@@ -247,6 +249,8 @@ at the top for "automatic" JMRI object verification.
                     _mTRL_LeftTrafficLockingRulesSSVList = "";
                     _mTRL_RightTrafficLockingRulesSSVList = "";
                     break;
+                default:
+                    break;
             }
         }
         _mFileVersion = FILE_VERSION;       // Now at this version
@@ -266,7 +270,9 @@ at the top for "automatic" JMRI object verification.
     private final static String FILE_VERSION_STRING = "<string>_mFileVersion</string>"; // NOI18N
     private final static String LESS_THAN_SIGN = "<";                                   // NOI18N
     private static final String TEMPORARY_EXTENSION = ".xmlTMP";                        // NOI18N
-            
+
+//  Regarding "@SuppressFBWarnings": My attitude is that if the input file is screwed up, do nothing!:
+    @SuppressFBWarnings(value = "NP_IMMEDIATE_DEREFERENCE_OF_READLINE", justification = "I'm already catching 'NullPointerException', it's ok!")
     static public void preprocessingUpgradeSelf(String filename) {
 //  First, get the existing _mFileVersion from the file to see if we need to work on it:
         int fileVersion = -1;       // Indicate none found.
@@ -286,8 +292,12 @@ at the top for "automatic" JMRI object verification.
             case 4:
                 upgradeVersion4FileTo5(filename);
                 break;
+            default:
+                break;
         }
     }
+    
+    @SuppressFBWarnings(value = "RV_RETURN_VALUE_IGNORED_BAD_PRACTICE", justification = "Any problems, I don't care, it's too late by this point")
     static private void upgradeVersion4FileTo5(String filename) {
         String temporaryFilename = ProjectsCommonSubs.changeExtensionTo(filename, TEMPORARY_EXTENSION);
         (new File(temporaryFilename)).delete();   // Just delete it for safety before we start:
@@ -307,7 +317,10 @@ at the top for "automatic" JMRI object verification.
                 if ((aLine = checkForRefactor(bufferedWriter, aLine, "_mTUL_AdditionalTurnout3FeedbackDifferent", "_mTUL_AdditionalExternalTurnout3FeedbackDifferent")) == null) { hadAChange = true; continue; }  // NOI18N Was processed.
                 writeLine(bufferedWriter, aLine);
             }
-            if (aLine == null && hadAChange) { // Do the two step:
+//  Regarding commented out code (due to SpotBugs):
+//  I'm a safety "nut".  I will do such things in case other code is someday inserted
+//  between the above "check for != null" and here.  But to satisfy SpotBugs:
+            if (/*aLine == null && */hadAChange) { // Do the two step:
                 bufferedReader.close();
                 bufferedWriter.close();
                 File oldFile = new File(filename);
@@ -331,11 +344,13 @@ at the top for "automatic" JMRI object verification.
             writeLine(bufferedWriter, bufferedReader.readLine());   // Ignore <void method="set">
             writeLine(bufferedWriter, bufferedReader.readLine());   // Ignore <object idref="CodeButtonHandlerData18"/>
             aLine = bufferedReader.readLine();  // Get something like <int>4</int>
-            int intStart = aLine.indexOf(INT_START_STRING + oldVersion + INT_END_STRING);
-            if (intStart >= 0) { // Found, replace:
-                writeLine(bufferedWriter, aLine.substring(0, intStart) + INT_START_STRING + newVersion + INT_END_STRING);
-            } else {
-                writeLine(bufferedWriter, aLine);
+            if (aLine != null) {
+                int intStart = aLine.indexOf(INT_START_STRING + oldVersion + INT_END_STRING);
+                if (intStart >= 0) { // Found, replace:
+                    writeLine(bufferedWriter, aLine.substring(0, intStart) + INT_START_STRING + newVersion + INT_END_STRING);
+                } else {
+                    writeLine(bufferedWriter, aLine);
+                }
             }
             return null;
         }

@@ -34,7 +34,7 @@ public final class SignalDirectionIndicators implements SignalDirectionIndicator
     private final ActionListener _mCodingTimeTimerActionListener;
     private int _mPresentDirection;
     private CodeButtonHandler _mCodeButtonHandler = null;
-    public void SetCodeButtonHandler(CodeButtonHandler codeButtonHandler) { _mCodeButtonHandler = codeButtonHandler; }
+    public void setCodeButtonHandler(CodeButtonHandler codeButtonHandler) { _mCodeButtonHandler = codeButtonHandler; }
     
     private LinkedList<SignalHeadPropertyChangeListenerMaintainer> _mSignalHeadPropertyChangeListenerLinkedList = new LinkedList<>();
     @SuppressWarnings("LeakingThisInConstructor")   // NOI18N
@@ -222,26 +222,26 @@ public final class SignalDirectionIndicators implements SignalDirectionIndicator
     private void setSignalsHeldTo(int direction) {
         switch (direction) {
             case CTCConstants.LEFTTRAFFIC:
-                SetLRSignalsHeldTo(true);
-                SetRLSignalsHeldTo(false);
+                setLRSignalsHeldTo(true);
+                setRLSignalsHeldTo(false);
                 break;
             case CTCConstants.RIGHTTRAFFIC:
-                SetLRSignalsHeldTo(false);
-                SetRLSignalsHeldTo(true);
+                setLRSignalsHeldTo(false);
+                setRLSignalsHeldTo(true);
                 break;
             default:    // Could be OUTOFCORRESPONDENCE or SIGNALSNORMAL:
-                SetLRSignalsHeldTo(true);
-                SetRLSignalsHeldTo(true);
+                setLRSignalsHeldTo(true);
+                setRLSignalsHeldTo(true);
                 break;
         }
         _mRequestedDirectionObserver.setRequestedDirection(direction);
     }
     
-    private void SetRLSignalsHeldTo(boolean held) { _mSignalListRightLeft.forEach((signal) -> {
+    private void setRLSignalsHeldTo(boolean held) { _mSignalListRightLeft.forEach((signal) -> {
         signal.setHeld(held);
         });
 }
-    private void SetLRSignalsHeldTo(boolean held) { _mSignalListLeftRight.forEach((signal) -> {
+    private void setLRSignalsHeldTo(boolean held) { _mSignalListLeftRight.forEach((signal) -> {
         signal.setHeld(held);
         });
 }

@@ -1,5 +1,6 @@
 package jmri.jmrit.ctc.editor.gui;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.jmrit.ctc.editor.code.AwtWindowProperties;
 import jmri.jmrit.ctc.editor.code.CommonSubs;
 import jmri.jmrit.ctc.editor.code.FindAndReplace;
@@ -329,6 +330,7 @@ public class DlgFindAndReplace extends javax.swing.JDialog {
         }
     }//GEN-LAST:event__mSelectDeselectAllActionPerformed
 
+    @SuppressFBWarnings(value = "DE_MIGHT_IGNORE", justification = "See comment on the line.")
     private void _mReplaceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mReplaceActionPerformed
 //  First thing, prune entries based upon selection:
         int[] selectedRows = _mResults.getSelectedRows();

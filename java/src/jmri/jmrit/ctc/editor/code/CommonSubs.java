@@ -259,16 +259,17 @@ public class CommonSubs {
 //  If the passed errors array has entries, put up a dialog and return true, if not no dialog, and return false.
     public static boolean missingFieldsErrorDialogDisplayed(Component parentComponent, ArrayList<String> errors, boolean isCancel) {
         if (errors.isEmpty()) return false;
-        String displayString = errors.size() > 1 ? Bundle.getMessage("CommonSubsFieldsPlural") : Bundle.getMessage("CommonSubsFieldSingular");  // NOI18N
+        StringBuffer stringBuffer = new StringBuffer(errors.size() > 1 ? Bundle.getMessage("CommonSubsFieldsPlural") : Bundle.getMessage("CommonSubsFieldSingular"));     // NOI18N
         for (String error : errors) {
-            displayString += error + "\n";  // NOI18N
+            stringBuffer.append(error);
+            stringBuffer.append("\n");    // NOI18N
         }
         if (!isCancel) {
-            displayString += Bundle.getMessage("CommonSubsPleaseFix1"); // NOI18N
+            stringBuffer.append(Bundle.getMessage("CommonSubsPleaseFix1")); // NOI18N
         } else {
-            displayString += Bundle.getMessage("CommonSubsPleaseFix2"); // NOI18N
+            stringBuffer.append(Bundle.getMessage("CommonSubsPleaseFix2")); // NOI18N
         }
-        JOptionPane.showMessageDialog(parentComponent, displayString, Bundle.getMessage("Error"), JOptionPane.ERROR_MESSAGE);   // NOI18N
+        JOptionPane.showMessageDialog(parentComponent, stringBuffer.toString(), Bundle.getMessage("Error"), JOptionPane.ERROR_MESSAGE);   // NOI18N
         return true;
     }
 

@@ -298,19 +298,19 @@ public class Columns {
     
     private String getListOfTrafficLockingRulesOSSectionsReferenced(CodeButtonHandlerData currentCodeButtonHandlerData,
                                                                     ArrayList <CodeButtonHandlerData> codeButtonHandlerDataArrayList) {
-        String returnString = "";
+        StringBuffer returnString = new StringBuffer("");
         TreeSet<String> temp = new TreeSet<>();
         int currentUniqueID = currentCodeButtonHandlerData._mUniqueID;
         for (CodeButtonHandlerData codeButtonHandlerData : codeButtonHandlerDataArrayList) {
             if (currentCodeButtonHandlerData != codeButtonHandlerData) { // Don't check ourselves
                 int otherUniqueID = codeButtonHandlerData._mUniqueID;
-                checkThisSSVList(currentUniqueID, otherUniqueID, "L", codeButtonHandlerData._mTRL_LeftTrafficLockingRulesSSVList, temp);
-                checkThisSSVList(currentUniqueID, otherUniqueID, "R", codeButtonHandlerData._mTRL_RightTrafficLockingRulesSSVList, temp);
+                checkThisSSVList(currentUniqueID, otherUniqueID, "L", codeButtonHandlerData._mTRL_LeftTrafficLockingRulesSSVList, temp);    //NOI18N
+                checkThisSSVList(currentUniqueID, otherUniqueID, "R", codeButtonHandlerData._mTRL_RightTrafficLockingRulesSSVList, temp);   //NOI18N
             }
         }
-        for (String result : temp) returnString += result;
-        if (!returnString.isEmpty()) returnString = "TrL: " + returnString.substring(0, returnString.length() - 2);
-        return returnString;
+        for (String result : temp) returnString.append(result);
+        if (returnString.length() > 0) returnString.append("TrL: " + returnString.substring(0, returnString.length() - 2));       //NOI18N
+        return returnString.toString();
     }
     
     private void checkThisSSVList(int ourUniqueID, int otherUniqueID, String lr, String trafficLockingRulesSSVList, TreeSet<String> setOfUniqueIDs) {
@@ -333,7 +333,7 @@ public class Columns {
     
     private String getListOfSwitchSlavedToOSSectionsReferenced( CodeButtonHandlerData currentCodeButtonHandlerData,
                                                                 ArrayList <CodeButtonHandlerData> codeButtonHandlerDataArrayList) {
-        String returnString = "";
+        StringBuffer returnString = new StringBuffer("");
         TreeSet<String> temp = new TreeSet<>();
         int currentUniqueID = currentCodeButtonHandlerData._mUniqueID;
         for (CodeButtonHandlerData codeButtonHandlerData : codeButtonHandlerDataArrayList) {
@@ -345,9 +345,9 @@ public class Columns {
                 }
             }
         }
-        for (String result : temp)  returnString += result;
-        if (!returnString.isEmpty())  returnString = "Sw: " + returnString.substring(0, returnString.length() - 2);
-        return returnString;
+        for (String result : temp)  returnString.append(result);
+        if (returnString.length() > 0)  returnString.append("Sw: " + returnString.substring(0, returnString.length() - 2));   //NOI18N
+        return returnString.toString();
     }
     
 //  Anything in error, return ERROR_STRING

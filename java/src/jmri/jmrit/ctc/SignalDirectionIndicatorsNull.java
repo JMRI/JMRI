@@ -12,7 +12,7 @@ public class SignalDirectionIndicatorsNull  implements SignalDirectionIndicators
     public SignalDirectionIndicatorsNull() {}
     
     @Override
-    public void SetCodeButtonHandler(CodeButtonHandler codeButtonHandler) {}
+    public void setCodeButtonHandler(CodeButtonHandler codeButtonHandler) {}
     @Override
     public void removeAllListeners() {}
     @Override

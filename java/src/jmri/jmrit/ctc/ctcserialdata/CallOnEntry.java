@@ -23,7 +23,7 @@ public class CallOnEntry {
     
     private static final int EXTERNAL_SIGNAL_INDEX = 0;
     private static final int SIGNAL_FACING_DIRECTION_INDEX = 1;
-    private final int SIGNAL_ASPECT_TO_DISPLAY_INDEX = 2;
+    private static final int SIGNAL_ASPECT_TO_DISPLAY_INDEX = 2;
     private static final int CALLED_ON_EXTERNAL_SENSOR_INDEX = 3;
     private static final int EXTERNAL_BLOCK_INDEX = 4;
     private static final int SWITCHINDICATOR1_INDEX = 5;
