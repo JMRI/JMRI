@@ -398,7 +398,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             return;
         }
         
-        cancelRamp();
+        cancelRamp(false);
 
         if (log.isDebugEnabled()) 
             log.debug("rampSpeedTo type= {}, throttle from {} to {}. warrant {}",
@@ -436,9 +436,9 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         }
     }
 
-    protected void cancelRamp() {
+    private void cancelRamp(boolean die) {
         if (_ramp != null && !_ramp.ready) {
-            _ramp.quit();
+            _ramp.quit(die);
         }
     }
 
@@ -528,7 +528,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
      * Do immediate speed change.
      */
     protected void setSpeedToType(String speedType) {
-        cancelRamp();
+        cancelRamp(false);
         if (speedType.equals(Warrant.EStop)) {
             setSpeed(-0.1f);        // always do immediate EStop
             _waitForClear = true;
@@ -615,7 +615,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
      * @param setHalt for user restart needed, otherwise some kind clear
      */
     synchronized public void setStop(boolean eStop, boolean setHalt) {
-        cancelRamp();
+        cancelRamp(false);
         if (setHalt) {
             _halt = true;
         } else {
@@ -661,10 +661,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         if (_waitSensor != null) {
             _waitSensor.removePropertyChangeListener(this);
         }
-        if (_ramp != null) {
-            _ramp.die();
-        }
-        cancelRamp();
+        cancelRamp(true);
 
         if (_throttle != null) {
             if (_throttle.getSpeedSetting() > 0.0f) {
@@ -1042,20 +1039,19 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         boolean _useIndex;
         boolean stop = false;   // aborts ramping
         boolean ready = false;   // ready for call doRamp
-        boolean die = false;    // kills ramp
+        boolean _die = false;    // kills ramp for good
 
         ThrottleRamp() {
            setName("Ramp(" + _warrant.getTrainName() +")");
         }
 
-        synchronized void quit() {
+        synchronized void quit(boolean die) {
             stop = true;
+            if (die) { // once set to true, do not allow resetting to false
+                _die = die;
+            }
             log.debug("ThrottleRamp.quit calls notify)");
             _ramp.notifyAll(); // free waits at ramp time interval
-        }
-
-        synchronized void die() {
-            die = true;
         }
 
         void setParameters(String endSpeedType, int endBlockIdx, boolean useIndex) {
@@ -1069,7 +1065,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         @SuppressFBWarnings(value="UW_UNCOND_WAIT", justification="waits may be indefinite until satisfied or thread aborted")
         public void run() {
             ready = true;
-            while (!die) {
+            while (!_die) {
                 synchronized (this) {
                     try {
                         wait(); // wait until notified by rampSpeedTo() call
