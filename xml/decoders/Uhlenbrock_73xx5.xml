@@ -94,7 +94,13 @@
         <programming direct="yes" paged="yes" register="yes" ops="yes">
             <capability>
                 <name>Indexed CV access</name>
-                <parameter name="PI">1021</parameter> <!--for audio on SUSI, add CV for Banks?-->
+                <parameter name="PI">1021</parameter> <!--for audio on SUSI-->
+                <parameter name="SI">0</parameter> <!-- Not used, but need to be declared for cvFirst to be read -->
+                <parameter name="cvFirst">true</parameter>
+            </capability>
+            <capability>
+                <name>Indexed CV access</name>
+                <parameter name="PI">31</parameter> <!--for Banks-->
                 <parameter name="SI">0</parameter> <!-- Not used, but need to be declared for cvFirst to be read -->
                 <parameter name="cvFirst">true</parameter>
             </capability>
