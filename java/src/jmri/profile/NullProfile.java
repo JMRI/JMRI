@@ -14,7 +14,7 @@ import javax.annotation.Nonnull;
  * JMRI profile is not acceptable.
  * <p>
  * This class deliberately overrides all methods of {@link jmri.profile.Profile}
- * that access the {@link #name} and {@link #id} fields to remove protections
+ * that access the private Profile.name and Profile.id fields to remove protections
  * and restrictions on those fields.
  *
  * @author Randall Wood Copyright (C) 2014
