@@ -42,7 +42,7 @@ public class CheckJMRIObject {
 
     public static enum OBJECT_TYPE { SENSOR, TURNOUT, SIGNAL, BLOCK };
 
-    public class VerifyClassReturnValue {
+    public static class VerifyClassReturnValue {
         public final String  _mFieldContents;                                // The contents
         public final OBJECT_TYPE _mObjectType;   // What it is.
 

@@ -1,5 +1,6 @@
 package jmri.jmrit.ctc.editor.code;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Rectangle;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -25,24 +26,28 @@ public class AwtWindowProperties {
     private final String _mFilename;
     private final java.awt.Window _mMasterWindow;
 
+    @SuppressFBWarnings(value = "DE_MIGHT_IGNORE", justification = "Any errors, I don't care")
     public AwtWindowProperties(java.awt.Window window, String filename, String windowName) {
         _mProperties = new Properties();
         _mFilename = filename;
         _mMasterWindow = window;
         try {
             File file = CTCFiles.getFile(filename);
-            BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
-            _mProperties.load(bufferedReader);
+            try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file))) {
+                _mProperties.load(bufferedReader);
+            }
         } catch (IOException e) {}
         setWindowState(window, windowName);
     }
 
+    @SuppressFBWarnings(value = "DE_MIGHT_IGNORE", justification = "Let it not write anything if it fails.")
     public void close() {
         try {
             File file = CTCFiles.getFile(_mFilename);
-            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file));
-            _mProperties.store(bufferedWriter, "All Ant Windows Properties");           // NOI18N
-        } catch (IOException e) {}
+            try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file))) {
+                _mProperties.store(bufferedWriter, "All Ant Windows Properties");           // NOI18N
+            }
+        } catch (IOException e) {} 
     }
 
     public final void setWindowState(java.awt.Window window, String windowName) {

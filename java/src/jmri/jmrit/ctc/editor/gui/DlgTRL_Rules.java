@@ -1,5 +1,6 @@
 package jmri.jmrit.ctc.editor.gui;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.jmrit.ctc.editor.code.AwtWindowProperties;
 import jmri.jmrit.ctc.editor.code.CheckJMRIObject;
 import jmri.jmrit.ctc.editor.code.CommonSubs;
@@ -431,13 +432,16 @@ public class DlgTRL_Rules extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    @SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION", justification = "I don't want to introduce bugs, CPU no big deal here.")
     private void _mSaveAndCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mSaveAndCloseActionPerformed
         int size = _mDefaultListModel.getSize();
+        
         String resultString = "";
         for (int index = 0; index < size; index++) {
             String thisEntry = _mDefaultListModel.getElementAt(index);
             resultString = (0 == index) ? thisEntry : resultString + ProjectsCommonSubs.SSV_SEPARATOR + thisEntry;
         }
+        
         if (_mIsLeftTraffic) { _mCodeButtonHandlerData._mTRL_LeftTrafficLockingRulesSSVList = resultString; }
         else { _mCodeButtonHandlerData._mTRL_RightTrafficLockingRulesSSVList = resultString; }
         _mClosedNormally = true;
@@ -632,17 +636,6 @@ public class DlgTRL_Rules extends javax.swing.JDialog {
         _mTRL_TrafficLockingRulesSSVList.setEnabled(true);
     }//GEN-LAST:event__mGroupingListAddReplaceActionPerformed
 
-    private void lazy1(javax.swing.JComboBox<String> jComboBox) {
-//  Verify user didn't select "self", since I don't want to screw up array indexes by eliminating it:
-        int selectedIndex = jComboBox.getSelectedIndex();
-        if (selectedIndex > 0) { // None and skip blank entry
-            int osSectionSelectedUniqueID = _mArrayListOfSelectableOSSectionUniqueIDs.get(selectedIndex - 1);  // Correct for blank entry
-            if (osSectionSelectedUniqueID == _mCodeButtonHandlerData._mUniqueID) {
-                jComboBox.setSelectedIndex(0); // Back to blank!
-            }
-        }
-    }
-    
     private void _mCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mCancelActionPerformed
         enableTopPart(true);
         _mTRL_TrafficLockingRulesSSVList.setEnabled(true);

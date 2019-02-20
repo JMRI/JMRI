@@ -1,5 +1,6 @@
 package jmri.jmrit.ctc;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
@@ -206,6 +207,7 @@ public class NBHSignalMast extends NBHAbstractSignalCommon implements SignalMast
         _mNamedBeanHandleSignalMast.getBean().updateListenerRef(l, newName);
     }
 
+    @SuppressFBWarnings(value = "DE_MIGHT_IGNORE", justification = "I don't use this function, let it not do anything if it fails.")
     @Override
     public void vetoableChange(PropertyChangeEvent evt) throws PropertyVetoException {
         if (_mNamedBeanHandleSignalMast == null) return;
@@ -242,6 +244,7 @@ public class NBHSignalMast extends NBHAbstractSignalCommon implements SignalMast
         _mNamedBeanHandleSignalMast.getBean().dispose();
     }
 
+    @SuppressFBWarnings(value = "DE_MIGHT_IGNORE", justification = "Let it not do anything if it fails.")
     @Override
     public void setState(int s) throws JmriException {
         if (_mNamedBeanHandleSignalMast == null) return;

@@ -78,6 +78,7 @@ public class ProgramProperties {
             FileInputStream fileInputStream = new FileInputStream(file);
             Properties properties = new Properties();
             properties.loadFromXML(fileInputStream);
+            fileInputStream.close();    // Spotbugs complains, but "loadFromXML" has a "in.close()" and is DOCUMENTED to close it.  But it won't hurt.
 
             // Migrate file name if necessary
             String tempName = properties.getProperty(FILENAME_KEY, FILENAME_DEFAULT);
@@ -85,42 +86,42 @@ public class ProgramProperties {
             _mFilename = FileUtil.getExternalFilename(fileName);
 
             _mCodeButtonInternalSensorPattern = properties.getProperty(CODE_BUTTON_INTERNAL_SENSOR_PATTERN, CODE_BUTTON_INTERNAL_SENSOR_PATTERN_DEFAULT);
-            _mSIDI_CodingTimeInMilliseconds = Integer.valueOf(properties.getProperty(SIDI_CODING_TIME_IN_MILLISECONDS, SIDI_CODING_TIME_IN_MILLISECONDS_DEFAULT));
+            _mSIDI_CodingTimeInMilliseconds = Integer.parseInt(properties.getProperty(SIDI_CODING_TIME_IN_MILLISECONDS, SIDI_CODING_TIME_IN_MILLISECONDS_DEFAULT));
             _mSIDI_LeftInternalSensorPattern = properties.getProperty(SIDI_LEFT_INTERNAL_SENSOR_PATTERN, SIDI_LEFT_INTERNAL_SENSOR_PATTERN_DEFAULT);
             _mSIDI_NormalInternalSensorPattern = properties.getProperty(SIDI_NORMAL_INTERNAL_SENSOR_PATTERN, SIDI_NORMAL_INTERNAL_SENSOR_PATTERN_DEFAULT);
             _mSIDI_RightInternalSensorPattern = properties.getProperty(SIDI_RIGHT_INTERNAL_SENSOR_PATTERN, SIDI_RIGHT_INTERNAL_SENSOR_PATTERN_DEFAULT);
-            _mSIDI_TimeLockingTimeInMilliseconds = Integer.valueOf(properties.getProperty(SIDI_TIME_LOCKING_TIME_IN_MILLISECONDS, SIDI_TIME_LOCKING_TIME_IN_MILLISECONDS_DEFAULT));
+            _mSIDI_TimeLockingTimeInMilliseconds = Integer.parseInt(properties.getProperty(SIDI_TIME_LOCKING_TIME_IN_MILLISECONDS, SIDI_TIME_LOCKING_TIME_IN_MILLISECONDS_DEFAULT));
             _mSIDL_LeftInternalSensorPattern = properties.getProperty(SIDL_LEFT_INTERNAL_SENSOR_PATTERN, SIDL_LEFT_INTERNAL_SENSOR_PATTERN_DEFAULT);
             _mSIDL_NormalInternalSensorPattern = properties.getProperty(SIDL_NORMAL_INTERNAL_SENSOR_PATTERN, SIDL_NORMAL_INTERNAL_SENSOR_PATTERN_DEFAULT);
             _mSIDL_RightInternalSensorPattern = properties.getProperty(SIDL_RIGHT_INTERNAL_SENSOR_PATTERN, SIDL_RIGHT_INTERNAL_SENSOR_PATTERN_DEFAULT);
-            _mSWDI_CodingTimeInMilliseconds = Integer.valueOf(properties.getProperty(SWDI_CODING_TIME_IN_MILLISECONDS, SWDI_CODING_TIME_IN_MILLISECONDS_DEFAULT));
+            _mSWDI_CodingTimeInMilliseconds = Integer.parseInt(properties.getProperty(SWDI_CODING_TIME_IN_MILLISECONDS, SWDI_CODING_TIME_IN_MILLISECONDS_DEFAULT));
             _mSWDI_NormalInternalSensorPattern = properties.getProperty(SWDI_NORMAL_INTERNAL_SENSOR_PATTERN, SWDI_NORMAL_INTERNAL_SENSOR_PATTERN_DEFAULT);
             _mSWDI_ReversedInternalSensorPattern = properties.getProperty(SWDI_REVERSED_INTERNAL_SENSOR_PATTERN, SWDI_REVERSED_INTERNAL_SENSOR_PATTERN_DEFAULT);
             _mSWDL_InternalSensorPattern = properties.getProperty(SWDL_INTERNAL_SENSOR_PATTERN, SWDL_INTERNAL_SENSOR_PATTERN_DEFAULT);
             _mCO_CallOnToggleInternalSensorPattern = properties.getProperty(CO_CALL_ON_TOGGLE_INTERNAL_SENSOR_PATTERN, CO_CALL_ON_TOGGLE_INTERNAL_SENSOR_PATTERN_DEFAULT);
             _mTUL_DispatcherInternalSensorLockTogglePattern = properties.getProperty(TUL_DISPATCHER_INTERNAL_SENSOR_LOCK_TOGGLE_PATTERN, TUL_DISPATCHER_INTERNAL_SENSOR_LOCK_TOGGLE_PATTERN_DEFAULT);
             _mTUL_DispatcherInternalSensorUnlockedIndicatorPattern = properties.getProperty(TUL_DISPATCHER_INTERNAL_SENSOR_UNLOCKED_INDICATOR_PATTERN, TUL_DISPATCHER_INTERNAL_SENSOR_UNLOCKED_INDICATOR_PATTERN_DEFAULT);
-            _mCodeButtonDelayTime = Integer.valueOf(properties.getProperty(NO_CODE_BUTTON_DELAY_TIME_IN_MILLISECONDS, NO_CODE_BUTTON_DELAY_TIME_IN_MILLISECONDS_DEFAULT));
+            _mCodeButtonDelayTime = Integer.parseInt(properties.getProperty(NO_CODE_BUTTON_DELAY_TIME_IN_MILLISECONDS, NO_CODE_BUTTON_DELAY_TIME_IN_MILLISECONDS_DEFAULT));
         }
         catch (IOException | NumberFormatException e) {
             _mFilename = FileUtil.getExternalFilename(FILENAME_DEFAULT);
             _mCodeButtonInternalSensorPattern = CODE_BUTTON_INTERNAL_SENSOR_PATTERN_DEFAULT;
-            _mSIDI_CodingTimeInMilliseconds = Integer.valueOf(SIDI_CODING_TIME_IN_MILLISECONDS_DEFAULT);
+            _mSIDI_CodingTimeInMilliseconds = Integer.parseInt(SIDI_CODING_TIME_IN_MILLISECONDS_DEFAULT);
             _mSIDI_LeftInternalSensorPattern = SIDI_LEFT_INTERNAL_SENSOR_PATTERN_DEFAULT;
             _mSIDI_NormalInternalSensorPattern = SIDI_NORMAL_INTERNAL_SENSOR_PATTERN_DEFAULT;
             _mSIDI_RightInternalSensorPattern = SIDI_RIGHT_INTERNAL_SENSOR_PATTERN_DEFAULT;
-            _mSIDI_TimeLockingTimeInMilliseconds = Integer.valueOf(SIDI_TIME_LOCKING_TIME_IN_MILLISECONDS_DEFAULT);
+            _mSIDI_TimeLockingTimeInMilliseconds = Integer.parseInt(SIDI_TIME_LOCKING_TIME_IN_MILLISECONDS_DEFAULT);
             _mSIDL_LeftInternalSensorPattern = SIDL_LEFT_INTERNAL_SENSOR_PATTERN_DEFAULT;
             _mSIDL_NormalInternalSensorPattern = SIDL_NORMAL_INTERNAL_SENSOR_PATTERN_DEFAULT;
             _mSIDL_RightInternalSensorPattern = SIDL_RIGHT_INTERNAL_SENSOR_PATTERN_DEFAULT;
-            _mSWDI_CodingTimeInMilliseconds = Integer.valueOf(SWDI_CODING_TIME_IN_MILLISECONDS_DEFAULT);
+            _mSWDI_CodingTimeInMilliseconds = Integer.parseInt(SWDI_CODING_TIME_IN_MILLISECONDS_DEFAULT);
             _mSWDI_NormalInternalSensorPattern = SWDI_NORMAL_INTERNAL_SENSOR_PATTERN_DEFAULT;
             _mSWDI_ReversedInternalSensorPattern = SWDI_REVERSED_INTERNAL_SENSOR_PATTERN_DEFAULT;
             _mSWDL_InternalSensorPattern = SWDL_INTERNAL_SENSOR_PATTERN_DEFAULT;
             _mCO_CallOnToggleInternalSensorPattern = CO_CALL_ON_TOGGLE_INTERNAL_SENSOR_PATTERN_DEFAULT;
             _mTUL_DispatcherInternalSensorLockTogglePattern = TUL_DISPATCHER_INTERNAL_SENSOR_LOCK_TOGGLE_PATTERN_DEFAULT;
             _mTUL_DispatcherInternalSensorUnlockedIndicatorPattern = TUL_DISPATCHER_INTERNAL_SENSOR_UNLOCKED_INDICATOR_PATTERN_DEFAULT;
-            _mCodeButtonDelayTime = Integer.valueOf(NO_CODE_BUTTON_DELAY_TIME_IN_MILLISECONDS_DEFAULT);
+            _mCodeButtonDelayTime = Integer.parseInt(NO_CODE_BUTTON_DELAY_TIME_IN_MILLISECONDS_DEFAULT);
         }
     }
 

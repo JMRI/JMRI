@@ -1075,11 +1075,12 @@ public class FrmMainForm extends JFrame {
                 _mCheckJMRIObject.analyzeClass(codeButtonHandlerData, errors);
             });
             if (!errors.isEmpty()) {
-                String result = "";
+                StringBuffer stringBuffer = new StringBuffer();
                 for (String error : errors) {
-                    result += error + "\n";
+                    stringBuffer.append(error);
+                    stringBuffer.append("\n");
                 }
-                JOptionPane.showMessageDialog(this, result);
+                JOptionPane.showMessageDialog(this, stringBuffer.toString());
             }
         }
     }//GEN-LAST:event__mCheckEverythingWithJMRIActionPerformed

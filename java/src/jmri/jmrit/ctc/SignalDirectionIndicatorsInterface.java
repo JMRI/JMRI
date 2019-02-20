@@ -4,7 +4,7 @@
 package jmri.jmrit.ctc;
 
 public interface SignalDirectionIndicatorsInterface {
-    public void SetCodeButtonHandler(CodeButtonHandler codeButtonHandler);
+    public void setCodeButtonHandler(CodeButtonHandler codeButtonHandler);
     public void removeAllListeners();
     public boolean isNonfunctionalObject();
     public void setPresentSignalDirectionLever(int presentSignalDirectionLever);

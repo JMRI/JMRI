@@ -2,6 +2,8 @@ package jmri.jmrit.ctc.editor.code;
 
 import static jmri.jmrit.ctc.editor.code.CreateXMLFiles.generateEpilogue;
 import static jmri.jmrit.ctc.editor.code.CreateXMLFiles.generateProlog;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Font;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.AffineTransform;
@@ -21,6 +23,7 @@ public class CreateGUIObjectsXMLFile {
     private static final int START_OFFSET = 12;
     private static final int GIF_HORIZONTAL_SIZE = 65;
     
+    @SuppressFBWarnings(value = "DE_MIGHT_IGNORE", justification = "Let it not write anything if it fails.")
 //  By doing this, it prevents me from accidentally accessing "_mCodeButtonHandlerDataArrayList" and screwing it up!
 //  I just have to make sure that I don't reference "passedCodeButtonHandlerDataArrayList" anywhere else in the code!
     public static void writeGUIObjects(String directoryToCreateThemIn, OtherData otherData, ArrayList <CodeButtonHandlerData> passedCodeButtonHandlerDataArrayList) {
@@ -206,8 +209,9 @@ public class CreateGUIObjectsXMLFile {
                             }
                             x += 11;
                         }
-                    } else if (otherData._mGUIDesign_SignalsOnPanel == OtherData.SIGNALS_ON_PANEL.GREEN_OFF) {  // Future someday, as of 10/30/18 user CANNOT select this!
-                    }
+//  SpotBugs whines about "uesless control flow", so I commented this out (not the comment on the next line):
+                    } /*else if (otherData._mGUIDesign_SignalsOnPanel == OtherData.SIGNALS_ON_PANEL.GREEN_OFF) {  // Future someday, as of 10/30/18 user CANNOT select this!
+                    }*/
                 }
 //  SIDL:             
                 if (codeButtonHandlerData._mSIDL_Enabled) { // Signal Lever:

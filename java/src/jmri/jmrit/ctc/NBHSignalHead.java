@@ -1,5 +1,6 @@
 package jmri.jmrit.ctc;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
@@ -186,6 +187,7 @@ public class NBHSignalHead extends NBHAbstractSignalCommon implements SignalHead
         _mNamedBeanHandleSignalHead.getBean().updateListenerRef(l, newName);
     }
 
+    @SuppressFBWarnings(value = "DE_MIGHT_IGNORE", justification = "I don't use this function, let it not do anything if it fails.")
     @Override
     public void vetoableChange(PropertyChangeEvent evt) throws PropertyVetoException {
         if (_mNamedBeanHandleSignalHead == null) return;

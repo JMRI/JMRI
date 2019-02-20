@@ -10,7 +10,7 @@ import jmri.JmriException;
 import jmri.Sensor;
 
 public class SignalDirectionLever {
-    public class LNR_NBHSensors {   // L = Left, N = Normal, R = Right.
+    public static class LNR_NBHSensors {   // L = Left, N = Normal, R = Right.
         public final NBHSensor _mLeftSensor;
         public final NBHSensor _mNormalSensor;
         public final NBHSensor _mRightSensor;

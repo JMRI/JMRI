@@ -2,6 +2,8 @@ package jmri.jmrit.ctc.editor.code;
 
 import static jmri.jmrit.ctc.editor.code.CreateXMLFiles.generateEpilogue;
 import static jmri.jmrit.ctc.editor.code.CreateXMLFiles.generateProlog;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,6 +16,7 @@ import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019
  */
 public class CreateVirtualSignalsXMLFile {
+    @SuppressFBWarnings(value = "DE_MIGHT_IGNORE", justification = "Let it not write anything if it fails.")
     public static void writeVirtualSignals(String directoryToCreateThemIn, OtherData otherData, ArrayList <CodeButtonHandlerData> codeButtonHandlerDataArrayList) {
         PrintWriter printWriter;
         try {

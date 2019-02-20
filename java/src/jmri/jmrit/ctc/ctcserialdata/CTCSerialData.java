@@ -1,5 +1,6 @@
 package jmri.jmrit.ctc.ctcserialdata;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
 import java.io.BufferedInputStream;
@@ -7,6 +8,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -61,16 +63,6 @@ public class CTCSerialData {
         try {
             Collections.swap(_mCodeButtonHandlerDataArrayList, index, index + 1);
         } catch (IndexOutOfBoundsException e) {}    // Do NOTHING in this case!  Technically should never happen, since buttons aren't enabled for such possibilities
-    }
-
-//  In case the user mixes up projects, or blows away "ProgramProperties.xml", we insure that the next
-//  number we return for the next unique ID will be one greater than the file just read in:
-    private  void possiblyFixUniqueID() {
-        int highestValue = -1;   // Indicating none.
-        for (CodeButtonHandlerData codeButtonHandlerData : _mCodeButtonHandlerDataArrayList) {
-            if (codeButtonHandlerData._mUniqueID > highestValue) highestValue = codeButtonHandlerData._mUniqueID;
-        }
-        _mOtherData.possiblySetToHighest(highestValue);
     }
 
 //  In addition, variable "_mTRL_LeftTrafficLockingRulesSSVList" and "_mTRL_RightTrafficLockingRulesSSVList"
@@ -160,7 +152,7 @@ public class CTCSerialData {
                 _mCodeButtonHandlerDataArrayList = (ArrayList <CodeButtonHandlerData>) xmlDecoder.readObject();	// Type safety: Unchecked cast from Object to ArrayList<>
             }
             returnValue = true;
-        } catch (Exception e) {}
+        } catch (IOException e) {}
 // Safety:
         if (_mOtherData == null) _mOtherData = new OtherData();
         if (_mCodeButtonHandlerDataArrayList == null) _mCodeButtonHandlerDataArrayList = new ArrayList<>();
@@ -201,6 +193,7 @@ Solution:
  */
 
     private static final String TEMPORARY_EXTENSION = ".xmlTMP";        // NOI18N
+    @SuppressFBWarnings(value = "RV_RETURN_VALUE_IGNORED_BAD_PRACTICE", justification = "Any problems, I don't care, it's too late by this point")
     public void writeDataToXMLFile(String filename) {
         String temporaryFilename = ProjectsCommonSubs.changeExtensionTo(filename, TEMPORARY_EXTENSION);
         try { // Write temporary file:
@@ -213,6 +206,6 @@ Solution:
 
             outputFile.delete();    // Delete existing old file.
             (new File(temporaryFilename)).renameTo(outputFile);     // Rename temporary filename to proper final file.
-        } catch (Exception e) {}
+        } catch (IOException e) {}
     }
 }

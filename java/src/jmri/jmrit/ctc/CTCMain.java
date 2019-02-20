@@ -4,6 +4,7 @@
 
 package jmri.jmrit.ctc;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
@@ -46,6 +47,7 @@ public class CTCMain {
         }
     }
     
+    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "There's only one!")
     private void handleLogging(PropertyChangeEvent e) {
         if (e.getPropertyName().equals("KnownState")) {         // NOI18N
             CTCJythonAccessInstanceManager._mCTCDebug_TrafficLockingRuleTriggeredDisplayLoggingEnabled = (int)e.getNewValue() == Sensor.ACTIVE;

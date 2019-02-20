@@ -61,7 +61,7 @@ You should probably use "YELLOW" in that case!
 
 */
 public class CallOn {
-    private class GroupingData {
+    private static class GroupingData {
         public final NBHAbstractSignalCommon _mSignal;    // Signal
         public final int _mSignalHeadFaces;      // Which way above faces.
         public final int _mCallOnAspect;         // What it should be set to if CallOn sucessful.

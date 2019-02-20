@@ -1,5 +1,6 @@
 package jmri.jmrit.ctc;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
@@ -135,6 +136,7 @@ public class NBHSensor implements Sensor {
         return _mNamedBeanHandleSensor.getBean().getKnownState();
     }
 
+    @SuppressFBWarnings(value = "DE_MIGHT_IGNORE", justification = "Let it not do anything if it fails.")
     @Override
     public void setKnownState(int newState) {
         if (_mNamedBeanHandleSensor == null) return;
@@ -303,6 +305,7 @@ public class NBHSensor implements Sensor {
         _mNamedBeanHandleSensor.getBean().updateListenerRef(l, newName);
     }
 
+    @SuppressFBWarnings(value = "DE_MIGHT_IGNORE", justification = "I don't use this function, let it not do anything if it fails.")
     @Override
     public void vetoableChange(PropertyChangeEvent evt) {
         if (_mNamedBeanHandleSensor == null) return;
@@ -333,6 +336,7 @@ public class NBHSensor implements Sensor {
         return _mNamedBeanHandleSensor.getBean().getPropertyChangeListenersByReference(name);
     }
 
+    @SuppressFBWarnings(value = "DE_MIGHT_IGNORE", justification = "Let it not do anything if it fails.")
     @Override
     public void setState(int s) {
         if (_mNamedBeanHandleSensor == null) return;
