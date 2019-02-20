@@ -1,5 +1,6 @@
 package jmri.jmrix.can.cbus.node;
 
+import javax.annotation.Nonnull;
 import jmri.jmrix.can.cbus.CbusEvent;
 
 /**
@@ -21,7 +22,16 @@ public class CbusNodeEvent extends CbusEvent {
         _evVarArr = new int[maxEvVar];
         java.util.Arrays.fill(_evVarArr,-1);
     }
-    
+ 
+    // copy one
+    public CbusNodeEvent(@Nonnull CbusNodeEvent m) {
+        super(m.getNn(),m.getEn());
+        _thisnode = m._thisnode;
+        _index = m._index;
+        _nodeConfigPanelID = m._nodeConfigPanelID;
+        _evVarArr = m._evVarArr;
+    }
+ 
     public void setEvVar(int index, int value) {
         _evVarArr[(index-1)]=value;
     }

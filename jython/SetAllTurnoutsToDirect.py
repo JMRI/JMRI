@@ -8,9 +8,8 @@ import jmri
 toCnt = 0
 chgCnt = 0
 # loop thru all defined turnouts, setting each to DIRECT if not already DIRECT
-for toName in turnouts.getSystemNameList().toArray() :
+for to in turnouts.getNamedBeanSet():
     toCnt += 1
-    to = turnouts.getTurnout(toName)
     fm = to.getFeedbackMode()
     if (fm != jmri.Turnout.DIRECT) :
         to.setFeedbackMode(jmri.Turnout.DIRECT)

@@ -217,6 +217,7 @@ public class TimeTableCsvExport {
             _trainIndex = trainIndex;
         }
 
+        @Override
         public String toString() {
             return String.format("%s : %s : %d : %d",
                     _train.getTrainName(), _direction, _lastStation, _trainIndex);

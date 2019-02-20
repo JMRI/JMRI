@@ -62,6 +62,7 @@ public class TrainType {
         JmriColorChooser.addRecentColor(Color.decode(newColor));
     }
 
+    @Override
     public String toString() {
         return _typeName;
     }

@@ -384,24 +384,10 @@ public class Dcc4PcReporter extends AbstractRailComReporter {
 
     RailCom decodeAddress() {
         RailCom rcTag;
-        if ((address_part_1 & 0x80) == 0x80) {
-            addr_type = Dcc4PcSensorManager.LONG_ADDRESS;
-            addr = (address_part_1 & 0x3f) << 8;
-            addr |= address_part_2;
-        } else if ((address_part_1 & 0x20) == 0x20) {
-            addr_type = Dcc4PcSensorManager.CONSIST_ADDRESS;
-            addr = address_part_2;
-        } else {
-            addr_type = Dcc4PcSensorManager.SHORT_ADDRESS;
-            addr = address_part_2 & 0x7F;
-        }
         if (log.isDebugEnabled()) {
-            log.debug(this.getDisplayName() + " Address part 2 " + addr_type + " " + addr);
             log.debug(this.getDisplayName() + " Create/Get id tag for " + addr);
         }
-        rcTag = jmri.InstanceManager.getDefault(jmri.RailComManager.class).provideIdTag("" + addr);
-
-        rcTag.setAddressType(addr_type);
+        rcTag = (RailCom)jmri.InstanceManager.getDefault(jmri.RailComManager.class).provideIdTag("" + addr);
 
         if ((fuelLevel != -1)) {
             rcTag.setFuelLevel(fuelLevel);
@@ -439,7 +425,7 @@ public class Dcc4PcReporter extends AbstractRailComReporter {
 
     RailCom provideTag(int address, int addr_type) {
         log.debug("provide Tag");
-        RailCom rcTag = jmri.InstanceManager.getDefault(jmri.RailComManager.class).provideIdTag("" + address);
+        RailCom rcTag = (RailCom) jmri.InstanceManager.getDefault(jmri.RailComManager.class).provideIdTag("" + address);
         notify(rcTag);
         return rcTag;
     }

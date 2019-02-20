@@ -25,6 +25,10 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+; - Version 0.1.25.0
+; - Add option to use standard launcher '/noalt'
+; - Disable use of alternate launcher when JDK 11 in use.
+; -------------------------------------------------------------------------
 ; - Version 0.1.24.0
 ; - Add support for Java 11 Registry Keys
 ; -------------------------------------------------------------------------
@@ -149,7 +153,7 @@
 !define AUTHOR     "Matt Harris for JMRI"         ; Author name
 !define APP        "LaunchJMRI"                   ; Application name
 !define COPYRIGHT  "(C) 1997-2019 JMRI Community" ; Copyright string
-!define VER        "0.1.24.0"                     ; Launcher version
+!define VER        "0.1.25.0"                     ; Launcher version
 !define PNAME      "${APP}"                       ; Name of launcher
 ; -- Comment out next line to use {app}.ico
 !define ICON       "decpro5.ico"                  ; Launcher icon
@@ -187,6 +191,7 @@ Var x64        ; used to determine OS architecture
 Var x64JRE     ; used to determine JRE architecture
 Var FORCE32BIT ; used to determine if 32-bit JRE should always be used
 Var DEFOPTIONS ; used to hold any default options
+Var ALTLAUNCH  ; used to determine use of the alternate launcher
 
 ; -------------------------------------------------------------------------
 ; - Various constants
@@ -253,6 +258,7 @@ Section "Main"
   DetailPrint "Noisy: $NOISY"
   DetailPrint "Force32bit: $FORCE32BIT"
   DetailPrint "Profile: $JMRIPROFILE"
+  DetailPrint "Alternate launcher: $ALTLAUNCH"
 
   ; -- First determine if we're running on x64
   DetailPrint "Testing for x64..."
@@ -296,6 +302,13 @@ Section "Main"
     DetailPrint "Checking 'JDK'..."
     ReadRegStr $R1 HKLM "SOFTWARE\JavaSoft\JDK" "CurrentVersion"
     ReadRegStr $R0 HKLM "SOFTWARE\JavaSoft\JDK\$R1" "JavaHome"
+    ; -- JDK 11 doesn't seem to like our 'default' behaviour of running from
+    ; -- a temp directory with a renamed 'java.exe' so switch that off here
+    ; -- We only need to do this if JDK has been found
+    IfErrors FoundJavaInstallPoint
+    DetailPrint "Switching off alternate launcher..."
+    StrCpy $ALTLAUNCH ${FLAG_NO}
+
   FoundJavaInstallPoint:
     StrCpy $R0 "$R0\bin\$JAVAEXE"
 
@@ -319,7 +332,8 @@ Section "Main"
   DetailPrint "JavaPath: $JAVAPATH"
 
   ; -- Now we've determined Java is basically OK, copy the file to a
-  ; -- temporary location and rename it
+  ; -- temporary location and rename it if configured to do so
+  StrCmp ${FLAG_NO} $ALTLAUNCH UseStandardLauncher
 
   ; -- First try to remove any old temporary launchers
   RMDir /r $TEMP\LaunchJMRI
@@ -335,9 +349,12 @@ Section "Main"
   ; -- Check that the temporary launcher file exists
   ClearErrors
   FindFirst $0 $1 $JEXEPATH
-  IfErrors 0 ExeRenameDone
-    ; -- Wasn't found so use regular launcher
-    StrCpy $JEXEPATH $JAVAPATH
+  ; -- Wasn't found so use regular launcher
+  IfErrors UseStandardLauncher ExeRenameDone
+
+  UseStandardLauncher:
+  StrCpy $JEXEPATH $JAVAPATH
+
   ExeRenameDone:
   DetailPrint "JExePath: $JEXEPATH"
 
@@ -569,6 +586,7 @@ Function .onInit
   SetSilent silent
   StrCpy $NOISY ${SW_MINIMIZE}
   StrCpy $FORCE32BIT ${FLAG_NO}
+  StrCpy $ALTLAUNCH ${FLAG_YES}
   ; -- Read any default_options
   Call ReadConfFile
   Pop $DEFOPTIONS
@@ -653,6 +671,7 @@ Function ProcessParameters
   StrCmp $2 "noisy" optsNoisy
   StrCmp $2 "32bit" opts32bit
   StrCmp $2 "profile" optsProfile
+  StrCmp $2 "noalt" optsNoAlt
   ; -- Now check if we've got a '/J | -J' option
   StrCpy $2 $2 1
   StrCmp $2 "J" optsJVMOpts
@@ -715,6 +734,10 @@ Function ProcessParameters
   ; -- to prepend 'CLASSPATH' to classpath
   ; -- $1 already contains complete option with '--cp:p=' prefix
   StrCpy $P_CLASSPATH $1 "" 7 ; strip first 7 chars
+  Return
+  
+  optsNoAlt:
+  StrCpy $ALTLAUNCH ${FLAG_NO}
   Return
 
   optsDone:

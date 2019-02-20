@@ -19,6 +19,7 @@ package jmri;
  * <P>
  * @author Bob Jacobsen Copyright (C) 2005
  */
+@javax.annotation.concurrent.Immutable
 public interface LocoAddress {
 
     public int getNumber();
