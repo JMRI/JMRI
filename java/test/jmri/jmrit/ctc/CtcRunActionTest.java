@@ -1,6 +1,5 @@
 package jmri.jmrit.ctc;
 
-import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 import org.junit.rules.ExpectedException;
@@ -16,22 +15,22 @@ public class CtcRunActionTest {
 
     @Test
     public void testCreate() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         new CtcRunAction();
     }
 
-//     @Test
-//     public void testAction() {
-//         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-//         new CtcRunAction().actionPerformed(null);
-//         new CtcRunAction().actionPerformed(null);
-//     }
+    @Test
+    public void testAction() {
+        new CtcRunAction().actionPerformed(null);
+        new CtcRunAction().actionPerformed(null);
+    }
 
     @Before
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.resetProfileManager();
+        jmri.jmrit.ctc.setup.CreateTestObjects.createTestObjects();
+        jmri.jmrit.ctc.setup.CreateTestObjects.createTestFiles();
     }
 
     @After
