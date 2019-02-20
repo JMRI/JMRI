@@ -2,14 +2,11 @@ package jmri.web.servlet.json;
 
 import static jmri.server.json.JSON.DATA;
 import static jmri.server.json.JSON.NAME;
-import static jmri.server.json.JSON.NODE;
-import static jmri.server.json.JSON.RAILROAD;
 import static jmri.server.json.JSON.STATE;
 import static jmri.server.json.JSON.VALUE;
 import static jmri.server.json.JsonException.CODE;
 import static jmri.server.json.operations.JsonOperations.LOCATION;
 import static jmri.server.json.power.JsonPowerServiceFactory.POWER;
-import static jmri.server.json.time.JsonTimeServiceFactory.TIME;
 import static jmri.web.servlet.ServletUtil.APPLICATION_JSON;
 import static jmri.web.servlet.ServletUtil.UTF8;
 import static jmri.web.servlet.ServletUtil.UTF8_APPLICATION_JSON;
@@ -20,6 +17,7 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.IOException;
 import java.net.URLDecoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -142,7 +140,12 @@ public class JsonServlet extends WebSocketServlet {
      * <li>[{"type":"sensor","data":{"name":"IS22","userName":"FarEast","comment":null,"inverted":false,"state":4}}]</li>
      * </ul>
      * Note that data will vary for each type.
-     *
+     * 
+     * Note that if an array is returned when requesting a single object, the
+     * client must resolve the multiple objects in the array, since it is
+     * possible for plugins to JMRI to provide their own response, and JMRI is
+     * incapable of judging the correctness of the plugin's response.
+     * 
      * @param request an HttpServletRequest object that contains the request the
      *            client has made of the servlet
      * @param response an HttpServletResponse object that contains the response
@@ -176,16 +179,17 @@ public class JsonServlet extends WebSocketServlet {
             try {
                 if (name == null) {
                     if (this.services.get(type) != null) {
+                        ArrayList<ArrayNode> lists = new ArrayList<>();
                         ArrayNode array = this.mapper.createArrayNode();
                         JsonException exception = null;
                         try {
                             for (JsonHttpService service : this.services.get(type)) {
-                                array.addAll(service.doGetList(type, request.getLocale()));
+                                lists.add(service.doGetList(type, request.getLocale()));
                             }
                         } catch (JsonException ex) {
                             exception = ex;
                         }
-                        switch (array.size()) {
+                        switch (lists.size()) {
                             case 0:
                                 if (exception != null) {
                                     throw exception;
@@ -193,9 +197,12 @@ public class JsonServlet extends WebSocketServlet {
                                 reply = array;
                                 break;
                             case 1:
-                                reply = array.get(0);
+                                reply = lists.get(0);
                                 break;
                             default:
+                                for (ArrayNode list : lists) {
+                                    array.addAll(list);
+                                }
                                 reply = array;
                                 break;
                         }
