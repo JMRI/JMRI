@@ -1156,6 +1156,10 @@ public class PositionableLabel extends JLabel implements Positionable {
                     g2d.translate(0, -getSize().getWidth());
                     break;
                 }
+                default:
+                    // unexpected orientation value
+                    jmri.util.Log4JUtil.warnOnce(log, "Unexpected orientation = {}", _popupUtil.getOrientation());
+                    break;
             }
 
             needsRotate = true;
