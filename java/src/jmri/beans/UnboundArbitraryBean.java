@@ -44,9 +44,8 @@ public abstract class UnboundArbitraryBean extends UnboundBean {
      * want to use {@link Bean#hasProperty(java.lang.String)} to test that the
      * property exists.
      * <p>
-     * This implementation searches
-     * {@link ArbitraryPropertySupport#getPropertyNames()} and uses
-     * introspection to get the property.
+     * This implementation searches the internal property collection
+     * and uses introspection to get the property.
      *
      * @param key Property to retrieve.
      * @return value of key or null.
@@ -75,9 +74,8 @@ public abstract class UnboundArbitraryBean extends UnboundBean {
     /**
      * Test if a property exists.
      * <p>
-     * This implementation searches
-     * {@link ArbitraryPropertySupport#getPropertyNames()} and uses
-     * introspection to get the property.
+     * This implementation searches the internal property collection
+     * and uses introspection to get the property.
      *
      * @param key Property to inspect.
      * @return true if property exists
