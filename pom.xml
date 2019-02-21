@@ -1073,7 +1073,7 @@
         <dependency>
             <groupId>net.coobird</groupId>
             <artifactId>thumbnailator</artifactId>
-            <version>[0.4, 0.5)</version>
+            <version>0.4.8</version>
         </dependency>
     </dependencies>
 
