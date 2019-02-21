@@ -122,6 +122,7 @@ abstract public class AbstractConnectionConfigXml extends AbstractXmlAdapter {
      * @deprecated 4.15.3  part of #4670 migration to parsable prefixes
      */
     @Deprecated // part of #4670 migration to parsable prefixes
+    @SuppressWarnings("deprecation") // Manager.isLegacySystemPrefix
     protected void checkAndWarnPrefix(String prefix) {
         if (! jmri.Manager.isLegacySystemPrefix(prefix)) return;
         // legacy, so warn
