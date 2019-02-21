@@ -32,7 +32,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Mark Underwood
  */
-@SuppressWarnings("serial")
 public class VSDecoderCreationAction extends AbstractAction {
 
     Boolean _useNewGUI = false;
