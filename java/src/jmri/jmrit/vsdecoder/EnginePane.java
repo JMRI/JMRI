@@ -22,7 +22,6 @@ import javax.swing.JPanel;
  * @author Mark Underwood Copyright (C) 2011
  * @author Klaus Killinger Copyright (C) 2018
  */
-@SuppressWarnings("serial")
 public class EnginePane extends JPanel {
     // Superclass for Diesel, Steam, Electric panes.
     // Doesn't really do anything.

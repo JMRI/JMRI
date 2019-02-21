@@ -4,6 +4,7 @@
 # Part of the JMRI distribution
 
 import java
+import java.awt
 
 if (not java.awt.GraphicsEnvironment.isHeadless()) : 
     execfile("jython/AutoDispatcher2.py")
