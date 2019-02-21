@@ -34,6 +34,7 @@ import jmri.ShutDownTask;
 import jmri.SignalHeadManager;
 import jmri.SignalMastLogicManager;
 import jmri.SignalMastManager;
+import jmri.ThrottleManager;
 import jmri.TurnoutManager;
 import jmri.TurnoutOperationManager;
 import jmri.UserPreferencesManager;
