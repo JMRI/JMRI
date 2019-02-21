@@ -51,7 +51,6 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
     protected int _contype=0; //  pane console message type
     protected String _context=null; // pane console text
 
-    private PropertyChangeListener _cconSignalMastListener = null;
     private int pFromDir[] = new int[50];
    
     private CabSignalManager cabSignalManager;
@@ -472,105 +471,15 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
     
     private void updateblocksforrow(int row){
         Runnable r;
-        List<Block> routelist = new ArrayList<>();
-        if (cabSignalManager.getCabSignalArray()[row].getNextMast()!= null) {
-            cabSignalManager.getCabSignalArray()[row].getNextMast().removePropertyChangeListener(_cconSignalMastListener);
-        }
-        cabSignalManager.getCabSignalArray()[row].setNextMast(null);
         r = new Notify(row, this);
         javax.swing.SwingUtilities.invokeLater(r);
 
         Block b = cabSignalManager.getCabSignalArray()[row].getBlock();
-        Block nB;
-        SignalMast sm = null;
-        LayoutBlockManager lbm = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class);
-        
-        int dir = 0;
-        int blockstep = 0;
-        
-        if ( b != null ) {
-            dir = b.getDirection();
-            routelist.add(b);
-            pFromDir[0] = dir;
-        }
-        
-        if ( dir > 0 ) {
-            nB = getnextblock(blockstep,(routelist.get(blockstep)),pFromDir[blockstep]);
-            routelist.add(nB);
-            while (sm == null && nB != null) {
-                sm = lbm.getFacingSignalMast(b, nB);
-                if (sm == null) {
-                    blockstep++;                                
-                    b = nB;
-                    nB = getnextblock(blockstep,(routelist.get(blockstep)),pFromDir[blockstep]);
-                    routelist.add(nB);
-                }
-            }
-            if ( sm == null) {
-                sm = lbm.getSignalMastAtEndBumper(routelist.get(blockstep),null);
-            }
-            if ( sm != null) {
-                // add signal changelistener
-                sm.addPropertyChangeListener(_cconSignalMastListener = (PropertyChangeEvent e) -> {
-                    updateblocksforrow(row);
-                });
-                cabSignalManager.getCabSignalArray()[row].setNextMast(sm);
-                // update table row
-                r = new Notify(row, this);
-                javax.swing.SwingUtilities.invokeLater(r);
-            }
-        
-            if ( routelist.size()==1 ) {
-                cabSignalManager.getCabSignalArray()[row].setNextBlock(null);
-            } else {
-                if ( routelist.get(1)==null) {
-                    cabSignalManager.getCabSignalArray()[row].setNextBlock(null);
-                } else {
-                    cabSignalManager.getCabSignalArray()[row].setNextBlock(routelist.get(1));
-                }
-            }
-        } else {
-            // no direction
-            cabSignalManager.getCabSignalArray()[row].setNextBlock(null);
-        }
-        
+        Block nB = cabSignalManager.getCabSignalArray()[row].getNextBlock();
+        SignalMast sm = cabSignalManager.getCabSignalArray()[row].getNextMast();
         calculatecabsig(row);
     }
     
-    private Block getnextblock(int step, Block b, int fromdirection){
-        List<Path> thispaths =b.getPaths();
-        for (final Path testpath : thispaths) {
-            if (testpath.checkPathSet()) {
-                Block blockTest = testpath.getBlock();
-                int dirftTest = testpath.getFromBlockDirection();
-                int dirtoTest = testpath.getToBlockDirection();
-                if ((((fromdirection & Path.NORTH) != 0) && ((dirtoTest & Path.NORTH) != 0)) ||
-                    (((fromdirection & Path.SOUTH) != 0) && ((dirtoTest & Path.SOUTH) != 0)) ||
-                    (((fromdirection & Path.EAST) != 0) && ((dirtoTest & Path.EAST) != 0)) ||
-                    (((fromdirection & Path.WEST) != 0) && ((dirtoTest & Path.WEST) != 0)) ||
-                    (((fromdirection & Path.CW) != 0) && ((dirtoTest & Path.CW) != 0)) ||
-                    (((fromdirection & Path.CCW) != 0) && ((dirtoTest & Path.CCW) != 0)) ||
-                    (((fromdirection & Path.LEFT) != 0) && ((dirtoTest & Path.LEFT) != 0)) ||
-                    (((fromdirection & Path.RIGHT) != 0) && ((dirtoTest & Path.RIGHT) != 0)) ||
-                    (((fromdirection & Path.UP) != 0) && ((dirtoTest & Path.UP) != 0)) ||
-                    (((fromdirection & Path.DOWN) != 0) && ((dirtoTest & Path.DOWN) != 0)))
-                { // most reliable
-                    pFromDir[(step+1)] = dirtoTest;
-                    return blockTest;
-                }
-                if (((fromdirection & dirftTest)) == 0) { // less reliable
-                    pFromDir[(step+1)] = dirtoTest;
-                    return blockTest;
-                }
-                if ((fromdirection != dirftTest)){ // least reliable but copes with 180 degrees 
-                    pFromDir[(step+1)] = dirtoTest;
-                    return blockTest;
-                }
-            }
-        }
-      return null;
-    }
-
     // returns block for a given row
     // loops through blocklist, compares each block value to locoAddress string
     // or number.
@@ -761,17 +670,6 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
      * disconnect from the CBUS
      */
     public void dispose() {
-        // eventTable.removeAllElements();
-        // eventTable = null;
-        
-        for (int i = 0; i < getRowCount(); i++) {
-            if (cabSignalManager.getCabSignalArray()[i].getNextMast()!= null) {
-                cabSignalManager.getCabSignalArray()[i].getNextMast().removePropertyChangeListener(_cconSignalMastListener);
-            }
-        }
-
-        masterSendCabDataButton(false); // send data off message to cabs
-        
     }
 
     private final static Logger log = LoggerFactory.getLogger(CabSignalTableModel.class);

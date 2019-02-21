@@ -63,15 +63,6 @@ public interface CabSignal {
     public Block getBlock();
 
     /**
-     * Set the Next Block the locomotive is expected to enter.
-     * This value is may be calculated from the current block and direction 
-     * of travel.
-     *
-     * @param position is a Block the locomotive is in.
-     */
-    public void setNextBlock(Block position);
-
-    /**
      * Get the Next Block the locomotive is expected to enter.
      * This value is calculated from the current block and direction 
      * of travel.
@@ -79,15 +70,6 @@ public interface CabSignal {
      * @return The next Block position
      */
     public Block getNextBlock();
-
-    /**
-     * Set the Next Signal Mast the locomotive is expected to pass.
-     * This value may be calculated from the current block and direction 
-     * of travel.
-     *
-     * @param mast The next SignalMast position
-     */
-    public void setNextMast(SignalMast mast);
 
     /**
      * Get the Next Signal Mast the locomotive is expected to pass.

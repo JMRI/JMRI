@@ -1,9 +1,16 @@
 package jmri.implementation;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.List;
 import jmri.Block;
+import jmri.BlockManager;
 import jmri.CabSignal;
+import jmri.InstanceManager;
 import jmri.LocoAddress;
 import jmri.SignalMast;
+import jmri.Path;
+import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 
 /**
  * Default implementation of a Cab Signal Object, describing the state of the 
@@ -21,6 +28,7 @@ public class DefaultCabSignal implements CabSignal {
     private Block _nextBlock;
     private SignalMast _nextMast;
     private boolean _cabSignalActive;
+    private PropertyChangeListener _cconSignalMastListener = null;
 
     public DefaultCabSignal(LocoAddress address){
        _address = address;
@@ -30,6 +38,9 @@ public class DefaultCabSignal implements CabSignal {
      * A method for cleaning up the cab signal 
      */
     public void dispose(){
+        if (_nextMast != null) {
+            _nextMast.removePropertyChangeListener(_cconSignalMastListener);
+        }
        _address = null;
        _currentBlock = null;
        _nextBlock = null;
@@ -83,17 +94,6 @@ public class DefaultCabSignal implements CabSignal {
     }
 
     /**
-     * Set the Next Block the locomotive is expected to enter.
-     * This value is may be calculated from the current block and direction 
-     * of travel.
-     *
-     * @param position is a Block the locomotive is in.
-     */
-    public void setNextBlock(Block position){
-         _nextBlock = position;
-    }
-
-    /**
      * Get the Next Block the locomotive is expected to enter.
      * This value is calculated from the current block and direction 
      * of travel.
@@ -101,18 +101,45 @@ public class DefaultCabSignal implements CabSignal {
      * @return The next Block position
      */
     public Block getNextBlock(){
+        if(getBlock()==null){
+           return null; // no current block, so can't have a next block.
+        }
+        _nextBlock = nextBlockOnPath(getBlock(),getBlock().getDirection());
         return _nextBlock;
     }
 
-    /**
-     * Set the Next Signal Mast the locomotive is expected to pass.
-     * This value may be calculated from the current block and direction 
-     * of travel.
-     *
-     * @param mast The next SignalMast position
-     */
-    public void setNextMast(SignalMast mast){
-        _nextMast = mast;
+    private Block nextBlockOnPath(Block current, int fromdirection){
+        List<Path> thispaths = current.getPaths();
+        for (final Path testpath : thispaths) {
+            if (testpath.checkPathSet()) {
+                Block blockTest = testpath.getBlock();
+                int dirftTest = testpath.getFromBlockDirection();
+                int dirtoTest = testpath.getToBlockDirection();
+                if ((((fromdirection & Path.NORTH) != 0) && ((dirtoTest & Path.NORTH) != 0)) ||
+                    (((fromdirection & Path.SOUTH) != 0) && ((dirtoTest & Path.SOUTH) != 0)) ||
+                    (((fromdirection & Path.EAST) != 0) && ((dirtoTest & Path.EAST) != 0)) ||
+                    (((fromdirection & Path.WEST) != 0) && ((dirtoTest & Path.WEST) != 0)) ||
+                    (((fromdirection & Path.CW) != 0) && ((dirtoTest & Path.CW) != 0)) ||
+                    (((fromdirection & Path.CCW) != 0) && ((dirtoTest & Path.CCW) != 0)) ||
+                    (((fromdirection & Path.LEFT) != 0) && ((dirtoTest & Path.LEFT) != 0)) ||
+                    (((fromdirection & Path.RIGHT) != 0) && ((dirtoTest & Path.RIGHT) != 0)) ||
+                    (((fromdirection & Path.UP) != 0) && ((dirtoTest & Path.UP) != 0)) ||
+                    (((fromdirection & Path.DOWN) != 0) && ((dirtoTest & Path.DOWN) != 0)))
+                { // most reliable
+                    blockTest.setDirection(dirtoTest);
+                    return blockTest;
+                }
+                if (((fromdirection & dirftTest)) == 0) { // less reliable
+                    blockTest.setDirection(dirtoTest);
+                    return blockTest;
+                }
+                if ((fromdirection != dirftTest)){ // least reliable but copes with 180 degrees 
+                    blockTest.setDirection(dirtoTest);
+                    return blockTest;
+                }
+            }
+        }
+      return null;
     }
 
     /**
@@ -123,6 +150,31 @@ public class DefaultCabSignal implements CabSignal {
      * @return The next SignalMast position
      */
     public SignalMast getNextMast(){
+        if (_nextMast != null) {
+            _nextMast.removePropertyChangeListener(_cconSignalMastListener);
+        }
+        _nextMast=null;
+        if(getBlock()==null){
+           return null; // no current block, so can't have a next signal.
+        }
+        LayoutBlockManager lbm = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class);
+        
+        Block b = getBlock();
+        Block nB = getNextBlock();
+        while(_nextMast == null && nB !=null ) {
+           _nextMast = lbm.getFacingSignalMast(b, nB);
+           b = nB;
+           nB = nextBlockOnPath(b,b.getDirection()); 
+        }
+        if ( _nextMast == null) {
+           _nextMast = lbm.getSignalMastAtEndBumper(getBlock(),null);
+        }
+        if ( _nextMast != null) {
+           // add signal changelistener
+           _nextMast.addPropertyChangeListener(_cconSignalMastListener = (PropertyChangeEvent e) -> {
+              //updateblocksforrow(row);  // aspect changed?, need to notify
+            });
+        }
         return _nextMast;
     }
 
