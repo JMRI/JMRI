@@ -132,10 +132,10 @@ public abstract class XmlFile {
      *
      * Exceptions are only thrown when local recovery is impossible.
      *
-     * @throws org.jdom2.JDOMException       only when all methods have failed
-     * @throws java.io.FileNotFoundException if file not found
      * @param file File to be parsed. A FileNotFoundException is thrown if it
      *             doesn't exist.
+     * @throws org.jdom2.JDOMException       only when all methods have failed
+     * @throws java.io.FileNotFoundException if file not found
      * @return root element from the file. This should never be null, as an
      *         exception should be thrown if anything goes wrong.
      */
@@ -154,9 +154,9 @@ public abstract class XmlFile {
      *
      * Exceptions are only thrown when local recovery is impossible.
      *
+     * @param stream InputStream to be parsed.
      * @throws org.jdom2.JDOMException       only when all methods have failed
      * @throws java.io.FileNotFoundException if file not found
-     * @param stream InputStream to be parsed.
      * @return root element from the file. This should never be null, as an
      *         exception should be thrown if anything goes wrong.
      */
@@ -169,9 +169,9 @@ public abstract class XmlFile {
      *
      * Exceptions are only thrown when local recovery is impossible.
      *
+     * @param url URL locating the data file
      * @throws org.jdom2.JDOMException only when all methods have failed
      * @throws FileNotFoundException   if file not found
-     * @param url URL locating the data file
      * @return root element from the file. This should never be null, as an
      *         exception should be thrown if anything goes wrong.
      */
@@ -262,9 +262,9 @@ public abstract class XmlFile {
     /**
      * Write a File as XML.
      *
-     * @throws FileNotFoundException if file not found
      * @param file File to be created.
      * @param doc  Document to be written out. This should never be null.
+     * @throws FileNotFoundException if file not found
      */
     public void writeXML(File file, Document doc) throws IOException, FileNotFoundException {
         // ensure parent directory exists

@@ -93,8 +93,9 @@
       <isset property="RELEASED"/>
     </condition>
 
-    <!-- should compiler warn of use of deprecated APIs? (on/off) -->
-    <property name="deprecation" value="off"/> <!-- off at start of 3.11 series, as we work through changes -->
+    <!-- Should compiler warn of use of deprecated APIs? (on/off) -->
+    <!-- This is overridden in a number of targets -->
+    <property name="deprecation" value="off"/>
 
     <!-- SDK version (1.8 as of JMRI 3.11.1 [3.12/4.0 pre-releases]) -->
     <property name="sdk_version"    value="1.8"/>
@@ -604,9 +605,12 @@
 
     <!-- this one target handles the compiler processing for all of the JDK based
          compilation - normal code, generated code and tests -->
-    <!-- use the java-compile macro instead -->
+    <!-- Deprecated, use the java-compile macro instead -->
     <target name="-java-compile-internal"> <!-- Internal target for compiling Java source from a specified directory -->
-        <java-compile javac.source="${java.source.directory}" javac.target="${target}" />
+        <java-compile 
+                javac.source="${java.source.directory}" 
+                javac.target="${target}"
+            />
     </target>
 
     <macrodef name="java-compile">
@@ -638,7 +642,10 @@
     <target name="compile-generated-source"
             depends="javacc, update-template-code"><!-- compile all generated Java source; internal target -->
         <!-- Compile the java code from ${genjavasrcdir} into ${target} -->
-        <java-compile javac.source="${genjavasrcdir}"/>
+        <java-compile 
+                javac.source="${genjavasrcdir}"
+                javac.deprecation="off"
+        />
         <copy todir="${target}/jmri" overwrite="true">
             <fileset dir="${genjavasrcdir}/jmri" includes="*.properties"/>
         </copy>
@@ -646,10 +653,39 @@
 
 
     <target name="compile"
-            description="compile source, omitting tests"
+            description="compile source, omitting tests - identical to debug target"
             depends="init, copyfiles, compile-generated-source">
         <!-- Compile the java code from ${source} into ${target} -->
-        <java-compile javac.source="${source}"/>
+        <java-compile 
+                javac.source="${source}"
+                javac.deprecation="on"
+            />
+    </target>
+
+    <!-- Note if modifying the debug target, please be sure to up date the -->
+    <!-- NetBeans IDE debug target in nbproject/ide-targets.xml -->
+    <target name="debug"
+            description="compile source with debugging on, omitting tests - identical to compile target"
+            depends="compile">
+    </target>
+
+    <target name="tests"
+            description="compile test classes"
+            depends="debug">
+        <!-- Compile the test java code from ${source} into ${target} -->
+        <java-compile 
+                javac.source="${test};${acceptancetest}" 
+                javac.target="${testtarget}" 
+                javac.classpath="test.class.path"
+                javac.deprecation="off"
+            />
+        <!-- Copy resources into ${testtarget} so they coexist with identical
+             resources in ${target} (this is important for the Java ServiceLoader -->
+        <copy todir="${testtarget}">
+            <fileset dir="${test}" includes="**/*.properties"/>
+            <fileset dir="${test}" includes="**/*.xml"/>
+            <fileset dir="${test}" includes="META-INF/**"/>
+        </copy>
     </target>
 
     <target name="ci-compile-deprecations"
@@ -674,28 +710,27 @@
         </javac>
     </target>
 
-    <!-- Note if modifying the debug target, please be sure to up date the -->
-    <!-- NetBeans IDE debug target in nbproject/ide-targets.xml -->
-    <target name="debug"
-            description="compile source with debugging on, omitting tests"
-            depends="init, javacc, copyfiles, compile-generated-source">
-        <!-- Compile the java code from ${source} into ${target} -->
-        <java-compile javac.source="${source}"/>
-    </target>
-
-
-    <target name="tests"
-            description="compile test classes"
-            depends="debug">
-        <!-- Compile the test java code from ${source} into ${target} -->
-        <java-compile javac.source="${test};${acceptancetest}" javac.target="${testtarget}" javac.classpath="test.class.path"/>
-        <!-- Copy resources into ${testtarget} so they coexist with identical
-             resources in ${target} (this is important for the Java ServiceLoader -->
-        <copy todir="${testtarget}">
-            <fileset dir="${test}" includes="**/*.properties"/>
-            <fileset dir="${test}" includes="**/*.xml"/>
-            <fileset dir="${test}" includes="META-INF/**"/>
-        </copy>
+    <target name="ci-tests-deprecations"
+            description="compile source and tests, warning on deprecations - for Jenkins CI"
+            depends="ci-compile-deprecations">
+        <!-- Compile the java test code allowing lots of deprecations!-->
+        <!-- The following is copied from the -java-compile-internal target -->
+        <!-- Eventually, we want to turn deprecation warnings "on" and remove this target's Xmax parameters -->
+        <mkdir dir="${testtarget}"/>
+        <javac compiler="modern"
+               srcdir="${test};${acceptancetest}"
+               destdir="${testtarget}"
+               source="${source_version}"
+               target="${jre_version}"
+               includeantruntime="false"
+               fork="true"
+               deprecation="on"
+               debug="${java.debugging}">
+            <classpath refid="test.class.path"/>
+            <compilerarg value="-Xlint:unchecked"/>
+            <compilerarg value="-Xpkginfo:always"/>  <!-- compile all package-info.java to avoid empty-file warnings -->
+            <compilerarg value="-Xmaxwarns"/><compilerarg value="2000"/><!-- change from default 100 warnings -->
+        </javac>
     </target>
 
     <target name="-pre-single-test">
@@ -732,10 +767,7 @@
         </fail>
     </target>
 
-    <!-- the next target requires Ant 1.8 or later, which can be obtained from -->
-    <!-- http://ant.apache.org/bindownload.cgi  -->
-    <!--                                        -->
-    <!-- The ecj.warning.options file defines which warnings are on and off -->
+    <!-- The java/ecj.warning.options and java/ecj.warning.options-ci files defines which warnings are on and off -->
     <!-- By default, we set them explicitly, so that new ones will show up -->
     <!-- See http://help.eclipse.org/galileo/index.jsp?topic=/org.eclipse.jdt.doc.isv/guide/jdt_api_compile.htm -->
     <!--                                        -->
@@ -753,6 +785,7 @@
                    source="${source_version}"
                    target="${jre_version}"
                    includeantruntime="false"
+                   deprecation="@{javac.deprecation}"
                    debug="yes">
                 <compilerclasspath>
                     <pathelement path="${libdir}/ecj.jar"/>
@@ -764,9 +797,12 @@
     </macrodef>
 
     <target name="warnings"
-            description="compile source with warning generation on, omitting tests; requires Ant 1.8 and ecj.jar"
+            description="compile source with ECJ warning generation on, omitting tests"
             depends="check-ant-requirements, clean, init, copyfiles, compile-generated-source">
-        <ecj-compile javac.source="${source}">
+        <ecj-compile 
+                javac.source="${source}"
+                javac.deprecation="on"
+            >
             <javac-options>
                 <compilerarg value="@${basedir}/java/ecj.warning.options"/>
             </javac-options>
@@ -774,9 +810,12 @@
     </target>
 
     <target name="warnings-check"
-            description="compile source with warning generation on and fail if any warnings, omitting tests; requires Ant 1.8 and ecj.jar"
+            description="compile source with ECJ warning generation on and fail if any warnings, omitting tests"
             depends="check-ant-requirements, clean, init, copyfiles, compile-generated-source">
-        <ecj-compile javac.source="${source}">
+        <ecj-compile 
+                javac.source="${source}"
+                javac.deprecation="on"
+            >
             <javac-options>
                 <compilerarg value="@${basedir}/java/ecj.warning.options-ci"/>
             </javac-options>
@@ -784,21 +823,33 @@
     </target>
 
     <target name="tests-warnings"
-            description="compile test sources with warning generation on; requires Ant 1.8 and ecj.jar"
-            depends="check-ant-requirements, clean, init, copyfiles, warnings">
-        <ecj-compile javac.source="${test}" javac.target="${testtarget}" javac.classpath="test.class.path">
+            description="compile test sources with ECJ warning generation on"
+            depends="warnings">
+        <ecj-compile 
+                javac.source="${test}" 
+                javac.target="${testtarget}" 
+                javac.classpath="test.class.path"
+                javac.deprecation="off"
+            >
             <javac-options>
                 <compilerarg value="@${basedir}/java/ecj.warning.options"/>
+                <compilerarg value="@${basedir}/java/ecj.warning.options-test"/>
             </javac-options>
         </ecj-compile>
     </target>
 
     <target name="tests-warnings-check"
-            description="compile test sources with warning generation on and fail if any warnings; requires Ant 1.8 and ecj.jar"
-            depends="check-ant-requirements, clean, init, copyfiles, warnings-check">
-        <ecj-compile javac.source="${test}" javac.target="${testtarget}" javac.classpath="test.class.path">
+            description="compile test sources with ECJ warning generation on and fail if any warnings"
+            depends="warnings-check">
+        <ecj-compile 
+                javac.source="${test}" 
+                javac.target="${testtarget}" 
+                javac.classpath="test.class.path"
+                javac.deprecation="off"
+            >
             <javac-options>
                 <compilerarg value="@${basedir}/java/ecj.warning.options-ci"/>
+                <compilerarg value="@${basedir}/java/ecj.warning.options-test-ci"/>
             </javac-options>
         </ecj-compile>
     </target>
@@ -1633,8 +1684,6 @@
           </check>
        </jacoco:report>
     </target>
-
-
 
     <!-- end of test execution targets -->
 

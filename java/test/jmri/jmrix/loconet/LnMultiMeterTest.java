@@ -31,11 +31,11 @@ public class LnMultiMeterTest {
 
     @Before
     public void setUp() {
+        JUnitUtil.setUp();
+
         lnis = new LocoNetInterfaceScaffold();
         slotmanager = new SlotManager(lnis);
         memo = new LocoNetSystemConnectionMemo(lnis,slotmanager);
-
-        JUnitUtil.setUp();
     }
 
     @After

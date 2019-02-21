@@ -357,7 +357,7 @@ public interface NamedBean extends Comparable<NamedBean> {
      * the second argument's name, +1 if the first argument's name  orders after the second argument's name.
      * The comparison is alphanumeric on the system prefix, then alphabetic on the
      * type letter, then system-specific comparison on the two suffix parts
-     * via the {@link compareSystemNameSuffix} method.
+     * via the {@link #compareSystemNameSuffix} method.
      *
      * @param n2 The second NamedBean in the comparison ("this" is the first one)
      * @return -1,0,+1 for ordering if the names are well-formed; may not provide proper ordering if the names are not well-formed.
