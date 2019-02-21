@@ -6,6 +6,8 @@ import com.digi.xbee.api.exceptions.XBeeException;
 import com.digi.xbee.api.models.XBee16BitAddress;
 import com.digi.xbee.api.models.XBee64BitAddress;
 import java.util.List;
+import jmri.configurexml.ConfigXmlManager;
+import jmri.configurexml.XmlAdapter;
 import jmri.jmrix.AbstractStreamPortController;
 import jmri.jmrix.AbstractStreamConnectionConfig;
 import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
@@ -82,6 +84,14 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 		if ((cf = node.getConnectionConfig()) != null) {
                     n.addContent(makeParameter("StreamConfig",
                             cf.getClass().getName()));
+                    String adapter = ConfigXmlManager.adapterName(cf);
+                    log.debug("forward to " + adapter);
+                    try {
+                       XmlAdapter x = (XmlAdapter) Class.forName(adapter).newInstance();
+                       n.addContent(x.store(cf));
+                    } catch (ClassNotFoundException | IllegalAccessException | InstantiationException ex) {
+                       log.error("Exception: ", ex);
+                    }
                 }
 
                 // look for the next node
@@ -154,7 +164,12 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
                String streamController = findParmValue(n, "StreamController");
                String streamConfig = findParmValue(n, "StreamConfig");
                AbstractStreamPortController connectedController = null; 
-	       if (streamController != null) {
+               jmri.jmrix.AbstractStreamConnectionConfig connectedConfig = null;
+
+               Element connect = n.getChildren("connection").get(0); // there should only be one connection child.
+	
+               // configure the controller.	       
+	       if (streamController != null && connectedController == null ) {
                     try {
                         @SuppressWarnings("unchecked") // Class.forName cast is unchecked at this point
                         java.lang.Class<jmri.jmrix.AbstractStreamPortController> T = (Class<AbstractStreamPortController>) Class.forName(streamController);
@@ -168,14 +183,14 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
                              java.lang.reflect.InvocationTargetException ex) {
 			 log.error("Unable to construct Stream Port Controller for node.", ex);
 	            }
-	       }
+               }
+	       // if streamConfig is available, set up connectedConfig.
 	       if (streamConfig != null && connectedController != null ) {
                     try {
                         @SuppressWarnings("unchecked") // Class.forName cast is unchecked at this point
                         java.lang.Class<jmri.jmrix.AbstractStreamConnectionConfig> T = (Class<AbstractStreamConnectionConfig>) Class.forName(streamConfig);
 			java.lang.reflect.Constructor<?> ctor = T.getConstructor(jmri.jmrix.AbstractStreamPortController.class);
-                        jmri.jmrix.AbstractStreamConnectionConfig connectedConfig = (jmri.jmrix.AbstractStreamConnectionConfig) ctor.newInstance(connectedController);
-                        node.connectPortController(connectedConfig);
+                        connectedConfig = (jmri.jmrix.AbstractStreamConnectionConfig) ctor.newInstance(connectedController);
                     } catch (java.lang.ClassNotFoundException cnfe) {
                         log.error("Unable to find class for stream config: {}",streamConfig);
 		    } catch (java.lang.InstantiationException | 
@@ -184,6 +199,30 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
                              java.lang.reflect.InvocationTargetException ex) {
 			 log.error("Unable to construct Stream Port Configuration for node.", ex);
                     }
+               }
+	       // load information from the xml file.
+	       if(connect!=null && connectedConfig != null ){
+                  String className = connect.getAttributeValue("class");
+                  String userName = connect.getAttributeValue("userName", ""); // NOI18N
+                  String systemName = connect.getAttributeValue("systemPrefix", ""); // NOI18N
+                  String manufacturer = connect.getAttributeValue("manufacturer", ""); // NOI18N
+
+                  try {
+                        @SuppressWarnings("unchecked") // Class.forName cast is unchecked at this point
+                        XmlAdapter adapter = (XmlAdapter) Class.forName(className).newInstance();
+                        //adapter.load(connect,connectedConfig);
+                    } catch (ClassNotFoundException | 
+		             InstantiationException | 
+			     IllegalAccessException ex) {
+                        log.error("Unable to create {} for {}", className, shared, ex);
+                    //} catch (RuntimeException | jmri.configurexml.JmriConfigureXmlException ex) {
+                    //    log.error("Unable to load {} into {}", shared, className, ex);
+                    }
+	       } 
+
+               // after loading either config or controller, connect them.
+	       if(connectedConfig != null) {
+	            node.connectPortController(connectedConfig);
 	       } else if(connectedController != null) {
 	            // fallback for connections created with a script
 	            node.connectPortController(connectedController);
