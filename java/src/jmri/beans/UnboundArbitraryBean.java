@@ -44,7 +44,7 @@ public abstract class UnboundArbitraryBean extends UnboundBean {
      * want to use {@link Bean#hasProperty(java.lang.String)} to test that the
      * property exists.
      * <p>
-     * This implementation searches {@link ArbitraryPropertySupport#properties}
+     * This implementation searches the internal property collection
      * and uses introspection to get the property.
      *
      * @param key Property to retrieve.
@@ -60,7 +60,7 @@ public abstract class UnboundArbitraryBean extends UnboundBean {
      * Return a list of property names.
      * <p>
      * This implementation combines the keys in
-     * {@link ArbitraryPropertySupport#properties} with the results of
+     * the internal property collection with the results of
      * {@link Beans#getIntrospectedPropertyNames(java.lang.Object)}.
      *
      * @return a Set of names
@@ -74,7 +74,7 @@ public abstract class UnboundArbitraryBean extends UnboundBean {
     /**
      * Test if a property exists.
      * <p>
-     * This implementation searches {@link ArbitraryPropertySupport#properties}
+     * This implementation searches the internal property collection
      * and uses introspection to get the property.
      *
      * @param key Property to inspect.
@@ -115,7 +115,7 @@ public abstract class UnboundArbitraryBean extends UnboundBean {
      * <p>
      * This implementation checks that a write method is not available for the
      * property using JavaBeans introspection, and stores the property in
-     * {@link ArbitraryPropertySupport#properties} only if a write method does
+     * the internal property collection only if a write method does
      * not exist. This implementation also fires a PropertyChangeEvent for the
      * property.
      *
