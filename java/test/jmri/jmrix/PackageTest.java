@@ -80,7 +80,6 @@ import org.junit.runners.Suite;
         jmri.jmrix.libusb.PackageTest.class,
         SystemConnectionMemoManagerTest.class,
         UsbPortAdapterTest.class,
-        JMRIStreamPortConnectionTypeListTest.class,
 })
 
 /**
