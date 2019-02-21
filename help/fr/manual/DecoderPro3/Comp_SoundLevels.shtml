@@ -1,12 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Translation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-02-19 -->
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>Comprehensive Programmer - Sound Levels Pane</title>
+  <title>Programmeur Complet- Onglet Niveaux Son</title>
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
@@ -27,34 +27,33 @@
     <div id="mainContent">
       <a name="Top" id="Top"></a>
 
-      <h1>DecoderPro&reg; Comprehensive Programmer</h1>
+      <h1>DecoderPro&reg; Programmeur Complet</h1>
 
-      <h2>Sound Levels Pane</h2>
+      <h2>Onglet Niveaux Son</h2>
 
       <div align="right">
-        <p><a href="Comp_SoundFX.shtml">Previous |</a> <a href=
-        "Comp_GlobalCVs.shtml">Next</a></p>
+        <p><a href="Comp_SoundFX.shtml">Pr&#233;c&#233;dent|</a> <a href=
+        "Comp_GlobalCVs.shtml">Suivant</a></p>
 
-        <p><a href="index.shtml#Advanced%20Programmer">Back to
-        Index</a></p>
+        <p><a href="index.shtml#Advanced%20Programmer">Retour à l'Index</a></p>
       </div>
       <hr>
 
-      <p>Here are the controls for the relative volume levels and
-      timing nuances of the sound decoder. Again, this is an
-      example of one implementation. See your decoder documentation
-      and the specific decoder programmer for details applicable to
-      your equipment. Above all, don't be afraid to play with these
-      settings and those in the <a href=
-      "Comp_SoundFX.shtml"><strong>Sound</strong></a> pane until
-      you get sound you like. It's much easier to do here than it
-      is to try to program these using a throttle! And even easier,
-      if you are using the <a href=
-      "Programmer_OpsMode.shtml"><strong>Ops Mode
-      option</strong></a> to program the unit when it's running on
-      the track. If you "write changes" after doing your selection
-      change, you'll get instant feedback of how the sound has
-      changed.</p>
+      <p>Voici les commandes pour les niveaux de volume relatifs et 
+      les nuances de synchronisation du d&#233;codeur de son. Encore une 
+      fois, ceci est un exemple d'une impl&#233;mentation. Reportez-vous 
+      &#224; la documentation de votre d&#233;codeur et au programmateur de 
+      d&#233;codeur sp&#233;cifique pour plus de d&#233;tails sur votre &#233;quipement. 
+      Surtout, n'ayez pas peur de jouer avec ces param&#232;tres et ceux 
+      de l'onglet <a href= "Comp_SoundFX.shtml"> <strong>Son</strong> </a> 
+      jusqu'&#224; ce que vous obteniez le son qui vous convient. C'est 
+      beaucoup plus facile &#224; faire ici que d'essayer de les programmer 
+      en utilisant un r&#233;gulateur! Et encore plus facilement si vous 
+      utilisez l' <a href= "Programmer_OpsMode.shtml"> <strong>option 
+      du mode Op&#233;ration</strong></a> pour programmer l'unit&#233; lorsqu'elle 
+      est ex&#233;cut&#233;e sur la voie. Si vous "&#233;crivez des modifications" apr&#232;s 
+      avoir modifi&#233; votre s&#233;lection, vous obtiendrez un retour instantan&#233;
+       de l'&#233;volution du son
 
       <h1><img src="images/Comp_10_Sound_Levels.png" width="852"
       height="637" alt="Sound level pane"></h1>
@@ -62,11 +61,10 @@
 
       <div align="right">
         <p><a href="Comp_GlobalCVs.shtml"></a> <a href=
-        "Comp_SoundFX.shtml">Previous |</a> <a href=
-        "Comp_GlobalCVs.shtml">Next</a></p>
+        "Comp_SoundFX.shtml">Pr&#233;c&#233;dent |</a> <a href=
+        "Comp_GlobalCVs.shtml">Suivant</a></p>
 
-        <p><a href="index.shtml#Advanced%20Programmer">Back to
-        Index</a></p>
+        <p><a href="index.shtml#Advanced%20Programmer">Retour &#224; l'Index</a></p>
       </div><!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
