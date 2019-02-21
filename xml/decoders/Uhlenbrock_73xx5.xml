@@ -12,7 +12,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-    <version author="Egbert Broerse" version="1" lastUpdated="20190215"/>
+    <version author="Egbert Broerse" version="1" lastUpdated="20190221"/>
     <!-- Version 1 - For new 2017-18 decoders. Copied and adapted from Uhlenbrock_76560.xml Uses common parts -->
     <!-- WARNING: output names fully linked to function mapping include file - do not change independently -->
     <decoder>
@@ -94,14 +94,8 @@
         <programming direct="yes" paged="yes" register="yes" ops="yes">
             <capability>
                 <name>Indexed CV access</name>
-                <parameter name="PI">1021</parameter> <!-- for audio on SUSI -->
-                <parameter name="SI">0</parameter> <!-- Not used, but need to be declared for cvFirst to be read -->
-                <parameter name="cvFirst">true</parameter>
-            </capability>
-            <capability>
-                <name>Indexed CV access 2</name>
                 <parameter name="PI">31</parameter> <!--for Banks -->
-                <parameter name="SI">0</parameter> <!-- Not used, but need to be declared for cvFirst to be read -->
+                <parameter name="SI">32</parameter> <!-- Not used, but need to be declared for cvFirst to be read -->
                 <parameter name="cvFirst">true</parameter>
             </capability>
         </programming>
@@ -1229,8 +1223,11 @@
             <!--extended function mapping on IntelliDrive2 and Piko 4.1, includes cv 31-32 bank switches-->
             <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv257.512extendedmap.xml"/>
         </variables>
+        <!-- Indexed variables -->
+        <constant item="PICV" default="31" comment="CV used for Primary Index"/>
+        <constant item="SICV" default="32" comment="CV used for Secondary Index"/>
 
-        <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/factReset4.xml"/><!-- Piko -->
+        <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/factReset4.xml"/><
     </decoder>
     <!-- special panes -->
     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/PaneRailcom.xml"/>
