@@ -48,7 +48,6 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2004, 2007
  * @author B. Milhaupt  Copyright (C) 2011, 2012, 2013, 2014, 2015, 2016, 2017
  */
-@SuppressWarnings("serial")
 abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.LnPanel
         implements LocoNetListener {
 

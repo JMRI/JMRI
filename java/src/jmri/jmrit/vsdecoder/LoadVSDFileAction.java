@@ -33,7 +33,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Mark Underwood 2011
  */
-@SuppressWarnings("serial")
 public class LoadVSDFileAction extends AbstractAction {
 
     /**
