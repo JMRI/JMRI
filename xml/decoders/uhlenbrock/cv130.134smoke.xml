@@ -186,7 +186,7 @@
         <label xml:lang="de">Rauchgen. - Anfahrwartezeit (T1)</label>
         <label xml:lang="nl">Rookgen. - Startvertraging (T1)</label>
     </variable>
-    <variable item="Smoke generator option 3" CV="134" default="30" include="73105,73115,73145,73405,73415,73235,PIKO41RH2400">
+    <variable item="Smoke generator option 7" CV="134" default="30" include="73105,73115,73145,73405,73415,73235,PIKO41RH2400">
         <decVal/>
         <label>Smoke generator - Start delay (T1)</label>
         <label xml:lang="de">Rauchgen. - Anfahrwartezeit (T1)</label>

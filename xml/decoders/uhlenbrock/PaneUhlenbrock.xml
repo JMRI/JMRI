@@ -215,16 +215,16 @@
           <!-- BEGIN - PWM Phase Grid -->
           <grid gridy="2" weightx="1" ipadx="1">
               <!-- BEGIN - Row 1 (headers)-->
-              <group exclude="73115">-->
+              <group exclude="73115">
                   <griditem gridx="0" gridy="0" gridwidth="1" anchor="LINE_END"><label><text>AUX0</text></label></griditem>
                   <griditem gridx="1" gridy="0" gridwidth="1" anchor="CENTER"><label><text>AUX1</text></label></griditem>
                   <griditem gridx="2" gridy="0" gridwidth="1" anchor="CENTER"><label><text>AUX2</text></label></griditem>
               </group>
-              <group exclude="73105,73115,73145,73405,73415">-->
+              <group exclude="73105,73115,73145,73405,73415">
                   <griditem gridx="3" gridy="0" gridwidth="1" anchor="CENTER"><label><text>AUX3</text></label></griditem>
                   <griditem gridx="4" gridy="0" gridwidth="1" anchor="CENTER"><label><text>AUX4</text></label></griditem>
               </group>
-              <group exclude="73105,73115,73145,73405,73415">-->
+              <group exclude="73105,73115,73145,73405,73415">
                   <griditem gridx="5" gridy="0" gridwidth="1" anchor="CENTER"><label><text>AUX5</text></label></griditem>
                   <griditem gridx="6" gridy="0" gridwidth="1" anchor="CENTER"><label><text>AUX6</text></label></griditem>
                   <griditem gridx="7" gridy="0" gridwidth="1" anchor="CENTER"><label><text>AUX7</text></label></griditem>

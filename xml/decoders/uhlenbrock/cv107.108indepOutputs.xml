@@ -55,33 +55,33 @@
 			<choice xml:lang="de">deaktiviert</choice>
 			<choice xml:lang="it">Disattivato</choice>
 		</enumChoice>
-		<group exclude="73115">
-			<enumChoice choice="A1" minOut="1">
+		<enumChoiceGroup exclude="73115">
+			<enumChoice choice="A1">
 				<choice>A1</choice>
 			</enumChoice>
-			<enumChoice choice="A2" minOut="2">
+			<enumChoice choice="A2">
 				<choice>A2</choice>
 			</enumChoice>
-		</group>
-		<group exclude="73115,73145,73405,73415">
-			<enumChoice choice="A3" minOut="3">
+		</enumChoiceGroup>
+		<enumChoiceGroup exclude="73115,73145,73405,73415">
+			<enumChoice choice="A3">
 				<choice>A3</choice>
 			</enumChoice>
-			<enumChoice choice="A4" minOut="4">
+			<enumChoice choice="A4">
 				<choice>A4</choice>
 			</enumChoice>
-		</group>
-		<group exclude="73105,73115,73145,73405,73415">
-			<enumChoice choice="A5" minOut="5">
+		</enumChoiceGroup>
+		<enumChoiceGroup exclude="73105,73115,73145,73405,73415">
+			<enumChoice choice="A5">
 				<choice>A5</choice>
 			</enumChoice>
-			<enumChoice choice="A6" minOut="6">
+			<enumChoice choice="A6">
 				<choice>A6</choice>
 			</enumChoice>
-			<enumChoice choice="A7" minOut="7">
+			<enumChoice choice="A7">
 				<choice>A7</choice>
 			</enumChoice>
-		</group>
+		</enumChoiceGroup>
 	</enumVal>
 	<label>Front Light Off - Output</label>
 	<label xml:lang="de">Licht vorne Aus - Ausgang</label>
@@ -150,33 +150,33 @@
             <choice xml:lang="de">deaktiviert</choice>
             <choice xml:lang="it">Disattivato</choice>
 	    </enumChoice>
-		<group exclude="73115">
-			<enumChoice choice="A1" minOut="1">
+		<enumChoiceGroup exclude="73115">
+			<enumChoice choice="A1">
 				<choice>A1</choice>
 			</enumChoice>
-			<enumChoice choice="A2" minOut="2">
+			<enumChoice choice="A2">
 				<choice>A2</choice>
 			</enumChoice>
-		</group>
-		<group exclude="73105,73115,73145,73405,73415">
-			<enumChoice choice="A3" minOut="3">
+		</enumChoiceGroup>
+		<enumChoiceGroup exclude="73105,73115,73145,73405,73415">
+			<enumChoice choice="A3">
 				<choice>A3</choice>
 			</enumChoice>
-			<enumChoice choice="A4" minOut="4">
+			<enumChoice choice="A4">
 				<choice>A4</choice>
 			</enumChoice>
-		</group>
-		<group exclude="73105,73115,73145,73405,73415">
-			<enumChoice choice="A5" minOut="5">
+		</enumChoiceGroup>
+		<enumChoiceGroup exclude="73105,73115,73145,73405,73415">
+			<enumChoice choice="A5">
 				<choice>A5</choice>
 			</enumChoice>
-			<enumChoice choice="A6" minOut="6">
+			<enumChoice choice="A6">
 				<choice>A6</choice>
 			</enumChoice>
-			<enumChoice choice="A7" minOut="7">
+			<enumChoice choice="A7">
 				<choice>A7</choice>
 			</enumChoice>
-		</group>
+		</enumChoiceGroup>
 	</enumVal>
 	<label>Rear Light Off - Output</label>
 	<label xml:lang="de">Licht hinten Aus - Ausgang</label>

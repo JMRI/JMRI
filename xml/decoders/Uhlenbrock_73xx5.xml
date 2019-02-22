@@ -12,7 +12,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-    <version author="Egbert Broerse" version="1" lastUpdated="20190221"/>
+    <version author="Egbert Broerse" version="1" lastUpdated="20190222"/>
     <!-- Version 1 - For new 2017-18 decoders. Copied and adapted from Uhlenbrock_76560.xml Uses common parts -->
     <!-- WARNING: output names fully linked to function mapping include file - do not change independently -->
     <decoder>
@@ -329,7 +329,7 @@
                 <label xml:lang="nl">Tijdsduur AD-meting</label>
                 <tooltip>Increase if loc does not run smoothly at low speeds - Decrease if the top speed is too low after CV53 has been lowered</tooltip>
                 <tooltip xml:lang="de">vergrößern, wenn Lok bei geringer Geschwindigkeit ungleichmäßig läuft; verkleinern, wenn bei heruntergesetztem CV 53 Höchstgeschwindigkeit der Lok zu gering ist</tooltip>
-                <label xml:lang="nl">verhoog als de Loc op lage snelheid onregelmatig rijdt; verlaag als bij verlaagde CV 53 topsnelheid van Loc te laag is</label>
+                <tooltip xml:lang="nl">verhoog als de Loc op lage snelheid onregelmatig rijdt; verlaag als bij verlaagde CV 53 topsnelheid van Loc te laag is</tooltip>
             </variable>
             <!--CV59 Reset incl at the bottom-->
             <variable item="Short circuit supervision" CV="60" readOnly="yes">
@@ -490,7 +490,7 @@
                 </enumVal>
                 <label>Analog Operation Control</label>
                 <label xml:lang="de">Analogbetrieb Regelung</label>
-                <choice xml:lang="nl">Regeling bij Analoogbedrijf</choice>
+                <label xml:lang="nl">Regeling bij Analoogbedrijf</label>
                 <tooltip>uses CVs 103-106 below</tooltip>
                 <tooltip xml:lang="de">benutzt unterstehende CVs 103-106</tooltip>
                 <tooltip xml:lang="nl">gebruikt de volgende CV's 103-106</tooltip>
@@ -1277,12 +1277,107 @@
             </variable>
             <!--extended function mapping on IntelliDrive2 and Piko 4.1, includes cv 31-32 bank switches-->
             <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv257.512extendedmap.xml"/>
-        </variables>
-        <!-- Indexed variables -->
-        <constant item="PICV" default="31" comment="CV used for Primary Index"/>
-        <constant item="SICV" default="32" comment="CV used for Secondary Index"/>
 
-        <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/factReset4.xml"/><
+            <!--Sound, only basic -->
+            <!-- Declaration of the "switch" CV, not for direct use but for checking value -->
+            <variable item="Range I Bank switch" CV="1021" default="0">
+                <enumVal>
+                    <enumChoice choice="Normal CVs">
+                        <choice>Normal CVs</choice>
+                        <choice xml:lang="de">Normale CVs</choice>
+                        <choice xml:lang="nl">Normale CVs</choice>
+                    </enumChoice>
+                    <enumChoice choice="Bank A">
+                        <choice>Bank A</choice>
+                        <choice xml:lang="de">Bank A</choice>
+                    </enumChoice>
+                    <enumChoice choice="Bank B">
+                        <choice>Bank B</choice>
+                        <choice xml:lang="de">Bank B</choice>
+                    </enumChoice>
+                    <enumChoice choice="Bank C">
+                        <choice>Bank C</choice>
+                        <choice xml:lang="de">Bank C</choice>
+                    </enumChoice>
+                    <enumChoice choice="Bank D">
+                        <choice>Bank C</choice>
+                        <choice xml:lang="de">Bank C</choice>
+                    </enumChoice>
+                    <enumChoice choice="Bank E" value="8">
+                        <choice>Bank C</choice>
+                        <choice xml:lang="de">Bank C</choice>
+                    </enumChoice>
+                </enumVal>
+                <label>Program</label>
+                <label xml:lang="de">Programmieren</label>
+                <label xml:lang="nl">Programmeer</label>
+                <tooltip>Setting that determines which bank A-E is programmed. Reset to Normal CVs when done!</tooltip>
+                <tooltip xml:lang="de">Einstellung der zu programmierenden Bank A - E. Zurückstellen nach Normale CVs wenn fertig!</tooltip>
+            </variable>
+            <!-- Bank A variables -->
+            <variable item="Range I Manufacturer ID" CV="900.0" readOnly="yes" default="85">
+                <decVal/>
+                <label>Manufacturer ID: </label>
+                <label xml:lang="it">ID Costruttore: </label>
+                <label xml:lang="fr">ID constructeur: </label>
+                <label xml:lang="de">Hersteller ID: </label>
+                <label xml:lang="nl">Fabrikant-ID: </label>
+            </variable>
+            <variable item="Range I Software version" CV="901.0" readOnly="yes">
+                <decVal/>
+                <label>Manufacturer Version No: </label>
+                <label xml:lang="it">Versione Decoder: </label>
+                <label xml:lang="fr">Version décodeur: </label>
+                <label xml:lang="de">Decoder Version: </label>
+                <label xml:lang="nl">Versie van decoder: </label>
+            </variable>
+            <variable item="Range I Reset" CV="905.0" readOnly="no">
+                <decVal/>
+                <label>Reset to factory settings: </label>
+                <label xml:lang="de">Rücksetzen der CVs: </label>
+                <label xml:lang="nl">Zet terug naar fabrieksinstellingen: </label>
+                <tooltip>To reset write a value other than 0</tooltip>
+                <tooltip xml:lang="de">zum Rücksetzen einen Wert ungleich 0 setzen</tooltip>
+            </variable>
+            <!-- Bank B variables -->
+            <variable item="Range II Hardware ID" CV="900.1" readOnly="yes">
+                <decVal/>
+                <label>Hardware ID: </label>
+                <label xml:lang="de">Hardwarekennung: </label>
+                <label xml:lang="nl">Hardware-ID: </label>
+            </variable>
+            <variable item="Range II Subversion ID" CV="901.1" readOnly="yes">
+                <decVal/>
+                <label>Sub Version Number: </label>
+                <label xml:lang="de">Unterversionsnummer: </label>
+                <label xml:lang="nl">Sub-versienummer: </label>
+            </variable>
+            <!-- Bank C variables -->
+            <variable item="Range III Sound Volume" CV="900.2" default="255" tooltip="0-255">
+                <decVal/>
+                <label>Master Sound Volume</label>
+                <label xml:lang="de">Gesamtlautstärke</label>
+                <label xml:lang="nl">Geluidsvolume</label>
+            </variable>
+            <variable item="Range III Random Min" CV="905.2">
+                <decVal/>
+                <label>Minimum Random Period</label>
+                <label xml:lang="de">Minimale Zufallszeit</label>
+                <label xml:lang="nl">Min. toevalstijd</label>
+            </variable>
+            <variable item="Range III Random Max" CV="906.2">
+                <decVal/>
+                <label>Maximum Random Period</label>
+                <label xml:lang="de">Maximale Zufallszeit</label>
+                <label xml:lang="nl">Max. toevalstijd</label>
+            </variable>
+            <!--TODO CV 907.2-911.2-->
+            <!--TODO CV 900.3-939.3-->
+            <!--TODO CV 900.4-939.4-->
+            <!--TODO CV 900.8-939.8-->
+        </variables>
+
+        <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/factReset4.xml"/>
     </decoder>
     <!-- special panes -->
     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/PaneRailcom.xml"/>
