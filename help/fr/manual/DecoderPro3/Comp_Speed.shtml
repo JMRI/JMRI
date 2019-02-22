@@ -1,7 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Translation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-02-19 -->
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -27,177 +27,180 @@
     <div id="mainContent">
       <a name="Top" id="Top"></a>
 
-      <h1>DecoderPro&reg; Comprehensive Programmer</h1>
+      <h1>DecoderPro&reg; Programmeur Complet</h1>
 
-      <h2>Basic Speed Control Pane</h2>
+      <h2>Onglet de Contr&#244;le Basique de Vitesse</h2>
 
       <div align="right">
-        <p><a href="Comp_Motor.shtml">Previous |</a> <a href=
-        "Comp_Speed_Talble.shtml">Next</a></p>
+        <p><a href="Comp_Motor.shtml">Pr&#233;c&#233;dent |</a> <a href=
+        "Comp_Speed_Talble.shtml">Suivant</a></p>
 
-        <p><a href="index.shtml#Advanced%20Programmer">Back to
-        Index</a></p>
+        <p><a href="index.shtml#Advanced%20Programmer">Retour &#224; l'Index</a></p>
       </div>
       <hr>
 
-      <p>The <strong>Speed Control pane</strong> looks very
-      complicated, but it can be one of the most significant in
-      improving the performance of your locomotive fleet. Remember
-      if you use <strong>Speed Table</strong> TAB this TAB is not
-      used.</p>
+      <p>L'<strong> onglet Contr&#244;le de la Vitesse </strong> a l'air tr&#233;s 
+      compliqu&#233;, mais il peut &#234;tre l'un des plus importants pour am&#233;liorer 
+      les performances de votre parc de locomotives. N'oubliez pas que 
+      si vous utilisez l'Onglet <strong> Table de Vitesse </strong>, cet Onglet n'est pas utilis&#233;. </P>
 
-      <h1><img src="images/Speed_Table_Main.png" alt="speed"
-      height="386" width="804"></h1>
+       <h1> <img src = "images/Speed_Table_Main.png" alt = "speed"
+       height = "386" width = "804"> </h1>
 
-      <p>Let's look first at the top of the pane: You now have the
-      option of using Basic Speed Control (this pane) or Speed
-      Table to control your locomotive's speed. Use the tabs at the
-      top of the screen to select the method you wish to use and
-      then click the button in the top center for the page to
-      select that method of speed control. Whichever one you select
-      last with the button will be the method used for speed
-      control.</p>
+       <p> Commen&#231;ons par regarder en haut de la fen&#234;tre: Vous avez 
+       maintenant la possibilit&#233; d'utiliser le Contr&#244;le Basique de Vitesse 
+      (cette fen&#234;tre) ou le Tableau des Vitesses pour contr&#244;ler la 
+      vitesse de votre locomotive. Utilisez les onglets situ&#233;s en 
+      haut de l'&#233;cran pour s&#233;lectionner la m&#233;thode &#224; utiliser, puis 
+      cliquez sur le bouton situ&#233; en haut au centre de la page pour 
+      s&#233;lectionner cette m&#233;thode de contr&#244;le de la vitesse. Le dernier 
+      que vous aurez s&#233;lectionn&#233; avec le bouton sera la m&#233;thode utilis&#233;e 
+      pour le contr&#244;le de la vitesse. </P>
+      
+      <p>Retournez maintenant &#224; l'Onglet de Contr&#244;le Basique de Vitesse. 
+      Le curseur <strong>Tension de d&#233;marrage (0-255)</strong> permet 
+      de d&#233;finir la tension de d&#233;marrage. Ce qui appara&#238;t dans le 
+      corps de ce panneau d&#233;pend de ce qui est disponible chez le 
+      fabricant de votre d&#233;codeur. La plupart ont quelque chose de 
+      similaire &#224; ce qui est montr&#233;, mais la s&#233;rie Soundtraxx Tsunami 
+      est tr&#233;s limit&#233;e. Nous vous montrerons comment contourner cette 
+      limitation lorsque nous arriverons &#224; l'&#233;cran Tableau de Vitesse.</P>
 
-      <p>Now back to Basic Speed Control Pane. We see the
-      <strong>Start Voltage(0-255)</strong> slider to set the start
-      voltage. What appears in the body of this panel is dependent
-      on what is available from your decoder manufacturer. Most
-      have something similar to what is shown, but the Soundtraxx
-      Tsunami series is very limited. We'll show you a way around
-      this limitation when we get to the Speed Table screen.</p>
+       <p>Trois CV importants sont programm&#233;s dans ce volet Vstart, 
+       Vmid et Vhigh. Ils travaillent ensemble pour cr&#233;er un tableau 
+       de base tr&#233;s rapide en trois points. Sur certains d&#233;codeurs, 
+       ces param&#233;tres peuvent &#234;tre &#233;tiquet&#233;s diff&#233;remment et les trois 
+       peuvent ne pas &#234;tre disponibles. Decoder Pro affiche les 
+       options correctes pour le d&#233;codeur s&#233;lectionn&#233;. </P>
 
-      <p>Three important CVs are programmed in this pane Vstart,
-      Vmid and Vhigh. They work together to make a very basic three
-      point speed table. On some decoders these settings may be
-      labeled differently and all three may not be available.
-      Decoder Pro will show the correct options for your selected
-      decoder.</p>
+       <p>Param&#233;tre possible pouvant appara&#238;tre sur cet Onglet.</p>
 
-      <p>Possible setting that can appear on this TAB.</p>
+      <p><b>Vstart</b>(<strong>Tension de d&#233;marrage </strong>) est la 
+      tension du premier cran de vitesse. Si votre locomotive n'a pas 
+      commenc&#233; &#224; bouger tant que la voie n'a pas atteint la tension 
+      analogique avec une tension analogique de 3 volts, cela vous 
+      permet de configurer le d&#233;codeur pour lui donner imm&#233;diatement 2,99 volts. </p>
 
-      <p><b>Vstart</b>(<strong>Start Voltage</strong>) is the
-      voltage at the first speed step. If your locomotive didn't
-      start moving until there were three volts on the track with
-      analog power, this lets you set up the decoder to give it
-      2.99 volts right away, so it will start moving when you
-      advance your DCC throttle.</p>
+      <p><b>Vhigh (tension maximale)</b> est le niveau maximal de 
+      tension que la locomotive obtiendra du d&#233;codeur. Si votre 
+      locomotive ressemble &#224; la X-1 de Chuck Yeager &#224; plein r&#233;gime, 
+      vous pouvez r&#233;duire la vitesse maximale &#224; un niveau plus 
+      raisonnable. Une limite similaire peut &#234;tre d&#233;finie sur 
+      l'&#233;cran d'entr&#233;e de l(inventaire, mais uniquement sur les 
+      r&#233;gulateurs JMRI. </P>
 
-      <p><b>Vhigh(Top Voltage, Max Voltage, Maximum Voltage)</b> is
-      the maximum amount of power the locomotive will get from the
-      decoder. If your locomotive looks like Chuck Yeager's X-1 at
-      full throttle, then you can trim the top speed down to a more
-      reasonable scale level. A similar looking limit can be set on
-      the Roster Entry screen, but it only apples to JMRI
-      Throttles.</p>
+      <p><b>Vmid</b> (<strong> Tension M&#233;diane)</strong> vous permet 
+      de configurer la pente entre <b>Vstart</b> et <b>Vhigh</b>  
+      de sorte que si votre locomotive atteint sa vitesse maximale &#224; 
+      5 volts, vous pouvez &#233;tirer le bas de la courbe pour obtenir un 
+      contr&#244;le plus pr&#233;cis dans une plage de vitesses utile.</p>
 
-      <p><b>Vmid</b>(<strong>Mid Voltage, Midpoint
-      Voltage)</strong> lets you configure the slope between
-      <b>Vstart</b> and <b>Vhigh</b> a bit, so that if your
-      locomotive reaches full speed at 5 volts, you can stretch out
-      the lower end of the curve to get more fine control in a
-      useful speed range.</p>
+      <p>Si vous rencontrez des probl&#233;mes de vitesse impr&#233;visible 
+      avec vos locomotives, v&#233;rifiez ces param&#233;tres. Parfois, un 
+      ou plusieurs de ces param&#233;tres ont &#233;t&#233; modifi&#233;s accidentellement 
+      (g&#233;n&#233;ralement en raison d'une erreur de programmation des CVs 
+      avec un r&#233;gulateur), ce qui entra&#238;ne des performances tr&#233;s 
+      bizarres. En particulier, si le <strong>Vmid</strong> est 
+      inf&#233;rieur &#224; <strong> Vstart </strong> ou sup&#233;rieur &#224; 
+      <strong> Vhigh </strong>, les r&#233;sultats peuvent &#234;tre extr&#234;mement 
+      impr&#233;visibles. Decoder Pro ne vous laissera pas faire cette erreur.</P>
 
-      <p>If you are having problems with unpredictable speeds with
-      your locomotives, check these settings. Sometimes, one or
-      more of these settings have been changed accidentally
-      (usually due to an error in programming CV's with a
-      throttle), leading to very odd speed performance. In
-      particular, if the <strong>Vmid</strong> is lower than
-      <strong>Vstart</strong> or higher than
-      <strong>Vhigh</strong>, results can be highly unpredictable.
-      Decoder Pro will not let you make this mistake.</p>
+      <p><b> R&#233;glage avant</b> et <b> R&#233;glage arri&#233;re </b> vous permettent 
+      de compenser les diff&#233;rences de vitesse d'avancement et de vitesse 
+      de recul de la locomotive. La plupart des locomotives mod&#233;les ne 
+      fonctionnent pas exactement &#224; la m&#234;me vitesse d'avant en arri&#233;re 
+      en raison de la m&#233;canique du moteur et des engrenages des roues. </P>
 
-      <p><b>Forward Trim</b> and <b>Reverse Trim</b> allow you to
-      compensate for differences in the forward speed and reverse
-      speed of the locomotive. Most model locomotives do not run at
-      exactly the same speed forward and backward due to the motor
-      mechanics and the gear train to the wheels.</p>
+       <p>Les param&#233;tres de ces commandes ne sont pas aussi intuitifs 
+       qu'on pourrait le penser. Une valeur de 0 dans ces CV les 
+       d&#233;sactive. Cependant, un r&#233;glage de 128 dans l'un d'eux 
+       n'aura aucun effet visible! Pour que les d&#233;coupages direct 
+       et inverse soient effectifs, augmentez la valeur au-dessus de 
+       128 pour augmenter la vitesse et diminuez-la en dessous de 128 
+       pour r&#233;duire la vitesse dans ce volet. Le r&#233;glage direct et 
+       inverse ne fonctionne pas de la m&#234;me mani&#233;re pour tous 
+       les d&#233;codeurs, avec des variations entre les fabricants. </P>
 
-      <p>The settings for these controls are not as intuitive as
-      you might think. A setting of 0 in these CVs turns them off.
-      However, a setting of 128 in either of them will have no
-      visible effect! To make the forward and reverse trim
-      effective, raise the value above 128 to increase speed, and
-      lower it below 128 to decrease speed in this pane. The
-      Forward and Reverse Trim does not work the same for all
-      decoders, with variations between manufacturers.</p>
+       <div class = "BOXIT">
+         <h3> Quelques suggestions sur l'utilisation des commandes 
+         basiques et de la programmation du moteur<br></h3>
 
-      <div class="BOXIT">
-        <h3>Some suggestions on using the basic motor controls and
-        programming on the main.<br></h3>
+        <p>&#193; moins que vous ne souhaitiez effectuer une correspondance 
+        de vitesse pr&#233;cise, vous n'aurez probablement pas besoin d'utiliser 
+        les <b>Tableaux de Vitesse</b> que vous verrez sur l'
+        <a href= "Comp_Speed_Talble.shtml" target="_parent"> <strong> 
+		onglet Tableau de vitesse </strong> </a>: vous pourrez 
+		r&#233;aliser ce que vous voulez en utilisant <b>Kick Start</b> (
+		<a href= "Comp_Motor.shtml">du pr&#233;c&#233;dent volet </a>) et 
+		<b> Tension de d&#233;marrage </b>, <b> VMid </b> et 
+		<b> Volts maximum </b> s'ils sont disponibles dans cet 
+		onglet ... mais comment faire cela? </p>
 
-        <p>Unless you want to get into some precision speed
-        matching, you probably won't need to use the <b>Speed
-        Tables</b> you'll see on the <a href=
-        "Comp_Speed_Talble.shtml" target="_parent"><strong>Speed
-        Table pane</strong></a>- you'll be able to accomplish much
-        of what you want using just <b>Kick start</b> (<a href=
-        "Comp_Motor.shtml">previous pane</a>), and <b>Start
-        Volts</b>, <b>Mid Volts</b>, and <b>Max Volts</b> if they
-        are available in this pane... but how to do this?</p>
+        <p> Commencez avec la valeur <b>Kick start</b> et 
+        <a href= "Programmer_OpsMode.shtml"> Programmation sur 
+        la voie principale </a> plut&#244;t que sur la voie de 
+        programmation. D&#233;finissez la locomotive &#224; programmer 
+        sur le cran 1 du r&#233;gulateur. Si elle se d&#233;place 
+        <span class = "ACCENT"> du tout </span>, ne modifiez pas 
+        la valeur <b> Kick Start </b>. Si elle ne ne bouge pas, augmentez 
+        lentement les gaz jusqu'&#224; ce qu'il le fasse. Ensuite, baissez 
+        les gaz. Si la locomotive s'arr&#234;te au m&#234;me r&#233;glage avec lequel 
+        vous avez d&#233;marr&#233;, vous n'aurez pas besoin de d&#233;finir la valeur 
+        <b> Kick Start </b>. Toutefois, s'il continue &#224; fonctionner &#224; une 
+        vitesse inf&#233;rieure &#224; celle du d&#233;marrage, augmentez 
+        la valeur <b> Kick start </b> jusqu'&#224; ce qu'il d&#233;marre et 
+        fonctionne &#224; sa vitesse la plus lente possible. </P>
 
-        <p>Start with the <b>Kick start</b> value, and <a href=
-        "Programmer_OpsMode.shtml">Programming on the main</a>
-        rather than the programming track. Set the locomotive to be
-        programmed on throttle step 1. If it moves <span class=
-        "ACCENT">at all</span>, don't change the <b>Kick start</b>
-        value. If it doesn't move, slowly step up the throttle
-        until it does. Then, turn the throttle down. If the
-        locomotive stops at the same setting it started, you won't
-        need to set the <b>Kick start</b> value. However, if it
-        continues to run at a slower speed than it would start,
-        then increase the <b>Kick start</b> value until it will
-        start and run at its slowest possible speed.</p>
 
-        <p>Now, if the locomotive isn't running at throttle step 1,
-        increase the <b>Start Volts</b> value (and write it)
-        without changing the throttle until the locomotive
-        <span class="ACCENT">barely</span> crawls... you can
-        usually get this down to a speed of a tie a minute or so if
-        you like! Remember, you are doing this in "<b>ops
-        mode</b>", so you can make these changes while the
-        locomotive is actually running. Don't forget to write the
-        value changes to the decoder - they won't take effect
-        unless you do.</p>
+        <p>Maintenant, si la locomotive ne fonctionne pas au cran 1 du r&#233;gulateur, 
+        augmentez la valeur <b>Start Volts </b> (et &#233;crivez-la) sans modifier le 
+        r&#233;gulateur jusqu'&#224; ce que la locomotive <span class = "ACCENT"> </span> 
+        rampe ... vous pouvez g&#233;n&#233;ralement en arriver &#224; &#233;galer une minute ou 
+        deux si vous le souhaitez! N'oubliez pas que vous effectuez 
+        cette op&#233;ration en "<b>mode ops</b>" afin que vous puissiez 
+        effectuer ces modifications pendant que la locomotive est en marche. 
+        N'oubliez pas d'&#233;crire les modifications de valeur dans le d&#233;codeur. 
+        Elles ne prendront effet que si vous le faites. </P>
 
-        <p>Now, set the top speed of the locomotive. Run the
-        throttle up to full, and lower the <b>Max Volts</b> value
-        (and write it) until the locomotive runs at the maximum
-        speed you want it to reach, but don't forget that adding a
-        train will slow it down!</p>
+        <p> Maintenant, r&#233;glez la vitesse maximale de la locomotive.
+        Maintenez le r&#233;glage du r&#233;gulateur au maximum et r&#233;duisez la 
+        valeur <b>Max Volts</b> (et &#233;crivez-le) jusqu'&#224; ce que la 
+        locomotive roule &#224; la vitesse maximale que vous souhaitez atteindre,
+         mais n'oubliez pas que l'ajout d'un train ralentira la vitesse! </p>
+         
 
-        <p>Finally, set the <b>Mid Volts</b> value about half-way
-        between <b>Start Volts</b> and <b>Max Volts</b>. Setting it
-        above or below the median of the <b>Start Volts</b> and
-        <b>Max Volts</b> values will give you a crude, three point
-        speed table.</p>
+        <p>Enfin, d&#233;finissez la valeur <b>Mid Volts</b> &#224; mi-chemin 
+        entre <b>Vmin </b> et <b> Vmax</b>. Si vous le placez 
+        au-dessus ou au-dessous de la m&#233;diane des valeurs <b>VMin</b> 
+        et <b>VMax</b>, vous obtiendrez un tableau de vitesse brut &#224; trois points. </P>
 
-        <p>There are no hard and fast rules for the exact numbers
-        to use. Even identical locomotives with identical decoders
-        will need different numbers, due to variances in motors and
-        drive trains. Experiment with the settings - Decoder Pro
-        makes it easy!</p>
+        <p>Il n'y a pas de r&#233;gles strictes pour les nombres exacts &#224; 
+        utiliser. M&#234;me les locomotives identiques avec des d&#233;codeurs 
+        identiques auront besoin de r&#233;glages diff&#233;rents, en raison 
+        des diff&#233;rences de motorisation et de transmission. 
+        Exp&#233;rimentez avec les param&#233;tres - Decoder Pro vous facilite la t&#226;che! </p>
+         
 
-        <p>Note: Not all decoders will have Start, Mid and Max
-        Volts, but will have some version of this which will be
-        displayed by Decoder Pro for the specific decoder.</p>
-      </div>
-      <hr>
+        <p>Remarque: tous les d&#233;codeurs n'auront pas de VMin, 
+        VMid ou mVMax, mais une version de celle-ci sera affich&#233;e 
+        par Decoder Pro pour le d&#233;codeur sp&#233;cifique. </p>
+       </div>
+       <h>
 
-      <p>If you select <a href=
-      "Comp_Speed_Talble.shtml"><strong>Speed Table</strong></a>
-      all of the settings in this pane are ignored.<br></p>
-      <hr>
+       <p> Si vous s&#233;lectionnez <a href= "Comp_Speed_Talble.shtml"> 
+		   <strong> Tableau des vitesses </strong> </a>, 
+		   tous les param&#232;tres de ce volet sont ignor&#233;s. <br> </p>
+       <h>
 
       <div align="right">
         <p><a href="Comp_Speed_Talble.shtml"></a> <a href=
-        "Comp_Motor.shtml">Previous |</a> <a href=
-        "Comp_Speed_Talble.shtml">Next</a></p>
+        "Comp_Motor.shtml">Pr&#233;c&#233;dent |</a> <a href=
+        "Comp_Speed_Talble.shtml">Suivant</a></p>
 
-        <p><a href="index.shtml#Advanced%20Programmer">Back to
-        Index</a></p>
+        <p><a href="index.shtml#Advanced%20Programmer">Retour &#224; l'Index</a></p>
       </div><!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>
 </html>
+
