@@ -1,7 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Translation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-02-22 -->
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -24,14 +24,14 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>DecoderPro&reg; Main Window</h1>
+      <h1>DecoderPro&reg; Fen&#234;tre Principale</h1>
 
-      <h2>Decoder Information Area</h2>
+      <h2>Zone d'Information D&#233;codeur</h2>
 
       <div align="right">
-        <p><a href="dp3_Main_Main.shtml">Back</a></p>
+        <p><a href="dp3_Main_Main.shtml">Retour</a></p>
 
-        <p><a href="index.shtml#Main">Back to Index</a></p>
+        <p><a href="index.shtml#Main">Retour &#224; l'Index</a></p>
       </div>
       <hr>
 
@@ -42,8 +42,7 @@
           "images/decoder_info.png" width="362" height="244" alt=
           "decoder info"></td>
 
-          <td width="41%" valign="top">Displays the information
-          about the current decoder selected.</td>
+          <td width="41%" valign="top">Affiche les informations sur le d&#233;codeur s&#233;lectionn&#233;.</td>
         </tr>
 
         <tr>
@@ -52,17 +51,17 @@
           "132" alt="decoder program mode"></td>
 
           <td valign="top">
-            <p>You may select the progamming mode:<br>
+            <p>Vous pouvez s&#233;lectionner le mode de programmation:<br>
             <strong><a href=
             "Programmer_ServiceMode.shtml"><input name="radio"
             type="radio" id="radio" value="radio" checked>
-            Programming Track</a></strong><br>
+            Voie de Programmation</a></strong><br>
             <strong><a href="Programmer_OpsMode.shtml"><input type=
             "radio" name="radio2" id="radio2" value="radio2">
-            Programming on Main</a></strong><br>
+            Programmation sur le R&#233;seau</a></strong><br>
             <strong><input type="radio" name="radio3" id="radio3"
-            value="radio3"> Edit Only</strong> allows you to edit
-            the roster without programming the locomotive.</p>
+            value="radio3"> Modifier uniquement </strong> vous permet de modifier
+             la liste sans programmer la locomotive.</p>
           </td>
         </tr>
 
@@ -71,10 +70,10 @@
           "images/btn_basic_programmer.png" width="202" height="29"
           alt="button"></td>
 
-          <td valign="top">Opens the <strong><a href=
-          "Basic_Start.shtml">Default
-          Programme</a></strong><a href="Basic_Start.shtml">r</a>
-          for the selected decoder in the Roster List</td>
+          <td valign="top">Ouvrir le <strong><a href=
+          "Basic_Start.shtml">Programme par D&#233;faut
+         </a></strong><a href="Basic_Start.shtml"></a>
+          pour le d&#233;codeur s&#233;lectionn&#233; dans la Liste d'Inventaire</td>
         </tr>
 
         <tr>
@@ -83,15 +82,14 @@
           alt="labels"></td>
 
           <td valign="top">
-            <p>Opens the Labels &amp; Media Window for the selected
-            roster member.</p>
+            <p>Ouvre les &#233;tiquettes & amp; Fen&#234;tre M&#233;dia pour le membre de la liste s&#233;lectionn&#233;.</p>
 
-            <p><strong><a href="Adv_FunctionLabel.shtml">Functions
-            labels</a></strong> TAB opens the Function labels pane
-            which allows you to label throttle function
-            buttons</p><strong><a href="RosterMedia.shtml">Roster
-            Media</a></strong> TAB opens the Roster Media pane
-            which allows you to assign an image to the roster entry
+            <p><strong><a href="Adv_FunctionLabel.shtml">&#201;tiquettes</a></strong> 
+            l'Onglet ouvre le panneau Labels Fonctions qui vous permet de libeller 
+            les boutons de fonction du r&#233;gulateur</p><strong><a href="RosterMedia.shtml">
+            Media</a></strong> l'Onglet ouvre le panneau Inventaire M&#233;dia qui vous 
+            permet d'affecter une image &#224; votre entr&#233;e d'inventaire
+            
           </td>
         </tr>
 
@@ -99,17 +97,16 @@
           <td valign="top"><img src="images/btn_lanch_throttle.png"
           width="198" height="30" alt="throttle"></td>
 
-          <td valign="top">Opens a <strong><a href=
-          "dp3_Main_Throttle.shtml">throttle</a></strong> tool for
-          the selected loco in the Roster List.</td>
+          <td valign="top">Ouvre un outil <strong><a href=
+          "dp3_Main_Throttle.shtml">r&#233;gulateur</a></strong> pour la loco 
+          s&#233;lectionn&#233;e dans la Liste d'Inventaire.</td>
         </tr>
       </table>
       <hr>
 
-      <div align="right">
-        <p><a href="dp3_Main_Main.shtml">Back</a></p>
+      <div align="right">Retour</a></p>
 
-        <p><a href="index.shtml#Main">Back to Index</a></p>
+        <p><a href="index.shtml#Main">Retour &#224; l'Index</a></p>
       </div><!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
