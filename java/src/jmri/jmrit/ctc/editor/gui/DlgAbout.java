@@ -49,7 +49,7 @@ public class DlgAbout extends javax.swing.JDialog {
 
         _mHelpTitle.setText("CTCEditor - CTC Editor  ");
 
-        _mOK.setText(Bundle.getMessage("ButtonOk"));
+        _mOK.setText(Bundle.getMessage("ButtonOK"));
         _mOK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 _mOKActionPerformed(evt);
