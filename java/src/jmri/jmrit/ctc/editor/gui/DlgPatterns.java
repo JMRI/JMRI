@@ -89,7 +89,7 @@ public class DlgPatterns extends javax.swing.JDialog {
         _mTUL_DispatcherInternalSensorLockTogglePattern.setText(programProperties._mTUL_DispatcherInternalSensorLockTogglePattern);
         _mTUL_DispatcherInternalSensorUnlockedIndicatorPattern.setText(programProperties._mTUL_DispatcherInternalSensorUnlockedIndicatorPattern);
         initOrig(programProperties);
-        _mAwtWindowProperties.setWindowState((java.awt.Window)this, FORM_PROPERTIES);        
+        _mAwtWindowProperties.setWindowState(this, FORM_PROPERTIES);        
         this.getRootPane().setDefaultButton(_mSaveAndClose);
     }
     

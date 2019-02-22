@@ -44,8 +44,8 @@ public class DlgCB extends javax.swing.JDialog {
     }
     private boolean dataChanged() {
         if (!_mCodeButtonInternalSensorOrig.equals(_mCodeButtonInternalSensor.getText())) return true;
-        if (!_mOSSectionOccupiedExternalSensorOrig.equals((String) _mOSSectionOccupiedExternalSensor.getSelectedItem())) return true;
-        if (!_mOSSectionOccupiedExternalSensor2Orig.equals((String) _mOSSectionOccupiedExternalSensor2.getSelectedItem())) return true;
+        if (!_mOSSectionOccupiedExternalSensorOrig.equals(_mOSSectionOccupiedExternalSensor.getSelectedItem())) return true;
+        if (!_mOSSectionOccupiedExternalSensor2Orig.equals(_mOSSectionOccupiedExternalSensor2.getSelectedItem())) return true;
         if (_mOSSectionSwitchSlavedToUniqueIDIndexOrig != _mOSSectionSwitchSlavedToUniqueID.getSelectedIndex()) return true;
         if (CommonSubs.getIntFromJTextFieldNoThrow(_mCodeButtonDelayTime) != _mCodeButtonDelayTimeOrig) return true;
         return false;
@@ -69,7 +69,7 @@ public class DlgCB extends javax.swing.JDialog {
         CommonSubs.setMillisecondsEdit(_mCodeButtonDelayTime);
         _mCodeButtonDelayTime.setText(Integer.toString(_mCodeButtonHandlerData._mCodeButtonDelayTime));
         initOrig();
-        _mAwtWindowProperties.setWindowState((java.awt.Window)this, FORM_PROPERTIES); 
+        _mAwtWindowProperties.setWindowState(this, FORM_PROPERTIES); 
         this.getRootPane().setDefaultButton(_mSaveAndClose);
     }
     

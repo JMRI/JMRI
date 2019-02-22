@@ -46,7 +46,7 @@ public class DlgSWDI extends javax.swing.JDialog {
     private boolean dataChanged() {
         if (!_mSWDI_NormalInternalSensorOrig.equals(_mSWDI_NormalInternalSensor.getText())) return true;
         if (!_mSWDI_ReversedInternalSensorOrig.equals(_mSWDI_ReversedInternalSensor.getText())) return true;
-        if (!_mSWDI_ExternalTurnoutOrig.equals((String) _mSWDI_ExternalTurnout.getSelectedItem())) return true;
+        if (!_mSWDI_ExternalTurnoutOrig.equals(_mSWDI_ExternalTurnout.getSelectedItem())) return true;
         if (CommonSubs.getIntFromJTextFieldNoThrow(_mSWDI_CodingTimeInMilliseconds) != _mSWDI_CodingTimeInMillisecondsOrig) return true;
         if (_mSWDI_FeedbackDifferentOrig != _mSWDI_FeedbackDifferent.isSelected()) return true;
         if (_mSWDI_GUITurnoutTypeOrig != CodeButtonHandlerData.TURNOUT_TYPE.getTurnoutType(_mSWDI_GUITurnoutType)) return true;
@@ -75,7 +75,7 @@ public class DlgSWDI extends javax.swing.JDialog {
         _mSWDI_GUITurnoutLeftHand.setSelected(_mCodeButtonHandlerData._mSWDI_GUITurnoutLeftHand);
         _mSWDI_GUICrossoverLeftHand.setSelected(_mCodeButtonHandlerData._mSWDI_GUICrossoverLeftHand);
         initOrig();
-        _mAwtWindowProperties.setWindowState((java.awt.Window)this, FORM_PROPERTIES);        
+        _mAwtWindowProperties.setWindowState(this, FORM_PROPERTIES);        
         this.getRootPane().setDefaultButton(_mSaveAndClose);
     }
     

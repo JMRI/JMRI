@@ -55,7 +55,7 @@ public class DlgSIDL extends javax.swing.JDialog {
         _mSIDL_NormalInternalSensor.setText(_mCodeButtonHandlerData._mSIDL_NormalInternalSensor);
         _mSIDL_RightInternalSensor.setText(_mCodeButtonHandlerData._mSIDL_RightInternalSensor);
         initOrig();
-        _mAwtWindowProperties.setWindowState((java.awt.Window)this, FORM_PROPERTIES);        
+        _mAwtWindowProperties.setWindowState(this, FORM_PROPERTIES);        
         this.getRootPane().setDefaultButton(_mSaveAndClose);
     }
     

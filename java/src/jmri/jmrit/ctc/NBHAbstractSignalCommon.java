@@ -19,10 +19,6 @@ import jmri.SignalMastManager;
 */
 
 public abstract class NBHAbstractSignalCommon {
-    private static final SignalHeadManager SIGNAL_HEAD_MANAGER = InstanceManager.getDefault(jmri.SignalHeadManager.class);
-    private static final SignalMastManager SIGNAL_MAST_MANAGER = InstanceManager.getDefault(jmri.SignalMastManager.class);
-    private static final NamedBeanHandleManager NAMED_BEAN_HANDLE_MANAGER = InstanceManager.getDefault(NamedBeanHandleManager.class);
-    
     static NBHAbstractSignalCommon getExistingSignal(String module, String userIdentifier, String parameter, String signal) {
         NBHSignalMast signalMast = new NBHSignalMast(signal);
         if (signalMast.valid()) return signalMast;

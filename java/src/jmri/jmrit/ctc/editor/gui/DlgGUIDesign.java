@@ -86,7 +86,7 @@ public class DlgGUIDesign extends javax.swing.JDialog {
         _mGUIDesign_OSSectionUnknownInconsistentRedBlink.setSelected(otherData._mGUIDesign_OSSectionUnknownInconsistentRedBlink);
         _mGUIDesign_TurnoutsOnPanel.setSelected(otherData._mGUIDesign_TurnoutsOnPanel);
         initOrig(otherData);
-        _mAwtWindowProperties.setWindowState((java.awt.Window)this, FORM_PROPERTIES);        
+        _mAwtWindowProperties.setWindowState(this, FORM_PROPERTIES);        
         this.getRootPane().setDefaultButton(_mSaveAndClose);
     }
     

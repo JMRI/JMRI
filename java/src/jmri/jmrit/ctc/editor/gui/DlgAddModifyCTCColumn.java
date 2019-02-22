@@ -42,7 +42,7 @@ public class DlgAddModifyCTCColumn extends javax.swing.JDialog {
         _mGUIColumnNumber.setModel(new SpinnerNumberModel(existingGUIColumnNumber, 0, 32767, 1));
         _mGUISwitchNumber.setModel(new SpinnerNumberModel(existingSwitchNumber, 1, 32767, 2));
         _mGUIGeneratedAtLeastOnceAlready.setSelected(existingGUIGeneratedAtLeastOnceAlready);
-        _mAwtWindowProperties.setWindowState((java.awt.Window)this, FORM_PROPERTIES);
+        _mAwtWindowProperties.setWindowState(this, FORM_PROPERTIES);
         this.getRootPane().setDefaultButton(_mSaveAndClose);
     }
 

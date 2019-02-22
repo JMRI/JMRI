@@ -75,7 +75,7 @@ public class FrmMainForm extends JFrame {
         InstanceManager.setDefault(jmri.jmrit.ctc.editor.gui.FrmMainForm.class, this);
         initComponents();
         addHelpMenu("index", true);  // NOI18N
-        _mAwtWindowProperties = new AwtWindowProperties((java.awt.Window)this, "AwtWindowProperties.txt", FORM_PROPERTIES); // NOI18N
+        _mAwtWindowProperties = new AwtWindowProperties(this, "AwtWindowProperties.txt", FORM_PROPERTIES); // NOI18N
         _mProgramProperties = new ProgramProperties();
         _mCheckJMRIObject = new CheckJMRIObject();
         newOrOpenFile(true);
@@ -146,7 +146,6 @@ public class FrmMainForm extends JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        _mOpen_Save_SaveAs = new javax.swing.JFileChooser();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jLabel1 = new javax.swing.JLabel();
@@ -718,7 +717,7 @@ public class FrmMainForm extends JFrame {
     }//GEN-LAST:event_addButtonActionPerformed
 
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
-        if (((String)_mPresentlyDefinedColumns.getSelectedValue()).contains(Columns.REFERENCES_PRESENT_INDICATOR)) {
+        if ((_mPresentlyDefinedColumns.getSelectedValue()).contains(Columns.REFERENCES_PRESENT_INDICATOR)) {
             JOptionPane.showMessageDialog(this, Bundle.getMessage("FrmMainFormReferencesExist"));   // NOI18N
             return; // Do nothing!
         }
@@ -733,7 +732,7 @@ public class FrmMainForm extends JFrame {
         if (!validToSaveAtThisTime(Bundle.getMessage("FrmMainFormAutoSaveError1"), Bundle.getMessage("FrmMainFormAutoSaveError2"))) return; // NOI18N
         _mCTCSerialData.writeDataToXMLFile(_mProgramProperties._mFilename);
         _mProgramProperties.close();
-        _mAwtWindowProperties.saveWindowStateAndClose((java.awt.Window)this, FORM_PROPERTIES);
+        _mAwtWindowProperties.saveWindowStateAndClose(this, FORM_PROPERTIES);
         shutdown();
     }//GEN-LAST:event_formWindowClosing
 
@@ -1121,7 +1120,6 @@ public class FrmMainForm extends JFrame {
     private javax.swing.JButton _mMoveDown;
     private javax.swing.JButton _mMoveUp;
     private javax.swing.JMenuItem _mNew;
-    private javax.swing.JFileChooser _mOpen_Save_SaveAs;
     private javax.swing.JMenuItem _mPatterns;
     private javax.swing.JList<String> _mPresentlyDefinedColumns;
     private javax.swing.JMenuItem _mQuitWithoutSaving;

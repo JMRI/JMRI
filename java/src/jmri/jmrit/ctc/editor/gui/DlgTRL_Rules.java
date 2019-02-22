@@ -23,7 +23,7 @@ public class DlgTRL_Rules extends javax.swing.JDialog {
      * Creates new form DlgTRL_Rules
      */
     private static final String FORM_PROPERTIES = "DlgTRL_Rules";   // NOI18N
-    private static final String PREFIX = "_mTRL_";                  // NOI18N
+//  private static final String PREFIX = "_mTRL_";                  // NOI18N
     private final AwtWindowProperties _mAwtWindowProperties;
     private boolean _mClosedNormally = false;
     public boolean closedNormally() { return _mClosedNormally; }
@@ -86,19 +86,7 @@ public class DlgTRL_Rules extends javax.swing.JDialog {
             _mDefaultListModel.addElement(aString);
         }
         initOrig();
-        _mAwtWindowProperties.setWindowState((java.awt.Window)this, FORM_PROPERTIES);        
-        
-//        _mOccupancyExternalSensor1.setText("");
-//        _mOccupancyExternalSensor2.setText("");
-//        _mOccupancyExternalSensor3.setText("");
-//        _mOccupancyExternalSensor4.setText("");
-//        _mOccupancyExternalSensor5.setText("");
-//        _mOccupancyExternalSensor6.setText("");
-//        _mOccupancyExternalSensor7.setText("");
-//        _mOccupancyExternalSensor8.setText("");
-//        _mOccupancyExternalSensor9.setText("");
-//        _mOptionalExternalSensor1.setText("");
-//        _mOptionalExternalSensor2.setText("");
+        _mAwtWindowProperties.setWindowState(this, FORM_PROPERTIES);        
         CommonSubs.populateJComboBoxWithBeans(_mOccupancyExternalSensor1, "Sensor", null, true);
         CommonSubs.populateJComboBoxWithBeans(_mOccupancyExternalSensor2, "Sensor", null, true);
         CommonSubs.populateJComboBoxWithBeans(_mOccupancyExternalSensor3, "Sensor", null, true);

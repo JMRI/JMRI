@@ -38,27 +38,33 @@ public class TrafficLocking {
         private final NBHSensor _mOptionalSensor2;
         private final boolean _mRuleEnabled;
         
-        private TrafficLockingRecord() {      // NEVER use this!
-            _mSwitchIndicatorsRoute = null;
-            _mOSSignalDirectionIndicatorsInterfaceInterface1 = null;
-            _mOSSignalDirectionIndicatorsInterfaceInterface2 = null;
-            _mOSSignalDirectionIndicatorsInterfaceInterface3 = null;
-            _mOSSignalDirectionIndicatorsInterfaceInterface4 = null;
-            _mOSSignalDirectionIndicatorsInterfaceInterface5 = null;
-            _mOccupancyExternalSensor1 = null;
-            _mOccupancyExternalSensor2 = null;
-            _mOccupancyExternalSensor3 = null;
-            _mOccupancyExternalSensor4 = null;
-            _mOccupancyExternalSensor5 = null;
-            _mOccupancyExternalSensor6 = null;
-            _mOccupancyExternalSensor7 = null;
-            _mOccupancyExternalSensor8 = null;
-            _mOccupancyExternalSensor9 = null;
-            _mOptionalSensor1 = null;
-            _mOptionalSensor2 = null;
-            _mRuleEnabled = false;
-        }
-        public TrafficLockingRecord( String userIdentifier,
+//  I'm practicing safe programming practices here, and Travis and Java compiler complain about each other here:    
+//  Travis complains that the default constructor is not called, and I can't do "this();" as the first
+//  line in the TrafficLockingRecord(String....) constructor to call it to get aroud Travis, because I properly
+//  used "final" in the variable declarations above. So there seems to be NO way to prevent a user from calling
+//  the default constructor IMPROPERLY.
+//  DON'T USE THE DEFAULT CONSTRUCTOR PLEASE!
+//      private TrafficLockingRecord() {      // NEVER use this!
+//          _mSwitchIndicatorsRoute = null;
+//          _mOSSignalDirectionIndicatorsInterfaceInterface1 = null;
+//          _mOSSignalDirectionIndicatorsInterfaceInterface2 = null;
+//          _mOSSignalDirectionIndicatorsInterfaceInterface3 = null;
+//          _mOSSignalDirectionIndicatorsInterfaceInterface4 = null;
+//          _mOSSignalDirectionIndicatorsInterfaceInterface5 = null;
+//          _mOccupancyExternalSensor1 = null;
+//          _mOccupancyExternalSensor2 = null;
+//          _mOccupancyExternalSensor3 = null;
+//          _mOccupancyExternalSensor4 = null;
+//          _mOccupancyExternalSensor5 = null;
+//          _mOccupancyExternalSensor6 = null;
+//          _mOccupancyExternalSensor7 = null;
+//          _mOccupancyExternalSensor8 = null;
+//          _mOccupancyExternalSensor9 = null;
+//          _mOptionalSensor1 = null;
+//          _mOptionalSensor2 = null;
+//          _mRuleEnabled = false;
+//      }
+        public TrafficLockingRecord(String userIdentifier,
                                     String parameter,
                                     NBHSensor switchIndicator1,
                                     NBHSensor switchIndicator2,

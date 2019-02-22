@@ -23,7 +23,7 @@ public class DlgFixErrors extends javax.swing.JDialog {
         initComponents();
         _mAwtWindowProperties = awtWindowProperties;
         _mColumns = columns;
-        _mAwtWindowProperties.setWindowState((java.awt.Window)this, FORM_PROPERTIES);
+        _mAwtWindowProperties.setWindowState(this, FORM_PROPERTIES);
         this.getRootPane().setDefaultButton(_mCancel);
     }
 

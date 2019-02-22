@@ -19,7 +19,7 @@ public class DlgAbout extends javax.swing.JDialog {
         initComponents();
         _mHelpTitle.setText(_mHelpTitle.getText() + CTCSerialData.CTCVersion);
         _mAwtWindowProperties = awtWindowProperties;
-        _mAwtWindowProperties.setWindowState((java.awt.Window)this, FORM_PROPERTIES); 
+        _mAwtWindowProperties.setWindowState(this, FORM_PROPERTIES); 
         this.getRootPane().setDefaultButton(_mOK);
     }
 

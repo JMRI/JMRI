@@ -58,7 +58,7 @@ public class DlgDefaults extends javax.swing.JDialog {
         _mTUL_EnabledAtStartup.setSelected(_mOtherData._mTUL_EnabledAtStartup);
         _mCodeButtonDelayTime.setText(Integer.toString(programProperties._mCodeButtonDelayTime));
         initOrig(_mProgramProperties, _mOtherData);
-        _mAwtWindowProperties.setWindowState((java.awt.Window)this, FORM_PROPERTIES);        
+        _mAwtWindowProperties.setWindowState(this, FORM_PROPERTIES);        
         this.getRootPane().setDefaultButton(_mSaveAndClose);
     }
     

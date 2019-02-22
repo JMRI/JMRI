@@ -15,6 +15,7 @@ public class TrafficLockingInfo {
     
     private TrafficLockingInfo() {}         // NEVER use this, be explicite about return status initialization value:
     public TrafficLockingInfo(boolean returnStatus) {
+        this(); // Prevent Travis from complaining about default constructor not being called.
         _mReturnStatus = returnStatus;      // Whatever the user wants.
         _mLockedRoute = null;               // Assume none allocated.
     }
