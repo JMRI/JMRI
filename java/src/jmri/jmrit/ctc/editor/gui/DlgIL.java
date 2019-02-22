@@ -25,7 +25,7 @@ public class DlgIL extends javax.swing.JDialog {
     public boolean closedNormally() { return _mClosedNormally; }
     private final CodeButtonHandlerData _mCodeButtonHandlerData;
     private final CheckJMRIObject _mCheckJMRIObject;
-
+    private final boolean _mSignalHeadSelected;
 
     private ArrayList<String> _mSignalsArrayListOrig;
     private void initOrig(ArrayList<String> signalsArrayList) {
@@ -47,12 +47,14 @@ public class DlgIL extends javax.swing.JDialog {
 
     public DlgIL(   java.awt.Frame parent, boolean modal, AwtWindowProperties awtWindowProperties,
                     CodeButtonHandlerData codeButtonHandlerData,
-                    CheckJMRIObject checkJMRIObject) {
+                    CheckJMRIObject checkJMRIObject,
+                    boolean signalHeadSelected) {
         super(parent, modal);
         initComponents();
         _mAwtWindowProperties = awtWindowProperties;
         _mCodeButtonHandlerData = codeButtonHandlerData;
         _mCheckJMRIObject = checkJMRIObject;
+        _mSignalHeadSelected = signalHeadSelected;
         _mIL_TableOfExternalSignalNamesDefaultTableModel = (DefaultTableModel)_mIL_TableOfExternalSignalNames.getModel();
         ArrayList<String> signalsArrayList = ProjectsCommonSubs.getArrayListFromCSV(_mCodeButtonHandlerData._mIL_ListOfCSVSignalNames);
         int signalsArrayLength = signalsArrayList.size();
@@ -104,7 +106,7 @@ public class DlgIL extends javax.swing.JDialog {
         // Create the signals combo box
         JComboBox<String> comboBox = new JComboBox<>();
         // Since IL does not have a signal type field, use the SIDI signal type
-        if (_mCodeButtonHandlerData._mSIDI_GUISignalType == CodeButtonHandlerData.SIGNAL_TYPE.SIGNALHEAD) {
+        if (_mSignalHeadSelected) {
             CommonSubs.populateJComboBoxWithBeans(comboBox, "SignalHead", null, true);
         } else {
             CommonSubs.populateJComboBoxWithBeans(comboBox, "SignalMast", null, true);

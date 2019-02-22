@@ -150,7 +150,11 @@ public class CTCMain {
 
 // Slave Switch: null            
             CallOn callOn = (codeButtonHandlerData._mCO_Enabled && !slavedSwitch) ?
-                new CallOn(_mLockedRoutesManager, userIdentifier, codeButtonHandlerData._mCO_CallOnToggleInternalSensor, codeButtonHandlerData._mCO_GroupingsListString, codeButtonHandlerData._mCO_SignalType)
+                new CallOn( _mLockedRoutesManager,
+                            userIdentifier,
+                            codeButtonHandlerData._mCO_CallOnToggleInternalSensor,
+                            codeButtonHandlerData._mCO_GroupingsListString,
+                            otherData._mSignalSystemType)
                 : null;
             
 // Slave Switch: Valid

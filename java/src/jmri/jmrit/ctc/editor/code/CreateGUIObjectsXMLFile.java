@@ -186,7 +186,7 @@ public class CreateGUIObjectsXMLFile {
                         int x;
                         x = thisObjectHorizontalPosition + 10;
                         for (String signal : signalsArrayListLR) {
-                            switch(codeButtonHandlerData._mSIDI_GUISignalType) {
+                            switch(otherData._mSignalSystemType) {
                                 case SIGNALHEAD:
                                     generateSignalHead(x, 120, signal, false, printWriter);
                                     break;
@@ -199,7 +199,7 @@ public class CreateGUIObjectsXMLFile {
                         ArrayList<String> signalsArrayListRL = ProjectsCommonSubs.getArrayListFromCSV(codeButtonHandlerData._mSIDI_RightLeftTrafficSignalsCSVList);
                         x = thisObjectHorizontalPosition + 20;
                         for (String signal : signalsArrayListRL) {
-                            switch(codeButtonHandlerData._mSIDI_GUISignalType) {
+                            switch(otherData._mSignalSystemType) {
                                 case SIGNALHEAD:
                                     generateSignalHead(x, 70, signal, true, printWriter);
                                     break;

@@ -29,13 +29,13 @@ public class DlgSIDI extends javax.swing.JDialog {
     private final CodeButtonHandlerData _mCodeButtonHandlerData;
     private final ProgramProperties _mProgramProperties;
     private final CheckJMRIObject _mCheckJMRIObject;
+    private final boolean _mSignalHeadSelected;
 
     private String _mSIDI_LeftInternalSensorOrig;
     private String _mSIDI_NormalInternalSensorOrig;
     private String _mSIDI_RightInternalSensorOrig;
     private int _mSIDI_CodingAndResponseTimeOrig;
     private int _mSIDI_TimeLockingIntervalOrig;
-    private CodeButtonHandlerData.SIGNAL_TYPE _mSIDI_GUISignalTypeOrig;
 
     private ArrayList<String> _mLeftRightTrafficSignalsArrayListOrig = new ArrayList<>();
     private ArrayList<String> _mRightLeftTrafficSignalsArrayListOrig = new ArrayList<>();
@@ -51,7 +51,6 @@ public class DlgSIDI extends javax.swing.JDialog {
         for (int index = 0; index < signalArrayList2.size(); index++) {
             _mRightLeftTrafficSignalsArrayListOrig.add(signalArrayList2.get(index));
         }
-        _mSIDI_GUISignalTypeOrig = _mCodeButtonHandlerData._mSIDI_GUISignalType;
     }
 
     private boolean dataChanged() {
@@ -70,7 +69,6 @@ public class DlgSIDI extends javax.swing.JDialog {
         for (int index = 0; index < tableLength; index++) {
             if (!_mRightLeftTrafficSignalsArrayListOrig.get(index).equals(_mSIDI_TableOfRightToLeftTrafficExternalSignalNamesDefaultTableModel.getValueAt(index, 0))) return true;
         }
-        if (_mSIDI_GUISignalTypeOrig != CodeButtonHandlerData.SIGNAL_TYPE.getSignalType(_mSIDI_GUISignalType)) return true;
         return false;
     }
 
@@ -79,15 +77,15 @@ public class DlgSIDI extends javax.swing.JDialog {
 
     public DlgSIDI( java.awt.Frame parent, boolean modal,
                     AwtWindowProperties awtWindowProperties, CodeButtonHandlerData codeButtonHandlerData,
-                    ProgramProperties programProperties, CheckJMRIObject checkJMRIObject) {
+                    ProgramProperties programProperties, CheckJMRIObject checkJMRIObject,
+                    boolean signalHeadSelected) {
         super(parent, modal);
         initComponents();
         _mAwtWindowProperties = awtWindowProperties;
         _mCodeButtonHandlerData = codeButtonHandlerData;
         _mProgramProperties = programProperties;
         _mCheckJMRIObject = checkJMRIObject;
-        CommonSubs.numberButtonGroup(_mSIDI_GUISignalType);
-        CommonSubs.setButtonSelected(_mSIDI_GUISignalType, _mCodeButtonHandlerData._mSIDI_GUISignalType.getInt());
+        _mSignalHeadSelected = signalHeadSelected;
         CommonSubs.setMillisecondsEdit(_mSIDI_CodingAndResponseTime);
         CommonSubs.setMillisecondsEdit(_mSIDI_TimeLockingInterval);
         _mSIDI_LeftInternalSensor.setText(_mCodeButtonHandlerData._mSIDI_LeftInternalSensor);
@@ -187,7 +185,7 @@ public class DlgSIDI extends javax.swing.JDialog {
     public void enableSignalListComboBox(JTable table) {
         // Create the signals combo box
         JComboBox<String> comboBox = new JComboBox<>();
-        if (_mCodeButtonHandlerData._mSIDI_GUISignalType == CodeButtonHandlerData.SIGNAL_TYPE.SIGNALHEAD) {
+        if (_mSignalHeadSelected) {
             CommonSubs.populateJComboBoxWithBeans(comboBox, "SignalHead", null, true);
         } else {
             CommonSubs.populateJComboBoxWithBeans(comboBox, "SignalMast", null, true);
@@ -207,7 +205,6 @@ public class DlgSIDI extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        _mSIDI_GUISignalType = new javax.swing.ButtonGroup();
         _mSaveAndClose = new javax.swing.JButton();
         _mSIDI_LeftInternalSensorPrompt = new javax.swing.JLabel();
         _mSIDI_LeftInternalSensor = new javax.swing.JTextField();
@@ -229,10 +226,6 @@ public class DlgSIDI extends javax.swing.JDialog {
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle(Bundle.getMessage("TitleSIDI"));
@@ -524,16 +517,6 @@ public class DlgSIDI extends javax.swing.JDialog {
             }
         });
 
-        jLabel3.setText(Bundle.getMessage("InfoSIDIGUI"));
-
-        jLabel1.setText(Bundle.getMessage("InfoSIDICreate"));
-
-        _mSIDI_GUISignalType.add(jRadioButton1);
-        jRadioButton1.setText(Bundle.getMessage("LabelSIDIHeads"));
-
-        _mSIDI_GUISignalType.add(jRadioButton2);
-        jRadioButton2.setText(Bundle.getMessage("LabelSIDIMasts"));
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -557,17 +540,10 @@ public class DlgSIDI extends javax.swing.JDialog {
                                     .addComponent(_mSIDI_NormalInternalSensor, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(_mSIDI_TimeLockingInterval, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(_mSIDI_RightInternalSensor, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jLabel3)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(_mSaveAndClose)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel9))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jRadioButton2)
-                                    .addComponent(jRadioButton1))))
+                                .addComponent(jLabel9)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -625,14 +601,6 @@ public class DlgSIDI extends javax.swing.JDialog {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(_mSIDI_TimeLockingInterval, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel22))
-                        .addGap(39, 39, 39)
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
-                            .addComponent(jRadioButton1))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jRadioButton2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(_mSaveAndClose)
@@ -658,7 +626,6 @@ public class DlgSIDI extends javax.swing.JDialog {
         _mCodeButtonHandlerData._mSIDI_TimeLockingTimeInMilliseconds = CommonSubs.getIntFromJTextFieldNoThrow(_mSIDI_TimeLockingInterval);
         _mCodeButtonHandlerData._mSIDI_LeftRightTrafficSignalsCSVList = CommonSubs.getCSVStringFromDefaultTableModel(_mSIDI_TableOfLeftToRightTrafficExternalSignalNamesDefaultTableModel);
         _mCodeButtonHandlerData._mSIDI_RightLeftTrafficSignalsCSVList = CommonSubs.getCSVStringFromDefaultTableModel(_mSIDI_TableOfRightToLeftTrafficExternalSignalNamesDefaultTableModel);
-        _mCodeButtonHandlerData._mSIDI_GUISignalType = CodeButtonHandlerData.SIGNAL_TYPE.getSignalType(_mSIDI_GUISignalType);
         _mClosedNormally = true;
         _mAwtWindowProperties.saveWindowState(this, FORM_PROPERTIES);
         dispose();
@@ -684,7 +651,6 @@ public class DlgSIDI extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JFormattedTextField _mSIDI_CodingAndResponseTime;
-    private javax.swing.ButtonGroup _mSIDI_GUISignalType;
     private javax.swing.JTextField _mSIDI_LeftInternalSensor;
     private javax.swing.JLabel _mSIDI_LeftInternalSensorPrompt;
     private javax.swing.JTextField _mSIDI_NormalInternalSensor;
@@ -699,14 +665,10 @@ public class DlgSIDI extends javax.swing.JDialog {
     private javax.swing.JLabel _mTableOfRightToLeftTrafficSignalNamesPrompt;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel22;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration//GEN-END:variables
