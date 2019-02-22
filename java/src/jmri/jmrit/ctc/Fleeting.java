@@ -10,9 +10,7 @@ import jmri.Sensor;
 public class Fleeting {
     private NBHSensor _mFleetingToggleInternalSensor;
     private boolean _mDefaultFleetingEnabled;
-    private Fleeting () {}  // NEVER use this!
     public Fleeting (String fleetingToggleInternalSensor, boolean defaultFleetingEnabled) {
-        this(); // Prevent Travis from complaining about default constructor not being called.
         _mFleetingToggleInternalSensor = new NBHSensor("Fleeting", "", "fleetingToggleInternalSensor", fleetingToggleInternalSensor, true); // NOI18N
         _mDefaultFleetingEnabled = defaultFleetingEnabled;
         _mFleetingToggleInternalSensor.setKnownState(_mDefaultFleetingEnabled ? Sensor.ACTIVE : Sensor.INACTIVE);

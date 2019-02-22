@@ -8,13 +8,6 @@ public class CTCException extends Exception {
     private final String _mUserIdentifier;
     private final String _mParameter;
     private final String _mReason;
-//  I'm practicing safe programming practices here, and Travis and Java compiler complain about each other here:    
-//  Travis complains that the default constructor is not called, and I can't do "this();" as the first
-//  line in the CTCException(String....) constructor to call it to get aroud Travis, because I properly
-//  used "final" in the variable declarations above. So there seems to be NO way to prevent a user from calling
-//  the default constructor IMPROPERLY.
-//  DON'T USE THE DEFAULT CONSTRUCTOR PLEASE!
-//  private CTCException() { _mModule = ""; _mUserIdentifier = ""; _mParameter = ""; _mReason = ""; }  // Shouldn't use it this way!
     public CTCException(String module, String userIdentifier, String parameter, String reason) {
         _mModule = module;
         _mUserIdentifier = userIdentifier;

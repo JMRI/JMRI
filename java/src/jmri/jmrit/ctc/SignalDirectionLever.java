@@ -25,9 +25,7 @@ public class SignalDirectionLever {
     private NBHSensor _mNormalSensor;
     private NBHSensor _mRightSensor;
     
-    private SignalDirectionLever() {}   // NEVER use this!
     public SignalDirectionLever(String userIdentifier, String leftSensor, String normalSensor, String rightSensor) {
-        this(); // Prevent Travis from complaining about default constructor not being called.
         _mLeftSensor = new NBHSensor("SignalDirectionLever", userIdentifier, "leftSensor", leftSensor, true);           // NOI18N
         _mNormalSensor = new NBHSensor("SignalDirectionLever", userIdentifier, "normalSensor", normalSensor, false);    // NOI18N
         _mRightSensor = new NBHSensor("SignalDirectionLever", userIdentifier, "rightSensor", rightSensor, true);        // NOI18N

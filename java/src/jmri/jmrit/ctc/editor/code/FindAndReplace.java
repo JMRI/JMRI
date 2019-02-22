@@ -24,13 +24,6 @@ public class FindAndReplace {
         public final int _mIndexIntoCodeButtonHandlerDataList;  // SUBSCRIPT (not UniqueID) into "codeButtonHandlerDataList"
         public final Field _mField;         // Field within CodeButtonHandlerData where it occurs.
         public final int _mIndexIntoField;  // IndexOf (if search is contains) into field where match starts, else 0 if search is exact.
-//  I'm practicing safe programming practices here, and Travis and Java compiler complain about each other here:    
-//  Travis complains that the default constructor is not called, and I can't do "this();" as the first
-//  line in the SearchResults(String....) constructor to call it to get aroud Travis, because I properly
-//  used "final" in the variable declarations above. So there seems to be NO way to prevent a user from calling
-//  the default constructor IMPROPERLY.
-//  DON'T USE THE DEFAULT CONSTRUCTOR PLEASE!
-//      private SearchResults() { _mUserSwitchSignalEtcEntry = null; _mUserFieldName = null; _mUserContent = null; _mUserTableLine = 0; _mIndexIntoCodeButtonHandlerDataList = 0; _mField = null; _mIndexIntoField = 0; } // Should NEVER use!
         public SearchResults (String userSwitchSignalEtcEntry, String userFieldName, String userContent, int userTableLine, int indexIntoCodeButtonHandlerDataList, Field field) { // Used by exact.
             _mUserSwitchSignalEtcEntry = userSwitchSignalEtcEntry;
             _mUserFieldName = userFieldName;
