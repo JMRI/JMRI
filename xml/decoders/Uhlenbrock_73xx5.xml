@@ -132,27 +132,33 @@
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>Selectrix Mode</label>
                 <label xml:lang="de">Selectrix Datenformat</label>
+                <label xml:lang="nl">Selectrix modus</label>
             </variable>
             <variable item="Mfx Operation" CV="12" default="1" mask="XXVXXXXX" include="PIKO41RH2400">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>Mfx Mode</label>
                 <label xml:lang="de">Mfx Datenformat</label>
+                <label xml:lang="nl">Mfx modus</label>
             </variable>
             <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv13analogfunction41.xml"/>
             <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv14analogfunction41.xml"/>
-            <variable CV="15" item="Decoder Lock ID" default="0" tooltip="Set this to match value below and decoder will unlock">
+            <variable CV="15" item="Decoder Lock ID" default="0">
                 <decVal/>
                 <label>Decoder Lock ID</label>
                 <label xml:lang="de">Decoder Lock</label>
                 <label xml:lang="ca">Bloqueig decoder per ID</label>
+                <tooltip>Set this to match value below and decoder will unlock</tooltip>
                 <tooltip xml:lang="de">Setzen Sie diesen Wert auf den unten stehenden Wert und der Decoder wird entsperrt</tooltip>
+                <tooltip xml:lang="nl">Stel hier dezelfde waarde in als ID hieronder en de decoder kan geprogrammeerd worden</tooltip>
             </variable>
-            <variable CV="16" item="Decoder Lock Index" default="0" tooltip="Set this to decoder type: 1=motor, 2=sound, 3=function etc.">
+            <variable CV="16" item="Decoder Lock Index" default="0">
                 <decVal/>
                 <label>Preset Lock ID</label>
                 <label xml:lang="de">Decoder-Typ Lock</label>
                 <label xml:lang="ca">ID locomotora per tipus</label>
+                <tooltip>Set this to decoder type: 1=motor, 2=sound, 3=function etc.</tooltip>
                 <tooltip xml:lang="de">Setzen Sie diesen Wert auf Decoder-Typ: 1 = Motor, 2 = Sound, 3 = Funktion etc.</tooltip>
+                <tooltip xml:lang="nl">Stel in als Decoder-type: 1=motor, 2=geluid, 3=functie e.d.</tooltip>
             </variable>
             <!-- CV 17-18 already in place with CV 1-->
             <!-- CV19 Consisting Information -->
@@ -164,30 +170,35 @@
                         <choice xml:lang="it">Non si ferma</choice>
                         <choice xml:lang="cs">Nezastavuje</choice>
                         <choice xml:lang="de">Kein Bremsen</choice>
+                        <choice xml:lang="nl">Niet actief</choice>
                     </enumChoice>
                     <enumChoice choice="When Right rail is higher voltage">
                         <choice>When Right rail is higher voltage</choice>
                         <choice xml:lang="it">Si ferma se rotaia destra ha tensione più alta</choice>
                         <choice xml:lang="cs">Zastaví když pravá kolejnice má vyšší napětí</choice>
                         <choice xml:lang="de">Wenn rechte Schienenspannung höher</choice>
+                        <choice xml:lang="nl">Als de spanning op de rechter rail hoger is</choice>
                     </enumChoice>
                     <enumChoice choice="When Left rail is higher voltage">
                         <choice>When Left rail is higher voltage</choice>
                         <choice xml:lang="it">Si ferma se rotaia sinistra ha tensione più alta</choice>
                         <choice xml:lang="cs">Zastaví když levá kolejnice má vyšší napětí</choice>
                         <choice xml:lang="de">Wenn linke Schienenspannung höher</choice>
+                        <choice xml:lang="nl">Als de spanning op de linker rail hoger is</choice>
                     </enumChoice>
                     <enumChoice choice="Stops in Both Directions">
                         <choice>In Either Direction</choice>
                         <choice xml:lang="it">Si ferma in entrambe le direzioni</choice>
                         <choice xml:lang="cs">Zastaví v obou směrech</choice>
                         <choice xml:lang="de">In entweder Richtung</choice>
+                        <choice xml:lang="nl">In beide richtingen</choice>
                     </enumChoice>
                 </enumVal>
                 <label>ABC Braking Setup</label>
                 <label xml:lang="de">ABC Bremseinstellung</label>
                 <tooltip>Brake on asymmetrical DCC detect</tooltip>
                 <tooltip xml:lang="de">Bremskonfiguration mittels asymmetrischer DCC-Digitalspannung</tooltip>
+                <tooltip xml:lang="nl">Rem op asymmetrische DCC</tooltip>
             </variable>
             <!-- CV 27 bit 4-5 Märklin DC Braking -->
             <variable item="Marklin Brake Mode" CV="27" mask="XXVVXXXX">
@@ -197,24 +208,30 @@
                         <choice xml:lang="it">Non si ferma</choice>
                         <choice xml:lang="cs">Nezastavuje</choice>
                         <choice xml:lang="de">Kein Bremsen</choice>
+                        <choice xml:lang="nl">Niet actief</choice>
                     </enumChoice>
                     <enumChoice choice="Stops on DC">
                         <choice>Polarity against direction</choice>
                         <choice xml:lang="de">Wenn Polarität entgegen der Fahrtrichtung</choice>
+                        <choice xml:lang="nl">Spanning tegengesteld aan rijrichting</choice>
                     </enumChoice>
                     <enumChoice choice="Stops on opposite DC">
                         <choice>Polarity in same direction</choice>
                         <choice xml:lang="de">Wenn Polarität mit der Fahrtrichtung</choice>
+                        <choice xml:lang="nl">Spanning in rijrichting</choice>
                     </enumChoice>
                     <enumChoice choice="Stops in Both Directions">
                         <choice>In Either Direction</choice>
                         <choice xml:lang="de">In entweder Richtung</choice>
+                        <choice xml:lang="nl">In beide richtingen</choice>
                     </enumChoice>
                 </enumVal>
                 <label>Märklin Brake mode</label>
                 <label xml:lang="de">Märklin Bremsmodus</label>
+                <label xml:lang="nl">Märklin Remmen</label>
                 <tooltip>Brake on analog DC detect</tooltip>
                 <tooltip xml:lang="de">Bremsen mit analoge DC Gleichspannung</tooltip>
+                <tooltip xml:lang="nl">Remmen met analoge DC gelijkspanning</tooltip>
             </variable>
             <variable item="RailCom channel 1 (Broadcast)" CV="28" mask="XXXXXXXV">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -222,6 +239,7 @@
                 <label xml:lang="it">RailCom canale 1 (Broadcast)</label>
                 <label xml:lang="cs">RailCom kanál 1 (adresa)</label>
                 <label xml:lang="de">RailCom Kanal 1 (Broadcast)</label>
+                <label xml:lang="nl">RailCom Kanaal 1 (Broadcast)</label>
             </variable>
             <variable item="RailCom channel 2 (Data)" CV="28" mask="XXXXXXVX">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -229,6 +247,7 @@
                 <label xml:lang="it">RailCom canale 2 (Dati)</label>
                 <label xml:lang="cs">RailCom kanál 2 (data)</label>
                 <label xml:lang="de">RailCom Kanal 2 (Daten)</label>
+                <label xml:lang="nl">RailCom Kanaal 1 (Data)</label>
             </variable>
             <variable item="RailCom Plus" CV="28" mask="VXXXXXXX">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -250,16 +269,19 @@
                 <decVal/>
                 <label>Motorola 1st Trinary Address</label>
                 <label xml:lang="de">Motorola 1. trinäre adresse</label>
+                <label xml:lang="nl">1e trinair Motorola adres</label>
             </variable>
             <variable item="Motorola 2" CV="48" readOnly="yes">
                 <decVal/>
                 <label>Motorola 2nd Trinary Address</label>
                 <label xml:lang="de">Motorola 2. trinäre adresse</label>
+                <label xml:lang="nl">2e trinair Motorola adres</label>
             </variable>
             <variable item="Motorola 3" CV="49" readOnly="yes">
                 <decVal/>
                 <label>Motorola 3rd Trinary Address</label>
                 <label xml:lang="de">Motorola 3. trinäre adresse</label>
+                <label xml:lang="nl">3e trinair Motorola adres</label>
             </variable>
             <!-- CV50-51 decoder configuration -->
             <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv50.51config.xml"/>
@@ -268,37 +290,46 @@
                 <decVal max="255"/>
                 <label>Repetition rate</label>
                 <label xml:lang="de">Wiederholrate der Motorregelung</label>
+                <label xml:lang="nl">Herhaling Motorregeling</label>
                 <tooltip>Lower if the locomotive does not run smoothly - Value * 0.1 sec</tooltip>
                 <tooltip xml:lang="de">verkleinern, wenn Lok ungleichmäßig läuft - Wert * 0.1 S</tooltip>
+                <tooltip xml:lang="nl">verlaag als Loc ongelijkmatig rijdt - Waarde * 0,1s</tooltip>
             </variable>
             <variable item="EMF Static Config" CV="54" default="100">
                 <decVal max="255"/>
                 <label>Motor regulation P Constant</label>
                 <label xml:lang="de">Motorregelung P-Konstante</label>
+                <label xml:lang="nl">Motorregeling P-Constante</label>
             </variable>
             <variable item="EMF Dynamic Config" CV="55" default="40">
                 <decVal max="255"/>
                 <label>Motor regulation I Constant</label>
                 <label xml:lang="de">Motorregelung I-Konstante</label>
+                <label xml:lang="nl">Motorregeling I-Constante</label>
             </variable>
             <variable item="EMF Droop Config" CV="56" default="32">
                 <decVal max="255"/>
                 <label>Motor regulation D Constant</label>
                 <label xml:lang="de">Motorregelung D-Konstante</label>
+                <label xml:lang="nl">Motorregeling D-Constante</label>
             </variable>
             <variable item="EMF Option 3" CV="57" default="6">
                 <decVal max="255"/>
                 <label>Control Offset</label>
                 <label xml:lang="de">Regeler Offset</label>
+                <label xml:lang="nl">Regelaar Offset</label>
                 <tooltip>Lower Value if top speed too low, Raise Value if Speed at Step 1 too fast</tooltip>
-                <tooltip xml:lang="de">verkleinern, wenn Höchstgeschwindigkeit zu geringer - vergrößern, wenn geschwindigkeit Schritt 1 zu schnell</tooltip>
+                <tooltip xml:lang="de">verkleinern, wenn Höchstgeschwindigkeit zu gering - vergrößern, wenn geschwindigkeit Schritt 1 zu schnell</tooltip>
+                <tooltip xml:lang="nl">verlaag als topsnelheid te laag - verhoog als snelheid in Stap 1 te snel</tooltip>
             </variable>
             <variable item="EMF Option 2" CV="58" default="8">
                 <decVal max="255"/>
                 <label>Time slot for AD measurement</label>
                 <label xml:lang="de">Zeitschlitz für AD Wandlermessung</label>
+                <label xml:lang="nl">Tijdsduur AD-meting</label>
                 <tooltip>Increase if loc does not run smoothly at low speeds - Decrease if the top speed is too low after CV53 has been lowered</tooltip>
                 <tooltip xml:lang="de">vergrößern, wenn Lok bei geringer Geschwindigkeit ungleichmäßig läuft; verkleinern, wenn bei heruntergesetztem CV 53 Höchstgeschwindigkeit der Lok zu gering ist</tooltip>
+                <label xml:lang="nl">verhoog als de Loc op lage snelheid onregelmatig rijdt; verlaag als bij verlaagde CV 53 topsnelheid van Loc te laag is</label>
             </variable>
             <!--CV59 Reset incl at the bottom-->
             <variable item="Short circuit supervision" CV="60" readOnly="yes">
@@ -344,15 +375,17 @@
                 <label xml:lang="nl">ABC Remdrempel</label>
                 <tooltip>Voltage drop in Diode block = CV value * 0.12 Volts</tooltip>
                 <tooltip xml:lang="de">Spannungsdifferenz für Diodenstrecke ist ca. CV-Wert * 0,12V</tooltip>
+                <tooltip xml:lang="nl">Spanningsval over Diodebaanvak is ong. CV-Waarde * 0,12V</tooltip>
             </variable>
             <variable item="ABC Slow Speed" CV="98" default="30">
                 <decVal/>
                 <label>ABC mode reduced speed</label>
                 <label xml:lang="de">ABC Modus „Langsamfahrt”</label>
                 <label xml:lang="ca">Velociatat limitada en mode ABC</label>
-                <label xml:lang="nl">ABC-modus Lage rijsnelheid</label>
+                <label xml:lang="nl">ABC-modus Langzaamrijden</label>
                 <tooltip>Speed in ABC Slow block</tooltip>
                 <tooltip xml:lang="de">Geschwindigkeit in der ABC Langsamfahrstrecke</tooltip>
+                <tooltip xml:lang="nl">Snelheid in ABC Langzaamrijden baanvak</tooltip>
             </variable>
 
             <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv107.108indepOutputs.xml"/>
@@ -401,7 +434,11 @@
             <variable item="Function Map Option 1" CV="101">
                 <decVal/>
                 <label>Set Fn Mapping Shift on tab Uhlenbrock to map F0-F12 to A2-A7</label>
+                <label xml:lang="de">Fn Mapping Shift eingeben auf Reiter Uhlenbrock um F0-F12 auf A2-A7 zu verbinden</label>
+                <label xml:lang="nl">Configureer Fn Mapping Shift op tab Uhlenbrock om F0-F12 te mappen naar A2-A7</label>
                 <tooltip>instead of to A0-A4 (don't edit here)</tooltip>
+                <tooltip xml:lang="de">statt A0-A4 (nicht hier ändern)</tooltip>
+                <tooltip xml:lang="nl">in plaats van normaal A0-A4 (dit veld niet bewerken)</tooltip>
             </variable>
 
             <variable item="Analog Control option 1" CV="102" default="2" mask="XXXXXXVV">
@@ -411,20 +448,25 @@
                         <choice xml:lang="it">Non si ferma</choice>
                         <choice xml:lang="cs">Nezastavuje</choice>
                         <choice xml:lang="de">Keine Regelung</choice>
+                        <choice xml:lang="nl">Geen Regeling</choice>
                     </enumChoice>
                     <enumChoice choice="Max CV106">
                         <choice>Max. speed from CV106</choice>
                         <choice xml:lang="de">max. Geschw. wie CV106</choice>
+                        <choice xml:lang="nl">max. snelheid vlg. CV106</choice>
                     </enumChoice>
                     <enumChoice choice="Compare voltage to CV103-104">
                         <choice>Compare voltage to CV103-104</choice>
                         <choice xml:lang="de">Trafospng. messen und CV103-104</choice>
+                        <choice xml:lang="nl">Spanning meten t.o.v. CV103-104</choice>
                     </enumChoice>
                 </enumVal>
                 <label>Analog Operation Max Speed</label>
                 <label xml:lang="de">Analogbetrieb Max Speed</label>
+                <label xml:lang="nl">Max. Snelheid in Analoogbedrijf</label>
                 <tooltip>uses CVs 103-106 below</tooltip>
                 <tooltip xml:lang="de">benutzt unterstehende CVs 103-106</tooltip>
+                <tooltip xml:lang="nl">gebruikt de volgende CV's 103-106</tooltip>
             </variable>
             <variable item="Analog Control option 2" CV="102" default="3" mask="XXXXVVXX">
                 <enumVal>
@@ -433,53 +475,65 @@
                         <choice xml:lang="it">Non si ferma</choice>
                         <choice xml:lang="cs">Nezastavuje</choice>
                         <choice xml:lang="de">Keine Regelung</choice>
+                        <choice xml:lang="nl">Geen Regeling</choice>
                     </enumChoice>
                     <enumChoice choice="PID Control" value="1">
                         <choice>PID Control</choice>
-                        <choice xml:lang="de">PID Regler</choice>
+                        <choice xml:lang="de">PID-Regler</choice>
+                        <choice xml:lang="nl">PID-Regelaar</choice>
                     </enumChoice>
                     <enumChoice choice="SX Control" value="3">
                         <choice>SX Control</choice>
                         <choice xml:lang="de">SX-Regler</choice>
+                        <choice xml:lang="nl">SX-Regelaar</choice>
                     </enumChoice>
                 </enumVal>
                 <label>Analog Operation Control</label>
                 <label xml:lang="de">Analogbetrieb Regelung</label>
+                <choice xml:lang="nl">Regeling bij Analoogbedrijf</choice>
                 <tooltip>uses CVs 103-106 below</tooltip>
                 <tooltip xml:lang="de">benutzt unterstehende CVs 103-106</tooltip>
+                <tooltip xml:lang="nl">gebruikt de volgende CV's 103-106</tooltip>
             </variable>
             <variable CV="102" item="Analog Control check 1" default="1" mask="XXXVXXXX">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label>Dynamic repeat rate</label>
                 <label xml:lang="de">dynamische Wiederholrate</label>
+                <label xml:lang="nl">dynamische Herhaling</label>
             </variable>
             <variable item="Analog Control slider 1" CV="103" default="150">
                 <decVal/>
                 <label>Minimum Voltage</label>
                 <label xml:lang="de">Mindest Trafospannung</label>
+                <label xml:lang="nl">Laagste Rijspanning</label>
                 <tooltip>for V = 0</tooltip>
                 <tooltip xml:lang="de">für Vsoll = 0</tooltip>
+                <tooltip xml:lang="nl">voor Vwens = 0</tooltip>
             </variable>
             <variable item="Analog Control slider 2" CV="104" default="180">
                 <decVal/>
                 <label>Maximum Voltage</label>
                 <label xml:lang="de">Maximale Trafospannung</label>
+                <label xml:lang="nl">Maximum Rijspanning</label>
                 <tooltip>for V = Vmax</tooltip>
                 <tooltip xml:lang="de">für Vsoll = Vmax</tooltip>
+                <tooltip xml:lang="nl">voor Vwens = Vmax</tooltip>
             </variable>
             <variable item="Analog Control slider 3" CV="105" default="30">
                 <decVal/>
                 <label>Hysteresis</label>
                 <label xml:lang="de">Hysterese</label>
+                <label xml:lang="nl">Hysteresis</label>
                 <tooltip>in analog mode</tooltip>
-                <tooltip xml:lang="de">in Analogmudus</tooltip>
+                <tooltip xml:lang="de">in Analogmodus</tooltip>
+                <tooltip xml:lang="nl">tijdens Analoog rijden</tooltip>
             </variable>
             <variable item="Analog Control slider 4" CV="106" default="200">
                 <decVal/>
                 <label>Vmax</label>
-                <label xml:lang="de">Vmax</label>
                 <tooltip>in analog mode</tooltip>
-                <tooltip xml:lang="de">in Analogmudus</tooltip>
+                <tooltip xml:lang="de">in Analogmodus</tooltip>
+                <tooltip xml:lang="nl">tijdens Analoog rijden</tooltip>
             </variable>
             <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv115lissy.xml"/>
             <!-- CVs 116-118 (CVs 116-123 for Piko) -->
@@ -644,6 +698,7 @@
                 </enumVal>
                 <label>Constant Braking Trigger</label>
                 <label xml:lang="de">Aktiviert durch</label>
+                <label xml:lang="nl">Geactiveerd door</label>
                 <tooltip>Select which (combination of) methods activates CB</tooltip>
                 <tooltip xml:lang="de">Welche Bremstypen aktievieren Konstanter Bremweg?</tooltip>
                 <tooltip xml:lang="nl">Welke remmethoden activeren constante Remweg?</tooltip>

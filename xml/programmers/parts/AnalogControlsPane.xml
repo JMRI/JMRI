@@ -60,13 +60,13 @@
     <display item="Analog Power Conversion" tooltip="Sets the alternate power source to use when the short address is zero">
       <tooltip xml:lang="ca">Estableix l'alimentació alternativa quan l'adreçaa curta és zero</tooltip>
       <tooltip xml:lang="de">Alternative Stromversorgung wenn die kurze Adresse Null ist</tooltip>
-      <tooltip xml:lang="it">Choisit la source alternative d'alimentation à utiliser lorsque l'adresse courte est zéro</tooltip>
+      <tooltip xml:lang="fr">Choisit la source alternative d'alimentation à utiliser lorsque l'adresse courte est zéro</tooltip>
       <tooltip xml:lang="it">Imposta la fonte di alimentazione analogica alternativa quando l'indirizzo corto = Zero</tooltip>
     </display>
     <display item="Radio Power Conversion" tooltip="Sets the alternate power source to use when the short address is zero">
       <tooltip xml:lang="ca">Estableix l'alimentació alternativa quan l'adreça curta és zero</tooltip>
       <tooltip xml:lang="de">Alternative Stromversorgung wenn die kurze Adresse Null ist</tooltip>
-      <tooltip xml:lang="it">Choisit la source alternative d'alimentation à utiliser lorsque l'adresse courte est zéro</tooltip>
+      <tooltip xml:lang="fr">Choisit la source alternative d'alimentation à utiliser lorsque l'adresse courte est zéro</tooltip>
       <tooltip xml:lang="it">Imposta la fonte di alimentazione Radio alternativa quando l'indirizzo corto = Zero</tooltip>
     </display>
     <display item="Zero-1 Power Conversion" tooltip="Sets the alternate power source to use when the short address is zero">
