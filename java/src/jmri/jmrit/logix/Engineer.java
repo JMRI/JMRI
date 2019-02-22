@@ -397,22 +397,22 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         if (!setSpeedRatio(endSpeedType)) {
             return;
         }
-        
-        cancelRamp(false);
-
-        if (log.isDebugEnabled()) 
-            log.debug("rampSpeedTo type= {}, throttle from {} to {}. warrant {}",
-                endSpeedType, getSpeedSetting(), 
-                _speedUtil.modifySpeed(_normalSpeed, endSpeedType, _isForward), 
-                _warrant.getDisplayName());
-
         synchronized (this) {
+            if (log.isDebugEnabled()) 
+                log.debug("rampSpeedTo type= {}, throttle from {} to {}. warrant {}",
+                    endSpeedType, getSpeedSetting(), 
+                    _speedUtil.modifySpeed(_normalSpeed, endSpeedType, _isForward), 
+                    _warrant.getDisplayName());
+
             if (_ramp == null) {
                 _ramp = new ThrottleRamp();
                 _ramp.start();
+            } else {
+            	_ramp.quit(false);            	
             }
             long time = 0;
-            while (time < 100 && !_ramp.ready) {
+            int waitTime = _speedUtil.getRampTimeIncrement() + 20;
+            while (time < waitTime && !_ramp.ready) {
                 // may need a bit of time for cancelRamp() or start() to get ready
                 try {
                     wait(20);
@@ -609,10 +609,12 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         return _ramp;
     }
     /**
-     * Immediate stop command from Warrant.controlRunTrain()
+     * Immediate stop command from Warrant.controlRunTrain()-user
+     * or from Warrant.goingInactive()-train lost
+     * or from setMovement()-overrun, possible collision risk.
      * Do not ramp.
      * @param eStop true for emergency stop
-     * @param setHalt for user restart needed, otherwise some kind clear
+     * @param setHalt for user restart needed, otherwise some kind of clear
      */
     synchronized public void setStop(boolean eStop, boolean setHalt) {
         cancelRamp(false);
@@ -1068,7 +1070,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             while (!_die) {
                 synchronized (this) {
                     try {
-                        wait(); // wait until notified by rampSpeedTo() call
+                        wait(); // wait until notified by rampSpeedTo() calls quit()
                     } catch (InterruptedException ie) {
                         log.debug("As expected {}", ie.toString());
                     }
@@ -1085,6 +1087,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             // "idxSkipToSpeedCommand" may be used rather than "_idxCurrentCommand".
             // Note on ramp up endSpeed should match scripted speed modified by endSpeedType
             ready = false;
+            stop = false;
             _endSpeed = _speedUtil.modifySpeed(_normalSpeed, _endSpeedType, _isForward);   // requested end speed
             float speed = _throttle.getSpeedSetting();  // current speed setting
             if (speed < 0.0f) {

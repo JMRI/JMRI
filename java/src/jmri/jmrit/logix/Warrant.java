@@ -986,7 +986,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                     cancelDelayRamp();
                     _engineer.rampSpeedTo(Warrant.Stop, 0, false);  // immediate ramp down
                     _engineer.setHalt(true);
-                    setMovement(MID);
+//                    setMovement(MID);
                     ret = true;
                     break;
                 case RESUME:
