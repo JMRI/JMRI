@@ -33,9 +33,10 @@ public class CtcEditorActionTest {
 
         _jfo = new JFrameOperator(0);
         Assert.assertNotNull(_jfo);
-//         menuTests();
-//         frameButtonTests();
+        menuTests();
+        frameButtonTests();
         editTests();
+new EventTool().waitNoEvent(5000);
     }
 
     void menuTests() {
@@ -229,21 +230,6 @@ public class CtcEditorActionTest {
 
 
 
-
-
-// 2 is callon
-// 3 is traffic locking
-// 5 is turnout locking
-// 6 is ??? IL
-
-
-
-new EventTool().waitNoEvent(5000);
-
-
-
-
-
     }
 
     Thread createModalDialogOperatorThread(String dialogTitle, String buttonText, String threadName) {
@@ -280,5 +266,5 @@ new EventTool().waitNoEvent(2000);
         jmri.util.JUnitUtil.tearDown();
     }
 
-    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CtcEditorActionTest.class);
+//     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CtcEditorActionTest.class);
 }

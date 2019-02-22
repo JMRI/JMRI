@@ -23,9 +23,13 @@ public class CreateTestObjects {
         createSensor("IS104", "B-Side");
         createSensor("IS105", "O-Right");
         createSensor("IS106", "B-Right");
+        createSensor("IS107", "O-Stub");
+        createSensor("IS108", "B-StubM");
+        createSensor("IS109", "B-StubS");
 
         createTurnout("IT101", "T-Left");
         createTurnout("IT102", "T-Right");
+        createTurnout("IT103", "T-Stub");
 
         createSignalHead("IH01", "Left-U");
         createSignalHead("IH02", "Left-L");
@@ -37,15 +41,27 @@ public class CreateTestObjects {
         createSignalHead("IH07", "Right-M");
         createSignalHead("IH08", "Right-S");
 
+        createSignalHead("IH09", "Stub-U");
+        createSignalHead("IH10", "Stub-L");
+        createSignalHead("IH11", "Stub-M");
+        createSignalHead("IH12", "Stub-S");
+
         // Create SSL
-        createSSL("Left-M",  2, "IT101", null,   false, "IS101");
-        createSSL("Left-S",  3, "IT101", null,   true,  "IS101");
-        createSSL("Right-U", 2, "IT102", "IH03", false, "IS103");
-        createSSL("Right-L", 3, "IT102", "IH04", true,  "IS104");
-        createSSL("Right-M", 2, "IT102", null,   false, "IS106");
-        createSSL("Right-S", 3, "IT102", null,   true,  "IS106");
-        createSSL("Left-U",  2, "IT101", "IH07", false, "IS103");
-        createSSL("Left-L",  3, "IT101", "IH08", true,  "IS104");
+        //        signal   mode   to      w1      wa      sp2       sen1    sen2
+        createSSL("Left-U",  2, "IT101", "IH07", null,   false, "IS102", "IS103");
+        createSSL("Left-L",  3, "IT101", "IH08", null,   true,  "IS102", "IS104");
+        createSSL("Left-M",  2, "IT101", null,   null,   false, "IS102", "IS101");
+        createSSL("Left-S",  3, "IT101", null,   null,   true,  "IS102", "IS101");
+
+        createSSL("Right-U", 2, "IT102", "IH03", null,   false, "IS105", "IS103");
+        createSSL("Right-L", 3, "IT102", "IH04", null,   true,  "IS105", "IS104");
+        createSSL("Right-M", 2, "IT102", "IH09", "IH10", false, "IS105", "IS106");
+        createSSL("Right-S", 3, "IT102", "IH09", "IH10", true,  "IS105", "IS106");
+
+        createSSL("Stub-U",  2, "IT103", null,   null,   false, "IS107", "IS108");
+        createSSL("Stub-L",  3, "IT103", null,   null,   true,  "IS107", "IS109");
+        createSSL("Stub-M",  2, "IT103", "IH05", "IH06", false, "IS107", "IS106");
+        createSSL("Stub-S",  3, "IT103", "IH05", "IH06", true,  "IS107", "IS106");
 
         // CTC objects
         InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("IS:RELOADCTC");
@@ -81,6 +97,21 @@ public class CreateTestObjects {
         InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("IS4:CALLON");
         InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("IS4:LOCKTOGGLE");
         InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("IS4:UNLOCKEDIND");
+
+        InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("IS5:LEVER");
+        InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("IS5:SN");
+        InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("IS5:SR");
+
+        InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("IS6:CB");
+        InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("IS6:LK");
+        InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("IS6:NK");
+        InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("IS6:RK");
+        InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("IS6:LL");
+        InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("IS6:NL");
+        InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("IS6:RL");
+        InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("IS6:CALLON");
+        InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("IS6:LOCKTOGGLE");
+        InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("IS6:UNLOCKEDIND");
     }
 
     public static void createSensor(String sname, String uname) {
@@ -105,26 +136,22 @@ public class CreateTestObjects {
         signalhead.setAppearance(SignalHead.RED);
     }
 
-    public static void createSSL(String signal, int mode, String watchedturnout, String watchedsignal1, boolean limitspeed2, String sensor) {
+    public static void createSSL(String signal, int mode, String watchedturnout, String watchedsignal1, String watchedsignal1alt,
+            boolean limitspeed2, String sensor1, String sensor2) {
         BlockBossLogic bb = BlockBossLogic.getStoppedObject(signal);
         bb.setMode(mode);
         bb.setTurnout(watchedturnout);
         if (watchedsignal1 != null) {
             bb.setWatchedSignal1(watchedsignal1, false);
         }
+        if (watchedsignal1alt != null) {
+            bb.setWatchedSignal1Alt(watchedsignal1alt);
+        }
         bb.setLimitSpeed2(limitspeed2);
-        bb.setSensor1(sensor);
-
-//     signal="Left-M"  mode="2" watchedturnout="IT101"                       limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false" sensorname=IS101
-//     signal="Left-S"  mode="3" watchedturnout="IT101"                       limitspeed1="false" limitspeed2="true"  useflashyellow="false" distantsignal="false" sensorname=IS101
-//     signal="Right-U" mode="2" watchedturnout="IT102" watchedsignal1="IH03" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false" sensorname=IS103
-//     signal="Right-L" mode="3" watchedturnout="IT102" watchedsignal1="IH04" limitspeed1="false" limitspeed2="true"  useflashyellow="false" distantsignal="false" sensorname=IS104
-//     signal="Right-M" mode="2" watchedturnout="IT102"                       limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false" sensorname=IS106
-//     signal="Right-S" mode="3" watchedturnout="IT102"                       limitspeed1="false" limitspeed2="true"  useflashyellow="false" distantsignal="false" sensorname=IS106
-//     signal="Left-U"  mode="2" watchedturnout="IT101" watchedsignal1="IH07" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false" sensorname=IS103
-//     signal="Left-L"  mode="3" watchedturnout="IT101" watchedsignal1="IH08" limitspeed1="false" limitspeed2="true"  useflashyellow="false" distantsignal="false" sensorname=IS104
-
+        bb.setSensor1(sensor1);
+        bb.setSensor2(sensor2);
     }
+
     public static void createTestFiles() {
         // Copy ProgramProperties
         final String SOURCE_PATH = "java/test/jmri/jmrit/ctc/setup/";
