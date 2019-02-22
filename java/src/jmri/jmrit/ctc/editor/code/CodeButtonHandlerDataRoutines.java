@@ -24,7 +24,6 @@ public class CodeButtonHandlerDataRoutines {
         returnValue._mSIDI_TimeLockingTimeInMilliseconds = programProperties._mSIDI_TimeLockingTimeInMilliseconds;
         returnValue._mSIDI_LeftRightTrafficSignalsCSVList = "";
         returnValue._mSIDI_RightLeftTrafficSignalsCSVList = "";
-        returnValue._mSIDI_GUISignalType = CodeButtonHandlerData.SIGNAL_TYPE.SIGNALHEAD;
         returnValue._mSIDL_Enabled = false;
         returnValue._mSWDI_Enabled = false;
         returnValue._mSWDI_ExternalTurnout = "";
@@ -36,7 +35,6 @@ public class CodeButtonHandlerDataRoutines {
         returnValue._mSWDL_Enabled = false;
         returnValue._mCO_Enabled = false;
         returnValue._mCO_GroupingsListString = "";
-        returnValue._mCO_SignalType = CodeButtonHandlerData.SIGNAL_TYPE.SIGNALHEAD;
         returnValue._mTRL_LeftTrafficLockingRulesSSVList = "";
         returnValue._mTRL_RightTrafficLockingRulesSSVList = "";
         returnValue._mTRL_Enabled = false;

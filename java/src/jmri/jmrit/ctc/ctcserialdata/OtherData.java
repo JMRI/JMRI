@@ -11,6 +11,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import javax.swing.ButtonGroup;
 
 /**
  *
@@ -55,6 +56,19 @@ public class OtherData implements Serializable {
         public static VERTICAL_SIZE getRadioGroupValue(int radioGroupValue) { return map.get(radioGroupValue); }
     }
     
+    public enum SIGNAL_SYSTEM_TYPE {
+// The values in paren's are the RadioGroup values set by "CommonSubs.numberButtonGroup",
+// gotten by calling "CommonSubs.getButtonSelectedInt".        
+        SIGNALHEAD(0), SIGNALMAST(1);
+        private final int _mRadioGroupValue;
+        private final static HashMap<Integer, SIGNAL_SYSTEM_TYPE> map = new HashMap<>();
+        private SIGNAL_SYSTEM_TYPE (int radioGroupValue) { _mRadioGroupValue = radioGroupValue; }
+        static { for (SIGNAL_SYSTEM_TYPE value : SIGNAL_SYSTEM_TYPE.values()) { map.put(value._mRadioGroupValue, value); }}
+        public int getInt() { return _mRadioGroupValue; }
+        public static SIGNAL_SYSTEM_TYPE getSignalSystemType(int radioGroupValue) { return map.get(radioGroupValue); }
+        public static SIGNAL_SYSTEM_TYPE getSignalSystemType(ButtonGroup buttonGroup) { return map.get(ProjectsCommonSubs.getButtonSelectedInt(buttonGroup)); }
+    }
+    
     public static ArrayList<Field> getAllInternalSensorStringFields() {
         return ProjectsCommonSubs.getAllPartialVariableNameStringFields(INTERNAL_SENSOR, OtherData.class.getFields());
     }
@@ -84,6 +98,8 @@ variable name and declared as type String.
     public boolean  _mDefaultFleetingEnabled;
 //  Global startup:
     public boolean  _mTUL_EnabledAtStartup = true;
+    public SIGNAL_SYSTEM_TYPE _mSignalSystemType;
+    
 //  Next unique # for each created Column:    
     public int      _mNextUniqueNumber = 0;
 //  CTC Debugging:    
@@ -106,6 +122,7 @@ variable name and declared as type String.
     public OtherData() {
         _mFleetingToggleInternalSensor = "IS:FLEETING";                                 // NOI18N
         _mDefaultFleetingEnabled = false;
+        _mSignalSystemType = SIGNAL_SYSTEM_TYPE.SIGNALMAST;
         _mCTCDebugSystemReloadInternalSensor = "IS:RELOADCTC";                          // NOI18N
         _mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor = "IS:DEBUGCTC";    // NOI18N
         _mGUIDesign_NumberOfEmptyColumnsAtEnd = 0;

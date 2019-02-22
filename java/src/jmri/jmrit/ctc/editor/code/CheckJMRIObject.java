@@ -51,6 +51,7 @@ public class CheckJMRIObject {
             _mObjectType = objectType;
         }
 
+        @Override
         public String toString() {
             switch(_mObjectType) {
                 case SENSOR:

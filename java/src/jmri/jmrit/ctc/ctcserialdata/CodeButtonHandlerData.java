@@ -54,20 +54,7 @@ public class CodeButtonHandlerData implements Serializable, Comparable<CodeButto
         public static TURNOUT_TYPE getTurnoutType(int radioGroupValue) { return map.get(radioGroupValue); }
         public static TURNOUT_TYPE getTurnoutType(ButtonGroup buttonGroup) { return map.get(ProjectsCommonSubs.getButtonSelectedInt(buttonGroup)); }
     }
-    
-    public enum SIGNAL_TYPE {
-// The values in paren's are the RadioGroup values set by "CommonSubs.numberButtonGroup",
-// gotten by calling "CommonSubs.getButtonSelectedInt".        
-        SIGNALHEAD(0), SIGNALMAST(1);
-        private final int _mRadioGroupValue;
-        private final static HashMap<Integer, SIGNAL_TYPE> map = new HashMap<>();
-        private SIGNAL_TYPE (int radioGroupValue) { _mRadioGroupValue = radioGroupValue; }
-        static { for (SIGNAL_TYPE value : SIGNAL_TYPE.values()) { map.put(value._mRadioGroupValue, value); }}
-        public int getInt() { return _mRadioGroupValue; }
-        public static SIGNAL_TYPE getSignalType(int radioGroupValue) { return map.get(radioGroupValue); }
-        public static SIGNAL_TYPE getSignalType(ButtonGroup buttonGroup) { return map.get(ProjectsCommonSubs.getButtonSelectedInt(buttonGroup)); }
-    }
-    
+  
     @SuppressFBWarnings(value = "EQ_COMPARETO_USE_OBJECT_EQUALS", justification = "The code works fine as is, I have no idea why it is whining about this.")
     @Override
     public int compareTo(CodeButtonHandlerData codeButtonHandlerData) {
@@ -76,9 +63,7 @@ public class CodeButtonHandlerData implements Serializable, Comparable<CodeButto
     
     public CodeButtonHandlerData() {
         _mOSSectionSwitchSlavedToUniqueID = SWITCH_NOT_SLAVED;
-        _mSIDI_GUISignalType = SIGNAL_TYPE.SIGNALHEAD;
         _mSWDI_GUITurnoutType = CodeButtonHandlerData.TURNOUT_TYPE.TURNOUT;
-        _mCO_SignalType = SIGNAL_TYPE.SIGNALHEAD;
         _mTUL_LockImplementation = LOCK_IMPLEMENTATION.GREGS;
     }
     private static final long serialVersionUID = 1L;
@@ -89,9 +74,7 @@ public class CodeButtonHandlerData implements Serializable, Comparable<CodeButto
         _mSignalEtcNumber = signalEtcNumber;
         _mOSSectionSwitchSlavedToUniqueID = SWITCH_NOT_SLAVED;
         _mGUIColumnNumber = guiColumnNumber;
-        _mSIDI_GUISignalType = SIGNAL_TYPE.SIGNALHEAD;
         _mSWDI_GUITurnoutType = CodeButtonHandlerData.TURNOUT_TYPE.TURNOUT;
-        _mCO_SignalType = SIGNAL_TYPE.SIGNALHEAD;
         _mTUL_LockImplementation = LOCK_IMPLEMENTATION.GREGS;
     }
 //  This number NEVER changes, and is how this object is uniquely identified:    
@@ -191,7 +174,6 @@ at the top for "automatic" JMRI object verification.
     public int                  _mSIDI_TimeLockingTimeInMilliseconds;
     public String               _mSIDI_LeftRightTrafficSignalsCSVList;
     public String               _mSIDI_RightLeftTrafficSignalsCSVList;
-    public SIGNAL_TYPE          _mSIDI_GUISignalType;
 //  Signal Direction Lever:    
     public boolean              _mSIDL_Enabled;
     public String               _mSIDL_LeftInternalSensor;
@@ -214,7 +196,6 @@ at the top for "automatic" JMRI object verification.
     public boolean              _mCO_Enabled;
     public String               _mCO_CallOnToggleInternalSensor;
     public String               _mCO_GroupingsListString;
-    public SIGNAL_TYPE          _mCO_SignalType;
 //  Traffic Locking:
     public boolean              _mTRL_Enabled;
     public String               _mTRL_LeftTrafficLockingRulesSSVList;

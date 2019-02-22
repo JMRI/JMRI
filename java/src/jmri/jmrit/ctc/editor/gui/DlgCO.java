@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
 import jmri.jmrit.ctc.ctcserialdata.CTCSerialData;
 import jmri.jmrit.ctc.ctcserialdata.CallOnEntry;
 import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
+import jmri.jmrit.ctc.ctcserialdata.OtherData;
 import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
 
 /**
@@ -35,11 +36,11 @@ public class DlgCO extends javax.swing.JDialog {
     private final ProgramProperties _mProgramProperties;
     private final CTCSerialData _mCTCSerialData;
     private final CheckJMRIObject _mCheckJMRIObject;
+    private final boolean _mSignalHeadSelected;
     private final DefaultListModel<String> _mDefaultListModel;
     private boolean _mAddNewPressed;
 
     private String _mCO_CallOnToggleInternalSensorOrig;
-    private CodeButtonHandlerData.SIGNAL_TYPE _mCO_SignalTypeOrig;
 
     private ArrayList<String> _mDefaultListModelOrig = new ArrayList<> ();
     private void initOrig() {
@@ -48,7 +49,6 @@ public class DlgCO extends javax.swing.JDialog {
         for (int index = 0; index < defaultListModelSize; index++) {
             _mDefaultListModelOrig.add(_mDefaultListModel.get(index));
         }
-        _mCO_SignalTypeOrig = _mCodeButtonHandlerData._mCO_SignalType;
     }
     private boolean dataChanged() {
         if (!_mCO_CallOnToggleInternalSensorOrig.equals(_mCO_CallOnToggleInternalSensor.getText())) return true;
@@ -57,13 +57,12 @@ public class DlgCO extends javax.swing.JDialog {
         for (int index = 0; index < defaultListModelSize; index++) {
             if (!_mDefaultListModel.get(index).equals(_mDefaultListModelOrig.get(index))) return true;
         }
-        if (_mCO_SignalTypeOrig != CodeButtonHandlerData.SIGNAL_TYPE.getSignalType(_mCO_SignalType)) return true;
         return false;
     }
 
     public DlgCO(   java.awt.Frame parent, boolean modal,
                     AwtWindowProperties awtWindowProperties, CodeButtonHandlerData codeButtonHandlerData, ProgramProperties programProperties,
-                    CTCSerialData ctcSerialData, CheckJMRIObject checkJMRIObject) {
+                    CTCSerialData ctcSerialData, CheckJMRIObject checkJMRIObject, boolean signalHeadSelected) {
         super(parent, modal);
         initComponents();
         _mSignalFacingDirection.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {  Bundle.getMessage("InfoDlgCOLeftTraffic"),          // NOI18N
@@ -82,6 +81,7 @@ public class DlgCO extends javax.swing.JDialog {
         _mProgramProperties = programProperties;
         _mCTCSerialData = ctcSerialData;
         _mCheckJMRIObject = checkJMRIObject;
+        _mSignalHeadSelected = signalHeadSelected;
         _mCO_CallOnToggleInternalSensor.setText(_mCodeButtonHandlerData._mCO_CallOnToggleInternalSensor);
         _mDefaultListModel = new DefaultListModel<>();
         _mGroupingsList.setModel(_mDefaultListModel);
@@ -91,8 +91,6 @@ public class DlgCO extends javax.swing.JDialog {
         for (String aString : ProjectsCommonSubs.getArrayListFromSSV(_mCodeButtonHandlerData._mCO_GroupingsListString)) {
             _mDefaultListModel.addElement(aString);
         }
-        CommonSubs.numberButtonGroup(_mCO_SignalType);
-        CommonSubs.setButtonSelected(_mCO_SignalType, _mCodeButtonHandlerData._mCO_SignalType.getInt());
         initOrig();
         ArrayList<String> arrayListOfSelectableSwitchDirectionIndicators = CommonSubs.getArrayListOfSelectableSwitchDirectionIndicators(_mCTCSerialData.getCodeButtonHandlerDataArrayList());
         arrayListOfSelectableSwitchDirectionIndicators.add(0, "");     // None is always available.
@@ -141,7 +139,6 @@ public class DlgCO extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        _mCO_SignalType = new javax.swing.ButtonGroup();
         _mSaveAndClose = new javax.swing.JButton();
         _mCO_CallOnToggleInternalSensorPrompt = new javax.swing.JLabel();
         _mCO_CallOnToggleInternalSensor = new javax.swing.JTextField();
@@ -167,9 +164,6 @@ public class DlgCO extends javax.swing.JDialog {
         _mGroupingListAddReplace = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         _mCancel = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
-        _mSignalHead = new javax.swing.JRadioButton();
-        _mSignalMast = new javax.swing.JRadioButton();
         jLabel4 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
@@ -188,6 +182,7 @@ public class DlgCO extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle(Bundle.getMessage("TitleDlgCO"));
         addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
             }
@@ -277,19 +272,6 @@ public class DlgCO extends javax.swing.JDialog {
             }
         });
 
-        jLabel2.setText(Bundle.getMessage("LabelDlgCOSignalTYpe"));
-
-        _mCO_SignalType.add(_mSignalHead);
-        _mSignalHead.setText(Bundle.getMessage("LabelDlgCOSignalHead"));
-        _mSignalHead.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                _mSignalHeadActionPerformed(evt);
-            }
-        });
-
-        _mCO_SignalType.add(_mSignalMast);
-        _mSignalMast.setText(Bundle.getMessage("LabelDlgCOSignalMast"));
-
         jLabel4.setText(Bundle.getMessage("LabelDlgCOBLock"));
 
         jLabel16.setText(Bundle.getMessage("InfoDlgCORow6A"));
@@ -337,14 +319,9 @@ public class DlgCO extends javax.swing.JDialog {
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(jLabel2)
-                                        .addComponent(_mCO_CallOnToggleInternalSensorPrompt))
+                                    .addComponent(_mCO_CallOnToggleInternalSensorPrompt)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(_mCO_CallOnToggleInternalSensor, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(_mSignalMast)
-                                        .addComponent(_mSignalHead)))
+                                    .addComponent(_mCO_CallOnToggleInternalSensor, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addComponent(_mGroupingsListPrompt, javax.swing.GroupLayout.Alignment.TRAILING))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(jScrollPane1)
@@ -410,13 +387,7 @@ public class DlgCO extends javax.swing.JDialog {
                         .addGap(9, 9, 9)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(_mCO_CallOnToggleInternalSensorPrompt)
-                            .addComponent(_mCO_CallOnToggleInternalSensor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(_mSignalHead))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(_mSignalMast))
+                            .addComponent(_mCO_CallOnToggleInternalSensor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(_mAddNew)
@@ -494,7 +465,6 @@ public class DlgCO extends javax.swing.JDialog {
             resultString = 0 == index ? thisEntry : resultString + ProjectsCommonSubs.SSV_SEPARATOR + thisEntry;
         }
         _mCodeButtonHandlerData._mCO_GroupingsListString = resultString;
-        _mCodeButtonHandlerData._mCO_SignalType = CodeButtonHandlerData.SIGNAL_TYPE.getSignalType(_mCO_SignalType);
         _mClosedNormally = true;
         _mAwtWindowProperties.saveWindowState(this, FORM_PROPERTIES);
         dispose();
@@ -516,8 +486,7 @@ public class DlgCO extends javax.swing.JDialog {
         _mSwitchIndicator5.setSelectedIndex(0);
         _mSwitchIndicator6.setSelectedIndex(0);
         _mExternalSignal.requestFocusInWindow();
-        boolean signalHeadSelected = CodeButtonHandlerData.SIGNAL_TYPE.getSignalType(_mCO_SignalType) == CodeButtonHandlerData.SIGNAL_TYPE.SIGNALHEAD;
-        if (signalHeadSelected) {
+        if (_mSignalHeadSelected) {
             CommonSubs.populateJComboBoxWithBeans(_mExternalSignal, "SignalHead", null, false);
             CommonSubs.populateJComboBoxWithBeans(_mCalledOnExternalSensor, "Sensor", null, false);
             CommonSubs.populateJComboBoxWithBeans(_mExternalBlock, "Block", null, true);
@@ -545,8 +514,7 @@ public class DlgCO extends javax.swing.JDialog {
         _mSwitchIndicator5.setSelectedItem(callOnEntry._mSwitchIndicator5);
         _mSwitchIndicator6.setSelectedItem(callOnEntry._mSwitchIndicator6);
         _mExternalSignal.requestFocusInWindow();
-        boolean signalHeadSelected = CodeButtonHandlerData.SIGNAL_TYPE.getSignalType(_mCO_SignalType) == CodeButtonHandlerData.SIGNAL_TYPE.SIGNALHEAD;
-        if (signalHeadSelected) {
+        if (_mSignalHeadSelected) {
             CommonSubs.populateJComboBoxWithBeans(_mExternalSignal, "SignalHead", callOnEntry._mExternalSignal, false);
             CommonSubs.populateJComboBoxWithBeans(_mCalledOnExternalSensor, "Sensor", callOnEntry._mCalledOnExternalSensor, false);
             CommonSubs.populateJComboBoxWithBeans(_mExternalBlock, "Block", null, true);
@@ -567,8 +535,7 @@ public class DlgCO extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorDlgCOSignalInvalid"), Bundle.getMessage("Error"), JOptionPane.ERROR_MESSAGE); // NOI18N
             return;
         }
-        boolean signalHeadSelected = CodeButtonHandlerData.SIGNAL_TYPE.getSignalType(_mCO_SignalType) == CodeButtonHandlerData.SIGNAL_TYPE.SIGNALHEAD;
-        if (signalHeadSelected) {
+        if (_mSignalHeadSelected) {
             if (ProjectsCommonSubs.isNullOrEmptyString((String) _mCalledOnExternalSensor.getSelectedItem())) {
                 JOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorDlgCOCalledOnSensorInvalid"), Bundle.getMessage("Error"), JOptionPane.ERROR_MESSAGE); // NOI18N
                 return;
@@ -634,18 +601,12 @@ public class DlgCO extends javax.swing.JDialog {
         _mGroupingsList.setEnabled(true);
     }//GEN-LAST:event__mCancelActionPerformed
 
-    private void _mSignalHeadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mSignalHeadActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event__mSignalHeadActionPerformed
-
     private void _mSwitchIndicator1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mSwitchIndicator1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event__mSwitchIndicator1ActionPerformed
 
     private void enableTopPart(boolean enabled) {
         _mAddNew.setEnabled(enabled);
-        _mSignalHead.setEnabled(enabled);
-        _mSignalMast.setEnabled(enabled);
         _mSwitchIndicator1.setEnabled(!enabled);
         _mSwitchIndicator2.setEnabled(!enabled);
         _mSwitchIndicator3.setEnabled(!enabled);
@@ -653,12 +614,11 @@ public class DlgCO extends javax.swing.JDialog {
         _mSwitchIndicator5.setEnabled(!enabled);
         _mSwitchIndicator6.setEnabled(!enabled);
 
-        boolean signalHeadSelected = CodeButtonHandlerData.SIGNAL_TYPE.getSignalType(_mCO_SignalType) == CodeButtonHandlerData.SIGNAL_TYPE.SIGNALHEAD;
         _mExternalSignal.setEnabled(!enabled);
         _mSignalFacingDirection.setEnabled(!enabled);
-        _mSignalAspectToDisplay.setEnabled(!enabled && signalHeadSelected);
-        _mCalledOnExternalSensor.setEnabled(!enabled && signalHeadSelected);
-        _mExternalBlock.setEnabled(!enabled && !signalHeadSelected);
+        _mSignalAspectToDisplay.setEnabled(!enabled && _mSignalHeadSelected);
+        _mCalledOnExternalSensor.setEnabled(!enabled && _mSignalHeadSelected);
+        _mExternalBlock.setEnabled(!enabled && !_mSignalHeadSelected);
 
         _mGroupingListAddReplace.setEnabled(!enabled);
         _mCancel.setEnabled(!enabled);
@@ -672,7 +632,6 @@ public class DlgCO extends javax.swing.JDialog {
     private javax.swing.JButton _mAddNew;
     private javax.swing.JTextField _mCO_CallOnToggleInternalSensor;
     private javax.swing.JLabel _mCO_CallOnToggleInternalSensorPrompt;
-    private javax.swing.ButtonGroup _mCO_SignalType;
     private javax.swing.JComboBox<String> _mCalledOnExternalSensor;
     private javax.swing.JButton _mCancel;
     private javax.swing.JButton _mDelete;
@@ -685,8 +644,6 @@ public class DlgCO extends javax.swing.JDialog {
     private javax.swing.JButton _mSaveAndClose;
     private javax.swing.JComboBox<String> _mSignalAspectToDisplay;
     private javax.swing.JComboBox<String> _mSignalFacingDirection;
-    private javax.swing.JRadioButton _mSignalHead;
-    private javax.swing.JRadioButton _mSignalMast;
     private javax.swing.JComboBox<String> _mSwitchIndicator1;
     private javax.swing.JComboBox<String> _mSwitchIndicator2;
     private javax.swing.JComboBox<String> _mSwitchIndicator3;
@@ -703,7 +660,6 @@ public class DlgCO extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

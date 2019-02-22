@@ -23,6 +23,7 @@ public class DlgDefaults extends javax.swing.JDialog {
     private int _mSWDI_CodingTimeInMillisecondsOrig;
     private boolean _mTUL_EnabledAtStartupOrig;
     private int _mCodeButtonDelayTimeOrig;
+    private OtherData.SIGNAL_SYSTEM_TYPE _mSignalSystemTypeOrig;
     
     private void initOrig(ProgramProperties programProperties, OtherData otherData) {
         _mSIDI_CodingTimeInMillisecondsOrig = programProperties._mSIDI_CodingTimeInMilliseconds;
@@ -30,6 +31,7 @@ public class DlgDefaults extends javax.swing.JDialog {
         _mSWDI_CodingTimeInMillisecondsOrig = programProperties._mSWDI_CodingTimeInMilliseconds;
         _mTUL_EnabledAtStartupOrig = otherData._mTUL_EnabledAtStartup;
         _mCodeButtonDelayTimeOrig = programProperties._mCodeButtonDelayTime;
+        _mSignalSystemTypeOrig = otherData._mSignalSystemType;
     }
     private boolean dataChanged() {
         if (CommonSubs.getIntFromJTextFieldNoThrow(_mSIDI_CodingTimeInMilliseconds) != _mSIDI_CodingTimeInMillisecondsOrig) return true;
@@ -37,6 +39,7 @@ public class DlgDefaults extends javax.swing.JDialog {
         if (CommonSubs.getIntFromJTextFieldNoThrow(_mSWDI_CodingTimeInMilliseconds) != _mSWDI_CodingTimeInMillisecondsOrig) return true;
         if (_mTUL_EnabledAtStartupOrig != _mTUL_EnabledAtStartup.isSelected()) return true;
         if (CommonSubs.getIntFromJTextFieldNoThrow(_mCodeButtonDelayTime) != _mCodeButtonDelayTimeOrig) return true;
+        if (_mSignalSystemTypeOrig != OtherData.SIGNAL_SYSTEM_TYPE.getSignalSystemType(_mSignalSystemType)) return true;        
         return false;
     }
     
@@ -46,12 +49,12 @@ public class DlgDefaults extends javax.swing.JDialog {
         _mAwtWindowProperties = awtWindowProperties;
         _mProgramProperties = programProperties;
         _mOtherData = otherData;
-        
+        CommonSubs.numberButtonGroup(_mSignalSystemType);
+        CommonSubs.setButtonSelected(_mSignalSystemType, _mOtherData._mSignalSystemType.getInt());
         CommonSubs.setMillisecondsEdit(_mSIDI_CodingTimeInMilliseconds);
         CommonSubs.setMillisecondsEdit(_mSWDI_CodingTimeInMilliseconds);
         CommonSubs.setMillisecondsEdit(_mSIDI_TimeLockingTimeInMilliseconds);
         CommonSubs.setMillisecondsEdit(_mCodeButtonDelayTime);
-        
         _mSIDI_CodingTimeInMilliseconds.setText(Integer.toString(programProperties._mSIDI_CodingTimeInMilliseconds));
         _mSIDI_TimeLockingTimeInMilliseconds.setText(Integer.toString(programProperties._mSIDI_TimeLockingTimeInMilliseconds));
         _mSWDI_CodingTimeInMilliseconds.setText(Integer.toString(programProperties._mSWDI_CodingTimeInMilliseconds));
@@ -71,6 +74,7 @@ public class DlgDefaults extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        _mSignalSystemType = new javax.swing.ButtonGroup();
         _mSWDI_CodingTimeInMilliseconds = new javax.swing.JFormattedTextField();
         _mSIDI_CodingTimeInMilliseconds = new javax.swing.JFormattedTextField();
         jLabel19 = new javax.swing.JLabel();
@@ -87,10 +91,14 @@ public class DlgDefaults extends javax.swing.JDialog {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         _mCodeButtonDelayTime = new javax.swing.JFormattedTextField();
+        jLabel7 = new javax.swing.JLabel();
+        jRadioButton1 = new javax.swing.JRadioButton();
+        jRadioButton2 = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle(Bundle.getMessage("TitleDlgDef"));
         addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
             }
@@ -130,6 +138,14 @@ public class DlgDefaults extends javax.swing.JDialog {
         jLabel4.setText(Bundle.getMessage("InfoDlgDefCodeDelayMore"));
 
         _mCodeButtonDelayTime.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
+
+        jLabel7.setText(Bundle.getMessage("LabelDlgDefSignalSystemType"));
+
+        _mSignalSystemType.add(jRadioButton1);
+        jRadioButton1.setText(Bundle.getMessage("LabelDlgDefSignalSystemTypeHeads"));
+
+        _mSignalSystemType.add(jRadioButton2);
+        jRadioButton2.setText(Bundle.getMessage("LabelDlgDefSignalSystemTypeMasts"));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -173,7 +189,13 @@ public class DlgDefaults extends javax.swing.JDialog {
                                                     .addComponent(_mTUL_EnabledAtStartup, javax.swing.GroupLayout.Alignment.LEADING)))
                                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                                 .addGap(133, 133, 133)
-                                                .addComponent(jLabel23))))))))
+                                                .addComponent(jLabel23))))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel7)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jRadioButton2)
+                                    .addComponent(jRadioButton1)))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(243, 243, 243)
                         .addComponent(_mSaveAndClose)))
@@ -183,6 +205,12 @@ public class DlgDefaults extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(jRadioButton1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jRadioButton2)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel17)
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -228,6 +256,7 @@ public class DlgDefaults extends javax.swing.JDialog {
         _mProgramProperties._mSWDI_CodingTimeInMilliseconds = Integer.parseInt(_mSWDI_CodingTimeInMilliseconds.getText());
         _mOtherData._mTUL_EnabledAtStartup = _mTUL_EnabledAtStartup.isSelected();
         _mProgramProperties._mCodeButtonDelayTime = Integer.parseInt(_mCodeButtonDelayTime.getText());
+        _mOtherData._mSignalSystemType = OtherData.SIGNAL_SYSTEM_TYPE.getSignalSystemType(_mSignalSystemType);
         _mClosedNormally = true;
         _mAwtWindowProperties.saveWindowState(this, FORM_PROPERTIES);
         dispose();
@@ -239,6 +268,7 @@ public class DlgDefaults extends javax.swing.JDialog {
     private javax.swing.JFormattedTextField _mSIDI_TimeLockingTimeInMilliseconds;
     private javax.swing.JFormattedTextField _mSWDI_CodingTimeInMilliseconds;
     private javax.swing.JButton _mSaveAndClose;
+    private javax.swing.ButtonGroup _mSignalSystemType;
     private javax.swing.JCheckBox _mTUL_EnabledAtStartup;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel17;
@@ -250,5 +280,8 @@ public class DlgDefaults extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JRadioButton jRadioButton1;
+    private javax.swing.JRadioButton jRadioButton2;
     // End of variables declaration//GEN-END:variables
 }

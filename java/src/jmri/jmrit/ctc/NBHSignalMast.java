@@ -56,15 +56,20 @@ public class NBHSignalMast extends NBHAbstractSignalCommon implements SignalMast
     }
         
     public boolean valid() { return _mNamedBeanHandleSignalMast != null; }  // For those that want to know the internal state.
+    @Override
     public Object getBean() { return _mNamedBeanHandleSignalMast.getBean(); }
     public void setCTCHeld(boolean held) { setHeld(held); }
+    @Override
     public boolean isDanger() {
         if (getHeld()) return true;     // Safety.  Problem in signal head, maybe same problem here?
         return getAspect().equals(_mDangerAppearance);
     }
 //  Fake for SignalHead support:    
+    @Override
     public String[] getValidStateNames() { return new String[0]; }
+    @Override
     public int[] getValidStates() { return new int[0]; }
+    @Override
     public void setAppearance(int newAppearance) {}
             
     @Override

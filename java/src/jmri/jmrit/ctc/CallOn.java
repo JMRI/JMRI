@@ -13,6 +13,7 @@ import jmri.NamedBeanHandleManager;
 import jmri.Sensor;
 import jmri.jmrit.ctc.ctcserialdata.CallOnEntry;
 import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
+import jmri.jmrit.ctc.ctcserialdata.OtherData;
 import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
 
 /*
@@ -84,9 +85,9 @@ public class CallOn {
     private final NBHSensor _mCallOnToggleSensor;
     private final ArrayList<GroupingData> _mGroupingDataArrayList = new ArrayList<>();
     
-    public CallOn(LockedRoutesManager lockedRoutesManager, String userIdentifier, String callOnToggleSensor, String groupingsListString, CodeButtonHandlerData.SIGNAL_TYPE signalType) {
+    public CallOn(LockedRoutesManager lockedRoutesManager, String userIdentifier, String callOnToggleSensor, String groupingsListString, OtherData.SIGNAL_SYSTEM_TYPE signalSystemType) {
         _mLockedRoutesManager = lockedRoutesManager;
-        _mSignalHeadSelected = (signalType == CodeButtonHandlerData.SIGNAL_TYPE.SIGNALHEAD);
+        _mSignalHeadSelected = (signalSystemType == OtherData.SIGNAL_SYSTEM_TYPE.SIGNALHEAD);
         _mCallOnToggleSensor = new NBHSensor("CallOn", userIdentifier, "callOnToggleSensor", callOnToggleSensor, false);    // NOI18N
         if (!ProjectsCommonSubs.isNullOrEmptyString(groupingsListString)) {
             ArrayList<String> groupingList = ProjectsCommonSubs.getArrayListFromSSV(groupingsListString);

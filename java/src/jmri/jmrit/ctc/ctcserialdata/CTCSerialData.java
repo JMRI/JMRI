@@ -166,8 +166,6 @@ public class CTCSerialData {
 //  Can be removed someday!
         for (CodeButtonHandlerData codeButtonHandlerData : _mCodeButtonHandlerDataArrayList) {
             if (codeButtonHandlerData._mSWDI_GUITurnoutType == null) { codeButtonHandlerData._mSWDI_GUITurnoutType = CodeButtonHandlerData.TURNOUT_TYPE.TURNOUT; }
-            if (codeButtonHandlerData._mSIDI_GUISignalType == null) { codeButtonHandlerData._mSIDI_GUISignalType = CodeButtonHandlerData.SIGNAL_TYPE.SIGNALHEAD; }
-            if (codeButtonHandlerData._mCO_SignalType == null) { codeButtonHandlerData._mCO_SignalType = CodeButtonHandlerData.SIGNAL_TYPE.SIGNALHEAD; }
         }
 //  Finally, give each object a chance to upgrade itself BEFORE anything uses it:
         _mOtherData.upgradeSelf();
