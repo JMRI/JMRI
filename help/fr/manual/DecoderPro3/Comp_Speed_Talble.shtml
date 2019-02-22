@@ -1,7 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Translation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-02-22 -->
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -27,253 +27,286 @@
     <div id="mainContent">
       <a name="Top" id="Top"></a>
 
-      <h1>DecoderPro&reg; Comprehensive Programmer</h1>
+      <h1>DecoderPro&reg; Programmeur Complet</h1>
 
-      <h2>The Speed Table Pane</h2>
+      <h2>Onglet Tableau de Vitesse</h2>
 
       <div align="right">
-        <p><a href="Comp_Speed.shtml">Previous |</a> <a href=
-        "Comp_FMap.shtml">Next</a></p>
+        <p><a href="Comp_Speed.shtml">Pr&#233;c&#233;dent |</a> <a href=
+        "Comp_FMap.shtml">Suivant</a></p>
 
-        <p><a href="index.shtml#Advanced%20Programmer">Back to
-        Index</a></p>
+        <p><a href="index.shtml#Advanced%20Programmer">Retour &#224; l'Index</a></p>
       </div>
       <hr>
 
-      <p>The <strong>Speed Table</strong> allows you to fine-tune
-      the throttle response of your locomotive. You might opt to
-      match all of your locomotives so they run at the same speed
-      for the same throttle setting, or you might want to set the
-      table up so that your locomotive runs at the actual scale
-      speed indicated by the throttle. Or maybe you have someone in
-      your operating group that likes to switch the yard at Mach
-      2.5, and you want to slow them down a bit. There are a lot of
-      ways to use this feature. (This feature may vary by
-      manufacturer and decoder series) Some decoders may only have
-      preset curves that you can select.</p>
+      <p>Le <strong>Tableau de Vitesse</strong> vous permet de r&#233;gler 
+      avec pr&#233;cision la r&#233;ponse du r&#233;gulateur de votre locomotive. 
+      Vous pouvez choisir de faire correspondre toutes vos locomotives 
+      afin qu'elles fonctionnent &#224; la m&#234;me vitesse pour le m&#234;me r&#233;glage 
+      du r&#233;gulateur, ou vous pouvez configurer le tableau de sorte que 
+      votre locomotive fonctionne &#224; la vitesse r&#233;elle indiqu&#233;e par 
+      le r&#233;gulateur. Ou peut-&#234;tre avez-vous quelqu'un dans votre 
+      groupe d'exploitation qui aime man&#156;uvrer sur le triage &#224; Mach 2,5 
+      et vous voulez le ralentir un peu. Il y a beaucoup de fa&#231;ons 
+      d'utiliser cette fonctionnalit&#233;. (Cette fonctionnalit&#233; peut 
+      varier selon le fabricant et la s&#233;rie de d&#233;codeurs.) Certains 
+      d&#233;codeurs peuvent uniquement avoir des courbes.</p>
 
-      <p>You now have the option of using <strong>Speed
-      Table</strong> (this pane) which if selected and written to
-      the decoder will replace the <a href=
-      "Comp_Speed.shtml"><strong>Basic Speed Control</strong></a>
-      to set your locomotive's speed control mode. Which ever one
-      you select last and write to your decoder will be the method
-      used for speed control. To select the use of <strong>speed
-      tables</strong>, the <strong>Use Table</strong> radio button
-      is selected at the top of the pane, and in the case of
-      Soundtraxx and QSI decoders, the drop down selection box must
-      be used. See the discussion at the end of this section for an
-      example.</p>
+      <p>Vous avez maintenant la possibilit&#233; d'utiliser le <strong>Tableau 
+      des Vitesses</strong> (ce volet) qui, s'il est s&#233;lectionn&#233; et &#233;crit 
+      dans le d&#233;codeur, remplacera le <a href= "Comp_Speed.shtml"> 
+		  <strong>Contr&#244;le Basique de la vitesse</strong > </a>pour 
+		  d&#233;finir le mode de contr&#244;le de la vitesse de votre locomotive. 
+		  Quel que soit le dernier que vous avez s&#233;lectionn&#233; et &#233;crit 
+		  dans votre d&#233;codeur, ce sera la m&#233;thode utilis&#233;e pour le 
+		  contr&#244;le de la vitesse. Pour s&#233;lectionner l'utilisation des 
+		  <strong>Tableaux de Vitesse </strong>, vous cochez la case 
+		  d'option <strong>Utiliser le Tableau</strong> en haut du volet. Dans 
+		  le cas des d&#233;codeurs Soundtraxx et QSI, la liste d&#233;roulante 
+		  doit &#234;tre utilis&#233;e. Voir la discussion &#224; la fin de cette section pour un exemple. </P>
 
-      <p>The default speed table for most decoders is a straight
-      line from zero on the left to maximum on the right. The
-      <b><input name="button" id="button" value="Force Straight"
-      type="button"></b> below the table duplicates that in the
-      table..</p>
+       <p>Le tableau des vitesses par d&#233;faut pour la plupart des 
+       d&#233;codeurs est une ligne droite allant de z&#233;ro &#224; gauche au 
+       maximum &#224; droite. Le <b><input name = "button" id = "button" 
+       value = "Force une Droite" type = "button"> </b> sous le tableau 
+       est identique &#224; celui du tableau.</P>
 
       <h1 style="text-align: center;"><img src=
       "images/Speed_Table_Straight.png" alt="speed table" height=
       "701" width="804"></h1>
 
-      <p align="center"><strong>Straight Line Speed
-      Curve</strong></p>
+      <p align="center"><strong>Courbe de Vitesse Droite </strong> </p>
 
-      <p>As you can see, you have both numbers and sliders to work
-      with. Changing either a number or slider will make the other
-      change to match it. If you are CV inquisitive, you can use
-      the tool tip to advantage. By hovering over any of the
-      sliders, the tool tip will reveal the CV to which you are
-      pointing .</p>
+       <p>Comme vous pouvez le constater, vous devez utiliser des 
+       chiffres et des curseurs. Changer un num&#233;ro ou un curseur 
+       fera l'autre modification correspondante. Si vous &#234;tes 
+       curieux, vous pouvez utiliser l'info-bulle. 
+       En survolant l'un des curseurs, l'info-bulle r&#233;v&#232;le le 
+       CV sur lequel vous vous dirigez. </P>
 
-      <p>The <strong><input name="button2" id="button2" value=
-      "Match ends" type="button"></strong> will also result in a
-      straight-line graph, but you can offset the beginning and end
-      by any amount you wish. The first and last steps are used to
-      set to minimum and maximum values for the straight line. The
-      function will then draw a straight line between those two end
-      points. Below is an example of the result.</p>
+       <p><strong> <input name = "button2" id = "button2" 
+       value = "Match ends" type = "button"> </strong> donnera &#233;galement 
+       un graphique en ligne droite, mais vous pouvez d&#233;caler le 
+       commencez et finissez par le montant que vous souhaitez. 
+       Les premi&#232;res et derni&#232;res &#233;tapes permettent de d&#233;finir les 
+       valeurs minimale et maximale de la ligne droite. La fonction 
+       trace ensuite une ligne droite entre ces deux points d'extr&#233;mit&#233;. 
+       Vous trouverez ci-dessous un exemple de r&#233;sultat.</P>
 
       <h1><img src="images/Speed_Table_Match.png" alt=
       "speed table match" height="315" width="914"></h1>
 
-      <p>Now if you've used DecoderPro in the past, you're probably
-      wondering what those little boxes at the bottom of each
-      slider are used for. Well, they're difficult to explain, but
-      easy to use. They basically allow you to set a slider to
-      control every slider in columns to its left as well as to its
-      right. If you click two of the boxes and then move one of
-      those sliders you'll see that they are linked to the sliders
-      between them. Points to the right never are higher than the
-      slider being moved, and the points to the left are never
-      lower that the slider being moved. This "always increasing
-      left to right" is normally the way the sliders worked, but
-      now the ones in between the check are linked. If the slider
-      is lowered and then raised the straight line is drawn between
-      the column checked to the right and the column that the
-      slider is controlling. It's difficult to describe, but try it
-      and you'll see.</p>
+      <p>Maintenant, si vous avez utilis&#233; DecoderPro dans le pass&#233;, 
+      vous vous demandez probablement &#224; quoi servent ces petites cases 
+      situ&#233;es au bas de chaque curseur. Eh bien, ils sont difficiles 
+      &#224; expliquer, mais faciles &#224; utiliser. En gros, ils vous permettent 
+      de d&#233;finir un curseur pour contr&#244;ler chaque curseur dans les 
+      colonnes &#224; gauche et &#224; droite. Si vous cliquez sur deux des 
+      cases, puis que vous d&#233;placez l'un de ces curseurs, vous verrez 
+      qu'elles sont li&#233;es aux curseurs situ&#233;s entre elles. Les points 
+      &#224; droite ne sont jamais plus hauts que le curseur en cours de
+       d&#233;placement, et les points &#224; gauche ne sont jamais plus bas 
+       que le curseur en cours de d&#233;placement. Cette "augmentation 
+       constante de gauche &#224; droite" correspond normalement au 
+       fonctionnement des curseurs, mais &#224; pr&#233;sent, ceux entre 
+       la v&#233;rification sont li&#233;s. Si le curseur est abaiss&#233; puis 
+       &#233;lev&#233;, la ligne droite est dessin&#233;e entre la colonne coch&#233;e 
+       &#224; droite et la colonne contr&#244;l&#233;e par le curseur. C'est 
+       difficile &#224; d&#233;crire, mais essayez et vous verrez. </P>
 
       <p><br>
-      What could that possibly be used for, you ask? Well, many
-      decoders (like the Soundtraxx Tsunami in this example) do not
-      support V-start, V-mid and V-max. So, if you are trying to
-      use the simplified method of speed matching locos, these
-      decoders won't support it. Well now you have a way. Check the
-      left-hand, right-hand and middle columns. Set the left-hand
-      column to V-start, the right-hand to V-max and then slide the
-      middle slider up and down until you get the V-mid that you
-      want. Now all you have to do is write this speed table to the
-      loco and you've accomplished what you wanted to do, but the
-      decoder manufacturer didn't provide for.</p>
+      &#193; quoi cela pourrait-il servir, demandez-vous? De nombreux 
+      d&#233;codeurs (comme le Soundtraxx Tsunami dans cet exemple) 
+      ne prennent pas en charge V-start, V-mid et V-max. Donc, 
+      si vous essayez d'utiliser la m&#233;thode simplifi&#233;e de 
+      correspondance de vitesse de locomotive, ces d&#233;codeurs 
+      ne la prendront pas en charge. Eh bien maintenant vous 
+      avez un moyen. V&#233;rifiez les colonnes de gauche, de droite 
+      et du milieu. D&#233;finissez la colonne de gauche sur V-start, 
+      la droite sur V-max, puis faites glisser le curseur du milieu 
+      vers le haut et le bas jusqu'&#224; ce que vous obteniez le V-mid 
+      souhait&#233;. Il ne vous reste plus qu'&#233;crire cette table de 
+      vitesse dans la locomotive et vous aurez accompli ce que 
+      vous vouliez faire, mais le fabricant du d&#233;codeur n'en avait pas pr&#233;vu.</P>
+
 
       <h1><img src="images/Speed_Table_SpeedMatch.png" alt=
       "Speed Match" height="527" width="922"></h1>
 
-      <p align="center"><strong>Substitute for Quick Speed
-      Matching</strong></p>
+      <p align="center"><strong>Substitut pour la correspondance 
+      rapide de vitesse </strong> </p>
 
-      <p align="left">If you want to set up a loco for switching
-      you can set a start speed that is the same for the first
-      portion of the throttle revolution and lower the top speed
-      for use in the yard as shown below:</p>
+       <p align = "left"> Si vous souhaitez configurer une locomotive
+        pour la man&#156;uvre, vous pouvez d&#233;finir une vitesse de d&#233;marrage 
+        identique pour la premi&#232;re partie de l'acc&#233;l&#233;rateur et r&#233;duire 
+        la vitesse maximale pour une utilisation dans le triage, 
+        comme indiqu&#233; ci-dessous: </p>
+
 
       <h1><img src="images/Speed_Table_Constant.png" alt=
       "Speed Table - Constant Ratio Curve" border="5" height="270"
       width="800"></h1>
 
-      <p align="center"><strong>Switcher Speed Curve</strong></p>
+     <p align = "center"> <strong>Courbe de vitesse du s&#233;lecteur </strong> </p>
 
-      <p>if you don't desire a strait-line response curve there are
-      other options available. The Constant ratio curve gives you a
-      response that increases slowly in the low end and rapidly at
-      high throttle. This function will also draw the curve between
-      preset end points.</p>
+       <p>Si vous ne souhaitez pas de courbe de r&#233;ponse en ligne droite, 
+       d'autres options sont disponibles. La courbe de rapport constant 
+       vous donne une r&#233;ponse qui augmente lentement dans les bas 
+       r&#233;gimes et rapidement &#224; fort r&#233;gime. Cette fonction trace 
+       &#233;galement la courbe entre les points finaux pr&#233;d&#233;finis. </P>
 
       <h1><img src="images/Speed_Table_Switcher.png" alt="switcher"
       height="335" width="807"></h1>
 
-      <p align="center"><strong>Constant Ratio Curve</strong></p>
+      <p align="center"><strong>Courbe &#224; Taux Constant</strong></p>
 
-      <p>The <b>Log curve</b> reverses this response, giving you a
-      logarithmic response curve with high acceleration at low
-      speeds, but topping out quickly. It will also draw the curve
-      between preset end points.</p>
-
+     <p>La <b>courbe Log</b> inverse cette r&#233;ponse en vous donnant 
+     une courbe de r&#233;ponse logarithmique avec une acc&#233;l&#233;ration
+      &#233;lev&#233;e &#224; basse vitesse, . Il va &#233;galement tracer 
+      la courbe entre les points finaux pr&#233;d&#233;finis. </P>
       <h1><img src="images/Speed_Table_Log.png" alt="log" height=
       "345" width="851"></h1>
 
-      <p align="center"><strong>Logarithmic Speed
-      Curve</strong></p>
+      <p></p>align="center"><strong>Courbe de Vitesse Logarithmique</strong></p>
 
       <p align="center"></p>
 
-      <p>The <input name="button3" id="button3" value="Shift left"
-      type="button"> moves the entire speed table to the left one
-      space with each click on the button. The example below shows
-      a linear 0-255 speed table that has been <b>Shifted left</b>
-      three times.</p>
+      <p> Le <input name = "button3" id = "button3" value = "Décalage Gauche" 
+      type = "button"> d&#233;place le Tableau de Vitesses complet vers 
+      la gauche d'un espace &#224; chaque clic sur le bouton. L'exemple 
+      ci-dessous montre un Tableau de Vitesse lin&#233;aire 0-255 qui 
+      a &#233;t&#233; <b> d&#233;cal&#233;e &#224; gauche </b> &#224; trois reprises. </P>
 
-      <h1><img src="images/Speed_Table_ShiftLeft.png" alt=
-      "shift left" height="369" width="840"></h1>
+       <h1> <img src = "images/Speed_Table_ShiftLeft.png" alt =
+       "shift left" height = "369" width = "840"> </h1>
 
-      <p align="center"><strong>Curve Shifted Left</strong></p>
+       <p align = "center"> <strong> Courbe d&#233;cal&#233;e &#224; gauche </strong> </p>
 
-      <p>The <input name="button4" id="button4" value="Shft right"
-      type="button"> move the entire speed table to the right one
-      space with each click on the button. The example below shows
-      a linear 0-255 speed table that has been <b>Shifted right</b>
-      three times.</p>
+       <p> Le <input name = "button4" id = "button4" value = "Décalage Droite" type = "button"> 
+       d&#233;place tout le tableau des vitesses vers la droite d'un espace 
+       &#224; chaque clic sur le bouton. L'exemple ci-dessous montre un tableau
+        de vitesse lin&#233;aire 0-255 qui a &#233;t&#233; <b>d&#233;cal&#233;e &#224; droite</b> &#224; trois reprises.</P>
 
       <h1><img src="images/Speed_Table_ShiftRight.png" alt=
       "shift right" height="331" width="824"></h1>
 
-      <p align="center"><strong>Curve Shifted Right</strong></p>
+      <p align="center"><strong>Courbe D&#233;cal&#233;e &#224; Droite</strong></p>
 
-      <p>Of course, you can enter the numbers individually or move
-      the sliders one at a time to create your own fully customized
-      speed table. To aid you with setting the individual values,
-      the slider value is shown at the top of each slider. Also, by
-      hovering the mouse at a slider column the number of the CV
-      being entered will be revealed.</p>
+      <p>Bien s&#251;r, vous pouvez entrer les chiffres individuellement 
+      ou d&#233;placer les curseurs un par un pour cr&#233;er votre propre 
+      tableau de vitesse enti&#232;rement personnalis&#233;. Pour vous aider 
+      &#224; d&#233;finir les valeurs individuelles, la valeur du curseur est 
+      affich&#233;e en haut de chaque curseur. De plus, en pla&#231;ant le 
+      curseur de la souris sur une colonne du curseur, le num&#233;ro du 
+      CV saisi sera r&#233;v&#233;l&#233;. </P>
 
-      <p>One very important thing to remember: <span class=
-      "ACCENT"><strong>No matter how pretty your speed table looks,
-      it has absolutely no effect on the locomotive unless you
-      write it to the decoder!</strong></span></p>
+      <p>Une chose tr&#232;s importante &#224; retenir: <span class = "ACCENT"> <strong> 
+		  M&#234;me si votre tableau de vitesse est joli, il n'a absolument 
+		  aucun effet sur la locomotive &#224; moins que vous ne l'&#233;criviez 
+		  dans le d&#233;codeur!</strong></span></p>
 
-      <p>And this point is especially pertinent with the QSI and
-      Soundtraxx Tsunami decoders, because they have a separate
-      drop down box like the QSI box below. They require that you
-      select the <strong>user defined</strong> speed table entry in
-      this box or your table will not be written to the decoder.
-      Interestingly, Tsunami puts the selection at the bottom of
-      the list making it very easy to miss.</p>
+      <p> Et ce point est particuli&#232;rement pertinent pour les d&#233;codeurs QSI 
+      et Soundtraxx Tsunami, car ils disposent d'une liste d&#233;roulante 
+      distincte, semblable &#224; la bo&#238;te QSI ci-dessous. Ils exigent que 
+      vous s&#233;lectionniez le tableau de vitesse <strong> d&#233;fini par 
+      l'utilisateur </strong>entr&#233; dans cette zone, sinon votre tableau 
+      ne sera pas &#233;crit dans le d&#233;codeur. Il est int&#233;ressant de noter 
+      que Tsunami place la s&#233;lection au bas de la liste, ce qui la 
+      rend tr&#232;s facile &#224; diffuser. </P>
 
       <p align="center"><img src="images/Speed_Table_QSI.png" alt=
       "QSI speed table" height="308" width="799"><br></p>
 
         <hr>
       <a name="gotchas" id="gotchas"></a>
-      There are some "gotchas" with programming speed curves in various decoders:
+     Il existe quelques "pi&#232;ges" avec la programmation des courbes de vitesse dans diff&#233;rents d&#233;codeurs:
 
       <ul>
-        <li>The NMRA S9.2.2 specifies that all decoders must provide CV2 (Vstart). 
-        The provision of CV6 (Vhigh) and CV5 (Vhigh) is optional. 
-        These three CVs are to be active only when Bit 4 of CV29 is 0. 
-        Speed tables are optional and use CVs 66 (Fwd Trim) 67-94 (the actual speed curve) and 95 (Rev Trim).
-        These thirty CVs are to be active only when Bit 4 of CV29 is 1. 
-        The disadvantage of this speed table specification is that any tweaking of 
-        starting or maximum speeds requires reshaping 
-        of the entire speed curve. 
+        <li> Le NMRA S9.2.2 sp&#233;cifie que tous les d&#233;codeurs doivent 
+        fournir CV2 (Vstart).
+        La fourniture de CV6 (Vhigh) et CV5 (Vhigh) est facultative.
+        Ces trois CV ne doivent &#234;tre actifs que lorsque le bit 4 
+        de CV29 est &#224; 0.
+        Les tableaux de vitesse sont facultatifs et utilisent les 
+        CV 66 (Dir avant) 67-94 (courbe de vitesse r&#233;elle) et 95 (Dir Inv).
+        Ces trente CV ne doivent &#234;tre actifs que lorsque le bit 4 de CV29 est &#224; 1.
+        L'inconv&#233;nient de cette sp&#233;cification de tableau de vitesses est 
+        que toute r&#233;duction de la vitesse de d&#233;part ou maximale n&#233;cessite 
+        un remodelage complet de la courbe de vitesse.
 
-        <li>SoundTraxx Tsunami decoders differ from the standard. 
-        When the speed table is active (Bit 4 of CV29 is 1), 
-        the value in CV2 is not ignored but is effectively (in the decoder) a
-        dded to CVs 67-94 in the speed table, 
-        pushing it upwards. The advantage of this variation from the NMRA standard is that 
-        you can tweak the starting speed without reshaping the whole curve, 
-        but the disadvantage is that you can effectively flatten the top end of 
-        the speed table it the maximum speed was already high.
+        <li> Les d&#233;codeurs SoundTraxx Tsunami diff&#232;rent des standards.
+        Lorsque le tableau de vitesse est actif (le bit 4 de CV29 vaut 1), 
+        la valeur dans CV2 n'est pas ignor&#233;e mais est effectivement 
+        ajout&#233;e (dans le d&#233;codeur) aux CV 67 &#224; 94 de la table de vitesse, 
+        en la poussant vers le haut. L'avantage de cette variation par 
+        rapport &#224; la norme NMRA est qu'il est possible d'ajuster la 
+        vitesse de d&#233;part sans modifier la courbe, mais l'avantage 
+        est que vous pouvez r&#233;ellement aplatir la partie sup&#233;rieure 
+        de la table de vitesse si la vitesse maximale &#233;tait d&#233;j&#224; &#233;lev&#233;e.
 
-        <li>QSI decoders differ from the standard. When the speed table is active 
-        (Bit 4 of CV29 is 1), the values in CVs 2 and 5 are not ignored. 
-        If either of CVs 2 or 5 are non-zero, these become the actual Vstart 
-        and/or Vhigh and the effective values in CVs 67-94 are compressed or expanded (scaled) 
-        in the decoder so the actual curve starts and/or ends on any non-zero value in 
-        Vstart and/or Vhigh. 
-        The advantage of this variation from the NMRA standard is that you can tweak 
-        both starting and maximum speeds without reshaping the whole curve, 
-        but the disadvantage is that if your speed table already covered a restricted range, 
-        the curve will be expanded, 
-        with possible integer multiplication errors producing glitches in the speed table.
+        <li>Les d&#233;codeurs QSI diff&#232;rent de la norme. Lorsque le tableau 
+        des vitesses est actif (le bit 4 de CV29 est 1), les valeurs des 
+        CV 2 et 5 ne sont pas ignor&#233;es.
+        Si l'un ou l'autre des CV 2 ou 5 est non nul, ils deviennent 
+        le Vstart et/ou le Vhigh r&#233;els et les valeurs effectives des 
+        CV 67 &#224; 94 sont compress&#233;es ou d&#233;velopp&#233;es (mises &#224; l'&#233;chelle) 
+        dans le d&#233;codeur, de sorte que la courbe r&#233;elle commence et/ou 
+        se termine le toute valeur non nulle dans Vstart et/ou Vhigh.
+        L'avantage de cette variation par rapport &#224; la norme NMRA est 
+        qu'il est possible de modifier les vitesses de d&#233;part et maximales 
+        sans modifier la courbe, mais l'inconv&#233;nient est que si votre 
+        tableau de vitesses couvrait d&#233;j&#224; une plage restreinte, la courbe 
+        serait &#233;largie, avec possibilit&#233; de multiplication erreurs 
+        produisant des probl&#232;mes dans le tableau de vitesse.
 
-        <li>ESU V4 and Select decoders differ from the standard (except in some early firmware versions) . When the speed table is active (Bit 4 of CV29 is 1), the values in CVs 2 and 5 are not ignored, but ALWAYS specify the actual Vstart and Vhigh of the loco. In addition the value of CV67 is fixed (read only) at 1 and the value of CV94 is fixed (read only) at 255. You therefore need to fit your speed table curve shape between these fixed end points. The effective values in CVs 67-94 are compressed (in the decoder) so the actual curve always starts and ends on the values in Vstart and Vhigh. The advantage of this variation from the NMRA standard is that you can tweak both starting and maximum speeds without reshaping the whole curve and without the possible multiplicative errors in the QSI approach. The LokProgrammer and JMRI DecoderPro software both enforce the restrictions on CVs 67 and 94 so you know what your speed table will actually look like. Also, the minimum value for CV2 is 1, so you cannot set the loco to be stationary at step 1.
+        <li>Les d&#233;codeurs ESU V4 et Select diff&#232;rent de la norme (sauf 
+        dans certaines versions ant&#233;rieures du microprogramme). Lorsque 
+        le tableau de vitesse est actif (le bit 4 de CV29 est 1), les 
+        valeurs des CV 2 et 5 ne sont pas ignor&#233;es, mais sp&#233;cifiez 
+        TOUJOURS les valeurs Vstart et Vhigh r&#233;elles de la locomotive. 
+        De plus, la valeur de CV67 est fix&#233;e (lecture seule) &#224; 1 et 
+        la valeur de CV94 est fix&#233;e (lecture seule) &#224; 255. Vous devez 
+        donc adapter la forme de la courbe de votre tableau de vitesses 
+        entre ces points d'extr&#233;mit&#233; fixes. Les valeurs effectives dans 
+        les CV 67 &#224; 94 sont compress&#233;es (dans le d&#233;codeur), de sorte que 
+        la courbe r&#233;elle commence et se termine toujours sur les valeurs 
+        dans Vstart et Vhigh. L'avantage de cette variation par rapport &#224; 
+        la norme NMRA est qu'il est possible d'ajuster les vitesses de 
+        d&#233;part et maximales sans modifier la courbe et sans les erreurs 
+        multiplicatives possibles dans l'approche QSI. Les logiciels 
+        LokProgrammer et JMRI DecoderPro appliquent les restrictions 
+        des CV 67 et 94 afin que vous sachiez &#224; quoi ressemblera votre 
+        tableau de vitesses. De plus, la valeur minimale pour CV2 est 1, 
+        vous ne pouvez donc pas r&#233;gler la locomotive pour qu'elle soit immobile &#224; l'&#233;tape 1.
 
     </ul>
-    The important thing to make very clear is that 
-    ALL FOUR DIFFERENT APPROACHES ALLOW FULL CONTROL OF SETTING THE ENTIRE SPEED RANGE OF THE LOCO. 
-    There is no limitation on setting of starting or maximum speed. 
-    But you MUST be aware of the different ways of setting up different decoders. 
-    The other important point is that THIS DOES NOT PREVENT SPEED MATCHING of different brands, 
-    you just have to be aware of the different ways of setting up each brand.
+    La chose importante &#224; pr&#233;ciser est que
+    LES QUATRE APPROCHES DIFF&#201;RENTES PERMETTENT UN CONTR&#212;LE COMPLET DU R&#201;GLAGE DE TOUTE LA GAMME DE VITESSE DU LOCO.
+    Il n'y a aucune limitation sur le r&#233;glage de la vitesse de d&#233;marrage ou maximale.
+    Mais vous DEVEZ conna&#238;tre les diff&#233;rentes mani&#232;res de configurer diff&#233;rents d&#233;codeurs.
+    L'autre point important est que CECI n'emp&#234;che pas l'ad&#233;quation de la vitesse des diff&#233;rentes marques,
+    il vous suffit de conna&#238;tre les diff&#233;rentes fa&#231;ons de gonfigurer chaque marque.
     <p>
-    The best way of avoiding problems is with any brand or mix thereof is to match speed steps in this order 1,28,14,7,21,... 
-    This will avoid any problems with any brand.
+    Le meilleur moyen d'&#233;viter les probl&#232;mes est de faire correspondre 
+    les &#233;tapes de vitesse dans cet ordre, quelle que soit la marque ou 
+    le m&#233;lange de marques qu'elles soient: 1.28,14,7,21, ...
+    Cela &#233;vitera tout probl&#232;me avec n'importe quelle marque.
     <p>
-    Footnote: Speed tables must always increase monotonically (i.e. no speed step can have a value lower 
-    than the previous speed step). 
-    Failure to do observe this restriction can cause strange behaviour in some decoders 
-    so both LokProgrammer and JMRI DecoderPro prevent you from doing so.
+    Note de bas de page: Les tableaux de vitesse doivent toujours 
+    augmenter de fa&#231;on monotone (c'est-&#224;-dire qu'aucun cran de vitesse 
+    ne peut avoir une valeur inf&#233;rieure au pas de vitesse pr&#233;c&#233;dent).
+    Le non-respect de cette restriction peut entra&#238;ner un comportement! 
+    &#233;trange de certains d&#233;codeurs. Par cons&#233;quent, LokProgrammer et 
+    JMRI DecoderPro vous emp&#234;chent de le faire.
       
        <hr>
 
       <div align="right">
         <p><a href="Comp_FMap.shtml"></a> <a href=
-        "Comp_Speed.shtml">Previous |</a> <a href=
-        "Comp_FMap.shtml">Next</a></p>
+        "Comp_Speed.shtml">Pr&#233;c&#233;dent |</a> <a href=
+        "Comp_FMap.shtml">Suivant</a></p>
 
-        <p><a href="index.shtml#Advanced%20Programmer">Back to
-        Index</a></p>
+        <p><a href="index.shtml#Advanced%20Programmer">Retour &#224; l'Index</a></p>
       </div>
      
       <!--#include virtual="/Footer" -->
