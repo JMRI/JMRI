@@ -38,8 +38,8 @@ public class CodeButtonHandlerData implements Serializable, Comparable<CodeButto
         private LOCK_IMPLEMENTATION (int radioGroupValue) { _mRadioGroupValue = radioGroupValue; }
         static { for (LOCK_IMPLEMENTATION value : LOCK_IMPLEMENTATION.values()) { map.put(value._mRadioGroupValue, value); }}
         public int getInt() { return _mRadioGroupValue; }
-        public static LOCK_IMPLEMENTATION getLockImplementation(int radioGroupValue) { return (LOCK_IMPLEMENTATION)map.get(radioGroupValue); }
-        public static LOCK_IMPLEMENTATION getLockImplementation(ButtonGroup buttonGroup) { return (LOCK_IMPLEMENTATION)map.get(ProjectsCommonSubs.getButtonSelectedInt(buttonGroup)); }
+        public static LOCK_IMPLEMENTATION getLockImplementation(int radioGroupValue) { return map.get(radioGroupValue); }
+        public static LOCK_IMPLEMENTATION getLockImplementation(ButtonGroup buttonGroup) { return map.get(ProjectsCommonSubs.getButtonSelectedInt(buttonGroup)); }
     }
 
     public enum TURNOUT_TYPE {
@@ -51,8 +51,8 @@ public class CodeButtonHandlerData implements Serializable, Comparable<CodeButto
         private TURNOUT_TYPE (int radioGroupValue) { _mRadioGroupValue = radioGroupValue; }
         static { for (TURNOUT_TYPE value : TURNOUT_TYPE.values()) { map.put(value._mRadioGroupValue, value); }}
         public int getInt() { return _mRadioGroupValue; }
-        public static TURNOUT_TYPE getTurnoutType(int radioGroupValue) { return (TURNOUT_TYPE)map.get(radioGroupValue); }
-        public static TURNOUT_TYPE getTurnoutType(ButtonGroup buttonGroup) { return (TURNOUT_TYPE)map.get(ProjectsCommonSubs.getButtonSelectedInt(buttonGroup)); }
+        public static TURNOUT_TYPE getTurnoutType(int radioGroupValue) { return map.get(radioGroupValue); }
+        public static TURNOUT_TYPE getTurnoutType(ButtonGroup buttonGroup) { return map.get(ProjectsCommonSubs.getButtonSelectedInt(buttonGroup)); }
     }
     
     public enum SIGNAL_TYPE {
@@ -64,8 +64,8 @@ public class CodeButtonHandlerData implements Serializable, Comparable<CodeButto
         private SIGNAL_TYPE (int radioGroupValue) { _mRadioGroupValue = radioGroupValue; }
         static { for (SIGNAL_TYPE value : SIGNAL_TYPE.values()) { map.put(value._mRadioGroupValue, value); }}
         public int getInt() { return _mRadioGroupValue; }
-        public static SIGNAL_TYPE getSignalType(int radioGroupValue) { return (SIGNAL_TYPE)map.get(radioGroupValue); }
-        public static SIGNAL_TYPE getSignalType(ButtonGroup buttonGroup) { return (SIGNAL_TYPE)map.get(ProjectsCommonSubs.getButtonSelectedInt(buttonGroup)); }
+        public static SIGNAL_TYPE getSignalType(int radioGroupValue) { return map.get(radioGroupValue); }
+        public static SIGNAL_TYPE getSignalType(ButtonGroup buttonGroup) { return map.get(ProjectsCommonSubs.getButtonSelectedInt(buttonGroup)); }
     }
     
     @SuppressFBWarnings(value = "EQ_COMPARETO_USE_OBJECT_EQUALS", justification = "The code works fine as is, I have no idea why it is whining about this.")
@@ -99,7 +99,7 @@ public class CodeButtonHandlerData implements Serializable, Comparable<CodeButto
 //  Used by the Editor only:    
     public int _mSwitchNumber;         // Switch Indicators and lever #
     public int _mSignalEtcNumber;      // Signal Indicators, lever, locktoggle, callon and code button number
-    public String myString() { return Bundle.getMessage("CBHD_SwitchNumber") + " " + _mSwitchNumber + Bundle.getMessage("CBHD_SignalNumberEtc") + " " + _mSignalEtcNumber + Bundle.getMessage("CBHD_ColumnNumber") + " " + _mGUIColumnNumber + (String)(_mGUIGeneratedAtLeastOnceAlready ? "*" : "") + ", [" + _mUniqueID + "]"; }  // NOI18N
+    public String myString() { return Bundle.getMessage("CBHD_SwitchNumber") + " " + _mSwitchNumber + Bundle.getMessage("CBHD_SignalNumberEtc") + " " + _mSignalEtcNumber + Bundle.getMessage("CBHD_ColumnNumber") + " " + _mGUIColumnNumber + (_mGUIGeneratedAtLeastOnceAlready ? "*" : "") + ", [" + _mUniqueID + "]"; }  // NOI18N
     public String myShortStringNoComma() { return _mSwitchNumber + "/" + _mSignalEtcNumber; }
 //  PRESENTLY (as of 10/18/18) these are ONLY used by the edit routines to TEMPORARILY get a copy.  The
 //  data is NEVER stored anywhere.  I say this because "_mUniqueID" MUST have another unique number if it is EVER

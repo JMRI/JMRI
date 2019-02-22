@@ -38,27 +38,7 @@ public class TrafficLocking {
         private final NBHSensor _mOptionalSensor2;
         private final boolean _mRuleEnabled;
         
-        private TrafficLockingRecord() {      // NEVER use this!
-            _mSwitchIndicatorsRoute = null;
-            _mOSSignalDirectionIndicatorsInterfaceInterface1 = null;
-            _mOSSignalDirectionIndicatorsInterfaceInterface2 = null;
-            _mOSSignalDirectionIndicatorsInterfaceInterface3 = null;
-            _mOSSignalDirectionIndicatorsInterfaceInterface4 = null;
-            _mOSSignalDirectionIndicatorsInterfaceInterface5 = null;
-            _mOccupancyExternalSensor1 = null;
-            _mOccupancyExternalSensor2 = null;
-            _mOccupancyExternalSensor3 = null;
-            _mOccupancyExternalSensor4 = null;
-            _mOccupancyExternalSensor5 = null;
-            _mOccupancyExternalSensor6 = null;
-            _mOccupancyExternalSensor7 = null;
-            _mOccupancyExternalSensor8 = null;
-            _mOccupancyExternalSensor9 = null;
-            _mOptionalSensor1 = null;
-            _mOptionalSensor2 = null;
-            _mRuleEnabled = false;
-        }
-        public TrafficLockingRecord( String userIdentifier,
+        public TrafficLockingRecord(String userIdentifier,
                                     String parameter,
                                     NBHSensor switchIndicator1,
                                     NBHSensor switchIndicator2,

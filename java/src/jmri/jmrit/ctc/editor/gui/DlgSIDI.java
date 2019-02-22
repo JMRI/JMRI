@@ -122,7 +122,7 @@ public class DlgSIDI extends javax.swing.JDialog {
         _mSIDI_TableOfLeftToRightTrafficExternalSignalNames.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);    // NOI18N
         _mSIDI_TableOfRightToLeftTrafficExternalSignalNames.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);    // NOI18N
         initOrig(signalsArrayList1, signalsArrayList2);
-        _mAwtWindowProperties.setWindowState((java.awt.Window)this, FORM_PROPERTIES);
+        _mAwtWindowProperties.setWindowState(this, FORM_PROPERTIES);
         this.getRootPane().setDefaultButton(_mSaveAndClose);
 
         enableSignalListComboBox(_mSIDI_TableOfLeftToRightTrafficExternalSignalNames);

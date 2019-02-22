@@ -69,7 +69,7 @@ public class DlgIL extends javax.swing.JDialog {
 //  Where is a list of properties available and their corresponding functions?
         _mIL_TableOfExternalSignalNames.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);    // NOI18N
         initOrig(signalsArrayList);
-        _mAwtWindowProperties.setWindowState((java.awt.Window)this, FORM_PROPERTIES);
+        _mAwtWindowProperties.setWindowState(this, FORM_PROPERTIES);
         this.getRootPane().setDefaultButton(_mSaveAndClose);
 
         enableSignalListComboBox(_mIL_TableOfExternalSignalNames);

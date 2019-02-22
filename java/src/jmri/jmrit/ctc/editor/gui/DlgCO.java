@@ -107,7 +107,7 @@ public class DlgCO extends javax.swing.JDialog {
         _mSwitchIndicator4.setModel(new DefaultComboBoxModel<>(arrayOfSelectableSwitchDirectionIndicators));
         _mSwitchIndicator5.setModel(new DefaultComboBoxModel<>(arrayOfSelectableSwitchDirectionIndicators));
         _mSwitchIndicator6.setModel(new DefaultComboBoxModel<>(arrayOfSelectableSwitchDirectionIndicators));
-        _mAwtWindowProperties.setWindowState((java.awt.Window)this, FORM_PROPERTIES);
+        _mAwtWindowProperties.setWindowState(this, FORM_PROPERTIES);
         enableTopPart(true);
         _mEditBelow.setEnabled(false);
         _mDelete.setEnabled(false);

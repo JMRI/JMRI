@@ -65,7 +65,7 @@ public class ClassCompareContents {
         } else if (obj1Class == Void.class) {       // Voids are ALWAYS void, ergo equal!
             return true;
         } else if (obj1Class == String.class) {
-            return ((String)obj1).equals((String)obj2);
+            return ((String)obj1).equals(obj2);
         }
 //  Must be another class or an enum:
         Field[] obj1Fields = obj1Class.getDeclaredFields();

@@ -25,7 +25,6 @@ public class SignalDirectionLever {
     private NBHSensor _mNormalSensor;
     private NBHSensor _mRightSensor;
     
-    private SignalDirectionLever() {}
     public SignalDirectionLever(String userIdentifier, String leftSensor, String normalSensor, String rightSensor) {
         _mLeftSensor = new NBHSensor("SignalDirectionLever", userIdentifier, "leftSensor", leftSensor, true);           // NOI18N
         _mNormalSensor = new NBHSensor("SignalDirectionLever", userIdentifier, "normalSensor", normalSensor, false);    // NOI18N

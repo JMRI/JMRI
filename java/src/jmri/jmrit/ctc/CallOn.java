@@ -162,7 +162,6 @@ NOTE:
         
         GroupingData foundGroupingData = null;
         
-        foundGroupingData = null;
         int ruleNumber = 0;
         for (GroupingData groupingData : _mGroupingDataArrayList) {
             ruleNumber++;

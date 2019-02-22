@@ -46,7 +46,7 @@ public class DlgTRL extends javax.swing.JDialog {
         _mCTCSerialData = ctcSerialData;
         _mCheckJMRIObject = checkJMRIObject;
         initOrig();
-        _mAwtWindowProperties.setWindowState((java.awt.Window)this, FORM_PROPERTIES);        
+        _mAwtWindowProperties.setWindowState(this, FORM_PROPERTIES);        
         this.getRootPane().setDefaultButton(_mOK);
         updateRuleCounts();
         this.setTitle(Bundle.getMessage("TitleDlgTRL") + " " + codeButtonHandlerData.myShortStringNoComma());   // NOI18N
@@ -125,9 +125,9 @@ public class DlgTRL extends javax.swing.JDialog {
             }
         });
 
-        _mLeftNumberOfRules.setText(Bundle.getMessage("InfoDlgTRLRules"));
+        _mLeftNumberOfRules.setText(Bundle.getMessage("InfoDlgTRLRulesQuestion"));
 
-        _mRightNumberOfRules.setText(Bundle.getMessage("InfoDlgTRLRules"));
+        _mRightNumberOfRules.setText(Bundle.getMessage("InfoDlgTRLRulesQuestion"));
 
         jLabel10.setText(Bundle.getMessage("InfoDlgTRLNote2"));
 

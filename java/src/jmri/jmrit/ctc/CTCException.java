@@ -8,7 +8,6 @@ public class CTCException extends Exception {
     private final String _mUserIdentifier;
     private final String _mParameter;
     private final String _mReason;
-    private CTCException() { _mModule = ""; _mUserIdentifier = ""; _mParameter = ""; _mReason = ""; }  // Shouldn't use it this way!
     public CTCException(String module, String userIdentifier, String parameter, String reason) {
         _mModule = module;
         _mUserIdentifier = userIdentifier;

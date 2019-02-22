@@ -45,7 +45,7 @@ public class DlgFleeting extends javax.swing.JDialog {
         _mFleetingToggleInternalSensor.setText(otherData._mFleetingToggleInternalSensor);
         _mDefaultFleetingEnabled.setSelected(otherData._mDefaultFleetingEnabled);
         initOrig(otherData);
-        _mAwtWindowProperties.setWindowState((java.awt.Window)this, FORM_PROPERTIES);        
+        _mAwtWindowProperties.setWindowState(this, FORM_PROPERTIES);        
         this.getRootPane().setDefaultButton(_mSaveAndClose);
     }
     

@@ -47,7 +47,7 @@ public class DlgSWDL extends javax.swing.JDialog {
         _mCheckJMRIObject = checkJMRIObject;
         _mSWDL_InternalSensor.setText(_mCodeButtonHandlerData._mSWDL_InternalSensor);
         initOrig();
-        _mAwtWindowProperties.setWindowState((java.awt.Window)this, FORM_PROPERTIES);        
+        _mAwtWindowProperties.setWindowState(this, FORM_PROPERTIES);        
         this.getRootPane().setDefaultButton(_mSaveAndClose);
     }
 

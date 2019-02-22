@@ -58,17 +58,17 @@ public class DlgTUL extends javax.swing.JDialog {
     }
     private boolean dataChanged() {
         if (!_mTUL_DispatcherInternalSensorLockToggleOrig.equals(_mTUL_DispatcherInternalSensorLockToggle.getText())) return true;
-        if (!_mTUL_ExternalTurnoutOrig.equals((String) _mTUL_ExternalTurnout.getSelectedItem())) return true;
+        if (!_mTUL_ExternalTurnoutOrig.equals(_mTUL_ExternalTurnout.getSelectedItem())) return true;
         if (_mTUL_ExternalTurnoutFeedbackDifferentOrig != _mTUL_ExternalTurnoutFeedbackDifferent.isSelected()) return true;
         if (!_mTUL_DispatcherInternalSensorUnlockedIndicatorOrig.equals(_mTUL_DispatcherInternalSensorUnlockedIndicator.getText())) return true;
         if (_mTUL_NoDispatcherControlOfSwitchOrig != _mTUL_NoDispatcherControlOfSwitch.isSelected()) return true;
         if (_mTUL_ndcos_WhenLockedSwitchStateIsClosedOrig != _mTUL_ndcos_WhenLockedSwitchStateIsClosed.isSelected()) return true;
         if (_mTUL_LockImplementationOrig != CodeButtonHandlerData.LOCK_IMPLEMENTATION.getLockImplementation(_mTUL_LockImplementation)) return true;
-        if (!_mTUL_AdditionalExternalTurnout1Orig.equals((String) _mTUL_AdditionalExternalTurnout1.getSelectedItem())) return true;
+        if (!_mTUL_AdditionalExternalTurnout1Orig.equals(_mTUL_AdditionalExternalTurnout1.getSelectedItem())) return true;
         if (_mTUL_AdditionalExternalTurnout1FeedbackDifferentOrig != _mTUL_AdditionalExternalTurnout1FeedbackDifferent.isSelected()) return true;
-        if (!_mTUL_AdditionalExternalTurnout2Orig.equals((String) _mTUL_AdditionalExternalTurnout2.getSelectedItem())) return true;
+        if (!_mTUL_AdditionalExternalTurnout2Orig.equals(_mTUL_AdditionalExternalTurnout2.getSelectedItem())) return true;
         if (_mTUL_AdditionalExternalTurnout2FeedbackDifferentOrig != _mTUL_AdditionalExternalTurnout2FeedbackDifferent.isSelected()) return true;
-        if (!_mTUL_AdditionalExternalTurnout3Orig.equals((String) _mTUL_AdditionalExternalTurnout3.getSelectedItem())) return true;
+        if (!_mTUL_AdditionalExternalTurnout3Orig.equals(_mTUL_AdditionalExternalTurnout3.getSelectedItem())) return true;
         if (_mTUL_AdditionalExternalTurnout3FeedbackDifferentOrig != _mTUL_AdditionalExternalTurnout3FeedbackDifferent.isSelected()) return true;
         return false;
     }
@@ -96,7 +96,7 @@ public class DlgTUL extends javax.swing.JDialog {
         CommonSubs.populateJComboBoxWithBeans(_mTUL_AdditionalExternalTurnout3, "Turnout", _mCodeButtonHandlerData._mTUL_AdditionalExternalTurnout3, true);
         _mTUL_AdditionalExternalTurnout3FeedbackDifferent.setSelected(_mCodeButtonHandlerData._mTUL_AdditionalExternalTurnout3FeedbackDifferent);
         initOrig();
-        _mAwtWindowProperties.setWindowState((java.awt.Window)this, FORM_PROPERTIES);        
+        _mAwtWindowProperties.setWindowState(this, FORM_PROPERTIES);        
         this.getRootPane().setDefaultButton(_mSaveAndClose);
     }
     

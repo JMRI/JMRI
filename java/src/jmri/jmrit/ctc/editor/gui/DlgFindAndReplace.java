@@ -39,7 +39,7 @@ public class DlgFindAndReplace extends javax.swing.JDialog {
         _mDefaultTableModel = (DefaultTableModel)_mResults.getModel();  // We know this is the type by default construction!
         _mContains.setSelected(true);
         _mSearchForText.requestFocusInWindow();
-        _mAwtWindowProperties.setWindowState((java.awt.Window)this, FORM_PROPERTIES);  
+        _mAwtWindowProperties.setWindowState(this, FORM_PROPERTIES);  
         TableColumnModel tableColumnModel = _mResults.getColumnModel();
         _mResults.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);    // Otherwise these don't work:
         tableColumnModel.getColumn(0).setPreferredWidth(60);

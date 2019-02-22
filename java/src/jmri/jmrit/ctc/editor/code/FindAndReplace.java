@@ -24,7 +24,6 @@ public class FindAndReplace {
         public final int _mIndexIntoCodeButtonHandlerDataList;  // SUBSCRIPT (not UniqueID) into "codeButtonHandlerDataList"
         public final Field _mField;         // Field within CodeButtonHandlerData where it occurs.
         public final int _mIndexIntoField;  // IndexOf (if search is contains) into field where match starts, else 0 if search is exact.
-        private SearchResults() { _mUserSwitchSignalEtcEntry = null; _mUserFieldName = null; _mUserContent = null; _mUserTableLine = 0; _mIndexIntoCodeButtonHandlerDataList = 0; _mField = null; _mIndexIntoField = 0; } // Should NEVER use!
         public SearchResults (String userSwitchSignalEtcEntry, String userFieldName, String userContent, int userTableLine, int indexIntoCodeButtonHandlerDataList, Field field) { // Used by exact.
             _mUserSwitchSignalEtcEntry = userSwitchSignalEtcEntry;
             _mUserFieldName = userFieldName;

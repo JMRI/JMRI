@@ -10,7 +10,6 @@ import jmri.Sensor;
 public class Fleeting {
     private NBHSensor _mFleetingToggleInternalSensor;
     private boolean _mDefaultFleetingEnabled;
-    private Fleeting () {}
     public Fleeting (String fleetingToggleInternalSensor, boolean defaultFleetingEnabled) {
         _mFleetingToggleInternalSensor = new NBHSensor("Fleeting", "", "fleetingToggleInternalSensor", fleetingToggleInternalSensor, true); // NOI18N
         _mDefaultFleetingEnabled = defaultFleetingEnabled;

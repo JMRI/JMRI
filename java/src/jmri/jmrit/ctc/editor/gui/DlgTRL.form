@@ -144,14 +144,14 @@
     <Component class="javax.swing.JLabel" name="_mLeftNumberOfRules">
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="Bundle.getMessage(&quot;InfoDlgTRLRules&quot;)" type="code"/>
+          <Connection code="Bundle.getMessage(&quot;InfoDlgTRLRulesQuestion&quot;)" type="code"/>
         </Property>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="_mRightNumberOfRules">
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="Bundle.getMessage(&quot;InfoDlgTRLRules&quot;)" type="code"/>
+          <Connection code="Bundle.getMessage(&quot;InfoDlgTRLRulesQuestion&quot;)" type="code"/>
         </Property>
       </Properties>
     </Component>

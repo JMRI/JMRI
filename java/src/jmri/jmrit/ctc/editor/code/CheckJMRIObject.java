@@ -40,7 +40,7 @@ public class CheckJMRIObject {
     public static final String EXTERNAL_BLOCK =  "ExternalBlock";       // NOI18N
     public static final String EXTERNAL_SIGNAL = "ExternalSignal";      // NOI18N
 
-    public static enum OBJECT_TYPE { SENSOR, TURNOUT, SIGNAL, BLOCK };
+    public static enum OBJECT_TYPE { SENSOR, TURNOUT, SIGNAL, BLOCK }
 
     public static class VerifyClassReturnValue {
         public final String  _mFieldContents;                                // The contents
@@ -193,13 +193,17 @@ public class CheckJMRIObject {
         switch(objectType) {
             case SENSOR:
                 if (SENSOR_MANAGER.getSensor(JMRIObjectName) != null) return true;
+                break;
             case TURNOUT:
                 if (TURNOUT_MANAGER.getTurnout(JMRIObjectName) != null) return true;
+                break;
             case SIGNAL:
                 if (SIGNAL_HEAD_MANAGER.getSignalHead(JMRIObjectName) != null) return true; // Try BOTH:
                 if (SIGNAL_MAST_MANAGER.getSignalMast(JMRIObjectName) != null) return true;
+                break;
             case BLOCK:
                 if (BLOCK_MANAGER.getBlock(JMRIObjectName) != null) return true;
+                break;
         }
         return false;   // Either bad objectType or object doesn't exist in JMRI
     }

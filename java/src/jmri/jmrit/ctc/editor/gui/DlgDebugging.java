@@ -41,7 +41,7 @@ public class DlgDebugging extends javax.swing.JDialog {
         _mCTCSystemReloadInternalSensor.setText(otherData._mCTCDebugSystemReloadInternalSensor);
         _mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor.setText(otherData._mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor);
         initOrig(otherData);
-        _mAwtWindowProperties.setWindowState((java.awt.Window)this, FORM_PROPERTIES);        
+        _mAwtWindowProperties.setWindowState(this, FORM_PROPERTIES);        
         this.getRootPane().setDefaultButton(_mSaveAndClose);
     }
     
