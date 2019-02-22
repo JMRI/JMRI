@@ -47,9 +47,11 @@ public class NBHSignalHead extends NBHAbstractSignalCommon implements SignalHead
         _mNamedBeanHandleSignalHead = null;
     }
     public boolean valid() { return _mNamedBeanHandleSignalHead != null; }  // For those that want to know the internal state.
+    @Override
     public Object getBean() { return _mNamedBeanHandleSignalHead.getBean(); }
     public void setCTCHeld(boolean held) { setHeld(held); }
 //  JMRI BUG: If "Held" attribute is True, then appearance is NOT the constant HELD!            
+    @Override
     public boolean isDanger() {
         if (getHeld()) return true;
         return SignalHead.RED == getAppearance();
