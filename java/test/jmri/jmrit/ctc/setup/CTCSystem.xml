@@ -2,6 +2,16 @@
 <java version="1.8.0_172" class="java.beans.XMLDecoder">
  <object class="jmri.jmrit.ctc.ctcserialdata.OtherData" id="OtherData0">
   <void class="jmri.jmrit.ctc.ctcserialdata.OtherData" method="getField">
+   <string>_mSignalSystemType</string>
+   <void method="set">
+    <object idref="OtherData0"/>
+    <object class="java.lang.Enum" method="valueOf">
+     <class>jmri.jmrit.ctc.ctcserialdata.OtherData$SIGNAL_SYSTEM_TYPE</class>
+     <string>SIGNALHEAD</string>
+    </object>
+   </void>
+  </void>
+  <void class="jmri.jmrit.ctc.ctcserialdata.OtherData" method="getField">
    <string>_mNextUniqueNumber</string>
    <void method="set">
     <object idref="OtherData0"/>
@@ -111,20 +121,6 @@
      </void>
     </void>
     <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
-     <string>_mSIDI_CodingTimeInMilliseconds</string>
-     <void method="set">
-      <object idref="CodeButtonHandlerData0"/>
-      <int>2000</int>
-     </void>
-    </void>
-    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
-     <string>_mSIDI_TimeLockingTimeInMilliseconds</string>
-     <void method="set">
-      <object idref="CodeButtonHandlerData0"/>
-      <int>3000</int>
-     </void>
-    </void>
-    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
      <string>_mSIDI_LeftRightTrafficSignalsCSVList</string>
      <void method="set">
       <object idref="CodeButtonHandlerData0"/>
@@ -195,13 +191,6 @@
      </void>
     </void>
     <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
-     <string>_mSWDI_CodingTimeInMilliseconds</string>
-     <void method="set">
-      <object idref="CodeButtonHandlerData0"/>
-      <int>2000</int>
-     </void>
-    </void>
-    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
      <string>_mSWDI_GUITurnoutLeftHand</string>
      <void method="set">
       <object idref="CodeButtonHandlerData0"/>
@@ -261,7 +250,7 @@
      <string>_mTRL_RightTrafficLockingRulesSSVList</string>
      <void method="set">
       <object idref="CodeButtonHandlerData0"/>
-      <string></string>
+      <string>Rule #:1,Enabled,,,1/2,Normal,,Normal,,Normal,,Normal,,Normal,O-Left,B-Main,,,,,,,,,,,0,,,,; Rule #:2,Enabled,,,1/2,Reverse,,Normal,,Normal,,Normal,,Normal,O-Left,B-Side,,,,,,,,,,,0,,,,</string>
      </void>
     </void>
     <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
@@ -665,6 +654,13 @@
      </void>
     </void>
     <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
+     <string>_mFileVersion</string>
+     <void method="set">
+      <object idref="CodeButtonHandlerData2"/>
+      <int>5</int>
+     </void>
+    </void>
+    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
      <string>_mCodeButtonInternalSensor</string>
      <void method="set">
       <object idref="CodeButtonHandlerData2"/>
@@ -851,13 +847,6 @@
      <void method="set">
       <object idref="CodeButtonHandlerData2"/>
       <string></string>
-     </void>
-    </void>
-    <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
-     <string>_mTRL_Enabled</string>
-     <void method="set">
-      <object idref="CodeButtonHandlerData2"/>
-      <boolean>true</boolean>
      </void>
     </void>
     <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">

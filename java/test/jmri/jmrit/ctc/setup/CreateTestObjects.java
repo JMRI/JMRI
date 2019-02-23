@@ -150,6 +150,7 @@ public class CreateTestObjects {
         bb.setLimitSpeed2(limitspeed2);
         bb.setSensor1(sensor1);
         bb.setSensor2(sensor2);
+        bb.start();
     }
 
     public static void createTestFiles() {

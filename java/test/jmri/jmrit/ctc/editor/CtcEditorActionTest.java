@@ -36,7 +36,7 @@ public class CtcEditorActionTest {
         menuTests();
         frameButtonTests();
         editTests();
-new EventTool().waitNoEvent(5000);
+// new EventTool().waitNoEvent(5000);
     }
 
     void menuTests() {
@@ -237,7 +237,7 @@ new EventTool().waitNoEvent(5000);
             // constructor for jdo will wait until the dialog is visible
             JDialogOperator jdo = new JDialogOperator(dialogTitle);
             JButtonOperator jbo = new JButtonOperator(jdo, buttonText);
-new EventTool().waitNoEvent(2000);
+// new EventTool().waitNoEvent(2000);
             jbo.pushNoBlock();
         });
         t.setName(dialogTitle + " Close Dialog Thread: " + threadName);  // NOI18N
