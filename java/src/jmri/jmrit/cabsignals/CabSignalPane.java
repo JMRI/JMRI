@@ -36,6 +36,7 @@ import javax.swing.table.TableRowSorter;
 import javax.swing.UIManager;
 import jmri.LocoAddress;
 import jmri.CabSignalListListener;
+import jmri.CabSignalManager;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.DccLocoAddressSelector;
 import jmri.jmrit.roster.swing.GlobalRosterEntryComboBox;
@@ -55,6 +56,8 @@ import org.slf4j.LoggerFactory;
  */
 public class CabSignalPane extends jmri.util.swing.JmriPanel implements CabSignalListListener {
 
+    private CabSignalManager cabSignalManager;
+
     private JScrollPane scrolltablefeedback;
     private JSplitPane split;
     private double _splitratio = 0.95;
@@ -65,7 +68,6 @@ public class CabSignalPane extends jmri.util.swing.JmriPanel implements CabSigna
     protected final XTableColumnModel tcm = new XTableColumnModel();
 
     private JMenu cabsigMenu = new JMenu(Bundle.getMessage("SigDataOpt"));
-    private JMenu cabsigSpeedMenu = new JMenu(Bundle.getMessage("Speed"));
     private JMenu colMenu = new JMenu((Bundle.getMessage("SessCol")));
     private JMenu cabSigColMenu = new JMenu(Bundle.getMessage("SigDataCol"));
     
@@ -313,6 +315,12 @@ public class CabSignalPane extends jmri.util.swing.JmriPanel implements CabSigna
     
     public CabSignalPane() {
         super();
+        cabSignalManager = jmri.InstanceManager.getNullableDefault(CabSignalManager.class);
+        if(cabSignalManager == null){
+           jmri.InstanceManager.store(new jmri.managers.DefaultCabSignalManager(),CabSignalManager.class);
+           cabSignalManager = jmri.InstanceManager.getNullableDefault(CabSignalManager.class); 
+        }
+        cabSignalManager.addCabSignalListListener(this);
     }
     
     /**
@@ -332,17 +340,7 @@ public class CabSignalPane extends jmri.util.swing.JmriPanel implements CabSigna
             }
         });
         
-        cabsigMenu.add(cabsigSpeedMenu);
         cabsigMenu.add(autorevblock);
-        
-        ButtonGroup speedgroup = new ButtonGroup();
-        JRadioButtonMenuItem speeddisabled = new JRadioButtonMenuItem(Bundle.getMessage("HighlightDisabled"));
-        speeddisabled.setSelected(true);
-        speedgroup.add(speeddisabled);
-        cabsigSpeedMenu.add(speeddisabled);
-
-        // cancmdMenu.setEnabled(false);        
-        // menuList.add(cancmdMenu);
         
         menuList.add(colMenu);
         menuList.add(cabSigColMenu);
@@ -355,8 +353,7 @@ public class CabSignalPane extends jmri.util.swing.JmriPanel implements CabSigna
             return;
         }
         LocoAddress locoaddress = locoSelector.getAddress();
-        slotModel.addRow(locoaddress); 
-        slotModel.fireTableDataChanged();
+        cabSignalManager.getCabSignal(locoaddress);
     }
 
     public void locoSelected() {
@@ -375,8 +372,10 @@ public class CabSignalPane extends jmri.util.swing.JmriPanel implements CabSigna
     
     @Override
     public void dispose() {
+        cabSignalManager.removeCabSignalListListener(this);
         slotTable = null;
         slotModel.dispose();
+        cabSignalManager = null;
         super.dispose();
     }
 

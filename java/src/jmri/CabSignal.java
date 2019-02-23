@@ -35,20 +35,6 @@ public interface CabSignal {
     public LocoAddress getCabSignalAddress();
 
     /**
-     * Direction the locomotive is running.
-     *
-     * @param isForward true for Forward false for Reverse.
-     */
-    public void setLocoDirection(boolean isForward);
-
-    /**
-     * Direction the locomotive is running.
-     *
-     * @return true for Forward false for Reverse.
-     */
-    public boolean getLocoDirection();
-
-    /**
      * Set the Block of the locomotive
      *
      * @param position is a Block the locomotive is in.

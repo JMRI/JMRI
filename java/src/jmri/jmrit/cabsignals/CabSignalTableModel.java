@@ -51,33 +51,29 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
     protected int _contype=0; //  pane console message type
     protected String _context=null; // pane console text
 
-    private int pFromDir[] = new int[50];
-   
     private CabSignalManager cabSignalManager;
  
     private ArrayList<PropertyChangeListener> mBlockListeners; // ??
     private ArrayList<Block> mBlockList; // master block list
     public Boolean autoreverseblockdir = true;
     public Boolean masterSendCabData = true;
-    protected int cabspeedtype=0; // initially set to disabled
     static private int MAX_LINES = 5000;
     TextAreaFIFO tablefeedback;
     
     // column order needs to match list in column tooltips
 
     static public final int LOCO_ID_COLUMN = 0;
-    static public final int LOCO_DIRECTION_COLUMN = 1;
-    static public final int CURRENT_BLOCK = 2;
-    static public final int BLOCK_DIR = 3;
-    static public final int REVERSE_BLOCK_DIR_BUTTON_COLUMN = 4;
-    static public final int NEXT_BLOCK = 5;
-    static public final int NEXT_SIGNAL = 6;
-    static public final int NEXT_ASPECT = 7;
-    static public final int SEND_CABSIG_COLUMN = 8;
+    static public final int CURRENT_BLOCK = 1;
+    static public final int BLOCK_DIR = 2;
+    static public final int REVERSE_BLOCK_DIR_BUTTON_COLUMN = 3;
+    static public final int NEXT_BLOCK = 4;
+    static public final int NEXT_SIGNAL = 5;
+    static public final int NEXT_ASPECT = 6;
+    static public final int SEND_CABSIG_COLUMN = 7;
     
-    static public final int MAX_COLUMN = 9;
+    static public final int MAX_COLUMN = 8;
     
-    static protected final int[] startupColumns = {0,1,2,3,4,5,6,7,8};
+    static protected final int[] startupColumns = {0,1,2,3,4,5,6,7};
     
     CabSignalTableModel(int row, int column) {
         cabSignalManager = InstanceManager.getNullableDefault(CabSignalManager.class); 
@@ -98,7 +94,6 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
     // order needs to match column list top of dtabledatamodel
     static protected final String[] columnToolTips = {
         null, // loco id
-        ("If Loco ID heard by long address format"),
         ("Block Username"),
         ("North / South / East / West, 8 point block direction"),
         null, // block button
@@ -133,8 +128,6 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
         switch (col) {
             case LOCO_ID_COLUMN:
                 return ("Loco ID");
-            case LOCO_DIRECTION_COLUMN:
-                return ("Direction");
             case CURRENT_BLOCK:
                 return("Block");
             case BLOCK_DIR:
@@ -163,8 +156,6 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
         switch (col) {
             case LOCO_ID_COLUMN:
                 return new JTextField(4).getPreferredSize().width;
-            case LOCO_DIRECTION_COLUMN:
-                return new JTextField(8).getPreferredSize().width;
             case CURRENT_BLOCK:
                 return new JTextField(8).getPreferredSize().width;
             case BLOCK_DIR:
@@ -194,8 +185,6 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
         switch (col) {
             case LOCO_ID_COLUMN:
                 return LocoAddress.class;
-            case LOCO_DIRECTION_COLUMN:
-                return String.class;
             case CURRENT_BLOCK:
                 return String.class;
             case BLOCK_DIR:
@@ -264,18 +253,16 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
         Block b;
         switch (col) {
             case LOCO_ID_COLUMN:
+                cabSignalManager.getCabSignalArray()[row].addPropertyChangeListener( (PropertyChangeEvent e) -> {
+                   if(e.getSource() instanceof jmri.CabSignal){
+                      fireTableDataChanged();
+                   }
+                });
                 return cabSignalManager.getCabSignalArray()[row].getCabSignalAddress();
-            case LOCO_DIRECTION_COLUMN: 
-                boolean dir = cabSignalManager.getCabSignalArray()[row].getLocoDirection();
-                if ( dir ) {
-                    return(Bundle.getMessage("FWD"));
-                } else {
-                    return(Bundle.getMessage("REV"));
-                }
             case CURRENT_BLOCK:
                 b = cabSignalManager.getCabSignalArray()[row].getBlock();
                 if ( b != null){
-                    return b.getUserName();
+                    return b.getDisplayName();
                 } else {
                     return "";
                 }
@@ -329,26 +316,6 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
     @Override
     public void setValueAt(Object value, int row, int col) {
         if (col == LOCO_ID_COLUMN) {
-            /*locoidarr.set(row,(LocoAddress)  value);
-            Runnable r = new Notify(row, this);
-            javax.swing.SwingUtilities.invokeLater(r);*/
-        }
-        else if (col == LOCO_DIRECTION_COLUMN) {
-            /*String speedflags = String.format("%8s", 
-            Integer.toBinaryString((Integer) value & 0xFF)).replace(' ', '0');
-            int decimal = Integer.parseInt((speedflags.substring(1)), 2);
-            boolean olddir = cabSignalManager.getCabSignalArray()[row].getLocoDirection();
-            boolean newdir = false //Integer.parseInt(String.valueOf(speedflags.charAt(0)));
-            if ( decimal == 1 ) {
-                newdir=-1;
-            }
-            cabSignalManager.getCabSignalArray()[row].setDirection(newdir);
-            if ( autoreverseblockdir && (olddir != newdir)) {
-                // log.debug("loco direction changed");
-                chngblockdir(row);
-            }
-            Runnable r = new Notify(row, this); 
-            javax.swing.SwingUtilities.invokeLater(r);*/
         }
         else if (col == CURRENT_BLOCK) {          
         }
@@ -362,8 +329,6 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
             BlockManager bmgr = jmri.InstanceManager.getDefault(jmri.BlockManager.class);
             Block b = bmgr.getBlock((String)value);
             cabSignalManager.getCabSignalArray()[row].setBlock(b);
-            Runnable r = new Notify(row, this); 
-            javax.swing.SwingUtilities.invokeLater(r);
         }
         else if (col == NEXT_SIGNAL) {          
         }
@@ -378,14 +343,9 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
             else {
                 cancelcabsig( row);
             }
-            
         }
     }
 
-    synchronized void addRow(LocoAddress locoid){
-        cabSignalManager.getCabSignal(locoid);
-    }
-    
     // takes a string returns row if matches locoid or alt td
     private int getrowfromstringval(String blockval){
         for (int i = 0; i < getRowCount(); i++) {
@@ -411,8 +371,6 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
     private void resetblock(int row) {
         cabSignalManager.getCabSignalArray()[row].setBlock(findblockforrow(row));
         updateblocksforrow(row);
-       // Runnable r = new Notify(row, this);
-       // javax.swing.SwingUtilities.invokeLater(r);        
     }
     
     // Adds changelistener to blocks
@@ -470,10 +428,6 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
     }
     
     private void updateblocksforrow(int row){
-        Runnable r;
-        r = new Notify(row, this);
-        javax.swing.SwingUtilities.invokeLater(r);
-
         Block b = cabSignalManager.getCabSignalArray()[row].getBlock();
         Block nB = cabSignalManager.getCabSignalArray()[row].getNextBlock();
         SignalMast sm = cabSignalManager.getCabSignalArray()[row].getNextMast();
@@ -652,23 +606,6 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
         }
     }
     
-    static class Notify implements Runnable {
-        public int _row;
-        javax.swing.table.AbstractTableModel _model;
-        public Notify(int row, javax.swing.table.AbstractTableModel model) {
-            _row = row;
-            _model = model;
-        }
-
-        @Override
-        public void run() {
-              _model.fireTableDataChanged();
-        }
-    }
-
-    /**
-     * disconnect from the CBUS
-     */
     public void dispose() {
     }
 

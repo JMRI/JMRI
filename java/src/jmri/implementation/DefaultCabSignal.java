@@ -2,6 +2,7 @@ package jmri.implementation;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.List;
 import jmri.Block;
 import jmri.BlockManager;
@@ -11,6 +12,8 @@ import jmri.LocoAddress;
 import jmri.SignalMast;
 import jmri.Path;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Default implementation of a Cab Signal Object, describing the state of the 
@@ -20,14 +23,13 @@ import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
  * @author Steve Young Copyright (C) 2018
  * @author Paul Bender Copyright (C) 2019
  */
-public class DefaultCabSignal implements CabSignal {
+public class DefaultCabSignal implements CabSignal, PropertyChangeListener {
 
-    private LocoAddress _address;
-    private boolean _direction;
-    private Block _currentBlock;
-    private Block _nextBlock;
-    private SignalMast _nextMast;
-    private boolean _cabSignalActive;
+    private LocoAddress _address = null;
+    private Block _currentBlock = null;
+    private Block _nextBlock = null;
+    private SignalMast _nextMast = null;
+    private boolean _cabSignalActive = true;
     private PropertyChangeListener _cconSignalMastListener = null;
 
     public DefaultCabSignal(LocoAddress address){
@@ -58,30 +60,27 @@ public class DefaultCabSignal implements CabSignal {
     }
 
     /**
-     * Direction the locomotive is running.
-     *
-     * @param isForward true for Forward false for Reverse.
-     */
-    public void setLocoDirection(boolean isForward){
-          _direction = isForward;
-    }
-
-    /**
-     * Direction the locomotive is running.
-     *
-     * @return true for Forward false for Reverse.
-     */
-    public boolean getLocoDirection(){
-          return _direction;
-    }
-
-    /**
      * Set the Block of the locomotive
      *
      * @param position is a Block the locomotive is in.
      */
-    public void setBlock(Block position){
-         _currentBlock = position;
+    synchronized public void setBlock(Block position){
+        Block oldCurrentBlock = _currentBlock;
+        if(_currentBlock!=null){
+           _currentBlock.removePropertyChangeListener(this);
+        }
+        _currentBlock = position;
+        if(_currentBlock!=null) {
+           _currentBlock.addPropertyChangeListener(this);
+           if(!_currentBlock.equals(oldCurrentBlock)) {
+              firePropertyChange("CurrentBlock",_currentBlock,oldCurrentBlock);
+           }
+       } else {
+           // currentblock is null, notify if old block was not.
+           if(oldCurrentBlock!=null){
+              firePropertyChange("CurrentBlock",_currentBlock,oldCurrentBlock);
+           }
+       }
     }
 
     /**
@@ -101,10 +100,23 @@ public class DefaultCabSignal implements CabSignal {
      * @return The next Block position
      */
     public Block getNextBlock(){
+        Block oldNextBlock = _nextBlock;
         if(getBlock()==null){
-           return null; // no current block, so can't have a next block.
+           _nextBlock = null; // no current block, so can't have a next block.
+        } else {
+          _nextBlock = nextBlockOnPath(getBlock(),getBlock().getDirection());
         }
-        _nextBlock = nextBlockOnPath(getBlock(),getBlock().getDirection());
+    
+        if(_nextBlock!=null) {
+            if(!_nextBlock.equals(oldNextBlock)) {
+               firePropertyChange("NextBlock",_nextBlock,oldNextBlock);
+            }
+        } else {
+            // currentNextBlock is null, notify if old next block was not.
+            if(oldNextBlock!=null){
+               firePropertyChange("NextBlock",_nextBlock,oldNextBlock);
+            }
+        }
         return _nextBlock;
     }
 
@@ -150,30 +162,41 @@ public class DefaultCabSignal implements CabSignal {
      * @return The next SignalMast position
      */
     public SignalMast getNextMast(){
+        SignalMast oldNextMast = _nextMast;
         if (_nextMast != null) {
             _nextMast.removePropertyChangeListener(_cconSignalMastListener);
         }
         _nextMast=null;
-        if(getBlock()==null){
-           return null; // no current block, so can't have a next signal.
-        }
-        LayoutBlockManager lbm = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class);
+        if(getBlock()!=null){
+           LayoutBlockManager lbm = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class);
         
-        Block b = getBlock();
-        Block nB = getNextBlock();
-        while(_nextMast == null && nB !=null ) {
-           _nextMast = lbm.getFacingSignalMast(b, nB);
-           b = nB;
-           nB = nextBlockOnPath(b,b.getDirection()); 
+           Block b = getBlock();
+           Block nB = getNextBlock();
+           while(_nextMast == null && nB !=null ) {
+              _nextMast = lbm.getFacingSignalMast(b, nB);
+              b = nB;
+              nB = nextBlockOnPath(b,b.getDirection()); 
+           }
+           if ( _nextMast == null) {
+              _nextMast = lbm.getSignalMastAtEndBumper(getBlock(),null);
+           }
+           if ( _nextMast != null) {
+              // add signal changelistener
+              _nextMast.addPropertyChangeListener(_cconSignalMastListener = (PropertyChangeEvent e) -> {
+                 // aspect changed?, need to notify
+                 firePropertyChange("MastChanged",e.getNewValue(),e.getOldValue());
+              });
+           }
         }
-        if ( _nextMast == null) {
-           _nextMast = lbm.getSignalMastAtEndBumper(getBlock(),null);
-        }
-        if ( _nextMast != null) {
-           // add signal changelistener
-           _nextMast.addPropertyChangeListener(_cconSignalMastListener = (PropertyChangeEvent e) -> {
-              //updateblocksforrow(row);  // aspect changed?, need to notify
-            });
+        if(_nextMast!=null) {
+            if(!_nextMast.equals(oldNextMast)) {
+               firePropertyChange("NextMast",_nextMast,oldNextMast);
+            }
+        } else {
+            // currentNextMast is null, notify if old next mast was not.
+            if(oldNextMast!=null){
+               firePropertyChange("NextMast",_nextMast,oldNextMast);
+            }
         }
         return _nextMast;
     }
@@ -196,12 +219,16 @@ public class DefaultCabSignal implements CabSignal {
         _cabSignalActive = active;
     }
 
+    PropertyChangeSupport pcs = new PropertyChangeSupport(this);
+
     /**
      * Add a listener for consist events
      *
      * @param listener is a PropertyChangeListener object
      */
-    public void addPropertyChangeListener(java.beans.PropertyChangeListener listener){
+    @Override
+    public synchronized void addPropertyChangeListener(PropertyChangeListener l) {
+        pcs.addPropertyChangeListener(l);
     }
 
     /**
@@ -209,7 +236,37 @@ public class DefaultCabSignal implements CabSignal {
      *
      * @param listener is a PropertyChangeListener object
      */
-    public void removePropertyChangeListener(java.beans.PropertyChangeListener listener){
+    @Override
+    public synchronized void removePropertyChangeListener(PropertyChangeListener l) {
+        pcs.removePropertyChangeListener(l);
     }
+
+    protected void firePropertyChange(String p, Object old, Object n) {
+        log.error("sending property {} new value {} old value {}",p,old,n);
+        pcs.firePropertyChange(p, old, n);
+    }
+
+    //PropertyChangeListener interface
+    @Override
+    public void propertyChange(PropertyChangeEvent event){
+       if(event.getSource() instanceof Block) {
+          if (event.getPropertyName().equals("value")){
+             // check if block changed
+           }
+
+           // block value is changed before direction is set
+           if ((event.getPropertyName().equals("state")) || (event.getPropertyName().equals("direction"))) {
+              // update internal state to cascade changes.
+              getNextBlock();
+              getNextMast();
+           }
+       } else if(event.getSource() instanceof SignalMast) {
+           // update internal state to cascade changes.
+           getNextMast();
+       }
+    }
+
+    private final static Logger log = LoggerFactory.getLogger(DefaultCabSignal.class);
+
 
 }

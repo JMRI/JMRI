@@ -1,5 +1,6 @@
 package jmri.managers;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
 import jmri.CabSignal;
@@ -28,10 +29,12 @@ import jmri.implementation.DefaultCabSignal;
 abstract public class AbstractCabSignalManager implements CabSignalManager {
 
     protected HashMap<LocoAddress,CabSignal> signalList;
+    protected ArrayList<CabSignalListListener> listListeners;
 
 
     public AbstractCabSignalManager(){
          signalList = new HashMap<LocoAddress,CabSignal>();
+         listListeners = new ArrayList<CabSignalListListener>();
     }
 
     /**
@@ -85,6 +88,9 @@ abstract public class AbstractCabSignalManager implements CabSignalManager {
      * @param listener a CabSignal List Listener object.
      */
     public void addCabSignalListListener(CabSignalListListener listener){
+       if(!listListeners.contains(listener)){
+          listListeners.add(listener);
+       }
     }
 
     /**
@@ -93,6 +99,9 @@ abstract public class AbstractCabSignalManager implements CabSignalManager {
      * @param listener a CabSignal List Listener object.
      */
     public void removeCabSignalListListener(CabSignalListListener listener){
+       if(listListeners.contains(listener)){
+          listListeners.remove(listener);
+       }
     }
 
     /**
@@ -100,6 +109,9 @@ abstract public class AbstractCabSignalManager implements CabSignalManager {
      * has changed.
      */
     public void notifyCabSignalListChanged(){
+       for(CabSignalListListener l : listListeners){
+           l.notifyCabSignalListChanged();
+       }
     }
 
 }
