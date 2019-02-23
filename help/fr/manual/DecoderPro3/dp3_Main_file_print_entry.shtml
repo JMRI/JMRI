@@ -1,7 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Translation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-02-23 -->
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -26,49 +26,40 @@
     <div id="mainContent">
       <a name="Top" id="Top"></a>
 
-      <h1>DecoderPro&reg; Main Window</h1>
+      <h1>DecoderPro&reg; Fen&#234;tre Principale</h1>
 
-      <h2>Print/Preview Roster Entry</h2>
+      <h2>Imprimer/Aper&#231;u Entr&#233;e Inventaire</h2>
 
       <div align="right">
-        <p><a href="dp3_menubar.shtml">Back</a></p>
+        <p><a href="dp3_menubar.shtml">Retour</a></p>
       </div>
       <hr>
 
-      <p>The <strong>Select Items to Print</strong> is opened from
-      the DecoderPro Main Window menubar, File --&gt; Print/Preview
-      Roster--&gt;Entry.</p>
+      <p>La <strong>S&#233;lection des &#201;l&#233;ments &#224; Imprimer</strong> est ouverte &#224; partir de la barre de menus de la fen&#234;tre principale de DecoderPro, Fichier-&gt; Imprimer/Aper&#231;u de l'Inventaire-&gt; Entr&#233;e. </P>
 
-      <p>This dialog allows you to select what features of an
-      individual decoder in Roster you would like to Preview or
-      Print.<br></p>
+       <p>Cette bo&#238;te de dialogue vous permet de s&#233;lectionner les fonctionnalit&#233;s d'un d&#233;codeur individuel de l'Inventaire que vous souhaitez pr&#233;visualiser ou imprimer.<br></p>
 
-      <h3><img src="images/Main_file_03.png" width="251" height=
-      "438" alt="select"></h3>
+       <h3> <img src = "images/Main_file_03.png" width = "251" height = "438" alt = "select"> </h3>
 
-      <p>Cancel button -- Cancels the selections</p>
+       <p>Bouton Annuler - Annule les s&#233;lections </p>
 
-      <p>Okay button -- displays the print dialog for your printer
-      or printer preview window.<br>
-      <img src="images/dp3_print_dialog.png" width="438" height=
-      "334" alt="dialog"></p>
+       <p>Bouton OK - affiche la bo&#238;te de dialogue d'impression de votre imprimante ou la fen&#234;tre d'aper&#231;u de l'imprimante.<br><img rc = "images/dp3_print_dialog.png" width = "438" height = "334" alt = "dialog"> </p>
 
-      <p>Example: <strong>Function List</strong> checkbox checked.
-      You may select any combinaation or all items from the
-      list.</p>
+       <p> Exemple: case &#224; cocher <strong>Liste des fonctions</strong> coch&#233;e.
+       Vous pouvez s&#233;lectionner n'importe quelle combinaison ou tous les &#233;l&#233;ments de la liste. </P>
 
-      <p><img src="images/dp3_rosterEntry_labels.png" width="800"
-      height="704"></p>
+       <p> <img src = "images/dp3_rosterEntry_labels.png" width = "800"
+       height = "704"> </p>
 
-      <p>Example of Print Preview with both Basic and Speed Table
-      selected.</p>
+       <p> Exemple d'aper&#231;u avant impression avec les options de base et de vitesse s&#233;lectionn&#233;es. </p>
+
 
       <p><img src="images/dp3_printPreview.png" width="665" height=
       "744" alt="preview"></p>
       <hr>
 
       <div align="right">
-        <p><a href="dp3_menubar.shtml">Back</a></p>
+        <p><a href="dp3_menubar.shtml">Retour</a></p>
       </div><!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
