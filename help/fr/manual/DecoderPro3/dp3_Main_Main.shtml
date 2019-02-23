@@ -1,7 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Translation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-02-23 -->
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -26,56 +26,57 @@
     <div id="mainContent">
       <a name="Top" id="Top"></a>
 
-      <h1>DecoderPro&reg; Main Window</h1>
+      <h1>DecoderPro&reg; Fen&#234;tre Principale</h1>
 
-      <h2>Main Window Overview</h2>
+      <h2>Aper&#231;u de la Fen&#234;tre Principale</h2>
 
       <div align="right">
-        <p><a href="index.shtml#Main">Back to Index</a></p>
+        <p><a href="index.shtml#Main">Retour &#224; l'Index</a></p>
       </div>
       <hr>
 
-      <p align="left">When you start DecoderPro, the DecoderPro
-      window is displayed. All of the JMRI functions can be
-      accessed via the menu bar on the DecoderPro window.</p>
+      <p align="left">Lorsque vous d&#233;marrez DecoderPro, la fen&#234;tre 
+      DecoderPro s'affiche. Toutes les fonctions JMRI sont accessibles
+       via la barre de menus de la fen&#234;tre DecoderPro..</p>
 
       <p align="center"><img src="images/start_dp_main01.png" alt=
       "main" height="493" width="1107"></p>
 
       <ol>
         <li>
-          <h3 align="left"><a href="dp3_menubar.shtml">Menu
-          Bar</a></h3>
+          <h3 align="left"><a href="dp3_menubar.shtml">Barre
+         de Menu</a></h3>
         </li>
 
         <li>
-          <h3 align="left"><strong><a href="dp3_toobar.shtml">Tool
-          Bar</a></strong></h3>
+          <h3 align="left"><strong><a href="dp3_toobar.shtml">Barre 
+          d'Outil</a></strong></h3>
         </li>
 
         <li>
-          <h3 align="left"><a href="dp3_rosterTable.shtml">Roster
-          Table</a></h3>
+          <h3 align="left"><a href="dp3_rosterTable.shtml">Tableau 
+          d'Inventaire</a></h3>
         </li>
 
         <li>
-          <h3><strong><a href="dp3_decoderInfo.shtml">Decoder
-          Information Area</a></strong></h3>
+          <h3><strong><a href="dp3_decoderInfo.shtml">Zone d'Information 
+          du D&#233;codeur
+          </a></strong></h3>
         </li>
 
-        <li><span style="font-weight: bold;">Status
-        Bar</span><a style="font-weight: bold;" name="status" id=
+        <li><span style="font-weight: bold;">Barre 
+        d'&#201;tat</span><a style="font-weight: bold;" name="status" id=
         "status"></a></li>
       </ol>
 
       <h3><img style="width: 1317px; height: 59px;" alt=
       "status bar" src="images/status_bar.png"><br></h3>
 
-      <p>Displays message, so that you can determine the state of
-      DecoderPro during operation.</p>
+      <p>Affiche un message pour que vous puissiez d&#233;terminer l'&#233;tat de 
+      DecoderPro pendant le fonctionnement.</p>
 
       <div align="right">
-        <p><a href="index.shtml#Main">Back to Index</a></p>
+        <p><a href="index.shtml#Main">Retour &#224; l'Index</a></p>
       </div><!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
