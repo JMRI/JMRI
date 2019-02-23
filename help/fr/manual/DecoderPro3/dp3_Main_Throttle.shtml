@@ -1,7 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Translation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-02-23 -->
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -26,80 +26,75 @@
     <div id="mainContent">
       <a name="Top" id="Top"></a>
 
-      <h1>DecoderPro&reg; Main Menu Bar</h1>
+      <h1>DecoderPro&reg; Barre du Menu Principal</h1>
 
-      <h2>JMRI&reg; Throttle Window</h2>
+      <h2>JMRI&reg; Fen&#234;tre R&#233;gulateur</h2>
 
       <div align="right">
-        <p><a href="dp3_Main_Main.shtml">Back</a></p>
+        <p><a href="dp3_Main_Main.shtml">Retour</a></p>
       </div>
       <hr>
 
-      <p>The JMRI&reg; Throttle may be used on your computer screen
-      to replace the vendor throttle that is furnished with your
-      DCC system. One or several throttles may be in use at one
-      time. The Throttle opens as a floating window that may be
-      positioned anywhere on your desktop. Note the Title Bar
-      contains the locomotive Roster ID information or the
-      Locomotive address.</p>
+      <p> Le R&#233;gulateur JMRI&reg; peut &#234;tre utilis&#233; sur l'&#233;cran de 
+      votre ordinateur pour remplacer celui du fournisseur fourni 
+      avec votre syst&#232;me DCC. Un ou plusieurs r&#233;gulateur peuvent &#234;tre 
+      utilis&#233;s en m&#234;me temps. Le r&#233;gulateur s'ouvre sous la forme d'une 
+      fen&#234;tre flottante pouvant &#234;tre positionn&#233;e n'importe o&#249; sur votre 
+      bureau. Notez que la barre de titre contient les informations 
+      d'identification de l'Inventaire de la locomotive ou l'adresse 
+      de la locomotive.</P>
 
       <p style="text-align: center;"><img style=
       "width: 512px; height: 538px;" alt="Throttle" src=
       "images/Main_Throttle01.png"><br></p>
 
-      <p>(color shading added to show functional areas of throttle
-      panels)</p>
+      <p>(couleur ombr&#233;e ajout&#233;e pour montrer les zones fonctionnelles 
+      des panneaux du r&#233;gulateur) </p>
 
-      <p>The Throttle Window contains <a href=
-      "dp3_Main_Throttle_menubar.shtml"><strong>Menu
-      Bar</strong></a>, <a href=
-      "dp3_Main_Throttle_toolbar.shtml"><strong>Toolbar</strong></a>
-      and three panels which may be enabled or disabled via check
-      box in the View menu. Each panel has a title bar with windows
-      controls to minimize, maximize and exit: :</p>
+      <p> La Fen&#234;tre du R&#233;gulateur contient <a href =
+      "dp3_Main_Throttle_menubar.shtml"><strong>Barre de menus</strong> 
+      </a>, <a href= "dp3_Main_Throttle_toolbar.shtml"> <strong>Barre d'outils</strong> </a>
+       et trois panneaux pouvant &#234;tre activ&#233;s ou d&#233;sactiv&#233; via la case &#224; 
+       cocher dans le menu Affichage. Chaque panneau est dot&#233; d'une barre 
+       de titre avec des contr&#244;les de fen&#234;tres permettant de r&#233;duire, 
+       d'agrandir et de quitter:</p>
 
-      <p style="color: rgb(255, 102, 102); font-weight: bold;">
-      <strong>Warning!!!</strong> Be careful with the left hand
-      (minimize) buttons. In Windows, if the little guy is clicked
-      it will minimize the panel, which means it is no longer
-      visible but the restore button is lost behind the rest of the
-      panels. The way to easily get it back, is to go into the view
-      menu, uncheck it there, then go back again and re-check it.
-      You may also drag the panels out of the way to uncover the
-      Maximize icon for a minimized panel.</p>
+      <p style = "color:rgb(255, 102, 102);font-weight:bold;">
+       <strong>Avertissement!!!</strong> Faites attention avec les 
+       boutons de la main gauche (minimiser). Sous Windows, si on 
+       clique sur le petit bonhomme, cela r&#233;duit le panneau, ce qui 
+       signifie qu'il n'est plus visible mais que le bouton de 
+       restauration est perdu derri&#232;re le reste des panneaux. Pour le 
+       r&#233;cup&#233;rer facilement, vous devez aller dans le menu Affichage, 
+       d&#233;cocher la case, puis revenir en arri&#232;re et rev&#233;rifier. Vous 
+       pouvez &#233;galement faire glisser les panneaux pour d&#233;couvrir 
+       l'ic&#244;ne Agrandir d'un panneau r&#233;duit.</P>
 
-      <p><a href=
-      "dp3_Main_Throttle_addressPanel.shtml"><strong>Address
-      Panel</strong></a> (green shading) facilitates setting the
-      address of the locomotive you wish to control with the
-      throttle.</p>
+      <p><a href =
+      "dp3_Main_Throttle_controlPanel.shtml"><strong>Panneau de Contr&#244;le 
+      de Vitesse</strong></a> (ombrage en bleu) contient les commandes 
+      permettant de mettre sous tension et de contr&#244;ler la vitesse de la 
+      locomotive </p>
 
-      <p><a href=
-      "dp3_Main_Throttle_controlPanel.shtml"><strong>Speed Control
-      Panel</strong></a> (blue shading) contains the controls for
-      applying power to the locomotive that is addressed and
-      controlling speed</p>
+       <p> <a href =
+       "dp3_Main_Throttle_functionPanel.shtml"><strong> Panneau de 
+       Fonctions</strong></a> (ombrage en jaune) contient tous les boutons 
+       de fonction utilis&#233;s pour contr&#244;ler les fonctions des locomotives s&#233;lectionn&#233;es.</p>
 
-      <p><a href=
-      "dp3_Main_Throttle_functionPanel.shtml"><strong>Function
-      Panel</strong></a>(yellow shading) contains all the function
-      buttons used to control the addressed locomotives
-      functions.</p>
-
-      <p class="important">The descriptions shown above are only a
-      small part of what the <strong>Throttle</strong> Window can
-      do. The author(s) of the <strong>Throttle</strong> Window
-      have created an extensive set of Help files to help you
-      customize Throttle Windows to your way of operating. To
-      access Help, just open a New <strong>Throttle</strong>. Then,
-      click on <strong>Help</strong> and select <strong>Window
-      Help</strong> from the dropdown box. There's lots of good
-      stuff in there.</p>
-
+       <p class = "important"> Les descriptions ci-dessus ne repr&#233;sentent 
+       qu'une petite partie de ce que peut faire la Fen&#234;tre<strong> 
+		   R&#233;gulateur</strong>. Les auteurs de la Fen&#234;tre R&#233;gulateur ont 
+		   cr&#233;&#233; un ensemble complet de fichiers d'aide pour vous aider &#224;
+		    personnaliser les fen&#234;tres du R&#233;gulateur en fonction de votre 
+		    mode de fonctionnement. Pour acc&#233;der &#224; l'aide, ouvrez simplement 
+		    un nouveau <strong> R&#233;gulateur</strong>. Cliquez ensuite sur 
+		    <strong>Aide</strong>, puis s&#233;lectionnez <strong>Aide sur 
+		    Fen&#234;tre </strong> dans la liste d&#233;roulante. Il y a beaucoup 
+		    de choses interressantes.</P>
       <div align="right"></div>
       <hr>
 
-      <p><a href="dp3_Main_Main.shtml">Back</a></p>
+      <p><a href="dp3_Main_Main.shtml">Retour</a></p>
     </div><!--#include virtual="/Footer" -->
   </div><!-- closes #mainContent-->
   <!-- closes #mBody-->
