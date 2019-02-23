@@ -242,7 +242,7 @@ public class DefaultCabSignal implements CabSignal, PropertyChangeListener {
     }
 
     protected void firePropertyChange(String p, Object old, Object n) {
-        log.error("sending property {} new value {} old value {}",p,old,n);
+        log.debug("sending property {} new value {} old value {}",p,old,n);
         pcs.firePropertyChange(p, old, n);
     }
 
