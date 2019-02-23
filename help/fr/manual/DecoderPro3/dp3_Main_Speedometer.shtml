@@ -1,7 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Translation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-02-23 -->
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -24,53 +24,52 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>DecoderPro&reg; Main Window</h1>
+      <h1>DecoderPro&reg; Fen&#234;tre Principale</h1>
 
-      <h2>Menu Bar - Speedometer Panel</h2>
+      <h2>Barre de Menu - Panneau Tachym&#232;tre</h2>
 
       <div align="right">
-        <p><a href="dp3_menubar.shtml">Back</a></p>
+        <p><a href="dp3_menubar.shtml">Retour</a></p>
 
-        <p><a href="index.shtml#Main">Back to Index</a></p>
+        <p><a href="index.shtml#Main">Retour &#224; l'Index</a></p>
       </div>
       <hr>
 
       <p><img style="width: 348px; height: 307px;" alt=
       "speedometer" src="images/Main_Speedometer.png"><br></p>
 
-      <p>Three sensors are installed on your layout, sensor 1 and 2
-      for slow speeds, and sensor 1 and 3 used for higher speeds.
-      The time to travel between the sensors is used with the
-      distance to calculate the speed in English or Metric
-      units</p>
+      <p>Trois capteurs sont install&#233;s sur votre r&#233;seau, les capteurs 1 
+      et 2 pour les vitesses lentes et les capteurs 1 et 3 utilis&#233;s pour 
+      les vitesses plus &#233;lev&#233;es. Le temps de parcours entre les capteurs 
+      est utilis&#233; avec la distance pour calculer la vitesse en mesures 
+      anglaises ou en unit&#233;s m&#233;triques </p>
 
-      <p>Enter the sensor number for each of the sensors in the
-      <strong>Sensor</strong> text box. You can set to start or
-      stop on the <strong>entry</strong> or <strong>exit</strong>
-      of the block.</p>
+      <p>Entrez le num&#233;ro du capteur pour chacun des capteurs dans la zone 
+      de texte <strong>Capteur</strong>. Vous pouvez choisir de d&#233;marrer 
+      ou d'arr&#234;ter &#224; l'<strong>entr&#233;e</strong> ou &#224; la <strong>sortie</strong> du canton. </P>
 
-      <p>Enter the <strong>Distance 1 (scale feet):</strong> in
-      text box, which is the distance between sensor 1 and 2.</p>
+      <p>Entrez la <strong>Distance 1 (&#233;chelle en pieds): </strong> dans 
+      la zone de texte, qui correspond &#224; la distance entre les capteurs 1 et 2. </p>
 
-      <p>Enter the <strong>Distance 2 (scale feet):</strong> in
-      text box, which is the distance between sensor 1 and 3.</p>
+      <p>Entrez la <strong>Distance 2 (&#233;chelle en pieds):</strong> dans 
+      la zone de texte, qui correspond &#224; la distance entre les capteurs 1 et 3. </p>
 
-      <p>The <strong>Start</strong> button starts the speedometer.
-      <strong>To metric units</strong> button converts output to
-      metric values.</p>
+      <p> Le bouton <strong>D&#233;m</strong> permet de lancer le 
+      compteur de vitesse. Le bouton <strong>En Syst m&#233;tr</strong> convertit 
+      la sortie en valeurs m&#233;triques. </p>
 
-      <p>The <span style="font-weight: bold;">Save</span> as
-      default -- saves the speedometer data to a file for
-      retrieval.</p>
-
-      <p>The <strong>Timer 1 and 2 Speed(scale MPH):</strong> and
-      <strong>Time (seconds)</strong> is displayed.</p>
+      <p> Le bouton <span style = "font-weight: bold;">Enregistrer</span>par d&#233;faut 
+      - enregistre les donn&#233;es de l'indicateur de vitesse dans un fichier 
+      pour les r&#233;cup&#233;rer. </p>
+      
+      <p>La <strong>vitesse de la minuterie 1 et 2 (&#233;chelle MPH):</strong> 
+      et le <strong>temps (secondes)</strong> sont affich&#233;es. </P>
       <hr>
 
       <div align="right">
-        <p><a href="dp3_menubar.shtml">Back</a></p>
+        <p><a href="dp3_menubar.shtml">Retour</a></p>
 
-        <p><a href="index.shtml#Main">Back to Index</a></p>
+        <p><a href="index.shtml#Main">Retour &#224; l'Index</a></p>
       </div><!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
