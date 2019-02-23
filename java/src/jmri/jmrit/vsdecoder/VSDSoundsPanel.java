@@ -24,7 +24,6 @@ import jmri.util.swing.JmriPanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@SuppressWarnings("serial")
 public class VSDSoundsPanel extends JmriPanel {
 
     String decoder_id;

@@ -43,7 +43,6 @@ import org.slf4j.LoggerFactory;
  * @author Mark Underwood Copyright (C) 2011
  * @author Klaus Killinger Copyright (C) 2018
  */
-@SuppressWarnings("serial")
 public class DieselPane extends EnginePane {
 
     static final int THROTTLE_MIN = 1;

@@ -29,7 +29,6 @@ import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@SuppressWarnings("serial")
 class VSDecoderFrame extends JmriJFrame {
 
     VSDecoderPane decpane;
