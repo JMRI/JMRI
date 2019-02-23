@@ -100,7 +100,7 @@
             </capability>
         </programming>
         <variables>
-            <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/><!-- CV1, 17, 18 -->
+            <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/><!-- CV1, 17, 29 bit 5 -->
             <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/vStartHighMid-accelDecel.xml"/><!-- CV2-6 -->
             <variable item="Decoder Version" CV="7" readOnly="yes" default="39">
                 <decVal/>
@@ -256,10 +256,11 @@
             <!-- CV29 -->
             <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
             <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
-            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv29analog.xml"/>
-            <xi:include href="http://jmri.org/xml/decoders/nmra/cv29RailCom.xml"/>
+            <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
             <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>
-            <xi:include href="http://jmri.org/xml/decoders/nmra/cv29address.xml"/>
+            <!--<xi:include href="http://jmri.org/xml/decoders/nmra/cv29address.xml"/> already declared as part of nmra/shortAndLongAddress.xml incl-->
+            <xi:include href="http://jmri.org/xml/decoders/nmra/cv29RailCom.xml"/>
+
             <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv30error.xml"/>
             <!-- CVs 31-32 Banks are on cv257.512extendedmap include -->
             <!-- CVs 33-46 function mapping -->
@@ -541,7 +542,6 @@
             <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv124.129coupling.xml"/>
             <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv130.134smoke.xml"/>
             <!-- SmartSound 4.1 variables, CVs 109 - 111 are on Lights tab -->
-            <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/soundVars7outputs.xml"/>
             <!--Rangiertango-->
             <variable item="Rangiertango Step" CV="135" default="0">
                 <decVal/>

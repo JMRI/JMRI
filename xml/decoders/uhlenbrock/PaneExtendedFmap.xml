@@ -32,9 +32,9 @@
             <display item="Bank switch 1"/>
             <display item="Bank switch 2"/>
             <label>
-                <text>Extended Function Mapping - under development</text>
+                <text>Extended Function Mapping - to be completed</text>
                 <text xml:lang="de">Erweiterte Funktionsmapping - nur teilweise implementiert</text>
-                <text xml:lang="nl">Uitgebreide Functiemapping - in ontwikkeling</text>
+                <text xml:lang="nl">Uitgebreide Functiemapping - nog verder uit te breiden</text>
             </label>
             <label>
                 <text>   </text>
@@ -896,17 +896,38 @@
               <value>1</value>
           </qualifier>
           <column>
-              <label><text> </text></label>
-              <display item="Bank2 On1"/>
-              <display item="Bank2 On2"/>
-              <label><text> </text></label>
-          </column>
-          <column><label><text>      </text></label></column>
-          <column>
-              <label><text> </text></label>
-              <display item="Bank2 Off1"/>
-              <display item="Bank2 Off2"/>
-              <label><text> </text></label>
+              <!--start Mapping row 17, demo incomplete-->
+              <row>
+                  <label>
+                      <text>Mapping #17 - Conditions: </text>
+                      <text xml:lang="de">Mapping #17 - Bedingungen: </text>
+                      <text xml:lang="nl">Mapping #17 - Voorwaarden: </text>
+                  </label>
+              </row>
+              <row>
+                  <label><text> </text></label>
+                  <display item="Z17 Direction Fw" format="checkbox"/>
+                  <display item="Z17 Moving Yes" format="checkbox"/>
+                  <label><text> </text></label>
+              </row>
+          <!--end Mapping row 17-->
+          <separator/>
+          <!--start Mapping row 32, demo incomplete-->
+              <row>
+                  <label>
+                      <text>Mapping #32 - Conditions: </text>
+                      <text xml:lang="de">Mapping #32 - Bedingungen: </text>
+                      <text xml:lang="nl">Mapping #32 - Voorwaarden: </text>
+                  </label>
+              </row>
+              <row>
+                  <label><text> </text></label>
+                  <display item="Z32 Direction Fw" format="checkbox"/>
+                  <display item="Z32 Moving Yes" format="checkbox"/>
+                  <label><text> </text></label>
+              </row>
+              <!--end Mapping row 17-->
+              <separator/>
           </column>
       </group>
 
@@ -1209,6 +1230,11 @@
               <value>5</value>
           </qualifier>
           <column>
+              <label>
+                  <text>Intellimatic - other commands not published by Uhlenbrock</text>
+                  <text xml:lang="de">Intellimatic - nur teilweise dokumentiert von Uhlenbrock</text>
+                  <text xml:lang="nl">Intellimatic - andere commando's niet gedocumenteerd door Uhlenbrock</text>
+              </label>
               <label><text> </text></label>
               <label>
                   <text>Macro 1:</text>

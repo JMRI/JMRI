@@ -745,30 +745,27 @@
 
     <!-- Bank 2 CVs Extended Function Mapping rows 17-32 (Index CV 32 = 1) -->
     <!-- group hides/shows with CV 32 choice = 1 -->
-    <variable item="Bank2 On1" CV="257.1" default="0">
-        <decVal/>
-        <label>ON</label>
-        <label xml:lang="de">EIN</label>
-        <tooltip>Row 1, Condition On 1, value 0-255</tooltip>
+    <variable item="Z17 Direction Fw" CV="257.1" mask="VXXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Forward</label>
+        <label xml:lang="de">Vorwärts</label>
     </variable>
-    <variable item="Bank2 On2" CV="258.1" default="0">
-        <decVal/>
-        <label>ON</label>
-        <label xml:lang="de">EIN</label>
-        <tooltip>Row 1, Condition On 2, value 0-255</tooltip>
+    <variable item="Z17 Moving Yes" CV="257.1" mask="XVXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Moving</label>
+        <label xml:lang="de">Fahrend</label>
     </variable>
+
     <!-- Test with only 1 series TODO enter remaining CVs 259.1 - 512.1 -->
-    <variable item="Bank2 Off1" CV="263.1" default="0">
-        <decVal/>
-        <label>OFF</label>
-        <label xml:lang="de">AUS</label>
-        <tooltip>Row 1, Condition On 1, value 0-255</tooltip>
+    <variable item="Z32 Direction Fw" CV="497.1" mask="VXXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Forward</label>
+        <label xml:lang="de">Vorwärts</label>
     </variable>
-    <variable item="Bank2 Off2" CV="264.1" default="0">
-        <decVal/>
-        <label>OFF</label>
-        <label xml:lang="de">AUS</label>
-        <tooltip>Row 1, Condition On 2, value 0-255</tooltip>
+    <variable item="Z32 Moving Yes" CV="497.1" mask="XVXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Moving</label>
+        <label xml:lang="de">Fahrend</label>
     </variable>
     <!-- End Bank 2 -->
 

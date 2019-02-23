@@ -32,9 +32,9 @@
       <revremark>Initial version as separate file for Uhlenbrock_73xx5.xml.
       Based on uhlenbrock/cv62error</revremark>
     </revision>
-  <!-- Uhlenbrock Decoder Configuration CV 62 - error register -->
+  <!-- Uhlenbrock Decoder Configuration CV 30 - error register -->
   </revhistory>
-  <variable item="Error register" CV="62" default="0">
+  <variable item="Error register" CV="30" default="0">
 	<enumVal>
 	  <enumChoice choice="No error" value="0">
             <choice>No error</choice>
