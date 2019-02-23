@@ -1,7 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Translation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-02-22 -->
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -24,45 +24,44 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>DecoderPro&reg; Main Window</h1>
+      <h1>DecoderPro&reg; Fen&#234;tre Principale</h1>
 
-      <h2>Menu Bar - Consisting Control Window</h2>
+      <h2>Barre de Menu - Fen&#234;tre de Contr&#244;le Couplage</h2>
 
       <div align="right">
-        <p><a href="dp3_menubar.shtml">Back</a></p>
+        <p><a href="dp3_menubar.shtml">Retour</a></p>
 
-        <p><a href="index.shtml#Main">Back to Index</a></p>
+        <p><a href="index.shtml#Main">Retour &#224; l'Index</a></p>
       </div>
       <hr>
 
-      <p align="left">Three types of consists are used on DCC
-      systems:</p>
+      <p align="left">Trois types de Couplage sont utilis&#233;s en DCC:</p>
 
       <ul>
-        <li>A <strong><em>basic</em></strong> or
-        <strong><em>primary address consist</em></strong>, where
-        each locomotive is assigned the same address on the
-        programming track, or on the main with <a href=
-        "Programmer_OpsMode.shtml"><strong>OpsMode
-        Programming</strong></a> (if supported by the command
-        station and decoder).<br>
+        <li>Un <strong><em>basique</em></strong> ou
+        <strong><em>adresse primaire de couplage</em></strong>, o&#249;
+       &#224; chaque locomotive est assign&#233;e la m&#234;me adresse sur la
+        voie de programmation ou sur le r&#233;seau avec <a href=
+        "Programmer_OpsMode.shtml"><strong>Programmation en mode Ops
+        </strong></a> (si support&#233; par la centrale et
+        le d&#233;codeur).<br>
         <br></li>
 
-        <li>A <strong><em>Command Station Assisted
-        Consist</em></strong> (CSAC) which builds the consist using
-        a function of your command station. Command Station
-        Assisted Consists go by the trade names listed below.<br>
+        <li>Un <strong><em>Couplage Assist&#233; par la Centrale</em> </strong> 
+        (CSAC) qui construit le couplage en utilisant une fonction de 
+        votre Centrale. Couplage Assist&#233; par la Centrale utilise les noms 
+        commerciaux &#233;num&#233;r&#233;s ci-dessous. <br>
           <br>
 
           <table align="center" border="0" cellpadding="1"
           cellspacing="1" width="90%">
             <tbody>
               <tr>
-                <td><strong>Manufacturer</strong></td>
+                <td><strong>Fabricant</strong></td>
 
-                <td><strong>Trade Name</strong></td>
+                <td><strong>Nom Commercial</strong></td>
 
-                <td><strong>Usage Notes</strong></td>
+                <td><strong>Notes d'Utilisation</strong></td>
               </tr>
 
               <tr>
@@ -70,8 +69,8 @@
 
                 <td>Universal Consist</td>
 
-                <td>Limited to the number of slots supported by the
-                system. Allows any address</td>
+                <td>Limit&#233; aux nombres de cr&#233;neau support&#233;s par le 
+                syst&#232;me. Autorise toutes les adresses.
               </tr>
 
               <tr>
@@ -79,8 +78,8 @@
 
                 <td>Double Header</td>
 
-                <td>Limited to 2 locomotives. Allows any address
-                but 00 to be used</td>
+                <td>Limit&#233; &#224; 2 locomotives. Permet d'utiliser 
+                n'importe quelle adresse sauf 00</td>
               </tr>
 
               <tr>
@@ -88,8 +87,8 @@
 
                 <td>Old Style Consist</td>
 
-                <td>Limited to 8 locomotives. Allows any address
-                but 00 to be used</td>
+                <td>Limit&#233; &#224; 8 locomotives. Permet d'utiliser 
+                n'importe quelle adresse sauf 00</td>
               </tr>
 
               <tr>
@@ -97,97 +96,96 @@
 
                 <td>Standard Consist</td>
 
-                <td>Limited to 8 locomotives. Allows any address
-                but 00 to be used</td>
+                <td>Limit&#233; &#224; 8 locomotives. Permet d'utiliser 
+                n'importe quelle adresse sauf 00</td>
               </tr>
             </tbody>
           </table><br>
         </li>
 
-        <li>A <em><strong>Decoder Assisted Consist
-        (</strong></em>DAC), often referred to as Advanced Consist.
-        The NMRA<sup>&reg;</sup> has set aside CV19 as a dedicated
-        location for consist addresses. If CV19 contains a value
-        other than 0, the locomotive will respond to speed and
-        direction instructions sent to the address in CV19. If CV19
-        contains zero then it will respond to speed and direction
-        commands sent to the usual short or long decoder address.
-        Since the consist address is a single CV, it is limited to
-        the range of 1 to 127. If you add 128 to the consist
-        address, the locomotive will run backwards (relative to
-        it's normal direction of travel) in the consist. The DAC
-        can be set up in the <a href=
-        "Comp_Consist.shtml"><strong>Consisting</strong></a> tab in
-        the Comprehensive Programmer.</li>
-      </ul>
+        <li>Un <em><strong>Couplage Assist&#233; D&#233;codeur(</strong> </em> 
+        CNA), souvent appel&#233; Couplage Avanc&#233;. Le NMRA<sup>&reg;</sup> 
+        a r&#233;serv&#233; le CV19 comme emplacement d&#233;di&#233; pour les adresses 
+        compl&#232;tes. Si CV19 contient une valeur autre que 0, la 
+        locomotive r&#233;pondra aux instructions de vitesse et de 
+        direction envoy&#233;es &#224; l'adresse indiqu&#233;e dans CV19. Si CV19 
+        contient z&#233;ro, il r&#233;pondra aux commandes de vitesse et de direction e
+        nvoy&#233;es &#224; l'adresse habituelle du d&#233;codeur, courte ou longue. 
+        &#201;tant donn&#233; que l'adresse du couplage est un CV unique, 
+        elle est limit&#233;e &#224; l'intervalle compris entre 1 et 127. 
+        Si vous ajoutez 128 &#224; l'adresse du couplage, la locomotive 
+        roulera en arri&#232;re (par rapport &#224; sa direction normale de 
+        d&#233;placement) dans le couplage. Le DAC peut &#234;tre configur&#233;e 
+        dans l'onglet <a href= "Comp_Consist.shtml"> <strong> Multi-Traction</strong></a> du Programmeur Complet. </Li>
+       </ul>
 
-      <h4>DecoderPro Consisting Tool</h4>
+      <h4>Outil de Couplage DecoderPro </h4>
 
-      <p>The consist tool provides a visual tool for manipulating
-      the <em><strong>Decoder Assisted Consists</strong></em> and ,
-      on some command stations, <em><strong>Command Station
-      Assisted Consists.</strong></em></p>
+       <p>L'outil de couplage fournit un outil visuel permettant 
+       de manipuler le <em> <strong> Couplage Assist&#233; D&#233;codeur</strong> </em> et, 
+       sur certaines centrales, la <em> <strong> Couplage Assist&#233; par la Centrale. </strong> </em>
+       </ul></p>
 
       <p align="center"><img style="width: 691px; height: 282px;"
       alt="consist" src="images/Main_consist_01.png"><br></p>
 
-      <p>The <input name="radio" id="radio" value="radio" checked=
-      "checked" type="radio"> <strong>Advanced Consist</strong> and
-      the <input name="radio2" id="radio2" value="radio2" type=
-      "radio"> <strong>Command Station Consist</strong> allow you
-      to select either consisting mode if supported by your command
-      station. If not supported the options will be grayed out.</p>
+      <p>Le <input name="radio" id="radio" value="radio" checked=
+      "checked" type="radio"> <strong> Couplage Avanc&#233;</strong> et 
+      <input name = "radio2" id = "radio2" value = "radio2" 
+      type = "radio"> <strong> Couplage par la Centrale</strong> 
+      vous permet de s&#233;lectionner l'une des options suivantes: mode 
+      si pris en charge par votre centrale. Si elles ne sont pas prises 
+      en charge, les options seront gris&#233;es. </P>
 
-      <p><strong>Consist</strong> text box: type the consist ID
-      assigned to the locomotives in the consist for
-      <em><strong>Decoder Assisted Consists.</strong></em> For
-      Command Station Consist, this is automatically filled in with
-      the address of the lead locomotive in the consist.</p>
+      Zone de texte<p><strong>Couplage</strong>: saisissez l'ID du coup
+      lage attribu&#233; aux locomotives Couplage pour <em> <strong> Couplage 
+      Assist&#233; par D&#233;codeur.</strong></em> Pour Couplage par la Centrale, 
+      cette zone est automatiquement renseign&#233; avec l'adresse de la locomotive 
+      de t&#234;te du lot. </p>
 
-      <p><strong>New Locomotive</strong> text box : type in a new
-      locomotive address or select from you roster using the
-      drop-down list.</p>
+      Zone de texte <p> <strong> Nouvelle Locomotive</strong>: entrez une 
+      nouvelle adresse pour la locomotive ou s&#233;lectionnez-la dans votre 
+      liste &#224; l'aide de la liste d&#233;roulante. </p>
 
-      <p>The <input name="checkbox" id="checkbox" checked="checked"
-      type="checkbox"> <strong>Direction Normal ?</strong>
-      determines the direction of the locomotive travel as
-      forwarded or reverse when the consist is traveling forward.
-      Will be grayed out until the lead locomotive is selected.</p>
+      <p> La <input name = "checkbox" id="checkbox" checked="checked"
+      type="checkbox"> <strong> Direction normale? </strong> 
+      d&#233;termine la direction du d&#233;placement de la locomotive en sens inverse 
+      ou invers&#233; lorsque le Couplage avance. Sera gris&#233;e jusqu'&#224; ce que la 
+      locomotive de t&#234;te soit s&#233;lectionn&#233;e. </P>
 
-      <p>The <big style="font-weight: bold;">add</big> button adds
-      the locomotive to the consist.</p>
+
+      <p>Le bouton <big style="font-weight: bold;">add</big> ajoute 
+      la locomotive au couplage.</p>
 
       <p style="text-align: center;"><img style=
       "width: 691px; height: 282px;" alt="consist" src=
       "images/Main_consist_02.png"></p>
 
-      <p>The <big style="font-weight: bold;">reset</big> buttton
-      removes alll data for the locomotive.</p>
+      <p>Le bouton <big style = "font-weight: bold;">Reset</big> supprime 
+      toutes les donn&#233;es de la locomotive. </P>
 
-      <p><strong><input name="button3" id="button3" value="DEL"
-      type="button"></strong> removes the consist. The list of the
-      consist will have a <input name="button4" id="button4" value=
-      "DEL" type="button"> for each locomotive, allowing you to
-      remove any locomotive from the consist.</p>
+       <p><strong><input name = "button3" id = "button3" value = "DEL" 
+       type = "button"> </strong> supprime le Couplage. La liste du couplage 
+       aura un <input name = "button4" id = "button4" value = "DEL" 
+       type = "button"> pour chaque locomotive, ce qui vous permettra 
+       de supprimer toute locomotive du couplage. </P>
 
-      <p><input name="button6" id="button6" value="Delelte" type=
-      "button"> deletes the entire consist.</p>
+      <p><input name = "button6" id = "button6" value = "Delelte" 
+      type = "button"> supprime l'int&#233;gralit&#233; du Couplage. </p>
 
-      <p><a href="Main_Throttle.shtml"><input name="button5" id=
-      "button5" value="Throttle" type="button"></a> opens a
-      <strong><a href=
-      "dp3_Main_Throttle.shtml">throttle</a></strong> for the
-      consist. Each time that yoiu select throttle the locomotive
-      will be added to the consist.</p>
+       <p><a href="Main_Throttle.shtml"> <input name = "button5" 
+       id = "button5" value = "Throttle" type = "button"> </a> ouvre un 
+       <strong> <a href = " dp3_Main_Throttle.shtml "> R&#233;gulateur </a> 
+       </strong> pour le Couplage. Chaque fois que vous s&#233;lectionnez le 
+       R&#233;gulateur, la locomotive est ajout&#233;e &#224; la composition.</P>
 
-      <p><input name="button7" id="button7" value="Reverse" type=
-      "button"> reverses the direction of the consist.</p>
-      <hr>
-
+       <p> <input name = "button7" id = "button7" value = "Reverse" 
+       type = "button">> Inverse le sens du Couplage. </p>
+       <h>
       <div align="right">
-        <p><a href="dp3_menubar.shtml">Back</a></p>
+        <p><a href="dp3_menubar.shtml">Retour</a></p>
 
-        <p><a href="index.shtml#Main">Back to Index</a></p>
+        <p><a href="index.shtml#Main">Retour &#224; l'Index</a></p>
       </div><!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
