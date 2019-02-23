@@ -125,7 +125,7 @@ public class ProfileUtils {
      */
     public static boolean copyPrivateContentToCurrentIdentity(@Nonnull Profile profile) throws IOException {
         String uniqueId = "-" + profile.getUniqueId();
-        File newPath = new File(new File(profile.getPath(), Profile.PROFILE), NodeIdentity.storageIdentity());
+        File newPath = new File(new File(profile.getPath(), Profile.PROFILE), NodeIdentity.storageIdentity(profile));
         if (!newPath.exists()) {
             File oldPath = null;
             for (String identity : NodeIdentity.formerIdentities()) {

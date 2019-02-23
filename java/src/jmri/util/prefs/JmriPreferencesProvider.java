@@ -272,7 +272,7 @@ public final class JmriPreferencesProvider {
                 if (Profile.isProfile(this.path)) { // protect against testing a new profile
                     try {
                         Profile profile = new Profile(this.path);
-                        File nodeDir = new File(dir, NodeIdentity.storageIdentity());
+                        File nodeDir = new File(dir, NodeIdentity.storageIdentity(profile));
                         if (!nodeDir.exists()) {
                             if (!ProfileUtils.copyPrivateContentToCurrentIdentity(profile)) {
                                 log.debug("Starting profile with new private preferences.");

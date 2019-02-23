@@ -408,7 +408,7 @@ public class NodeIdentity {
     /**
      * @return the network identity
      */
-    public synchronized String getNetworkIdentity() {
+    private synchronized String getNetworkIdentity() {
         if (this.networkIdentity == null) {
             this.getNetworkIdentity(false);
         }
@@ -418,7 +418,7 @@ public class NodeIdentity {
     /**
      * @return the storage identity
      */
-    public synchronized String getStorageIdentity() {
+    private synchronized String getStorageIdentity() {
         if (this.storageIdentity == null) {
             this.getStorageIdentity(false);
         }
