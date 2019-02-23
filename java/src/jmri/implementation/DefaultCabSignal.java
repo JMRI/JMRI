@@ -224,7 +224,7 @@ public class DefaultCabSignal implements CabSignal, PropertyChangeListener {
     /**
      * Add a listener for consist events
      *
-     * @param listener is a PropertyChangeListener object
+     * @param l is a PropertyChangeListener object
      */
     @Override
     public synchronized void addPropertyChangeListener(PropertyChangeListener l) {
@@ -234,7 +234,7 @@ public class DefaultCabSignal implements CabSignal, PropertyChangeListener {
     /**
      * Remove a listener for cab signal events
      *
-     * @param listener is a PropertyChangeListener object
+     * @param l is a PropertyChangeListener object
      */
     @Override
     public synchronized void removePropertyChangeListener(PropertyChangeListener l) {
