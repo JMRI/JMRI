@@ -294,6 +294,7 @@ public class CabSignalPane extends jmri.util.swing.JmriPanel implements CabSigna
 		public CabSignalButtonMouseListener(JTable table) {
 			this.table = table;
 		}
+        @Override
 		public void mouseClicked(MouseEvent e) {
 			int column = table.getColumnModel().getColumnIndexAtX(e.getX());
 			int row    = e.getY()/table.getRowHeight(); 

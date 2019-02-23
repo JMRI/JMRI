@@ -21,7 +21,6 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Element;
-import javax.swing.Timer;
 import jmri.Block;
 import jmri.BlockManager;
 import jmri.InstanceManager;
@@ -428,9 +427,6 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
     }
     
     private void updateblocksforrow(int row){
-        Block b = cabSignalManager.getCabSignalArray()[row].getBlock();
-        Block nB = cabSignalManager.getCabSignalArray()[row].getNextBlock();
-        SignalMast sm = cabSignalManager.getCabSignalArray()[row].getNextMast();
         calculatecabsig(row);
     }
     
