@@ -12,7 +12,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-    <version author="Egbert Broerse" version="1" lastUpdated="20190222"/>
+    <version author="Egbert Broerse" version="1" lastUpdated="20190224"/>
     <!-- Version 1 - For new 2017-18 decoders. Copied and adapted from Uhlenbrock_76560.xml Uses common parts -->
     <!-- WARNING: output names fully linked to function mapping include file - do not change independently -->
     <decoder>
@@ -90,6 +90,21 @@
                 <output name="Start/brake" label="inertia"/>
                 <size length="30.2" width="16" height="3.8" units="mm"/>
             </model>
+            <model model="PIKO41BR82" numOuts="10" numFns="14" maxMotorCurrent="1.2A" formFactor="N" connector="Next18" productID="PIKO41BR82" comment="Piko SmartDecoder 4.1 Sound Dieselloco Rh2400 Next18 plug and RailCom(R) (Plus)">
+                <output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
+                <output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>
+                <output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="4" label=". A2 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="5" label=". A3 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="6" label=". A4 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="7" label=". A5 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="8" label=". A6 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="9" label=". A7 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="10" label=". A8 ." connection="plug" maxcurrent="400 mA"/>
+                <output name="Shunting" label="mode"/>
+                <output name="Start/brake" label="inertia"/>
+                <size length="30.2" width="16" height="3.8" units="mm"/>
+            </model>
         </family>
         <programming direct="yes" paged="yes" register="yes" ops="yes">
             <capability>
@@ -110,16 +125,16 @@
                 <label xml:lang="de">Decoder Version: </label>
                 <label xml:lang="nl">Versie van decoder: </label>
             </variable>
-            <variable item="Manufacturer" CV="8" readOnly="yes" default="85" exclude="PIKO41RH2400"><!-- Uhlenbrock -->
+            <variable item="Manufacturer" CV="8" readOnly="yes" default="85" exclude="PIKO41RH2400,PIKO41BR82"><!-- Uhlenbrock -->
                 <decVal/>
-                <!--<defaultItem default="162" include="PIKO41RH2400"/> somehow not validating -->
+                <!--<defaultItem default="162" include="PIKO41RH2400,PIKO41BR82"/> somehow not validating -->
                 <label>Manufacturer ID: </label>
                 <label xml:lang="it">ID Costruttore: </label>
                 <label xml:lang="fr">ID constructeur: </label>
                 <label xml:lang="de">Hersteller ID: </label>
                 <label xml:lang="nl">Fabrikant-ID: </label>
             </variable>
-            <variable item="Manufacturer" CV="8" readOnly="yes" default="162" include="PIKO41RH2400"><!-- Piko -->
+            <variable item="Manufacturer" CV="8" readOnly="yes" default="162" include="PIKO41RH2400,PIKO41BR82"><!-- Piko -->
                 <decVal/>
                 <label>Manufacturer ID: </label>
                 <label xml:lang="it">ID Costruttore: </label>
@@ -134,7 +149,7 @@
                 <label xml:lang="de">Selectrix Datenformat</label>
                 <label xml:lang="nl">Selectrix modus</label>
             </variable>
-            <variable item="Mfx Operation" CV="12" default="1" mask="XXVXXXXX" include="PIKO41RH2400">
+            <variable item="Mfx Operation" CV="12" default="1" mask="XXVXXXXX" include="PIKO41RH2400,PIKO41BR82">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>Mfx Mode</label>
                 <label xml:lang="de">Mfx Datenformat</label>
@@ -1280,32 +1295,37 @@
 
             <!--Sound, only basic -->
             <!-- Declaration of the "switch" CV, not for direct use but for checking value -->
-            <variable item="Range I Bank switch" CV="1021" default="0">
+            <variable item="Bank_Switch" CV="1021" default="0">
                 <enumVal>
                     <enumChoice choice="Normal CVs">
                         <choice>Normal CVs</choice>
                         <choice xml:lang="de">Normale CVs</choice>
-                        <choice xml:lang="nl">Normale CVs</choice>
+                        <choice xml:lang="nl">Normale CV's</choice>
                     </enumChoice>
                     <enumChoice choice="Bank A">
-                        <choice>Bank A</choice>
-                        <choice xml:lang="de">Bank A</choice>
+                        <choice>Bank A - Hardware</choice>
+                        <choice xml:lang="de">Bank A - Hardware</choice>
+                        <choice xml:lang="nl">Bank A - Hardware</choice>
                     </enumChoice>
                     <enumChoice choice="Bank B">
-                        <choice>Bank B</choice>
-                        <choice xml:lang="de">Bank B</choice>
+                        <choice>Bank B  - Common</choice>
+                        <choice xml:lang="de">Bank B - Algemein</choice>
+                        <choice xml:lang="nl">Bank B - Gedeeld</choice>
                     </enumChoice>
                     <enumChoice choice="Bank C">
-                        <choice>Bank C</choice>
-                        <choice xml:lang="de">Bank C</choice>
+                        <choice>Bank C - Speed</choice>
+                        <choice xml:lang="de">Bank C - Geschwindigkeit</choice>
+                        <choice xml:lang="nl">Bank C - Snelheid</choice>
                     </enumChoice>
                     <enumChoice choice="Bank D">
-                        <choice>Bank C</choice>
-                        <choice xml:lang="de">Bank C</choice>
+                        <choice>Bank D - Volume</choice>
+                        <choice xml:lang="de">Bank D - Lautstärke</choice>
+                        <choice xml:lang="nl">Bank D - Volume</choice>
                     </enumChoice>
                     <enumChoice choice="Bank E" value="8">
-                        <choice>Bank C</choice>
-                        <choice xml:lang="de">Bank C</choice>
+                        <choice>Bank E - Fn Keys</choice>
+                        <choice xml:lang="de">Bank E - Fn Tasten</choice>
+                        <choice xml:lang="nl">Bank E - Fn-toetsen</choice>
                     </enumChoice>
                 </enumVal>
                 <label>Program</label>
@@ -1315,7 +1335,7 @@
                 <tooltip xml:lang="de">Einstellung der zu programmierenden Bank A - E. Zurückstellen nach Normale CVs wenn fertig!</tooltip>
             </variable>
             <!-- Bank A variables -->
-            <variable item="Range I Manufacturer ID" CV="900.0" readOnly="yes" default="85">
+            <variable item="Bank A Manufacturer ID" CV="900.0" readOnly="yes" default="85">
                 <decVal/>
                 <label>Manufacturer ID: </label>
                 <label xml:lang="it">ID Costruttore: </label>
@@ -1323,7 +1343,7 @@
                 <label xml:lang="de">Hersteller ID: </label>
                 <label xml:lang="nl">Fabrikant-ID: </label>
             </variable>
-            <variable item="Range I Software version" CV="901.0" readOnly="yes">
+            <variable item="Bank A Software version" CV="901.0" readOnly="yes">
                 <decVal/>
                 <label>Manufacturer Version No: </label>
                 <label xml:lang="it">Versione Decoder: </label>
@@ -1331,7 +1351,7 @@
                 <label xml:lang="de">Decoder Version: </label>
                 <label xml:lang="nl">Versie van decoder: </label>
             </variable>
-            <variable item="Range I Reset" CV="905.0" readOnly="no">
+            <variable item="Bank A Reset" CV="905.0" readOnly="no">
                 <decVal/>
                 <label>Reset to factory settings: </label>
                 <label xml:lang="de">Rücksetzen der CVs: </label>
@@ -1340,32 +1360,32 @@
                 <tooltip xml:lang="de">zum Rücksetzen einen Wert ungleich 0 setzen</tooltip>
             </variable>
             <!-- Bank B variables -->
-            <variable item="Range II Hardware ID" CV="900.1" readOnly="yes">
+            <variable item="Bank B Hardware ID" CV="900.1" readOnly="yes">
                 <decVal/>
                 <label>Hardware ID: </label>
                 <label xml:lang="de">Hardwarekennung: </label>
                 <label xml:lang="nl">Hardware-ID: </label>
             </variable>
-            <variable item="Range II Subversion ID" CV="901.1" readOnly="yes">
+            <variable item="Bank B Subversion ID" CV="901.1" readOnly="yes">
                 <decVal/>
                 <label>Sub Version Number: </label>
                 <label xml:lang="de">Unterversionsnummer: </label>
                 <label xml:lang="nl">Sub-versienummer: </label>
             </variable>
             <!-- Bank C variables -->
-            <variable item="Range III Sound Volume" CV="900.2" default="255" tooltip="0-255">
+            <variable item="Bank C Sound Setting 1" CV="900.2" default="255" tooltip="0-255">
                 <decVal/>
                 <label>Master Sound Volume</label>
                 <label xml:lang="de">Gesamtlautstärke</label>
                 <label xml:lang="nl">Geluidsvolume</label>
             </variable>
-            <variable item="Range III Random Min" CV="905.2">
+            <variable item="Bank C Sound Setting 2" CV="905.2">
                 <decVal/>
                 <label>Minimum Random Period</label>
                 <label xml:lang="de">Minimale Zufallszeit</label>
                 <label xml:lang="nl">Min. toevalstijd</label>
             </variable>
-            <variable item="Range III Random Max" CV="906.2">
+            <variable item="Bank C Sound Setting 3" CV="906.2">
                 <decVal/>
                 <label>Maximum Random Period</label>
                 <label xml:lang="de">Maximale Zufallszeit</label>
@@ -1374,15 +1394,376 @@
             <!--TODO CV 907.2-911.2-->
             <!--TODO CV 900.3-939.3-->
             <!--TODO CV 900.4-939.4-->
-            <!--TODO CV 900.8-939.8-->
-        </variables>
+            <!--CVs 900.8-939.8-->
+            <!--<group>-->
+                <!--<qualifier>-->
+                    <!--<variableref>Bank_Switch</variableref>-->
+                    <!--<relation>eq</relation>-->
+                    <!--<value>8</value>-->
+                <!--</qualifier>-->
+                <!--PIKO41BR82 sounds-->
+                <variable item="Bank E F0 activated sound" CV="900.8" default="1" include="PIKO41BR82">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
+                    <label>F0 activated sound</label>
+                    <label xml:lang="de">F0 activiert Sound</label>
+                    <label xml:lang="nl">F0 speelt geluid:</label>
+                </variable>
+                <variable item="Bank E F1 activated sound" CV="901.8" default="2" include="PIKO41BR82">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
+                    <label>F1 activated sound</label>
+                    <label xml:lang="de">F1 activiert Sound</label>
+                    <label xml:lang="nl">F1 speelt geluid:</label>
+                </variable>
+                <variable item="Bank E F2 activated sound" CV="902.8" default="3" include="PIKO41BR82">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
+                    <label>F2 activated sound</label>
+                    <label xml:lang="de">F2 activiert Sound</label>
+                    <label xml:lang="nl">F2 speelt geluid:</label>
+                </variable>
+                <variable item="Bank E F3 activated sound" CV="903.8" default="4" include="PIKO41BR82">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
+                    <label>F3 activated sound</label>
+                    <label xml:lang="de">F3 activiert Sound</label>
+                    <label xml:lang="nl">F3 speelt geluid:</label>
+                </variable>
+                <variable item="Bank E F4 activated sound" CV="904.8" default="5" include="PIKO41BR82">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
+                    <label>F4 activated sound</label>
+                    <label xml:lang="de">F4 activiert Sound</label>
+                    <label xml:lang="nl">F4 speelt geluid:</label>
+                </variable>
+                <variable item="Bank E F5 activated sound" CV="905.8" default="6" include="PIKO41BR82">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
+                    <label>F5 activated sound</label>
+                    <label xml:lang="de">F5 activiert Sound</label>
+                    <label xml:lang="nl">F5 speelt geluid:</label>
+                </variable>
+                <variable item="Bank E F6 activated sound" CV="906.8" default="7" include="PIKO41BR82">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
+                    <label>F6 activated sound</label>
+                    <label xml:lang="de">F6 activiert Sound</label>
+                    <label xml:lang="nl">F6 speelt geluid:</label>
+                </variable>
+                <variable item="Bank E F7 activated sound" CV="907.8" default="8" include="PIKO41BR82">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
+                    <label>F7 activated sound</label>
+                    <label xml:lang="de">F7 activiert Sound</label>
+                    <label xml:lang="nl">F7 speelt geluid:</label>
+                </variable>
+                <variable item="Bank E F8 activated sound" CV="908.8" default="9" include="PIKO41BR82">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
+                    <label>F8 activated sound</label>
+                    <label xml:lang="de">F8 activiert Sound</label>
+                    <label xml:lang="nl">F8 speelt geluid:</label>
+                </variable>
+                <variable item="Bank E F9 activated sound" CV="909.8" default="10" include="PIKO41BR82">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
+                    <label>F9 activated sound</label>
+                    <label xml:lang="de">F9 activiert Sound</label>
+                    <label xml:lang="nl">F9 speelt geluid:</label>
+                </variable>
+                <variable item="Bank E F10 activated sound" CV="910.8" default="11" include="PIKO41BR82">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
+                    <label>F10 activated sound</label>
+                    <label xml:lang="de">F10 activiert Sound</label>
+                    <label xml:lang="nl">F10 speelt geluid:</label>
+                </variable>
+                <variable item="Bank E F11 activated sound" CV="911.8" default="12" include="PIKO41BR82">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
+                    <label>F11 activated sound</label>
+                    <label xml:lang="de">F11 activiert Sound</label>
+                    <label xml:lang="nl">F11 speelt geluid:</label>
+                </variable>
+                <variable item="Bank E F12 activated sound" CV="912.8" default="13" include="PIKO41BR82">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
+                    <label>F12 activated sound</label>
+                    <label xml:lang="de">F12 activiert Sound</label>
+                    <label xml:lang="nl">F12 speelt geluid:</label>
+                </variable>
+                <variable item="Bank E F13 activated sound" CV="913.8" default="14" include="PIKO41BR82">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
+                    <label>F13 activated sound</label>
+                    <label xml:lang="de">F13 activiert Sound</label>
+                    <label xml:lang="nl">F13 speelt geluid:</label>
+                </variable>
+                <variable item="Bank E F14 activated sound" CV="914.8" default="15" include="PIKO41BR82">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
+                    <label>F14 activated sound</label>
+                    <label xml:lang="de">F14 activiert Sound</label>
+                    <label xml:lang="nl">F14 speelt geluid:</label>
+                </variable>
+                <variable item="Bank E F15 activated sound" CV="915.8" default="16" include="PIKO41BR82">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
+                    <label>F15 activated sound</label>
+                    <label xml:lang="de">F15 activiert Sound</label>
+                    <label xml:lang="nl">F15 speelt geluid:</label>
+                </variable>
+                <variable item="Bank E F16 activated sound" CV="916.8" default="17" include="PIKO41BR82">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
+                    <label>F16 activated sound</label>
+                    <label xml:lang="de">F16 activiert Sound</label>
+                    <label xml:lang="nl">F16 speelt geluid:</label>
+                </variable>
+                <variable item="Bank E F17 activated sound" CV="917.8" default="18" include="PIKO41BR82">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
+                    <label>F17 activated sound</label>
+                    <label xml:lang="de">F17 activiert Sound</label>
+                    <label xml:lang="nl">F17 speelt geluid:</label>
+                </variable>
+                <variable item="Bank E F18 activated sound" CV="918.8" default="19" include="PIKO41BR82">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
+                    <label>F18 activated sound</label>
+                    <label xml:lang="de">F18 activiert Sound</label>
+                    <label xml:lang="nl">F18 speelt geluid:</label>
+                </variable>
+                <variable item="Bank E F19 activated sound" CV="919.8" default="20" include="PIKO41BR82">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
+                    <label>F19 activated sound</label>
+                    <label xml:lang="de">F19 activiert Sound</label>
+                    <label xml:lang="nl">F19 speelt geluid:</label>
+                </variable>
+                <variable item="Bank E F20 activated sound" CV="920.8" default="21" include="PIKO41BR82">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
+                    <label>F20 activated sound</label>
+                    <label xml:lang="de">F20 activiert Sound</label>
+                    <label xml:lang="nl">F20 speelt geluid:</label>
+                </variable>
+                <variable item="Bank E F21 activated sound" CV="921.8" default="22" include="PIKO41BR82">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
+                    <label>F21 activated sound</label>
+                    <label xml:lang="de">F21 activiert Sound</label>
+                    <label xml:lang="nl">F21 speelt geluid:</label>
+                </variable>
+                <variable item="Bank E F22 activated sound" CV="922.8" default="23" include="PIKO41BR82">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
+                    <label>F22 activated sound</label>
+                    <label xml:lang="de">F22 activiert Sound</label>
+                    <label xml:lang="nl">F22 speelt geluid:</label>
+                </variable>
+                <variable item="Bank E F23 activated sound" CV="923.8" default="24" include="PIKO41BR82">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
+                    <label>F23 activated sound</label>
+                    <label xml:lang="de">F23 activiert Sound</label>
+                    <label xml:lang="nl">F23 speelt geluid:</label>
+                </variable>
+                <variable item="Bank E F24 activated sound" CV="924.8" default="25" include="PIKO41BR82">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
+                    <label>F24 activated sound</label>
+                    <label xml:lang="de">F24 activiert Sound</label>
+                    <label xml:lang="nl">F24 speelt geluid:</label>
+                </variable>
+                <variable item="Bank E F25 activated sound" CV="925.8" default="0" include="PIKO41BR82">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
+                    <label>F25 activated sound</label>
+                    <label xml:lang="de">F25 activiert Sound</label>
+                    <label xml:lang="nl">F25 speelt geluid:</label>
+                </variable>
+                <variable item="Bank E F26 activated sound" CV="926.8" default="0" include="PIKO41BR82">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
+                    <label>F26 activated sound</label>
+                    <label xml:lang="de">F26 activiert Sound</label>
+                    <label xml:lang="nl">F26 speelt geluid:</label>
+                </variable>
+                <variable item="Bank E F27 activated sound" CV="927.8" default="0" include="PIKO41BR82">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
+                    <label>F27 activated sound</label>
+                    <label xml:lang="de">F27 activiert Sound</label>
+                    <label xml:lang="nl">F27 speelt geluid:</label>
+                </variable>
+                <variable item="Bank E F28 activated sound" CV="928.8" default="0" include="PIKO41BR82">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundBr82.xml"/>
+                    <label>F28 activated sound</label>
+                    <label xml:lang="de">F28 activiert Sound</label>
+                    <label xml:lang="nl">F28 speelt geluid:</label>
+                </variable>
+                <!--einde BR82-->
 
+                <!--PIKO41RH2400 sounds-->
+                <variable item="Bank E F0 activated sound" CV="900.8" default="1" include="PIKO41RH2400">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
+                    <label>F0 activated sound</label>
+                    <label xml:lang="de">F0 activiert Sound</label>
+                    <label xml:lang="nl">F0 speelt geluid:</label>
+                </variable>
+                <variable item="Bank E F1 activated sound" CV="901.8" default="2" include="PIKO41RH2400">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
+                    <label>F1 activated sound</label>
+                    <label xml:lang="de">F1 activiert Sound</label>
+                    <label xml:lang="nl">F1 speelt geluid:</label>
+                </variable>
+                <variable item="Bank E F2 activated sound" CV="902.8" default="3" include="PIKO41RH2400">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
+                    <label>F2 activated sound</label>
+                    <label xml:lang="de">F2 activiert Sound</label>
+                    <label xml:lang="nl">F2 speelt geluid:</label>
+                </variable>
+                <variable item="Bank E F3 activated sound" CV="903.8" default="4" include="PIKO41RH2400">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
+                    <label>F3 activated sound</label>
+                    <label xml:lang="de">F3 activiert Sound</label>
+                    <label xml:lang="nl">F3 speelt geluid:</label>
+                </variable>
+                <variable item="Bank E F4 activated sound" CV="904.8" default="5" include="PIKO41RH2400">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
+                    <label>F4 activated sound</label>
+                    <label xml:lang="de">F4 activiert Sound</label>
+                    <label xml:lang="nl">F4 speelt geluid:</label>
+                </variable>
+                <variable item="Bank E F5 activated sound" CV="905.8" default="6" include="PIKO41RH2400">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
+                    <label>F5 activated sound</label>
+                    <label xml:lang="de">F5 activiert Sound</label>
+                    <label xml:lang="nl">F5 speelt geluid:</label>
+                </variable>
+                <variable item="Bank E F6 activated sound" CV="906.8" default="7" include="PIKO41RH2400">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
+                    <label>F6 activated sound</label>
+                    <label xml:lang="de">F6 activiert Sound</label>
+                    <label xml:lang="nl">F6 speelt geluid:</label>
+                </variable>
+                <variable item="Bank E F7 activated sound" CV="907.8" default="8" include="PIKO41RH2400">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
+                    <label>F7 activated sound</label>
+                    <label xml:lang="de">F7 activiert Sound</label>
+                    <label xml:lang="nl">F7 speelt geluid:</label>
+                </variable>
+                <variable item="Bank E F8 activated sound" CV="908.8" default="9" include="PIKO41RH2400">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
+                    <label>F8 activated sound</label>
+                    <label xml:lang="de">F8 activiert Sound</label>
+                    <label xml:lang="nl">F8 speelt geluid:</label>
+                </variable>
+                <variable item="Bank E F9 activated sound" CV="909.8" default="10" include="PIKO41RH2400">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
+                    <label>F9 activated sound</label>
+                    <label xml:lang="de">F9 activiert Sound</label>
+                    <label xml:lang="nl">F9 speelt geluid:</label>
+                </variable>
+                <variable item="Bank E F10 activated sound" CV="910.8" default="11" include="PIKO41RH2400">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
+                    <label>F10 activated sound</label>
+                    <label xml:lang="de">F10 activiert Sound</label>
+                    <label xml:lang="nl">F10 speelt geluid:</label>
+                </variable>
+                <variable item="Bank E F11 activated sound" CV="911.8" default="12" include="PIKO41RH2400">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
+                    <label>F11 activated sound</label>
+                    <label xml:lang="de">F11 activiert Sound</label>
+                    <label xml:lang="nl">F11 speelt geluid:</label>
+                </variable>
+                <variable item="Bank E F12 activated sound" CV="912.8" default="13" include="PIKO41RH2400">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
+                    <label>F12 activated sound</label>
+                    <label xml:lang="de">F12 activiert Sound</label>
+                    <label xml:lang="nl">F12 speelt geluid:</label>
+                </variable>
+                <variable item="Bank E F13 activated sound" CV="913.8" default="14" include="PIKO41RH2400">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
+                    <label>F13 activated sound</label>
+                    <label xml:lang="de">F13 activiert Sound</label>
+                    <label xml:lang="nl">F13 speelt geluid:</label>
+                </variable>
+                <variable item="Bank E F14 activated sound" CV="914.8" default="15" include="PIKO41RH2400">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
+                    <label>F14 activated sound</label>
+                    <label xml:lang="de">F14 activiert Sound</label>
+                    <label xml:lang="nl">F14 speelt geluid:</label>
+                </variable>
+                <variable item="Bank E F15 activated sound" CV="915.8" default="16" include="PIKO41RH2400">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
+                    <label>F15 activated sound</label>
+                    <label xml:lang="de">F15 activiert Sound</label>
+                    <label xml:lang="nl">F15 speelt geluid:</label>
+                </variable>
+                <variable item="Bank E F16 activated sound" CV="916.8" default="17" include="PIKO41RH2400">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
+                    <label>F16 activated sound</label>
+                    <label xml:lang="de">F16 activiert Sound</label>
+                    <label xml:lang="nl">F16 speelt geluid:</label>
+                </variable>
+                <variable item="Bank E F17 activated sound" CV="917.8" default="18" include="PIKO41RH2400">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
+                    <label>F17 activated sound</label>
+                    <label xml:lang="de">F17 activiert Sound</label>
+                    <label xml:lang="nl">F17 speelt geluid:</label>
+                </variable>
+                <variable item="Bank E F18 activated sound" CV="918.8" default="19" include="PIKO41RH2400">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
+                    <label>F18 activated sound</label>
+                    <label xml:lang="de">F18 activiert Sound</label>
+                    <label xml:lang="nl">F18 speelt geluid:</label>
+                </variable>
+                <variable item="Bank E F19 activated sound" CV="919.8" default="20" include="PIKO41RH2400">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
+                    <label>F19 activated sound</label>
+                    <label xml:lang="de">F19 activiert Sound</label>
+                    <label xml:lang="nl">F19 speelt geluid:</label>
+                </variable>
+                <variable item="Bank E F20 activated sound" CV="920.8" default="21" include="PIKO41RH2400">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
+                    <label>F20 activated sound</label>
+                    <label xml:lang="de">F20 activiert Sound</label>
+                    <label xml:lang="nl">F20 speelt geluid:</label>
+                </variable>
+                <variable item="Bank E F21 activated sound" CV="921.8" default="22" include="PIKO41RH2400">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
+                    <label>F21 activated sound</label>
+                    <label xml:lang="de">F21 activiert Sound</label>
+                    <label xml:lang="nl">F21 speelt geluid:</label>
+                </variable>
+                <variable item="Bank E F22 activated sound" CV="922.8" default="23" include="PIKO41RH2400">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
+                    <label>F22 activated sound</label>
+                    <label xml:lang="de">F22 activiert Sound</label>
+                    <label xml:lang="nl">F22 speelt geluid:</label>
+                </variable>
+                <variable item="Bank E F23 activated sound" CV="923.8" default="24" include="PIKO41RH2400">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
+                    <label>F23 activated sound</label>
+                    <label xml:lang="de">F23 activiert Sound</label>
+                    <label xml:lang="nl">F23 speelt geluid:</label>
+                </variable>
+                <variable item="Bank E F24 activated sound" CV="924.8" default="25" include="PIKO41RH2400">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
+                    <label>F24 activated sound</label>
+                    <label xml:lang="de">F24 activiert Sound</label>
+                    <label xml:lang="nl">F24 speelt geluid:</label>
+                </variable>
+                <variable item="Bank E F25 activated sound" CV="925.8" default="26" include="PIKO41RH2400">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
+                    <label>F25 activated sound</label>
+                    <label xml:lang="de">F25 activiert Sound</label>
+                    <label xml:lang="nl">F25 speelt geluid:</label>
+                </variable>
+                <variable item="Bank E F26 activated sound" CV="926.8" default="0" include="PIKO41RH2400">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
+                    <label>F26 activated sound</label>
+                    <label xml:lang="de">F26 activiert Sound</label>
+                    <label xml:lang="nl">F26 speelt geluid:</label>
+                </variable>
+                <variable item="Bank E F27 activated sound" CV="927.8" default="0" include="PIKO41RH2400">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
+                    <label>F27 activated sound</label>
+                    <label xml:lang="de">F27 activiert Sound</label>
+                    <label xml:lang="nl">F27 speelt geluid:</label>
+                </variable>
+                <variable item="Bank E F28 activated sound" CV="928.8" default="0" include="PIKO41RH2400">
+                    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/enumSoundRh2400.xml"/>
+                    <label>F28 activated sound</label>
+                    <label xml:lang="de">F28 activiert Sound</label>
+                    <label xml:lang="nl">F28 speelt geluid:</label>
+                </variable>
+                <!--einde RH2400-->
+            <!--</group>-->
+
+        </variables>
         <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/factReset4.xml"/>
     </decoder>
     <!-- special panes -->
     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/PaneRailcom.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/PaneUhlenbrock.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/PaneId2Advanced.xml"/><!-- IntelliDrive2, overrides some CVs set above -->
-    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/fmapPane7outputs.xml"/>
+    <!--<xi:include href="http://jmri.org/xml/decoders/uhlenbrock/fmapPane7outputs.xml"/>-->
     <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/PaneExtendedFmap.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/SoundPaneId2.xml"/>
 </decoder-config>
