@@ -49,11 +49,11 @@ public class CtcEditorActionTest {
         jpm = jmo.getPopupMenu();
 
         // MenuFind
-//         Thread menuFind = createModalDialogOperatorThread(Bundle.getMessage("TitleDlgFind"), Bundle.getMessage("ButtonOK"), "menuFind");  // NOI18N
-//         JMenuItem findMenuItem = (JMenuItem)jpm.getComponent(0);
-//         Assert.assertTrue(findMenuItem.getText().equals(Bundle.getMessage("MenuFind")));  // NOI18N
-//         new JMenuItemOperator(findMenuItem).doClick();
-//         JUnitUtil.waitFor(()->{return !(menuFind.isAlive());}, "menuFind finished");
+        Thread menuFind = createModalDialogOperatorThread(Bundle.getMessage("TitleDlgFind"), Bundle.getMessage("ButtonDone"), "menuFind");  // NOI18N
+        JMenuItem findMenuItem = (JMenuItem)jpm.getComponent(0);
+        Assert.assertTrue(findMenuItem.getText().equals(Bundle.getMessage("MenuFind")));  // NOI18N
+        new JMenuItemOperator(findMenuItem).doClick();
+        JUnitUtil.waitFor(()->{return !(menuFind.isAlive());}, "menuFind finished");
 
         // MenuFix
         Thread menuFix = createModalDialogOperatorThread(Bundle.getMessage("TitleDlgFix"), Bundle.getMessage("ButtonCancel"), "menuFix");  // NOI18N

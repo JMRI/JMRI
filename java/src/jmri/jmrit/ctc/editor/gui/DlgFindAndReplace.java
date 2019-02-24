@@ -77,6 +77,7 @@ public class DlgFindAndReplace extends javax.swing.JDialog {
 
         _mHowSearch = new javax.swing.ButtonGroup();
         _mHowReplace = new javax.swing.ButtonGroup();
+        _mButtonDone = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         _mCaseSensitive = new javax.swing.JCheckBox();
@@ -103,9 +104,15 @@ public class DlgFindAndReplace extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle(Bundle.getMessage("TitleDlgFind"));
         addWindowListener(new java.awt.event.WindowAdapter() {
-            @Override
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
+            }
+        });
+
+        _mButtonDone.setText(Bundle.getMessage("ButtonDone"));
+        _mButtonDone.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                _mButtonDoneActionPerformed(evt);
             }
         });
 
@@ -163,12 +170,10 @@ public class DlgFindAndReplace extends javax.swing.JDialog {
                 false, false, false
             };
 
-            @Override
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
 
-            @Override
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
@@ -229,7 +234,8 @@ public class DlgFindAndReplace extends javax.swing.JDialog {
                                         .addComponent(_mCountSelected))
                                     .addComponent(_mRescanWithValue, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(jLabel6)
-                            .addComponent(jLabel7))
+                            .addComponent(jLabel7)
+                            .addComponent(_mButtonDone))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -280,7 +286,9 @@ public class DlgFindAndReplace extends javax.swing.JDialog {
                     .addComponent(_mCountSelected))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel7)
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(_mButtonDone)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(36, 36, 36)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -288,7 +296,7 @@ public class DlgFindAndReplace extends javax.swing.JDialog {
                     .addComponent(jLabel4)
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 422, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -379,7 +387,13 @@ public class DlgFindAndReplace extends javax.swing.JDialog {
         }
     }//GEN-LAST:event__mReplaceActionPerformed
 
+    private void _mButtonDoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mButtonDoneActionPerformed
+       _mAwtWindowProperties.saveWindowState(this, FORM_PROPERTIES);
+        dispose();
+     }//GEN-LAST:event__mButtonDoneActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton _mButtonDone;
     private javax.swing.JCheckBox _mCaseSensitive;
     private javax.swing.JRadioButton _mContains;
     private javax.swing.JLabel _mCountSelected;

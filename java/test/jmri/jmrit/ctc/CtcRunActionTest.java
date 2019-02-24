@@ -34,23 +34,9 @@ public class CtcRunActionTest {
 
         // ** Run time test scenarios **
         InstanceManager im = InstanceManager.getDefault();
-        SensorManager sm = im.getDefault(SensorManager.class);
-        TurnoutManager tm = im.getDefault(TurnoutManager.class);
-        SignalHeadManager hm = im.getDefault(SignalHeadManager.class);
-
-//         hm.getSignalHead("Left-U").addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-//             public void propertyChange(java.beans.PropertyChangeEvent evt) {
-//                 log.warn(">>>>>>>> : {}", evt);
-//             }
-//         });
-
-        // Enable debug mode, set the T-Left to normal
-//         try {
-//             sm.getSensor("IS:DEBUGCTC").setKnownState(Sensor.ACTIVE);
-//             sm.getSensor("IS1:SN").setKnownState(Sensor.ACTIVE);
-//         } catch (JmriException ex) {
-//             log.error("debug exeptions: ", ex);
-//         }
+        SensorManager sm = InstanceManager.getDefault(SensorManager.class);
+//         TurnoutManager tm = InstanceManager.getDefault(TurnoutManager.class);
+        SignalHeadManager hm = InstanceManager.getDefault(SignalHeadManager.class);
 
         // Clear Left turnout right on main.
         try {
@@ -64,25 +50,49 @@ public class CtcRunActionTest {
         }
         new EventTool().waitNoEvent(1000);
         jmri.SignalHead sh = hm.getSignalHead("Left-U");
-//         log.warn("Left-U = {} - {}", sh.getHeld(), sh.getAppearanceName());
         Assert.assertFalse(sh.getHeld());  // NOI18N
+
+        // Clear Right turnout left on sideing using Call On.
+        try {
+            sm.getSensor("B-Side").setKnownState(Sensor.ACTIVE);
+            sm.getSensor("IS3:LEVER").setKnownState(Sensor.INACTIVE);
+            sm.getSensor("IS4:CB").setKnownState(Sensor.ACTIVE);
+            sm.getSensor("IS4:CB").setKnownState(Sensor.INACTIVE);
+            new EventTool().waitNoEvent(1000);
+            sm.getSensor("IS3:SN").setKnownState(Sensor.INACTIVE);
+            sm.getSensor("IS3:SR").setKnownState(Sensor.ACTIVE);
+
+            sm.getSensor("IS4:CALLON").setKnownState(Sensor.ACTIVE);
+            sm.getSensor("IS4:NL").setKnownState(Sensor.INACTIVE);
+            sm.getSensor("IS4:LL").setKnownState(Sensor.ACTIVE);
+            sm.getSensor("IS4:CB").setKnownState(Sensor.ACTIVE);
+            sm.getSensor("IS4:CB").setKnownState(Sensor.INACTIVE);
+        } catch (JmriException ex) {
+            log.error("sensor exeptions: ", ex);
+        }
+        new EventTool().waitNoEvent(1000);
+        sh = hm.getSignalHead("Right-L");
+        Assert.assertFalse(sh.getHeld());  // NOI18N
+
+
 //         log.warn("Test SHM = {}", hm);
 //         log.warn("DEBUG = {}", sm.getSensor("IS:DEBUGCTC").getKnownState());
-//         log.warn("SN = {}", sm.getSensor("IS1:SN").getKnownState());
-//         log.warn("LL = {}", sm.getSensor("IS2:LL").getKnownState());
-//         log.warn("NL = {}", sm.getSensor("IS2:NL").getKnownState());
-//         log.warn("RL = {}", sm.getSensor("IS2:RL").getKnownState());
-//         log.warn("LK = {}", sm.getSensor("IS2:LK").getKnownState());
-//         log.warn("NK = {}", sm.getSensor("IS2:NK").getKnownState());
-//         log.warn("RK = {}", sm.getSensor("IS2:RK").getKnownState());
-//         jmri.SignalHead sh = hm.getSignalHead("Left-U");
-//         log.warn("Left-U = {} - {}", sh.getHeld(), sh.getAppearanceName());
-//         sh = hm.getSignalHead("Left-L");
-//         log.warn("Left-L = {} - {}", sh.getHeld(), sh.getAppearanceName());
-//         sh = hm.getSignalHead("Left-M");
-//         log.warn("Left-M = {} - {}", sh.getHeld(), sh.getAppearanceName());
-//         sh = hm.getSignalHead("Left-S");
-//         log.warn("Left-S = {} - {}", sh.getHeld(), sh.getAppearanceName());
+//         log.warn("SN = {}", sm.getSensor("IS3:SN").getKnownState());
+//         log.warn("SR = {}", sm.getSensor("IS3:SR").getKnownState());
+//         log.warn("LL = {}", sm.getSensor("IS4:LL").getKnownState());
+//         log.warn("NL = {}", sm.getSensor("IS4:NL").getKnownState());
+//         log.warn("RL = {}", sm.getSensor("IS4:RL").getKnownState());
+//         log.warn("LK = {}", sm.getSensor("IS4:LK").getKnownState());
+//         log.warn("NK = {}", sm.getSensor("IS4:NK").getKnownState());
+//         log.warn("RK = {}", sm.getSensor("IS4:RK").getKnownState());
+//         sh = hm.getSignalHead("Right-U");
+//         log.warn("Right-U = {} - {}", sh.getHeld(), sh.getAppearanceName());
+//         sh = hm.getSignalHead("Right-L");
+//         log.warn("Right-L = {} - {}", sh.getHeld(), sh.getAppearanceName());
+//         sh = hm.getSignalHead("Right-M");
+//         log.warn("Right-M = {} - {}", sh.getHeld(), sh.getAppearanceName());
+//         sh = hm.getSignalHead("Right-S");
+//         log.warn("Right-S = {} - {}", sh.getHeld(), sh.getAppearanceName());
     }
 
     @Before

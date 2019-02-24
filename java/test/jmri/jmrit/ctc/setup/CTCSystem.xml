@@ -541,7 +541,7 @@
      <string>_mCO_GroupingsListString</string>
      <void method="set">
       <object idref="CodeButtonHandlerData1"/>
-      <string></string>
+      <string>Right-L,LEFTTRAFFIC,Flashing Yellow,B-Side,,IS3:SR,,,,,</string>
      </void>
     </void>
     <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
@@ -555,7 +555,7 @@
      <string>_mTRL_LeftTrafficLockingRulesSSVList</string>
      <void method="set">
       <object idref="CodeButtonHandlerData1"/>
-      <string></string>
+      <string>Rule #:1,Enabled,,,3/4,Normal,,Normal,,Normal,,Normal,,Normal,B-Main,,,,,,,,,,,,1,,,,; Rule #:2,Enabled,,,3/4,Reverse,,Normal,,Normal,,Normal,,Normal,B-Side,,,,,,,,,,,,1,,,,</string>
      </void>
     </void>
     <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">
@@ -846,7 +846,7 @@
      <string>_mCO_GroupingsListString</string>
      <void method="set">
       <object idref="CodeButtonHandlerData2"/>
-      <string></string>
+      <string>Stub-U,RIGHTTRAFFIC,Flashing Yellow,B-StubM,,IS5:SN,,,,,</string>
      </void>
     </void>
     <void class="jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData" method="getField">

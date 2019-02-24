@@ -79,12 +79,12 @@ public class CallOn {
             _mRoute = route;
         }
     }
-    
+
     private final LockedRoutesManager _mLockedRoutesManager;
     private final boolean _mSignalHeadSelected;
     private final NBHSensor _mCallOnToggleSensor;
     private final ArrayList<GroupingData> _mGroupingDataArrayList = new ArrayList<>();
-    
+
     public CallOn(LockedRoutesManager lockedRoutesManager, String userIdentifier, String callOnToggleSensor, String groupingsListString, OtherData.SIGNAL_SYSTEM_TYPE signalSystemType) {
         _mLockedRoutesManager = lockedRoutesManager;
         _mSignalHeadSelected = (signalSystemType == OtherData.SIGNAL_SYSTEM_TYPE.SIGNALHEAD);
@@ -133,9 +133,9 @@ public class CallOn {
         }
         resetToggle();
     }
-    
+
     public void removeAllListeners() {}   // None done.
-    
+
     public void resetToggle() {
         _mCallOnToggleSensor.setKnownState(Sensor.INACTIVE);
     }
@@ -143,7 +143,7 @@ public class CallOn {
 /*  Call On requested.  CodeButtonHandler has determined from it's "limited"
     viewpoint that it is OK to attempt the call on.  This routine determines
     if it is fully valid to allow it at this time.
-    
+
 NOTE:
     We "fake out" the caller: we return "true" AS IF we actually did the
     call on.  Why?  So higher level code in CodeButtonHandler DOES NOT attempt
@@ -153,16 +153,16 @@ NOTE:
     the signals would go to yellow/green instead of staying at signals normal
     (all stop) which would be the result of the call on only, which is what we
     want.  After all, that's what the dispatcher asked for explicitly!
-*/    
+*/
     public TrafficLockingInfo codeButtonPressed(HashSet<Sensor> sensors,
                                                 String userIdentifier,
                                                 SignalDirectionIndicatorsInterface signalDirectionIndicatorsObject,
                                                 int signalDirectionLever) {
         if (_mCallOnToggleSensor.getKnownState() == Sensor.INACTIVE) return new TrafficLockingInfo(false);    // Dispatcher didn't want it at this time!
         if (signalDirectionLever != CTCConstants.LEFTTRAFFIC && signalDirectionLever != CTCConstants.RIGHTTRAFFIC) return new TrafficLockingInfo(false); // Doesn't make sense, don't do anything
-        
+
         GroupingData foundGroupingData = null;
-        
+
         int ruleNumber = 0;
         for (GroupingData groupingData : _mGroupingDataArrayList) {
             ruleNumber++;
@@ -173,11 +173,10 @@ NOTE:
                 }
             }
         }
-        
-//  From NOW ON, the "returnValue" status will be true:        
+//  From NOW ON, the "returnValue" status will be true:
         TrafficLockingInfo returnValue = new TrafficLockingInfo(true);
         if (foundGroupingData == null) return returnValue;    // Has to be active, pretend we did it, but we didn't!
-        
+
         if (_mSignalHeadSelected) {
             if (Sensor.ACTIVE != foundGroupingData._mCalledOnExternalSensor.getKnownState()) return returnValue;    // Has to be active EXACTLY, pretend we did it, but we didn't!
             if (foundGroupingData._mCalledOnExternalSensor.valid()) {
@@ -187,7 +186,7 @@ NOTE:
 //  The route is the O.S. section that called us, along with the called on occupancy sensor:
             returnValue._mLockedRoute = _mLockedRoutesManager.checkRouteAndAllocateIfAvailable(sensors, userIdentifier, "Rule #" + ruleNumber);
             if (returnValue._mLockedRoute == null) return returnValue;         // Not available, fake out
-            
+
             foundGroupingData._mSignal.setHeld(false);    // Original order in .py code
             foundGroupingData._mSignal.setAppearance(foundGroupingData._mCallOnAspect);
         } else {
@@ -198,14 +197,14 @@ NOTE:
             if (sensor.valid()) {
                 sensors.add(sensor.getBean());
             }
-            
+
 //  Check to see if the route specified is free:
 //  The route is the O.S. section that called us, along with the called on occupancy sensor:
             returnValue._mLockedRoute = _mLockedRoutesManager.checkRouteAndAllocateIfAvailable(sensors, userIdentifier, "Rule #" + ruleNumber);
             if (returnValue._mLockedRoute == null) return returnValue;         // Not available, fake out
             foundGroupingData._mSignal.setHeld(false);
         }
-        
+
 // These two statements MUST be last thing in this order:
         signalDirectionIndicatorsObject.setSignalDirectionIndicatorsToOUTOFCORRESPONDENCE();
         signalDirectionIndicatorsObject.startCodingTime();
@@ -218,9 +217,9 @@ NOTE:
         }
         return -1;
     }
-    
+
 //  When we went to foreign language support, I had to convert to English here, so that these lines worked above:
-//  String[] validStateNames = signal.getValidStateNames();    
+//  String[] validStateNames = signal.getValidStateNames();
 //  int validStateNamesIndex = arrayFind(validStateNames, convertFromForeignLanguageColor(callOnEntry._mSignalAspectToDisplay));
 //  I SUSPECT (not verified) that "signal.getValidStateNames()" ALWAYS returns English no matter what language is selected.
 //  If I AM WRONG, then this routine can be removed, and the call to it removed:
@@ -229,14 +228,14 @@ NOTE:
         if (foreignLanguageColor.equals(Bundle.getMessage("InfoDlgCORed"))) return "Red";   // NOI18N
         if (foreignLanguageColor.equals(Bundle.getMessage("InfoDlgCOYellow"))) return "Yellow"; // NOI18N
         if (foreignLanguageColor.equals(Bundle.getMessage("InfoDlgCOGreen"))) return "Green";   // NOI18N
-        if (foreignLanguageColor.equals(Bundle.getMessage("InfoDlgCOFlashingRed"))) return "FlashingRed";   // NOI18N
-        if (foreignLanguageColor.equals(Bundle.getMessage("InfoDlgCOFlashingYellow"))) return "FlashingYellow"; // NOI18N
-        if (foreignLanguageColor.equals(Bundle.getMessage("InfoDlgCOFlashingGreen"))) return "FlashingGreen";   // NOI18N
+        if (foreignLanguageColor.equals(Bundle.getMessage("InfoDlgCOFlashingRed"))) return "Flashing Red";   // NOI18N
+        if (foreignLanguageColor.equals(Bundle.getMessage("InfoDlgCOFlashingYellow"))) return "Flashing Yellow"; // NOI18N
+        if (foreignLanguageColor.equals(Bundle.getMessage("InfoDlgCOFlashingGreen"))) return "Flashing Green";   // NOI18N
         if (foreignLanguageColor.equals(Bundle.getMessage("InfoDlgCOLunar"))) return "Lunar";   // NOI18N
-        if (foreignLanguageColor.equals(Bundle.getMessage("InfoDlgCOFlashingLunar"))) return "FlashingLunar";   // NOI18N
+        if (foreignLanguageColor.equals(Bundle.getMessage("InfoDlgCOFlashingLunar"))) return "Flashing Lunar";   // NOI18N
         return "Red";   // NOI18N    Should NEVER happen, but if programmers screw up, default to some "sane" value.
     }
-    
+
     private static final NamedBeanHandleManager NAMED_BEAN_HANDLE_MANAGER = InstanceManager.getDefault(NamedBeanHandleManager.class);
     private static final BlockManager blockManager = InstanceManager.getDefault(BlockManager.class);
 }

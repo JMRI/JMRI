@@ -11,8 +11,8 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
     BundleTest.class,
-//     CTCConstantsTest.class,
-//     CTCExceptionTest.class,
+    CTCConstantsTest.class,
+    CTCExceptionTest.class,
 //     CTCFilesTest.class,
 //     CTCJythonAccessInstanceManagerTest.class,
     CTCMainTest.class,
@@ -32,7 +32,7 @@ import org.junit.runners.Suite;
 //     NBHTurnoutTest.class,
 //     RequestedDirectionObservedTest.class,
 //     SignalDirectionIndicatorsInterfaceTest.class,
-//     SignalDirectionIndicatorsNullTest.class,
+    SignalDirectionIndicatorsNullTest.class,
 //     SignalDirectionIndicatorsTest.class,
 //     SignalDirectionLeverTest.class,
 //     SwitchDirectionIndicatorsTest.class,
