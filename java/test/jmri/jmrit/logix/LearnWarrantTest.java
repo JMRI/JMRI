@@ -80,7 +80,8 @@ public class LearnWarrantTest {
         List<BlockOrder> orders = frame.getOrders();
         Assert.assertEquals("5 BlockOrders", 5, orders.size());
 
-        frame.setTrainInfo("99");
+        frame._speedUtil.setDccAddress("99");
+        frame.setTrainInfo(null);
         JUnitUtil.waitFor(() -> {
             return (frame._speedUtil.getDccAddress() != null);
         }, "Found address");
@@ -112,6 +113,7 @@ public class LearnWarrantTest {
         pressButton(jfo, Bundle.getMessage("Stop"));
 
         // change address and run
+        frame._speedUtil.setDccAddress("111");
         frame.setTrainInfo("111");
         JUnitUtil.waitFor(() -> {
             return (frame._speedUtil.getDccAddress() != null);
