@@ -75,7 +75,7 @@
                 <output name="Start/brake" label="inertia"/>
                 <size length="9.5" width="7.8" height="2.4" units="mm"/>
             </model>
-            <model model="PIKO41RH2400" numOuts="10" numFns="14" maxMotorCurrent="1.2A" formFactor="N" connector="Next18" productID="PIKO41RH2400" comment="Piko SmartDecoder 4.1 Sound Dieselloco Rh2400 Next18 plug and RailCom(R) (Plus)">
+            <model model="PIKO41RH2400" numOuts="10" numFns="14" maxMotorCurrent="1.2A" formFactor="N" connector="Next18" productID="PIKO41RH2400" comment="Piko SmartDecoder 4.1 Sound Diesel Loco Rh2400 Next18 plug and RailCom(R) (Plus)">
                 <output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
                 <output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>
                 <output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA"/>
@@ -90,7 +90,7 @@
                 <output name="Start/brake" label="inertia"/>
                 <size length="30.2" width="16" height="3.8" units="mm"/>
             </model>
-            <model model="PIKO41BR82" numOuts="10" numFns="14" maxMotorCurrent="1.2A" formFactor="N" connector="Next18" productID="PIKO41BR82" comment="Piko SmartDecoder 4.1 Sound Dieselloco Rh2400 Next18 plug and RailCom(R) (Plus)">
+            <model model="PIKO41BR82" numOuts="10" numFns="14" maxMotorCurrent="1.2A" formFactor="N" connector="Next18" productID="PIKO41BR82" comment="Piko SmartDecoder 4.1 Sound Steam Loco BR82 Next18 plug and RailCom(R) (Plus)">
                 <output name="1" label="F0(f)" connection="plug" maxcurrent="400 mA"/>
                 <output name="2" label="F0(r)" connection="plug" maxcurrent="400 mA"/>
                 <output name="3" label=". A1 ." connection="plug" maxcurrent="400 mA"/>
