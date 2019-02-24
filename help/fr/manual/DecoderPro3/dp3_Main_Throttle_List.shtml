@@ -1,7 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Translation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-02-24 -->
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -26,20 +26,20 @@
     <div id="mainContent">
       <a name="Top" id="Top"></a>
 
-      <h1>DecoderPro&reg; Main Window</h1>
+      <h1>DecoderPro&reg; Fen&#234;tre Principale</h1>
 
-      <h2>JMRI&reg; Throttle Window - Local JMRI&reg;
-      Throttles</h2>
+      <h2>JMRI&reg; Fen&#234;tre R&#233;gulateur - R&#233;gulateur JMRI&reg;
+      locaux</h2>
 
       <div align="right">
-        <p><a href="dp3_Main_Throttle.shtml">Back</a></p>
+        <p><a href="dp3_Main_Throttle.shtml">Retour</a></p>
       </div>
       <hr>
 
-      <h4>Local JMRI throttles</h4>
+      <h4>R&#233;gulateur JMRI&reg;locaux</h4>
 
-      <p>Opens the Local JMRI throttles Window displaying all the
-      throttles that are in use on your program.<br></p>
+      <p>Ouvrir la fen&#234;tre R&#233;gulateur Locaux JMRI affichant tous les 
+      R&#233;gulateurs qui sont utilis&#233;s dans votre programme.<br></p>
 
       <table align="center" border="1" cellpadding="2" cellspacing=
       "1" width="50%">
@@ -61,7 +61,7 @@
               </div>
             </td>
 
-            <td width="65%">Opens a new Thottle</td>
+            <td width="65%">Ouvreun nouveau &#233;gulateur</td>
           </tr>
 
           <tr>
@@ -72,8 +72,8 @@
               </div>
             </td>
 
-            <td>Emergency stop for all Throttles under JMRI
-            control</td>
+            <td>Arr&#234;t d'Urgence pour tous les R&#233;gulateurs sous le contr&#244;le 
+            de JMRI</td>
           </tr>
 
           <tr>
@@ -84,7 +84,7 @@
               </div>
             </td>
 
-            <td>Track power control</td>
+            <td>Contr&#244;le alimentation de la voie</td>
           </tr>
 
           <tr>
@@ -95,14 +95,14 @@
               </div>
             </td>
 
-            <td>Opens the Throttles preferences window</td>
+            <td>Ouvre la fen&#234;tre des pr&#233;f&#233;rences du R&#233;gulateur</td>
           </tr>
         </tbody>
       </table>
       <hr>
 
       <div align="right">
-        <p><a href="dp3_Main_Throttle.shtml">Back</a></p>
+        <p><a href="dp3_Main_Throttle.shtml">Retour</a></p>
       </div><!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
