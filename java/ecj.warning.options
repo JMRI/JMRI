@@ -140,7 +140,8 @@
 # 159 outstanding items
 -warn:-raw
 
-# this tags some FindBugs labels?  But still useful to run occasionally
+# this tags some NetBeans and FindBugs tokens in @SuppressWarnings  
+# Until that's fixed, useful to run occasionally to find "Unnecessary" annotations
 -warn:-warningToken
 
 #
