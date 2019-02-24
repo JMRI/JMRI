@@ -17,8 +17,6 @@ import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonHttpService;
 import jmri.spi.JsonServiceFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Cache for mapping {@link jmri.server.json.JsonHttpService}s to types for
