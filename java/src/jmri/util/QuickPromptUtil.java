@@ -1,7 +1,20 @@
 package jmri.util;
 
+import static javax.swing.JOptionPane.OK_CANCEL_OPTION;
+
 import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.function.Predicate;
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
+import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JRootPane;
+import javax.swing.SwingConstants;
+import org.python.google.common.base.Objects;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -50,6 +63,81 @@ public class QuickPromptUtil {
             }
         }
         return result;
+    }
+    
+    /**
+     * Utility function to prompt for new integer value. Allows to constrain values using a Predicate (validator).
+     * The validator may throw an {@link IllegalArgumentException} whose {@link IllegalArgumentException#getLocalizedMessage()} will
+     * be displayed. The Predicate may also simply return {@code false}, which causes just general message (the value is invalid) to
+     * be printed. If the Predicate rejects the input, the OK button is disabled and the user is unable to confirm the dialog.
+     * <p/>
+     * The function returns the original value if the dialog was cancelled or the entered value was empty or invalid. Otherwise, it
+     * returns the new value entered by the user.
+     * @param parentComponent the parent component
+     * @param message the prompt message.
+     * @param title title for the dialog
+     * @param oldValue the original value
+     * @param validator the validator instance. May be {@code null}
+     * @return the updated value, or the original one.
+     */
+    static public int promptForInt(Component parentComponent, @Nonnull String message, @Nonnull String title, int oldValue, @CheckForNull Predicate<Integer> validator) {
+        String result = Integer.toString(oldValue);
+        JButton okOption = new JButton(Bundle.getMessage("InputDialogOK"));
+        JButton cancelOption = new JButton(Bundle.getMessage("InputDialogCancel"));
+        okOption.setDefaultCapable(true);
+
+        ValidatingInputPane<Integer> validating = new ValidatingInputPane<Integer>((val) -> {
+                try {
+                    return Integer.parseInt(val);
+                } catch (NumberFormatException ex) {
+                    throw new NumberFormatException(Bundle.getMessage("InputDialogNotNumber"));
+                }
+            })
+                .message(message)
+                .validator(validator)
+                .attachConfirmUI(okOption);
+        validating.setText(result);
+        
+        JOptionPane    pane = new JOptionPane(validating, JOptionPane.PLAIN_MESSAGE,
+                        OK_CANCEL_OPTION, null, new Object[] { okOption, cancelOption });
+        
+        pane.putClientProperty("OptionPane.buttonOrientation", SwingConstants.RIGHT);
+        pane.setInitialSelectionValue(result);
+        JDialog dialog = pane.createDialog(parentComponent, title);
+        dialog.getRootPane().setDefaultButton(okOption);
+        dialog.setResizable(true);
+        pane.selectInitialValue();
+
+        class AL implements ActionListener {
+            boolean confirmed;
+            
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Object s = e.getSource();
+                if (s == okOption || Objects.equal("confirm", e.getActionCommand())) {
+                    confirmed = true;
+                    dialog.setVisible(false);
+                }
+                if (s == cancelOption || Objects.equal("cancel", e.getActionCommand())) {
+                    dialog.setVisible(false);
+                }
+            }
+        }
+        
+        AL al = new AL();
+        okOption.addActionListener(al);
+        cancelOption.addActionListener(al);
+
+        dialog.setVisible(true);
+        dialog.dispose();
+        
+        if (al.confirmed) {
+            Integer res = validating.getValue();
+            if (res != null) {
+                return res;
+            }
+        }
+        return oldValue;
     }
 
     /**
