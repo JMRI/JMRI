@@ -1,4 +1,4 @@
-package jmri.jmrix.can.cbus.swing.console;
+package jmri.jmrix.can.cbus.swing;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;

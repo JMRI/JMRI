@@ -29,6 +29,7 @@ public class CbusSimulator {
 
     public CbusSimulator(CanSystemConnectionMemo sysmemo){
         memo = sysmemo;
+        jmri.InstanceManager.store(this,jmri.jmrix.can.cbus.simulator.CbusSimulator.class);
         init();
     }
     
@@ -110,6 +111,8 @@ public class CbusSimulator {
             _evResponseArr.set(i,null);
         } 
         _evResponseArr = null;
+        
+        jmri.InstanceManager.deregister(this, jmri.jmrix.can.cbus.simulator.CbusSimulator.class);
     }
 
     private static final Logger log = LoggerFactory.getLogger(CbusSimulator.class);

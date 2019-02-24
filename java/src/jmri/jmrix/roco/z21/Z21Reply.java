@@ -83,7 +83,6 @@ public class Z21Reply extends AbstractMRReply {
         return 0;
     }
 
-    @SuppressWarnings("fallthrough")
     @SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")
     public String toMonitorString() {
         switch(getOpCode()){

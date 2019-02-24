@@ -52,6 +52,11 @@ public class SampleScriptTest {
     @Before
     public void setUp() throws Exception {
         jmri.util.JUnitUtil.setUp();
+        
+        // it's not really understood why, but doing these inside of the 
+        // sample Python script doesn't always work; it's as if that
+        // is working with a different InstanceManager. So we 
+        // include a comprehensive set here.
         jmri.util.JUnitUtil.resetInstanceManager();
         jmri.util.JUnitUtil.resetProfileManager();
         jmri.util.JUnitUtil.initConfigureManager();
@@ -59,6 +64,7 @@ public class SampleScriptTest {
         jmri.util.JUnitUtil.initDebugPowerManager();
         jmri.util.JUnitUtil.initInternalSensorManager();
         jmri.util.JUnitUtil.initInternalTurnoutManager();
+        jmri.util.JUnitUtil.initDebugThrottleManager();
     }
         
     @After 

@@ -45,6 +45,13 @@ public class CbusEvent {
         return _nn;
     }
     
+    public void setEn ( int en ) {
+        _en = en;
+    }
+
+    public void setNn ( int nn ) {
+        _nn = nn;
+    }
     
     public void setName( String name ) {
         _name = name;

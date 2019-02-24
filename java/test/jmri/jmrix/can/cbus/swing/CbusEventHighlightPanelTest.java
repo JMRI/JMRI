@@ -1,4 +1,4 @@
-package jmri.jmrix.can.cbus.swing.console;
+package jmri.jmrix.can.cbus.swing;
 
 import java.awt.GraphicsEnvironment;
 import org.junit.After;
