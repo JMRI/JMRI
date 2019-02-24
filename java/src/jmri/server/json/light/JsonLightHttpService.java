@@ -5,7 +5,6 @@ import static jmri.server.json.JSON.INCONSISTENT;
 import static jmri.server.json.JSON.OFF;
 import static jmri.server.json.JSON.ON;
 import static jmri.server.json.JSON.STATE;
-import static jmri.server.json.JSON.TYPE;
 import static jmri.server.json.JSON.UNKNOWN;
 import static jmri.server.json.light.JsonLight.LIGHT;
 import static jmri.server.json.light.JsonLight.LIGHTS;
