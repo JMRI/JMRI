@@ -33,9 +33,7 @@ public class CtcRunActionTest {
         new CtcRunAction().actionPerformed(null);
 
         // ** Run time test scenarios **
-        InstanceManager im = InstanceManager.getDefault();
         SensorManager sm = InstanceManager.getDefault(SensorManager.class);
-//         TurnoutManager tm = InstanceManager.getDefault(TurnoutManager.class);
         SignalHeadManager hm = InstanceManager.getDefault(SignalHeadManager.class);
 
         // Clear Left turnout right on main.

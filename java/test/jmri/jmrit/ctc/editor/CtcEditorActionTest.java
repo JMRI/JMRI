@@ -208,6 +208,7 @@ public class CtcEditorActionTest {
         JButtonOperator jbTRL = new JButtonOperator(_jfo, Bundle.getMessage("ButtonEdit"), 3);
         jbTRL.doClick();
         JUnitUtil.waitFor(()->{return !(editTRL.isAlive());}, "editTRL finished");  // NOI18N
+        JUnitUtil.waitFor(()->{return !(editRules.isAlive());}, "editRules finished");  // NOI18N
 
     }
 
