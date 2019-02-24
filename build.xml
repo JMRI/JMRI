@@ -1789,7 +1789,7 @@
            additionalparam="-breakiterator"
            author="true"
            version="false"
-           package="yes"
+           public="yes"
            use="true"
            failonerror="true"
            windowtitle="JMRI API">
@@ -1860,7 +1860,7 @@
            additionalparam="-breakiterator"
            author="true"
            version="false"
-           package="yes"
+           public="yes"
            use="true"
            failonerror="true"
            windowtitle="JMRI API">
@@ -1934,7 +1934,7 @@
            additionalparam="-breakiterator"
            author="true"
            version="false"
-           package="yes"
+           public="yes"
            use="true"
            windowtitle="JMRI API">
 
