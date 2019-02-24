@@ -13,7 +13,7 @@ import org.junit.runners.Suite;
 //     AwtWindowPropertiesTest.class,
     BundleTest.class,
 //     CheckJMRIObjectTest.class,
-//     ClassCompareContentsTest.class,
+    ClassCompareContentsTest.class,
 //     CodeButtonHandlerDataRoutinesTest.class,
 //     ColumnsTest.class,
 //     CommonSubsTest.class,
@@ -21,7 +21,7 @@ import org.junit.runners.Suite;
 //     CreateInternalSensorsXMLFileTest.class,
 //     CreateVirtualSignalsXMLFileTest.class,
 //     CreateXMLFilesTest.class,
-//     FindAndReplaceTest.class,
+    FindAndReplaceTest.class,
 //     InternalSensorManagerTest.class,
 //     OriginalCopyTest.class,
 //     ProgramPropertiesTest.class

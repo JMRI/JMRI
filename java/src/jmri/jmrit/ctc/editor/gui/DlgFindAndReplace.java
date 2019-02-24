@@ -28,9 +28,9 @@ public class DlgFindAndReplace extends javax.swing.JDialog {
     private final CTCSerialData _mCTCSerialData;
     private final DefaultTableModel _mDefaultTableModel;
     private String _mSearchForTextFrozen = "";
-    
+
     private ArrayList<FindAndReplace.SearchResults> _mSearchResults = null;
-    
+
     public DlgFindAndReplace(java.awt.Frame parent, boolean modal, AwtWindowProperties awtWindowProperties, CTCSerialData ctcSerialData) {
         super(parent, modal);
         initComponents();
@@ -39,7 +39,7 @@ public class DlgFindAndReplace extends javax.swing.JDialog {
         _mDefaultTableModel = (DefaultTableModel)_mResults.getModel();  // We know this is the type by default construction!
         _mContains.setSelected(true);
         _mSearchForText.requestFocusInWindow();
-        _mAwtWindowProperties.setWindowState(this, FORM_PROPERTIES);  
+        _mAwtWindowProperties.setWindowState(this, FORM_PROPERTIES);
         TableColumnModel tableColumnModel = _mResults.getColumnModel();
         _mResults.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);    // Otherwise these don't work:
         tableColumnModel.getColumn(0).setPreferredWidth(60);
@@ -50,7 +50,7 @@ public class DlgFindAndReplace extends javax.swing.JDialog {
         _mSelectDeselectAll.setText(Bundle.getMessage("InfoDlgFindSelectAll")); // NOI18N
         CommonSubs.numberButtonGroup(_mHowReplace);
         CommonSubs.setButtonSelected(_mHowReplace, 1);
-        
+
         _mResults.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
            public void valueChanged(ListSelectionEvent event)  {
                if (!event.getValueIsAdjusting()) {
@@ -59,7 +59,7 @@ public class DlgFindAndReplace extends javax.swing.JDialog {
            }
         });
     }
-    
+
     private void updateSelectionCount() {
         int selectionCount = _mResults.getSelectedRows().length;
         _mCountSelected.setText(Bundle.getMessage("InfoDlgFindCount") + " " + Integer.toString(selectionCount));    // NOI18N
@@ -104,6 +104,7 @@ public class DlgFindAndReplace extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle(Bundle.getMessage("TitleDlgFind"));
         addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
             }
@@ -170,10 +171,12 @@ public class DlgFindAndReplace extends javax.swing.JDialog {
                 false, false, false
             };
 
+            @Override
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
 
+            @Override
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
@@ -335,7 +338,7 @@ public class DlgFindAndReplace extends javax.swing.JDialog {
                 _mResults.setRowSelectionInterval(0, _mResults.getRowCount() - 1);
             }
             _mSelectDeselectAll.setText(Bundle.getMessage("InfoDlgFindDeselectAll"));   // NOI18N
-        } else { 
+        } else {
             _mResults.clearSelection();
             _mSelectDeselectAll.setText(Bundle.getMessage("InfoDlgFindSelectAll")); // NOI18N
         }
@@ -349,7 +352,7 @@ public class DlgFindAndReplace extends javax.swing.JDialog {
         for (int selectedRow : selectedRows) {
             selectedSearchResults.add(_mSearchResults.get(selectedRow));
         }
-//  Perform the action the user requested:        
+//  Perform the action the user requested:
         switch (ProjectsCommonSubs.getButtonSelectedInt(_mHowReplace)) {
             case 0:     // Replace completely:
                 for (FindAndReplace.SearchResults selectedSearchResult : selectedSearchResults) {

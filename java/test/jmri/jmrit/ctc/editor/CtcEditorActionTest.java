@@ -200,35 +200,14 @@ public class CtcEditorActionTest {
         jbIL.doClick();
         JUnitUtil.waitFor(()->{return !(editIL.isAlive());}, "editIL finished");  // NOI18N
 
-        // TRL button - requires special handling.
-        // First a left/right Edit has to be selected which gets the rules dialog.
-        // After exiting the rules dialog, the initial dialog returns and needs OK.
-        // 1 - TRL, select edit
-        // 2 - Rules, select save close, may need focus
-        // 3 - TRL, select OK
-
-//         jlo.clickOnItem(0, 1);
-//         JButtonOperator jbTRL = new JButtonOperator(_jfo, "Edit", 3);
-//         jbTRL.doClick();
-//             JDialogOperator jdo = new JDialogOperator("TitleDlgTRL");
-//             JButtonOperator jbo = new JButtonOperator(jdo, Bundle.getMessage("ButtonOK"));
-// new EventTool().waitNoEvent(2000);
-//             jbo.pushNoBlock();
-
-//         Thread editTRL1 = createModalDialogOperatorThread(Bundle.getMessage("TitleDlgTRL"), "Edit", "editTRL1");  // NOI18N
-//         Thread editRules = createModalDialogOperatorThread(Bundle.getMessage("TitleDlgTRLRules"), Bundle.getMessage("ButtonSaveClose"), "editRules");  // NOI18N
-// //         JUnitUtil.waitFor(()->{return !(editTRL1.isAlive());}, "editTRL 1 finished");  // NOI18N
-//         JUnitUtil.waitFor(()->{return !(editRules.isAlive());}, "editRules finished");  // NOI18N
-
-
-//         Thread editRules = createModalDialogOperatorThread(Bundle.getMessage("TitleDlgTUL"), Bundle.getMessage("ButtonSaveClose"), "editRules");  // NOI18N
-//         jbTRL.doClick();
-//         JUnitUtil.waitFor(()->{return !(editTRL.isAlive());}, "editTRL finished");  // NOI18N
-//         JButtonOperator jbTRL = new JButtonOperator(_jfo, "Edit", 3);
-//         jbTRL.doClick();
-//         JUnitUtil.waitFor(()->{return !(editTRL.isAlive());}, "editTRL finished");  // NOI18N
-
-
+        // TRL button -- Special handling required since the TRL dialog starts the Rules dialog.
+        // This test should also be the last one.
+        jlo.clickOnItem(0, 1);
+        Thread editRules= createModalDialogOperatorThread("Edit Right traffic locking rules", Bundle.getMessage("ButtonSaveClose"), "editRules");  // NOI18N
+        Thread editTRL= createModalDialogOperatorThread(Bundle.getMessage("TitleDlgTRL"), Bundle.getMessage("ButtonOK"), "editTRL");  // NOI18N
+        JButtonOperator jbTRL = new JButtonOperator(_jfo, Bundle.getMessage("ButtonEdit"), 3);
+        jbTRL.doClick();
+        JUnitUtil.waitFor(()->{return !(editTRL.isAlive());}, "editTRL finished");  // NOI18N
 
     }
 
@@ -238,6 +217,11 @@ public class CtcEditorActionTest {
             JDialogOperator jdo = new JDialogOperator(dialogTitle);
             JButtonOperator jbo = new JButtonOperator(jdo, buttonText);
 // new EventTool().waitNoEvent(2000);
+            if (threadName.equals("editTRL")) {
+                // Start the rules dialog
+                JButtonOperator jbTRL = new JButtonOperator(jdo, Bundle.getMessage("ButtonEdit"), 0);
+                jbTRL.doClick();
+            }
             jbo.pushNoBlock();
         });
         t.setName(dialogTitle + " Close Dialog Thread: " + threadName);  // NOI18N
