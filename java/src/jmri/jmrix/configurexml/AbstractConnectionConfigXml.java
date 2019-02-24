@@ -124,9 +124,16 @@ abstract public class AbstractConnectionConfigXml extends AbstractXmlAdapter {
     @Deprecated // part of #4670 migration to parsable prefixes
     @SuppressWarnings("deprecation") // Manager.isLegacySystemPrefix
     protected void checkAndWarnPrefix(String prefix) {
-        if (! jmri.Manager.isLegacySystemPrefix(prefix)) return;
-        // legacy, so warn
-        log.warn("Connection is using a legacy prefix that needs to be migrated: {}", prefix);
+        if (prefix.length() == 1 && ! org.apache.commons.lang3.StringUtils.isNumeric(prefix) ) return;
+        if (prefix.length() > 1 
+                && ! org.apache.commons.lang3.StringUtils.isNumeric(prefix.substring(0,1)) 
+                && org.apache.commons.lang3.StringUtils.isNumeric(prefix.substring(1)) ) return;
+        
+        // No longer checking jmri.Manager.isLegacySystemPrefix(prefix)) as this is more rigorous
+            
+            
+        // unparsable, so warn
+        log.warn("Connection is using a prefix that needs to be migrated: {}", prefix);
         log.warn("See http://jmri.org/help/en/html/setup/MigrateSystemPrefixes.shtml for more information");
         
         // and show clickable dialog
