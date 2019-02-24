@@ -1,7 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Translation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-02-24 -->
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -26,35 +26,35 @@
     <div id="mainContent">
       <a name="Top" id="Top"></a>
 
-      <h1>DecoderPro&reg; Main Menu Bar</h1>
+      <h1>DecoderPro&reg; Barre Menu Principal</h1>
 
-      <h2>JMRI&reg; Throttle Window Menu Bar</h2>
+      <h2>Barre de Menu Fen&#234;tre R&#233;gulateur JMRI&reg;</h2>
 
       <div align="right">
-        <p><a href="dp3_Main_Throttle.shtml">Back</a></p>
+        <p><a href="dp3_Main_Throttle.shtml">Retour</a></p>
       </div>
       <hr>
 
-      <p>Throttle Window Menu Bar<br></p>
+      <p>Barre de Menu Fen&#234;tre R&#233;gulateur<br></p>
 
       <div style="text-align: center;">
         <img src="images/Main_Throttle_menu.png" alt="menu bar"
         height="89" width="384">
       </div>
 
-      <h3><strong>File</strong></h3>
+      <h3><strong>Fichier</strong></h3>
 
       <ul>
-        <li><strong>New Throttle...</strong></li>
+        <li><strong>Nouveau R&#233;gulateur...</strong></li>
 
         <li style="list-style: none">
           <blockquote>
-            <p>Opens new copy of the throttle</p>
+            <p>Ouvre une nouvelle copie du R&#233;gulateur</p>
           </blockquote>
         </li>
 
         <li>
-          <strong>Open Throttle</strong>
+          <strong>Ouvrir R&#233;gulateur</strong>
 
           <blockquote>
             <div style="text-align: center;"></div>
@@ -63,20 +63,19 @@
             "images/ThrottleOpen.png" alt="open throttle" height=
             "360" width="508"></p>
 
-            <p>Select a saved throttle XML: file.</p>
+            <p>S&#233;lectionne un R&#233;gulateur sauvegard&#233; fichier: XML.</p>
           </blockquote>
         </li>
 
         <li>
-          <strong>Save Current Throttle</strong>
+          <strong>Enregistrer le R&#233;gulateur Actuel</strong>
 
           <blockquote>
-            <p>Save a throttle file that has been opened and
-            modified</p>
+            <p>Enregistre un fichier R&#233;gulateur qui a &#233;t&#233; ouvert et modifi&#233;</p>
           </blockquote>
         </li>
 
-        <li><strong>Save Current Throttle As...</strong></li>
+        <li><strong>Enregistrer le R&#233;gulateur Actuel Sous...</strong></li>
 
         <li style="list-style: none">
           <blockquote>
@@ -90,9 +89,9 @@
       </ul>
 
       <div style="margin-left: 4em">
-        <p>Opens the Save dialog to allow you to save the Throttle
-        XML file in the location you select and using the name you
-        specify</p>
+        <p>Ouvre la bo&#238;te de dialogue Enregistrer pour vous permettre de 
+        sauvegarder le fichier XML du R&#233;gulateur &#224; l'emplacement que vous 
+        avez s&#233;lectionn&#233; et en utilisant le nom que vous avez sp&#233;cifi&#233;.</p>
       </div>
 
       <blockquote>
@@ -101,20 +100,19 @@
 
       <ul>
         <li>
-          <span style="font-weight: bold;">Open Throttles
-          Layout...</span>
+          <span style="font-weight: bold;">Ouvrir Mise en Page R&#233;gulateur...</span>
 
           <blockquote>
-            <p>Opens Throttle layout that you select.</p>
+            <p>Ouvre la Mise en Page R&#233;gulateur que vous avez s&#233;lectionn&#233;.</p>
           </blockquote>
         </li>
 
         <li>
-          <span style="font-weight: bold;">Save Throttles
-          Layout...</span>
+          <span style="font-weight: bold;">Enregistrer Mise en Page R&#233;gulateur...</span>
 
           <blockquote>
-            <p>Save Throttles Layout to file in Throttle Folder</p>
+            <p>Enregistre la Mise en Page R&#233;gulateur dans le fichier du 
+            r&#233;pertoire Throttle</p>
           </blockquote>
         </li>
       </ul>
@@ -125,22 +123,22 @@
 
       <ul>
         <li>
-          <span style="font-weight: bold;">Load Default Throttles
-          Layout</span>
+          <span style="font-weight: bold;">Charger la Mise en Page 
+          R&#233;gulateur par d&#233;faut</span>
 
           <blockquote>
-            <p>Load the default throttle layout from Throttle
-            Folder</p>
+            <p>Charge la mise en page r&#233;gulateur par d&#233;faut depuis le 
+            r&#233;pertoire Throttle</p>
           </blockquote>
         </li>
 
         <li>
-          <span style="font-weight: bold;">Save As Default
-          Throttles Layout</span>
+          <span style="font-weight: bold;">Enregistrer comme Mise en Page 
+          R&#233;gulateur par D&#233;faut</span>
 
           <blockquote>
-            <p>Save as the default throttle layout from Throttle
-            Folder</p>
+            <p>Enregistre comme mise en page r&#233;gulateur par d&#233;faut dans 
+            le r&#233;pertoire Throttle</p>
           </blockquote>
         </li>
       </ul>
@@ -150,28 +148,27 @@
       </blockquote>
 
       <ul>
-        <li><a name="Wi" id="Wi"></a>Start <a style=
+        <li><a name="Wi" id="Wi"></a>D&#233;marrer <a style=
         "font-weight: bold;" href=
         "WiThrottle.shtml">WiThrottle</a></li>
       </ul>
 
-      <h3><strong>Edit</strong></h3>
+      <h3><strong>Modifier</strong></h3>
 
       <ul>
         <li><a href=
-        "dp3_Main_Throttle_FrameProperties.shtml"><strong>Frame
-        Properties</strong></a></li>
+        "dp3_Main_Throttle_FrameProperties.shtml"><strong>Propri&#233;t&#233;s du 
+        Cadre</strong></a></li>
 
         <li style="list-style: none">
           <blockquote>
-            <p>Opens the <strong>Edit Throttle Frame</strong>
-            dialog and allows you to edit the current throttle
-            window title and selected Frame properties.</p>
+            <p> Ouvre la bo&#238;te de dialogue <strong>Modifier le Cadre du 
+            R&#233;gulateur</strong> et vous permet de modifier le titre actuel 
+            de la fen&#234;tre du r&#233;gulateur et les propri&#233;t&#233;s du Cadre s&#233;lectionn&#233;es.</p>
           </blockquote>
         </li>
 
-        <li><strong>Export Current Throttle Customization to
-        roster</strong><br></li>
+        <li><strong>Exporter la personnalisation du R&#233;gulateur actuel vers l'inventaire</strong><br></li>
 
         <li style="list-style: none">
           <blockquote>
@@ -184,80 +181,74 @@
         </li>
 
         <li><strong><a href=
-        "Start_Preferences.shtml#Throttle">Throttle
-        Prefereces</a></strong></li>
+        "Start_Preferences.shtml#Throttle">Pr&#233;f&#233;rences R&#233;gulateur</a></strong></li>
       </ul>
 
-      <h3><strong>View</strong></h3>
+      <h3><strong>Vue</strong></h3>
 
       <blockquote>
-        <p>Allows you to select which of the three panels of the
-        throttle are being shown. Place a check mark in each of the
-        panels that your want to display.</p>
+        <p>Vous permet de s&#233;lectionner lequel des trois panneaux du 
+        R&#233;gulateur est affich&#233;. Cochez chaque panneau que vous souhaitez afficher..</p>
       </blockquote>
 
       <ul>
         <li><input name="checkbox" id="checkbox" checked="checked"
-        type="checkbox"> <strong>Address Panel</strong></li>
+        type="checkbox"> <strong>Panneau d'Adresse</strong></li>
 
         <li><strong><input name="checkbox2" id="checkbox2" checked=
-        "checked" type="checkbox"> Control Panel</strong></li>
+        "checked" type="checkbox"> Panneau de Contr&#244;le</strong></li>
 
         <li><strong><input name="checkbox3" id="checkbox3" checked=
-        "checked" type="checkbox"> Function Panel</strong><br>
+        "checked" type="checkbox"> Panneau de Fonction</strong><br>
         <br></li>
 
         <li style="list-style: none">
           <blockquote>
-            <p>You may ask yourself, "Why would I want to turn off
-            any of these panels?" As only one example, let's say we
-            have an observation car at the rear of a passenger
-            train. We could equip this car with a function only
-            decoder to control:</p>
+            <p>Vous pouvez vous demander: "Pourquoi voudrais-je d&#233;sactiver 
+            l'un de ces panneaux?" Par exemple, supposons que nous ayons 
+            une voiture d'observation &#224; l'arri&#232;re d'un train de voyageurs. 
+            Nous pourrions &#233;quiper cette voiture d'un d&#233;codeur uniquement 
+            pour contr&#244;ler: </p>
 
             <ol>
-              <li>Interior lights,</li>
+              <li>&#201;clairage int&#233;rieur,</li>
 
-              <li>Rear marker lights, and</li>
+              <li> Feux de position arri&#232;re et</li>
 
-              <li>A rear Drum light.</li>
+              <li> Un feu arri&#232;re tournant.</li>
             </ol>
 
-            <p>We have no need for the speed control pane and only
-            need three function buttons for this "Throttle".<br>
-            With a whole passenger train equipped like this, lots
-            of screen space can be conserved by using the throttle
-            set-up files to optimize the <strong>Throttle</strong>
-            windows. Then you could turn off the lights in the
-            kitchen and lower the lights in the dining area so the
-            passengers can enjoy the sunset as they transit the
-            Rockies enjoying the beautiful sunset sipping
-            Cognac&hellip;. but I digress. You get the idea.</p>
+            <p> Nous n'avons pas besoin de la sous-fen&#234;tre de contr&#244;le 
+            de la vitesse et nous n'avons besoin que de trois boutons de 
+            fonction pour ce "R&#233;gulateur".<br> Avec tout un train de 
+            voyageurs &#233;quip&#233; de cette mani&#232;re, vous pouvez &#233;conomiser 
+            beaucoup d'espace &#224; l'&#233;cran gr&#226;ce &#224; la configuration des 
+            fichiers R&#233;gulateur pour optimiser les fen&#234;tres <strong>
+				R&#233;gulateur</strong>. Vous pouvez ensuite &#233;teindre les 
+				lumi&#232;res de la cuisine et baisser les lumi&#232;res de la 
+				salle &#224; manger pour permettre aux passagers de profiter 
+				du coucher du soleil pendant leur transit dans les 
+				Rocheuses en profitant du magnifique coucher de soleil 
+				en sirotant du Cognac ; mais je m'&#233;gare.</P>
 
-            <p><img src="images/separator.png" alt="separator"
-            height="4" width="340"></p>
-          </blockquote>
+            <p> <img src = "images / separator.png" alt = "separator" height = "4" width "340"> </p> </blockquote>
         </li>
 
-        <li><strong>Reset Function Buttons</strong></li>
+        <li> <strong>Touches de fonction de r&#233;initialisation</strong> </li>
 
-        <li style="list-style: none">
+        <li style = "list-style: none">
           <blockquote>
-            <p>Resets all the Function buttons to the default
-            settings, <input name="button14" id="button14" value=
-            "F1" type="button"> , <input name="button15" id=
-            "button15" value="F2" type="button"> , etc.</p>
+            <p> R&#233;initialise tous les boutons de fonction aux param&#232;tres 
+            par d&#233;faut,<input name = "button14" id = "button14" value = "F1" type = "bouton">, <input name = "button15" id = "button15" value = "F2" type = "bouton">, etc.</p>
           </blockquote>
         </li>
 
         <li>
-          <strong>Get all current throttle components in
-          bounds</strong><br>
+          <strong>Obtenez tous les composants actuels du R&#233;gulateur dans les limites</strong> <br>
           <br>
 
           <blockquote>
-            <p>Returns all the throttle panels to the throttle
-            frame.</p>
+            <p>Ram&#232;ne tous les panneaux R&#233;gulateur dans le cadre R&#233;gulateur.</p>
           </blockquote>
         </li>
       </ul>
@@ -269,17 +260,16 @@
 
       <ul>
         <li>
-          <strong>Switch Throttle frame view mode</strong><br>
-          Toggles the Throttle frames on/off
+			<strong> Activer/d&#233;sactiver le mode d'affichage du cadre du R&#233;gulateur</strong>: active ou d&#233;sactive l'affichage des cadres du R&#233;gulateur.
 
           <blockquote>
-            <p>Frames on.</p>
+            <p>Cadres  on.</p>
 
             <p style="margin-left: 40px; text-align: center;">
             <img src="images/Throttle_FrameMode.png" alt="frames"
             height="313" width="318"></p>
 
-            <p>Frames off</p>
+            <p>Cadres off</p>
 
             <p style="text-align: center;"><img src=
             "images/Throttle_FrameModeOff.png" alt="frame off"
@@ -289,52 +279,52 @@
       </ul>
 
       <ul>
-        <li><strong>Show/Hide Throttles list window<br></strong>
-        Toggles the <a href=
-        "dp3_Main_Throttle_List.shtml"><strong>Local JMRI
-        throttles</strong></a> list window on or off<br></li>
+        <li><strong>Afficher/Masquer la fen&#234;tre de la liste des 
+        r&#233;gulateurs<br> </strong> active ou d&#233;sactive les 
+        <a href= "dp3_Main_Throttle_List.shtml"> <strong>r&#233;gulateurs 
+        JMRI locaux</strong> </a> - </li >
       </ul>
 
-      <h3><strong>Power</strong> (<em>track power control, if
-      supported by your system)</em></h3>
+      <h3> <strong>Alimentation</strong> (<em>Contr&#244;le de l'alimentation 
+      de la voie, si le syst&#232;me le prend en charge)</em> </h3>
 
       <ul>
-        <li><strong>Power On</strong></li>
+        <li> <strong>Mise sous tension</strong> </li>
 
-        <li><strong>Power Off</strong></li>
+        <li> <strong>Mise hors tension</strong> </li>
       </ul>
 
-      <h3><strong>Window</strong></h3>
+      <h3> <strong>Fen&#234;tre</strong> </h3>
 
       <ul>
-        <li><strong>Minimize</strong></li>
+        <li> <strong>R&#233;duire</strong> </li>
 
-        <li>Lists all open DecoderPro windows. If one of the
-        windows is clicked it will be brought to the front so that
-        you can minimize it to the system tray.</li>
+        <li>R&#233;pertorie toutes les fen&#234;tres DecoderPro ouvertes. Si vous 
+        cliquez sur l'une des fen&#234;tres, celle-ci sera plac&#233;e au premier 
+        plan afin que vous puissiez la r&#233;duire dans la barre d'&#233;tat syst&#232;me. </Li>
       </ul>
 
-      <h3><strong>Help</strong></h3>
+      <h3> <strong> Aide </strong> </h3>
 
       <ul>
-        <li><strong>Window Help...</strong></li>
+        <li> <strong> Aide sur la fen&#234;tre ... </strong> </li>
 
-        <li><strong>General Help...</strong></li>
+        <li> <strong> Aide g&#233;n&#233;rale ... </strong> </li>
 
-        <li><strong>License...</strong></li>
+        <li> <strong> Licence ... </strong> </li>
 
-        <li><strong>Locations...</strong></li>
+        <li> <strong> Emplacements ... </strong> </li>
 
-        <li><strong>Context</strong></li>
+        <li> <strong> Contexte </strong> </li>
 
-        <li><strong>System Console</strong></li>
+        <li> <strong> Console syst&#232;me </strong> </li>
 
-        <li><strong>Upload Debugging Info..</strong>.</li>
+        <li> <strong> T&#233;l&#233;charger les informations de d&#233;bogage .. </strong>. </li>
       </ul>
       <hr>
 
       <div align="right">
-        <p><a href="dp3_Main_Throttle.shtml">Back</a></p>
+        <p><a href="dp3_Main_Throttle.shtml">Retour</a></p>
       </div><!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
