@@ -1,7 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Translation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-02-24 -->
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -26,50 +26,47 @@
     <div id="mainContent">
       <a name="Top" id="Top"></a>
 
-      <h1>DecoderPro&reg; Main Window</h1>
+      <h1>DecoderPro&reg; Fenre Principale</h1>
 
-      <h2>JMRI&reg; Throttle Window - Function Panel</h2>
+      <h2>JMRI&reg; Fen&#234;tre R&#233;gulateur - Panneau Fonction</h2>
 
       <div align="right">
         <p><a href="dp3_Main_Throttle.shtml">Back</a></p>
       </div>
       <hr>
 
-      <h4>Throttle Function Panel</h4>
+      <h4>Panneau Fonction R&#233;gulateur</h4>
 
       <table border="0" cellpadding="1" cellspacing="1" width=
       "90%">
         <tbody>
           <tr>
             <td colspan="2" rowspan="1" width="44%">
-              <p>The <strong>Throttle Function Panel</strong>
-              allows you to select the decoder functions from F0
-              through F15 on first overlay and F16 through F28 on
-              second overlay. Many new Sound decoders use up to 28
-              functions.. use the <input name="button11" id=
-              "button11" value="*" type="submit"> to toggle between
-              the two overlays</p>
+              <p>Le <strong>Le panneau de fonctions du R&#233;gulateur</strong> 
+              vous permet de s&#233;lectionner les fonctions du d&#233;codeur de 
+              F0 &#224; F15 sur la premi&#232;re page et de F16 &#224; F28 sur la seconde. 
+              De nombreux nouveaux d&#233;codeurs de son utilisent jusqu'&#224; 28 
+              fonctions. Utilisez <input name = "button11" id = "button11" 
+              value = "*" type = "submit"> pour basculer entre les deux pages </p>
 
               <p style="text-align: center;"><img src=
               "images/Main_Throttle_Function.png" alt=
               "Throttle function panel" height="248" width=
               "281"></p>
 
-              <p>If you have entered <a href=
-              "Adv_FunctionLabel.shtml"><strong>Function
-              labels</strong>,</a> the label text will appear on
-              the throttle Function buttons.</p>
+              <p>Si vous avez entr&#233; <a href=
+              "Adv_FunctionLabel.shtml"><strong>les libell&#233;s Fonction
+              </strong>,</a> le texte appaitra sur les boutons du R&#233;gulateur.</p>
 
               <p style="text-align: center;"><img style=
               "width: 427px; height: 254px;" alt="labels" src=
               "images/Main_Throttle_Function_Labels.png"></p>
 
-              <p>Another way to change the labels on the function
-              buttons, is to right click on the button that you
-              want to edit, the word <strong>Properties..</strong>
-              is displayed and when clicked on, an <strong>Edit
-              Function Button</strong> dialog box will be
-              displayed.</p>
+              <p>Une autre fa&#231;on de modifier les libell&#233;s des boutons 
+              de fonction consiste &#224; cliquer avec le bouton droit de la 
+              souris sur le bouton que vous souhaitez modifier. Le mot 
+              <strong> Propri&#233;t&#233;s .. </strong> s'affiche et, lorsque vous 
+              cliquez sur ce bouton, la bo&#238;te de dialogue <strong> Modifier la fonction</strong> sera affich&#233;e. </p>
             </td>
           </tr>
 
@@ -79,63 +76,64 @@
             "Function edit" height="257" width="229"></td>
 
             <td align="left" valign="top" width="56%">
-              <p><strong>Edit Function Button</strong> allows you
-              to edit the text displayed on the button and the
-              function assigned.</p>
+              <p> <strong>Le Bouton Modifier Fonction</strong> vous 
+              permet de modifier le texte affich&#233; sur le bouton et la 
+              fonction attribu&#233;e. </p>
 
-              <p><strong>Function Number:</strong> text box to set
-              the function assigned to the button.</p>
+               <p> <strong>Num&#233;ro de fonction:</strong> zone de texte 
+               permettant de d&#233;finir la fonction attribu&#233;e au bouton. </p>
 
-              <p style="color: rgb(255, 102, 102);">
-              <strong>Warning!!!</strong> Make sure you do not
-              assign the same function number to more than one
-              button, otherwise, undesirable results may occur</p>
+               <p style = "color: rgb (255, 102, 102);"> <strong>
+				   Avertissement !!! </strong> Veillez &#224; ne pas attribuer 
+				   le m&#234;me num&#233;ro de fonction &#224; plusieurs boutons. 
+				   Dans le cas contraire, des r&#233;sultats ind&#233;sirables 
+				   peuvent se produire </p>
 
-              <p><strong>Text:</strong> the text you want displayed
-              on the button.</p>
+               <p> <strong>Texte:</strong> le texte &#224; afficher sur le bouton. </p>
 
-              <p><strong>Font Size:</strong> Select the font size
-              in points.</p>
+               <p> <strong>Taille de la police:</strong> s&#233;lectionnez 
+               la taille de la police en points. </p>
+
 
               <p><input name="checkbox4" id="checkbox4" checked=
-              "checked" type="checkbox"> <strong>Lockable</strong>
-              - locks the function when button is clicked. eg makes
-              the button a push on / push off button.</p>
+              "checked" type="checkbox"> <strong>Verrouillable</strong>: 
+              verrouille la fonction lorsque vous cliquez sur le bouton. 
+              par exemple, fait du bouton un bouton On/Off. </p>
 
-              <p><input name="checkbox5" id="checkbox5" checked=
-              "checked" type="checkbox"> <strong>Visible</strong> -
-              makes the button visible. When unchecked the button
-              will not show in the panel. To restore use the
-              <strong>View</strong> menu and select <strong>Show
-              All Function Buttons</strong> option.</p>
+              <p> <input name = "checkbox5" id = "checkbox5" checked= 
+              "checked" type = "checkbox"> <strong>Visible</strong>: 
+              rend le bouton visible. Lorsque cette case n'est pas coch&#233;e, 
+              le bouton n'appara&#238;tra pas dans le panneau. Pour restaurer, 
+              utilisez le menu <strong> Afficher </strong>, puis 
+              s&#233;lectionnez l'option <strong> Afficher toutes les touches 
+              de fonction </strong>. </P>
 
-              <p><strong>Function off icon</strong>:</p>
+              <p> <strong>Ic&#244;ne de Fonction D&#233;sactiv&#233;e </strong>: </p>
 
-              <p><input name="textfield2" id="textfield2" size="5"
-              type="text"> Drag and drop icon of your choice into
-              the box. To remove icon right click and click on
-              Remove.</p>
+              <p> <input name = "textfield2" id = "textfield2" size = "5"
+               type = "text"> Faites glisser l'ic&#244;ne de votre choix dans 
+               la bo&#238;te. Pour supprimer l'ic&#244;ne, cliquez avec le bouton 
+               droit de la souris et cliquez sur Supprimer. </P>
 
-              <p><strong>Function on icon:</strong></p>
+              <p> <strong> Ic&#244;ne de Fonction Activ&#233;e: </strong> </p>
 
-              <p><input name="textfield3" id="textfield3" size="5"
-              type="text"> Drag and drop icon of your choice into
-              the box. To remove icon right click and click on
-              Remove.</p>
+              <p> <input name = "textfield3" id = "textfield3" size = 
+              "5" type = "text"> Faites glisser l'ic&#244;ne de votre choix 
+              dans la bo&#238;te. Pour supprimer l'ic&#244;ne, cliquez avec le 
+              bouton droit de la souris et cliquez sur Supprimer. </P>
 
-              <p><strong><input name="button12" id="button12"
-              value="OK" type="submit"></strong> sets all the
-              values edited.</p>
+              <p> <strong> <input name = "button12" id = "button12" 
+              value = "OK" type = "submit"> </strong> d&#233;finit toutes 
+              les valeurs modifi&#233;es. </p>
 
-              <p><strong><input name="button13" id="button13"
-              value="Cancel" type="submit"></strong> exits dialog
-              without change.</p>
+              <p> <strong> <input name = "button13" id = "button13" 
+              value = "Annuler" type = "submit"> </strong> ferme la bo&#238;te 
+              de dialogue sans modification. </p>
 
-              <p>You can use the <strong>Save</strong> button on
-              the <a href=
-              "dp3_Main_Throttle_addressPanel.shtml"><strong>Address
-              Panel</strong></a>to save the edited functions to
-              your locomotives Roster entry.</p>
+              <p> Vous pouvez utiliser le bouton <strong>Enregistrer</strong> 
+              du <a href=fr "dp3_Main_Throttle_addressPanel.shtml"> 
+				  <strong> Panneau d'adresse </strong> </a> pour enregistrer 
+				  les fonctions modifi&#233;es sur vos locomotives. </p>
             </td>
           </tr>
         </tbody>
