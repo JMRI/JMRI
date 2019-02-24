@@ -1,7 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Translation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-02-24 -->
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -26,24 +26,24 @@
     <div id="mainContent">
       <a name="Top" id="Top"></a>
 
-      <h1>DecoderPro&reg; Main Window</h1>
+      <h1>DecoderPro&reg; Fen&#234;tre Principale</h1>
 
-      <h2>JMRI&reg; Throttle Window - Speed Control Panel</h2>
+      <h2>JMRI&reg; Fen&#234;tre R&#233;gulateur - Panneau Contr&#244;le de Vitesse</h2>
 
       <div align="right">
-        <p><a href="dp3_Main_Throttle.shtml">Back</a></p>
+        <p><a href="dp3_Main_Throttle.shtml">Retour</a></p>
       </div>
       <hr>
 
-      <h4>Speed Control Panel</h4>
+      <h4>Panneau Contr&#244;le de Vitesse</h4>
 
       <table style="text-align: left; width: 100%;" border="1"
       cellpadding="2" cellspacing="2">
         <tbody>
           <tr>
-            <td colspan="2" rowspan="1">Right Click in the Speed
-            Control Panel space and context menu with Properties is
-            displayed.<br>
+            <td colspan="2" rowspan="1"> Un clic droit dans l'espace du 
+            panneau de contr&#244;le de la vitesse et le menu contextuel avec 
+            Propri&#233;t&#233;s s'affiche<br>
             <img style="width: 201px; height: 487px;" alt=
             "properties" src=
             "images/Throttle_SpeedControlProperties.png"></td>
@@ -51,8 +51,8 @@
 
           <tr>
             <td colspan="2" rowspan="1">
-              Click on Properties and Edit Speed Control Panel
-              window opens.<br>
+             Cliquez sur Propri&#233;t&#233;s et la fen&#234;tre Modifier le Panneau 
+             de Configuration de la vitesse s'ouvre..<br>
 
               <table style=
               "width: 100%; text-align: left; margin-left: auto; margin-right: auto;"
@@ -68,47 +68,46 @@
                     </td>
 
                     <td align="left" valign="top" width="47%">
-                      Control Panel Properties may be set by right
-                      clicking on the Throttle Control
-                      Panel(Speed), the <strong>Edit Speed Control
-                      Panel</strong> dialog is displayed. This
-                      allows you to select either of the two slider
-                      or step speed control
+                     Vous pouvez d&#233;finir les Propri&#233;t&#233;s du Panneau de 
+                     Configuration en cliquant avec le bouton droit de 
+                     la souris sur le panneau de commande du R&#233;gulateur 
+                     (vitesse). La bo&#238;te de dialogue <strong>Modifier le 
+                     Panneau de Configuration de la Vitesse </strong> 
+                     s'affiche. Cela vous permet de s&#233;lectionner l'un 
+                     des deux curseurs ou le cran de contr&#244;le de la vitesse
 
-                      <p><input name="radio3" id="radio3" value=
-                      "radio3" checked="checked" type="radio">
-                      <strong>Display Speed Slider(from 0 to
-                      100)</strong>-- displays the Throttle Control
-                      shown at the left</p>
+                       <p><input name = "radio3" id = "radio3" valeur = 
+                       "radio3" checked= "v&#233;rifi&#233;" type = "radio"><strong> 
+						Curseur de vitesse d'affichage (de 0 &#224; 100) 
+						</strong> - affiche la Commande du R&#233;gulateur 
+						illustr&#233; &#224; gauche </p>
 
-                      <p><input name="radio4" id="radio4" value=
-                      "radio4" type="radio"> <strong>Display Speed
-                      Steps</strong> -- displays the Throttle
-                      Control shown in the middle</p>
+                       <p> <input name = "radio4" id = "radio4" value = 
+                       "radio4" type = "radio"> <strong> Incr&#233;ments de 
+                       vitesse d'affichage </strong>: affiche la Commande 
+                       du R&#233;gulateur situ&#233; au centre </p>.
 
                       <p><input name="radio5" id="radio5" value=
-                      "radio5" type="radio"> <strong>Display
-                      shunting speed slider(from 100 to 0 to 100)
-                      --</strong> displays the Throttle control
-                      shown on the right</p>
+                      "radio5" type="radio"> <strong>Affiche le
+                      Curseur de vitesse de man&#156;uvre (de 100 &#224; 0 &#224; 100) 
+                      - </strong>: affiche la commande du R&#233;gulateur 
+                      indiqu&#233;e &#224; droite </p>
 
-                      <p><input name="checkbox7" id="checkbox7"
-                      type="checkbox"> <strong>Track sider in real
-                      time</strong></p>
+                       <p> <input name="checkbox7" id="checkbox7" 
+                       type ="checkbox"><strong> Suivre le curseur en 
+                       temps r&#233;el </strong> </p>
 
-                      <p><strong>Switch to contiuous speed slider
-                      on function:</strong> <input name="textfield"
-                      id="textfield" value="F5" size="5" type=
-                      "text"> Enter the function from the
-                      <strong>Function Panel</strong> that you want
-                      to use.</p>
+                       <p> <strong>Basculer vers le curseur de vitesse 
+                       continue: </strong> <input name = "textfield" 
+                       id = "textfield" value = "F5" size = "5" type = "text"> 
+                       Entrez la fonction &#224; partir du <strong> Panneau 
+                       de fonctions </strong> que vous souhaitez utiliser.</p>
 
                       <p><input name="button3" id="button3" value=
-                      "OK" type="button"> Sets the selections</p>
+                      "OK" type="button">Configurer les s&#233;lections</p>
 
                       <p><input name="button4" id="button4" value=
-                      "Cancel" type="button"> Cancels any
-                      settings</p>
+                      "Cancel" type="button"> Annule tous les r&#233;glages</p>
                     </td>
                   </tr>
                 </tbody>
@@ -126,61 +125,62 @@
               <p><img src="images/Main_Throttle_Control.png" alt=
               "speed control" height="391" width="96"></p>
 
-              <h4>Slider from 0% to 100%</h4>
+              <h4>Curseur de 0% &#224; 100%</h4>
             </td>
 
             <td valign="top" width="14%">
               <p><img src="images/Main_Throttle_Control01.png" alt=
               "digital control" height="384" width="103"></p>
 
-              <h4>Speed steps</h4>
+              <h4>Crans de Vitesse</h4>
             </td>
 
             <td align="left" valign="top" width="26%">
               <p><img src="images/Main_Throttle_Control02.png" alt=
               "control 2" height="387" width="104"></p>
 
-              <h4>Slider 100% to 100%<br>
-              through 0%</h4>
+              <h4>Curseur de 100% &#224; 100%<br>
+              par 0%</h4>
             </td>
 
             <td align="left" valign="top">
-              <p>After you have established an address for the
-              throttle, you should be able to run the train on your
-              layout. The Speed Control panel is used to control
-              the speed and direction on your locomotive when the
-              throttle is used to operate on a layout.</p>
+              <p>Apr&#232;s avoir &#233;tabli une adresse pour le R&#233;gulateur, vous 
+              devriez pouvoir faire rouler le train sur votre r&#233;seau. 
+              Le panneau de contr&#244;le de la vitesse permet de contr&#244;ler 
+              la vitesse et la direction de votre locomotive lorsque 
+              le R&#233;gulateur est utilis&#233; pour fonctionner selon un mod&#232;le. </P>
 
-              <p>The throttle slider controls the speed and
-              indicates the percentage of power from
-              <strong>Stop</strong> to <strong>100%</strong>. Use
-              mouse to drag the slider to the desired speed</p>
+               <p>Le curseur du R&#233;gulateur contr&#244;le la vitesse et indique 
+               le pourcentage de puissance de <strong>Arr&#234;ter</strong> &#224; 
+               <strong>100% </strong>. Utilisez la souris pour faire 
+               glisser le curseur &#224; la vitesse souhait&#233;e </p>
 
-              <p>Alternately, the slider may be set to STOP in the
-              middle and move to + 100% or to -100% to control
-              locomotive speed.</p>
+               <p>Alternativement, le curseur peut &#234;tre r&#233;gl&#233; sur STOP 
+               au milieu et passer &#224; + 100% ou &#224; -100% pour contr&#244;ler 
+               la vitesse de la locomotive.</p>
 
-              <p>In the Step mode the up and down arrows control
-              the speed one step at a time, or you may enter a
-              number into the text box area between 0 and the max
-              step indicated.</p>
+             <p> En mode pas &#224; pas, les fl&#232;ches haut et bas permettent 
+             de contr&#244;ler la vitesse pas &#224; pas. Vous pouvez &#233;galement 
+             entrer un nombre dans la zone de texte comprise entre 0 
+             et le pas maximum indiqu&#233;. </p>
 
-              <p><strong><input name="radio" id="radio" value=
-              "radio" checked="checked" type="radio">
-              Forward</strong> and <input name="radio2" id="radio2"
-              value="radio2" type="radio"> <strong>Reverse</strong>
-              set the locomotives direction.</p>
+              <p><strong> <input name = "radio" id = "radio" valeur = 
+              "radio" checked= "v&#233;rifi&#233;" type = "radio">Marche Avant</strong> 
+              et <input name = "radio2" id = "radio2" value ="radio2" 
+              type ="radio"> <strong>Marche Arri&#232;re</strong>: d&#233;finissez 
+              la direction des locomotives.</p>
 
-              <p><strong><input name="button9" id="button9" value=
-              "Stop!" type="submit"></strong> executes an emergency
-              stop, locomotive stops immediately overriding any
-              BEMF or momentum programmed into the decoder.</p>
+              <p><strong> <input name = "button9" id = "button9" value 
+              = "Stop!" type = "submit"> </strong> ex&#233;cute un arr&#234;t 
+              d'urgence, la locomotive s'arr&#234;tant imm&#233;diatement en annulant toute 
+              FCEM ou mouvement programm&#233; dans le d&#233;codeur. </p>
 
-              <p><strong><input name="button10" id="button10"
-              value="Idle" type="submit"></strong> stops the
-              locomotive smoothly using any momentum setting
-              programmed into the decoder..</p>
+              <p><strong> <input name = "button10" id = "button10" value 
+              = "Arr&#234;t" type = "submit"> </strong> arr&#234;te la locomotive 
+              en douceur en utilisant n'importe quel r&#233;glage de quantit&#233; 
+              de mouvement programm&#233; dans le d&#233;codeur. </p >
             </td>
+
           </tr>
         </tbody>
       </table>
@@ -189,7 +189,7 @@
       <div align="right">
         <a href="#Top"></a>
 
-        <p><a href="dp3_Main_Throttle.shtml">Back</a></p>
+        <p><a href="dp3_Main_Throttle.shtml">Retour</a></p>
       </div><!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
