@@ -10,7 +10,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 /**
- * A helper Panel for input-validating input boxes. It converts & validates the
+ * A helper Panel for input-validating input boxes. It converts and validates the
  * text input, disabling {@link #confirmUI} component (usually a button) when
  * the input is not valid.
  * 
