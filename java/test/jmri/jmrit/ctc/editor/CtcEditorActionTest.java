@@ -6,7 +6,6 @@ import javax.swing.JMenuItem;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 import org.junit.rules.ExpectedException;
-import org.netbeans.jemmy.EventTool;
 import org.netbeans.jemmy.operators.*;
 
 /**
@@ -36,7 +35,6 @@ public class CtcEditorActionTest {
         menuTests();
         frameButtonTests();
         editTests();
-// new EventTool().waitNoEvent(5000);
     }
 
     void menuTests() {
@@ -217,7 +215,6 @@ public class CtcEditorActionTest {
             // constructor for jdo will wait until the dialog is visible
             JDialogOperator jdo = new JDialogOperator(dialogTitle);
             JButtonOperator jbo = new JButtonOperator(jdo, buttonText);
-// new EventTool().waitNoEvent(2000);
             if (threadName.equals("editTRL")) {
                 // Start the rules dialog
                 JButtonOperator jbTRL = new JButtonOperator(jdo, Bundle.getMessage("ButtonEdit"), 0);
