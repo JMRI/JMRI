@@ -105,7 +105,7 @@ public class RfidStreamConnectionConfig extends jmri.jmrix.AbstractStreamConnect
         return Bundle.getMessage("RfidStreamName");
     }
 
-    String manufacturerName = "JMRI (Streams)"; // NOI18N
+    String manufacturerName = "RFID"; // NOI18N
 
     @Override
     public String getManufacturer() {
