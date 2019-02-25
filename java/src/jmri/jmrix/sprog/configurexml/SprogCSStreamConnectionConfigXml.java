@@ -36,6 +36,9 @@ public class SprogCSStreamConnectionConfigXml extends AbstractStreamConnectionCo
 
     @Override
     protected void register() {
+	if(adapter!=null) {
+	   return; // already registered.
+	}
         this.register(new SprogCSStreamConnectionConfig(adapter));
     }
 

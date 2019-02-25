@@ -224,6 +224,8 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 	            // fallback for connections created with a script
 	            node.connectPortController(connectedController);
 	       }
+	       log.info("loaded {} onto node ",node.getConnectionConfig(),node);
+	       log.info("manuf {} userName {} ",node.getConnectionConfig().getManufacturer(),node.getConnectionConfig().name());
 	    } catch (TimeoutException toe) {
 		 log.error("Timeout adding node {} from configuration file.",
 				 remoteDevice);
