@@ -11,6 +11,7 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
+<!-- version 1.5, added CV309 and CV349 for brake (function) key control, in decoders from zimo version 33.25.  Nigel Cliffe, 20 Sept 2018 -->
 <!-- version 1.4, corrected CV313 "inverted" output labels, which corrects bug in displayed file. Nigel Cliffe, 27Dec 2016 -->
 <!-- version 1.3, add german translation by Ronald Kuhn -->
 <!-- version 1.2, include statments for CV341 CV342 CV343 edited for new decoders and corrections by Mark Waters -->
@@ -677,6 +678,102 @@
     <label xml:lang="de">E-Motor: Steigung der Frequenz</label>
     <label xml:lang="cs">Trakční motor: závislost výšky tónu na rychlosti</label>
   </variable>
+  
+    <variable item="Brake Key" CV="309" default="0" tooltip="CV309, brake key">
+	<enumVal>
+      <enumChoice choice="No key assigned">
+        <choice>No key assigned</choice>
+        <choice xml:lang="it">Nessun Tasto</choice>
+        <choice xml:lang="de">keine Taste</choice>
+        <choice xml:lang="cs">Nepřiřazena žádná klávesa</choice>
+      </enumChoice>
+      <enumChoice choice="F1">
+        <choice>F1</choice>
+      </enumChoice>
+      <enumChoice choice="F2">
+        <choice>F2</choice>
+      </enumChoice>
+      <enumChoice choice="F3">
+        <choice>F3</choice>
+      </enumChoice>
+      <enumChoice choice="F4">
+        <choice>F4</choice>
+      </enumChoice>
+      <enumChoice choice="F5">
+        <choice>F5</choice>
+      </enumChoice>
+      <enumChoice choice="F6">
+        <choice>F6</choice>
+      </enumChoice>
+      <enumChoice choice="F7">
+        <choice>F7</choice>
+      </enumChoice>
+      <enumChoice choice="F8">
+        <choice>F8</choice>
+      </enumChoice>
+      <enumChoice choice="F9">
+        <choice>F9</choice>
+      </enumChoice>
+      <enumChoice choice="F10">
+        <choice>F10</choice>
+      </enumChoice>
+      <enumChoice choice="F11">
+        <choice>F11</choice>
+      </enumChoice>
+      <enumChoice choice="F12">
+        <choice>F12</choice>
+      </enumChoice>
+      <enumChoice choice="F13">
+        <choice>F13</choice>
+      </enumChoice>
+      <enumChoice choice="F14">
+        <choice>F14</choice>
+      </enumChoice>
+      <enumChoice choice="F15">
+        <choice>F15</choice>
+      </enumChoice>
+      <enumChoice choice="F16">
+        <choice>F16</choice>
+      </enumChoice>
+      <enumChoice choice="F17">
+        <choice>F17</choice>
+      </enumChoice>
+      <enumChoice choice="F18">
+        <choice>F18</choice>
+      </enumChoice>
+      <enumChoice choice="F19">
+        <choice>F19</choice>
+      </enumChoice>
+      <enumChoice choice="F20">
+        <choice>F20</choice>
+      </enumChoice>
+      <enumChoice choice="F21">
+        <choice>F21</choice>
+      </enumChoice>
+      <enumChoice choice="F22">
+        <choice>F22</choice>
+      </enumChoice>
+      <enumChoice choice="F23">
+        <choice>F23</choice>
+      </enumChoice>
+      <enumChoice choice="F24">
+        <choice>F24</choice>
+      </enumChoice>
+      <enumChoice choice="F25">
+        <choice>F25</choice>
+      </enumChoice>
+      <enumChoice choice="F26">
+        <choice>F26</choice>
+      </enumChoice>
+      <enumChoice choice="F27">
+        <choice>F27</choice>
+      </enumChoice>
+      <enumChoice choice="F28">
+        <choice>F28</choice>
+      </enumChoice>
+    </enumVal>
+  </variable>
+  
   <variable item="On/off key for engine and random sound" CV="310" default="8" tooltip="Defines the key that turns the engine and random sounds on or off">
     <enumVal>
       <enumChoice choice="No key assigned">
@@ -1485,6 +1582,12 @@
     <label xml:lang="cs">Strojová jízda volnoběh</label>
     <tooltip xml:lang="cs">Přehrávání zvuku volnoběhu při pomalé jízdě</tooltip>
   </variable>
+  
+   <variable item="Brake Key Deceleration Rate" CV="349" default="0" tooltip="CV349, brake key time">
+	<decVal min="0" max="255"/>
+  </variable>
+   
+  
 </variables>
   <variable item="Delay of Switchgear sound at startup" CV="350" default="0" tooltip="0 = no delay, 255 = 25sec">
     <decVal min="0" max="255"/>

@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/appearancetable.xsl" type="text/xsl"?>
+
+<appearancetable
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable.xsd"
+>
+
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2009</year><year>2010</year><holder>JMRI</holder>
+  </copyright>
+  
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+        <personname><firstname>Petr</firstname><surname>Šídlo</surname></personname>
+        <email>sidlo64@hotmail.com</email>
+    </author>    
+  </authorgroup>
+    
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+        <revnumber>1</revnumber>
+        <date>2019-02-20</date>
+        <authorinitials>PŠ</authorinitials>
+        <revremark>Initial version</revremark>
+    </revision>    
+  </revhistory>
+
+  <aspecttable>CSD-1962-zakladni</aspecttable>
+  <name>Test</name>
+  <description>Testovací sada návěstidel.</description>
+
+  <appearances>
+
+    <appearance>
+      <aspectname>Stůj</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/000_stuj_3o.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Volno</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/001_volno_3o.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Výstraha</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/002_vystraha_5o.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Očekávej 40</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/003_o40_5o.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Očekávej 60</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/004_o60_5o.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Očekávej 80</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/005_o80_5o.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Rychlost 40 a volno</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/006_40_volno_4o.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Rychlost 40 a výstraha</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/007_40_vystraha_5o.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Rychlost 40 a očekávej 40</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/008_40_o40_5o.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Rychlost 40 a očekávej 60</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/009_40_o60_5o.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Rychlost 40 a očekávej 80</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/010_40_o80_5o.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Rychlost 60 a volno</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/011_60_volno_4o.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Rychlost 60 a výstraha</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/012_60_vystraha_5o.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Rychlost 60 a očekávej 40</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/013_60_o40_5o.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Rychlost 60 a očekávej 60</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/014_60_o60_5o.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Rychlost 60 a očekávej 80</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/015_60_o80_5o.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Rychlost 80 a volno</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/016_80_volno_4o.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Rychlost 80 a výstraha</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/017_80_vystraha_5o.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Rychlost 80 a očekávej 40</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/018_80_o40_5o.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Rychlost 80 a očekávej 60</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/019_80_o60_5o.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Rychlost 80 a očekávej 80</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/020_80_o80_5o.gif</imagelink>
+    </appearance>
+    
+    <appearance>
+      <aspectname>Opakovaná volno</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/021_opvolno_po.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Opakovaná výstraha</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/022_opvystraha_po.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Opakovaná očekávej 40</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/023_opo40_po.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Opakovaná očekávej 60</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/024_opo60_po.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Opakovaná očekávej 80</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/025_opo80_po.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Zhasnuto</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/026_zhasnuto_ab.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Posun zakázán</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/027_pz_sn.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Posun dovolen</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/028_pd_sn.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Posun dovolen - nezabezpečený</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/029_npd_3o.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Opatrně na přivolávací návěst bez červené</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/030_opn2_3o.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Opatrně na přivolávací návěst</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/031_opn_4o.gif</imagelink>
+    </appearance>
+
+  </appearances>
+  
+  <specificappearances>
+      <danger>
+          <aspect>Stůj</aspect>
+      </danger>
+      <permissive>
+          <aspect>Opatrně na přivolávací návěst</aspect>
+      </permissive>
+      <dark>
+          <aspect>Zhasnuto</aspect>
+      </dark>
+  </specificappearances>
+    
+  <aspectMappings>
+    <aspectMapping>
+      <advancedAspect>Volno</advancedAspect>
+      <ourAspect>Volno</ourAspect>
+      <ourAspect>Rychlost 40 a volno</ourAspect>
+      <ourAspect>Rychlost 60 a volno</ourAspect>
+      <ourAspect>Rychlost 80 a volno</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Stůj</advancedAspect>
+      <ourAspect>Výstraha</ourAspect>
+      <ourAspect>Rychlost 40 a výstraha</ourAspect>
+      <ourAspect>Rychlost 60 a výstraha</ourAspect>
+      <ourAspect>Rychlost 80 a výstraha</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Rychlost 40 a volno</advancedAspect>
+      <ourAspect>Očekávej 40</ourAspect>
+      <ourAspect>Rychlost 40 a očekávej 40</ourAspect>
+      <ourAspect>Rychlost 60 a očekávej 40</ourAspect>
+      <ourAspect>Rychlost 80 a očekávej 40</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Rychlost 60 a volno</advancedAspect>
+      <ourAspect>Očekávej 60</ourAspect>
+      <ourAspect>Rychlost 40 a očekávej 60</ourAspect>
+      <ourAspect>Rychlost 60 a očekávej 60</ourAspect>
+      <ourAspect>Rychlost 80 a očekávej 60</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Rychlost 80 a volno</advancedAspect>
+      <ourAspect>Očekávej 80</ourAspect>
+      <ourAspect>Rychlost 40 a očekávej 80</ourAspect>
+      <ourAspect>Rychlost 60 a očekávej 80</ourAspect>
+      <ourAspect>Rychlost 80 a očekávej 80</ourAspect>
+    </aspectMapping>
+  </aspectMappings>
+  
+</appearancetable>  

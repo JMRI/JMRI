@@ -41,7 +41,6 @@ public class SampleConfigPane extends jmri.util.swing.JmriPanel {
     /**
      * 2nd stage of initialization, invoked after the constructor is complete.
      */
-    @SuppressWarnings("unchecked")
     @Override
     public void initComponents() {
         JLabel label = new JLabel("Some GUI elements ...");
