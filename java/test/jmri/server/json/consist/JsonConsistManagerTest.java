@@ -1,8 +1,12 @@
 package jmri.server.json.consist;
 
 import jmri.util.JUnitUtil;
-import jmri.util.junit.annotations.*;
-import org.junit.*;
+import jmri.util.junit.annotations.NotApplicable;
+import jmri.util.junit.annotations.ToDo;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 
 /**
  *
