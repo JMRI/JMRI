@@ -49,6 +49,7 @@
             <ul>
                 <li>"PR3 Standalone Programmer" mode has been updated so that only one LocoNet menu will be displayed, instead of displaying two menus.</li>
                 <li>Digitrax connections now support PR4, DCS240 and DCS210 via uniquely named connection types. <span class="since">Since JMRI 4.15.4</span></li>
+                <li>Addresses a problem when track power status is changed on the DCS52 which can cause a JMRI code failure. <span class="since">Since JMRI 4.15.4</span></li>
             </ul>
 
         <h4>Maple</h4>
