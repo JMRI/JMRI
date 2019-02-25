@@ -169,7 +169,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
                Element connect = n.getChildren("connection").get(0); // there should only be one connection child.
 	
                // configure the controller.	       
-	       if (streamController != null && connectedController == null ) {
+	       if (streamController != null ) {
                     try {
                         @SuppressWarnings("unchecked") // Class.forName cast is unchecked at this point
                         java.lang.Class<jmri.jmrix.AbstractStreamPortController> T = (Class<AbstractStreamPortController>) Class.forName(streamController);
@@ -203,20 +203,17 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 	       // load information from the xml file.
 	       if(connect!=null && connectedConfig != null ){
                   String className = connect.getAttributeValue("class");
-                  String userName = connect.getAttributeValue("userName", ""); // NOI18N
-                  String systemName = connect.getAttributeValue("systemPrefix", ""); // NOI18N
-                  String manufacturer = connect.getAttributeValue("manufacturer", ""); // NOI18N
 
                   try {
                         @SuppressWarnings("unchecked") // Class.forName cast is unchecked at this point
                         XmlAdapter adapter = (XmlAdapter) Class.forName(className).newInstance();
-                        //adapter.load(connect,connectedConfig);
+                        adapter.load(connect,connectedConfig);
                     } catch (ClassNotFoundException | 
 		             InstantiationException | 
 			     IllegalAccessException ex) {
                         log.error("Unable to create {} for {}", className, shared, ex);
-                    //} catch (RuntimeException | jmri.configurexml.JmriConfigureXmlException ex) {
-                    //    log.error("Unable to load {} into {}", shared, className, ex);
+                    } catch (RuntimeException | jmri.configurexml.JmriConfigureXmlException ex) {
+                        log.error("Unable to load {} into {}", shared, className, ex);
                     }
 	       } 
 
