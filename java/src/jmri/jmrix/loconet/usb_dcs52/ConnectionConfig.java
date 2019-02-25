@@ -31,19 +31,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
 
     @Override
     public String name() {
-        return "LocoNet DCS52 USB Interface"; // NOI18N
-    }
-
-    public boolean isOptList2Advanced() {
-        return false;
-    }
-
-    @Override
-    protected String[] getPortFriendlyNames() {
-        if (SystemType.isWindows()) {
-            return new String[]{"Communications Port"}; // NOI18N
-        }
-        return new String[]{};
+        return "DCS52 USB Interface"; // NOI18N
     }
 
     @Override

@@ -126,9 +126,6 @@ public class UsbDcs52Adapter extends LocoBufferAdapter {
             msg.setOpCode(0xD3);
             msg.setElement(1, 0x10);
             msg.setElement(2, 0);  // set MS100, no power
-            if (commandStationType == LnCommandStationType.COMMAND_STATION_STANDALONE) {
-                msg.setElement(2, 3);  // set MS100, with power
-            }
             msg.setElement(3, 0);
             msg.setElement(4, 0);
             packets.sendLocoNetMessage(msg);
@@ -166,12 +163,18 @@ public class UsbDcs52Adapter extends LocoBufferAdapter {
      *      name(s) of modes without command stations
      */
     public String[] commandStationOptions() {
-        String[] retval = new String[commandStationNames.length + 2];
+        String[] retval = new String[commandStationNames.length + 1];
         retval[0] = LnCommandStationType.COMMAND_STATION_USB_DCS52_ALONE.getName();
-        for (int i = 0; i < commandStationNames.length; i++) {
-            retval[i + 1] = commandStationNames[i];
+        retval[1] = LnCommandStationType.COMMAND_STATION_DCS052.getName();
+        int count = 2;
+        for (String commandStationName : commandStationNames) {
+            if (!commandStationName.equals(LnCommandStationType.COMMAND_STATION_DCS052.getName())) {
+                // include all but COMMAND_STATION_DCS052, which was forced  to 
+                // the front of the list (above)
+                retval[count++] = commandStationName;
+            }
         }
-        retval[retval.length - 1] = LnCommandStationType.COMMAND_STATION_STANDALONE.getName();
+        // Note: Standalone loconet does not make sense for DCS240 USB interface.
         return retval;
     }
 

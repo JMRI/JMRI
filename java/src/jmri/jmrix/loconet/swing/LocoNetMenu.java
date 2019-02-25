@@ -31,15 +31,16 @@ public class LocoNetMenu extends JMenu {
 
         LnCommandStationType cmdStation = memo.getSlotManager().getCommandStationType();
         boolean isLocoNetInterface;
-        if (cmdStation.equals(LnCommandStationType.COMMAND_STATION_PR2_ALONE) ||
-                cmdStation.equals(LnCommandStationType.COMMAND_STATION_PR3_ALONE) ||
-                cmdStation.equals(LnCommandStationType.COMMAND_STATION_PR4_ALONE) ||
-                cmdStation.equals(LnCommandStationType.COMMAND_STATION_USB_DCS240_ALONE) ||
-                cmdStation.equals(LnCommandStationType.COMMAND_STATION_USB_DCS52_ALONE)
+        if ((cmdStation == null) || 
+                (!cmdStation.equals(LnCommandStationType.COMMAND_STATION_PR2_ALONE) &&
+                !cmdStation.equals(LnCommandStationType.COMMAND_STATION_PR3_ALONE) &&
+                !cmdStation.equals(LnCommandStationType.COMMAND_STATION_PR4_ALONE) &&
+                !cmdStation.equals(LnCommandStationType.COMMAND_STATION_USB_DCS240_ALONE) &&
+                !cmdStation.equals(LnCommandStationType.COMMAND_STATION_USB_DCS52_ALONE))
                 ) {
-            isLocoNetInterface = false;
-        } else {
             isLocoNetInterface = true;
+        } else {
+            isLocoNetInterface = false;
         }
         
         /*

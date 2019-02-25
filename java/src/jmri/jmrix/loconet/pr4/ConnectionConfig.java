@@ -12,7 +12,7 @@ import jmri.util.SystemType;
  * @author B. Milhaupt Copyright (C) 2019
  */
 
-public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
+public class ConnectionConfig extends jmri.jmrix.loconet.pr3.ConnectionConfig {
 
     /**
      * Ctor for an object being created during load process; Swing init is
@@ -32,18 +32,6 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
     @Override
     public String name() {
         return "LocoNet PR4"; // NOI18N
-    }
-
-    public boolean isOptList2Advanced() {
-        return false;
-    }
-
-    @Override
-    protected String[] getPortFriendlyNames() {
-        if (SystemType.isWindows()) {
-            return new String[]{"Communications Port"}; // NOI18N
-        }
-        return new String[]{};
     }
 
     @Override
