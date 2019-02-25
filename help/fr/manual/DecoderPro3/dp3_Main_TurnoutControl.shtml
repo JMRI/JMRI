@@ -1,7 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Translation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-02-25 -->
+<html lang="FR">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -26,15 +26,15 @@
     <div id="mainContent">
       <a name="Top" id="Top"></a>
 
-      <h1>DecoderPro&reg; Main Window</h1>
+      <h1>DecoderPro&reg; Fen&#234;tre Principale</h1>
 
-      <h2>Menu Bar - Turnout Control Panel</h2>
+      <h2>Barre de Menu - Panneau Contr&#244;le des Aiguillages</h2>
 
       <div align="right">
-        <p><a href="dp3_menubar.shtml">Back</a></p>
+        <p><a href="dp3_menubar.shtml">Retour</a></p>
 
-        <p><a href="dp3_menubar.html">Back to Index</a></p>
-      </div>
+        <p><a href="dp3_menubar.html">Retour &#224; l'Index</a></p>
+     </div>
       <hr>
 
       <table width="90%" border="0" cellspacing="1" cellpadding=
@@ -45,73 +45,72 @@
           "291" alt="turnout control"></td>
 
           <td width="68%" align="left" valign="top">
-            <p><strong>Turnout Control</strong></p>
+            <p><strong>Contr&#244;le des Aiguillages</strong></p>
 
-            <p><strong>Turnout</strong></p>
+            <p><strong>Aiguillage</strong></p>
 
             <p><input name="textfield2" type="text" id="textfield2"
-            size="8"> Enter the accessory number or tunout system
-            name for the accessory or turnout you wish to control.
-            For example, entering 678 and by pressing either the
-            <input type="submit" name="button" id="button" value=
-            "Thrown"> or <input type="submit" name="button2" id=
-            "button2" value="closed"> , you should be able to
-            change the state of accessory number 678 on the
-            layout.</p>
+            size="8"> Entrez le num&#233;ro de l'accessoire ou le nom du 
+            syst&#232;me pour l'accessoire ou l'aiguillage que vous souhaitez 
+            contr&#244;ler. Par exemple, entrez 678 et appuyez sur le bouton
+             <input type  = "submit" nom = "," id = "bouton" value = 
+             "D&#233;vi&#233;"> ou <input type = "submit" nom = "bouton2" "id ="
+             bouton2"value = "Direct">, vous devriez pouvoir modifier 
+             l'&#233;tat du num&#233;ro d'accessoire 678 dans la pr&#233;sentation.</p>
 
-            <p>Another example, a valid turnout system name for NCE
-            could be NT456. Then by pressing either the
-            <input type="submit" name="button3" id="button3" value=
-            "Thrown"> or <input type="submit" name="button3" id=
-            "button4" value="closed"> , you should be able to
-            change the state of turnout or accessory number 456 on
-            the layout</p>
+            <p>Autre exemple, un nom de syst&#232;me d'aiguillage valide 
+            pour NCE pourrait &#234;tre NT456. Ensuite, en appuyant sur 
+            <input type = "submit" name = "button3" id = "button3" 
+            value = "d&#233;vi&#233;"> ou <input type = "submit" name = "button3"
+             id = "button4" value = "direct ">, vous devriez pouvoir 
+             changer l'&#233;tat de l'aiguillage ou de l'accessoire num&#233;ro 
+             456 sur le r&#233;seau</p>
 
-            <p>Another example, a valid turnout name could be IT123
-            which is internal turnout number 123. Pressing either
-            the <input type="submit" name="button4" id="button5"
-            value="Thrown"> or <input type="submit" name="button4"
-            id="button6" value="closed"> will only change the state
-            of the internal turnout and will not change a turnout
-            on the layout.</p>
+            <p>Un autre exemple, un nom d'appareil valide pourrait &#234;tre 
+            IT123, qui correspond au num&#233;ro d'appareil interne 123. 
+            Appuyez sur <input type  = "submit" nom = "button4" id = 
+            "button5" value = "D&#233;vi&#233;"> ou <input type = "submit" 
+            name = "button4" id = "button6" value = "Direct"> ne 
+            modifiera que l'&#233;tat de l'aiguillage interne et ne 
+            changera pas l'aiguillage du r&#233;seau.</p>
 
-            <p><strong>current state:</strong> A turnout can have
-            four states: &lt;unknown&gt;, &lt;inconsistent&gt;,
-            &lt;thrown&gt; and &lt;closed&gt;</p>
+            <p><strong>&#233;tat actuel:</strong>un aiguillage peut avoir 
+            quatre &#233;tats:&lt;inconnu&gt;,&lt;incoh&#233;rent&gt;,&lt; 
+            d&#233;vi&#233;&gt; et &lt;direct&gt;</p>
 
-            <p><strong>feedback mode:</strong> some of the
-            available feedback modes are: &lt;DIRECT&gt;, &lt;DELAYED&gt;,
-            &lt;ONE SENSOR&gt;, &lt;TWO SENSOR&gt;, and &lt;MONITORING&gt;.
-            A turnout using DIRECT mode does not have feedback from
-            the layout. 
-            When a close or throw command is executed the JMRI program
-            assumes that the command always completes immediately. 
-            DELAYED simulates the turnout operation taking a few seconds
-            to complete.
-            ONE SENSOR use one sensor on the layout to
-            provide feedback on he state of the turnout. TWO SENSOR
-            uses two sensors for feedback, one for closed and one
-            for thrown. MONITORING gets feedback from the system by
-            either listening to cab commands on the layout or
-            polling the system for turnout status.</p>
+            <p><strong>mode de r&#233;trosignalisation:</strong> les modes 
+            de r&#233;troaction disponibles sont les suivants:&lt;DIRECT&gt;,&lt;
+             RETARD&#201;&gt;,&lt;UN CAPTEUR&gt;,&lt;DEUX CAPTEURS&gt;, et &lt;
+             MONITORING&gt;</b>; Un aiguillage utilisant le mode DIRECT 
+             n'a pas de retour du r&#233;seau.
+			Quand une commande d&#233;vi&#233; ou direct est ex&#233;cut&#233;e, le programme 
+			JMRI suppose que la commande se termine toujours imm&#233;diatement. 
+			RETARD&#201; simule l'op&#233;ration d'aiguillage en quelques secondes.
+            UN CAPTEUR utilise un capteur sur la r&#233;seau pour fournir un 
+            retour sur l'&#233;tat de l'aiguillage. DEUX CAPTEURS utilise deux 
+            capteurs pour le retour, un pour d&#233;vi&#233; et un pour direct. 
+            MONITORING re&#231;oit les informations du syst&#232;me en &#233;coutant 
+            les commandes de la configuration ou en interrogeant le 
+            syst&#232;me pour conna&#238;tre l'&#233;tat de l'aiguillage.</P>
 
-            <p><strong>Caboperation:</strong> some turnouts can be
-            locked. If the control button is grayed out, the lock
-            feature is not available.</p>
+            <p><strong>Caboperation:</strong>certains aiguillages peuvent 
+            &#234;tre verrouill&#233;s. Si le bouton de commande est gris&#233;, 
+            la fonction de verrouillage n'est pas disponible.</P>
 
-            <p><strong>Pushbuttons:</strong> Shows state of
-            Pushbuttons.</p>
-          </td>
-        </tr>
-      </table>
+            <p><strong>Boutons-poussoirs: </strong>affiche l'&#233;tat des 
+            boutons-poussoirs.</p>
+
+         </td>
+       </tr>
+     </table>
       <hr>
 
       <div align="right">
-        <p><a href="dp3_menubar.shtml">Back</a></p>
+        <p><a href="dp3_menubar.shtml">Retour</a></p>
 
-        <p><a href="index.shtml#Main">Back to Index</a></p>
-      </div><!--#include virtual="/Footer" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+        <p><a href="index.shtml#Main">Retour à l'Index</a></p>
+     </div><!--#include virtual="/Footer" -->
+   </div><!-- closes #mainContent-->
+ </div><!-- closes #mBody-->
 </body>
 </html>
