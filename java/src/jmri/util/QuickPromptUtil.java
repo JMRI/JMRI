@@ -117,11 +117,11 @@ public class QuickPromptUtil {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Object s = e.getSource();
-                if (s == okOption || Objects.equal("confirm", e.getActionCommand())) {
+                if (s == okOption) {
                     confirmed = true;
                     dialog.setVisible(false);
                 }
-                if (s == cancelOption || Objects.equal("cancel", e.getActionCommand())) {
+                if (s == cancelOption) {
                     dialog.setVisible(false);
                 }
             }
