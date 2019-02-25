@@ -1,7 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Translation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-02-25 -->
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -24,58 +24,58 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>DecoderPro&reg; Main Window</h1>
+      <h1>DecoderPro&reg; Fen&#234;tre Principale</h1>
 
-      <h2>The Roster Table</h2>
+      <h2>Le Tableau Inventaire</h2>
 
       <div align="right">
-        <p><a href="dp3_Main_Main.shtml">Back</a></p>
+        <p><a href="dp3_Main_Main.shtml">Retour</a></p>
 
-        <p><a href="index.shtml#Main">Back to Index</a></p>
+        <p><a href="index.shtml#Main">Retour &#224; l'Index</a></p>
       </div>
       <hr>
 
-      <p>The Roster Table in the main body of DecoderPro displays
-      all of the locomotives in your roster or selected roster
-      groups.<br>
-      <strong>SORT</strong> by any column by clicking on the column
-      header. Roster above is sorted by DCC addresses.</p>
+      <p>Le Tableau Inventaire dans le corps principal de DecoderPro 
+      affiche toutes les locomotives de votre Inventaire ou de certains 
+      groupes de votre Inventaire. <br>
+       <strong>TRIER</strong> dans une colonne en cliquant sur son 
+       en-t&#234;te. La liste ci-dessus est tri&#233;e par adresses DCC. </P>
 
-      <p><img src="images/dp3_rosterTable.png" width="900" height=
-      "141" alt="table"></p>
+       <p> <img src = "images/dp3_rosterTable.png" width = "900" height =
+       "141" alt = "table"> </p>
 
-      <p>Hide/show any column by right clicking anywhere in the
-      Roster header and checking columns to be displayed and
-      unchecking columns to hide.</p>
+       <p> Masquer/afficher une colonne en cliquant avec le bouton droit 
+       n'importe o&#249; dans l'en-t&#234;te de liste, en cochant les colonnes &#224; 
+       afficher et en d&#233;cochant les colonnes &#224; masquer. </p>
 
       <p><img src="images/dp3_rosterTable01.png" width="418"
       height="322" alt="table"></p>
 
-      <p>With columns hidden.<br>
-      <img src="images/dp3_rosterTable02.png" width="495" height=
-      "376" alt="table"><br></p>
+      <p>Avec les colonnes cach&#233;es.<br>
+       <img src = "images/dp3_rosterTable02.png" width = "495" height =
+       "376" alt = "table"> <br> </p>
 
-      <p>Selecting Actions using Context menu (Right Click ) on
-      locomotive selected. Select the action you would like to
-      perform.</p>
+       <p>S&#233;lection d'actions &#224; l'aide du menu contextuel (clic droit) 
+       sur la locomotive s&#233;lectionn&#233;e. S&#233;lectionnez l'action que vous 
+       souhaitez effectuer.</P>
 
-      <p><img src="images/dp3_rosterTable03.png" width="483"
-      height="303" alt="table3"></p>
+       <p><img src = "images/dp3_rosterTable03.png" width = "483"
+       height = "303" alt = "table3"> </p>
 
-      <p>Double Click on Selected locomotive and Programming Window
-      will open.</p>
+       <p>Double-cliquez sur la locomotive s&#233;lectionn&#233;e pour ouvrir 
+       la fen&#234;tre de programmation.</p>
 
-      <p>Editing column of a Roster Entry in the table. select
-      locomotive then click on column that you want to edit. Type
-      your change.</p>
+       <p>Modification de la colonne d'uneEntr&#233;e d'Inventaire dans 
+       le tableau. S&#233;lectionnez la locomotive puis cliquez sur la colonne 
+       que vous souhaitez modifier. Saisissez votre changement.</P>
 
-      <p>The following columns may be edited.<br>
-      ID Col<br>
-      Road Name<br>
-      Road Number<br>
-      Manufacturer<br>
-      Model<br>
-      Owner<br></p>
+       <p> Les colonnes suivantes peuvent &#234;tre modifi&#233;es.<br>
+       ID Col <br>
+       Nom de la ligne <br>
+       Num&#233;ro de la ligne <br>
+       Fabricant <br>
+       Mod&#232;le <br>
+       Propri&#233;taire <br> </p>
 
       <table width="90%" border="0" cellspacing="1" cellpadding=
       "2">
@@ -88,22 +88,23 @@
         </tr>
       </table>
 
-      <p><strong>Column sequence</strong> may be modified and
-      Saved. Just Drag and Drop the column header to the desired
-      position.</p>
+     <p><strong>La s&#233;quence des Colonnes</strong> peut &#234;tre modifi&#233;e et 
+     enregistr&#233;e. Il suffit de Glisser-D&#233;poser l'en-t&#234;te de colonne &#224; la 
+     position souhait&#233;e. </P>
 
-      <p><strong>Column Width</strong> may be changed by grabbing
-      the divider between the column until the double headed arrow
-      shows and move the arrows to the desired column width.</p>
+       <p><strong>La Largeur de Colonne</strong> peut &#234;tre modifi&#233;e en 
+       saisissant le s&#233;parateur entre les colonnes jusqu'&#224; ce que la 
+       fl&#232;che &#224; deux pointes apparaisse et en d&#233;pla&#231;ant les fl&#232;ches 
+       vers la largeur de colonne souhait&#233;e.</p>
 
-      <p>You may use the same technique to resize panes or the main
-      window.<br></p>
+       <p>Vous pouvez utiliser la m&#234;me technique pour redimensionner 
+       les volets ou la fen&#234;tre principale.<br></p>
       <hr>
 
       <div align="right">
-        <p><a href="dp3_Main_Main.shtml">Back</a></p>
+        <p><a href="dp3_Main_Main.shtml">Retour</a></p>
 
-        <p><a href="index.shtml#Main">Back to Index</a></p>
+        <p><a href="index.shtml#Main">Retour &#224; l'Index</a></p>
       </div><!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
