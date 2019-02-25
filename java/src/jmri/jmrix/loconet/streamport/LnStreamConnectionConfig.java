@@ -33,7 +33,7 @@ public class LnStreamConnectionConfig extends jmri.jmrix.AbstractStreamConnectio
         return Bundle.getMessage("LnStreamName");
     }
 
-    String manufacturerName = "JMRI (Streams)"; // NOI18N
+    String manufacturerName = "Digitrax"; // NOI18N
 
     @Override
     public String getManufacturer() {
