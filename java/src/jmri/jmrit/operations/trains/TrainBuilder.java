@@ -3566,8 +3566,19 @@ public class TrainBuilder extends TrainCommon {
         //        log.debug("Found {} staging tracks for load generation", tracks.size());
         addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildTryStagingToStaging"),
                 new Object[]{car.toString(), tracks.size()}));
+        if (Setup.getRouterBuildReportLevel().equals(Setup.BUILD_REPORT_VERY_DETAILED)) {
+            for (Track track : tracks) {
+                addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildStagingLocationTrack"),
+                        new Object[]{track.getLocation().getName(), track.getName()}));
+            }
+        }
         // list of locations that can't be reached by the router
         List<Location> locationsNotServiced = new ArrayList<>();
+        if (_terminateStageTrack != null) {   
+            addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildIgnoreStagingFirstPass"),
+                    new Object[]{_terminateStageTrack.getLocation().getName()}));
+            locationsNotServiced.add(_terminateStageTrack.getLocation());
+        }
         while (tracks.size() > 0) {
             // pick a track randomly
             int rnd = (int) (Math.random() * tracks.size());
@@ -3591,12 +3602,6 @@ public class TrainBuilder extends TrainCommon {
                 addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildDestinationNotServiced"),
                         new Object[]{track.getLocation().getName(), car.getTrackName()}));
                 locationsNotServiced.add(track.getLocation());
-                continue;
-            }
-            // ignore the staging tracks at the train's terminal 
-            if (_terminateStageTrack != null && track.getLocation() == _terminateStageTrack.getLocation()) {
-                log.debug("Ignoring staging track ({}) at terminal ({})", track.getName(), track
-                        .getLocation().getName());
                 continue;
             }
             // the following method sets the Car load generated from staging boolean

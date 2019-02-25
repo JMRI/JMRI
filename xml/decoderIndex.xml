@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!--Written by JMRI version 4.15.3ish+jake+20190212T1417Z+R342025162a on Tue Feb 12 06:18:40 PST 2019-->
-  <decoderIndex version="926">
+  <!--Written by JMRI version 4.15.4ish+jake+20190221T1837Z+R68612e21e1 on Thu Feb 21 10:37:23 PST 2019-->
+  <decoderIndex version="928">
     <mfgList nmraListDate="2015-03-06" updated="2015-03-25" lastadd="107,124,126,128,134">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -7862,6 +7862,77 @@
             <protocol>dcc</protocol>
             <protocol>motorola</protocol>
           </protocols>
+        </model>
+      </family>
+      <family name="Fl decoders RailCom" mfg="Fleischmann" file="Fl_decoders_RailCom.xml">
+        <model model="685303" maxInputVolts="20V" maxTotalCurrent="1.00 A" formFactor="N" connector="NEM651" numOuts="8" numFns="14" productID="685303">
+          <output name="1" label="Light forwards">
+            <label xml:lang="de">Licht vorwärts</label>
+            <label xml:lang="nl">Licht vooruit</label>
+          </output>
+          <output name="2" label="Light backwards">
+            <label xml:lang="de">Licht rückwärts</label>
+            <label xml:lang="nl">Licht achteruit</label>
+          </output>
+          <output name="3" label="Aux 1" />
+          <output name="4" label="Aux 2" />
+          <output name="5" label="Aux 3" />
+          <output name="6" label="Aux 4" />
+          <output name="7" label="Acceleration off">
+            <label xml:lang="de">Massen simulation aus</label>
+            <label xml:lang="nl">Massa simulatie uit</label>
+          </output>
+          <output name="8" label="Shunting-gear">
+            <label xml:lang="de">Rangier-gang</label>
+            <label xml:lang="nl">Rangeer-stand</label>
+          </output>
+          <size length="12.9" width="9" height="3.4" units="mm" />
+        </model>
+        <model model="685403" maxInputVolts="20V" maxTotalCurrent="1.00 A" formFactor="N" connector="NEM651" numOuts="8" numFns="14" productID="685403">
+          <output name="1" label="Light forwards">
+            <label xml:lang="de">Licht vorwärts</label>
+            <label xml:lang="nl">Licht vooruit</label>
+          </output>
+          <output name="2" label="Light backwards">
+            <label xml:lang="de">Licht rückwärts</label>
+            <label xml:lang="nl">Licht achteruit</label>
+          </output>
+          <output name="3" label="Aux 1" />
+          <output name="4" label="Aux 2" />
+          <output name="5" label="Aux 3" />
+          <output name="6" label="Aux 4" />
+          <output name="7" label="Acceleration off">
+            <label xml:lang="de">Massen simulation aus</label>
+            <label xml:lang="nl">Massa simulatie uit</label>
+          </output>
+          <output name="8" label="Shunting-gear">
+            <label xml:lang="de">Rangier-gang</label>
+            <label xml:lang="nl">Rangeer-stand</label>
+          </output>
+          <size length="12.9" width="9" height="3.4" units="mm" />
+        </model>
+        <model model="685503" maxInputVolts="20V" maxTotalCurrent="1.00 A" formFactor="N" connector="NEM651" numOuts="8" numFns="14" productID="685503">
+          <output name="1" label="Light forwards">
+            <label xml:lang="de">Licht vorwärts</label>
+            <label xml:lang="nl">Licht vooruit</label>
+          </output>
+          <output name="2" label="Light backwards">
+            <label xml:lang="de">Licht rückwärts</label>
+            <label xml:lang="nl">Licht achteruit</label>
+          </output>
+          <output name="3" label="Aux 1" />
+          <output name="4" label="Aux 2" />
+          <output name="5" label="Aux 3" />
+          <output name="6" label="Aux 4" />
+          <output name="7" label="Acceleration off">
+            <label xml:lang="de">Massen simulation aus</label>
+            <label xml:lang="nl">Massa simulatie uit</label>
+          </output>
+          <output name="8" label="Shunting-gear">
+            <label xml:lang="de">Rangier-gang</label>
+            <label xml:lang="nl">Rangeer-stand</label>
+          </output>
+          <size length="12.9" width="9" height="3.4" units="mm" />
         </model>
       </family>
       <family name="Fl decoders Train-Navigation" mfg="Fleischmann" file="Fl_decoders_Train-Navigation.xml">

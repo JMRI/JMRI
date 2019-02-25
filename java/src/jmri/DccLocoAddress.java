@@ -12,6 +12,7 @@ package jmri;
  *
  * @author Bob Jacobsen Copyright (C) 2005
  */
+@javax.annotation.concurrent.Immutable
 public class DccLocoAddress implements LocoAddress {
 
     public DccLocoAddress(int number, boolean isLong) {
