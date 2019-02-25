@@ -33,7 +33,7 @@ public class DCCppStreamConnectionConfig extends jmri.jmrix.AbstractStreamConnec
         return Bundle.getMessage("DCCppStreamName");
     }
 
-    String manufacturerName = "JMRI (Streams)"; // NOI18N
+    String manufacturerName = "DCC++"; // NOI18N
 
     @Override
     public String getManufacturer() {

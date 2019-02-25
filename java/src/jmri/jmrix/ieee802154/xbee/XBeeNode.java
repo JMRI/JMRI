@@ -335,7 +335,7 @@ public class XBeeNode extends IEEE802154Node {
     private XBeeIOStream mStream = null;
 
     /**
-     * Connect a StreamPortController object to the XBeeIOStream
+     * Connect and configure a StreamPortController object to the XBeeIOStream
      * associated with this node.
      *
      * @param cont AbstractSTreamPortController object to connect
@@ -343,6 +343,16 @@ public class XBeeNode extends IEEE802154Node {
     public void connectPortController(jmri.jmrix.AbstractStreamPortController cont) {
         connectedController = cont;
         connectedController.configure();
+    }
+
+    /**
+     * Connect a StreamPortController object to the XBeeIOStream
+     * associated with this node.
+     *
+     * @param cont AbstractSTreamPortController object to connect
+     */
+    public void setPortController(jmri.jmrix.AbstractStreamPortController cont) {
+        connectedController = cont;
     }
 
     /**
@@ -358,7 +368,7 @@ public class XBeeNode extends IEEE802154Node {
     private jmri.jmrix.AbstractStreamPortController connectedController = null;
 
     /**
-     * Connect a StreamConnectionConfig object to the XBeeIOStream
+     * Connect and configure a StreamConnectionConfig object to the XBeeIOStream
      * associated with this node.
      *
      * @param cfg AbstractStreamConnectionConfig object to connect
@@ -366,6 +376,17 @@ public class XBeeNode extends IEEE802154Node {
     public void connectPortController(jmri.jmrix.AbstractStreamConnectionConfig cfg) {
         connectedConfig = cfg;
         connectPortController(cfg.getAdapter());
+    }
+
+    /**
+     * Connect a StreamConnectionConfig object to the XBeeIOStream
+     * associated with this node.
+     *
+     * @param cfg AbstractStreamConnectionConfig object to connect
+     */
+    public void setPortController(jmri.jmrix.AbstractStreamConnectionConfig cfg) {
+        connectedConfig = cfg;
+        setPortController(cfg.getAdapter());
     }
 
     /**

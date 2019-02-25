@@ -294,7 +294,8 @@ public class StreamConfigPane extends JmrixConfigPane {
         if (old != this.ccCurrent) {
               // store the connection config with the node.
               if(ccCurrent instanceof AbstractStreamConnectionConfig) {
-                 confNode.connectPortController((AbstractStreamConnectionConfig)ccCurrent); 
+                 confNode.setPortController((AbstractStreamConnectionConfig)ccCurrent); 
+                 //confNode.connectPortController((AbstractStreamConnectionConfig)ccCurrent); 
               // this.ccCurrent.register();
               }
         }
