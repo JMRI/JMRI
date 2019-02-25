@@ -64,7 +64,7 @@ public class EasyDccOpsModeProgrammer extends EasyDccProgrammer implements Addre
         startShortTimer();
 
         // send it
-        controller().sendEasyDccMessage(msg, this);
+        tc.sendEasyDccMessage(msg, this);
     }
 
     /** 

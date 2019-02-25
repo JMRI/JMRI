@@ -1,7 +1,6 @@
 package jmri.server.json.memory;
 
 import static jmri.server.json.JSON.DATA;
-import static jmri.server.json.JSON.TYPE;
 import static jmri.server.json.JSON.VALUE;
 import static jmri.server.json.memory.JsonMemory.MEMORIES;
 import static jmri.server.json.memory.JsonMemory.MEMORY;
@@ -72,8 +71,8 @@ public class JsonMemoryHttpService extends JsonNamedBeanHttpService {
     @Override
     public ArrayNode doGetList(String type, Locale locale) throws JsonException {
         ArrayNode root = this.mapper.createArrayNode();
-        for (String name : InstanceManager.memoryManagerInstance().getSystemNameList()) {
-            root.add(this.doGet(MEMORY, name, locale));
+        for (Memory m : InstanceManager.memoryManagerInstance().getNamedBeanSet()) {
+            root.add(this.doGet(MEMORY, m.getSystemName(), locale));
         }
         return root;
 

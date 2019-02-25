@@ -1,4 +1,4 @@
-package jmri.jmrix.can.cbus.swing.console;
+package jmri.jmrix.can.cbus.swing;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -74,7 +74,7 @@ public class CbusEventHighlightPanel extends JPanel {
         JFormattedTextField fieldEv = (JFormattedTextField) compEv.getComponent(0);
         DefaultFormatter formatterEv = (DefaultFormatter) fieldEv.getFormatter();
         fieldEv.setColumns(2);
-        formatterEv.setCommitsOnValidEdit(true); 
+        formatterEv.setCommitsOnValidEdit(true);
         
         this.add(evPane);
 

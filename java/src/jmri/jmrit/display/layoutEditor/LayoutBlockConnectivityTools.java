@@ -858,9 +858,7 @@ public class LayoutBlockConnectivityTools {
         LayoutBlockManager lbm = InstanceManager.getDefault(LayoutBlockManager.class);
         List<FacingProtecting> beanList = new ArrayList<>();
 
-        List<String> lblksSysName = lbm.getSystemNameList();
-        for (int i = 0; i < lblksSysName.size(); i++) {
-            LayoutBlock curLblk = lbm.getLayoutBlock(lblksSysName.get(i));
+        for (LayoutBlock curLblk : lbm.getNamedBeanSet()) {
             Block curBlk = curLblk.getBlock();
             LayoutEditor useEdit = editor;
             if (editor == null) {

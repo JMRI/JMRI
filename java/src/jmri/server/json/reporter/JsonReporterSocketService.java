@@ -2,7 +2,6 @@ package jmri.server.json.reporter;
 
 import static jmri.server.json.JSON.NAME;
 import static jmri.server.json.JSON.PUT;
-import static jmri.server.json.reporter.JsonReporter.REPORTER;
 import static jmri.server.json.reporter.JsonReporter.REPORTERS;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -65,14 +64,12 @@ public class JsonReporterSocketService extends JsonSocketService<JsonReporterHtt
     }
 
     private void addListenersToChildren() {
-        InstanceManager.getDefault(ReporterManager.class).getSystemNameList().stream().forEach((rn) -> { //add listeners to each child (if not already)
+        InstanceManager.getDefault(ReporterManager.class).getNamedBeanSet().stream().forEach((r) -> { //add listeners to each child (if not already)
+            String rn = r.getSystemName();
             if (!reporterListeners.containsKey(rn)) {
                 log.debug("adding ReporterListener for Reporter '{}'", rn);
-                Reporter r = InstanceManager.getDefault(ReporterManager.class).getReporter(rn);
-                if (r != null) {
-                    reporterListeners.put(rn, new ReporterListener(r));
-                    r.addPropertyChangeListener(this.reporterListeners.get(rn));
-                }
+                reporterListeners.put(rn, new ReporterListener(r));
+                r.addPropertyChangeListener(this.reporterListeners.get(rn));
             }
         });
     }    
@@ -94,16 +91,13 @@ public class JsonReporterSocketService extends JsonSocketService<JsonReporterHtt
         }
 
         @Override
-        public void propertyChange(PropertyChangeEvent e) {
+        public void propertyChange(PropertyChangeEvent evt) {
+            log.debug("in ReporterListener for '{}' '{}' ('{}'=>'{}')", this.reporter.getSystemName(), evt.getPropertyName(), evt.getOldValue(), evt.getNewValue());            
 //            if (e.getPropertyName().equals("currentReport")) {
                 try {
-                    try {
-                        connection.sendMessage(service.doGet(REPORTER, this.reporter.getSystemName(), getLocale()));
-                    } catch (JsonException ex) {
-                        connection.sendMessage(ex.getJsonMessage());
-                    }
+                    connection.sendMessage(service.doGetReporter(this.reporter, getLocale()));
                 } catch (IOException ex) {
-                    // if we get an error, de-register
+                    // if we get an error, unregister as listener
                     reporter.removePropertyChangeListener(this);
                     reporterListeners.remove(this.reporter.getSystemName());
                 }
@@ -129,7 +123,7 @@ public class JsonReporterSocketService extends JsonSocketService<JsonReporterHtt
                     connection.sendMessage(ex.getJsonMessage());
                 }
             } catch (IOException ex) {
-                // if we get an error, de-register
+                // if we get an error, unregister as listener
                 log.debug("deregistering reportersListener due to IOException");
                 InstanceManager.getDefault(ReporterManager.class).removePropertyChangeListener(reportersListener);
             }

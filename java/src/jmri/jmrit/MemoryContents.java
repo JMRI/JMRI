@@ -69,13 +69,13 @@ import org.slf4j.LoggerFactory;
  * Similarly, when writing the contents of data storage to a file, the
  * instantiating method will create a {@link File} and an associated
  * {@link Writer} and pass the {@link Writer} object to
- * {@link writeHex}. The mechanisms implemented within this class do not
+ * {@link #writeHex}. The mechanisms implemented within this class do not
  * know about or care about the filename or its extension and do not use that
  * information as part of its file interpretation or file creation.
  * <p>
  * The class is implemented with a maximum of 24 bits of address space, with up
  * to 256 pages of up to 65536 bytes per page. A "sparse" implementation of
- * memory is modeled, where only occupied pages are allocated within the JAVA
+ * memory is modeled, where only occupied pages are allocated within the Java
  * system's memory.
  * <hr>
  * The Intel "Hexadecimal Object File Format File Format Specification"
@@ -275,7 +275,7 @@ public class MemoryContents {
      * information. Such Key/Value pair information is used within the .DMF
      * format to provide configuration information for firmware update
      * mechanism. This class also extracts key/value pair comments "I8HEX"
-     * format files. After successful completion of this {@link readHex},
+     * format files. After successful completion of the {@link #readHex} call,
      * then the {@link #extractValueOfKey(String keyName)} method may be used to inspect individual key values.
      * <p>
      * Key/Value pair definition comment lines are of the format:
@@ -781,7 +781,7 @@ public class MemoryContents {
      * any comment lines in its output.
      *
      * @param writer    Writer to which the character stream is sent
-     * @param blocksize is the maximum number of bytes defined in a data record
+     * @param blockSize is the maximum number of bytes defined in a data record
      * @throws IOException                         upon file access problem
      * @throws MemoryFileAddressingFormatException if unsupported addressing
      *                                             format

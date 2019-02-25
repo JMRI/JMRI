@@ -21,7 +21,7 @@ public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccList
         LONG_TIMEOUT = 180000;
     }
 
-    private EasyDccTrafficController tc = null;
+    protected EasyDccTrafficController tc = null;
 
     /** 
      * {@inheritDoc}

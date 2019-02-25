@@ -1,5 +1,8 @@
 package jmri.jmrix.roco.z21;
 
+import java.util.ArrayList;
+import java.util.function.Predicate;
+import jmri.CollectingReporter;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.RailCom;
@@ -15,13 +18,15 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2016
  */
-public class Z21CanReporter extends jmri.implementation.AbstractRailComReporter implements Z21Listener {
+public class Z21CanReporter extends jmri.implementation.AbstractRailComReporter implements Z21Listener,CollectingReporter {
 
     private Z21SystemConnectionMemo _memo = null;
 
     private int networkID=0; // CAN network ID associated with this reporter's module.
     private int moduleAddress=-1; // User assigned address associated with this reporter's module.
     private int port; // module port (0-7) associated with this reporter.
+
+    private ArrayList<RailCom> idTags;
 
     /**  
      * Create a new Z21CanReporter.
@@ -39,37 +44,31 @@ public class Z21CanReporter extends jmri.implementation.AbstractRailComReporter 
         //Address format passed is in the form of moduleAddress:pin 
         int seperator = systemName.indexOf(":");
         int start = _memo.getSystemPrefix().length() + 1;
-           try {
-              try{
-                 moduleAddress = (Integer.parseInt(systemName.substring(start,seperator)));
-              } catch (NumberFormatException ex) {
-                 // didn't parse as a decimal, check to see if network ID 
-                 // was used instead.
-                 networkID = (Integer.parseInt(systemName.substring(start,seperator),16));
-                 
-              }
-              port = (Integer.parseInt(systemName.substring(seperator + 1)));
+        try {
+           try{
+              moduleAddress = (Integer.parseInt(systemName.substring(start,seperator)));
            } catch (NumberFormatException ex) {
-              log.debug("Unable to convert " + systemName + " into the cab and input format of nn:xx");
-              throw new IllegalArgumentException("requires mm:pp format address.");
+              // didn't parse as a decimal, check to see if network ID 
+              // was used instead.
+              networkID = (Integer.parseInt(systemName.substring(start,seperator),16));
            }
-        // request an update from the layout.
-        //requestUpdateFromLayout();  // leave commented out for now, causing 
-                                      // loop that needs investigation.
-    //    if(networkID!=0){
-    // leave commented out for now, causing loop that needs investigation.
-    //       _memo.getTrafficController().sendz21Message(Z21Message.getLanCanDetector(networkID),this);
-    //    }
+           port = (Integer.parseInt(systemName.substring(seperator + 1)));
+        } catch (NumberFormatException ex) {
+           log.debug("Unable to convert " + systemName + " into the cab and input format of nn:xx");
+           throw new IllegalArgumentException("requires mm:pp format address.");
+        }
+        idTags = new ArrayList<RailCom>();
+        // request an update from the layout
+        //if(networkID!=0){
+        //leave commented out for now, causing loop that needs investigation.
+        //   _memo.getTrafficController().sendz21Message(Z21Message.getLanCanDetector(networkID),this);
+        //}
     }
 
     // the Z21 Listener interface
 
     /**
-     * Member function that will be invoked by a z21Interface implementation to
-     * forward a z21 message from the layout.
-     *
-     * @param msg The received z21 reply. Note that this same object may be
-     * presented to multiple users. It should not be modified here.
+     * {@inheritDoc}
      */
     @Override
     public void reply(Z21Reply msg){
@@ -88,85 +87,70 @@ public class Z21CanReporter extends jmri.implementation.AbstractRailComReporter 
             int type = ( msg.getElement(9) & 0xFF);
             log.debug("reporter message type {}",type);
             if (type >= 0x11 && type <= 0x1f) {
+               if(type==0x11) { // restart the list.
+                  log.trace("clear list, size {}",idTags.size());
+                  idTags.clear();
+                  notify(null);
+               }
                int value1 = (msg.getElement(10)&0xFF) + ((msg.getElement(11)&0xFF) << 8);
                int value2 = (msg.getElement(12)&0xFF) + ((msg.getElement(13)&0xFF) << 8);
-               log.debug("value 1: {}; value 2: {}",value1,value2);
-               if (value1 != 0 ) { // 0 represents end of list or no railcom address.
-                  // get the first locomotive address from the message.
-                  DccLocoAddress l = msg.getCanDetectorLocoAddress(value1);
-                  if(l!=null) {
-                     log.debug("reporting tag for address 1 {}",l);
-                     // see if there is a tag for this address.
-                     RailCom tag = InstanceManager.getDefault(RailComManager.class).provideIdTag("" + l.getNumber());
-                     tag.setAddressType(l.isLongAddress()?RailCom.LONG_ADDRESS:RailCom.SHORT_ADDRESS);
-                     int direction = (0xC000&value1);
-                     switch (direction) {
-                        case 0x8000:
-                           tag.setOrientation(RailCom.ORIENTA);
-                           break;
-                        case 0xC000:
-                           tag.setOrientation(RailCom.ORIENTB);
-                           break;
-                        default:
-                           tag.setOrientation(0);
-                     }
+               RailCom tag = getRailComTagFromValue(msg,value1);
+               if(tag != null ) {
+                  log.trace("add tag {}",tag);
+                  notify(tag);
+                  idTags.add(tag);
+                  // add the tag to the collection
+                  tag = getRailComTagFromValue(msg,value2);
+                  if(tag != null ) {
+                     log.trace("add tag {} ",tag);
                      notify(tag);
-                     if( value2 != 0 ) { // again, 0 is end of list or no railcom address available.
-                        // get the second locomotive address from the message.
-                        DccLocoAddress l2 = msg.getCanDetectorLocoAddress(value2);
-                        if(l2!=null) {
-                           log.debug("reporting tag for address 2 {}",l2);
-                           // see if there is a tag for this address.
-                           RailCom tag2 = InstanceManager.getDefault(RailComManager.class).provideIdTag("" + l2.getNumber());
-                           tag2.setAddressType(l2.isLongAddress()?RailCom.LONG_ADDRESS:RailCom.SHORT_ADDRESS);
-                           direction = (0xC000&value2);
-                           switch (direction) {
-                             case 0x8000:
-                                 tag2.setOrientation(RailCom.ORIENTA);
-                                 break;
-                             case 0xC000:
-                                 tag2.setOrientation(RailCom.ORIENTB);
-                                 break;
-                              default:
-                                 tag2.setOrientation(0);
-                           }
-                           notify(tag2);
-                        }
-                     }
+                     // add the tag to idTags
+                     idTags.add(tag);
                   }
-                }
-             } else if( type == 0x01 ) {
+               }
+               if(log.isDebugEnabled()){
+                  log.debug("after message, new list size {}",idTags.size());
+                  int i = 0;
+                  for(RailCom id:idTags){
+                      log.debug("{}: {}",i++,id);
+                  }
+               }
+            } else if( type == 0x01 ) {
                 // status message, not a railcom value, so no report.
-                int value1 = (msg.getElement(10)&0xFF) + ((msg.getElement(11)&0xFF) << 8);
-                if(value1 == 0x0000) {
-                   log.debug("Free without tension");
-                   notify(null); // clear the current report if no tags.
-                } else if(value1 == 0x0001) {
-                   log.debug("Free with tension");
-                } else if(value1 == 0x1000) {
-                   log.debug("Busy without tension");
-                } else if(value1 == 0x1100) {
-                   log.debug("Busy with tension");
-                } else if(value1 == 0x1201) {
-                   log.debug("Busy Overload 1");
-                } else if(value1 == 0x1202) {
-                   log.debug("Busy Overload 2");
-                } else if(value1 == 0x1203) {
-                   log.debug("Busy Overload 3");
-                }
-             } else {
-                //notify(null); // clear the current report if no tags.
+                return;
              }
          }
     }
 
+    /*
+     * private method to get and update a railcom tag based on the value 
+     * bytes from the message.
+     */
+    private RailCom getRailComTagFromValue(Z21Reply msg,int value){
+       DccLocoAddress l = msg.getCanDetectorLocoAddress(value);
+       if (l != null ) { // 0 represents end of list or no railcom address.
+          // get the first locomotive address from the message.
+          log.debug("reporting tag for address 1 {}",l);
+          // see if there is a tag for this address.
+          RailCom tag = (RailCom) InstanceManager.getDefault(RailComManager.class).provideIdTag("" + l.getNumber());
+          int direction = (0xC000&value);
+          switch (direction) {
+             case 0x8000:
+                tag.setOrientation(RailCom.ORIENTA);
+                break;
+             case 0xC000:
+                tag.setOrientation(RailCom.ORIENTB);
+                break;
+             default:
+                tag.setOrientation(0);
+          }
+          return tag;
+       } 
+       return null; // address in the message indicates end of list.
+    }
+
     /**
-     * Member function that will be invoked by a z21Interface implementation to
-     * forward a z21 message sent to the layout. Normally, this function will do
-     * nothing.
-     *
-     * @param msg The received z21 message. Note that this same object may be
-     * presented to multiple users. It should not be modified here.
+     * {@inheritDoc}
      */
     @Override
     public void message(Z21Message msg){
@@ -176,6 +160,15 @@ public class Z21CanReporter extends jmri.implementation.AbstractRailComReporter 
     @Override
     public void dispose(){
         super.dispose();
+    }
+
+    // the CollectingReporter interface.
+    /**
+     * {@inheritDoc}
+     */
+    @Override 
+    public java.util.Collection getCollection(){
+        return idTags;
     }
 
     private static final Logger log = LoggerFactory.getLogger(Z21CanReporter.class);

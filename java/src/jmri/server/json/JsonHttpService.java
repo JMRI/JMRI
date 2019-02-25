@@ -18,7 +18,6 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Randall Wood
  */
-@SuppressWarnings("serial")
 public abstract class JsonHttpService {
 
     protected final ObjectMapper mapper;

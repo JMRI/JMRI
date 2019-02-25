@@ -6,7 +6,6 @@ import static jmri.server.json.JSON.DATA;
 import static jmri.server.json.JSON.LIT;
 import static jmri.server.json.JSON.STATE;
 import static jmri.server.json.JSON.TOKEN_HELD;
-import static jmri.server.json.JSON.TYPE;
 import static jmri.server.json.signalHead.JsonSignalHead.SIGNAL_HEAD;
 import static jmri.server.json.signalHead.JsonSignalHead.SIGNAL_HEADS;
 
@@ -87,7 +86,8 @@ public class JsonSignalHeadHttpService extends JsonNamedBeanHttpService {
     @Override
     public ArrayNode doGetList(String type, Locale locale) throws JsonException {
         ArrayNode root = this.mapper.createArrayNode();
-        for (String name : InstanceManager.getDefault(SignalHeadManager.class).getSystemNameList()) {
+        for (SignalHead head : InstanceManager.getDefault(SignalHeadManager.class).getNamedBeanSet()) {
+            String name = head.getSystemName();
             root.add(this.doGet(SIGNAL_HEAD, name, locale));
         }
         return root;

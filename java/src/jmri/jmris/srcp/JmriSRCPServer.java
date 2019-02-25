@@ -31,7 +31,8 @@ public class JmriSRCPServer extends JmriServer {
     /*
      * @deprecated since 4.7.1 use @link{jmri.InstanceManager.getDefault()} instead.
      */
-    @Deprecated
+    @Deprecated  // will be removed when class is refactored
+    @SuppressWarnings("deprecation")  // temporary implementation of method
     synchronized public static JmriServer instance() {
         if (_instance == null) {
             int port = java.lang.Integer.parseInt(rb.getString("JMRISRCPServerPort"));

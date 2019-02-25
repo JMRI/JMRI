@@ -2,61 +2,139 @@
 # See the java/ecj.warning.options-ci file for those used during CI operations
 # The two files should be the same _except_ for warn vs err at start of lines with + signs
 
--warn:-unusedImport
+# for compiling the test directory, the java/ecj.warning.options-test file overrides this
 
--warn:+assertIdentifier
--warn:-boxing
--warn:+charConcat
--warn:+conditionAssign
--warn:+constructorName 
--warn:+discouraged
--warn:+enumSwitch
--warn:+fallthrough
+# Group (macro) checks - these need to be sorted out
+-warn:+hiding
 -warn:-fieldHiding
--warn:+finalBound
--warn:+finally 
--warn:+forbidden
--warn:-hiding
--warn:-indirectStatic 
--warn:+intfAnnotation
--warn:+intfNonInherited
--warn:+javadoc
 -warn:-localHiding 
--warn:+maskedCatchBlocks
--warn:+noEffectAssign
--warn:+null
--warn:-over-ann
--warn:+pkgDefaultMethod
--warn:-raw
--warn:+semicolon
--warn:+specialParamHiding
--warn:+staticReceiver
--warn:+suppress
--warn:-syntheticAccess
--warn:-tasks(<task1>|...|<taskN>)
 -warn:+typeHiding
--warn:+unchecked
--warn:-unqualified-field-access
--warn:-unqualifiedField
--warn:+unusedLabel
--warn:+unusedLocal
--warn:+unusedPrivate
--warn:-unusedThrown 
--warn:+uselessTypeCheck
--warn:+varargsCast
--warn:-warningToken
-
--warn:-deadCode
--warn:-emptyBlock
--warn:-paramAssign
--warn:-unnecessaryElse
-
--warn:+dep-ann
--warn:+deprecation
--warn:-allDeprecation
 
 -warn:-allJavadoc
 -warn:-javadoc
+
+# 36 on next
+-warn:-invalidJavadoc
+-warn:-invalidJavadocTag
+-warn:-invalidJavadocTagDep
+-warn:-invalidJavadocTagNotVisible
+
+-warn:-missingJavadocTags
+-warn:-missingJavadocTagsMethod
+-warn:-missingJavadocTagsOverriding
+
+-warn:-missingJavadocComments
+-warn:-missingJavadocCommentsOverriding
+
+-warn:+static-access
+-warn:-indirectStatic 
+-warn:+staticReceiver
+
+-warn:+unused
+-warn:-unusedAllocation
+-warn:-unusedImport
+-warn:+unusedLabel
+-warn:+unusedLocal
+-warn:-unusedParam
+-warn:+unusedParamImplementing
+-warn:+unusedParamIncludeDoc
+-warn:+unusedParamOverriding
+-warn:+unusedPrivate
+-warn:-unusedThrown 
+-warn:+unusedThrownIncludeDocComment
+-warn:+unusedThrownExemptExceptionThrowable
+-warn:+unusedThrownWhenOverriding
+-warn:-unusedTypeArgs
+-warn:-unusedTypeParameter
+
+
+# Checks we choose to enforce
+-warn:+allDeprecation
+-warn:+allOver-ann
+-warn:+assertIdentifier
+-warn:+charConcat
+-warn:+conditionAssign
+-warn:+constructorName
+-warn:+compareIdentical
+-warn:+dep-ann
+-warn:+deprecation
+-warn:+discouraged
+-warn:+enumIdentifier
+-warn:+enumSwitch
+-warn:+fallthrough
+-warn:+finalBound
+-warn:+finally 
+-warn:+forbidden
+-warn:+hashCode
+-warn:+includeAssertNull
+-warn:+inheritNullAnnot
+-warn:+intfAnnotation
+-warn:+intfNonInherited
+-warn:+maskedCatchBlocks
+-warn:+noEffectAssign
+-warn:+nonnullNotRepeated
+-warn:+null
+-warn:+nullAnnot
+-warn:+nullAnnotConflict
+-warn:+nullAnnotRedundant
+-warn:+nullDereference
+-warn:+nullUncheckedConversion
+-warn:+over-ann
+-warn:+pkgDefaultMethod
+-warn:+semicolon
+-warn:+specialParamHiding
+-warn:+suppress
+-warn:+unavoidableGenericProblems
+-warn:+unchecked
+-warn:+uselessTypeCheck
+-warn:+varargsCast
+
+
+# Checks we choose not to enforce as a matter of style
+-warn:-boxing
+-warn:-intfRedundant
 -warn:-nls
+-warn:-paramAssign
 -warn:-serial
+-warn:-super
+-warn:-syntheticAccess
+-warn:-unqualifiedField
+-warn:-unqualified-field-access
 -warn:-unusedArgument
+
+
+
+# Checks we're warning on, but not enforcing
+
+
+
+# Checks we're working on
+
+# 14 outstanding items
+-warn:-deadCode
+
+# 22 outstanding items
+-warn:-syncOverride
+
+# 159 outstanding items
+-warn:-raw
+
+# this tags some FindBugs labels?  But still useful to run occasionally
+-warn:-warningToken
+
+# 7 outstanding items
+-warn:-switchDefault
+
+
+
+# Checks not yet examined 
+
+-warn:-allDeadCode
+-warn:-all-static-method
+-warn:-emptyBlock
+-warn:-enumSwitchPedantic
+-warn:-static-method
+#-warn:-tasks(<task1>|...|<taskN>)
+-warn:-unnecessaryElse
+
+

@@ -87,6 +87,8 @@ import org.junit.runners.Suite;
         jmri.jmrix.loconet.streamport.PackageTest.class,
         CsOpSwAccessTest.class,
         LnPacketizerStrictTest.class,
+        TranspondingTagTest.class,
+        TranspondingTagManagerTest.class,
 })
 
 /**

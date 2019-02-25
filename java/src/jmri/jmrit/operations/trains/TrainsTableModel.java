@@ -75,7 +75,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     public void setShowAll(boolean showAll) {
         _showAll = showAll;
         updateList();
-        //fireTableStructureChanged();
+        fireTableStructureChanged();
         initTable();
     }
 
@@ -372,7 +372,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 
     public Color getRowColor(int row) {
         Train train = sysList.get(row);
-        //  log.debug("Row: {} train: {} color: {}", row, train.getName(), train.getTableRowColorName());
+//          log.debug("Row: {} train: {} color: {}", row, train.getName(), train.getTableRowColorName());
         return train.getTableRowColor();
     }
 

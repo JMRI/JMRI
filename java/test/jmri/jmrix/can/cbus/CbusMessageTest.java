@@ -2,7 +2,7 @@ package jmri.jmrix.can.cbus;
 
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
-import jmri.jmrix.can.cbus.CbusConstants;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -12,7 +12,7 @@ import org.junit.Test;
 /**
  *
  * @author Paul Bender Copyright (C) 2017
- * @author Steve Young Copyright (C) 2018
+ * @author Steve Young Copyright (C) 2018 2019
  */
 public class CbusMessageTest {
 
@@ -255,7 +255,7 @@ public class CbusMessageTest {
         r.setNumDataElements(1);
         r.setElement(0, 0x05); // TON OPC    
         Assert.assertEquals("isRequestTrackOff Bad Reply", CbusMessage.isTrackOff(r),false);
-    }    
+    }
     
     @Test
     public void testgetRequestTrackOnMessage() {
@@ -270,6 +270,291 @@ public class CbusMessageTest {
         Assert.assertTrue("getRequestTrackOff OPC", m.getElement(0) == 0x08); // RTON OPC
         Assert.assertTrue("getRequestTrackOff Length", m.getNumDataElements() == 1);
     }
+
+    @Test
+    public void testgetDataLength() {
+        CanReply r = new CanReply(0x12);
+        CanMessage m = new CanMessage(0x12);
+        r.setElement(0, 0x04); // TOF OPC
+        m.setElement(0, 0x04); // TOF OPC
+        Assert.assertEquals("Data Length 0 r",0,CbusMessage.getDataLength(r));
+        Assert.assertEquals("Data Length 0 m",0,CbusMessage.getDataLength(m));
+        r.setElement(0, 0x11); // RQMN
+        m.setElement(0, 0x11); // RQMN
+        Assert.assertEquals("Data Length 0 r",0,CbusMessage.getDataLength(r));
+        Assert.assertEquals("Data Length 0 m",0,CbusMessage.getDataLength(m));
+
+        r.setElement(0, 0x83); // WCVB OPC
+        m.setElement(0, 0x83); // WCVB OPC
+        Assert.assertEquals("Data Length 4 r",4,CbusMessage.getDataLength(r));
+        Assert.assertEquals("Data Length 4 m",4,CbusMessage.getDataLength(m));
+        r.setElement(0, 0xe2); // NAME
+        m.setElement(0, 0xe2); // NAME
+        Assert.assertEquals("Data Length 7 r",7,CbusMessage.getDataLength(r));
+        Assert.assertEquals("Data Length 7 m",7,CbusMessage.getDataLength(m));
+        
+        r = null;
+        m = null;
+    }
+    
+    @Test
+    public void testsetgetPriority() {
+        CanReply r = new CanReply(0x00);
+        CanMessage m = new CanMessage(0x00);
+        Assert.assertEquals("Priority 0 r",0,CbusMessage.getPri(r));
+        Assert.assertEquals("Priority 0 m",0,CbusMessage.getPri(m));
+        
+        try {
+            CbusMessage.setPri(r,0xff);
+            Assert.fail("Should have thrown an exception");
+        } catch (Exception e) {
+            Assert.assertTrue(true);
+        }
+        
+        try {
+            CbusMessage.setPri(m,0xff);
+            Assert.fail("Should have thrown an exception");
+        } catch (Exception e) {
+            Assert.assertTrue(true);
+        }
+        
+        CbusMessage.setPri(m,CbusConstants.DEFAULT_MINOR_PRIORITY);
+        CbusMessage.setPri(r,CbusConstants.DEFAULT_MINOR_PRIORITY);
+        Assert.assertEquals("Priority DEFAULT_MINOR_PRIORITY r",3,CbusMessage.getPri(r));
+        Assert.assertEquals("Priority DEFAULT_MINOR_PRIORITY m",3,CbusMessage.getPri(m));
+
+        CbusMessage.setPri(m,CbusConstants.DEFAULT_DYNAMIC_PRIORITY);
+        CbusMessage.setPri(r,CbusConstants.DEFAULT_DYNAMIC_PRIORITY);
+        Assert.assertEquals("Priority DEFAULT_DYNAMIC_PRIORITY r",2,CbusMessage.getPri(r));
+        Assert.assertEquals("Priority DEFAULT_DYNAMIC_PRIORITY m",2,CbusMessage.getPri(m));
+        
+        r.setExtended(true);
+        m.setExtended(true);
+        
+        Assert.assertEquals("Priority setExtended r",0,CbusMessage.getPri(r));
+        Assert.assertEquals("Priority setExtended m",0,CbusMessage.getPri(m));        
+
+        CbusMessage.setPri(m,CbusConstants.DEFAULT_MINOR_PRIORITY);
+        CbusMessage.setPri(r,CbusConstants.DEFAULT_MINOR_PRIORITY);
+        Assert.assertEquals("Priority setExtended DEFAULT_MINOR_PRIORITY r",3,CbusMessage.getPri(r));
+        Assert.assertEquals("Priority setExtended DEFAULT_MINOR_PRIORITY m",3,CbusMessage.getPri(m));
+        
+    }
+    
+    @Test
+    public void testsetgetId() {
+        
+        CanReply r = new CanReply(0x00);
+        CanMessage m = new CanMessage(0x00);
+        Assert.assertEquals("getId 0 r",0,CbusMessage.getId(r));
+        Assert.assertEquals("getId 0 m",0,CbusMessage.getId(m));
+        CbusMessage.setId(r,0x01);
+        CbusMessage.setId(m,0x01);
+        Assert.assertEquals("getId 1 r",1,CbusMessage.getId(r));
+        Assert.assertEquals("getId 1 m",1,CbusMessage.getId(m));
+        CbusMessage.setId(r,120);
+        CbusMessage.setId(m,120);
+        Assert.assertEquals("getId 120 r",120,CbusMessage.getId(r));
+        Assert.assertEquals("getId 120 m",120,CbusMessage.getId(m));
+        try {
+            CbusMessage.setId(r,0xff);
+            Assert.fail("Should have thrown an exception");
+        } catch (Exception e) {
+            Assert.assertTrue(true);
+        }
+        
+        try {
+            CbusMessage.setId(m,0xff);
+            Assert.fail("Should have thrown an exception");
+        } catch (Exception e) {
+            Assert.assertTrue(true);
+        }
+        
+        r.setExtended(true);
+        m.setExtended(true);        
+        
+        CbusMessage.setId(r,0x01);
+        CbusMessage.setId(m,0x01);
+        Assert.assertEquals("getId 1 r",1,CbusMessage.getId(r));
+        Assert.assertEquals("getId 1 m",1,CbusMessage.getId(m));
+        CbusMessage.setId(r,120);
+        CbusMessage.setId(m,120);
+        Assert.assertEquals("getId 120 r",120,CbusMessage.getId(r));
+        Assert.assertEquals("getId 120 m",120,CbusMessage.getId(m));
+        try {
+            CbusMessage.setId(r,0xffffff);
+            Assert.fail("r Should have thrown an exception");
+        } catch (Exception e) {
+            Assert.assertTrue(true);
+        }
+        
+        try {
+            CbusMessage.setId(m,0xffffff);
+            Assert.fail("m Should have thrown an exception");
+        } catch (Exception e) {
+            Assert.assertTrue(true);
+        }        
+        
+    }
+    
+    @Test
+    public void testisArst() {
+        CanReply r = new CanReply(0x12);
+        r.setNumDataElements(1);
+        r.setElement(0, 0x07); // Arst OPC
+        Assert.assertTrue(CbusMessage.isArst(r));
+        r.setElement(0, 0x06);
+        Assert.assertFalse(CbusMessage.isArst(r));
+        r = null;
+    }
+    
+    @Test
+    public void testgetReadCV() {
+        CanMessage m = CbusMessage.getReadCV(1,jmri.ProgrammingMode.PAGEMODE,0x12);
+        Assert.assertEquals("PAGEMODE","[592] 84 FF 00 01 02",m.toString());
+        m = CbusMessage.getReadCV(255,jmri.ProgrammingMode.DIRECTBITMODE,0x12);
+        Assert.assertEquals("DIRECTBITMODE","[592] 84 FF 00 FF 01",m.toString());
+        m = CbusMessage.getReadCV(214,jmri.ProgrammingMode.DIRECTBYTEMODE,0x12);
+        Assert.assertEquals("DIRECTBYTEMODE","[592] 84 FF 00 D6 00",m.toString());
+        m = CbusMessage.getReadCV(214,jmri.ProgrammingMode.REGISTERMODE,0x12);
+        Assert.assertEquals("REGISTERMODE","[592] 84 FF 00 D6 03",m.toString());
+        m = null;
+    }
+    
+    @Test
+    public void testgetgetWriteCV() {
+        CanMessage m = CbusMessage.getWriteCV(1,211,jmri.ProgrammingMode.PAGEMODE,0x12);
+        Assert.assertEquals("PAGEMODE","[592] A2 FF 00 01 02 D3",m.toString());
+        m = CbusMessage.getWriteCV(255,1,jmri.ProgrammingMode.DIRECTBITMODE,0x12);
+        Assert.assertEquals("DIRECTBITMODE","[592] A2 FF 00 FF 01 01",m.toString());
+        m = CbusMessage.getWriteCV(214,0,jmri.ProgrammingMode.DIRECTBYTEMODE,0x12);
+        Assert.assertEquals("DIRECTBYTEMODE","[592] A2 FF 00 D6 00 00",m.toString());
+        m = CbusMessage.getWriteCV(214,123,jmri.ProgrammingMode.REGISTERMODE,0x12);
+        Assert.assertEquals("REGISTERMODE","[592] A2 FF 00 D6 03 7B",m.toString());
+        m = null;
+    }    
+    
+    
+    @Test
+    public void testgetOpsModeWriteCV() {
+        CanMessage m = CbusMessage.getOpsModeWriteCV(22,false,211,255,0x12);
+        Assert.assertEquals("getOpsModeWriteCV","[592] C1 00 16 00 D3 05 FF",m.toString());
+    }        
+    
+    @Test
+    public void testgetBootEntry() {
+        CanMessage m = CbusMessage.getBootEntry(43215,0x12);
+        Assert.assertEquals("getBootEntry","[592] 5C A8 CF",m.toString());
+    }
+
+    @Test
+    public void testgetBootNop() {
+        CanMessage m = CbusMessage.getBootNop(0x3D,0x12);
+        Assert.assertEquals("getBootNop","[16000004] 00 00 3D 00 0D 00 00 00",m.toString());
+    }    
+
+    @Test
+    public void testgetBootReset() {
+        CanMessage m = CbusMessage.getBootReset(0x12);
+        Assert.assertEquals("getBootReset","[16000004] 00 00 00 00 0D 01 00 00",m.toString());
+    }
+
+    @Test
+    public void testgetBootInitialise() {
+        CanMessage m = CbusMessage.getBootInitialise(202,0x12);
+        Assert.assertEquals("getBootInitialise","[16000004] 00 00 CA 00 0D 02 00 00",m.toString());
+    }
+
+    @Test
+    public void testgetBootCheck() {
+        CanMessage m = CbusMessage.getBootCheck(123,0x12);
+        Assert.assertEquals("getBootCheck","[16000004] 00 00 00 00 0D 03 00 7B",m.toString());
+    }
+
+    @Test
+    public void testgetBootTest() {
+        CanMessage m = CbusMessage.getBootTest(0x12);
+        Assert.assertEquals("getBootTest","[16000004] 00 00 00 00 0D 04 00 00",m.toString());
+    }
+
+    @Test
+    public void testgetBootWriteData() {
+        CanMessage m = CbusMessage.getBootWriteData( new int[]{0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08},0x12);
+        Assert.assertEquals("getBootWriteData","[16000005] 01 02 03 04 05 06 07 08",m.toString());
+        
+        m = CbusMessage.getBootWriteData( new int[]{0x01,0x02},0x12);
+        JUnitAppender.assertErrorMessageStartsWith("Exception in bootloader data");
+        m = null;
+    }
+
+    @Test
+    public void testisBootError() {
+        CanReply r = new CanReply(0x14);
+        r.setExtended(false);
+        r.setElement(0,7);
+        Assert.assertEquals("isBootError fff",false,CbusMessage.isBootError(r)); // false false false
+        r.setElement(0,0);
+        Assert.assertEquals("isBootError ffp",false,CbusMessage.isBootError(r)); // ffp
+        r.setHeader(0x10000004);
+        Assert.assertEquals("isBootError fpp",false,CbusMessage.isBootError(r)); // fpp
+        r.setElement(0,7);
+        Assert.assertEquals("isBootError fpf",false,CbusMessage.isBootError(r)); // fpf
+        r.setExtended(true);
+        Assert.assertEquals("isBootError ppf",false,CbusMessage.isBootError(r)); // ppf
+        r.setHeader(0x14);
+        Assert.assertEquals("isBootError pff",false,CbusMessage.isBootError(r)); // pff
+        r.setHeader(0x10000004);
+        r.setElement(0,0);
+        Assert.assertEquals("isBootError ppp",true,CbusMessage.isBootError(r)); // ppp
+        r = null;
+    }
+
+    @Test
+    public void testisBootOK() {
+        CanReply r = new CanReply(0x14);
+        r.setExtended(false);
+        r.setElement(0,7);
+        Assert.assertEquals("isBootOK fff",false,CbusMessage.isBootOK(r)); // false false false
+        r.setElement(0,1);
+        Assert.assertEquals("isBootOK ffp",false,CbusMessage.isBootOK(r)); // ffp
+        r.setHeader(0x10000004);
+        Assert.assertEquals("isBootOK fpp",false,CbusMessage.isBootOK(r)); // fpp
+        r.setElement(0,7);
+        Assert.assertEquals("isBootOK fpf",false,CbusMessage.isBootOK(r)); // fpf
+        r.setExtended(true);
+        Assert.assertEquals("isBootOK ppf",false,CbusMessage.isBootOK(r)); // ppf
+        r.setHeader(0x14);
+        Assert.assertEquals("isBootOK pff",false,CbusMessage.isBootOK(r)); // pff
+        r.setHeader(0x10000004);
+        r.setElement(0,1);
+        Assert.assertEquals("isBootOK ppp",true,CbusMessage.isBootOK(r)); // ppp
+        r = null;
+    }
+
+
+
+    @Test
+    public void testisBootConfirm() {
+        CanReply r = new CanReply(0x14);
+        r.setExtended(false);
+        r.setElement(0,7);
+        Assert.assertEquals("isBootConfirm fff",false,CbusMessage.isBootConfirm(r)); // false false false
+        r.setElement(0,2);
+        Assert.assertEquals("isBootConfirm ffp",false,CbusMessage.isBootConfirm(r)); // ffp
+        r.setHeader(0x10000004);
+        Assert.assertEquals("isBootConfirm fpp",false,CbusMessage.isBootConfirm(r)); // fpp
+        r.setElement(0,7);
+        Assert.assertEquals("isBootConfirm fpf",false,CbusMessage.isBootConfirm(r)); // fpf
+        r.setExtended(true);
+        Assert.assertEquals("isBootConfirm ppf",false,CbusMessage.isBootConfirm(r)); // ppf
+        r.setHeader(0x14);
+        Assert.assertEquals("isBootConfirm pff",false,CbusMessage.isBootConfirm(r)); // pff
+        r.setHeader(0x10000004);
+        r.setElement(0,2);
+        Assert.assertEquals("isBootConfirm ppp",true,CbusMessage.isBootConfirm(r)); // ppp
+        r = null;
+    }
+    
     
     // The minimal setup for log4J
     @Before

@@ -8,7 +8,6 @@ import static jmri.server.json.JSON.DATA;
 import static jmri.server.json.JSON.LIT;
 import static jmri.server.json.JSON.STATE;
 import static jmri.server.json.JSON.TOKEN_HELD;
-import static jmri.server.json.JSON.TYPE;
 import static jmri.server.json.signalMast.JsonSignalMast.SIGNAL_MAST;
 import static jmri.server.json.signalMast.JsonSignalMast.SIGNAL_MASTS;
 
@@ -88,8 +87,8 @@ public class JsonSignalMastHttpService extends JsonNamedBeanHttpService {
     public ArrayNode doGetList(String type, Locale locale) throws JsonException {
         ArrayNode root = this.mapper.createArrayNode();
 
-        for (String name : InstanceManager.getDefault(SignalMastManager.class
-        ).getSystemNameList()) {
+        for (SignalMast mast : InstanceManager.getDefault(SignalMastManager.class).getNamedBeanSet()) {
+            String name = mast.getSystemName();
             root.add(this.doGet(SIGNAL_MAST, name, locale));
         }
         return root;

@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
  */
 public class Pr2Throttle extends AbstractThrottle {
 
-    private int addr;
+    private final int addr;
     DccLocoAddress address;
 
     /**
@@ -151,7 +151,7 @@ public class Pr2Throttle extends AbstractThrottle {
         }
 
         LocoNetMessage l = new LocoNetMessage(21);
-        l.setOpCode(LnConstants.OPC_WR_SL_DATA_EXP);
+        l.setOpCode(LnConstants.OPC_EXP_WR_SL_DATA);
         int i = 1;
         l.setElement(i++, 21);      // length
         l.setElement(i++, 0);       // EXP_MAST

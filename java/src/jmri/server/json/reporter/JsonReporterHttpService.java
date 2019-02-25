@@ -6,6 +6,7 @@ import static jmri.server.json.JSON.NAME;
 import static jmri.server.json.JSON.STATE;
 import static jmri.server.json.JSON.TYPE;
 import static jmri.server.json.JSON.USERNAME;
+import static jmri.server.json.JSON.VALUE;
 import static jmri.server.json.reporter.JsonReporter.LAST_REPORT;
 import static jmri.server.json.reporter.JsonReporter.REPORT;
 import static jmri.server.json.reporter.JsonReporter.REPORTER;
@@ -35,28 +36,11 @@ public class JsonReporterHttpService extends JsonHttpService {
 
     @Override
     public JsonNode doGet(String type, String name, Locale locale) throws JsonException {
-        ObjectNode root = mapper.createObjectNode();
-        root.put(TYPE, REPORTER);
-        ObjectNode data = root.putObject(DATA);
         Reporter reporter = InstanceManager.getDefault(ReporterManager.class).getReporter(name);
         if (reporter == null) {
             throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", REPORTER, name));
         }
-        data.put(NAME, reporter.getSystemName());
-        data.put(USERNAME, reporter.getUserName());
-        data.put(STATE, reporter.getState());
-        data.put(COMMENT, reporter.getComment());
-        if (reporter.getCurrentReport() != null) {
-            data.put(REPORT, reporter.getCurrentReport().toString());
-        } else {
-            data.putNull(REPORT);
-        }
-        if (reporter.getLastReport() != null) {
-            data.put(LAST_REPORT, reporter.getLastReport().toString());
-        } else {
-            data.putNull(LAST_REPORT);
-        }
-        return root;
+        return doGetReporter(reporter, locale);
     }
 
     @Override
@@ -94,8 +78,36 @@ public class JsonReporterHttpService extends JsonHttpService {
     @Override
     public ArrayNode doGetList(String type, Locale locale) throws JsonException {
         ArrayNode root = this.mapper.createArrayNode();
-        for (String name : InstanceManager.getDefault(ReporterManager.class).getSystemNameList()) {
-            root.add(this.doGet(REPORTER, name, locale));
+        for (Reporter r : InstanceManager.getDefault(ReporterManager.class).getNamedBeanSet()) {
+            root.add(this.doGet(REPORTER, r.getSystemName(), locale));
+        }
+        return root;
+    }
+
+    // package protected
+    JsonNode doGetReporter(Reporter reporter, Locale locale) {
+        ObjectNode root = mapper.createObjectNode();
+        root.put(TYPE, REPORTER);
+        ObjectNode data = root.putObject(DATA);
+        data.put(NAME, reporter.getSystemName());
+        data.put(USERNAME, reporter.getUserName());
+        data.put(STATE, reporter.getState());
+        data.put(COMMENT, reporter.getComment());
+        if (reporter.getCurrentReport() != null) {
+            String report = reporter.getCurrentReport().toString();
+            data.put(REPORT, report);
+            //value matches text displayed on panel
+            data.put(VALUE, (report.equals("") 
+                    ? Bundle.getMessage(locale, "Blank")
+                            : reporter.getCurrentReport().toString()));
+        } else {
+            data.putNull(REPORT);
+            data.put(VALUE,  Bundle.getMessage(locale, "NoReport"));
+        }
+        if (reporter.getLastReport() != null) {
+            data.put(LAST_REPORT, reporter.getLastReport().toString());
+        } else {
+            data.putNull(LAST_REPORT);
         }
         return root;
     }

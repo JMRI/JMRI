@@ -68,14 +68,12 @@ public class JsonTurnoutSocketService extends JsonSocketService<JsonTurnoutHttpS
     }
 
     private void addListenersToChildren() {
-        InstanceManager.getDefault(TurnoutManager.class).getSystemNameList().stream().forEach((tn) -> { //add listeners to each child (if not already)
+        InstanceManager.getDefault(TurnoutManager.class).getNamedBeanSet().stream().forEach((t) -> { //add listeners to each child (if not already)
+            String tn = t.getSystemName();
             if (!turnoutListeners.containsKey(tn)) {
                 log.debug("adding TurnoutListener for Turnout {}", tn);
-                Turnout t = InstanceManager.getDefault(TurnoutManager.class).getTurnout(tn);
-                if (t != null) {
-                    turnoutListeners.put(tn, new TurnoutListener(t));
-                    t.addPropertyChangeListener(this.turnoutListeners.get(tn));
-                }
+                turnoutListeners.put(tn, new TurnoutListener(t));
+                t.addPropertyChangeListener(this.turnoutListeners.get(tn));
             }
         });
     }

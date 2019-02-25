@@ -5,7 +5,6 @@ import static jmri.server.json.JSON.INCONSISTENT;
 import static jmri.server.json.JSON.OFF;
 import static jmri.server.json.JSON.ON;
 import static jmri.server.json.JSON.STATE;
-import static jmri.server.json.JSON.TYPE;
 import static jmri.server.json.JSON.UNKNOWN;
 import static jmri.server.json.light.JsonLight.LIGHT;
 import static jmri.server.json.light.JsonLight.LIGHTS;
@@ -93,8 +92,8 @@ public class JsonLightHttpService extends JsonNamedBeanHttpService {
     @Override
     public ArrayNode doGetList(String type, Locale locale) throws JsonException {
         ArrayNode root = this.mapper.createArrayNode();
-        for (String name : InstanceManager.lightManagerInstance().getSystemNameList()) {
-            root.add(this.doGet(LIGHT, name, locale));
+        for (Light l : InstanceManager.lightManagerInstance().getNamedBeanSet()) {
+            root.add(this.doGet(LIGHT, l.getSystemName(), locale));
         }
         return root;
 

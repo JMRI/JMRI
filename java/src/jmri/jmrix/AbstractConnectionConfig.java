@@ -21,7 +21,7 @@ import jmri.InstanceManager;
 abstract public class AbstractConnectionConfig implements ConnectionConfig {
 
     /**
-     * Ctor for a functional object with no prexisting adapter. Expect that the
+     * Ctor for a functional object with no preexisting adapter. Expect that the
      * subclass setInstance() will fill the adapter member.
      */
     @SuppressWarnings("deprecation")  // two temporary references during migration
@@ -44,6 +44,8 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
                         setToolTipText("This is a legacy prefix that should be migrated, ask on JMRIusers");
                     }                    
                 }
+                
+                @Override
                 public void setText(String value) {
                     log.debug("setText {} {}", value, getBackground());
                     if (getBackground().equals(java.awt.Color.RED)) { // only if might have set before, leaving default otherwise

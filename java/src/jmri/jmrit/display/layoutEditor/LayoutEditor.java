@@ -132,7 +132,6 @@ import org.slf4j.LoggerFactory;
  * @author Dave Duchamp Copyright: (c) 2004-2007
  * @author George Warner Copyright: (c) 2017
  */
-@SuppressWarnings("serial")
 @SuppressFBWarnings(value = "SE_TRANSIENT_FIELD_NOT_RESTORED") //no Serializable support at present
 public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
@@ -3675,7 +3674,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         JMenuItem newTrainItem = new JMenuItem(Bundle.getMessage("MenuItemNewTrain"));
         dispMenu.add(newTrainItem);
         newTrainItem.addActionListener((ActionEvent event) -> {
-            if (InstanceManager.getDefault(TransitManager.class).getSystemNameList().size() <= 0) {
+            if (InstanceManager.getDefault(TransitManager.class).getNamedBeanSet().size() <= 0) {
                 //Inform the user that there are no Transits available, and don't open the window
                 JOptionPane.showMessageDialog(null,
                         ResourceBundle.getBundle("jmri.jmrit.dispatcher.DispatcherBundle").
@@ -10851,19 +10850,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                     }
                 }
             }
-        }
-    }
-
-    // The meta key was until Java 8 the right mouse button on Windows.
-    // On Java 9 on Windows 10, there is no more meta key. Note that this
-    // method is called both on mouse button events and mouse move events,
-    // and therefore "event.getButton() == MouseEvent.BUTTON3" doesn't work.
-    // event.getButton() always return 0 for MouseMoveEvent.
-    private boolean isMetaDown(MouseEvent event) {
-        if (SystemType.isWindows() || SystemType.isLinux()) {
-            return SwingUtilities.isRightMouseButton(event);
-        } else {
-            return event.isMetaDown();
         }
     }
 

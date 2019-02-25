@@ -27,23 +27,23 @@ public class CbusSensorTest extends jmri.implementation.AbstractSensorTestBase {
 
     @Override
     public void checkOnMsgSent() {
-        Assert.assertTrue(("[78] 98 00 00 00 01").equals(tcis.outbound.elementAt(tcis.outbound.size() - 1).toString()));
+        Assert.assertEquals(("[5f8] 98 00 00 00 01"),(tcis.outbound.elementAt(tcis.outbound.size() - 1).toString()));
     }
 
     @Override
     public void checkOffMsgSent() {
-        Assert.assertTrue(("[78] 99 00 00 00 01").equals(tcis.outbound.elementAt(tcis.outbound.size() - 1).toString()));
+        Assert.assertEquals(("[5f8] 99 00 00 00 01"),(tcis.outbound.elementAt(tcis.outbound.size() - 1).toString()));
     }
 
     @Override
     public void checkStatusRequestMsgSent() {
-        Assert.assertTrue(("[78] 9A 00 00 00 01").equals(tcis.outbound.elementAt(tcis.outbound.size() - 1).toString()));
+        Assert.assertEquals(("[5f8] 9A 00 00 00 01"),(tcis.outbound.elementAt(tcis.outbound.size() - 1).toString()));
     }
     
     // X923039D431
     
     public void checkLongStatusRequestMsgSent() {
-        Assert.assertTrue(("[78] 92 30 39 D4 31").equals(tcis.outbound.elementAt(tcis.outbound.size() - 1).toString()));
+        Assert.assertEquals(("[5f8] 92 30 39 D4 31"),(tcis.outbound.elementAt(tcis.outbound.size() - 1).toString()));
     }
     
     public void checkNoMsgSent() {
@@ -375,6 +375,55 @@ public class CbusSensorTest extends jmri.implementation.AbstractSensorTestBase {
         t.setInverted(true);
         t.reply(r);
         Assert.assertTrue(t.getKnownState() == Sensor.INACTIVE);    
+    }
+    
+    // with presence of node number should still resolve to short event turnout due to opc
+    @Test
+    public void testSensorCanReplyShortEvWithNode() throws jmri.JmriException {
+        CbusSensor t = new CbusSensor("MS","+12345",tcis);
+        CanReply r = new CanReply(tcis.getCanid());
+        r.setNumDataElements(5);
+        r.setElement(0, 0x95); // EVULN OPC
+        r.setElement(1, 0xd4);
+        r.setElement(2, 0x31);
+        r.setElement(3, 0x30);
+        r.setElement(4, 0x39);
+        t.reply(r);
+        Assert.assertTrue(t.getKnownState() == Sensor.UNKNOWN);        
+        
+        r.setElement(0, 0x98); // ASON OPC
+        t.reply(r);
+        Assert.assertTrue(t.getKnownState() == Sensor.ACTIVE);
+        
+        r.setElement(0, 0x99); // ASOF OPC
+        t.reply(r);
+        Assert.assertTrue(t.getKnownState() == Sensor.INACTIVE);
+    
+    }
+    
+    // with presence of node number should still resolve to short event turnout due to opc
+    @Test
+    public void testSensorCanMessageShortEvWithNode() throws jmri.JmriException {
+    
+        CbusSensor t = new CbusSensor("MS","+12345",tcis);
+        CanMessage m = new CanMessage(tcis.getCanid());
+        m.setNumDataElements(5);
+        m.setElement(0, 0x95); // EVULN OPC
+        m.setElement(1, 0xd4);
+        m.setElement(2, 0x31);
+        m.setElement(3, 0x30);
+        m.setElement(4, 0x39);
+        t.message(m);
+        Assert.assertTrue(t.getKnownState() == Sensor.UNKNOWN); 
+        
+        m.setElement(0, 0x98); // ASON OPC
+        t.message(m);
+        Assert.assertTrue(t.getKnownState() == Sensor.ACTIVE);
+        
+        m.setElement(0, 0x99); // ASOF OPC
+        t.message(m);
+        Assert.assertTrue(t.getKnownState() == Sensor.INACTIVE);
+    
     }
     
     // The minimal setup for log4J
