@@ -9,6 +9,7 @@ import org.junit.runners.Suite;
    LnStreamPortControllerTest.class,
    BundleTest.class,
    LnStreamConnectionConfigTest.class,
+   jmri.jmrix.loconet.streamport.configurexml.PackageTest.class,
 })
 
 /**
