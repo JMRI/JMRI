@@ -21,17 +21,18 @@ public class LocoNetMenu extends JMenu {
     public LocoNetMenu(LocoNetSystemConnectionMemo memo) {
         super();
 
+        LnCommandStationType cmdStation = null;
         if (memo != null) {
             setText(memo.getUserName());
+            cmdStation = memo.getSlotManager().getCommandStationType();
         } else {
             setText(Bundle.getMessage("MenuLocoNet"));
         }
 
         jmri.util.swing.WindowInterface wi = new jmri.util.swing.sdi.JmriJFrameInterface();
 
-        LnCommandStationType cmdStation = memo.getSlotManager().getCommandStationType();
         boolean isLocoNetInterface;
-        if ((cmdStation == null) || 
+        if ((cmdStation == null) ||
                 (!cmdStation.equals(LnCommandStationType.COMMAND_STATION_PR2_ALONE) &&
                 !cmdStation.equals(LnCommandStationType.COMMAND_STATION_PR3_ALONE) &&
                 !cmdStation.equals(LnCommandStationType.COMMAND_STATION_PR4_ALONE) &&
@@ -42,9 +43,9 @@ public class LocoNetMenu extends JMenu {
         } else {
             isLocoNetInterface = false;
         }
-        
+
         /*
-         * A local variable to help prevent a leading JSeparator and sequential 
+         * A local variable to help prevent a leading JSeparator and sequential
          * JSeparators.
          */
         boolean lastWasSeparator = true;
