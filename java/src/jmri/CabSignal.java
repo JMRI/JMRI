@@ -66,6 +66,17 @@ public interface CabSignal {
      */
     public SignalMast getNextMast();
 
+    /**
+     * Forward the current cab signal value to the layout.
+     */
+    public void forwardCabSignalToLayout();
+
+    /*
+     * Disable the cab signal.  This method causes isCabSignalActive to return 
+     * false and the on-layout cab signal to be cleared, if possible.
+     */
+    public void disableCabSignal();
+
     /*
      * get whether this cab signal is on or off
      *

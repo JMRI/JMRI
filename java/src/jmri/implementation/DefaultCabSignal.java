@@ -201,6 +201,36 @@ public class DefaultCabSignal implements CabSignal, PropertyChangeListener {
         return _nextMast;
     }
 
+    /**
+     * Forward the current cab signal value to the layout.
+     */
+    public void forwardCabSignalToLayout() {
+        if (!isCabSignalActive() ) {
+            return;
+        }
+
+        LocoAddress locoaddr = getCabSignalAddress();
+        SignalMast mast = getNextMast();
+
+        if (mast != null) {
+            log.debug("cab {} aspect {}",locoaddr,mast.getAspect());
+
+            // notify listeners of change of aspect
+
+            // and forward the message on to the layout.
+            forwardAspectToLayout();
+        }
+       
+    }
+
+    /**
+     * Forward the command to the layout that sets the displayed signal
+     * aspect for this address
+     */
+    protected void forwardAspectToLayout(){
+    }
+
+
     /*
      * get whether this cab signal is on or off
      *
@@ -218,6 +248,23 @@ public class DefaultCabSignal implements CabSignal, PropertyChangeListener {
     public void setCabSignalActive(boolean active){
         _cabSignalActive = active;
     }
+
+    /*
+     * Disable the cab signal.  
+     *
+     */
+    public void disableCabSignal(){
+        setCabSignalActive(false);
+        resetLayoutCabSignal();
+    }
+
+    /**
+     * Forward the command to the layout that clears any displayed signal
+     * for this address
+     */
+    protected void resetLayoutCabSignal(){
+    }
+
 
     PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 

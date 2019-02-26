@@ -337,10 +337,10 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
             cabSignalManager.getCabSignalArray()[row].setCabSignalActive((Boolean) value);
             
             if ((Boolean)value==true){
-                updateblocksforrow(row);
+                calculatecabsig(row);
             }
             else {
-                cancelcabsig( row);
+                cabSignalManager.getCabSignalArray()[row].disableCabSignal();
             }
         }
     }
@@ -369,7 +369,7 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
 
     private void resetblock(int row) {
         cabSignalManager.getCabSignalArray()[row].setBlock(findblockforrow(row));
-        updateblocksforrow(row);
+        calculatecabsig(row);
     }
     
     // Adds changelistener to blocks
@@ -421,13 +421,9 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
         if ((e.getPropertyName().equals("state")) || (e.getPropertyName().equals("direction"))) {
             if (arow > -1 ) {
                 b = cabSignalManager.getCabSignalArray()[arow].getBlock();
-                updateblocksforrow(arow);
+                calculatecabsig(arow);
             }
         }
-    }
-    
-    private void updateblocksforrow(int row){
-        calculatecabsig(row);
     }
     
     // returns block for a given row
@@ -481,33 +477,15 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
             b.setDirection(Path.reverseDirection(olddirection));
         }
         log.debug("{}",buf);
-        updateblocksforrow(row);        
+        calculatecabsig(row);
     }
     
 
     private void calculatecabsig(int row){
-        SignalMast mast = cabSignalManager.getCabSignalArray()[row].getNextMast();
-        if (mast!=null) {
-            sendcabsig(row);
-        }
-        
-        return;
+        cabSignalManager.getCabSignalArray()[row].getNextMast();
+        cabSignalManager.getCabSignalArray()[row].forwardCabSignalToLayout();
     }
     
-    public void sendcabsig(int row){
-        if (!masterSendCabData || !(cabSignalManager.getCabSignalArray()[row].isCabSignalActive()) ) {
-            return;
-        }
-       
-        StringBuilder buf = new StringBuilder();
-        buf.append("Sending Cabdata Cabsig");
-        addToLog(0,buf.toString());
-        
-        LocoAddress locoaddr = cabSignalManager.getCabSignalArray()[row].getCabSignalAddress();
-        SignalMast mast = cabSignalManager.getCabSignalArray()[row].getNextMast();
-        // TODO: implement forwarding cab signal data 
-        log.debug("cab {} aspect {}",locoaddr,mast.getAspect());
-    }
 
     public int getSigType(String aspect) {
         // look for the opcode
@@ -535,22 +513,12 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
         return Collections.unmodifiableMap(result);
     }
     
-    public void cancelcabsig(int row){
-        // log.warn("cancel cabsig row {}",row);
-        LocoAddress locoaddr = cabSignalManager.getCabSignalArray()[row].getCabSignalAddress();
-        StringBuilder buf = new StringBuilder();
-        buf.append("Cancelling Cabdata for loco " + locoaddr);
-        addToLog(0,buf.toString());
-
-        // send cancel cab signal.
-    }
-    
     protected void masterSendCabDataButton(Boolean but){
         for (int i = 0; i < getRowCount(); i++) {
             if (but){
-                calculatecabsig(i);
+                cabSignalManager.getCabSignalArray()[i].getNextMast();
             } else {
-                cancelcabsig(i);
+                cabSignalManager.getCabSignalArray()[i].disableCabSignal();
             }
         }
     }
