@@ -64,36 +64,60 @@ public class SpeedUtil {
             _orders = orders;
         }
     }
-    
+
+    /**
+     * If one exists, return RosterEntry for the rosterId key
+     * @return RosterEntry
+     */
     public RosterEntry getRosterEntry() {
+        if (_rosterEntry == null) {
+            _rosterEntry = Roster.getDefault().getEntryForId(_rosterId);
+        }
         if (_rosterEntry == null) {
             _rosterEntry = Roster.getDefault().entryFromTitle(_rosterId);
         }
+        if (_rosterEntry != null) {
+        	_dccAddress = _rosterEntry.getDccLocoAddress();           
+        }
+        if (log.isTraceEnabled()) log.debug("getRosterEntry() _rosterId= {}, _dccAddress= {}, _rosterEntry {} null}",
+        		_rosterId, _dccAddress, (_rosterEntry!=null?"NOT":""));
         return _rosterEntry;
     }
 
     /**
-     * Set the identifier for the Speed Profile
-     * If a RosterEntry exists, _rosterId is the RosterEntry id,
-     * otherwise it may be just the decoder address
+     * Set the key identifier for the Speed Profile
+     * If a RosterEntry exists, _rosterId is the RosterEntry id
+     * or possibly is the RosterEntrytitle.
+     * Otherwise it may be just the decoder address
      * @return key to speedProfile
      */
     public String getRosterId() {
         return _rosterId;
     }
 
+    /**
+     * Set a key to a loco's roster and speed info.
+     * If there is no RosterEntry, the id still locates
+     * a session SpeedProfile for the loco.
+     * @param id key to speedProfile
+     */
     public void setRosterId(String id) {
-       if (log.isTraceEnabled()) log.debug("setRosterId() set _rosterId= {} was {}", id, _rosterId);
-       _rosterEntry = Roster.getDefault().entryFromTitle(id);
-       _rosterId = id;
+        if (log.isTraceEnabled()) log.debug("setRosterId({}) old= {}", id, _rosterId);
+        if (id == null) {
+        	_rosterEntry = null;
+        	return;
+        }
+        if (!id.equals(_rosterId)) {
+        	_rosterEntry = null;
+            _rosterId = id;
+            getRosterEntry();	// set _rosterEntry  and _dccAddress too
+        }
     }
     
     public DccLocoAddress getDccAddress() {
         if (_dccAddress == null) {
             if (_rosterEntry != null) {
                 _dccAddress = _rosterEntry.getDccLocoAddress();
-            } else if (_rosterId != null){
-                setDccAddress(_rosterId);
             }
         }
         return _dccAddress;            
@@ -110,22 +134,18 @@ public class SpeedUtil {
     }
     
     protected void setDccAddress(DccLocoAddress dccAddr) {
+        if (log.isTraceEnabled()) log.debug("setDccAddress(DccLocoAddress) _dccAddress= {}", _dccAddress);
         if (dccAddr == null || !dccAddr.equals(_dccAddress)) {
             _mergeProfile = null;
             _sessionProfile = null;
-            if (dccAddr != null) {
-                makeSpeedTree();
-                makeRampParameters();
-            } else {
-                _rosterId = null;
-                _rosterEntry = null;
-            }
+            _rosterId = null;
+            _rosterEntry = null;
         }
         _dccAddress = dccAddr;
     }
 
    /**
-     * Sets dccAddress and will fetch RosterEntry if one exists.
+     * Sets dccAddress and key for a speedProfile.  Will fetch RosterEntry if one exists.
      * If _rosterEntry exists, _rosterId set to RosterEntry Id (which may or not be "id")
      * else _rosterId set to "id" or decoder address.
      * Called from: 
@@ -136,17 +156,16 @@ public class SpeedUtil {
      * @return true if address found for id
      */
     public boolean setDccAddress(String id) {
-        if (log.isTraceEnabled()) log.debug("setDccAddress({}) _rosterId= {}", id, _rosterId);
+        if (log.isTraceEnabled()) log.debug("setDccAddress(String) id= {}, _rosterId= {}", id, _rosterId);
         if (id == null || id.trim().length()==0) {
-            setRosterId(null);   // set _rosterId
+            setRosterId(null);
             _dccAddress = null;           
            return false;
         }
         if (_dccAddress !=null && id.equals(_dccAddress.toString())) {
         	return false;
         }
-        DccLocoAddress dccAddr;
-        _rosterEntry = Roster.getDefault().entryFromTitle(id);
+        setRosterId(id);	// sets _rosterEntry too
         if (_rosterEntry == null) {
         	_rosterId = null;
            int index = id.indexOf('(');
@@ -170,26 +189,20 @@ public class SpeedUtil {
                         // In some systems, such as Maerklin MFX or ESU ECOS M4, the DCC address is always 0.
                         // That should not make us overwrite the _rosterId.
                         setRosterId(re.getId());
-                        _rosterEntry = re;
                     }
-                    dccAddr = _rosterEntry.getDccLocoAddress();           
+                    setDccAddress(re.getDccLocoAddress());           
                 } else {
                     boolean isLong = true;
                     if ((index + 1) < id.length()
                             && (id.charAt(index + 1) == 'S' || id.charAt(index + 1) == 's')) {
                         isLong = false;
                     }
-                    dccAddr = new DccLocoAddress(num, isLong);
+                    setDccAddress(new DccLocoAddress(num, isLong));
                }
             } catch (NumberFormatException e) {
-            	dccAddr = null;
+            	_dccAddress = null;
             }
-        } else {
-            _rosterId = id;
-            dccAddr = _rosterEntry.getDccLocoAddress();
         }
-        
-        setDccAddress(dccAddr);
         if (log.isTraceEnabled()) log.debug("setDccAddress: _rosterId= {}, _dccAddress= {}",_rosterId, _dccAddress);
         return true;
     }

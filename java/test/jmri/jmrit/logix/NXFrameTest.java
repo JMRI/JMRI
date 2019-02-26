@@ -297,6 +297,60 @@ public class NXFrameTest {
         panel.dispose();    // disposing this way allows test to be rerun (i.e. reload panel file) multiple times
     }    
 
+/*    @Test
+    public void testWarrantRampHalt() throws Exception {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        // load and display
+        File f = new File("java/test/jmri/jmrit/logix/valid/NXWarrantTest.xml");
+        InstanceManager.getDefault(ConfigureManager.class).load(f);
+        _OBlockMgr = InstanceManager.getDefault(OBlockManager.class);
+        _sensorMgr = InstanceManager.getDefault(SensorManager.class);
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for to finish run
+
+
+        Sensor sensor1 = _sensorMgr.getBySystemName("IS1");
+        Assert.assertNotNull("Senor IS1 not found", sensor1);
+
+        jmri.util.ThreadingUtil.runOnLayout(() -> {
+            try {
+                sensor1.setState(Sensor.ACTIVE);
+            } catch (jmri.JmriException e) {
+                Assert.fail("Unexpected Exception: " + e);
+            }
+        });
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause light sensor
+
+        WarrantTableFrame tableFrame = WarrantTableFrame.getDefault();
+        Assert.assertNotNull("tableFrame", tableFrame);
+
+        Warrant warrant = tableFrame.getModel().getWarrantAt(0);
+        Assert.assertNotNull("warrant", warrant);
+       
+        tableFrame.runTrain(warrant, Warrant.MODE_RUN);
+        jmri.util.JUnitUtil.waitFor(() -> {
+            String m =  warrant.getRunningMessage();
+            return m.endsWith("Cmd #3.");
+        }, "Train is moving at 3rd command");
+
+       // OBlock sensor names
+        String[] route = {"OB1", "OB2", "OB3"};
+        OBlock block = _OBlockMgr.getOBlock("OB3");
+        // runtimes() in next line runs the train, then checks location
+        Assert.assertEquals("Train in last block", block.getSensor().getDisplayName(), runtimes(route).getDisplayName());
+
+        String[] route = {"OB3", "OB4", "OB5"};
+        OBlock block = _OBlockMgr.getOBlock("OB5");
+        // runtimes() in next line runs the train, then checks location
+        Assert.assertEquals("Train in last block", block.getSensor().getDisplayName(), runtimes(route).getDisplayName());
+
+        // passed test - cleanup.  Do it here so failure leaves traces.
+        JFrameOperator jfo = new JFrameOperator(tableFrame);
+        jfo.requestClose();
+        // we may want to use jemmy to close the panel as well.
+        ControlPanelEditor panel = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("NXWarrantTest");
+        panel.dispose();    // disposing this way allows test to be rerun (i.e. reload panel file) multiple times
+    }
+
     /**
      * Simulates the movement of a warranted train over its route.
      * <p>Works through a list of OBlocks, gets its sensor,

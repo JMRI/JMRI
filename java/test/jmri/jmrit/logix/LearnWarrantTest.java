@@ -225,7 +225,14 @@ public class LearnWarrantTest {
             Sensor sensorNext = _OBlockMgr.getBySystemName(route[i]).getSensor();
             sensorNext.setState(Sensor.ACTIVE);
             new org.netbeans.jemmy.QueueTool().waitEmpty(100);
-            sensor.setState(Sensor.INACTIVE);
+            final Sensor tsensor = sensor;
+            jmri.util.ThreadingUtil.runOnLayout(() -> {
+                try {
+                    tsensor.setState(Sensor.INACTIVE);
+                } catch (jmri.JmriException e) {
+                    Assert.fail("Unexpected Exception: " + e);
+                }
+            });
             sensor = sensorNext;
         }
         return sensor;
