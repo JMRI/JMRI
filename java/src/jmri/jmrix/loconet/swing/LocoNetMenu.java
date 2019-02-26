@@ -93,7 +93,7 @@ public class LocoNetMenu extends JMenu {
         new Item("MenuItemDownload", "jmri.jmrix.loconet.downloader.LoaderPane", false), // NOI18N
         new Item("MenuItemSoundload", "jmri.jmrix.loconet.soundloader.LoaderPane", false), // NOI18N
         new Item("MenuItemSoundEditor", "jmri.jmrix.loconet.soundloader.EditorPane", false) // NOI18N
-    };
+    }
 
     static class Item {
 

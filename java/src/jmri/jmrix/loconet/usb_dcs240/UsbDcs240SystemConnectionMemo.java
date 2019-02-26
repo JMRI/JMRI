@@ -16,6 +16,9 @@ import org.slf4j.LoggerFactory;
 /**
  * Lightweight class to denote that a DCS240 USB interface is active
  * <p>
+ * This class serves as a placeholder; it is anticipated that the DCS240
+ * implementation will require differentiation from the PR3 implementation.
+ * <p>
  * Based on PR3SystemConnectionMemo
  * <p>
  * @author Bob Jacobsen Copyright (C) 2010
@@ -23,6 +26,6 @@ import org.slf4j.LoggerFactory;
  */
 public class UsbDcs240SystemConnectionMemo extends PR3SystemConnectionMemo {
 
-    private final static Logger log = LoggerFactory.getLogger(UsbDcs240SystemConnectionMemo.class);
+//    private final static Logger log = LoggerFactory.getLogger(UsbDcs240SystemConnectionMemo.class);
 
 }
