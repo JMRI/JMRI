@@ -33,7 +33,7 @@ public class XNetStreamConnectionConfig extends jmri.jmrix.AbstractStreamConnect
         return Bundle.getMessage("XNetStreamName");
     }
 
-    String manufacturerName = "JMRI (Streams)"; // NOI18N
+    String manufacturerName = "Lenz"; // NOI18N
 
     @Override
     public String getManufacturer() {

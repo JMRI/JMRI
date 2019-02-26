@@ -33,7 +33,7 @@ public class SprogCSStreamConnectionConfig extends jmri.jmrix.AbstractStreamConn
         return Bundle.getMessage("SprogCSStreamName");
     }
 
-    String manufacturerName = "JMRI (Streams)"; // NOI18N
+    String manufacturerName = "SPROG DCC"; // NOI18N
 
     @Override
     public String getManufacturer() {

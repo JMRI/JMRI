@@ -127,7 +127,6 @@ abstract public class AbstractStreamConnectionConfigXml extends AbstractConnecti
     @Override
     public void load(Element element, Object o) {
         log.debug("load({}, {})", element, o);
-        boolean result = true;  // assume success (optimist!)
 
         getInstance(o);
 

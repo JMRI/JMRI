@@ -44,7 +44,7 @@ public class XNetStreamPortController extends jmri.jmrix.AbstractStreamPortContr
      */
     @Override
     public boolean status() {
-        return true;
+        return (getInputStream()!=null && getOutputStream()!=null);
     }
 
     /**

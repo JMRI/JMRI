@@ -1,14 +1,14 @@
-package jmri.jmrix.sprog.configurexml;
+package jmri.jmrix.rfid.configurexml;
 
 import jmri.jmrix.configurexml.AbstractStreamConnectionConfigXml;
-import jmri.jmrix.sprog.SprogCSStreamConnectionConfig;
-import jmri.jmrix.sprog.SprogCSStreamPortController;
+import jmri.jmrix.rfid.RfidStreamConnectionConfig;
+import jmri.jmrix.rfid.RfidStreamPortController;
 
 /**
  * Handle XML persistance of layout connections by persistening the
- * SerialDriverAdapter (and connections). Note this is named as the XML version
- * of a ConnectionConfig object, but it's actually persisting the
- * SerialDriverAdapter.
+ * RfidStreamConnectionConfig (and connections). Note this is named as the 
+ * XML version of a ConnectionConfig object, but it's actually persisting the
+ * RfidStreamPortController.
  * <p>
  * This class is invoked from jmrix.JmrixConfigPaneXml on write, as that class
  * is the one actually registered. Reads are brought here directly via the class
@@ -16,22 +16,22 @@ import jmri.jmrix.sprog.SprogCSStreamPortController;
  *
  * @author Andrew Crosland Copyright: Copyright (c) 2006
  */
-public class SprogCSStreamConnectionConfigXml extends AbstractStreamConnectionConfigXml {
+public class RfidStreamConnectionConfigXml extends AbstractStreamConnectionConfigXml {
 
-    public SprogCSStreamConnectionConfigXml() {
+    public RfidStreamConnectionConfigXml() {
         super();
     }
 
     @Override
     protected void getInstance() {
         if (adapter == null) {
-            adapter = new SprogCSStreamPortController();
+            adapter = new RfidStreamPortController();
         }
     }
 
     @Override
     protected void getInstance(Object object) {
-        adapter = ((SprogCSStreamConnectionConfig) object).getAdapter();
+        adapter = ((RfidStreamConnectionConfig) object).getAdapter();
     }
 
     @Override
@@ -39,7 +39,7 @@ public class SprogCSStreamConnectionConfigXml extends AbstractStreamConnectionCo
 	if(adapter!=null) {
 	   return; // already registered.
 	}
-        this.register(new SprogCSStreamConnectionConfig(adapter));
+        this.register(new RfidStreamConnectionConfig(adapter));
     }
 
 }

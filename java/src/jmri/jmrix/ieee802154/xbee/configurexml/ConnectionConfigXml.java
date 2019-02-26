@@ -169,7 +169,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
                Element connect = n.getChildren("connection").get(0); // there should only be one connection child.
 	
                // configure the controller.	       
-	       if (streamController != null && connectedController == null ) {
+	       if (streamController != null ) {
                     try {
                         @SuppressWarnings("unchecked") // Class.forName cast is unchecked at this point
                         java.lang.Class<jmri.jmrix.AbstractStreamPortController> T = (Class<AbstractStreamPortController>) Class.forName(streamController);
@@ -203,20 +203,17 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 	       // load information from the xml file.
 	       if(connect!=null && connectedConfig != null ){
                   String className = connect.getAttributeValue("class");
-                  String userName = connect.getAttributeValue("userName", ""); // NOI18N
-                  String systemName = connect.getAttributeValue("systemPrefix", ""); // NOI18N
-                  String manufacturer = connect.getAttributeValue("manufacturer", ""); // NOI18N
 
                   try {
                         @SuppressWarnings("unchecked") // Class.forName cast is unchecked at this point
                         XmlAdapter adapter = (XmlAdapter) Class.forName(className).newInstance();
-                        //adapter.load(connect,connectedConfig);
+                        adapter.load(connect,connectedConfig);
                     } catch (ClassNotFoundException | 
 		             InstantiationException | 
 			     IllegalAccessException ex) {
                         log.error("Unable to create {} for {}", className, shared, ex);
-                    //} catch (RuntimeException | jmri.configurexml.JmriConfigureXmlException ex) {
-                    //    log.error("Unable to load {} into {}", shared, className, ex);
+                    } catch (RuntimeException | jmri.configurexml.JmriConfigureXmlException ex) {
+                        log.error("Unable to load {} into {}", shared, className, ex);
                     }
 	       } 
 
@@ -227,6 +224,8 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 	            // fallback for connections created with a script
 	            node.connectPortController(connectedController);
 	       }
+	       log.info("loaded {} onto node ",node.getConnectionConfig(),node);
+	       log.info("manuf {} userName {} ",node.getConnectionConfig().getManufacturer(),node.getConnectionConfig().name());
 	    } catch (TimeoutException toe) {
 		 log.error("Timeout adding node {} from configuration file.",
 				 remoteDevice);
@@ -236,25 +235,6 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 	    }
 	}
 		
-    }
-
-    /**
-     * Service routine to look through "parameter" child elements to find a
-     * particular parameter value
-     *
-     * @param e    Element containing parameters
-     * @param name name of desired parameter
-     * @return String value
-     */
-    String findParmValue(Element e, String name) {
-        List<Element> l = e.getChildren("parameter");
-        for (int i = 0; i < l.size(); i++) {
-            Element n = l.get(i);
-            if (n.getAttributeValue("name").equals(name)) {
-                return n.getTextTrim();
-            }
-        }
-        return null;
     }
 
     @Override
