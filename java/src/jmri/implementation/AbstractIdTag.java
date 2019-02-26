@@ -1,6 +1,7 @@
 package jmri.implementation;
 
 import java.util.Date;
+import java.util.Set;
 import jmri.IdTag;
 import jmri.Reportable;
 import jmri.Reporter;
@@ -58,10 +59,32 @@ public abstract class AbstractIdTag extends AbstractNamedBean implements IdTag,R
         }
     }
 
+    /**
+     * The IDTag version of toReportString returns a string consisting
+     * of the user name (if defined) or Tag ID followed by the associated
+     * list of property values.
+     */
     @Override
     public String toReportString() {
         String userName = getUserName();
-        return (userName == null || userName.isEmpty()) ? getTagID() : userName;
+        StringBuilder sb = new StringBuilder();
+        if(userName == null || userName.isEmpty()){
+           sb.append(getTagID());
+        } else {
+          sb.append(userName);
+        }
+
+        // check to see if any properties have been added.
+        Set keySet = getPropertyKeys();
+        if(keySet!=null){
+            // we have properties, so append the values to the
+            // end of the report seperated by spaces.
+            for( Object s : keySet) {
+                sb.append(" ");
+                sb.append(getProperty((String)s));
+            }
+        }
+        return sb.toString();
     }
 
     @Override

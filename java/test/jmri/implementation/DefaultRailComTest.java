@@ -36,6 +36,21 @@ public class DefaultRailComTest {
     }
 
     @Test
+    public void testRailComGetLocoAddress() {
+        RailCom r = new DefaultRailCom("ID1234");
+        Assert.assertEquals("Loco Address ", new jmri.DccLocoAddress(1234,true), r.getLocoAddress());
+    }
+
+    @Test
+    public void testRailComGetDccLocoAddress() {
+        // this is testing a now deprecated default method in
+        // the RailCom interface.  For code coverage, we need to
+        // leave this until the deprecated method can be removed.
+        RailCom r = new DefaultRailCom("ID1234");
+        Assert.assertEquals("Dcc Loco Address ", new jmri.DccLocoAddress(1234,true), r.getDccLocoAddress());
+    }
+
+    @Test
     public void testRailComToString() {
         RailCom r = new DefaultRailCom("ID1234");
         Assert.assertEquals("RailCom toString ", "ID1234", r.toString());
@@ -44,7 +59,7 @@ public class DefaultRailComTest {
     @Test
     public void testRailComToReportString() {
         DefaultRailCom r = new DefaultRailCom("ID1234");
-        Assert.assertEquals("RailCom toReportString ", "Unknown Orientation Address 1234(S) ", r.toReportString());
+        Assert.assertEquals("RailCom toReportString ", "Unknown Orientation Address 1234(L) ", r.toReportString());
     }
 
     @Test

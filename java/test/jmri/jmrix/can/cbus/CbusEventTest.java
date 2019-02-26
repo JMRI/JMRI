@@ -33,6 +33,10 @@ public class CbusEventTest {
         Assert.assertEquals("getState off",CbusEvent.EvState.OFF,t.getState());
         t.setName("Jon Smith");
         Assert.assertEquals("getName","Jon Smith",t.getName());
+        t.setEn(4);
+        t.setNn(7);
+        Assert.assertEquals("get Node Number 7",7,t.getNn());
+        Assert.assertEquals("get Event Number 4",4,t.getEn());        
         t = null;
     }    
     

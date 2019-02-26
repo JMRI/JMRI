@@ -124,7 +124,7 @@ public interface Manager<E extends NamedBean> {
      * Note: this is not a live array; the contents don't stay up to date
      * @return (slow) copy of system names in array form
      * @deprecated 4.11.5 - use direct access via 
-     *                  {@link getNamedBeanSet} 
+     *                  {@link #getNamedBeanSet()} 
      */
     @Deprecated // 4.11.5
     @CheckReturnValue
@@ -139,12 +139,12 @@ public interface Manager<E extends NamedBean> {
      * Note: this is ordered by the underlying NamedBeans, not
      *       on the Strings themselves.
      * <p>
-     * Note: Access via {@link getNamedBeanSet} is faster.
+     * Note: Access via {@link #getNamedBeanSet()}  is faster.
      * <p>
      * Note: This is not a live list; the contents don't stay up to date
      * @return Unmodifiable access to a list of system names
      * @deprecated 4.11.5 - use direct access via 
-     *                  {@link getNamedBeanSet} 
+     *                  {@link #getNamedBeanSet()} 
      */
     @Deprecated // 4.11.5
     @CheckReturnValue
@@ -158,12 +158,12 @@ public interface Manager<E extends NamedBean> {
      * <p>
      * Note: this is ordered by the original add order, used for ConfigureXML
      * <p>
-     * Note: Access via {@link getNamedBeanSet} is faster.
+     * Note: Access via {@link #getNamedBeanSet()}  is faster.
      * <p>
      * Note: This is a live list, it will be updated as beans are added and removed.
      * @return Unmodifiable access to a list of system names
      * @deprecated 4.11.5 - use direct access via 
-     *                  {@link getNamedBeanSet} 
+     *                  {@link #getNamedBeanSet()} 
      */
     @Deprecated // 4.11.5
     @CheckReturnValue
@@ -175,12 +175,12 @@ public interface Manager<E extends NamedBean> {
      * {@linkplain java.util.Collections#unmodifiableList unmodifiable} List
      * of NamedBeans in system-name order.
      * <p>
-     * Note: Access via {@link getNamedBeanSet} is faster.
+     * Note: Access via {@link #getNamedBeanSet()} is faster.
      * <p>
      * Note: This is not a live list; the contents don't stay up to date
      * @return Unmodifiable access to a List of NamedBeans
      * @deprecated 4.11.5 - use direct access via 
-     *                  {@link getNamedBeanSet} 
+     *                  {@link #getNamedBeanSet()} 
      */
     @Deprecated // 4.11.5
     @CheckReturnValue
@@ -647,6 +647,7 @@ public interface Manager<E extends NamedBean> {
          *
          * @return the event source
          */
+        @Override
         public Manager<E> getSource() { return source; }
   
         /**
@@ -684,6 +685,7 @@ public interface Manager<E extends NamedBean> {
          * 
          * @return A string.
          */
+         @Override
          public String toString() {
             return getClass().getName() + "[type=" + type + ",index0=" + index0 + ",index1=" + index1 + "]";
         }

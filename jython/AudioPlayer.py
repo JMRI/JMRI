@@ -168,9 +168,9 @@ class AudioPlayerFrame (JmriJFrame):
         # Now populate
         self.sourceCombo.addItem(self.SELECT)
         # Retrieve system name list of AudioSources
-        for source in audio.getSystemNameList(Audio.SOURCE):
+        for source in audio.getNamedBeanSet(Audio.SOURCE):
             # Add available sources to the list
-            self.sourceCombo.addItem(source)
+            self.sourceCombo.addItem(source.getSystemName())
 
     def whenRangeChanged(self, event):
         # store value & update sliders

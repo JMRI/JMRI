@@ -363,7 +363,9 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         CbusThrottle cbt = new CbusThrottle(memo,addr,1);
         JUnitUtil.waitFor(()->{ return(cbtmb.getThrottleUsageCount(addr)>0); }, "reply didn't arrive");
         Assert.assertEquals("throttle use 1", 1, cbtmb.getThrottleUsageCount(addr));
-        Assert.assertEquals("disposed throttle boolean ",true,(cbtmb.disposeThrottle(cbt,throtListen)));
+        
+        cbtmb.disposeThrottle(cbt,throtListen);
+        JUnitUtil.waitFor(()->{ return(cbtmb.getThrottleUsageCount(addr)==0); }, "reply didn't arrive");
         Assert.assertEquals("disposed throttle use 0", 0, cbtmb.getThrottleUsageCount(addr));
         Assert.assertNull("NULL",cbtmb.getThrottleInfo(addr,Throttle.F28));
     }

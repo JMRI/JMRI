@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import jmri.jmrix.can.cbus.CbusCommandStation;
 import jmri.jmrix.AbstractMessage;
 
 // import org.slf4j.Logger;
@@ -56,11 +55,9 @@ public class CbusOpCodes {
                 fields[i] = locoFromBytes(msg.getElement(idx++), msg.getElement(idx++) );
             }
             else if (fields[i].startsWith("$4")) { // replace the 4 bytes with event / node name ( if possible )
-                CbusCommandStation cmndstat = (CbusCommandStation) jmri.InstanceManager.getDefault(jmri.CommandStation.class);
                 int nn = (256*msg.getElement(idx++))+(msg.getElement(idx++));
                 int en = (256*msg.getElement(idx++))+(msg.getElement(idx++));
-                // log.warn("fetching node {} event {}",nn,en);
-                fields[i] = cmndstat.getEventNodeString(nn,en);
+                fields[i] = new CbusNameService().getEventNodeString(nn,en);
             }
             // concatenat to the result
             buf.append(fields[i]);
@@ -699,8 +696,6 @@ public class CbusOpCodes {
     private static Set<Integer> createEventOPC() {
         Set<Integer> result = new HashSet<>();
 
-        result.add(CbusConstants.CBUS_RQDAT);
-        result.add(CbusConstants.CBUS_RQDDS);
         result.add(CbusConstants.CBUS_ACON);
         result.add(CbusConstants.CBUS_ACOF);
         result.add(CbusConstants.CBUS_AREQ);
@@ -734,12 +729,8 @@ public class CbusOpCodes {
         result.add(CbusConstants.CBUS_ACOF3);
         result.add(CbusConstants.CBUS_ARON3);
         result.add(CbusConstants.CBUS_AROF3);
-        result.add(CbusConstants.CBUS_ACDAT);
-        result.add(CbusConstants.CBUS_ARDAT);
         result.add(CbusConstants.CBUS_ASON3);
         result.add(CbusConstants.CBUS_ASOF3);
-        result.add(CbusConstants.CBUS_DDES);
-        result.add(CbusConstants.CBUS_DDRS);
         result.add(CbusConstants.CBUS_ARSON3);
         result.add(CbusConstants.CBUS_ARSOF3);
         
@@ -801,12 +792,8 @@ public class CbusOpCodes {
         result.add(CbusConstants.CBUS_ACOF3);
         result.add(CbusConstants.CBUS_ARON3);
         result.add(CbusConstants.CBUS_AROF3);
-        result.add(CbusConstants.CBUS_ACDAT);
-        result.add(CbusConstants.CBUS_ARDAT);
         result.add(CbusConstants.CBUS_ASON3);
         result.add(CbusConstants.CBUS_ASOF3);
-        result.add(CbusConstants.CBUS_DDES);
-        result.add(CbusConstants.CBUS_DDRS);
         result.add(CbusConstants.CBUS_ARSON3);
         result.add(CbusConstants.CBUS_ARSOF3);
         

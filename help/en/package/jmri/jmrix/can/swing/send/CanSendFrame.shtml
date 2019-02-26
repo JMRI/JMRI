@@ -51,8 +51,7 @@
       contents, precede the packet data with the header in "( )"
       characters or "[ ]" characters for a standard or extended
       header, respectively.</p>
-      
-      <p>To add a MERG CBUS priority to the message header, check the tickbox.</p>
+
       
       <p>This tool works well in combination with the <a href=
       "../../cbus/swing/console/CbusConsoleFrame.shtml">CBUS
@@ -84,6 +83,12 @@
       
       <p>You will be notified if the sequencer is unable to send a can frame.</p>
       
+      
+      <h2>Options</h2>
+      <p>MERG CBUS priority - Adds a priority to the message header.</p>
+      <p>Send as outgoing CanMessage - Sends as if message originating from JMRI 
+      ( selected by default ).</p>
+      <p>Send as outgoing CanMessage - Sends as if message originating from outside of JMRI </p>
       
      <h3>JMRI Help</h3>
       

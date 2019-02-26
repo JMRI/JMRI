@@ -649,6 +649,7 @@ public class TimeTableDataManager {
             return _stationId;
         }
 
+        @Override
         public String toString() {
             return String.format("%s : %s", getSegment(_segmentId).getSegmentName(), getStation(_stationId).getStationName());  // NOI18N
         }
