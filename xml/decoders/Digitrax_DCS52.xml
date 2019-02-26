@@ -303,8 +303,11 @@
                 <label>DCS52 Loco Reset Button</label>
                 <tooltip>OpSw 38</tooltip>
             </variable>
-            <variable CV="csOpSw.039" item="OpSw 039" default="0" readOnly="yes">
-                <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-normalStarReserved.xml"/>
+            <variable CV="csOpSw.039" item="OpSw 039" default="0">
+                <enumVal>
+                    <enumChoice choice="Normal operating state *"/>
+                    <enumChoice choice="Clears all internal memory states *" />
+                </enumVal>
                 <label>OpSw 39</label>
                 <tooltip>OpSw 39</tooltip>
             </variable>
@@ -677,9 +680,10 @@
                 &lt;/strong&gt;&lt;/h2&gt;&lt;/html&gt;</text>
             </label>
             <display item="OpSw 036"/>
+            <display item="OpSw 039"/>
             <label>
                 <text>&lt;html&gt;&lt;/strong&gt;&lt;h3&gt;NOTE:&lt;/h3&gt;
-                    In order for OpSw36, OpSw37, and/or OpSw39 operations to take
+                    In order for OpSw36 and/or OpSw39 operations to take
                     effect, it may be necessary to&lt;p&gt;
                     remove command station power or briefly place the command
                     station into "OpSw" mode via its &lt;p&gt;
@@ -740,7 +744,6 @@
                     <display item="OpSw 033"/>
                     <display item="OpSw 034"/>
                     <display item="OpSw 037"/>
-                    <display item="OpSw 039"/>
                     <display item="OpSw 044"/>
                     <display item="OpSw 045"/>
                     <display item="OpSw 046"/>
