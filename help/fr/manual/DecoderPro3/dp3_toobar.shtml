@@ -1,12 +1,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
-<!-- Translation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-02-24 -->
+<!-- Translation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-02-26 -->
 <html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>DecoderPro Throttle</title><!-- Style -->
+  <title>DecoderPro&reg; Main Window</title><!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -24,79 +24,84 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <a name="Top" id="Top"></a>
+      <h1>DecoderPro&reg; Fen&#234;tre Principale</h1>
 
-      <h1>DecoderPro&reg; fen&#234;tre Principale</h1>
-
-      <h2>JMRI&reg; Fen&#234;tre R&#233;gulateur - Barre d'Outil</h2>
+      <h2>Barre d'Outil</h2>
 
       <div align="right">
-        <p><a href="dp3_Main_Throttle.shtml">Retour</a></p>
+        <p><a href="dp3_Main_Main.shtml">Retour</p>
+
+        <p><a href="index.shtml#Main">Retour &#224; l'Index</a></p>
       </div>
       <hr>
-      <img src="images/Main_Throttle_toolbar.png" width="515"
-      height="118" alt="throttle toolbar">
 
-      <p>
-		La barre d'outils R&#233;gulateur est activ&#233;e &#224; partir du <a href = 
-		"Start_Preferences.shtml" target="_blank">volet des pr&#233;f&#233;rences 
-		des R&#233;gulateurs</a> </p>.
+      <p><img src="images/dp3_toolbar.png" alt="toolbar" height=
+      "115" width="900"></p>
 
-      <div style = "margin-left: 2em">
-        <p>Utilisez la fen&#234;tre des pr&#233;f&#233;rences des R&#233;gulateurs pour 
-        d&#233;finir les pr&#233;f&#233;rences souhait&#233;es.</p>
+      <table border="1" cellpadding="2" cellspacing="1" width=
+      "90%">
+        <tbody>
+          <tr>
+            <td width="35%"><img src=
+            "images/dp3_toolbar_newloco.png" alt="new loco button"
+            height="43" width="105"></td>
 
-        <p align = "center"> <img src = "images/Main_Tool01.png" width = "700" height = "427" alt = "Throttle pref"> </p>
-      </div>
+            <td width="65%">Ouvre la  <a href=
+            "Programmer_Setup.shtml#newloco"></a><a href=
+            "Programmer_Setup.shtml#newloco">fen&#234;tre <strong>Cr&#233;er une 
+            nouvelle loco</strong> </a>.
+          </tr>
 
-      <p> Lorsqu'elle est activ&#233;e, une fen&#234;tre de R&#233;gulateur peut h&#233;berger 
-      un ensemble de r&#233;gulateurs. Vous pouvez parcourir les commandes 
-      suivantes: Ajouter une nouvelle commande dans cette fen&#234;tre. Une 
-      fois que le nombre de restrictions dans une fen&#234;tre de R&#233;gulateur
-      est sup&#233;rieur &#224; un, les ic&#244;nes Suivant et Pr&#233;c&#233;dent sont activ&#233;s.</P>
+          <tr>
+            <td><img src="images/dp3_toolbar_identify.png" alt=
+            "identify button" height="48" width="91"></td>
 
-      <ul>
-        <li> <img src = "image/Main_Throttle_toolbar_new.png" width = "51" 
-        height = "45" alt = "nouveau">Ouvrez une nouvelle fen&#234;tre R&#233;gulateur</li>
+            <td>Tentatives d'identification de la locomotive dans 
+            l'inventaire.</td>
+          </tr>
 
-        <li> <img src =
-        "images/Main_Throttle_toolbar_close_current.png" width = "43" 
-        height = "50" alt = "fermer">Ferme la fen&#234;tre R&#233;gulateur actuelle</li>
+          <tr>
+            <td><img src="images/dp3_toolbar_help.png" alt=
+            "help button" height="47" width="71"></td>
 
-        <li> <img src =
-        "images/Main_Throttle_toolbar_previous_loco.png" width = "44" 
-        height = "44" alt = "Loco pr&#233;c&#233;dente">Retour &#224; la locomotive 
-        active pr&#233;c&#233;dente.</li>
+            <td>Affiche le fichier d'aide de la fen&#234;treDecoderPro&reg;</td>
+          </tr>
 
-        <li> <img src = "images/Main_Throttle_toolbar_previous.png" width 
-        = "44" height = "44" alt = "pr&#233;c&#233;dent">Aller au R&#233;gulateur  pr&#233;c&#233;dent.</li>
+          <tr>
+            <td><strong><a href="dp3_Main_Throttle.shtml"><img src=
+            "images/dp3_toolbar_newThrottle.png" alt="throttle"
+            height="30" width="120"></a></strong></td>
 
-        <li> <img src = "images/Main_Throttle_toolbar_next.png" width = 
-        "46" height = "43" alt = "r&#233;gulateur suivant">Va au R&#233;gulateur suivant</li>
+            <td>Ouvre le nouveau <strong><a href=
+            "dp3_Main_Throttle.shtml">R&#233;gulateur></strong> ou d'autres 
+            boutons ajout&#233;s dans<strong><a href=
+            "Start_Preferences.shtml">Les Pr&#233;f&#233;rences.</a></strong></td>
+          </tr>
 
-        <li> <img src = "images/Main_Throttle_toolbar_next_loco.png" width 
-        = "45" height = "45" alt = "loco suivante">Va &#224; la prochaine 
-        locomotive en marche</li>
+          <tr>
+            <td><img src="images/dp3_toolbar_Power.png" alt=
+            "power control" height="49" width="69"></td>
 
-        <li> <img src = "images/Main_Throttle_toolbar_stop.png" width = 
-        "44" height = "48" alt = "arr&#234;t">envoie une commande d'arr&#234;t
-         d'urgence &#224; toutes les locomotives sous contr&#244;le JMRI.</li>
+            <td>Contr&#244;le l'alimentation de la voie si votre centrale de 
+            commande prend en charge cette fonctionnalit&#233;.</td>
+          </tr>
 
-        <li> <img src = "images/Main_Throttle_toolbar_power.png" width = 
-        "45" height = "48" alt = "alimentation">Contr&#244;le la mise sous/hors 
-        tension de la voie, si elle est prise en charge.</li>
+          <tr>
+            <td><img src="images/dp3_toolbar_programMode.png" alt=
+            "programming mode" height="28" width="232"></td>
 
-        <li> <img src = "images/Main_Throttle_toolbar_edit.png" width = 
-        "50" height = "49" alt = "modifier">Basculer vers le mode &#201;dition 
-        R&#233;gulateur ou revenir en arri&#232;re.</li>
-
-        <li> <img src = "images/Main_Throttle_toolbar_list.png" width = 
-        "48" height = "51" alt = "listr">Ouvre la <a href= "dp3_Main_Throttle_List.shtml">fen&#234;tre JMRI local</a> </li>
-      </ul></a></li>
-      </ul>
+            <td>Liste d&#233;roulante qui vous permet de s&#233;lectionner <a style=
+            "font-weight: bold;" href=
+            "Basic_Mode.shtml">Mode de Programmation</a></td>
+          </tr>
+        </tbody>
+      </table>
+      <hr>
 
       <div align="right">
-        <a href="dp3_Main_Throttle.shtml">Retour</a>
+        <p><a href="dp3_Main_Main.shtml">Retour</a></p>
+
+        <p><a href="index.shtml#Main">Retour &#224; l'Index</a></p>
       </div><!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
