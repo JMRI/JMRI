@@ -1,7 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Translation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-02-26 -->
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -24,180 +24,179 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>DecoderPro&reg; Error Messages</h1>
+      <h1>DecoderPro&reg; Messages d'Erreurs</h1>
 
-      <h2>Decoder Programmer Common Error Messages</h2>
+      <h2>Messages d'Erreur Courants du Programmeur D&#233;codeur</h2>
 
       <div align="right">
-        <p><a href="index.shtml">Back to Index</a></p>
+        <p><a href="index.shtml">Retour &#224; l'Index</a></p>
       </div>
       <hr>
 
-      <p>Various things can go wrong when JMRI tries to work with
-      your DCC command station to program a DCC decoder. This page
-      lists the error message that can result, and describes what
-      they mean.</p>
+      <p>Divers probl&#232;mes peuvent survenir lorsque JMRI tente de dialoguer 
+      avec votre centrale de commande DCC pour programmer un d&#233;codeur DCC. 
+      Cette page r&#233;pertorie le message d'erreur pouvant en r&#233;sulter 
+      et d&#233;crit leur signification. </P>
 
-      <h4><a href="../../html/setup/Errors.shtml">JMRI Error
-      Codes</a></h4>
+      <h4> <a href="../../html/setup/Errors.shtml"> Codes d'Erreur JMRI </a> </h4>
 
       <dl>
-        <dt><strong>301 - no locomotive detected</strong></dt>
+        <dt> <strong> 301 - aucune locomotive d&#233;tect&#233;e </strong> </dt>
 
-        <dd>The command station has reported that it doesn't see a
-        locomotive on the programming track.</dd>
+        <dd> La centrale a signal&#233; qu'elle ne voyait aucune locomotive 
+        sur la voie de programmation. </dd>
 
         <dd>
-          <p>This can happen if the locomotive isn't making good
-          electrical contact or if there's a wiring fault in the
-          locomotive.</p>
+          <p> Cela peut arriver si la locomotive n'&#233;tablit pas un bon 
+          contact &#233;lectrique ou si le c&#226;blage de la locomotive est d&#233;fectueux. </p>
         </dd>
 
-        <dt><strong>302 - programmer busy</strong></dt>
+        <dt> <strong> 302 - programmeur occup&#233; </strong> </dt>
 
         <dd>
-          <p>The command station has reported that it's busy doing
-          something else, and can't do any programming right now.
-          This usually means that some other part of the DCC system
-          is doing a programming operation, e.g. a hand-held
-          throttle.</p>
-        </dd>
-
-        <dd>
-          <p>Some DCC systems can't do ops-mode programming
-          (programming on the main) while also using the service
-          mode programming track, in which case they'll return this
-          error message.</p>
-        </dd>
-
-        <dt><strong>303 - requested not implemented in command
-        station</strong></dt>
-
-        <dd>
-          <p>This means that JMRI has requested the command station
-          do something that it doesn't support.</p>
+          <p> La centrale de commande a signal&#233; qu'elle est occup&#233;e &#224; 
+          faire autre chose et qu'elle ne peut effectuer aucune 
+          programmation pour le moment. Cela signifie g&#233;n&#233;ralement 
+          qu'une autre partie du syst&#232;me DCC effectue une op&#233;ration 
+          de programmation, par exemple, un R&#233;gulateur. </p>
         </dd>
 
         <dd>
-          <p>This is not supposed to happen, as JMRI should disable
-          programming modes that the command station can't provide.
-          If you do see this message, please report the
-          circumstances on the JMRI users Yahoo group (link at
-          bottom of this page).</p>
+          <p> Certains syst&#232;mes DCC ne peuvent pas programmer en mode 
+          ops (programmation principale) tout en utilisant &#233;galement 
+          la voie de programmation en mode service, auquel cas ils 
+          renverront ce message d'erreur. </p>
         </dd>
 
-        <dt><strong>304 - aborted by user</strong></dt>
+        <dt> <strong> 303 - Demande non impl&#233;ment&#233;e dans la centrale de 
+        commande </strong> </dt>
 
         <dd>
-          <p>The user has requested that the read or write
-          operation stop early.</p>
-        </dd>
-
-        <dd>
-          <p>This is considered an error, because the program
-          doesn't know whether the decoder actually saw the
-          operation complete or not.</p>
-        </dd>
-
-        <dt><strong>305 - confirm failed</strong></dt>
-
-        <dd>
-          <p>Some command stations allow you to "confirm" the
-          content of a CV, rather that read the value from it. In
-          general, this is faster than doing a complete read. If
-          the value in the CV doesn't match the expected value,
-          this message is issued. It's considered an error because
-          if the values don't match, we know that we don't know the
-          correct value for the CV contents.</p>
-        </dd>
-
-        <dt><strong>306 - timeout talking to command
-        station</strong></dt>
-
-        <dd>
-          <p>The program did not hear back from the command station
-          when it expected to.</p>
+          <p> Cela signifie que JMRI a demand&#233; &#224; lac entrale de commande 
+          de faire quelque chose qu'elle ne prend pas en charge. </p>
         </dd>
 
         <dd>
-          <p>This is by far the most common error message when
-          people first start using JMRI. In that case, it usually
-          means that the connection to the command station isn't
-          correct. This could be a problem with the cable(s) making
-          the connection, or a problem with how the preferences are
-          set. Picking the wrong serial port is particularly
-          common.</p>
-
-          <p>Once JMRI is working properly, this error may
-          occasionally happen due to a transient error. DecoderPro
-          generally will retry it successfully in that case.</p>
+          <p> Cela n'est pas cens&#233; se produire, car JMRI devrait 
+          d&#233;sactiver les modes de programmation que la centrale de 
+          commande ne peut pas fournir. Si vous voyez ce message, 
+          veuillez signaler les circonstances du groupe Yahoo des 
+          utilisateurs JMRI (lien au bas de cette page). </P>
         </dd>
 
-        <dt><strong>307 - Unknown error</strong></dt>
+        <dt><strong>304 - abandonn&#233; par l'utilisateur </strong> </dt>
 
         <dd>
-          <p>An error has happened, but JMRI doesn't know enough
-          about it to be able to report more detail.</p>
+          <p> L'utilisateur a demand&#233; &#224; ce que l'op&#233;ration 
+          de lecture ou d'&#233;criture s'arr&#234;te plus t&#244;t. </p>
         </dd>
 
         <dd>
-          <p>In general, JMRI is pretty good at deciphering what
-          went wrong, and this message isn't very common. If you do
-          see this message, please report the circumstances on the
-          jmriusers mailing list.</p>
+          <p> Ceci est consid&#233;r&#233; comme une erreur, car le programme 
+          ne sait pas si le d&#233;codeur a r&#233;ellement vu l'op&#233;ration 
+          termin&#233;e ou non. </p>
         </dd>
 
-        <dt><strong>308 - No acknowledge from
-        locomotive</strong></dt>
+        <dt> <strong> 305 - Confirmation de l'&#233;chec </strong> </dt>
 
         <dd>
-          <p>At the end of a CV read or write operation, the
-          locomotive replies ("acknowledges") to the command
-          station using a pulse of current.</p>
+          <p> Certaines centrales de commande vous permettent de 
+          "confirmer" le contenu d'un CV, plut&#244;t que d'en lire 
+          la valeur. En g&#233;n&#233;ral, cela est plus rapide que de faire 
+          une lecture compl&#232;te. Si la valeur du CV ne correspond pas 
+          &#224; la valeur attendue, ce message est envoy&#233;. C'est consid&#233;r&#233;
+           comme une erreur car si les valeurs ne correspondent pas, 
+           nous savons que nous ne connaissons pas la valeur correcte 
+           pour le contenu du CV. </P>
+        </dd>
+
+        <dt> <strong> 306 - Expiration du d&#233;lai de communication avec 
+        la centrale de commande </strong> </dt>
+
+        <dd>
+          <p> Le programme n'a pas eu de r&#233;ponse de la part de la 
+          centrale de commande quand elle s'y attendait. </p>
         </dd>
 
         <dd>
-          <p>If that pulse isn't seen, some command stations
-          provide this error message. It could be due to poor
-          electrical connections to the programming track or within
-          the locomotive. It could also be that the decoder doesn't
-          support readback.</p>
+          <p> C'est de loin le message d'erreur le plus courant lorsque 
+          les gens commencent &#224; utiliser JMRI. Dans ce cas, cela 
+          signifie g&#233;n&#233;ralement que la connexion &#224; la centrale de 
+          commande n'est pas correcte. Cela pourrait &#234;tre un probl&#232;me 
+          avec le ou les c&#226;bles &#233;tablissant la connexion ou un probl&#232;me 
+          de d&#233;finition des pr&#233;f&#233;rences. Choisir le mauvais port 
+          s&#233;rie est particuli&#232;rement courant. </P>
 
-          <p>Some decoders, particularly certain sound decoders,
-          draw so much current that the reply pulse isn't detected
-          by the command station. In that case, one of the various
-          "programming boosters" may solve the problem.</p>
+          <p> Une fois que JMRI fonctionne correctement, cette erreur 
+          peut parfois se produire en raison d'une erreur transitoire. 
+          DecoderPro l'essayera g&#233;n&#233;ralement avec succ&#232;s dans ce cas. </P>
         </dd>
 
-        <dt><strong>309 - Short Circuit on Programming
-        Track</strong></dt>
+        <dt> <strong> 307 - Erreur inconnue </strong> </dt>
 
         <dd>
-          <p>The command station has reported seeing a short
-          circuit on the programming track. That prevents
-          programming operations.</p>
-
-          <p>Check the electrical connections to the programming
-          track, and also within the locomotive.</p>
+          <p> Une erreur est survenue, mais JMRI n'en sait pas assez 
+          pour pouvoir en dire plus. </p>
         </dd>
 
-        <dt><strong>310 - Sequence Error</strong></dt>
+        <dd>
+          <p> En g&#233;n&#233;ral, JMRI est assez efficace pour d&#233;chiffrer ce 
+          qui ne va pas, et ce message n'est pas tr&#232;s courant. Si vous 
+          voyez ce message, veuillez signaler les circonstances de la 
+          liste de diffusion jmriusers. </P>
+        </dd>
+
+        <dt> <strong> 308 - Aucun accus&#233; de r&#233;ception de la locomotive </strong> </dt>
 
         <dd>
-          <p>For some reason, the programming operation ended early
-          and the command station returned to normal mode (left
-          service mode) before it should have.</p>
+          <p> &#193; la fin d'une op&#233;ration de lecture ou d'&#233;criture de CV, 
+          la locomotive r&#233;pond ("accuse r&#233;ception") &#224; la centrale de 
+          commande en utilisant une impulsion de courant. </p>
+        </dd>
 
-          <p>This is an unusual error, which might indicate that
-          you've selected the wrong command station type in the
-          preferences. Check that. If that's correct and it's still
-          happening, ask for help on the JMRI users list.</p>
+        <dd>
+          <p> Si cette impulsion n'est pas vue, certaines centrales de 
+          commande fournissent ce message d'erreur. Cela pourrait &#234;tre 
+          d&#251; &#224; de mauvaises connexions &#233;lectriques &#224; la voie de p
+          rogrammation ou &#224; la locomotive. Il se peut &#233;galement que 
+          le d&#233;codeur ne prenne pas en charge la relecture. </P>
+
+          <p> Certains d&#233;codeurs, en particulier certains d&#233;codeurs 
+          sonores, consomment tellement de courant que l'impulsion 
+          de r&#233;ponse n'est pas d&#233;tect&#233;e par la centrale de commande. 
+          Dans ce cas, l'un des "amplificateurs de programmation" 
+          peut r&#233;soudre le probl&#232;me. </P>
+        </dd>
+
+        <dt> <strong> 309 - Court-circuit sur la voie de programmation</strong> </dt>
+
+        <dd>
+          <p> La centrale de commande a signal&#233; avoir constat&#233; un 
+          court-circuit sur la voie de programmation. Cela emp&#234;che 
+          les op&#233;rations de programmation. </P>
+
+          <p> V&#233;rifiez les connexions &#233;lectriques &#224; la voie de 
+          programmation et &#224; la locomotive. </p>
+        </dd>
+
+        <dt> <strong> 310 - Erreur de s&#233;quence </strong> </dt>
+
+        <dd>
+          <p> Pour une raison quelconque, la programmation s'est termin&#233;e 
+          t&#244;t et la console de commande est revenue en mode normal 
+          (quitte le mode service). </p>
+
+          <p> Il s'agit d'une erreur inhabituelle, qui peut indiquer 
+          que vous avez s&#233;lectionn&#233; le mauvais type de centrale de 
+          commande dans les pr&#233;f&#233;rences. Regarde &#231;a. Si cela est
+           correct et que cela se produit toujours, demandez de 
+           l'aide sur la liste des utilisateurs JMRI. </P>
         </dd>
       </dl>
       <hr>
 
       <div align="right">
-        <p><a href="index.shtml#Error">Back to Index</a></p>
+        <p><a href="index.shtml#Error">Retour &#224; l'Index</a></p>
       </div><!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
