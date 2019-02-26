@@ -13,6 +13,7 @@ import jmri.jmrit.dispatcher.DispatcherFrame;
 import jmri.jmrit.display.PanelMenu;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
+import jmri.jmrit.display.layoutEditor.LayoutShape;
 import jmri.jmrit.display.layoutEditor.LayoutSlip;
 import jmri.jmrit.display.layoutEditor.LayoutTrack;
 import jmri.jmrit.display.layoutEditor.LayoutTrackDrawingOptions;
@@ -187,6 +188,19 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
                 log.error("Error storing layoutturnout element: " + e);
             }
         }
+        
+        // include Layout Shapes
+        for (LayoutShape ls : p.getLayoutShapes()) {
+            try {
+                Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(ls);
+                if (e != null) {
+                    panel.addContent(e);
+                }
+            } catch (Exception e) {
+                log.error("Error storing layout shape element: " + e);
+            }
+        }
+
         return panel;
     }   // store
 
