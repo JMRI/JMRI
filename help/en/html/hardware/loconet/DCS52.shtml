@@ -74,7 +74,7 @@
         <tr><td>Control and monitor LocoNet-connected Switches, Sensors, and Transponding</td></tr>
         <tr><td>Configure some LocoNet devices</td></tr>
         <tr><td>Control or monitor the LocoNet Fast Clock</td></tr>
-        <tr><td>Update firmware on some Loconet devices</td></tr>
+        <tr><td>Update firmware on some LocoNet devices</td></tr>
         <tr><td>etc.</td></tr>
         <tr><td rowspan="7" align="center">LocoNet Interface, Decoder Programming</td>
             <td rowspan="7" align="center">Computer Connection to something other than the DCS52 USB connector</td>
@@ -85,7 +85,7 @@
         <tr><td>Control and monitor LocoNet-connected Switches, Sensors, and Transponding</td></tr>
         <tr><td>Configure some LocoNet devices</td></tr>
         <tr><td>Control or monitor the LocoNet Fast Clock</td></tr>
-        <tr><td>Update firmware on some Loconet devices</td></tr>
+        <tr><td>Update firmware on some LocoNet devices</td></tr>
         <tr><td>etc.</td></tr>
       </table>
 

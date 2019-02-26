@@ -74,7 +74,7 @@
         <tr><td>Control and monitor LocoNet-connected Switches, Sensors, and Transponding</td></tr>
         <tr><td>Configure some LocoNet devices</td></tr>
         <tr><td>Control or monitor the LocoNet Fast Clock</td></tr>
-        <tr><td>Update firmware on some Loconet devices</td></tr>
+        <tr><td>Update firmware on some LocoNet devices</td></tr>
         <tr><td>etc.</td></tr>
         <tr><td rowspan="7" align="center">LocoNet Interface, Decoder Programming</td>
             <td rowspan="7" align="center">Computer Connection to something other than the DCS240 USB connector</td>
@@ -85,7 +85,7 @@
         <tr><td>Control and monitor LocoNet-connected Switches, Sensors, and Transponding</td></tr>
         <tr><td>Configure some LocoNet devices</td></tr>
         <tr><td>Control or monitor the LocoNet Fast Clock</td></tr>
-        <tr><td>Update firmware on some Loconet devices</td></tr>
+        <tr><td>Update firmware on some LocoNet devices</td></tr>
         <tr><td>etc.</td></tr>
       </table>
 
@@ -137,7 +137,7 @@
       can use the DCS240 programming track to access decoder CVs when the decoder is
       connected to the programming track.</p>
 
-      <p>This JMRI configuraiton may also be used to download sound information into
+      <p>This JMRI configuration may also be used to download sound information into
       Digitrax sound decoders and, within its limited current
       capability, run one locomotive to test it. When used with
       Digitrax SFX decoders, "neutral mode" allows you to vary the
@@ -195,7 +195,6 @@
 
       <p>The "connection" preferences should look similar to this image:</p>
       <img src="images/DCS240StandConnProfile.png" alt="Sample configuration profile with DCS240 USB interface as a standalone programmer" width="500">
-
 
       <h3>DCS240 USB Interface in Standalone Programming Mode Usage Hints</h3>
 

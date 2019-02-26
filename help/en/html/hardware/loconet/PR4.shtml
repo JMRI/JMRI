@@ -58,7 +58,7 @@
         <tr><td>Control and monitor LocoNet-connected Switches, Sensors, and Transponding</td></tr>
         <tr><td>Configure some LocoNet devices</td></tr>
         <tr><td>Control or monitor the LocoNet Fast Clock</td></tr>
-        <tr><td>Update firmware on some Loconet devices</td></tr>
+        <tr><td>Update firmware on some LocoNet devices</td></tr>
         <tr><td>etc.</td></tr>
         <tr><td rowspan="7" align="center">Standalone LocoNet</td>
             <td rowspan="7" align="center">"<em>PR4</em>"</td>
@@ -66,7 +66,7 @@
         <tr><td>Control and monitor LocoNet-connected Switches, Sensors, and Transponding</td></tr>
         <tr><td>Configure some LocoNet devices</td></tr>
         <tr><td>Control or monitor the LocoNet Fast Clock</td></tr>
-        <tr><td>Update firmware on some Loconet devices</td></tr>
+        <tr><td>Update firmware on some LocoNet devices</td></tr>
         <tr><td>etc.</td></tr>
       </table>
 
@@ -129,7 +129,7 @@
     to communicate with the command station or any LocoNet peripherals.  The 
     red "X" in the diagram above denotes this limitation.</p>
     
-      <p>To set up JMRI to use the DCS52 via the dedicated
+      <p>To set up JMRI to use the PR4 via the dedicated
       decoder programming track mode:</p>
 
       <ul>
@@ -171,7 +171,7 @@
       <h3>PR4 Standalone programmer usage suggestions</h3>
 
       <p>You can use a JMRI throttle to control the locomotive
-      connected to the PR4 dedocated programming track. Use the JMRI Power Control
+      connected to the PR4 dedicated programming track. Use the JMRI Power Control
       or the "Power" menu item on the Throttle's menu bar to turn
       on track power, and then you can operate the locomotive
       normally.</p>
@@ -206,10 +206,6 @@
       power as "off". Just wait a couple seconds and turn the track
       power back on to recover.</p>
 
-      
-
-
-
       <h2>PR4 as a LocoNet Interface</h2>
       <img src="images/PR3-PR4LocoNetInterfaceConnections.png" alt="Connections for PR4 acting as a LocoNet interface" width="350">
 
@@ -221,7 +217,7 @@
       of that feature.</p>
       
       
-      <p>To set up JMRI to use the DCS52 via the dedicated
+      <p>To set up JMRI to use the PR4 via the dedicated
       decoder programming track mode:</p>
 
       <ul>
@@ -322,16 +318,6 @@
 
       <p>You don't need to install a separate driver when using
       current versions of Mac OS X or Linux.</p>
-
-
-
-
-
-
-
-
-
-
 
       <h1>See Also</h1>
       <ul>
