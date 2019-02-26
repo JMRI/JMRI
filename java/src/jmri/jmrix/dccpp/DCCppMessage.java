@@ -1511,11 +1511,12 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
         // address = (address - 1) * 4 + subaddress + 1 for address>0;
         int addr, subaddr;
         if (address > 0) {
-            addr = (address - 1) / (DCCppConstants.MAX_ACC_DECODER_SUBADDR + 1);
+            addr = ((address - 1) / (DCCppConstants.MAX_ACC_DECODER_SUBADDR + 1)) + 1;
             subaddr = (address - 1) % (DCCppConstants.MAX_ACC_DECODER_SUBADDR + 1);
         } else {
             addr = subaddr = 0;
         }
+        log.debug("makeAccessoryDecoderMsg address {}, addr {}, subaddr {}, activate {}",address, addr, subaddr, activate);
         return(makeAccessoryDecoderMsg(addr, subaddr, activate));
     }
 
