@@ -24,7 +24,7 @@ import jmri.server.json.JsonNamedBeanHttpService;
  *
  * @author Randall Wood
  */
-public class JsonLightHttpService extends JsonNamedBeanHttpService {
+public class JsonLightHttpService extends JsonNamedBeanHttpService<Light> {
 
     public JsonLightHttpService(ObjectMapper mapper) {
         super(mapper);
@@ -57,11 +57,7 @@ public class JsonLightHttpService extends JsonNamedBeanHttpService {
 
     @Override
     public JsonNode doPost(String type, String name, JsonNode data, Locale locale) throws JsonException {
-        Light light = InstanceManager.lightManagerInstance().getLight(name);
-        if (light == null) {
-            throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", LIGHT, name));
-        }
-        this.postNamedBean(light, data, name, type, locale);
+        Light light = this.postNamedBean(InstanceManager.lightManagerInstance().getLight(name), data, name, type, locale);
         int state = data.path(STATE).asInt(UNKNOWN);
         switch (state) {
             case ON:

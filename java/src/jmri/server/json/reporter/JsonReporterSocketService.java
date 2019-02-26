@@ -95,8 +95,8 @@ public class JsonReporterSocketService extends JsonSocketService<JsonReporterHtt
             log.debug("in ReporterListener for '{}' '{}' ('{}'=>'{}')", this.reporter.getSystemName(), evt.getPropertyName(), evt.getOldValue(), evt.getNewValue());            
 //            if (e.getPropertyName().equals("currentReport")) {
                 try {
-                    connection.sendMessage(service.doGetReporter(this.reporter, getLocale()));
-                } catch (IOException ex) {
+                    connection.sendMessage(service.doGetReporter(this.reporter, this.reporter.getSystemName(), getLocale()));
+                } catch (IOException | JsonException ex) {
                     // if we get an error, unregister as listener
                     reporter.removePropertyChangeListener(this);
                     reporterListeners.remove(this.reporter.getSystemName());

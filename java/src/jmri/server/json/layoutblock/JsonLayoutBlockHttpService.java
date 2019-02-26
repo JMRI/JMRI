@@ -29,7 +29,7 @@ import jmri.server.json.JsonNamedBeanHttpService;
  * @author mstevetodd Copyright (C) 2018 (copied from JsonMemoryHttpService)
  * @author Randall Wood
  */
-public class JsonLayoutBlockHttpService extends JsonNamedBeanHttpService {
+public class JsonLayoutBlockHttpService extends JsonNamedBeanHttpService<LayoutBlock> {
 
     public JsonLayoutBlockHttpService(ObjectMapper mapper) {
         super(mapper);
@@ -55,11 +55,7 @@ public class JsonLayoutBlockHttpService extends JsonNamedBeanHttpService {
 
     @Override
     public JsonNode doPost(String type, String name, JsonNode data, Locale locale) throws JsonException {
-        LayoutBlock layoutBlock = InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock(name);
-        if (layoutBlock == null) {
-            throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", LAYOUTBLOCK, name));
-        }
-        this.postNamedBean(layoutBlock, data, name, type, locale);
+        LayoutBlock layoutBlock = this.postNamedBean(InstanceManager.getDefault(LayoutBlockManager.class).getLayoutBlock(name), data, name, type, locale);
         //layoutBlock.state is a bogus construct, so don't expect valid results from this
         if (!data.path(STATE).isMissingNode()) {
             layoutBlock.setState(data.path(STATE).asInt());

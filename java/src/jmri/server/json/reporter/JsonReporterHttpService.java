@@ -1,12 +1,5 @@
 package jmri.server.json.reporter;
 
-import static jmri.server.json.JSON.COMMENT;
-import static jmri.server.json.JSON.DATA;
-import static jmri.server.json.JSON.NAME;
-import static jmri.server.json.JSON.STATE;
-import static jmri.server.json.JSON.TYPE;
-import static jmri.server.json.JSON.USERNAME;
-import static jmri.server.json.JSON.VALUE;
 import static jmri.server.json.reporter.JsonReporter.LAST_REPORT;
 import static jmri.server.json.reporter.JsonReporter.REPORT;
 import static jmri.server.json.reporter.JsonReporter.REPORTER;
@@ -21,14 +14,15 @@ import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
 import jmri.Reporter;
 import jmri.ReporterManager;
+import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
-import jmri.server.json.JsonHttpService;
+import jmri.server.json.JsonNamedBeanHttpService;
 
 /**
  *
  * @author Randall Wood Copyright 2016, 2018
  */
-public class JsonReporterHttpService extends JsonHttpService {
+public class JsonReporterHttpService extends JsonNamedBeanHttpService<Reporter> {
 
     public JsonReporterHttpService(ObjectMapper mapper) {
         super(mapper);
@@ -36,24 +30,17 @@ public class JsonReporterHttpService extends JsonHttpService {
 
     @Override
     public JsonNode doGet(String type, String name, Locale locale) throws JsonException {
-        Reporter reporter = InstanceManager.getDefault(ReporterManager.class).getReporter(name);
-        if (reporter == null) {
-            throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", REPORTER, name));
-        }
-        return doGetReporter(reporter, locale);
+        return this.doGetReporter(InstanceManager.getDefault(ReporterManager.class).getReporter(name), name, locale);
     }
 
     @Override
     public JsonNode doPost(String type, String name, JsonNode data, Locale locale) throws JsonException {
-        Reporter reporter = InstanceManager.getDefault(jmri.ReporterManager.class).getBySystemName(name);
-        if (reporter == null) {
-            throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", REPORTER, name));
+        Reporter reporter = this.postNamedBean(InstanceManager.getDefault(jmri.ReporterManager.class).getBySystemName(name), data, name, type, locale);
+        if (data.path(JSON.USERNAME).isTextual()) {
+            reporter.setUserName(data.path(JSON.USERNAME).asText());
         }
-        if (data.path(USERNAME).isTextual()) {
-            reporter.setUserName(data.path(USERNAME).asText());
-        }
-        if (data.path(COMMENT).isTextual()) {
-            reporter.setComment(data.path(COMMENT).asText());
+        if (data.path(JSON.COMMENT).isTextual()) {
+            reporter.setComment(data.path(JSON.COMMENT).asText());
         }
         if (!data.path(REPORT).isMissingNode()) {
             if (data.path(REPORT).isNull()) {
@@ -69,6 +56,8 @@ public class JsonReporterHttpService extends JsonHttpService {
     public JsonNode doPut(String type, String name, JsonNode data, Locale locale) throws JsonException {
         try {
             InstanceManager.getDefault(ReporterManager.class).provideReporter(name);
+        } catch (IllegalArgumentException ex) {
+            throw new JsonException(400, Bundle.getMessage(locale, "ErrorCreatingObject", REPORTER, name));
         } catch (Exception ex) {
             throw new JsonException(500, Bundle.getMessage(locale, "ErrorCreatingObject", REPORTER, name));
         }
@@ -85,24 +74,18 @@ public class JsonReporterHttpService extends JsonHttpService {
     }
 
     // package protected
-    JsonNode doGetReporter(Reporter reporter, Locale locale) {
-        ObjectNode root = mapper.createObjectNode();
-        root.put(TYPE, REPORTER);
-        ObjectNode data = root.putObject(DATA);
-        data.put(NAME, reporter.getSystemName());
-        data.put(USERNAME, reporter.getUserName());
-        data.put(STATE, reporter.getState());
-        data.put(COMMENT, reporter.getComment());
+    JsonNode doGetReporter(Reporter reporter, String name, Locale locale) throws JsonException {
+        ObjectNode root = this.getNamedBean(reporter, name, REPORTER, locale); // throws JsonException if reporter == null
+        ObjectNode data = root.with(JSON.DATA);
+        data.put(JSON.STATE, reporter.getState());
         if (reporter.getCurrentReport() != null) {
             String report = reporter.getCurrentReport().toString();
             data.put(REPORT, report);
             //value matches text displayed on panel
-            data.put(VALUE, (report.equals("") 
-                    ? Bundle.getMessage(locale, "Blank")
-                            : reporter.getCurrentReport().toString()));
+            data.put(JSON.VALUE, (report.isEmpty() ? Bundle.getMessage(locale, "Blank") : report));
         } else {
             data.putNull(REPORT);
-            data.put(VALUE,  Bundle.getMessage(locale, "NoReport"));
+            data.put(JSON.VALUE, Bundle.getMessage(locale, "NoReport"));
         }
         if (reporter.getLastReport() != null) {
             data.put(LAST_REPORT, reporter.getLastReport().toString());

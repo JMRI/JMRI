@@ -20,7 +20,7 @@ import jmri.server.json.JsonNamedBeanHttpService;
  *
  * @author Randall Wood
  */
-public class JsonMemoryHttpService extends JsonNamedBeanHttpService {
+public class JsonMemoryHttpService extends JsonNamedBeanHttpService<Memory> {
 
     public JsonMemoryHttpService(ObjectMapper mapper) {
         super(mapper);
@@ -43,11 +43,7 @@ public class JsonMemoryHttpService extends JsonNamedBeanHttpService {
 
     @Override
     public JsonNode doPost(String type, String name, JsonNode data, Locale locale) throws JsonException {
-        Memory memory = InstanceManager.memoryManagerInstance().getMemory(name);
-        if (memory == null) {
-            throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", MEMORY, name));
-        }
-        this.postNamedBean(memory, data, name, type, locale);
+        Memory memory = this.postNamedBean(InstanceManager.memoryManagerInstance().getMemory(name), data, name, type, locale);
         if (!data.path(VALUE).isMissingNode()) {
             if (data.path(VALUE).isNull()) {
                 memory.setValue(null);

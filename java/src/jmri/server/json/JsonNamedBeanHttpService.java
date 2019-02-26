@@ -13,8 +13,9 @@ import jmri.NamedBean;
  * {@link jmri.NamedBean} objects.
  *
  * @author Randall Wood (C) 2016
+ * @param <T> the type supported by this service
  */
-public abstract class JsonNamedBeanHttpService extends JsonHttpService {
+public abstract class JsonNamedBeanHttpService<T extends NamedBean> extends JsonHttpService {
 
     public JsonNamedBeanHttpService(ObjectMapper mapper) {
         super(mapper);
@@ -31,7 +32,7 @@ public abstract class JsonNamedBeanHttpService extends JsonHttpService {
      * @throws JsonException if the bean is null
      */
     @Nonnull
-    protected ObjectNode getNamedBean(NamedBean bean, @Nonnull String name, @Nonnull String type, @Nonnull Locale locale) throws JsonException {
+    protected ObjectNode getNamedBean(T bean, @Nonnull String name, @Nonnull String type, @Nonnull Locale locale) throws JsonException {
         if (bean == null) {
             throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", type, name));
         }
@@ -65,9 +66,11 @@ public abstract class JsonNamedBeanHttpService extends JsonHttpService {
      * @param name   the system name of the bean
      * @param type   the JSON type of the bean
      * @param locale the locale used for any error messages
+     * @return the bean so that this can be used in a method chain
      * @throws JsonException if the bean is null
      */
-    protected void postNamedBean(NamedBean bean, @Nonnull JsonNode data, @Nonnull String name, @Nonnull String type, @Nonnull Locale locale) throws JsonException {
+    @Nonnull
+    protected T postNamedBean(T bean, @Nonnull JsonNode data, @Nonnull String name, @Nonnull String type, @Nonnull Locale locale) throws JsonException {
         if (bean == null) {
             throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", type, name));
         }
@@ -78,5 +81,6 @@ public abstract class JsonNamedBeanHttpService extends JsonHttpService {
             JsonNode comment = data.path(JSON.COMMENT);
             bean.setComment(comment.isTextual() ? comment.asText() : null);
         }
+        return bean;
     }
 }

@@ -28,7 +28,7 @@ import jmri.server.json.JsonNamedBeanHttpService;
  *
  * @author Randall Wood Copyright 2016, 2018
  */
-public class JsonSignalMastHttpService extends JsonNamedBeanHttpService {
+public class JsonSignalMastHttpService extends JsonNamedBeanHttpService<SignalMast> {
 
     public JsonSignalMastHttpService(ObjectMapper mapper) {
         super(mapper);
@@ -61,23 +61,20 @@ public class JsonSignalMastHttpService extends JsonNamedBeanHttpService {
 
     @Override
     public JsonNode doPost(String type, String name, JsonNode data, Locale locale) throws JsonException {
-        SignalMast signalMast = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(name);
-        this.postNamedBean(signalMast, data, name, type, locale);
-        if (signalMast != null) {
-            if (data.path(STATE).isTextual()) {
-                String aspect = data.path(STATE).asText();
-                if (aspect.equals("Held")) {
-                    signalMast.setHeld(true);
-                } else if (signalMast.getValidAspects().contains(aspect)) {
-                    if (signalMast.getHeld()) {
-                        signalMast.setHeld(false);
-                    }
-                    if (signalMast.getAspect() == null || !signalMast.getAspect().equals(aspect)) {
-                        signalMast.setAspect(aspect);
-                    }
-                } else {
-                    throw new JsonException(400, Bundle.getMessage(locale, "ErrorUnknownState", SIGNAL_MAST, aspect));
+        SignalMast signalMast = this.postNamedBean(InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(name), data, name, type, locale);
+        if (data.path(STATE).isTextual()) {
+            String aspect = data.path(STATE).asText();
+            if (aspect.equals("Held")) {
+                signalMast.setHeld(true);
+            } else if (signalMast.getValidAspects().contains(aspect)) {
+                if (signalMast.getHeld()) {
+                    signalMast.setHeld(false);
                 }
+                if (signalMast.getAspect() == null || !signalMast.getAspect().equals(aspect)) {
+                    signalMast.setAspect(aspect);
+                }
+            } else {
+                throw new JsonException(400, Bundle.getMessage(locale, "ErrorUnknownState", SIGNAL_MAST, aspect));
             }
         }
         return this.doGet(type, name, locale);

@@ -22,7 +22,7 @@ import jmri.server.json.JsonNamedBeanHttpService;
  *
  * @author Randall Wood Copyright 2016, 2018
  */
-public class JsonRouteHttpService extends JsonNamedBeanHttpService {
+public class JsonRouteHttpService extends JsonNamedBeanHttpService<Route> {
 
     public JsonRouteHttpService(ObjectMapper mapper) {
         super(mapper);
@@ -80,11 +80,7 @@ public class JsonRouteHttpService extends JsonNamedBeanHttpService {
      */
     @Override
     public JsonNode doPost(String type, String name, JsonNode data, Locale locale) throws JsonException {
-        Route route = InstanceManager.getDefault(RouteManager.class).getRoute(name);
-        if (route == null) {
-            throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", ROUTE, name));
-        }
-        this.postNamedBean(route, data, name, type, locale);
+        Route route = this.postNamedBean(InstanceManager.getDefault(RouteManager.class).getRoute(name), data, name, type, locale);
         int state = data.path(JSON.STATE).asInt(JSON.UNKNOWN);
         switch (state) {
             case JSON.ACTIVE:

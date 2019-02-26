@@ -27,7 +27,7 @@ import jmri.server.json.sensor.JsonSensor;
  * @author mstevetodd Copyright 2018
  * @author Randall Wood Copyright 2018
  */
-public class JsonBlockHttpService extends JsonNamedBeanHttpService {
+public class JsonBlockHttpService extends JsonNamedBeanHttpService<Block> {
 
     public JsonBlockHttpService(ObjectMapper mapper) {
         super(mapper);
@@ -67,11 +67,7 @@ public class JsonBlockHttpService extends JsonNamedBeanHttpService {
 
     @Override
     public JsonNode doPost(String type, String name, JsonNode data, Locale locale) throws JsonException {
-        Block block = InstanceManager.getDefault(BlockManager.class).getBlock(name);
-        if (block == null) {
-            throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", BLOCK, name));
-        }
-        this.postNamedBean(block, data, name, type, locale);
+        Block block = this.postNamedBean(InstanceManager.getDefault(BlockManager.class).getBlock(name), data, name, type, locale);
         if (!data.path(JSON.VALUE).isMissingNode()) {
             if (data.path(JSON.VALUE).isNull()) {
                 block.setValue(null);

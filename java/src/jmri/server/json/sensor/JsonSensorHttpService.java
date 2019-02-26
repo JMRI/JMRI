@@ -22,7 +22,7 @@ import jmri.server.json.JsonNamedBeanHttpService;
  *
  * @author Randall Wood Copyright 2016, 2018
  */
-public class JsonSensorHttpService extends JsonNamedBeanHttpService {
+public class JsonSensorHttpService extends JsonNamedBeanHttpService<Sensor> {
 
     public JsonSensorHttpService(ObjectMapper mapper) {
         super(mapper);
@@ -56,11 +56,7 @@ public class JsonSensorHttpService extends JsonNamedBeanHttpService {
 
     @Override
     public JsonNode doPost(String type, String name, JsonNode data, Locale locale) throws JsonException {
-        Sensor sensor = InstanceManager.getDefault(SensorManager.class).getSensor(name);
-        if (sensor == null) {
-            throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", SENSOR, name));
-        }
-        this.postNamedBean(sensor, data, name, type, locale);
+        Sensor sensor = this.postNamedBean(InstanceManager.getDefault(SensorManager.class).getSensor(name), data, name, type, locale);
         if (data.path(JSON.INVERTED).isBoolean()) {
             sensor.setInverted(data.path(JSON.INVERTED).asBoolean());
         }

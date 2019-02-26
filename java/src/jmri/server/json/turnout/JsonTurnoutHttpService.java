@@ -25,7 +25,7 @@ import jmri.server.json.JsonNamedBeanHttpService;
  *
  * @author Randall Wood
  */
-public class JsonTurnoutHttpService extends JsonNamedBeanHttpService {
+public class JsonTurnoutHttpService extends JsonNamedBeanHttpService<Turnout> {
 
     public JsonTurnoutHttpService(ObjectMapper mapper) {
         super(mapper);
@@ -59,11 +59,7 @@ public class JsonTurnoutHttpService extends JsonNamedBeanHttpService {
 
     @Override
     public JsonNode doPost(String type, String name, JsonNode data, Locale locale) throws JsonException {
-        Turnout turnout = InstanceManager.turnoutManagerInstance().getTurnout(name);
-        if (turnout == null) {
-            throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", TURNOUT, name));
-        }
-        this.postNamedBean(turnout, data, name, type, locale);
+        Turnout turnout = this.postNamedBean(InstanceManager.turnoutManagerInstance().getTurnout(name), data, name, type, locale);
         if (data.path(INVERTED).isBoolean()) {
             turnout.setInverted(data.path(INVERTED).asBoolean());
         }
