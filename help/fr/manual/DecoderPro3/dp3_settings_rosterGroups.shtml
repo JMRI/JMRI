@@ -1,7 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Translation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-02-25 -->
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -26,55 +26,58 @@
     <div id="mainContent">
       <a name="Top" id="Top"></a>
 
-      <h1>DecoderPro&reg; Main Window</h1>
+      <h1>DecoderPro&reg; Fen&#234;tre Principale</h1>
 
-      <h2>Settings Menu - Roster Groups</h2>
+      <h2>Menu R&#233;glages - Groupes Inventaire</h2>
 
       <div align="right">
-        <p><a href="dp3_menubar.shtml">Back to Menubar</a><a href=
+        <p><a href="dp3_menubar.shtml">Retour &#224; la Barre de Menu</a><a href=
         "#"></a></p>
 
-        <p><a href="index.shtml#Main">Back to Index</a></p>
+        <p><a href="index.shtml#Main">Retour &#224; l'Index</a></p>
       </div>
       <hr>
 
-      <p>The <strong>Roster Groups</strong> function allows you to
-      take your entire roster and categorize it. At home you might
-      want to break it down by diesel vs. steam, or by railroad. At
-      a club it would be handy to have categories by member name in
-      addition to any other category you might think of. A roster
-      entry can be associated with more than one group. Again in a
-      club environment, a roster entry could be associated with the
-      Steam, Union Pacific and John Smith groups all at the same
-      time. There is always one group present and it is called
-      Global. All the roster entries are in the Global Group.</p>
+      <p>La fonction <strong>Groupes d'Inventaire </strong> vous permet 
+      de prendre l'ensemble de votre inventaire et de le classer. &#193; 
+      la maison, vous voudrez peut-&#234;tre faire la distinction entre le 
+      diesel et la vapeur ou la compagnie. Dans un club, il serait 
+      pratique d'avoir des cat&#233;gories par nom de membre en plus de 
+      toute autre cat&#233;gorie &#224; laquelle vous pourriez penser. Une entr&#233;e 
+      de l'inventaire peut &#234;tre associ&#233;e &#224; plusieurs groupes. Toujours 
+      dans un environnement de club, une entr&#233;e dans l'inventairee peut 
+      &#234;tre associ&#233;e aux groupes Vapeur, Union Pacific et John Smith en 
+      m&#234;me temps. Il y a toujours un groupe pr&#233;sent qui s'appelle 
+      Global. Toutes les entr&#233;es de la liste sont dans le groupe global.</P>
 
-      <h3>Hide/Show Roster Groups</h3>
+      <h3> Masquer/Afficher les groupes d'Inventaires</h3>
 
-      <p>The Hide/Show Roster Groups control is used to toggle the
-      Roster Groups Display Panel on/off in the area highlighted in
-      pink. This must first be activated by clicking on the
-      Settings tab and then clicking on Hide/Show Roster Groups. If
-      the Roster Groups panel does not display when you click on
-      the setting, try to grab the frame on the left side of the
-      area and drag it open (make sure the Hide/Show is in the
-      correct state.)</p>The panel width may be sized by dragging
-      the frame as indicated by the red arrows. The small
-      arrowheads will allow you to close the panel or open the
-      panel<br>
-      <img style="width: 900px; height: 415px;" alt="roster group"
-      src="images/dp3_rosterGroup01.png"><br>
-      The Roster Groups will be listed in the Roster Group panel as
-      we create them.<br>
+      <p>Le contr&#244;le Masquer/Afficher les groupes d'inventaires est 
+      utilis&#233; pour activer/d&#233;sactiver le panneau d'affichage des 
+      groupes d'inventaire dans la zone surlign&#233;e en rose. Cela doit 
+      d'abord &#234;tre activ&#233; en cliquant sur l'onglet Param&#232;tres, puis 
+      sur Masquer/Afficher les groupes d'inventaires. Si le panneau 
+      Groupes d'inventaire ne s'affiche pas lorsque vous cliquez sur le 
+      param&#232;tre, essayez de saisir le cadre situ&#233; &#224; gauche de la zone 
+      et de le faire glisser pour l'ouvrir (assurez-vous que le 
+      mode Masquer/Afficher est dans le bon &#233;tat.) </P> la largeur du 
+      panneau peut &#234;tre dimensionn&#233;e en faisant glisser le cadre 
+      comme indiqu&#233; par les fl&#232;ches rouges. Les petites pointes de 
+      fl&#232;che vous permettent de fermer ou d'ouvrir le panneau <br> 
+      <img style = "width: 900px; height: 415px;" alt = "groupe d'appels" 
+      src = "images/dp3_rosterGroup01.png"> <br>
+      Les groupes de l'inventaire seront r&#233;pertori&#233;s dans le panneau de 
+      l'inventaire au fur et &#224; mesure de leur cr&#233;ation. <br>
 
-      <h3><strong><a name="create" id="create"></a>Create Roster
-      Group</strong></h3>
+      <h3> <strong> <a name="create" id="create"> </a> Cr&#233;er un Groupe 
+      d'Inventaire</strong> </h3>
 
-      <p>Use Create Roster Group to define any other groups you
-      wish. From the Settings menu Create Roster Group opens the
-      <strong>New Roster Group</strong> dialog. This same
-      <strong>New Roster Group</strong> dialog may be opened using
-      the + button above.</p>
+      <p>Utilisez Cr&#233;er un Groupe d'Inventaire pour d&#233;finir les autres 
+      groupes souhait&#233;s. Dans le menu Configuration, Cr&#233;er un groupe 
+      d'Inventaire ouvre la bo&#238;te de dialogue <strong> Nouveau groupe 
+      d'Inventaire</strong>. Cette m&#234;me bo&#238;te de dialogue <strong>
+		Nouveau groupe d'Inventaires</strong> peut &#234;tre ouverte &#224; 
+		 l'aide du bouton + ci-dessus. </P>
 
       <table style="text-align: left; width: 100%;" border="1"
       cellpadding="2" cellspacing="2" summary=
@@ -91,20 +94,21 @@
             "images/dp3_rosterGroup02a.png"></td>
 
             <td style="vertical-align: top;">
-              Creates a Roster Group<img style=
+              Cr&#233;e un Groupe d'Inventaire<img style=
               "width: 297px; height: 128px;" src=
               "images/dp3_settings_rosterGroup_new.png" alt=
               "new group">
 
-              <p>The <span style="font-weight: bold;">OK</span>
-              button will Add the Roster Group to the list in the
-              panel and to the drop-down list on Main window
-              toolbar.</p>
+              <p>Le bouton <span style = "font-weight: bold;">OK</span> 
+              ajoutera le groupe d'Inventaire &#224; la liste du panneau et 
+              &#224; la liste d&#233;roulante de la barre d'outils de la fen&#234;tre
+               principale. </P>
 
-              <p>You can now add locomotives to the Groups either
-              by dragging from the locomotive roster list or using
-              the Table Associate, discussed later.</p>
-            </td>
+               <p>Vous pouvez maintenant ajouter des locomotives 
+               aux groupes en les faisant glisser depuis la liste 
+               de locomotives ou en utilisant le Tableau Associ&#233;, 
+               d&#233;crit plus tard.</p>
+             </td>
           </tr>
 
           <tr>
@@ -115,23 +119,23 @@
             <td colspan="1" rowspan="1"><img style=
             "width: 216px; height: 209px;" alt="roster group menu"
             src="images/dp3_rosterGroup02c.png"><br>
-            Opens context menu for Roster Groups<br>
-            <span style="font-weight: bold;">Open in New
-            Window</span><br>
-            A window may be opened for each group if you wish.<br>
-            <span style="font-weight: bold;">Export...</span><br>
-            Opens Save dialog box allowing you to save the group to
-            a file.<br>
-            <span style="font-weight: bold;">Rename...</span><br>
-            <img style="width: 327px; height: 144px;" alt="rename"
-            src="images/dp3_RosterGroup_rename.png"><br>
-            <span style="font-weight: bold;">Duplicate</span><br>
-            <img style="width: 303px; height: 144px;" alt=
-            "duplicae" src=
-            "images/dp3_RosterGroup_duplicate.png"><br>
-            <span style="font-weight: bold;">Delete</span><br>
-            <img style="width: 377px; height: 122px;" alt="delete"
-            src="images/dp3_RosterGroup_delete.png"></td>
+            Ouvre le menu contextuel pour les groupes d'Inventaire<br>
+            <span style="font-weight: bold;">Ouvre dans une 
+            Nouvelle Fen&#234;tre</span><br>
+            Une fen&#234;tre peut &#234;tre ouverte pour chaque groupe si vous le souhaitez.<br>
+             <span style = "font-weight: bold;"> Exporter ... </span> <br>
+             Ouvre la bo&#238;te de dialogue Enregistrer vous permettant de sauvegarder le groupe dans
+             un fichier. <br>
+             <span style = "font-weight: bold;"> Renommer ... </span> <br>
+             <img style = "width: 327px; height: 144px;" alt = "renommer"
+             src = "images/dp3_RosterGroup_rename.png"> <br>
+             <span style = "font-weight: bold;"> Dupliquer </span> <br>
+             <img style = "width: 303px; height: 144px;" alt =
+             "duplicae" src =
+             "images/dp3_RosterGroup_duplicate.png"> <br>
+             <span style = "font-weight: bold;"> Supprimer </span> <br>
+             <img style = "width: 377px; height: 122px;" alt = "delete"
+             src = "images/dp3_RosterGroup_delete.png"> </td>
           </tr>
 
           <tr>
@@ -148,8 +152,8 @@
         </tbody>
       </table>
 
-      <h3><a name="renameRoster" id="renameRoster"></a>Rename
-      Roster Group</h3>
+      <h3><a name="renameRoster" id="renameRoster"></a>Renommer
+      Groupe Inventaire</h3>
 
       <div style="text-align: center;">
         <div style="text-align: left;">
@@ -160,77 +164,78 @@
       </div>
 
       <h3><a name="DupRosterGroup" id=
-      "DupRosterGroup"></a>Duplicate Roster Group</h3><img style=
-      "width: 303px; height: 144px;" alt="roster group duplicate"
-      src="images/dp3_RosterGroup_duplicate.png"><br>
+      "DupRosterGroup"></a>Dupliquer Groupe Inventaire</h3> <img style =
+       "largeur: 303px; hauteur: 144px;" alt = "roster group duplicate"
+       src = "images/dp3_RosterGroup_duplicate.png"> <br>
 
-      <h3><a name="Delete" id="Delete"></a>Delete Roster
-      Group</h3><img style="width: 377px; height: 122px;" alt=
-      "delete roster group" src=
-      "images/dp3_RosterGroup_delete.png">
+       <h3> <a name="Delete" id="Delete"> </a>Supprimer Groupe 
+       Inventaire</h3> <img style = "width: 377px; height: 122px;" alt =
+       "delete roster group" src =
+       "images/dp3_RosterGroup_delete.png">
 
-      <h3 style="margin-left: 40px;"><a name="table" id=
-      "table"></a>Roster Group Table Association</h3>
+       <h3 style = "margin-left: 40px;"> <a name = "table" id =
+       "table"> </a> Association de Tableaux de groupes d'Inventaire </h3>
 
-      <p>Once the groups are named, then you "associate" the roster
-      entries with their group. This can be done by using the
-      <strong>Table Association</strong> selection. At the top of
-      the table you select the group you wish the roster entries to
-      be associated with, then the roster entries that you want to
-      associate with that group.</p>
+       <p> Une fois les groupes nomm&#233;s, vous "associez" les entr&#233;es 
+       d'Inventaire &#224; leur groupe. Pour ce faire, utilisez la s&#233;lection 
+       <strong>Tableau Association</strong>. En haut du tableau, 
+       s&#233;lectionnez le groupe auquel vous souhaitez associer les entr&#233;es 
+       de l'inventaire, puis les entr&#233;es de l'inventaire que vous 
+       souhaitez associer &#224; ce groupe.</P>
 
       <p><img src="images/dp3_setting_rosterGroup_table.png" alt=
       "table" height="591" width="784"></p>
 
-      <p>Select Roster Group: <select name="select3" id="select3">
+      <p>S&#233;lectionner un groupe d'Inventaire: <select name = "select3" id = "select3">
         <option>
           Santa Fe
         </option>
-      </select> the roster group that you want to add entries
-      to.</p>
+      </select> le groupe d'Inventaire auquel vous voulez ajouter des entr&#233;es
+       </p>
 
-      <p>The table shows all the engines in your roster.</p>
+      <p>Le tableau pr&#233;sente toutes les locomotives de votre inventaire. </p>
 
-      <p>In the right column, Include... select the entries that
-      you wish to add to the Roster Group, click individually to
-      select a single item, hold the shift key down to select a
-      range of items, hold the CNTRL key down to randomly select
-      items. Close the Table and the entries will be added to the
-      group.</p>
+      <p> Dans la colonne de droite, Inclure ... s&#233;lectionnez les entr&#233;es 
+      que vous souhaitez ajouter au groupe d'inventaires, cliquez 
+      individuellement pour s&#233;lectionner un seul &#233;l&#233;ment, maintenez 
+      la touche Maj enfonc&#233;e pour s&#233;lectionner une plage d'&#233;l&#233;ments, 
+      maintenez la touche CNTRL enfonc&#233;e. pour s&#233;lectionner des &#233;l&#233;ments 
+      au hasard. Fermez la table et les entr&#233;es seront ajout&#233;es au groupe. </P>
 
-      <p>Once the associations have been made, then you can select
-      the Active Roster Group. Once this is done then the Print and
-      Print Summary actions will show only the roster entries
-      associated with that group. As an example you could select
-      the Group <strong>Santa Fe</strong> and only the roster
-      entries in this Roster Group will be printed. The printout
-      does not currently show the active group in the header. The
-      active group will also influence any drop down box which has
-      a list of entries in it, such as Throttle, edit entry, copy,
-      etc. Also, when adding a new roster entry it will
-      automatically be associated with the currently active group,
-      so it is good practice when finishing working with a group to
-      return the active group to Global.</p>
+      <p>Une fois les associations &#233;tablies, vous pouvez s&#233;lectionner 
+      le Groupe d'Inventaire Actif. Une fois cette op&#233;ration effectu&#233;e, 
+      les actions Imprimer et Imprimer le r&#233;sum&#233; ne montreront que les 
+      entr&#233;es de l'inventaire associ&#233;es &#224; ce groupe. Par exemple, 
+      vous pouvez s&#233;lectionner le groupe <strong>Santa Fe</strong>. 
+      Seules les entr&#233;es de l'inventaire de ce groupe seront imprim&#233;es. 
+      L'impression ne montre pas actuellement le groupe actif dans 
+      l'en-t&#234;te. Le groupe actif influera &#233;galement sur les listes 
+      d&#233;roulantes contenant une liste d'entr&#233;es, telles que R&#233;gulateur, 
+      &#233;dition entr&#233;e, copie, etc. De plus, lors de l'ajout d'une nouvelle 
+      entr&#233;e de l'inventaire, elle sera automatiquement associ&#233;e au 
+      groupe actif. Lorsque vous avez fini de travailler avec 
+      un groupe, il est recommand&#233; de renvoyer le groupe actif &#224; Global. </p>
+
 
       <h4><strong><em><br>
-      Restoring Roster to include all Engines</em></strong></h4>
+     Restauration de l'Inventaire pour inclure toutes les Machines </em> </strong> </h4>
 
-      <p>To return your roster to show all engines, <strong>Select
-      Roster Group</strong> to All Entries, or Global. Then you may
-      be certain that you are working with all engines in your
-      roster.</p>
+       <p> Pour que votre inventaire affiche ttoutes les Machines,
+       <strong>S&#233;lectionnez le Groupe d'Inventaire</strong> dans 
+       Toutes les Entr&#233;es ou Global. Ensuite, vous pouvez &#234;tre certain 
+       de travailler avec toutes les Machine de votre Inventaire. </P>
 
-      <p><strong><em>Disassociation of Roster Entry to
-      Group</em></strong><br></p>
+       <p> <strong> <em> Dissociation de l'Entr&#233;e de l'Inventaire dans un Groupe </em> </strong> <br> </p>
 
-      <p>To disassociate a roster entry to a Roster Group, open
-      Roster Group Table and uncheck roster selection and save new
-      Group by closing the Roster Group Table.</p>
+       <p> Pour dissocier une entr&#233;e inventaire d'un Groupe d'Inventaire, 
+       ouvrez le Tableau des Groupes d'Inventaire, d&#233;cochez la 
+       s&#233;lection de l'inventaire et enregistrez le nouveau Groupe en 
+       fermant le Tableau du Groupe d'Inventaire.</p>
 
       <div align="right">
-        <p><a href="dp3_menubar.shtml">Back to Menubar</a></p>
+        <p><a href="dp3_menubar.shtml">Retour Barre de Menu</a></p>
 
-        <p><a href="index.shtml#Main">Back to Index</a></p>
+        <p><a href="index.shtml#Main">Retour &#224; l'Index</a></p>
       </div><!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
