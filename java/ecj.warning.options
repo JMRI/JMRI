@@ -65,7 +65,6 @@
 -warn:+deprecation
 -warn:+discouraged
 -warn:+enumIdentifier
--warn:+enumSwitch
 -warn:+fallthrough
 -warn:+finalBound
 -warn:+finally 
@@ -89,7 +88,6 @@
 -warn:+semicolon
 -warn:+specialParamHiding
 -warn:+suppress
--warn:+switchDefault
 -warn:+unavoidableGenericProblems
 -warn:+unchecked
 -warn:+uselessTypeCheck
@@ -132,7 +130,8 @@
 #
 # Checks we're warning on, working to reduce, but not enforcing
 #
-
+-warn:-switchDefault
+-warn:+enumSwitch
 
 #
 # Checks we're working on putting in place

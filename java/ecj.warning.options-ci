@@ -58,7 +58,6 @@
 -err:+deprecation
 -err:+discouraged
 -err:+enumIdentifier
--err:+enumSwitch
 -err:+fallthrough
 -err:+finalBound
 -err:+finally 
@@ -82,7 +81,6 @@
 -err:+semicolon
 -err:+specialParamHiding
 -err:+suppress
--err:+switchDefault
 -err:+unavoidableGenericProblems
 -err:+unchecked
 -err:+uselessTypeCheck
@@ -104,7 +102,8 @@
 
 
 # Checks we're warning on, but not enforcing
-
+-warn:-switchDefault
+-warn:-enumSwitch
 
 
 # Checks we're working on
