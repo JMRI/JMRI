@@ -325,9 +325,13 @@
       <p>You don't need to install a separate driver when using
       current versions of Mac OS X or Linux.</p>
 
-   <h1>See Also</h1>
+      <h1>See Also</h1>
       <ul>
           <li><a href="Digitrax.shtml">JMRI's general Digitrax support page</a></li>
+          <li>The JMRI <a href="../../apps/DecoderPro/Roster.shtml">Rosters</a> page.</li>
+          <li>The JMRI <a href="CommandStationConfig.shtml">
+                  Command Station Configuration</a> page describes how to configure 
+                  command station OpSw settings.</li> 
 
           <li>For more information on the DCS240 itself, please consult the Digitrax
           web site:

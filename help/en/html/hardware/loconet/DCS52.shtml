@@ -335,6 +335,10 @@
       <h1>See Also</h1>
       <ul>
           <li><a href="Digitrax.shtml">JMRI's general Digitrax support page</a></li>
+          <li>The JMRI <a href="../../apps/DecoderPro/Roster.shtml">Rosters</a> page.</li>
+          <li>The JMRI <a href="CommandStationConfig.shtml">
+                  Command Station Configuration</a> page describes how to configure 
+                  command station OpSw settings.</li> 
 
           <li>For more information on the DCS52 itself, please consult the Digitrax
           web site:
