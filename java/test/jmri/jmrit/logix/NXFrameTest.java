@@ -328,7 +328,7 @@ public class NXFrameTest {
         tableFrame.runTrain(warrant, Warrant.MODE_RUN);
 
         SpeedUtil sp = warrant.getSpeedUtil();
-        sp.setRampThrottleIncrement(0.25f);
+        sp.setRampThrottleIncrement(0.15f);
         sp.setRampTimeIncrement(100);
 
         jmri.util.JUnitUtil.waitFor(() -> {
@@ -345,14 +345,15 @@ public class NXFrameTest {
         warrant.controlRunTrain(Warrant.RAMP_HALT);
         jmri.util.JUnitUtil.waitFor(() -> {
             String m =  warrant.getRunningMessage();
-            return m.startsWith("Halted in block");
+            return (m.startsWith("Halted in block"));
         }, "Train Halted");
+        new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for NXFrame to make commands
 
         warrant.controlRunTrain(Warrant.RESUME);
         jmri.util.JUnitUtil.waitFor(() -> {
             String m =  warrant.getRunningMessage();
             return m.startsWith("Overdue for arrival at block");
-        }, "Train Halted");
+        }, "Train Resumed");
 
         String[] route2 = {"OB3", "OB7", "OB5"};
         block = _OBlockMgr.getOBlock("OB5");
