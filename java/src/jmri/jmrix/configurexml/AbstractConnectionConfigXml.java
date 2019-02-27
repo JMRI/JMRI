@@ -206,6 +206,25 @@ abstract public class AbstractConnectionConfigXml extends AbstractXmlAdapter {
         log.error("method with two args invoked");
     }
 
+    /**
+     * Service routine to look through "parameter" child elements to find a
+     * particular parameter value
+     *
+     * @param e    Element containing parameters
+     * @param name name of desired parameter
+     * @return String value
+     */
+    protected String findParmValue(Element e, String name) {
+        List<Element> l = e.getChildren("parameter");
+        for (int i = 0; i < l.size(); i++) {
+            Element n = l.get(i);
+            if (n.getAttributeValue("name").equals(name)) {
+                return n.getTextTrim();
+            }
+        }
+        return null;
+    }
+
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(AbstractConnectionConfigXml.class);
 
