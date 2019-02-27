@@ -328,7 +328,7 @@ public class NXFrameTest {
         tableFrame.runTrain(warrant, Warrant.MODE_RUN);
 
         SpeedUtil sp = warrant.getSpeedUtil();
-        sp.setRampThrottleIncrement(0.2f);
+        sp.setRampThrottleIncrement(0.25f);
         sp.setRampTimeIncrement(100);
 
         jmri.util.JUnitUtil.waitFor(() -> {
