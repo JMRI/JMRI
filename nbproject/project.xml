@@ -154,6 +154,20 @@
                         </arity>
                     </context>
                 </action>
+                <action name="debug.single">
+                    <!--<script>${ant.script}</script>-->
+                    <script>nbproject/ide-targets.xml</script>
+                    <target>debug-test-single.nb</target>
+                    <context>
+                        <property>test.includes</property>
+                        <folder>java/test</folder>
+                        <pattern>\.java$</pattern>
+                        <format>java-name</format>
+                        <arity>
+                            <one-file-only/>
+                        </arity>
+                    </context>
+                </action>
             </ide-actions>
             <export>
                 <type>folder</type>
