@@ -5,6 +5,7 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
+import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -51,6 +52,12 @@ final class ValidatingInputPane<T> extends javax.swing.JPanel  {
     private String lastError;
     
     /**
+     * Last custom exception. {@code null}, if no error or if
+     * the validator just rejected with no message.
+     */
+    private IllegalArgumentException customException;
+    
+    /**
      * Creates new form ValidatingInputPane.
      * @param convertor converts String to the desired data type.
      */
@@ -60,6 +67,15 @@ final class ValidatingInputPane<T> extends javax.swing.JPanel  {
         this.convertor = convertor;
     }
     
+    /**
+     * Attaches a component used to confirm/proceed. The component will
+     * be disabled if the input is erroneous. The first validation will happen
+     * after this component appears on the screen. Typically, the OK button
+     * should be passed here.
+     * 
+     * @param confirm the "confirm" control.
+     * @return this instance.
+     */
     ValidatingInputPane<T> attachConfirmUI(JComponent confirm) {
         this.confirmUI = confirm;
         return this;
@@ -72,49 +88,108 @@ final class ValidatingInputPane<T> extends javax.swing.JPanel  {
         SwingUtilities.invokeLater(this::validateInput);
     }
     
+    /**
+     * Configures a prompt message for the panel. The prompt message
+     * appears above the input line.
+     * @param msg message text
+     * @return this instance.
+     */
     ValidatingInputPane<T> message(String msg) {
         promtptMessage.setText(msg);
         return this;
     }
     
+    /**
+     * Returns the exception from the most recent validation. Only exceptions
+     * from unsuccessful conversion or thrown by validator are returned. To check
+     * whether the input is valid, call {@link #hasError()}. If the validator 
+     * just rejects the input with no exception, this method returns {@code null}
+     * @return exception thrown by converter or validator.
+     */
+    IllegalArgumentException getException() {
+        return customException;
+    }
+    
+    /**
+     * Configures the validator. Validator is called to check the value after
+     * the String input is converted to the target type. The validator can either
+     * just return {@code false} to reject the value with a generic message, or
+     * throw a {@link IllegalArgumentException} subclass with a custom message.
+     * The message will be then displayed below the input line.
+     * 
+     * @param val validator instance, {@code null} to disable.
+     * @return this instance
+     */
     ValidatingInputPane<T> validator(Predicate<T> val) {
         this.validator = val;
         return this;
     }
     
+    /**
+     * Determines if the input is erroneous.
+     * @return error status
+     */
     boolean hasError() {
         return lastError != null;
     }
     
+    /**
+     * Sets the input value, as text.
+     * @param text input text
+     */
     void setText(String text) {
         inputText.setText(text);
     }
     
+    /**
+     * Gets the input value, as text.
+     * @return the input text
+     */
     String getText() {
         return inputText.getText().trim();
     }
     
+    /**
+     * Gets the input value after conversion. May throw {@link IllegalArgumentException}
+     * if the conversion fails (text input cannot be converted to the target type).
+     * Returns {@code null} for empty (all whitespace) input.
+     * @return the entered value or {@code null} for empty input.
+     */
     T getValue() {
         String s = getText();
         return s.isEmpty() ? null : convertor.apply(s);
     }
     
+    /**
+     * Gets the error message. Either a custom message from an exception
+     * thrown by converter or validator, or the default message for failed validation.
+     * Returns {@code null} for valid input.
+     * @return if input is invalid, returns the error message. If the input is valid, returns {@code null}.
+     */
+    String getErrorMessage() {
+        return lastError;
+    }
+    
     private void validateInput() {
         if (isVisible()) {
-            validate(getText());
+            validateText(getText());
         }
     }
     
     private void clearErrors() {
         if (confirmUI != null) {
             confirmUI.setEnabled(true);
-            errorMessage.setText("");
-            errorMessage.setVisible(false);
         }
+        errorMessage.setText("");
+        errorMessage.setVisible(false);
+        customException = null;
         lastError = null;
     }
     
-    private void validate(String text) {
+    /**
+     * Should be called from tests only
+     */
+    void validateText(String text) {
         String msg;
         if (text.isEmpty()) {
             clearErrors();
@@ -130,6 +205,7 @@ final class ValidatingInputPane<T> extends javax.swing.JPanel  {
             msg = Bundle.getMessage("InputDialogError");
         } catch (IllegalArgumentException ex) {
             msg = ex.getLocalizedMessage();
+            customException = ex;
         }
         lastError = msg;
         errorMessage.setText(msg);
@@ -138,10 +214,17 @@ final class ValidatingInputPane<T> extends javax.swing.JPanel  {
             confirmUI.setEnabled(false);
         }
         Component c = SwingUtilities.getRoot(this);
-        c.invalidate();
-        if (c instanceof JDialog) {
-            ((JDialog)c).pack();
+        if (c != null) {
+            c.invalidate();
+            if (c instanceof JDialog) {
+                ((JDialog)c).pack();
+            }
         }
+    }
+
+    // only for testing
+    JTextField getTextField() {
+        return inputText;
     }
     
     /**
