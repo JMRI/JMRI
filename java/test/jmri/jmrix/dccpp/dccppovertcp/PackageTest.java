@@ -12,7 +12,8 @@ import org.junit.runners.Suite;
    ServerFrameTest.class,
    ConnectionConfigTest.class,
    DCCppTcpDriverAdapterTest.class,
-   ClientRxHandlerTest.class
+   ClientRxHandlerTest.class,
+   BundleTest.class
 })
 /**
  * Tests for the jmri.jmrix.dccpp.dccppovertcp package.

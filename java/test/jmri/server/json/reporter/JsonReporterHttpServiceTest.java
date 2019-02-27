@@ -46,6 +46,13 @@ public class JsonReporterHttpServiceTest  {
             result = service.doGet(REPORTER, "IR1", Locale.ENGLISH);
             Assert.assertNotNull(result);
             Assert.assertEquals("close", result.path(JSON.DATA).path(JsonReporter.REPORT).asText());
+            // Request a non-existent reporter
+            try {
+                service.doGet(REPORTER, "IR2", Locale.ENGLISH);
+                Assert.fail("Expected exception not thrown.");
+            } catch (JsonException ex) {
+                Assert.assertEquals(404, ex.getCode());
+            }
         } catch (JsonException ex) {
             Assert.fail(ex.getMessage());
         }
@@ -119,6 +126,7 @@ public class JsonReporterHttpServiceTest  {
         }
     }
 
+    @SuppressWarnings("null")
     @Test
     public void testDelete() {
         try {
@@ -134,13 +142,14 @@ public class JsonReporterHttpServiceTest  {
     @Before
     public void setUp() throws Exception {
         JUnitUtil.setUp();
-
         JUnitUtil.initReporterManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initDebugThrottleManager();
     }
 
     @After
-    public void tearDown() throws Exception {        JUnitUtil.tearDown();    }
+    public void tearDown() throws Exception {
+        JUnitUtil.tearDown();
+    }
 
 }

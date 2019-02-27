@@ -18,6 +18,10 @@ public class XNetStreamPortController extends jmri.jmrix.AbstractStreamPortContr
         super(new XNetSystemConnectionMemo(), in, out, pname);
     }
 
+    public XNetStreamPortController() {
+        super(new XNetSystemConnectionMemo());
+    }
+
     @Override
     public void configure() {
         // connect to a packetizing traffic controller
@@ -40,7 +44,7 @@ public class XNetStreamPortController extends jmri.jmrix.AbstractStreamPortContr
      */
     @Override
     public boolean status() {
-        return true;
+        return (getInputStream()!=null && getOutputStream()!=null);
     }
 
     /**
