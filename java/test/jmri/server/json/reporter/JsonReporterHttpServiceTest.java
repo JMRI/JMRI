@@ -104,6 +104,15 @@ public class JsonReporterHttpServiceTest  {
         } catch (JsonException ex) {
             Assert.fail(ex.getMessage());
         }
+        // add a reporter with invalid name
+        Assert.assertNull(manager.getReporter("JR1"));
+        message = mapper.createObjectNode().put(JSON.NAME, "JR1").put(JsonReporter.REPORT, "close");
+        try {
+            service.doPut(REPORTER, "JR1", message, Locale.ENGLISH);
+            Assert.fail("JR1 should not have been created");
+        } catch (JsonException ex) {
+            Assert.assertEquals("400 name was invalid", 400, ex.getCode());
+        }
     }
 
     @Test
