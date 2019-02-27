@@ -84,31 +84,52 @@
 -warn:+semicolon
 -warn:+specialParamHiding
 -warn:+suppress
+-warn:+switchDefault
 -warn:+unavoidableGenericProblems
 -warn:+unchecked
 -warn:+uselessTypeCheck
 -warn:+varargsCast
 
+#
+# Checks we choose not to enforce as out common style
+#
 
-# Checks we choose not to enforce as a matter of style
+# no real cost to using implicit boxing/unboxing, and it's just easier
 -warn:-boxing
+
+# our inheritance tree doesn't insist on single-access to parent interfaces
 -warn:-intfRedundant
+
 -warn:-nls
+
+# many of these in the code, and "final" for parameters is a matter of style
 -warn:-paramAssign
+
+# JMRI doesn't anticipate use of Java serialization
 -warn:-serial
+
+# maybe a good idea, but too expensive now
 -warn:-super
+
+# many of these aleady in the code, and the value is not clear
 -warn:-syntheticAccess
+
+# we don't require "this." in every variable access
 -warn:-unqualifiedField
 -warn:-unqualified-field-access
+
+# our APIs routinely have "may need in future" parameters
 -warn:-unusedArgument
 
 
+#
+# Checks we're warning on, working to reduce, but not enforcing
+#
 
-# Checks we're warning on, but not enforcing
 
-
-
-# Checks we're working on
+#
+# Checks we're working on putting in place
+#
 
 # 14 outstanding items
 -warn:-deadCode
@@ -119,15 +140,13 @@
 # 159 outstanding items
 -warn:-raw
 
-# this tags some FindBugs labels?  But still useful to run occasionally
+# this tags some NetBeans and FindBugs tokens in @SuppressWarnings  
+# Until that's fixed, useful to run occasionally to find "Unnecessary" annotations
 -warn:-warningToken
 
-# 7 outstanding items
--warn:-switchDefault
-
-
-
+#
 # Checks not yet examined 
+#
 
 -warn:-allDeadCode
 -warn:-all-static-method

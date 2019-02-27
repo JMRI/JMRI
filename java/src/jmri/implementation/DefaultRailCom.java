@@ -70,7 +70,6 @@ public class DefaultRailCom extends DefaultIdTag implements jmri.RailCom {
      * {@inheritDoc}
      */
     @Deprecated
-    @SuppressWarnings("deprecation") // getAddressTypeAsString()
     @Override
     public String getAddressTypeAsString() {
         switch (addressTypeInt) {
@@ -91,7 +90,6 @@ public class DefaultRailCom extends DefaultIdTag implements jmri.RailCom {
      * {@inheritDoc}
      */
     @Deprecated
-    @SuppressWarnings("deprecation") // setAddressType()
     @Override
     public void setAddressType(int type) {
         addressTypeInt = type;
@@ -101,7 +99,6 @@ public class DefaultRailCom extends DefaultIdTag implements jmri.RailCom {
      * {@inheritDoc}
      */
     @Deprecated
-    @SuppressWarnings("deprecation") // getAddressType()
     @Override
     public int getAddressType() {
         return addressTypeInt;

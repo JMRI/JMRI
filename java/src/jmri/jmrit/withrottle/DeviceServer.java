@@ -89,7 +89,6 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Timer;
 import java.util.TimerTask;
 import jmri.CommandStation;
 import jmri.DccLocoAddress;
@@ -121,7 +120,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
     private boolean isUsingHeartbeat = false;
     private boolean heartbeat = true;
     private int pulseInterval = 16; // seconds til disconnect
-    private Timer ekg;
+    private TimerTask ekgTask;
     private int stopEKGCount;
 
     private TrackPowerController trackPower = null;
@@ -460,8 +459,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
         log.debug("starting heartbeat EKG for '{}' with interval: {}", getName(), pulseInterval);
         isUsingHeartbeat = true;
         stopEKGCount = 0;
-        ekg = new Timer("Withrottle hearbeat");
-        TimerTask task = new TimerTask() {
+        ekgTask = new TimerTask() {
             @Override
             public void run() {  //  Drops on second pass
                 if (!heartbeat) {
@@ -493,13 +491,13 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
             }
 
         };
-        ekg.scheduleAtFixedRate(task, pulseInterval * 900L, pulseInterval * 900L);
+        jmri.util.TimerUtil.scheduleAtFixedRateOnLayoutThread(ekgTask, pulseInterval * 900L, pulseInterval * 900L);
     }
 
     public void stopEKG() {
         isUsingHeartbeat = false;
-        if (ekg != null) {
-            ekg.cancel();
+        if (ekgTask != null) {
+            ekgTask.cancel();
         }
 
     }
