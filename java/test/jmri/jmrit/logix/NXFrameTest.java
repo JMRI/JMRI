@@ -342,7 +342,7 @@ public class NXFrameTest {
         // runtimes() in next line runs the train, then checks location
         Assert.assertEquals("Train in last block", block.getSensor().getDisplayName(), runtimes(route1).getDisplayName());
 
-        warrant.controlRunTrain(Warrant.RAMP_HALT);
+        warrant.controlRunTrain(Warrant.RAMP_HALT); // user interrupts script
         jmri.util.JUnitUtil.waitFor(() -> {
             String m =  warrant.getRunningMessage();
             return (m.startsWith("Halted in block"));
