@@ -18,10 +18,14 @@ import org.slf4j.LoggerFactory;
 public class SprogCSStreamPortController extends AbstractStreamPortController implements SprogInterface {
 
     private Thread rcvNotice = null;
-    private SprogMode operatingMode = SprogMode.SERVICE;
+    private SprogMode operatingMode = SprogMode.OPS;
 
     public SprogCSStreamPortController(DataInputStream in, DataOutputStream out, String pname) {
         super(new SprogSystemConnectionMemo(SprogConstants.SprogMode.OPS), in, out, pname);
+    }
+
+    public SprogCSStreamPortController() {
+        super(new SprogSystemConnectionMemo(SprogConstants.SprogMode.OPS));
     }
 
     @Override
