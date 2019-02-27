@@ -76,7 +76,7 @@ public class LocoNetMenu extends JMenu {
         new Item("MenuItemLocoNetMonitor", "jmri.jmrix.loconet.locomon.LocoMonPane", false), // NOI18N
         new Item("MenuItemSlotMonitor", "jmri.jmrix.loconet.slotmon.SlotMonPane", false), // NOI18N
         new Item("MenuItemClockMon", "jmri.jmrix.loconet.clockmon.ClockMonPane", true), // NOI18N
-        new Item("MenuItemLocoStats", "jmri.jmrix.loconet.locostats.swing.LocoStatsPanel", true), // NOI18N
+        new Item("MenuItemLocoStats", "jmri.jmrix.loconet.locostats.swing.LocoStatsPanel", false), // NOI18N
         null,
         new Item("MenuItemBDL16Programmer", "jmri.jmrix.loconet.bdl16.BDL16Panel", true), // NOI18N
         new Item("MenuItemLocoIOProgrammer", "jmri.jmrix.loconet.locoio.LocoIOPanel", true), // NOI18N
@@ -88,7 +88,7 @@ public class LocoNetMenu extends JMenu {
         new Item("MenuItemDuplex", "jmri.jmrix.loconet.duplexgroup.swing.DuplexGroupTabbedPanel", true), // NOI18N
         null,
         new Item("MenuItemThrottleMessages", "jmri.jmrix.loconet.swing.throttlemsg.MessagePanel", true), // NOI18N
-        new Item("MenuItemSendPacket", "jmri.jmrix.loconet.locogen.LocoGenPanel", true), // NOI18N
+        new Item("MenuItemSendPacket", "jmri.jmrix.loconet.locogen.LocoGenPanel", false), // NOI18N
         new Item("MenuItemPr3ModeSelect", "jmri.jmrix.loconet.pr3.swing.Pr3SelectPane", false), // NOI18N
         null,
         new Item("MenuItemDownload", "jmri.jmrix.loconet.downloader.LoaderPane", false), // NOI18N
