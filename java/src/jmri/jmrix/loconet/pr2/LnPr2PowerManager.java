@@ -121,7 +121,9 @@ public class LnPr2PowerManager extends LnPowerManager {
                 // go to power off due to service mode op
                 if (power == ON) {
                     power = OFF;
-                    timer.stop();
+                    if (timer != null) {
+                        timer.stop();
+                    }
                     firePropertyChange("Power", null, null); // NOI18N
                 }
             }
