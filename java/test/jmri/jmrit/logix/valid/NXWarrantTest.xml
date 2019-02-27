@@ -87,7 +87,7 @@
     </turnout>
   </turnouts>
   <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
-    <memory value="6:12 PM">
+    <memory value="3:20 PM">
       <systemName>IMCURRENTTIME</systemName>
     </memory>
     <memory value="1.0">
@@ -97,10 +97,10 @@
   <signalmasts class="jmri.managers.configurexml.DefaultSignalMastManagerXml" />
   <signalgroups class="jmri.managers.configurexml.DefaultSignalGroupManagerXml" />
   <oblocks class="jmri.jmrit.logix.configurexml.OBlockManagerXml">
-    <oblock systemName="OB0" userName="West" length="254.0" units="false" curve="0" permissive="false" speedNotch="">
+    <oblock systemName="OB0" userName="West" length="1270.0" units="false" curve="0" permissive="false" speedNotch="">
       <userName>West</userName>
       <sensor systemName="WestSensor" />
-      <path pathName="Main" blockName="OB0" fromPortal="East Meets West" toPortal="Enter" fromDirection="0" toDirection="0" length="254.0" />
+      <path pathName="Main" blockName="OB0" fromPortal="East Meets West" toPortal="Enter" fromDirection="0" toDirection="0" length="1270.0" />
       <portal systemName="IP1" portalName="Enter">
         <fromBlock blockName="OB0">
           <path pathName="Main" blockName="OB0" />
@@ -174,21 +174,21 @@
         </toBlock>
       </portal>
     </oblock>
-    <oblock systemName="OB3" length="762.0" units="false" curve="0" permissive="false" speedNotch="">
+    <oblock systemName="OB3" length="2540.0" units="false" curve="0" permissive="false" speedNotch="">
       <sensor systemName="IS3" />
-      <path pathName="Main" blockName="OB3" fromPortal="3-4" toPortal="2-3" fromDirection="0" toDirection="0" length="762.0">
+      <path pathName="Main" blockName="OB3" fromPortal="3-4" toPortal="2-3" fromDirection="0" toDirection="0" length="2540.0">
         <setting turnout="IT2" set="2" />
         <setting turnout="IT3" set="2" />
       </path>
-      <path pathName="WestSiding" blockName="OB3" fromPortal="3-8" toPortal="3-4" fromDirection="0" toDirection="0" length="762.0">
+      <path pathName="WestSiding" blockName="OB3" fromPortal="3-6" toPortal="3-4" fromDirection="0" toDirection="0" length="2540.0">
         <setting turnout="IT2" set="4" />
         <setting turnout="IT3" set="2" />
       </path>
-      <path pathName="SidingToSiding" blockName="OB3" fromPortal="3-8" toPortal="3-7" fromDirection="0" toDirection="0" length="762.0">
+      <path pathName="SidingToSiding" blockName="OB3" fromPortal="3-6" toPortal="3-7" fromDirection="0" toDirection="0" length="2540.0">
         <setting turnout="IT2" set="4" />
         <setting turnout="IT3" set="4" />
       </path>
-      <path pathName="EastSiding" blockName="OB3" fromPortal="2-3" toPortal="3-7" fromDirection="0" toDirection="0" length="762.0">
+      <path pathName="EastSiding" blockName="OB3" fromPortal="2-3" toPortal="3-7" fromDirection="0" toDirection="0" length="2540.0">
         <setting turnout="IT2" set="2" />
         <setting turnout="IT3" set="4" />
       </path>
@@ -219,9 +219,9 @@
           <path pathName="EastSiding" blockName="OB7" />
         </toBlock>
       </portal>
-      <portal systemName="IP8" portalName="3-8">
-        <fromBlock blockName="OB8">
-          <path pathName="Siding" blockName="OB8" />
+      <portal systemName="IP8" portalName="3-6">
+        <fromBlock blockName="OB6">
+          <path pathName="WestSiding" blockName="OB6" />
         </fromBlock>
         <toBlock blockName="OB3">
           <path pathName="WestSiding" blockName="OB3" />
@@ -284,9 +284,9 @@
         </toBlock>
       </portal>
     </oblock>
-    <oblock systemName="OB6" userName="Dark East" length="1270.0" units="false" curve="0" permissive="false" speedNotch="">
-      <userName>Dark East</userName>
-      <path pathName="WestSiding" blockName="OB6" fromPortal="6-8" toPortal="1-6" fromDirection="0" toDirection="0" length="1270.0" />
+    <oblock systemName="OB6" length="1270.0" units="false" curve="0" permissive="false" speedNotch="">
+      <sensor systemName="IS6" />
+      <path pathName="WestSiding" blockName="OB6" fromPortal="3-6" toPortal="1-6" fromDirection="0" toDirection="0" length="1270.0" />
       <portal systemName="IP4" portalName="1-6">
         <fromBlock blockName="OB1">
           <path pathName="WestSiding" blockName="OB1" />
@@ -295,17 +295,18 @@
           <path pathName="WestSiding" blockName="OB6" />
         </toBlock>
       </portal>
-      <portal systemName="IP12" portalName="6-8">
+      <portal systemName="IP8" portalName="3-6">
         <fromBlock blockName="OB6">
           <path pathName="WestSiding" blockName="OB6" />
         </fromBlock>
-        <toBlock blockName="OB8">
-          <path pathName="Siding" blockName="OB8" />
+        <toBlock blockName="OB3">
+          <path pathName="WestSiding" blockName="OB3" />
+          <path pathName="SidingToSiding" blockName="OB3" />
         </toBlock>
       </portal>
     </oblock>
-    <oblock systemName="OB7" userName="Dark West" length="1905.0" units="false" curve="0" permissive="false" speedNotch="">
-      <userName>Dark West</userName>
+    <oblock systemName="OB7" length="1905.0" units="false" curve="0" permissive="false" speedNotch="">
+      <sensor systemName="IS7" />
       <path pathName="EastSiding" blockName="OB7" fromPortal="5-7" toPortal="3-7" fromDirection="0" toDirection="0" length="1905.0" />
       <portal systemName="IP7" portalName="3-7">
         <fromBlock blockName="OB3">
@@ -325,30 +326,10 @@
         </toBlock>
       </portal>
     </oblock>
-    <oblock systemName="OB8" length="0.0" units="false" curve="0" permissive="false" speedNotch="">
-      <path pathName="Siding" blockName="OB8" fromPortal="3-8" toPortal="6-8" fromDirection="0" toDirection="0" length="0.0" />
-      <portal systemName="IP8" portalName="3-8">
-        <fromBlock blockName="OB8">
-          <path pathName="Siding" blockName="OB8" />
-        </fromBlock>
-        <toBlock blockName="OB3">
-          <path pathName="WestSiding" blockName="OB3" />
-          <path pathName="SidingToSiding" blockName="OB3" />
-        </toBlock>
-      </portal>
-      <portal systemName="IP12" portalName="6-8">
-        <fromBlock blockName="OB6">
-          <path pathName="WestSiding" blockName="OB6" />
-        </fromBlock>
-        <toBlock blockName="OB8">
-          <path pathName="Siding" blockName="OB8" />
-        </toBlock>
-      </portal>
-    </oblock>
-    <oblock systemName="OB10" userName="East" length="254.0" units="false" curve="0" permissive="false" speedNotch="">
+    <oblock systemName="OB10" userName="East" length="1270.0" units="false" curve="0" permissive="false" speedNotch="">
       <userName>East</userName>
       <sensor systemName="IS10" />
-      <path pathName="Main" blockName="OB10" fromPortal="East Meets West" toPortal="Exit" fromDirection="0" toDirection="0" length="254.0" />
+      <path pathName="Main" blockName="OB10" fromPortal="East Meets West" toPortal="Exit" fromDirection="0" toDirection="0" length="1270.0" />
       <portal systemName="IP2" portalName="East Meets West">
         <fromBlock blockName="OB10">
           <path pathName="Main" blockName="OB10" />
@@ -439,12 +420,54 @@
       <throttleCommand time="100" command="Speed" value="0.0" block="OB3" />
       <train trainId="" dccAddress="99" dccType="L" runBlind="false" shareRoute="false" noRamp="false" trainName="Casey" />
     </warrant>
+    <warrant systemName="IW2" userName="RampHalt" wtype="normal">
+      <blockOrder pathName="WestSiding" entryName="" exitName="1-6">
+        <block systemName="OB1" />
+      </blockOrder>
+      <blockOrder pathName="WestSiding" entryName="1-6" exitName="3-6">
+        <block systemName="OB6" />
+      </blockOrder>
+      <blockOrder pathName="SidingToSiding" entryName="3-6" exitName="3-7">
+        <block systemName="OB3" />
+      </blockOrder>
+      <blockOrder pathName="EastSiding" entryName="3-7" exitName="5-7">
+        <block systemName="OB7" />
+      </blockOrder>
+      <blockOrder pathName="EastSiding" entryName="5-7" exitName="Exit">
+        <block systemName="OB5" />
+      </blockOrder>
+      <throttleCommand time="0" command="F0" value="true" block="OB1" />
+      <throttleCommand time="100" command="Forward" value="true" block="OB1" />
+      <throttleCommand time="100" command="F2" value="true" block="OB1" />
+      <throttleCommand time="250" command="F2" value="false" block="OB1" />
+      <throttleCommand time="100" command="F2" value="true" block="OB1" />
+      <throttleCommand time="250" command="F2" value="false" block="OB1" />
+      <throttleCommand time="0" command="Speed" value="0.05" block="OB1" />
+      <throttleCommand time="1000" command="Speed" value="0.105000004" block="OB1" />
+      <throttleCommand time="1000" command="Speed" value="0.16550002" block="OB1" />
+      <throttleCommand time="1000" command="Speed" value="0.23205002" block="OB1" />
+      <throttleCommand time="1000" command="Speed" value="0.30525503" block="OB1" />
+      <throttleCommand time="410" command="NoOp" value="Enter Block" block="OB6" />
+      <throttleCommand time="589" command="Speed" value="0.3857805" block="OB6" />
+      <throttleCommand time="1082" command="NoOp" value="Enter Block" block="OB3" />
+      <throttleCommand time="0" command="Speed" value="0.47435856" block="OB3" />
+      <throttleCommand time="1000" command="Speed" value="0.5" block="OB3" />
+      <throttleCommand time="2683" command="NoOp" value="Enter Block" block="OB7" />
+      <throttleCommand time="2441" command="Speed" value="0.39282054" block="OB7" />
+      <throttleCommand time="646" command="NoOp" value="Enter Block" block="OB5" />
+      <throttleCommand time="353" command="Speed" value="0.29538468" block="OB5" />
+      <throttleCommand time="100" command="Speed" value="0.20680663" block="OB5" />
+      <throttleCommand time="100" command="Speed" value="0.12628113" block="OB5" />
+      <throttleCommand time="100" command="Speed" value="0.053076126" block="OB5" />
+      <throttleCommand time="1000" command="Speed" value="0.0" block="OB5" />
+      <train trainId="" dccAddress="99" dccType="L" runBlind="false" shareRoute="false" noRamp="false" trainName="Ol'99" />
+    </warrant>
   </warrants>
   <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
     <logicDelay>500</logicDelay>
   </signalmastlogics>
   <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Mon May 18 10:30:41 PDT 2015" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
-  <paneleditor class="jmri.jmrit.display.controlPanelEditor.configurexml.ControlPanelEditorXml" name="NXWarrantTest" x="1199" y="715" height="280" width="691" editable="no" positionable="yes" showtooltips="yes" controlling="yes" hide="no" panelmenu="yes" scrollable="none" redBackground="255" greenBackground="224" blueBackground="12" state="0" shapeSelect="yes">
+  <paneleditor class="jmri.jmrit.display.controlPanelEditor.configurexml.ControlPanelEditorXml" name="NXWarrantTest" x="798" y="638" height="280" width="691" editable="no" positionable="yes" showtooltips="yes" controlling="yes" hide="no" panelmenu="yes" scrollable="none" redBackground="255" greenBackground="224" blueBackground="12" state="0" shapeSelect="yes">
     <icons>
       <visible>
         <url>program:resources/icons/throttles/RoundRedCircle20.png</url>
@@ -767,6 +790,7 @@
       </iconmap>
       <paths>
         <path>Siding</path>
+        <path>WestSiding</path>
       </paths>
     </indicatortrackicon>
     <indicatorturnouticon x="332" y="71" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" degrees="180" class="jmri.jmrit.display.configurexml.IndicatorTurnoutIconXml">
@@ -1166,7 +1190,7 @@
     <PortalIcon x="174" y="89" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" scale="1.0" rotate="0" portalName="1-2" toBlockName="OB2" fromBlockName="OB1" arrowSwitch="no" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
       <tooltip>Portal "1-2" between OBlocks "OB1" and "null"</tooltip>
     </PortalIcon>
-    <PortalIcon x="173" y="63" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" scale="1.0" rotate="0" portalName="1-6" toBlockName="Dark East" fromBlockName="OB1" arrowSwitch="no" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
+    <PortalIcon x="173" y="63" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" scale="1.0" rotate="0" portalName="1-6" toBlockName="OB6" fromBlockName="OB1" arrowSwitch="no" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
       <tooltip>Portal "1-6" between OBlocks "OB1" and "Dark East"</tooltip>
     </PortalIcon>
     <PortalIcon x="247" y="88" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" scale="1.0" rotate="0" portalName="2-3" toBlockName="OB2" fromBlockName="OB3" arrowSwitch="yes" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
@@ -1175,13 +1199,13 @@
     <PortalIcon x="359" y="89" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" scale="1.0" rotate="0" portalName="3-4" toBlockName="OB4" fromBlockName="OB3" arrowSwitch="no" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
       <tooltip>Portal "3-4" between OBlocks "OB3" and "null"</tooltip>
     </PortalIcon>
-    <PortalIcon x="356" y="62" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" scale="1.0" rotate="0" portalName="3-7" toBlockName="Dark West" fromBlockName="OB3" arrowSwitch="no" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
+    <PortalIcon x="356" y="62" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" scale="1.0" rotate="0" portalName="3-7" toBlockName="OB7" fromBlockName="OB3" arrowSwitch="no" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
       <tooltip>Portal "3-7" between OBlocks "OB3" and "Dark West"</tooltip>
     </PortalIcon>
     <PortalIcon x="431" y="88" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" scale="1.0" rotate="0" portalName="4-5" toBlockName="OB4" fromBlockName="OB5" arrowSwitch="yes" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
       <tooltip>Portal "4-5" between OBlocks "OB5" and "null"</tooltip>
     </PortalIcon>
-    <PortalIcon x="429" y="63" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" scale="1.0" rotate="0" portalName="5-7" toBlockName="Dark West" fromBlockName="OB5" arrowSwitch="yes" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
+    <PortalIcon x="429" y="63" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" scale="1.0" rotate="0" portalName="5-7" toBlockName="OB7" fromBlockName="OB5" arrowSwitch="yes" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
       <tooltip>Portal "5-7" between OBlocks "OB5" and "Dark West"</tooltip>
     </PortalIcon>
     <indicatortrackicon x="73" y="95" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
@@ -1271,8 +1295,8 @@
     </indicatortrackicon>
     <indicatortrackicon x="36" y="95" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
       <tooltip>OBlock "West"</tooltip>
-      <occupancyblock>OB0</occupancyblock>
-      <showTrainName>no</showTrainName>
+      <occupancyblock>West</occupancyblock>
+      <showTrainName>yes</showTrainName>
       <iconmap family="BlockSegment">
         <OccupiedTrack url="program:resources/icons/track/line/TrackSeg/block-yellow.gif" degrees="0" scale="1.0">
           <rotation>0</rotation>
@@ -1295,7 +1319,6 @@
       </iconmap>
       <paths>
         <path>Main</path>
-        <path>WestSiding</path>
       </paths>
     </indicatortrackicon>
     <PortalIcon x="98" y="87" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" scale="1.0" rotate="0" portalName="Enter" toBlockName="OB1" fromBlockName="West" arrowSwitch="no" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
@@ -1304,19 +1327,13 @@
     <PortalIcon x="507" y="88" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" scale="1.0" rotate="0" portalName="Exit" toBlockName="OB5" fromBlockName="East" arrowSwitch="yes" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
       <tooltip>Portal "Exit" between OBlocks "East" and "null"</tooltip>
     </PortalIcon>
-    <PortalIcon x="210" y="63" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" scale="1.0" rotate="0" portalName="6-8" toBlockName="OB8" fromBlockName="Dark East" arrowSwitch="no" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
-      <tooltip>Portal "6-8" between OBlocks "Dark East" and "OB8"</tooltip>
-    </PortalIcon>
-    <PortalIcon x="247" y="63" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" scale="1.0" rotate="0" portalName="3-8" toBlockName="OB3" fromBlockName="OB8" arrowSwitch="no" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
-      <tooltip>Portal "3-8" between OBlocks "OB8" and "null"</tooltip>
-    </PortalIcon>
     <PortalIcon x="581" y="86" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" scale="1.0" rotate="0" portalName="East Meets West" toBlockName="West" fromBlockName="East" arrowSwitch="yes" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
       <tooltip>Portal "East Meets West" between OBlocks "East" and "West"</tooltip>
     </PortalIcon>
     <indicatortrackicon x="591" y="95" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
       <tooltip>OBlock "West"</tooltip>
-      <occupancyblock>OB0</occupancyblock>
-      <showTrainName>no</showTrainName>
+      <occupancyblock>West</occupancyblock>
+      <showTrainName>yes</showTrainName>
       <iconmap family="BlockSegment">
         <OccupiedTrack url="program:resources/icons/track/line/TrackSeg/block-yellow.gif" degrees="0" scale="1.0">
           <rotation>0</rotation>
@@ -1341,108 +1358,111 @@
         <path>Main</path>
       </paths>
     </indicatortrackicon>
+    <PortalIcon x="246" y="62" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" scale="1.0" rotate="0" portalName="3-6" toBlockName="OB3" fromBlockName="OB6" arrowSwitch="no" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
+      <tooltip>Portal "6-3" between OBlocks "Dark East" and "null"</tooltip>
+    </PortalIcon>
   </paneleditor>
   <filehistory>
     <operation>
       <type>app</type>
-      <date>Sun Feb 17 18:01:02 PST 2019</date>
+      <date>Tue Feb 26 15:18:39 PST 2019</date>
       <filename>JMRI program</filename>
     </operation>
     <operation>
       <type>Load OK</type>
-      <date>Sun Feb 17 18:01:10 PST 2019</date>
+      <date>Tue Feb 26 15:18:47 PST 2019</date>
       <filename>/C:/jmriPanels/NXWarrantTest.xml</filename>
       <filehistory>
         <operation>
           <type>app</type>
-          <date>Sun Feb 17 17:27:39 PST 2019</date>
+          <date>Tue Feb 26 14:11:14 PST 2019</date>
           <filename>JMRI program</filename>
         </operation>
         <operation>
           <type>Load OK</type>
-          <date>Sun Feb 17 17:27:46 PST 2019</date>
+          <date>Tue Feb 26 14:11:23 PST 2019</date>
           <filename>/C:/jmriPanels/NXWarrantTest.xml</filename>
           <filehistory>
             <operation>
               <type>app</type>
-              <date>Sun Feb 17 11:15:38 PST 2019</date>
+              <date>Tue Feb 26 13:32:16 PST 2019</date>
               <filename>JMRI program</filename>
             </operation>
             <operation>
               <type>Load OK</type>
-              <date>Sun Feb 17 11:16:01 PST 2019</date>
+              <date>Tue Feb 26 13:34:04 PST 2019</date>
               <filename>/C:/jmriPanels/NXWarrantTest.xml</filename>
               <filehistory>
                 <operation>
                   <type>app</type>
-                  <date>Sat Feb 16 15:01:43 PST 2019</date>
+                  <date>Mon Feb 25 15:17:35 PST 2019</date>
                   <filename>JMRI program</filename>
                 </operation>
                 <operation>
                   <type>Load OK</type>
-                  <date>Sat Feb 16 15:01:51 PST 2019</date>
+                  <date>Mon Feb 25 15:17:42 PST 2019</date>
                   <filename>/C:/jmriPanels/NXWarrantTest.xml</filename>
                   <filehistory>
                     <operation>
                       <type>app</type>
-                      <date>Sat Feb 16 14:38:11 PST 2019</date>
+                      <date>Mon Feb 25 15:01:56 PST 2019</date>
                       <filename>JMRI program</filename>
                     </operation>
                     <operation>
                       <type>Load OK</type>
-                      <date>Sat Feb 16 14:38:19 PST 2019</date>
+                      <date>Mon Feb 25 15:02:04 PST 2019</date>
                       <filename>/C:/jmriPanels/NXWarrantTest.xml</filename>
                       <filehistory>
                         <operation>
                           <type>app</type>
-                          <date>Sat Feb 16 14:30:27 PST 2019</date>
+                          <date>Sun Feb 17 18:01:02 PST 2019</date>
                           <filename>JMRI program</filename>
                         </operation>
                         <operation>
                           <type>Load OK</type>
-                          <date>Sat Feb 16 14:30:38 PST 2019</date>
+                          <date>Sun Feb 17 18:01:10 PST 2019</date>
                           <filename>/C:/jmriPanels/NXWarrantTest.xml</filename>
                         </operation>
                         <operation>
                           <type>Store</type>
-                          <date>Sat Feb 16 14:35:05 PST 2019</date>
+                          <date>Sun Feb 17 18:12:25 PST 2019</date>
                           <filename />
                         </operation>
                       </filehistory>
                     </operation>
                     <operation>
                       <type>Store</type>
-                      <date>Sat Feb 16 14:54:33 PST 2019</date>
+                      <date>Mon Feb 25 15:13:17 PST 2019</date>
                       <filename />
                     </operation>
                   </filehistory>
                 </operation>
                 <operation>
                   <type>Store</type>
-                  <date>Sat Feb 16 15:06:07 PST 2019</date>
+                  <date>Mon Feb 25 15:22:42 PST 2019</date>
                   <filename />
                 </operation>
               </filehistory>
             </operation>
             <operation>
               <type>Store</type>
-              <date>Sun Feb 17 11:16:54 PST 2019</date>
+              <date>Tue Feb 26 13:43:30 PST 2019</date>
               <filename />
             </operation>
           </filehistory>
         </operation>
         <operation>
           <type>Store</type>
-          <date>Sun Feb 17 17:33:00 PST 2019</date>
+          <date>Tue Feb 26 14:27:54 PST 2019</date>
           <filename />
         </operation>
       </filehistory>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Sun Feb 17 18:12:25 PST 2019</date>
+      <date>Tue Feb 26 15:20:58 PST 2019</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.15.4ish+pete_+2019-02-18T02:00:54Z+R9e9f50f6c4 on Sun Feb 17 18:12:25 PST 2019-->
+  <!--Written by JMRI version 4.15.4ish+pete_+2019-02-26T23:18:31Z+R34a1f3b479 on Tue Feb 26 15:20:58 PST 2019-->
 </layout-config>
