@@ -1467,7 +1467,7 @@ public class WarrantFrame extends WarrantRoute {
 
         @Override
         public boolean isCellEditable(int row, int col) {
-            if (row == ROW_NUM || row == SPEED_COLUMN) {
+            if (col == ROW_NUM || col == SPEED_COLUMN) {
                 return false;
             }
             return true;

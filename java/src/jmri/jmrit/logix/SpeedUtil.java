@@ -213,9 +213,17 @@ public class SpeedUtil {
     protected float getRampThrottleIncrement() {
         return _rampThrottleIncrement;
     }
+    protected void setRampThrottleIncrement(float incr) {
+    	_rampThrottleIncrement = incr;
+    }
+
     protected int getRampTimeIncrement() {
         return _rampTimeIncrement;
     }
+    protected void setRampTimeIncrement(int incr) {
+    	_rampTimeIncrement = incr;
+    }
+
     /** ms momentum time to change speed for a throttle amount
      * @param delta throttle change
      * @param increasing  is acceleration

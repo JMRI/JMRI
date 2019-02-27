@@ -183,7 +183,7 @@ public class NXFrameTest {
             return model.getRowCount() > 1;
         }, "NXWarrant loaded into table");
         
-        Warrant warrant = tableFrame.getModel().getWarrantAt(1);
+        Warrant warrant = tableFrame.getModel().getWarrantAt(model.getRowCount()-1);
 
         Assert.assertNotNull("warrant", warrant);
         Assert.assertNotNull("warrant.getBlockOrders(", warrant.getBlockOrders());
@@ -297,7 +297,7 @@ public class NXFrameTest {
         panel.dispose();    // disposing this way allows test to be rerun (i.e. reload panel file) multiple times
     }    
 
-/*    @Test
+    @Test
     public void testWarrantRampHalt() throws Exception {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // load and display
@@ -306,7 +306,6 @@ public class NXFrameTest {
         _OBlockMgr = InstanceManager.getDefault(OBlockManager.class);
         _sensorMgr = InstanceManager.getDefault(SensorManager.class);
         new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for to finish run
-
 
         Sensor sensor1 = _sensorMgr.getBySystemName("IS1");
         Assert.assertNotNull("Senor IS1 not found", sensor1);
@@ -323,25 +322,42 @@ public class NXFrameTest {
         WarrantTableFrame tableFrame = WarrantTableFrame.getDefault();
         Assert.assertNotNull("tableFrame", tableFrame);
 
-        Warrant warrant = tableFrame.getModel().getWarrantAt(0);
+        Warrant warrant = tableFrame.getModel().getWarrantAt(1);
         Assert.assertNotNull("warrant", warrant);
        
         tableFrame.runTrain(warrant, Warrant.MODE_RUN);
+
+        SpeedUtil sp = warrant.getSpeedUtil();
+        sp.setRampThrottleIncrement(0.2f);
+        sp.setRampTimeIncrement(100);
+
         jmri.util.JUnitUtil.waitFor(() -> {
             String m =  warrant.getRunningMessage();
-            return m.endsWith("Cmd #3.");
-        }, "Train is moving at 3rd command");
+            return m.endsWith("Cmd #8.");
+        }, "Train starts to move at 8th command");
 
        // OBlock sensor names
-        String[] route = {"OB1", "OB2", "OB3"};
+        String[] route1 = {"OB1", "OB6", "OB3"};
         OBlock block = _OBlockMgr.getOBlock("OB3");
         // runtimes() in next line runs the train, then checks location
-        Assert.assertEquals("Train in last block", block.getSensor().getDisplayName(), runtimes(route).getDisplayName());
+        Assert.assertEquals("Train in last block", block.getSensor().getDisplayName(), runtimes(route1).getDisplayName());
 
-        String[] route = {"OB3", "OB4", "OB5"};
-        OBlock block = _OBlockMgr.getOBlock("OB5");
+        warrant.controlRunTrain(Warrant.RAMP_HALT);
+        jmri.util.JUnitUtil.waitFor(() -> {
+            String m =  warrant.getRunningMessage();
+            return m.startsWith("Halted in block");
+        }, "Train Halted");
+
+        warrant.controlRunTrain(Warrant.RESUME);
+        jmri.util.JUnitUtil.waitFor(() -> {
+            String m =  warrant.getRunningMessage();
+            return m.startsWith("Overdue for arrival at block");
+        }, "Train Halted");
+
+        String[] route2 = {"OB3", "OB7", "OB5"};
+        block = _OBlockMgr.getOBlock("OB5");
         // runtimes() in next line runs the train, then checks location
-        Assert.assertEquals("Train in last block", block.getSensor().getDisplayName(), runtimes(route).getDisplayName());
+        Assert.assertEquals("Train in last block", block.getSensor().getDisplayName(), runtimes(route2).getDisplayName());
 
         // passed test - cleanup.  Do it here so failure leaves traces.
         JFrameOperator jfo = new JFrameOperator(tableFrame);
