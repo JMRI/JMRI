@@ -18,6 +18,9 @@ import org.junit.*;
  */
 public class TimeTableCsvImportTest {
 
+    @Rule
+    public org.junit.rules.TemporaryFolder folder = new org.junit.rules.TemporaryFolder();
+
     @Test
     public void testImport() {
         TimeTableDataManager dm = new TimeTableDataManager(false);
@@ -161,11 +164,24 @@ public class TimeTableCsvImportTest {
         jmri.util.JUnitUtil.setUp();
 
         JUnitUtil.resetInstanceManager();
-        JUnitUtil.resetProfileManager();
+        try {
+            JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder.newFolder(jmri.profile.Profile.PROFILE)));
+        } catch(java.io.IOException ioe){
+          Assert.fail("failed to setup profile for test");
+        }
     }
 
     @After
     public void tearDown() {
+       // use reflection to reset the static file location.
+       try {
+            Class<?> c = jmri.jmrit.timetable.configurexml.TimeTableXml.TimeTableXmlFile.class;
+            java.lang.reflect.Field f = c.getDeclaredField("fileLocation");
+            f.setAccessible(true);
+            f.set(new String(), null);
+        } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException x) {
+            Assert.fail("Failed to reset TimeTableXml static fileLocation " + x);
+        }
         jmri.util.JUnitUtil.tearDown();
     }
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TimeTableCsvImportTest.class);
