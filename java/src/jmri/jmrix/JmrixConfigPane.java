@@ -189,7 +189,14 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
                     } else {
                         Class<?> cl = Class.forName(className);
                         config = (ConnectionConfig) cl.newInstance();
-                        modeBox.addItem(config.name());
+			if( !(config instanceof StreamConnectionConfig)) {
+			   // only include if the connection is not a 
+			   // StreamConnection.  Those connections require
+			   // additional context.
+                           modeBox.addItem(config.name());
+			} else {
+		           continue;
+			}
                     }
                     classConnectionList[n++] = config;
                 } catch (NullPointerException e) {
@@ -250,7 +257,14 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
                     jmri.jmrix.ConnectionConfig config;
                     Class<?> cl = Class.forName(classConnectionNameList1);
                     config = (jmri.jmrix.ConnectionConfig) cl.newInstance();
-                    modeBox.addItem(config.name());
+		    if( !(config instanceof StreamConnectionConfig)) {
+		        // only include if the connection is not a 
+			// StreamConnection.  Those connections require
+			// additional context.
+                        modeBox.addItem(config.name());
+	            } else {
+		        continue;
+		    }
                     classConnectionList[n++] = config;
                     if (classConnectionNameList.length == 1) {
                         modeBox.setSelectedIndex(1);

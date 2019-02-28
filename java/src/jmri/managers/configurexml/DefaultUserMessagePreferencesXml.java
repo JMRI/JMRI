@@ -218,9 +218,6 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
         return true;
     }
 
-    // separate routine to allow annotating deprecations
-    @SuppressWarnings("deprecation")  // JmriJTablePersistenceManager.setTableColumnPreferences is deprecated for new uses,
-                                      // but retained for here to handle old XML files.
     private void setTableColumnPreferences(JmriJTablePersistenceManager jtpm, String table, String column, int order, int width, SortOrder sort, boolean hidden) {
     }
     

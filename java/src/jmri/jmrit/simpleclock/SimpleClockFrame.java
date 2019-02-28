@@ -242,6 +242,10 @@ public class SimpleClockFrame extends JmriJFrame
                 break;
             case DO_NOTHING:
                 startRunBox.setSelectedIndex(START_NORUNCHANGE);
+                break;
+            default:
+                jmri.util.Log4JUtil.warnOnce(log, "Unexpected initial run state = {}", clock.getClockInitialRunState());
+                break;
         }
         startRunBox.addActionListener(new ActionListener() {
             @Override

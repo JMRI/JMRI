@@ -103,8 +103,11 @@ public class LightControl {
                 if (that._controlSensorSense != this._controlSensorSense) return false;
                 if (! that._controlSensor2Name.equals(this._controlSensor2Name)) return false;
                 return true;
+            default:
+                // unexpected _controlType value
+                jmri.util.Log4JUtil.warnOnce(log, "Unexpected _controlType = {}", _controlType);
+                return true; // since _controlType matches
         }
-        return true;
     }
     
     @Override

@@ -79,11 +79,11 @@ public class TabbedPreferencesAction extends jmri.util.swing.JmriAbstractAction 
         }
 
         if (f == null) {
+            setWait(true);
             f = new TabbedPreferencesFrame();
             Thread preferencesInitThread = new Thread(() -> {
                 final Object waiter = new Object();
                 try {
-                    setWait(true);
                     while (jmri.InstanceManager.getDefault(TabbedPreferences.class).init() != TabbedPreferences.INITIALISED) {
                         synchronized (waiter) {
                             waiter.wait(50);
