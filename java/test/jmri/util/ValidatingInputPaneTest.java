@@ -119,7 +119,7 @@ public class ValidatingInputPaneTest {
      * Callable in EDT to properly process UI. Terminate
      * the test without failure in headless env.
      */
-    private <T> T testInGUI(Callable<T> check) throws Exception {
+    private <T> void testInGUI(Callable<T> check) throws Exception {
         // terminate tests which require GUI
         assumeFalse(GraphicsEnvironment.isHeadless());
         
@@ -133,10 +133,9 @@ public class ValidatingInputPaneTest {
         dlg.show();
         
         Exception[] out = new Exception[1];
-        Object[] result = new Object[1];
         SwingUtilities.invokeAndWait(() -> {
             try {
-                result[0] = check.call();
+                check.call();
             } catch (Exception ex) {
                 out[0] = ex;
             }
@@ -147,7 +146,6 @@ public class ValidatingInputPaneTest {
         if (out[0] != null) {
             throw out[0];
         }
-        return (T)result[0];
     }
     
     @Test
