@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/appearancetable.xsl" type="text/xsl"?>
+
+<appearancetable
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable.xsd"
+>
+
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2009</year><year>2010</year><holder>JMRI</holder>
+  </copyright>
+  
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+        <personname><firstname>Petr</firstname><surname>Šídlo</surname></personname>
+        <email>sidlo64@hotmail.com</email>
+    </author>    
+  </authorgroup>
+    
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+        <revnumber>1</revnumber>
+        <date>2019-02-21</date>
+        <authorinitials>PŠ</authorinitials>
+        <revremark>Initial version</revremark>
+    </revision>    
+  </revhistory>
+
+  <aspecttable>CSD-1962-mechaniky</aspecttable>
+  <name>Test</name>
+  <description>Testovací sada návěstidel.</description>
+
+  <appearances>
+
+    <appearance>
+      <aspectname>Stůj</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/400_stuj_2pv.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Volno</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/401_volno_2pv.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Výstraha</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/402_vystraha_p.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Pomalu</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/403_pomalu_pp.gif</imagelink>
+    </appearance>
+    
+    <appearance>
+      <aspectname>Odjezdové návěstidlo dovoluje jízdu</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/405_ondj_vl.gif</imagelink>
+    </appearance>
+    
+    <appearance>
+      <aspectname>Vjezd odbočkou</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/407_vo_2v.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Stůj, kolej uzavřena</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/426_sku_u.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Uzavření koleje zrušeno</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/425_ukz_u.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Posun zakázán</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/427_pz_sn.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Posun dovolen</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/428_pd_sn.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Opatrně na přivolávací návěst</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/431_opn_2pv.gif</imagelink>
+    </appearance>
+
+  </appearances>
+  
+  <specificappearances>
+      <danger>
+          <aspect>Stůj</aspect>
+      </danger>
+      <permissive>
+          <aspect>Opatrně na přivolávací návěst</aspect>
+      </permissive>
+  </specificappearances>
+  
+  <aspectMappings>
+    <aspectMapping>
+      <advancedAspect>Volno</advancedAspect>
+      <ourAspect>Volno</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Stůj</advancedAspect>
+      <ourAspect>Výstraha</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Stůj</advancedAspect>
+      <ourAspect>Vjezd odbočkou</ourAspect>
+    </aspectMapping>
+  </aspectMappings>
+  
+</appearancetable>  

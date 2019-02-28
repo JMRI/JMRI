@@ -116,7 +116,6 @@ public class AbstractAutomaton implements Runnable {
      * <p>
      * Overrides the superclass method to do local accounting.
      */
-    @SuppressWarnings("deprecation") // Thread.stop not likely to be removed
     public void start() {
         if (currentThread != null) {
             log.error("Start with currentThread not null!");

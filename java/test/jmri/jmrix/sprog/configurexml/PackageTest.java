@@ -5,7 +5,8 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-   SprogTurnoutManagerXmlTest.class
+   SprogTurnoutManagerXmlTest.class,
+   SprogCSStreamConnectionConfigXmlTest.class
 })
 /**
  * Tests for the jmri.jmrix.sprog.configurexml package.

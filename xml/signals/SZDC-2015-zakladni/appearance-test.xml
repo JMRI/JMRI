@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/appearancetable.xsl" type="text/xsl"?>
+
+<appearancetable
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable.xsd"
+>
+
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2009</year><year>2010</year><holder>JMRI</holder>
+  </copyright>
+  
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+        <personname><firstname>Petr</firstname><surname>Šídlo</surname></personname>
+        <email>sidlo64@hotmail.com</email>
+    </author>    
+  </authorgroup>
+    
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+        <revnumber>1</revnumber>
+        <date>2019-02-21</date>
+        <authorinitials>PŠ</authorinitials>
+        <revremark>Initial version</revremark>
+    </revision>    
+  </revhistory>
+
+  <aspecttable>SZDC-2015-zakladni</aspecttable>
+  <name>Test</name>
+  <description>Testovací sada návěstidel.</description>
+
+  <appearances>
+
+    <appearance>
+      <aspectname>Stůj</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SZDC-2015/300_stuj_5o.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Volno</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SZDC-2015/301_volno_5o.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Výstraha</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SZDC-2015/302_vystraha_5o.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Očekávej 40</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SZDC-2015/303_o40_5o.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Očekávej 60</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SZDC-2015/304_o60_5o.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Rychlost 40 a volno</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SZDC-2015/306_40_volno_5o.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Rychlost 40 a výstraha</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SZDC-2015/307_40_vystraha_5o.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Rychlost 40 a očekávej 40</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SZDC-2015/308_40_o40_5o.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Rychlost 40 a očekávej 60</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SZDC-2015/309_40_o60_5o.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Rychlost 60 a volno</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SZDC-2015/311_60_volno_5o.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Rychlost 60 a výstraha</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SZDC-2015/312_60_vystraha_5o.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Rychlost 60 a očekávej 40</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SZDC-2015/313_60_o40_5o.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Rychlost 60 a očekávej 60</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SZDC-2015/314_60_o60_5o.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Rychlost 40 a opakovaná výstraha</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SZDC-2015/316_40_opvystraha_6c.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Rychlost 40 a opakovaná očekávej 40</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SZDC-2015/317_40_opo40_6c.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Rychlost 40 a opakovaná očekávej 60</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SZDC-2015/318_40_opo60_6c.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Jízda podle rozhledových poměrů</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SZDC-2015/319_vystraha_vok_6v.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Rychlost 40 a jízda podle rozhledových poměrů</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SZDC-2015/320_40_vystraha_vok_6v.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Opakovaná volno</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SZDC-2015/321_opvolno_po.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Opakovaná výstraha</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SZDC-2015/322_opvystraha_po.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Opakovaná očekávej 40</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SZDC-2015/323_opo40_po.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Opakovaná očekávej 60</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SZDC-2015/324_opo60_po.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Zhasnuto</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SZDC-2015/325_zhasnuto_ab.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Jízda vlaku dovolena</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SZDC-2015/326_jvd_3c.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Posun zakázán</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SZDC-2015/327_pz_sn.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Posun dovolen</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SZDC-2015/328_pd_sn.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Posun dovolen - nezabezpečený</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SZDC-2015/329_npd_3o.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Opatrně na přivolávací návěst bez červené</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SZDC-2015/330_opn2_5o.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Opatrně na přivolávací návěst</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SZDC-2015/331_opn_5o.gif</imagelink>
+    </appearance>
+
+  </appearances>
+  
+  <specificappearances>
+      <danger>
+          <aspect>Stůj</aspect>
+      </danger>
+      <permissive>
+          <aspect>Opatrně na přivolávací návěst</aspect>
+      </permissive>
+  </specificappearances>
+    
+  <aspectMappings>
+    <aspectMapping>
+      <advancedAspect>Volno</advancedAspect>
+      <ourAspect>Volno</ourAspect>
+      <ourAspect>Rychlost 40 a volno</ourAspect>
+      <ourAspect>Rychlost 60 a volno</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Stůj</advancedAspect>
+      <ourAspect>Výstraha</ourAspect>
+      <ourAspect>Rychlost 40 a výstraha</ourAspect>
+      <ourAspect>Rychlost 60 a výstraha</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Rychlost 40 a volno</advancedAspect>
+      <ourAspect>Očekávej 40</ourAspect>
+      <ourAspect>Rychlost 40 a očekávej 40</ourAspect>
+      <ourAspect>Rychlost 60 a očekávej 40</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Rychlost 60 a volno</advancedAspect>
+      <ourAspect>Očekávej 60</ourAspect>
+      <ourAspect>Rychlost 40 a očekávej 60</ourAspect>
+      <ourAspect>Rychlost 60 a očekávej 60</ourAspect>
+    </aspectMapping>
+  </aspectMappings>
+  
+</appearancetable>  

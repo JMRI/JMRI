@@ -6,7 +6,7 @@
 
         <title>JMRI Hardware Support - Digitrax Command Station Configuration</title>
         <meta name="keywords" content=
-              "Digitrax Command Station DCS100 DCS200 DCS240 DCS210 DCS50 DCS51 DB150 JMRI">
+              "Digitrax Command Station DCS100 DCS200 DCS240 DCS210 DCS50 DCS51 DCS52 DB150 JMRI">
         <!-- Style -->
         <meta http-equiv="content-type" content=
               "text/html; charset=us-ascii">
@@ -68,9 +68,9 @@
                     effect.  For some OpSw settings, it may be necessary to change the command
                     station to a different mode before it is returned to its normal operating
                     mode.</p>
-                <p>For DCS50 and DCS51 (Zephyr and Zephyr Xtra) command stations, OpSw
+                <p>For DCS50, DCS51 and DCS52 (Zephyr, Zephyr Xtra, and Zephyr Express) command stations, OpSw
                     configuration operations can be performed from the integrated keypad.  The
-                    DCS50/DCS51 will automatically perform any necessary mode-change before
+                    DCS50/DCS51/DCS52 will automatically perform any necessary mode-change before
                     returning to normal operating mode.</p>
 
                 <p>Alternately, JMRI, when configured to communicate with LocoNet, can make
@@ -89,6 +89,7 @@
                         <ul>
                             <li>DCS50 (Zephyr&trade;)</li>
                             <li>DCS51 (Zephyr Xtra&trade;)</li>
+                            <li>DCS52 (Zephyr Express&trade;)</li>
                             <li>DB150 (Empire Builder&trade;, Empire Builder II&trade;, Super Empire Builder&trade;, Super Empire Builder Xtra&trade;, Genesis&trade;)</li>
                             <li>DCS100, DCS200 (Chief&trade;, Chief II&trade;, Super Chief&trade;, Super Chief Xtra&trade;)</li>
                             <li>DCS210 (Evolution&trade;)</li>

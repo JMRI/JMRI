@@ -28,7 +28,6 @@ public class DefaultSignalGroupManagerXml
      * @return Element containing the complete info
      */
     @Override
-    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations & generics
     public Element store(Object o) {
         SignalGroupManager m = (SignalGroupManager) o;
 

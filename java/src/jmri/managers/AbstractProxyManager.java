@@ -465,7 +465,6 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
     @Nonnull
     @Override
     @Deprecated  // will be removed when superclass method is removed due to @Override
-    @SuppressWarnings("deprecation")  // temporary implementation of method with @Override
     public String[] getSystemNameArray() {
         jmri.util.Log4JUtil.deprecationWarning(log, "getSystemNameArray");        
         if (log.isTraceEnabled()) log.trace("Manager#getSystemNameArray() called", new Exception("traceback"));
@@ -481,7 +480,6 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
     @Nonnull
     @Override
     @Deprecated  // will be removed when superclass method is removed due to @Override
-    @SuppressWarnings("deprecation")  // temporary implementation of method with @Override
     public List<String> getSystemNameList() {
         // jmri.util.Log4JUtil.deprecationWarning(log, "getSystemNameList"); // used by configureXML
         List<E> list = getNamedBeanList();
@@ -505,7 +503,6 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
     /** {@inheritDoc} */
     @Override
     @Deprecated  // will be removed when superclass method is removed due to @Override
-    @SuppressWarnings("deprecation")  // temporary implementation of method with @Override
     public List<String> getSystemNameAddedOrderList() {
         // jmri.util.Log4JUtil.deprecationWarning(log, "getSystemNameAddedOrderList"); // used by configureXML
         addedOrderList = new ArrayList<>();  // need to start maintaining it
@@ -516,7 +513,6 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Provi
     /** {@inheritDoc} */
     @Override
     @Deprecated  // will be removed when superclass method is removed due to @Override
-    @SuppressWarnings("deprecation")  // temporary implementation of method with @Override
     @Nonnull
     public List<E> getNamedBeanList() {
         // jmri.util.Log4JUtil.deprecationWarning(log, "getNamedBeanList"); // used by getSystemNameList

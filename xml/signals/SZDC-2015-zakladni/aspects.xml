@@ -35,6 +35,12 @@
         <authorinitials>PŠ</authorinitials>
         <revremark>Panel indicators</revremark>
     </revision>    
+    <revision>
+        <revnumber>3</revnumber>
+        <date>2019-02-19</date>
+        <authorinitials>PŠ</authorinitials>
+        <revremark>Aspect 25 Unlit</revremark>
+    </revision>    
   </revhistory>
 
   <aspects>
@@ -328,6 +334,19 @@
     </aspect>
 
     <aspect>
+      <name>Zhasnuto</name>
+      <title>Unlit</title>
+      <indication>Traffic locking in opposing direction on a banalized ABS</indication>
+      <description>Unlit all lights</description>
+      <reference>Aspect 135</reference>
+      <comment>Znasnuté návěstidlo v nesprávném směru</comment>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
+      <dccAspect>25</dccAspect>
+    </aspect>
+
+    <aspect>
       <name>Jízda vlaku dovolena</name>
       <title>Run a train allowed</title>
       <indication>Proceed by aspect of last signal mast</indication>
@@ -450,6 +469,8 @@
     <appearancefile href="appearance-abs.xml"/>
     
     <appearancefile href="appearance-shunting.xml"/>
+
+    <appearancefile href="appearance-test.xml"/>
 
   </appearancefiles>
 

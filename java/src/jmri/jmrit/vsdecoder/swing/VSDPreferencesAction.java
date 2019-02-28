@@ -24,7 +24,6 @@ import javax.swing.JFrame;
 import jmri.jmrit.vsdecoder.VSDecoderManager;
 import jmri.util.JmriJFrame;
 
-@SuppressWarnings("serial")
 public class VSDPreferencesAction extends AbstractAction {
 
     /**
