@@ -38,7 +38,7 @@ public class CmdStnConfigPane extends LnPanel implements LocoNetListener {
 
     int CONFIG_SLOT = 127;
     int MIN_OPTION = 1;
-    int MAX_OPTION = 72;
+    int MAX_OPTION = 96;
 
     String labelT;
     String labelC;

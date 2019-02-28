@@ -58,7 +58,6 @@
 -err:+deprecation
 -err:+discouraged
 -err:+enumIdentifier
--err:+enumSwitch
 -err:+fallthrough
 -err:+finalBound
 -err:+finally 
@@ -103,7 +102,8 @@
 
 
 # Checks we're warning on, but not enforcing
-
+-warn:-switchDefault
+-warn:-enumSwitch
 
 
 # Checks we're working on
@@ -119,10 +119,6 @@
 
 # this tags some FindBugs labels?  But still useful to run occasionally
 -warn:-warningToken
-
-# 7 outstanding items
--warn:-switchDefault
-
 
 
 # Checks not yet examined 

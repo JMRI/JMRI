@@ -3071,7 +3071,6 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
         }
     }
 
-    @java.lang.SuppressWarnings("serial")
     private class JRadioButtonWithInteger extends JRadioButton {
 
         public int index;
