@@ -1,32 +1,26 @@
 package jmri.util;
 
-import static junit.framework.TestCase.assertEquals;
-import static junit.framework.TestCase.assertFalse;
-import static junit.framework.TestCase.assertNotNull;
-import static junit.framework.TestCase.assertNull;
-import static junit.framework.TestCase.assertTrue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assume.assumeFalse;
 
 import java.awt.BorderLayout;
+import java.awt.GraphicsEnvironment;
 import java.util.concurrent.Callable;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.JWindow;
 import javax.swing.SwingUtilities;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
 /**
  *
  * @author Svata Dedic Copyright (c) 2019
  */
 public class ValidatingInputPaneTest {
-    @Rule
-    public AssumeGUIRule nonHeadless = new AssumeGUIRule();
-    
-    @Rule
-    public ExpectedException exception = ExpectedException.none();
-    
     /**
      * Checks that inconvertible input produces an error message.
      */
@@ -120,7 +114,15 @@ public class ValidatingInputPaneTest {
         assertFalse("No error must be indicated", intValidator.hasError());
     }
     
+    /**
+     * Wraps the tested panel into a Window and makes it visible. Runs the
+     * Callable in EDT to properly process UI. Terminate
+     * the test without failure in headless env.
+     */
     private <T> T testInGUI(Callable<T> check) throws Exception {
+        // terminate tests which require GUI
+        assumeFalse(GraphicsEnvironment.isHeadless());
+        
         // display the panel
         JWindow dlg = new JWindow();
         dlg.setLayout(new BorderLayout());

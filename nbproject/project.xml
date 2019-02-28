@@ -155,7 +155,6 @@
                     </context>
                 </action>
                 <action name="debug.single">
-                    <!--<script>${ant.script}</script>-->
                     <script>nbproject/ide-targets.xml</script>
                     <target>debug-test-single.nb</target>
                     <context>
