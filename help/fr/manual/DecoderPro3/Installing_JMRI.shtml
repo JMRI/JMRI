@@ -1,7 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Translation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-03-01 -->
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -28,32 +28,33 @@
       "JMRI DecoderPro Logo" border="0" height="135" width="160"
       vspace="15">
 
-      <h1>Installing JMRI&reg;</h1>
+      <h1>Installer JMRI&reg;</h1>
 
       <div align="right">
-        <p><a href="index.shtml#Installing">Back to Index</a></p>
+        <p><a href="index.shtml#Installing">Retour &#224; l'Index</a></p>
       </div>
       <hr>
 
-      <p class="important">Please consult <a href=
-      "../../html/setup/index.shtml">JMRI Setup Help</a>.</p>
+      <p class="important">SVP Consultez <a href=
+      "../../html/setup/index.shtml">Aide &#224; la Configuration de JMRI</a>.</p>
 
-      <p>JMRI&reg; requires that Java be installed, whether your
-      computer is <a href=
+      <p>JMRI&reg; n&#233;cessite que Java soit install&#233;, que votre 
+      ordinateur soit bas&#233; sur <a href=
       "http://jmri.org/install/MacOSX.shtml">Mac</a>, <a href=
-      "http://jmri.org/install/WindowsNew.shtml">Windows</a>, or
+      "http://jmri.org/install/WindowsNew.shtml">Windows</a>,ou
       <a href="http://jmri.org/install/Linux.shtml">Linux</a>
-      based.</p>
+      .</p>
 
-      <p>Version 2.12 can run on any computer system that will run
-      Java 1.5 or later.<br>
-      Version 2.14.1 requires Java 1.5 (or 1.6 if you wish for drag
-      &amp; drop)<br>
-      Version 3.10.1 requires Java 1.7 or later.<br>
-      Version 4.2 requires Java 1.8.</p>
+      <p>La version 2.12 peut s'ex&#233;cuter sur n'importe quel syst&#232;me 
+      informatique Java 1.5 ou version ult&#233;rieure. <br>
+       La version 2.14.1 n&#233;cessite Java 1.5 (ou 1.6 si vous souhaitez 
+       faire glisser &amp; d&#233;poser) <br>
+       La version 3.10.1 n&#233;cessite Java 1.7 ou une version ult&#233;rieure. <br>
+       La version 4.2 n&#233;cessite Java 1.8
+.</p>
 
-      <p>Full instructions for installing on different platforms
-      can be found here:</p>
+      <p>Vous trouverez les instructions compl&#232;tes pour l'installation 
+      sur diff&#233;rentes plates-formes ici:</p>
 
       <ul>
         <li><a href=
@@ -74,7 +75,7 @@
       <hr>
 
       <div align="right">
-        <p><a href="index.shtml#Installing">Back to Index</a></p>
+        <p><a href="index.shtml#Installing">Retour &#224; L'index</a></p>
       </div><!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
