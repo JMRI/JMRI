@@ -1,7 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Translation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-03-01 -->
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -27,35 +27,34 @@
     <div id="mainContent">
       <a name="Top" id="Top"></a>
 
-      <h1>DecoderPro&reg; Main Window</h1>
+      <h1>DecoderPro&reg; Fen&#234;tre Principale</h1>
 
-      <h2>EasyDCC Menu</h2>
+      <h2>Menu EasyDCC</h2>
 
       <div align="right">
-        <p><a href="dp3_menubar.shtml">Back to Index</a><a href=
+        <p><a href="dp3_menubar.shtml">Retour &#224; l'Index</a><a href=
         "Main_Menu.shtml#System"></a></p>
       </div>
       <hr>
 
-      <p><strong>Command Monitor</strong></p>
+      <p><strong>Moniteur de Commande</strong></p>
 
-      <p>Opens the <a href=
-      "Main_Monitor_Window.shtml">Communications Monitor Window</a>
-      and automatically displays the information that is being sent
-      and received on the communications link between your computer
-      and your DCC system.</p>
+      <p>Ouvre la <a href= "Main_Monitor_Window.shtml"> Fen&#234;tre du 
+      Moniteur de Communication </a> et affiche automatiquement les 
+      informations envoy&#233;es et re&#231;ues sur le lien de communication 
+      entre votre ordinateur et votre syst&#232;me DCC.</P>
 
-      <p><strong>Send Command</strong></p>
+       <p><strong>Envoyer la Commande</strong>'</p>
 
-      <p>Opens the Send EasyDcc command prompt, which is used to
-      send commands using DecoderPro.</p>
+       <p> Ouvre l'invite de Envoyer Commande EasyDcc, utilis&#233;e pour 
+       envoyer des commandes &#224; l'aide de DecoderPro. </p>
 
       <p align="center"><img src="images/Main_EasyDCC_01.png" alt=
       "Send Command" width="263" height="99" border="4"></p>
       <hr>
 
       <div align="right">
-        <p><a href="dp3_menubar.shtml">Back to Index</a><a href=
+        <p><a href="dp3_menubar.shtml">Retour &#224; l'Index</a><a href=
         "Main_Menu.shtml#System"></a></p>
       </div><!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
