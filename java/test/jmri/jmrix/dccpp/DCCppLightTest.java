@@ -22,14 +22,14 @@ public class DCCppLightTest extends jmri.implementation.AbstractLightTestBase {
 
     @Override
     public void checkOnMsgSent() {
-        Assert.assertEquals("ON message", "a 5 0 1",
+        Assert.assertEquals("ON message", "a 6 0 1",
                 xnis.outbound.elementAt(xnis.outbound.size() - 1).toString());
         Assert.assertEquals("ON state", jmri.Light.ON, t.getState());
     }
 
     @Override
     public void checkOffMsgSent() {
-        Assert.assertEquals("OFF message", "a 5 0 0",
+        Assert.assertEquals("OFF message", "a 6 0 0",
                 xnis.outbound.elementAt(xnis.outbound.size() - 1).toString());
         Assert.assertEquals("OFF state", jmri.Light.OFF, t.getState());
     }
