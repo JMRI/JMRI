@@ -291,6 +291,13 @@ public class LnIPLImplementationTest {
             Assert.assertEquals("Query IPL Device Type DCS51 test Byte "+i+ " test", expect[i], m.getElement(i));
         }
 
+        m = LnIPLImplementation.createIplDcs52QueryPacket();
+        Assert.assertEquals("message length", 20, m.getNumDataElements());
+        expect[5] = 52;
+        for (int i = 0; i < 20; ++i) {
+            Assert.assertEquals("Query IPL Device Type DCS52 test Byte "+i+ " test", expect[i], m.getElement(i));
+        }
+
         m = LnIPLImplementation.createIplPr3QueryPacket();
         Assert.assertEquals("message length", 20, m.getNumDataElements());
         expect[5] = 0x23;
@@ -336,6 +343,8 @@ public class LnIPLImplementationTest {
                     LnIPLImplementation.isIplUt4IdentityReportMessage(m));
             Assert.assertEquals("IplIdentity device "+dev+" check is DCS51 device", dev == 51,
                     LnIPLImplementation.isIplDcs51IdentityReportMessage(m));
+            Assert.assertEquals("IplIdentity device "+dev+" check is DCS52 device", dev == 52,
+                    LnIPLImplementation.isIplDcs52IdentityReportMessage(m));
             Assert.assertEquals("IplIdentity device "+dev+" check is PR3 device", dev == 35,
                     LnIPLImplementation.isIplPr3IdentityReportMessage(m));
             Assert.assertFalse ("IplIdentity device "+dev+" check is DT402D device",
@@ -376,6 +385,8 @@ public class LnIPLImplementationTest {
                     LnIPLImplementation.isIplUt4IdentityReportMessage(m));
             Assert.assertFalse("IplIdentity device "+dev+" check is DCS51 device, mfg=1",
                     LnIPLImplementation.isIplDcs51IdentityReportMessage(m));
+            Assert.assertFalse("IplIdentity device "+dev+" check is DCS52 device, mfg=1",
+                    LnIPLImplementation.isIplDcs52IdentityReportMessage(m));
             Assert.assertFalse("IplIdentity device "+dev+" check is PR3 device, mfg=1",
                     LnIPLImplementation.isIplPr3IdentityReportMessage(m));
             Assert.assertFalse ("IplIdentity device "+dev+" check is DT402D device, mfg=1",
@@ -416,6 +427,8 @@ public class LnIPLImplementationTest {
                     LnIPLImplementation.isIplUt4IdentityReportMessage(m));
             Assert.assertFalse("IplIdentity device "+dev+" check is DCS51 device, mfg=127",
                     LnIPLImplementation.isIplDcs51IdentityReportMessage(m));
+            Assert.assertFalse("IplIdentity device "+dev+" check is DCS52 device, mfg=127",
+                    LnIPLImplementation.isIplDcs52IdentityReportMessage(m));
             Assert.assertFalse("IplIdentity device "+dev+" check is PR3 device, mfg=127",
                     LnIPLImplementation.isIplPr3IdentityReportMessage(m));
             Assert.assertFalse ("IplIdentity device "+dev+" check is DT402D device, mfg=127",
@@ -459,6 +472,8 @@ public class LnIPLImplementationTest {
                     LnIPLImplementation.isIplUt4IdentityReportMessage(m));
             Assert.assertEquals("IplIdentity device "+dev+" check is DCS51 device, mfg=0, slave=24", dev == 51,
                     LnIPLImplementation.isIplDcs51IdentityReportMessage(m));
+            Assert.assertEquals("IplIdentity device "+dev+" check is DCS52 device, mfg=0, slave=24", dev == 52,
+                    LnIPLImplementation.isIplDcs52IdentityReportMessage(m));
             Assert.assertEquals("IplIdentity device "+dev+" check is PR3 device, mfg=0, slave=24", dev == 35,
                     LnIPLImplementation.isIplPr3IdentityReportMessage(m));
             Assert.assertEquals("IplIdentity device "+dev+" check is DT402D device, mfg=0, slave=24", dev == 42,
@@ -502,6 +517,8 @@ public class LnIPLImplementationTest {
                     LnIPLImplementation.isIplUt4IdentityReportMessage(m));
             Assert.assertEquals("IplIdentity device "+dev+" check is DCS51 device, mfg=0, slave=24, slaveMfg=2", dev == 51,
                     LnIPLImplementation.isIplDcs51IdentityReportMessage(m));
+            Assert.assertEquals("IplIdentity device "+dev+" check is DCS52 device, mfg=0, slave=24, slaveMfg=2", dev == 52,
+                    LnIPLImplementation.isIplDcs52IdentityReportMessage(m));
             Assert.assertEquals("IplIdentity device "+dev+" check is PR3 device, mfg=0, slave=24, slaveMfg=2", dev == 35,
                     LnIPLImplementation.isIplPr3IdentityReportMessage(m));
             Assert.assertFalse("IplIdentity device "+dev+" check is DT402D device, mfg=0, slave=24, slaveMfg=2",
@@ -586,6 +603,10 @@ public class LnIPLImplementationTest {
                    Assert.assertEquals ("Ipl Extract host name from device "+dev, "Digitrax DCS51",
                            LnIPLImplementation.extractInterpretedIplHostDevice(m));
                    break;
+                case 52:
+                   Assert.assertEquals ("Ipl Extract host name from device "+dev, "Digitrax DCS52",
+                           LnIPLImplementation.extractInterpretedIplHostDevice(m));
+                   break;
                 case 81:
                    Assert.assertEquals ("Ipl Extract host name from device "+dev, "Digitrax BXPA1",
                            LnIPLImplementation.extractInterpretedIplHostDevice(m));
@@ -668,6 +689,10 @@ public class LnIPLImplementationTest {
                    Assert.assertEquals ("Ipl Extract host name from device "+dev+", slave=24", "Digitrax DCS51",
                            LnIPLImplementation.extractInterpretedIplHostDevice(m));
                    break;
+                case 52:
+                   Assert.assertEquals ("Ipl Extract host name from device "+dev+", slave=24", "Digitrax DCS52",
+                           LnIPLImplementation.extractInterpretedIplHostDevice(m));
+                   break;
                 case 81:
                    Assert.assertEquals ("Ipl Extract host name from device "+dev+", slave=24", "Digitrax BXPA1",
                            LnIPLImplementation.extractInterpretedIplHostDevice(m));
@@ -747,6 +772,10 @@ public class LnIPLImplementationTest {
                    Assert.assertEquals ("Ipl Extract host name from device "+dev+", slave=24, slaveMfg=5", "Digitrax DCS51",
                            LnIPLImplementation.extractInterpretedIplHostDevice(m));
                    break;
+                case 52:
+                   Assert.assertEquals ("Ipl Extract host name from device "+dev+", slave=24, slaveMfg=5", "Digitrax DCS52",
+                           LnIPLImplementation.extractInterpretedIplHostDevice(m));
+                   break;
                 case 81:
                    Assert.assertEquals ("Ipl Extract host name from device "+dev+", slave=24, slaveMfg=5", "Digitrax BXPA1",
                            LnIPLImplementation.extractInterpretedIplHostDevice(m));
@@ -824,6 +853,10 @@ public class LnIPLImplementationTest {
                    break;
                 case 51:
                    Assert.assertEquals ("Ipl Extract host name from device "+dev+", slave=24, slaveMfg=5", "Digitrax DCS51",
+                           LnIPLImplementation.extractInterpretedIplHostDevice(m));
+                   break;
+                case 52:
+                   Assert.assertEquals ("Ipl Extract host name from device "+dev+", slave=24, slaveMfg=5", "Digitrax DCS52",
                            LnIPLImplementation.extractInterpretedIplHostDevice(m));
                    break;
                 case 81:
@@ -1053,6 +1086,11 @@ public class LnIPLImplementationTest {
                            "Digitrax DCS51",
                            LnIPLImplementation.interpretHostManufacturerDevice(0,dev));
                    break;
+                case 52:
+                   Assert.assertEquals ("Mfg/HostDev: 0,"+dev,
+                           "Digitrax DCS52",
+                           LnIPLImplementation.interpretHostManufacturerDevice(0,dev));
+                   break;
                 case 81:
                    Assert.assertEquals ("Mfg/HostDev: 0,"+dev,
                            "Digitrax BXPA1",
@@ -1143,6 +1181,11 @@ public class LnIPLImplementationTest {
                            "Digitrax DCS51",
                            LnIPLImplementation.interpretHostManufacturerDevice(0,dev,0,0));
                    break;
+                case 52:
+                   Assert.assertEquals ("Mfg/HostDev/SlvMfg/SlvDev: 0,"+dev+",0,0",
+                           "Digitrax DCS52",
+                           LnIPLImplementation.interpretHostManufacturerDevice(0,dev,0,0));
+                   break;
                 case 81:
                    Assert.assertEquals ("Mfg/HostDev/SlvMfg/SlvDev: 0,"+dev+",0,0",
                            "Digitrax BXPA1",
@@ -1231,6 +1274,11 @@ public class LnIPLImplementationTest {
                 case 51:
                    Assert.assertEquals ("Mfg/HostDev/SlvMfg/SlvDev: 0,"+dev+",0,24",
                            "Digitrax DCS51",
+                           LnIPLImplementation.interpretHostManufacturerDevice(0,dev,0,24));
+                   break;
+                case 52:
+                   Assert.assertEquals ("Mfg/HostDev/SlvMfg/SlvDev: 0,"+dev+",0,24",
+                           "Digitrax DCS52",
                            LnIPLImplementation.interpretHostManufacturerDevice(0,dev,0,24));
                    break;
                 case 81:

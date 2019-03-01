@@ -889,7 +889,6 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
         sectionTableModel.fireTableDataChanged();
     }
 
-    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations & generics
     void replacePrimaryForSeqPressed(ActionEvent e) {
         int seq = getSeqNum();
         if (seq == 0) {
@@ -1097,7 +1096,6 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
         sectionTableModel.fireTableDataChanged();
     }
 
-    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations & generics
     void addAlternateForSeqPressed(ActionEvent e) {
         if (sectionList.size() > maxSections) {
             JOptionPane.showMessageDialog(addFrame, rbx

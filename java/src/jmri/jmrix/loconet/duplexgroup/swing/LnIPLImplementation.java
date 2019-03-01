@@ -224,6 +224,20 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
     }
 
     /**
+     * Create a LocoNet packet which queries DCS52 devices for IPL
+     * identification information. The invoking method is responsible for
+     * sending the message to LocoNet.
+     *
+     * @return a LocoNetMessage containing the packet required to query DCS52
+     *         devices for IPL identification information
+     */
+    public static final LocoNetMessage createIplDcs52QueryPacket() {
+        return createIplSpecificHostQueryPacket(
+                LnConstants.RE_IPL_MFR_DIGITRAX,
+                LnConstants.RE_IPL_DIGITRAX_HOST_DCS52);
+    }
+
+    /**
      * Create a LocoNet packet which queries PR3 devices for IPL identification
      * information. The invoking method is responsible for sending the message
      * to LocoNet.
@@ -354,6 +368,19 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
         return isIplSpecificIdentityReportMessage(m,
                 LnConstants.RE_IPL_MFR_DIGITRAX,
                 LnConstants.RE_IPL_DIGITRAX_HOST_DCS51);
+    }
+
+    /**
+     * Check message m to determine if it contains a DSC52 IPL Identity Report
+     * message.
+     *
+     * @param m message to analyse
+     * @return true if message is report of DCS52 IPL Identity
+     */
+    public static final boolean isIplDcs52IdentityReportMessage(LocoNetMessage m) {
+        return isIplSpecificIdentityReportMessage(m,
+                LnConstants.RE_IPL_MFR_DIGITRAX,
+                LnConstants.RE_IPL_DIGITRAX_HOST_DCS52);
     }
 
     /**
@@ -725,6 +752,9 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
                 switch (device) {
                     case LnConstants.RE_IPL_DIGITRAX_HOST_DCS51:
                         s = "Digitrax DCS51"; // NOI18N
+                        break;
+                    case LnConstants.RE_IPL_DIGITRAX_HOST_DCS52:
+                        s = "Digitrax DCS52"; // NOI18N
                         break;
                     case LnConstants.RE_IPL_DIGITRAX_HOST_DT402:
                         if ((smanuf == LnConstants.RE_IPL_MFR_DIGITRAX)
