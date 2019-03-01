@@ -1,7 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Translation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-03-01 -->
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -29,25 +29,26 @@
       <h2>CMRI Menu</h2>
 
       <div align="right">
-        <p><a href="dp3_menubar.shtml">Back to Index</a></p>
+        <p><a href="dp3_menubar.shtml">Retour &#224; l'Index</a></p>
       </div>
       <hr>
 
-      <p><strong>CMRI Monitor</strong></p>
+      <p><strong>Moniteur CMRI</strong></p>
 
-      <p>Opens the <a href=
-      "Main_Monitor_Window.shtml">Communications Monitor Window</a>
-      and automatically displays the information that is being sent
-      and received on the communications link between your computer
-      and your DCC system.</p>
+      <p>Ouvre la <a href= 
+      "Main_Monitor_Window.shtml"> Fen&#234;tre du Moniteur de 
+      Communication </a> et affiche automatiquement les informations
+       envoy&#233;es et re&#231;ues sur le lien de communication entre 
+       votre ordinateur et votre syst&#232;me DCC.</P>
 
-      <p><strong>Send Command</strong></p>
+       <p> <strong></strong> Envoyer la Commande</strong></p>
 
-      <p>Opens the <strong>Send CMRI serial command</strong>
-      prompt. You may poll devices on the CMRI serial link, using
-      the <strong>Send poll</strong> button. You can send a command
-      to the device using the <strong>Command:</strong> text box
-      and the <strong>Send</strong> button.</p>
+       <p> Ouvre l'invite <strong>Envoyer une commande s&#233;rie CMRI </strong>.
+        Vous pouvez interroger des p&#233;riph&#233;riques sur la liaison 
+        s&#233;rie CMRI &#224; l'aide du bouton <strong> Envoyer un sondage</strong>. 
+        Vous pouvez envoyer une commande au p&#233;riph&#233;rique &#224; l'aide 
+        de la zone de texte <strong> Commande: </strong> et du 
+        bouton <strong> Envoyer</strong>.</P>
 
       <p align="center"><img src="images/Main_CMRI_01.png" alt=
       "CMRI Send Command" width="300" height="145" border="4"></p>
@@ -55,62 +56,58 @@
       <p><img src="images/separator.png" alt="separator" width=
       "190" height="4"></p>
 
-      <p><strong><a name="Diagnostics" id="Diagnostics"></a>Run
-      Diagnostics</strong></p>
+      <p><strong><a name="Diagnostics" id="Diagnostics"></a>Lancer les
+      Diagnostiques</strong></p>
 
-      <p>Open the <a href="#RunDiagnostices">Run CMRI
-      Diagnostics</a> window.</p>
-
-      <p><img src="images/separator.png" alt="separator" width=
-      "190" height="4"></p>
-
-      <p><strong><a name="Nodes" id="Nodes"></a>Configure C/MRI
-      Nodes</strong></p>
-
-      <p>Opens the <a href="#ConfigureNodes">Configure C/MRI
-      Nodes</a> Window.</p>
+      <p>Ouvre la Fen&#234;tre <a href="#RunDiagnostices">Lancer les
+      Diagnostiques CMRI</a></p>
 
       <p><img src="images/separator.png" alt="separator" width=
       "190" height="4"></p>
 
-      <p><strong>List Assignments</strong></p>
+      <p><strong><a name="Nodes" id="Nodes"></a>Configurer les N&#156;uds 
+      C/MRI</strong></p>
 
-      <p>Opens <strong>List C/MRI Assignments</strong> window. Thsi
-      tool lets you check teh pin assignments of your C/MRI Nodes
-      and print them.</p>
+      <p>Ouvre la Fen&#234;tre <a href="#ConfigureNodes">Configurer les N&#156;uds 
+      C/MRI</a>.</p>
 
-      <p align="center"><img src="images/Main_CMRI_04.png" alt=
-      "Assignment" width="357" height="181" border="4"></p>
-      <hr>
+      <p><img src="images/separator.png" alt="separator" width=
+      "190" height="4"></p>
 
-      <h4><a name="RunDiagnostices" id="RunDiagnostices"></a>Run
-      CMRI Diagnostic window</h4>
+      <p><strong>Ouvre la fen&#234;tre</strong>strong> R&#233;pertorier les 
+      affectationss C/MRI </strong>. Cet outil vous permet de v&#233;rifier 
+      l'affectation des broches de vos n&#156;uds C/MRI et de les imprimer.</P>
 
-      <p>Provides a tool for testing your CMRI serial cards in the
-      system using either an Output Test or a Wraparound Test.</p>
+       <p align = "center"> <img src = "images/Main_CMRI_04.png" alt =
+       "Affectation" width = "357" height = "181" border = "4"> </p>
+       <h>
 
+       <h4> <a name="RunDiagnostices" id="RunDiagnostices"> </a> Fen&#234;tre 
+       Ex&#233;cuter le diagnostic CMRI </h4>
+
+       <p> Fournit un outil permettant de tester vos cartes s&#233;rie CMRI 
+       dans le syst&#232;me &#224; l'aide d'un test de sortie ou d'un Test Global. </p>
       <p align="center"><img src="images/Main_CMRI_02.png" alt=
       "Run Diagnostics" width="428" height="353" border="4"></p>
 
       <div>
         <div align="right">
-          <p><a href="#Diagnostics">Back</a></p>
+          <p><a href="#Diagnostics">Retour</a></p>
         </div>
       </div>
 
       <h4 align="left"><a name="ConfigureNodes" id=
-      "ConfigureNodes"></a>Configure C/MRI Nodes Window</h4>
+      "ConfigureNodes"></a>Fen&#234;tre Configurer les n&#156;uds C/MRI </h4>
 
-      <p align="left">Tool the allows you to configure your C/MRI
-      system Nodes.</p>
+       <p align = "left"> L'outil permet de configurer les n&#156;uds de votre syst&#232;me C/MRI. </p>
 
-      <p align="center"><img src="images/Main_CMRI_03.png" alt=
-      "Configure Nodes" width="390" height="425" border="4"></p>
+       <p align = "center"> <img src = "images/Main_CMRI_03.png" alt =
+       "Configurer les n&#156;uds" width = "390" height = "425" border = "4"> </p>
 
-      <div align="right">
-        <a href="#Nodes">Back</a>
+       <div align = "right">
+         <a href="#Nodes"> Retour </a>
 
-        <p><a href="dp3_menubar.shtml">Back to Index</a></p>
+         <p> <a href="dp3_menubar.shtml"> Retour &#224; l'index </a> </p>
       </div><!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
