@@ -53,7 +53,7 @@ public class NBHSensorTest {
     }
 
     public void nullBean(NBHSensor sensor) {
-        Sensor sbean = (Sensor) sensor.getBean();
+        Sensor sbean = sensor.getBean();
         Assert.assertNull(sbean);
         boolean match = sensor.matchSensor(sbean);
         Assert.assertFalse(match);
@@ -150,7 +150,7 @@ public class NBHSensorTest {
     }
 
     public void realBean(NBHSensor sensor) {
-        Sensor sbean = (Sensor) sensor.getBean();
+        Sensor sbean = sensor.getBean();
         Assert.assertNotNull(sbean);
         boolean match = sensor.matchSensor(sbean);
         Assert.assertTrue(match);
