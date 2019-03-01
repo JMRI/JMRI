@@ -1,12 +1,13 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
+<!-- Translation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-03-01 -->
 
-<html lang="en">
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>DecoderPro&reg; Main Window</title><!-- Style -->
+  <title>DecoderPro&reg; Fen&#234;tre Principale</title><!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -24,44 +25,43 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>DecoderPro&reg; Main Window</h1>
+      <h1>DecoderPro&reg; Fen&#234;tre Principal</h1>
 
-      <h2>Acela Menu</h2>
+      <h2>Menu Acela</h2>
 
       <div align="right">
-        <p><a href="dp3_menubar.shtml">Back to Index</a><a href=
+        <p><a href="dp3_menubar.shtml">Retour &#224; l'Index</a><a href=
         "Main_Menu.shtml#System"></a></p>
       </div>
       <hr>
 
-      <p><strong>Command Monitor</strong></p>
+      <p><strong>Moniteur de Commande</strong></p>
+	<p> Ouvre la <a href =
+       "Main_Monitor_Window.shtml"> Fen&#234;tre du moniteur de communication</a> 
+       affiche automatiquement les informations envoy&#233;es et re&#231;ues 
+       sur le lien de communication entre votre ordinateur et votre 
+       syst&#232;me DCC. </P>
 
-      <p>Opens the <a href=
-      "Main_Monitor_Window.shtml">Communications Monitor Window</a>
-      and automatically displays the information that is being sent
-      and received on the communications link between your computer
-      and your DCC system.</p>
+       <p> <strong>Envoyer la commande</strong> </p>
 
-      <p><strong>Send Command</strong></p>
+       <p> Ouvre l'invite <strong>Envoyer une commande Acela </strong>, 
+       tapez votre commande et cliquez sur le bouton <strong> Envoyer </strong>
+       pour ex&#233;cuter la commande. </p>
 
-      <p>Opens the <strong>Send Acela command</strong> prompt, type
-      in your command and click on <strong>Send</strong> button to
-      execute the command.</p>
+       <p align = "center"> <img src = "images / Main_Acela_01.png" alt =
+       "Acela Send Comand" width = "264" height = "118" border = "4"> </p>
 
-      <p align="center"><img src="images/Main_Acela_01.png" alt=
-      "Acela Send Comand" width="264" height="118" border="4"></p>
+       <p> <strong> Configurer les N&#156;uds </strong> </p>
 
-      <p><strong>Configure Nodes</strong></p>
-
-      <p>Opens the Configure Nodes window. This tool facilitates
-      configuring the Acela network nodes.</p>
+       <p> Ouvre la fen&#234;tre Configurer les n&#156;uds. Cet outil facilite 
+       la configuration des n&#156;uds du r&#233;seau Acela. </P>
 
       <p align="center"><img src="images/Main_Acela_02.png" alt=
       "Configure Nodes" width="590" height="683" border="4"></p>
       <hr>
 
       <div align="right">
-        <p><a href="dp3_menubar.shtml">Back to Index</a><a href=
+        <p><a href="dp3_menubar.shtml">Retour &#224; l'Index</a><a href=
         "Main_Menu.shtml#System"></a></p>
       </div><!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
