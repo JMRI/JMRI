@@ -67,7 +67,9 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
     static public final int SEND_CABSIG_COLUMN = 7;
     
     static public final int MAX_COLUMN = 8;
-    
+   
+    static protected final int[] startupColumns = {0,1,2,3,4,5,6,7};
+ 
     CabSignalTableModel(int row, int column) {
         cabSignalManager = InstanceManager.getNullableDefault(CabSignalManager.class); 
         if(cabSignalManager == null){
