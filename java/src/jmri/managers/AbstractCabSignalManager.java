@@ -1,13 +1,20 @@
 package jmri.managers;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
+import jmri.Block;
+import jmri.BlockManager;
 import jmri.CabSignal;
 import jmri.CabSignalListListener;
 import jmri.CabSignalManager;
 import jmri.LocoAddress;
+import jmri.DccLocoAddress;
 import jmri.implementation.DefaultCabSignal;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * abstract implementation of the {@link jmri.CabSignalManager} interface.
@@ -31,10 +38,14 @@ abstract public class AbstractCabSignalManager implements CabSignalManager {
     protected HashMap<LocoAddress,CabSignal> signalList;
     protected ArrayList<CabSignalListListener> listListeners;
 
+    // keep a list of listeners for block objects.
+    private ArrayList<PropertyChangeListener> mBlockListeners; 
+    private boolean blockInit = false;
 
     public AbstractCabSignalManager(){
          signalList = new HashMap<LocoAddress,CabSignal>();
          listListeners = new ArrayList<CabSignalListListener>();
+         mBlockListeners = new ArrayList<PropertyChangeListener>();
     }
 
     /**
@@ -45,6 +56,9 @@ abstract public class AbstractCabSignalManager implements CabSignalManager {
      * @return an existing or new cab signal
      */
     public CabSignal getCabSignal(LocoAddress address){
+        if(!blockInit) {
+           initBlocks();
+        }
         if(!signalList.containsKey(address)){
            signalList.put(address,new DefaultCabSignal(address));
            notifyCabSignalListChanged();
@@ -114,4 +128,38 @@ abstract public class AbstractCabSignalManager implements CabSignalManager {
        }
     }
 
+    // Adds changelistener to blocks	
+    private void initBlocks(){
+        blockInit = true;	
+        BlockManager bmgr = jmri.InstanceManager.getDefault(jmri.BlockManager.class);	
+        Set<Block> blockSet = bmgr.getNamedBeanSet();	
+        for (Block b : blockSet) {	
+            PropertyChangeListener listener = (PropertyChangeEvent e) -> {	
+                handleBlockChange(e);	
+            };	
+            b.addPropertyChangeListener(listener);	
+            mBlockListeners.add(listener);	
+        }	
+    }
+
+    /**
+     * Handle tasks when block contents change.
+     * @param e propChgEvent
+     */
+  private void handleBlockChange(PropertyChangeEvent e) {	
+        Block b = (Block)e.getSource();
+        log.debug("property {} new value {} old value {}",e.getPropertyName(),e.getNewValue(),e.getOldValue());
+        if (e.getPropertyName().equals("value")){	
+           if(e.getOldValue()==null && e.getNewValue()!=null){
+              for(CabSignal c: signalList.values()){
+                 if(c.getBlock()==null){
+                    c.setBlock(); // cause this cab signal to look for a block.
+                 }
+              } 
+           }
+           return;	
+        }
+   }
+
+    private final static Logger log = LoggerFactory.getLogger(AbstractCabSignalManager.class);
 }
