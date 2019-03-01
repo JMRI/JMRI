@@ -1,7 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Translation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-03-01 -->
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -24,135 +24,136 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>DecoderPro&reg; Main Window</h1>
+      <h1>DecoderPro&reg; Fen&#234;tre Principale</h1>
 
-      <h2>Communications Monitor Window</h2>
+      <h2>Fen&#234;tre Moniteur de Communications</h2>
 
       <div align="right">
-        <p><a href="dp3_menubar.shtml">Back to Index</a></p>
+        <p><a href="dp3_menubar.shtml">Retour &#224; l'Index</a></p>
       </div>
       <hr>
 
-      <p>DecoderPro provides a communications monitor window so
-      that you can see what is happening on the communications link
-      between the program and the layout hardware.</p>
+      <p>DecoderPro fournit une fen&#234;tre de contr&#244;le des communications 
+      vous permettant de voir ce qui se passe sur la liaison de 
+      communication entre le programme et le mat&#233;riel du r&#233;seau.</P>
 
-      <p>When the monitor window opens, it will automatically
-      display all traffic on the communications link.</p>
+      <p>Lorsque la fen&#234;tre du moniteur s'ouvre, elle affiche 
+      automatiquement tout le trafic sur le lien de communication.</p>
 
-      <p>The Title bar will display the <em>name</em> of your DCC
-      systems communications link.</p>
+      <p>La barre de titre affiche le <em>nom</em> du lien de 
+      communication de votre syst&#232;me DCC.</p>
 
-      <p align="center"><img style="width: 739px; height: 215px;"
-      alt="monitor" src="images/Main_MonitorWindow.png"><br></p>
+      <p align = "center"> <img style = "width: 739px; height: 215px;"
+      alt = "monitor" src = "images/Main_MonitorWindow.png"> <br></p>
 
-      <p align="left"></p>
+      <p align = "left"></p>
 
-      <p align="left">The messages that are sent and received over
-      the communications link are displayed in the main pane of the
-      window.</p>
+      <p align = "left"> Les messages envoy&#233;s et re&#231;us via le lien de 
+      communication sont affich&#233;s dans le volet principal de la fen&#234;tre.</p>
 
-      <h4 align="left">Controls at the bottom of the window.</h4>
+      <h4 align = "left"> Contr&#244;les en bas de la fen&#234;tre. </h4>
 
-      <p align="left"><strong>Clear screen</strong> button- Erases
-      the log area of the screen where the messages are
-      displayed.</p>
+      Bouton <strong> Effacer l'&#233;cran </strong>: 
+      efface la zone de journal de l'&#233;cran o&#249; les messages sont affich&#233;s.</p>
 
-      <p align="left"><strong>Freeze screen</strong> button-Stops
-      acquiring new information, so that the captured information
-      stops scrolling.</p>
+      Bouton <strong> Arr&#234;t sur &#233;cran </strong>: 
+      arr&#234;te l'acquisition de nouvelles informations afin que les 
+      informations captur&#233;es ne d&#233;filent plus.</p>
 
-      <p align="left"><input name="checkbox" id="checkbox" type=
-      "checkbox"> <strong>Show raw data</strong>-Normally, the
-      monitor displays the program's interpretation of what it's
-      seeing. If you want to see the raw bytes, check this box.</p>
+      <p align = "left"> <input name = "checkbox" id = "checkbox" type =
+      "checkbox"> <strong> Afficher les donn&#233;es brutes </strong>: 
+      le moniteur affiche normalement l'interpr&#233;tation que donne le 
+      programme de ce qu'il voit. Si vous voulez voir les octets bruts, 
+      cochez cette case.</p>
 
-      <p align="left"><input name="checkbox2" id="checkbox2" type=
-      "checkbox"> <strong>Show timestamps</strong>-Normally, the
-      program just displays the data from the communication link..
-      If you would like each message to be preceded by the time it
-      was sent or recieved, check this box.</p>
+      <p align = "left"> <input name = "checkbox2" id = "checkbox2" type =
+      "case &#224; cocher"> <strong> Afficher les horodatages </strong>: 
+      normalement, le programme n'affiche que les donn&#233;es du lien de 
+      communication. Si vous souhaitez que chaque message soit pr&#233;c&#233;d&#233; 
+      de l'heure &#224; laquelle il a &#233;t&#233; envoy&#233; ou re&#231;u, cochez cette case.</p>
 
-      <p align="left"><input name="a" type="checkbox"> <span style=
-      "font-weight: bold;">Window always on Top</span> -- Always
-      displays the Monitor window.</p>
+      <p align = "left"> <input name = "a" type = "checkbox"> <span style =
+      "font-weight: bold;"> La fen&#234;tre toujours en haut </span> - Affiche 
+      toujours la fen&#234;tre du moniteur.</p>
 
-      <p align="left"><input checked="checked" name="b" type=
-      "checkbox"> <span style="font-weight: bold;">Auto
-      scroll</span> -- Scrolls the data in the window
-      continuously.</p>
+      <p align = "left"> <input checked = "checked" name = "b" type =
+      "checkbox"> <span style = "font-weight: bold;"> D&#233;filement 
+      automatique </span>: fait d&#233;filer les donn&#233;es dans la fen&#234;tre 
+      en continu.</p>
 
-      <p align="left"><span style="font-weight: bold;">Filter
-      Bytes: <input size="40" name="c"></span></p>
+      <p align = "left"> <span style = "font-weight: bold;"> Filtrer 
+      les Octets: <input size = "40" name = "c"> </span></p>
 
-      <div class="nomenu" id="mBody">
-        <div id="mainContent">
+      <div class = "nomenu" id = "mBody">
+        <div id = "mainContent">
           <dl>
-            <dd>You can filter unwanted messages from the window by
-            entering each message's first hex value into the
-            "Filter Bytes" field. This can be especially helpful
-            when there is a lot of routine comm traffic. Separate
-            multiple values by spaces. e.g. "B0 D0 CC". This
-            example will suppress any messages whose raw data
-            starts with "B0", "D0" or "CC" You can determine the
-            available hex values by turning on "Show raw
-            data."</dd>
+            <dd> Vous pouvez filtrer les messages ind&#233;sirables de la 
+            fen&#234;tre en entrant la premi&#232;re valeur hexad&#233;cimale de chaque 
+            message dans le champ "Filtrer les octets". Cela peut &#234;tre 
+            particuli&#232;rement utile lorsque le trafic de communication 
+            est important. S&#233;parez plusieurs valeurs par des espaces. 
+            par exemple. "B0 D0 CC". Cet exemple supprimera tous les 
+            messages dont les donn&#233;es brutes commencent par "B0", "D0" 
+            ou "CC". Vous pouvez d&#233;terminer les valeurs hexad&#233;cimales 
+            disponibles en activant l'option "Afficher les donn&#233;es brutes". </Dd>
           </dl>
         </div>
       </div>
 
-      <p align="left"><span style="font-weight: bold;">Choose log
-      file</span> button -- Log monitor data to a file for recovery
-      for diagnostics, and sharing data with others.</p>
+      <p align = "left"> <span style = "font-weight: bold;"> Choisissez 
+      un Bouton Fichier Journal</span>: enregistrez les donn&#233;es du moniteur 
+      dans un fichier pour les r&#233;cup&#233;rer &#224; des fins de diagnostique et 
+      les partager avec d'autres.</p>
 
-      <p align="left"><span style="font-weight: bold;">Start
-      logging</span> button -- Starts sending data in <span style=
-      "font-weight: bold;">Monitor Window</span> to selected
-      file.</p>
+      <span style = "font-weight: bold;">Bouton D&#233;marrer 
+      l'enregistrement </span> - Lance l'envoi de donn&#233;es de la<span style =
+      "font-weight: bold;"> Fen&#234;tre du moniteur </span> vers le fichier 
+      s&#233;lectionn&#233;.</p>
 
-      <h4 align="left"><span style=
-      "font-weight: normal;"><span style="font-weight: bold;">Stop
-      logging</span> button -- Stops sending data in <span style=
-      "font-weight: bold;">Monitor Window</span> to selected
-      file.</span><br></h4>
+      <h4 align = "left"> <span style =
+      "font-weight: normal;"> <span style = "font-weight: bold;"> Bouton 
+      Arr&#234;ter l'enregistrement </span> - Arr&#234;te l'envoi de donn&#233;es de la <span style =
+      "font-weight: bold;"> Fen&#234;tre du moniteur </span> vers le fichier 
+      s&#233;lectionn&#233;. </span> <br> </h4>
 
-      <h4 style="font-weight: normal;" align="left">Logging to a
-      File</h4>
+      <h4 style = "font-weight: normal;" align = "left"> Connexion &#224; un 
+      fichier </h4>
 
-      <p align="left">Sometimes, it is useful to capture the events
-      that are happening. If a problem occurs, then the information
-      capture in the log file can be sent to the group for analysis
-      of the problem. Small amounts of information can be copied
-      from the display pane of the monitor window. If more
-      information is needed than is provided by the window, you
-      need to write the information to a log file on your
-      computer's disk.</p>
+      <p align = "left"> Parfois, il est utile de capturer les &#233;v&#233;nements 
+      qui se produisent. Si un probl&#232;me survient, les informations 
+      captur&#233;es dans le fichier journal peuvent &#234;tre envoy&#233;es au groupe 
+      pour analyse du probl&#232;me. De petites quantit&#233;s d'informations 
+      peuvent &#234;tre copi&#233;es &#224; partir du volet d'affichage de la fen&#234;tre 
+      du moniteur. Si vous avez besoin de plus d'informations que celles 
+      fournies par la fen&#234;tre, vous devez les &#233;crire dans un fichier 
+      journal sur le disque de votre ordinateur.</p>
 
-      <p align="left">To do this:</p>
+      <p align = "left"> Pour ce faire:</p>
 
       <ol>
-        <li>Click the <strong>Choose log file</strong> button. This
-        opens a <strong>Save</strong> dialog on your computer,
-        locate the folder where you would like to save the log
-        file, give the log file a name ( if you use the name of an
-        existing file, it will be overwritten). Click on Save
-        button.</li>
+        <li>Cliquez sur le bouton <strong> Choisir le fichier journal </strong>. 
+        Cela ouvre une bo&#238;te de dialogue <strong> Enregistrer </strong> 
+        sur votre ordinateur, localisez le dossier dans lequel vous 
+        souhaitez enregistrer le fichier journal, attribuez un nom au 
+        fichier journal (si vous utilisez le nom d'un fichier existant, 
+        il sera &#233;cras&#233;). ). Cliquez sur le bouton Enregistrer. </Li>
 
-        <li>When you are ready to capture the data that you want to
-        save, click on the <strong>Start logging</strong> button on
-        the monitor window.</li>
+        <li>Lorsque vous &#234;tes pr&#234;t &#224; capturer les donn&#233;es que vous 
+        souhaitez enregistrer, cliquez sur le bouton <strong> D&#233;marrer 
+        la journalisation </strong> dans la fen&#234;tre du moniteur. </li>
 
-        <li>When done, click the <strong>Stop logging</strong>
-        button to store the data and close the file.</li>
+        <li>Une fois termin&#233;, cliquez sur le bouton <strong> Arr&#234;ter 
+        la journalisation </strong> pour stocker les donn&#233;es et fermer 
+        le fichier. </li>
       </ol>
 
-      <h4>Adding Message</h4>button <input size="50" name="v">
+      Bouton <h4> Ajout d'un message </h4> <input size = "50" name = "v">
 
-      <p>Type your message in the Add Message text box, then click
-      on the <strong>Add Message</strong> button to add your
-      message to the log file.</p>
-      <hr>
-      <a href="dp3_menubar.shtml">Back to Index</a>
+       <p> Saisissez votre message dans la zone de texte Ajouter un 
+       message, puis cliquez sur le bouton <strong> Ajouter un 
+       message </strong> pour ajouter votre message au fichier journal.</p>
+       <h>
+       <a href="dp3_menubar.shtml"> Retour &#224; l'Index </a>
 
       <div align="right"></div><!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
