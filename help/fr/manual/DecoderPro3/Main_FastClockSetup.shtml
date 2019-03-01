@@ -1,7 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Translation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-03-01 -->
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -24,14 +24,14 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>Tool Menu</h1>
+      <h1>Menu Outil</h1>
 
-      <h2>Fast Clock Setup Window</h2>
+      <h2>Fen&#234;tre Configuration Horloge Acc&#233;l&#233;r&#233;e</h2>
 
       <div align="right">
-        <p><a href="Main_Tool.shtml#Clocks">Back</a></p>
+        <p><a href="Main_Tool.shtml#Clocks">Retour</a></p>
 
-        <p><a href="index.shtml#Main">Back to Index</a></p>
+        <p><a href="index.shtml#Main">Retour &#224; l'Index</a></p>
       </div>
       <hr>
 
@@ -43,67 +43,70 @@
             "Fast Clock Setup window" width="357" height="478"
             border="4"></p>
 
-            <p><strong>Clock Status</strong></p>
+            <p><strong>&#201;tat de l'horloge</strong> </p>
 
-            <p>Status of the clock is displayed as is the
-            <strong>Current Fast Time:</strong></p>
+             <p>Le statut de l'horloge est affich&#233;, de m&#234;me que le 
+             <strong>temps rapide actuel:</strong> </p>.
 
-            <p>The button at the bottom of the window toggles
-            between <strong>Stop Clock</strong> and <strong>Start
-            Clock</strong> when clicked, allowing you to start/stop
-            clock as you desire.</p>
-          </td>
+             <p>Lorsque vous cliquez sur le bouton situ&#233; en bas de la 
+             fen&#234;tre, vous pouvez basculer entre<strong> Arr&#234;ter 
+             l'horloge</strong> et <strong>D&#233;marrer Horloge</strong>, 
+             ce qui vous permet de d&#233;marrer / arr&#234;ter l'horloge &#224; votre 
+             guise.</p>
+           </td>
 
-          <td width="49%" align="left" valign="top">
-            <p><strong>Time Source</strong> drop-down list allows
-            you to select the your clock source. Usually, the
-            Internal Computer Clock is selected unless you have a
-            DCC clock on your system.</p>
+           <td width = "49%" align = "left" valign = "top">
+			<p>La <strong>source temporelle</strong> vous permet de 
+           s&#233;lectionner la source d'horloge. G&#233;n&#233;ralement, l'horloge 
+           interne de l'ordinateur est s&#233;lectionn&#233;e, sauf si vous avez 
+           une horloge DCC sur votre syst&#232;me.</P>
 
-            <p><input name="checkbox" type="checkbox" id="checkbox"
-            checked> <strong>Synchronize Internal Fast Clock and
-            <em>system</em> Fast Clock</strong> will normally be
-            checked. (Loconet shown with Digitrax).</p>
+             <p> <input name = "checkbox" type = "checkbox" id = "checkbox"
+             v&#233;rifi&#233;> <strong> La synchronisation de l'horloge rapide 
+             interne et du <em>syst&#232;me</em> Horloge Acc&#233;l&#233;r&#233;e</strong> sera 
+             normalement coch&#233;e. (Loconet montr&#233; avec Digitrax).</p>
 
             <p><input type="checkbox" name="checkbox2" id=
-            "checkbox2"> <strong>Correct hardware clock</strong>
-            used to maintain accurate time when using a hardware
-            fast clock.</p>
+            "checkbox2"> <strong>Corriger l'horloge mat&#233;rielle</strong> 
+            utilis&#233;e pour conserver une heure pr&#233;cise lorsque vous 
+            utilisez une horloge mat&#233;rielle rapide.</P>
 
-            <p>If you clock supports computer setting of 12/24 hour
-            display, <input type="checkbox" name="checkbox3" id=
-            "checkbox3"> <strong>Use 12-hour clock display</strong>
-            will be displayed.</p>
+            <p> Si votre horloge prend en charge le r&#233;glage d'affichage de 
+            l'ordinateur  12/24 heures, <input type = "checkbox" 
+            name = "checkbox3" id = "checkbox3"> <strong> L'affichage 
+            de l'horloge sur 12 heures </strong> sera affich&#233;. </p>
 
-            <p><strong>Fast Clock Rate</strong> text box, type in
-            the multiplier factor for the wall clock time. Example:
-            4.000 rate would mean than fast clock move 1 hour while
-            wall clock moves 15 minutes. Click on
-            <strong>Set</strong> button to set the rate. If
-            anything is incorrect an error message will be
-            displayed. If the rate is valid then it will be sent to
-            all clocks, even if they are synchronized.</p>
+            Dans la zone de texte <p><strong>Taux d'horloge rapide</strong>, 
+            entrez le facteur de multiplication correspondant &#224; l'heure 
+            de l'horloge murale. Exemple: un taux de 4.000 signifierait 
+            qu'une horloge rapide se d&#233;place d'une heure tandis que 
+            l'horloge murale se d&#233;place de 15 minutes. Cliquez sur le 
+            bouton <strong>D&#233;finir</strong> pour d&#233;finir le taux. 
+            Si quelque chose est incorrect, un message d'erreur sera 
+            affich&#233;. Si le taux est valide, il sera envoy&#233; &#224; toutes 
+            les horloges, m&#234;me si elles sont synchronis&#233;es.
+             </P>
 
-            <p><strong>Fast Clock Time</strong> text box, type in
-            time in hours and minutes using 24 hour clock. Click
-            <strong>Set</strong> button to set all clock times.</p>
+            Dans la zone de texte <p> <strong>Heure d'horloge rapide</strong>, 
+            saisissez l'heure en heures et en minutes en utilisant une 
+            horloge de 24 heures. Cliquez sur le bouton <strong>D&#233;finir</strong> 
+            pour d&#233;finir toutes les heures. </P>
 
-            <p><strong>Start Up Options</strong></p>
+            <p><strong>Options de d&#233;marrage</strong> </p>
 
-            <p>All options set in this section take effect when you
-            load either Panel file or configuration file if you do
-            not use a panel.</p>
+            <p>Toutes les options d&#233;finies dans cette section prennent 
+            effet lorsque vous chargez un fichier Panel ou un fichier 
+            de configuration si vous n'utilisez pas de panel. </p>
 
-            <p><input type="checkbox" name="checkbox4" id=
-            "checkbox4"> <strong>Start with Fast Clock
-            Stopped</strong> is checked your Fast Clock will start
-            up Stopped (Paused) else if will start at file loading
-            time.</p>
+            <p> <type input = "checkbox" name = "checkbox4" id =
+            "checkbox4"> <strong>D&#233;marrer avec Horloge Rapide arr&#234;t&#233;e</strong> 
+            est coch&#233;e, votre horloge rapide d&#233;marrera arr&#234;t&#233;e (en pause) 
+            sinon, elle d&#233;marrera au moment du chargement du fichier. </p>
 
-            <p><input type="checkbox" name="checkbox5" id=
-            "checkbox5"> <strong>Set Fast Clock Time to</strong>
-            hours and minutes as 24 hour clock. Click
-            <strong>Set</strong> button to set the time.</p>
+            <p> <type input = "checkbox" nom = "checkbox5" id =
+            "checkbox5"> <strong>D&#233;finissez l'Heure de l'Horloge Rapide avec</strong> 
+            les heures et les minutes sur 24 heures. Cliquez sur le 
+            bouton <strong>D&#233;finir</strong> pour d&#233;finir l'heure..</p>
           </td>
         </tr>
       </table>
