@@ -1406,7 +1406,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
     public String getPacketString() {
        if ( this.isWriteDccPacketMessage() ) {
             StringBuffer b = new StringBuffer();
-            for(int i = 2;i<=getGroupCount();i++){
+            for(int i = 2;i<=getGroupCount()-1;i++){
                 b.append(this.getValueString(i));
             }
             return(b.toString());
