@@ -1,7 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Translation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-03-01 --> 
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -26,379 +26,358 @@
     <div id="mainContent">
       <a name="Top" id="Top"></a>
 
-      <h1>DecoderPro&reg;3 Main Window</h1>
+      <h1>DecoderPro&reg;3 Fen&#234;tre Principale</h1>
 
-      <h2>LocoNet Menu</h2>
+      <h2>Menu LocoNet</h2>
 
       <div align="right">
-        <p><a href="dp3_menubar.shtml">Back to Index</a><a href=
+        <p><a href="dp3_menubar.shtml">Retour &#224; l'Index</a><a href=
         "index.shtml"></a></p>
       </div>
       <hr>
 
-      <p><strong>Monitor LocoNet</strong></p>
+      <p><strong>Moniteur LocoNet</strong></p>
 
-      <p>Opens the <a href="Main_Monitor_Window.shtml">Monitor
-      LocoNet Window (Generic Communications Monitor Window)</a>
-      and automatically displays the information that is being sent
-      and received on the communications link between your computer
-      and your DCC system.</p>
+      <p>Ouvre la <a href="Main_Monitor_Window.shtml"> fen&#234;tre Moniteur 
+      LocoNet (fen&#234;tre de surveillance des communications g&#233;n&#233;riques) </a> 
+      et affiche automatiquement les informations envoy&#233;es et re&#231;ues 
+      sur la liaison de communication entre votre ordinateur et 
+      votre syst&#232;me DCC. .</p
 
-      <p><strong><a name="Slots" id="Slots"></a>Monitor
-      Slots</strong></p>
+      <p><strong><a name="Slots" id="Slots"> </a> Moniteur de Slot</strong></p
 
-      <p>Opens the <a href="#SlotMonitor">Monitor Slots</a> window,
-      and displays a table of the "command station slots"
-      contents.</p>
+      <p>Ouvre la fen&#234;tre <a href="#SlotMonitor"> Surveiller les 
+      Slots</a> et affiche un tableau du contenu des "Slots de la 
+      centrale de commande".</p
 
-      <p><strong><a name="Clock" id="Clock"></a>Monitor
-      Clock</strong></p>
+      <p><strong><a name="Clock" id="Clock"> </a> Horloge du moniteur</strong></p
 
-      <p>A Digitrax LocoNet can contain it's own fast clock
-      timebase. This can be driven either by a DCS100/DCS200
-      command station, or by a separate fast clock module such as
-      those made by Logic Rail Technologies. The <a href=
-      "#ClockMonitor">Monitor Clock</a> dialog allows you to
-      control this feature.</p>
+      <p>Un DigiTrax LocoNet peut contenir sa propre base de temps 
+      d'horloge rapide. Cela peut &#234;tre pilot&#233; soit par une centrale 
+      de commande DCS100/DCS200, soit par un module d'horloge rapide 
+      distinct tel que ceux fabriqu&#233;s par Logic Rail Technologies. 
+      La bo&#238;te de dialogue <a href= "#ClockMonitor"> Moniteur Horloge</a>
+       vous permet de contr&#244;ler cette fonctionnalit&#233;.</P>
 
-      <p><strong>Monitor LocoNet Stats</strong></p>
+      <p><strong>Surveiller les statistiques LocoNet</strong></p
 
-      <p>If active displays the statistics related to traffic on
-      the LocoNet Monitor <strong>LocoNet Stats</strong>
-      Window.</p>
+      <p>Si actif, affiche les statistiques relatives au trafic dans 
+      la fen&#234;tre <strong>Statistiques LocoNet</strong> du Moniteur LocoNet.</p
 
-      <p><img src="images/separator.png" alt="sep" height="4"
-      width="340"></p>
+      <p><img src = "images/separator.png" alt = "sep" height = "4"
+      width = "340"></p
 
-      <p><strong><a name="BDL16" id="BDL16"></a>Configure
-      BDL16</strong>/<strong>BDL168</strong></p>
+      <p><strong><a name="BDL16" id="BDL16"> </a>Configurer BDL16</strong>/<strong>BDL168</strong></p>
 
-      <p>Opens <a href="#BDL16Programmer">Configure
-      BDL16/BDL162/BDL168</a> window</p>
+      <p>Ouvre la fen&#234;tre <a href="#BDL16Programmer">Configurer BDL16/BDL162/BDL168 </a></p>
 
-      <p><strong>Configure LocoIO</strong></p>
+      <p><strong>Configurer LocoIO</strong></p
 
-      <p>Opens the <a href="#LocoIOProgrammer">Configure LocoIO</a>
-      window (no longer supported, see the <a href=
-      "../../package/jmri/jmrix/loconet/locoio/LocoIOFrame.shtml">LocoIO
-      page</a>)</p>
 
-      <p><strong><a name="PM4" id="PM4"></a>Configure
-      PM4</strong>/PM42</p>
+      <p>Ouvre la fen&#234;tre <a href="#LocoIOProgrammer"> Configurer LocoIO </a>
+      (n'est plus prise en charge, voir <a href = "../../package/jmri/jmrix/loconet/locoio/LocoIOFrame .shtml ">Page LocoIO </a>)</p
 
-      <p>Opens the <a href="#PM4Programmer">Configure PM4/PM42</a>
-      window.</p>
+      <p><strong><a name="PM4" id="PM4"> </a>Configurer PM4</strong>/PM42</p
 
-      <p><strong><a name="SE8C" id="SE8C"></a>Configure
-      SE8C</strong></p>
+      <p>Ouvre la fen&#234;tre<a href="#PM4Programmer">Configurer M4/PM42 </a>.
+      </p
 
-      <p>Opens the <a href="#SE8CProgrammer">Configure SE8C</a>
-      window.</p>
+      <p><strong><a name="SE8C" id="SE8C"> </a>Configurer SE8C</strong></p
 
-      <p><strong><a name="DS64" id="DS64"></a>Configure
-      DS64</strong></p>
+      <p>Ouvre la fen&#234;tre <a href="#SE8CProgrammer" Configurer SE8C </a>.</p
 
-      <p>Opens the <a href="#DS64Programmer">Configure DS64</a>
-      window.</p>
+      <p><strong><a name="DS64" id="DS64"> </a>Configurer DS64</strong></p
 
-      <p><strong><a name="CommandStation" id=
-      "CommandStation"></a>Configure Command Station</strong></p>
+      <p>Ouvre la fen&#234;tre <a href="#DS64Programmer">Configurer DS64 </a>.</p
 
-      <p>Opens the Configure Command Station window</p>
+      <p><strong><a name="CommandStation" id= "CommandStation"> </a>
+      Configurer la Centrale de Commande</strong></p
 
-      <p><strong>Configure LocoNet ID</strong></p>
+      <p>Ouvre la fen&#234;tre Configurer la Centrale de Commande</p
 
-      <p>Opens the <strong>Configure LocoNet ID</strong> dialog
-      that allows you to <input name="button5" id="button5" value=
-      "Read" type="submit"> or <input name="button6" id="button6"
-      value="Set" type="submit"> the LocoNet ID
-      <strong>Value:</strong></p>
+      <p><strong>Configurer l'identifiant LocoNet</strong></p
 
-      <p><img src="images/Main_Loconet08.png" alt="loconet if"
-      height="145" width="245"></p>
+      <p>Ouvre la bo&#238;te de dialogue <strong>Configurer l'identifiant 
+      LocoNet</strong> qui vous permet de <input name = "button5" id = 
+      "button5" value = "Read" type = "submit"> ou <input name = "button6 
+      "id =" button6 "value =" Set "type =" submit ">identifier 
+      l'identifiant LocoNet <strong>Valeur:</strong></p
 
-      <p><strong>Configure Duplex Group</strong></p>
+      <p><img src = "images/Main_Loconet08.png" alt = "loconet si" height = "145" width = "245"></p
 
-      <p>Provides dialog to configure duplex Radio system</p>
+      <p><strong>Configurer le groupe duplex</strong></p
 
-      <table style="text-align: left; width: 100%;" border="1"
-      cellpadding="2" cellspacing="2">
+      <p>Fournit une bo&#238;te de dialogue pour configurer 
+      le syst&#232;me radio duplex</p
+
+      <table style = "text-align: left; width: 100%;" border = "1"
+      cellpadding = "2" cellpacing = "2">
         <tbody>
           <tr>
-            <td><img src="images/Loconet_DuplexGroup.png" alt=
-            "duplex group" height="406" width="478"></td>
+            <td> <img src = "images/Loconet_DuplexGroup.png" alt =
+            "duplex group" height = "406" width = "478"> </td>
 
-            <td><img style="width: 478px; height: 406px;" alt=
-            "duplex scan" src=
-            "images/Loconet_DuplexGroup01.png"></td>
+            <td> <img style = "width: 478px; height: 406px;" alt =
+            "duplex scan" src = "images/Loconet_DuplexGroup01.png"> </td>
           </tr>
         </tbody>
       </table>
 
-      <p><img src="images/separator.png" alt="sep" height="4"
-      width="340"></p>
+      <p><img src = "images/separator.png" alt = "sep" height = "4"
+      width = "340"></p
 
-      <p><strong>Send Throttle Messages</strong></p>
+      <p><strong>Envoyer des messages de r&#233;gulation</strong></p
 
-      <p>Opens <strong>Throttle message</strong> prompt with
-      limited capability to send messages to handheld throttle.</p>
+      <p>Ouvre l'invite <strong>Message d'acc&#233;l&#233;ration</strong> avec 
+      une capacit&#233; limit&#233;e &#224; envoyer des messages au r&#233;gulateur du 
+      terminal mobile.</p
 
-      <p><img src="images/Main_Loconet10.png" alt=
-      "send loconet messages" height="100" width="267"></p>
+      <p><img src = "images/Main_Loconet10.png" alt = "send loconet 
+      messages" height = "100" width = "267"></p
 
-      <p><img src="images/separator.png" alt="sep" height="4"
-      width="340"></p>
+      <p><img src = "images/separator.png" alt = "sep" height = "4"
+      width = "340"></p
 
-      <p><strong><a name="Packet" id="Packet"></a>Send LocoNet
-      Packet</strong></p>
+      <p><strong><a name="Packet" id="Packet"> </a> Envoyer un paquet 
+      LocoNet</strong></p
 
-      <p>Opens the <a href="#SendPacket">Send LocoNet Packet</a>
-      dialog that lets you directly command LocoNet devices.</p>
+      <p>Ouvre la bo&#238;te de dialogue <a href="#SendPacket"> Envoyer un 
+      paquet LocoNet </a> qui vous permet de commander directement des
+       appareils LocoNet.</p
 
-      <p><strong>Select PR3 Mode</strong></p>
+      <p><strong>S&#233;lectionner le mode PR3</strong></p
 
-      <p>Opens the <strong>Select PR3 Mode</strong> dialog.</p>
+      <p>Ouvre la bo&#238;te de dialogue <strong>S&#233;lectionner le mode 
+      PR3</strong>.</p
 
-      <p><img src="images/Main_Loconet14.png" alt="PR3 Mode"
-      height="91" width="452"></p>
+      <p><img src = "images/Main_Loconet14.png" alt = 
+      "Mode PR3" height = "91" width = "452"></p
 
-      <p><img src="images/separator.png" alt="sep" height="4"
-      width="340"></p>
+      <p><img src = "images/separator.png" alt = 
+      "sep" height = "4" width "340"></p
 
-      <p><strong><a name="Firmware" id="Firmware"></a>Download
-      Firmware</strong></p>
+      <p><strong><a name="Firmware" id="Firmware"> </a> T&#233;l&#233;charger le 
+      micrologiciel</strong></p
 
-      <p>Opens the <a href="#FirmwareDownloader">Firmware
-      Downloader.</a></p>
+      <p>Ouvre le <a href="#FirmwareDownloader"> T&#233;l&#233;chargeur de Firmware. </a></p
 
-      <p><strong><a name="Sounds" id="Sounds"></a>Download
-      Sounds</strong></p>
+      <p><strong><a name="Sounds" id="Sounds"> </a> T&#233;l&#233;charger des sons</strong></p
 
-      <p>Opens the <a href="#SoundDownloader">Decoder Sound
-      Downloader</a>.</p>
+      <p>Ouvre le <a href="#SoundDownloader"> T&#233;l&#233;chargeur de son du d&#233;codeur </a>.</p>
 
-      <p><strong>Edit SPJ Sound</strong> <strong>File</strong></p>
+      <p><strong> Modifier le Fichier son SPJ </strong></p>
 
-      <p>Opens Sound File editing tool</p>
+      <p>Ouvre l'outil d'&#233;dition de fichier son</p>
+      <p><img src = "images/Main_Loconet15.png" alt = "Edit soumd"
+      height = "93" width = "248"></p>
 
-      <p><img src="images/Main_Loconet15.png" alt="Edit soumd"
-      height="93" width="248"></p>
+      <p><strong> D&#233;marrer le serveur LocoNet </strong></p>
 
-      <p><strong>Start LocoNet Server</strong></p>
+      <p>D&#233;marre le serveur LocoNet.</p>
 
-      <p>Starts the LocoNet server.</p>
+      <p><strong> D&#233;marrer LocoNet sur un serveur TCP </strong></p>
 
-      <p><strong>Start LocoNet over TCP Server</strong></p>
+      <p>Ouvre la bo&#238;te de dialogue <strong> Serveur LocoNetOver Tcp </strong>.</p>
 
-      <p>Opens the <strong>LocoNetOver Tcp Server</strong>
-      dialog.</p>
-
-      <p><img src="images/Main_Loconet09.png" alt="LocoNet server"
-      border="4" height="120" width="361"></p>
+      <p><img src = "images/Main_Loconet09.png" alt = "serveur LocoNet"
+      border = "4" height = "120" width = "361"></p>
 
       <p>.</p>
 
-      <div align="right">
-        <p><a href="Main_Menu.shtml#System">Back to Index</a></p>
+      <div align = "right">
+        <p><a href="Main_Menu.shtml#System"> Retour &#224; l'index </a></p>
       </div>
-      <hr>
+      <h>
 
-      <h4><a name="SlotMonitor" id="SlotMonitor"></a>Monitor Slot
-      Window</h4>
+      <h4><a name="SlotMonitor" id="SlotMonitor"> </a>Fen&#234;tre Moniteur de Slots</h4>
 
-      <p>Slots are used to control individual locomotive and
-      consists. The display includes the decoder's speed step
-      format, current speed and function settings, consist
-      information and status. You may choose to show all slots or
-      just the ones being actively used.</p>
+      <p>Les slots sont utilis&#233;s pour contr&#244;ler individuellement chaque 
+      locomotive et les couplage. L'affichage comprend le format de cran d
+      e vitesse du d&#233;codeur, la vitesse actuelle et les param&#232;tres de 
+      fonction, les informations de couplage et l'&#233;tat. Vous pouvez 
+      choisir d'afficher tous les slots ou uniquement 
+      ceux qui sont utilis&#233;s activement.</P>
 
-      <p align="center"><img src="images/Main_Loconet01.png" alt=
-      "slot monitor" height="274" width="800"></p>
+      <p align = "center"> <img src = "images/Main_Loconet01.png" alt =
+      "slot monitor" height = "274" width = "800"></p>
 
-      <p>The checkboxes at the top allow to select what slots are
-      displayed.</p>
+      <p>Les cases &#224; cocher en haut permettent de s&#233;lectionner les slots &#224; afficher.</p>
 
-      <p><input name="checkbox" id="checkbox" type="checkbox">
-      <strong>Show unused slots</strong></p>
+      <p><input name = "checkbox" id = "checkbox" type = "checkbox">
+      <strong> Afficher les emplacements inutilis&#233;s </strong></p>
 
-      <p><input name="checkbox2" id="checkbox2" type="checkbox">
-      <strong>Show system slots</strong></p>
+      <p><input name = "checkbox2" id = "checkbox2" type = "checkbox">
+      <strong> Afficher les emplacements syst&#232;me </strong></p>
 
-      <p><strong><input name="button" id="button" value="estop all"
-      type="submit"></strong> Executes an <strong>Emergency
-      Stop</strong> for all locomotives.</p>
+      <p><strong> <input name = "boutton" id = "boutton" value = "estop " 
+      type = "submit"> </strong> Ex&#233;cute un <strong> Arr&#234;t d'Urgence </strong> 
+      pour toutes les locomotives. </p>
 
-      <p>The columns are:</p>
+      <p>Les colonnes sont:</p>
 
-      <table align="center" border="1" cellpadding="1" cellspacing=
-      "1" width="90%">
+      <table align = "center" border = "1" cellpadding = "1" cellspacing =
+      "1" width = "90%">
         <tbody>
           <tr>
-            <td width="18%"><strong>Column</strong></td>
+            <td width = "18%"> <strong> Colonne </strong> </td>
 
-            <td colspan="2" width="82%">
-            <strong>Displays</strong></td>
+            <td colspan = "2" width = "82%">
+            <strong> Affichages </strong> </td>
           </tr>
 
           <tr>
-            <td>Slot</td>
+            <td> Emplacement </td>
 
-            <td colspan="2">The number of the slot</td>
+            <td colspan = "2"> Le num&#233;ro de l'emplacement </td>
           </tr>
 
           <tr>
-            <td>Address</td>
+            <td> Adresse </td>
 
-            <td colspan="2">Locomotive address the slot
-            controls</td>
+            <td colspan = "2"> Adresse de la locomotive &#224; l'emplacement
+            contr&#244;les </td>
           </tr>
 
           <tr>
-            <td>Speed</td>
+            <td> Vitesse </td>
 
-            <td colspan="2">For unconsisted locomotives and
-            addresses that are at the top of a consist, this is the
-            current speed setting. It is an internal value for
-            consisted slots.</td>
+            <td colspan = "2"> Pour les locomotives non conserv&#233;es et 
+            les adresses qui se trouvent en t&#234;te d'un couplage, il 
+            s'agit du r&#233;glage de la vitesse actuelle. C'est une valeur 
+            interne pour les slots coupl&#233;s. </Td>
           </tr>
 
           <tr>
-            <td>Decoder Type</td>
+            
 
-            <td colspan="2">The format of the commands being sent
-            to the decoder, typically, either 128 step or 28 step,
-            though other values are possible.</td>
+			<td> Type de D&#233;codeur </td>
+
+            <td colspan = "2"> Le format des commandes envoy&#233;es au d&#233;codeur, 
+            g&#233;n&#233;ralement en 128 crans ou en 28 crans, bien que d'autres 
+            valeurs soient possibles. </td>
           </tr>
 
           <tr>
-            <td rowspan="5" valign="top">Status</td>
+            <td rowspan = "5" valign = "top"> &#201;tat </td>
 
-            <td colspan="2">One of the four possible states:</td>
+            <td colspan = "2"> L'un des quatre &#233;tats possibles: </td>
           </tr>
 
           <tr>
-            <td>Free</td>
+            <td> Libre </td>
 
-            <td>Not reserved for any particular use, no
-            contents</td>
+            <td> Non r&#233;serv&#233; &#224; un usage particulier, pas de contenu </td>
           </tr>
 
           <tr>
-            <td>Idle</td>
+            <td> Inactif </td>
 
-            <td>Not reserved for any particular use, no
-            contents</td>
+            <td> Non r&#233;serv&#233; &#224; un usage particulier, pas de contenu </td>
           </tr>
 
           <tr>
-            <td>Common</td>
+            <td> Commun </td>
 
-            <td>Not in use at the moment, but still contains valid
-            data for the last decoder to use it.</td>
+            <td> Non utilis&#233; pour le moment, mais contient toujours des 
+            donn&#233;es valides pour le dernier d&#233;codeur qui les utilise. </td>
           </tr>
 
           <tr>
-            <td>In Use</td>
+            <td> En cours d'utilisation </td>
 
-            <td>Currently controlling a decoder</td>
+            <td> Contr&#244;le actuellement un d&#233;codeur </td>
           </tr>
 
           <tr>
-            <td>Consisted</td>
+            <td> Coupl&#233; </td>
 
-            <td colspan="2">Displays the consist status of the
-            slot, whether it is not consisted, the top of a
-            consist, included in a consist, etc.</td>
+            <td colspan = "2"> Affiche l'&#233;tat du couplage du slot, qu'il 
+            soit ou non coupl&#233;, la t&#234;ttet d'un couplage, inclus dans un 
+            couplage, etc. </td>
           </tr>
 
           <tr>
-            <td>Throttle ID</td>
+            <td> Identifiant du R&#233;gulateur </td>
 
-            <td colspan="2">The UT4 throttles have a fixed throttle
-            ID. The DT400 has a fixed common leading HEX value and
-            a user programmable second HEX value. It is displayed
-            as two hexadecimal bytes, see the Digitrax instructions
-            for details.</td>
+            <td colspan = "2"> Les r&#233;gulateurs UT4 ont un identifiant de 
+            r&#233;gulateur fixe. Le DT400 a une valeur HEX  principale fixe 
+            commune et une seconde valeur HEX programmable par l'utilisateur. 
+            Il est affich&#233; sous forme de deux octets hexad&#233;cimaux. 
+            Pour plus de d&#233;tails, reportez-vous aux instructions de Digitrax. </Td>
           </tr>
 
           <tr>
-            <td>Direction</td>
+            <td> Direction </td>
 
-            <td colspan="2">Whether the decoder is currently being
-            commanded to go Forward or Reverse.</td>
+            <td colspan = "2"> Indique si le d&#233;codeur est command&#233; pour 
+            aller en avant ou en arri&#232;re. </td>
           </tr>
 
           <tr>
-            <td>F0-F8</td>
+            <td> F0-F8 </td>
 
-            <td colspan="2">The current function settings</td>
+            <td colspan = "2"> Les param&#232;tres de fonction actuels </td>
           </tr>
         </tbody>
       </table>
 
       <div>
-        <div align="right">
-          <a href="#Slots">Back</a>
+        <div align = "right">
+          <a href="#Slots"> Retour </a>
         </div>
       </div>
 
-      <h4><a name="ClockMonitor" id="ClockMonitor"></a> Monitor
-      Clock</h4>
+      <h4> <a name="ClockMonitor" id="ClockMonitor"> </a>Moniteur d'Horloge</h4>
 
-      <p><img src="images/Main_Loconet02.png" alt="clock monitor"
-      height="153" width="215"></p>
+      <p><img src = "images/Main_Loconet02.png" alt = "moniteur d'horloge"
+      height = "153" width = "215"></p>
 
-      <p>The <strong>Clock Monitor</strong> tool provides a
-      convenient way to:</p>
+      <p>L'outil <strong> Moniteur d'horloge </strong> constitue un moyen pratique de:</p>
 
       <ul>
-        <li><input name="button2" id="button2" value="Read" type=
-        "submit"> the current contents of the LocoNet fast
-        clock</li>
+        <li><input name = "button2" id = "button2" value = "lire" type = 
+        "submit"> le contenu actuel de l'horloge acc&#233;l&#233;r&#233;e LocoNet</li>
 
-        <li>Set the <strong>Day</strong> and
-        <strong>Time</strong></li>
+        <li>D&#233;finissez les <strong> jours </strong> et les <strong> heures </strong></li>.
 
-        <li>Set the <strong>Rate</strong>. Note that you can't
-        explicitly pause a LocoNet clock, but you can stop it by
-        setting the rate to zero.</li>
+        <li>D&#233;finissez le <strong> Taux </strong>. Notez que vous ne 
+        pouvez pas explicitement mettre en pause une horloge LocoNet, 
+        mais vous pouvez l'arr&#234;ter en r&#233;glant le taux &#224; z&#233;ro. </Li>
       </ul>
 
-      <p>If you are using a DCS100 or DCS200 command station to
-      create your LocoNet fast clock, you may have noticed that it
-      doesn't keep particularly good time. If you select the
-      "Correct LocoNet Fast Clock Master", JMRI will adjust the
-      rate of the LocoNet clock so that it keeps better time.</p>
+      <p>Si vous utilisez une station de commande DCS100 ou DCS200 
+      pour cr&#233;er votre horloge rapide LocoNet, vous avez peut-&#234;tre 
+      remarqu&#233; qu'elle ne tient pas tr&#232;s bien &#224; l'heure. Si vous 
+      s&#233;lectionnez "Corriger le pilote de l'horloge rapide LocoNet", 
+      JMRI ajustera la fr&#233;quence de l'horloge LocoNet de mani&#232;re &#224; 
+      conserver un meilleur temps.</P>
 
       <div>
-        <div align="right">
-          <a href="#Clock">Back</a>
+        <div align = "right">
+          <a href="#Clock"> Retour </a>
         </div>
       </div>
 
-      <h4><a name="BDL16Programmer" id=
-      "BDL16Programmer"></a>Configure BDL16/BDL162/BDL168
-      window</h4>
+      <h4> <a name = "BDL16Programmer" id =
+      "BDL16Programmer"> </a> Configurer la fen&#234;tre BDL16/BDL162/BDL168 </h4>
 
-      <p style="text-align: center;"><img style=
-      "border: 4px solid ; width: 447px; height: 628px;" src=
-      "images/Main_Loconet03.png" alt="BDL 16"></p>
-
+       <p style="text-align: center;"><img style=
+      "border: 4px solid ; width: 447px; height: 628px;" src="images/Main_Loconet03.png" alt="BDL 16"></p>
       <div>
-        <div align="right">
-          <a href="#BDL16">Back</a>
+        <div align = "right">
+          <a href="#BDL16"> Retour </a>
         </div>
       </div>
 
-      <h4><a name="LocoIOProgrammer" id=
-      "LocoIOProgrammer"></a>Configure LocoIO window</h4>
+      <h4> <a name = "LocoIOProgrammer" id =
+      "LocoIOProgrammer"> </a> Fen&#234;tre Configurer LocoIO </h4>
 
-      <p style="text-align: center;">Note: The LocoNet Configure
-      LocoIO tool is no longer supported; you're advised to use
-      DecoderPro&reg; to program a LocoIO board as a decoder, see
-      the <a href=
-      "../../package/jmri/jmrix/loconet/locoio/LocoIOFrame.shtml">LocoIO
-      page</a>.<br>
+      <p style = "text-align: center;"> Remarque: l'outil LocoNet Configure 
+      LocoIO n'est plus pris en charge. nous vous conseillons d'utiliser 
+      DecoderPro&reg; pour programmer une carte LocoIO en tant que 
+      d&#233;codeur, reportez-vous &#224; la section <a href =
+      "../../package/jmri/jmrix/loconet/locoio/LocoIOFrame.shtml">page LocoIO
+      </a>.<br>
       <br>
       <img src="images/Main_Loconet04.png" alt=
       "LocoNet IO programmer" border="4" height="518" width=
@@ -406,12 +385,12 @@
 
       <div>
         <div align="right">
-          <a href="#BDL16">Back</a>
+          <a href="#BDL16">Retour</a>
         </div>
       </div>
 
-      <h4><a name="PM4Programmer" id="PM4Programmer"></a>Configure
-      PM4/PM42 Window</h4>
+      <h4><a name="PM4Programmer" id="PM4Programmer"></a>Configurer la 
+      Fen&#234;tre PM4/PM42</h4>
 
       <p style="text-align: center;"><img style=
       "border: 4px solid ; width: 416px; height: 289px;" src=
@@ -419,12 +398,12 @@
 
       <div>
         <div align="right">
-          <a href="#PM4">Back</a>
+          <a href="#PM4">Retour</a>
         </div>
       </div>
 
       <h4><a name="SE8CProgrammer" id=
-      "SE8CProgrammer"></a>Configure SE8c Window</h4>
+      "SE8CProgrammer"></a>Configurer la Fen&#234;tre SE8c</h4>
 
       <p style="text-align: center;"><img src=
       "images/Main_Loconet06.png" alt="SE8C programmer" border="4"
@@ -432,203 +411,199 @@
 
       <div>
         <div align="right">
-          <a href="#SE8C">Back</a>
+          <a href="#SE8C">Retour</a>
         </div>
       </div>
 
       <h4><a name="DS64Programmer" id=
-      "DS64Programmer"></a>Configure DS64 Window</h4>
+      "DS64Programmer"></a>Configurer la Fen&#234;tre DS64</h4>
 
-      <p>The DS64 programming tool lets you configure the internal
-      options of a DS64 directly from your computer.</p>
+      <p>L'outil de programmation DS64 vous permet de configurer les 
+      options internes d'un DS64 directement &#224; partir de votre ordinateur.</p>
 
-      <p>Type the address of a DS64 board in the text field and
-      click <input name="button3" id="button3" value=
-      "Read from DS64" type="submit"> . The tool will read back the
-      current state of the various options, and set the check boxes
-      to correspond to their current values.</p>
+       <p>Saisissez l'adresse d'une carte DS64 dans le champ de texte, 
+       puis cliquez sur <input name = "button3" id = "button3" value =
+       "Lire &#224; partir de DS64" type = "submit">. L'outil relira l'&#233;tat 
+       actuel des diff&#233;rentes options et d&#233;finira les cases &#224; cocher 
+       pour correspondre &#224; leurs valeurs actuelles.</P>
 
-      <p>You can then, if you wish, change the checkboxes and click
-      <input name="button4" id="button4" value="Write to DS64"
-      type="submit"> to make your changes permanent.</p>
+       <p>Vous pouvez ensuite, si vous le souhaitez, modifier les 
+       cases &#224; cocher et cliquer sur <input name = "button4" id = "button4" value = "&#201;crire dans DS64"
+       type = "submit"> pour rendre vos modifications permanentes.</p>
 
-      <h4>Limitations</h4>Because of the way the DS64 board works,
-      this tool can't change the basic address of the unit.
-
+       <h4> Limitations </h4> En raison du fonctionnement de la carte 
+       DS64, cet outil ne peut pas modifier l'adresse de base de l'unit&#233;.
       <p style="text-align: center;"><img src=
       "images/Main_Loconet07.png" alt="DS64 Programmer" border="4"
       height="624" width="466"></p>
 
       <div>
         <div align="right">
-          <a href="#DS64">Back</a>
+          <a href="#DS64">Retour</a>
         </div>
       </div>
 
-      <h4><a name="SendPacket" id="SendPacket"></a>Send LocoNet
-      Packet dialog</h4>
+      <h4><a name="SendPacket" id="SendPacket"></a>Dialogue Envoyer 
+      Paquet LocoNet</h4>
 
       <p style="text-align: center;"><img src=
       "images/Main_Loconet11.png" alt="Send packet" border="4"
       height="311" width="468"></p>
 
-      <p>LocoNet packets are sent in raw hexadecimal format, you
-      may use the <a href="Main_Monitor_Window.shtml">Monitor
-      Window</a> in the <strong>Show Raw Data</strong> option to
-      monitor the packets.</p>
+     <p>Les paquets LocoNet sont envoy&#233;s au format hexad&#233;cimal brut. 
+     Vous pouvez utiliser la <a href="Main_Monitor_Window.shtml"> fen&#234;tre 
+     de surveillance </a> dans <strong> Afficher les donn&#233;es brutes </strong> 
+     pour surveiller les paquets.</p>
 
-      <p>The top section lets you send a single LocoNet packet.
-      Type the hexidecimal numbers and click <input name="button7"
-      id="button7" value="Send" type="submit"> , you should include
-      the byte for the checksum at the end of the message.</p>
+      <p>La section sup&#233;rieure vous permet d'envoyer un seul paquet 
+      LocoNet. Tapez les nombres hexad&#233;cimaux et cliquez sur <input 
+      name = "button7"id = "button7" value = "Send" type = "submit">, 
+      vous devez inclure l'octet pour la somme de contr&#244;le &#224; la fin du 
+      message.</p>
 
-      <p>The bottom section lets you enter from one to four packets
-      that will be repeatedly sent in sequence, with the
-      user-defined delays in between. Press the <input name=
-      "button8" id="button8" value="Go" type="submit"> to start
-      transmission sequence, and press again to stop the
-      sequence.</p>
+      <p>La section inf&#233;rieure vous permet de saisir de un &#224; quatre 
+      paquets qui seront envoy&#233;s de mani&#232;re r&#233;p&#233;t&#233;e en s&#233;quence, 
+      avec les d&#233;lais d&#233;finis par l'utilisateur entre les deux. 
+      Appuyez sur <input name = "button8" id = "button8" value = "Go" 
+      type = "submit"> pour d&#233;marrer la s&#233;quence de transmission et 
+      appuyez &#224; nouveau pour arr&#234;ter la s&#233;quence.</P>
 
       <div>
-        <p><a href="#Packet">Back</a></p>
+        <p><a href="#Packet"> Retour </a></p>
       </div>
 
-      <h4><a name="FirmwareDownloader" id=
-      "FirmwareDownloader"></a>Firmware Downloader</h4>
+      <h4> <a name="FirmwareDownloader" id= "FirmwareDownloader"> </a> 
+      T&#233;l&#233;chargeur de micrologiciels </h4>
 
-      <p>Some Digitrax products can have new firmware downloaded to
-      them.The firmware updates are distributed as .dml (Digitrax
-      Mangled Firmware) files. They contain both the code itself,
-      and various management information to make sure that it can
-      be downloaded into the hardware it expects.</p>
+      <p>Certains produits Digitrax peuvent recevoir le nouveau 
+      micrologiciel t&#233;l&#233;charg&#233;. Les mises &#224; jour du micrologiciel 
+      sont distribu&#233;es sous forme de fichiers .dml (Digitrax Mangled Firmware). 
+      Ils contiennent &#224; la fois le code lui-m&#234;me et diverses informations 
+      de gestion permettant de le t&#233;l&#233;charger dans le mat&#233;riel attendu.</P>
 
-      <p style="text-align: center;"><img src=
-      "images/Main_Loconet12.png" alt="firmware downloader" height=
-      "473" width="425"></p>
+      <p style = "text-align: center;"> <img src =
+      "images/Main_Loconet12.png" alt = "t&#233;l&#233;chargeur de firmware" height =
+      "473" width = "425"></p>
 
-      <p>To use this tool:</p>
+      <p>Pour utiliser cet outil:</p>
 
       <ul>
-        <li>Click <input name="button9" id="button9" value="Select"
-        type="submit"> and select the .dmf file you want to
-        download.<br>
+        <li>Cliquez sur <input name = "button9" id = "button9" value = "Select"
+        type = "submit"> et s&#233;lectionnez le fichier .dmf que vous souhaitez t&#233;l&#233;charger. <br>
         <br></li>
 
-        <li>Click <input name="button10" id="button10" value=
-        "Read file" type="submit"> to read the file into the
-        program and verify its contents.</li>
+        <li>Cliquez sur <input name = "button10" id = "button10" value =
+        "Read file" type = "submit"> pour lire le fichier dans le programme 
+        et v&#233;rifier son contenu. </Li>
 
-        <li>Only if instructed to by Digitrax, change the various
-        values in the control fields (this is usually not
-        needed</li>
+        <li>Modifiez les diff&#233;rentes valeurs dans les champs de contr&#244;le 
+        uniquement si cela est demand&#233; par Digitrax (g&#233;n&#233;ralement inutile)</li>
 
-        <li>Click <input name="button11" id="button11" value=
-        "Download" type="submit"> to load the firmware. This will
-        take a little while.</li>
+        <li>Cliquez sur <input name = "button11" id = "button11" value =
+        "Download" type = "submit"> pour charger le firmware. 
+        Cela prendra un peu de temps. </Li>
       </ul>
 
       <div>
-        <a href="#Firmware">Back</a>
+        <a href="#Firmware"> Retour </a>
       </div>
 
-      <h4><a name="SoundDownloader" id=
-      "SoundDownloader"></a>Download Sounds</h4>
+      <h4> <a name = "SoundDownloader" id =
+      "SoundDownloader"> </a> T&#233;l&#233;charger des sons </h4>
 
-      <p style="text-align: center;"><img src=
-      "images/Main_Loconet13.png" alt="Sound Download" height="232"
-      width="436"></p>
+      <p style = "text-align: center;"> <img src =
+      "images/Main_Loconet13.png" alt = "Sound Download" height = "232"
+      width = "436"></p>
 
-      <p>Digitrax sound decoders are loaded with "sound projects",
-      stored in "Sound Project" (.spj) files. Those contain a
-      number of "sound fragments" in .wav format, plus some
-      additional control information.</p>
+      <p>Les d&#233;codeurs sonores Digitrax sont charg&#233;s avec des "projets 
+      sonores", stock&#233;s dans des fichiers "Projet sonore" (.spj). 
+      Ceux-ci contiennent un certain nombre de "fragments sonores" 
+      au format .wav, ainsi que des informations de contr&#244;le 
+      suppl&#233;mentaires.</P>
 
-      <p>The Decoder Sound Downloader tool lets you load a new .spj
-      file into a Digitrax sound decoder via a Digitrax PR2 or PR3
-      interface. If you're using a PR3, it needs to be put into
-      "Programmer mode" before trying to download, see the main
-      <a target="_blank" href=
-      "http://jmri.org/help/en/html/hardware/loconet/PR3.shtml">PR3
-      page</a>.</p>
+      <p>L'outil Decoder Sound Downloader vous permet de charger un 
+      nouveau fichier .spj dans un d&#233;codeur de son Digitrax via une 
+      interface Digitrax PR2 ou PR3. Si vous utilisez un PR3, vous devez 
+      le mettre en "mode programmeur" avant de t&#233;l&#233;charger, consultez 
+      la section principale <a target = "_ blank" href =
+      "http://jmri.org/help/en/html/hardware/loconet/PR3.shtml"> page PR3</a>.</p>
 
-      <p>Digitrax provides sample sound project files at their
-      Sound Depot <a target="_blank" href=
-      "http://www.digitrax.com/sounddepot.php">(http://www.digitrax.com/sounddepot.php)</a>
-      web site. You can also find links to documentation and
-      additional tools there.</p>
+      <p>Digitrax fournit des exemples de fichiers de projet audio sur 
+      leur site Web Sound Depot <a target="_blank" 
+      href= "http://www.digitrax.com/sounddepot.php"> 
+      (http://www.digitrax.com/sounddepot .php) </a>. Vous 
+      pouvez &#233;galement y trouver des liens vers de la documentation 
+      et des outils suppl&#233;mentaires.</P>
 
-      <p>JMRI also provides tools for <a target="_blank" href=
+      <p>JMRI fournit &#233;galement des outils pour <a target = "_ blank" href =
       "http://jmri.org/help/en/package/jmri/jmrix/loconet/soundloader/EditorFrame.shtml">
-      editing sound project files</a> to include new sounds and
-      even to <a target="_blank" href=
-      "http://jmri.org/help/en/package/jmri/jmrix/loconet/sdfeditor/EditorFrame.shtml">
-      change the sound logic</a>. When you first select the
-      Download Sounds tool, it opens a dialog with most of the
-      controls disabled:<br>
-      <br>
-      (Click on any image on this page to see a larger version)</p>
+      l'&#233;dition de fichiers de projet audio</a> pour inclure de nouveaux 
+      sons et m&#234;me pour <a target = "_ blank" href = 
+      "http://jmri.org/help/en/package/jmri/jmrix/loconet/sdfeditor/EditorFrame.shtml "> 
+      changer la logique du son </a>. Lorsque vous s&#233;lectionnez l'outil 
+      T&#233;l&#233;charger des sons pour la premi&#232;re fois, il ouvre une bo&#238;te 
+      de dialogue avec la plupart des commandes d&#233;sactiv&#233;es: <br>
+      <br> (Cliquez sur une image de cette page pour l'agrandir.)</p>
 
-      <p>The status line at the bottom will walk you through the
-      steps needed.</p>
+      <p>La ligne d'&#233;tat en bas vous guidera pas &#224; pas.</p>
 
       <ol>
-        <li>First, click "Select" and pick the .spj file you want
-        to download.</li>
+        <li>Tout d'abord, cliquez sur "S&#233;lectionner" et s&#233;lectionnez le 
+        fichier .spj que vous souhaitez t&#233;l&#233;charger.</li>
 
-        <li>Next, click "Read" to read the file (this is a separate
-        step so you can just click "Read" multiple times if you're
-        editing and saving new versions of the file).
+        <li>Ensuite, cliquez sur "Lire" pour lire le fichier (il s'agit 
+        d'une &#233;tape distincte. Vous pouvez simplement cliquer sur "Lire" 
+        plusieurs fois si vous modifiez et enregistrez de nouvelles 
+        versions du fichier).
 
-          <p>If everything is OK, the file will be read into the
-          program and verified, a version string from the file will
-          be displayed, and the "Download" button will be
-          enabled.</p>
-        </li>
+          <p>Si tout va bien, le fichier sera lu dans le programme et 
+          v&#233;rifi&#233;, une cha&#238;ne de version du fichier sera affich&#233;e et 
+          le bouton "T&#233;l&#233;charger" sera activ&#233;.</p>
 
-        <li>Click "Download" to start the download process. It will
-        take a little while. The progress is described in the
-        status line:
+       <li> Cliquez sur "T&#233;l&#233;charger" pour lancer le processus de 
+       t&#233;l&#233;chargement. Cela prendra un peu de temps. La progression 
+       est d&#233;crite dans la ligne d'&#233;tat:
 
           <dl>
-            <dt>"Starting download; erase flash"</dt>
+            <dt>"Commencer le t&#233;l&#233;chargement; effacer le flash"</dt>
 
-            <dd>The first step is to erase the decoders memory so
-            it can take new data. This will take up to about 30
-            seconds, depending on the specific decoder.</dd>
+            <dd>La premi&#232;re &#233;tape consiste &#224; effacer la m&#233;moire du 
+            d&#233;codeur afin qu'elle puisse prendre de nouvelles donn&#233;es. 
+            Cela prendra environ 30 secondes, selon le d&#233;codeur sp&#233;cifique. </Dd>
 
-            <dt>"Sending initialization message"</dt>
+            <dt>"Envoi du message d'initialisation"</dt>
 
-            <dd>Set up the decoder to accept data after being
-            erased. This should only take a fraction of a
-            second.</dd>
+            <dd>Configurez le d&#233;codeur pour accepter les donn&#233;es 
+            apr&#232;s leur effacement. Cela ne devrait prendre qu'une 
+            fraction de seconde. </Dd>
 
-            <dt>"Send SDF data"</dt>
+            <dt>"Envoyer des donn&#233;es SDF"</dt>
 
-            <dd>Load the Sound Definition data into the decoder,
-            which should only take a few seconds</dd>
+            <dd>Chargez les donn&#233;es de d&#233;finition du son dans le 
+            d&#233;codeur, ce qui ne devrait prendre que quelques secondes </dd>
 
-            <dt>"Send WAV data"</dt>
+            <dt>"Envoyer des donn&#233;es WAV"</dt>
 
-            <dd>The sound data is being downloaded. As each block
-            is sent you'll get an update: "Send WAV data block 1",
-            then 2, then 3, etc.</dd>
+            <dd>Les donn&#233;es audio sont en cours de t&#233;l&#233;chargement. 
+            Chaque fois que vous envoyez un bloc, vous obtenez une mise 
+            &#224; jour: "Envoyez le bloc de donn&#233;es WAV 1", puis 2, puis 3, etc. </dd>
 
-            <dt>"Done"</dt>
+            <dt>"Termin&#233;"</dt>
 
-            <dd>The downloadload completed OK.</dd>
-          </dl>If something goes wrong, the final status will be
-          "Download aborted". The most common reason is that the
-          PR2 couldn't handle the data that was being send, which
-          is listed as "PR2 not ready". If this happens repeatedly,
-          make sure that the serial port and cable that the PR2 is
-          using as the control lea
-        </li>
+            <dd>Le t&#233;l&#233;chargement est termin&#233;.<dd></dl> En cas de 
+            probl&#232;me, le statut final sera "T&#233;l&#233;chargement interrompu". 
+            La raison la plus courante est que le PR2 n'a pas pu g&#233;rer 
+            les donn&#233;es en cours d'envoi, qui sont r&#233;pertori&#233;es comme 
+            "PR2 non pr&#234;t". Si cela se produit &#224; plusieurs reprises, 
+            assurez-vous que le port s&#233;rie et le c&#226;ble que le PR2 
+            utilise en tant que
+       </li>
       </ol>
 
-      <div align="right">
-        <a href="#Sounds">Back</a>
+      <div align = "right">
+        <a href="#Sounds"> Retour </a>
 
-        <p><a href="dp3_menubar.shtml">Back to Index</a><a href=
+        <p> <a href="dp3_menubar.shtml"> Retour &#224; l'index </a> <a href 
         "index.shtml"></a></p>
       </div><!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
