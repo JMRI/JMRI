@@ -21,9 +21,9 @@ import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
 /**
  *
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019
- * 
+ *
  * Prefix NBH = Named Bean Handler....
- * 
+ *
  * This object additionally supports "inverted feedback", so that when someone
  * calls "getKnownState", (typically my own code in this CTC project) we return
  * the "adjusted" value based upon "inverted feedback".
@@ -40,11 +40,10 @@ public class NBHTurnout implements Turnout {
     public static final long DEFAULT_LONG_RV = 0;              // For any function that returns long.
     public static final float DEFAULT_FLOAT_RV = (float)0.0;   // For any function that returns float.
     public static final String DEFAULT_STRING_RV = "UNKNOWN";  // NOI18N  For any function that returns String.
-    
-    private static final TurnoutManager TURNOUT_MANAGER = InstanceManager.turnoutManagerInstance();
+
     private static final NamedBeanHandleManager NAMED_BEAN_HANDLE_MANAGER = InstanceManager.getDefault(NamedBeanHandleManager.class);
 
-//  The "thing" we're protecting:    
+//  The "thing" we're protecting:
     private final NamedBeanHandle<Turnout> _mNamedBeanHandleTurnout;
     private final boolean _mFeedbackDifferent;
 
@@ -58,21 +57,26 @@ public class NBHTurnout implements Turnout {
         _mFeedbackDifferent = FeedbackDifferent;
     }
     public boolean valid() { return _mNamedBeanHandleTurnout != null; }  // For those that want to know the internal state.
-    public Object getBean() { return _mNamedBeanHandleTurnout.getBean(); }
-    
+
+    public Turnout getBean() {
+        if (valid()) return _mNamedBeanHandleTurnout.getBean();
+        return null;
+    }
+
     private static Turnout getSafeExistingJMRITurnout(String module, String userIdentifier, String parameter, String turnout) {
         try { return getExistingJMRITurnout(module, userIdentifier, parameter, turnout); } catch (CTCException e) { e.logError(); }
-        return null; 
+        return null;
     }
-//  turnout is NOT optional and cannot be null.  Raises Exception in ALL error cases.    
+//  turnout is NOT optional and cannot be null.  Raises Exception in ALL error cases.
     static private Turnout getExistingJMRITurnout(String module, String userIdentifier, String parameter, String turnout) throws CTCException {
         if (!ProjectsCommonSubs.isNullOrEmptyString(turnout)) {
-            Turnout returnValue = TURNOUT_MANAGER.getTurnout(turnout.trim());
+            // Cannot use a constant Instance manager reference due to the dynamic nature of tests.
+            Turnout returnValue = InstanceManager.getDefault(TurnoutManager.class).getTurnout(turnout.trim());
             if (returnValue == null) { throw new CTCException(module, userIdentifier, parameter, Bundle.getMessage("NBHTurnoutDoesNotExist") + " " + turnout); }    // NOI18N
             return returnValue;
         } else { throw new CTCException(module, userIdentifier, parameter, Bundle.getMessage("RequiredTurnoutMissing")); }    // NOI18N
     }
-    
+
     @Override
     public int getKnownState() {
         if (_mNamedBeanHandleTurnout == null) return DEFAULT_TURNOUT_STATE_RV;

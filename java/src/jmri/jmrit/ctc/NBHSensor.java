@@ -19,10 +19,10 @@ import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
 
 /**
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019
- * 
+ *
  * This object attempts to "extend" (implements) Sensor functionality that
  * is needed by the CTC system.
- * 
+ *
  * Goals:
  * 1.) Catches and thereby prevents exceptions from propagating upward.  No need
  *     for this everywhere in your code:
@@ -76,11 +76,10 @@ public class NBHSensor implements Sensor {
     public static final long DEFAULT_LONG_RV = 0;              // For any function that returns long.
     public static final String DEFAULT_STRING_RV = "UNKNOWN";  // NOI18N  For any function that returns String.
 //  Functions that don't return any of the above have specific implementations.  Ex: PropertyChangeListener[] or ArrayList<>
-    
-    private static final SensorManager SENSOR_MANAGER = InstanceManager.sensorManagerInstance();
+
     private static final NamedBeanHandleManager NAMED_BEAN_HANDLE_MANAGER = InstanceManager.getDefault(NamedBeanHandleManager.class);
-    
-//  The "thing" we're protecting:    
+
+//  The "thing" we're protecting:
     private final NamedBeanHandle<Sensor> _mNamedBeanHandleSensor;
     public Sensor getBean() {
         if (valid()) return _mNamedBeanHandleSensor.getBean();
@@ -99,32 +98,34 @@ public class NBHSensor implements Sensor {
             _mNamedBeanHandleSensor = null;
         }
     }
-//  Use when something else has the thing we help with:    
+//  Use when something else has the thing we help with:
     public NBHSensor(NamedBeanHandle<Sensor> namedBeanHandleSensor) {
         _mNamedBeanHandleSensor = namedBeanHandleSensor;
     }
     public boolean valid() { return _mNamedBeanHandleSensor != null; }  // For those that want to know the internal state.
-    
+
     private static Sensor getSafeExistingJMRISensor(String module, String userIdentifier, String parameter, String sensor) {
         try { return getExistingJMRISensor(module, userIdentifier, parameter, sensor); } catch (CTCException e) { e.logError(); }
-        return null; 
+        return null;
     }
     private static Sensor getSafeOptionalJMRISensor(String module, String userIdentifier, String parameter, String sensor) {
         try { return getOptionalJMRISensor(module, userIdentifier, parameter, sensor); } catch (CTCException e) { e.logError(); }
-        return null; 
+        return null;
     }
-//  sensor is NOT optional and cannot be null.  Raises Exception in ALL error cases.    
+//  sensor is NOT optional and cannot be null.  Raises Exception in ALL error cases.
     private static Sensor getExistingJMRISensor(String module, String userIdentifier, String parameter, String sensor) throws CTCException {
         if (!ProjectsCommonSubs.isNullOrEmptyString(sensor)) {
-            Sensor returnValue = SENSOR_MANAGER.getSensor(sensor.trim());
+            // Cannot use a constant Instance manager reference due to the dynamic nature of tests.
+            Sensor returnValue = InstanceManager.getDefault(SensorManager.class).getSensor(sensor.trim());
             if (returnValue == null) { throw new CTCException(module, userIdentifier, parameter, Bundle.getMessage("NBHSensorDoesNotExist") + " " + sensor); }  // NOI18N
             return returnValue;
         } else { throw new CTCException(module, userIdentifier, parameter, Bundle.getMessage("NBHSensorRequiredSensorMissing")); }  // NOI18N
     }
-//  sensor is optional, but must exist if given.  Raises Exception in ALL error cases.    
+//  sensor is optional, but must exist if given.  Raises Exception in ALL error cases.
     private static Sensor getOptionalJMRISensor(String module, String userIdentifier, String parameter, String sensor) throws CTCException {
         if (!ProjectsCommonSubs.isNullOrEmptyString(sensor)) {
-            Sensor returnValue = SENSOR_MANAGER.getSensor(sensor.trim());
+            // Cannot use a constant Instance manager reference due to the dynamic nature of tests.
+            Sensor returnValue = InstanceManager.getDefault(SensorManager.class).getSensor(sensor.trim());
             if (returnValue == null) { throw new CTCException(module, userIdentifier, parameter, Bundle.getMessage("NBHSensorDoesNotExist") + " " + sensor); }  // NOI18N
             return returnValue;
         } else { return null; }

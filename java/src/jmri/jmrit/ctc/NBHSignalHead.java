@@ -21,7 +21,7 @@ import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019
  */
 public class NBHSignalHead extends NBHAbstractSignalCommon implements SignalHead {
-    
+
 //  Standard sane return values for the types indicated:
     public static final Object DEFAULT_OBJECT_RV = null;       // For any function that returns something derived from Java's Object.
     public static final boolean DEFAULT_BOOLEAN_RV = false;    // For any function that returns boolean.
@@ -29,16 +29,16 @@ public class NBHSignalHead extends NBHAbstractSignalCommon implements SignalHead
     public static final long DEFAULT_LONG_RV = 0;              // For any function that returns long.
     public static final float DEFAULT_FLOAT_RV = (float)0.0;   // For any function that returns float.
     public static final String DEFAULT_STRING_RV = "UNKNOWN";  // NOI18N  For any function that returns String.
-    
-    private static final SignalHeadManager SIGNAL_HEAD_MANAGER = InstanceManager.getDefault(jmri.SignalHeadManager.class);
+
     private static final NamedBeanHandleManager NAMED_BEAN_HANDLE_MANAGER = InstanceManager.getDefault(NamedBeanHandleManager.class);
 
-//  The "thing" we're protecting:    
+//  The "thing" we're protecting:
     private final NamedBeanHandle<SignalHead> _mNamedBeanHandleSignalHead;
 
     protected NBHSignalHead(String signal) {
         if (!ProjectsCommonSubs.isNullOrEmptyString(signal)) {
-            SignalHead signalHead = SIGNAL_HEAD_MANAGER.getSignalHead(signal.trim());
+            // Cannot use a constant Instance manager reference due to the dynamic nature of tests.
+            SignalHead signalHead = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signal.trim());
             if (signalHead != null) {
                 _mNamedBeanHandleSignalHead = NAMED_BEAN_HANDLE_MANAGER.getNamedBeanHandle(signal, signalHead);
                 return;
@@ -47,16 +47,21 @@ public class NBHSignalHead extends NBHAbstractSignalCommon implements SignalHead
         _mNamedBeanHandleSignalHead = null;
     }
     public boolean valid() { return _mNamedBeanHandleSignalHead != null; }  // For those that want to know the internal state.
+
     @Override
-    public Object getBean() { return _mNamedBeanHandleSignalHead.getBean(); }
+    public Object getBean() {
+        if (!valid()) return null;
+        return _mNamedBeanHandleSignalHead.getBean();
+    }
+
     public void setCTCHeld(boolean held) { setHeld(held); }
-//  JMRI BUG: If "Held" attribute is True, then appearance is NOT the constant HELD!            
+//  JMRI BUG: If "Held" attribute is True, then appearance is NOT the constant HELD!
     @Override
     public boolean isDanger() {
         if (getHeld()) return true;
         return SignalHead.RED == getAppearance();
     }
-    
+
     @Override
     public int getAppearance() {
         if (_mNamedBeanHandleSignalHead == null) return DEFAULT_INT_RV;

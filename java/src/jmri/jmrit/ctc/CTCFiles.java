@@ -12,7 +12,7 @@ import jmri.util.FileUtil;
 
 public class CTCFiles {
 
-    private static final String FILE_LOCATION = FileUtil.getUserFilesPath() + "ctc/";  // NOI18N
+    private static String fileLocation = FileUtil.getUserFilesPath() + "ctc/";  // NOI18N
 
     /**
      * Verify that the standard file path is valid.
@@ -22,7 +22,7 @@ public class CTCFiles {
      */
     public static File getFile(String fileName) {
         // Verify that preference:ctc exists
-        File chkdir = new File(FILE_LOCATION);
+        File chkdir = new File(getFileLocation());
         if (!chkdir.exists()) {
             if (!chkdir.mkdir()) {
                 log.error("Create preference:ctc failed");  // NOI18N
@@ -32,13 +32,20 @@ public class CTCFiles {
         return new File(getFullName(fileName));
     }
 
+    public static String getFileLocation() {
+        if (fileLocation == null) {
+            fileLocation = FileUtil.getUserFilesPath() + "ctc/";  // NOI18N
+        }
+        return fileLocation;
+    }
+
     /**
      * Create the full file name with path
      * @param fileName The name of the file.
      * @return the full path and name.
      */
     public static String getFullName(String fileName) {
-        return FILE_LOCATION + fileName;
+        return getFileLocation() + fileName;
     }
 
     /**

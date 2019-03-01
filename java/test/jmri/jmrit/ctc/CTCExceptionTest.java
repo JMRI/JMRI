@@ -1,5 +1,6 @@
 package jmri.jmrit.ctc;
 
+import jmri.util.JUnitAppender;
 import org.junit.*;
 
 /*
@@ -13,6 +14,8 @@ public class CTCExceptionTest {
         CTCException ctcex = new CTCException("Test", "ID", "Param", "Reason");
         ctcex.logWarning();
         Assert.assertNotNull("CTCException Constructor Return", ctcex);
+
+        JUnitAppender.suppressWarnMessage("Test, IDParam, Reason");
     }
 
     @Before

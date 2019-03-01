@@ -24,7 +24,7 @@ import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019
  */
 public class NBHSignalMast extends NBHAbstractSignalCommon implements SignalMast {
-    
+
 //  Standard sane return values for the types indicated:
     public static final Object DEFAULT_OBJECT_RV = null;       // For any function that returns something derived from Java's Object.
     public static final boolean DEFAULT_BOOLEAN_RV = false;    // For any function that returns boolean.
@@ -33,18 +33,18 @@ public class NBHSignalMast extends NBHAbstractSignalCommon implements SignalMast
     public static final float DEFAULT_FLOAT_RV = (float)0.0;   // For any function that returns float.
     public static final String DEFAULT_STRING_RV = "UNKNOWN";  // NOI18N  For any function that returns String.
 
-    private static final SignalMastManager SIGNAL_MAST_MANAGER = InstanceManager.getDefault(jmri.SignalMastManager.class);
     private static final NamedBeanHandleManager NAMED_BEAN_HANDLE_MANAGER = InstanceManager.getDefault(NamedBeanHandleManager.class);
 
-//  The "thing" we're protecting:    
+//  The "thing" we're protecting:
     private final NamedBeanHandle<SignalMast> _mNamedBeanHandleSignalMast;
 
 //  The string to determine "Is the Signal Mast all Red":
     private final String _mDangerAppearance;
-    
+
     protected NBHSignalMast(String signal) {
         if (!ProjectsCommonSubs.isNullOrEmptyString(signal)) {
-            SignalMast signalMast = SIGNAL_MAST_MANAGER.getSignalMast(signal.trim());
+            // Cannot use a constant Instance manager reference due to the dynamic nature of tests.
+            SignalMast signalMast = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(signal.trim());
             if (signalMast != null) {
                 _mNamedBeanHandleSignalMast = NAMED_BEAN_HANDLE_MANAGER.getNamedBeanHandle(signal, signalMast);
                 _mDangerAppearance = getAppearanceMap().getSpecificAppearance(SignalAppearanceMap.DANGER);
@@ -54,24 +54,33 @@ public class NBHSignalMast extends NBHAbstractSignalCommon implements SignalMast
         _mDangerAppearance = "";                // Never used, just required for "final"
         _mNamedBeanHandleSignalMast = null;
     }
-        
+
     public boolean valid() { return _mNamedBeanHandleSignalMast != null; }  // For those that want to know the internal state.
     @Override
-    public Object getBean() { return _mNamedBeanHandleSignalMast.getBean(); }
+    public Object getBean() {
+        if (!valid()) return null;
+        return _mNamedBeanHandleSignalMast.getBean();
+    }
+
     public void setCTCHeld(boolean held) { setHeld(held); }
+
     @Override
     public boolean isDanger() {
         if (getHeld()) return true;     // Safety.  Problem in signal head, maybe same problem here?
         return getAspect().equals(_mDangerAppearance);
     }
-//  Fake for SignalHead support:    
+
+//  Fake for SignalHead support:
     @Override
     public String[] getValidStateNames() { return new String[0]; }
+
     @Override
     public int[] getValidStates() { return new int[0]; }
+
     @Override
     public void setAppearance(int newAppearance) {}
-            
+
+
     @Override
     public void setAspect(String aspect) {
         if (_mNamedBeanHandleSignalMast == null) return;
@@ -90,14 +99,14 @@ public class NBHSignalMast extends NBHAbstractSignalCommon implements SignalMast
         return _mNamedBeanHandleSignalMast.getBean().getValidAspects();
     }
 
-//  Without a default "SignalSystem", just return null if the object is invalid, let the caller deal with it!    
+//  Without a default "SignalSystem", just return null if the object is invalid, let the caller deal with it!
     @Override
     public SignalSystem getSignalSystem() {
         if (_mNamedBeanHandleSignalMast == null) return null;
         return _mNamedBeanHandleSignalMast.getBean().getSignalSystem();
     }
 
-//  Without a default "SignalAppearanceMap", just return null if the object is invalid, let the caller deal with it!    
+//  Without a default "SignalAppearanceMap", just return null if the object is invalid, let the caller deal with it!
     @Override
     public SignalAppearanceMap getAppearanceMap() {
         if (_mNamedBeanHandleSignalMast == null) return null;
@@ -315,4 +324,5 @@ public class NBHSignalMast extends NBHAbstractSignalCommon implements SignalMast
         if (_mNamedBeanHandleSignalMast == null) return DEFAULT_INT_RV;
         return _mNamedBeanHandleSignalMast.getBean().compareSystemNameSuffix(suffix1, suffix2, n2);
     }
+//     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NBHSignalMast.class);
 }

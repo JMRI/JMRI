@@ -22,10 +22,8 @@ public class CtcRunActionTest {
     @Rule
     public final ExpectedException thrown = ExpectedException.none();
 
-    @Test
-    public void testCreate() {
-        new CtcRunAction();
-    }
+    @Rule
+    public org.junit.rules.TemporaryFolder folder = new org.junit.rules.TemporaryFolder();
 
     @Test
     public void testAction() {
@@ -97,13 +95,29 @@ public class CtcRunActionTest {
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
-        JUnitUtil.resetProfileManager();
+
+        try {
+            JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder.newFolder(jmri.profile.Profile.PROFILE)));
+        } catch(java.io.IOException ioe){
+            Assert.fail("failed to setup profile for test");
+        }
+
         jmri.jmrit.ctc.setup.CreateTestObjects.createTestObjects();
         jmri.jmrit.ctc.setup.CreateTestObjects.createTestFiles();
     }
 
     @After
     public void tearDown() {
+        // use reflection to reset the static file location.
+        try {
+            Class<?> c = jmri.jmrit.ctc.CTCFiles.class;
+            java.lang.reflect.Field f = c.getDeclaredField("fileLocation");
+            f.setAccessible(true);
+            f.set(new String(), null);
+        } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException x) {
+            Assert.fail("Failed to reset CTC static fileLocation " + x);
+        }
+
         jmri.util.JUnitUtil.tearDown();
     }
 
