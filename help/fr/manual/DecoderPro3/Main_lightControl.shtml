@@ -1,7 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Translation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-03-01 -->
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -24,14 +24,14 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>Tool Menu</h1>
+      <h1>Menu Outil</h1>
 
-      <h2>Light Control</h2>
+      <h2>Contr&#244;le Lumi&#232;re</h2>
 
       <div align="right">
-        <p><a href="Main_Tool.shtml#Light">Back</a></p>
+        <p><a href="Main_Tool.shtml#Light">Retour</a></p>
 
-        <p><a href="dp3_menubar.shtml">Back to Index</a><a href=
+        <p><a href="dp3_menubar.shtml">Retour &#224; l'Index</a><a href=
         "index.shtml#Main"></a></p>
       </div>
       <hr>
@@ -39,77 +39,72 @@
       <p><img src="images/Main_LightControl.png" alt=
       "Light control" width="601" height="262" border="4"></p>
 
-      <p>This tool is used to control Powerline Devices that are
-      used to control your layout lighting.</p>
+      <p>Cet outil est utilis&#233; pour contr&#244;ler les p&#233;riph&#233;riques 
+      CPL utilis&#233;s pour contr&#244;ler votre &#233;clairage du r&#233;seau. </P>
 
-      <p>Enter the light system name for the light you wish to
-      control in the <strong>Light:</strong> text box</p>
+      <p>Saisissez le nom du syst&#232;me d'&#233;clairage que vous souhaitez 
+      contr&#244;ler dans la zone de texte <strong>Lumi&#232;re:</strong> </p>.
 
-      <p>Click on either the <strong>On</strong> button to turn the
-      light on or <strong>Off</strong> button to turn off the
-      light.</p>
+      <p>Cliquez sur le bouton <strong<On</strong> pour allumer 
+      la lumi&#232;re ou sur le bouton <strong>Off</strong> pour 
+      l'&#233;teindre. </p>
 
-      <p><strong>Current State:</strong> Shows the current known
-      state of the light.</p>
+      <p> <strong>&#201;tat actuel:</strong> affiche l'&#233;tat actuel connu 
+      de la lumi&#232;re. </p>
 
-      <p><strong>&lt;Unknown&gt;</strong> Either no light selected
-      or invalid light name.</p>
+      <p> <strong>&lt;Inconnu&gt;</strong> Aucune lumi&#232;re s&#233;lectionn&#233;e 
+      ou nom de lumi&#232;re non valide. </p>
 
-      <p><strong>&lt;Off&gt;</strong> Light is at minimum
-      intensity, if variable intensity is supported, or off</p>
+      <p> <strong>&lt;Off&gt;</strong> La lumi&#232;re est &#224; l'intensit&#233; 
+      minimale, si une intensit&#233; variable est support&#233;e, ou est d&#233;sactiv&#233;e </p>
 
-      <p><strong>&lt;On&gt;</strong> Light is at maximum intensity
-      if variable intensity supported, or full on.</p>
+      <p> <strong>&lt;On&gt;</strong> la lumi&#232;re est &#224; son intensit&#233; 
+      maximale si l'intensit&#233; variable est support&#233;e ou &#224; fond. </p>
 
-      <p><strong>&lt;Intermediate&gt;</strong> Light intensity is
-      between 0 and 100% and the current intensity is equal to the
-      target intensity.</p>
+      <p> <strong>&lt;Interm&#233;diaire&gt </strong> L'intensit&#233; lumineuse 
+      est comprise entre 0 et 100% et l'intensit&#233; du courant est &#233;gale 
+      &#224; l'intensit&#233; cible. </p>
 
-      <p><strong>&lt;Transitioning Higher&gt;</strong> Target
-      intensity is higher than the current intensity and light is
-      adjusting every fast minute according to Transition Time
-      value.</p>
+      <p> <strong>&lt;Transition vers le Haut&gt;</strong> L'intensit&#233; 
+      cible est sup&#233;rieure &#224; l'intensit&#233; actuelle et la lumi&#232;re 
+      s'adapte toutes les minutes rapides en fonction de la valeur 
+      du temps de transition. </p>
 
-      <p><strong>&lt;Transitioning Lower&gt;</strong> Target
-      intensity is lower than the current intensity and light is
-      adjusting every fast minute according to Transition Time
-      value</p>
+      <p> <strong>&lt;Transition vers le Bas&gt;</strong> L'intensit&#233; 
+      cible est inf&#233;rieure &#224; l'intensit&#233; actuelle et la lumi&#232;re s'adapte 
+      toutes les minutes rapides en fonction de la valeur du temps de 
+      transition </p>
 
-      <p><strong>.&lt;Transitioning to Full On&gt;</strong> Target
-      intensity is higher than the current intensity, and equal or
-      higher than maximum intensity and light is adjusting every
-      fast minute according to Transition Time value.</p>
+      <p> <strong>.&lt;Passage au Maximum D&#233;sactiv&#233;&gt;</strong> L'intensit&#233; 
+      cible est sup&#233;rieure &#224; l'intensit&#233; actuelle et &#233;gale ou sup&#233;rieure 
+      &#224; l'intensit&#233; maximale. La lumi&#232;re s'adapte toutes les minutes 
+      rapides en fonction de la valeur du temps de transition. </p >
 
-      <p><strong>&lt;Transitioning to Full Off&gt;</strong>Target
-      intensity is lower than the current intensity, and equal or
-      lower than minimum intensity and light is adjusting every
-      fast minute according to Transition Time value.</p>
+      <p> <strong>&lt;Passage au Minimum D&#233;sactiv&#233;&gt;</strong> L'intensit&#233; 
+      cible est inf&#233;rieure &#224; l'intensit&#233; actuelle et &#233;gale ou inf&#233;rieure 
+      &#224; l'intensit&#233; minimale. La lumi&#232;re s'adapte toutes les minutes 
+      rapides en fonction de la valeur du temps de transition. </p>
+      <p>Options de configuration des lumi&#232;res:</p>
 
-      <p>Configuration Options of Lights:</p>
+       <p> <type input = "checkbox" nom = "checkbox" id = "checkbox">
+       <strong>Activ&#233;</strong>: le voyant r&#233;pond &#224; son type de contr&#244;le automatique. </p>
 
-      <p><input type="checkbox" name="checkbox" id="checkbox">
-      <strong>Enabled:</strong> The light will respond to its
-      automatic control type.</p>
+       <p><type input = "checkbox" name = "checkbox2" id = "checkboxr2">
+       <strong>Variable:</strong> La lumi&#232;re peut &#234;tre command&#233;e &#224; des valeurs comprises entre 0% et 100%. </p>
 
-      <p><input type="checkbox" name="checkbox2" id="checkbox2">
-      <strong>Variable:</strong> Light may be commanded to values
-      between 0% and 100%.</p>
+       <p> <type input = "checkbox" nom = "checkbox3" id = "checkbox3">
+       <strong> Transition</strong>: l'intensit&#233; utilisera le temps de transition pour passer de l'intensit&#233; actuelle &#224; l'intensit&#233; cible. </p>
 
-      <p><input type="checkbox" name="checkbox3" id="checkbox3">
-      <strong>Transitional:</strong> Changes the intensity will use
-      the transition time to step between current and target
-      intensity.</p>
+       Le bouton <p><strong>On</strong> allume la lumi&#232;re. </p>
 
-      <p><strong>On</strong> button turns on the light.</p>
+       Le bouton <p> <strong>Off</strong> &#233;teint la lumi&#232;re. </p>
+       <h>
 
-      <p><strong>Off</strong> button turns off the light.</p>
-      <hr>
+       <div align = "right">
+         <p> <a href="Main_Tool.shtml#Light"> Retour </a> </p>
 
-      <div align="right">
-        <p><a href="Main_Tool.shtml#Light">Back</a></p>
-
-        <p><a href="dp3_menubar.shtml">Back to Index</a><a href=
-        "index.shtml#Main"></a></p>
+         <p> <a href="dp3_menubar.shtml"> Retour &#224; l'Index </a> <a href =
+         "index.shtml # Main"> </a> </p>
       </div><!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
