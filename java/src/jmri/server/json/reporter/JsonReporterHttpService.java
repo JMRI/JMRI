@@ -55,7 +55,7 @@ public class JsonReporterHttpService extends JsonNamedBeanHttpService<Reporter> 
     @Override
     public JsonNode doPut(String type, String name, JsonNode data, Locale locale) throws JsonException {
         try {
-            InstanceManager.getDefault(ReporterManager.class).provideReporter(name);
+            InstanceManager.getDefault(ReporterManager.class).provide(name);
         } catch (IllegalArgumentException ex) {
             throw new JsonException(400, Bundle.getMessage(locale, "ErrorCreatingObject", REPORTER, name));
         } catch (Exception ex) {
