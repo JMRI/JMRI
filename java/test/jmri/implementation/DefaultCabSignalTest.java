@@ -2,6 +2,9 @@ package jmri.implementation;
 
 import jmri.util.JUnitUtil;
 import jmri.DccLocoAddress;
+import jmri.InstanceManager;
+import jmri.Block;
+import jmri.BlockManager;
 import org.junit.*;
 
 /**
@@ -20,6 +23,28 @@ public class DefaultCabSignalTest {
         Assert.assertNull("next block",cs.getNextBlock());
         Assert.assertNull("next mast",cs.getNextMast());
         Assert.assertTrue("cab signal active",cs.isCabSignalActive());
+        cs.dispose(); // verify no exceptions
+    }
+
+    @Test
+    public void testSetBlock() {
+        DefaultCabSignal cs = new DefaultCabSignal(new DccLocoAddress(1234,true)){
+            @Override
+            public jmri.SignalMast getNextMast(){
+               // don't check for signal masts, they aren't setup for this
+               // test.
+               return null;
+            }
+        };
+
+        Block b1 = InstanceManager.getDefault(jmri.BlockManager.class).provideBlock("IB12");
+        // set the block contents to our locomotive address.
+        b1.setValue(new DccLocoAddress(1234,true));
+        // call setBlock() for the cab signal.
+        cs.setBlock();
+        // and verify getBlock returns the block we set.
+        Assert.assertEquals("Block set",b1,cs.getBlock());
+
         cs.dispose(); // verify no exceptions
     }
 

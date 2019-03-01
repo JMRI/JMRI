@@ -4,6 +4,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.List;
+import java.util.Set;
 import jmri.Block;
 import jmri.BlockManager;
 import jmri.CabSignal;
@@ -65,6 +66,7 @@ public class DefaultCabSignal implements CabSignal, PropertyChangeListener {
      * @param position is a Block the locomotive is in.
      */
     synchronized public void setBlock(Block position){
+        log.debug("CabSignal for {} set block {}",getCabSignalAddress(),position);
         Block oldCurrentBlock = _currentBlock;
         if(_currentBlock!=null){
            _currentBlock.removePropertyChangeListener(this);
@@ -81,6 +83,31 @@ public class DefaultCabSignal implements CabSignal, PropertyChangeListener {
               firePropertyChange("CurrentBlock",_currentBlock,oldCurrentBlock);
            }
        }
+       getNextBlock(); // calculate the next block and fire an appropriate property change.
+       getNextMast(); // calculate the next mast and fire an appropriate property change.
+    }
+
+    /**
+     * Set the Block of the locomotive by searching the block list.
+     */
+    synchronized public void setBlock(){
+        BlockManager bmgr = jmri.InstanceManager.getDefault(jmri.BlockManager.class);
+        Set<Block> blockSet = bmgr.getNamedBeanSet();
+        LocoAddress addr = getCabSignalAddress();
+        for (Block blockVal : blockSet) {
+            if ( blockVal.getValue() != null ) {
+                log.debug("CabSignal for {} searching block {} value {}",
+                           addr,blockVal,blockVal.getValue());
+                if (blockVal.getValue().equals(addr) ||
+                    blockVal.getValue().toString().equals(addr.toString()) || 
+                    blockVal.getValue().toString().equals("" + addr.getNumber())) {
+                    setBlock(blockVal);
+                    return;
+                }
+            }
+        }
+        // address not found in any block, set block to null
+        setBlock(null);
     }
 
     /**
@@ -246,6 +273,9 @@ public class DefaultCabSignal implements CabSignal, PropertyChangeListener {
      * @param active true if on, false if off
      */
     public void setCabSignalActive(boolean active){
+        if(_cabSignalActive!=active && active == true ) {
+           setBlock();
+        }
         _cabSignalActive = active;
     }
 
@@ -298,7 +328,7 @@ public class DefaultCabSignal implements CabSignal, PropertyChangeListener {
     public void propertyChange(PropertyChangeEvent event){
        if(event.getSource() instanceof Block) {
           if (event.getPropertyName().equals("value")){
-             // check if block changed
+             setBlock(); // change the block.
            }
 
            // block value is changed before direction is set

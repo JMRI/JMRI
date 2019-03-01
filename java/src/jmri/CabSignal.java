@@ -35,6 +35,11 @@ public interface CabSignal {
     public LocoAddress getCabSignalAddress();
 
     /**
+     * Set the Block of the locomotive by searching the block list.
+     */
+    public void setBlock();
+
+    /**
      * Set the Block of the locomotive
      *
      * @param position is a Block the locomotive is in.

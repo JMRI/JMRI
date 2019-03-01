@@ -47,15 +47,8 @@ import org.slf4j.LoggerFactory;
  */
 public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
 
-    protected int _contype=0; //  pane console message type
-    protected String _context=null; // pane console text
-
     private CabSignalManager cabSignalManager;
  
-    private ArrayList<PropertyChangeListener> mBlockListeners; // ??
-    private ArrayList<Block> mBlockList; // master block list
-    public Boolean autoreverseblockdir = true;
-    public Boolean masterSendCabData = true;
     static private int MAX_LINES = 5000;
     TextAreaFIFO tablefeedback;
     
@@ -72,17 +65,13 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
     
     static public final int MAX_COLUMN = 8;
     
-    static protected final int[] startupColumns = {0,1,2,3,4,5,6,7};
-    
     CabSignalTableModel(int row, int column) {
         cabSignalManager = InstanceManager.getNullableDefault(CabSignalManager.class); 
         if(cabSignalManager == null){
            InstanceManager.store(new jmri.managers.DefaultCabSignalManager(),CabSignalManager.class);
            cabSignalManager = InstanceManager.getNullableDefault(CabSignalManager.class); 
         }
-        mBlockListeners = new ArrayList<PropertyChangeListener>();
         tablefeedback = new TextAreaFIFO(MAX_LINES);
-        initblocks();
         
     }
     
@@ -276,7 +265,7 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
                 final JButton chngblockbutton = new JButton("Chng Direction");
                 chngblockbutton.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent arg0) {
-                        resetblock(row);
+                        cabSignalManager.getCabSignalArray()[row].setBlock();
                         chngblockdir(row);
                     }
                 });
@@ -334,10 +323,8 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
         else if (col == NEXT_ASPECT) {          
         }
         else if (col == SEND_CABSIG_COLUMN) {
-            cabSignalManager.getCabSignalArray()[row].setCabSignalActive((Boolean) value);
-            
             if ((Boolean)value==true){
-                calculatecabsig(row);
+                cabSignalManager.getCabSignalArray()[row].setCabSignalActive((Boolean) value);
             }
             else {
                 cabSignalManager.getCabSignalArray()[row].disableCabSignal();
@@ -345,114 +332,19 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
         }
     }
 
-    // takes a string returns row if matches locoid or alt td
-    private int getrowfromstringval(String blockval){
-        for (int i = 0; i < getRowCount(); i++) {
-            LocoAddress addr = cabSignalManager.getCabSignalArray()[i].getCabSignalAddress();
-            if (blockval.equals(addr.toString()) || 
-                blockval.equals("" + addr.getNumber())) {
-                return i;
-            }
-        }
-        return -1;
-    }    
-    
-    private int getrowfromblock( Block blocktotest ){
-        for (int i = 0; i < getRowCount(); i++) {
-            Block b = cabSignalManager.getCabSignalArray()[i].getBlock();
-            if ( ( b != null ) && (b.equals(blocktotest)) ){
-                return i;
-            }
-        }
-        return -1;
-    }
-
-    private void resetblock(int row) {
-        cabSignalManager.getCabSignalArray()[row].setBlock(findblockforrow(row));
-        calculatecabsig(row);
-    }
-    
-    // Adds changelistener to blocks
-    private void initblocks(){
-        mBlockList=null;
-        mBlockList = new ArrayList<>();
-        BlockManager bmgr = jmri.InstanceManager.getDefault(jmri.BlockManager.class);
-        Set<Block> blockSet = bmgr.getNamedBeanSet();
-        int i = 0;
-        for (Block b : blockSet) {
-            mBlockList.add(b);
-            final int index = i; 
-            PropertyChangeListener listener = (PropertyChangeEvent e) -> {
-                handleBlockChange(index,e);
-            };
-            b.addPropertyChangeListener(listener);
-            mBlockListeners.add(listener);
-            i++;
-        }
-    }
-    
     /**
-     * Handle tasks when block changes
-     *
-     * @param e propChgEvent
+     * Reverse the direction on the block associated with
+     * the row.  Changes to the cab signal happen when the block's 
+     * properties change.
      */
-    private void handleBlockChange(int index, PropertyChangeEvent e) {
-        Block b = mBlockList.get(index);
-        Object val = b.getValue();
-        log.debug("block {} change e {}",b,e);
-        int arow = -1;
-        if ( val != null ) {
-            String strval = val.toString();
-            arow = getrowfromstringval(strval);
-        }        
-
-        if (e.getPropertyName().equals("value")){
-            // log.warn("val {}",val);
-            // check if block is attached to a row
-            int row = getrowfromblock(b);
-            if (( row > -1 ) && ( row !=arow )){
-                // log.warn("need to reset block for row {}",row);
-                resetblock(row);
-            }
-            return;
-        }
-        
-        // block value is changed before direction is set
-        if ((e.getPropertyName().equals("state")) || (e.getPropertyName().equals("direction"))) {
-            if (arow > -1 ) {
-                b = cabSignalManager.getCabSignalArray()[arow].getBlock();
-                calculatecabsig(arow);
-            }
-        }
-    }
-    
-    // returns block for a given row
-    // loops through blocklist, compares each block value to locoAddress string
-    // or number.
-    private Block findblockforrow(int row) {
-        // log.warn("total blocks {} ",(mBlockList.size()) );
-        for (Block tb : mBlockList) {
-            Object val = tb.getValue();
-            if ( val != null ) {
-                String strval = val.toString();
-                int testrow = getrowfromstringval(strval); // checks loco id and alt td
-                if (testrow==row){
-                    // log.warn("Block found {} ",tb.getUserName());
-                    return tb;
-                }
-            }
-        }
-        return null;
-    }
-
     private void chngblockdir(int row){
-        // log.debug("changing block direction for row {}",row);
+        log.debug("changing block direction for row {}",row);
         StringBuilder buf = new StringBuilder();
         int olddirection = 0;
         Block b = cabSignalManager.getCabSignalArray()[row].getBlock();
         if (b == null){
-            buf.append("Searching for block");
-            b=findblockforrow(row);
+            cabSignalManager.getCabSignalArray()[row].setBlock();
+            b = cabSignalManager.getCabSignalArray()[row].getBlock();
             if (b==null){
                 return;
             } else {
@@ -465,8 +357,6 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
             buf.append("Block set to {} direction {} " + b.getUserName() + " " + (String.valueOf(olddirection)) );
         }
         
-        // String directionstr = Path.decodeDirection(b.getDirection());
-        // log.warn("olddirection {} ",olddirection);
         buf.append(" Direction to reverse : " + Path.decodeDirection(olddirection) );
         
         if (olddirection==0){
@@ -477,13 +367,6 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
             b.setDirection(Path.reverseDirection(olddirection));
         }
         log.debug("{}",buf);
-        calculatecabsig(row);
-    }
-    
-
-    private void calculatecabsig(int row){
-        cabSignalManager.getCabSignalArray()[row].getNextMast();
-        cabSignalManager.getCabSignalArray()[row].forwardCabSignalToLayout();
     }
     
 
