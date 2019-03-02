@@ -1,7 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Translation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-03-02 -->
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -27,186 +27,190 @@
     <div id="mainContent">
       <a name="Top" id="Top"></a>
 
-      <h1>DecoderPro&reg; Advanced Feature</h1>
+      
 
-      <h2>Roster Media Pane</h2>
+<h1>DecoderPro&reg; Fonction avanc&#233;e</h1>
 
-      <div align="right">
-        <p><a href="index.shtml">Back to Index</a></p>
-      </div>
-      <hr>
+      <h2>Volet M&#233;dia de la liste</h2>
 
-      <p>The Roster Media Pane is opened from the DecoderPro button
-      in main window or from the Action menu, then select the
-      Roster Media TAB.</p>
+      <div align = "right">
+        <p><a href="index.shtml">Retour &#224; l'index</a></p>
+     </div>
+      <h>
 
-      <p>The Roster Media Pane allows you to add a main image and
-      an icon to the engines roster. The main image may be used for
-      Throttle background image if selected in the Throttle
-      preferences. The icon image is used in the Throttle list and
-      various roster combo boxes.</p>
+      <p>Le volet Support de M&#233;dia s'ouvrira &#224; partir du bouton DecoderPro 
+      de la fen&#234;tre principale ou du menu Action, puis s&#233;lectionnez 
+      l'onglet Support de M&#233;dia.</p>
 
-      <p>The icon is the image that will appear in the Decoder
-      Information part of the DecoderPro initial screen, once you
-      have selected a locomotive from the list. The icon will also
-      display in the icon column of the Locomotive Roster List.</p>
+      <p>La sous-fen&#234;tre  Multim&#233;dia vous permet d'ajouter une image 
+      principale et une ic&#244;ne &#224; la liste des Machines. L'image principale 
+      peut &#234;tre utilis&#233;e pour l'image d'arri&#232;re-plan du R&#233;gulateur si elle 
+      est s&#233;lectionn&#233;e dans les pr&#233;f&#233;rences du R&#233;gulateur. L'image de 
+      l'ic&#244;ne est utilis&#233;e dans la liste des R&#233;gulateur et dans diverses 
+      zones de liste d&#233;roulante.</P>
 
-      <p align="center"><img src="images/Adv_04_RosterMedia.png"
-      alt="roster media" height="768" width="916"></p>
+      <p>L'ic&#244;ne est l'image qui appara&#238;tra dans la partie Informations 
+      sur le d&#233;codeur de l'&#233;cran initial de DecoderPro, une fois que vous 
+      avez s&#233;lectionn&#233; une locomotive dans la liste. L'ic&#244;ne s'affiche &#233;
+      galement dans la colonne d'ic&#244;nes de la liste des locomotives.</P>
 
-      <p align="left"><strong>Image to be used as main image for
-      that Roster:</strong> The large black box is the image
-      holder. The image is placed into the image holder by
-      following these instructions.</p>
+      <p align = "center"> <img src = "images/Adv_04_RosterMedia.png"
+      alt = "roster media" height = "768" width = "916"></p>
 
-      <div style="margin-left: 2em">
+      <p align = "left"> <strong>Image &#224; utiliser pour cette locomotive:</strong> 
+      le grand cadre correspond au support de l'image. L'image est 
+      plac&#233;e dans le porte-image en suivant les instructions ci-dessous.</P>
+
+      <div style = "margin-left: 2em">
         <ol>
-          <li>First you must find the image of the Locomotive and
-          store it on your disk drive.
+          <li> Vous devez d'abord trouver l'image de la locomotive et 
+          la stocker sur votre lecteur de disque.
 
-            <ol type="a">
-              <li>Sources
-
-                <ol>
-                  <li>Images downloaded from a website to your
-                  computer</li>
-
-                  <li>Photos taken with a digital camera or scanned
-                  from film</li>
-
-                  <li>Other sources, CD, DVD frames from videos
-                  etc. saved as an image to your computer</li>
-                </ol>
-              </li>
-
-              <li>Format
+            <ol type = "a">
+              <li> Sources
 
                 <ol>
-                  <li>The GIF format is preferred with transparent
-                  background</li>
+                  <li> Images t&#233;l&#233;charg&#233;es d'un site Web sur votre 
+                  ordinateur</li>
 
-                  <li>PNG with transparent background</li>
+                  <li> Photos prises avec un appareil photo num&#233;rique 
+                  ou num&#233;ris&#233;es &#224; partir d'un film</li>
 
-                  <li>JPG</li>
-                </ol>
-              </li>
-            </ol>
-          </li>
+                  <li> Autres sources, images de CD, de DVD provenant 
+                  de vid&#233;os, etc. enregistr&#233;es sous forme d'image sur 
+                  votre ordinateur</li>
+               </ol>
+             </li>
 
-          <li>After storing image on your computer open the Roster
-          Media Pane, then open Windows Explorer or File Manager
-          for your system and drag and drop the image file into the
-          large black box. You may also save the image to your
-          Desktop and drag and drop to Roster Media from there. DO
-          NOT try to drag and drop from a website.</li>
+              <li> Format
 
-          <li style="list-style: none">Roster images are stored in
-          the &lt;JMRI Preferences folder&gt;/resources. When an
-          image is updated or removed it is not removed from this
-          folder.</li>
-        </ol>
-      </div>
+                <ol>
+                  <li> Le format GIF est pr&#233;f&#233;rable avec un fond 
+                  transparent</li>
+
+                  <li> PNG avec fond transparent</li>
+
+                  <li> JPG</li>
+               </ol>
+             </li>
+           </ol>
+         </li>
+
+          <li> Apr&#232;s avoir enregistr&#233; l'image sur votre ordinateur, 
+          ouvrez le volet M&#233;dia de support, puis ouvrez l'explorateur 
+          Windows ou le gestionnaire de fichiers de votre syst&#232;me, 
+          puis faites glisser le fichier image dans le grand cadre noire. 
+          Vous pouvez &#233;galement enregistrer l'image sur votre bureau, 
+          puis faire un glisser-d&#233;poser sur le m&#233;dia d'alignement &#224; 
+          partir de l&#224;. N'essayez PAS de glisser-d&#233;poser depuis un 
+          site Web.</Li>
+
+          <li style = "list-style: none"> Les images de la liste sont 
+          stock&#233;es dans le dossier &lt;Pr&#233;f&#233;rences JMRI&gt;/resources. 
+          Lorsqu'une image est mise &#224; jour ou supprim&#233;e, elle n'est 
+          pas supprim&#233;e de ce dossier.</Li>
+       </ol>
+     </div>
 
       <blockquote>
         <blockquote>
-          <p align="center"><img src=
-          "images/Adv_04a_RosterMedia.png" alt="drag and drop"
-          height="515" width="690"></p>
-        </blockquote>
+          <p align = "center"> <img src =
+          "images/Adv_04a_RosterMedia.png" alt = "glisser-d&#233;poser"
+          height = "515" width = "690"></p>
+       </blockquote>
 
-        <p>To remove either image from the Roster, Right click and
-        click remove in the context that displays, however, it will
-        not remove the image from the Resources folder.</p>
+        <p>Pour supprimer une image de la liste, cliquez avec le bouton 
+        droit de la souris et cliquez sur Supprimer dans le contexte qui 
+        s'affiche. Toutefois, l'image ne sera pas supprim&#233;e du dossier 
+        Ressources.</p>
+<p align = "left"> <strong>Image &#224; utiliser comme ic&#244;ne pour cette 
+locomotive, t&#234;te &#224; droite:</strong> de la m&#234;me mani&#232;re, il existe un petit 
+cadre pouvant &#234;tre rempli avec une image &#224; utiliser comme ic&#244;ne 
+d'identification de la liste. Les instructions sont &#233;galement similaires:</p></blockquote>
 
-        <p align="left"><strong>Image to be used as icon for that
-        roster, head to the right:</strong> similarly, there is a
-        small black box which can be filled with a picture to be
-        used as an icon for roster entry identification. The
-        instructions are the also similar:</p>
-      </blockquote>
-
-      <div style="margin-left: 4em">
+      <div style = "margin-left: 4em">
         <ol>
-          <li>Next you must find the image of the Locomotive to use
-          as an icon and store it on your disk drive.
+          <li> Ensuite, vous devez trouver l'image de la locomotive &#224; 
+          utiliser comme ic&#244;ne et la stocker sur votre lecteur de disque.
 
-            <ol type="a">
-              <li>Sources
-
-                <ol>
-                  <li>Images downloaded from a website to your
-                  computer</li>
-
-                  <li>Photos taken with a digital camera or scanned
-                  from film</li>
-
-                  <li>Other sources, CD, DVD frames from videos
-                  etc. saved as an image to your computer</li>
-                </ol>
-              </li>
-
-              <li>Format
+            <ol type = "a">
+              <li> Sources
 
                 <ol>
-                  <li>The GIF format is preferred</li>
+                  <li> Images t&#233;l&#233;charg&#233;es d'un site Web sur 
+                  votre ordinateur</li>
 
-                  <li>PNG with transparent background</li>
+                  <li> Photos prises avec un appareil photo num&#233;rique 
+                  ou num&#233;ris&#233;es &#224; partir d'un film</li>
 
-                  <li>Do not use JPG.</li>
-                </ol>
-              </li>
-            </ol>
-          </li>
+                  <li> Autres sources, images de CD, de DVD provenant 
+                  de vid&#233;os, etc. enregistr&#233;es sous forme d'image sur 
+                  votre ordinateur</li>
+               </ol>
+             </li>
 
-          <li>After storing icon image on your computer open the
-          Roster Media Pane, the open Windows Explorer or File
-          Manager for your system and drag and drop the image file
-          into the small black box. You may also save the image to
-          your Desktop and drag and drop to Roster Media from
-          there. DO NOT try to drag and drop from a website.</li>
-        </ol>
-      </div>
+              <li> Format
+
+                <ol>
+                  <li> Le format GIF est pr&#233;f&#233;r&#233;</li>
+
+                  <li> PNG avec fond transparent</li>
+
+                  <li> N'utilisez pas de fichier JPG.</li>
+               </ol>
+             </li>
+           </ol>
+         </li>
+
+          <li> Apr&#232;s avoir stock&#233; l'image de l'ic&#244;ne sur votre ordinateur,
+           ouvrez le volet Multim&#233;dia, l'explorateur Windows ou le 
+           gestionnaire de fichiers de votre syst&#232;me, puis faites glisser 
+           le fichier image dans le petit cadre. Vous pouvez &#233;galement 
+           enregistrer l'image sur votre bureau, puis faire un glisser-
+           d&#233;poser sur le m&#233;dia d'alignement &#224; partir de l&#224;. N'essayez 
+           PAS de glisser-d&#233;poser depuis un site Web.</Li>
+       </ol>
+     </div>
 
       <blockquote>
-        <p>To remove either image from the Roster, Right click and
-        click remove in the context that displays, however, it will
-        not remove the image from the Resources folder.</p>
+        <p>Pour supprimer une image de la liste, cliquez avec le bouton 
+        droit de la souris et cliquez sur Supprimer dans le contexte qui 
+        s'affiche. Toutefois, l'image ne sera pas supprim&#233;e du dossier Ressources.</p>
 
-        <p><strong>Web reference:</strong> You can copy the URL of
-        the website where you located the images for reference</p>
-      </blockquote>
+        <p><strong>R&#233;f&#233;rence Web:</strong> vous pouvez copier l'URL du 
+        site Web sur lequel vous avez localis&#233; les images pour r&#233;f&#233;rence</p>.
+     </blockquote>
 
-      <p><input name="button" id="button" value="Save to Roster"
-      type="submit"> After adding images to the image boxes for
-      main image and icon, click on this button to store images in
-      your Roster. Now the image will appear in your roster list in
-      DecoderPro.</p>
+      <p><input name = "button" id = "button" value = "Enregistrer dans 
+      la liste" type = "submit"> Apr&#232;s avoir ajout&#233; des images aux zones 
+      d'image pour l'image principale et l'ic&#244;ne, cliquez sur ce bouton 
+      pour enregistrer les images dans votre Liste. Maintenant, l'image 
+      appara&#238;tra dans votre liste d'inventaire dans DecoderPro.</P>
 
-      <p><img src="images/Adv_04b_RosterMedia.png" alt=
-      "roster media" height="358" width="899"></p>
+      <p><img src = "images/Adv_04b_RosterMedia.png" alt =
+      "support de liste" height = "358" width = "899"></p>
 
-      <p><strong>Links for icons in GIF and images of most
-      Locomotives</strong> <strong>are listed below:</strong></p>
+      <p><strong>Les liens pour les ic&#244;nes au format GIF et les images 
+      de la plupart des locomotives</strong> <strong>sont 
+      r&#233;pertori&#233;s ci-dessous:</strong></p>
 
-      <p><a href="http://www.railserve.com/TrainGIFs/" target=
-      "_blank">Rail Serve</a></p>
+      <p><a href = "http://www.railserve.com/TrainGIFs/" target =
+      "_blank"> Service Ferroviaire </a></p>
 
-      <p><a href=
-      "http://www.djcooley.com/info/gifs/loco/gifloco.htm" target=
-      "_blank">Train GIF Railyard</a></p>
+      <p><a href =
+      "http://www.djcooley.com/info/gifs/loco/gifloco.htm" target =
+      "_blank"> Train GIF Railyard </a></p>
 
-      <p><a target="_blank" href=
-      "http://www.kls2.com/%7Ekarl/rr/consists/">Karl's RR
-      Pages</a></p>
+      <p><a target = "_ blank" href =
+      "http://www.kls2.com/%7Ekarl/rr/consists/">Pages Karl's RR</a></p>
 
-      <p><a target="_blank" href=
-      "http://www.bluarcher.com/traingifs/edtraingifsSD40.htm">ED
-      Bindler Train GIF.s</a></p>
-      <hr>
+      <p><a target = "_ blank" href =
+      "http://www.bluarcher.com/traingifs/edtraingifsSD40.htm">EDBindler Train GIF.s </a></p>
+      <h>
 
-      <div align="right">
-        <p><a href="Comp_LightFX.shtml"></a><a href=
-        "index.shtml">Back to Index</a></p>
+      <div align = "right">
+        <p><a href="Comp_LightFX.shtml"> </a> <a href =
+        "index.shtml"> Retour &#224; l'index </a></p>
       </div><!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
