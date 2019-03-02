@@ -1,7 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Translation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-03-02 -->
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -24,153 +24,155 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>DecoderPro&reg; Main Window</h1>
+      
 
-      <h2>XpressNet Menu</h2>
+<h1> DecoderPro & reg; Fen&#234;tre principale </h1>
 
-      <div align="right">
-        <p><a href="dp3_menubar.shtml">Back to Index</a></p>
+      <h2> Menu XpressNet </h2>
+
+      <div align = "right">
+        <p><a href="dp3_menubar.shtml"> Retour &#224; l'Index</a></h4>
       </div>
-      <hr>
+      <h>
 
-      <p><strong>XpressNet Monitor</strong></p>
+      <p><strong>Moniteur XpressNet</strong></h4>
 
-      <p>Opens the <a href=
-      "Main_Monitor_Window.shtml">Communications Monitor Window</a>
-      and automatically displays the information that is being sent
-      and received on the communications link between your computer
-      and your DCC system.</p>
+      <p>Ouvre la <a href =
+      "Main_Monitor_Window.shtml"> Fen&#234;tre du moniteur de communication</a> 
+      qui affiche automatiquement les informations envoy&#233;es et re&#231;ues 
+      sur le lien de communication entre votre ordinateur et votre 
+      syst&#232;me DCC. </P>
 
-      <p><strong><a name="Info" id="Info"></a>XpressNet System
-      Information</strong></p>
+      <p><strong><a name="Info" id="Info"></a> Informations sur le syst&#232;me 
+      XpressNet</strong></h4>
 
-      <p>Opens the <a href="#InfoDialog">XPressNet System
-      Information</a> Dialog.</p>
+      <p>Ouvre la bo&#238;te de dialogue <a href="#InfoDialog"> Informations 
+      syst&#232;me XPressNet</a>.</h4>
 
-      <p><strong>Send XpressNet Command</strong></p>
+      <p><strong>Envoyer une commande XpressNet</strong></h4>
 
-      <p>Opens the Send XpressNet Packet prompt so that you can
-      type in a Packet: and click on the <input type="submit" name=
-      "button3" id="button3" value="Send"> to transmit via
-      XpressNet to your system.</p>
+      <p>Ouvre l'invite Envoyer un paquet XpressNet afin que vous 
+      puissiez taper un paquet: et cliquez sur le <type input = 
+      "submit" name = "button3" id = "button3" value = "Send"> 
+      pour transmettre via XpressNet &#224; votre syst&#232;me.</h4>
 
-      <p><img src="images/Main_XpressNet_02.png" alt="Send Command"
-      width="256" height="97"></p>
+      <p><img src = "images/Main_XpressNet_02.png" alt = "Send Command"
+      width = "256" height = "97"></h4>
 
-      <p><img src="images/separator.png" alt="separator" width=
-      "340" height="4"></p>
+      <p><img src = "images/separator.png" alt = "separator" width =
+      "340" height = "4"></h4>
 
-      <p><strong><a name="Database" id="Database"></a>Command
-      Station Database Manager</strong></p>
+      <p><strong><a name="Database" id="Database"></a> Gestionnaire de 
+      base de donn&#233;es de la Centrale de Commande</strong></h4>
 
-      <p>Opens the <a href="#StackMonitor">Command Station Stack
-      Monitor</a> window that allows you to monitor the status of
-      the command station stack (database).</p>
+      <p>Ouvre la fen&#234;tre <a href="#StackMonitor"> Moniteur de pile 
+      de la centrale de commande</a> qui vous permet de surveiller 
+      l'&#233;tat de la pile de la Centrale de Commande (base de donn&#233;es).</h4>
 
-      <p><strong><a name="LI101" id="LI101"></a>LI101 Configuration
-      Manager</strong></p>
+      <p><strong><a name="LI101" id="LI101"></a> Gestionnaire de 
+      configuration LI101</strong></h4>
 
-      <p>Open the <a href="#LI101CU">LI101 Configuration
-      Utility</a> Window.</p>
+      <p>Ouvrez la fen&#234;tre <a href="#LI101CU"> Utilitaire de 
+      configuration LI101</a>.</h4>
 
-      <p><strong><a name="LZ100" id="LZ100"></a>LZ100 Configuration
-      Manager</strong></p>
+      <p><strong><a name="LZ100" id="LZ100"></a> Gestionnaire de 
+      configuration LZ100</strong></h4>
 
-      <p>Open the <a href="#LZ100">LV100 Configuration Manager</a>
-      Window</p>
+      <p>Ouvrez la fen&#234;tre <a href="#LZ100"> du Gestionnaire de 
+      configuration LV100</a></h4>.
 
-      <p><strong><a name="LZV100" id="LZV100"></a>LZV100
-      Configuration Manager</strong></p>
+      <p><strong><a name="LZV100" id="LZV100"></a> Gestionnaire de 
+      configuration LZV100</strong></h4>
 
-      <p>Open the <a href="#LZV100CM">LZV100 Configuration
-      Manager</a> Window</p>
+      <p>Ouvrez la fen&#234;tre <a href="#LZV100CM"> LZV100 Configuration
+      Manager</a></h4>.
 
-      <p><strong><a name="LV102" id="LV102"></a>LV102 Configuration
-      Manager</strong></p>
+      <p><strong><a name="LV102" id="LV102"></a> Configuration de LV102
+      Gestionnaire</strong></h4>
 
-      <p>Open the <a href="#LV102CM">LV102 Configuration
-      Manager</a> Window.</p>
-      <hr>
+      <p>Ouvrez la fen&#234;tre <a href="#LV102CM"> LV102 Configuration 
+      Manager</a>.</h4>
+      <h>
 
-      <h4><a name="InfoDialog" id="InfoDialog"></a>XPressNet System
-      Information Dialog</h4>
+      <h4> <a name="InfoDialog" id="InfoDialog"></a> Bo&#238;te de dialogue 
+      Informations syst&#232;me XPressNet</h4>
 
-      <p>Click on the <input type="submit" name="button" id=
-      "button" value="Get System Info"> to query the system (Lenz
-      or other) for system information that will be displayed in
-      the dialog. Click on <input type="submit" name="button2" id=
-      "button2" value="Close"> to close the dialog.</p>
+      <p>Cliquez sur le <type d'entr&#233;e = "submit" nom = "bouton" id =
+      "button" value = "Get System Info"> pour interroger le syst&#232;me 
+      (Lenz ou autre) sur les informations syst&#232;me &#224; afficher dans la 
+      bo&#238;te de dialogue. Cliquez sur <input type = "submit" name = "button2" id =
+      "button2" value = "Close"> pour fermer la bo&#238;te de dialogue.</h4>
 
-      <p><img src="images/Main_XpressNet_01.png" alt=
-      "System Information"></p>
+      <p><img src = "images/Main_XpressNet_01.png" alt =
+      "Informations syst&#232;me"></h4>
 
       <div>
-        <div align="right">
-          <a href="#Info">Back</a>
+        <div align = "right">
+          <a href="#Info"> Retour</a>
         </div>
       </div>
 
-      <h4><a name="StackMonitor" id="StackMonitor"></a>Command
-      Station Stack Monitor</h4>
+      <h4> <a name="StackMonitor" id="StackMonitor"></a> Moniteur de 
+      pile de la station de commande</h4>
 
-      <p>Click the <input type="submit" name="button4" id="button4"
-      value="Refresh"> to update the display to the current
-      information.</p>
+      <p>Cliquez sur le <type d'entr&#233;e = "submit" name = "button4" id = "button4".
+      value = "Refresh"> pour mettre &#224; jour l'affichage avec les 
+      informations actuelles.</h4>
 
-      <p><img src="images/Main_XpressNet_03.png" alt="Database"
-      width="523" height="186"></p>
+      <p><img src = "images/Main_XpressNet_03.png" alt = "Base de donn&#233;es"
+      width = "523" height = "186"></h4>
 
       <div>
-        <div align="right">
-          <a href="#Database">Back</a>
+        <div align = "right">
+          <a href="#Database"> Retour</a>
         </div>
       </div>
 
-      <h4><a name="LI101CU" id="LI101CU"></a>LI101 Configuration
-      Utility Window</h4>
+      <h4> <a name="LI101CU" id="LI101CU"></a> Fen&#234;tre de l'utilitaire 
+      de configuration LI101</h4>
 
-      <p><img src="images/Main_XpressNet_04.png" alt=
-      "configuration" width="516" height="140"></p>
+      <p><img src = "images/Main_XpressNet_04.png" alt =
+      "configuration" width = "516" height = "140"></h4>
 
       <div>
-        <div align="right">
-          <a href="#LI101">Back</a>
+        <div align = "right">
+          <a href="#LI101"> Retour</a>
         </div>
       </div>
 
-      <h4><a name="LV100CM" id="LV100CM"></a>LV100 Configuration
-      Manager Window</h4>
+      <h4> <a name="LV100CM" id="LV100CM"></a> Fen&#234;tre du gestionnaire 
+      de configuration LV100</h4>
 
-      <p><img src="images/Main_XpressNet_05.png" alt=
-      "configuration" width="580" height="202"></p>
+      <p><img src = "images/Main_XpressNet_05.png" alt =
+      "configuration" width = "580" height = "202"></h4>
 
       <div>
-        <a href="#LZ100">Back</a>
+        <a href="#LZ100"> Retour</a>
       </div>
 
-      <h4><a name="LZV100CM" id="LZV100CM"></a>LZV100 Configuration
-      Manager Window</h4>
+      <h4> <a name="LZV100CM" id="LZV100CM"></a> Fen&#234;tre du gestionnaire 
+      de configuration LZV100</h4>
 
-      <p><img src="images/Main_XpressNet_06.png" alt=
-      "configuration" width="585" height="400"></p>
+      <p><img src = "images/Main_XpressNet_06.png" alt =
+      "configuration" width = "585" height = "400"></h4>
 
       <div>
-        <div align="right">
-          <p><a href="#LZV100">Back</a></p>
+        <div align = "right">
+          <p><a href="#LZV100"> Retour</a></h4>
         </div>
       </div>
 
-      <h4><a name="LV102CM" id="LV102CM"></a>LV102 Configuration
-      Manager Window</h4>
+      <h4> <a name="LV102CM" id="LV102CM"></a> Fen&#234;tre du gestionnaire 
+      de configuration LV102</h4>
 
-      <p><img src="images/Main_XpressNet_07.png" alt=
-      "configuration" width="561" height="270"></p>
+      <p><img src = "images/Main_XpressNet_07.png" alt =
+      "configuration" width = "561" height = "270"></h4>
 
       <div>
-        <div align="right">
-          <a href="#LV102">Back</a>
+        <div align = "right">
+          <a href="#LV102"> Retour</a>
 
-          <p><a href="dp3_menubar.shtml">Back to Index</a><a href=
+          <p><a href="dp3_menubar.shtml"> Retour &#224; l'Index</a> <a href 
           "Main_Menu.shtml#System"></a></p>
         </div><!--#include virtual="/Footer" -->
       </div><!-- closes #mainContent-->
