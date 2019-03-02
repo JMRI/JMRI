@@ -195,6 +195,7 @@ public class JsonBlockHttpServiceTest extends JsonHttpServiceTestBase {
         }
     }
 
+    @SuppressWarnings("null")
     @Test
     public void testDoPut() throws IOException {
         JsonBlockHttpService service = new JsonBlockHttpService(mapper);

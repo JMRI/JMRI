@@ -42,6 +42,16 @@ public class WebServerTest {
     }
 
     @Test
+    public void testURIForProfile() {
+        Assert.assertEquals("URI for Program directory", "/project/", WebServer.URIforPortablePath("profile:"));
+    }
+
+    @Test
+    public void testURIForSettings() {
+        Assert.assertEquals("URI for Program directory", "/settings/", WebServer.URIforPortablePath("settings:"));
+    }
+
+    @Test
     public void testURIForOther() {
         Assert.assertNull("URI for Other directory", WebServer.URIforPortablePath("roster:"));
     }
