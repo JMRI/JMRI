@@ -408,6 +408,7 @@
                     <failOnError>true</failOnError><!-- default -->
                     <quiet>true</quiet>
                     <splitindex>true</splitindex>
+                    <additionalJOption>-J-Dhttp.agent=maven-javadoc-plugin-${project.name}</additionalJOption>
                     <tags>
                         <tag>
                             <!-- disable output of custom @navassoc tag - used for UML image generation -->

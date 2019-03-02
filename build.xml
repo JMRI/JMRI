@@ -1806,6 +1806,7 @@
             <arg value="2300"/><!-- change from default 100 warnings -->
             <arg value="-quiet"/>
             <arg value="-splitindex"/>
+            <arg value="-J-Dhttp.agent=javadoc"/>
 
             <!-- disable output of custom @navassoc tag - used for UML image generation -->
             <tag name="navassoc" enabled="false"/>
