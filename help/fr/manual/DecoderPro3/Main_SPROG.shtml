@@ -1,7 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Translation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-03-02 -->
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -24,83 +24,82 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>DecoderPro&reg; Main Window</h1>
+      <h1>DecoderPro&reg; Fen&#234;tre Principale</h1>
 
-      <h2>SPROG Menu</h2>
+      <h2>Menu SPROG</h2>
 
       <div align="right">
-        <p><a href="dp3_menubar.shtml">Back to Index</a><a href=
-        "Main_Menu.shtml#System"></a></p>
+        <p><a href="dp3_menubar.shtml">Retour &#224; l'Index</a> <a href =
+        "Main_Menu.shtml # System"></a></p>
       </div>
-      <hr>
+      <h>
 
-      <p><strong>Command Monitor</strong></p>
+      <p><strong>Moniteur de commandes</strong></p>
 
-      <p>Opens the <a href=
-      "Main_Monitor_Window.shtml">Communications Monitor Window</a>
-      and automatically displays the information that is being sent
-      and received on the communications link between your computer
-      and your DCC system.</p>
+      <p>Ouvre la <a href =
+      "Main_Monitor_Window.shtml">Fen&#234;tre du moniteur de communication</a> 
+      qui affiche automatiquement les informations envoy&#233;es et re&#231;ues 
+      sur le lien de communication entre votre ordinateur et votre 
+      syst&#232;me DCC. </P>
 
-      <p><strong>Send Command</strong></p>
+      <p><strong>Envoyer la commande</strong></p>
 
-      <p>Opens the Send prompt with a text box to enter the
-      <strong>Command</strong> message that will be sent to the DCC
-      system when you click on the <strong>Send</strong>
-      button.</p>
+      <p>Ouvre l'invite Envoyer avec une zone de texte pour saisir le 
+      message <strong>Commande</strong> qui sera envoy&#233; au syst&#232;me DCC 
+      lorsque vous cliquez sur le bouton <strong>Envoyer</strong>.</p>
 
-      <p align="center"><img src="images/Main_SPROG_Command.png"
-      alt="SPROG comamd" width="240" height="94"></p>
+      <p align = "center"> <img src = "images/Main_SPROG_Command.png"
+      alt = "SPROG comamd" width = "240" height = "94"></p>
 
-      <p><strong><a name="ConsoleMenu" id=
-      "ConsoleMenu"></a>Console</strong></p>
-
-      <blockquote>
-        <p>Opens the <a href="#Console">SPROG Console</a> window
-        that combines the communications monitor, Send Command and
-        other features into a single user interface.</p>
-      </blockquote>
-
-      <p><strong>Get SPROG Firmware Version</strong></p>
+      <p><strong><a name = "ConsoleMenu" id =
+      "ConsoleMenu"></a> Console</strong></p>
 
       <blockquote>
-        <p>Retrieves the SPROG firmware version and displays that
-        information.</p>
+        <p>Ouvre la fen&#234;tre <a href="#Console"> Console SPROG</a> qui 
+        combine le moniteur de communication, la commande Envoyer et 
+        d'autres fonctionnalit&#233;s dans une interface utilisateur unique.</p>
       </blockquote>
 
-      <p><strong>SPROG V3/V4 Firmware Update</strong></p>
+      <p><strong>Obtenir la version du micrologiciel SPROG</strong></p>
 
       <blockquote>
-        <p>Starts the SPROG Firmware Update wizard.</p>
-
-        <p><img src="images/Main_SPROG_firmware.png" alt=
-        "SPROG firmware" width="623" height="125" border="4"></p>
+        <p>R&#233;cup&#232;re la version du micrologiciel SPROG et affiche 
+        ces informations.</p>
       </blockquote>
 
-      <p><strong>SPROG II Firmware Update</strong></p>
+      <p><strong>Mise &#224; jour du micrologiciel SPROG V3/V4</strong></p>
 
       <blockquote>
-        <p>Starts the SPROG II Firmware Update Wizard (basically
-        the same as above)</p>
+        <p>Lance l'assistant de mise &#224; jour du microprogramme SPROG.</p>
+
+        <p><img src = "images/Main_SPROG_firmware.png" alt =
+        "Micrologiciel SPROG" width = "623" height = "125" border = "4"></p>
       </blockquote>
-      <hr>
 
-      <h4><a name="Console" id="Console"></a> SPROG Console</h4>
+      <p><strong>Mise &#224; jour du micrologiciel SPROG II</strong></p>
 
-      <p>The Console combines the Communications Monitor, Send
-      Command and other features into a single interface.</p>
+      <blockquote>
+        <p>Lance l'assistant de mise &#224; jour du microprogramme 
+        SPROG II (pratiquement identique &#224; celui ci-dessus)</p>
+      </blockquote>
+      <h>
 
-      <p align="center"><img src="images/Main_SPROG_Console.png"
-      alt="SPROG Console" width="898" height="594" border="4"></p>
+      <h4> <a name="Console" id="Console"></a> Console SPROG </h4>
+
+      <p>La console combine le moniteur de communication, la commande 
+      d'envoi et d'autres fonctionnalit&#233;s dans une interface unique.</p>
+
+      <p align = "center"> <img src = "images/Main_SPROG_Console.png"
+      alt = "Console SPROG" width = "898" height = "594" border = "4"></p>
 
       <div>
-        <div align="right">
-          <a href="#ConsoleMenu">Back</a>
+        <div align = "right">
+          <a href="#ConsoleMenu"> Retour</a>
         </div>
       </div>
 
-      <div align="right">
-        <p><a href="dp3_menubar.shtml">Back to Index</a></p>
+      <div align = "right">
+        <p><a href="dp3_menubar.shtml"> Retour &#224; l'index</a></p>
       </div><!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
