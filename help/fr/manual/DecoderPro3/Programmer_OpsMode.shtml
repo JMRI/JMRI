@@ -1,7 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Translation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-03-02 -->
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -28,78 +28,81 @@
         <a name="Top" id="Top"></a> <img src="images/Logo.gif" alt=
         "JMRI DecoderPro Logo" border="10" height="117" width="163"
         vspace="15">
-      </div>
+     </div>
 
-      <h1>DecoderPro&reg; Programming Modes</h1>
+      <h1>DecoderPro&reg; Modes de programmation</h1>
 
-      <h2>Ops Mode Programming</h2>
+      <h2>Programmation en mode Ops</h2>
 
-      <div align="right">
-        <p><a href="index.shtml">Back to Index</a></p>
-      </div>
-      <hr>
+      <div align = "right">
+        <p><a href="index.shtml">Retour &#224; l'Index</a></p>
+     </div>
+      <h>
 
-      <p>Select locomotive from roster, select <input name="radio"
-      type="radio" id="radio" value="radio" checked>
-      <strong>Programming On Main</strong> and press
-      <strong>Program</strong>.</p>
+      <p>S&#233;lectionnez la locomotive &#224; partir de la liste, s&#233;lectionnez 
+      <input name = "radio" type = "radio" id = "radio" valeur = "radio" checked>
+      <strong>Programmation principale</strong> et appuyez sur 
+      <strong>Programme</strong>.</p>
 
-      <p><b>Operations Mode (Main Track) Programmer</b> - or
-      <strong>Programming on the main(POM)</strong>. Opens the
-      <strong>Operations Mode (Main Track)</strong> windowThis lets
-      you program a specific decoder on the layout, even while it
-      is operating. However, because it addresses a specific
-      decoder address, some decoders will not allow you to change
-      the decoder's address using this method!</p>
+      <p><b> Programmateur en mode Op&#233;rations (Piste principale)</b> - 
+      ou <strong>Programmation sur le POM principal</strong>. Ouvre la 
+      fen&#234;tre <strong>Mode d'exploitation (piste principale)</strong>. 
+      Elle vous permet de programmer un d&#233;codeur sp&#233;cifique sur le r&#233;seau, 
+      m&#234;me en cours de fonctionnement. Cependant, &#233;tant donn&#233; qu'il 
+      s'adresse &#224; une adresse de d&#233;codeur sp&#233;cifique, certains d&#233;codeurs 
+      ne vous permettront pas de changer l'adresse du d&#233;codeur en 
+      utilisant cette m&#233;thode!</P>
 
-      <p><img src="images/Ops_Mode_setup.png" width="268" height=
-      "155" alt="ops mode"></p>
+      <p><img src = "images/Ops_Mode_setup.png" width = "268" height =
+      "155" alt = "mode op"></p>
 
-      <p>Some command stations will only "broadcast" programming
-      commands, which can mean every locomotive on the layout gets
-      the same programming! The same is true if you try to program
-      a loco with address zero (or forget to enter an address when
-      you start). If in doubt, check your documentation.</p>
+      <p>Certaines centrale de commande ne "diffuseront" que des commandes 
+      de programmation, ce qui signifie que chaque locomotive du 
+      r&#233;seau re&#231;oit la m&#234;me programmation! Il en va de m&#234;me si vous 
+      essayez de programmer une locomotive avec une adresse z&#233;ro 
+      (ou si vous oubliez de saisir une adresse lorsque vous d&#233;marrez). 
+      En cas de doute, consultez votre documentation.</P>
 
       <blockquote>
-        <strong>Reading from your Decoder on the main:</strong><br>
+        <strong>Lecture &#224; partir de votre d&#233;codeur dans le menu principal:</strong> <br>
+        <br> &#193; quelques exceptions pr&#232;s, il n'est pas possible de lire 
+        un CV sur le r&#233;seau. Si la lecture &#233;choue, une erreur 306 est 
+        g&#233;n&#233;ralement signal&#233;e (d&#233;lai d'attente pour dialoguer avec la 
+        centrale de commande.) <br>
         <br>
-        With a few exceptions it is not possible to read from a CV
-        on the Main. If reading fails it usually reports as a 306
-        error (Timeout Talking to Command Station.)<br>
+        <strong>&#201;crire dans votre d&#233;codeur &#224; partir du menu principal:</strong> <br>
         <br>
-        <strong>Writing to your decoder on the main:</strong><br>
-        <br>
-        Program on the Main writes are often called a "blind write"
-        because there is no response from the decoder that the
-        write was successful. POM is very useful for tuning loco
-        performance while it is operating and the ack is the change
-        in performance.<br>
-        The decoder is first addressed by the Command Station, then
-        the CV is addressed and then the data that is to be written
-        into that CV of that decoder is sent. An exception is if
-        address zero is used,(or you forget to enter an address
-        when you start). Then <strong>ALL</strong> decoders on the
-        main will write that data into the appropriate CV which
-        usually is an "unintended consequence".
-      </blockquote>
+        Les programmes sur les &#233;critures principales sont souvent 
+        appel&#233;s «&#233;critures aveugles» car le d&#233;codeur ne r&#233;pond pas que 
+        l'&#233;criture a r&#233;ussi. Le POM est tr&#232;s utile pour r&#233;gler les 
+        performances de la locomotive pendant son fonctionnement et 
+        l'accus&#233; de r&#233;ception est le changement de performances. <br> 
+        Le d&#233;codeur est d'abord adress&#233; par la station de commande, 
+        puis le CV est adress&#233;, puis les donn&#233;es &#224; &#233;crire dans le CV 
+        de ce d&#233;codeur est envoy&#233;. Une exception est si l'adresse 
+        z&#233;ro est utilis&#233;e (ou si vous oubliez d'entrer une adresse
+         lorsque vous d&#233;marrez). Ensuite, les <strong>ALL</strong> 
+         d&#233;codeurs du disque principal &#233;crivent ces donn&#233;es dans 
+         le CV appropri&#233;, ce qui constitue g&#233;n&#233;ralement une 
+         "cons&#233;quence inattendue".
+     </blockquote>
 
-      <p>Some command stations will only "broadcast" programming
-      commands, which can mean every locomotive on the layout gets
-      the same programming! If in doubt, check your
-      documentation.</p>
+      <p>Certaines stations de commande ne "diffuseront" que des 
+      commandes de programmation, ce qui signifie que chaque locomotive 
+      du r&#233;seau re&#231;oit la m&#234;me programmation! En cas de doute, 
+      consultez votre documentation.</P>
 
-      <p>In this window you select the locomotive in which you wish
-      to change CV values, and what programmer you want to use.
-      Once they are selected you click <strong>Open
-      Programmer</strong> button just as you would do in the
-      <strong>Service Mode programmer</strong>.</p>
+      <p>Dans cette fen&#234;tre, vous s&#233;lectionnez la locomotive dans 
+      laquelle vous souhaitez modifier les valeurs de CV et le 
+      programmeur que vous souhaitez utiliser. Une fois s&#233;lectionn&#233;s, 
+      cliquez sur le bouton <strong>Ouvrir un programmateur</strong>, 
+      comme vous le feriez avec le <strong>programmeur en mode service</strong>.</P>
 
-      <div align="right">
-        <p><a href="index.shtml#Basic%20Programmer">Back to
+      <div align = "right">
+        <p><a href="index.shtml#Basic%20Programmer"> Retour &#224;
         Index</a></p>
-      </div><!--#include virtual="/Footer" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
+     </div><!--#include virtual="/Footer" -->
+   </div><!-- closes #mainContent-->
+ </div><!-- closes #mBody-->
 </body>
 </html>
