@@ -59,7 +59,7 @@ public class NBHTurnoutTest {
 // ERROR - Module, UserIdParameter, Turnout does not exist: IT94 [main] jmri.jmrit.ctc.CTCException.logError()
 
     public void nullBean(NBHTurnout turnout) {
-        Turnout tbean = turnout.getBean();
+        Turnout tbean = (Turnout) turnout.getBean();
         Assert.assertNull(tbean);
 
         int known = turnout.getKnownState();
@@ -234,7 +234,7 @@ public class NBHTurnoutTest {
     }
 
     public void realBean(NBHTurnout turnout) {
-        Turnout tbean = turnout.getBean();
+        Turnout tbean = (Turnout) turnout.getBean();
         Assert.assertNotNull(tbean);
 
         int known = turnout.getKnownState();
