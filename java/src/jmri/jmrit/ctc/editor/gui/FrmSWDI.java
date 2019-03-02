@@ -13,7 +13,7 @@ import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
  *
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019
  */
-public class DlgSWDI extends javax.swing.JDialog {
+public class FrmSWDI extends javax.swing.JFrame {
 
     private static final String FORM_PROPERTIES = "DlgSWDI";    // NOI18N
     private static final String PREFIX = "_mSWDI_";             // NOI18N
@@ -23,7 +23,7 @@ public class DlgSWDI extends javax.swing.JDialog {
     private final CodeButtonHandlerData _mCodeButtonHandlerData;
     private final ProgramProperties _mProgramProperties;
     private final CheckJMRIObject _mCheckJMRIObject;
-    
+
     private String _mSWDI_NormalInternalSensorOrig;
     private String _mSWDI_ReversedInternalSensorOrig;
     private String _mSWDI_ExternalTurnoutOrig;
@@ -32,7 +32,7 @@ public class DlgSWDI extends javax.swing.JDialog {
     private CodeButtonHandlerData.TURNOUT_TYPE _mSWDI_GUITurnoutTypeOrig;
     private boolean _mSWDI_GUITurnoutLeftHandOrig;
     private boolean _mSWDI_GUICrossoverLeftHandOrig;
-    
+
     private void initOrig() {
         _mSWDI_NormalInternalSensorOrig = _mCodeButtonHandlerData._mSWDI_NormalInternalSensor;
         _mSWDI_ReversedInternalSensorOrig = _mCodeButtonHandlerData._mSWDI_ReversedInternalSensor;
@@ -54,11 +54,10 @@ public class DlgSWDI extends javax.swing.JDialog {
         if (_mSWDI_GUICrossoverLeftHandOrig != _mSWDI_GUICrossoverLeftHand.isSelected()) return true;
         return false;
     }
-    
-    public DlgSWDI( java.awt.Frame parent, boolean modal,
-                    AwtWindowProperties awtWindowProperties, CodeButtonHandlerData codeButtonHandlerData,
+
+    public FrmSWDI( AwtWindowProperties awtWindowProperties, CodeButtonHandlerData codeButtonHandlerData,
                     ProgramProperties programProperties, CheckJMRIObject checkJMRIObject) {
-        super(parent, modal);
+        super();
         initComponents();
         _mAwtWindowProperties = awtWindowProperties;
         _mCodeButtonHandlerData = codeButtonHandlerData;
@@ -75,23 +74,23 @@ public class DlgSWDI extends javax.swing.JDialog {
         _mSWDI_GUITurnoutLeftHand.setSelected(_mCodeButtonHandlerData._mSWDI_GUITurnoutLeftHand);
         _mSWDI_GUICrossoverLeftHand.setSelected(_mCodeButtonHandlerData._mSWDI_GUICrossoverLeftHand);
         initOrig();
-        _mAwtWindowProperties.setWindowState(this, FORM_PROPERTIES);        
+        _mAwtWindowProperties.setWindowState(this, FORM_PROPERTIES);
         this.getRootPane().setDefaultButton(_mSaveAndClose);
     }
-    
+
     public static boolean dialogCodeButtonHandlerDataValid(CheckJMRIObject checkJMRIObject, CodeButtonHandlerData codeButtonHandlerData) {
         if (!codeButtonHandlerData._mSWDI_Enabled) return true; // Not enabled, can be no error!
-//  Checks:        
+//  Checks:
         if (ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mSWDI_NormalInternalSensor)) return false;
         if (ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mSWDI_ReversedInternalSensor)) return false;
         if (ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mSWDI_ExternalTurnout)) return false;
         return checkJMRIObject.validClassWithPrefix(PREFIX, codeButtonHandlerData);
     }
-    
+
 //  Validate all internal fields as much as possible:
     private ArrayList<String> formFieldsValid() {
         ArrayList<String> errors = new ArrayList<>();
-//  Checks:        
+//  Checks:
         CommonSubs.checkJTextFieldNotEmpty(_mSWDI_NormalInternalSensor, _mSWDI_NormalInternalSensorPrompt, errors);
         CommonSubs.checkJTextFieldNotEmpty(_mSWDI_ReversedInternalSensor, _mSWDI_ReversedInternalSensorPrompt, errors);
         CommonSubs.checkJComboBoxNotEmpty(_mSWDI_ExternalTurnout, _mSWDI_ActualTurnoutPrompt, errors);
@@ -131,7 +130,6 @@ public class DlgSWDI extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle(Bundle.getMessage("TitleSWDI"));
         addWindowListener(new java.awt.event.WindowAdapter() {
-            @Override
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
             }
@@ -330,7 +328,7 @@ public class DlgSWDI extends javax.swing.JDialog {
         _mSWDI_GUITurnoutLeftHand.setEnabled(false);
         _mSWDI_GUICrossoverLeftHand.setEnabled(false);
     }//GEN-LAST:event__mDoubleCrossoverActionPerformed
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JRadioButton _mCrossover;
     private javax.swing.JRadioButton _mDoubleCrossover;

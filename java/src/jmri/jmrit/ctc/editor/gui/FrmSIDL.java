@@ -13,7 +13,7 @@ import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
  *
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019
  */
-public class DlgSIDL extends javax.swing.JDialog {
+public class FrmSIDL extends javax.swing.JFrame {
 
     /**
      * Creates new form DlgSIDL
@@ -26,7 +26,7 @@ public class DlgSIDL extends javax.swing.JDialog {
     private final CodeButtonHandlerData _mCodeButtonHandlerData;
     private final ProgramProperties _mProgramProperties;
     private final CheckJMRIObject _mCheckJMRIObject;
-    
+
     private String _mSIDL_LeftInternalSensorOrig;
     private String _mSIDL_NormalInternalSensorOrig;
     private String _mSIDL_RightInternalSensorOrig;
@@ -41,11 +41,10 @@ public class DlgSIDL extends javax.swing.JDialog {
         if (!_mSIDL_RightInternalSensorOrig.equals(_mSIDL_RightInternalSensor.getText())) return true;
         return false;
     }
-    
-    public DlgSIDL( java.awt.Frame parent, boolean modal,
-                    AwtWindowProperties awtWindowProperties, CodeButtonHandlerData codeButtonHandlerData,
+
+    public FrmSIDL( AwtWindowProperties awtWindowProperties, CodeButtonHandlerData codeButtonHandlerData,
                     ProgramProperties programProperties, CheckJMRIObject checkJMRIObject) {
-        super(parent, modal);
+        super();
         initComponents();
         _mAwtWindowProperties = awtWindowProperties;
         _mCodeButtonHandlerData = codeButtonHandlerData;
@@ -55,28 +54,28 @@ public class DlgSIDL extends javax.swing.JDialog {
         _mSIDL_NormalInternalSensor.setText(_mCodeButtonHandlerData._mSIDL_NormalInternalSensor);
         _mSIDL_RightInternalSensor.setText(_mCodeButtonHandlerData._mSIDL_RightInternalSensor);
         initOrig();
-        _mAwtWindowProperties.setWindowState(this, FORM_PROPERTIES);        
+        _mAwtWindowProperties.setWindowState(this, FORM_PROPERTIES);
         this.getRootPane().setDefaultButton(_mSaveAndClose);
     }
-    
+
     public static boolean dialogCodeButtonHandlerDataValid(CheckJMRIObject checkJMRIObject, CodeButtonHandlerData codeButtonHandlerData) {
         if (!codeButtonHandlerData._mSIDL_Enabled) return true; // Not enabled, can be no error!
-//  For interrelationship(s) checks:        
+//  For interrelationship(s) checks:
         boolean leftInternalSensorPresent = !ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mSIDL_LeftInternalSensor);
         boolean rightInternalSensorPresent = !ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mSIDL_RightInternalSensor);
-//  Checks:        
+//  Checks:
         if (ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mSIDL_NormalInternalSensor)) return false;
         if (!leftInternalSensorPresent && !rightInternalSensorPresent) return false;
         return checkJMRIObject.validClassWithPrefix(PREFIX, codeButtonHandlerData);
     }
-    
+
 //  Validate all internal fields as much as possible:
     private ArrayList<String> formFieldsValid() {
         ArrayList<String> errors = new ArrayList<>();
-//  For interrelationship(s) checks:        
+//  For interrelationship(s) checks:
         boolean leftInternalSensorPresent = CommonSubs.isJTextFieldNotEmpty(_mSIDL_LeftInternalSensor);
         boolean rightInternalSensorPresent = CommonSubs.isJTextFieldNotEmpty(_mSIDL_RightInternalSensor);
-//  Checks:        
+//  Checks:
         CommonSubs.checkJTextFieldNotEmpty(_mSIDL_NormalInternalSensor, _mSIDL_NormalInternalSensorPrompt, errors);
         if (!leftInternalSensorPresent && !rightInternalSensorPresent) errors.add(Bundle.getMessage("OneOrBothOf") + " \"" + _mSIDL_LeftInternalSensorPrompt.getText() + "\" " + Bundle.getMessage("And") + " \"" + _mSIDL_RightInternalSensorPrompt.getText() + "\" " + Bundle.getMessage("MustBePresent"));   // NOI18N
         _mCheckJMRIObject.analyzeForm(PREFIX, this, errors);
@@ -104,7 +103,6 @@ public class DlgSIDL extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle(Bundle.getMessage("TitleDlgSIDL"));
         addWindowListener(new java.awt.event.WindowAdapter() {
-            @Override
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
             }

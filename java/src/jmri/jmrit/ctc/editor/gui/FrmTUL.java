@@ -13,7 +13,7 @@ import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
  *
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019
  */
-public class DlgTUL extends javax.swing.JDialog {
+public class FrmTUL extends javax.swing.JFrame {
 
     /**
      * Creates new form DlgTUL
@@ -26,7 +26,7 @@ public class DlgTUL extends javax.swing.JDialog {
     private final CodeButtonHandlerData _mCodeButtonHandlerData;
     private final ProgramProperties _mProgramProperties;
     private final CheckJMRIObject _mCheckJMRIObject;
-    
+
     private String _mTUL_DispatcherInternalSensorLockToggleOrig;
     private String _mTUL_ExternalTurnoutOrig;
     private boolean _mTUL_ExternalTurnoutFeedbackDifferentOrig;
@@ -40,7 +40,7 @@ public class DlgTUL extends javax.swing.JDialog {
     private boolean _mTUL_AdditionalExternalTurnout2FeedbackDifferentOrig;
     private String _mTUL_AdditionalExternalTurnout3Orig;
     private boolean _mTUL_AdditionalExternalTurnout3FeedbackDifferentOrig;
-    
+
     private void initOrig() {
         _mTUL_DispatcherInternalSensorLockToggleOrig = _mCodeButtonHandlerData._mTUL_DispatcherInternalSensorLockToggle;
         _mTUL_ExternalTurnoutOrig = _mCodeButtonHandlerData._mTUL_ExternalTurnout;
@@ -72,10 +72,10 @@ public class DlgTUL extends javax.swing.JDialog {
         if (_mTUL_AdditionalExternalTurnout3FeedbackDifferentOrig != _mTUL_AdditionalExternalTurnout3FeedbackDifferent.isSelected()) return true;
         return false;
     }
-    
-    public DlgTUL(  java.awt.Frame parent, boolean modal, AwtWindowProperties awtWindowProperties, CodeButtonHandlerData codeButtonHandlerData,
+
+    public FrmTUL(  AwtWindowProperties awtWindowProperties, CodeButtonHandlerData codeButtonHandlerData,
                     ProgramProperties programProperties, CheckJMRIObject checkJMRIObject) {
-        super(parent, modal);
+        super();
         initComponents();
         _mAwtWindowProperties = awtWindowProperties;
         _mCodeButtonHandlerData = codeButtonHandlerData;
@@ -96,23 +96,23 @@ public class DlgTUL extends javax.swing.JDialog {
         CommonSubs.populateJComboBoxWithBeans(_mTUL_AdditionalExternalTurnout3, "Turnout", _mCodeButtonHandlerData._mTUL_AdditionalExternalTurnout3, true);
         _mTUL_AdditionalExternalTurnout3FeedbackDifferent.setSelected(_mCodeButtonHandlerData._mTUL_AdditionalExternalTurnout3FeedbackDifferent);
         initOrig();
-        _mAwtWindowProperties.setWindowState(this, FORM_PROPERTIES);        
+        _mAwtWindowProperties.setWindowState(this, FORM_PROPERTIES);
         this.getRootPane().setDefaultButton(_mSaveAndClose);
     }
-    
+
     public static boolean dialogCodeButtonHandlerDataValid(CheckJMRIObject checkJMRIObject, CodeButtonHandlerData codeButtonHandlerData) {
         if (!codeButtonHandlerData._mTUL_Enabled) return true; // Not enabled, can be no error!
-//  Checks:        
+//  Checks:
         if (ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mTUL_ExternalTurnout)) return false;
         return checkJMRIObject.validClassWithPrefix(PREFIX, codeButtonHandlerData);
     }
-    
+
 //  Validate all internal fields as much as possible:
     private ArrayList<String> formFieldsValid() {
         ArrayList<String> errors = new ArrayList<>();
-//  Checks:        
+//  Checks:
         CommonSubs.checkJComboBoxNotEmpty(_mTUL_ExternalTurnout, _mTUL_ActualTurnoutPrompt, errors);
-        _mCheckJMRIObject.analyzeForm(PREFIX, this, errors);        
+        _mCheckJMRIObject.analyzeForm(PREFIX, this, errors);
         return errors;
     }
 
@@ -157,7 +157,6 @@ public class DlgTUL extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle(Bundle.getMessage("TitleDlgTUL"));
         addWindowListener(new java.awt.event.WindowAdapter() {
-            @Override
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
             }

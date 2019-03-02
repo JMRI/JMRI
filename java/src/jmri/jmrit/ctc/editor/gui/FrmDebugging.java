@@ -9,7 +9,7 @@ import jmri.jmrit.ctc.ctcserialdata.OtherData;
  *
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019
  */
-public class DlgDebugging extends javax.swing.JDialog {
+public class FrmDebugging extends javax.swing.JFrame {
 
     /**
      * Creates new form dlgProperties
@@ -19,10 +19,10 @@ public class DlgDebugging extends javax.swing.JDialog {
     private final OtherData _mOtherData;
     private boolean _mClosedNormally = false;
     public boolean closedNormally() { return _mClosedNormally; }
-    
+
     private String _mCTCDebugSystemReloadInternalSensorOrig;
     private String _mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensorOrig;
-    
+
     private void initOrig(OtherData otherData) {
         _mCTCDebugSystemReloadInternalSensorOrig = otherData._mCTCDebugSystemReloadInternalSensor;
         _mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensorOrig = otherData._mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor;
@@ -32,19 +32,19 @@ public class DlgDebugging extends javax.swing.JDialog {
         if (!_mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensorOrig.equals(_mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor.getText())) return true;
         return false;
     }
-    
-    public DlgDebugging(java.awt.Frame parent, boolean modal, AwtWindowProperties awtWindowProperties, OtherData otherData) {
-        super(parent, modal);
+
+    public FrmDebugging(AwtWindowProperties awtWindowProperties, OtherData otherData) {
+        super();
         initComponents();
         _mAwtWindowProperties = awtWindowProperties;
         _mOtherData = otherData;
         _mCTCSystemReloadInternalSensor.setText(otherData._mCTCDebugSystemReloadInternalSensor);
         _mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor.setText(otherData._mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor);
         initOrig(otherData);
-        _mAwtWindowProperties.setWindowState(this, FORM_PROPERTIES);        
+        _mAwtWindowProperties.setWindowState(this, FORM_PROPERTIES);
         this.getRootPane().setDefaultButton(_mSaveAndClose);
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -66,7 +66,6 @@ public class DlgDebugging extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle(Bundle.getMessage("TitleDlgDeb"));
         addWindowListener(new java.awt.event.WindowAdapter() {
-            @Override
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
             }

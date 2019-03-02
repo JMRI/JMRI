@@ -12,7 +12,7 @@ import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
  *
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019
  */
-public class DlgPatterns extends javax.swing.JDialog {
+public class FrmPatterns extends javax.swing.JFrame {
 
     /**
      * Creates new form dlgProperties
@@ -22,7 +22,7 @@ public class DlgPatterns extends javax.swing.JDialog {
     private final ProgramProperties _mProgramProperties;
     private boolean _mClosedNormally = false;
     public boolean closedNormally() { return _mClosedNormally; }
-    
+
     private String _mCodeButtonInternalSensorPatternOrig;
     private String _mSIDI_LeftInternalSensorPatternOrig;
     private String _mSIDI_NormalInternalSensorPatternOrig;
@@ -36,7 +36,7 @@ public class DlgPatterns extends javax.swing.JDialog {
     private String _mCO_CallOnToggleInternalSensorPatternOrig;
     private String _mTUL_DispatcherInternalSensorLockTogglePatternOrig;
     private String _mTUL_DispatcherInternalSensorUnlockedIndicatorPatternOrig;
-    
+
     private void initOrig(ProgramProperties programProperties) {
         _mCodeButtonInternalSensorPatternOrig = programProperties._mCodeButtonInternalSensorPattern;
         _mSIDI_LeftInternalSensorPatternOrig = programProperties._mSIDI_LeftInternalSensorPattern;
@@ -68,13 +68,13 @@ public class DlgPatterns extends javax.swing.JDialog {
         if (!_mTUL_DispatcherInternalSensorUnlockedIndicatorPatternOrig.equals(_mTUL_DispatcherInternalSensorUnlockedIndicatorPattern.getText())) return true;
         return false;
     }
-    
-    public DlgPatterns(java.awt.Frame parent, boolean modal, AwtWindowProperties awtWindowProperties, ProgramProperties programProperties) {
-        super(parent, modal);
+
+    public FrmPatterns(AwtWindowProperties awtWindowProperties, ProgramProperties programProperties) {
+        super();
         initComponents();
         _mAwtWindowProperties = awtWindowProperties;
         _mProgramProperties = programProperties;
-        
+
         _mCodeButtonInternalSensorPattern.setText(programProperties._mCodeButtonInternalSensorPattern);
         _mSIDI_LeftInternalSensorPattern.setText(programProperties._mSIDI_LeftInternalSensorPattern);
         _mSIDI_NormalInternalSensorPattern.setText(programProperties._mSIDI_NormalInternalSensorPattern);
@@ -89,10 +89,10 @@ public class DlgPatterns extends javax.swing.JDialog {
         _mTUL_DispatcherInternalSensorLockTogglePattern.setText(programProperties._mTUL_DispatcherInternalSensorLockTogglePattern);
         _mTUL_DispatcherInternalSensorUnlockedIndicatorPattern.setText(programProperties._mTUL_DispatcherInternalSensorUnlockedIndicatorPattern);
         initOrig(programProperties);
-        _mAwtWindowProperties.setWindowState(this, FORM_PROPERTIES);        
+        _mAwtWindowProperties.setWindowState(this, FORM_PROPERTIES);
         this.getRootPane().setDefaultButton(_mSaveAndClose);
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -140,7 +140,6 @@ public class DlgPatterns extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle(Bundle.getMessage("TItleDlgPat"));
         addWindowListener(new java.awt.event.WindowAdapter() {
-            @Override
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
             }

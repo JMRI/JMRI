@@ -16,7 +16,7 @@ import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
  *
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019
  */
-public class DlgSIDI extends javax.swing.JDialog {
+public class FrmSIDI extends javax.swing.JFrame {
 
     /**
      * Creates new form dlgSIDI
@@ -75,11 +75,10 @@ public class DlgSIDI extends javax.swing.JDialog {
     private final DefaultTableModel _mSIDI_TableOfLeftToRightTrafficExternalSignalNamesDefaultTableModel;
     private final DefaultTableModel _mSIDI_TableOfRightToLeftTrafficExternalSignalNamesDefaultTableModel;
 
-    public DlgSIDI( java.awt.Frame parent, boolean modal,
-                    AwtWindowProperties awtWindowProperties, CodeButtonHandlerData codeButtonHandlerData,
+    public FrmSIDI( AwtWindowProperties awtWindowProperties, CodeButtonHandlerData codeButtonHandlerData,
                     ProgramProperties programProperties, CheckJMRIObject checkJMRIObject,
                     boolean signalHeadSelected) {
-        super(parent, modal);
+        super();
         initComponents();
         _mAwtWindowProperties = awtWindowProperties;
         _mCodeButtonHandlerData = codeButtonHandlerData;
@@ -230,7 +229,6 @@ public class DlgSIDI extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle(Bundle.getMessage("TitleSIDI"));
         addWindowListener(new java.awt.event.WindowAdapter() {
-            @Override
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
             }
@@ -371,7 +369,6 @@ public class DlgSIDI extends javax.swing.JDialog {
                 java.lang.String.class
             };
 
-            @Override
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
@@ -492,7 +489,6 @@ public class DlgSIDI extends javax.swing.JDialog {
                 java.lang.String.class
             };
 
-            @Override
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }

@@ -14,10 +14,10 @@ import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
  *
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019
  */
-public class DlgCB extends javax.swing.JDialog {
+public class FrmCB extends javax.swing.JFrame {
 
     /**
-     * 
+     *
      */
     private static final String FORM_PROPERTIES = "DlgCB";  // NOI18N
     private static final String PREFIX = "_mOS";            // NOI18N
@@ -29,7 +29,7 @@ public class DlgCB extends javax.swing.JDialog {
     private final CTCSerialData _mCTCSerialData;
     private final CheckJMRIObject _mCheckJMRIObject;
     private final ArrayList<Integer> _mArrayListOfSelectableOSSectionUniqueIDs;
-    
+
     private String _mCodeButtonInternalSensorOrig;
     private String _mOSSectionOccupiedExternalSensorOrig;
     private String _mOSSectionOccupiedExternalSensor2Orig;
@@ -51,10 +51,9 @@ public class DlgCB extends javax.swing.JDialog {
         return false;
     }
 
-    public DlgCB(   java.awt.Frame parent, boolean modal,
-                    AwtWindowProperties awtWindowProperties, CodeButtonHandlerData codeButtonHandlerData, ProgramProperties programProperties,
+    public FrmCB(   AwtWindowProperties awtWindowProperties, CodeButtonHandlerData codeButtonHandlerData, ProgramProperties programProperties,
                     CTCSerialData ctcSerialData, CheckJMRIObject checkJMRIObject) {
-        super(parent, modal);
+        super();
         initComponents();
         _mAwtWindowProperties = awtWindowProperties;
         _mCodeButtonHandlerData = codeButtonHandlerData;
@@ -69,27 +68,27 @@ public class DlgCB extends javax.swing.JDialog {
         CommonSubs.setMillisecondsEdit(_mCodeButtonDelayTime);
         _mCodeButtonDelayTime.setText(Integer.toString(_mCodeButtonHandlerData._mCodeButtonDelayTime));
         initOrig();
-        _mAwtWindowProperties.setWindowState(this, FORM_PROPERTIES); 
+        _mAwtWindowProperties.setWindowState(this, FORM_PROPERTIES);
         this.getRootPane().setDefaultButton(_mSaveAndClose);
     }
-    
+
     public static boolean dialogCodeButtonHandlerDataValid(CheckJMRIObject checkJMRIObject, CodeButtonHandlerData codeButtonHandlerData) {
-//  Checks:        
+//  Checks:
         if (ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mCodeButtonInternalSensor)) return false;
         if (ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mOSSectionOccupiedExternalSensor)) return false;
         return checkJMRIObject.validClassWithPrefix(PREFIX, codeButtonHandlerData);
     }
-  
+
 //  Validate all internal fields as much as possible:
     private ArrayList<String> formFieldsValid() {
         ArrayList<String> errors = new ArrayList<>();
-//  Checks:        
+//  Checks:
         CommonSubs.checkJTextFieldNotEmpty(_mCodeButtonInternalSensor, _mCodeButtonInternalSensorPrompt, errors);
         CommonSubs.checkJComboBoxNotEmpty(_mOSSectionOccupiedExternalSensor, _mOSSectionOccupiedExternalSensorPrompt, errors);
         _mCheckJMRIObject.analyzeForm(PREFIX, this, errors);
         return errors;
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -123,7 +122,6 @@ public class DlgCB extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle(Bundle.getMessage("TitleDlgCB"));
         addWindowListener(new java.awt.event.WindowAdapter() {
-            @Override
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
             }
@@ -324,7 +322,7 @@ public class DlgCB extends javax.swing.JDialog {
             }
         }
     }//GEN-LAST:event__mOSSectionSwitchSlavedToUniqueIDActionPerformed
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JFormattedTextField _mCodeButtonDelayTime;
     private javax.swing.JTextField _mCodeButtonInternalSensor;

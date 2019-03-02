@@ -12,14 +12,14 @@ import jmri.jmrit.ctc.editor.code.Columns;
  *
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019
  */
-public class DlgFixErrors extends javax.swing.JDialog {
+public class FrmFixErrors extends javax.swing.JFrame {
 
     private static final String FORM_PROPERTIES = "DlgFixErrors";   // NOI18N
     private final AwtWindowProperties _mAwtWindowProperties;
     private final Columns _mColumns;
-    
-    public DlgFixErrors(java.awt.Frame parent, boolean modal, AwtWindowProperties awtWindowProperties, Columns columns) {
-        super(parent, modal);
+
+    public FrmFixErrors(AwtWindowProperties awtWindowProperties, Columns columns) {
+        super();
         initComponents();
         _mAwtWindowProperties = awtWindowProperties;
         _mColumns = columns;
@@ -43,7 +43,6 @@ public class DlgFixErrors extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle(Bundle.getMessage("TitleDlgFix"));
         addWindowListener(new java.awt.event.WindowAdapter() {
-            @Override
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
             }
@@ -116,7 +115,7 @@ public class DlgFixErrors extends javax.swing.JDialog {
         _mAwtWindowProperties.saveWindowState(this, FORM_PROPERTIES);
         dispose();
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton _mCancel;
     private javax.swing.JLabel _mInfo;

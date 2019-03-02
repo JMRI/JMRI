@@ -7,19 +7,19 @@ import jmri.jmrit.ctc.ctcserialdata.CTCSerialData;
  *
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019
  */
-public class DlgAbout extends javax.swing.JDialog {
+public class FrmAbout extends javax.swing.JFrame {
 
     private static final String FORM_PROPERTIES = "dlgAbout";
     private final AwtWindowProperties _mAwtWindowProperties;
     /**
      * Creates new form dlgAbout
      */
-    public DlgAbout(java.awt.Frame parent, boolean modal, AwtWindowProperties awtWindowProperties) {
-        super(parent, modal);
+    public FrmAbout(AwtWindowProperties awtWindowProperties) {
+        super();
         initComponents();
         _mHelpTitle.setText(_mHelpTitle.getText() + CTCSerialData.CTCVersion);
         _mAwtWindowProperties = awtWindowProperties;
-        _mAwtWindowProperties.setWindowState(this, FORM_PROPERTIES); 
+        _mAwtWindowProperties.setWindowState(this, FORM_PROPERTIES);
         this.getRootPane().setDefaultButton(_mOK);
     }
 
@@ -41,7 +41,6 @@ public class DlgAbout extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("About");
         addWindowListener(new java.awt.event.WindowAdapter() {
-            @Override
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
             }

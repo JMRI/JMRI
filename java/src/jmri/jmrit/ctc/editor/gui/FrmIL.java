@@ -13,7 +13,7 @@ import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
 /**
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019
  */
-public class DlgIL extends javax.swing.JDialog {
+public class FrmIL extends javax.swing.JFrame {
 
     /**
      * Creates new form DlgIL
@@ -45,11 +45,11 @@ public class DlgIL extends javax.swing.JDialog {
 
     private final DefaultTableModel _mIL_TableOfExternalSignalNamesDefaultTableModel;
 
-    public DlgIL(   java.awt.Frame parent, boolean modal, AwtWindowProperties awtWindowProperties,
+    public FrmIL(   AwtWindowProperties awtWindowProperties,
                     CodeButtonHandlerData codeButtonHandlerData,
                     CheckJMRIObject checkJMRIObject,
                     boolean signalHeadSelected) {
-        super(parent, modal);
+        super();
         initComponents();
         _mAwtWindowProperties = awtWindowProperties;
         _mCodeButtonHandlerData = codeButtonHandlerData;
@@ -139,7 +139,6 @@ public class DlgIL extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle(Bundle.getMessage("TitleDlgIL"));
         addWindowListener(new java.awt.event.WindowAdapter() {
-            @Override
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
             }
@@ -263,7 +262,6 @@ public class DlgIL extends javax.swing.JDialog {
                 java.lang.String.class
             };
 
-            @Override
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
@@ -320,7 +318,7 @@ public class DlgIL extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel5)
-                        .addGap(46, 46, 46)
+                        .addGap(47, 47, 47)
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1)

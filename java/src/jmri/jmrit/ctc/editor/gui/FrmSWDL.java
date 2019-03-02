@@ -13,7 +13,7 @@ import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
  *
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019
  */
-public class DlgSWDL extends javax.swing.JDialog {
+public class FrmSWDL extends javax.swing.JFrame {
 
     /**
      * Creates new form DlgSWDL
@@ -25,8 +25,8 @@ public class DlgSWDL extends javax.swing.JDialog {
     public boolean closedNormally() { return _mClosedNormally; }
     private final CodeButtonHandlerData _mCodeButtonHandlerData;
     private final ProgramProperties _mProgramProperties;
-    private final CheckJMRIObject _mCheckJMRIObject;    
-    
+    private final CheckJMRIObject _mCheckJMRIObject;
+
     private String _mSWDL_InternalSensorOrig;
     private void initOrig() {
         _mSWDL_InternalSensorOrig = _mCodeButtonHandlerData._mSWDL_InternalSensor;
@@ -35,11 +35,10 @@ public class DlgSWDL extends javax.swing.JDialog {
         if (!_mSWDL_InternalSensorOrig.equals(_mSWDL_InternalSensor.getText())) return true;
         return false;
     }
-    
-    public DlgSWDL( java.awt.Frame parent, boolean modal,
-                    AwtWindowProperties awtWindowProperties, CodeButtonHandlerData codeButtonHandlerData,
+
+    public FrmSWDL( AwtWindowProperties awtWindowProperties, CodeButtonHandlerData codeButtonHandlerData,
                     ProgramProperties programProperties, CheckJMRIObject checkJMRIObject) {
-        super(parent, modal);
+        super();
         initComponents();
         _mAwtWindowProperties = awtWindowProperties;
         _mCodeButtonHandlerData = codeButtonHandlerData;
@@ -47,26 +46,26 @@ public class DlgSWDL extends javax.swing.JDialog {
         _mCheckJMRIObject = checkJMRIObject;
         _mSWDL_InternalSensor.setText(_mCodeButtonHandlerData._mSWDL_InternalSensor);
         initOrig();
-        _mAwtWindowProperties.setWindowState(this, FORM_PROPERTIES);        
+        _mAwtWindowProperties.setWindowState(this, FORM_PROPERTIES);
         this.getRootPane().setDefaultButton(_mSaveAndClose);
     }
 
     public static boolean dialogCodeButtonHandlerDataValid(CheckJMRIObject checkJMRIObject, CodeButtonHandlerData codeButtonHandlerData) {
         if (!codeButtonHandlerData._mSWDL_Enabled) return true; // Not enabled, can be no error!
-//  Checks:        
+//  Checks:
         if (ProjectsCommonSubs.isNullOrEmptyString(codeButtonHandlerData._mSWDL_InternalSensor)) return false;
         return checkJMRIObject.validClassWithPrefix(PREFIX, codeButtonHandlerData);
     }
-    
+
 //  Validate all internal fields as much as possible:
     private ArrayList<String> formFieldsValid() {
         ArrayList<String> errors = new ArrayList<>();
-//  Checks:        
+//  Checks:
         CommonSubs.checkJTextFieldNotEmpty(_mSWDL_InternalSensor, _mSWDL_InternalSensorPrompt, errors);
-        _mCheckJMRIObject.analyzeForm(PREFIX, this, errors);        
+        _mCheckJMRIObject.analyzeForm(PREFIX, this, errors);
         return errors;
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -84,7 +83,6 @@ public class DlgSWDL extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle(Bundle.getMessage("TitleDlgSWDL"));
         addWindowListener(new java.awt.event.WindowAdapter() {
-            @Override
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
             }

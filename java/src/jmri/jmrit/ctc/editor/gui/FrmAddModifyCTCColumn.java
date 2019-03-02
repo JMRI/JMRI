@@ -9,7 +9,7 @@ import javax.swing.SpinnerNumberModel;
  *
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019
  */
-public class DlgAddModifyCTCColumn extends javax.swing.JDialog {
+public class FrmAddModifyCTCColumn extends javax.swing.JFrame {
 
     private static final String FORM_PROPERTIES = "DlgAddModifyCTCColumn";  // NOI18N
     private final AwtWindowProperties _mAwtWindowProperties;
@@ -26,8 +26,8 @@ public class DlgAddModifyCTCColumn extends javax.swing.JDialog {
     private boolean _mClosedNormally = false;
     public boolean closedNormally() { return _mClosedNormally; }
 
-    public DlgAddModifyCTCColumn(java.awt.Frame parent, boolean modal, AwtWindowProperties awtWindowProperties, Columns columns, boolean isModify, int existingSwitchNumber, int existingGUIColumnNumber, boolean existingGUIGeneratedAtLeastOnceAlready) {
-        super(parent, modal);
+    public FrmAddModifyCTCColumn(AwtWindowProperties awtWindowProperties, Columns columns, boolean isModify, int existingSwitchNumber, int existingGUIColumnNumber, boolean existingGUIGeneratedAtLeastOnceAlready) {
+        super();
         initComponents();
         _mAwtWindowProperties = awtWindowProperties;
         _mColumns = columns;
@@ -66,9 +66,7 @@ public class DlgAddModifyCTCColumn extends javax.swing.JDialog {
         _mGUIGeneratedAtLeastOnceAlready = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-        setModalityType(java.awt.Dialog.ModalityType.DOCUMENT_MODAL);
         addWindowListener(new java.awt.event.WindowAdapter() {
-            @Override
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
             }

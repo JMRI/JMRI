@@ -15,9 +15,9 @@ import jmri.jmrit.ctc.ctcserialdata.TrafficLockingEntry;
 /**
  *
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019
- * 
+ *
  */
-public class DlgTRL_Rules extends javax.swing.JDialog {
+public class FrmTRL_Rules extends javax.swing.JFrame {
 
     /**
      * Creates new form DlgTRL_Rules
@@ -34,7 +34,7 @@ public class DlgTRL_Rules extends javax.swing.JDialog {
     private final ArrayList<Integer> _mArrayListOfSelectableOSSectionUniqueIDs;
     private final DefaultListModel<String> _mDefaultListModel;
     private boolean _mAddNewPressed;
-    
+
     private final ArrayList<String> _mDefaultListModelOrig = new ArrayList<> ();
     private void initOrig() {
         int defaultListModelSize = _mDefaultListModel.getSize();
@@ -50,12 +50,11 @@ public class DlgTRL_Rules extends javax.swing.JDialog {
         }
         return false;
     }
-    
-    public DlgTRL_Rules(java.awt.Frame parent, boolean modal,
-                        AwtWindowProperties awtWindowProperties, CodeButtonHandlerData codeButtonHandlerData,
+
+    public FrmTRL_Rules(AwtWindowProperties awtWindowProperties, CodeButtonHandlerData codeButtonHandlerData,
                         boolean isLeftTraffic,
                         CTCSerialData ctcSerialData, CheckJMRIObject checkJMRIObject) {
-        super(parent, modal);
+        super();
         initComponents();
         _mAwtWindowProperties = awtWindowProperties;
         _mCodeButtonHandlerData = codeButtonHandlerData;
@@ -65,7 +64,7 @@ public class DlgTRL_Rules extends javax.swing.JDialog {
         _mArrayListOfSelectableOSSectionUniqueIDs = CommonSubs.getArrayListOfSelectableOSSectionUniqueIDs(_mCTCSerialData.getCodeButtonHandlerDataArrayList());
         _mDefaultListModel = new DefaultListModel<>();
         _mTRL_TrafficLockingRulesSSVList.setModel(_mDefaultListModel);
-        
+
         String trafficLockingRulesSSVList;
         String identifier = codeButtonHandlerData.myShortStringNoComma();
         if (isLeftTraffic) {
@@ -86,7 +85,7 @@ public class DlgTRL_Rules extends javax.swing.JDialog {
             _mDefaultListModel.addElement(aString);
         }
         initOrig();
-        _mAwtWindowProperties.setWindowState(this, FORM_PROPERTIES);        
+        _mAwtWindowProperties.setWindowState(this, FORM_PROPERTIES);
         CommonSubs.populateJComboBoxWithBeans(_mOccupancyExternalSensor1, "Sensor", null, true);
         CommonSubs.populateJComboBoxWithBeans(_mOccupancyExternalSensor2, "Sensor", null, true);
         CommonSubs.populateJComboBoxWithBeans(_mOccupancyExternalSensor3, "Sensor", null, true);
@@ -113,7 +112,7 @@ public class DlgTRL_Rules extends javax.swing.JDialog {
         _mEditBelow.setEnabled(false);
         _mDelete.setEnabled(false);
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -167,7 +166,6 @@ public class DlgTRL_Rules extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle(Bundle.getMessage("TitleDlgTRLRules"));
         addWindowListener(new java.awt.event.WindowAdapter() {
-            @Override
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
             }
@@ -424,13 +422,13 @@ public class DlgTRL_Rules extends javax.swing.JDialog {
     @SuppressFBWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION", justification = "I don't want to introduce bugs, CPU no big deal here.")
     private void _mSaveAndCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mSaveAndCloseActionPerformed
         int size = _mDefaultListModel.getSize();
-        
+
         String resultString = "";
         for (int index = 0; index < size; index++) {
             String thisEntry = _mDefaultListModel.getElementAt(index);
             resultString = (0 == index) ? thisEntry : resultString + ProjectsCommonSubs.SSV_SEPARATOR + thisEntry;
         }
-        
+
         if (_mIsLeftTraffic) { _mCodeButtonHandlerData._mTRL_LeftTrafficLockingRulesSSVList = resultString; }
         else { _mCodeButtonHandlerData._mTRL_RightTrafficLockingRulesSSVList = resultString; }
         _mClosedNormally = true;
@@ -445,10 +443,10 @@ public class DlgTRL_Rules extends javax.swing.JDialog {
 
     private void _mTRL_TrafficLockingRulesSSVListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event__mTRL_TrafficLockingRulesSSVListValueChanged
         if (_mTRL_TrafficLockingRulesSSVList.isSelectionEmpty()) {
-            _mEditBelow.setEnabled(false);        
+            _mEditBelow.setEnabled(false);
             _mDelete.setEnabled(false);
         } else {
-            _mEditBelow.setEnabled(true);        
+            _mEditBelow.setEnabled(true);
             _mDelete.setEnabled(true);
         }
     }//GEN-LAST:event__mTRL_TrafficLockingRulesSSVListValueChanged
@@ -501,7 +499,7 @@ public class DlgTRL_Rules extends javax.swing.JDialog {
         int selectedIndex = _mTRL_TrafficLockingRulesSSVList.getSelectedIndex();
         enableTopPart(false);
         _mTRL_TrafficLockingRulesSSVList.setEnabled(false);
-        
+
         TrafficLockingEntry trafficLockingEntry = new TrafficLockingEntry(_mDefaultListModel.get(selectedIndex));
 //        _mOccupancyExternalSensor1.setText(trafficLockingEntry._mOccupancyExternalSensor1);
 //        _mOccupancyExternalSensor2.setText(trafficLockingEntry._mOccupancyExternalSensor2);
@@ -573,13 +571,13 @@ public class DlgTRL_Rules extends javax.swing.JDialog {
                                                                             (String)_mOccupancyExternalSensor9.getSelectedItem(),
                                                                             (String)_mOptionalExternalSensor1.getSelectedItem(),
                                                                             (String)_mOptionalExternalSensor2.getSelectedItem());
-        
+
         CheckJMRIObject.VerifyClassReturnValue verifyClassReturnValue = _mCheckJMRIObject.verifyClass(trafficLockingEntry);
         if (verifyClassReturnValue != null) { // Error:
             JOptionPane.showMessageDialog(this, verifyClassReturnValue.toString(), Bundle.getMessage("Error"), JOptionPane.ERROR_MESSAGE);  // NOI18N
             return;
         }
-        
+
 // Any uninitialized are null, and thats OK for "constructCSVStringFromArrayList":
 
         int osNumberSelectedIndex;
@@ -608,7 +606,7 @@ public class DlgTRL_Rules extends javax.swing.JDialog {
             trafficLockingEntry._mUserText5 = (String)_mOS_NumberEntry5.getSelectedItem();
             trafficLockingEntry._mUniqueID5 = _mArrayListOfSelectableOSSectionUniqueIDs.get(osNumberSelectedIndex - 1).toString();
         }
-        
+
         _mGroupingListAddReplace.setEnabled(false);
         enableTopPart(true);
         if (_mAddNewPressed) {
@@ -652,7 +650,7 @@ public class DlgTRL_Rules extends javax.swing.JDialog {
             return trafficLockingEntry.toCSVString();
     }
     private String getRuleNumberString(int ruleNumber) { return " " + Bundle.getMessage("InfoDlgTRLRuleNumber") + Integer.toString(ruleNumber); }   // NOI18N
-    
+
     private void enableTopPart(boolean enabled) {
         _mAddNew.setEnabled(enabled);
         _mOccupancyExternalSensor1.setEnabled(!enabled);
@@ -680,7 +678,7 @@ public class DlgTRL_Rules extends javax.swing.JDialog {
         _mGroupingListAddReplace.setEnabled(!enabled);
         _mCancel.setEnabled(!enabled);
         _mSaveAndClose.setEnabled(enabled);
-        
+
         if (enabled) this.getRootPane().setDefaultButton(_mSaveAndClose);
         else this.getRootPane().setDefaultButton(_mGroupingListAddReplace);
     }
@@ -695,7 +693,7 @@ public class DlgTRL_Rules extends javax.swing.JDialog {
 //      }
 //      return returnValue;
 //  }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton _mAddNew;
     private javax.swing.JButton _mCancel;

@@ -9,7 +9,7 @@ import jmri.jmrit.ctc.ctcserialdata.OtherData;
  *
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019
  */
-public class DlgDefaults extends javax.swing.JDialog {
+public class FrmDefaults extends javax.swing.JFrame {
 
     private static final String FORM_PROPERTIES = "DlgDefaults";    // NOI18N
     private final AwtWindowProperties _mAwtWindowProperties;
@@ -17,14 +17,14 @@ public class DlgDefaults extends javax.swing.JDialog {
     private final OtherData _mOtherData;
     private boolean _mClosedNormally = false;
     public boolean closedNormally() { return _mClosedNormally; }
-    
+
     private int _mSIDI_CodingTimeInMillisecondsOrig;
     private int _mSIDI_TimeLockingTimeInMillisecondsOrig;
     private int _mSWDI_CodingTimeInMillisecondsOrig;
     private boolean _mTUL_EnabledAtStartupOrig;
     private int _mCodeButtonDelayTimeOrig;
     private OtherData.SIGNAL_SYSTEM_TYPE _mSignalSystemTypeOrig;
-    
+
     private void initOrig(ProgramProperties programProperties, OtherData otherData) {
         _mSIDI_CodingTimeInMillisecondsOrig = programProperties._mSIDI_CodingTimeInMilliseconds;
         _mSIDI_TimeLockingTimeInMillisecondsOrig = programProperties._mSIDI_TimeLockingTimeInMilliseconds;
@@ -39,12 +39,12 @@ public class DlgDefaults extends javax.swing.JDialog {
         if (CommonSubs.getIntFromJTextFieldNoThrow(_mSWDI_CodingTimeInMilliseconds) != _mSWDI_CodingTimeInMillisecondsOrig) return true;
         if (_mTUL_EnabledAtStartupOrig != _mTUL_EnabledAtStartup.isSelected()) return true;
         if (CommonSubs.getIntFromJTextFieldNoThrow(_mCodeButtonDelayTime) != _mCodeButtonDelayTimeOrig) return true;
-        if (_mSignalSystemTypeOrig != OtherData.SIGNAL_SYSTEM_TYPE.getSignalSystemType(_mSignalSystemType)) return true;        
+        if (_mSignalSystemTypeOrig != OtherData.SIGNAL_SYSTEM_TYPE.getSignalSystemType(_mSignalSystemType)) return true;
         return false;
     }
-    
-    public DlgDefaults(java.awt.Frame parent, boolean modal, AwtWindowProperties awtWindowProperties, ProgramProperties programProperties, OtherData otherData) {
-        super(parent, modal);
+
+    public FrmDefaults(AwtWindowProperties awtWindowProperties, ProgramProperties programProperties, OtherData otherData) {
+        super();
         initComponents();
         _mAwtWindowProperties = awtWindowProperties;
         _mProgramProperties = programProperties;
@@ -61,10 +61,10 @@ public class DlgDefaults extends javax.swing.JDialog {
         _mTUL_EnabledAtStartup.setSelected(_mOtherData._mTUL_EnabledAtStartup);
         _mCodeButtonDelayTime.setText(Integer.toString(programProperties._mCodeButtonDelayTime));
         initOrig(_mProgramProperties, _mOtherData);
-        _mAwtWindowProperties.setWindowState(this, FORM_PROPERTIES);        
+        _mAwtWindowProperties.setWindowState(this, FORM_PROPERTIES);
         this.getRootPane().setDefaultButton(_mSaveAndClose);
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -98,7 +98,6 @@ public class DlgDefaults extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle(Bundle.getMessage("TitleDlgDef"));
         addWindowListener(new java.awt.event.WindowAdapter() {
-            @Override
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
             }

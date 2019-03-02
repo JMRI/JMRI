@@ -9,7 +9,7 @@ import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
  *
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019
  */
-public class DlgGUIDesign extends javax.swing.JDialog {
+public class FrmGUIDesign extends javax.swing.JFrame {
 
     /*
      * Creates new form dlgProperties
@@ -19,7 +19,7 @@ public class DlgGUIDesign extends javax.swing.JDialog {
     private final OtherData _mOtherData;
     private boolean _mClosedNormally = false;
     public boolean closedNormally() { return _mClosedNormally; }
-    
+
     private int _mGUIDesign_NumberOfEmptyColumnsAtEndOrig;
     private OtherData.CTC_PANEL_TYPE   _mGUIDesign_CTCPanelTypeOrig;
     private boolean  _mGUIDesign_BuilderPlateOrig;
@@ -32,7 +32,7 @@ public class DlgGUIDesign extends javax.swing.JDialog {
     private OtherData.VERTICAL_SIZE _mGUIDesign_VerticalSizeOrig;
     private boolean  _mGUIDesign_OSSectionUnknownInconsistentRedBlinkOrig;
     private boolean  _mGUIDesign_TurnoutsOnPanelOrig;
-    
+
     private void initOrig(OtherData otherData) {
         _mGUIDesign_NumberOfEmptyColumnsAtEndOrig = otherData._mGUIDesign_NumberOfEmptyColumnsAtEnd;
         _mGUIDesign_CTCPanelTypeOrig = otherData._mGUIDesign_CTCPanelType;
@@ -47,7 +47,7 @@ public class DlgGUIDesign extends javax.swing.JDialog {
         _mGUIDesign_OSSectionUnknownInconsistentRedBlinkOrig = otherData._mGUIDesign_OSSectionUnknownInconsistentRedBlink;
         _mGUIDesign_TurnoutsOnPanelOrig = otherData._mGUIDesign_TurnoutsOnPanel;
     }
-    
+
     private boolean dataChanged() {
         if (CommonSubs.getIntFromJTextFieldNoThrow(_mGUIDesign_NumberOfEmptyColumnsAtEnd) != _mGUIDesign_NumberOfEmptyColumnsAtEndOrig) return true;
         if (_mGUIDesign_CTCPanelTypeOrig != OtherData.CTC_PANEL_TYPE.getRadioGroupValue(ProjectsCommonSubs.getButtonSelectedInt(_mGUIDesign_CTCPanelType))) return true;
@@ -63,13 +63,13 @@ public class DlgGUIDesign extends javax.swing.JDialog {
         if (_mGUIDesign_TurnoutsOnPanelOrig != _mGUIDesign_TurnoutsOnPanel.isSelected()) return true;
         return false;
     }
-    
-    public DlgGUIDesign(java.awt.Frame parent, boolean modal, AwtWindowProperties awtWindowProperties, OtherData otherData) {
-        super(parent, modal);
+
+    public FrmGUIDesign(AwtWindowProperties awtWindowProperties, OtherData otherData) {
+        super();
         initComponents();
         _mAwtWindowProperties = awtWindowProperties;
         _mOtherData = otherData;
-        
+
         _mGUIDesign_NumberOfEmptyColumnsAtEnd.setText(Integer.toString(_mOtherData._mGUIDesign_NumberOfEmptyColumnsAtEnd));
         CommonSubs.numberButtonGroup(_mGUIDesign_CTCPanelType);
         CommonSubs.setButtonSelected(_mGUIDesign_CTCPanelType, _mOtherData._mGUIDesign_CTCPanelType.getRadioGroupValue());
@@ -86,10 +86,10 @@ public class DlgGUIDesign extends javax.swing.JDialog {
         _mGUIDesign_OSSectionUnknownInconsistentRedBlink.setSelected(otherData._mGUIDesign_OSSectionUnknownInconsistentRedBlink);
         _mGUIDesign_TurnoutsOnPanel.setSelected(otherData._mGUIDesign_TurnoutsOnPanel);
         initOrig(otherData);
-        _mAwtWindowProperties.setWindowState(this, FORM_PROPERTIES);        
+        _mAwtWindowProperties.setWindowState(this, FORM_PROPERTIES);
         this.getRootPane().setDefaultButton(_mSaveAndClose);
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -131,7 +131,6 @@ public class DlgGUIDesign extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle(Bundle.getMessage("TitleDlgGUI"));
         addWindowListener(new java.awt.event.WindowAdapter() {
-            @Override
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
             }

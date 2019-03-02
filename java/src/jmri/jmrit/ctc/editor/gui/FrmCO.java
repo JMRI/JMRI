@@ -23,7 +23,7 @@ import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
  *
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019
  */
-public class DlgCO extends javax.swing.JDialog {
+public class FrmCO extends javax.swing.JFrame {
     /**
      * Creates new form DlgCO
      */
@@ -60,10 +60,9 @@ public class DlgCO extends javax.swing.JDialog {
         return false;
     }
 
-    public DlgCO(   java.awt.Frame parent, boolean modal,
-                    AwtWindowProperties awtWindowProperties, CodeButtonHandlerData codeButtonHandlerData, ProgramProperties programProperties,
+    public FrmCO(   AwtWindowProperties awtWindowProperties, CodeButtonHandlerData codeButtonHandlerData, ProgramProperties programProperties,
                     CTCSerialData ctcSerialData, CheckJMRIObject checkJMRIObject, boolean signalHeadSelected) {
-        super(parent, modal);
+        super();
         initComponents();
         _mSignalFacingDirection.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {  Bundle.getMessage("InfoDlgCOLeftTraffic"),          // NOI18N
                                                                                                 Bundle.getMessage("InfoDlgCORightTraffic") }));     // NOI18N
@@ -182,7 +181,6 @@ public class DlgCO extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle(Bundle.getMessage("TitleDlgCO"));
         addWindowListener(new java.awt.event.WindowAdapter() {
-            @Override
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
             }

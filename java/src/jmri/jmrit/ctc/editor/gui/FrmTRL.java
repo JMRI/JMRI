@@ -15,12 +15,11 @@ import jmri.jmrit.ctc.ctcserialdata.TrafficLockingEntry;
  *
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019
  */
-public class DlgTRL extends javax.swing.JDialog {
+public class FrmTRL extends javax.swing.JFrame {
 
     /**
      * Creates new form DlgTRL
      */
-    private final java.awt.Frame _mParent;
     private static final String FORM_PROPERTIES = "DlgTRL";     // NOI18N
     private final AwtWindowProperties _mAwtWindowProperties;
     private boolean _mClosedNormally = false;
@@ -28,43 +27,41 @@ public class DlgTRL extends javax.swing.JDialog {
     private final CodeButtonHandlerData _mCodeButtonHandlerData;
     private final CTCSerialData _mCTCSerialData;
     private final CheckJMRIObject _mCheckJMRIObject;
-    
+
     private void initOrig() {
     }
     private boolean dataChanged() {
         return false;
     }
 
-    public DlgTRL(  java.awt.Frame parent, boolean modal,
-                    AwtWindowProperties awtWindowProperties, CodeButtonHandlerData codeButtonHandlerData,
+    public FrmTRL(  AwtWindowProperties awtWindowProperties, CodeButtonHandlerData codeButtonHandlerData,
                     CTCSerialData ctcSerialData, CheckJMRIObject checkJMRIObject) {
-        super(parent, modal);
+        super();
         initComponents();
-        _mParent = parent;
         _mAwtWindowProperties = awtWindowProperties;
         _mCodeButtonHandlerData = codeButtonHandlerData;
         _mCTCSerialData = ctcSerialData;
         _mCheckJMRIObject = checkJMRIObject;
         initOrig();
-        _mAwtWindowProperties.setWindowState(this, FORM_PROPERTIES);        
+        _mAwtWindowProperties.setWindowState(this, FORM_PROPERTIES);
         this.getRootPane().setDefaultButton(_mOK);
         updateRuleCounts();
         this.setTitle(Bundle.getMessage("TitleDlgTRL") + " " + codeButtonHandlerData.myShortStringNoComma());   // NOI18N
     }
-    
+
     public static boolean dialogCodeButtonHandlerDataValid(CheckJMRIObject checkJMRIObject, CodeButtonHandlerData codeButtonHandlerData) {
         if (!valid(checkJMRIObject, codeButtonHandlerData._mTRL_LeftTrafficLockingRulesSSVList)) return false;
         if (!valid(checkJMRIObject, codeButtonHandlerData._mTRL_RightTrafficLockingRulesSSVList)) return false;
         return true;
     }
-    
+
     private void updateRuleCounts() {
         _mLeftNumberOfRules.setText(Bundle.getMessage("InfoDlgTRLRules") + " " + Integer.toString(ProjectsCommonSubs.getArrayListFromSSV(_mCodeButtonHandlerData._mTRL_LeftTrafficLockingRulesSSVList).size()));        // NOI18N
         _mRightNumberOfRules.setText(Bundle.getMessage("InfoDlgTRLRules") + " " + Integer.toString(ProjectsCommonSubs.getArrayListFromSSV(_mCodeButtonHandlerData._mTRL_RightTrafficLockingRulesSSVList).size()));      // NOI18N
         _mLeftNumberOfRulesPrompt.setForeground(valid(_mCheckJMRIObject, _mCodeButtonHandlerData._mTRL_LeftTrafficLockingRulesSSVList) ? Color.black : Color.red);
         _mRightNumberOfRulesPrompt.setForeground(valid(_mCheckJMRIObject, _mCodeButtonHandlerData._mTRL_RightTrafficLockingRulesSSVList) ? Color.black : Color.red);
     }
-    
+
     private static boolean valid(CheckJMRIObject checkJMRIObject, String trafficLockingRulesSSVList) {
         for (String groupingListString : ProjectsCommonSubs.getArrayListFromSSV(trafficLockingRulesSSVList)) {
             if (!checkJMRIObject.validClass(new TrafficLockingEntry(groupingListString))) return false; // Error
@@ -95,7 +92,6 @@ public class DlgTRL extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle(Bundle.getMessage("TitleDlgTRL"));
         addWindowListener(new java.awt.event.WindowAdapter() {
-            @Override
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
             }
@@ -204,8 +200,7 @@ public class DlgTRL extends javax.swing.JDialog {
     }//GEN-LAST:event_formWindowClosing
 
     private void _mEditLeftTrafficLockingRulesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mEditLeftTrafficLockingRulesActionPerformed
-        DlgTRL_Rules dialog = new DlgTRL_Rules( _mParent, true,
-                                                _mAwtWindowProperties, _mCodeButtonHandlerData, 
+        FrmTRL_Rules dialog = new FrmTRL_Rules( _mAwtWindowProperties, _mCodeButtonHandlerData,
                                                 true, _mCTCSerialData, _mCheckJMRIObject);
         dialog.addWindowListener(new WindowAdapter() {
             @Override
@@ -220,8 +215,7 @@ public class DlgTRL extends javax.swing.JDialog {
     }//GEN-LAST:event__mEditLeftTrafficLockingRulesActionPerformed
 
     private void _mEditRightTrafficLockingRulesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mEditRightTrafficLockingRulesActionPerformed
-        DlgTRL_Rules dialog = new DlgTRL_Rules( _mParent, true,
-                                                _mAwtWindowProperties, _mCodeButtonHandlerData,
+        FrmTRL_Rules dialog = new FrmTRL_Rules( _mAwtWindowProperties, _mCodeButtonHandlerData,
                                                 false, _mCTCSerialData, _mCheckJMRIObject);
         dialog.addWindowListener(new WindowAdapter() {
             @Override

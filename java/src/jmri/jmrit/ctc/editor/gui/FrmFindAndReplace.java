@@ -18,7 +18,7 @@ import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
  *
  * @author Gregory J. Bedlek Copyright (C) 2018, 2019
  */
-public class DlgFindAndReplace extends javax.swing.JDialog {
+public class FrmFindAndReplace extends javax.swing.JFrame {
 
     /**
      * Creates new form DlgFindAndReplace
@@ -31,8 +31,8 @@ public class DlgFindAndReplace extends javax.swing.JDialog {
 
     private ArrayList<FindAndReplace.SearchResults> _mSearchResults = null;
 
-    public DlgFindAndReplace(java.awt.Frame parent, boolean modal, AwtWindowProperties awtWindowProperties, CTCSerialData ctcSerialData) {
-        super(parent, modal);
+    public FrmFindAndReplace(AwtWindowProperties awtWindowProperties, CTCSerialData ctcSerialData) {
+        super();
         initComponents();
         _mAwtWindowProperties = awtWindowProperties;
         _mCTCSerialData = ctcSerialData;
@@ -104,7 +104,6 @@ public class DlgFindAndReplace extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle(Bundle.getMessage("TitleDlgFind"));
         addWindowListener(new java.awt.event.WindowAdapter() {
-            @Override
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
             }
@@ -171,12 +170,10 @@ public class DlgFindAndReplace extends javax.swing.JDialog {
                 false, false, false
             };
 
-            @Override
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
 
-            @Override
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
