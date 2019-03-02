@@ -70,7 +70,7 @@ public class TabbedPreferencesAction extends jmri.util.swing.JmriAbstractAction 
         preferencesItem = category;
     }
 
-    public void actionPerformed() {
+    final public void actionPerformed() {
         // create the JTable model, with changes for specific NamedBean
         // create the frame
         if (inWait) {
