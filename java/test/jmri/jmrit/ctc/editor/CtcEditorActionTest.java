@@ -50,68 +50,76 @@ public class CtcEditorActionTest {
         jpm = jmo.getPopupMenu();
 
         // MenuFind
-        Thread menuFind = createModalDialogOperatorThread(Bundle.getMessage("TitleDlgFind"), Bundle.getMessage("ButtonDone"), "menuFind");  // NOI18N
         JMenuItem findMenuItem = (JMenuItem)jpm.getComponent(0);
         Assert.assertTrue(findMenuItem.getText().equals(Bundle.getMessage("MenuFind")));  // NOI18N
         new JMenuItemOperator(findMenuItem).doClick();
-        JUnitUtil.waitFor(()->{return !(menuFind.isAlive());}, "menuFind finished");
+        JFrameOperator frmFind = new JFrameOperator(Bundle.getMessage("TitleDlgFind"));  // NOI18N
+        Assert.assertNotNull(frmFind);
+        new JButtonOperator(frmFind, Bundle.getMessage("ButtonDone")).pushNoBlock();
 
         // MenuFix
-        Thread menuFix = createModalDialogOperatorThread(Bundle.getMessage("TitleDlgFix"), Bundle.getMessage("ButtonCancel"), "menuFix");  // NOI18N
         JMenuItem fixMenuItem = (JMenuItem)jpm.getComponent(1);
         Assert.assertTrue(fixMenuItem.getText().equals(Bundle.getMessage("MenuFix")));  // NOI18N
         new JMenuItemOperator(fixMenuItem).doClick();
-        JUnitUtil.waitFor(()->{return !(menuFix.isAlive());}, "menuFix finished");
+        JFrameOperator frmFix = new JFrameOperator(Bundle.getMessage("TitleDlgFix"));  // NOI18N
+        Assert.assertNotNull(frmFix);
+        new JButtonOperator(frmFix, Bundle.getMessage("ButtonCancel")).pushNoBlock();
 
         // ** Configure menu **
         jmo = new JMenuOperator(jmbo, Bundle.getMessage("MenuConfigure"));  // NOI18N
         jpm = jmo.getPopupMenu();
 
         // MenuDebugging
-        Thread menuDebug = createModalDialogOperatorThread(Bundle.getMessage("TitleDlgDeb"), Bundle.getMessage("ButtonSaveClose"), "menuDebug");  // NOI18N
         JMenuItem debugMenuItem = (JMenuItem)jpm.getComponent(0);
         Assert.assertTrue(debugMenuItem.getText().equals(Bundle.getMessage("MenuDebugging")));  // NOI18N
         new JMenuItemOperator(debugMenuItem).doClick();
-        JUnitUtil.waitFor(()->{return !(menuDebug.isAlive());}, "menuDebug finished");
+        JFrameOperator frmDebug = new JFrameOperator(Bundle.getMessage("TitleDlgDeb"));  // NOI18N
+        Assert.assertNotNull(frmDebug);
+        new JButtonOperator(frmDebug, Bundle.getMessage("ButtonSaveClose")).pushNoBlock();
 
         // MenuDefaults
-        Thread menuDefault = createModalDialogOperatorThread(Bundle.getMessage("TitleDlgDef"), Bundle.getMessage("ButtonSaveClose"), "menuDefault");  // NOI18N
         JMenuItem defaultMenuItem = (JMenuItem)jpm.getComponent(1);
         Assert.assertTrue(defaultMenuItem.getText().equals(Bundle.getMessage("MenuDefaults")));  // NOI18N
         new JMenuItemOperator(defaultMenuItem).doClick();
-        JUnitUtil.waitFor(()->{return !(menuDefault.isAlive());}, "menuDefault finished");
+        JFrameOperator frmDefaults = new JFrameOperator(Bundle.getMessage("TitleDlgDef"));  // NOI18N
+        Assert.assertNotNull(frmDefaults);
+        new JButtonOperator(frmDefaults, Bundle.getMessage("ButtonSaveClose")).pushNoBlock();
 
         // MenuFleeting
-        Thread menuFleet = createModalDialogOperatorThread(Bundle.getMessage("TitleDlgFleet"), Bundle.getMessage("ButtonSaveClose"), "menuFleet");  // NOI18N
         JMenuItem fleetMenuItem = (JMenuItem)jpm.getComponent(2);
         Assert.assertTrue(fleetMenuItem.getText().equals(Bundle.getMessage("MenuFleeting")));  // NOI18N
         new JMenuItemOperator(fleetMenuItem).doClick();
-        JUnitUtil.waitFor(()->{return !(menuFleet.isAlive());}, "menuFleet finished");
+        JFrameOperator frmFleeting = new JFrameOperator(Bundle.getMessage("TitleDlgFleet"));  // NOI18N
+        Assert.assertNotNull(frmFleeting);
+        new JButtonOperator(frmFleeting, Bundle.getMessage("ButtonSaveClose")).pushNoBlock();
 
         // MenuPatterns
-        Thread menuPatterns = createModalDialogOperatorThread(Bundle.getMessage("TItleDlgPat"), Bundle.getMessage("ButtonSaveClose"), "menuPatterns");  // NOI18N
         JMenuItem patternMenuItem = (JMenuItem)jpm.getComponent(3);
         Assert.assertTrue(patternMenuItem.getText().equals(Bundle.getMessage("MenuPatterns")));  // NOI18N
         new JMenuItemOperator(patternMenuItem).doClick();
-        JUnitUtil.waitFor(()->{return !(menuPatterns.isAlive());}, "menuPatterns finished");
+        JFrameOperator frmPatterns = new JFrameOperator(Bundle.getMessage("TItleDlgPat"));  // NOI18N
+        Assert.assertNotNull(frmPatterns);
+        new JButtonOperator(frmPatterns, Bundle.getMessage("ButtonSaveClose")).pushNoBlock();
 
         // MenuDesign
-        Thread menuDesign = createModalDialogOperatorThread(Bundle.getMessage("TitleDlgGUI"), Bundle.getMessage("ButtonSaveClose"), "menuDesign");  // NOI18N
         JMenuItem designMenuItem = (JMenuItem)jpm.getComponent(4);
         Assert.assertTrue(designMenuItem.getText().equals(Bundle.getMessage("MenuDesign")));  // NOI18N
         new JMenuItemOperator(designMenuItem).doClick();
-        JUnitUtil.waitFor(()->{return !(menuDesign.isAlive());}, "menuDesign finished");
+        JFrameOperator frmGUI = new JFrameOperator(Bundle.getMessage("TitleDlgGUI"));  // NOI18N
+        Assert.assertNotNull(frmGUI);
+        new JButtonOperator(frmGUI, Bundle.getMessage("ButtonSaveClose")).pushNoBlock();
 
         // ** About menu **
         jmo = new JMenuOperator(jmbo, Bundle.getMessage("MenuAbout"));  // NOI18N
         jpm = jmo.getPopupMenu();
 
         // MenuAbout
-        Thread menuAbout = createModalDialogOperatorThread("About", Bundle.getMessage("ButtonOK"), "menuAbout");  // NOI18N
         JMenuItem aboutMenuItem = (JMenuItem)jpm.getComponent(0);
         Assert.assertTrue(aboutMenuItem.getText().equals(Bundle.getMessage("MenuAbout")));  // NOI18N
         new JMenuItemOperator(aboutMenuItem).doClick();
-        JUnitUtil.waitFor(()->{return !(menuAbout.isAlive());}, "menuAbout finished");
+        JFrameOperator frmAbout = new JFrameOperator("About");  // NOI18N
+        Assert.assertNotNull(frmAbout);
+        new JButtonOperator(frmAbout, Bundle.getMessage("ButtonOK")).pushNoBlock();
     }
 
     void frameButtonTests() {
@@ -119,25 +127,26 @@ public class CtcEditorActionTest {
 
         // ButtonChange
         jlo.clickOnItem(0, 1);
-        Thread btnChange = createModalDialogOperatorThread("Modify switch and signal", Bundle.getMessage("ButtonSaveClose"), "btnChange");  // NOI18N
         JButtonOperator jbChange = new JButtonOperator(_jfo, Bundle.getMessage("ButtonChange"));
         jbChange.doClick();
-        JUnitUtil.waitFor(()->{return !(btnChange.isAlive());}, "btnChange finished");  // NOI18N
+        JFrameOperator frmChange = new JFrameOperator("Modify switch and signal");  // NOI18N
+        Assert.assertNotNull(frmChange);
+        new JButtonOperator(frmChange, Bundle.getMessage("ButtonSaveClose")).pushNoBlock();
 
-        // ButtonCheck
+        // ButtonCheck -- Not a frame, use dialog mode
         Thread btnCheck = createModalDialogOperatorThread("Info", Bundle.getMessage("ButtonNo"), "btnCheck");  // NOI18N
         JButtonOperator jbCheck = new JButtonOperator(_jfo, Bundle.getMessage("ButtonCheck"));
         jbCheck.doClick();
         JUnitUtil.waitFor(()->{return !(btnCheck.isAlive());}, "btnCheck finished");  // NOI18N
 
-        // ButtonReapplyItem
+        // ButtonReapplyItem -- Not a frame, use dialog mode
         jlo.clickOnItem(0, 1);
         Thread btnApply = createModalDialogOperatorThread("Warning", Bundle.getMessage("ButtonYes"), "btnApply");  // NOI18N
         JButtonOperator jbApply = new JButtonOperator(_jfo, Bundle.getMessage("ButtonReapplyItem"));
         jbApply.doClick();
         JUnitUtil.waitFor(()->{return !(btnApply.isAlive());}, "btnApply finished");  // NOI18N
 
-        // ButtonXmlFiles
+        // ButtonXmlFiles -- No GUI object
         JButtonOperator jbXMLFiles = new JButtonOperator(_jfo, Bundle.getMessage("ButtonXmlFiles"));
         jbXMLFiles.doClick();
     }
@@ -147,70 +156,87 @@ public class CtcEditorActionTest {
 
         // Code button
         jlo.clickOnItem(0, 1);
-        Thread editCB = createModalDialogOperatorThread(Bundle.getMessage("TitleDlgCB"), Bundle.getMessage("ButtonSaveClose"), "editCB");  // NOI18N
         JButtonOperator jbCB = new JButtonOperator(_jfo, Bundle.getMessage("ButtonEdit"), 0);
         jbCB.doClick();
-        JUnitUtil.waitFor(()->{return !(editCB.isAlive());}, "editCB finished");  // NOI18N
+        JFrameOperator frmCB = new JFrameOperator(Bundle.getMessage("TitleDlgCB"));  // NOI18N
+        Assert.assertNotNull(frmCB);
+        new JButtonOperator(frmCB, Bundle.getMessage("ButtonSaveClose")).pushNoBlock();
 
         // SIDI button
         jlo.clickOnItem(0, 1);
-        Thread editSIDI = createModalDialogOperatorThread(Bundle.getMessage("TitleSIDI"), Bundle.getMessage("ButtonSaveClose"), "editSIDI");  // NOI18N
         JButtonOperator jbSIDI = new JButtonOperator(_jfo, Bundle.getMessage("ButtonEdit"), 1);
         jbSIDI.doClick();
-        JUnitUtil.waitFor(()->{return !(editSIDI.isAlive());}, "editSIDI finished");  // NOI18N
+        JFrameOperator frmSIDI = new JFrameOperator(Bundle.getMessage("TitleSIDI"));  // NOI18N
+        Assert.assertNotNull(frmSIDI);
+        new JButtonOperator(frmSIDI, Bundle.getMessage("ButtonSaveClose")).pushNoBlock();
 
         // SIDL button
         jlo.clickOnItem(0, 1);
-        Thread editSIDL = createModalDialogOperatorThread(Bundle.getMessage("TitleDlgSIDL"), Bundle.getMessage("ButtonSaveClose"), "editSIDL");  // NOI18N
         JButtonOperator jbSIDL = new JButtonOperator(_jfo, Bundle.getMessage("ButtonEdit"), 4);
         jbSIDL.doClick();
-        JUnitUtil.waitFor(()->{return !(editSIDL.isAlive());}, "editSIDL finished");  // NOI18N
+        JFrameOperator frmSIDL = new JFrameOperator(Bundle.getMessage("TitleDlgSIDL"));  // NOI18N
+        Assert.assertNotNull(frmSIDL);
+        new JButtonOperator(frmSIDL, Bundle.getMessage("ButtonSaveClose")).pushNoBlock();
 
         // SWDI button
         jlo.clickOnItem(0, 1);
-        Thread editSWDI= createModalDialogOperatorThread(Bundle.getMessage("TitleSWDI"), Bundle.getMessage("ButtonSaveClose"), "editSWDI");  // NOI18N
         JButtonOperator jbSWDI = new JButtonOperator(_jfo, Bundle.getMessage("ButtonEdit"), 7);
         jbSWDI.doClick();
-        JUnitUtil.waitFor(()->{return !(editSWDI.isAlive());}, "editSWDI finished");  // NOI18N
+        JFrameOperator frmSWDI = new JFrameOperator(Bundle.getMessage("TitleSWDI"));  // NOI18N
+        Assert.assertNotNull(frmSWDI);
+        new JButtonOperator(frmSWDI, Bundle.getMessage("ButtonSaveClose")).pushNoBlock();
 
         // SWDL button
         jlo.clickOnItem(0, 1);
-        Thread editSWDL= createModalDialogOperatorThread(Bundle.getMessage("TitleDlgSWDL"), Bundle.getMessage("ButtonSaveClose"), "editSWDL");  // NOI18N
         JButtonOperator jbSWDL = new JButtonOperator(_jfo, Bundle.getMessage("ButtonEdit"), 8);
         jbSWDL.doClick();
-        JUnitUtil.waitFor(()->{return !(editSWDL.isAlive());}, "editSWDL finished");  // NOI18N
+        JFrameOperator frmSWDL = new JFrameOperator(Bundle.getMessage("TitleDlgSWDL"));  // NOI18N
+        Assert.assertNotNull(frmSWDL);
+        new JButtonOperator(frmSWDL, Bundle.getMessage("ButtonSaveClose")).pushNoBlock();
 
         // CO button
         jlo.clickOnItem(0, 1);
-        Thread editCO= createModalDialogOperatorThread(Bundle.getMessage("TitleDlgCO"), Bundle.getMessage("ButtonSaveClose"), "editCO");  // NOI18N
         JButtonOperator jbCO = new JButtonOperator(_jfo, Bundle.getMessage("ButtonEdit"), 2);
         jbCO.doClick();
-        JUnitUtil.waitFor(()->{return !(editCO.isAlive());}, "editCO finished");  // NOI18N
+        JFrameOperator frmCO = new JFrameOperator(Bundle.getMessage("TitleDlgCO"));  // NOI18N
+        Assert.assertNotNull(frmCO);
+        new JButtonOperator(frmCO, Bundle.getMessage("ButtonSaveClose")).pushNoBlock();
 
         // TUL button
         jlo.clickOnItem(0, 1);
-        Thread editTUL= createModalDialogOperatorThread(Bundle.getMessage("TitleDlgTUL"), Bundle.getMessage("ButtonSaveClose"), "editTUL");  // NOI18N
         JButtonOperator jbTUL = new JButtonOperator(_jfo, Bundle.getMessage("ButtonEdit"), 5);
         jbTUL.doClick();
-        JUnitUtil.waitFor(()->{return !(editTUL.isAlive());}, "editTUL finished");  // NOI18N
+        JFrameOperator frmTUL = new JFrameOperator(Bundle.getMessage("TitleDlgTUL"));  // NOI18N
+        Assert.assertNotNull(frmTUL);
+        new JButtonOperator(frmTUL, Bundle.getMessage("ButtonSaveClose")).pushNoBlock();
 
         // IL button
         jlo.clickOnItem(0, 1);
-        Thread editIL= createModalDialogOperatorThread(Bundle.getMessage("TitleDlgIL"), Bundle.getMessage("ButtonSaveClose"), "editIL");  // NOI18N
         JButtonOperator jbIL = new JButtonOperator(_jfo, Bundle.getMessage("ButtonEdit"), 6);
         jbIL.doClick();
-        JUnitUtil.waitFor(()->{return !(editIL.isAlive());}, "editIL finished");  // NOI18N
+        JFrameOperator frmIL = new JFrameOperator(Bundle.getMessage("TitleDlgIL"));  // NOI18N
+        Assert.assertNotNull(frmIL);
+        new JButtonOperator(frmIL, Bundle.getMessage("ButtonSaveClose")).pushNoBlock();
 
-        // TRL button -- Special handling required since the TRL dialog starts the Rules dialog.
+        // TRL button -- Special handling required since the TRL frame starts the Rules frame.
         // This test should also be the last one.
         jlo.clickOnItem(0, 1);
-        Thread editRules= createModalDialogOperatorThread("Edit Right traffic locking rules", Bundle.getMessage("ButtonSaveClose"), "editRules");  // NOI18N
-        Thread editTRL= createModalDialogOperatorThread(Bundle.getMessage("TitleDlgTRL"), Bundle.getMessage("ButtonOK"), "editTRL");  // NOI18N
+
+        // Open the TRL frame
         JButtonOperator jbTRL = new JButtonOperator(_jfo, Bundle.getMessage("ButtonEdit"), 3);
         jbTRL.doClick();
-        JUnitUtil.waitFor(()->{return !(editTRL.isAlive());}, "editTRL finished");  // NOI18N
-        JUnitUtil.waitFor(()->{return !(editRules.isAlive());}, "editRules finished");  // NOI18N
+        JFrameOperator frmTRL = new JFrameOperator(Bundle.getMessage("TitleDlgTRL"));  // NOI18N
+        Assert.assertNotNull(frmTRL);
 
+        // Open the Rules frame
+        JButtonOperator jbRules = new JButtonOperator(frmTRL, Bundle.getMessage("ButtonEdit"), 0);
+        jbRules.doClick();
+        JFrameOperator frmRules = new JFrameOperator("Edit Right traffic locking rules");  // NOI18N
+        Assert.assertNotNull(frmRules);
+
+        // Close them in reverse order
+        new JButtonOperator(frmRules, Bundle.getMessage("ButtonSaveClose")).pushNoBlock();
+        new JButtonOperator(frmTRL, Bundle.getMessage("ButtonOK")).pushNoBlock();
     }
 
     Thread createModalDialogOperatorThread(String dialogTitle, String buttonText, String threadName) {
@@ -218,11 +244,6 @@ public class CtcEditorActionTest {
             // constructor for jdo will wait until the dialog is visible
             JDialogOperator jdo = new JDialogOperator(dialogTitle);
             JButtonOperator jbo = new JButtonOperator(jdo, buttonText);
-            if (threadName.equals("editTRL")) {
-                // Start the rules dialog
-                JButtonOperator jbTRL = new JButtonOperator(jdo, Bundle.getMessage("ButtonEdit"), 0);
-                jbTRL.doClick();
-            }
             jbo.pushNoBlock();
         });
         t.setName(dialogTitle + " Close Dialog Thread: " + threadName);  // NOI18N
