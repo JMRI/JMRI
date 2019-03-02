@@ -49,7 +49,7 @@ public class Engine implements ReadingListener {
         double oldVal = vsound;
         vsound = v;
         log.info("change vsound from " + oldVal + " to " + v);
-        prop.firePropertyChange("vSound", new Double(oldVal), new Double(v));
+        prop.firePropertyChange("vSound", Double.valueOf(oldVal), Double.valueOf(v));
     }
 
     public double getVSound() {
