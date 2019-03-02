@@ -1,0 +1,49 @@
+@startuml
+
+participant user
+participant TabbedPreferencesAction
+
+participant apps
+participant InstanceManager
+participant TabbedPreferencesFrame
+participant TabbedPreferences
+participant SwingAWTThread
+participant loadingThread
+
+apps o-> InstanceManager : getDefault(TabbedPreferencesFrame)
+    activate InstanceManager
+    InstanceManager o-> TabbedPreferencesFrame : (auto create)
+        activate TabbedPreferencesFrame
+        TabbedPreferencesFrame o-> TabbedPreferences : ctor
+            activate TabbedPreferences
+                TabbedPreferences o-> loadingThread
+                    activate loadingThread
+                TabbedPreferences o-> TabbedPreferencesFrame
+                deactivate TabbedPreferences
+        TabbedPreferencesFrame o-> TabbedPreferencesFrame : add TP to Frame
+        TabbedPreferencesFrame o-> InstanceManager
+        deactivate TabbedPreferencesFrame
+    InstanceManager o-> apps
+    deactivate InstanceManager
+    note over InstanceManager : At this point, TabbedPreferencesFrame exists\nbut is still being filled
+
+loadingThread o-> loadingThread : create something
+loadingThread o-> SwingAWTThread
+    activate SwingAWTThread
+    SwingAWTThread o-> TabbedPreferencesFrame : add(item) while on Swing thread
+    TabbedPreferencesFrame o-> SwingAWTThread
+    deactivate SwingAWTThread
+SwingAWTThread o-> loadingThread
+
+
+user o-> TabbedPreferencesAction: actionPerformed(..)
+activate TabbedPreferencesAction
+TabbedPreferencesAction o-> TabbedPreferencesFrame : setVisible
+    activate TabbedPreferencesFrame
+    TabbedPreferencesFrame o-> TabbedPreferencesAction
+    deactivate TabbedPreferencesFrame
+TabbedPreferencesAction o-> user
+deactivate TabbedPreferencesFrame
+
+@enduml
+
