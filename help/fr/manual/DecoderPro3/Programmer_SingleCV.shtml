@@ -1,7 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Translation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-03-02 -->
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -28,57 +28,58 @@
       "JMRI DecoderPro Logo" border="10" height="117" width="163"
       vspace="15">
 
-      <h1>DecoderPro&reg; Main Window</h1>
+       <h1>DecoderPro&reg; Fen&#234;tre principale</h1>
 
-      <h2>Simple Programmer</h2>
+      <h2>Programmeur simple</h2>
 
-      <div align="right">
-        <p><a href="dp3_menubar.shtml#single">Back</a></p>
+      <div align = "right">
+        <p><a href="dp3_menubar.shtml#single"> Retour </a></p>
 
-        <p><a href="index.shtml#Main">Back to Index</a></p>
+        <p><a href="index.shtml#Main"> Retour &#224; l'index </a></p>
       </div>
-      <hr>
+      <h>
 
-      <p>The <strong>Simple Programmer</strong> is opened from the
-      <strong>Main</strong> Page of DecoderPro
-      <strong>Action</strong> menu. The <strong>Simple
-      Programmer</strong> allows you to read or write CV values in
-      DCC decoders one at a time.</p>
+      <p>Le <strong>Programmeur Simple</strong> est ouvert &#224; partir de la
+      <strong>Page principale</strong> de DecoderPro
+      Menu <strong>Action</strong>. Le <strong>Programmeur Simple</strong> 
+      vous permet de lire ou d'&#233;crire des valeurs de CV dans les d&#233;codeurs 
+      DCC un par un. </P>
 
-      <p align="center"><img src="images/Main_SingleCVProgram.png"
-      alt="Simple Programmer" width="241" height="335" border=
+      <p align = "center"> <img src = "images/Main_SingleCVProgram.png"
+      alt = "Programmeur simple" width = "241" height = "335" border =
       "4"></p>
 
-      <p>Prior to reading a CV value you should enter the CV Number
-      (address) into the <strong>CV Number</strong> text box. If
-      writing a CV value you should enter the CV Number and then a
-      value in the <strong>Value</strong> text box. You may enter
-      the value as Decimal or Hexadecimal depending upon the option
-      selected in <strong>Value is:</strong> area.</p>
+      <p>Avant de lire une valeur de CV, vous devez entrer le num&#233;ro de CV
+      (adresse) dans la zone de texte <strong>Num&#233;ro CV</strong>. Si vous 
+      &#233;crivez une valeur de CV, vous devez entrer le num&#233;ro de CV, puis un
+      valeur dans la zone de texte <strong>Valeur</strong>. Vous pouvez entrer
+      la valeur sous forme d&#233;cimale ou hexad&#233;cimale selon l'option
+      s&#233;lectionn&#233; dans la zone <strong>Valeur est:</strong>.</p>
 
-      <p>On the left side of the window you can select the
-      Programming Mode. Any mode not supported by your command
-      station will be grayed out.</p>
+      <p>Sur le c&#244;t&#233; gauche de la fen&#234;tre, vous pouvez s&#233;lectionner le
+      Mode de Programmation. Tout Mde non support&#233; par votre Centrale de 
+      Commande sera gris&#233;.</p>
 
-      <p>If you select the <strong>Ops</strong> mode, which
-      programs on the main track, you need to enter the address of
-      the decoder (locomotive) that you are programming. Your DCC
-      system may require you to check the <strong>Long
-      address</strong> check box if the address is a long address.
-      Most DCC systems do not allow you to read on the main, if so,
-      the <strong>Read CV</strong> button will be disabled.</p>
+      <p>Si vous s&#233;lectionnez le mode <strong>Ops</strong>, qui
+      programmes sur la voie principale, vous devez entrer l'adresse du
+      d&#233;codeur (locomotive) que vous programmez. Votre syst&#232;me DCC peut 
+      vous demander de cocher la case <strong>Adresse Longue</strong> si 
+      cette adresse est une adresse longue.
+      La plupart des syst&#232;mes DCC ne vous permettent pas de lire sur la 
+      voie principal, le cas &#233;ch&#233;ant,le bouton <strong>Lire le CV</strong> 
+      sera d&#233;sactiv&#233;.</p>
 
-      <p>Now that you have everything setup, you may read the
-      current value in the decoder's memory from the CV by clicking
-      on the <strong>Read CV</strong> button or write your new
-      value to the CV by clicking on the <strong>Write CV</strong>
-      button.</p>
-      <hr>
+      <p>Maintenant que toutest configur&#233;, vous pouvez lire la
+      valeur actuelle dans la m&#233;moire du d&#233;codeur &#224; partir du CV en cliquant sur
+      sur le bouton <strong>Lire le CV</strong> ou &#233;crivez votre nouvelle
+      valeur dans le CV en cliquant sur le bouton <strong>&#201;crire un CV</strong>
+     .</p>
+      <h>
 
-      <div align="right">
-        <p><a href="dp3_menubar.shtml#single">Back</a></p>
+      <div align = "right">
+        <p><a href="dp3_menubar.shtml#single"> Retour </a></p>
 
-        <p><a href="index.shtml#Main">Back to Index</a></p>
+        <p><a href="index.shtml#Main"> Retour &#224; l'index </a></p>
       </div><!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
