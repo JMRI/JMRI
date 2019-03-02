@@ -134,7 +134,7 @@ public class AbstractSignalHeadManagerXml extends AbstractNamedBeanManagerConfig
             String adapterName = item.getAttribute("class").getValue();
             log.debug("load via " + adapterName);
             try {
-                XmlAdapter adapter = (XmlAdapter) Class.forName(adapterName).newInstance();
+                XmlAdapter adapter = (XmlAdapter) Class.forName(adapterName).getDeclaredConstructor().newInstance();
                 // and do it
                 adapter.load(item, null);
             } catch (Exception e) {
