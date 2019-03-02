@@ -147,7 +147,6 @@ abstract public class AbstractCabSignalManager implements CabSignalManager {
      * @param e propChgEvent
      */
   private void handleBlockChange(PropertyChangeEvent e) {	
-        Block b = (Block)e.getSource();
         log.debug("property {} new value {} old value {}",e.getPropertyName(),e.getNewValue(),e.getOldValue());
         if (e.getPropertyName().equals("value")){	
            if(e.getOldValue()==null && e.getNewValue()!=null){
