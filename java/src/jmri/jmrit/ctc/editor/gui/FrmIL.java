@@ -139,6 +139,7 @@ public class FrmIL extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle(Bundle.getMessage("TitleDlgIL"));
         addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
             }
@@ -262,6 +263,7 @@ public class FrmIL extends javax.swing.JFrame {
                 java.lang.String.class
             };
 
+            @Override
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }

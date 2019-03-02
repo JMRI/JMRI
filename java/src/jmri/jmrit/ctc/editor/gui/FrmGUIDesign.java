@@ -67,6 +67,7 @@ public class FrmGUIDesign extends javax.swing.JFrame {
     public FrmGUIDesign(AwtWindowProperties awtWindowProperties, OtherData otherData) {
         super();
         initComponents();
+//         CommonSubs.addHelpMenu(this, "package.jmri.jmrit.ctc.CTC_menuCfgGui", true);  // NOI18N
         _mAwtWindowProperties = awtWindowProperties;
         _mOtherData = otherData;
 
@@ -131,6 +132,7 @@ public class FrmGUIDesign extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle(Bundle.getMessage("TitleDlgGUI"));
         addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
             }

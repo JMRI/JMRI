@@ -73,29 +73,13 @@ public class FrmMainForm extends JFrame {
         super();
         InstanceManager.setDefault(jmri.jmrit.ctc.editor.gui.FrmMainForm.class, this);
         initComponents();
-        addHelpMenu("index", true);  // NOI18N
+//         CommonSubs.addHelpMenu(this, "package.jmri.jmrit.ctc.CTC", true);  // NOI18N
         _mAwtWindowProperties = new AwtWindowProperties(this, "AwtWindowProperties.txt", FORM_PROPERTIES); // NOI18N
         _mProgramProperties = new ProgramProperties();
         _mCheckJMRIObject = new CheckJMRIObject();
         newOrOpenFile(true);
         checkPanelStatus.actionPerformed(null);
         new javax.swing.Timer(5000, checkPanelStatus).start();
-    }
-
-    /**
-     * Add a standard help menu, including window specific help item.
-     *
-     * @param ref    JHelp reference for the desired window-specific help page
-     * @param direct true if the help main-menu item goes directly to the help system,
-     *               such as when there are no items in the help menu
-     */
-    private void addHelpMenu(String ref, boolean direct) {
-        JMenuBar bar = getJMenuBar();
-        if (bar == null) {
-            bar = new JMenuBar();
-        }
-        jmri.util.HelpUtil.helpMenu(bar, ref, direct);
-        setJMenuBar(bar);
     }
 
     /**
@@ -211,6 +195,7 @@ public class FrmMainForm extends JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setLocation(new java.awt.Point(0, 0));
         addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
             }
