@@ -5,11 +5,11 @@ import static jmri.server.json.route.JsonRouteServiceFactory.ROUTES;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.Locale;
 import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
+import jmri.ProvidingManager;
 import jmri.Route;
 import jmri.RouteManager;
 import jmri.Sensor;
@@ -22,15 +22,14 @@ import jmri.server.json.JsonNamedBeanHttpService;
  *
  * @author Randall Wood Copyright 2016, 2018
  */
-public class JsonRouteHttpService extends JsonNamedBeanHttpService {
+public class JsonRouteHttpService extends JsonNamedBeanHttpService<Route> {
 
     public JsonRouteHttpService(ObjectMapper mapper) {
         super(mapper);
     }
 
     @Override
-    public JsonNode doGet(String type, String name, Locale locale) throws JsonException {
-        Route route = InstanceManager.getDefault(RouteManager.class).getRoute(name);
+    public ObjectNode doGet(Route route, String name, String type, Locale locale) throws JsonException {
         ObjectNode root = this.getNamedBean(route, name, type, locale); // throws JsonException if route == null
         ObjectNode data = root.with(JSON.DATA);
         if (route != null) {
@@ -80,11 +79,7 @@ public class JsonRouteHttpService extends JsonNamedBeanHttpService {
      */
     @Override
     public JsonNode doPost(String type, String name, JsonNode data, Locale locale) throws JsonException {
-        Route route = InstanceManager.getDefault(RouteManager.class).getRoute(name);
-        if (route == null) {
-            throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", ROUTE, name));
-        }
-        this.postNamedBean(route, data, name, type, locale);
+        Route route = this.postNamedBean(getManager().getBeanBySystemName(name), data, name, type, locale);
         int state = data.path(JSON.STATE).asInt(JSON.UNKNOWN);
         switch (state) {
             case JSON.ACTIVE:
@@ -101,29 +96,9 @@ public class JsonRouteHttpService extends JsonNamedBeanHttpService {
         return this.doGet(type, name, locale);
     }
 
-    /* We need more information than currently gathered to create a route, so comment out for now
     @Override
     public JsonNode doPut(String type, String name, JsonNode data, Locale locale) throws JsonException {
-        String username = data.path(USERNAME).asText();
-        if (username == null || username.isEmpty()) {
-            throw new JsonException(400, Bundle.getMessage(locale, "ErrorMissingAttribute", USERNAME)); // NOI18N
-        }
-        try {
-            InstanceManager.getDefault(RouteManager.class).provideRoute(name, username);
-        } catch (Exception ex) {
-            throw new JsonException(500, Bundle.getMessage(locale, "ErrorCreatingObject", ROUTE, name)); // NOI18N
-        }
-        return this.doPost(type, name, data, locale);
-    }
-     */
-    @Override
-    public ArrayNode doGetList(String type, Locale locale) throws JsonException {
-        ArrayNode root = this.mapper.createArrayNode();
-        for (Route r : InstanceManager.getDefault(RouteManager.class).getNamedBeanSet()) {
-            root.add(this.doGet(ROUTE, r.getSystemName(), locale));
-        }
-        return root;
-
+        throw new JsonException(HttpServletResponse.SC_METHOD_NOT_ALLOWED, Bundle.getMessage(locale, "PutNotAllowed", type));
     }
 
     @Override
@@ -138,5 +113,15 @@ public class JsonRouteHttpService extends JsonNamedBeanHttpService {
             default:
                 throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type));
         }
+    }
+
+    @Override
+    protected String getType() {
+        return ROUTE;
+    }
+
+    @Override
+    protected ProvidingManager<Route> getManager() throws UnsupportedOperationException {
+        return InstanceManager.getDefault(RouteManager.class);
     }
 }

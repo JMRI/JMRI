@@ -6,77 +6,104 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.Locale;
 import javax.annotation.Nonnull;
+import javax.servlet.http.HttpServletResponse;
 import jmri.NamedBean;
+import jmri.ProvidingManager;
 
 /**
  * Abstract implementation of JsonHttpService with specific support for
  * {@link jmri.NamedBean} objects.
+ * <p>
+ * <strong>Note:</strong> services requiring support
+ * for multiple classes of NamedBean cannot extend this class.
+ * <p>
+ * <strong>Note:</strong> NamedBeans must be managed by a
+ * {@link jmri.ProvidingManager} for this class to be used.
  *
- * @author Randall Wood (C) 2016
+ * @author Randall Wood (C) 2016, 2019
+ * @param <T> the type supported by this service
  */
-public abstract class JsonNamedBeanHttpService extends JsonHttpService {
+public abstract class JsonNamedBeanHttpService<T extends NamedBean> extends JsonNonProvidedNamedBeanHttpService<T> {
 
     public JsonNamedBeanHttpService(ObjectMapper mapper) {
         super(mapper);
     }
 
     /**
-     * Create the JsonNode for a {@link jmri.NamedBean} object.
-     *
-     * @param bean   the bean to create the node for
-     * @param name   the name of the bean; used only if the bean is null
-     * @param type   the JSON type of the bean
-     * @param locale the locale used for any error messages
-     * @return a JSON node
-     * @throws JsonException if the bean is null
+     * {@inheritDoc}
      */
+    @Override
     @Nonnull
-    protected ObjectNode getNamedBean(NamedBean bean, @Nonnull String name, @Nonnull String type, @Nonnull Locale locale) throws JsonException {
-        if (bean == null) {
-            throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", type, name));
+    public final JsonNode doGet(@Nonnull String type, @Nonnull String name, @Nonnull Locale locale) throws JsonException {
+        if (type != getType()) {
+            throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "LoggedError"));
         }
-        ObjectNode root = mapper.createObjectNode();
-        root.put(JSON.TYPE, type);
-        ObjectNode data = root.putObject(JSON.DATA);
-        data.put(JSON.NAME, bean.getSystemName());
-        data.put(JSON.USERNAME, bean.getUserName());
-        data.put(JSON.COMMENT, bean.getComment());
-        ArrayNode properties = data.putArray(JSON.PROPERTIES);
-        bean.getPropertyKeys().stream().forEach((key) -> {
-            Object value = bean.getProperty(key);
-            if (value != null) {
-                properties.add(mapper.createObjectNode().put(key, value.toString()));
-            } else {
-                properties.add(mapper.createObjectNode().putNull(key));
-            }
-        });
-        return root;
+        return this.doGet(this.getManager().getBeanBySystemName(name), name, type, locale);
     }
 
     /**
-     * Handle the common elements of a NamedBean that can be changed in an POST
-     * message.
-     * <p>
-     * <strong>Note:</strong> the system name of a NamedBean cannot be changed
-     * using this method.
-     *
-     * @param bean   the bean to modify
-     * @param data   the JsonNode containing the JSON representation of bean
-     * @param name   the system name of the bean
-     * @param type   the JSON type of the bean
-     * @param locale the locale used for any error messages
-     * @throws JsonException if the bean is null
+     * {@inheritDoc}
+     * 
+     * Override if the implementing class needs to prevent PUT methods
+     * from functioning or need to perform additional validation prior to
+     * creating the NamedBean. 
      */
-    protected void postNamedBean(NamedBean bean, @Nonnull JsonNode data, @Nonnull String name, @Nonnull String type, @Nonnull Locale locale) throws JsonException {
-        if (bean == null) {
-            throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", type, name));
+    @Override
+    public JsonNode doPut(@Nonnull String type, @Nonnull String name, @Nonnull JsonNode data, @Nonnull Locale locale) throws JsonException {
+        try {
+            getManager().provide(name);
+        } catch (IllegalArgumentException ex) {
+            throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(locale, "ErrorInvalidSystemName", name, getType()));
+        } catch (Exception ex) {
+            throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorCreatingObject", getType(), name));
         }
-        if (data.path(JSON.USERNAME).isTextual()) {
-            bean.setUserName(data.path(JSON.USERNAME).asText());
-        }
-        if (!data.path(JSON.COMMENT).isMissingNode()) {
-            JsonNode comment = data.path(JSON.COMMENT);
-            bean.setComment(comment.isTextual() ? comment.asText() : null);
-        }
+        return this.doPost(type, name, data, locale);
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Nonnull
+    @Override
+    public final ArrayNode doGetList(String type, Locale locale) throws JsonException {
+        return doGetList(getManager(), type, locale);
+    }
+
+    /**
+     * Respond to an HTTP GET request for the requested name.
+     * <p>
+     * If name is null, return a list of all objects for the given type, if
+     * appropriate.
+     * <p>
+     * This method should throw a 500 Internal Server Error if type is not
+     * recognized.
+     *
+     * @param bean   the requested object
+     * @param name   the name of the requested object
+     * @param type   the type of the requested object
+     * @param locale the requesting client's Locale
+     * @return a JSON description of the requested object
+     * @throws JsonException if the named object does not exist or other error
+     *                       occurs
+     */
+    @Override
+    @Nonnull
+    protected abstract ObjectNode doGet(T bean, @Nonnull String name, @Nonnull String type, @Nonnull Locale locale) throws JsonException;
+    
+    /**
+     * Get the JSON type supported by this service.
+     * 
+     * @return the JSON type
+     */
+    @Nonnull
+    protected abstract String getType();
+
+    /**
+     * Get the expected manager for the supported JSON type. This should normally be
+     * the default manager.
+     * 
+     * @return the manager
+     */
+    @Nonnull
+    protected abstract ProvidingManager<T> getManager();
 }
