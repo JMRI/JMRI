@@ -13,11 +13,11 @@ import static jmri.server.json.signalMast.JsonSignalMast.SIGNAL_MASTS;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.Locale;
 import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
+import jmri.ProvidingManager;
 import jmri.SignalMast;
 import jmri.SignalMastManager;
 import jmri.server.json.JsonException;
@@ -35,8 +35,7 @@ public class JsonSignalMastHttpService extends JsonNamedBeanHttpService<SignalMa
     }
 
     @Override
-    public JsonNode doGet(String type, String name, Locale locale) throws JsonException {
-        SignalMast signalMast = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(name);
+    public ObjectNode doGet(SignalMast signalMast, String name, String type, Locale locale) throws JsonException {
         ObjectNode root = this.getNamedBean(signalMast, name, type, locale);
         ObjectNode data = root.with(DATA);
         if (signalMast != null) {
@@ -61,7 +60,7 @@ public class JsonSignalMastHttpService extends JsonNamedBeanHttpService<SignalMa
 
     @Override
     public JsonNode doPost(String type, String name, JsonNode data, Locale locale) throws JsonException {
-        SignalMast signalMast = this.postNamedBean(InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(name), data, name, type, locale);
+        SignalMast signalMast = this.postNamedBean(getManager().getBeanBySystemName(name), data, name, type, locale);
         if (data.path(STATE).isTextual()) {
             String aspect = data.path(STATE).asText();
             if (aspect.equals("Held")) {
@@ -81,17 +80,6 @@ public class JsonSignalMastHttpService extends JsonNamedBeanHttpService<SignalMa
     }
 
     @Override
-    public ArrayNode doGetList(String type, Locale locale) throws JsonException {
-        ArrayNode root = this.mapper.createArrayNode();
-
-        for (SignalMast mast : InstanceManager.getDefault(SignalMastManager.class).getNamedBeanSet()) {
-            String name = mast.getSystemName();
-            root.add(this.doGet(SIGNAL_MAST, name, locale));
-        }
-        return root;
-    }
-
-    @Override
     public JsonNode doSchema(String type, boolean server, Locale locale) throws JsonException {
         switch (type) {
             case SIGNAL_MAST:
@@ -103,5 +91,15 @@ public class JsonSignalMastHttpService extends JsonNamedBeanHttpService<SignalMa
             default:
                 throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type));
         }
+    }
+
+    @Override
+    protected String getType() {
+        return SIGNAL_MAST;
+    }
+
+    @Override
+    protected ProvidingManager<SignalMast> getManager() throws UnsupportedOperationException {
+        return InstanceManager.getDefault(SignalMastManager.class);
     }
 }

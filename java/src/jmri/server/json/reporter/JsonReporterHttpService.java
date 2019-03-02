@@ -7,7 +7,6 @@ import static jmri.server.json.reporter.JsonReporter.REPORTERS;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.Locale;
 import javax.servlet.http.HttpServletResponse;
@@ -20,17 +19,12 @@ import jmri.server.json.JsonNamedBeanHttpService;
 
 /**
  *
- * @author Randall Wood Copyright 2016, 2018
+ * @author Randall Wood Copyright 2016, 2018, 2019
  */
 public class JsonReporterHttpService extends JsonNamedBeanHttpService<Reporter> {
 
     public JsonReporterHttpService(ObjectMapper mapper) {
         super(mapper);
-    }
-
-    @Override
-    public JsonNode doGet(String type, String name, Locale locale) throws JsonException {
-        return this.doGetReporter(InstanceManager.getDefault(ReporterManager.class).getReporter(name), name, locale);
     }
 
     @Override
@@ -49,33 +43,12 @@ public class JsonReporterHttpService extends JsonNamedBeanHttpService<Reporter> 
                 reporter.setReport(data.path(REPORT).asText());
             }
         }
-        return this.doGet(type, name, locale);
+        return this.doGet(reporter, name, type, locale);
     }
 
     @Override
-    public JsonNode doPut(String type, String name, JsonNode data, Locale locale) throws JsonException {
-        try {
-            InstanceManager.getDefault(ReporterManager.class).provide(name);
-        } catch (IllegalArgumentException ex) {
-            throw new JsonException(400, Bundle.getMessage(locale, "ErrorCreatingObject", REPORTER, name));
-        } catch (Exception ex) {
-            throw new JsonException(500, Bundle.getMessage(locale, "ErrorCreatingObject", REPORTER, name));
-        }
-        return this.doPost(type, name, data, locale);
-    }
-
-    @Override
-    public ArrayNode doGetList(String type, Locale locale) throws JsonException {
-        ArrayNode root = this.mapper.createArrayNode();
-        for (Reporter r : InstanceManager.getDefault(ReporterManager.class).getNamedBeanSet()) {
-            root.add(this.doGet(REPORTER, r.getSystemName(), locale));
-        }
-        return root;
-    }
-
-    // package protected
-    JsonNode doGetReporter(Reporter reporter, String name, Locale locale) throws JsonException {
-        ObjectNode root = this.getNamedBean(reporter, name, REPORTER, locale); // throws JsonException if reporter == null
+    protected ObjectNode doGet(Reporter reporter, String name, String type, Locale locale) throws JsonException {
+        ObjectNode root = getNamedBean(reporter, name, type, locale); // throws JsonException if reporter == null
         ObjectNode data = root.with(JSON.DATA);
         data.put(JSON.STATE, reporter.getState());
         if (reporter.getCurrentReport() != null) {
@@ -107,5 +80,15 @@ public class JsonReporterHttpService extends JsonNamedBeanHttpService<Reporter> 
             default:
                 throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type));
         }
+    }
+    
+    @Override
+    protected ReporterManager getManager() {
+        return InstanceManager.getDefault(ReporterManager.class);
+    }
+    
+    @Override
+    protected String getType() {
+        return REPORTER;
     }
 }

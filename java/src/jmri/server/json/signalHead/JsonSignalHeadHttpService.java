@@ -19,14 +19,14 @@ import jmri.InstanceManager;
 import jmri.SignalHead;
 import jmri.SignalHeadManager;
 import jmri.server.json.JsonException;
-import jmri.server.json.JsonNamedBeanHttpService;
+import jmri.server.json.JsonNonProvidedNamedBeanHttpService;
 
 /**
  * JSON HTTP service for {@link jmri.SignalHead}s.
  *
  * @author Randall Wood Copyright 2016, 2018
  */
-public class JsonSignalHeadHttpService extends JsonNamedBeanHttpService<SignalHead> {
+public class JsonSignalHeadHttpService extends JsonNonProvidedNamedBeanHttpService<SignalHead> {
 
     public JsonSignalHeadHttpService(ObjectMapper mapper) {
         super(mapper);
@@ -34,7 +34,11 @@ public class JsonSignalHeadHttpService extends JsonNamedBeanHttpService<SignalHe
 
     @Override
     public JsonNode doGet(String type, String name, Locale locale) throws JsonException {
-        SignalHead signalHead = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(name);
+        return doGet(InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(name), name, type, locale);
+    }
+
+    @Override
+    protected ObjectNode doGet(SignalHead signalHead, String name, String type, Locale locale) throws JsonException {
         ObjectNode root = this.getNamedBean(signalHead, name, type, locale); // throws JsonException if signalHead == null
         ObjectNode data = root.with(DATA);
         if (signalHead != null) {
