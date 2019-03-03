@@ -120,8 +120,8 @@ final class ValidatingInputPane<T> extends javax.swing.JPanel  {
      * @param val validator instance, {@code null} to disable.
      * @return this instance
      */
-    ValidatingInputPane<T> validator(Predicate<? extends T> val) {
-        this.validator = (Predicate<T>)val;
+    ValidatingInputPane<T> validator(Predicate<T> val) {
+        this.validator = val;
         return this;
     }
     
