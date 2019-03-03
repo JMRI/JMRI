@@ -1,7 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Translation by Herv&&#233; BLOREC <bzh56420@yahoo.fr> on 2019-03-03 -->
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -27,18 +27,20 @@
     <div id="mainContent">
       <a name="Top" id="Top"></a>
 
-      <h1>JMRI&reg; OperationsPro Manual</h1>
+      
 
-      <h2>Installing JMRI&reg;</h2>
+<h1>JMRI & reg; Manuel d'OperationsPro</h1>
 
-      <div align="right">
-        <p><a href="index.shtml#Installing">Back to Index</a></p>
-      </div>
-      <hr>
+      <h2>Installation de JMRI&reg;</h2>
 
-      <h3>Preparing to Install JMRI&reg;</h3>
+      <div align = "right">
+        <p><a href="index.shtml#Installing"> Retour &#224; l'index</a></p>
+     </div>
+      <h>
 
-      <p>The JMRI software package includes:</p>
+      <h3>Pr&#233;paration de l'installation de JMRI&reg;</h3>
+
+      <p>Le progiciel JMRI comprend:</p>
 
       <ul>
         <li>DecoderPro&reg;</li>
@@ -46,90 +48,89 @@
         <li>PanelPro&trade;</li>
 
         <li>SoundPro&trade;</li>
-      </ul>
+     </ul>
 
-      <p>Two versions of the software are available:</p>
-
-      <ul>
-        <li>Production Version: The current stable version that is
-        fixed in design and for general use. If just starting, this
-        is the version for you.</li>
-
-        <li>Development Version: The version that is under
-        development for testing and is used to validate new
-        features and changes to existing features. If you are
-        familiar with JMRI and want to help in the validation and
-        testing process, then use this version.</li>
-      </ul>
-
-      <p>Check the <a href=
-      "http://www.jmri.org/help/en/html/hardware/index.shtml"
-      target="_blank">supported hardware</a> systems to verify your
-      computer can run JMRI.</p>
-
-      <p>If it can, <a href=
-      "http://www.jmri.org/download/index.shtml" target=
-      "_blank">download</a> the correct installer for your computer
-      system:</p>
+      <p>Deux versions du logiciel sont disponibles:</p>
 
       <ul>
-        <li><a href=
+        <li>Version de production: version stable actuelle qui a &#233;t&#233; 
+        corrig&#233;e dans sa conception et pour son utilisation g&#233;n&#233;rale. 
+        Si vous venez de commencer, cette version est faite pour vous.</Li>
+
+        <li>Version de d&#233;veloppement: version en cours de d&#233;veloppement 
+        pour les tests et utilis&#233;e pour valider les nouvelles fonctionnalit&#233;s 
+        et les modifications apport&#233;es aux fonctionnalit&#233;s existantes. 
+        Si vous connaissez JMRI et souhaitez contribuer au processus 
+        de validation et de test, utilisez cette version.</Li>
+     </ul>
+
+      <p>V&#233;rifiez le <a href = "http://www.jmri.org/help/en/html/hardware/index.shtml"
+      target = "_ blank"> mat&#233;riel pris en charge</a> pour v&#233;rifier que 
+      votre ordinateur peut ex&#233;cuter JMRI.</p>
+
+      <p>Si possible, <a href =
+      "http://www.jmri.org/download/index.shtml" target =
+      "_blank"> t&#233;l&#233;chargez</a> le programme d'installation appropri&#233; 
+      pour votre syst&#232;me informatique:</p>
+
+      <ul>
+        <li><a href =
         "http://www.jmri.org/install/WindowsNew.shtml">Windows</a></li>
 
-        <li><a href="http://www.jmri.org/install/MacOSX.shtml">Mac
+        <li><a href="http://www.jmri.org/install/MacOSX.shtml"> Mac
         OS X</a></li>
 
-        <li><a href=
+        <li><a href =
         "http://www.jmri.org/install/Linux.shtml">Linux</a></li>
-      </ul>
+     </ul>
 
-      <h3>Installing Java</h3>
+      <h3>Installation de Java</h3>
 
-      <p><a href="Installing_JMRI.shtml#InstallJMRI">Versions of
-      JMRI&reg;</a> can run on any computer system that will run
-      Java 1.6.0 or later, whether it is Macintosh, Windows, or
-      Linux based. It does require that Java be installed on the
-      computer. You can get Java as a free (but large) download at:
-      <a href="http://java.com/download/" target=
-      "_blank">java.com/download/</a></p>
+      <p><a href="Installing_JMRI.shtml#InstallJMRI"> Les versions de 
+      JMRI&reg;</a> peuvent &#234;tre ex&#233;cut&#233;es sur tout syst&#232;me ex&#233;cutant 
+      Java 1.6.0 ou une version ult&#233;rieure, qu'il soit bas&#233; sur 
+      Macintosh, Windows ou Linux. Il faut que Java soit install&#233; sur 
+      l'ordinateur. Vous pouvez obtenir Java en t&#233;l&#233;chargement gratuit 
+      (mais volumineux) &#224; l'adresse suivante:
+      <a href = "http://java.com/download/" target =
+      "_blank"> java.com/download/</a></p>
 
-      <h3><a name="InstallJMRI" id="InstallJMRI"></a>Installing the
-      JMRI software</h3>
+      <h3><a name="InstallJMRI" id="InstallJMRI"></a> Installer le logiciel JMRI</h3>
 
-      <p>After downloading the JMRI file, install using the
-      appropriate Installation guide:</p>
+      <p>Apr&#232;s avoir t&#233;l&#233;charg&#233; le fichier JMRI, installez-le &#224; l'aide 
+      du guide d'installation appropri&#233;:</p>
 
       <ul>
-        <li><a href="http://www.jmri.org/install/WindowsNew.shtml"
-        target="_blank">Windows Installation Guide</a></li>
+        <li><a href = "http://www.jmri.org/install/WindowsNew.shtml"
+        target = "_ blank"> Guide d'installation de Windows</a></li>
 
-        <li><a href="http://www.jmri.org/install/MacOSX.shtml"
-        target="_blank">Mac OS X Installation Guide</a></li>
+        <li><a href = "http://www.jmri.org/install/MacOSX.shtml"
+        target = "_ blank"> Guide d'installation de Mac OS X</a></li>
 
         <li>
-          <a href="http://www.jmri.org/install/Linux.shtml" target=
-          "_blank">Linux Installation Guide</a>
+          <a href = "http://www.jmri.org/install/Linux.shtml" target =
+          "_blank"> Guide d'installation de Linux</a>
 
           <ul>
-            <li><a href="http://www.jmri.org/install/Ubuntu.shtml"
-            target="_blank">Ubuntu GNU/Linux</a></li>
+            <li><a href = "http://www.jmri.org/install/Ubuntu.shtml"
+            target = "_ blank"> Ubuntu GNU / Linux</a></li>
 
-            <li><a href="http://www.jmri.org/install/decTop.shtml"
-            target="_blank">Xubuntu</a></li>
+            <li><a href = "http://www.jmri.org/install/decTop.shtml"
+            target = "_ blank"> Xubuntu</a></li>
 
-            <li><a href=
-            "http://www.jmri.org/install/OpenSUSE.shtml" target=
-            "_blank">Open SUSE linux</a></li>
-          </ul>
-        </li>
-      </ul>
-      <hr>
+            <li><a href =
+            "http://www.jmri.org/install/OpenSUSE.shtml" target =
+            "_blank"> Ouvrez SUSE linux</a></li>
+         </ul>
+       </li>
+     </ul>
+      <h>
 
-      <div align="right">
-        <p><a href="index.shtml#Installing">Back to Index</a></p>
-        <!--#include virtual="/Footer" -->
-      </div><!-- closes #mainContent -->
-    </div>
-  </div>
-</body>
-</html>
+      <div align = "right">
+        <p><a href="index.shtml#Installing"> Retour &#224; l'index</a></p>
+        <! - # include virtual = "/ Footer" ->
+     </div> <! - ferme #mainContent ->
+   </div>
+ </div>
+</ body>
+</ html>
