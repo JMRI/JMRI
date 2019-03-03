@@ -43,17 +43,18 @@ public class JsonSignalMastHttpServiceTest {
             Assert.assertNotNull(result);
             Assert.assertEquals(JsonSignalMast.SIGNAL_MAST, result.path(JSON.TYPE).asText());
             Assert.assertEquals(sysName, result.path(JSON.DATA).path(JSON.NAME).asText());
-
-            //retrieve by username, should get systemname back
-            result = service.doGet(JsonSignalMast.SIGNAL_MAST, userName, Locale.ENGLISH);
-            Assert.assertNotNull(result);
-            Assert.assertEquals(sysName, result.path(JSON.DATA).path(JSON.NAME).asText());
-
             //verify initial aspect/state is "Unknown"
             Assert.assertEquals(JSON.ASPECT_UNKNOWN, result.path(JSON.DATA).path(JSON.STATE).asText());
+            //retrieve by username, should fail
+            try {
+                result = service.doGet(JsonSignalMast.SIGNAL_MAST, userName, Locale.ENGLISH);
+                Assert.fail("Excepted exception not thrown");
+            } catch (JsonException ex) {
+                Assert.assertEquals("Username not found as not system name", 404, ex.getCode());
+            }
             //change to Clear, then verify change
             s.setAspect("Clear");
-            result = service.doGet(JsonSignalMast.SIGNAL_MAST, userName, Locale.ENGLISH);
+            result = service.doGet(JsonSignalMast.SIGNAL_MAST, sysName, Locale.ENGLISH);
             Assert.assertEquals("Clear", result.path(JSON.DATA).path(JSON.STATE).asText());
         } catch (JsonException ex) {
             Assert.fail(ex.getMessage());
@@ -76,8 +77,8 @@ public class JsonSignalMastHttpServiceTest {
 
         try {
             //set signalmast to Clear and verify change
-            message = mapper.createObjectNode().put(JSON.NAME, userName).put(JSON.STATE, "Clear");
-            result = service.doPost(JsonSignalMast.SIGNAL_MAST, userName, message, Locale.ENGLISH);
+            message = mapper.createObjectNode().put(JSON.NAME, sysName).put(JSON.STATE, "Clear");
+            result = service.doPost(JsonSignalMast.SIGNAL_MAST, sysName, message, Locale.ENGLISH);
             Assert.assertNotNull(result);
             Assert.assertEquals("Clear", s.getAspect());
             Assert.assertEquals("Clear", result.path(JSON.DATA).path(JSON.STATE).asText());
@@ -88,8 +89,8 @@ public class JsonSignalMastHttpServiceTest {
         // try to set to UNKNOWN, which should not be allowed, so state should not change
         JsonException exception = null;
         try {
-            message = mapper.createObjectNode().put(JSON.NAME, userName).put(JSON.STATE, JSON.ASPECT_UNKNOWN);
-            result = service.doPost(JsonSignalMast.SIGNAL_MAST, userName, message, Locale.ENGLISH);
+            message = mapper.createObjectNode().put(JSON.NAME, sysName).put(JSON.STATE, JSON.ASPECT_UNKNOWN);
+            result = service.doPost(JsonSignalMast.SIGNAL_MAST, sysName, message, Locale.ENGLISH);
             Assert.assertNotNull(result);
             Assert.assertEquals("Clear", s.getAspect());
             Assert.assertEquals("Clear", result.path(JSON.DATA).path(JSON.STATE).asText());

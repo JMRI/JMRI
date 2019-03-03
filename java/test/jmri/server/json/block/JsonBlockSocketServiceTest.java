@@ -29,10 +29,12 @@ public class JsonBlockSocketServiceTest {
     public void testBlockChange() throws IOException, JmriException, JsonException {
         JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
         JsonNode message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IB1");
-        JsonBlockSocketService service = new JsonBlockSocketService(connection);
+        // create block *before* creating service to ensure service does not pick up change in number
+        // of blocks when creating block for test
         BlockManager manager = InstanceManager.getDefault(BlockManager.class);
         Block block1 = manager.provideBlock("IB1");
         Assert.assertEquals("Block has only one listener", 1, block1.getNumPropertyChangeListeners());
+        JsonBlockSocketService service = new JsonBlockSocketService(connection);
         service.onMessage(JsonBlock.BLOCK, message, JSON.POST, Locale.ENGLISH);
         Assert.assertEquals("Block is being listened to by service", 2, block1.getNumPropertyChangeListeners());
         JsonNode result = connection.getMessage();

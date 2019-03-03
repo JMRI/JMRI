@@ -29,7 +29,7 @@ abstract public class AbstractFrameAction extends AbstractAction {
     @Override
     public void actionPerformed(ActionEvent e) {
         try {
-            JFrame f = (JFrame) Class.forName(className).newInstance();
+            JFrame f = (JFrame) Class.forName(className).getDeclaredConstructor().newInstance();
             f.setVisible(true);
         } catch (Exception ex) {
             log.error("Error starting JFrame " + className + ": " + ex);
