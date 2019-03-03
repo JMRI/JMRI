@@ -1,7 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Translation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-03-03 -->
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -26,87 +26,87 @@
     <div id="mainContent">
       <a name="Top" id="Top"></a>
 
-      <h1>Getting Started with DecoderPro&reg;</h1>
+      <h1> Premiers pas avec DecoderPro&reg;</h1>
 
-      <h2>How do I start the DecoderPro program for New User?</h2>
+      <h2> Comment d&#233;marrer le programme DecoderPro pour un nouvel utilisateur?</h2>
 
-      <div align="right">
-        <p><a href="Start_DecoderPro.shtml">Back</a></p>
-      </div>
-      <hr>
+      <div align = "right">
+        <p><a href="Start_DecoderPro.shtml"> Retour</a></p>
+     </div>
+      <h>
 
-      <p>For First Time or totally new Install. Once you have
-      downloaded the JMRI software and installed it, simply open
-      the program in the usual manner for your operating system. An
-      icon for DecoderPro should be installed on your Desktop.<br>
-      <img src="images/decoderpro3_icon.png" alt="icon" height="64"
-      width="88"></p>
+      <p>Pour la premi&#232;re fois ou une toute nouvelle installation. Une 
+      fois que vous avez t&#233;l&#233;charg&#233; et install&#233; le logiciel JMRI, ouvrez 
+      simplement le programme de la mani&#232;re habituelle pour votre syst&#232;me 
+      d'exploitation. Une ic&#244;ne pour DecoderPro doit &#234;tre install&#233;e sur 
+      votre bureau. <Br
+      <img src = "images/decoderpro3_icon.png" alt = "icon" height = "64"
+      width = "88"></p>
 
-      <p>DecoderPro may be opened by double click on the Desktop
-      icon and the DecoderPro initial screen as shown below will be
-      displayed on completion of startup for a brand new install
-      with no settings stored in your computer.</p>
+      <p>DecoderPro peut &#234;tre ouvert en double-cliquant sur l'ic&#244;ne du 
+      bureau. L'&#233;cran initial de DecoderPro, pr&#233;sent&#233; ci-dessous, 
+      s'affichera &#224; la fin du d&#233;marrage pour une nouvelle installation 
+      sans aucun param&#232;tre enregistr&#233; sur votre ordinateur.</p>
 
-      <p>First time install start screen</p>
+      <p>&#201;cran de d&#233;marrage de la premi&#232;re installation</p>
 
-      <p><img src="images/newUser_01.png" alt="new" height="410"
-      width="710"></p>
+      <p><img src = "images/newUser_01.png" alt = "new" height = "410"
+      width = "710"></p>
 
-      <p>Press the <input name="Button" id="button" value=
-      "Next&gt;" type="button"> starts the wizard.</p>
+      <p>Appuyez sur la <entr&#233;e nom = "bouton" id = "bouton" value =
+      "Suivant & gt;" type = "button"> lance l'assistant.</p>
 
-      <p><img src="images/newUser_02.png" alt="wizard" height="410"
-      width="710"></p>
+      <p><img src = "images/newUser_02.png" alt = "assistant" height = "410"
+      width = "710"></p>
 
-      <p>Press the <input name="button" id="button2" value=
-      "Next&gt;" type="button"> to continue</p>
+      <p>Appuyez sur <input name = "button" id = "button2" value =
+      "Suivant & gt;" type = "button"> pour continuer</p>
 
-      <p><img src="images/newUser_03.png" alt="wizard" height="410"
-      width="710"></p>
+      <p><img src = "images/newUser_03.png" alt = "assistant" height = "410"
+      width = "710"></p>
 
-      <p>Select your system and other options for your system will
-      be shown.</p>
+      <p>S&#233;lectionnez votre syst&#232;me. Les autres options correspondant &#224; 
+      votre syst&#232;me s'afficheront.</p>
 
-      <p><img style="width: 710px; height: 410px;" src=
-      "images/newUser_04.png" alt="wizaard"></p>
+      <p><img style = "width: 710px; height: 410px;" src =
+      "images/newUser_04.png" alt = "wizaard"></p>
 
-      <p>Select your system connection.</p>
+      <p>S&#233;lectionnez votre connexion syst&#232;me.</p>
 
-      <p><img src="images/newUser_05.png" alt="wizard" height="400"
-      width="700"></p>
+      <p><img src = "images/newUser_05.png" alt = "assistant" height = "400"
+      width = "700"></p>
 
-      <p>Select your Serial port and Command station type.</p>
+      <p>S&#233;lectionnez votre type de port s&#233;rie et de Centrale de Commande.</p>
 
-      <p><img src="images/newUser_06.png" alt="wizard" height="400"
-      width="700"></p>
+      <p><img src = "images/newUser_06.png" alt = "assistant" height = "400"
+      width = "700"></p>
 
-      <p>Next Connection Prefix and Connection Name, At this time
-      leave as default.</p>
+      <p>Pr&#233;fixe de connexion et nom de connexion suivants, pour 
+      l'instant, laissez par d&#233;faut.</p>
 
-      <p>Press the <input name="button2" id="button3" value=
-      "Next&gt;" type="button"></p>
+      <p>Appuyez sur <input name = "button2" id = "button3" value =
+      "Suivant" type = "bouton"></p>
 
-      <p><img src="images/newUser_07.png" alt="wizard" height="400"
-      width="700"></p>
+      <p><img src = "images/newUser_07.png" alt = "assistant" height = "400"
+      width = "700"></p>
 
-      <p>Press the <input name="button3" id="button4" value=
-      "Finish" type="button"></p>
+      <p>Appuyez sur <input name = "button3" id = "button4" value =
+      "Terminer" type = "bouton"></p>
 
-      <p>The DecoderPro main window is displayed with instructions
-      for Getting Started:</p>
+      <p>La fen&#234;tre principale de DecoderPro s'affiche avec les 
+      instructions relatives &#224; la mise en route:</p>
 
-      <p><img src="images/newUser_08.png" alt="new start" height=
-      "351" width="600"></p>
+      <p><img src = "images/newUser_08.png" alt = "nouveau d&#233;part" height =
+      "351" width = "600"></p>
 
-      <p>When you want to set up the other preferences at this
-      time, go to Edit -&gt; <a href=
-      "Start_Preferences.shtml">Preferences</a>. A pane will come
-      up that allows you to set up the system for your particular
-      configuration.</p>
-      <hr>
+      <p>Si vous souhaitez configurer les autres pr&#233;f&#233;rences &#224; ce stade, 
+      acc&#233;dez &#224; Edition - &gt; <a href= "Start_Preferences.shtml"> 
+		  Pr&#233;f&#233;rences</a>. Un volet appara&#238;tra vous permettant de 
+		  configurer le syst&#232;me pour votre configuration particuli&#232;re.</P>
+      <h>
 
-      <div align="right">
-        <p><a href="Start_DecoderPro.shtml">Back</a></p>
+      <div align = "right">
+        <p><a href="Start_DecoderPro.shtml"> Retour</a></p>
       </div><!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
