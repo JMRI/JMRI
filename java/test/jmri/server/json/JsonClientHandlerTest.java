@@ -54,6 +54,7 @@ public class JsonClientHandlerTest {
      */
     @Test
     public void testOnMessage_String() throws IOException {
+        // valid list request
         String string = "{\"type\":\"test\",\"method\":\"list\"}";
         JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
         JsonClientHandler instance = new TestJsonClientHandler(connection);
@@ -66,6 +67,7 @@ public class JsonClientHandlerTest {
         Assert.assertEquals("Response array element 0 is a JSON message", 2, message.get(0).size());
         Assert.assertTrue("Response array element 1 is an object", message.get(1).isObject());
         Assert.assertEquals("Response array element 1 is a JSON message", 2, message.get(1).size());
+        // non-JSON request
         instance.onMessage("not a JSON object");
         message = connection.getMessage();
         Assert.assertNotNull("Response provided", message);
@@ -75,6 +77,13 @@ public class JsonClientHandlerTest {
         Assert.assertEquals("Error response is an ERROR", JsonException.ERROR, message.path(JSON.TYPE).asText());
         Assert.assertEquals("Error response is type 500", 500,
                 message.path(JSON.DATA).path(JsonException.CODE).asInt());
+        // ping request (triggers special paths in JsonClientHandler)
+        instance.onMessage("{\"type\":\"ping\"}");
+        message = connection.getMessage();
+        Assert.assertNotNull("Response provided", message);
+        Assert.assertTrue("Response is an object", message.isObject());
+        Assert.assertEquals("Response array contains one elements", 1, message.size());
+        Assert.assertEquals("Response type is pong", JSON.PONG, message.path(JSON.TYPE).asText());
     }
 
     /**

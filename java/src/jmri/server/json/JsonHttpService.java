@@ -36,7 +36,7 @@ public abstract class JsonHttpService {
      * recognized.
      *
      * @param type   the type of the requested object
-     * @param name   the name of the requested object
+     * @param name   the system name of the requested object
      * @param locale the requesting client's Locale
      * @return a JSON description of the requested object
      * @throws JsonException if the named object does not exist or other error
@@ -52,7 +52,7 @@ public abstract class JsonHttpService {
      * does not exist.
      *
      * @param type   the type of the requested object
-     * @param name   the name of the requested object
+     * @param name   the system name of the requested object
      * @param data   JSON data set of attributes of the requested object to be
      *               updated
      * @param locale the requesting client's Locale
@@ -71,7 +71,7 @@ public abstract class JsonHttpService {
      * are not intended to be addable.
      *
      * @param type   the type of the requested object
-     * @param name   the name of the requested object
+     * @param name   the system name of the requested object
      * @param data   JSON data set of attributes of the requested object to be
      *               created or updated
      * @param locale the requesting client's Locale
@@ -92,7 +92,7 @@ public abstract class JsonHttpService {
      * Do not throw an error if the requested object does not exist.
      *
      * @param type   the type of the deleted object
-     * @param name   the name of the deleted object
+     * @param name   the system name of the deleted object
      * @param locale the requesting client's Locale
      * @throws JsonException if this method is not allowed or other error occurs
      */

@@ -87,9 +87,10 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
                     String adapter = ConfigXmlManager.adapterName(cf);
                     log.debug("forward to " + adapter);
                     try {
-                       XmlAdapter x = (XmlAdapter) Class.forName(adapter).newInstance();
+                       XmlAdapter x = (XmlAdapter) Class.forName(adapter).getDeclaredConstructor().newInstance();
                        n.addContent(x.store(cf));
-                    } catch (ClassNotFoundException | IllegalAccessException | InstantiationException ex) {
+                    } catch (ClassNotFoundException | IllegalAccessException | 
+                                InstantiationException | NoSuchMethodException | java.lang.reflect.InvocationTargetException  ex) {
                        log.error("Exception: ", ex);
                     }
                 }
@@ -206,10 +207,10 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
                   try {
                         @SuppressWarnings("unchecked") // Class.forName cast is unchecked at this point
-                        XmlAdapter adapter = (XmlAdapter) Class.forName(className).newInstance();
+                        XmlAdapter adapter = (XmlAdapter) Class.forName(className).getDeclaredConstructor().newInstance();
                         adapter.load(connect,connectedConfig);
                     } catch (ClassNotFoundException | 
-		             InstantiationException | 
+		             InstantiationException | NoSuchMethodException | java.lang.reflect.InvocationTargetException |
 			     IllegalAccessException ex) {
                         log.error("Unable to create {} for {}", className, shared, ex);
                     } catch (RuntimeException | jmri.configurexml.JmriConfigureXmlException ex) {

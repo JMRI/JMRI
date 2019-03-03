@@ -310,7 +310,10 @@
     <h3>DecoderPro</h3>
     <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-          <li></li>
+            <li>Decoder definitions for indexed-access CVs can now use a "81=23.40" syntax
+            to specify an alternate PI and/or SI CV. The previous syntax continues to
+            work unchanged.
+            </li>
         </ul>
 
    <h3>Dispatcher</h3>

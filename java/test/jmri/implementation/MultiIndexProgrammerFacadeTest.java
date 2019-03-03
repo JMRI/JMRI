@@ -302,6 +302,35 @@ public class MultiIndexProgrammerFacadeTest extends TestCase {
         Assert.assertEquals("index 2 written", 46, dp.getCvVal(82));
     }
 
+    public void testWriteReadDoubleIndexedAltPiSi() throws jmri.ProgrammerException, InterruptedException {
+
+        ProgDebugger dp = new ProgDebugger();
+        Programmer p = new MultiIndexProgrammerFacade(dp, "81", "82", true, false);
+        ProgListener l = new ProgListener() {
+            @Override
+            public void programmingOpReply(int value, int status) {
+                log.debug("callback value=" + value + " status=" + status);
+                replied = true;
+                readValue = value;
+            }
+        };
+
+        p.writeCV("123.101=45.102=46", 12, l);
+        waitReply();
+        Assert.assertEquals("index 1 written", 45, dp.getCvVal(101));
+        Assert.assertEquals("index 2 written", 46, dp.getCvVal(102));
+        Assert.assertEquals("value written", 12, dp.getCvVal(123));
+
+        dp.clearHasBeenWritten(101);
+        dp.clearHasBeenWritten(102);
+
+        p.readCV("123.101=45.102=46", l);
+        waitReply();
+        Assert.assertEquals("read back", 12, readValue);
+        Assert.assertEquals("index 1 written", 45, dp.getCvVal(101));
+        Assert.assertEquals("index 2 written", 46, dp.getCvVal(102));
+    }
+
     public void testWriteReadDoubleIndexedSkip() throws jmri.ProgrammerException, InterruptedException {
 
         ProgDebugger dp = new ProgDebugger();
@@ -381,6 +410,54 @@ public class MultiIndexProgrammerFacadeTest extends TestCase {
 
     }
 
+    public void testWriteReadDoubleIndexedCvListAltPiSi() throws jmri.ProgrammerException, InterruptedException {
+
+        ProgDebugger dp = new ProgDebugger();
+        Programmer p = new MultiIndexProgrammerFacade(dp, "81", "82", false, false);
+        ProgListener l = new ProgListener() {
+            @Override
+            public void programmingOpReply(int value, int status) {
+                log.debug("callback value=" + value + " status=" + status);
+                replied = true;
+                readValue = value;
+            }
+        };
+
+        p.writeCV("101=45.102=46.123", 12, l);
+        waitReply();
+        Assert.assertEquals("index 1 written", 45, dp.getCvVal(101));
+        Assert.assertEquals("index 2 written", 46, dp.getCvVal(102));
+        Assert.assertEquals("value written", 12, dp.getCvVal(123));
+
+        dp.clearHasBeenWritten(101);
+        dp.clearHasBeenWritten(102);
+
+        p.readCV("101=45.102=46.123", l);
+        waitReply();
+        Assert.assertEquals("read back", 12, readValue);
+        Assert.assertEquals("index 1 written", 45, dp.getCvVal(101));
+        Assert.assertEquals("index 2 written", 46, dp.getCvVal(102));
+
+        dp.clearHasBeenWritten(101);
+        dp.clearHasBeenWritten(102);
+
+        p.readCV("101=45.102=46.123", l);
+        waitReply();
+        Assert.assertEquals("read back", 12, readValue);
+        Assert.assertEquals("index 1 written", 45, dp.getCvVal(101));
+        Assert.assertEquals("index 2 written", 46, dp.getCvVal(102));
+
+        dp.clearHasBeenWritten(101);
+        dp.clearHasBeenWritten(102);
+
+        p.readCV("101=45.102=46.123", l);
+        waitReply();
+        Assert.assertEquals("read back", 12, readValue);
+        Assert.assertEquals("index 1 written", 45, dp.getCvVal(101));
+        Assert.assertEquals("index 2 written", 46, dp.getCvVal(102));
+
+    }
+
     public void testWriteReadDoubleIndexedCvListSkip() throws jmri.ProgrammerException, InterruptedException {
 
         ProgDebugger dp = new ProgDebugger();
@@ -438,6 +515,65 @@ public class MultiIndexProgrammerFacadeTest extends TestCase {
         Assert.assertEquals("read back", 12, readValue);
         Assert.assertEquals("index 1 written", 45, dp.getCvVal(81));
         Assert.assertEquals("index 2 written", 46, dp.getCvVal(82));
+    }
+
+    public void testWriteReadDoubleIndexedCvListSkipAltPiSi() throws jmri.ProgrammerException, InterruptedException {
+
+        ProgDebugger dp = new ProgDebugger();
+        MultiIndexProgrammerFacade p = new MultiIndexProgrammerFacade(dp, "81", "82", false, true);
+        ProgListener l = new ProgListener() {
+            @Override
+            public void programmingOpReply(int value, int status) {
+                log.debug("callback value=" + value + " status=" + status);
+                replied = true;
+                readValue = value;
+            }
+        };
+
+        p.writeCV("101=45.102=46.123", 12, l);
+        waitReply();
+        Assert.assertEquals("index 1 written", 45, dp.getCvVal(101));
+        Assert.assertEquals("index 2 written", 46, dp.getCvVal(102));
+        Assert.assertEquals("value written", 12, dp.getCvVal(123));
+
+        dp.clearHasBeenWritten(101);
+        dp.clearHasBeenWritten(102);
+
+        p.readCV("101=45.102=46.123", l);
+        waitReply();
+        Assert.assertEquals("read back", 12, readValue);
+        Assert.assertTrue("index 1 not written", !dp.hasBeenWritten(101));
+        Assert.assertTrue("index 2 not written", !dp.hasBeenWritten(102));
+
+        dp.clearHasBeenWritten(101);
+        dp.clearHasBeenWritten(102);
+
+        p.readCV("101=45.102=46.123", l);
+        waitReply();
+        Assert.assertEquals("read back", 12, readValue);
+        Assert.assertTrue("index 1 not written", !dp.hasBeenWritten(101));
+        Assert.assertTrue("index 2 not written", !dp.hasBeenWritten(102));
+
+        dp.clearHasBeenWritten(101);
+        dp.clearHasBeenWritten(102);
+
+        p.readCV("101=45.102=46.123", l);
+        waitReply();
+        Assert.assertEquals("read back", 12, readValue);
+        Assert.assertTrue("index 1 not written", !dp.hasBeenWritten(101));
+        Assert.assertTrue("index 2 not written", !dp.hasBeenWritten(102));
+
+        // add timeout
+        p.lastOpTime = p.lastOpTime - 2*p.maxDelay; 
+        
+        dp.clearHasBeenWritten(101);
+        dp.clearHasBeenWritten(102);
+
+        p.readCV("101=45.102=46.123", l);
+        waitReply();
+        Assert.assertEquals("read back", 12, readValue);
+        Assert.assertEquals("index 1 written", 45, dp.getCvVal(101));
+        Assert.assertEquals("index 2 written", 46, dp.getCvVal(102));
     }
 
     public void testWriteReadDoubleIndexedCvListDelayedSkip() throws jmri.ProgrammerException, InterruptedException {
