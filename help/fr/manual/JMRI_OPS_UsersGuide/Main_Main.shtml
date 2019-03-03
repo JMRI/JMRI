@@ -1,7 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Translation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-03-03 -->
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -26,47 +26,47 @@
     <div id="mainContent">
       <a name="Top" id="Top"></a>
 
-      <h2>JMRI: OperationsPro Main Window</h2>
+      <h2> JMRI: fen&#234;tre principale d'OperationsPro</h2>
 
-      <div align="right">
-        <p><a href="index.shtml#Main">Back to Index</a></p>
-      </div>
-      <hr>
+      <div align = "right">
+        <p><a href="index.shtml#Main"> Retour &#224; l'index</a></p>
+     </div>
+      <h>
 
-      <p align="left">All of the JMRI functions - including the
-      OperationsPro Program - can be accessed via the menu bar on
-      either the DecoderPro&reg; or PanelPro main window.</p>
+      <p align = "left"> Toutes les fonctions JMRI, y compris le programme 
+      OperationsPro, sont accessibles via la barre de menus de DecoderPro&reg; 
+      ou la fen&#234;tre principale de PanelPro.</p>
 
-      <p>All OperationsPro functionality is always available from
-      the <strong>Tools -&gt; Operations</strong> menu on the main
-      JMRI toolbar.</p>
+      <p>Toutes les fonctionnalit&#233;s d'OperationsPro sont toujours 
+      disponibles &#224; partir de <strong> Outils - &gt; Op&#233;rations
+      </strong> dans la barre d'outils principale JMRI.</P>
 
-      <p>The main DecoderPro&reg; screen below shows the optional
-      <strong>Operations</strong> menu (by selecting it in the
-      <a href="Ops_Settings.shtml#options">OperationsPro
-      Settings</a> pane).</p>
+      <p>L'&#233;cran principal DecoderPro&reg; ci-dessous pr&#233;sente 
+      le menu facultatif <strong> Op&#233;rations</strong> (en le 
+      s&#233;lectionnant dans le volet <a href="Ops_Settings.shtml#options"> 
+		  Param&#232;tres OperationsPro</a>).</p>
 
-      <p align="center"><img style="width: 496px; height: 282px;"
-      alt="splash screen" src="images/Splash_Screen.png"></p>
+      <p align = "center"> <img style = "width: 496px; height: 282px;"
+      alt = "&#233;cran de d&#233;marrage" src = "images/Splash_Screen.png"></p>
 
-      <p>DecoderPro&reg; icon and DecoderPro&reg; version
-      information is displayed. The version of Java installed and
-      in use is also shown.</p>
+      <p>L'ic&#244;ne DecoderPro&reg; et les informations de version DecoderPro&reg;  
+      sont affich&#233;es. La version de Java install&#233;e et en cours 
+      d'utilisation est &#233;galement affich&#233;e.</P>
 
-      <h2><a href="Main_Menu.shtml">Main window menu bar</a></h2>
+      <h2> <a href="Main_Menu.shtml"> Barre de menus de la fen&#234;tre 
+      principale</a></h2>
 
-      <p>The main menu contains the menus that allow you to access
-      all the features of JMRI.</p>
+      <p>Le menu principal contient les menus qui vous permettent 
+      d'acc&#233;der &#224; toutes les fonctionnalit&#233;s de JMRI.</p>
 
-      <p>This Manual focusses on the functions and menus that apply
-      to JMRI&reg; OperationsPro version 3.x.<br>
-      Please consult the other JMRI&reg; Manuals for other
-      functions.</p>
+      <p>Ce manuel porte sur les fonctions et les menus qui s'appliquent 
+      &#224; JMRI&reg; OperationsPro version 3.x. <br> Veuillez consulter 
+      les manuels JMRI&reg;  pour d'autres fonctions.</P>
 
-      <div align="right">
-        <p><a href="index.shtml#Main">Back to Index</a></p>
-      </div><!--#include virtual="/Footer" -->
-    </div>
-  </div>
-</body>
-</html>
+      <div align = "right">
+        <p><a href="index.shtml#Main"> Retour &#224; l'index</a></p>
+     </div> <! - # include virtual = "/ Footer" ->
+   </div>
+ </div>
+</ body>
+</ html>
