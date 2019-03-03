@@ -746,6 +746,7 @@
         <property name="test.test" value="${test.includes}Test"/>
     </target>
     <target depends="-test-single-src,-test-single-test,tests,runtime-library-selection" description="Run single unit test." name="test-single">
+        <property name="test-single.jvmargs" value=""/>
         <junit haltonerror="false" haltonfailure="false" printsummary="yes" fork="yes" dir="." errorProperty="test.failed" failureProperty="test.failed">
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
@@ -759,6 +760,7 @@
             <test name="${test.test}">
                 <formatter usefile="no" type="brief"/>
             </test>
+            <jvmarg line="${test-single.jvmargs}"/>
         </junit>
         <fail>
             <condition>
@@ -1806,6 +1808,7 @@
             <arg value="2300"/><!-- change from default 100 warnings -->
             <arg value="-quiet"/>
             <arg value="-splitindex"/>
+            <arg value="-J-Dhttp.agent=javadoc"/>
 
             <!-- disable output of custom @navassoc tag - used for UML image generation -->
             <tag name="navassoc" enabled="false"/>

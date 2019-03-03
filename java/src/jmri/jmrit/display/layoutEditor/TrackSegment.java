@@ -19,6 +19,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Predicate;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.swing.AbstractAction;
@@ -772,6 +773,11 @@ public class TrackSegment extends LayoutTrack {
     private JCheckBoxMenuItem flippedCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("FlippedCheckBoxMenuItemTitle"));
 
     /**
+     * Maximum length of the bumper decoration.
+     */
+    private static final int MAX_BUMPER_LENGTH = 200;
+
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -1272,7 +1278,17 @@ public class TrackSegment extends LayoutTrack {
             int newValue = QuickPromptUtil.promptForInt(layoutEditor,
                     Bundle.getMessage("DecorationLengthMenuItemTitle"),
                     Bundle.getMessage("DecorationLengthMenuItemTitle"),
-                    bumperLength);
+                    bumperLength, new Predicate<Integer>() {
+                        @Override
+                        public boolean test(Integer t) {
+                            if (t < 0 || t > MAX_BUMPER_LENGTH) {
+                                throw new IllegalArgumentException(
+                                        Bundle.getMessage("DecorationLengthMenuItemRange", MAX_BUMPER_LENGTH));
+                            }
+                            return true;
+                        }
+                    }
+            );
             setBumperLength(newValue);
         });
 

@@ -5,13 +5,13 @@ import static jmri.server.json.block.JsonBlock.BLOCKS;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.Locale;
 import javax.servlet.http.HttpServletResponse;
 import jmri.Block;
 import jmri.BlockManager;
 import jmri.InstanceManager;
+import jmri.ProvidingManager;
 import jmri.Reporter;
 import jmri.ReporterManager;
 import jmri.Sensor;
@@ -27,15 +27,14 @@ import jmri.server.json.sensor.JsonSensor;
  * @author mstevetodd Copyright 2018
  * @author Randall Wood Copyright 2018
  */
-public class JsonBlockHttpService extends JsonNamedBeanHttpService {
+public class JsonBlockHttpService extends JsonNamedBeanHttpService<Block> {
 
     public JsonBlockHttpService(ObjectMapper mapper) {
         super(mapper);
     }
 
     @Override
-    public JsonNode doGet(String type, String name, Locale locale) throws JsonException {
-        Block block = InstanceManager.getDefault(BlockManager.class).getBlock(name);
+    public ObjectNode doGet(Block block, String name, String type, Locale locale) throws JsonException {
         ObjectNode root = this.getNamedBean(block, name, type, locale); // throws JsonException if block == null
         ObjectNode data = root.with(JSON.DATA);
         if (block != null) {
@@ -67,11 +66,7 @@ public class JsonBlockHttpService extends JsonNamedBeanHttpService {
 
     @Override
     public JsonNode doPost(String type, String name, JsonNode data, Locale locale) throws JsonException {
-        Block block = InstanceManager.getDefault(BlockManager.class).getBlock(name);
-        if (block == null) {
-            throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", BLOCK, name));
-        }
-        this.postNamedBean(block, data, name, type, locale);
+        Block block = this.postNamedBean(getManager().getBeanBySystemName(name), data, name, type, locale);
         if (!data.path(JSON.VALUE).isMissingNode()) {
             if (data.path(JSON.VALUE).isNull()) {
                 block.setValue(null);
@@ -123,26 +118,6 @@ public class JsonBlockHttpService extends JsonNamedBeanHttpService {
     }
 
     @Override
-    public JsonNode doPut(String type, String name, JsonNode data, Locale locale) throws JsonException {
-        try {
-            InstanceManager.getDefault(BlockManager.class).provideBlock(name);
-        } catch (Exception ex) {
-            throw new JsonException(500, Bundle.getMessage(locale, "ErrorCreatingObject", BLOCK, name));
-        }
-        return this.doPost(type, name, data, locale);
-    }
-
-    @Override
-    public ArrayNode doGetList(String type, Locale locale) throws JsonException {
-        ArrayNode root = this.mapper.createArrayNode();
-        for (Block block : InstanceManager.getDefault(BlockManager.class).getNamedBeanSet()) {
-            root.add(this.doGet(BLOCK, block.getSystemName(), locale));
-        }
-        return root;
-
-    }
-
-    @Override
     public JsonNode doSchema(String type, boolean server, Locale locale) throws JsonException {
         switch (type) {
             case BLOCK:
@@ -154,5 +129,15 @@ public class JsonBlockHttpService extends JsonNamedBeanHttpService {
             default:
                 throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type));
         }
+    }
+
+    @Override
+    protected String getType() {
+        return BLOCK;
+    }
+
+    @Override
+    protected ProvidingManager<Block> getManager() throws UnsupportedOperationException {
+        return InstanceManager.getDefault(BlockManager.class);
     }
 }

@@ -1,6 +1,5 @@
 package jmri;
 
-import java.util.List;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
@@ -41,7 +40,7 @@ import javax.annotation.Nonnull;
  * @see jmri.managers.AbstractMemoryManager
  * @see jmri.InstanceManager
  */
-public interface MemoryManager extends Manager<Memory> {
+public interface MemoryManager extends ProvidingManager<Memory> {
 
     /**
      * Get the Memory with the user name, then system name if needed; if that fails, create a
