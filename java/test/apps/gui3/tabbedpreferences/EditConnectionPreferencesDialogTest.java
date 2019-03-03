@@ -1,5 +1,6 @@
-package apps.gui3;
+package apps.gui3.tabbedpreferences;
 
+import apps.gui3.tabbedpreferences.EditConnectionPreferencesDialog;
 import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -24,7 +25,11 @@ public class EditConnectionPreferencesDialogTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.InstanceManager.setDefault(TabbedPreferences.class,new TabbedPreferences());
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.initConfigureManager();
+        JUnitUtil.resetPreferencesProviders();
+        
+        jmri.InstanceManager.setDefault(TabbedPreferences.class, new TabbedPreferences());
     }
 
     @After

@@ -26,7 +26,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
 import apps.ConfigBundle;
-import apps.gui3.TabbedPreferences;
+import apps.gui3.tabbedpreferences.TabbedPreferences;
 import jmri.InstanceManager;
 import jmri.jmrix.ConnectionConfigManager;
 import jmri.jmrix.can.CanSystemConnectionMemo;

@@ -83,3 +83,17 @@ npm. This file is only used by JMRI developers and can otherwise be ignored.
 [3]: http://jmri.org/JavaDoc/doc/jmri/server/web/spi/WebManifest.html
 [4]: http://cockpit-project.org/guide/latest/packages.html#package-manifest
 [5]: https://www.patternfly.org
+
+## Updating
+
+(From a note in PR #6614 by @rhwood)
+
+```
+cd web/app
+npm update
+npm audit fix
+```
+followed by commit, etc, as needed.  Further:
+
+> `npm outdated` showed additional dependencies, but one (@rhwood) had to report since it was incorrectly published by Red Hat, so that needs to be fixed before the remaining dependencies are updated.
+

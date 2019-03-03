@@ -1,4 +1,4 @@
-package apps.gui3;
+package apps.gui3.tabbedpreferences;
 
 import java.awt.event.WindowEvent;
 import javax.swing.JOptionPane;
@@ -9,9 +9,13 @@ import jmri.swing.PreferencesPanel;
 import jmri.util.JmriJFrame;
 
 /**
- * Provide a preferences window.
- *
+ * Support displaying {@link TabbedPreferences} in a window.
+ *<p>
+ * The {@link TabbedPreferences} object is requested from the InstanceManager, and
+ * if need-be created and initialized in the process of doing that.
+ * 
  * @author Kevin Dickerson Copyright 2010
+ * @author Bob Jacobsen Copyright 2019
  */
 public class TabbedPreferencesFrame extends JmriJFrame {
 

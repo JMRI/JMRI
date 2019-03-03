@@ -1,4 +1,4 @@
-package apps.gui3;
+package apps.gui3.tabbedpreferences;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -6,12 +6,12 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
     BundleTest.class,
-    apps.gui3.dp3.PackageTest.class,
-    apps.gui3.mdi.PackageTest.class,
-    apps.gui3.paned.PackageTest.class,
-    apps.gui3.tabbedpreferences.PackageTest.class,
-    FirstTimeStartUpWizardTest.class,
-    FirstTimeStartUpWizardActionTest.class,})
+    EditConnectionPreferencesDialogTest.class,
+    TabbedPreferencesActionTest.class,
+    TabbedPreferencesFrameTest.class,
+    TabbedPreferencesProfileActionTest.class,
+    TabbedPreferencesTest.class
+})
 
 /**
  * Tests for GUI3 base class.
