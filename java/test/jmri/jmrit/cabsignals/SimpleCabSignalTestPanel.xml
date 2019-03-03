@@ -317,7 +317,7 @@
   </layoutblocks>
   <warrants class="jmri.jmrit.logix.configurexml.WarrantManagerXml" />
   <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
-    <logicDelay>500</logicDelay>
+    <logicDelay>10</logicDelay>
     <signalmastlogic source="SidingToEastTurnout">
       <sourceSignalMast>SidingToEastTurnout</sourceSignalMast>
       <destinationMast destination="East1ToEast2">
