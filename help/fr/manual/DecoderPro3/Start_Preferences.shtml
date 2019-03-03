@@ -1,7 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Translation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-03-03 -->
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -25,519 +25,523 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>Getting Started with DecoderPro&reg;</h1>
+    <h1> Premiers pas avec DecoderPro&reg;</h1>
 
-      <h2>How to set up Preferences</h2>
+      <h2> Comment configurer les pr&#233;f&#233;rences</h2>
 
-      <div align="right">
-        <p><a href="Start_DecoderPro.shtml">Previous</a><br>
-        <a href="index.shtml#Getting%20Started">Back to
-        Index</a></p>
-      </div>
+      <div align = "right">
+        <p><a href="Start_DecoderPro.shtml"> Pr&#233;c&#233;dent</a> <br>
+        <a href="index.shtml#Getting%20Started"> Retour &#224;
+        l'Index</a></p>
+     </div>
 
-      <p class="important">The current JMRI Preferences Help is
-      <a href="../../html/setup/index.shtml#setprefs">here</a>.</p>
+      <p class = "important"> L'aide actuelle sur les pr&#233;f&#233;rences JMRI 
+      est <a href="../../html/setup/index.shtml#setprefs"> ici</a>.</p>
 
-      <p>From the Edit menu in DecoderPro select
-      <strong>Preferences</strong>. On Mac OS X choose
-      Preferences... from the DecoderPro application menu. This
-      window may open automatically the first time you run the
-      program.</p>
+      <p>Dans le menu Edition de DecoderPro, s&#233;lectionnez <strong>
+		  Pr&#233;f&#233;rences</strong>. Sous Mac OS X, choisissez Pr&#233;f&#233;rences ... 
+		  dans le menu de l'application DecoderPro. Cette fen&#234;tre peut 
+		  s'ouvrir automatiquement la premi&#232;re fois que vous ex&#233;cutez 
+		  le programme.</P>
 
-      <p><img src="images/preferences_menu.png" alt=
-      "prefernces menu" height="252" width="275"></p>
+      <p><img src = "images/preferences_menu.png" alt =
+      "prefernces menu" height = "252" width = "275"></p>
 
-      <p>As a first time user the most important information is the
-      <strong>Connections</strong> screen where you describe how
-      the computer will talk to the command station. Most of rest
-      you can leave at the initial or "default" settings until you
-      find a need to change things to suit your fancy.</p>
+      <p>En tant que nouvel utilisateur, les informations les plus 
+      importantes sont l'&#233;cran <strong>Connexions</strong>, dans lequel 
+      vous d&#233;crivez comment l'ordinateur communiquera avec la Centrale 
+      de Commande. La plupart du temps , vous pouvez laisser les 
+      r&#233;glages initiaux ou "par d&#233;faut" jusqu'&#224; ce que vous ayez besoin 
+      de modifier les choses &#224; votre guise.</P>
 
-      <p><strong>Most importantly, you must click <input name=
-      "button9" id="button9" value="Save" type="button"> to
-      finalize your settings and then re-start the program to have
-      them take effect.</strong></p>
+      <p><strong>Plus important encore, vous devez cliquer sur <input name =
+      "button9" id = "button9" value = "Enregistrer" type = "bouton"> 
+      pour finaliser vos param&#232;tres, puis red&#233;marrez le programme pour 
+      qu'ils prennent effet.</strong></p>
 
-      <p>The Preferences window provides access to the basic
-      configuration information to connect your computer to your
-      DCC system. You will be using that system to actually program
-      and operate trains equipped with DCC decoders. An important
-      concept to keep in mind is that JMRI is nothing more than a
-      very smart throttle. If you can do something with your
-      throttle you can probably do it faster and easier with JMRI.
-      However, if your system can't do what you want, either
-      because your system is not connected properly (it's broken)
-      or the system manufacturer did not incorporate that
-      capability, then JMRI will not be able to do it either. In
-      the latter case JMRI will probably give you an error message
-      or have the command "greyed out" to help you identify why it
-      can't accomplish your request.</p>
+      <p>La fen&#234;tre Pr&#233;f&#233;rences permet d'acc&#233;der aux informations de 
+      configuration de base pour connecter votre ordinateur &#224; votre 
+      syst&#232;me DCC. Vous utiliserez ce syst&#232;me pour programmer et 
+      exploiter des trains &#233;quip&#233;s de d&#233;codeurs DCC. Un concept 
+      important &#224; garder &#224; l'esprit est que JMRI n'est rien de plus 
+      qu'un R&#233;gulateur tr&#232;s intelligent. Si vous pouvez faire quelque 
+      chose avec votre R&#233;gulateur, vous pouvez probablement le faire 
+      plus rapidement et plus facilement avec JMRI. Cependant, si 
+      votre syst&#232;me ne peut pas faire ce que vous voulez, soit parce 
+      que votre syst&#232;me n'est pas connect&#233; correctement (c'est cass&#233;) 
+      ou que le fabricant du syst&#232;me n'a pas incorpor&#233; cette 
+      fonctionnalit&#233;, alors JMRI ne pourra pas le faire non plus. 
+      Dans ce dernier cas, JMRI vous communiquera probablement 
+      un message d'erreur ou aura la commande "gris&#233;e" pour vous 
+      aider &#224; d&#233;terminer pourquoi elle ne peut pas r&#233;pondre &#224; votre demande.</P>
 
-      <p>The window is split into two panes, on the left side is a
-      list of preference groups that may be set. Clicking on one of
-      the items opens the options that may be set in the right side
-      pane. No selection have been made</p>
+      <p>La fen&#234;tre est divis&#233;e en deux volets. Sur le c&#244;t&#233; gauche se 
+      trouve une liste de groupes de pr&#233;f&#233;rences pouvant &#234;tre d&#233;finis. 
+      En cliquant sur l'un des &#233;l&#233;ments, vous ouvrez les options 
+      pouvant &#234;tre d&#233;finies dans le volet de droite. Aucune s&#233;lection 
+      n'a &#233;t&#233; faite</p>
 
       <blockquote>
         <blockquote>
-          <h1><img src="images/Preferences.png" alt="Preferences"
-          height="288" width="502"></h1>
-        </blockquote>
-      </blockquote>
+          <h1> <img src = "images/Preferences.png" alt = "Pr&#233;f&#233;rences"
+          height = "288" width = "502"></h1>
+       </blockquote>
+     </blockquote>
 
       <p><a name="Top" id="Top"></a></p>
 
-      <table class="BOXIT" align="center" border="1" cellpadding=
-      "1" cellspacing="1" width="86%" summary="connections">
+      <table class = "BOXIT" align = "center" border = "1" cellpadding =
+      "1" cellspacing = "1" width = "86%" summary = "connections">
         <tbody>
           <tr>
-            <td align="left" valign="top" width="22%">
-            <strong><a href="#Connections">Connections</a><a href=
-            "#Connectorss"></a></strong></td>
+            <td align = "left" valign = "top" width = "22%">
+            <strong><a href="#Connections"> Connexions</a> <a href =
+            "#Connectors"></a></strong></td>
 
-            <td align="left" valign="top" width="78%">Allows you to
-            select the system connection that you are using for
-            controlling DCC and the connection to your computer.
-            This is the only required preferences to define your
-            DCC system. The rest of the features are used to
-            customize your specific system.</td>
-          </tr>
+            <td align = "left" valign = "top" width = "78%"> Vous permet 
+            de s&#233;lectionner le syst&#232;me de connexion que vous utilisez 
+            pour contr&#244;ler DCC et la connexion &#224; votre ordinateur. 
+            Ce sont les seules pr&#233;f&#233;rences requises pour d&#233;finir 
+            votre syst&#232;me DCC. Les autres fonctionnalit&#233;s servent &#224; 
+            personnaliser votre syst&#232;me sp&#233;cifique.</Td>
+         </tr>
+
+          <tr>
+            <td align = "left" valign = "top"> <strong><a href =
+            "#Defaults"> Valeurs par d&#233;faut</a></strong></td>
+
+            <td align = "left" valign = "top"> Affiche les valeurs par 
+            d&#233;faut des param&#232;tres du syst&#232;me
+            </td>
+         </tr>
+
+          <tr>
+            <td align = "left" valign = "top"> <strong><a href =
+            "#FileLocations"> Emplacement des fichiers</a></strong></td>
+
+            <td align = "left" valign = "top"> D&#233;finir l'emplacement 
+            par d&#233;faut pour l'enregistrement des fichiers utilisateur 
+            et des fichiers de script</td>
+         </tr>
+
+          <tr>
+            <td align = "left" valign = "top"> <strong><a href =
+            "#StartUp"> D&#233;marrer</a></strong></td>
+
+            <td align = "left" valign = "top"> Vous permet de d&#233;finir 
+            des actions, des boutons, des fichiers et des scripts 
+            ex&#233;cut&#233;s au d&#233;marrage</td>
+         </tr>
+
+          <tr>
+            <td align = "left" valign = "top"> <strong><a href =
+            "#Affichage"> Afficher</a></strong></td>
+
+            <td align = "left" valign = "top"> Vous permet de 
+            s&#233;lectionner le mode d'affichage de votre ordinateur</td>
+         </tr>
+
+          <tr>
+            <td align = "left" valign = "top"> <strong><a href =
+            "#Messages"> Messages</a></strong></td>
+
+            <td align = "left" valign = "top"> D&#233;finit les actions 
+            par d&#233;faut du message syst&#232;me lors de l'affichage</td>
+         </tr>
+
+          <tr>
+            <td align = "left" valign = "top"> <strong><a href =
+            "#Roster"> Liste</a></strong></td>
+
+            <td align = "left" valign = "top"> Vous permet de d&#233;finir 
+            l'emplacement par d&#233;faut du programmeur et de la liste</td>
+         </tr>
 
           <tr>
             <td align="left" valign="top"><strong><a href=
-            "#Defaults">Defaults</a></strong></td>
+            
 
-            <td align="left" valign="top">Shows system default
-            settings</td>
-          </tr>
+		"#Throttle"> R&#233;gulateur</a></strong></td>
 
-          <tr>
-            <td align="left" valign="top"><strong><a href=
-            "#FileLocations">File Locations</a></strong></td>
-
-            <td align="left" valign="top">Set default location for
-            saving User files and Script Files</td>
-          </tr>
+            <td align = "left" valign = "top"> Vous permet de configurer 
+            vos pr&#233;f&#233;rences de R&#233;gulateur</td>
+         </tr>
 
           <tr>
-            <td align="left" valign="top"><strong><a href=
-            "#StartUp">Start Up</a></strong></td>
+            <td align = "left" valign = "top"> <strong><a href =
+            "#WiThrottle"> Manette Wi</a></strong></td>
 
-            <td align="left" valign="top">Allows you to set
-            Actions, Buttons, Files and Scripts that run at Start
-            Up</td>
-          </tr>
+            <td align = "left" valign = "top"> Vous permet de configurer les param&#232;tres d'une manette Wi</td>
+         </tr>
 
           <tr>
-            <td align="left" valign="top"><strong><a href=
-            "#Display">Display</a></strong></td>
+            <td align = "left" valign = "top"> <strong><a href =
+            "#JSON"> Serveur JSON</a></strong></td>
 
-            <td align="left" valign="top">Allows you to select your
-            computer display mode</td>
-          </tr>
-
-          <tr>
-            <td align="left" valign="top"><strong><a href=
-            "#Messages">Messages</a></strong></td>
-
-            <td align="left" valign="top">Set default actions for
-            system message when displayed</td>
-          </tr>
+            <td align = "left" valign = "top"> Le servlet JMRI <em> Json</em> 
+            fournit un acc&#232;s Web aux listes et aux valeurs de nombreuses 
+            entit&#233;s d&#233;finies par JMRI, au format <em> JSON</em> moderne .</td>
+         </tr>
 
           <tr>
-            <td align="left" valign="top"><strong><a href=
-            "#Roster">Roster</a></strong></td>
+            <td align = "left" valign = "top"> <strong><a href =
+            "#MiniServer"> Serveur Web</a></strong></td>
 
-            <td align="left" valign="top">Allows you to set your
-            default Programmer and roster location</td>
-          </tr>
-
-          <tr>
-            <td align="left" valign="top"><strong><a href=
-            "#Throttle">Throttle</a></strong></td>
-
-            <td align="left" valign="top">Allows you to set up you
-            Throttle preferences</td>
-          </tr>
-
-          <tr>
-            <td align="left" valign="top"><strong><a href=
-            "#WiThrottle">Wi Throttle</a></strong></td>
-
-            <td align="left" valign="top">Allows you to set up a Wi
-            Throttle settings</td>
-          </tr>
-
-          <tr>
-            <td align="left" valign="top"><strong><a href=
-            "#JSON">JSON Server</a></strong></td>
-
-            <td align="left" valign="top">The JMRI <em>Json</em>
-            Servlet provides web access to lists and values for
-            numerous JMRI-defined entities, in the modern
-            <em>JSON</em> format.</td>
-          </tr>
-
-          <tr>
-            <td align="left" valign="top"><strong><a href=
-            "#MiniServer">Web Server</a></strong></td>
-
-            <td align="left" valign="top">Sets up the Decoder
-            Pro&reg; miniServer</td>
-          </tr>
-        </tbody>
-      </table>
+            <td align = "left" valign = "top"> Configure le miniserveur Decoder Pro&reg;</td>
+         </tr>
+       </tbody>
+     </table>
 
       <blockquote>
         <blockquote>
-          <p>Now we will set up preferences for the JMRI
-          environment with your command station.</p>
-        </blockquote>
-      </blockquote>
+          <p>Nous allons maintenant configurer les pr&#233;f&#233;rences pour 
+          l'environnement JMRI avec votre centrale de commande.</p>
+       </blockquote>
+     </blockquote>
 
-      <table align="center" border="1" cellpadding="2" cellspacing=
-      "1" width="80%" title="Example" summary="Example">
+      <table align = "center" border = "1" cellpadding = "2" cellspacing =
+      "1" width = "80%" title = "Exemple" summary = "Exemple">
         <tbody>
           <tr>
-            <td>I am using a Digitrax Super Chief Command Station
-            (radio) interfaced to the computer via LocoNet, PR3
-            (MS100 mode) and USB port. I keep master roster on the
-            System Drive.;</td>
-          </tr>
-        </tbody>
-      </table>
+            <td> J'utilise une centrale de commande Digitrax Super 
+            Chief (radio) reli&#233;e &#224; l'ordinateur par LocoNet, PR3 
+            (mode MS100) et un port USB. Je garde la liste principale 
+            sur le lecteur syst&#232;me.;</Td>
+         </tr>
+       </tbody>
+     </table>
 
       <blockquote>
         <blockquote>
-          <h3><a name="Connections" id=
-          "Connections"></a>Connections Pane (TABS are configured
-          to the system your selected)</h3>
+          <h3> <a name = "Connections" id =
+          "Connexions"></a> Volet Connexions (les onglets sont configur&#233;s 
+          en fonction du syst&#232;me que vous avez s&#233;lectionn&#233;)</h3>
 
-          <p>Now select Connections and connection options display
-          in right pane. After saved and restarted, the TAB will
-          read LocoNet. This the set up for Digitrax Chief system
-          with PR3 interface.</p>
+          <p>S&#233;lectionnez maintenant Connexions et les options de 
+          connexion s'affichent dans le volet de droite. Apr&#232;s avoir 
+          &#233;t&#233; sauvegard&#233; et red&#233;marr&#233;. Ceci est 
+          la configuration du syst&#232;me Digitrax Chief avec interface PR3.</P>
 
-          <p><img src="images/Preferences2.png" alt=
-          "connectionpane" height="441" width="666"></p>
-        </blockquote>
-      </blockquote>
+          <p><img src = "images/Preferences2.png" alt =
+          "connexionpane" height = "441" width = "666"></p>
+       </blockquote>
+     </blockquote>
 
-      <table align="center" border="1" cellpadding="2" cellspacing=
-      "1" width="80%" summary="Drop down table">
+      <table align = "center" border = "1" cellpadding = "2" cellspacing =
+      "1" width = "80%" summary = "Table d&#233;roulante">
         <tbody>
           <tr>
-            <td width="21%">System manufacturer:</td>
+            <td width = "21%"> Constructeur du syst&#232;me:</td>
 
-            <td colspan="2">Drop-down list with all the supported
-            DCC manufacturers, select the manufacturer of your
-            system.</td>
-          </tr>
-
-          <tr>
-            <td>System connection:</td>
-
-            <td colspan="2">Drop-down list with all of the
-            supported DCC system interfaces supported by the
-            manufacturer that you selected, select the interface
-            that you are using.</td>
-          </tr>
+            <td colspan = "2"> Liste d&#233;roulante avec tous les 
+            fabricants DCC pris en charge, s&#233;lectionnez le fabricant 
+            de votre syst&#232;me.</td>
+         </tr>
 
           <tr>
-            <td rowspan="4">Settings:</td>
+            <td> Connexion au syst&#232;me:</td>
 
-            <td width="22%">Serial Port:</td>
-
-            <td width="57%">Drop-down list to select the serial
-            port to which your DCC interface is connected. If you
-            do not know, check your system hardware configuration
-            manual. A second drop-down list may include a selection
-            if there are more than one possibility.
-            possibilityDrop-down list to select the serial port to
-            which your DCC interface is connected. If you do not
-            know, check your system hardware configuration manual.
-            A second drop-down list may include a selection if
-            there are more than one possibility</td>
-          </tr>
+            <td colspan = "2"> Liste d&#233;roulante avec toutes les 
+            interfaces syst&#232;me DCC prises en charge par le fabricant 
+            que vous avez s&#233;lectionn&#233;, s&#233;lectionnez l'interface
+            que vous utilisez.</td>
+         </tr>
 
           <tr>
-            <td>Command station type:</td>
+            <td rowspan = "4"> Param&#232;tres:</td>
 
-            <td>Drop-down list to select the command station type
-            that JMRI will be using to send your DCC commands.</td>
-          </tr>
+            <td width = "22%"> Port s&#233;rie:</td>
+
+            <td width = "57%"> Liste d&#233;roulante permettant de s&#233;lectionner 
+            le port s&#233;rie auquel votre interface DCC est connect&#233;e. Si 
+            vous ne le savez pas, consultez le manuel de configuration 
+            du mat&#233;riel de votre syst&#232;me. Une deuxi&#232;me liste d&#233;roulante 
+            peut inclure une s&#233;lection s'il existe plus d'une possibilit&#233;. 
+            Liste de possibilit&#233;s  pour s&#233;lectionner le port s&#233;rie auquel 
+            votre interface DCC est connect&#233;e. Si vous ne le savez pas, 
+            consultez le manuel de configuration du mat&#233;riel de votre 
+            syst&#232;me. Une deuxi&#232;me liste d&#233;roulante peut inclure une 
+            s&#233;lection s'il existe plus d'une possibilit&#233;</td>
+         </tr>
 
           <tr>
-            <td>Connection prefix</td>
+            <td> Type de Centrale de Commande:</td>
 
-            <td>Include the prefix for your connection, in the case
-            shown the "L" is default</td>
-          </tr>
+            <td> Liste d&#233;roulante pour s&#233;lectionner le type de Centrale 
+            de Commandee que JMRI utilisera pour envoyer vos commandes DCC.</td>
+         </tr>
 
           <tr>
-            <td>Connection name</td>
+            <td> Pr&#233;fixe de connexion</td>
 
-            <td>Should default to the connection used</td>
-          </tr>
-        </tbody>
-      </table>
+            <td> Incluez le pr&#233;fixe de votre connexion, dans le cas 
+            indiqu&#233;, "L" est la valeur par d&#233;faut</td>
+         </tr>
+
+          <tr>
+            <td> Nom de la connexion</td>
+
+            <td> La connexion utilis&#233;e doit-elle &#234;tre d&#233;finie par d&#233;faut</td>
+         </tr>
+       </tbody>
+     </table>
 
       <blockquote>
         <blockquote>
-          <p><input name="checkbox" id="checkbox" type="checkbox">
-          Additional Connection Settings, if checked: <img src=
-          "images/Preferences3.png" alt="preference" height="139"
-          width="350"></p>
+          <p><input name = "checkbox " id = "checkbox " type = "checkbox ">
+          Param&#232;tres de connexion suppl&#233;mentaires, si coch&#233;: <img src =
+          "images/Preferences3.png" alt = "pr&#233;f&#233;rence" height = "139"
+          width = "350"></p>
 
-          <p><input name="button2" id="button2" value=
-          "Disable Connection" type="submit"> will disable all the
-          connection settings.</p>
+          <p><input name = "bouton2" id = "bouton2" valeur =
+          "D&#233;sactiver Connexion" type = "submit"> d&#233;sactivera tous les
+          param&#232;tres de connexion.</p>
 
-          <p><strong><a href="#Top">Top</a></strong></p>
+          <p><strong><a href="#Top"> Haut</a></strong></p>
 
-          <h3><a name="Defaults" id="Defaults"></a>Defaults
-          Pane</h3>
+          <h3> <a name="Defaults" id="Defaults"></a> Volet par d&#233;faut
+          </h3>
 
-          <p><img style="width: 674px; height: 444px;" alt=
-          "default preferences" src=
-          "images/Preferences4.png"><br></p>
+          <p><img style = "width: 674px; height: 444px;" alt =
+          "pr&#233;f&#233;rences par d&#233;faut" src =
+          "images/Preferences4.png"> <br></p>
 
-          <p>Shows the default settings which will depend upon the
-          system used.</p>
+          <p>Affiche les param&#232;tres par d&#233;faut qui vont d&#233;pendre du 
+          syst&#232;me utilis&#233;.</p>
 
-          <p><a href="#Top">Top</a></p>
+          <p><a href="#Top"> Haut</a></p>
 
-          <h3><a name="FileLocations" id="FileLocations"></a>File
-          locations Pane</h3>
+          <h3> <a name="FileLocations" id="FileLocations"></a> Volet 
+          Emplacements des fichiers</h3>
 
-          <p><img src="images/Preferences5.png" alt="preferences"
-          height="450" width="663"></p>
-        </blockquote>
-      </blockquote>
+          <p><img src = "images/Preferences5.png" alt = "preferences"
+          height = "450" ​​width = "663"></p>
+       </blockquote>
+     </blockquote>
 
-      <table align="center" border="1" cellpadding="2" cellspacing=
-      "1" width="50%" summary="File locations">
+      <table align = "center" border = "1" cellpadding = "2" cellspacing =
+      "1" width = "50%" summary = "Emplacement des fichiers">
         <tbody>
           <tr>
-            <td align="left" valign="top" width="26%"><strong>User
-            File Locations</strong></td>
+            <td align = "left" valign = "top" width = "26%"> <strong>
+				Emplacement des fichiers utilisateur</strong></td>
 
-            <td align="left" width="74%">Select the location for
-            your user files on your system</td>
-          </tr>
+            <td align = "left" width = "74%"> S&#233;lectionnez l'emplacement 
+            de vos fichiers utilisateur sur votre syst&#232;me</td>
+         </tr>
 
           <tr>
-            <td align="left" valign="top"><strong>Jython Script
-            Location</strong></td>
+            <td align = "left" valign = "top"> <strong>Emplacement 
+            Script Jython</strong></td>
 
-            <td align="left">Set the location of Jython Script
-            files</td>
-          </tr>
-        </tbody>
-      </table>
+            <td align = "left"> D&#233;finit l'emplacement des fichiers script Jython</td>
+         </tr>
+       </tbody>
+     </table>
 
       <blockquote>
         <blockquote>
-          <p><strong><a href="#Top">Top</a></strong></p>
+          <p><strong><a href="#Top"> Haut</a></strong></p>
 
-          <h3><a name="StartUp" id="StartUp"></a>Start Up Pane</h3>
-        </blockquote>
-      </blockquote>
+          <h3> <a name="StartUp" id="StartUp"></a> Volet de d&#233;marrage</h3>
+       </blockquote>
+     </blockquote>
 
-      <p><em>Start Up</em> preferences allow windows and files to
-      be opened, scripts to be run, and additional buttons to be
-      placed on the main window when the application starts.</p>
+      Les pr&#233;f&#233;rences <p><em> D&#233;marrer</em> permettent d'ouvrir des 
+      fen&#234;tres et des fichiers, d'ex&#233;cuter des scripts et de placer des 
+      boutons suppl&#233;mentaires dans la fen&#234;tre principale au d&#233;marrage 
+      de l'application.</p>
 
-      <p>Click the <strong>Add &#9662;</strong> button and select
-      the type of start up action to add. The new action will be
-      added last.</p>
+      <p>Cliquez sur le bouton <strong>Ajouter</strong>, puis s&#233;lectionnez 
+      le type d'action de d&#233;marrage &#224; ajouter. La nouvelle action 
+      sera ajout&#233;e en dernier.</P>
 
-      <p>Start up action order is important. In most cases, scripts
-      should be the last items in the start up order. Start up
-      order can be changed by selecting a start up item and moving
-      it <em>up</em> or <em>down</em> in the list.</p>
+      <p>L'ordre d'action au d&#233;marrage est important. Dans la plupart 
+      des cas, les scripts doivent &#234;tre les derniers &#233;l&#233;ments de 
+      l'ordre de d&#233;marrage. L'ordre de d&#233;marrage peut &#234;tre modifi&#233; en 
+      s&#233;lectionnant un &#233;l&#233;ment de d&#233;marrage et en le d&#233;pla&#231;ant <em> 
+		  vers le haut</em> ou <em> vers le bas</em> dans la liste.</P>
 
-      <p><strong><a href="#Top">Top</a></strong></p>
+      <p><strong><a href="#Top"> Haut</a></strong></p>
 
       <blockquote>
         <blockquote>
-          <p><strong><a href="#Top">Top</a></strong></p>
+          <p><strong><a href="#Top"> Haut</a></strong></p>
 
-          <h3><a name="Display" id="Display"></a>Display Panes</h3>
+          <h3> <a name="Display" id="Display"></a> Afficher les volets</h3>
 
-          <h4>GUI TAB</h4>
+          <h4> Onglet Interface Graphique Utilisateur</h4>
 
-          <p><img src="images/Preferences_GUI.png" alt="GUI"
-          height="467" width="667"></p>
-        </blockquote>
-      </blockquote>
+          <p><img src = "images/Preferences_GUI.png" alt = "interface graphique"
+          height = "467" width = "667"></p>
+       </blockquote>
+     </blockquote>
 
-      <table align="center" border="1" cellpadding="2" cellspacing=
-      "1" width="80%" summary="Setting preferences">
+      <table align = "center" border = "1" cellpadding = "2" cellspacing =
+      "1" width = "80%" summary = "D&#233;finition des pr&#233;f&#233;rences">
         <tbody>
           <tr>
-            <td rowspan="5" width="51%"><strong>Select your
-            preferred appearance for buttons, menus,
+            <td rowspan = "5" width = "51%"> <strong>S&#233;lectionnez votre
+            aspect pr&#233;f&#233;r&#233; pour les boutons, les menus,
             etc.</strong></td>
 
-            <td width="49%"><input name="radio" id="radio" value=
-            "radio" checked="checked" type="radio"> Metal</td>
-          </tr>
+            <td width = "49%"> <input name = "radio" id = "radio" valeur =
+            "radio" checked = "checked" type = "radio"> M&#233;tal</td>
+         </tr>
 
           <tr>
-            <td><input name="radio2" id="radio2" value="radio2"
-            type="radio"> Windows Classic</td>
-          </tr>
+            <td> <input name  = "radio2" id = "radio2" valeur = "radio2"
+            type = "radio"> Windows Classic</td>
+         </tr>
 
           <tr>
-            <td><input name="radio3" id="radio3" value="radio3"
-            type="radio"> CDEMotif</td>
-          </tr>
+            <td> <input name  = "radio3" id = "radio3" valeur = "radio3"
+            type = "radio">Motif CDE</td>
+         </tr>
 
           <tr>
-            <td><input name="radio4" id="radio4" value="radio4"
-            type="radio"> Windows</td>
-          </tr>
+            <td> <input name  = "radio4" id = "radio4" value = "radio4"
+            type = "radio"> Windows</td>
+         </tr>
 
           <tr>
-            <td><input name="radio5" id="radio5" value="radio5"
-            type="radio"> Nimbus</td>
-          </tr>
+            <td> <input name  = "radio5" id = "radio5" value = "radio5"
+            type = "radio"> Nimbus</td>
+         </tr>
 
           <tr>
-            <td><strong>Select font size in points</strong></td>
+            <td> <strong>S&#233;lectionnez la taille de la police en points</strong></td>
 
             <td>
-              <form name="form" id="form">
-                <select name="jumpMenu" id="jumpMenu" onchange=
-                "MM_jumpMenu('parent',this,0)">
+              <input name  = "formulaire" id = "formulaire">
+                <select name = "jumpMenu" id = "jumpMenu" onchange =
+                "MM_jumpMenu ('parent', this, 0)">
                   <option>
                     12
-                  </option>
-                </select> select font size
-              </form>
-            </td>
-          </tr>
+                 </option>
+               </select> s&#233;lectionne la taille de la police
+             </form>
+           </td>
+         </tr>
 
           <tr>
-            <td colspan="2"><input name="checkbox2" id="checkbox2"
-            type="checkbox"> Use non-standard release event for
-            mouse click?</td>
-          </tr>
-        </tbody>
-      </table>
+            <td colspan = "2"> <nom d'entr&#233;e = "checkbox2" id = "checkbox2"
+            type = "checkbox"> Utiliser un &#233;v&#233;nement de publication non 
+            standard pour un clic de souris?</td>
+         </tr>
+       </tbody>
+     </table>
 
       <blockquote>
         <blockquote>
-          <h4>Locale TAB</h4>
+          <h4> Onglet Param&#232;tres r&#233;gionaux</h4>
 
-          <p><img src="images/Preferences_local.png" alt="locale"
-          height="300" width="657"></p>
+          <p><img src = "images/Preferences_local.png" alt = "locale"
+          height = "300" width = "657"></p>
 
-          <p>Drop-down list to select your location and
-          language</p>
+          <p>Liste d&#233;roulante pour s&#233;lectionner votre emplacement et 
+          votre langue</p>
 
-          <h4>Console TAB</h4>
+          <h4> Onglet Console</h4>
 
-          <p><img src="images/Preferences_Console.png" alt=
-          "console" height="444" width="673"></p>
+          <p><img src = "images/Preferences_Console.png" alt =
+          "console" height = "444" width = "673"></p>
 
-          <p>Display settings for the JMRI system console.</p>
+          <p>Afficher les param&#232;tres de la console syst&#232;me JMRI.</p>
+<p><strong><a href="#Top"> Haut</a></strong></p>
 
-          <p><strong><a href="#Top">Top</a></strong></p>
+          <h3> <a name="Messages" id="Messages"></a> Fen&#234;tre Messages
+          </h3>
 
-          <h3><a name="Messages" id="Messages"></a>Messages
-          Panes</h3>
+          <p>Les onglets et les s&#233;lections peuvent &#234;tre utilis&#233;s pour 
+          d&#233;finir comment et quand les messages sont affich&#233;s.</p>
 
-          <p>TABS and selections can be used to set how and when
-          messages are displayed.</p>
+          <p><strong><a href="#Top"> Haut</a></strong></p>
 
-          <p><strong><a href="#Top">Top</a></strong></p>
+          <h3> <a name="Roster" id="Roster"></a> Volets d'Inventaire</h3>
 
-          <h3><a name="Roster" id="Roster"></a>Roster Panes</h3>
+          <h4> Onglet Programmeur</h4>
 
-          <h4>Programmer TAB</h4>
+          <p>Utilis&#233; pour d&#233;finir le programmeur de d&#233;codeur pr&#233;f&#233;r&#233;.</p>
 
-          <p>Used to set the preferred decoder programmer.</p>
+          <p><img src = "images/Preferences_Roster_Programmer.png"
+          alt = "roster" height = "339" width = "648"></p>
 
-          <p><img src="images/Preferences_Roster_Programmer.png"
-          alt="roster" height="339" width="648"></p>
+          <h4> Onglet r&#233;pertoire</h4>
 
-          <h4>Roster TAB</h4>
-
-          <p>You may set the default location of the locomotive
-          roster and the default owners name.</p>
+          <p>Vous pouvez d&#233;finir l'emplacement par d&#233;faut de la liste de locomotive
+           et le nom du propri&#233;taire par d&#233;faut.</p>
 
           <p><img src="images/Preferences_roster.png" alt="rosster"
           height="311" width="669"></p>
 
           <p><strong><a href="#Top">Top</a></strong></p>
 
-          <h3><a name="Throttle" id="Throttle"></a>Throttle
-          Pane</h3>
+          <p><strong><a href="#Top"> Haut</a></strong></p>
 
-          <p>Select throttle startup conditions, shown are
-          defaults, but you may change the settings.</p>
+          <h3> <a name="Throttle" id="Throttle"></a> Volet R&#233;gulateur
+          </h3>
 
-          <p><img style="width: 677px; height: 450px;" src=
-          "images/Preferences_throttle.png" alt="throttle"></p>
+          <p>S&#233;lectionnez les conditions de d&#233;marrage du R&#233;gulateur. 
+          Les valeurs par d&#233;faut sont affich&#233;es, mais vous pouvez 
+          modifier les param&#232;tres.</p>
 
-          <p><strong><a href="#Top">Top</a></strong></p>
+          <p><img style = "width: 677px; height: 450px;" src =
+          "images/Preferences_throttle.png" alt = "acc&#233;l&#233;rateur"></p>
 
-          <h3><a name="WiThrottle" id="WiThrottle"></a>WiThrottle
-          Pane</h3>
+          <p><strong><a href="#Top"> Haut</a></strong></p>
 
-          <p>This pane allows WiThrottle users to customize the
-          setup.</p>
+          <h3> <a name="WiThrottle" id="WiThrottle"></a> Volet WiThrottle</h3>
 
-          <p><img src="images/Preferences_Wi.png" height="446"
-          width="669" alt="preferences"></p>
+          <p>Ce volet permet aux utilisateurs de WiThrottle de 
+          personnaliser la configuration.</p>
 
-          <p><strong><a href="#Top">Top</a></strong></p>
+          <p><img src = "images/Preferences_Wi.png" height = "446"
+          width = "669" alt = "pr&#233;f&#233;rences"></p>
 
-          <h2><a name="JSON" id="JSON"></a>JSON Server Pane</h2>
+          <p><strong><a href="#Top"> Haut</a></strong></p>
 
-          <p>The JMRI <em>Json</em> Servlet provides web access to
-          lists and values for numerous JMRI-defined entities, in
-          the modern <em>JSON</em> format.</p>
+          <h2> <a name="JSON" id="JSON"></a> Volet Serveur JSON</h2>
 
-          <p><img src="images/Preferences_JSON.png" alt="json pane"
-          height="444" width="676"></p>
+          <p>Le servlet JMRI <em> Json</em> fournit un acc&#232;s Web aux 
+          listes et aux valeurs de nombreuses entit&#233;s d&#233;finies par 
+          JMRI, au format <em> JSON</em> moderne.</p>
 
-          <p><strong><a href="#Top">Top</a></strong></p>
+          <p><img src = "images/Preferences_JSON.png" alt = "volet json"
+          height = "444" width = "676"></p>
 
-          <h2><a name="MiniServer" id="MiniServer"></a>Web Server
-          Pane</h2>
+          <p><strong><a href="#Top"> Haut</a></strong></p>
 
-          <p>Use this pane to setup MinServer if you are using
-          it.</p>
+          <h2> <a name="MiniServer" id="MiniServer"></a>Volet serveur Web
+          </h2>
 
-          <p>Ajax is now in use for smoother image refresh and
-          clicking. For older browser you may want to unselect
-          Ajax.</p>
+          <p>Utilisez ce volet pour configurer MinServer si vous l'utilisez.</p>
 
-          <p><img src="images/Preferences_miniServer.png" alt=
-          "web server" height="446" width="680"></p>
+          <p>Ajax est maintenant utilis&#233; pour un rafra&#238;chissement 
+          d'image plus fluide et en un clic. Pour les navigateurs plus 
+          anciens, vous pouvez d&#233;s&#233;lectionner Ajax.</P>
 
-          <p><strong><a href="#Top">Top</a></strong></p>
+          <p><img src = "images/Preferences_miniServer.png" alt =
+          "serveur Web" height = "446" width = "680"></p>
 
-          <h2 align="center">Before you exit the preferences, Click
-          on <input name="button8" id="button8" value="Save" type=
-          "submit"> button to save all your selections.</h2>
+          <p><strong><a href="#Top"> Haut</a></strong></p>
 
-          <h2 align="center">You must restart DecoderPro for
-          preferences to take effect</h2>
-          <hr>
-        </blockquote>
-      </blockquote>
+          <h2 align = "center"> Avant de quitter les pr&#233;f&#233;rences, 
+          cliquez sur <input name = "button8" id = "button8" value = 
+          "Enregistrer" type = "submit"> pour enregistrer toutes vos s&#233;lections.</h2>
 
-      <div align="right">
+          <h2 align = "center"> Vous devez red&#233;marrer DecoderPro 
+          pour que les pr&#233;f&#233;rences prennent effet</h2>
+          <h>
+       </blockquote>
+     </blockquote>
+
+      <div align = "right">
         <blockquote>
           <blockquote>
-            <p><a href="Start_DecoderPro.shtml">Previous</a></p>
+            <p><a href="Start_DecoderPro.shtml"> Pr&#233;c&#233;dent</a></p>
 
-            <p><a href="index.shtml#Getting%20Started">Back to
-            Index</a></p>
+            <p><a href="index.shtml#Getting%20Started"> Retour &#224; l'Index</a></p>
           </blockquote>
         </blockquote>
       </div><!--#include virtual="/Footer" -->
