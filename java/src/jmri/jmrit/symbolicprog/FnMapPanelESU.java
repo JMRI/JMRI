@@ -19,7 +19,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import jmri.jmrit.roster.RosterEntry;
-import jmri.jmrit.symbolicprog.tabbedframe.PaneProgPane;
+import jmri.util.CvUtil;
 import jmri.util.FileUtil;
 import jmri.util.jdom.LocaleSelector;
 import org.jdom2.Attribute;
@@ -433,7 +433,7 @@ public class FnMapPanelESU extends JPanel {
                                 varComp = (JComponent) (_varModel.getRep(iVar, ""));
                             }
                             VariableValue var = _varModel.getVariable(iVar);
-                            varComp.setToolTipText(PaneProgPane.addCvDescription((Bundle.getMessage("FnMapESURow") + " " + Integer.toString(iRow + 1) + ", " + fullItemName), var.getCvDescription(), var.getMask()));
+                            varComp.setToolTipText(CvUtil.addCvDescription((Bundle.getMessage("FnMapESURow") + " " + Integer.toString(iRow + 1) + ", " + fullItemName), var.getCvDescription(), var.getMask()));
                             if (cvObject == null) {
                                 cvObject = cvModel.allCvMap().get(thisCV); // case of new loco
                             }

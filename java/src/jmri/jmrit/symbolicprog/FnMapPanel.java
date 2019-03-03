@@ -8,7 +8,7 @@ import java.util.List;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import jmri.jmrit.symbolicprog.tabbedframe.PaneProgPane;
+import jmri.util.CvUtil;
 import jmri.util.jdom.LocaleSelector;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
@@ -215,7 +215,7 @@ public class FnMapPanel extends JPanel {
                                     displayFormat = "";
                                 }
                                 JComponent j = (JComponent) (_varModel.getRep(iVar, displayFormat));
-                                j.setToolTipText(PaneProgPane.addCvDescription((fnNameString + " "
+                                j.setToolTipText(CvUtil.addCvDescription((fnNameString + " "
                                         + Bundle.getMessage("FnMapControlsOutput") + " "
                                         + outName[iOut] + " " + outLabel[iOut]), var.getCvDescription(), var.getMask()));
                                 int column = firstOutCol + iOut;

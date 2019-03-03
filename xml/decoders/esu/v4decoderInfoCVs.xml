@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<!-- $Id: v4standardCVs.xml 27260 2014-09-21 00:21:27Z jacobsen $ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <!-- Decoder Information -->
+  <variable CV="0.255.261:4" readOnly="yes" item="ProId">
+    <splitHexVal case="upper"/>
+  </variable>
+  <variable CV="0.255.261:4" readOnly="yes" item="ProId 2">
+    <splitVal/>
+  </variable>
+  <variable CV="0.255.265:4" readOnly="yes" item="SerNo">
+    <splitHexVal case="upper"/>
+  </variable>
+  <variable CV="0.255.269:4" readOnly="yes" item="PDate">
+    <splitDateTimeVal display="dateOnly" base="2000-01-01T00:00:00"/>
+  </variable>
+  <variable CV="0.255.273:4" readOnly="yes" item="PInfo">
+    <splitHexVal case="upper"/>
+  </variable>
+  <variable CV="0.255.277:2" readOnly="yes" item="BCode Build Number">
+    <splitVal/>
+  </variable>
+  <variable CV="0.255.279" readOnly="yes" item="BCode Minor Version">
+    <decVal/>
+  </variable>
+  <variable CV="0.255.280" readOnly="yes" item="BCode Major Version">
+    <decVal/>
+  </variable>
+  <variable CV="0.255.281:4" readOnly="yes" item="BDate">
+    <splitDateTimeVal display="dateOnly" base="2000-01-01T00:00:00"/>
+  </variable>
+  <variable CV="0.255.285:2" readOnly="yes" item="ACode Build Number">
+    <splitVal/>
+  </variable>
+  <variable CV="0.255.287" readOnly="yes" item="ACode Minor Version">
+    <decVal/>
+  </variable>
+  <variable CV="0.255.288" readOnly="yes" item="ACode Major Version">
+    <decVal/>
+  </variable>
+  <variable CV="0.255.289:4" readOnly="yes" item="ADate">
+    <splitDateTimeVal display="dateOnly" base="2000-01-01T00:00:00"/>
+  </variable>
+  <variable CV="0.255.293:4" readOnly="yes" item="AType">
+    <splitVal/>
+  </variable>
+</variables>
