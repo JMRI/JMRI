@@ -96,7 +96,6 @@ public class DefaultCabSignalTest {
         BlockManager bm = InstanceManager.getDefault(jmri.BlockManager.class);
         SensorManager sm = InstanceManager.getDefault(jmri.SensorManager.class);
         TurnoutManager tm = InstanceManager.getDefault(jmri.TurnoutManager.class);
-        SignalMastManager smm = InstanceManager.getDefault(jmri.SignalMastManager.class);
 
         ThreadingUtil.runOnLayout( ()-> { 
              try{
