@@ -1270,11 +1270,9 @@ public class PositionablePoint extends LayoutTrack {
                     linkPointsBox.addItem(p.getName());
                     linkPointsBox.setSelectedItem(p.getName());
                 } else if (p.getLinkedPoint() == null) {
-                    if (p.getConnect1() != null) {
-                        if (p.getConnect1() != getConnect1()) {
-                            pointList.add(p);
-                            linkPointsBox.addItem(p.getName());
-                        }
+                    if ((p.getConnect1() != null) && (p.getConnect1().getLayoutBlock() != null)) {
+                        pointList.add(p);
+                        linkPointsBox.addItem(p.getName());
                     }
                 }
             }
