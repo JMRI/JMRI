@@ -1,7 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Translation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-03-03 -->
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -27,89 +27,85 @@
     <div id="mainContent">
       <a name="Top" id="Top"></a>
 
-      <h1>DecoderPro&reg;</h1>
+     <h1> DecoderPro&reg;</h1>
 
-      <h2>WiThrottle</h2>
+      <h2> WiThrottle</h2>
 
-      <div align="right">
-        <p><a href=
-        "dp3_Main_Throttle_menubar.shtml#Wi">Back</a></p>
+      <div align = "right">
+        <p><a href =
+        "dp3_Main_Throttle_menubar.shtml # Wi"> Retour</a></p>
 
-        <p><a href="index.shtml">Back to Index</a></p>
-      </div>
+        <p><a href="index.shtml"> Retour &#224; l'Index</a></p>
+     </div>
 
-      <p>This window controls the connection between WiFi
-      throttles, e. g. an iPhone, iPod Touch, or Android Phone and
-      JMRI <a href="Start_Preferences.shtml">Preference</a> in the
-      Wi/Throttle Pane.</p>
+      <p>Cette fen&#234;tre contr&#244;le la connexion entre les 
+      r&#233;gulateurs WiFi, c'est &#224; dire. un iPhone, un iPod Touch, 
+      un t&#233;l&#233;phone Android et un JMRI, <a href="Start_Preferences.shtml"> 
+		  Pr&#233;f&#233;rences</a> dans le volet Wi/R&#233;gulateur.</p>
 
       <blockquote>
         <blockquote>
           <blockquote>
             <blockquote>
-              <p><img src="images/ThrottleWi.png" alt="WiThrottle"
-              height="271" width="331"></p>
-            </blockquote>
-          </blockquote>
+              <p><img src = "images / ThrottleWi.png" alt = "WiThrottle"
+              height = "271" width = "331"></p>
+           </blockquote>
+         </blockquote>
 
-          <p style="font-weight: bold;">Menu Bar</p>
+          <p style = "font-weight: bold;"> Barre de menus</p>
 
-          <p><img src="images/ThrottleWi_menu.png" alt="menu"
-          height="167" width="217"></p>
+          <p><img src = "images / ThrottleWi_menu.png" alt = "menu"
+          height = "167" width = "217"></p>
 
           <ul>
             <li>
-              <span style="font-weight: bold;">WiThrottle</span>
+              <span style = "font-weight: bold;"> WiThrottle</span>
 
-              <ul style="font-weight: bold;">
-                <li>Stop Server</li>
-              </ul>
-
-              <blockquote>
-                <p>Stops the server for the WiThrottle</p>
-              </blockquote>
-
-              <ul style="font-weight: bold;">
-                <li>Filter Controls</li>
-              </ul>
+              <ul style = "font-weight: bold;">
+                <li> Arr&#234;ter le serveur</li>
+             </ul>
 
               <blockquote>
-                <p><img src="images/ThrottleWi_ControlsFilter.png"
-                alt="filter" height="209" width="669"></p>
+                <p>Arr&#234;te le serveur pour le WiThrottle</p>
+             </blockquote>
 
-                <p>Set up Turnouts and Routes that can be
-                controlled by DecoderPro for control by
-                WiThrottle.</p>
-              </blockquote>
+              <ul style = "font-weight: bold;">
+                <li> Contr&#244;les du filtre</li>
+             </ul>
+
+              <blockquote>
+                <p><img src = "images/ThrottleWi_ControlsFilter.png"
+                alt = "filter" height = "209" width = "669"></p>
+
+                <p>Configurez les aiguillages et les itin&#233;raires pouvant &#234;tre contr&#244;l&#233;s par DecoderPro et contr&#244;l&#233;s par WiThrottle.</p>
+             </blockquote>
 
               <ul>
-                <li><span style=
-                "font-weight: bold;">Preferences</span>...</li>
-              </ul>
-            </li>
+                <li> <span style =
+                "font-weight: bold;">Pr&#233;f&#233;rences</span> ...</li>
+             </ul>
+           </li>
 
-            <li style="list-style: none">
+            <li style = "list-style: none">
               <blockquote>
-                <p>Opens the WiThrottle Preferences Pane in
-                <a style="font-weight: bold;" href=
-                "Start_Preferences.shtml">preferences.</a></p>
-              </blockquote>
-            </li>
+                <p>Ouvre le volet Pr&#233;f&#233;rences WiThrottle dans <a style = "font-weight: bold;" href = "Start_Preferences.shtml">Pr&#233;f&#233;rences.</a></p>
+             </blockquote>
+           </li>
 
-            <li style="font-weight: bold;">Window</li>
+            <li style = "font-weight: bold;"> Fen&#234;tre</li>
 
-            <li style="font-weight: bold;">Help</li>
-          </ul>
-        </blockquote>
-      </blockquote>
+            <li style = "font-weight: bold;"> Aide</li>
+         </ul>
+       </blockquote>
+     </blockquote>
 
-      <div align="right">
-        <p><a href="Comp_LightFX.shtml"></a><a href=
-        "dp3_Main_Throttle_menubar.shtml#Wi">Back</a></p>
+      <div align = "right">
+        <p><a href="Comp_LightFX.shtml"></a> <a href =
+        "dp3_Main_Throttle_menubar.shtml # Wi"> Retour</a></p>
 
-        <p><a href="index.shtml">Back to Index</a></p>
-      </div><!--#include virtual="/Footer" -->
-    </div><!-- closes #mainContent-->
-  </div><!-- closes #mBody-->
-</body>
-</html>
+        <p><a href="index.shtml"> Retour &#224; l'Index</a></p>
+     </div> <! - # include virtual = "/ Footer" ->
+   </div> <! - ferme #mainContent ->
+ </div> <! - ferme #mBody ->
+</ body>
+</ html>
