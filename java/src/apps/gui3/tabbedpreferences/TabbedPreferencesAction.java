@@ -1,26 +1,28 @@
-package apps.gui3;
+package apps.gui3.tabbedpreferences;
 
 import java.awt.event.ActionEvent;
 import javax.swing.Icon;
 import javax.swing.SwingUtilities;
+
+import jmri.InstanceManager;
 import jmri.util.swing.JmriPanel;
 import jmri.util.swing.WindowInterface;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Tabbed Preferences Action for dealing with all the preferences in a single
- * view with a list option to the left hand side.
+ * Action launches the tabbed preferences window.
+ *
+ * The {@link TabbedPreferencesFrame} object is requested from the InstanceManager, and
+ * if need-be created and initialized in the process of doing that.
  *
  * @author Kevin Dickerson Copyright (C) 2009
+ * @author Bob Jacobsen Copyright (C) 2019
  */
 public class TabbedPreferencesAction extends jmri.util.swing.JmriAbstractAction {
 
-    // must be null until first use to allow app initialization before construction
-    static TabbedPreferencesFrame f = null;
     String preferencesItem = null;
     String preferenceSubCat = null;
-    static boolean inWait = false;
 
     /**
      * Create an action with a specific title.
@@ -70,44 +72,19 @@ public class TabbedPreferencesAction extends jmri.util.swing.JmriAbstractAction 
         preferencesItem = category;
     }
 
-    public void actionPerformed() {
-        // create the JTable model, with changes for specific NamedBean
-        // create the frame
-        if (inWait) {
-            log.info("We are already waiting for the preferences to be displayed");
-            return;
-        }
+    final public void actionPerformed() {
+        TabbedPreferencesFrame f = InstanceManager.getOptionalDefault(TabbedPreferencesFrame.class).orElseGet(() -> {
+            return InstanceManager.setDefault(TabbedPreferencesFrame.class, new TabbedPreferencesFrame());
+        });
+            
+        showPreferences(f);
 
-        if (f == null) {
-            setWait(true);
-            f = new TabbedPreferencesFrame();
-            Thread preferencesInitThread = new Thread(() -> {
-                final Object waiter = new Object();
-                try {
-                    while (jmri.InstanceManager.getDefault(TabbedPreferences.class).init() != TabbedPreferences.INITIALISED) {
-                        synchronized (waiter) {
-                            waiter.wait(50);
-                        }
-                    }
-                    SwingUtilities.updateComponentTreeUI(f);
-                    showPreferences();
-                } catch (InterruptedException ex) {
-                    Thread.currentThread().interrupt();
-                    setWait(false);
-                }
-            });
-            preferencesInitThread.setName("TabbedPreferencesAction actionPerformed");
-            preferencesInitThread.start();
-        } else {
-            showPreferences();
-        }
     }
 
-    private void showPreferences() {
+    private void showPreferences(TabbedPreferencesFrame f) {
         // Update the GUI Look and Feel
         // This is needed as certain controls are instantiated
         // prior to the setup of the Look and Feel
-        setWait(false);
         
         // might not be a preferences item set yet
         if (preferencesItem != null) f.gotoPreferenceItem(preferencesItem, preferenceSubCat);
@@ -115,10 +92,6 @@ public class TabbedPreferencesAction extends jmri.util.swing.JmriAbstractAction 
         f.pack();
 
         f.setVisible(true);
-    }
-
-    synchronized static void setWait(boolean boo) {
-        inWait = boo;
     }
 
     @Override
@@ -139,6 +112,6 @@ public class TabbedPreferencesAction extends jmri.util.swing.JmriAbstractAction 
         throw new IllegalArgumentException("Should not be invoked");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TabbedPreferencesAction.class);
+    // private final static Logger log = LoggerFactory.getLogger(TabbedPreferencesAction.class);
 
 }

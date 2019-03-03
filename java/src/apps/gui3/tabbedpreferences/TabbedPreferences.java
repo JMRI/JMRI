@@ -1,4 +1,4 @@
-package apps.gui3;
+package apps.gui3.tabbedpreferences;
 
 import apps.AppConfigBase;
 import apps.ConfigBundle;
@@ -7,7 +7,10 @@ import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.ServiceLoader;
+import java.util.Set;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -25,6 +28,7 @@ import javax.swing.event.ListSelectionEvent;
 import jmri.InstanceManager;
 import jmri.ShutDownManager;
 import jmri.swing.PreferencesPanel;
+import jmri.swing.PreferencesSubPanel;
 import jmri.util.FileUtil;
 import jmri.util.ThreadingUtil;
 import org.jdom2.Element;
@@ -38,18 +42,14 @@ import org.slf4j.LoggerFactory;
  * automatically loaded if they implement the
  * {@link jmri.swing.PreferencesPanel} interface.
  * <p>
- * State is maintained as a bound property with name INITIALIZATION (see value
- * below)
- * <p>
  * JMRI apps (generally) create one object of this type on the main thread as
- * part of initialization, then create a separate "initialize preferences"
- * thread to handle the init() call and adding all the tabs. Finally, the result
- * is displayed on the Swing thread.
+ * part of initialization, which is then made available via the 
+ * {@link InstanceManager}.
  *
- * @author Bob Jacobsen Copyright 2010
+ * @author Bob Jacobsen Copyright 2010, 2019
  * @author Randall Wood 2012, 2016
  */
-public class EditConnectionPreferences extends AppConfigBase {
+public class TabbedPreferences extends AppConfigBase {
 
     @Override
     public String getHelpTarget() {
@@ -75,32 +75,57 @@ public class EditConnectionPreferences extends AppConfigBase {
         detailpanel.setLayout(new CardLayout());
     }
 
-    /**
-     * The dialog that displays the preferences.
-     * Used by the quit button to dispose the dialog.
-     */
-    final EditConnectionPreferencesDialog dialog;
-    
     ArrayList<PreferencesCatItems> preferencesArray = new ArrayList<>();
     JPanel buttonpanel;
     JList<String> list;
     JButton save;
-    JButton quit = null;
     JScrollPane listScroller;
 
-    public EditConnectionPreferences(EditConnectionPreferencesDialog dialog) {
+    public TabbedPreferences() {
 
-        this.dialog = dialog;
-        
         /*
          * Adds the place holders for the menu managedPreferences so that any managedPreferences add by
          * third party code is added to the end
          */
         preferencesArray.add(new PreferencesCatItems("CONNECTIONS", rb
                 .getString("MenuConnections"), 100));
+
+        preferencesArray.add(new PreferencesCatItems("DEFAULTS", rb
+                .getString("MenuDefaults"), 200));
+
+        preferencesArray.add(new PreferencesCatItems("FILELOCATIONS", rb
+                .getString("MenuFileLocation"), 300));
+
+        preferencesArray.add(new PreferencesCatItems("STARTUP", rb
+                .getString("MenuStartUp"), 400));
+
+        preferencesArray.add(new PreferencesCatItems("DISPLAY", rb
+                .getString("MenuDisplay"), 500));
+
+        preferencesArray.add(new PreferencesCatItems("MESSAGES", rb
+                .getString("MenuMessages"), 600));
+
+        preferencesArray.add(new PreferencesCatItems("ROSTER", rb
+                .getString("MenuRoster"), 700));
+
+        preferencesArray.add(new PreferencesCatItems("THROTTLE", rb
+                .getString("MenuThrottle"), 800));
+
+        preferencesArray.add(new PreferencesCatItems("WITHROTTLE", rb
+                .getString("MenuWiThrottle"), 900));
+                
+        // initialization process via init
+        init();
     }
 
-    public void init() {
+    /**
+     * Initialize, including loading classes provided by a
+     * {@link java.util.ServiceLoader}.
+     * <p>
+     * This creates a thread which creates items, then
+     * invokes the GUI thread to add them in.
+     */
+    private void init() {
         list = new JList<>();
         listScroller = new JScrollPane(list);
         listScroller.setPreferredSize(new Dimension(100, 100));
@@ -117,23 +142,58 @@ public class EditConnectionPreferences extends AppConfigBase {
                 ConfigBundle.getMessage("ButtonSave"),
                 new ImageIcon(FileUtil.findURL("program:resources/icons/misc/gui3/SaveIcon.png", FileUtil.Location.INSTALLED)));
         save.addActionListener((ActionEvent e) -> {
-            dialog.restartProgram = true;
             savePressed(invokeSaveOptions());
         });
 
-        quit = new JButton(
-                ConfigBundle.getMessage("ButtonQuit"));
-//                new ImageIcon(FileUtil.findURL("program:resources/icons/misc/gui3/SaveIcon.png", FileUtil.Location.INSTALLED)));
-        quit.addActionListener((ActionEvent e) -> {
-            if (dialog != null) {
-                dialog.restartProgram = false;
-                dialog.dispose();
-            }
-        });
-
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-        getTabbedPreferences().preferencesArray.stream().forEach((preferences) -> {
+        // panels that are dependent upon another panel being added first
+        Set<PreferencesPanel> delayed = new HashSet<>();
+
+        // add preference panels registered with the Instance Manager
+        for (PreferencesPanel panel : InstanceManager.getList(jmri.swing.PreferencesPanel.class)) {
+            if (panel instanceof PreferencesSubPanel) {
+                String parent = ((PreferencesSubPanel) panel).getParentClassName();
+                if (!this.getPreferencesPanels().containsKey(parent)) {
+                    delayed.add(panel);
+                } else {
+                    ((PreferencesSubPanel) panel).setParent(this.getPreferencesPanels().get(parent));
+                }
+            }
+            if (!delayed.contains(panel)) {
+                this.addPreferencesPanel(panel);
+            }
+        }
+
+        for (PreferencesPanel panel : ServiceLoader.load(PreferencesPanel.class)) {
+            if (panel instanceof PreferencesSubPanel) {
+                String parent = ((PreferencesSubPanel) panel).getParentClassName();
+                if (!this.getPreferencesPanels().containsKey(parent)) {
+                    delayed.add(panel);
+                } else {
+                    ((PreferencesSubPanel) panel).setParent(this.getPreferencesPanels().get(parent));
+                }
+            }
+            if (!delayed.contains(panel)) {
+                this.addPreferencesPanel(panel);
+            }
+        }
+        while (!delayed.isEmpty()) {
+            Set<PreferencesPanel> iterated = new HashSet<>(delayed);
+            iterated.stream().filter((panel) -> (panel instanceof PreferencesSubPanel)).forEach((panel) -> {
+                String parent = ((PreferencesSubPanel) panel).getParentClassName();
+                if (this.getPreferencesPanels().containsKey(parent)) {
+                    ((PreferencesSubPanel) panel).setParent(this.getPreferencesPanels().get(parent));
+                    delayed.remove(panel);
+                    this.addPreferencesPanel(panel);
+                }
+            });
+        }
+        preferencesArray.stream().forEach((preferences) -> {
             detailpanel.add(preferences.getPanel(), preferences.getPrefItem());
+        });
+        preferencesArray.sort((PreferencesCatItems o1, PreferencesCatItems o2) -> {
+            int comparison = Integer.compare(o1.sortOrder, o2.sortOrder);
+            return (comparison != 0) ? comparison : o1.getPrefItem().compareTo(o2.getPrefItem());
         });
 
         updateJList();
@@ -145,7 +205,7 @@ public class EditConnectionPreferences extends AppConfigBase {
         selection(preferencesArray.get(0).getPrefItem());
     }
 
-    // package only - for EditConnectionPreferencesDialog
+    // package only - for TabbedPreferencesFrame
     boolean isDirty() {
         // if not for the debug statements, this method could be the one line:
         // return this.getPreferencesPanels().values.stream().anyMatch((panel) -> (panel.isDirty()));
@@ -161,7 +221,7 @@ public class EditConnectionPreferences extends AppConfigBase {
         }).anyMatch((panel) -> (panel.isDirty()));
     }
 
-    // package only - for EditConnectionPreferencesDialog
+    // package only - for TabbedPreferencesFrame
     boolean invokeSaveOptions() {
         boolean restartRequired = false;
         for (PreferencesPanel panel : this.getPreferencesPanels().values()) {
@@ -254,6 +314,14 @@ public class EditConnectionPreferences extends AppConfigBase {
         return choices;
     }
 
+    /*
+     * Returns a list of Sub Category Items for a give category
+     */
+    public List<String> getPreferenceSubCategory(String category) {
+        int index = getCategoryIndexFromString(category);
+        return preferencesArray.get(index).getSubCategoriesList();
+    }
+
     int getCategoryIndexFromString(String category) {
         for (int x = 0; x < preferencesArray.size(); x++) {
             if (preferencesArray.get(x).getPrefItem().equals(category)) {
@@ -261,6 +329,16 @@ public class EditConnectionPreferences extends AppConfigBase {
             }
         }
         return -1;
+    }
+
+    public void disablePreferenceItem(String selection, String subCategory) {
+        if (subCategory == null || subCategory.isEmpty()) {
+            // need to do something here like just disable the item
+
+        } else {
+            preferencesArray.get(getCategoryIndexFromString(selection))
+                    .disableSubCategory(subCategory);
+        }
     }
 
     protected ArrayList<String> getChoices() {
@@ -289,10 +367,6 @@ public class EditConnectionPreferences extends AppConfigBase {
         });
         buttonpanel.add(listScroller);
         buttonpanel.add(save);
-        
-        if (quit != null) {
-            buttonpanel.add(quit);
-        }
     }
 
     public boolean isPreferencesValid() {
@@ -381,6 +455,14 @@ public class EditConnectionPreferences extends AppConfigBase {
             return itemText;
         }
 
+        ArrayList<String> getSubCategoriesList() {
+            ArrayList<String> choices = new ArrayList<>();
+            for (TabDetails tabDetails : tabDetailsArray) {
+                choices.add(tabDetails.getTitle());
+            }
+            return choices;
+        }
+
         /*
          * This returns a JPanel if only one item is configured for a menu item
          * or it returns a JTabbedFrame if there are multiple managedPreferences for the menu
@@ -417,6 +499,23 @@ public class EditConnectionPreferences extends AppConfigBase {
             for (int i = 0; i < tabDetailsArray.size(); i++) {
                 if (tabDetailsArray.get(i).getTitle().equals(sub)) {
                     tabbedPane.setSelectedIndex(i);
+                    return;
+                }
+            }
+        }
+
+        void disableSubCategory(String sub) {
+            if (tabDetailsArray.isEmpty()) {
+                // So the tab preferences might not have been initialised when
+                // the call to disable an item is called therefore store it for
+                // later on
+                disableItemsList.add(sub);
+                return;
+            }
+            for (int i = 0; i < tabDetailsArray.size(); i++) {
+                if ((tabDetailsArray.get(i).getItem()).getClass().getName()
+                        .equals(sub)) {
+                    tabbedPane.setEnabledAt(i, false);
                     return;
                 }
             }
@@ -483,17 +582,6 @@ public class EditConnectionPreferences extends AppConfigBase {
         }
     }
 
-    /**
-     * Ensure a TabbedPreferences instance is always available.
-     *
-     * @return the default TabbedPreferences instance, creating it if needed
-     */
-    private TabbedPreferences getTabbedPreferences() {
-        return InstanceManager.getOptionalDefault(TabbedPreferences.class).orElseGet(() -> {
-            return InstanceManager.setDefault(TabbedPreferences.class, new TabbedPreferences());
-        });
-    }
-    
-    private final static Logger log = LoggerFactory.getLogger(EditConnectionPreferences.class);
+    private final static Logger log = LoggerFactory.getLogger(TabbedPreferences.class);
 
 }
