@@ -86,8 +86,8 @@
      <Match>
        <!-- JMRI code is often written to trust weird from other classes,
             so the question of "malicious" is complicated. The rules in
-            this category should be restored in small batches  
-       <Bug category="MALICIOUS_CODE" /> -->
+            this category should be restored in small batches   -->
+       <Bug category="MALICIOUS_CODE" />
      </Match>
 
     <!-- items we're unlikely to restore -->
