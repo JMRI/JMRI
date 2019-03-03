@@ -24,14 +24,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Base implementation for a test that launches and tests complete JMRI apps from prebuilt profile directories
+ * Base implementation for a test that launches and tests complete JMRI apps
+ * from prebuilt profile directories
  *
  * @author Bob Jacobsen 2018
  */
 abstract public class LaunchJmriAppBase {
 
-    static final int RELEASETIME = 3000;  // mSec
-    static final int TESTMAXTIME = 20;    // seconds - not too long, so job doesn't hang
+    static final int RELEASETIME = 3000; // mSec
+    static final int TESTMAXTIME = 20; // seconds - not too long, so job doesn't hang
 
     @Rule
     public TemporaryFolder folder = new TemporaryFolder();
@@ -44,40 +45,46 @@ abstract public class LaunchJmriAppBase {
 
     /**
      * Run one application
-     * @param Name of the Profile to copy from files in java/test/apps/PanelPro/profiles/
-     * @param Name application (frame) title 
+     * 
+     * @param Name  of the Profile to copy from files in
+     *                  java/test/apps/PanelPro/profiles/
+     * @param Name  application (frame) title
      * @param Start of the "we're up!" message
      */
     protected void runOne(String profileName, String frameName, String startMessageStart) throws IOException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-                
+
         try {
 
             // create a custom profile
             folder.create();
             File tempFolder = folder.newFolder();
-            File profileDir = new File (tempFolder.getAbsolutePath()+File.separator+profileName);
+            File profileDir = new File(tempFolder.getAbsolutePath() + File.separator + profileName);
             profileDir.mkdir();
-            System.setProperty("jmri.prefsdir", tempFolder.getAbsolutePath() );
-            FileUtils.copyDirectory(new File("java/test/apps/PanelPro/profiles/"+profileName), profileDir);
-            System.setProperty("org.jmri.profile", profileDir.getAbsolutePath() );
+            System.setProperty("jmri.prefsdir", tempFolder.getAbsolutePath());
+            FileUtils.copyDirectory(new File("java/test/apps/PanelPro/profiles/" + profileName), profileDir);
+            System.setProperty("org.jmri.profile", profileDir.getAbsolutePath());
 
             // launch!
             launch(new String[]{profileName});
 
-            JUnitUtil.waitFor(()->{return JmriJFrame.getFrame(frameName) != null;}, "window up");
-        
-            JUnitUtil.waitFor(()->{return JUnitAppender.checkForMessageStartingWith(startMessageStart) != null;}, "first Info line seen");
+            JUnitUtil.waitFor(() -> {
+                return JmriJFrame.getFrame(frameName) != null;
+            }, "window up");
+
+            JUnitUtil.waitFor(() -> {
+                return JUnitAppender.checkForMessageStartingWith(startMessageStart) != null;
+            }, "first Info line seen");
 
             extraChecks();
-            
+
             // maybe have it run a script to indicate that it's really up?
-            
+
             // now clean up frames, depending on what's actually left
             cleanup();
-            
+
             // gracefully shutdown, but don't exit
-            ((DefaultShutDownManager)InstanceManager.getDefault(jmri.ShutDownManager.class)).shutdown(0, false);
+            ((DefaultShutDownManager) InstanceManager.getDefault(jmri.ShutDownManager.class)).shutdown(0, false);
 
         } finally {
             // wait for threads, etc
@@ -86,10 +93,13 @@ abstract public class LaunchJmriAppBase {
     }
 
     abstract protected void launch(String[] args);
-    
-    protected void extraChecks() {}
-    protected void cleanup() {}
-    
+
+    protected void extraChecks() {
+    }
+
+    protected void cleanup() {
+    }
+
     // The minimal setup for log4J
     @Before
     public void setUp() {
