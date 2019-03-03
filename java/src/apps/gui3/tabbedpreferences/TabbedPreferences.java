@@ -42,13 +42,14 @@ import org.slf4j.LoggerFactory;
  * automatically loaded if they implement the
  * {@link jmri.swing.PreferencesPanel} interface.
  * <p>
- * State is maintained as a bound property with name INITIALIZATION (see value
- * below)
- * <p>
  * JMRI apps (generally) create one object of this type on the main thread as
- * part of initialization, then create a separate "initialize preferences"
- * thread to handle the init() call and adding all the tabs. Finally, the result
- * is displayed on the Swing thread.
+ * part of initialization, which is then made available via the 
+ * {@link InstanceManager}.
+ * <p>Because of the time needed to initialize all the 
+ * subpanes, this class defers that to a separate init thread (transparently).
+ * <a href="doc-files/TabbedPreferencesCreation.png">
+ *   <img src="doc-files/TabbedPreferencesCreation.png" style="text-align: right;" alt="TabbedPreferences creation process" height="33%" width="33%">
+ * </a>
  *
  * @author Bob Jacobsen Copyright 2010
  * @author Randall Wood 2012, 2016
@@ -84,12 +85,6 @@ public class TabbedPreferences extends AppConfigBase {
     JList<String> list;
     JButton save;
     JScrollPane listScroller;
-    private int initialisationState = 0x00;
-
-    public static final int UNINITIALISED = 0x00;
-    public static final int INITIALISING = 0x01;
-    public static final int INITIALISED = 0x02;
-    public static final String INITIALIZATION = "PROP_INITIALIZATION";
 
     public TabbedPreferences() {
 
@@ -123,26 +118,19 @@ public class TabbedPreferences extends AppConfigBase {
 
         preferencesArray.add(new PreferencesCatItems("WITHROTTLE", rb
                 .getString("MenuWiThrottle"), 900));
+                
+        // initialization process via init
+        init();
     }
 
     /**
      * Initialize, including loading classes provided by a
      * {@link java.util.ServiceLoader}.
      * <p>
-     * Keeps a current state to prevent doing its work twice.
-     *
-     * @return The current state, which should be INITIALISED if all is well.
+     * This creates a thread which creates items, then
+     * invokes the GUI thread to add them in.
      */
-    @SuppressWarnings("rawtypes")
-    public synchronized int init() {
-        if (initialisationState == INITIALISED) {
-            return INITIALISED;
-        }
-        if (initialisationState != UNINITIALISED) {
-            return initialisationState;
-        }
-        this.setInitalisationState(INITIALISING);
-
+    private void init() {
         list = new JList<>();
         listScroller = new JScrollPane(list);
         listScroller.setPreferredSize(new Dimension(100, 100));
@@ -220,22 +208,6 @@ public class TabbedPreferences extends AppConfigBase {
 
         list.setSelectedIndex(0);
         selection(preferencesArray.get(0).getPrefItem());
-        this.setInitalisationState(INITIALISED);
-        return initialisationState;
-    }
-
-    public synchronized void setInitalisationState(int state) { // currently only used in init(), but synchronized in case added elsewhere later
-        int old = this.initialisationState;
-        this.initialisationState = state;
-        this.firePropertyChange(INITIALIZATION, old, state);
-    }
-
-    public synchronized int getInitialisationState() { // not an atomic read, because of time between assignment and propertyChange notification in set
-        return this.initialisationState;
-    }
-
-    public boolean isInitialised() {
-        return (this.getInitialisationState() == INITIALISED);
     }
 
     // package only - for TabbedPreferencesFrame
@@ -316,9 +288,7 @@ public class TabbedPreferences extends AppConfigBase {
             preferencesArray.add(itemBeingAdded);
             // As this is a new item in the selection list, we need to update
             // the JList.
-            if (getInitialisationState() == INITIALISED) {
-                updateJList();
-            }
+            updateJList();
         }
         if (tabTitle == null) {
             tabTitle = itemText;

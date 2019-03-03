@@ -9,9 +9,14 @@ import jmri.swing.PreferencesPanel;
 import jmri.util.JmriJFrame;
 
 /**
- * Provide a preferences window.
+ * Support displaying {@link TabbedPreferences} in a window.
+ *
+ * <a href="doc-files/TabbedPreferencesCreation.png">
+ *   <img src="doc-files/TabbedPreferencesCreation.png" style="text-align: right;" alt="TabbedPreferences creation process" height="33%" width="33%">
+ * </a>
  *
  * @author Kevin Dickerson Copyright 2010
+ * @author Bob Jacobsen Copyright 2019
  */
 public class TabbedPreferencesFrame extends JmriJFrame {
 

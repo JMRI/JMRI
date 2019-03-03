@@ -24,9 +24,12 @@ public class TabbedPreferencesFrameTest {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        JUnitUtil.setUp();        jmri.InstanceManager.setDefault(TabbedPreferences.class,new TabbedPreferences());
+        JUnitUtil.setUp();
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.initConfigureManager();
+        JUnitUtil.resetPreferencesProviders();
     }
-
+    
     @After
     public void tearDown() {
         JUnitUtil.tearDown();

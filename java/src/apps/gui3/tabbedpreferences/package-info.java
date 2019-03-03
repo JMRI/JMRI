@@ -18,7 +18,7 @@
  * <h2>The Startup Process</h2>
  *
  * <a href="doc-files/TabbedPreferencesCreation.png">
- *   <img src="doc-files/TabbedPreferencesCreation.png" style="text-align: right;" alt="TabbedPreferences creation process" height="25%" width="25%">
+ *   <img src="doc-files/TabbedPreferencesCreation.png" style="text-align: right;" alt="TabbedPreferences creation process" height="33%" width="33%">
  * </a>
  * 
  * <!-- Put @see and @since tags down here. -->

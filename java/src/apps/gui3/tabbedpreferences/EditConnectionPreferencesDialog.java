@@ -30,28 +30,16 @@ public final class EditConnectionPreferencesDialog extends JDialog implements Wi
     }
     
     /**
-     * Displays a dialog for editing the conenctions.
+     * Displays a dialog for editing the connections.
      * @return true if the program should restart, false if the program should quit.
      */
     public static boolean showDialog() {
-        try {
-            while (jmri.InstanceManager.getDefault(TabbedPreferences.class).init() != TabbedPreferences.INITIALISED) {
-                final Object waiter = new Object();
-                synchronized (waiter) {
-                    waiter.wait(50);
-                }
-            }
-            
-            EditConnectionPreferencesDialog dialog = new EditConnectionPreferencesDialog();
-            SwingUtilities.updateComponentTreeUI(dialog);
-            
-            dialog.pack();
-            dialog.setVisible(true);
-            return dialog.restartProgram;
-        } catch (InterruptedException ex) {
-            Thread.currentThread().interrupt();
-            return false;
-        }
+        EditConnectionPreferencesDialog dialog = new EditConnectionPreferencesDialog();
+        SwingUtilities.updateComponentTreeUI(dialog);
+        
+        dialog.pack();
+        dialog.setVisible(true);
+        return dialog.restartProgram;
     }
 
     public EditConnectionPreferencesDialog() {

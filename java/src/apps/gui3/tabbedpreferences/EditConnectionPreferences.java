@@ -37,14 +37,6 @@ import org.slf4j.LoggerFactory;
  * Preferences panels provided by a {@link java.util.ServiceLoader} will be
  * automatically loaded if they implement the
  * {@link jmri.swing.PreferencesPanel} interface.
- * <p>
- * State is maintained as a bound property with name INITIALIZATION (see value
- * below)
- * <p>
- * JMRI apps (generally) create one object of this type on the main thread as
- * part of initialization, then create a separate "initialize preferences"
- * thread to handle the init() call and adding all the tabs. Finally, the result
- * is displayed on the Swing thread.
  *
  * @author Bob Jacobsen Copyright 2010
  * @author Randall Wood 2012, 2016

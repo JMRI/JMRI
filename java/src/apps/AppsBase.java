@@ -106,24 +106,6 @@ public abstract class AppsBase {
 
         FileUtil.logFilePaths();
 
-        /*
-         * Once all the preferences have been loaded we can initial the
-         * preferences doing it in a thread at this stage means we can let it
-         * work in the background if the file doesn't exist then we do not
-         * initialize it
-         */
-        if (preferenceFileExists && !GraphicsEnvironment.isHeadless()) {
-            new Thread(() -> {
-                try {
-                    InstanceManager.getOptionalDefault(TabbedPreferences.class).ifPresent(tp -> {
-                        tp.init();
-                    });
-                } catch (Exception ex) {
-                    log.error("Error initializing preferences window", ex);
-                }
-            }, "Initialize TabbedPreferences").start();
-        }
-
         if (Boolean.getBoolean("org.jmri.python.preload")) {
             new Thread(() -> {
                 try {
@@ -212,10 +194,6 @@ public abstract class AppsBase {
         // install the abstract action model that allows items to be added to the, both
         // CreateButton and Perform Action Model use a common Abstract class
         InstanceManager.store(new CreateButtonModel(), CreateButtonModel.class);
-
-        // install preference manager
-        InstanceManager.store(new TabbedPreferences(), TabbedPreferences.class);
-
     }
 
     /**
@@ -305,7 +283,7 @@ public abstract class AppsBase {
             log.info("Migrating preferences to new format...");
             // migrate preferences
             InstanceManager.getOptionalDefault(TabbedPreferences.class).ifPresent(tp -> {
-                tp.init();
+                //tp.init();
                 tp.saveContents();
                 InstanceManager.getOptionalDefault(ConfigureManager.class).ifPresent(cm -> {
                     cm.storePrefs();
