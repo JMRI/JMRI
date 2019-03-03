@@ -1,4 +1,4 @@
-package apps.gui3;
+package apps.gui3.tabbedpreferences;
 
 import apps.AppConfigBase;
 import apps.ConfigBundle;

@@ -1,5 +1,4 @@
-package apps.gui3;
-
+package apps.gui3.tabbedpreferences;
 
 /**
  * Tabbed Preferences Action for going direct to Profiles

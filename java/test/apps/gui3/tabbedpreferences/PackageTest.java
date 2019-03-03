@@ -5,7 +5,12 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-    BundleTest.class
+    BundleTest.class,
+    EditConnectionPreferencesDialogTest.class,
+    TabbedPreferencesActionTest.class,
+    TabbedPreferencesFrameTest.class,
+    TabbedPreferencesProfileActionTest.class,
+    TabbedPreferencesTest.class
 })
 
 /**

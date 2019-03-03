@@ -27,4 +27,4 @@
  * @see jmri.swing.PreferencesPanel
  * @see apps.AppConfigBase
  */
-package jmri;
+package apps.gui3.tabbedpreferences;

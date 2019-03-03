@@ -1,4 +1,4 @@
-package apps.gui3;
+package apps.gui3.tabbedpreferences;
 
 import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;

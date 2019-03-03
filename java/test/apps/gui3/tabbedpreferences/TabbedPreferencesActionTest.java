@@ -1,4 +1,4 @@
-package apps.gui3;
+package apps.gui3.tabbedpreferences;
 
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -10,11 +10,11 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class TabbedPreferencesProfileActionTest {
+public class TabbedPreferencesActionTest {
 
     @Test
     public void testCTor() {
-        TabbedPreferencesProfileAction t = new TabbedPreferencesProfileAction();
+        TabbedPreferencesAction t = new TabbedPreferencesAction();
         Assert.assertNotNull("exists",t);
     }
 
@@ -29,6 +29,6 @@ public class TabbedPreferencesProfileActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(TabbedPreferencesProfileActionTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(TabbedPreferencesActionTest.class);
 
 }

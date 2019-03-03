@@ -1,7 +1,7 @@
 package apps;
 
-import apps.gui3.TabbedPreferences;
-import apps.gui3.TabbedPreferencesAction;
+import apps.gui3.tabbedpreferences.TabbedPreferences;
+import apps.gui3.tabbedpreferences.TabbedPreferencesAction;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.AWTEvent;
 import java.awt.Color;

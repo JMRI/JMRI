@@ -1,4 +1,4 @@
-package apps.gui3;
+package apps.gui3.tabbedpreferences;
 
 import jmri.util.JUnitUtil;
 import org.junit.After;

@@ -1,4 +1,4 @@
-package apps.gui3;
+package apps.gui3.tabbedpreferences;
 
 import java.awt.event.ActionEvent;
 import javax.swing.Icon;

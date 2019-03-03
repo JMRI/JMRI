@@ -1,6 +1,6 @@
 package apps;
 
-import apps.gui3.TabbedPreferences;
+import apps.gui3.tabbedpreferences.TabbedPreferences;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.GraphicsEnvironment;
 import java.io.File;
