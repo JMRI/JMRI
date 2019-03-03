@@ -13,11 +13,11 @@ import org.slf4j.LoggerFactory;
 /**
  * Action launches the tabbed preferences window.
  *
- * <a href="doc-files/TabbedPreferencesCreation.png">
- *   <img src="doc-files/TabbedPreferencesCreation.png" style="text-align: right;" alt="TabbedPreferences creation process" height="33%" width="33%">
- * </a>
+ * The {@link TabbedPreferencesFrame} object is requested from the InstanceManager, and
+ * if need-be created and initialized in the process of doing that.
  *
  * @author Kevin Dickerson Copyright (C) 2009
+ * @author Bob Jacobsen Copyright (C) 2019
  */
 public class TabbedPreferencesAction extends jmri.util.swing.JmriAbstractAction {
 

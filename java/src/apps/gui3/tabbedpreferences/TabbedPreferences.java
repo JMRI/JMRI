@@ -45,13 +45,8 @@ import org.slf4j.LoggerFactory;
  * JMRI apps (generally) create one object of this type on the main thread as
  * part of initialization, which is then made available via the 
  * {@link InstanceManager}.
- * <p>Because of the time needed to initialize all the 
- * subpanes, this class defers that to a separate init thread (transparently).
- * <a href="doc-files/TabbedPreferencesCreation.png">
- *   <img src="doc-files/TabbedPreferencesCreation.png" style="text-align: right;" alt="TabbedPreferences creation process" height="33%" width="33%">
- * </a>
  *
- * @author Bob Jacobsen Copyright 2010
+ * @author Bob Jacobsen Copyright 2010, 2019
  * @author Randall Wood 2012, 2016
  */
 public class TabbedPreferences extends AppConfigBase {

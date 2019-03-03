@@ -12,6 +12,9 @@ import jmri.swing.PreferencesPanel;
 
 /**
  * Provide a preferences dialog.
+ * <p>
+ * References the status of an {@link EditConnectionPreferences} object that 
+ * is created (via new()) as part of this constructor.
  * 
  * @author Kevin Dickerson Copyright 2010
  */
@@ -35,7 +38,7 @@ public final class EditConnectionPreferencesDialog extends JDialog implements Wi
      */
     public static boolean showDialog() {
         EditConnectionPreferencesDialog dialog = new EditConnectionPreferencesDialog();
-        SwingUtilities.updateComponentTreeUI(dialog);
+        SwingUtilities.updateComponentTreeUI(dialog);  // hack because sometimes this was created before L&F was set?
         
         dialog.pack();
         dialog.setVisible(true);

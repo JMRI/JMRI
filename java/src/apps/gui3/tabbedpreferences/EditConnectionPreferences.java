@@ -32,13 +32,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Provide access to preferences via a tabbed pane.
+ * Provide access to the connection preferences via a tabbed pane.
  *
- * Preferences panels provided by a {@link java.util.ServiceLoader} will be
- * automatically loaded if they implement the
- * {@link jmri.swing.PreferencesPanel} interface.
- *
- * @author Bob Jacobsen Copyright 2010
+ * @author Bob Jacobsen Copyright 2010, 2019
  * @author Randall Wood 2012, 2016
  */
 public class EditConnectionPreferences extends AppConfigBase {
