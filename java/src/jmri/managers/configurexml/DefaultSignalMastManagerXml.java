@@ -38,16 +38,10 @@ public class DefaultSignalMastManagerXml
         if (m != null) {
             // include contents
             for (SignalMast p : m.getNamedBeanSet()) {
-                //Element e = new Element("signalmast");
-                try {
-                    Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(p);
-                    if (e != null) {
-                        element.addContent(e);
-                    }
-                } catch (Exception ex) {
-                    log.error("Error storing signalmast: {}", ex);
+                Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(p);
+                if (e != null) {
+                    element.addContent(e);
                 }
-
             }
             List<SignalMastRepeater> repeaterList = m.getRepeaterList();
             if (repeaterList.size() > 0) {
@@ -113,7 +107,9 @@ public class DefaultSignalMastManagerXml
                     XmlAdapter adapter = (XmlAdapter) Class.forName(adapterName).getDeclaredConstructor().newInstance();
                     // and do it
                     adapter.load(e, null);
-                } catch (Exception ex) {
+                } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException 
+                            | IllegalAccessException | java.lang.reflect.InvocationTargetException
+                            | jmri.configurexml.JmriConfigureXmlException ex) {
                     log.error("Exception while loading {}: {}", e.getName(), ex, ex);
                 }
             }
@@ -129,7 +125,9 @@ public class DefaultSignalMastManagerXml
                     XmlAdapter adapter = (XmlAdapter) Class.forName(adapterName).getDeclaredConstructor().newInstance();
                     // and do it
                     adapter.load(e, null);
-                } catch (Exception ex) {
+                } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException 
+                            | IllegalAccessException | java.lang.reflect.InvocationTargetException
+                            | jmri.configurexml.JmriConfigureXmlException ex) {
                     log.error("Exception while loading {}: {}", e.getName(), ex, ex);
                 }
             }
@@ -145,7 +143,9 @@ public class DefaultSignalMastManagerXml
                     XmlAdapter adapter = (XmlAdapter) Class.forName(adapterName).getDeclaredConstructor().newInstance();
                     // and do it
                     adapter.load(e, null);
-                } catch (Exception ex) {
+                } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException 
+                            | IllegalAccessException | java.lang.reflect.InvocationTargetException
+                            | jmri.configurexml.JmriConfigureXmlException ex) {
                     log.error("Exception while loading {}: {}", e.getName(), ex, ex);
                 }
             }
@@ -161,7 +161,9 @@ public class DefaultSignalMastManagerXml
                     XmlAdapter adapter = (XmlAdapter) Class.forName(adapterName).getDeclaredConstructor().newInstance();
                     // and do it
                     adapter.load(e, null);
-                } catch (Exception ex) {
+                } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException 
+                            | IllegalAccessException | java.lang.reflect.InvocationTargetException
+                            | jmri.configurexml.JmriConfigureXmlException ex) {
                     log.error("Exception while loading {}: {}", e.getName(), ex, ex);
                 }
             }
@@ -177,7 +179,9 @@ public class DefaultSignalMastManagerXml
                     XmlAdapter adapter = (XmlAdapter) Class.forName(adapterName).getDeclaredConstructor().newInstance();
                     // and do it
                     adapter.load(e, null);
-                } catch (Exception ex) {
+                 } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException 
+                            | IllegalAccessException | java.lang.reflect.InvocationTargetException
+                            | jmri.configurexml.JmriConfigureXmlException ex) {
                     log.error("Exception while loading {}: {}", e.getName(), ex, ex);
                 }
             }
@@ -193,7 +197,9 @@ public class DefaultSignalMastManagerXml
                     XmlAdapter adapter = (XmlAdapter) Class.forName(adapterName).getDeclaredConstructor().newInstance();
                     // and do it
                     adapter.load(e, null);
-                } catch (Exception ex) {
+                } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException 
+                            | IllegalAccessException | java.lang.reflect.InvocationTargetException
+                            | jmri.configurexml.JmriConfigureXmlException ex) {
                     log.error("Exception while loading {}: {}", e.getName(), ex, ex);
                 }
             }
