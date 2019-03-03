@@ -1,4 +1,4 @@
-package apps.gui3;
+package apps.gui3.tabbedpreferences;
 
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
@@ -12,6 +12,9 @@ import jmri.swing.PreferencesPanel;
 
 /**
  * Provide a preferences dialog.
+ * <p>
+ * References the status of an {@link EditConnectionPreferences} object that 
+ * is created (via new()) as part of this constructor.
  * 
  * @author Kevin Dickerson Copyright 2010
  */
@@ -30,28 +33,16 @@ public final class EditConnectionPreferencesDialog extends JDialog implements Wi
     }
     
     /**
-     * Displays a dialog for editing the conenctions.
+     * Displays a dialog for editing the connections.
      * @return true if the program should restart, false if the program should quit.
      */
     public static boolean showDialog() {
-        try {
-            while (jmri.InstanceManager.getDefault(TabbedPreferences.class).init() != TabbedPreferences.INITIALISED) {
-                final Object waiter = new Object();
-                synchronized (waiter) {
-                    waiter.wait(50);
-                }
-            }
-            
-            EditConnectionPreferencesDialog dialog = new EditConnectionPreferencesDialog();
-            SwingUtilities.updateComponentTreeUI(dialog);
-            
-            dialog.pack();
-            dialog.setVisible(true);
-            return dialog.restartProgram;
-        } catch (InterruptedException ex) {
-            Thread.currentThread().interrupt();
-            return false;
-        }
+        EditConnectionPreferencesDialog dialog = new EditConnectionPreferencesDialog();
+        SwingUtilities.updateComponentTreeUI(dialog);  // hack because sometimes this was created before L&F was set?
+        
+        dialog.pack();
+        dialog.setVisible(true);
+        return dialog.restartProgram;
     }
 
     public EditConnectionPreferencesDialog() {

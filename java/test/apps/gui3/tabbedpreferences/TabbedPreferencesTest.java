@@ -1,4 +1,4 @@
-package apps.gui3;
+package apps.gui3.tabbedpreferences;
 
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -15,6 +15,10 @@ public class TabbedPreferencesTest extends jmri.util.swing.JmriPanelTest {
     @Override
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.initConfigureManager();
+        JUnitUtil.resetPreferencesProviders();
+
         panel  = new TabbedPreferences();
         helpTarget = "package.apps.TabbedPreferences";
         title = Bundle.getMessage("TitlePreferences");
