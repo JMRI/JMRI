@@ -1,7 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Translation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-03-03 -->
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -26,79 +26,77 @@
     <div id="mainContent">
       <a name="Top" id="Top"></a>
 
-      <h1>Getting Started with DecoderPro&reg;</h1>
+      
+2838/5000
+<h1> Premiers pas avec DecoderPro&reg;</h1>
 
-      <h2>How do I start the DecoderPro program?</h2>
+      <h2> Comment d&#233;marrer le programme DecoderPro?</h2>
 
-      <div align="right">
-        <p><a href="Start_DCC_Hardware.shtml">Previous</a> <a href=
-        "Start_Preferences.shtml">| Next</a></p>
+      <div align = "right">
+        <p><a href="Start_DCC_Hardware.shtml"> Pr&#233;c&#233;dent</a> <a href =
+        "Start_Preferences.shtml"> | Suivant</a></p>
 
-        <p><a href="index.shtml#Getting%20Started">Back to
-        Index</a></p>
-      </div>
-      <hr>
+        <p><a href="index.shtml#Getting%20Started"> Retour &#224; l'index</a></p>
+     </div>
+      <h>
 
-      <h3>If you are a first time user with no entries in the
-      roster or preferences set <a href=
-      "Start_DecoderPro_New.shtml">Click Here</a>.</h3>
+      <h3> Si vous &#234;tes un nouvel utilisateur sans nom dans la liste 
+      ou les pr&#233;f&#233;rences, d&#233;finies <a href= "Start_DecoderPro_New.shtml"> 
+		  Cliquez ici</a>.</h3>
+      <p>Une fois le logiciel JMRI t&#233;l&#233;charg&#233; et install&#233;, il vous suffit 
+      d'ouvrir le programme de la mani&#232;re habituelle pour votre syst&#232;me 
+      d'exploitation. Une ic&#244;ne pour DecoderPro doit &#234;tre install&#233;e sur 
+      votre bureau. <br> <img src = "images/decoderpro3_icon.png" alt = 
+      "icon" height = "64" width = "88"></p>
 
-      <p>Once you have downloaded the JMRI software and installed
-      it, simply open the program in the usual manner for your
-      operating system. An icon for DecoderPro should be installed
-      on your Desktop.<br>
-      <img src="images/decoderpro3_icon.png" alt="icon" height="64"
-      width="88"></p>
+      <p>DecoderPro peut &#234;tre ouvert en double-cliquant sur l'ic&#244;ne du 
+      bureau. L'&#233;cran initial de DecoderPro, comme indiqu&#233; ci-dessous, 
+      s'affichera &#224; la fin du d&#233;marrage, sans aucune entr&#233;e dans la liste.</p>
 
-      <p>DecoderPro may be opened by double click on the Desktop
-      icon and the DecoderPro initial screen as shown below will be
-      displayed on completion of startup with no roster
-      entries.</p>
+      <p><img src = "images/start_dp3_main.png" alt = "D&#233;but DP3"
+      height = "232" width = "900"></p>
 
-      <p><img src="images/start_dp3_main.png" alt="DP3 start"
-      height="232" width="900"></p>
+      <p>DecoderPro s'ouvre et affiche les entr&#233;es de votre liste si 
+      vous avez d&#233;j&#224; &#233;tabli une liste de locomotives.</p>
 
-      <p>DecoderPro will open showing your roster entries if you
-      already have established a Roster of locomotives.</p>
+      <h1> <img src = "images/Splash_Screen_dp3.png" alt = "Splash DP3"
+      height = "387" width = "800"></h1>
 
-      <h1><img src="images/Splash_Screen_dp3.png" alt="DP3 splash"
-      height="387" width="800"></h1>
+      <p>Cet &#233;cran peut prendre un certain temps, en particulier sur 
+      les ordinateurs les plus anciens et les plus lents. N'oubliez pas 
+      que vous ex&#233;cutez essentiellement le programme sur un &#233;mulateur 
+      Java via le logiciel de votre syst&#232;me d'exploitation natif. Les 
+      nouveaux ordinateurs peuvent le faire assez rapidement, mais les 
+      plus anciens auront l'impression de prendre une &#233;ternit&#233;. Soyez 
+      patient - &#231;a finira par arriver! M&#234;me sur des ordinateurs plus 
+      anciens, le temps de r&#233;ponse est assez rapide une fois le 
+      programme termin&#233;.</P>
 
-      <p>It may take a while for this screen to come up, especially
-      on older and slower computers. Remember that you are
-      essentially running the program on a Java emulator over your
-      native operating system software. New computers can do this
-      fairly quickly, but older ones will feel like they're taking
-      forever. Be patient - it will come up eventually! Even on
-      older computers, once the program is up the response time is
-      quite good.</p>
-
-      <p>If this is the first time you have run the program after
-      you installed the software, the <a href=
-      "Start_Preferences.shtml">Preferences</a> screen will come up
-      automatically to allow you to set up the system for your
-      particular configuration. Also if you change your system
-      configuration, or if you have your laptop away from the
-      railroad, but you want to play with JMRI there is a simulator
-      mode you may want to try.So click next, and we'll have a look
-      at preferences.</p>
+      <p>Si vous ex&#233;cutez le programme pour la premi&#232;re fois apr&#232;s 
+      l'installation du logiciel, l'&#233;cran <a href= "Start_Preferences.shtml"> 
+		 Pr&#233;f&#233;rences</a> appara&#238;tra automatiquement pour vous permettre 
+		  de configurer le syst&#232;me pour votre configuration particuli&#232;re. 
+		  De plus, si vous modifiez la configuration de votre syst&#232;me, 
+		  ou si votre ordinateur portable est &#233;loign&#233; du chemin de fer, 
+		  mais que vous souhaitez jouer avec JMRI, vous pouvez essayer 
+		  un mode simulateur. Cliquez ensuite sur Suivant, et nous 
+		  examinerons les pr&#233;f&#233;rences. .</p>
 
       <blockquote>
         <blockquote>
           <blockquote>
-            <p><img style="width: 468px; height: 333px;" alt=
-            "splash" src="images/Splash_Screen.png"><br></p>
-          </blockquote>
-        </blockquote>
-      </blockquote>
-      <hr>
+            <p><img style = "width: 468px; height: 333px;" alt =
+            "splash" src = "images/Splash_Screen.png"> <br></p>
+         </blockquote>
+       </blockquote>
+     </blockquote>
+      <h>
 
-      <div align="right">
-        <p><a href="Start_DCC_Hardware.shtml">Previous</a> <a href=
-        "Start_Preferences.shtml">| Next</a></p>
+      <div align = "right">
+        <p><a href="Start_DCC_Hardware.shtml"> Pr&#233;c&#233;dent</a> <a href =
+        "Start_Preferences.shtml"> | Suivant</a></p>
 
-        <p><a href="index.shtml#Getting%20Started">Back to
-        Index</a></p>
+        <p><a href="index.shtml#Getting%20Started"> Retour &#224; l'index</a></p>
       </div><!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
