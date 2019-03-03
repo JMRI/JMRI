@@ -6,6 +6,7 @@ import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
 import jmri.jmrix.AbstractMRTrafficController;
+import net.jcip.annotations.GuardedBy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,7 +21,7 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class XNetTrafficController extends AbstractMRTrafficController implements XNetInterface {
 
-    // @GuardedBy(this)
+    @GuardedBy("this")
     // PENDING: the field should be probably made private w/ accessor to force proper synchronization for reading.
     protected final HashMap<XNetListener, Integer> mListenerMasks;
 
@@ -149,8 +150,8 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
         // using offer as the queue is unbounded and should never block on write.
         // Note: the message should be inserted LAST, as the message is tested/acquired first
         // by the reader; serves a a guard for next item processing.
-        highPriorityListeners.offer(reply);
-        highPriorityQueue.offer(m);
+        highPriorityListeners.add(reply);
+        highPriorityQueue.add(m);
     }
 
     @Override
