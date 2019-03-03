@@ -1,7 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Translation by Herv&#233; BLOREC <bzh56420@yahoo.fr>on 2019-03-03 -->
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -24,65 +24,65 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <a name="Top" id="Top"></a> <img src="images/Logo.gif" alt=
+      <a name="Top" id="Top"></a><img src="images/Logo.gif" alt=
       "JMRI DecoderPro Logo" width="163" height="117" vspace="15"
       border="10" class="BOXIT">
 
-      <h1>Getting Started with DecoderPro&reg;</h1>
+      <h1>Premiers pas avec DecoderPro&reg;</h1>
 
-      <h2>What is DCC?</h2>
+      <h2>Qu'est-ce que le DCC?</h2>
 
-      <div align="right">
-        <p><a href="Start_DCC_Systems.shtml">Next</a></p>
+      <div align = "right">
+        <p><a href="Start_DCC_Systems.shtml">Suivant</a></p>
 
-        <p><a href="index.shtml#Getting%20Started">Back to
-        Index</a></p>
-      </div>
-      <hr>
+        <p><a href="index.shtml#Getting%20Started">Retour &#224; l'index</a></p>
+     </div>
+      <h>
 
-      <p>In short, DCC is Digital Command Control, a system for
-      operating model railroads in a more prototypical manner. Each
-      locomotive contains a tiny, specialized controller. These
-      controllers (decoders) accept digital commands over a network
-      (the rails) addressed to them and interprets them to control
-      the locomotive's speed, direction, lighting effects, sound,
-      and other functions. Each decoder responds only to those
-      commands addressed to it. Not every decoder will have
-      functions beyond basic throttle commands available. Although
-      there are NMRA&reg; standards for the format of communication
-      (allowing the decoders from different manufacturers to work
-      on the same railroad), beyond that there is considerable
-      variety in the functions supported and the implementation of
-      those functions.</p>
+      <p>En bref, DCC est le Digital Command Control, un syst&#232;me permettant 
+      d'exploiter les chemins de fer mod&#232;les de mani&#232;re plus concr&#232;te. 
+      Chaque locomotive contient un minuscule contr&#244;leur sp&#233;cialis&#233;. 
+      Ces contr&#244;leurs (d&#233;codeurs) acceptent les commandes num&#233;riques 
+      sur un r&#233;seau (les rails) qui leur sont adress&#233;s et les interpr&#232;tent 
+      pour contr&#244;ler la vitesse, la direction, les effets d'&#233;clairage, 
+      le son et d'autres fonctions de la locomotive. Chaque d&#233;codeur ne 
+      r&#233;pond qu'aux commandes qui lui sont adress&#233;es. Tous les d&#233;codeurs 
+      ne disposent pas de fonctions autres que les commandes d'acc&#233;l&#233;ration. 
+      Bien qu'il existe les normes NMRA&reg; relatives au format de 
+      communication (permettant aux d&#233;codeurs de diff&#233;rents fabricants 
+      de travailler sur le m&#234;me chemin de fer), il existe par ailleurs 
+      une diversit&#233; consid&#233;rable de fonctions prises en charge et 
+      de mise en &#156;uvre de ces fonctions.</p>
 
-      <p>Just like any other controller, decoders must be
-      programmed by the user to reach their full potential. While
-      they come with basic "default" programs, most users will want
-      to customize the decoder address, motor control, lights,
-      sound, and other functions to meet their specific needs. You
-      do so by editing <b>CV</b>s, or <b>Configuration
-      Variables</b>, in the decoder. Some CVs use values ranging
-      from 0 to 255, others use their space in the decoder's memory
-      as a bank of 8 on/off switches. While this lets you do a lot
-      with very little memory, it can get very complex for those of
-      us that are not on speaking terms with binary code.</p>
+      <p>Comme tout autre contr&#244;leur, les d&#233;codeurs doivent &#234;tre 
+      programm&#233;s par l'utilisateur pour atteindre leur plein potentiel. 
+      Bien qu'ils soient livr&#233;s avec des programmes "par d&#233;faut" de 
+      base, la plupart des utilisateurs voudront personnaliser l'adresse 
+      du d&#233;codeur, le contr&#244;le moteur, les lumi&#232;res, le son et d'autres 
+      fonctions pour r&#233;pondre &#224; leurs besoins sp&#233;cifiques. Pour ce faire, 
+      &#233;ditez les <b>CV</b> ou les <b>Variables de configuration</b> dans 
+      le d&#233;codeur. Certains CV utilisent des valeurs comprises entre 0 
+      et 255, d'autres utilisent leur espace dans la m&#233;moire du d&#233;codeur 
+      comme une banque de 8 commutateurs marche/arr&#234;t. Bien que cela
+       vous permette de faire beaucoup avec tr&#232;s peu de m&#233;moire, 
+       cela peut devenir tr&#232;s complexe pour ceux d'entre nous qui ne
+        ma&#238;trisons pas bien le code binaire.</P>
 
-      <p>Decoder Pro attempts to help overcome the inevitable
-      complexity of this system by providing a clear, usable, user
-      friendly <span class="ACCENT">open source</span> software
-      solution for programming these on-board decoders. Programming
-      panel designs are written in <b>XML</b>, (a close relative of
-      HTML) and can be modified or even created from scratch by
-      users with even a passing familiarity with the format without
-      previous XML experience.</p>
-      <hr>
+      <p>Decoder Pro tente de surmonter la complexit&#233; in&#233;vitable de ce 
+      syst&#232;me en fournissant une solution logicielle <span class = "ACCENT"
+      >open source claire, utilisable et conviviale pour la programmation 
+      de ces d&#233;codeurs int&#233;gr&#233;s. Les conceptions des panneaux de 
+      programmation sont &#233;crites en <b>XML</b> (un proche parent du HTML) 
+      et peuvent &#234;tre modifi&#233;es ou m&#234;me cr&#233;&#233;es de toutes pi&#232;ces par 
+      les utilisateurs connaissant m&#234;me le format sans exp&#233;rience 
+      pr&#233;alable du langage XML.</P>
+      <h>
 
-      <div align="right">
-        <p><a href="Start_DCC_Systems.shtml">Next</a><a href=
+      <div align = "right">
+        <p><a href="Start_DCC_Systems.shtml">Suivant</a><a href =
         "Basic_Programming.shtml"></a></p>
 
-        <p><a href="index.shtml#Getting%20Started">Back to
-        Index</a></p>
+        <p><a href="index.shtml#Getting%20Started">Retour &#224; l'Index</a></p>
       </div><!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
