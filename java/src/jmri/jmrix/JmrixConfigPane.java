@@ -203,7 +203,7 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
                 } catch (NullPointerException e) {
                     log.error("Attempt to load {} failed.", className, e);
                 } catch (InvocationTargetException | ClassNotFoundException | InstantiationException | IllegalAccessException | NoSuchMethodException e) {
-                    log.debug("Attempt to load {} failed: {}.", className, e);
+                    log.error("Attempt to load {} failed: {}.", className, e);
                 }
             }
             if ((modeBox.getSelectedIndex() == 0) && (p.getComboBoxLastSelection((String) manuBox.getSelectedItem()) != null)) {
