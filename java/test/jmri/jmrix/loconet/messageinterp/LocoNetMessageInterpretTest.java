@@ -1048,6 +1048,11 @@ public class LocoNetMessageInterpretTest {
                 "IPL Identity report.\n\tHost: Digitrax DCS51 host, S/N=159, S/W Version=1.0\n\tSlave: None.\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
+        l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x34, 0x00, 0x00, 0x08, 0x00, 0x05, 0x59, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x77});
+        Assert.assertEquals("IPL test 8b",
+                "IPL Identity report.\n\tHost: Digitrax DCS52 host, S/N=159, S/W Version=1.0\n\tSlave: None.\n",
+                LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x32, 0x00, 0x00, 0x08, 0x00, 0x05, 0x59, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x77});
         Assert.assertEquals("IPL test 9",
                 "IPL Identity report.\n\tHost: Digitrax DT500(x) host, S/N=159, S/W Version=1.0\n\tSlave: None.\n",
@@ -1567,6 +1572,9 @@ public class LocoNetMessageInterpretTest {
                     break;
                 case 0x33:
                     s = "Digitrax DCS51 host";
+                    break;
+                case 0x34:
+                    s = "Digitrax DCS52 host";
                     break;
                 case 0x58:
                     s = "Digitrax BXP88 host";

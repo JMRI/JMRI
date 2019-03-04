@@ -165,7 +165,10 @@
       might be used externally to JMRI, such as in scripts and
       CATS, we prefer to leave the old interface in place for
       a while, marking it as "deprecated" so that people can
-      discover that it will eventually go away. The sequence is then:
+      discover that it will eventually go away. 
+      (The current list of those is available as
+      <a href="http://jmri.org/JavaDoc/doc/deprecated-list.html">part of the Javadocs</a>)
+      The sequence is then:
       <ul>
         <li>Write the new methods.
         <li>Mark the old methods with @deprecated and @Deprecated. The 

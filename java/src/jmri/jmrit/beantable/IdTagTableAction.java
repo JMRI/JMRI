@@ -41,14 +41,9 @@ public class IdTagTableAction extends AbstractTableAction<IdTag> {
      */
     public IdTagTableAction(String actionName) {
         super(actionName);
-
-        // disable ourself if there is no primary IdTag manager available
-        if (tagManager == null) {
-            setEnabled(false);
-        }
-
     }
-
+    
+    @Nonnull
     protected IdTagManager tagManager = InstanceManager.getDefault(jmri.IdTagManager.class);
 
     /**

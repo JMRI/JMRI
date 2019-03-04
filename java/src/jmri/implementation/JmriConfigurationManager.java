@@ -1,8 +1,8 @@
 package jmri.implementation;
 
 import apps.AppsBase;
-import apps.gui3.EditConnectionPreferencesDialog;
-import apps.gui3.TabbedPreferencesAction;
+import apps.gui3.tabbedpreferences.EditConnectionPreferencesDialog;
+import apps.gui3.tabbedpreferences.TabbedPreferencesAction;
 import com.alexandriasoftware.swing.JSplitButton;
 import com.alexandriasoftware.swing.action.ButtonClickedActionListener;
 import com.alexandriasoftware.swing.action.SplitButtonClickedActionListener;

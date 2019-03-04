@@ -45,14 +45,15 @@
 			train's route.
 
 			<p>
-    Locations can have spurs, yards, staging and classification/interchange tracks. Spurs are used
-    to service industries, and can optionally have <a href="#Schedules">schedules</a> assigned to
-    them which allows for very fine control over car movement and loads. Trains can be configured to
-    require a caboose or car with Flashing Rear End Device (FRED). The program generates Manifests
-    for each train and switch lists for any location. A <a href="#SwitchList">switch list</a> for a
-    location shows the work for all of the trains that will visit that location. The program can
-    also place icons representing trains on a JMRI panel. The icon can be taught to move in the
-    panel along with the train from location to location.
+    Locations can have spurs, yards, staging and classification/interchange tracks. Spurs are used to service
+    industries, and can optionally have
+    <a href="#Schedules">schedules</a> assigned to them which allows for very fine control over car movement and loads.
+    Trains can be configured to require a caboose or car with Flashing Rear End Device (FRED). The program generates
+    Manifests for each train and switch lists for any location. A
+    <a href="#SwitchList">switch list</a> for a location shows the work for all of the trains that will visit that
+    location. The program can also place
+    <a href="#PanelOptionsTrainIcons">icons</a> representing trains on a JMRI panel. The icon can be taught to move in
+    the panel along with the train from location to location.
    </p>
 
    <p>OperationsPro&trade; is included in the JMRI suite of tools and can be found under the
@@ -3724,15 +3725,14 @@
    </p>
 
    <p>
-    Enter the route name and an optional comment. This comment is shown in the <a href="#Routes">Routes</a> window, and <a
-     href="#ManifestComments">optionally</a> on your Manifests. Each route must have unique name.
-    Then press the "Add Route" button located at the bottom of the window. Now select the location
-    the train will depart by selecting the location in the menu box located at the left bottom side
-    of the window. Press "Add Location". You should now see the train's departure location in the
-    table along with the train's departure direction, the requested number of car moves, whether car
-    set outs or pick ups are allowed, the train wait time, the maximum train length departing the
-    location, and the track grade between this location and the next location in the train's route.
-    The X and Y values are where to place the train icon on a panel. The <a href="#EditRoute">Edit
+    Enter the route name and an optional comment. This comment is shown in the <a href="#Routes">Routes</a> window, and
+    <a href="#ManifestComments">optionally</a> on your Manifests. Each route must have unique name. Then press the "Add
+    Route" button located at the bottom of the window. Now select the location the train will depart by selecting the
+    location in the menu box located at the left bottom side of the window. Press "Add Location". You should now see the
+    train's departure location in the table along with the train's departure direction, the requested number of car
+    moves, whether car set outs or pick ups are allowed, the train wait time, the maximum train length departing the
+    location, and the track grade between this location and the next location in the train's route. The X and Y values
+    are where to place the <a href="#PanelOptionsTrainIcons">train icon</a> on a panel. The <a href="#EditRoute">Edit
      Route</a> below provides additional details about a location in a route.
    </p>
 
@@ -3815,11 +3815,11 @@
    </p>
 
    <p>
-    The X and Y are the coordinates on your dispatcher's panel for the optional train icon. You can
-    set the coordinates here, use the <a href="#SetTrainIconCoordinates">Set Train Icon
-     Coordinates</a> tool, or use the "SetX&amp;Y" train icon popup menu to teach the program where you
-    want the train icon placed when the train is at the specified location. Leave the X and Y
-    coordinates at zero if you want to manually move the icon or you're not using the icon feature.
+    The X and Y are the coordinates on your dispatcher's panel for the optional train icon. You can set the coordinates
+    here, use the <a href="#SetTrainIconCoordinates">Set Train Icon Coordinates</a> tool, or use the "SetX&amp;Y" <a
+     href="#PanelOptionsTrainIcons">train icon</a> popup menu to teach the program where you want the train icon placed
+    when the train is at the specified location. Leave the X and Y coordinates at zero if you want to manually move the
+    icon or you're not using the icon feature.
    </p>
    <a name="RouteComment" id="RouteComment"></a>
 
@@ -5365,16 +5365,15 @@
    <a name="TrainMove" id="TrainMove"></a>
    <h3>Moving Trains</h3>
    <p>
-    After providing your crew with a printed Manifest or location switch list, you must keep the
-    program database synchronized with the actual movement of trains on your layout. This is done by
-    the train "Move" buttons located on the right side of the <a href="#Trains">Trains</a> window.
-    Pressing the "Move" button will cause the train to depart its current location move to the next
-    location in the route. The locomotives and cars assigned to the train will travel to the next
-    location on the railroad. At each location, cars can be picked up or set out. You can also move
-    a train by selecting the train's icon and selecting "Move" from the icon's popup menu. Each
-    press of the "Move" button moves the train closer to its terminal location. When the train
-    arrives at the last location in the route, the last press of the "Move" button will terminate
-    the train. Once a train is terminated, you can build it again.
+    After providing your crew with a printed Manifest or location switch list, you must keep the program database
+    synchronized with the actual movement of trains on your layout. This is done by the train "Move" buttons located on
+    the right side of the <a href="#Trains">Trains</a> window. Pressing the "Move" button will cause the train to depart
+    its current location move to the next location in the route. The locomotives and cars assigned to the train will
+    travel to the next location on the railroad. At each location, cars can be picked up or set out. You can also move a
+    train by selecting the train's <a href="#PanelOptionsTrainIcons">icon</a> and selecting "Move" from the icon's popup
+    menu. Each press of the "Move" button moves the train closer to its terminal location. When the train arrives at the
+    last location in the route, the last press of the "Move" button will terminate the train. Once a train is
+    terminated, you can build it again.
    </p>
 
    <a name="TerminateTrain" id="TerminateTrain"></a>

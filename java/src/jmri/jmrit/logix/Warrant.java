@@ -583,9 +583,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                 String speed = getSpeedMessage(_curSpeedType);
 
                 switch (_engineer.getRunState()) {
-                    case Warrant.HALT:
-                        return Bundle.getMessage("Halted", blockName, cmdIdx);
-
                     case Warrant.RESUME:
                         return Bundle.getMessage("reStarted", blockName, cmdIdx, speed);
 
@@ -599,6 +596,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                         }
                         return Bundle.getMessage("Aborted", blockName, cmdIdx);
 
+                    case Warrant.HALT:
                     case Warrant.WAIT_FOR_CLEAR:
                         String s = "";
                         if (_waitForSignal) {
@@ -613,6 +611,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                             }
                         } else if (_waitForBlock) {
                             s = Bundle.getMessage("Occupancy");
+                        } else {
+                            return Bundle.getMessage("Halted", blockName, cmdIdx);
                         }
                         return Bundle.getMessage("RampWaitForClear", 
                                 getTrainName(), getCurrentBlockName(), s);
@@ -986,7 +986,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                     cancelDelayRamp();
                     _engineer.rampSpeedTo(Warrant.Stop, 0, false);  // immediate ramp down
                     _engineer.setHalt(true);
-                    setMovement(MID);
+//                    setMovement(MID);
                     ret = true;
                     break;
                 case RESUME:
@@ -1000,20 +1000,27 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                             // This is user's decision to reset and override wait flags
                             Engineer.ThrottleRamp ramp = _engineer.getRamp();
                             if (ramp == null || ramp.ready) {   // do not change flags when ramping
-                                _engineer.setHalt(false);
-                                _engineer.setWaitforClear(false);
+                                // recheck flags
+                                if (_idxCurrentOrder < _orders.size() - 1 &&
+                                		Stop.equals(getSpeedTypeForBlock(_idxCurrentOrder + 1))) {
+                                	break;	// cannot overide flags
+                                }
+                            	if (_idxCurrentOrder == 0) {
+                                    _engineer.setHalt(false);
+                            	}
                                 _waitForSignal = false;
                                 _waitForBlock = false;
                                 _waitForWarrant = false;
+//                                _engineer.setWaitforClear(false);
+                                // engineer will clear its flags when ramp completes
+                                _engineer.rampSpeedTo(_curSpeedType, 0, false);
                             }
-                            // engineer will clear its flags when ramp completes
-                            _engineer.rampSpeedTo(_curSpeedType, 0, false);
-                         } else if (runState == WAIT_FOR_TRAIN || runState == SPEED_RESTRICTED) {
-                             // user wants to increase throttle of stalled train slowly
-                             float speedSetting = _engineer.getSpeedSetting();
-                             _engineer.setSpeed(speedSetting + _speedUtil.getRampThrottleIncrement());
-                         } else {    // last resort from user to get on script
-                             _engineer.setSpeed(_speedUtil.modifySpeed(_engineer.getScriptSpeed(), _curSpeedType, _engineer.getIsForward()));
+                        } else if (runState == WAIT_FOR_TRAIN || runState == SPEED_RESTRICTED) {
+                            // user wants to increase throttle of stalled train slowly
+                            float speedSetting = _engineer.getSpeedSetting();
+                            _engineer.setSpeed(speedSetting + _speedUtil.getRampThrottleIncrement());
+                        } else {    // last resort from user to get on script
+                            _engineer.setSpeed(_speedUtil.modifySpeed(_engineer.getScriptSpeed(), _curSpeedType, _engineer.getIsForward()));
                         }
                         ret = true;
                     } else {    // train must be lost. 
@@ -1058,17 +1065,21 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
                     ret = true;
                     break;
                 case DEBUG:
-                    if (log.isDebugEnabled()) {
-                        ret = debugInfo();
-                    }
+                    ret = debugInfo();
                     break;
                 default:
             }
         }
+        int state = runState;
+        if ( state == Warrant.HALT) {
+        	if (_waitForSignal || _waitForBlock || _waitForWarrant) {
+        		state = WAIT_FOR_CLEAR;
+        	}
+        }
         if (ret) {
-            fireRunStatus("controlChange", runState, idx);
+            fireRunStatus("controlChange", state, idx);
         } else {
-            fireRunStatus("controlFailed", runState, idx);
+            fireRunStatus("controlFailed", state, idx);
         }
         return ret;
     }

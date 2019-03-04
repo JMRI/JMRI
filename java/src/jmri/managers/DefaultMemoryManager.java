@@ -1,11 +1,9 @@
 package jmri.managers;
 
-import jmri.Memory;
-import jmri.implementation.DefaultMemory;
-
-import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
+import jmri.Memory;
+import jmri.implementation.DefaultMemory;
 
 /**
  * Provide the concrete implementation for the Internal Memory Manager.

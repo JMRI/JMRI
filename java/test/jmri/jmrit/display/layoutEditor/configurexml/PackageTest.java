@@ -16,6 +16,7 @@ import org.junit.runners.Suite;
    PositionablePointXmlTest.class,
    TrackSegmentXmlTest.class,
    BundleTest.class,
+   LayoutShapeXmlTest.class,
    LayoutTrackDrawingOptionsXmlTest.class,
 })
 /**

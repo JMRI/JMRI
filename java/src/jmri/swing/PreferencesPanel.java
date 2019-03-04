@@ -86,7 +86,7 @@ public interface PreferencesPanel extends JmriServiceProviderInterface {
      * Save any changes to preferences.
      *
      * This method is called for every instance of a PreferencesPanel that is
-     * loaded by {@link apps.gui3.TabbedPreferences} if {@link #isPersistant()}
+     * loaded by {@link apps.gui3.tabbedpreferences.TabbedPreferences} if {@link #isPersistant()}
      * is false.
      */
     public abstract void savePreferences();
