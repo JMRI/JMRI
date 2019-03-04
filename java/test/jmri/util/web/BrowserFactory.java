@@ -43,6 +43,7 @@ public class BrowserFactory {
                     firefoxBinary.addCommandLineOptions("--headless");
                     FirefoxOptions firefoxOptions = new FirefoxOptions();
                     firefoxOptions.setBinary(firefoxBinary);
+		    firefoxOptions.setLogLevel(org.openqa.selenium.firefox.FirefoxDriverLogLevel.ERROR);
                     driver = new EventFiringWebDriver(new FirefoxDriver(firefoxOptions));
                     } else {
                        driver = new EventFiringWebDriver(new FirefoxDriver());
