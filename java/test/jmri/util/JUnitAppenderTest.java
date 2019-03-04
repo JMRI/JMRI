@@ -1,10 +1,13 @@
 package jmri.util;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Test;
+
+import static org.junit.Assume.assumeTrue;
+
 import org.apache.log4j.Level;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,7 +16,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright 2007
  */
-public class JUnitAppenderTest extends TestCase {
+public class JUnitAppenderTest {
 
     /**
      * If this constant is true, some tests will run that are expected to log
@@ -21,16 +24,19 @@ public class JUnitAppenderTest extends TestCase {
      */
     boolean allTests = false;
 
+    @Test
     public void testInstance() {
         Assert.assertTrue("Instance exists, e.g. initialization for tests OK", JUnitAppender.instance() != null);
     }
 
+    @Test
     public void testExpectedErrorMessage() {
         String msg = "Message for testing";
         log.error(msg);
         JUnitAppender.assertErrorMessage(msg);
     }
 
+    @Test
     public void testCheckForMessageError() {
         String msg = "Message for testing to find";
         log.error("Dummy");
@@ -41,6 +47,7 @@ public class JUnitAppenderTest extends TestCase {
         Assert.assertNull(JUnitAppender.checkForMessage(msg));
     }
     
+    @Test
     public void testCheckForMessageWarn() {
         String msg = "Message for testing to find";
         log.error("Dummy");
@@ -50,6 +57,7 @@ public class JUnitAppenderTest extends TestCase {
         Assert.assertNull(JUnitAppender.checkForMessage(msg));
     }
     
+    @Test
     public void testCheckForMessageInfo() {
         String msg = "Message for testing to find";
         log.error("Dummy");
@@ -59,6 +67,7 @@ public class JUnitAppenderTest extends TestCase {
         Assert.assertNull(JUnitAppender.checkForMessage(msg));
     }
 
+    @Test
     public void testCheckForMessageStartError() {
         String msg = "Message for testing to find";
         log.error("Dummy");
@@ -73,6 +82,7 @@ public class JUnitAppenderTest extends TestCase {
         Assert.assertNull(JUnitAppender.checkForMessageStartingWith(msg));
     }
     
+    @Test
     public void testCheckForMessageStartWarn() {
         String msg = "Message for testing to find";
         log.error("Dummy");
@@ -85,6 +95,7 @@ public class JUnitAppenderTest extends TestCase {
         Assert.assertNull(JUnitAppender.checkForMessageStartingWith(msg));
     }
     
+    @Test
     public void testCheckForMessageStartInfo() {
         String msg = "Message for testing to find";
         log.error("Dummy");
@@ -104,6 +115,8 @@ public class JUnitAppenderTest extends TestCase {
     boolean cacheError;
     boolean cacheWarn;
     boolean cacheInfo;
+
+    @Test
     public void testUnexpectedCheck() {
         testingUnexpected = true;
         // cache values
@@ -129,36 +142,46 @@ public class JUnitAppenderTest extends TestCase {
         log.info("This INFO message was emitted to test the entire logging chain, please don't remove");
     }
 
+    @Test
     public void testExpectedWarnMessage() {
         String msg = "Message for testing";
         log.warn(msg);
         JUnitAppender.assertWarnMessage(msg);
     }
 
+    @Test
     public void testExpectedMessageAsError() {
         String msg = "Message for testing";
         log.error(msg);
         JUnitAppender.assertMessage(msg);
     }
 
+    @Test
     public void testExpectedMessageAsWarn() {
         String msg = "Message for testing";
         log.warn(msg);
         JUnitAppender.assertMessage(msg);
     }
 
+    @Test
     public void testExpectedMessageAsInfo() {
+        // info is usually turned off, so this doesn't pass in most cases
+        assumeTrue(log.isInfoEnabled());
         String msg = "Message for testing";
         log.info(msg);
-        // JUnitAppender.assertMessage(msg);  // info is usually turned off, so this doesn't pass
+        JUnitAppender.assertMessage(msg);
     }
 
+    @Test
     public void testExpectedMessageAsDebug() {
+        // debug is usually turned off, so this doesn't pass in most cases
+        assumeTrue(log.isDebugEnabled());
         String msg = "Message for testing";
         log.debug(msg);
-        // JUnitAppender.assertMessage(msg);  // debug is usually turned off, so this doesn't pass
+        JUnitAppender.assertMessage(msg);
     }
 
+    @Test
     public void testIgnoreLowerBeforeExpectedWarnMessage() {
         log.debug("this is a DEBUG, should still pass");
         log.info("this is an INFO, should still pass");
@@ -169,6 +192,7 @@ public class JUnitAppenderTest extends TestCase {
         JUnitAppender.assertWarnMessage(msg);
     }
 
+    @Test
     public void testExpectedWarnAfterDebugMessage() {
         String msg = "Message for testing";
         log.debug("debug to skip");
@@ -176,6 +200,7 @@ public class JUnitAppenderTest extends TestCase {
         JUnitAppender.assertWarnMessage(msg);
     }
 
+    @Test
     public void testUnexpectedMessage() {
         if (allTests) {
             String msg = "Message should appear in log";
@@ -183,27 +208,32 @@ public class JUnitAppenderTest extends TestCase {
         }
     }
 
+    @Test
     public void testClearBacklogDefaultNone() {
         Assert.assertEquals(0,JUnitAppender.clearBacklog());
     }
         
+    @Test
     public void testClearBacklogDefaultWarn() {
         log.warn("warn message");
         Assert.assertEquals(1,JUnitAppender.clearBacklog());
         Assert.assertEquals(0,JUnitAppender.clearBacklog());
     }
         
+    @Test
     public void testClearBacklogDefaultError() {
         log.error("error message");
         Assert.assertEquals(1,JUnitAppender.clearBacklog());
         Assert.assertEquals(0,JUnitAppender.clearBacklog());
     }
 
+    @Test
     public void testClearBacklogDefaultInfo() {
         log.info("info message");
         Assert.assertEquals(0,JUnitAppender.clearBacklog());
     }
 
+    @Test
     public void testClearBacklogDefaultMultiple() {
         log.info("info 1");
         log.warn("warn 1");
@@ -212,6 +242,7 @@ public class JUnitAppenderTest extends TestCase {
         Assert.assertEquals(0,JUnitAppender.clearBacklog());
     }
     
+    @Test
     public void testClearBacklogAtInfoWithInfo() {
         log.info("info message");
 
@@ -222,12 +253,14 @@ public class JUnitAppenderTest extends TestCase {
         Assert.assertEquals(0,JUnitAppender.clearBacklog(org.apache.log4j.Level.INFO));
     }
 
+    @Test
     public void testClearBacklogAtInfoWithWarn() {
         log.warn("warn message");
         Assert.assertEquals(1,JUnitAppender.clearBacklog(org.apache.log4j.Level.INFO));
         Assert.assertEquals(0,JUnitAppender.clearBacklog(org.apache.log4j.Level.INFO));
     }
 
+    @Test
     public void suppressErrorMessage() {
         String msg = "Message for testing to find";
 
@@ -252,32 +285,13 @@ public class JUnitAppenderTest extends TestCase {
         Assert.assertFalse(JUnitAppender.verifyNoBacklog());
     }
 
-
-    // from here down is testing infrastructure
-    public JUnitAppenderTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", JUnitAppenderTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(JUnitAppenderTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    @Override
-    protected void setUp() {
+    @Before
+    public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
 
         jmri.util.JUnitUtil.tearDown();     
 
