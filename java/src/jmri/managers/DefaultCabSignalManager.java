@@ -25,6 +25,14 @@ import jmri.implementation.DefaultCabSignal;
  *
  * @author Paul Bender Copyright (C) 2019
  */
-public class DefaultCabSignalManager extends AbstractCabSignalManager implements jmri.InstanceManagerAutoDefault {
+public class DefaultCabSignalManager extends AbstractCabSignalManager {
+
+    /**
+     * { @inheritDoc }
+     */
+    @Override
+    protected CabSignal createCabSignal(LocoAddress address){
+           return new DefaultCabSignal(address);
+    }
 
 }

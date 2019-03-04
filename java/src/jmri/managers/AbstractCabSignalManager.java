@@ -60,11 +60,19 @@ abstract public class AbstractCabSignalManager implements CabSignalManager {
            initBlocks();
         }
         if(!signalList.containsKey(address)){
-           signalList.put(address,new DefaultCabSignal(address));
+           signalList.put(address,createCabSignal(address));
            notifyCabSignalListChanged();
         }
         return signalList.get(address); 
     }
+
+    /**
+     * Create a new cab signal with the given address.
+     *
+     * @param address the address the cba signal is for
+     * @return a new cab signal
+     */
+    abstract protected CabSignal createCabSignal(LocoAddress address);
 
     /**
      * Remove an old CabSignal.
