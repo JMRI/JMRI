@@ -456,11 +456,13 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
     protected static TranspondingTagManager tagManager;
 
     static public TranspondingTagManager getIdTagManager() {
-        if (tagManager == null) {
-            tagManager = new TranspondingTagManager();
-            InstanceManager.setIdTagManager(tagManager);
+        synchronized (LocoNetSystemConnectionMemo.class) { // since tagManager can be null, can't synch on that
+            if (tagManager == null) {
+                tagManager = new TranspondingTagManager();
+                InstanceManager.setIdTagManager(tagManager);
+            }
+            return tagManager;
         }
-        return tagManager;
     }
 
     @Override
