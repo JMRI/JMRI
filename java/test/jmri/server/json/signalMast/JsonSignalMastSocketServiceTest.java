@@ -71,7 +71,6 @@ public class JsonSignalMastSocketServiceTest {
         JsonNode message;
         JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
         JsonSignalMastSocketService service = new JsonSignalMastSocketService(connection);
-
         //create a signalmast for testing
         String sysName = "IF$shsm:basic:one-searchlight(IH2)";
         String userName = "SM2";
@@ -81,7 +80,7 @@ public class JsonSignalMastSocketServiceTest {
 
         try {
             // SignalMast Stop
-            message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, userName).put(JSON.STATE, "Stop");
+            message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, sysName).put(JSON.STATE, "Stop");
             service.onMessage(JsonSignalMast.SIGNAL_MAST, message, JSON.POST, Locale.ENGLISH);
             Assert.assertEquals("Stop", s.getAspect()); //aspect should be Stop
         } catch (IOException | JmriException | JsonException ex) {
@@ -91,7 +90,7 @@ public class JsonSignalMastSocketServiceTest {
         // Try to set SignalMast to Unknown, should throw error, remain at Stop
         Exception exception = null;
         try {
-            message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, userName).put(JSON.STATE, JSON.ASPECT_UNKNOWN);
+            message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, sysName).put(JSON.STATE, JSON.ASPECT_UNKNOWN);
             service.onMessage(JsonSignalMast.SIGNAL_MAST, message, JSON.POST, Locale.ENGLISH);
             Assert.assertEquals("Stop", s.getAspect());
         } catch (IOException | JmriException | JsonException ex) {

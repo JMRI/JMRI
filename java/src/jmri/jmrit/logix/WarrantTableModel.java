@@ -474,9 +474,14 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
             w.setTrainName((String) value);
             break;
         case ADDRESS_COLUMN:
-            String addr = (String) value;
-            if (!w.getSpeedUtil().setDccAddress(addr)) {
-                msg = Bundle.getMessage("BadDccAddress", addr);                
+            if (w.getRunMode() == Warrant.MODE_NONE) {
+                String addr = (String) value;
+                if (!w.getSpeedUtil().setDccAddress(addr)) {
+                    msg = Bundle.getMessage("BadDccAddress", addr);                
+                }
+            } else {
+                msg = w.getRunModeMessage();
+                msg = Bundle.getMessage("CannotChangeAddress", w.getDisplayName(), msg);
             }
             break;
         case ALLOCATE_COLUMN:
@@ -518,10 +523,16 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
             }
             break;
         case AUTO_RUN_COLUMN:
-            msg = _frame.runTrain(w, Warrant.MODE_RUN);
+            msg = checkAddressInUse(w);
+            if (msg == null) {
+            	msg = _frame.runTrain(w, Warrant.MODE_RUN);
+            }
             break;
         case MANUAL_RUN_COLUMN:
-            msg = _frame.runTrain(w, Warrant.MODE_MANUAL);
+            msg = checkAddressInUse(w);
+            if (msg == null) {
+            	msg = _frame.runTrain(w, Warrant.MODE_MANUAL);
+            }
             break;
         case CONTROL_COLUMN:
             // Message is set when propertyChangeEvent (below) is received from
@@ -639,6 +650,10 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
                     break;
                 }
             }
+            int row = getRow(bean);
+            if (row < 0) {	// warrant deleted
+            	return;
+            }
             if (property.equals("blockChange")) {
                 OBlock oldBlock = (OBlock) e.getOldValue();
                 OBlock newBlock = (OBlock) e.getNewValue();
@@ -667,15 +682,9 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
                         bean.getTrainName(), speed, name),
                         Color.red, true);
             } else if (property.equals("SpeedChange")) {
-                int row = getRow(bean);
-                if (row>=0) {
-                    fireTableRowsUpdated(row, row);                    
-                }
+            	fireTableCellUpdated(row, CONTROL_COLUMN);
             } else if (property.equals("WaitForSync")) {
-                int row = getRow(bean);
-                if (row>=0) {
-                    fireTableRowsUpdated(row, row);                    
-                }
+            	fireTableCellUpdated(row, CONTROL_COLUMN);
             } else if (property.equals("runMode")) {
                 int oldMode = ((Integer) e.getOldValue()).intValue();
                 int newMode = ((Integer) e.getNewValue()).intValue();
@@ -777,6 +786,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
                         bean.getTrainName(), stateStr,
                         Bundle.getMessage(Warrant.CNTRL_CMDS[newCntrl])),
                         color, true);
+                fireTableCellUpdated(row, CONTROL_COLUMN);
             } else if (property.equals("controlFailed")) {
                 String blkName = bean.getCurrentBlockName();
                 String stateStr;
@@ -791,6 +801,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
                         bean.getTrainName(), stateStr,
                         Bundle.getMessage(Warrant.CNTRL_CMDS[newCntrl])),
                         Color.red, true);
+                fireTableCellUpdated(row, CONTROL_COLUMN);
             } else if (property.equals("SensorSetCommand")) {
                 String action = (String) e.getOldValue();
                 String sensorName = (String) e.getNewValue();
@@ -806,10 +817,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
                     _frame.setStatusText(Bundle.getMessage("waitSensorChange",
                             bean.getTrainName(), sensorName), myGreen, true);
                 }
-                int row = getRow(bean);
-                if (row>=0) {
-                    fireTableRowsUpdated(row, row);                    
-                }
+                fireTableCellUpdated(row, CONTROL_COLUMN);                    
             } else if (property.equals("throttleFail")) {
                 _frame.setStatusText(Bundle.getMessage("ThrottleFail",
                         bean.getTrainName(), e.getNewValue()), Color.red, true);

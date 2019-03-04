@@ -3,6 +3,7 @@ package jmri.jmrit.beantable;
 import java.awt.event.ActionEvent;
 import java.text.DateFormat;
 import java.util.Date;
+import javax.annotation.Nonnull;
 import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -37,13 +38,10 @@ public class RailComTableAction extends AbstractTableAction<IdTag> {
     public RailComTableAction(String actionName) {
         super(actionName);
 
-        // disable ourself if there is no primary RailComm manager available
-        if (tagManager == null) {
-            setEnabled(false);
-        }
         includeAddButton = false;
     }
 
+    @Nonnull
     protected RailComManager tagManager = InstanceManager.getDefault(jmri.RailComManager.class);
 
     public RailComTableAction() {

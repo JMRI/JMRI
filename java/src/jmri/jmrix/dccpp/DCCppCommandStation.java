@@ -150,6 +150,7 @@ public class DCCppCommandStation implements jmri.CommandStation {
 
         int reg = 0;  // register 0, so this doesn't repeat
         DCCppMessage msg = DCCppMessage.makeWriteDCCPacketMainMsg(reg, packet.length, packet);
+        log.debug("sendPacket:'{}'", msg.toString());
 
         for (int i = 0; i < repeats; i++) {
             _tc.sendDCCppMessage(msg, null);

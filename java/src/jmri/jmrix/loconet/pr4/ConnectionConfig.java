@@ -6,7 +6,7 @@ import jmri.util.SystemType;
  * Definition of objects to handle configuring a PR4 layout connection via a
  * PR2Adapter object.
  * <p>
- * Copied from loconet.pr3.ConnectionConfig.java
+ * Copied from loconet.pr3.ConnectionConfig
  * <p>
  * @author Bob Jacobsen Copyright (C) 2001, 2003, 2008, 2010
  * @author B. Milhaupt Copyright (C) 2019

@@ -46,7 +46,7 @@ public class JythonAutomaton extends AbstractAutomaton {
             initialize.invoke(null, (Object[]) null);
 
             // interp = new PythonInterpreter();
-            interp = Class.forName("org.python.util.PythonInterpreter").newInstance();
+            interp = Class.forName("org.python.util.PythonInterpreter").getDeclaredConstructor().newInstance();
 
             // load some general objects
             java.lang.reflect.Method set

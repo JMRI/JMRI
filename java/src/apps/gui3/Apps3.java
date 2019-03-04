@@ -1,5 +1,6 @@
 package apps.gui3;
 
+import apps.gui3.tabbedpreferences.TabbedPreferencesAction;
 import apps.AppsBase;
 import apps.SplashWindow;
 import apps.SystemConsole;

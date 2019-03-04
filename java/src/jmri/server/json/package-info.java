@@ -34,6 +34,12 @@
  * a <code>{"type":"pong"}</code> response.</li>
  * <li>a sign off in the form: <code>{"type":"goodbye"}</code> to which an
  * identical response is sent before the connection gets closed.</li></ul>
+ * <p>
+ * <strong>Note</strong> The <em>name</em> property of a data object <strong>must</strong>
+ * be the system name, not the user name, of the requested object (usually a {@link jmri.NamedBean}),
+ * except when creating an object using a {@code put} method and the {@link jmri.Manager}
+ * for that class of NamedBean supports creating a NamedBean without a system name. It
+ * is generally safer to always use system names.</p>
  *
  * <h2>Responses</h2>
  * <p>
