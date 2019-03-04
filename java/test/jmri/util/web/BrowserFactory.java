@@ -38,16 +38,17 @@ public class BrowserFactory {
                 driver = drivers.get("Firefox");
                 if (driver == null) {
                   WebDriverManager.getInstance(FirefoxDriver.class).setup();
+                  FirefoxBinary firefoxBinary = new FirefoxBinary();
+                  FirefoxOptions firefoxOptions = new FirefoxOptions();
                   if(GraphicsEnvironment.isHeadless()) {
-                    FirefoxBinary firefoxBinary = new FirefoxBinary();
-                    firefoxBinary.addCommandLineOptions("--headless");
-                    FirefoxOptions firefoxOptions = new FirefoxOptions();
-                    firefoxOptions.setBinary(firefoxBinary);
-		    firefoxOptions.setLogLevel(org.openqa.selenium.firefox.FirefoxDriverLogLevel.ERROR);
-                    driver = new EventFiringWebDriver(new FirefoxDriver(firefoxOptions));
+                       firefoxBinary.addCommandLineOptions("--headless");
+                       firefoxOptions.setBinary(firefoxBinary);
+		       firefoxOptions.setLogLevel(org.openqa.selenium.firefox.FirefoxDriverLogLevel.ERROR);
                     } else {
-                       driver = new EventFiringWebDriver(new FirefoxDriver());
+                       firefoxOptions.setBinary(firefoxBinary);
+		       firefoxOptions.setLogLevel(org.openqa.selenium.firefox.FirefoxDriverLogLevel.ERROR);
                     }
+                    driver = new EventFiringWebDriver(new FirefoxDriver(firefoxOptions));
                     driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
                     drivers.put("Firefox", driver);
                 }
@@ -56,13 +57,13 @@ public class BrowserFactory {
                 driver = drivers.get("Chrome");
                 if (driver == null) {
                    WebDriverManager.getInstance(ChromeDriver.class).setup();
+                   ChromeOptions chromeOptions = new ChromeOptions();
                    if(GraphicsEnvironment.isHeadless()) {
-                      ChromeOptions chromeOptions = new ChromeOptions();
                       chromeOptions.addArguments("--headless --log-level=3");
-                      driver = new EventFiringWebDriver(new ChromeDriver(chromeOptions));
                   } else {
-                     driver = new EventFiringWebDriver(new ChromeDriver());
+		      chromeOptions.addArguments("--log-level=3");
                   }
+                  driver = new EventFiringWebDriver(new ChromeDriver(chromeOptions));
                   driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
                   drivers.put("Chrome", driver);
                 }
