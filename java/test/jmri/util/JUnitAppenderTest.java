@@ -1,13 +1,12 @@
 package jmri.util;
 
-import org.junit.Test;
-
-import static org.junit.Assume.assumeTrue;
-
 import org.apache.log4j.Level;
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -164,18 +163,20 @@ public class JUnitAppenderTest {
     }
 
     @Test
+    @Ignore("last line was commented out under JUnit 3, ignoring under JUnit 4")
     public void testExpectedMessageAsInfo() {
         // info is usually turned off, so this doesn't pass in most cases
-        assumeTrue(log.isInfoEnabled());
+        Assume.assumeTrue(log.isInfoEnabled());
         String msg = "Message for testing";
         log.info(msg);
         JUnitAppender.assertMessage(msg);
     }
 
     @Test
+    @Ignore("last line was commented out under JUnit 3, ignoring under JUnit 4")
     public void testExpectedMessageAsDebug() {
         // debug is usually turned off, so this doesn't pass in most cases
-        assumeTrue(log.isDebugEnabled());
+        Assume.assumeTrue(log.isDebugEnabled());
         String msg = "Message for testing";
         log.debug(msg);
         JUnitAppender.assertMessage(msg);
@@ -244,11 +245,8 @@ public class JUnitAppenderTest {
     
     @Test
     public void testClearBacklogAtInfoWithInfo() {
+        Assume.assumeTrue(log.isInfoEnabled());
         log.info("info message");
-
-        // this test skipped if INFO is not being logged
-        if (org.apache.log4j.Category.getRoot().getLevel().toInt() > Level.INFO.toInt()) return;  // redo for Log4J2
-        
         Assert.assertEquals(1,JUnitAppender.clearBacklog(org.apache.log4j.Level.INFO));
         Assert.assertEquals(0,JUnitAppender.clearBacklog(org.apache.log4j.Level.INFO));
     }
@@ -260,7 +258,6 @@ public class JUnitAppenderTest {
         Assert.assertEquals(0,JUnitAppender.clearBacklog(org.apache.log4j.Level.INFO));
     }
 
-    @Test
     public void suppressErrorMessage() {
         String msg = "Message for testing to find";
 
