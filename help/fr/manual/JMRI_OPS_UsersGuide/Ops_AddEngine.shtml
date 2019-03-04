@@ -1,7 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Translation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-03-03 -->
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -26,275 +26,275 @@
     <div id="mainContent">
       <a name="Top" id="Top"></a>
 
-      <h1>Using JMRI&reg; to Operate Trains</h1>
+      
 
-      <h2>OperationsPro: Add Locomotive window</h2>
+	<h1>Utilisation de JMRI&reg; exploiter des trains</h1>
 
-      <div align="right">
-        <p><a href="Ops_Engines.shtml">Back</a></p>
+      <h2>OperationsPro: Fen&#234;tre Ajouter une Locomotive</h2>
 
-        <p><a href="index.shtml#Operations">Back to Index</a></p>
-      </div>
+      <div align = "right">
+        <p><a href="Ops_Engines.shtml">Retour</a></p>
 
-      <p>The Add Locomotive window is displayed.</p>
+        <p><a href="index.shtml#Operations"> Retour &#224; l'Index</a></p>
+     </div>
 
-      <table width="90%" border="0" cellspacing="1" cellpadding=
+      <p>La fen&#234;tre Ajouter une locomotive s'affiche.</p>
+
+      <table width = "90%" border = "0" cellspacing = "1" cellpadding =
       "2">
         <tr>
-          <td align="left" valign="top"><img src=
-          "images/Ops_AddEngineMenu.png" width="471" height="88"
-          alt="Add Engine Menu"></td>
+          <td align = "left" valign = "top"> <img src =
+          "images/Ops_AddEngineMenu.png" width = "471" height = "88"
+          alt = "Menu Ajouter moteur"></td>
 
-          <td align="left" valign="top">
-            <p>The Add Locomotive pane's Window and Help menus are
-            the standard JMRI&reg; menus used on most JMRI
-            windows.</p>
-          </td>
-        </tr>
+          <td align = "left" valign = "top">
+            <p>Les menus Fen&#234;tre et Aide de la sous-fen&#234;tre Ajouter une 
+            locomotive correspondent &#224; la norme des menus JMRI&reg; 
+            utilis&#233;s sur la plupart des fen&#234;tres JMRI.</p>
+         </td>
+       </tr>
 
         <tr>
-          <td align="left" valign="top"><img src=
-          "images/Ops_AddEngineRoad.png" width="457" height="113"
-          alt="road"></td>
+          <td align = "left" valign = "top"> <img src =
+          "images/Ops_AddEngineRoad.png" width = "457" height = "113"
+          alt = "route"></td>
 
-          <td align="left" valign="top">
-            <p>Select the Road <select name="select" id="select">
+          <td align = "left" valign = "top">
+            <p>S&#233;lectionnez la Ligne <select name = "select" id = "select">
               <option>
                 AA
-              </option>
-            </select> for the engine. If the desired Road Name
-            abbreviation doesn't exist, press <input type="submit"
-            name="button" id="button" value="Edit"> to open the
-            <a href="Ops_EngineAttributes.shtml">Edit Locomotive
-            Attributes</a> dialog for Road.</p>
-          </td>
-        </tr>
+             </option>
+           </select> pour la machine. Si l'abr&#233;viation de nom de ligne 
+           souhait&#233;e n'existe pas, appuyez sur <input type = "submit" 
+           name = "button" id = "button" value = "&#201;diter"> pour ouvrir
+           le dialogue<a ref="Ops_EngineAttributes.shtml">Editer les Attributs 
+           d'une Locomotive.</a> pour la Ligne.</P>
+         </td>
+       </tr>
 
         <tr>
-          <td align="left" valign="top"><img src=
-          "images/Ops_CarNumber.png" width="474" height="81" alt=
-          "Engine number"></td>
+          <td align = "left" valign = "top"> <img src =
+          "images/Ops_CarNumber.png" width = "474" height = "81" alt =
+          "Num&#233;ro de moteur"></td>
 
-          <td align="left" valign="top">
-            <p>Enter the Locomotive's Road Number <input name=
-            "textfield" type="text" id="textfield" size="12"> Use
-            <input type="submit" name="button2" id="button2" value=
-            "Clear"> to remove your entry if you make a typing
-            error.</p>
-          </td>
-        </tr>
+          <td align = "left" valign = "top">
+            <p>Entrez le Num&#233;ro de Ligne de la Locomotive <input name=
+            "textfield" type = "text" id = "textfield" size = "12"> Utiliser
+            <type input= "submit" nom = "bouton2" id = "bouton2" value =
+            "Effacer"> pour supprimer votre saisie si vous tapez une
+            erreur.</p>
+         </td>
+       </tr>
 
         <tr>
-          <td align="left" valign="top"><img src=
-          "images/Ops_EngineModel.png" width="475" height="101"
-          alt="Engine Model"></td>
+          <td align = "left" valign = "top"> <img src =
+          "images/Ops_EngineModel.png" width = "475" height = "101"
+          alt = "Mod&#232;le de moteur"></td>
 
-          <td align="left" valign="top">
-            <p>Select the Locomotive Model <select name="select2"
-            id="select2">
+          <td align = "left" valign = "top">
+            <p>S&#233;lectionnez le mod&#232;le de locomotive <select name = "select2"
+            id = "select2">
               <option>
                 P42
-              </option>
-            </select> If the model you need is not in the list then
-            press <input type="submit" name="button3" id="button3"
-            value="Edit"> and the <a href=
-            "Ops_EngineAttributes.shtml">Edit Locomotive
-            Attributes</a> dialog for Model will open.</p>
+             </option>
+           </select> Si le mod&#232;le dont vous avez besoin ne figure pas 
+           dans la liste, appuyez sur <input type = "submit" name = "button3" id = "button3".
+            value = "&#201;diter"> et le <a href = "Ops_EngineAttributes.shtml">
+				La bo&#238;te de dialogue Modifier les attributs de locomotive
+				</a> du mod&#232;le s'ouvre.</P>
 
-            <p>The program allows you to organize your engines by
-            Model. Each Model can only have one engine Type,
-            length, weight and horsepower rating associated with
-            it. For example, if you assign the model name "RS11" to
-            a set of locomotives, when you change the length of one
-            of the RS11's, the length will also change for the
-            others.</p>
-          </td>
-        </tr>
+            <p>Le programme vous permet d'organiser vos moteurs par 
+            Mod&#232;le. Chaque Mod&#232;le ne peut &#234;tre associ&#233; qu'&#224; un Type de 
+            machine, &#224; sa longueur, &#224; son poids et &#224; sa puissance. 
+            Par exemple, si vous attribuez le nom de mod&#232;le "RS11" 
+            &#224; un ensemble de locomotives, lorsque vous modifiez la 
+            longueur de l'une des RS11, celle-ci change &#233;galement pour 
+            les autres.</p>
+         </td>
+       </tr>
 
         <tr>
-          <td align="left" valign="top"><img src=
-          "images/Ops_EngineType.png" width="471" height="93" alt=
-          "Engine Type"></td>
+          <td align = "left" valign = "top"> <img src =
+          "images/Ops_EngineType.png" width = "471" height = "93" alt =
+          "Type de moteur"></td>
 
-          <td align="left" valign="top">
-            <p>Now select the locomotive's <strong>Type</strong>
-            <select name="select3" id="select3">
+          <td align = "left" valign = "top">
+            <p>S&#233;lectionnez maintenant le <strong>Type</strong> de la 
+            locomotive <select name = "select3" id = "select3">
               <option>
                 Diesel
-              </option>
-            </select> If the type you need is not in the list then
-            press <input type="submit" name="button4" id="button4"
-            value="Edit"> and the <a href=
-            "Ops_EngineAttributes.shtml">Edit Locomotive
-            Attributes</a> dialog for Type will open.</p>
-          </td>
-        </tr>
+             </option>
+           </select> Si le type dont vous avez besoin ne figure pas dans 
+           la liste, appuyez sur <input type = "submit" name = "button4" id = "button4".
+            value = "&#201;diter"> et le <a href =
+            "Ops_EngineAttributes.shtml">La bo&#238;te de dialogue Modifier 
+            les attributs de locomotive</a> pour le Type s'ouvre.</P>
+         </td>
+       </tr>
 
         <tr>
-          <td align="left" valign="top"><img src=
-          "images/Ops_CarLength.png" width="470" height="104" alt=
-          "Engine Length"></td>
+          <td align = "left" valign = "top"> <img src =
+          "images/Ops_CarLength.png" width = "470" height = "104" alt =
+          "Longueur du moteur"></td>
 
-          <td align="left" valign="top">
-            <p>Now select the locomotive's <strong>Length</strong>
-            <select name="select4" id="select4">
+          <td align = "left" valign = "top">
+            <p>S&#233;lectionnez maintenant la <strong>Longueur</strong> de la locomotive.
+            <select name = "select4" id = "select4">
               <option>
                 60
-              </option>
-            </select> If the length you need is not in the list
-            then press <input type="submit" name="button5" id=
-            "button5" value="Edit"> and the <a href=
-            "Ops_EngineAttributes.shtml">Edit Locomotive
-            Attributes</a> dialog for Length will open.</p>
-          </td>
-        </tr>
+             </option>
+           </select> Si la longueur dont vous avez besoin ne figure pas 
+           dans la liste, appuyez sur <input type = "submit" 
+           name = "button5" id = "button5" value = "&#201;diter"> et <a href =.
+            "Ops_EngineAttributes.shtml">La bo&#238;te de dialogue Modifier 
+            les attributs de locomotive</a> pour la Longueur s'ouvre.</P>
+         </td>
+       </tr>
 
         <tr>
-          <td align="left" valign="top"><img src=
-          "images/Ops_Engine_LocationTrack.png" width="459" height=
-          "128" alt="location and track"></td>
+          <td align = "left" valign = "top"> <img src =
+          "images/Ops_Engine_LocationTrack.png" width = "459" height =
+          "128" alt = "emplacement et voie"></td>
 
-          <td align="left" valign="top">Select the locomotive's
-          current (starting) Location <select name="select21" id=
+		<td align = "left" valign = "top"> S&#233;lectionnez l'Emplacement 
+		actuel (de d&#233;part) de la locomotive <select name = "select21" id =
           "select21">
-            </select> and the locomotive's Track <select name=
-            "select22" id="select22">
-            </select></td>
-        </tr>
+           </select> et la Voie de la locomotive <select name =
+            "select22" id = "select22">
+           </select></td>
+       </tr>
 
         <tr>
-          <td align="left" valign="top"><img src=
+          <td align = "left" valign = ""top"><img src=
           "images/Ops_Engine_weight.png" width="461" height="134"
           alt="weight"></td>
 
-          <td align="left" valign="top">Optional: Enter the weight
-          of the locomotive in tons</td>
-        </tr>
+          <td align="left" valign="top">Facultatif: entrez le poids de 
+          la locomotive en tonnes</td>
+       </tr>
 
         <tr>
-          <td align="left" valign="top"><img src=
-          "images/Ops_EngineHP.png" width="474" height="83" alt=
-          "Engine Horsepower"></td>
+          <td align = "left" valign = "top"> <img src =
+          "images/Ops_EngineHP.png" width = "474" height = "83" alt =
+          "Puissance du moteur"></td>
 
-          <td align="left" valign="top">
-            <p>Now enter the engine's <strong>Horsepower</strong>
-            <input name="textfield2" type="text" id="textfield2"
-            size="15"> . The locomotive's horsepower, the train's
-            weight, and track grade is used by OperationsPro to
-            calculate how many engines are required when using the
-            "Auto" feature when building Trains.</p>
-          </td>
-        </tr>
+          <td align = "left" valign = "top">
+            <p>Entrez maintenant la <strong>Puissance </strong>de la machine.
+            <input name= "textfield2" type = "text" id = "textfield2"
+            taille = "15">. OperationsPro utilise la puissance de la 
+            locomotive, son poids et la pente de la voie pour calculer 
+            le nombre de moteurs n&#233;cessaires pour utiliser la 
+            fonction "Auto" lors de la construction de trains.</P>
+         </td>
+       </tr>
 
         <tr>
-          <td align="left" valign="top"><img src=
-          "images/Ops_EngineConsist.png" width="460" height="124"
-          alt="consist"></td>
+          <td align = "left" valign = "top"> <img src =
+          "images/Ops_EngineConsist.png" width = "460" height = "124"
+          alt = "consist"></td>
 
-          <td align="left" valign="top">
-            <p>If you wish this locomotive to be part of an
-            <strong>Optional Consist <select name="select7" id=
+          <td align = "left" valign = "top">
+            <p>Si vous souhaitez que cette locomotive fasse partie 
+            d'un <strong>Couplage en option <select name = "select7" id =
             "select7">
-              </select></strong> , press <input type="submit" name=
-              "button6" id="button6" value="Edit"> which opens
-              the<br>
+             </select></strong>,appuyez sur <input type = "submit" name =
+              "button6" id = "button6" value = "&#201;diter"> qui ouvre le
+              <br>
             <br>
-            <img src="images/Ops_AddEngine_consist.png" width="275"
-            height="151" alt="consist"> where you may enter a new
-            Consist Name. Then select the Consist Name from the
-            drop-down list.</p><a name="NCE" id="NCE"></a>
+            <img src = "images/Ops_AddEngine_consist.png" width = "275"
+            height = "151" alt = "Couplage"> o&#249; vous pouvez entrer un 
+            nouveau Nom de Couplage. S&#233;lectionnez ensuite le Nom du 
+            Couplage dans la liste d&#233;roulante.</P> <a name="NCE" id="NCE"></a>
 
-            <h4>Synchronize with NCE Consists</h4>If you are using
-            NCE as your DCC command station, you can have the
-            program synchronize your consist numbers with your
-            locomotives. The program will read all of the consists
-            out of your NCE system and then will search for
-            matching locomotives in your OperationsPro Roster. The
-            program will assign the Consist Name
-            <code>nce_xxx</code> where xxx is the NCE consist
-            number. To synchronize your consists, select
-            "Synchronize with NCE Consists" under the "Tools" menu
-            (dimmed when no NCE Connection is set).<br>
-          </td>
-        </tr>
-
-        <tr>
-          <td align="left" valign="top"><img src=
-          "images/Ops_CarBuilt.png" width="474" height="91" alt=
-          "Built"></td>
-
-          <td align="left" valign="top">You may enter an optional
-          <strong>Built</strong> <input type="text" name=
-          "textfield3" id="textfield3"> date</td>
-        </tr>
+            <h4>Synchroniser avec Couplages NCE</h4> si vous utilisez 
+            NCE comme centrale de commande DCC, vous pouvez demander au 
+            programme de synchroniser vos num&#233;ros de Couplage avec vos 
+            locomotives. Le programme lira tous les Couplages de votre 
+            syst&#232;me NCE, puis recherchera les locomotives correspondantes 
+            dans votre liste OperationsPro. Le programme attribuera le 
+            Nom de Couplage <code> nce_xxx</code> o&#249; xxx est le num&#233;ro 
+            de couplage NCE. Pour synchroniser vos couplages, s&#233;lectionnez 
+            "Synchroniser avec Couplage NCE " dans le menu "Outils" 
+            (gris&#233; si aucune connexion NCE n'est d&#233;finie). <br>
+         </td>
+       </tr>
 
         <tr>
-          <td align="left" valign="top"><img src=
-          "images/Ops_CarOwner.png" width="475" height="92" alt=
-          "owner"></td>
+          <td align = "left" valign = "top"> <img src =
+          "images/Ops_CarBuilt.png" width = "474" height = "91" alt =
+          "Construit"></td>
 
-          <td align="left" valign="top">
-            <strong>Owner <select name="select8" id="select8">
+          <td align = "left" valign = "top"> Vous pouvez entrer une date 
+          facultative de <strong> Construction</strong> <input type = "text" name =
+          "textfield3" id = "textfield3"></td>
+       </tr>
+
+        <tr>
+          <td align = "left" valign = "top"> <img src =
+          "images/Ops_CarOwner.png" width = "475" height = "92" alt =
+          "propri&#233;taire"></td>
+
+          <td align = "left" valign = "top">
+            <strong> Propri&#233;taire <select name = "select8" id = "select8">
               <option>
                 SF
-              </option>
-            </select></strong> , if the owner's name is not in the
-            list press <input type="submit" name="button7" id=
-            "button7" value="Edit"> which opens
+             </option>
+           </select></strong>, si le nom du Propri&#233;taire ne figure pas 
+           dans la liste, appuyez sur <input type = "submit" name = "button7" id =
+            "button7" value = "&#201;diter"> qui s'ouvre
 
-            <p><img src="images/Ops_AddEngine_owner.png" width=
-            "275" height="151" alt="owner"></p>where you may enter
-            the owner's name. Then select the Owner Name from the
-            drop-down list.
-          </td>
-        </tr>
-
-        <tr>
-          <td align="left" valign="top"><img src=
-          "images/Ops_CarComment.png" width="475" height="97" alt=
-          "comments"></td>
-
-          <td align="left" valign="top">Type your <strong>Comment
-          <input name="textfield4" type="text" id="textfield4"
-          size="50"></strong></td>
-        </tr>
+            <p><img src = "images/Ops_AddEngine_owner.png" width =
+            "275" height = "151" alt = "propri&#233;taire"></p> o&#249; vous pouvez 
+            entrer le Nom du Propri&#233;taire. S&#233;lectionnez ensuite le Nom 
+            du Propri&#233;taire dans la liste d&#233;roulante.
+         </td>
+       </tr>
 
         <tr>
-          <td align="left" valign="top"><img src=
-          "images/Ops_CarButtons.png" width="475" height="75" alt=
-          "Buttons"></td>
+          <td align = "left" valign = "top"> <img src =
+          "images/Ops_CarComment.png" width = "475" height = "97" alt =
+          "commentaires"></td>
 
-          <td align="left" valign="top">
-            <p><input type="submit" name="button9" id="button9"
-            value="Add"> add another engine.</p>
+          <td align = "left" valign = "top"> Tapez votre <strong> Commentaire
+          <input name= "textfield4" type = "text" id = "textfield4"
+          size = "50"></strong></td>
+       </tr>
 
-            <p><input type="submit" name="button10" id="button10"
-            value="Delete"> delete the currently visible
-            Locomotive.</p>
+        <tr>
+          <td align = "left" valign = "top"> <img src =
+          "images/Ops_CarButtons.png" width = "475" height = "75" alt =
+          "Boutons"></td>
 
-            <p><input type="submit" name="button11" id="button11"
-            value="Save"> to store the engine's settings.
-            OperationsPro will create a file
-            (OperationsEngineRoster.xml) in your JMRI directory in
-            a folder called "operations". A backup file with the
-            last settings for all of your engines is also created
-            each time the <input type="submit" name="button12" id=
-            "button12" value="Save"> button is pressed.</p>
-          </td>
-        </tr>
-      </table>
+          <td align = "left" valign = "top">
+            <p><type input= "submit" name = "button9" id = "button9"
+            value = "Add"> Ajouter une autre Machine.</p>
 
-      <p>Now that you have your Locomotives stored in the Engine
-      Roster, you will need to add <a href=
-      "Ops_Routes.shtml">Routes</a> that your Trains will use to
-      operate on your layout.</p>
-      <hr>
+            <p><type input= "submit" name = "button10" id = "button10"
+            value = "Supprimer"> supprime la Locomotive actuellement visible.</P>
 
-      <div align="right">
-        <p><a href="Ops_Engines.shtml">Back</a><a href=
+            <p><type input= "submit" name = "button11" id = "button11"
+            value = "Enregistrer"> pour stocker les param&#232;tres de la machine, 
+            OperationsPro cr&#233;era un fichier (OperationsEngineRoster.xml) 
+            dans votre r&#233;pertoire JMRI dans un dossier appel&#233; "operations". 
+            Un fichier de sauvegarde avec les derniers param&#232;tres de toutes 
+            vos machines est &#233;galement cr&#233;&#233; chaque fois que le bouton 
+            <input type = "submit" name = "button12" id =
+            "button12" value = "Enregistrer"> est enfonc&#233;.</p>
+         </td>
+       </tr>
+     </table>
+
+      <p>Maintenant que vos Locomotives sont stock&#233;es dans l'Invenataire 
+      des Machines, vous devez ajouter les <a href= "Ops_Routes.shtml">
+		  Itin&#233;raires</a> que vos trains utiliseront pour op&#233;rer sur 
+		  votre r&#233;seau.</p>
+      <h>
+
+      <div align = "right">
+        <p><a href="Ops_Engines.shtml">Retour</a> <a href =
         "Ops_Routes.shtml"></a></p>
 
-        <p><a href="index.shtml#Operations">Back to Index</a></p>
+        <p><a href = "index.shtml # Operations">Retour &#224; l'Index</a></p>
       </div><!--#include virtual="/Footer" -->
     </div>
   </div>
