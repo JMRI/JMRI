@@ -1,7 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Translation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-03-03 -->
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -26,120 +26,108 @@
     <div id="mainContent">
       <a name="Top" id="Top"></a>
 
-      <h1>Using JMRI&reg; to Operate Trains</h1>
+      <h1>Utilisation de JMRI&reg;: exploiter des trains</h1>
 
-      <h2>OperationsPro: Add Car (Edit Car) Window</h2>
+      <h2>OperationsPro: fen&#234;tre Ajouter un wagon (Modifier un wagon)</h2>
 
-      <div align="right">
-        <p><a href="Ops_Cars.shtml">Back</a><a href="#"></a></p>
+      <div align = "right">
+        <p><a href="Ops_Cars.shtml"> Retour</a> <a href="#"></a></p>
 
-        <p><a href="index.shtml#Operations">Back to Index</a></p>
-      </div>
-      <hr>
+        <p><a href="index.shtml#Operations"> Retour &#224; l'Index</a></p>
+     </div>
+      <h>
 
-      <p>The <strong>Add Car</strong> window or <strong>Edit
-      Car</strong> window is opened. Both windows share the same
-      features except for their title.</p>
+      <p>La fen&#234;tre <strong>Ajouter un wagon</strong> ou <strong>
+		  Modifier un wagon</strong> est ouverte. Les deux fen&#234;tres 
+		  partagent les m&#234;mes fonctionnalit&#233;s, &#224; l'exception de leur titre.</P>
 
-      <table width="90%" border="0" align="center" cellpadding="2"
-      cellspacing="1">
+      <table width = "90%" border = "0" align = "center" cellpadding = "2" 
+      cellpadding = "1">
         <tr>
-          <td width="49%" align="left" valign="top"><img src=
-          "images/Ops_CarMenu.png" width="475" height="91" alt=
-          "Car Menu"><br>
+          <td width = "49%" align = "left" valign = "top"> <img src =
+          "images/Ops_CarMenu.png" width = "475" height = "91" alt =
+          "Menu Wagon"> <br>
           <br>
-          <img src="images/Ops_CarMenu01.png" width="461" height=
-          "106" alt="menu"></td>
+          <img src = "images/Ops_CarMenu01.png" width = "461" height =
+          "106" alt = "menu"></td>
 
-          <td width="51%" align="left" valign="top">
-            <p><strong><em>Menu</em></strong></p>
+          <td width = "51%" align = "left" valign = "top">
+            <p><strong><em> Menu</em></strong></p>
 
-            <p><strong>Window</strong>-- Same as other JMRI
-            menus</p>
+            <p><strong>Fen&#234;tre</strong>: identique &#224; l'autre menu JMRI.
+           </p>
 
-            <p><strong>Help</strong> -- Same as other JMRI
-            Menus</p>
-          </td>
-        </tr>
+            <p><strong>Aide</strong>: identique &#224; l'autre menu JMRI.
+            </p>
+         </td>
+       </tr>
 
         <tr>
-          <td align="left" valign="top"><img src=
-          "images/Ops_CarRoad.png" width="473" height="71" alt=
-          "Car's Road"></td>
+          <td align = "left" valign = "top"> <img src =
+          "images/Ops_CarRoad.png" width = "473" height = "71" alt =
+          "Itin&#233;raire du wagon"></td>
 
-          <td width="51%" align="left" valign="top">
-            <p>Select <strong>Road</strong> <select name="select"
-            id="select">
+          <td width = "51%" align = "left" valign = "top">
+            <p>S&#233;lectionnez <strong>Itin&#233;raire</strong> <select name = "select"
+            id = "select">
               <option>
                 AA
-              </option>
-            </select> If your Road is not listed then press
-            <input type="submit" name="button" id="button" value=
-            "Edit"> and the <a href="Ops_CarAttributes.shtml">Edit
-            Car Road</a>. A dialog box will display. Check this
-            reference for the <a href=
+             </option>
+           </select> Si votre itin&#233;raire ne figure pas dans la liste, appuyez sur
+            <input type = "submit" name = "bouton" id = "bouton" value =
+            "Modifier"> et le <a href="Ops_CarAttributes.shtml"> Modifier
+            Itin&#233;raire de wagon</a>. Une bo&#238;te de dialogue s'affichera. 
+            V&#233;rifiez cette r&#233;f&#233;rence pour les <a href =
             "http://www.railserve.com/aar_railroad_reporting_marks.html"
-            target="_blank">Railroad Reporting Marks.</a></p>
-          </td>
-        </tr>
+            target = "_ blank"> Marques de Rep&#233;rage AAR (USA) pour les 
+            chemins de fer.</a></p>
+         </td>
+       </tr>
 
         <tr>
-          <td align="left" valign="top"><img src=
-          "images/Ops_CarNumber.png" width="474" height="81" alt=
-          "Car Number"></td>
+          <td align = "left" valign = "top"> <img src =
+          "images/Ops_CarNumber.png" width = "474" height = "81" alt =
+          "Num&#233;ro de wagon"></td>
 
-          <td width="51%" align="left" valign="top">
-            <p>Enter the car's Road Number <input name="textfield"
-            type="text" id="textfield" size="15"> The program
-            requires a unique Road Name and Road Number for each
-            car. If you have cars with identical roads and numbers,
-            simply add "-1", "-2", etc. to each of the car numbers.
-            The program when printing out the Manifest or Switch
-            List will drop the -1, -2, etc. from the car's Road
-            Number.</p>
-          </td>
-        </tr>
+          <td width = "51%" align = "left" valign = "top">
+            <p>Entrez le num&#233;ro de l'itin&#233;raire du wagon <input name = 
+            "textfield"
+            type = "text" id = "textfield" size = "15"> Le programme 
+            n&#233;cessite un nom et un num&#233;ro de itin&#233;raire uniques pour 
+            chaque wagon. Si vous avez des wagons avec des itin&#233;raires 
+            et des num&#233;ros identiques, ajoutez simplement "-1", "-2", 
+            etc. &#193; chacun des num&#233;ros de wagon. Lors de l'impression 
+            du manifeste ou de la liste de commutation, le programme 
+            supprime -1, -2, etc. du num&#233;ro de itin&#233;raire du v&#233;hicule.</P>
+         </td>
+       </tr>
 
         <tr>
-          <td align="left" valign="top"><img src=
-          "images/Ops_CarType.png" width="474" height="120" alt=
-          "Car Type"><br>
-          If the car is a <input type="checkbox" name="checkbox"
-          id="checkbox"> <strong>Caboose</strong>, has a
-          <input type="checkbox" name="checkbox2" id="checkbox2">
-          <strong>FRED</strong> (Flashing Rear End Device), or is
-          <input type="checkbox" name="checkbox3" id="checkbox3">
-          <strong>Hazardous</strong>, check the proper box. The
-          program uses the Caboose and FRED functions to place the
-          car at the end of a train when the train requires a
-          caboose or car with FRED. The Hazardous checkbox will
-          cause the program to add a note to the switch list that
-          the car is transporting hazardous materials. Your
-          railroad's policy regarding hazardous materials can than
-          be applied to this car!</td>
+          <td align = "left" valign = "top"> <img src =
+          "images/Ops_CarType.png" width = "474" height = "120" alt =
+          "Type de wagon"> <br>
+          Si le wagon est un<input type = "checkbox" name = "checkbox" 
+          id = "checkbox"> <strong>Caboose</strong>, avec un <input type = 
+          "checkbox" name = "checkbox2" id = "checkbox2 "> <strong>FRED
+          </strong> (feu arri&#232;re clignotant) ou est<input type =" checkbox "
+          name =" checkbox3 "id =" checkbox3 "> <strong>Dangereux</strong>, 
+          cochez la case correspondante. Le programme utilise les 
+          fonctions Caboose et FRED pour placer le wagon &#224; la fin du 
+          train lorsque le train n&#233;cessite un fourgon de queue ou un 
+          wagon avec FRED. La checkbox Dangereux am&#232;nera le 
+          programme &#224; ajouter une note &#224; la liste des man&#156;uvres indiquant 
+          que le wagon transporte des mati&#232;res dangereuses. La politique 
+          de votre chemin de fer concernant les mati&#232;res dangereuses 
+          peut &#234;tre appliqu&#233;e &#224; ce wagon!</Td>
 
-          <td width="51%" align="left" valign="top">
-            <p><strong>Type</strong> <select name="select2" id=
-            "select2">
-              <option>
-                Baggage
-              </option>
-            </select> from drop-down list. if your type is not
-            listed then press <input type="submit" name="button3"
-            id="button3" value="Edit"> and the <a href=
-            "Ops_CarAttributes.shtml">Edit Car Type</a> dialog box
-            will display.</p>
-
-            <p>The program supports the ability to add a subType to
-            your car types. Adding a "-subType" to your car type
-            will create a new type of car. The "-subType" is not
-            printed on the Manifest or Switch Lists. For example
-            you might have coal cars with loads and coal cars that
-            are empty. If you enter the car type as HopCoal-C for
-            your cars loaded with coal, and HopCoal-E for the
-            empties, the program can use this information to assign
-            and deliver Cars to their appropriate Trains and
-            Locations respectively.</p>
+          <td width = "51%" align = "left" valign = "top">
+            <p><strong>Saisissez</strong> <select name = "select2" id =
+            "select2"> <option> bagages</option>
+           </select> dans la liste d&#233;roulante. si votre type ne figure 
+           pas dans la liste, appuyez sur <input type = "submit" name = 
+           "button3" id = "button3" value = "Modifier"> et sur 
+           <a href= "Ops_CarAttributes.shtml"> Modifier le type de wagon</a>. 
+           La bo&#238;te de dialogue s'affichera.</p>
           </td>
         </tr>
 
@@ -148,354 +136,351 @@
           "images/Ops_CarLength.png" width="470" height="104" alt=
           "Car Length"></td>
 
-          <td width="51%" align="left" valign="top">Select the
-          Car's <strong>Length</strong> <select name="select3" id=
-          "select3">
-            <option>
+    <td width = "51%" align = "left" valign = "top"> S&#233;lectionnez la 
+    <strong>longueur du wagon</strong> <select name = "select3" id = 
+    "select3"> <option>
               32
-            </option>
-          </select> If the appropriate Length is not listed then
-          press <input type="submit" name="button3" id="button3"
-          value="Edit"> and the <a href=
-          "Ops_CarAttributes.shtml">Edit Car Length</a> dialog box
-          will display.</td>
-        </tr>
+           </option>
+         </select> Si la longueur appropri&#233;e ne figure pas dans la liste, 
+         appuyez sur <input type = "submit" name = "button3" id = "button3" 
+         value = "Modifier"> et le <a href= "Ops_CarAttributes.shtml"> 
+			la bo&#238;te de dialogue Modifier la longueur d'un wagon</a> 
+			 s'affiche.</Td>
+       </tr>
 
         <tr>
-          <td align="left" valign="top"><img src=
-          "images/Ops_CarWeight.png" width="474" height="115" alt=
-          "Car Weight"></td>
+          <td align = "left" valign = "top"> <img src =
+          "images/Ops_CarWeight.png" width = "474" height = "115" alt =
+          "Poids le wagon"></td>
 
-          <td width="51%" align="left" valign="top">The Car
-          <strong>Weight</strong> is automatically calculated when
-          the <input name="checkbox4" type="checkbox" id=
-          "checkbox4" checked> <strong>Auto</strong> is selected
-          based on the car's length, but you can enter a different
-          weight if necessary. If the <input type="checkbox" name=
-          "checkbox5" id="checkbox5"> <strong>Auto</strong> is not
-          checked then you may use the <input type="submit" name=
-          "button4" id="button4" value="Calculate"> to calculate
-          the weight. When entering the length of a car, enter the
-          length of the body and not the total length. For example,
-          a forty foot boxcar has a length of 40 feet. The program
-          when calculating lengths will add two feet to each end of
-          a car for the couplers. Therefore when you place a forty
-          foot car at a siding, it will consume 44 feet of
-          track.</td>
-        </tr>
+          <td width = "51%" align = "left" valign = "top"> Le <strong>Poids
+          </strong> du wagon est automatiquement calcul&#233;e lorsque 
+          <input name = "checkbox4" type = "checkbox" id = "checkbox4 "
+          option "checkboxed" <strong>Auto</strong> est s&#233;lectionn&#233;e en 
+          fonction de la longueur du wagon, mais vous pouvez saisir un 
+          poids diff&#233;rent si n&#233;cessaire. Si la case <input type = 
+          "checkbox" name = "checkbox5" id = "checkbox5"> 
+          <strong>Auto</strong> n'est pas coch&#233;e, vous pouvez utiliser  
+          <input type = "submit" name = "button4" id =. "button4" value = 
+          "Calculer"> pour calculer le poids. Lorsque vous entrez la 
+          longueur d'un wagon, entrez la longueur du corps et non la 
+          longueur totale. Par exemple, un wagon couvert de quarante 
+          pieds a une longueur de 40 pieds ( 12 m). Le programme lors du calcul 
+          des longueurs ajoutera deux pieds (0,6m) &#224; chaque extr&#233;mit&#233; d'un 
+          wagon pour les attelages. Par cons&#233;quent, lorsque vous placez
+           un wagon de quarante pieds sur une voie d'&#233;vitement, celui-ci 
+           occupe 44 pieds (13,5 m ) de voie.</Td>
+       </tr>
 
         <tr>
-          <td align="left" valign="top"><img src=
-          "images/Ops_CarLocation.png" width="457" height="106"
-          alt="car location"></td>
+          <td align = "left" valign = "top"> <img src =
+          "images/Ops_CarLocation.png" width = "457" height = "106"
+          alt = "emplacement le wagon"></td>
 
-          <td width="51%" align="left" valign="top">
-            <p>Now you select the car's <strong>Location and Track
-            <select name="select8" id="select8">
-              <option>
-                Red Rock Junction
-              </option>
-            </select></strong>. The first selection is the
-            Location, city, yard etc. that was created under
-            <a href="Ops_Locations.shtml">Locations</a>.</p>
+          <td width = "51%" align = "left" valign = "top">
+            <p>Maintenant, vous s&#233;lectionnez l'emplacement et la voie du wagon<strong> <select name = "select8" id = "select8"> 
+				<option>
+                Jonction Red Rock
+             </option>
+           </select></strong>. La premi&#232;re s&#233;lection est l'emplacement, 
+           la ville, le triage, etc. cr&#233;&#233; sous <a href="Ops_Locations.shtml"> emplacements</a>.</P>
 
-            <p>The second selection <select name="select9" id=
+            <p>La deuxi&#232;me s&#233;lection <select name = "select9" id =
             "select9">
-              <option>
-                Food Depot
-              </option>
-            </select> is based on the first and only has entries if
-            there is more than one track at this Location.</p>
+              <option>Food Depot</option></select> est bas&#233; sur la premi&#232;re 
+              et ne comporte d'entr&#233;e que s'il existe plusieurs voies 
+              &#224; cet emplacement.</p>
 
-            <p>If the car is off the layout, set the location to
-            None (blank space)</p>
+            <p>Si le wagon est en dehors du r&#233;seau, d&#233;finissez l'emplacement sur Aucun (espace vide)</p>
 
-            <p><input type="checkbox" name="checkbox6" id=
-            "checkbox6"> Auto selection</p>
-          </td>
-        </tr>
+            <p><input type = "checkbox" name = "checkbox6" id =
+            "checkbox6"> S&#233;lection automatique</p>
+         </td>
+       </tr>
 
         <tr>
-          <td colspan="2" valign="top">
-            <h3>Optional Car Attributes</h3>
-          </td>
-        </tr>
+          <td colspan = "2" valign = "top">
+            <h3>Attributs de wagon facultatifs</h3>
+         </td>
+       </tr>
 
         <tr>
-          <td align="left" valign="top"><img src=
-          "images/Ops_CarColor.png" width="475" height="119" alt=
-          "Car Color"></td>
+          <td align = "left" valign = "top"> <img src =
+          "images/Ops_CarColor.png" width = "475" height = "119" alt =
+          "Couleur le wagon"></td>
 
-          <td width="51%" align="left" valign="top">Select the
-          car's <strong>Color</strong> <select name="select4" id=
+          <td width = "51%" align = "left" valign = "top"> S&#233;lectionnez la
+          <strong>Couleur</strong> le wagon <select name = "select4" id =
           "select4">
             <option>
-              Black
-            </option>
-          </select> if the applicable Car Color is not listed then
-          press <input type="submit" name="button5" id="button5"
-          value="Edit"> and the <a href=
-          "Ops_CarAttributes.shtml">Edit Color</a> dialog box will
-          display.</td>
-        </tr>
+              Noir
+           </option>
+         </select> si la couleur de wagon applicable ne figure pas dans 
+         la liste, appuyez sur <input type = "submit" name = "button5" id 
+         = "button5" value = "Modifier"> et sur la bo&#238;te de dialogue<a href= 
+         "Ops_CarAttributes.shtml"> Modifier La  Couleur
+         </a> qui s'affichera.</Td>
+       </tr>
 
         <tr>
-          <td align="left" valign="top"><img src=
-          "images/Ops_CarLoad.png" width="471" height="100" alt=
-          "Car Load"></td>
+          <td align = "left" valign = "top"> <img src =
+          "images/Ops_CarLoad.png" width = "471" height = "100" alt =
+          "Charge de wagon"></td>
 
-          <td width="51%" align="left" valign="top">
-            <p>You can optionally set the <strong>Load</strong>
-            <select name="select5" id="select5">
+          <td width = "51%" align = "left" valign = "top">
+            <p>Vous pouvez &#233;ventuellement d&#233;finir la <strong>Charge</strong>.
+            <select name = "select5" id = "select5">
               <option>
                 E
-              </option>
-            </select> state of the car. Select <strong>E</strong>
-            for Empty or <strong>L</strong> for loaded. Press
-            <input type="submit" name="button6" id="button6" value=
-            "Edit"> to create your own Car Load codes, but beware
-            there are restrictions. Only sidings with <a href=
-            "Ops_schedule.shtml">Schedules</a> can load or unload
-            Cars with custom Load types that you've created. It is
-            also suggested that you use a format similar to
-            <strong>L(commodity)</strong> to describe your Loads.
-            For example a load of tools could be entered as
-            L(Tools).</p>
-          </td>
-        </tr>
+             </option>
+           </select> &#233;tat du wagon. S&#233;lectionnez <strong>E</strong> pour 
+           Vide ou <strong>L</strong> pour Charger. Appuyez sur <input 
+           type = "submit" name = "button6" id = "button6" value = "&#201;diter"> 
+           pour cr&#233;er vos propres codes de chargement de wagon, mais 
+           attention, il y a des restrictions. Seuls les embranchements 
+           avec <a href= "Ops_schedule.shtml"> Horaires</a> peuvent 
+           charger ou d&#233;charger des wagons avec les types de charge 
+           personnalis&#233;s que vous avez cr&#233;&#233;s. Nous vous sugg&#233;rons &#233;galement 
+           d'utiliser un format similaire &#224; <strong>L (marchandise)</strong> 
+           pour d&#233;crire vos charges. Par exemple, une charge d'outils 
+           peut &#234;tre entr&#233;e comme
+            L (Outils).</P>
+         </td>
+       </tr>
 
         <tr>
-          <td align="left" valign="top"><img src=
-          "images/Ops_CarKernel.png" width="471" height="93" alt=
-          "Car Kernel"></td>
+          <td align = "left" valign = "top"> <img src =
+          "images/Ops_CarKernel.png" width = "471" height = "93" alt =
+          "Noyau de wagon"></td>
 
-          <td width="51%" align="left" valign="top">
-            <p><strong>Kernel</strong></p>
+          <td width = "51%" align = "left" valign = "top">
+            <p><strong>Noyau</strong></p>
 
-            <p>If you wish this Car to be part of a Kernel, which
-            is a group of Cars that you want to switch as one unit,
-            select <select name="select6" id="select6">
+ 
+		<p>Si vous souhaitez que ce wagon fasse partie d'un noyau, 
+		c'est-&#224;-dire un groupe de wagons que vous souhaitez convertir 
+		en une seule unit&#233;, s&#233;lectionnez <select name = "select6" id = "select6">
               <option>
-                Coal Empty
-              </option>
-            </select> Kernel from drop-down list. If the Kernel you
-            want is not there, press <input type="submit" name=
-            "button7" id="button7" value="Edit"> and enter a
-            <a href="Ops_CarAttributes.shtml">Kernel name.</a> to
-            add to the list. Then select the Kernel from the
-            drop-down list.</p>
-          </td>
-        </tr>
+                Charbon vide
+             </option>
+           </select> Noyau dans la liste d&#233;roulante. Si le noyau souhait&#233; 
+           n'est pas pr&#233;sent, appuyez sur <input type = "submit" name = 
+           "button7" id = "button7" value = "&#201;diter"> et entrez un 
+           <a href="Ops_CarAttributes.shtml"> Nom du Noyau. </a> &#224; ajouter 
+           &#224; la liste. S&#233;lectionnez ensuite le noyau dans la liste d&#233;roulante.</P>
+         </td>
+       </tr>
 
         <tr>
-          <td align="left" valign="top"><img src=
-          "images/Ops_CarBuilt.png" width="474" height="91" alt=
-          "Car Built"></td>
+          <td align = "left" valign = "top"> <img src =
+          "images/Ops_CarBuilt.png" width = "474" height = "91" alt =
+          "Wagon construite"></td>
 
-          <td width="51%" align="left" valign="top">Optional Built
-          <input name="textfield2" type="text" id="textfield2"
-          size="15"> you may enter the built date.</td>
-        </tr>
-
-        <tr>
-          <td align="left" valign="top"><img src=
-          "images/Ops_CarOwner.png" width="475" height="92" alt=
-          "Car Owner"></td>
-
-          <td width="51%" align="left" valign="top">You may
-          optionally select an <strong>Owner</strong> <select name=
-          "select7" id="select7">
-            </select> or press <input type="submit" name="button8"
-            id="button8" value="Edit"> to enter an <a href=
-            "Ops_CarAttributes.shtml">Owner.</a> Then select the
-            Owner from the menu box.</td>
-        </tr>
+          <td width = "51%" align = "left" valign = "top"> Facultatif Construit
+          <input name = "textfield2" type = "text" id = "textfield2"
+          size = "15"> vous pouvez entrer la date de construction.</td>
+       </tr>
 
         <tr>
-          <td align="left" valign="top"><img src=
-          "images/Ops_CarComment.png" width="475" height="97" alt=
-          "Car Comment"></td>
+          <td align = "left" valign = "top"> <img src =
+          "images/Ops_CarOwner.png" width = "475" height = "92" alt =
+          "Propri&#233;taire du wagon"></td>
 
-          <td width="51%" align="left" valign="top">
-          <strong>Comment</strong> <input type="text" name=
-          "textfield3" id="textfield3"> for this car.</td>
-        </tr>
+          <td width = "51%" align = "left" valign = "top"> Vous pouvez 
+          &#233;ventuellement s&#233;lectionner un <strong>propri&#233;taire</strong> 
+          <select name =
+          "select7" id = "select7">
+           </select> ou appuyez sur <input type = "submit" name = "button8"
+            id = "button8" value = "&#201;diter"> pour entrer un <a href =
+            "Ops_CarAttributes.shtml"> Propri&#233;taire.</a> S&#233;lectionnez 
+            ensuite le propri&#233;taire dans la zone de menu.</Td>
+       </tr>
 
         <tr>
-          <td align="left" valign="top"><img src=
-          "images/Ops_CarButtons.png" width="475" height="75" alt=
+          <td align = "left" valign = "top"> <img src =
+          "images/Ops_CarComment.png" width = "475" height = "97" alt =
+          "Commentaire de wagon"></td>
+
+          <td width = "51%" align = "left" valign = "top">
+          <strong>Commentaire</strong> <input type = "text" name =
+          "textfield3" id = "textfield3"> pour ce wagon.</td>
+       </tr>
+
+        <tr>
+          <td align = "left" valign = "top"> <img src =
+          "images/Ops_CarButtons.png" width = "475" height = "75" alt =
           "Car Butttons"></td>
 
-          <td width="51%" align="left" valign="top">
-            <p><input type="submit" name="button9" id="button9"
-            value="Add"> add another car.</p>
+          <td width = "51%" align = "left" valign = "top">
+            <p><input type = "submit" name = "button9" id = "button9"
+            value = "Ajouter"> Ajouter une autre wagon.</p>
 
-            <p><input type="submit" name="button10" id="button10"
-            value="Delete"> delete the Car currently open.</p>
+            <p><input type = "submit" name = "button10" id = "button10"
+            value = "Supprimer"> Supprimer le wagon actuellement ouvert.</p>
 
-            <p><input type="submit" name="button11" id="button11"
-            value="Save"> to store the Car's settings. The program
-            will create a file (OperationsCarRoster.xml) in your
-            JMRI directory in a folder called "operations". A
-            backup file with the last settings for all of your Cars
-            is also created each time the <input type="submit"
-            name="button12" id="button12" value="Save"> button is
-            pressed.</p>
-          </td>
-        </tr>
-      </table>
+            <p><input type = "submit" name = "button11" id = "button11"
+            value = "Enregistrer"> pour stocker les param&#232;tres du wagon. 
+            Le programme cr&#233;era un fichier (OperationsCarRoster.xml) 
+            dans votre r&#233;pertoire JMRI dans un dossier appel&#233; "operations". 
+            Un fichier de sauvegarde contenant les derniers param&#232;tres 
+            de tous vos wagons est &#233;galement cr&#233;&#233; chaque fois que vous 
+            appuyez sur le bouton <input type = "submit" 
+            name = "button12" id = "button12" value = "Enregistrer">.</P>
+         </td>
+       </tr>
+     </table>
 
-      <p>Now lets add several cars to our Car Roster. When we add
-      and save the Cars, they will be added to the Roster and shown
-      in the <strong>Cars</strong> window.</p>
+      <p>Ajoutons maintenant plusieurs wagons &#224; notre catalogue de wagons. 
+      Lorsque nous ajoutons et sauvegardons les wagons, ils seront 
+      ajout&#233;es &#224; la liste et affich&#233;es dans la fen&#234;tre <strong>Wagons</strong>.</P>
 
-      <p align="center"><img src="images/Ops_Cars06.png" width=
-      "922" height="421" alt="Cars with roster"></p>
+      <p align = "center"> <img src = "images/Ops_Cars06.png" width =
+      "922" height = "421" alt = "Wagons avec Inventaire"></p>
 
-      <p align="left">Now if you desire to change a value of a
-      <strong>Cars</strong> attributes that is already in the Cars
-      Roster, press the <input type="submit" name="button2" id=
-      "button2" value="Edit"> to the right of that Car. The
-      <strong><a href="Ops_AddCars.shtml">Edit
-      Car</a></strong>window will open, which is almost identical
-      to the <strong>Add Car</strong> window.</p>
+      <p align = "left"> D&#233;sormais, si vous souhaitez modifier la valeur 
+      d'un attribut <strong>Wagons</strong> figurant d&#233;j&#224; dans le 
+      r&#233;pertoire Wagons, appuyez sur l'identificateur <input type = 
+      "submit" name = "button2". ="button2" value = "&#201;diter"> 
+      &#224; droite de ce wagon. La fen&#234;tre <strong><a href="Ops_AddCars.shtml"> 
+		  Modifier un wagon</a></strong> s'ouvre, ce qui est presque 
+		  identique &#224; la fen&#234;tre <strong>Ajouter un wagon</strong>.</P>
 
-      <p align="left"><img src="images/Ops_EditCar.png" width="467"
-      height="765" alt="Edit Car"></p>
+      <p align = "left"> <img src = "images/Ops_EditCar.png" width = "467"
+      height = "765" alt = "Modifier le wagon"></p>
 
-      <p align="left">You may choose from:</p>
+      <p align = "left"> Vous pouvez choisir parmi:</p>
 
-      <p align="left"><input type="submit" name="button13" id=
-      "button13" value="Delete"> removes the selected Car from the
-      Roster.</p>
+      <p align = "left"> <input type = "submit" nom = "bouton13" id =
+      "button13" value = "Supprimer"> supprime le wagon s&#233;lectionn&#233;e 
+      de la liste.</p>
 
-      <p align="left"><input type="submit" name="button14" id=
-      "button14" value="Add"> add the edited Car as another item to
-      the Car Roster.</p>
+      <p align = "left"> <input type = "submit" name = "button14" id =
+      "button14" value = "Ajouter"> ajoute le wagon modifi&#233;e en tant 
+      qu'article suppl&#233;mentaire dans l'inventaire des wagons.</p>
 
-      <p align="left"><input type="submit" name="button15" id=
-      "button15" value="Save"> make changes and save them in the
-      Car Roster.</p>
+      <p align = "left"> <input type = "submit" name = "button15" id =
+      "button15" value = "Enregistrer"> apporter des modifications et les 
+      enregistrer dans dans l'inventaire de wagon.</p>
 
-      <p align="left">The <input type="submit" name="button16" id=
-      "button16" value="Set"> when pressed, opens the <strong>Set
-      Car Location</strong> pane and allows you to override the
-      program and set a Car at a Location that is defined in your
-      OperationsPro database.</p>
+      <p align = "left">  <input type = "submit" name = "button16" id =
+      "button16" value = "D&#233;finir"> ouvre le volet <strong>D&#233;finir 
+      l'emplacement du wagon</strong> et vous permet de remplacer le 
+      programme et de d&#233;finir un wagon &#224; un emplacement d&#233;fini dans votre 
+      base de donn&#233;es OperationsPro.</p >
 
-      <table width="90%" border="0" cellspacing="1" cellpadding=
+      <table width = "90%" border = "0" cellspacing = "1" cellpadding =
       "2">
         <tr>
-          <td width="47%" valign="top"><img src=
-          "images/Ops_SetCarLocation.png" width="500" height="650"
-          alt="set car location"></td>
+          <td width = "47%" valign = "top"> <img src =
+          "images/Ops_SetCarLocation.png" width = "500" height = "650"
+          alt = "d&#233;finir l'emplacement le wagon"></td>
 
-          <td width="53%" align="left" valign="top">
-            <p><strong>Menu</strong> is standard for JMRI&reg;.</p>
+          
 
-            <p><strong>Car</strong> displays the user name of the
-            selected Car.<br>
-            <strong>Type</strong> displays Car Type<br>
-            <strong>Status</strong><br>
-            <input type="checkbox" name="checkbox7" id="checkbox7">
-            Location Unknown<br>
-            <input type="checkbox" name="checkbox8" id="checkbox8">
-            Out of Service</p>
+	<td width = "53%" align = "left" valign = "top">
+            Le <p><strong>Menu</strong> est standard pour JMRI&reg;.</p>
 
-            <p><strong>Location</strong><br>
-            Using <strong>Name <select name="select10" id=
+            <p><strong>Wagon</strong> affiche le Nom Utilisateur du 
+            wagon s&#233;lectionn&#233;e. <br> Le <strong>Type</strong> affiche 
+            le type de wagon <br> <br>
+            <strong>Statut</strong> <br>
+            <input type = "checkbox" nom = "checkbox7" id = "checkbox7">>
+            Lieu inconnu <br>
+            <input type = "checkbox" nom = "checkbox8" id = "checkbox8">>
+            Hors service</p>
+
+            <p><strong>Emplacement</strong> <br>
+            Utilisation de <strong>Nom <select name = "select10" id =
             "select10">
               <option>
                 North Yard
-              </option>
-            </select></strong> and <strong>Track <select name=
-            "select11" id="select11">
+             </option>
+           </select></strong> et <strong>Suivre <select name =
+            "select11" id = "select11">
               <option>
-                Track 2
-              </option>
-            </select></strong> you can set the Car at any defined
-            Location on your layout.<br>
-            <input type="checkbox" name="checkbox9" id="checkbox9">
-            <strong>Auto</strong> When checked, OperationsPro will
-            choose a Location</p>
+                Piste 2
+             </option>
+           </select></strong>, vous pouvez d&#233;finir le wagon &#224; n'importe 
+           quel emplacement d&#233;fini de votre r&#233;seau. <br>
+            <input type = "checkbox" nom = "checkbox9" id = "checkbox9">>
+            <strong>Auto</strong>: lorsque cette case est coch&#233;e,
+             OperationsPro choisit un lieu</p>
 
-            <p><strong>Optional</strong></p>
+            <p><strong>Facultatif</strong></p>
 
-            <p><strong>Return When Empty</strong><br>
-            <select name="select15" size="1" id="select15">
-              </select> <strong>Name</strong> of the return
-              Location <strong><select name="select16" id=
-              "select16">
-              </select> Track</strong> at Location
-              <strong><input type="checkbox" name="checkbox10" id=
-              "checkbox10"> Auto</strong> selection</p>
+            <p><strong>Retourner quand il est vide</strong> <br>
+            <select name = "select15" size = "1" id = "select15">
+             </select> <strong>Nom</strong> de l'emplacement de retour 
+             <strong><select name = "select16" id ="select16">
+             </select> Suivre</strong> &#224; l'emplacement
+              <strong><input type = "checkbox" name = "checkbox10" id =
+              "checkbox10"> S&#233;lection automatique</strong></p>
 
-            <p><strong>Load</strong><br>
-            <select name="select17" id="select17">
+            <p><strong>Charge</strong> <br>
+            <select name = "select17" id = "select17">
               <option>
-                E&lt;mpty&gt;
-              </option>
-            </select> type of load <input type="button" name=
-            "button18" id="button18" value="Edit"> Edit Load for
-            this Car</p>
+               &lt;Empty&gt;
+             </option>
+           </select> type de chargement <input type = "button" name =
+            "button18" id = "button18" value = "&#201;diter"> Modifier la 
+            charge pour cette wagon</p>
 
-            <p><strong>Optional</strong> (the values in this box
-            are normally set by OperationsPro)</p>
+            <p><strong>Facultatif</strong> (les valeurs de cette zone 
+            sont normalement d&#233;finies par OperationsPro)</p>
 
-            <p><strong>Destination</strong> optionally set the
-            <strong>Name</strong> <strong><select name="select12"
-            id="select12">
-              <option>
-                North Yard
-              </option>
-            </select></strong> of location and the <strong>Track
-            <select name="select13" id="select13">
-              <option>
-                Track 2
-              </option>
-            </select></strong> . <input type="checkbox" name=
-            "checkbox11" id="checkbox11"> <strong>Auto</strong></p>
-
-            <p><strong>Final Destination</strong><br>
-            <strong>Name</strong> <strong><select name="select18"
-            id="select18">
+            <p><strong>Destination</strong> &#233;ventuellement d&#233;finir 
+            le <strong>Nom</strong> <strong><select name = "select12"
+            id = "select12">
               <option>
                 North Yard
-              </option>
-            </select></strong> of the Location and the
-            <strong>Track <select name="select18" id="select19">
+             </option>
+           </select></strong> du lieu et de la <strong>voie <select 
+           name = "select13" id = "select13">
               <option>
-                Track 2
-              </option>
-            </select></strong> . <input type="checkbox" name=
-            "checkbox12" id="checkbox12">
-            <strong>Auto</strong><br></p>
+                Piste 2
+             </option>
+           </select></strong>. <input type = "checkbox" name =
+            "checkbox11" id = "checkbox11"> <strong>Auto</strong></p>
 
-            <p><strong>Train</strong><br>
-            <select name="select14" id="select14">
-              </select> optionally set the Train. <input type=
-              "checkbox" name="checkbox13" id="checkbox13">
+            <p><strong>Destination finale</strong> <br>
+            <strong>Nom</strong> <strong><select name = "select18"
+            id = "select18">
+              <option>
+                North Yard
+             </option>
+           </select></strong> de l'emplacement et de la <strong>voie <select 
+           name = "select18" id = "select19">
+              <option>
+                Piste 2
+             </option>
+           </select></strong>. <input type = "checkbox" name =
+            "checkbox12" id = "checkbox12">
+            <strong>Auto</strong> <br></p>
+
+            <p><strong>Former</strong> <br>
+            <select name = "select14" id = "select14">
+             </select> &#233;ventuellement d&#233;finir le train. <input type =
+              "checkbox" nom = "checkbox13" id = "checkbox13">
               <strong>Auto</strong></p>
 
-            <p><input type="submit" name="button17" id="button17"
-            value="Save"> press to save the Car Locations that you
-            have set.</p>
+            <p><input type = "submit" name = "button17" id = "button17"
+            value = "Enregistrer"> appuyez sur pour enregistrer 
+            les emplacements de wagon que vous avez d&#233;finis.</p>
 
-            <p>Close the window when completed.</p>
-          </td>
-        </tr>
-      </table>
+            <p>Fermez la fen&#234;tre lorsque vous avez termin&#233;.</p>
+         </td>
+       </tr>
+     </table>
 
-      <p align="left">Now that you have your Cars stored in the
-      Roster, you will probably want to add some <a href=
-      "Ops_Engines.shtml">Locomotives</a> to move your Cars about
-      the layout.</p>
-      <hr>
+      <p align = "left"> Maintenant que vos wagons sont stock&#233;es dans 
+      l'Inventaire, vous voudrez probablement en ajouter <a href =
+      "Ops_Engines.shtml"> Locomotives</a> pour d&#233;placer vos wagons sur le r&#233;seau.</P>
+      <h>
 
-      <div align="right">
-        <p><a href="Ops_Cars.shtml">Back</a><a href="#"></a></p>
+      <div align = "right">
+        <p><a href="Ops_Cars.shtml"> Retour</a> <a href="#"></a></p>
 
-        <p><a href="index.shtml#Operations">Back to Index</a></p>
+        <p><a href="index.shtml#Operations"> Retour &#224; l'index</a></p>
       </div><!--#include virtual="/Footer" -->
     </div>
   </div>
