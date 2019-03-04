@@ -4278,4 +4278,50 @@
 
 <mapID target="manual.DecoderPro3.images.btn_throttle_labels" url="manual/DecoderPro3/images/btn_throttle_labels.png"/>
 
+<mapID target="package.jmri.jmrit.ctc.CTC_editor" url="package/jmri/jmrit/ctc/CTC.shtml#editor"/>
+
+<mapID target="package.jmri.jmrit.ctc.CTC_menuCfgPat" url="package/jmri/jmrit/ctc/CTC.shtml#menuCfgPat"/>
+
+<mapID target="package.jmri.jmrit.ctc.CTC_menuCfgGui" url="package/jmri/jmrit/ctc/CTC.shtml#menuCfgGui"/>
+
+<mapID target="package.jmri.jmrit.ctc.CTC_ctcFiles" url="package/jmri/jmrit/ctc/CTC.shtml#ctcFiles"/>
+
+<mapID target="package.jmri.jmrit.ctc.CTC_osList" url="package/jmri/jmrit/ctc/CTC.shtml#osList"/>
+
+<mapID target="package.jmri.jmrit.ctc.CTC_ctcMain" url="package/jmri/jmrit/ctc/CTC.shtml#ctcMain"/>
+
+<mapID target="package.jmri.jmrit.ctc.CTC_menuCfgDef" url="package/jmri/jmrit/ctc/CTC.shtml#menuCfgDef"/>
+
+<mapID target="package.jmri.jmrit.ctc.CTC_menuCfgDeb" url="package/jmri/jmrit/ctc/CTC.shtml#menuCfgDeb"/>
+
+<mapID target="package.jmri.jmrit.ctc.CTC_frmIL" url="package/jmri/jmrit/ctc/CTC.shtml#frmIL"/>
+
+<mapID target="package.jmri.jmrit.ctc.CTC_menuEditFind" url="package/jmri/jmrit/ctc/CTC.shtml#menuEditFind"/>
+
+<mapID target="package.jmri.jmrit.ctc.CTC_menuEditFind" url="package/jmri/jmrit/ctc/CTC.shtml#menuEditFind"/>
+
+<mapID target="package.jmri.jmrit.ctc.CTC_frmCB" url="package/jmri/jmrit/ctc/CTC.shtml#frmCB"/>
+
+<mapID target="package.jmri.jmrit.ctc.CTC_frmCO" url="package/jmri/jmrit/ctc/CTC.shtml#frmCO"/>
+
+<mapID target="package.jmri.jmrit.ctc.CTC_menuFile" url="package/jmri/jmrit/ctc/CTC.shtml#menuFile"/>
+
+<mapID target="package.jmri.jmrit.ctc.CTC_ctcDefinitions" url="package/jmri/jmrit/ctc/CTC.shtml#ctcDefinitions"/>
+
+<mapID target="package.jmri.jmrit.ctc.CTC_frmSIDI" url="package/jmri/jmrit/ctc/CTC.shtml#frmSIDI"/>
+
+<mapID target="package.jmri.jmrit.ctc.CTC_frmSIDL" url="package/jmri/jmrit/ctc/CTC.shtml#frmSIDL"/>
+
+<mapID target="package.jmri.jmrit.ctc.CTC" url="package/jmri/jmrit/ctc/CTC.shtml"/>
+
+<mapID target="package.jmri.jmrit.ctc.CTC_frmTRL" url="package/jmri/jmrit/ctc/CTC.shtml#frmTRL"/>
+
+<mapID target="package.jmri.jmrit.ctc.CTC_frmTUL" url="package/jmri/jmrit/ctc/CTC.shtml#frmTUL"/>
+
+<mapID target="package.jmri.jmrit.ctc.CTC_frmSWDI" url="package/jmri/jmrit/ctc/CTC.shtml#frmSWDI"/>
+
+<mapID target="package.jmri.jmrit.ctc.CTC_frmSWDL" url="package/jmri/jmrit/ctc/CTC.shtml#frmSWDL"/>
+
+<mapID target="package.jmri.jmrit.ctc.CTC_menuCfgFlt" url="package/jmri/jmrit/ctc/CTC.shtml#menuCfgFlt"/>
+
 </map>
