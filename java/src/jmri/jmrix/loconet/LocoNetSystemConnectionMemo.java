@@ -3,6 +3,7 @@ package jmri.jmrix.loconet;
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import jmri.AddressedProgrammerManager;
+import jmri.CabSignalManager;
 import jmri.ClockControl;
 import jmri.CommandStation;
 import jmri.ConsistManager;
@@ -228,6 +229,9 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
         if (type.equals(IdTagManager.class)) {
             return true;
         }
+        if (type.equals(CabSignalManager.class)) {
+            return true;
+        }
 
         return super.provides(type);
     }
@@ -280,8 +284,10 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
         if (T.equals(MultiMeter.class)) {
             return (T) getMultiMeter();
         }
-
         if (T.equals(IdTagManager.class)) {
+            return (T) getIdTagManager();
+        }
+        if (T.equals(CabSignalManager.class)) {
             return (T) getIdTagManager();
         }
         return super.get(T);
@@ -321,8 +327,8 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
             InstanceManager.store(getProgrammerManager(), GlobalProgrammerManager.class);
         }
 
-        InstanceManager.setReporterManager(
-                getReporterManager());
+        //InstanceManager.store(getCabSignalManager(),CabSignalManager.class);
+        InstanceManager.setDefault(CabSignalManager.class,getCabSignalManager());
 
         setConsistManager(new LocoNetConsistManager(this));
 
@@ -335,6 +341,7 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
         jmri.InstanceManager.store(getMultiMeter(), jmri.MultiMeter.class);
 
         getIdTagManager();
+
     }
 
     protected LnPowerManager powerManager;
@@ -462,6 +469,15 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
             }
             return tagManager;
         }
+    }
+
+    protected LnCabSignalManager cabSignalManager;
+
+    public LnCabSignalManager getCabSignalManager() {
+        if (cabSignalManager == null) {
+            cabSignalManager = new LnCabSignalManager(this);
+        }
+        return cabSignalManager;
     }
 
     @Override

@@ -35,11 +35,9 @@ public interface CabSignal {
     public LocoAddress getCabSignalAddress();
 
     /**
-     * Direction the locomotive is running.
-     *
-     * @return 1 for Forward 0 for Reverse.
+     * Set the Block of the locomotive by searching the block list.
      */
-    public int getLocoDirection();
+    public void setBlock();
 
     /**
      * Set the Block of the locomotive
@@ -66,12 +64,37 @@ public interface CabSignal {
 
     /**
      * Get the Next Signal Mast the locomotive is expected to pass.
-     * This value is calculated from the current block and direction 
+     * This value may be calculated from the current block and direction 
      * of travel.
      *
      * @return The next SignalMast position
      */
     public SignalMast getNextMast();
+
+    /**
+     * Forward the current cab signal value to the layout.
+     */
+    public void forwardCabSignalToLayout();
+
+    /*
+     * Disable the cab signal.  This method causes isCabSignalActive to return 
+     * false and the on-layout cab signal to be cleared, if possible.
+     */
+    public void disableCabSignal();
+
+    /*
+     * get whether this cab signal is on or off
+     *
+     * @return true if on, false if off
+     */
+    public boolean isCabSignalActive();
+
+    /*
+     * set whether this cab signal is on or off
+     *
+     * @param active true if on, false if off
+     */
+    public void setCabSignalActive(boolean active);
 
     /**
      * Add a listener for consist events

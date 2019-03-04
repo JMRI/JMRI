@@ -14,6 +14,7 @@ public class CabSignalAction extends JmriAbstractAction {
 
     public CabSignalAction(String s, WindowInterface wi) {
         super(s, wi);
+        
     }
 
     public CabSignalAction(String s, Icon i, WindowInterface wi) {
@@ -28,7 +29,6 @@ public class CabSignalAction extends JmriAbstractAction {
         this("Cab Signal");
     }
 
-    // never invoked, because we overrode actionPerformed above
     @Override
     public jmri.util.swing.JmriPanel makePanel() {
        CabSignalPane retval = new CabSignalPane();

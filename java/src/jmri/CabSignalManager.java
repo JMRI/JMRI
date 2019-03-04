@@ -1,6 +1,6 @@
 package jmri;
 
-import java.util.ArrayList;
+import java.util.Set;
 
 /**
  * Interface for CabSignal Manager objects, which provide access to the existing
@@ -39,11 +39,18 @@ public interface CabSignalManager {
     public void delCabSignal(LocoAddress address);
 
     /**
-     * Get a list of known consist addresses.
+     * Get a list of known cab signal addresses.
      *
-     * @return list of addresses
+     * @return list of cab signal addresses
      */
-    public ArrayList<CabSignal> getCabSignalList();
+    public Set getCabSignalList();
+
+    /**
+     * Get an array of known cab signals.
+     *
+     * @return array of cab signals
+     */
+    public CabSignal[] getCabSignalArray();
 
     /**
      * Register a CabSignalListListener object with this CabSignalManager
