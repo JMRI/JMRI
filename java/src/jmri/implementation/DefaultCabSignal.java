@@ -5,6 +5,7 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.List;
 import java.util.Set;
+import javax.annotation.concurrent.GuardedBy;
 import jmri.Block;
 import jmri.BlockManager;
 import jmri.CabSignal;
@@ -27,6 +28,7 @@ import org.slf4j.LoggerFactory;
 public class DefaultCabSignal implements CabSignal, PropertyChangeListener {
 
     private LocoAddress _address = null;
+    @GuardedBy("this")
     private Block _currentBlock = null;
     private Block _nextBlock = null;
     private SignalMast _nextMast = null;
@@ -115,7 +117,7 @@ public class DefaultCabSignal implements CabSignal, PropertyChangeListener {
      *
      * @return The current Block position
      */
-    public Block getBlock(){
+    synchronized public Block getBlock(){
         return _currentBlock;
     }
 
