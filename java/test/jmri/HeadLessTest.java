@@ -34,7 +34,6 @@ public class HeadLessTest {
         System.setProperty("java.awt.headless", "true");
 
         // start tests
-        String[] testCaseName = {"-noloading", HeadLessTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
+        org.junit.runner.JUnitCore.runClasses(HeadLessTest.class);
     }
 }
