@@ -1,12 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+OCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Translation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-03-04 -->
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>Operations - Add Route window</title><!-- Style -->
+  <title>Operations - Add itin&#233;raire window</title><!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -26,159 +26,167 @@
     <div id="mainContent">
       <a name="Top" id="Top"></a>
 
-      <h1>Using JMRI&reg; to Operate Trains</h1>
+      <h1>Utilisation de JMRI&reg; Exploiter des Trains</h1>
 
-      <h2>OperationsPro: Add Route window</h2>
+      <h2>OperationsPro: fen&#234;tre Ajouter un Itin&#233;raire</h2>
 
-      <div align="right">
-        <p><a href="Ops_Routes.shtml">Back</a><a href=
+      <div align = "right">
+        <p><a href="Ops_Routes.shtml"> Retour</a> <a href =
         "Ops_Trains.shtml"></a></p>
 
-        <p><a href="index.shtml#Operations">Back to Index</a></p>
-      </div>
-      <hr>
+        <p><a href="index.shtml#Operations"> Retour &#224; l'index</a></p>
+     </div>
+      <h>
 
-      <p>The <strong>Add Route</strong> window opens to add a Route
-      to your OperationsPro database.</p>
+      <p>La fen&#234;tre <strong>Ajouter un Itin&#233;raire</strong> s'ouvre pour 
+      ajouter un Itin&#233;raire &#224; votre base de donn&#233;es OperationsPro.</p>
 
-      <p><img src="images/Ops_AddRoute.png" alt="add route" height=
-      "239" width="900"></p>Type the Route <strong>Name</strong>
-      <input name="textfield" id="textfield" size="30" type="text">
-      Each route must have a unique Name.
+      <p><img src = "images/Ops_AddRoute.png" alt = "Ajouter itin&#233;raire" height =
+      "239" width = "900"></p> saisissez l'Itin&#233;raire <strong>Nom</strong>.
+      <input name = "textfield" id = "textfield" size = "30" type = "text">
+      Chaque Itin&#233;raire doit avoir un nom unique.
 
-      <p>Then press <input name="button" id="button" value="Add"
-      type="submit"> located at the bottom of the pane. The
-      <strong>Add Route</strong> window now activates the
-      attributes required to enter the Route.</p>
+      <p>Appuyez ensuite sur <input name = "boutton" id = "boutton" 
+      value = "Ajouter"
+      type = "submit"> situ&#233; en bas du volet. La fen&#234;tre <strong>Ajouter 
+      un Itin&#233;raire</strong> active d&#233;sormais les attributs n&#233;cessaires 
+      &#224; la saisie de l'Itin&#233;raire.</P>
 
-      <p><img src="images/Ops_AddRoute01.png" alt="add route"
-      height="239" width="900"></p>
+      <p><img src = "images/Ops_AddRoute01.png" alt = "ajouter un 
+      itin&#233;raire" 
+      height = "239" width = "900"></p>
 
-      <p>Select the Location from which the Train will depart by
-      selecting the Location <select name="select" id="select">
+      <p>S&#233;lectionnez le lieu de d&#233;part du train en s&#233;lectionnant le 
+      lieu <select name = "select" id = "select">
         <option>
           North Yard
-        </option>
-      </select> located at the left bottom side of the window.</p>
+       </option>
+     </select> situ&#233; en bas &#224; gauche de la fen&#234;tre.</p>
 
-      <p>Select <input name="radio" id="radio" value="radio"
-      checked="checked" type="radio"> Add location to start
-      <input name="radio2" id="radio2" value="radio2" type="radio">
-      Add location at end</p>
+      <p>S&#233;lectionnez <input name = "radio" id = "radio" value = "radio"
+      checked = "checked" type = "radio"> Ajouter un emplacement pour d&#233;marrer
+      <input name = "radio2" id = "radio2" value = "radio2" type = "radio">
+      Ajouter un emplacement &#224; la fin</p>
 
-      <p>Press <input name="button2" id="button2" value=
-      "Add Location" type="submit"> An updated <strong>Add
-      Route</strong> window will be displayed with all the
-      attributes required active. Repeat until all stops are
-      entered for the Route.</p>
+      <p>Appuyez sur <input name = "button2" id = "button2" value =
+      "Ajouter un emplacement" type = "submit"> Une fen&#234;tre mise &#224; jour<strong>
+		  Ajouter un itin&#233;raire</strong> sera affich&#233;e avec tous les 
+		  attributs requis actifs. R&#233;p&#233;tez cette op&#233;ration jusqu'&#224; ce 
+		  que tous les arr&#234;ts soient entr&#233;s pour l'itin&#233;raire.</P>
 
-      <p><img src="images/Ops_AddRoute02.png" alt="add route"
-      height="239" width="900"></p>
+      <p><img src = "images/Ops_AddRoute02.png" alt = "ajouter un itin&#233;raire"
+      height = "239" width = "900"></p>
 
-      <p>We will now add all the Locations to the Route. Each time
-      you add a Location to the Route, the table shows the order in
-      which the Train will visit them. Make sure that <input name=
-      "radio3" id="radio3" value="radio3" checked="checked" type=
-      "radio"> <strong>Add location at end</strong> is selected to
-      add after the first location.</p>
+      <p>Nous allons maintenant ajouter tous les emplacements &#224; 
+      l'Itin&#233;raire. Chaque fois que vous ajoutez un emplacement 
+      &#224; l'Itin&#233;raire, le tableau indique l'ordre dans lequel le 
+      train les visitera. Assurez-vous que <input name =
+      "radio3" id = "radio3" value = "radio3" checked = "checked" type =
+      "radio"> <strong>Ajouter un emplacement &#224; la fin</strong> est 
+      s&#233;lectionn&#233; pour &#234;tre ajout&#233; apr&#232;s le premier emplacement.</p>
 
-      <p>Build your Route by selecting the next Location the Train
-      will visit; select all Locations that the Train will pass
-      through even if the Train will not work the Location. This
-      way your train's engineer will know when reading his Manifest
-      the towns he will be traveling through.</p>
+      <p>Cr&#233;ez votre itin&#233;raire en s&#233;lectionnant le prochain emplacement 
+      visit&#233; par le train; s&#233;lectionner tous les lieux travers&#233;s par 
+      le train m&#234;me si le train ne fonctionne pas. De cette fa&#231;on, 
+      le conducteur de votre train saura, en lisant son manifeste, 
+      les villes qu'il traversera.</P>
 
-      <p>Make sure you press <input name="button3" id="button3"
-      value="Save Route" type="submit"> when you are done entering
-      the Locations.</p>
+      <p>Assurez-vous d'appuyer sur <input name = "button3" id = "button3"
+      value = "Enregistrer itin&#233;raire" type = "submit"> lorsque vous avez 
+      termin&#233; d'entrer les emplacements.</p>
 
-      <p><img src="images/Ops_AddRoute03.png" alt="route" height=
-      "350" width="900"></p>
+      <p><img src = "images/Ops_AddRoute03.png" alt = "itin&#233;raire" height =
+      "350" width = "900"></p>
 
-      <p>Each <strong>Location</strong> has the Train's departure
-      direction (<strong>Train Direction</strong>), number of
-      desired car <strong>Moves</strong> and whether Car
-      <strong>Pickups?</strong> and/or car <strong>Drops?</strong>
-      are allowed at that Location.</p>
+      <p>Chaque <strong>Emplacement</strong> a la direction de d&#233;part 
+      du train (<strong>Direction du train</strong>), le nombre de 
+      wagons <strong>en mouvement</strong> et si le wagon <strong>Prend 
+      en Charge? </strong> et/ou le wagon <strong>D&#233;pose?</strong> sont 
+      autoris&#233;s &#224; cet emplacement.</p>
 
-      <p>You can also adjust the maximum Train length (<strong>Max
-      Length</strong>) that can depart that Location.</p>
+      
 
-      <p>A Car <strong>Move</strong> can be a car Pickup or car
-      Drop at that Location. For example, 5 Moves can be 5 Pickups
-      or 5 Drops or any combination of 5 Pickups and Drops.</p>
+	<p>Vous pouvez &#233;galement r&#233;gler la longueur maximale du train 
+	(<strong>longueur maximale</strong>) pouvant quitter cette position.</p>
 
-      <p>The <strong>Grade</strong> is used to determine how many
-      Engines the Train will require for that segment. The
-      <strong>X</strong> and <strong>Y</strong> are the coordinates
-      on your dispatcher's Panel for the optional Train Icon. You
-      can set the coordinates here, or use the "SetX&amp;Y" Train
-      Icon popup menu to teach the program where you want the Train
-      Icon placed when the Train is at the specified location in
-      OperationsPro. Leave the X and Y coordinates at zero if you
-      want to manually move the icon or you're not using the icon
-      feature. After setting the number of moves, maximum length,
-      or coordinates, click on the table to make sure it is
-      recognized and stored by the program.</p>
+      <p>Un wagon <strong>D&#233;placer</strong> peut &#234;tre unwagon Pris en Charge 
+      ou D&#233;pos&#233; &#224; cet endroit. Par exemple, 5 coups peuvent &#234;tre 5 
+      Ramassage ou 5 D&#233;pose ou toute combinaison de 5 Ramassages et D&#233;pose.</P>
 
-      <p>You may move the selected Location <input name="button10"
-      id="button10" value="Up" type="button"> or <input name=
-      "button11" id="button11" value="Down" type="button"> to
-      change it's position in the list.</p>
+      <p>La <strong>pente</strong> permet de d&#233;terminer le nombre de 
+      Machine dont le train aura besoin pour ce segment. 
+      Les <strong>X</strong> et les <strong>Y</strong> sont les 
+      coordonn&#233;es du panneau de votre r&#233;partiteur pour l'ic&#244;ne de 
+      train optionnelle. Vous pouvez d&#233;finir les coordonn&#233;es ici ou 
+      utiliser le menu contextuel "Ic&#244;ne de Train" pour indiquer au 
+      programme o&#249; vous voulez que l'ic&#244;ne de train soit plac&#233;e lorsque 
+      le train se trouve &#224; l'emplacement sp&#233;cifi&#233; dans OperationsPro. 
+      Laissez les coordonn&#233;es X et Y &#224; z&#233;ro si vous souhaitez d&#233;placer 
+      manuellement l'ic&#244;ne ou si vous n'utilisez pas la fonction ic&#244;ne. 
+      Apr&#232;s avoir d&#233;fini le nombre de d&#233;placements, la longueur maximale 
+      ou les coordonn&#233;es, cliquez sur le tableau pour vous assurer 
+      qu'il est reconnu et stock&#233; par le programme.</P>
 
-      <p>You may add a comment for each location. In the Comment
-      column press <input name="button9" id="button9" value="Add"
-      type="button"><br>
-      <img src="images/Ops_AddRoute_comments.png" alt="comments"
-      height="128" width="268"><br></p>
+      <p>Vous pouvez d&#233;placer l'emplacement s&#233;lectionn&#233; <input name = "button10"
+      id = "button10" value = "Haut" type = "boutton"> ou <input name =
+      "button11" id = "button11" value = "Bas" type = "button"> pour 
+      changer sa position dans la liste.</p>
 
-      <p>Press <input name="button4" id="button4" value=
-      "Save Route" type="submit"> to save your route. The program
-      will create a file (OperationsRouteRoster.xml) in your JMRI
-      directory in a folder called "operations". A backup file with
-      the last settings for all of your routes is also created each
-      time <input name="button5" id="button5" value="Save Route"
-      type="submit"> pressed.</p>
+      <p>Vous pouvez ajouter un commentaire pour chaque emplacement. 
+      Dans la colonne Commentaire, appuyez sur <input name = "button9" 
+      id = "button9" value = "Ajouter"
+      type = "button"> <br>
+      <img src = "images/Ops_AddRoute_comments.png" alt = "commentaires"
+      height = "128" width = "268"> <br></p>
 
-      <p>Now we have our first Route set up.</p>
+      <p>Appuyez sur <input name = "button4" id = "button4" value =
+      "Enregistrer l'itin&#233;raire" type = "submit"> pour enregistrer 
+      votre itin&#233;raire. Le programme cr&#233;era un fichier 
+      (Operationsitin&#233;raireRoster.xml) dans votre r&#233;pertoire JMRI 
+      dans un dossier appel&#233; "operations". Un fichier de sauvegarde 
+      contenant les derniers param&#232;tres de toutes vos itin&#233;raires 
+      est &#233;galement cr&#233;&#233; &#224; chaque fois que <input name = "button5" 
+      id = "button5" value = "Enregistrer l'itin&#233;raire" type = "submit"> est appuy&#233;.</P>.
 
-      <p><img src="images/Ops_AddRoute04.png" alt="route" height=
-      "365" width="900"></p>
+      <p>Nous avons maintenant notre premi&#232;re itin&#233;raire configur&#233;e.</p>
 
-      <p>You may start a new Route using the <strong>Add
-      Route</strong> window and entering a new Route Name and
-      repeat this process for each Route.</p>
+      <p><img src = "images/Ops_AddRoute04.png" alt = "itin&#233;raire" height =
+      "365" width = "900"></p>
 
-      <p>Now back to the Route window, which will show us a list of
-      all the Routes.</p>
+      <p>Vous pouvez commencer un nouvel itin&#233;raire &#224; l'aide de la 
+      fen&#234;tre <strong>Ajouter une itin&#233;raire</strong>, entrer un nouveau 
+      nom d'itin&#233;raire et r&#233;p&#233;ter cette proc&#233;dure pour chaque itin&#233;raire.</p>
 
-      <p><img src="images/Ops_Routes01.png" alt="routes" height=
-      "310" width="730"></p>
+      <p>Retournez maintenant &#224; la fen&#234;tre itin&#233;raire, qui affichera 
+      une liste de tous les itin&#233;raires.</p>
 
-      <p>Note that you may press <input name="button6" id="button6"
-      value="Edit" type="submit"> on any Route and the
-      <strong><a href="Ops_EditRoutes.shtml">Edit
-      Route</a></strong> window opens, similar to the <strong>Add
-      Route</strong> window.</p>
+      <p><img src = "images/Ops_Routes01.png" alt = "itin&#233;raires" height =
+      "310" width = "730"></p>
 
-      <p>You may now press <input name="button7" id="button7"
-      value="Add" type="submit"> to add another Route, repeating
-      the process just completed, or close the
-      <strong>Route</strong> pane.</p>
+      <p>Notez que vous pouvez appuyer sur <input name = "button6" id = "button6"
+      value = "&#201;diter" type = "submit"> sur n'importe quel itin&#233;raire et 
+      la fen&#234;tre <strong><a href="Ops_Edititin&#233;raires.shtml"> Modifier 
+      l'itin&#233;raire</a></strong> s'ouvre, similaire &#224; la fen&#234;tre 
+      <strong>Ajouter un itin&#233;raire.</strong>.</p>
 
-      <h3><a href="Ops_Routes_Menu.shtml">Add Route menu</a></h3>
+      <p>Vous pouvez maintenant appuyer sur <input name = "button7" 
+      id = "button7"
+      value = "Ajouter" type = "submit"> pour ajouter un autre itin&#233;raire, 
+      en r&#233;p&#233;tant le processus que vous venez de terminer ou fermez 
+      le volet <strong>Itin&#233;raire</strong>.</p>
 
-      <p><strong>Window</strong> -- Standard JMRI&reg; window
-      menu.</p>
+      <h3><a href="Ops_Route_Menu.shtml"> Ajouter un Menu Itin&#233;raire</a></h3>
 
-      <p><strong>Help</strong> -- Standard JMRI&reg; Help menu.</p>
-      <hr>
+      <p><strong>Fen&#234;tre</strong> - JMRI standard&reg; menu de la fen&#234;tre.</p>
 
-      <div align="right">
-        <p><a href="Ops_Routes.shtml">Back</a><a href=
+      <p><strong>Aide</strong>: JMRI standard&reg; Menu Aide.</P>
+      <h>
+
+      <div align = "right">
+        <p><a href="Ops_Routes.shtml"> Retour</a> <a href =
         "Ops_Trains.shtml"></a></p>
 
-        <p><a href="index.shtml#Operations">Back to Index</a></p>
+        <p><a href="index.shtml#Operations"> Retour &#224; l'index</a></p>
       </div><!--#include virtual="/Footer" -->
     </div>
   </div>
