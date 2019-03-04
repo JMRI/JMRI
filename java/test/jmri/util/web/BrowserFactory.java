@@ -57,7 +57,7 @@ public class BrowserFactory {
                    WebDriverManager.getInstance(ChromeDriver.class).setup();
                    if(GraphicsEnvironment.isHeadless()) {
                       ChromeOptions chromeOptions = new ChromeOptions();
-                      chromeOptions.addArguments("--headless");
+                      chromeOptions.addArguments("--headless --log-level=3");
                       driver = new EventFiringWebDriver(new ChromeDriver(chromeOptions));
                   } else {
                      driver = new EventFiringWebDriver(new ChromeDriver());
