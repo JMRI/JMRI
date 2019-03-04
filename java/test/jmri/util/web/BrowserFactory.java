@@ -37,17 +37,12 @@ public class BrowserFactory {
             case "Firefox":
                 driver = drivers.get("Firefox");
                 if (driver == null) {
-                  WebDriverManager.getInstance(FirefoxDriver.class).setup();
-                  FirefoxBinary firefoxBinary = new FirefoxBinary();
-                  FirefoxOptions firefoxOptions = new FirefoxOptions();
-                  if(GraphicsEnvironment.isHeadless()) {
-                       firefoxBinary.addCommandLineOptions("--headless");
-                       firefoxOptions.setBinary(firefoxBinary);
-		       firefoxOptions.setLogLevel(org.openqa.selenium.firefox.FirefoxDriverLogLevel.ERROR);
-                    } else {
-                       firefoxOptions.setBinary(firefoxBinary);
-		       firefoxOptions.setLogLevel(org.openqa.selenium.firefox.FirefoxDriverLogLevel.ERROR);
-                    }
+                    WebDriverManager.getInstance(FirefoxDriver.class).setup();
+                    FirefoxBinary firefoxBinary = new FirefoxBinary();
+                    FirefoxOptions firefoxOptions = new FirefoxOptions();
+                    firefoxBinary.addCommandLineOptions("--headless");
+                    firefoxOptions.setBinary(firefoxBinary);
+		    firefoxOptions.setLogLevel(org.openqa.selenium.firefox.FirefoxDriverLogLevel.ERROR);
                     driver = new EventFiringWebDriver(new FirefoxDriver(firefoxOptions));
                     driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
                     drivers.put("Firefox", driver);
