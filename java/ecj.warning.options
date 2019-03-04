@@ -4,7 +4,9 @@
 
 # for compiling the test directory, the java/ecj.warning.options-test file overrides this
 
-# Group (macro) checks - these need to be sorted out
+#
+# Group (macro) checks - some still need to be sorted out
+#
 -warn:+hiding
 -warn:-fieldHiding
 -warn:-localHiding 
@@ -48,7 +50,10 @@
 -warn:-unusedTypeParameter
 
 
+#
 # Checks we choose to enforce
+#
+
 -warn:+allDeprecation
 -warn:+allOver-ann
 -warn:+assertIdentifier
@@ -60,7 +65,6 @@
 -warn:+deprecation
 -warn:+discouraged
 -warn:+enumIdentifier
--warn:+enumSwitch
 -warn:+fallthrough
 -warn:+finalBound
 -warn:+finally 
@@ -89,52 +93,82 @@
 -warn:+uselessTypeCheck
 -warn:+varargsCast
 
+#
+# Checks we choose not to enforce as out common style
+#
 
-# Checks we choose not to enforce as a matter of style
+  # no real cost to using implicit boxing/unboxing, and it's just easier
 -warn:-boxing
+
+  # redundant super-interfaces: this is a design-style issue
+  # our inheritance tree doesn't insist on single-access to parent interfaces
 -warn:-intfRedundant
+
+  # non-nls string literals (mostly missing // $ NON-NLS)
 -warn:-nls
+
+# many of these in the code, and "final" for parameters is a matter of style
 -warn:-paramAssign
+
+# JMRI doesn't anticipate use of Java serialization
 -warn:-serial
+
+# maybe a good idea, but too expensive now
 -warn:-super
+
+# many of these aleady in the code, and the value is not clear
 -warn:-syntheticAccess
+
+# we don't require "this." in every variable access
 -warn:-unqualifiedField
 -warn:-unqualified-field-access
+
+# our APIs routinely have "may need in future" parameters
 -warn:-unusedArgument
 
 
+#
+# Checks we're warning on, working to reduce, but not enforcing
+#
+-warn:-switchDefault
+-warn:+enumSwitch
 
-# Checks we're warning on, but not enforcing
-
-
-
-# Checks we're working on
+#
+# Checks we're working on putting in place
+#
 
 # 14 outstanding items
 -warn:-deadCode
 
+# missing synch in synchronized method override
 # 22 outstanding items
 -warn:-syncOverride
 
-# 159 outstanding items
+# raw type instead of parameterized type 
+# 159 outstanding items (some likely to be in APIs)
 -warn:-raw
 
-# this tags some FindBugs labels?  But still useful to run occasionally
+# this tags some NetBeans and FindBugs tokens in @SuppressWarnings  
+# Until that's fixed, useful to run occasionally to find "Unnecessary" annotations
 -warn:-warningToken
 
-# 7 outstanding items
--warn:-switchDefault
 
+#
+# Checks not yet decided 
+#
 
-
-# Checks not yet examined 
-
--warn:-allDeadCode
 -warn:-all-static-method
 -warn:-emptyBlock
+  # missing enum switch cases even when default case is present
 -warn:-enumSwitchPedantic
+
+-warn:-allDeadCode
+  # flags methods that can be made static because they don't access data members
 -warn:-static-method
-#-warn:-tasks(<task1>|...|<taskN>)
+
+  # We often seem to _prefer_ the terminal else instead of bottom return
 -warn:-unnecessaryElse
+
+#-warn:-tasks(<task1>|...|<taskN>)
 
 

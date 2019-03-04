@@ -8,12 +8,8 @@ import org.junit.runners.Suite;
     BundleTest.class,
     apps.gui3.dp3.PackageTest.class,
     apps.gui3.mdi.PackageTest.class,
-    TabbedPreferencesActionTest.class,
-    TabbedPreferencesFrameTest.class,
-    TabbedPreferencesProfileActionTest.class,
-    TabbedPreferencesTest.class,
-    EditConnectionPreferencesDialogTest.class,
     apps.gui3.paned.PackageTest.class,
+    apps.gui3.tabbedpreferences.PackageTest.class,
     FirstTimeStartUpWizardTest.class,
     FirstTimeStartUpWizardActionTest.class,})
 

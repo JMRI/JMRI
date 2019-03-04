@@ -89,6 +89,7 @@ import org.junit.runners.Suite;
         QuickPromptUtilTest.class,
         UnzipFileClassTest.class,
         AbstractFrameActionTest.class,
+        ValidatingInputPaneTest.class,
 
         // deliberately at end
         jmri.util.Log4JErrorIsErrorTest.class,

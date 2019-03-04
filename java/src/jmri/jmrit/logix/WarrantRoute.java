@@ -112,6 +112,10 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
 
     @Override
     public abstract void propertyChange(java.beans.PropertyChangeEvent e);
+    
+    protected void setSpeedUtil(SpeedUtil sp) {
+    	_speedUtil = sp;
+    }
 
     /* ************************* Panel for Route search depth **********************/
     /**
@@ -206,7 +210,12 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         trainPanel.add(Box.createHorizontalStrut(STRUT_SIZE));
 
         _dccNumBox.addActionListener((ActionEvent e) -> {
-            setTrainInfo(_dccNumBox.getText());
+        	_speedUtil.setDccAddress(_dccNumBox.getText());
+        	if (_speedUtil.getRosterEntry() == null) {
+        		_rosterBox.setSelectedItem(Bundle.getMessage("noSuchAddress"));
+        	} else {
+                setTrainInfo(_trainNameBox.getText());
+        	}
         });
         return trainPanel;
     }
@@ -224,10 +233,10 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         _rosterBox.setMaximumSize(_rosterBox.getPreferredSize());
         _rosterBox.addActionListener((ActionEvent e) -> {
             String selection = (String) _rosterBox.getSelectedItem();
-            if (Bundle.getMessage("noSuchAddress").equals(selection)) {
-                _dccNumBox.setText(null);
-            } else {
-                setTrainInfo(selection);
+            if (selection != null && !Bundle.getMessage("noSuchAddress").equals(selection)
+            		&& selection.trim().length() != 0) {
+                _speedUtil.setDccAddress(selection);
+                setTrainInfo(_trainNameBox.getText());
             }
         });
         
@@ -295,26 +304,20 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         if (log.isDebugEnabled()) {
             log.debug("setTrainInfo for: " + name);
         }
-        if (name == null) {
-            setTrainName(null);
-            _dccNumBox.setText(null);
-            _rosterBox.setSelectedIndex(0);            
-            return Bundle.getMessage("NoLoco");
-        }
-        _rosterBox.setSelectedIndex(0);
-        if (_speedUtil.setDccAddress(name)) {
-            _dccNumBox.setText(_speedUtil.getDccAddress().toString());
-            _rosterBox.setSelectedItem(_speedUtil.getRosterId());
-            if (_trainNameBox.getText() == null) {
-                if (_speedUtil.getRosterEntry()!=null) {
-                    setTrainName(_speedUtil.getRosterEntry().getRoadNumber()); 
-                } else {
-                    setTrainName(_speedUtil.getDccAddress().toString()); 
-                }
-            }
+        setTrainName(name);
+        _dccNumBox.setText(_speedUtil.getAddress());
+        String id = _speedUtil.getRosterId();
+        if (id != null) {
+            _rosterBox.setSelectedItem(id);
         } else {
-            _dccNumBox.setText(null);
-            return Bundle.getMessage("NoLoco");            
+        	_rosterBox.setSelectedItem(Bundle.getMessage("noSuchAddress"));
+        }
+        if (name == null) {
+            if (_speedUtil.getRosterEntry()!=null) {
+                setTrainName(_speedUtil.getRosterEntry().getRoadNumber()); 
+            } else {
+                setTrainName(_speedUtil.getAddress()); 
+            }
         }
         return null;
     }
@@ -371,15 +374,14 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
     }
 
     @SuppressWarnings("unchecked") // parameter can be any of several types, including JComboBox<String>
-    @SuppressFBWarnings(value = "UCF_USELESS_CONTROL_FLOW", justification = "checkBlockBox in the internal class RouteLocation is a method with side effects that returns a boolean value. This code basically says try all possibilities until one succeeds.")
+//    @SuppressFBWarnings(value = "UCF_USELESS_CONTROL_FLOW", justification = "checkBlockBox in the internal class RouteLocation is a method with side effects that returns a boolean value. This code basically says try all possibilities until one succeeds.")
     void doAction(Object obj) {
         if (obj instanceof JTextField) {
             JTextField box = (JTextField) obj;
             if (!_origin.checkBlockBox(box)) {
                 if (!_destination.checkBlockBox(box)) {
                     if (!_via.checkBlockBox(box)) {
-                        if (!_avoid.checkBlockBox(box)) {
-                        }
+                        _avoid.checkBlockBox(box);
                     }
                 }
             }
@@ -479,7 +481,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         private BlockOrder order;
         JTextField blockBox = new JTextField();
         private final JComboBox<String> pathBox = new JComboBox<>();
-        private JComboBox<String> portalBox;
+        JComboBox<String> portalBox;
 
         RouteLocation(Location loc) {
             location = loc;

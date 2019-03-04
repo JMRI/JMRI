@@ -461,29 +461,19 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
      */
     public String runTrain(Warrant w, int mode) {
         String msg = null;
-        w.deAllocate();
         if (w.getRunMode() != Warrant.MODE_NONE) {
             msg = w.getRunModeMessage();
         }
         if (msg == null) {
+            w.deAllocate();
             msg = w.setRoute(false, null);
             if (msg == null) {
-                msg = _model.checkAddressInUse(w);
-                if (msg == null) {
-                    msg = w.setRunMode(mode, null, null, null, w.getRunBlind());
-                }
+                msg = w.setRunMode(mode, null, null, null, w.getRunBlind());
             }
         }
         if (msg != null) {
-            w.deAllocate();
-//            setStatusText(msg, Color.red, false);
             return Bundle.getMessage("CannotRun", w.getDisplayName(), msg);
         }
-/*        if (w.commandsHaveTrackSpeeds()) {
-            w.getSpeedUtil().getValidSpeedProfile(this);            
-        } else {
-            setStatusText(Bundle.getMessage("NoTrackSpeeds", w.getDisplayName()), Color.red, true);
-        }*/
         return null;
     }
 

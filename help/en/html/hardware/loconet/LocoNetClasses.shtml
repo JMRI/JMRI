@@ -257,8 +257,9 @@ make it easy to test the transmission and receipt of messages. --></p>
       <p>Note that the current MS100 implementation is
       not as robust as we really need it to be. In particular,
       back-off and retransmit is not being checked. Other interface
-      devices, such as the Digitrax PR3, the LocoBuffer,
-      LocoBuffer-II, and LocoBuffer-USB all implement an internal
+      devices, such as the Digitrax PR3 and PR4, Digitrax DCS240 and DCS52 USB 
+      interfaces, and the LocoBuffer,
+      LocoBuffer-II, and LocoBuffer-USB devices, all implement an internal
       microcontroller which handles back-off and retransmit
       operations properly and are therefore preferred over the
       MS100.</p>

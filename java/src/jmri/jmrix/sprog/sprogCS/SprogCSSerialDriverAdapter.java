@@ -29,7 +29,6 @@ public class SprogCSSerialDriverAdapter
      * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
     @Deprecated  // will be removed when class is converted
-    @SuppressWarnings("deprecation")  // temporary implementation
     static public SprogCSSerialDriverAdapter instance() {
         return null;
     }

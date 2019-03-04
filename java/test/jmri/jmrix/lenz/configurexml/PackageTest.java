@@ -8,7 +8,8 @@ import org.junit.runners.Suite;
    XNetLightManagerXmlTest.class,
    XNetSensorManagerXmlTest.class,
    XNetTurnoutManagerXmlTest.class,
-   AbstractXNetSerialConnectionConfigXmlTest.class
+   AbstractXNetSerialConnectionConfigXmlTest.class,
+   XNetStreamConnectionConfigXmlTest.class
 })
 /**
  * Tests for the jmri.jmrix.lenz.configurexml package.
