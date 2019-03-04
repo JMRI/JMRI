@@ -1,7 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Translation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-03-04 -->
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -26,176 +26,184 @@
     <div id="mainContent">
       <a name="Top" id="Top"></a>
 
-      <h1>Using JMRI&reg; to Operate Trains</h1>
+      
 
-      <h2>OperationsPro: Add Location window</h2>
+<h1>Utilisation de JMRI&reg; exploiter des trains</h1>
 
-      <div align="right">
-        <p><a href="Ops_Locations.shtml">Back</a><a href=
+      <h2>OperationsPro: fen&#234;tre Ajouter un emplacement</h2>
+
+      <div align = "right">
+        <p><a href="Ops_Locations.shtml">Retour</a> <a href =
         "Ops_Cars.shtml"></a></p>
 
-        <p><a href="index.shtml#Main">Back to Index</a></p>
-      </div>
-      <hr>
-      The <strong>Add Location</strong> window is opened from the
-      <span style="font-weight: bold;">Locations</span> window
-      using the <span style="font-weight: bold;">Add</span> button
-      at the bottom of the window. Initially only the <span style=
-      "font-weight: bold;">Name</span> and the <span style=
-      "font-weight: bold;">Operations (Tracks) at this
-      location</span> parts are active.
+        <p><a href="index.shtml#Main"> Retour &#224; l'index</a></p>
+     </div>
+      <h>
+      La fen&#234;tre <strong>Ajouter un lieu</strong> est ouverte &#224; partir 
+      de la fen&#234;tre <span style = "font-weight: bold;"> Lieux</span> 
+      &#224; l'aide d' <span style = "font-weight: bold;"> Ajouter.</span> 
+      en bas de la fen&#234;tre. Initialement, seules les &#233;l&#233;ments <span 
+      style = "font-weight: bold;">Nom</span> et <span style = 
+      "font-weight: bold;"> Op&#233;rations (Voies) &#224; cet emplacement</span> 
+      sont actifs. .
 
-      <p style="text-align: center;"><img src=
-      "images/Ops_AddLocation.png" alt="add location" height="589"
-      width="772"></p>
+      <p style = "text-align: center;"> <img src =
+      "images/Ops_AddLocation.png" alt = "add location" height = "589"
+      width = "772"></p>
 
-      <p><strong>Name</strong> <input name="textfield" id=
-      "textfield" type="text"> The Location name must be unique;
-      OperationsPro will not allow two Locations with identical
-      names. However, if you want more than one Location to have
-      the same name on your Manifests and Switch Lists, add a
-      hyphen and a number to the end of the Locations name. For
-      example, <strong>Boston-1</strong> and
-      <strong>Boston-2</strong> will both print as
-      <strong>Boston</strong>. The program will remove the hyphen
-      and number when printing Manifests and Switch Lists.</p>Press
-      <input name="button2" id="button2" value="Add Location" type=
-      "submit"> at the bottom of the panel. The various fields that
-      were disabled should now be enabled.
+      <p><strong>Nom</strong> <input name = "textfield" id = "textfield" 
+      type = "text"> Le nom de l'emplacement doit &#234;tre unique; 
+      OperationsPro n'autorisera pas deux emplacements avec des noms 
+      identiques. Toutefois, si vous souhaitez que plusieurs emplacements 
+      aient le m&#234;me nom dans vos manifestes et vos listes de commutateurs, 
+      ajoutez un trait d'union et un num&#233;ro &#224; la fin du nom de l'emplacement. 
+      Par exemple, <strong>Boston-1</strong> et <strong>Boston-2</strong> 
+      seront tous deux imprim&#233;s en tant que <strong>Boston</strong>. 
+      Le programme supprimera le trait d'union et le num&#233;ro lors de 
+      l'impression des Manifestes et des Listes de Man&#156;uvres.</P> 
+      Appuyez sur <input name = "button2" id = "button2" value = 
+      "Ajouter un lieu" type = "submit"> en bas du panneau . Les 
+      diff&#233;rents champs qui ont &#233;t&#233; d&#233;sactiv&#233;s doivent maintenant 
+      &#234;tre activ&#233;s.
 
-      <p style="text-align: center;"><img src=
-      "images/Ops_AddLocation01.png" alt="Add Location" height=
-      "585" width="772"></p>
+      <p style = "text-align: center;"> <img src =
+      "images/Ops_AddLocation01.png" alt = "Ajouter un emplacement" height =
+      "585" width = "772"></p>
 
-      <p>Each Location can have several Yard, Spur, Interchange or
-      Staging Tracks:</p>
+      <p>Chaque emplacement peut avoir plusieurs voies de Triage, 
+      d'Embranchement,d'&#201;change ou de Garage</p>
 
       <ul>
-        <li>Yards are where Cars and Engines are placed for
-        temporary storage.</li>
+        <li> Les Triages sont l'endroit o&#249; les wagons et les machines 
+        sont plac&#233;s pour un stockage temporaire.</li>
 
-        <li>A Spur can be an industry or any place where a Car is
-        loaded or unloaded.</li>
-      </ul>For a Train to service a Location, there must be at
-      least one Track for that Location. See <a href=
-      "#addtracks">below</a> how to add Tracks to your Location.
+        <li> Un Embranchement peut &#234;tre une industrie ou n'importe quel 
+        lieu de chargement ou de d&#233;chargement d'un wagon.</li>
+     </ul> Pour qu'un train puisse desservir un Emplacement, il doit y 
+     avoir au moins une Voie pour cet Emplacement. Voir 
+     <a href= "#addtracks"> ci-dessous</a> pour savoir comment 
+     ajouter des Voies &#224; votre Emplacement.
 
-      <p><strong>Select the rolling stock serviced by this
-      Location</strong></p>
+      <p><strong>S&#233;lectionnez le mat&#233;riel roulant desservi par cet 
+      emplacement</strong></p>
 
-      <p>The Locations Table shows the total length of all Tracks,
-      the amount of track that is occupied (Used) by Cars and
-      Engines, the total number of Cars and Engines (Rolling Stock)
-      at each Location, the number of Cars and Engines that will be
-      picked up (Pickups) by Trains, and the number of Cars and
-      Engines that will be delivered (Drops) here by active
-      Trains.</p>
+      <p>Le tableau Emplacements indique la longueur totale de toutes les 
+      Voies, le nombre de voies occup&#233;es (utilis&#233;es) par des Wagons et 
+      des Machines, le nombre total de Wagons et de Machines (mat&#233;riel 
+      roulant) &#224; chaque emplacement, le nombre de wagons et de machines 
+      qui seront ramass&#233;s (pick-up) par les trains et le nombre de 
+      Wagons et de Machines qui seront livr&#233;s (drops) ici par les trains actifs.</p>
 
-      <p><strong>This Location is serviced by trains
-      traveling</strong> <strong><input name="checkbox" id=
-      "checkbox" type="checkbox"> North <input name="checkbox2" id=
-      "checkbox2" checked="checked" type="checkbox"> South
-      <input name="checkbox3" id="checkbox3" type="checkbox"> East
-      <input name="checkbox4" id="checkbox4" type="checkbox">
-      West<br></strong> You can decide which train direction the
-      Location can service. For example, if only south bound trains
-      can access the Location, select <strong>South</strong> and
-      deselect the other directions. This can be useful if you want
-      to only support trailing point switching for a given
-      Location. If a Location can support multiple directions then
-      select the ones that are appropriate.<br>
+      <p><strong>Cet emplacement est desservi par les trains circulant
+      </strong> <strong><input name = "checkbox" id = "checkbox" type = 
+      "checkboxr"> Nord <input namee = "checkbox2" id = "checkbox2 "
+      checked =" checked "type =" checkbox"> Sud <input name =" checkbox3 "
+      id =" checkbox3 "type =" checkbox "> Est <input name =" checkbox4 "
+      id =" checkbox4 "type =" checkbox "> Ouest <br></strong> 
+      Vous pouvez choisir la direction du train accept&#233; par l'Emplacement. 
+      Par exemple, si seuls les trains en direction du sud peuvent acc&#233;der 
+      &#224; l'Emplacement, s&#233;lectionnez <strong>Sud</strong> et 
+      d&#233;s&#233;lectionnez les autres directions. Cela peut &#234;tre utile si 
+      vous souhaitez uniquement prendre en charge le changement de 
+      direction pour un Emplacement donn&#233;. Si un emplacement peut 
+      prendre en charge plusieurs directions, s&#233;lectionnez celles 
+      qui conviennent. <br>
       <br>
-      <strong>Operations (Tracks) at this Location <input name=
-      "radio3" id="radio3" value="radio3" checked="checked" type=
-      "radio"> Spurs <input name="radio4" id="radio4" value=
-      "radio4" type="radio"> Yards <input name="radio5" id="radio5"
-      value="radio5" type="radio"> Classification/Interchange
-      <input name="radio6" id="radio6" value="radio6" type="radio">
-      Staging only</strong><br>
-      To add a Track, press the "Add [...] Track" button. Now enter
-      the name of the Track along with the length of the Track in
-      scale feet or in actual inches. Append a double quote (") to
-      the length when entering actual inches to have OperationsPro
-      convert the length into scale feet. Append cm if you want to
-      convert from centimeters to meters. Press the "Add [...]
-      Track" button at the bottom of the panel to add a new track
-      to the list and activate the disabled fields.</p>
+      
 
-      <p>The <input name="button3" id="button3" value=
-      "Add [...] Track" type="submit"> button at the bottom of the
-      window will change to match the option you chose as "Tracks
-      at this Location".<br></p>
+	<strong>Op&#233;rations (voies) &#224; cet emplacement <input name = "radio3" id = 
+	"radio3" value = "radio3" checked = "checked" type = "radio"> 
+	Embranchement <input name = "radio4" id = "radio4 "value =" radio4 "
+	type =" radio ">Triage <input name =" radio5 "id =" radio5 "
+	value =" radio5 "type =" radio "> Classification/&#201;change
+	 <input name =" radio6 "id =" radio6 "value =" radio6 "
+	 type =" radio "> Voie de Stockage Temporaire uniquement</strong> <br>
+      Pour ajouter une voie, appuyez sur le bouton "Ajouter une voie [...]". 
+      Maintenant, entrez le nom de la voie ainsi que sa longueur en 
+      pieds ou en pouces r&#233;els. Ajoutez un guillemet double (") &#224; la 
+      longueur lors de la saisie en pouces afin de permettre &#224; OperationsPro 
+      de convertir la longueur en pieds d'&#233;chelle. Ajoutez cm si vous 
+      souhaitez convertir des centim&#232;tres en m&#232;tres. Cliquez sur le
+       bouton" Ajouter une voie [...] ". bas du panneau pour ajouter 
+       une nouvelle voie &#224; la liste et activer les champs d&#233;sactiv&#233;s.</p>
 
-      <h4><a name="addtracks" id="addtracks">Add Spurs, Yards,
-      Classification/Interchange, or Staging Only (corresponding to
-      the present task)</a></h4>
+      <p>Le <input name = "button3" id = "button3" value = 
+      "Ajouter [...] une voie" type = "submit"> Le bouton situ&#233; au bas 
+      de la fen&#234;tre changera pour correspondre &#224; l'option choisie 
+      " Voies &#224; cet endroit ". <br></p>
 
-      <p>To add a Location, press the "Add [location]" button,
-      which shows one of the following types</p>
+      <h4><a name="addtracks" id="addtracks"> Ajouter des Embranchements, 
+      des Triages, une classification/&#233;change ou un stockage interm&#233;diaire 
+      uniquement (correspondant &#224; la t&#226;che actuelle)</a></h4>
 
-      <p><a href="Ops_AddSiding.shtml"><input name="button4" id=
-      "button4" value="Add Spur Track" type="button"></a> <a href=
-      "Ops_AddSiding.shtml">Add Spur Track</a></p>
+      <p>Pour ajouter un lieu, appuyez sur le bouton "Ajouter [lieu]", 
+      qui affiche l'un des types suivants</p>
 
-      <p><a href="Ops_AddYard.shtml"><input name="button5" id=
-      "button5" value="Add Yard Track" type="button"></a> <a href=
-      "Ops_AddYard.shtml">Add Yard Track</a></p>
+      <p><a href="Ops_AddSiding.shtml"><input name = "button4" 
+      id = "button4" value = "Ajouter une voie d'Embranchement" 
+      type = "button"></a> <a href = "Ops_AddSiding.shtml "> Ajouter une 
+      Voie d'Embranchement</a></p>
 
-      <p><a href="Ops_AddInterchange.shtml"><input name="button6"
-      id="button6" value="Add C/I Track" type="button"></a>
-      <a href="Ops_AddInterchange.shtml">Add
-      Classification/Interchange Track</a></p>
+      <p><a href="Ops_AddYard.shtml"><input name = "button5" 
+      id = "button5" value = "Ajouter une voie de Triage" 
+      type = "button"></a> <a href = "Ops_AddYard.shtml "> Ajouter une 
+      Voie de Triage</a></p>
 
-      <p><a href="Ops_AddStaging.shtml"><input name="button7" id=
-      "button7" value="Add Staging Only Track" type="button"></a>
-      <a href="Ops_AddStaging.shtml">Add Staging Only Track</a></p>
+      <p><a href="Ops_AddInterchange.shtml"><input name = "button6" 
+      id = "button6" value = "Ajouter un voie C/E" type = "button">
+      </a> <a href = "Ops_AddInterchange .shtml "> Ajouter une voie de 
+      Classification/&#201;change</a></p>
 
-      <p>Each of these buttons opens a corresponding dialog to
-      describe its function.</p>
+      <p><a href="Ops_AddStaging.shtml"><input name = "button7" 
+      id = "button7" value = "Ajouter une voie pour le stockage 
+      interm&#233;diaire" type = "button"></a> <a href = "Ops_AddStaging. shtml "> 
+		  Ajouter une voie de Stockage Interm&#233;diaire uniquement</a></p>
 
-      <h4>Save [...] Track</h4>
+      <p>Chacun de ces boutons ouvre une bo&#238;te de dialogue correspondante 
+      pour d&#233;crire sa fonction.</p>
 
-      <p>Press the <input name="button8" id="button8" value=
-      "Save Location" type="submit"> to save your work. The program
-      will create a file (OperationsLocationRoster.xml) in your
-      JMRI directory in a folder called "operations". The program
-      will also create a backup file containing the last settings
-      for all of your locations. <a name="Sidings" id=
-      "Sidings"></a></p>
+      <h4>Enregistrer [...] Voie</h4>
 
-      <p>Spurs are very similar to <a href=
-      "Ops_AddYard.shtml">Yards</a>, so see above for more
-      information. You can if you wish schedule the order that Cars
-      will be delivered to a Spur. See <a href=
-      "Ops_schedule.shtml">Schedules</a> for more information.</p>
+      <p>Appuyez sur <input name = "button8" id = "button8" 
+      value = "Emplacement de sauvegarde" type = "submit"> pour enregistrer 
+      votre travail. Le programme cr&#233;era un fichier (OperationsLocationRoster.xml) 
+      dans votre r&#233;pertoire JMRI dans un dossier appel&#233; "operations". 
+      Le programme cr&#233;era &#233;galement un fichier de sauvegarde contenant 
+      les derniers param&#232;tres pour tous vos emplacements. 
+      <a name="Sidings" id= "Sidings"></a></p>
 
-      <h3><span style="font-weight: bold;">Add Location</span>
-      window menu</h3>
+      <p>Les Embranchements sont tr&#232;s similaires aux 
+      <a href= "Ops_AddYard.shtml">Triages</a>. Voir ci-dessus pour 
+      plus d'informations. Vous pouvez, si vous le souhaitez, programmer 
+      la commande pour que les wagons soient livr&#233;es &#224; un Embranchement. 
+      Voir <a href= "Ops_schedule.shtml">Horaires</a> pour plus d'informations.</P>
 
-      <p style="text-align: center;"><img src=
-      "images/Ops_AddLocation_menu.png" alt="menu" height="168"
-      width="776"></p>
+      <h3><span style = "font-weight: bold;"> menu de la fen&#234;tre 
+      Ajouter un emplacement</span></h3>
 
-      <p><strong>Tools</strong></p>
+      <p style = "text-align: center;"> 
+		  <img src = "images/Ops_AddLocation_menu.png" 
+		  alt = "menu" height = "168" width = "776"></p>
+
+      <p><strong>Outils</strong></p>
 
       <blockquote>
-        <p><a href="Ops_Locations_byCar.shtml"><strong>Modify
-        Locations by Car Type</strong></a></p>
+        <p><a href="Ops_Locations_byCar.shtml"><strong>Modifier les 
+        Emplacements par Type de Wagon</strong></a></p>
 
-        <p><strong><a href="Ops_Cars.shtml">Show
-        Cars</a></strong></p>
+        <p><strong><a href="Ops_Cars.shtml">Afficher les Wagons</a></strong></p>
 
-        <p><strong>Change Track Type</strong></p>
+        <p><strong>Modifier le Type de Voie</strong></p>
 
-        <p><img src="images/Ops_location_ChangeTrackType.png" alt=
-        "track type" height="107" width="388"><br></p>
-      </blockquote>
-      <hr>
+        <p><img src = "images/Ops_location_ChangeTrackType.png" alt = 
+        "type de voie" height = "107" width = "388"> <br></p>
+     </blockquote>
+      <h>
 
-      <div align="right">
-        <p><a href="Ops_Locations.shtml">Back</a></p>
+      <div align = "right">
+        <p><a href="Ops_Locations.shtml">Retour</a></p>
 
-        <p><a href="index.shtml#Main">Back to Index</a></p>
+        <p><a href="index.shtml#Main"> Retour &#224; l'index</a></p>
       </div><!--#include virtual="/Footer" -->
     </div>
   </div>
