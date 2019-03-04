@@ -34,6 +34,7 @@ public class FrmFindAndReplace extends javax.swing.JFrame {
     public FrmFindAndReplace(AwtWindowProperties awtWindowProperties, CTCSerialData ctcSerialData) {
         super();
         initComponents();
+        CommonSubs.addHelpMenu(this, "package.jmri.jmrit.ctc.CTC_menuEditFind", true);  // NOI18N
         _mAwtWindowProperties = awtWindowProperties;
         _mCTCSerialData = ctcSerialData;
         _mDefaultTableModel = (DefaultTableModel)_mResults.getModel();  // We know this is the type by default construction!

@@ -51,6 +51,7 @@ public class FrmIL extends javax.swing.JFrame {
                     boolean signalHeadSelected) {
         super();
         initComponents();
+        CommonSubs.addHelpMenu(this, "package.jmri.jmrit.ctc.CTC_frmIL", true);  // NOI18N
         _mAwtWindowProperties = awtWindowProperties;
         _mCodeButtonHandlerData = codeButtonHandlerData;
         _mCheckJMRIObject = checkJMRIObject;

@@ -80,6 +80,7 @@ public class FrmSIDI extends javax.swing.JFrame {
                     boolean signalHeadSelected) {
         super();
         initComponents();
+        CommonSubs.addHelpMenu(this, "package.jmri.jmrit.ctc.CTC_frmSIDI", true);  // NOI18N
         _mAwtWindowProperties = awtWindowProperties;
         _mCodeButtonHandlerData = codeButtonHandlerData;
         _mProgramProperties = programProperties;

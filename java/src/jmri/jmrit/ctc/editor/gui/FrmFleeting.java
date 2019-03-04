@@ -40,6 +40,7 @@ public class FrmFleeting extends javax.swing.JFrame {
     public FrmFleeting(AwtWindowProperties awtWindowProperties, OtherData otherData) {
         super();
         initComponents();
+        CommonSubs.addHelpMenu(this, "package.jmri.jmrit.ctc.CTC_menuCfgFlt", true);  // NOI18N
         _mAwtWindowProperties = awtWindowProperties;
         _mOtherData = otherData;
         _mFleetingToggleInternalSensor.setText(otherData._mFleetingToggleInternalSensor);

@@ -55,7 +55,7 @@ public class FrmCB extends javax.swing.JFrame {
                     CTCSerialData ctcSerialData, CheckJMRIObject checkJMRIObject) {
         super();
         initComponents();
-//         CommonSubs.addHelpMenu(this, "package.jmri.jmrit.ctc.CTC_frmCB", true);  // NOI18N
+        CommonSubs.addHelpMenu(this, "package.jmri.jmrit.ctc.CTC_frmCB", true);  // NOI18N
         _mAwtWindowProperties = awtWindowProperties;
         _mCodeButtonHandlerData = codeButtonHandlerData;
         _mProgramProperties = programProperties;
