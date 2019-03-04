@@ -450,14 +450,11 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
 
         // Listen to selection of scale
         scaleList.addActionListener(e -> {
-            try {
-                JComboBox<String> cb = (JComboBox<String>) e.getSource();
-                selectedScale = scales[cb.getSelectedIndex()];
-                checkCustomScale();
-            } catch (ClassCastException ce) {
-                log.error(ce.getLocalizedMessage());
-            }
+            selectedScale = scales[scaleList.getSelectedIndex()];
+            checkCustomScale();
         });
+        
+        
 
         scaleLabel.setText(Bundle.getMessage("Scale"));
         scaleLabel.setVisible(true);
