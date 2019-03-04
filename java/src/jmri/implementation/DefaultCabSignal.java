@@ -86,7 +86,8 @@ public class DefaultCabSignal implements CabSignal, PropertyChangeListener {
            }
        }
        getNextBlock(); // calculate the next block and fire an appropriate property change.
-       getNextMast(); // calculate the next mast and fire an appropriate property change.
+       // calculate the next mast and fire an appropriate property change.
+       forwardCabSignalToLayout();
     }
 
     /**
@@ -214,6 +215,7 @@ public class DefaultCabSignal implements CabSignal, PropertyChangeListener {
               _nextMast.addPropertyChangeListener(_cconSignalMastListener = (PropertyChangeEvent e) -> {
                  // aspect changed?, need to notify
                  firePropertyChange("MastChanged",e.getNewValue(),e.getOldValue());
+                 forwardCabSignalToLayout();
               });
            }
         }
@@ -243,12 +245,9 @@ public class DefaultCabSignal implements CabSignal, PropertyChangeListener {
 
         if (mast != null) {
             log.debug("cab {} aspect {}",locoaddr,mast.getAspect());
-
-            // notify listeners of change of aspect
-
-            // and forward the message on to the layout.
-            forwardAspectToLayout();
         }
+        // and forward the message on to the layout.
+        forwardAspectToLayout();
        
     }
 
@@ -337,11 +336,11 @@ public class DefaultCabSignal implements CabSignal, PropertyChangeListener {
            if ((event.getPropertyName().equals("state")) || (event.getPropertyName().equals("direction"))) {
               // update internal state to cascade changes.
               getNextBlock();
-              getNextMast();
+              forwardCabSignalToLayout();
            }
        } else if(event.getSource() instanceof SignalMast) {
            // update internal state to cascade changes.
-           getNextMast();
+           forwardCabSignalToLayout();
        }
     }
 

@@ -73,6 +73,7 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
     CabSignalTableModel(int row, int column) {
         cabSignalManager = InstanceManager.getNullableDefault(CabSignalManager.class); 
         if(cabSignalManager == null){
+           log.info("creating new DefaultCabSignalManager");
            InstanceManager.store(new jmri.managers.DefaultCabSignalManager(),CabSignalManager.class);
            cabSignalManager = InstanceManager.getNullableDefault(CabSignalManager.class); 
         }

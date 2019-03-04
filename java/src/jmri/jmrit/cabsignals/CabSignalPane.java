@@ -318,6 +318,7 @@ public class CabSignalPane extends jmri.util.swing.JmriPanel implements CabSigna
         super();
         cabSignalManager = jmri.InstanceManager.getNullableDefault(CabSignalManager.class);
         if(cabSignalManager == null){
+           log.info("creating new DefaultCabSignalManager");
            jmri.InstanceManager.store(new jmri.managers.DefaultCabSignalManager(),CabSignalManager.class);
            cabSignalManager = jmri.InstanceManager.getNullableDefault(CabSignalManager.class); 
         }
