@@ -18,7 +18,7 @@ import jmri.jmrix.loconet.usb_dcs52.UsbDcs52Adapter;
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2005, 2006, 2008
  * @author B. Milhaupt Copyright (C) 2019
  */
-public class ConnectionConfigXml extends jmri.jmrix.loconet.pr3.configurexml.ConnectionConfigXml {
+public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
     @Override
     protected void getInstance() {

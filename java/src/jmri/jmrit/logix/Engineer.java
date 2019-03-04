@@ -1055,7 +1055,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             if (die) { // once set to true, do not allow resetting to false
                 _die = die;
             }
-            synchronized (this) {
+            synchronized (_ramp) {
                 log.debug("ThrottleRamp.quit calls notify)");
                 _ramp.notifyAll(); // free waits at ramp time interval
             }
