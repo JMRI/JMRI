@@ -1,6 +1,8 @@
 package jmri.util;
 
 import apps.gui.GuiLafPreferencesManager;
+
+import java.awt.Container;
 import java.awt.Frame;
 import java.awt.Window;
 import java.io.FileNotFoundException;
@@ -9,6 +11,8 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import javax.annotation.Nonnull;
+import javax.swing.AbstractButton;
+
 import jmri.*;
 import jmri.implementation.JmriConfigurationManager;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
@@ -47,6 +51,9 @@ import org.apache.log4j.Level;
 import org.junit.Assert;
 import org.netbeans.jemmy.FrameWaiter;
 import org.netbeans.jemmy.TestOut;
+import org.netbeans.jemmy.operators.AbstractButtonOperator;
+import org.netbeans.jemmy.operators.JButtonOperator;
+import org.netbeans.jemmy.operators.JDialogOperator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -1169,20 +1176,42 @@ public class JUnitUtil {
 
     /* GraphicsEnvironment utility methods */
 
-    public static java.awt.Container findContainer(String title) {
-        junit.extensions.jfcunit.finder.DialogFinder finder = new junit.extensions.jfcunit.finder.DialogFinder(title);
-        JUnitUtil.waitFor(() -> {
-            return (java.awt.Container) finder.find() != null;
-        }, "Found dialog + \"title\"");
-        java.awt.Container pane = (java.awt.Container) finder.find();
-        return pane;
+    /**
+     * Get the content pane of a dialog.
+     * 
+     * @param title the dialog title
+     * @return the content pane
+     */
+    public static Container findContainer(String title) {
+        return new JDialogOperator(title).getContentPane();
     }
 
-    public static javax.swing.AbstractButton pressButton(jmri.util.SwingTestCase clazz, java.awt.Container frame, String text) {
-        junit.extensions.jfcunit.finder.AbstractButtonFinder buttonFinder = new junit.extensions.jfcunit.finder.AbstractButtonFinder(text);
-        javax.swing.AbstractButton button = (javax.swing.AbstractButton) buttonFinder.find(frame, 0);
+    /**
+     * Press a button after finding it in a container by title.
+     * 
+     * @param clazz an object no longer used
+     * @param frame container containing button to press
+     * @param text button title
+     * @return the pressed button
+     * @deprecated use {@link #pressButton(Container, String)} instead
+     */
+    @Deprecated // for removal after 4.18
+    public static AbstractButton pressButton(SwingTestCase clazz, Container frame, String text) {
+        return pressButton(frame, text);
+    }
+
+    /**
+     * Press a button after finding it in a container by title.
+     * 
+     * @param frame container containing button to press
+     * @param text button title
+     * @return the pressed button
+     */
+    public static AbstractButton pressButton(Container frame, String text) {
+        AbstractButton button = JButtonOperator.findAbstractButton(frame, text, true, true);
         Assert.assertNotNull(text + " Button not found", button);
-        clazz.getHelper().enterClickAndLeave(new junit.extensions.jfcunit.eventdata.MouseEventData(clazz, button));
+        AbstractButtonOperator abo = new AbstractButtonOperator(button);
+        abo.doClick();
         return button;
     }
 

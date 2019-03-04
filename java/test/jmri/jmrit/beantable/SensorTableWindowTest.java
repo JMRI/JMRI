@@ -113,7 +113,7 @@ public class SensorTableWindowTest extends jmri.util.SwingTestCase {
         java.awt.Container dialog = JUnitUtil.findContainer(Bundle.getMessage("SensorGlobalDebounceMessageTitle"));
         Assert.assertNotNull("Not found Global Debounce dialog", dialog);
         // Find the cancel button
-        JUnitUtil.pressButton(this, dialog, Bundle.getMessage("ButtonCancel"));
+        JUnitUtil.pressButton(dialog, Bundle.getMessage("ButtonCancel"));
 
         // ask for the Initial Sensor State menu to open
         jmri.util.ThreadingUtil.runOnGUIEventually(() -> {
@@ -124,7 +124,7 @@ public class SensorTableWindowTest extends jmri.util.SwingTestCase {
         dialog = JUnitUtil.findContainer(Bundle.getMessage("InitialSensorState"));
         Assert.assertNotNull("Not found Global Debounce dialog", dialog);
         // Find the cancel button
-        JUnitUtil.pressButton(this, dialog, Bundle.getMessage("ButtonCancel"));
+        JUnitUtil.pressButton(dialog, Bundle.getMessage("ButtonCancel"));
 
         // Ask to close table window
         TestHelper.disposeWindow(ft, this);
