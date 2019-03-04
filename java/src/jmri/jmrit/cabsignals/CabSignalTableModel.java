@@ -374,33 +374,6 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
         log.debug("{}",buf);
     }
     
-
-    public int getSigType(String aspect) {
-        // look for the opcode
-        if (cabSigMap.get(aspect)==null){
-            log.warn("Cabsig unable to translate aspect {} Not Found",aspect);
-            return 0xff;
-        }
-        else {
-            return cabSigMap.get(aspect);
-        }
-    }
-    
-    public Map<String, Integer> cabSigMap = createCabSigMap();
-
-    private Map<String, Integer> createCabSigMap() {
-        Map<String, Integer> result = new HashMap<>();
-        result.put("Danger",0); // NOI18N
-        result.put("Caution",1); // NOI18N
-        result.put("Preliminary Caution",2); // NOI18N
-        result.put("Proceed", 3); // NOI18N
-        result.put("Flash Caution", 257); // NOI18N
-        result.put("Flash Preliminary Caution", 258); // NOI18N
-        result.put("Off", 4); // NOI18N
-        result.put("On", 0); // NOI18N
-        return Collections.unmodifiableMap(result);
-    }
-    
     protected void masterSendCabDataButton(Boolean but){
         for (int i = 0; i < getRowCount(); i++) {
             if (but){
