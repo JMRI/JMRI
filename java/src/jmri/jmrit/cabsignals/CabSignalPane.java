@@ -67,7 +67,6 @@ public class CabSignalPane extends jmri.util.swing.JmriPanel implements CabSigna
     protected JTable slotTable=null;
     protected final XTableColumnModel tcm = new XTableColumnModel();
 
-    private JMenu colMenu = new JMenu((Bundle.getMessage("SessCol")));
     private JMenu cabSigColMenu = new JMenu(Bundle.getMessage("SigDataCol"));
     
     protected List<JCheckBoxMenuItem> colMenuList = new ArrayList<JCheckBoxMenuItem>();
@@ -251,7 +250,8 @@ public class CabSignalPane extends jmri.util.swing.JmriPanel implements CabSigna
         resetLocoButton.setVisible(true);
         resetLocoButton.setToolTipText(Bundle.getMessage("ResetButtonToolTip"));
         resetLocoButton.addActionListener((ActionEvent e) -> {
-            //resetLocoButtonActionPerformed(e);
+            locoSelector.reset();
+            locoRosterBox.setSelectedIndex(0);
         });
 
         toppanelcontainer.add(resetLocoButton);
@@ -331,7 +331,6 @@ public class CabSignalPane extends jmri.util.swing.JmriPanel implements CabSigna
     public List<JMenu> getMenus() {
         List<JMenu> menuList = new ArrayList<JMenu>();
         
-        menuList.add(colMenu);
         menuList.add(cabSigColMenu);
         return menuList;
     }
