@@ -992,8 +992,6 @@ public class LevelXing extends LayoutTrack {
     public String connectBName = "";
     public String connectCName = "";
     public String connectDName = "";
-//    public String tBlockNameAC = "";
-//    public String tBlockNameBD = "";
 
     /**
      * Initialization method The above variables are initialized by

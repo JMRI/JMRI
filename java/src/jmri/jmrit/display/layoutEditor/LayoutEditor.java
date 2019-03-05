@@ -7905,7 +7905,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
         if ((o.getTurnoutType() == LayoutTurnout.DOUBLE_XOVER)
                 || (o.getTurnoutType() == LayoutTurnout.RH_XOVER)
-                || (o.getTurnoutType() == LayoutTurnout.LH_XOVER)) {
+                || (o.getTurnoutType() == LayoutTurnout.LH_XOVER)
+                || (o.getTurnoutType() == LayoutTurnout.SINGLE_SLIP)
+                || (o.getTurnoutType() == LayoutTurnout.DOUBLE_SLIP)) {
             LayoutBlock b2 = o.getLayoutBlockB();
 
             if ((b2 != null) && (b2 != b)) {
