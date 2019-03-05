@@ -1008,28 +1008,16 @@ public class LevelXing extends LayoutTrack {
         connectD = p.getFinder().findTrackSegmentByName(connectDName);
 
         LayoutBlock blockAC = getLayoutBlockAC();
-//        if (!tBlockNameAC.isEmpty()) {
-//            blockAC = p.getLayoutBlock(tBlockNameAC);
-//            if (blockAC != null) {
-//                blockNameAC = tBlockNameAC;
-//                if (blockAC != blockBD) {
-//                    blockAC.incrementUse();
-//                }
-//            } else {
-//                log.error("bad blocknameac '" + tBlockNameAC + "' in levelxing " + getName());
-//            }
-//        }
-//        if (!tBlockNameBD.isEmpty()) {
-//            blockBD = p.getLayoutBlock(tBlockNameBD);
-//            if (blockBD != null) {
-//                blockNameBD = tBlockNameBD;
-//                if (blockAC != blockBD) {
-//                    blockBD.incrementUse();
-//                }
-//            } else {
-//                log.error("bad blocknamebd '" + tBlockNameBD + "' in levelxing " + getName());
-//            }
-//        }
+        if (blockAC != null) {
+            blockAC.incrementUse();
+        }
+
+        LayoutBlock blockBD = getLayoutBlockBD();
+        if (blockBD != null) {
+            if (blockAC != blockBD) {
+                blockBD.incrementUse();
+            }
+        }
     }
 
     JPopupMenu popup = null;

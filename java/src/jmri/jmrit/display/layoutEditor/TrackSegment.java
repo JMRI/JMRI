@@ -616,15 +616,11 @@ public class TrackSegment extends LayoutTrack {
     // we're using it here for backwards compatibility until it can be removed
     @Override
     public void setObjects(LayoutEditor p) {
-//        if (!tBlockName.isEmpty()) {
-//            layoutBlock = p.getLayoutBlock(tBlockName);
-//            if (layoutBlock != null) {
-//                blockName = tBlockName;
-//                layoutBlock.incrementUse();
-//            } else {
-//                log.error("bad blockname '" + tBlockName + "' in tracksegment " + getName());
-//            }
-//        }
+        
+        LayoutBlock blockA = getLayoutBlock();
+        if (blockA != null) {
+            blockA.incrementUse();
+        }
 
         //NOTE: testing "type-less" connects
         // (read comments for findObjectByName in LayoutEditorFindItems.java)
