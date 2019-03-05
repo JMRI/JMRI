@@ -7436,15 +7436,14 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      * @return the LayoutBlock provided
      */
     public LayoutBlock provideLayoutBlock(@Nonnull String inBlockName) {
-        LayoutBlock result = null;
-        LayoutBlock newBlk = null; //assume failure (pessimist!)
+        LayoutBlock result = null; //assume failure (pessimist!)
 
         if (inBlockName.isEmpty()) {
             //nothing entered, try autoAssign
             if (autoAssignBlocks) {
-                newBlk = InstanceManager.getDefault(LayoutBlockManager.class
+                result = InstanceManager.getDefault(LayoutBlockManager.class
                 ).createNewLayoutBlock();
-                if (null == newBlk) {
+                if (null == result) {
                     log.error("Failure to auto-assign LayoutBlock '{}'.", inBlockName);
 
                 }
@@ -7455,27 +7454,24 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             ).getByUserName(inBlockName);
 
             if (null == result) { //(no)
-                newBlk = InstanceManager.getDefault(LayoutBlockManager.class
+                result = InstanceManager.getDefault(LayoutBlockManager.class
                 ).createNewLayoutBlock(null, inBlockName);
-                if (null == newBlk) {
+                if (null == result) {
                     log.error("Failure to create new LayoutBlock '{}'.", inBlockName);
                 }
             }
         }
 
         //if we created a new block
-        if (newBlk != null) {
+        if (result != null) {
             //initialize the new block
             //log.debug("provideLayoutBlock :: Init new block {}", inBlockName);
-            newBlk.initializeLayoutBlock();
-            newBlk.initializeLayoutBlockRouting();
-            newBlk.setBlockTrackColor(defaultTrackColor);
-            newBlk.setBlockOccupiedColor(defaultOccupiedTrackColor);
-            newBlk.setBlockExtraColor(defaultAlternativeTrackColor);
-            result = newBlk;
-        }
+            result.initializeLayoutBlock();
+            result.initializeLayoutBlockRouting();
+            result.setBlockTrackColor(defaultTrackColor);
+            result.setBlockOccupiedColor(defaultOccupiedTrackColor);
+            result.setBlockExtraColor(defaultAlternativeTrackColor);
 
-        if (result != null) {
             //set both new and previously existing block
             result.addLayoutEditor(this);
             result.incrementUse();
