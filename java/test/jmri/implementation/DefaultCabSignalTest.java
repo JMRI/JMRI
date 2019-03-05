@@ -195,6 +195,7 @@ public class DefaultCabSignalTest {
         Assert.assertEquals("next Block set",bm.getBlock(nextBlock),cs.getNextBlock());
         Assert.assertEquals("Mast set",smm.getSignalMast(mastName),cs.getNextMast());
         if(mastName!="") {
+           new org.netbeans.jemmy.QueueTool().waitEmpty(100); // wait for signal to settle.
            // mast expected, so check the aspect.
            JUnitUtil.waitFor( () -> { return "Clear".equals(cs.getNextMast().getAspect().toString());});
            Assert.assertEquals("Mast " + mastName + " Aspect clear","Clear",cs.getNextMast().getAspect());
