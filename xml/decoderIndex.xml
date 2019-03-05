@@ -12240,7 +12240,10 @@
         </model>
       </family>
       <family name="dccdoma.cz" mfg="Public-domain and DIY" file="Public_Domain_dccdoma_ARD_SCOM_MX.xml">
-        <model model="ARD-SCOM-MX" lowVersionID="10" highVersionID="19" productID="16843265" maxInputVolts="24V AC" maxTotalCurrent="1.0A peak 3.3A" numOuts="16" connector="other" />
+        <model model="ARD-SCOM-MX" lowVersionID="10" highVersionID="19" productID="16843265" maxInputVolts="24V AC" maxTotalCurrent="0.2A" numOuts="16" connector="other" />
+      </family>
+      <family name="dccdoma.cz" mfg="Public-domain and DIY" file="Public_Domain_dccdoma_ARD_SCOM_TC.xml">
+        <model model="ARD-SCOM-TC" lowVersionID="10" highVersionID="19" productID="16843266" maxInputVolts="24V AC" maxTotalCurrent="0.2A" numOuts="16" connector="other" />
       </family>
       <family name="dccdoma.cz" mfg="Public-domain and DIY" file="Public_Domain_dccdoma_UNI16ARD_8VYH.xml">
         <model model="UNI16ARD-8VYH" lowVersionID="40" highVersionID="49" productID="16843009" maxInputVolts="24V AC" maxTotalCurrent="1.0A peak 3.3A" numOuts="16" connector="other" />
