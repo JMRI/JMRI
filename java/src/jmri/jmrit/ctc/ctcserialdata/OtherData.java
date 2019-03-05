@@ -99,7 +99,7 @@ variable name and declared as type String.
 //  Global startup:
     public boolean  _mTUL_EnabledAtStartup = true;
     public SIGNAL_SYSTEM_TYPE _mSignalSystemType;
-    
+    public int      _mTUL_SecondsToLockTurnouts = 0;
 //  Next unique # for each created Column:    
     public int      _mNextUniqueNumber = 0;
 //  CTC Debugging:    

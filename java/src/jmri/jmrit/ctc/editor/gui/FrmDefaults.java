@@ -1,5 +1,6 @@
 package jmri.jmrit.ctc.editor.gui;
 
+import javax.swing.SpinnerNumberModel;
 import jmri.jmrit.ctc.editor.code.AwtWindowProperties;
 import jmri.jmrit.ctc.editor.code.CommonSubs;
 import jmri.jmrit.ctc.editor.code.ProgramProperties;
@@ -24,6 +25,7 @@ public class FrmDefaults extends javax.swing.JFrame {
     private boolean _mTUL_EnabledAtStartupOrig;
     private int _mCodeButtonDelayTimeOrig;
     private OtherData.SIGNAL_SYSTEM_TYPE _mSignalSystemTypeOrig;
+    private int _mTUL_SecondsToLockTurnoutsOrig;
 
     private void initOrig(ProgramProperties programProperties, OtherData otherData) {
         _mSIDI_CodingTimeInMillisecondsOrig = programProperties._mSIDI_CodingTimeInMilliseconds;
@@ -32,6 +34,7 @@ public class FrmDefaults extends javax.swing.JFrame {
         _mTUL_EnabledAtStartupOrig = otherData._mTUL_EnabledAtStartup;
         _mCodeButtonDelayTimeOrig = programProperties._mCodeButtonDelayTime;
         _mSignalSystemTypeOrig = otherData._mSignalSystemType;
+        _mTUL_SecondsToLockTurnoutsOrig = otherData._mTUL_SecondsToLockTurnouts;
     }
     private boolean dataChanged() {
         if (CommonSubs.getIntFromJTextFieldNoThrow(_mSIDI_CodingTimeInMilliseconds) != _mSIDI_CodingTimeInMillisecondsOrig) return true;
@@ -40,6 +43,7 @@ public class FrmDefaults extends javax.swing.JFrame {
         if (_mTUL_EnabledAtStartupOrig != _mTUL_EnabledAtStartup.isSelected()) return true;
         if (CommonSubs.getIntFromJTextFieldNoThrow(_mCodeButtonDelayTime) != _mCodeButtonDelayTimeOrig) return true;
         if (_mSignalSystemTypeOrig != OtherData.SIGNAL_SYSTEM_TYPE.getSignalSystemType(_mSignalSystemType)) return true;
+        if (_mTUL_SecondsToLockTurnoutsOrig != (int)_mTUL_SecondsToLockTurnouts.getValue()) return true;
         return false;
     }
 
@@ -52,6 +56,7 @@ public class FrmDefaults extends javax.swing.JFrame {
         _mOtherData = otherData;
         CommonSubs.numberButtonGroup(_mSignalSystemType);
         CommonSubs.setButtonSelected(_mSignalSystemType, _mOtherData._mSignalSystemType.getInt());
+        _mTUL_SecondsToLockTurnouts.setModel(new SpinnerNumberModel(otherData._mTUL_SecondsToLockTurnouts, 0, 32767, 1));
         CommonSubs.setMillisecondsEdit(_mSIDI_CodingTimeInMilliseconds);
         CommonSubs.setMillisecondsEdit(_mSWDI_CodingTimeInMilliseconds);
         CommonSubs.setMillisecondsEdit(_mSIDI_TimeLockingTimeInMilliseconds);
@@ -95,11 +100,13 @@ public class FrmDefaults extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jRadioButton1 = new javax.swing.JRadioButton();
         jRadioButton2 = new javax.swing.JRadioButton();
+        jLabel5 = new javax.swing.JLabel();
+        _mTUL_SecondsToLockTurnouts = new javax.swing.JSpinner();
+        jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle(Bundle.getMessage("TitleDlgDef"));
         addWindowListener(new java.awt.event.WindowAdapter() {
-            @Override
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
             }
@@ -147,6 +154,10 @@ public class FrmDefaults extends javax.swing.JFrame {
 
         _mSignalSystemType.add(jRadioButton2);
         jRadioButton2.setText(Bundle.getMessage("LabelDlgDefSignalSystemTypeMasts"));
+
+        jLabel5.setText(Bundle.getMessage("LabelDlgDefSecondsUntilUnlock"));
+
+        jLabel6.setText(Bundle.getMessage("LabelDlgDefSecondsUntilUnlockHint"));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -199,7 +210,14 @@ public class FrmDefaults extends javax.swing.JFrame {
                                     .addComponent(jRadioButton1)))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(243, 243, 243)
-                        .addComponent(_mSaveAndClose)))
+                        .addComponent(_mSaveAndClose))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(_mTUL_SecondsToLockTurnouts, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel6)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -211,6 +229,11 @@ public class FrmDefaults extends javax.swing.JFrame {
                     .addComponent(jRadioButton1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jRadioButton2)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(_mTUL_SecondsToLockTurnouts, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel17)
                 .addGap(20, 20, 20)
@@ -258,6 +281,7 @@ public class FrmDefaults extends javax.swing.JFrame {
         _mOtherData._mTUL_EnabledAtStartup = _mTUL_EnabledAtStartup.isSelected();
         _mProgramProperties._mCodeButtonDelayTime = Integer.parseInt(_mCodeButtonDelayTime.getText());
         _mOtherData._mSignalSystemType = OtherData.SIGNAL_SYSTEM_TYPE.getSignalSystemType(_mSignalSystemType);
+        _mOtherData._mTUL_SecondsToLockTurnouts = (int)_mTUL_SecondsToLockTurnouts.getValue();
         _mClosedNormally = true;
         _mAwtWindowProperties.saveWindowState(this, FORM_PROPERTIES);
         dispose();
@@ -271,6 +295,7 @@ public class FrmDefaults extends javax.swing.JFrame {
     private javax.swing.JButton _mSaveAndClose;
     private javax.swing.ButtonGroup _mSignalSystemType;
     private javax.swing.JCheckBox _mTUL_EnabledAtStartup;
+    private javax.swing.JSpinner _mTUL_SecondsToLockTurnouts;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
@@ -281,6 +306,8 @@ public class FrmDefaults extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton2;

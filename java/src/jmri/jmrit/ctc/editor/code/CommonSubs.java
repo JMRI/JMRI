@@ -37,7 +37,7 @@ public class CommonSubs {
     public static void setMillisecondsEdit(JFormattedTextField formattedTextField) {
         NumberFormatter numberFormatter = (NumberFormatter) formattedTextField.getFormatter();
         numberFormatter.setMinimum(0);
-        numberFormatter.setMaximum(60000);
+        numberFormatter.setMaximum(120000);
         numberFormatter.setAllowsInvalid(false);
     }
 

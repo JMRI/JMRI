@@ -7,10 +7,14 @@ package jmri.jmrit.ctc;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
+import jmri.InstanceManager;
 import jmri.Sensor;
+import jmri.SensorManager;
 import jmri.Turnout;
 import jmri.jmrit.ctc.ctcserialdata.CTCSerialData;
 import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
@@ -30,9 +34,14 @@ public class CTCMain {
     private final HashMap<Integer, SwitchDirectionIndicators> _mSWDIHashMap = new HashMap<>();          // "Const" after initialization completes.
     private final HashMap<Integer, CodeButtonHandler> _mCBHashMap = new HashMap<>();                    // "Const" after initialization completes.
     private final LockedRoutesManager _mLockedRoutesManager = new LockedRoutesManager();
+    private javax.swing.Timer _mLockTurnoutsTimer = null;
     
 //  So that external python script can set locks on all of the lockable turnouts:    
-    public void externalLockTurnout() { for (CodeButtonHandler codeButtonHandler : _mCodeButtonHandlersArrayList) { codeButtonHandler.externalLockTurnout(); } }
+    public void externalLockTurnout() {
+        for (CodeButtonHandler codeButtonHandler : _mCodeButtonHandlersArrayList) {
+            codeButtonHandler.externalLockTurnout();
+        }
+    }
     
     private String _mFilenameRead = null;
     public CTCMain() {}
@@ -228,5 +237,30 @@ public class CTCMain {
         for (TrafficLocking trafficLocking : trafficLockingFileReadComplete) { // Call these routines to give them a chance to initialize:
             trafficLocking.fileReadComplete(_mCBHashMap, _mSIDIHashMap, _mSWDIHashMap);
         }
+        
+/*  As a final item, if the developer wants us to lock all of the lockable
+    turnouts after a time period, create a GUI timer to do that, so that
+    when we call the objects, they are called on the GUI thread for safety.
+    In the called routines, sensors will be updated, but I don't know how
+    thread safe they are, or whether they will directly update GUI objects,
+    since GUI objects "visually back" the sensors.
+*/
+        if (otherData._mTUL_SecondsToLockTurnouts > 0) { // Enabled:
+            _mLockTurnoutsTimer = new javax.swing.Timer(otherData._mTUL_SecondsToLockTurnouts * 1000, lockTurnoutsTimerTicked);
+            _mLockTurnoutsTimer.setRepeats(false);
+            _mLockTurnoutsTimer.start();
+        }
     }
+    
+//  One shot routine:
+    private final java.awt.event.ActionListener lockTurnoutsTimerTicked = new java.awt.event.ActionListener() {
+        @Override
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+//  Shut down this timer so this doesn't happen again:            
+            _mLockTurnoutsTimer.stop();
+            _mLockTurnoutsTimer.removeActionListener(lockTurnoutsTimerTicked);
+            _mLockTurnoutsTimer = null; 
+            externalLockTurnout();
+        }
+    };
 }
