@@ -37,16 +37,13 @@ public class BrowserFactory {
             case "Firefox":
                 driver = drivers.get("Firefox");
                 if (driver == null) {
-                  WebDriverManager.getInstance(FirefoxDriver.class).setup();
-                  if(GraphicsEnvironment.isHeadless()) {
+                    WebDriverManager.getInstance(FirefoxDriver.class).setup();
                     FirefoxBinary firefoxBinary = new FirefoxBinary();
-                    firefoxBinary.addCommandLineOptions("--headless");
                     FirefoxOptions firefoxOptions = new FirefoxOptions();
+                    firefoxBinary.addCommandLineOptions("--headless");
                     firefoxOptions.setBinary(firefoxBinary);
+		    firefoxOptions.setLogLevel(org.openqa.selenium.firefox.FirefoxDriverLogLevel.ERROR);
                     driver = new EventFiringWebDriver(new FirefoxDriver(firefoxOptions));
-                    } else {
-                       driver = new EventFiringWebDriver(new FirefoxDriver());
-                    }
                     driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
                     drivers.put("Firefox", driver);
                 }
@@ -55,13 +52,13 @@ public class BrowserFactory {
                 driver = drivers.get("Chrome");
                 if (driver == null) {
                    WebDriverManager.getInstance(ChromeDriver.class).setup();
+                   ChromeOptions chromeOptions = new ChromeOptions();
                    if(GraphicsEnvironment.isHeadless()) {
-                      ChromeOptions chromeOptions = new ChromeOptions();
                       chromeOptions.addArguments("--headless");
-                      driver = new EventFiringWebDriver(new ChromeDriver(chromeOptions));
                   } else {
-                     driver = new EventFiringWebDriver(new ChromeDriver());
+		      chromeOptions.addArguments("--log-level=3");
                   }
+                  driver = new EventFiringWebDriver(new ChromeDriver(chromeOptions));
                   driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
                   drivers.put("Chrome", driver);
                 }
