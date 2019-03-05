@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  * LayoutEditor.
  *
  * @author David Duchamp Copyright (c) 2007
- * @author George Warner Copyright (c) 2017-2018
+ * @author George Warner Copyright (c) 2017-2019
  */
 public class LayoutTurnoutXml extends AbstractXmlAdapter {
 
@@ -211,11 +211,11 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
         // get remaining attributes
         Attribute a = element.getAttribute("turnoutname");
         if (a != null) {
-            l.tTurnoutName = a.getValue();
+            l.setTurnout(a.getValue());
         }
         a = element.getAttribute("secondturnoutname");
         if (a != null) {
-            l.tSecondTurnoutName = a.getValue();
+            l.setSecondTurnout(a.getValue());
             try {
                 l.setSecondTurnoutInverted(element.getAttribute("secondturnoutinverted").getBooleanValue());
             } catch (DataConversionException e1) {

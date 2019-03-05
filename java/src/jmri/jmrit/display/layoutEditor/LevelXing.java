@@ -67,18 +67,14 @@ import org.slf4j.LoggerFactory;
  * placed here by Set Signals at Level Crossing in Tools menu.
  *
  * @author Dave Duchamp Copyright (c) 2004-2007
- * @author George Warner Copyright (c) 2017-2018
+ * @author George Warner Copyright (c) 2017-2019
  */
 public class LevelXing extends LayoutTrack {
 
     // defined constants
     // operational instance variables (not saved between sessions)
-    private LayoutBlock blockAC = null;
-    private LayoutBlock blockBD = null;
-
-    // persistent instances variables (saved between sessions)
-    private String blockNameAC = "";
-    private String blockNameBD = "";
+    private NamedBeanHandle<LayoutBlock> namedLayoutBlockAC = null;
+    private NamedBeanHandle<LayoutBlock> namedLayoutBlockBD = null;
 
     protected NamedBeanHandle<SignalHead> signalAHeadNamed = null; // signal at A track junction
     protected NamedBeanHandle<SignalHead> signalBHeadNamed = null; // signal at B track junction
@@ -126,12 +122,20 @@ public class LevelXing extends LayoutTrack {
      */
     @Nonnull
     public String getBlockNameAC() {
-        return ((blockNameAC == null) ? "" : blockNameAC);
+        String result = null;
+        if (namedLayoutBlockAC != null) {
+            result = namedLayoutBlockAC.getName();
+        }
+        return ((result == null) ? "" : result);
     }
 
     @Nonnull
     public String getBlockNameBD() {
-        return ((blockNameBD == null) ? "" : blockNameBD);
+        String result = getBlockNameAC();
+        if (namedLayoutBlockBD != null) {
+            result = namedLayoutBlockBD.getName();
+        }
+        return ((result == null) ? "" : result);
     }
 
     public SignalHead getSignalHead(int loc) {
@@ -672,23 +676,11 @@ public class LevelXing extends LayoutTrack {
     }
 
     public LayoutBlock getLayoutBlockAC() {
-        if ((blockAC == null) && !blockNameAC.isEmpty()) {
-            blockAC = layoutEditor.provideLayoutBlock(blockNameAC);
-            if ((blockAC != null) && (blockAC == blockBD)) {
-                blockAC.decrementUse();
-            }
-        }
-        return blockAC;
+        return (namedLayoutBlockAC != null) ? namedLayoutBlockAC.getBean() : null;
     }
 
     public LayoutBlock getLayoutBlockBD() {
-        if ((blockBD == null) && !blockNameBD.isEmpty()) {
-            blockBD = layoutEditor.provideLayoutBlock(blockNameBD);
-            if ((blockBD != null) && (blockBD == blockAC)) {
-                blockBD.decrementUse();
-            }
-        }
-        return blockBD;
+        return (namedLayoutBlockBD != null) ? namedLayoutBlockBD.getBean() : getLayoutBlockAC();
     }
 
     public Point2D getCoordsA() {
@@ -755,14 +747,21 @@ public class LevelXing extends LayoutTrack {
     /**
      * Add Layout Blocks
      */
-    public void setLayoutBlockAC(LayoutBlock b) {
-        if (blockAC != b) {
+    public void setLayoutBlockAC(LayoutBlock newLayoutBlock) {
+        LayoutBlock blockAC = getLayoutBlockAC();
+        LayoutBlock blockBD = getLayoutBlockBD();
+        if (blockAC != newLayoutBlock) {
             // block 1 has changed, if old block exists, decrement use
             if ((blockAC != null) && (blockAC != blockBD)) {
                 blockAC.decrementUse();
             }
-            blockAC = b;
-            blockNameAC = (b == null) ? "" : b.getId();
+            blockAC = newLayoutBlock;
+            if (newLayoutBlock != null) {
+                namedLayoutBlockAC = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(newLayoutBlock.getUserName(), newLayoutBlock);
+            } else {
+                namedLayoutBlockAC = null;
+            }
+
             // decrement use if block was previously counted
             if ((blockAC != null) && (blockAC == blockBD)) {
                 blockAC.decrementUse();
@@ -770,14 +769,20 @@ public class LevelXing extends LayoutTrack {
         }
     }
 
-    public void setLayoutBlockBD(LayoutBlock b) {
-        if (blockBD != b) {
+    public void setLayoutBlockBD(LayoutBlock newLayoutBlock) {
+        LayoutBlock blockAC = getLayoutBlockAC();
+        LayoutBlock blockBD = getLayoutBlockBD();
+        if (blockBD != newLayoutBlock) {
             // block 1 has changed, if old block exists, decrement use
             if ((blockBD != null) && (blockBD != blockAC)) {
                 blockBD.decrementUse();
             }
-            blockBD = b;
-            blockNameBD = (b == null) ? "" : b.getId();
+            blockBD = newLayoutBlock;
+            if (newLayoutBlock != null) {
+                namedLayoutBlockBD = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(newLayoutBlock.getUserName(), newLayoutBlock);
+            } else {
+                namedLayoutBlockBD = null;
+            }
             // decrement use if block was previously counted
             if ((blockBD != null) && (blockBD == blockAC)) {
                 blockBD.decrementUse();
@@ -787,6 +792,8 @@ public class LevelXing extends LayoutTrack {
     }
 
     protected void updateBlockInfo() {
+        LayoutBlock blockAC = getLayoutBlockAC();
+        LayoutBlock blockBD = getLayoutBlockBD();
         LayoutBlock b1 = null;
         LayoutBlock b2 = null;
         if (blockAC != null) {
@@ -985,8 +992,8 @@ public class LevelXing extends LayoutTrack {
     public String connectBName = "";
     public String connectCName = "";
     public String connectDName = "";
-    public String tBlockNameAC = "";
-    public String tBlockNameBD = "";
+//    public String tBlockNameAC = "";
+//    public String tBlockNameBD = "";
 
     /**
      * Initialization method The above variables are initialized by
@@ -999,28 +1006,30 @@ public class LevelXing extends LayoutTrack {
         connectB = p.getFinder().findTrackSegmentByName(connectBName);
         connectC = p.getFinder().findTrackSegmentByName(connectCName);
         connectD = p.getFinder().findTrackSegmentByName(connectDName);
-        if (!tBlockNameAC.isEmpty()) {
-            blockAC = p.getLayoutBlock(tBlockNameAC);
-            if (blockAC != null) {
-                blockNameAC = tBlockNameAC;
-                if (blockAC != blockBD) {
-                    blockAC.incrementUse();
-                }
-            } else {
-                log.error("bad blocknameac '" + tBlockNameAC + "' in levelxing " + getName());
-            }
-        }
-        if (!tBlockNameBD.isEmpty()) {
-            blockBD = p.getLayoutBlock(tBlockNameBD);
-            if (blockBD != null) {
-                blockNameBD = tBlockNameBD;
-                if (blockAC != blockBD) {
-                    blockBD.incrementUse();
-                }
-            } else {
-                log.error("bad blocknamebd '" + tBlockNameBD + "' in levelxing " + getName());
-            }
-        }
+
+        LayoutBlock blockAC = getLayoutBlockAC();
+//        if (!tBlockNameAC.isEmpty()) {
+//            blockAC = p.getLayoutBlock(tBlockNameAC);
+//            if (blockAC != null) {
+//                blockNameAC = tBlockNameAC;
+//                if (blockAC != blockBD) {
+//                    blockAC.incrementUse();
+//                }
+//            } else {
+//                log.error("bad blocknameac '" + tBlockNameAC + "' in levelxing " + getName());
+//            }
+//        }
+//        if (!tBlockNameBD.isEmpty()) {
+//            blockBD = p.getLayoutBlock(tBlockNameBD);
+//            if (blockBD != null) {
+//                blockNameBD = tBlockNameBD;
+//                if (blockAC != blockBD) {
+//                    blockBD.incrementUse();
+//                }
+//            } else {
+//                log.error("bad blocknamebd '" + tBlockNameBD + "' in levelxing " + getName());
+//            }
+//        }
     }
 
     JPopupMenu popup = null;
@@ -1042,18 +1051,18 @@ public class LevelXing extends LayoutTrack {
 
             boolean blockACAssigned = false;
             boolean blockBDAssigned = false;
-            if ((blockNameAC == null) || (blockNameAC.isEmpty())) {
-                jmi = popup.add(Bundle.getMessage("NoBlockX", 1));
+            if (getLayoutBlockAC() == null) {
+                jmi = popup.add(Bundle.getMessage("NoBlockX", "AC"));
             } else {
-                jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("Block_ID", 1)) + getLayoutBlockAC().getDisplayName());
+                jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("Block_ID", "AC")) + getLayoutBlockAC().getDisplayName());
                 blockACAssigned = true;
             }
             jmi.setEnabled(false);
 
-            if ((blockNameBD == null) || (blockNameBD.isEmpty())) {
-                jmi = popup.add(Bundle.getMessage("NoBlockX", 2));
+            if (getLayoutBlockBD() == null) {
+                jmi = popup.add(Bundle.getMessage("NoBlockX", "BD"));
             } else {
-                jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("Block_ID", 2)) + getLayoutBlockBD().getDisplayName());
+                jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("Block_ID", "BD")) + getLayoutBlockBD().getDisplayName());
                 blockBDAssigned = true;
             }
             jmi.setEnabled(false);
@@ -1188,18 +1197,18 @@ public class LevelXing extends LayoutTrack {
                     });
                 } else if (blockACAssigned && blockBDAssigned) {
                     JMenu viewRouting = new JMenu(Bundle.getMessage("ViewBlockRouting"));
-                    viewRouting.add(new AbstractAction(blockNameAC) {
+                    viewRouting.add(new AbstractAction(getLayoutBlockAC().getDisplayName()) {
                         @Override
                         public void actionPerformed(ActionEvent e) {
-                            AbstractAction routeTableAction = new LayoutBlockRouteTableAction(blockNameAC, getLayoutBlockAC());
+                            AbstractAction routeTableAction = new LayoutBlockRouteTableAction(getLayoutBlockAC().getDisplayName(), getLayoutBlockAC());
                             routeTableAction.actionPerformed(e);
                         }
                     });
 
-                    viewRouting.add(new AbstractAction(blockNameBD) {
+                    viewRouting.add(new AbstractAction(getLayoutBlockBD().getDisplayName()) {
                         @Override
                         public void actionPerformed(ActionEvent e) {
-                            AbstractAction routeTableAction = new LayoutBlockRouteTableAction(blockNameBD, getLayoutBlockBD());
+                            AbstractAction routeTableAction = new LayoutBlockRouteTableAction(getLayoutBlockBD().getDisplayName(), getLayoutBlockBD());
                             routeTableAction.actionPerformed(e);
                         }
                     });
@@ -1246,7 +1255,13 @@ public class LevelXing extends LayoutTrack {
     public String[] getBlockBoundaries() {
         final String[] boundaryBetween = new String[4];
 
-        if ((blockNameAC != null) && (!blockNameAC.isEmpty()) && (blockAC != null)) {
+        String blockNameAC = getBlockNameAC();
+        String blockNameBD = getBlockNameBD();
+
+        LayoutBlock blockAC = getLayoutBlockAC();
+        LayoutBlock blockBD = getLayoutBlockAC();
+
+        if (!blockNameAC.isEmpty() && (blockAC != null)) {
             if ((connectA instanceof TrackSegment) && (((TrackSegment) connectA).getLayoutBlock() != blockAC)) {
                 try {
                     boundaryBetween[0] = (((TrackSegment) connectA).getLayoutBlock().getDisplayName() + " - " + blockAC.getDisplayName());
@@ -1264,7 +1279,7 @@ public class LevelXing extends LayoutTrack {
                 }
             }
         }
-        if ((blockNameBD != null) && (!blockNameBD.isEmpty()) && (blockBD != null)) {
+        if (!blockNameBD.isEmpty() && (blockBD != null)) {
             if ((connectB instanceof TrackSegment) && (((TrackSegment) connectB).getLayoutBlock() != blockBD)) {
                 try {
                     boundaryBetween[1] = (((TrackSegment) connectB).getLayoutBlock().getDisplayName() + " - " + blockBD.getDisplayName());
@@ -1685,7 +1700,7 @@ public class LevelXing extends LayoutTrack {
             //  #1) add us to TrackNameSet and...
             //  #2) flood them
             //check the AC blockName
-            if ((blockNameAC != null) && (blockNameAC.equals(blockName))) {
+            if (getBlockNameAC().equals(blockName)) {
                 // if we are added to the TrackNameSet
                 if (TrackNameSet.add(getName())) {
                     log.debug("*    Add track '{}'for block '{}'", getName(), blockName);
@@ -1699,7 +1714,7 @@ public class LevelXing extends LayoutTrack {
                 }
             }
             //check the BD blockName
-            if ((blockNameBD != null) && (blockNameBD.equals(blockName))) {
+            if (getBlockNameBD().equals(blockName)) {
                 // if we are added to the TrackNameSet
                 if (TrackNameSet.add(getName())) {
                     log.debug("*    Add track '{}'for block '{}'", getName(), blockName);
