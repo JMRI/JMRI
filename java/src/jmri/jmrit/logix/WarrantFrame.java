@@ -166,9 +166,10 @@ public class WarrantFrame extends WarrantRoute {
         _warrant.setTrainName(warrant.getTrainName());
         
         SpeedUtil spU = warrant.getSpeedUtil();
-        String trainId = spU.getRosterId();
-        setTrainInfo(trainId);
-        _warrant.getSpeedUtil().setDccAddress(trainId);
+        setSpeedUtil(_warrant.getSpeedUtil());
+        _speedUtil.setRosterId(spU.getRosterId());
+        _speedUtil.setDccAddress(spU.getDccAddress());
+        setTrainInfo(warrant.getTrainName());
     }
 
     private void init() {
@@ -1466,7 +1467,7 @@ public class WarrantFrame extends WarrantRoute {
 
         @Override
         public boolean isCellEditable(int row, int col) {
-            if (row == ROW_NUM || row == SPEED_COLUMN) {
+            if (col == ROW_NUM || col == SPEED_COLUMN) {
                 return false;
             }
             return true;

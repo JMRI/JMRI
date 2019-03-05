@@ -1,5 +1,6 @@
 package jmri;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -176,9 +177,9 @@ public class TurnoutOperationManager implements InstanceManagerAutoDefault {
                     // creating the instance invokes the TurnoutOperation ctor,
                     // which calls addOperation here, which adds it to the 
                     // turnoutOperations map.
-                    thisClass.newInstance();
+                    thisClass.getDeclaredConstructor().newInstance();
                     log.debug("loaded TurnoutOperation class {}", thisClassName);
-                } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e1) {
+                } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e1) {
                     log.error("during loadOperationTypes", e1);
                 }
             }
