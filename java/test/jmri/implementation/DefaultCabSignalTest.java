@@ -195,7 +195,7 @@ public class DefaultCabSignalTest {
         Assert.assertEquals("next Block set",bm.getBlock(nextBlock),cs.getNextBlock());
         Assert.assertEquals("Mast set",smm.getSignalMast(mastName),cs.getNextMast());
         if(mastName!="") {
-           // no mast expected, so don't check the aspect.
+           // mast expected, so check the aspect.
            JUnitUtil.waitFor( () -> { return "Clear".equals(cs.getNextMast().getAspect().toString());});
            Assert.assertEquals("Mast " + mastName + " Aspect clear","Clear",cs.getNextMast().getAspect());
         }
