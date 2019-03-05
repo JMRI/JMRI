@@ -5139,12 +5139,12 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 //private static List testEachItemInListOfLists(
 //        @Nonnull List<List> listOfListsOfObjects,
 //        @Nonnull Predicate<Object> tester) {
-//    List result = new ArrayList<>();
+//    List newBlk = new ArrayList<>();
 //    for (List<Object> listOfObjects : listOfListsOfObjects) {
 //        List<Object> l = listOfObjects.stream().filter(o -> tester.test(o)).collect(Collectors.toList());
-//        result.addAll(l);
+//        newBlk.addAll(l);
 //    }
-//    return result;
+//    return newBlk;
 //}
 // this is a method to iterate over a list of lists of items
 // calling the predicate tester.test on each one
@@ -5154,15 +5154,15 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 //private static Object findFirstMatchingItemInListOfLists(
 //        @Nonnull List<List> listOfListsOfObjects,
 //        @Nonnull Predicate<Object> tester) {
-//    Object result = null;
+//    Object newBlk = null;
 //    for (List listOfObjects : listOfListsOfObjects) {
 //        Optional<Object> opt = listOfObjects.stream().filter(o -> tester.test(o)).findFirst();
 //        if (opt.isPresent()) {
-//            result = opt.get();
+//            newBlk = opt.get();
 //            break;
 //        }
 //    }
-//    return result;
+//    return newBlk;
 //}
     /**
      * Called by {@link #mousePressed} to determine if the mouse click was in a
@@ -7437,15 +7437,15 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      */
     public LayoutBlock provideLayoutBlock(@Nonnull String inBlockName) {
         LayoutBlock result = null; //assume failure (pessimist!)
+        LayoutBlock newBlk = null; //assume failure (pessimist!)
 
         if (inBlockName.isEmpty()) {
             //nothing entered, try autoAssign
             if (autoAssignBlocks) {
-                result = InstanceManager.getDefault(LayoutBlockManager.class
+                newBlk = InstanceManager.getDefault(LayoutBlockManager.class
                 ).createNewLayoutBlock();
-                if (null == result) {
+                if (null == newBlk) {
                     log.error("Failure to auto-assign LayoutBlock '{}'.", inBlockName);
-
                 }
             }
         } else {
@@ -7453,31 +7453,34 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             result = InstanceManager.getDefault(LayoutBlockManager.class
             ).getByUserName(inBlockName);
 
-            if (null == result) { //(no)
-                result = InstanceManager.getDefault(LayoutBlockManager.class
+            if (result == null) { //(no)
+                newBlk = InstanceManager.getDefault(LayoutBlockManager.class
                 ).createNewLayoutBlock(null, inBlockName);
-                if (null == result) {
+                if (newBlk == null) {
                     log.error("Failure to create new LayoutBlock '{}'.", inBlockName);
                 }
             }
         }
 
         //if we created a new block
-        if (result != null) {
+        if (newBlk != null) {
             //initialize the new block
             //log.debug("provideLayoutBlock :: Init new block {}", inBlockName);
-            result.initializeLayoutBlock();
-            result.initializeLayoutBlockRouting();
-            result.setBlockTrackColor(defaultTrackColor);
-            result.setBlockOccupiedColor(defaultOccupiedTrackColor);
-            result.setBlockExtraColor(defaultAlternativeTrackColor);
+            newBlk.initializeLayoutBlock();
+            newBlk.initializeLayoutBlockRouting();
+            newBlk.setBlockTrackColor(defaultTrackColor);
+            newBlk.setBlockOccupiedColor(defaultOccupiedTrackColor);
+            newBlk.setBlockExtraColor(defaultAlternativeTrackColor);
+            result = newBlk;
+        }
 
+        if (result != null) {
             //set both new and previously existing block
             result.addLayoutEditor(this);
             result.incrementUse();
             setDirty();
         }
-        return result;
+        return newBlk;
     }
 
     /**
@@ -7501,7 +7504,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         if (!sensorName.isEmpty()) {
             //get a validated sensor corresponding to this name and assigned to block
             Sensor s = blk.validateSensor(sensorName, openFrame);
-            result = (s != null); //if sensor returned result is true.
+            result = (s != null); //if sensor returned newBlk is true.
         }
         return result;
     }
