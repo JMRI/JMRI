@@ -49,7 +49,6 @@ public class CabSignalTableModel extends javax.swing.table.AbstractTableModel {
 
     private CabSignalManager cabSignalManager;
 
-    public Boolean autoreverseblockdir = true;	
     public Boolean masterSendCabData = true;
  
     static private int MAX_LINES = 5000;

@@ -67,7 +67,6 @@ public class CabSignalPane extends jmri.util.swing.JmriPanel implements CabSigna
     protected JTable slotTable=null;
     protected final XTableColumnModel tcm = new XTableColumnModel();
 
-    private JMenu cabsigMenu = new JMenu(Bundle.getMessage("SigDataOpt"));
     private JMenu colMenu = new JMenu((Bundle.getMessage("SessCol")));
     private JMenu cabSigColMenu = new JMenu(Bundle.getMessage("SigDataCol"));
     
@@ -332,21 +331,8 @@ public class CabSignalPane extends jmri.util.swing.JmriPanel implements CabSigna
     public List<JMenu> getMenus() {
         List<JMenu> menuList = new ArrayList<JMenu>();
         
-        JCheckBoxMenuItem autorevblock = new JCheckBoxMenuItem(Bundle.getMessage("MAutoRev"));
-        autorevblock.setSelected(true);
-        autorevblock.setToolTipText(Bundle.getMessage("MAutoRevTip"));
-        autorevblock.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                slotModel.autoreverseblockdir = autorevblock.isSelected();
-            }
-        });
-        
-        cabsigMenu.add(autorevblock);
-        
         menuList.add(colMenu);
         menuList.add(cabSigColMenu);
-        menuList.add(cabsigMenu);
         return menuList;
     }
 
