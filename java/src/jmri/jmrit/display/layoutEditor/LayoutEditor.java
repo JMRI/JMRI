@@ -7480,7 +7480,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             result.incrementUse();
             setDirty();
         }
-        return newBlk;
+        return result;
     }
 
     /**
