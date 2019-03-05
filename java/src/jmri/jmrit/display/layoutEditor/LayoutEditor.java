@@ -5139,12 +5139,12 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 //private static List testEachItemInListOfLists(
 //        @Nonnull List<List> listOfListsOfObjects,
 //        @Nonnull Predicate<Object> tester) {
-//    List newBlk = new ArrayList<>();
+//    List result = new ArrayList<>();
 //    for (List<Object> listOfObjects : listOfListsOfObjects) {
 //        List<Object> l = listOfObjects.stream().filter(o -> tester.test(o)).collect(Collectors.toList());
-//        newBlk.addAll(l);
+//        result.addAll(l);
 //    }
-//    return newBlk;
+//    return result;
 //}
 // this is a method to iterate over a list of lists of items
 // calling the predicate tester.test on each one
@@ -5154,15 +5154,15 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 //private static Object findFirstMatchingItemInListOfLists(
 //        @Nonnull List<List> listOfListsOfObjects,
 //        @Nonnull Predicate<Object> tester) {
-//    Object newBlk = null;
+//    Object result = null;
 //    for (List listOfObjects : listOfListsOfObjects) {
 //        Optional<Object> opt = listOfObjects.stream().filter(o -> tester.test(o)).findFirst();
 //        if (opt.isPresent()) {
-//            newBlk = opt.get();
+//            result = opt.get();
 //            break;
 //        }
 //    }
-//    return newBlk;
+//    return result;
 //}
     /**
      * Called by {@link #mousePressed} to determine if the mouse click was in a
@@ -7504,7 +7504,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         if (!sensorName.isEmpty()) {
             //get a validated sensor corresponding to this name and assigned to block
             Sensor s = blk.validateSensor(sensorName, openFrame);
-            result = (s != null); //if sensor returned newBlk is true.
+            result = (s != null); //if sensor returned result is true.
         }
         return result;
     }
