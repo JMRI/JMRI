@@ -7,6 +7,7 @@ package jmri.jmrit.ctc.editor.gui;
 
 import jmri.jmrit.ctc.editor.code.AwtWindowProperties;
 import jmri.jmrit.ctc.editor.code.Columns;
+import jmri.jmrit.ctc.editor.code.CommonSubs;
 
 /**
  *
@@ -21,6 +22,7 @@ public class FrmFixErrors extends javax.swing.JFrame {
     public FrmFixErrors(AwtWindowProperties awtWindowProperties, Columns columns) {
         super();
         initComponents();
+        CommonSubs.addHelpMenu(this, "package.jmri.jmrit.ctc.CTC_menuEditFix", true);  // NOI18N
         _mAwtWindowProperties = awtWindowProperties;
         _mColumns = columns;
         _mAwtWindowProperties.setWindowState(this, FORM_PROPERTIES);

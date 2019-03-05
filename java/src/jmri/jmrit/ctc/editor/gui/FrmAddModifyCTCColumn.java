@@ -2,6 +2,7 @@ package jmri.jmrit.ctc.editor.gui;
 
 import jmri.jmrit.ctc.editor.code.AwtWindowProperties;
 import jmri.jmrit.ctc.editor.code.Columns;
+import jmri.jmrit.ctc.editor.code.CommonSubs;
 import javax.swing.JOptionPane;
 import javax.swing.SpinnerNumberModel;
 
@@ -29,6 +30,7 @@ public class FrmAddModifyCTCColumn extends javax.swing.JFrame {
     public FrmAddModifyCTCColumn(AwtWindowProperties awtWindowProperties, Columns columns, boolean isModify, int existingSwitchNumber, int existingGUIColumnNumber, boolean existingGUIGeneratedAtLeastOnceAlready) {
         super();
         initComponents();
+        CommonSubs.addHelpMenu(this, "package.jmri.jmrit.ctc.CTC_osList", true);  // NOI18N
         _mAwtWindowProperties = awtWindowProperties;
         _mColumns = columns;
         _mIsModify = isModify;

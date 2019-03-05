@@ -46,6 +46,7 @@ public class FrmSIDL extends javax.swing.JFrame {
                     ProgramProperties programProperties, CheckJMRIObject checkJMRIObject) {
         super();
         initComponents();
+        CommonSubs.addHelpMenu(this, "package.jmri.jmrit.ctc.CTC_frmSIDL", true);  // NOI18N
         _mAwtWindowProperties = awtWindowProperties;
         _mCodeButtonHandlerData = codeButtonHandlerData;
         _mProgramProperties = programProperties;

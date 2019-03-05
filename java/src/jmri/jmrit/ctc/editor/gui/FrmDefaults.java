@@ -46,6 +46,7 @@ public class FrmDefaults extends javax.swing.JFrame {
     public FrmDefaults(AwtWindowProperties awtWindowProperties, ProgramProperties programProperties, OtherData otherData) {
         super();
         initComponents();
+        CommonSubs.addHelpMenu(this, "package.jmri.jmrit.ctc.CTC_menuCfgDef", true);  // NOI18N
         _mAwtWindowProperties = awtWindowProperties;
         _mProgramProperties = programProperties;
         _mOtherData = otherData;

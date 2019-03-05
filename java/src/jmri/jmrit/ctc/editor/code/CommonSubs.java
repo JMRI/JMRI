@@ -53,6 +53,23 @@ public class CommonSubs {
         return true;    // NO change, ok to exit
     }
 
+    /**
+     * Add a standard help menu, including the window specific help item.
+     *
+     * @param frame  The frame receiving the help menu.
+     * @param ref    JHelp reference for the desired window-specific help page
+     * @param direct true if the help main-menu item goes directly to the help system,
+     *               such as when there are no items in the help menu
+     */
+    public static void addHelpMenu(javax.swing.JFrame frame, String ref, boolean direct) {
+        javax.swing.JMenuBar bar = frame.getJMenuBar();
+        if (bar == null) {
+            bar = new javax.swing.JMenuBar();
+        }
+        jmri.util.HelpUtil.helpMenu(bar, ref, direct);
+        frame.setJMenuBar(bar);
+    }
+
 //  If the table model value is null, that is the same as "".  This also "compacts"
 //  the entries also (i.e. blank line(s) between entries are removed):
     public static String getCSVStringFromDefaultTableModel(DefaultTableModel defaultTableModel) {

@@ -67,7 +67,7 @@ public class FrmGUIDesign extends javax.swing.JFrame {
     public FrmGUIDesign(AwtWindowProperties awtWindowProperties, OtherData otherData) {
         super();
         initComponents();
-//         CommonSubs.addHelpMenu(this, "package.jmri.jmrit.ctc.CTC_menuCfgGui", true);  // NOI18N
+        CommonSubs.addHelpMenu(this, "package.jmri.jmrit.ctc.CTC_menuCfgGui", true);  // NOI18N
         _mAwtWindowProperties = awtWindowProperties;
         _mOtherData = otherData;
 

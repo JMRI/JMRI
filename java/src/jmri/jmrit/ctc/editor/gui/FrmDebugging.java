@@ -36,6 +36,7 @@ public class FrmDebugging extends javax.swing.JFrame {
     public FrmDebugging(AwtWindowProperties awtWindowProperties, OtherData otherData) {
         super();
         initComponents();
+        CommonSubs.addHelpMenu(this, "package.jmri.jmrit.ctc.CTC_menuCfgDeb", true);  // NOI18N
         _mAwtWindowProperties = awtWindowProperties;
         _mOtherData = otherData;
         _mCTCSystemReloadInternalSensor.setText(otherData._mCTCDebugSystemReloadInternalSensor);

@@ -56,6 +56,7 @@ public class FrmTRL_Rules extends javax.swing.JFrame {
                         CTCSerialData ctcSerialData, CheckJMRIObject checkJMRIObject) {
         super();
         initComponents();
+        CommonSubs.addHelpMenu(this, "package.jmri.jmrit.ctc.CTC_frmTRL", true);  // NOI18N
         _mAwtWindowProperties = awtWindowProperties;
         _mCodeButtonHandlerData = codeButtonHandlerData;
         _mIsLeftTraffic = isLeftTraffic;

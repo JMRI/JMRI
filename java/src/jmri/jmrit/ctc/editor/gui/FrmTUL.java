@@ -77,6 +77,7 @@ public class FrmTUL extends javax.swing.JFrame {
                     ProgramProperties programProperties, CheckJMRIObject checkJMRIObject) {
         super();
         initComponents();
+        CommonSubs.addHelpMenu(this, "package.jmri.jmrit.ctc.CTC_frmTUL", true);  // NOI18N
         _mAwtWindowProperties = awtWindowProperties;
         _mCodeButtonHandlerData = codeButtonHandlerData;
         _mProgramProperties = programProperties;

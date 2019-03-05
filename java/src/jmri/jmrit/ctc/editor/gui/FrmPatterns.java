@@ -72,6 +72,7 @@ public class FrmPatterns extends javax.swing.JFrame {
     public FrmPatterns(AwtWindowProperties awtWindowProperties, ProgramProperties programProperties) {
         super();
         initComponents();
+        CommonSubs.addHelpMenu(this, "package.jmri.jmrit.ctc.CTC_menuCfgPat", true);  // NOI18N
         _mAwtWindowProperties = awtWindowProperties;
         _mProgramProperties = programProperties;
 

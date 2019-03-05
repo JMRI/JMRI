@@ -115,6 +115,10 @@ public class ToolsMenu extends JMenu {
         add(new jmri.jmrit.ampmeter.AmpMeterAction());
         add(new jmri.jmrit.dispatcher.DispatcherAction(Bundle.getMessage("MenuItemDispatcher")));
         add(new jmri.jmrit.timetable.swing.TimeTableAction(Bundle.getMessage("MenuItemTimeTable")));
+        JMenu ctcMenu = new JMenu(Bundle.getMessage("MenuCTC"));
+        ctcMenu.add(new jmri.jmrit.ctc.editor.CtcEditorAction(Bundle.getMessage("MenuItemCTCEditor")));
+        ctcMenu.add(new jmri.jmrit.ctc.CtcRunAction(Bundle.getMessage("MenuItemCTCMain")));
+        add(ctcMenu);
 
         add(new JSeparator());
 

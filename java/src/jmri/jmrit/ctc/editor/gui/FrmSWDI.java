@@ -59,6 +59,7 @@ public class FrmSWDI extends javax.swing.JFrame {
                     ProgramProperties programProperties, CheckJMRIObject checkJMRIObject) {
         super();
         initComponents();
+        CommonSubs.addHelpMenu(this, "package.jmri.jmrit.ctc.CTC_frmSWDI", true);  // NOI18N
         _mAwtWindowProperties = awtWindowProperties;
         _mCodeButtonHandlerData = codeButtonHandlerData;
         _mProgramProperties = programProperties;

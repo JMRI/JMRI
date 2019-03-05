@@ -64,6 +64,7 @@ public class FrmCO extends javax.swing.JFrame {
                     CTCSerialData ctcSerialData, CheckJMRIObject checkJMRIObject, boolean signalHeadSelected) {
         super();
         initComponents();
+        CommonSubs.addHelpMenu(this, "package.jmri.jmrit.ctc.CTC_frmCO", true);  // NOI18N
         _mSignalFacingDirection.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {  Bundle.getMessage("InfoDlgCOLeftTraffic"),          // NOI18N
                                                                                                 Bundle.getMessage("InfoDlgCORightTraffic") }));     // NOI18N
         _mSignalAspectToDisplay.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {  Bundle.getMessage("InfoDlgCODark"),                 // NOI18N
