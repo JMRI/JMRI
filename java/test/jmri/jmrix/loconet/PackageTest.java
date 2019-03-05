@@ -92,6 +92,7 @@ import org.junit.runners.Suite;
         LnPacketizerStrictTest.class,
         TranspondingTagTest.class,
         TranspondingTagManagerTest.class,
+        LnCabSignalTest.class,
 })
 
 /**
