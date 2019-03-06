@@ -1048,7 +1048,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 boolean prefsHighlightSelectedBlockFlag
                         = prefsMgr.getSimplePreferenceState(windowFrameRef + ".highlightSelectedBlock");
                 //log.debug("{}.highlightSelectedBlock is {}", windowFrameRef, prefsHighlightSelectedBlockFlag);
-                setHighlightSelectedBlock(prefsHighlightSelectedBlockFlag);
+                /////zzzzz setHighlightSelectedBlock(prefsHighlightSelectedBlockFlag);
 
                 prefsProp = prefsMgr.getProperty(windowFrameRef, "toolBarFontSize");
                 //log.debug("{} prefsProp toolBarFontSize is {}", windowFrameRef, prefsProp);
@@ -7467,7 +7467,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             //initialize the new block
             //log.debug("provideLayoutBlock :: Init new block {}", inBlockName);
             newBlk.initializeLayoutBlock();
-            newBlk.initializeLayoutBlockRouting();
+            ///newBlk.initializeLayoutBlockRouting();
             newBlk.setBlockTrackColor(defaultTrackColor);
             newBlk.setBlockOccupiedColor(defaultOccupiedTrackColor);
             newBlk.setBlockExtraColor(defaultAlternativeTrackColor);

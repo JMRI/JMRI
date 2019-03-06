@@ -3727,6 +3727,9 @@ public class TrackSegment extends LayoutTrack {
                 if (type2 <= TURNOUT_D) {
                     // have connection to a turnout
                     LayoutTurnout lt = (LayoutTurnout) getConnect2();
+                    if (lt == null) {
+                        log.warn("error!");
+                    }
                     lb2 = lt.getLayoutBlock();
                     if (lt.getTurnoutType() > LayoutTurnout.WYE_TURNOUT) {
                         // not RH, LH, or WYE turnout - other blocks possible

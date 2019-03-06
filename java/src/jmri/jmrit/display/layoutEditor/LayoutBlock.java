@@ -217,7 +217,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
         }
     }
 
-    /* initializeLayoutBlock */
+    /* initializeLayoutBlockRouting */
     protected void initializeLayoutBlockRouting() {
         if (!InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled()) {
             return;
@@ -679,11 +679,12 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
      */
     public void updatePaths() {
         //Update paths is called by the panel, turnouts, xings, track segments etc
-        if ((block != null) && (panels.size() > 0)) {
+        if ((block != null) && !panels.isEmpty()) {
             //a block is attached and this LayoutBlock is used
             //initialize connectivity as defined in first Layout Editor panel
             LayoutEditor panel = panels.get(0);
             List<LayoutConnectivity> c = panel.getLEAuxTools().getConnectivityList(this);
+
             //if more than one panel, find panel with the highest connectivity
             if (panels.size() > 1) {
                 for (int i = 1; i < panels.size(); i++) {
@@ -693,9 +694,10 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                         c = panel.getLEAuxTools().getConnectivityList(this);
                     }
                 }
+
                 //Now try to determine if this block is across two panels due to a linked point
                 PositionablePoint point = panel.getFinder().findPositionableLinkPoint(this);
-                if (point != null && point.getLinkedEditor() != null && panels.contains(point.getLinkedEditor())) {
+                if ((point != null) && (point.getLinkedEditor() != null) && panels.contains(point.getLinkedEditor())) {
                     c = panel.getLEAuxTools().getConnectivityList(this);
                     c.addAll(point.getLinkedEditor().getLEAuxTools().getConnectivityList(this));
                 } else {
@@ -830,9 +832,14 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
         }
 
         //djd debugging - lists results of automatic initialization of Paths and BeanSettings
+        //if (log.isDebugEnabled()) {
         block.getPaths().stream().forEach((p) -> {
+            if (p == null) {
+                log.warn("p == null");
+            }
             log.debug("From {} to {}", getDisplayName(), p.toString());
         });
+        //}
         //end debugging
     }   // updateBlockPaths
 

@@ -213,6 +213,10 @@ public class PositionablePoint extends LayoutTrack {
     }
 
     public void setLinkedPoint(PositionablePoint p) {
+        setLinkedPoint(p, true);
+    }
+
+    public void setLinkedPoint(PositionablePoint p, boolean updateBlock) {
         if (p == linkedPoint) {
             return;
         }
@@ -236,8 +240,8 @@ public class PositionablePoint extends LayoutTrack {
         }
         linkedPoint = p;
         if (p != null) {
-            p.setLinkedPoint(this);
-            if (getConnect1() != null) {
+            p.setLinkedPoint(this, updateBlock);
+            if (updateBlock && (getConnect1() != null)) {
                 layoutEditor.getLEAuxTools().setBlockConnectivityChanged();
                 getConnect1().updateBlockInfo();
                 layoutEditor.repaint();
@@ -1272,7 +1276,7 @@ public class PositionablePoint extends LayoutTrack {
                     linkPointsBox.setSelectedItem(p.getConnect2().getLayoutBlock().getDisplayName());
                 } else if (p.getLinkedPoint() == null) {
                     if (p.getConnect1() != null && p.getConnect1().getLayoutBlock() != null) {
-                        if (p.getConnect1().getLayoutBlock() != getConnect1().getLayoutBlock() /* && ourDir != p.getConnect1Dir() */ ) {
+                        if (p.getConnect1().getLayoutBlock() != getConnect1().getLayoutBlock()) {
                             pointList.add(p);
                             linkPointsBox.addItem(p.getConnect1().getLayoutBlock().getDisplayName());
                         }
