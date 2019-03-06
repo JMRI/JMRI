@@ -91,6 +91,7 @@ public class LocoNetMessage extends AbstractMessage implements Serializable {
      * this method of AbstractMessage is not supported.
      * <p>
      * This constructor always logs an error
+     * @param s an unused parameter
      */
     public LocoNetMessage(String s) {
         _nDataChars = 0;

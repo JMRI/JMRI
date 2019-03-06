@@ -11,6 +11,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
     /**
      * Ctor for an object being created during load process; Swing init is
      * deferred.
+     * @param p the SerialPortAdapter to associate with this connection
      */
     public ConnectionConfig(jmri.jmrix.SerialPortAdapter p) {
         super(p);
