@@ -135,7 +135,7 @@ public class LevelXing extends LayoutTrack {
         if (namedLayoutBlockBD != null) {
             result = namedLayoutBlockBD.getName();
         }
-        return ((result == null) ? "" : result);
+        return result;
     }
 
     public SignalHead getSignalHead(int loc) {

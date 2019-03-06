@@ -548,8 +548,12 @@ public class TrackSegment extends LayoutTrack {
     }
 
     public void setLayoutBlockByName(@Nullable String name) {
-        LayoutBlock b = layoutEditor.provideLayoutBlock(name);
-        namedLayoutBlock = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(b.getUserName(), b);
+        if ((name != null) && !name.isEmpty())  {
+            LayoutBlock b = layoutEditor.provideLayoutBlock(name);
+            namedLayoutBlock = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(b.getUserName(), b);
+        } else {
+            namedLayoutBlock = null;
+        }
     }
 
     /*
@@ -616,7 +620,7 @@ public class TrackSegment extends LayoutTrack {
     // we're using it here for backwards compatibility until it can be removed
     @Override
     public void setObjects(LayoutEditor p) {
-        
+
         LayoutBlock blockA = getLayoutBlock();
         if (blockA != null) {
             blockA.incrementUse();

@@ -403,7 +403,7 @@ public class LayoutTurnout extends LayoutTrack {
         if (namedLayoutBlockB != null) {
             result = namedLayoutBlockB.getName();
         }
-        return ((result == null) ? "" : result);
+        return result;
     }
 
     @Nonnull
@@ -412,7 +412,7 @@ public class LayoutTurnout extends LayoutTrack {
         if (namedLayoutBlockC != null) {
             result = namedLayoutBlockC.getName();
         }
-        return ((result == null) ? "" : result);
+        return result;
     }
 
     @Nonnull
@@ -421,7 +421,7 @@ public class LayoutTurnout extends LayoutTrack {
         if (namedLayoutBlockD != null) {
             result = namedLayoutBlockD.getName();
         }
-        return ((result == null) ? "" : result);
+        return result;
     }
 
     public SignalHead getSignalHead(int loc) {
