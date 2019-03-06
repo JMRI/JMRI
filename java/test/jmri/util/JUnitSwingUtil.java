@@ -1,30 +1,27 @@
 package jmri.util;
 
+import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.image.BufferedImage;
 
-import org.junit.After;
+import javax.swing.AbstractButton;
+
 import org.junit.Assert;
-import org.junit.Before;
+import org.netbeans.jemmy.operators.AbstractButtonOperator;
+import org.netbeans.jemmy.operators.JButtonOperator;
 
 /**
- * Provide Swing context for JUnit test classes.
+ * Utilities for GUI unit testing.
+ * 
+ * @author Randall Wood, Copyright 2019
  *
- * @author Bob Jacobsen - Copyright 2009
- * @since 2.5.3
- * @deprecated use {@link jmri.util.JUnitSwingUtil} instead
  */
-@Deprecated // for removal after JMRI 4.18
-public class SwingTestCase {
-
-    public SwingTestCase(String s) {
-        // nothing to do
-    }
+public final class JUnitSwingUtil {
 
     /**
      * Get the displayed content of a JComponent.
-     * <p>
-     * static so that it can in invoked outside SwingTestCases subclasses
      * <p>
      * Note: this does no adjustment, e.g. pack, etc. That should have been
      * already been done as required.
@@ -37,13 +34,17 @@ public class SwingTestCase {
      * @return int[] array of ARGB values
      */
     public static int[] getDisplayedContent(java.awt.Container component, Dimension size, Point upLeft) {
-        return JUnitSwingUtil.getDisplayedContent(component, size, upLeft);
+        // check pixel color (from http://stackoverflow.com/questions/13307962/how-to-get-the-color-of-a-point-in-a-jpanel )
+        BufferedImage image = new BufferedImage(size.width, size.height, BufferedImage.TYPE_4BYTE_ABGR);
+        Graphics2D g2 = image.createGraphics();
+        component.paint(g2);
+
+        int[] retval = image.getRGB(upLeft.x, upLeft.y, size.width, size.height, null, 0, size.width);
+
+        g2.dispose();
+        return retval;
     }
 
-    /**
-     * @deprecated use {@link jmri.util.JUnitSwingUtil.Pixel} instead
-     */
-    @Deprecated
     public static enum Pixel {
 
         TRANSPARENT(0x00000000),
@@ -75,11 +76,9 @@ public class SwingTestCase {
      * 
      * @param pixel the pixel to parse
      * @return hexadecimal representation of the pixel
-     * @deprecated use {@link jmri.util.JUnitSwingUtil#formatPixel(int)} instead
      */
-    @Deprecated
     public static String formatPixel(int pixel) {
-        return JUnitSwingUtil.formatPixel(pixel);
+        return String.format("0x%8s", Integer.toHexString(pixel)).replace(' ', '0');
     }
 
     /**
@@ -87,12 +86,8 @@ public class SwingTestCase {
      *
      * @param name  Condition being asserted
      * @param value Correct ARGB value for test
-     * @param pixel ARGB pixel value being tested
-     * @deprecated use
-     *             {@link jmri.util.JUnitSwingUtil#assertPixel(String, jmri.util.JUnitSwingUtil.Pixel, int)}
-     *             instead
+     * @param pixel ARGB piel value being tested
      */
-    @Deprecated
     public static void assertPixel(String name, Pixel value, int pixel) {
         Assert.assertEquals(name, value.toString(), formatPixel(pixel));
     }
@@ -114,9 +109,7 @@ public class SwingTestCase {
      * @param lowerLeft   expected value of pixel in bottom left corner of image
      * @param lowerCenter expected value of pixel in bottom center of image
      * @param lowerRight  expected value of pixel in top right corner of image
-     * @deprecated use {@link jmri.util.JUnitSwingUtil} instead
      */
-    @Deprecated
     public static void assertImageNinePoints(String name, int[] pixels, Dimension size,
             Pixel upperLeft, Pixel upperCenter, Pixel upperRight,
             Pixel midLeft, Pixel center, Pixel midRight,
@@ -141,12 +134,19 @@ public class SwingTestCase {
         assertPixel(name + " center", center, pixels[(rows / 2) * cols + cols / 2]);
     }
 
-    @Before
-    protected void setUp() throws Exception {
-    }
-
-    @After
-    protected void tearDown() throws Exception {
+    /**
+     * Press a button after finding it in a container by title.
+     * 
+     * @param frame container containing button to press
+     * @param text button title
+     * @return the pressed button
+     */
+    public static AbstractButton pressButton(Container frame, String text) {
+        AbstractButton button = JButtonOperator.findAbstractButton(frame, text, true, true);
+        Assert.assertNotNull(text + " Button not found", button);
+        AbstractButtonOperator abo = new AbstractButtonOperator(button);
+        abo.doClick();
+        return button;
     }
 
 }

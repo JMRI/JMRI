@@ -6,7 +6,6 @@ import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
-import jmri.util.SwingTestCase;
 import jmri.util.ThreadingUtil;
 
 import org.junit.After;
