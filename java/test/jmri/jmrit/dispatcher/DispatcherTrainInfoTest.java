@@ -7,7 +7,7 @@ import junit.framework.TestSuite;
 import org.junit.Assert;
 
 /**
- * Swing jfcUnit tests for dispatcher train info
+ * Swing tests for dispatcher train info.
  *
  * @author	Dave Duchamp
  */

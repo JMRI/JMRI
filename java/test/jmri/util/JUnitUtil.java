@@ -321,7 +321,7 @@ public class JUnitUtil {
      * {@value #DEFAULT_RELEASETHREAD_DELAY} milliseconds.
      * <p>
      * This cannot be used on the Swing or AWT event threads. For those, please
-     * use Jemmy's wait routine or JFCUnit's flushAWT() and waitAtLeast(..)
+     * use Jemmy's wait routine.
      *
      * @param self currently ignored
      * @deprecated 4.9.1 Use the various waitFor routines instead
@@ -335,7 +335,7 @@ public class JUnitUtil {
      * Release the current thread, allowing other threads to process.
      * <p>
      * This cannot be used on the Swing or AWT event threads. For those, please
-     * use JFCUnit's flushAWT() and waitAtLeast(..)
+     * use Jemmy's wait routine.
      *
      * @param self  currently ignored
      * @param delay milliseconds to wait

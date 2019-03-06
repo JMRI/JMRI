@@ -4,25 +4,21 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
-import junit.extensions.jfcunit.JFCTestCase;
-import junit.extensions.jfcunit.JFCTestHelper;
-import junit.extensions.jfcunit.TestHelper;
+
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 
 /**
  * Provide Swing context for JUnit test classes.
- * <p>
- * By default, JFCUnit closes all windows at the end of each test. JMRI tests
- * leave windows open, so that's been bypassed for now.
  *
  * @author Bob Jacobsen - Copyright 2009
  * @since 2.5.3
  */
-public class SwingTestCase extends JFCTestCase {
+public class SwingTestCase {
 
     public SwingTestCase(String s) {
-        super(s);
-        setLockWait(10); // getLockWait() found default value 25 in JMRI 4.3.4
+        // nothing to do
     }
 
     /**
@@ -34,9 +30,9 @@ public class SwingTestCase extends JFCTestCase {
      * already been done as required.
      *
      * @param component Typically a JComponent, could be a JFrame, the item to
-     *                  be returned
+     *                      be returned
      * @param upLeft    the upper-left corner of the returned area in
-     *                  component's coordinates
+     *                      component's coordinates
      * @param size      dimension of returned array
      * @return int[] array of ARGB values
      */
@@ -52,7 +48,7 @@ public class SwingTestCase extends JFCTestCase {
         return retval;
     }
 
-    protected enum Pixel { // protected to limit leakage outside Swing tests
+    public static enum Pixel {
 
         TRANSPARENT(0x00000000),
         RED(0xFFFF0000),
@@ -78,7 +74,10 @@ public class SwingTestCase extends JFCTestCase {
     }
 
     /**
-     * Standard parsing of ARCG pixel (int) value to String
+     * Parse ARCG pixel value.
+     * 
+     * @param pixel the pixel to parse
+     * @return hexadecimal representation of the pixel
      */
     public static String formatPixel(int pixel) {
         return String.format("0x%8s", Integer.toHexString(pixel)).replace(' ', '0');
@@ -91,17 +90,29 @@ public class SwingTestCase extends JFCTestCase {
      * @param value Correct ARGB value for test
      * @param pixel ARGB piel value being tested
      */
-    protected static void assertPixel(String name, Pixel value, int pixel) {
+    public static void assertPixel(String name, Pixel value, int pixel) {
         Assert.assertEquals(name, value.toString(), formatPixel(pixel));
     }
 
     /**
      * Check four corners and center of an image
      *
-     * @param name   Condition being asserted
-     * @param pixels Image ARCG array
+     * @param name        Condition being asserted
+     * @param pixels      Array of ARCG pixels from image
+     * @param size        the size of the image
+     * @param upperLeft   expected value of pixel in top left corner of image
+     * @param upperCenter expected value of pixel in top center of image
+     * @param upperRight  expected value of pixel in top right corner of image
+     * @param midLeft     expected value of pixel in center of left side of
+     *                        image
+     * @param center      expected value of pixel in center of image
+     * @param midRight    expected value of pixel in center of right side of
+     *                        image
+     * @param lowerLeft   expected value of pixel in bottom left corner of image
+     * @param lowerCenter expected value of pixel in bottom center of image
+     * @param lowerRight  expected value of pixel in top right corner of image
      */
-    protected static void assertImageNinePoints(String name, int[] pixels, Dimension size,
+    public static void assertImageNinePoints(String name, int[] pixels, Dimension size,
             Pixel upperLeft, Pixel upperCenter, Pixel upperRight,
             Pixel midLeft, Pixel center, Pixel midRight,
             Pixel lowerLeft, Pixel lowerCenter, Pixel lowerRight
@@ -126,34 +137,12 @@ public class SwingTestCase extends JFCTestCase {
         assertPixel(name + " center", center, pixels[(rows / 2) * cols + cols / 2]);
     }
 
-    /**
-     * Provides a (slightly) better calibrated waiting interval than a native
-     * awtSleep()
-     */
-    public void waitAtLeast(int delay) {
-        long start = System.currentTimeMillis();
-        while (System.currentTimeMillis() < start + delay) {
-            awtSleep(20); // this is completely uncalibrated
-        }
-    }
-
-    @Override
+    @Before
     protected void setUp() throws Exception {
-        super.setUp();
-        // Choose the test Helper
-        setHelper(new JFCTestHelper()); // Uses the AWT Event Queue.
-        // setHelper( new RobotTestHelper( ) ); // Uses the OS Event Queue.
     }
 
-    protected void leaveAllWindowsOpen()  throws org.apache.regexp.RESyntaxException {
-        TestHelper.addSystemWindow(".");  // all windows left open
-    }
-
-    @Override
+    @After
     protected void tearDown() throws Exception {
-        leaveAllWindowsOpen();
-        TestHelper.cleanUp(this);
-        super.tearDown();
     }
 
 }
