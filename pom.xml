@@ -559,7 +559,7 @@
                                 <File>jmri/jmrix/loconet/AbstractAlmImplementation.class</File>
                                 <!-- Exclude files meant to check SpotBugs. -->
                                 <File>apps/FindBugsCheck.class</File>
-                                <File>apps/CheckerFrameworkCheck.class<File/>
+                                <File>apps/CheckerFrameworkCheck.class</File>
                             </excludes>
                             <rules>
                                 <rule>
