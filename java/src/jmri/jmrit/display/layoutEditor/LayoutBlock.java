@@ -887,6 +887,8 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
         }
         if (e.getPropertyName().equals("UserName")) {
             setUserName(e.getNewValue().toString());
+            jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).
+                    renameBean(e.getOldValue().toString(), e.getNewValue().toString(), this);
         }
         //Redraw all Layout Editor panels using this Layout Block
         redrawLayoutBlockPanels();
