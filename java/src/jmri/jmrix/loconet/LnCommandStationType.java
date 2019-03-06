@@ -83,6 +83,7 @@ public enum LnCommandStationType {
 
     /**
      * Can this command station read back from decoders?
+     * @return whether the command station can perform CV reads
      */
     public boolean getCanRead() {
         return canRead;
@@ -95,6 +96,7 @@ public enum LnCommandStationType {
 
     /**
      * Does a programming operation turn track power off?
+     * @return whether the programming operation turns track power off
      */
     public boolean getProgPowersOff() {
         return progEndOp;
@@ -111,6 +113,9 @@ public enum LnCommandStationType {
 
     /**
      * Get a new ThrottleManager of the right type for this command station.
+     * 
+     * @param memo the LocoNetSystemConnectionMemo object which hosts throttles
+     * @return the ThrottleManager object for the connection and the command station
      */
     public ThrottleManager getThrottleManager(LocoNetSystemConnectionMemo memo) {
         try {
@@ -141,6 +146,9 @@ public enum LnCommandStationType {
 
     /**
      * Get a new SlotManager of the right type for this command station.
+     * 
+     * @param tc the LnTrafficController object which hosts the slot manager
+     * @return the SlogManager object for the connection and the command station
      */
     public SlotManager getSlotManager(LnTrafficController tc) {
         try {

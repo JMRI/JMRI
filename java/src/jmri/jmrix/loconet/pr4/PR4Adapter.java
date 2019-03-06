@@ -3,6 +3,7 @@ package jmri.jmrix.loconet.pr4;
 import jmri.jmrix.loconet.LnCommandStationType;
 import jmri.jmrix.loconet.LnPacketizer;
 import jmri.jmrix.loconet.LocoNetMessage;
+import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.jmrix.loconet.locobuffer.LocoBufferAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -177,14 +178,13 @@ public class PR4Adapter extends LocoBufferAdapter {
 
     @Override
     public PR4SystemConnectionMemo getSystemConnectionMemo() {
-        if (super.getSystemConnectionMemo() instanceof PR4SystemConnectionMemo) {
-            return (PR4SystemConnectionMemo) super.getSystemConnectionMemo();
-        } else {
-            log.error("Cannot cast the system connection memo to a PR4SystemConnection Memo.");
-            return null;
+        LocoNetSystemConnectionMemo m = super.getSystemConnectionMemo();
+        if (m instanceof PR4SystemConnectionMemo) {
+            return (PR4SystemConnectionMemo) m;
         }
+        log.error("Cannot cast the system connection memo to a PR4SystemConnection Memo.");
+        return null;
     }
-
 
     private final static Logger log = LoggerFactory.getLogger(PR4Adapter.class);
 }
