@@ -313,7 +313,7 @@ Notez que celui-ci ne devrait <b>pas</b> &#234;tre utilis&#233; en synchronisme 
 Voir le <a href="#testSwingCode"> Test Code Swing</a>, une section faite pour &#231;a.
 <p>
 En g&#233;n&#233;ral,vous ne devriez pas avoir d'appels pour dormir(), attendre(), produire() dans votre code.
-Utilisez l'aide de JUnitUtil et JFCUtil pour ceux en place. 
+Utilisez l'aide de JUnitUtil pour ceux en place. 
 
 <h3><a name="threads">Travailler avec les T&#226;ches</a></h3>
 

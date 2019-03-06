@@ -3,17 +3,18 @@ package jmri.jmrit.beantable;
 import java.awt.GraphicsEnvironment;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JComponent;
 import javax.swing.JTextField;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
-import junit.extensions.jfcunit.TestHelper;
-import junit.extensions.jfcunit.eventdata.MouseEventData;
-import junit.extensions.jfcunit.finder.AbstractButtonFinder;
-import junit.extensions.jfcunit.finder.NamedComponentFinder;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.junit.Assert;
+import org.netbeans.jemmy.QueueTool;
+import org.netbeans.jemmy.operators.JButtonOperator;
+import org.netbeans.jemmy.operators.JComboBoxOperator;
+import org.netbeans.jemmy.operators.JFrameOperator;
+import org.netbeans.jemmy.operators.JTextFieldOperator;
+import org.netbeans.jemmy.util.NameComponentChooser;
 
 /**
  * Swing jfcUnit tests for the light table. Do not convert to JUnit4 (no support
@@ -34,58 +35,44 @@ public class LightTableWindowTest extends jmri.util.SwingTestCase {
 
         // Find new table window by name
         JmriJFrame ft = JmriJFrame.getFrame(Bundle.getMessage("TitleLightTable"));
-        flushAWT();
+        new QueueTool().waitEmpty();
 
-        // Find the Add... button
-        AbstractButtonFinder abfinder = new AbstractButtonFinder(Bundle.getMessage("ButtonAdd"));
-        JButton ad = (JButton) abfinder.find(ft, 0);
-        Assert.assertNotNull(ad);
-
-        // Click button to open Add Light pane
-        getHelper().enterClickAndLeave(new MouseEventData(this, ad));
+        // Find the Add... button and open Add Light pane
+        JUnitUtil.pressButton(ft, Bundle.getMessage("ButtonAdd"));
 
         // Find Add Light pane by name
         JmriJFrame fa = JmriJFrame.getFrame(Bundle.getMessage("TitleAddLight"));
         Assert.assertNotNull("Add window found", fa);
 
         // Find hardware address field
-        NamedComponentFinder ncfinder = new NamedComponentFinder(JComponent.class, "hwAddressTextField");
-        JTextField hwAddressField = (JTextField) ncfinder.find(fa, 0);
+        JTextField hwAddressField = JTextFieldOperator.findJTextField(fa, new NameComponentChooser("hwAddressTextField"));
         Assert.assertNotNull("hwAddressTextField", hwAddressField);
 
         // set to "1"
-        // The following line works on the CI servers, but not in some standalone cases
-        //getHelper().sendString(new StringEventData(this, hwAddressField, "1"));
-        hwAddressField.setText("1"); // workaround
-        NamedComponentFinder ncfinder2 = new NamedComponentFinder(JComponent.class, "createButton");
-        JButton createButton = (JButton) ncfinder2.find(fa, 0);
+        new JTextFieldOperator(hwAddressField).enterText("1");
+        JButton createButton = JButtonOperator.findJButton(fa, new NameComponentChooser("createButton"));
         createButton.setEnabled(true); // skip validation
 
-        flushAWT();
+        new QueueTool().waitEmpty();
         Assert.assertEquals("name content", "1", hwAddressField.getText());
 
         // Find system combobox
-        ncfinder = new NamedComponentFinder(JComponent.class, "prefixBox");
-        JComboBox<?> prefixBox = (JComboBox<?>) ncfinder.find(fa, 0);
+        JComboBox<?> prefixBox = JComboBoxOperator.findJComboBox(fa, new NameComponentChooser("prefixBox"));
         Assert.assertNotNull(prefixBox);
         // set to "Internal"
         prefixBox.setSelectedItem("Internal");
         Assert.assertEquals("Selected system item", "Internal", prefixBox.getSelectedItem()); // this connection type is always available
 
-        // Find the Add Create button
-        AbstractButtonFinder createfinder = new AbstractButtonFinder(Bundle.getMessage("ButtonCreate"));
-        JButton createbutton = (JButton) createfinder.find(fa, 0);
-        Assert.assertNotNull(createbutton);
-        // Click button to add turnout
-        getHelper().enterClickAndLeave(new MouseEventData(this, createbutton));
+        // Find and click the Add Create button to add turnout
+        JUnitUtil.pressButton(fa, Bundle.getMessage("ButtonCreate"));
         // Ask to close Add pane
-        TestHelper.disposeWindow(fa, this);
+        new JFrameOperator(fa).dispose();
 
         // don't test edit pane, identical to create pane
         // Ask to close turnout table window
-        TestHelper.disposeWindow(ft, this);
+        new JFrameOperator(ft).dispose();
 
-        flushAWT();
+        new QueueTool().waitEmpty();
 
         // check that light was created
         Assert.assertNotNull(jmri.InstanceManager.lightManagerInstance().getLight("IL1"));

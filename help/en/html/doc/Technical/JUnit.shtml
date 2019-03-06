@@ -96,7 +96,6 @@
         <li style="list-style: none">
           <ul>
             <li><a href="#jemmy">Using Jemmy</a></li>
-            <li><a href="#jfcunit">Using JFCUnit</a></li>
           </ul>
         </li>
 
@@ -1069,13 +1068,7 @@ setenv JMRI_OPTIONS -Djmri.util.JUnitUtil.checkRemnantThreads=true
       lets you check the logic code separately, but invoking those
       methods and checking the state them update.</p>
 
-      <p>For more complicated GUI testing, two tools are generally used.
-      The older one,
-      <a href="#jfcunit">JFCUnit</a>
-      is no longer maintained, so we recommend that new tests be
-      written with <a href="#jemmy">Jemmy</a>.
-      Note: Only use one of these in your test class!  Don't try
-      to mix them.
+      <p>For more complicated GUI testing, the Jemmy tool is generally used.
 
       <h3><a id="jemmy" name="jemmy">Using Jemmy</a></h3>
 
@@ -1199,29 +1192,9 @@ setenv JMRI_OPTIONS -Djmri.util.JUnitUtil.checkRemnantThreads=true
       
       <h3><a id="jfcunit" name="jfcunit">Using JFCUnit</a></h3>
 
-      <p>You should not write new test classes using JFCUnit.  Use
-      <a href="#jemmy">Jemmy</a>
-      instead.  This section is to document test classes we already have.
-      
-      <p>The <a href="http://jfcunit.sourceforge.net/">JFCUnit</a> library can control
-      interactions with Swing objects.
-      For a very simple example of the use of JFCUnit, see the
-      <a href=
-      "https://github.com/JMRI/JMRI/blob/master/java/test/jmri/util/SwingTestCaseTest.java">
-      test/jmri/util/SwingTestCaseTest.java</a> file.</p>
-
-      <p>To use JFCUnit, you first inherit your class From
-      <code>SwingTestCase</code> instead of <code>TestCase</code>.
-      This is enough to get basic operation of Swing tests; the
-      base class pauses the test thread until Swing (actually, the
-      AWT event mechanism) has completed all processing after every
-      Swing call in the test. (For this reason, the tests will run
-      much slower if you're e.g. moving the mouse cursor around
-      while they're running)</p>
-
-      <p>For more complex GUI testing, you can invoke various
-      aspects of the interface and check internal state using test
-      code.</p>
+      <p><a href="http://jfcunit.sourceforge.net/">JFCUnit</a> is
+      no longer used by JMRI. If you need it for non-JMRI code,
+      download it and any dependencies it may have separately.</p>
 
       <h2><a id="testScriptCode" name="testScriptCode"></a>Testing
       Script Code</h2>JMRI ships with sample scripts. This section

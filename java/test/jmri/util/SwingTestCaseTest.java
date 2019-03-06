@@ -8,11 +8,12 @@ import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
-import junit.extensions.jfcunit.eventdata.MouseEventData;
-import junit.extensions.jfcunit.finder.NamedComponentFinder;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.junit.Assert;
+import org.netbeans.jemmy.QueueTool;
+import org.netbeans.jemmy.operators.JCheckBoxOperator;
+import org.netbeans.jemmy.util.NameComponentChooser;
 
 /**
  * Tests for the jmri.util.SwingTestCase class.
@@ -38,13 +39,12 @@ public class SwingTestCaseTest extends SwingTestCase {
         f.setVisible(true);
 
         // find the check box and confirm not yet checked
-        NamedComponentFinder finder = new NamedComponentFinder(JCheckBox.class, "Check");
-        JCheckBox testBox = (JCheckBox) finder.find(f, 0);
+        JCheckBox testBox = JCheckBoxOperator.findJCheckBox(f, new NameComponentChooser("Check"));
         Assert.assertNotNull(testBox);
         Assert.assertTrue(!testBox.isSelected());
 
         // set the check in the box by clicking it
-        getHelper().enterClickAndLeave(new MouseEventData(this, testBox));
+        new JCheckBoxOperator(testBox).doClick();
 
         // test for selected
         Assert.assertTrue(testBox.isSelected());
@@ -80,7 +80,7 @@ public class SwingTestCaseTest extends SwingTestCase {
 
         f.add(wIcon);
         f.pack();
-        flushAWT();
+        new QueueTool().waitEmpty();
         Assert.assertEquals("icon size", new Dimension(39, 13).toString(), wIcon.getSize().toString());
 
         int[] val = getDisplayedContent(wIcon, wIcon.getSize(), new Point(0, 0));
@@ -108,7 +108,7 @@ public class SwingTestCaseTest extends SwingTestCase {
         JLabel wIcon = new JLabel(new ImageIcon("resources/icons/greenSquare.gif")); // 13x13
         f.add(wIcon);
         f.pack();
-        flushAWT();
+        new QueueTool().waitEmpty();
 
         Assert.assertEquals("icon size", new Dimension(13, 13).toString(), wIcon.getSize().toString());
 
@@ -147,7 +147,7 @@ public class SwingTestCaseTest extends SwingTestCase {
 
         f.add(wIcon);
         f.pack();
-        flushAWT();
+        new QueueTool().waitEmpty();
         Assert.assertEquals("icon size", new Dimension(13, 13).toString(), wIcon.getSize().toString());
 
         int[] val = getDisplayedContent(wIcon, wIcon.getSize(), new Point(0, 0));
@@ -181,7 +181,7 @@ public class SwingTestCaseTest extends SwingTestCase {
 
         f.add(wIcon);
         f.pack();
-        flushAWT();
+        new QueueTool().waitEmpty();
         Assert.assertEquals("icon", new Dimension(13, 13).toString(), wIcon.getSize().toString());
 
         int[] val = getDisplayedContent(wIcon, wIcon.getSize(), new Point(0, 0));

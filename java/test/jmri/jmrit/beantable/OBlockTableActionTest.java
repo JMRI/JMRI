@@ -7,6 +7,7 @@ import jmri.util.ThreadingUtil;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import org.junit.Assert;
+import org.netbeans.jemmy.QueueTool;
 
 /**
  * Swing jfcUnit tests for the OBlock table
@@ -27,7 +28,7 @@ public class OBlockTableActionTest extends jmri.util.SwingTestCase {
         // Find new table window by name
         JmriJFrame doc = JmriJFrame.getFrame(jmri.jmrit.beantable.oblock.Bundle.getMessage("TitleOBlocks"));
         Assert.assertNotNull("Occupancy window", doc);
-        flushAWT();
+        new QueueTool().waitEmpty();
 
         javax.swing.JDesktopPane dt = (javax.swing.JDesktopPane) doc.getContentPane();
         javax.swing.JInternalFrame[] fob = dt.getAllFrames();
@@ -35,7 +36,7 @@ public class OBlockTableActionTest extends jmri.util.SwingTestCase {
         System.out.println();
 
         Assert.assertEquals(4, fob.length);
-        flushAWT();
+        new QueueTool().waitEmpty();
         // Ask to close add window
         ThreadingUtil.runOnGUI(() -> {
             JUnitUtil.dispose(doc);

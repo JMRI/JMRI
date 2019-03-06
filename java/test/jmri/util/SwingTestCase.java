@@ -4,10 +4,11 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
-import junit.extensions.jfcunit.JFCTestCase;
-import junit.extensions.jfcunit.JFCTestHelper;
-import junit.extensions.jfcunit.TestHelper;
+
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.netbeans.jemmy.QueueTool;
 
 /**
  * Provide Swing context for JUnit test classes.
@@ -18,11 +19,10 @@ import org.junit.Assert;
  * @author Bob Jacobsen - Copyright 2009
  * @since 2.5.3
  */
-public class SwingTestCase extends JFCTestCase {
+public class SwingTestCase {
 
     public SwingTestCase(String s) {
-        super(s);
-        setLockWait(10); // getLockWait() found default value 25 in JMRI 4.3.4
+        // nothing to do
     }
 
     /**
@@ -126,34 +126,12 @@ public class SwingTestCase extends JFCTestCase {
         assertPixel(name + " center", center, pixels[(rows / 2) * cols + cols / 2]);
     }
 
-    /**
-     * Provides a (slightly) better calibrated waiting interval than a native
-     * awtSleep()
-     */
-    public void waitAtLeast(int delay) {
-        long start = System.currentTimeMillis();
-        while (System.currentTimeMillis() < start + delay) {
-            awtSleep(20); // this is completely uncalibrated
-        }
-    }
-
-    @Override
+    @Before
     protected void setUp() throws Exception {
-        super.setUp();
-        // Choose the test Helper
-        setHelper(new JFCTestHelper()); // Uses the AWT Event Queue.
-        // setHelper( new RobotTestHelper( ) ); // Uses the OS Event Queue.
     }
 
-    protected void leaveAllWindowsOpen()  throws org.apache.regexp.RESyntaxException {
-        TestHelper.addSystemWindow(".");  // all windows left open
-    }
-
-    @Override
+    @After
     protected void tearDown() throws Exception {
-        leaveAllWindowsOpen();
-        TestHelper.cleanUp(this);
-        super.tearDown();
     }
 
 }
