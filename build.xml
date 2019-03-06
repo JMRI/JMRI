@@ -363,6 +363,9 @@
         <exclude name="jmri/server/json/signalMast/JsonSignalMast.class" />
         <!-- Exclude deprecated classes. -->
         <exclude name="jmri/jmrix/loconet/AbstractAlmImplementation.class" />
+        <!-- Exclude files meant to check SpotBugs. -->
+        <exclude name="apps/FindBugsCheck.class" />
+        <exclude name="apps/CheckerFrameworkCheck.class" />
     </fileset>
 
 
