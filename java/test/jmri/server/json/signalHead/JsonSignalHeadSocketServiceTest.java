@@ -26,7 +26,7 @@ public class JsonSignalHeadSocketServiceTest {
     @Test
     public void testSignalHeadChange() {
         try {
-            //create a signalhead for testing
+            //create a signal head for testing
             String sysName = "IH1";
             String userName = "SH1";
             SignalHead s = new jmri.implementation.VirtualSignalHead(sysName, userName);
@@ -39,21 +39,27 @@ public class JsonSignalHeadSocketServiceTest {
             service.onMessage(JsonSignalHead.SIGNAL_HEAD, message, JSON.POST, Locale.ENGLISH);
 
             //signalhead defaults to Dark
-            Assert.assertEquals(SignalHead.DARK, connection.getMessage().path(JSON.DATA).path(JSON.STATE).asInt());
+            message = connection.getMessage();
+            Assert.assertNotNull(message);
+            Assert.assertEquals(SignalHead.DARK, message.path(JSON.DATA).path(JSON.STATE).asInt());
 
             //change to Green, and wait for change to show up, then verify
             s.setAppearance(SignalHead.GREEN);
             JUnitUtil.waitFor(() -> {
                 return s.getState() == SignalHead.GREEN;
             }, "SignalHead is now GREEN");
-            Assert.assertEquals(SignalHead.GREEN, connection.getMessage().path(JSON.DATA).path(JSON.STATE).asInt());
+            message = connection.getMessage();
+            Assert.assertNotNull(message);
+            Assert.assertEquals(SignalHead.GREEN, message.path(JSON.DATA).path(JSON.STATE).asInt());
 
             //change to Red, and wait for change to show up, then verify
             s.setAppearance(SignalHead.RED);
             JUnitUtil.waitFor(() -> {
                 return s.getState() == SignalHead.RED;
             }, "SignalHead is now RED");
-            Assert.assertEquals(SignalHead.RED, connection.getMessage().path(JSON.DATA).path(JSON.STATE).asInt());
+            message = connection.getMessage();
+            Assert.assertNotNull(message);
+            Assert.assertEquals(SignalHead.RED, message.path(JSON.DATA).path(JSON.STATE).asInt());
 
             service.onClose();
 

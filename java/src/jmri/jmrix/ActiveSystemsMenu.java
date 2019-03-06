@@ -64,8 +64,8 @@ public class ActiveSystemsMenu extends JMenu {
 
     static JMenu getMenu(String className) {
         try {
-            return (JMenu) Class.forName(className).newInstance();
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+            return (JMenu) Class.forName(className).getDeclaredConstructor().newInstance();
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | NoSuchMethodException | java.lang.reflect.InvocationTargetException e) {
             log.error("Could not load class {}", className, e);
             return null;
         }

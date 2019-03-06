@@ -471,12 +471,12 @@
           executable, such as:</p>
 
           <p style="font-family: monospace">
-              spotbugs.home=C:/spotbugs-3.1.1</p>
+              spotbugs.home=C:/spotbugs-3.1.1/</p>
 
           <p>or</p>
 
           <p style="font-family: monospace">
-              spotbugs.home=/opt/spotbugs-3.1.1</p>
+              spotbugs.home=/opt/spotbugs-3.1.1/</p>
 
           <p>To run the SpotBugs tool on JMRI code, execute the ant
               target "spotbugs" which is defined in build.xml. Within

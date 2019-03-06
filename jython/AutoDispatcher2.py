@@ -5619,7 +5619,7 @@ class ADsignalHead :
         self.signalHead = None
         self.iconOnLayout = False
         if signalName.strip() != "" :
-            self.signalHead = InstanceManager.signalHeadManagerInstance().getSignalHead(signalName)
+            self.signalHead = InstanceManager.getDefault(SignalHeadManager).getSignalHead(signalName)
             if self.signalHead != None :
                 self.setHeld(False)
                 self.iconOnLayout = signalName in AutoDispatcher.signalIcons
