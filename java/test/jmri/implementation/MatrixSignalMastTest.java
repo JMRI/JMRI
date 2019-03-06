@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Tests for the MatrixSignalMast implementation.
  *
- * @author	Egbert Broerse Copyright (C) 2016
+ * @author	Egbert Broerse Copyright (C) 2016, 2019
  */
 public class MatrixSignalMastTest {
 
@@ -131,7 +131,7 @@ public class MatrixSignalMastTest {
         InstanceManager.turnoutManagerInstance().setOutputInterval(0); // default outputInterval = 250, set to 0 to speed up test
         m.setAspect("Clear");
         Assert.assertEquals("check clear", "Clear", m.getAspect());
-        JUnitUtil.waitFor(250); // next test fails on Travis and Appveyor servers without waitFor
+        JUnitUtil.waitFor(250); // next test fails on Travis and Appveyor servers without the waitFor(250) statement
         Assert.assertEquals("it11 for Clear", Turnout.CLOSED, it11.getCommandedState());
         // mast delay + interval = 0 but it12 state is fragile (expected state on it12 happens to be identical to it11)
 //        m.setAspect("Stop"); // removed test since it will take too long as part of alltest
