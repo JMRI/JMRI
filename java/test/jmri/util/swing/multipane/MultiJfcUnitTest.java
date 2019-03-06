@@ -4,6 +4,7 @@ import java.awt.GraphicsEnvironment;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import jmri.util.JUnitUtil;
+import jmri.util.SwingTestCase;
 import jmri.util.swing.SamplePane;
 
 import org.junit.After;
