@@ -1013,8 +1013,11 @@ public class LevelXing extends LayoutTrack {
             lb = p.provideLayoutBlock(tLayoutBlockNameAC);
             if (lb != null) {
                 namedLayoutBlockAC = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(lb.getUserName(), lb);
-                lb.incrementUse();
+                if (namedLayoutBlockBD != namedLayoutBlockAC) {
+                    lb.incrementUse();
+                }
             } else {
+                log.error("bad blocknamebd '" + tLayoutBlockNameAC + "' in levelxing " + getName());
                 namedLayoutBlockAC = null;
             }
             tLayoutBlockNameAC = null; //release this memory
@@ -1028,6 +1031,7 @@ public class LevelXing extends LayoutTrack {
                     lb.incrementUse();
                 }
             } else {
+                log.error("bad blocknamebd '" + tLayoutBlockNameBD + "' in levelxing " + getName());
                 namedLayoutBlockBD = null;
             }
             tLayoutBlockNameBD = null; //release this memory

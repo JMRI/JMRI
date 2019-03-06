@@ -548,7 +548,7 @@ public class TrackSegment extends LayoutTrack {
     }
 
     public void setLayoutBlockByName(@Nullable String name) {
-        if ((name != null) && !name.isEmpty())  {
+        if ((name != null) && !name.isEmpty()) {
             LayoutBlock b = layoutEditor.provideLayoutBlock(name);
             namedLayoutBlock = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(b.getUserName(), b);
         } else {
@@ -606,7 +606,6 @@ public class TrackSegment extends LayoutTrack {
     }
 
     // initialization instance variables (used when loading a LayoutEditor)
-    //public String tBlockName = "";
     public String tConnect1Name = "";
     public String tConnect2Name = "";
 
@@ -623,13 +622,14 @@ public class TrackSegment extends LayoutTrack {
     @Override
     public void setObjects(LayoutEditor p) {
 
-                LayoutBlock lb;
+        LayoutBlock lb;
         if (!tLayoutBlockName.isEmpty()) {
             lb = p.provideLayoutBlock(tLayoutBlockName);
             if (lb != null) {
                 namedLayoutBlock = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(lb.getUserName(), lb);
                 lb.incrementUse();
             } else {
+                log.error("bad blockname '" + tLayoutBlockName + "' in tracksegment " + getName());
                 namedLayoutBlock = null;
             }
             tLayoutBlockName = null; //release this memory
@@ -3736,9 +3736,6 @@ public class TrackSegment extends LayoutTrack {
                 if (type2 <= TURNOUT_D) {
                     // have connection to a turnout
                     LayoutTurnout lt = (LayoutTurnout) getConnect2();
-                    if (lt == null) {
-                        log.warn("error!");
-                    }
                     lb2 = lt.getLayoutBlock();
                     if (lt.getTurnoutType() > LayoutTurnout.WYE_TURNOUT) {
                         // not RH, LH, or WYE turnout - other blocks possible

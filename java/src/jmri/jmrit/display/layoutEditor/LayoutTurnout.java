@@ -89,10 +89,10 @@ import org.slf4j.LoggerFactory;
  * literal}
  * <P>
  * A LayoutTurnout carries Block information. For right-handed, left-handed, and
- * wye turnouts, the entire turnout is in one blockA, however, a blockA border
- * may occur at any connection (A,B,C,D). For a double crossover turnout, up to
- * four blocks may be assigned, one for each connection point, but if only one
- * blockA is assigned, that blockA applies to the entire turnout.
+ * wye turnouts, the entire turnout is in one block, however, a block border may
+ * occur at any connection (A,B,C,D). For a double crossover turnout, up to four
+ * blocks may be assigned, one for each connection point, but if only one block
+ * is assigned, that block applies to the entire turnout.
  * <P>
  * For drawing purposes, each LayoutTurnout carries a center point and
  * displacements for B and C. For right-handed or left-handed turnouts, the
@@ -186,9 +186,9 @@ public class LayoutTurnout extends LayoutTrack {
 
     // default is package protected
     protected NamedBeanHandle<LayoutBlock> namedLayoutBlockA = null;
-    protected NamedBeanHandle<LayoutBlock> namedLayoutBlockB = null;  // Xover - second blockA, if there is one
-    protected NamedBeanHandle<LayoutBlock> namedLayoutBlockC = null;  // Xover - third blockA, if there is one
-    protected NamedBeanHandle<LayoutBlock> namedLayoutBlockD = null;  // Xover - forth blockA, if there is one
+    protected NamedBeanHandle<LayoutBlock> namedLayoutBlockB = null;  // Xover - second block, if there is one
+    protected NamedBeanHandle<LayoutBlock> namedLayoutBlockC = null;  // Xover - third block, if there is one
+    protected NamedBeanHandle<LayoutBlock> namedLayoutBlockD = null;  // Xover - forth block, if there is one
 
     protected NamedBeanHandle<SignalHead> signalA1HeadNamed = null; // signal 1 (continuing) (throat for RH, LH, WYE)
     protected NamedBeanHandle<SignalHead> signalA2HeadNamed = null; // signal 2 (diverging) (throat for RH, LH, WYE)
@@ -2410,6 +2410,7 @@ public class LayoutTurnout extends LayoutTrack {
                 namedLayoutBlockA = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(lb.getUserName(), lb);
                 lb.incrementUse();
             } else {
+                log.error("bad blockname '" + tBlockAName + "' in layoutturnout " + getId());
                 namedLayoutBlockA = null;
             }
             tBlockAName = null; //release this memory
@@ -2423,6 +2424,7 @@ public class LayoutTurnout extends LayoutTrack {
                     lb.incrementUse();
                 }
             } else {
+                log.error("bad blockname '" + tBlockBName + "' in layoutturnout " + getId());
                 namedLayoutBlockB = null;
             }
             tBlockBName = null; //release this memory
@@ -2437,6 +2439,7 @@ public class LayoutTurnout extends LayoutTrack {
                     lb.incrementUse();
                 }
             } else {
+                log.error("bad blockname '" + tBlockCName + "' in layoutturnout " + getId());
                 namedLayoutBlockC = null;
             }
             tBlockCName = null; //release this memory
@@ -2452,6 +2455,7 @@ public class LayoutTurnout extends LayoutTrack {
                     lb.incrementUse();
                 }
             } else {
+                log.error("bad blockname '" + tBlockDName + "' in layoutturnout " + getId());
                 namedLayoutBlockD = null;
             }
             tBlockDName = null; //release this memory
@@ -2519,14 +2523,12 @@ public class LayoutTurnout extends LayoutTrack {
             }
             jmi.setEnabled(false);
 
-            int block_count = 0;
             if (getBlockName().isEmpty()) {
                 jmi = popup.add(Bundle.getMessage("NoBlock"));
                 jmi.setEnabled(false);
             } else {
                 jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameBlock")) + getLayoutBlock().getDisplayName());
                 jmi.setEnabled(false);
-                block_count++;  // bump blockA count
                 if ((getTurnoutType() == DOUBLE_XOVER)
                         || (getTurnoutType() == RH_XOVER)
                         || (getTurnoutType() == LH_XOVER)) {
@@ -2534,22 +2536,15 @@ public class LayoutTurnout extends LayoutTrack {
                     if ((getLayoutBlockB() != null) && (getLayoutBlockB() != getLayoutBlock())) {
                         jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("Block_ID", "B")) + getLayoutBlockB().getDisplayName());
                         jmi.setEnabled(false);
-                        block_count++;  // bump blockA count
                     }
                     if ((getLayoutBlockC() != null) && (getLayoutBlockC() != getLayoutBlock())) {
                         jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("Block_ID", "C")) + getLayoutBlockC().getDisplayName());
                         jmi.setEnabled(false);
-                        block_count++;  // bump blockA count
                     }
                     if ((getLayoutBlockD() != null) && (getLayoutBlockD() != getLayoutBlock())) {
                         jmi = popup.add(Bundle.getMessage("MakeLabel", Bundle.getMessage("Block_ID", "D")) + getLayoutBlockD().getDisplayName());
                         jmi.setEnabled(false);
-                        block_count++;  // bump blockA count
                     }
-                }
-                if (block_count == 0) {
-                    jmi = popup.add(Bundle.getMessage("NoBlock"));
-                    jmi.setEnabled(false);
                 }
             }
 
@@ -2831,7 +2826,7 @@ public class LayoutTurnout extends LayoutTrack {
                         try {
                             boundaryBetween[0] = (aLBlock.getDisplayName() + " - " + getLayoutBlock().getDisplayName());
                         } catch (java.lang.NullPointerException e) {
-                            //Can be considered normal if tracksegement hasn't yet been allocated a blockA
+                            //Can be considered normal if tracksegement hasn't yet been allocated a block
                             log.debug("TrackSegement at connection A doesn't contain a layout block");
                         }
                     }
@@ -2844,7 +2839,7 @@ public class LayoutTurnout extends LayoutTrack {
                         try {
                             boundaryBetween[1] = (bLBlock.getDisplayName() + " - " + getLayoutBlock().getDisplayName());
                         } catch (java.lang.NullPointerException e) {
-                            //Can be considered normal if tracksegement hasn't yet been allocated a blockA
+                            //Can be considered normal if tracksegement hasn't yet been allocated a block
                             log.debug("TrackSegement at connection B doesn't contain a layout block");
                         }
                     }
@@ -2858,7 +2853,7 @@ public class LayoutTurnout extends LayoutTrack {
                         try {
                             boundaryBetween[2] = (cLBlock.getDisplayName() + " - " + getLayoutBlock().getDisplayName());
                         } catch (java.lang.NullPointerException e) {
-                            //Can be considered normal if tracksegement hasn't yet been allocated a blockA
+                            //Can be considered normal if tracksegement hasn't yet been allocated a block
                             log.debug("TrackSegement at connection C doesn't contain a layout block");
                         }
                     }
@@ -2876,14 +2871,14 @@ public class LayoutTurnout extends LayoutTrack {
                         try {
                             boundaryBetween[0] = (aLBlock.getDisplayName() + " - " + getLayoutBlock().getDisplayName());
                         } catch (java.lang.NullPointerException e) {
-                            //Can be considered normal if tracksegement hasn't yet been allocated a blockA
+                            //Can be considered normal if tracksegement hasn't yet been allocated a block
                             log.debug("TrackSegement at connection A doesn't contain a layout block");
                         }
                     } else if (getLayoutBlock() != getLayoutBlockB()) {
                         try {
                             boundaryBetween[0] = (getLayoutBlock().getDisplayName() + " - " + getLayoutBlockB().getDisplayName());
                         } catch (java.lang.NullPointerException e) {
-                            //Can be considered normal if tracksegement hasn't yet been allocated a blockA
+                            //Can be considered normal if tracksegement hasn't yet been allocated a block
                             log.debug("TrackSegement at connection A doesn't contain a layout block");
                         }
                     }
@@ -2896,15 +2891,15 @@ public class LayoutTurnout extends LayoutTrack {
                         try {
                             boundaryBetween[1] = (bLBlock.getDisplayName() + " - " + getLayoutBlockB().getDisplayName());
                         } catch (java.lang.NullPointerException e) {
-                            //Can be considered normal if tracksegement hasn't yet been allocated a blockA
+                            //Can be considered normal if tracksegement hasn't yet been allocated a block
                             log.debug("TrackSegement at connection B doesn't contain a layout block");
                         }
                     } else if (getLayoutBlock() != getLayoutBlockB()) {
-                        //This is an interal blockA on the turnout
+                        //This is an interal block on the turnout
                         try {
                             boundaryBetween[1] = (getLayoutBlockB().getDisplayName() + " - " + getLayoutBlock().getDisplayName());
                         } catch (java.lang.NullPointerException e) {
-                            //Can be considered normal if tracksegement hasn't yet been allocated a blockA
+                            //Can be considered normal if tracksegement hasn't yet been allocated a block
                             log.debug("TrackSegement at connection A doesn't contain a layout block");
                         }
                     }
@@ -2916,15 +2911,15 @@ public class LayoutTurnout extends LayoutTrack {
                         try {
                             boundaryBetween[2] = (cLBlock.getDisplayName() + " - " + getLayoutBlockC().getDisplayName());
                         } catch (java.lang.NullPointerException e) {
-                            //Can be considered normal if tracksegement hasn't yet been allocated a blockA
+                            //Can be considered normal if tracksegement hasn't yet been allocated a block
                             log.debug("TrackSegement at connection C doesn't contain a layout block");
                         }
                     } else if (getLayoutBlockC() != getLayoutBlockD()) {
-                        //This is an interal blockA on the turnout
+                        //This is an interal block on the turnout
                         try {
                             boundaryBetween[2] = (getLayoutBlockC().getDisplayName() + " - " + getLayoutBlockD().getDisplayName());
                         } catch (java.lang.NullPointerException e) {
-                            //Can be considered normal if tracksegement hasn't yet been allocated a blockA
+                            //Can be considered normal if tracksegement hasn't yet been allocated a block
                             log.debug("TrackSegement at connection A doesn't contain a layout block");
                         }
                     }
@@ -2936,15 +2931,15 @@ public class LayoutTurnout extends LayoutTrack {
                         try {
                             boundaryBetween[3] = (dLBlock.getDisplayName() + " - " + getLayoutBlockD().getDisplayName());
                         } catch (java.lang.NullPointerException e) {
-                            //Can be considered normal if tracksegement hasn't yet been allocated a blockA
+                            //Can be considered normal if tracksegement hasn't yet been allocated a block
                             log.debug("TrackSegement at connection C doesn't contain a layout block");
                         }
                     } else if (getLayoutBlockC() != getLayoutBlockD()) {
-                        //This is an interal blockA on the turnout
+                        //This is an interal block on the turnout
                         try {
                             boundaryBetween[3] = (getLayoutBlockD().getDisplayName() + " - " + getLayoutBlockC().getDisplayName());
                         } catch (java.lang.NullPointerException e) {
-                            //Can be considered normal if tracksegement hasn't yet been allocated a blockA
+                            //Can be considered normal if tracksegement hasn't yet been allocated a block
                             log.debug("TrackSegement at connection A doesn't contain a layout block");
                         }
                     }
@@ -3057,7 +3052,7 @@ public class LayoutTurnout extends LayoutTrack {
             if (connectA != null) {
                 if (getSignalAMast() == bean || getSensorA() == bean) {
                     //Mast at throat
-                    //if the turnout is in the same blockA as the segment connected at the throat, then we can be protecting two blocks
+                    //if the turnout is in the same block as the segment connected at the throat, then we can be protecting two blocks
                     if (((TrackSegment) connectA).getLayoutBlock() == getLayoutBlock()) {
                         if (connectB != null && connectC != null) {
                             if (((TrackSegment) connectB).getLayoutBlock() != getLayoutBlock()
@@ -3176,7 +3171,7 @@ public class LayoutTurnout extends LayoutTrack {
     @Override
     protected void draw1(Graphics2D g2, boolean isMain, boolean isBlock) {
         if (isBlock && getLayoutBlock() == null) {
-            // Skip the blockA layer if there is no blockA assigned.
+            // Skip the block layer if there is no block assigned.
             return;
         }
 
@@ -3194,7 +3189,7 @@ public class LayoutTurnout extends LayoutTrack {
 
         Color color = g2.getColor();
 
-        // if this isn't a blockA line all these will be the same color
+        // if this isn't a block line all these will be the same color
         Color colorA = color;
         Color colorB = color;
         Color colorC = color;
@@ -4534,11 +4529,11 @@ public class LayoutTurnout extends LayoutTrack {
 
         LayoutBlock lbA = getLayoutBlock(), lbB = getLayoutBlockB(), lbC = getLayoutBlockC(), lbD = getLayoutBlockD();
         if ((getTurnoutType() >= LayoutTurnout.DOUBLE_XOVER) && (lbA != null)) {
-            // have a crossover turnout with at least one blockA, check for multiple blocks
+            // have a crossover turnout with at least one block, check for multiple blocks
             if ((lbA != lbB) || (lbA != lbC) || (lbA != lbD)) {
-                // have multiple blocks and therefore internal blockA boundaries
+                // have multiple blocks and therefore internal block boundaries
                 if (lbA != lbB) {
-                    // have a AB blockA boundary, create a LayoutConnectivity
+                    // have a AB block boundary, create a LayoutConnectivity
                     log.debug("Block boundary  ('{}'<->'{}') found at {}", lbA, lbB, this);
                     lc = new LayoutConnectivity(lbA, lbB);
                     lc.setXoverBoundary(this, LayoutConnectivity.XOVER_BOUNDARY_AB);
@@ -4546,7 +4541,7 @@ public class LayoutTurnout extends LayoutTrack {
                     results.add(lc);
                 }
                 if ((getTurnoutType() != LayoutTurnout.LH_XOVER) && (lbA != lbC)) {
-                    // have a AC blockA boundary, create a LayoutConnectivity
+                    // have a AC block boundary, create a LayoutConnectivity
                     log.debug("Block boundary  ('{}'<->'{}') found at {}", lbA, lbC, this);
                     lc = new LayoutConnectivity(lbA, lbC);
                     lc.setXoverBoundary(this, LayoutConnectivity.XOVER_BOUNDARY_AC);
@@ -4554,7 +4549,7 @@ public class LayoutTurnout extends LayoutTrack {
                     results.add(lc);
                 }
                 if (lbC != lbD) {
-                    // have a CD blockA boundary, create a LayoutConnectivity
+                    // have a CD block boundary, create a LayoutConnectivity
                     log.debug("Block boundary  ('{}'<->'{}') found at {}", lbC, lbD, this);
                     lc = new LayoutConnectivity(lbC, lbD);
                     lc.setXoverBoundary(this, LayoutConnectivity.XOVER_BOUNDARY_CD);
@@ -4562,7 +4557,7 @@ public class LayoutTurnout extends LayoutTrack {
                     results.add(lc);
                 }
                 if ((getTurnoutType() != LayoutTurnout.RH_XOVER) && (lbB != lbD)) {
-                    // have a BD blockA boundary, create a LayoutConnectivity
+                    // have a BD block boundary, create a LayoutConnectivity
                     log.debug("Block boundary  ('{}'<->'{}') found at {}", lbB, lbD, this);
                     lc = new LayoutConnectivity(lbB, lbD);
                     lc.setXoverBoundary(this, LayoutConnectivity.XOVER_BOUNDARY_BD);
@@ -4612,8 +4607,8 @@ public class LayoutTurnout extends LayoutTrack {
      */
     @Override
     public boolean checkForUnAssignedBlocks() {
-        // because getLayoutBlock[BCD] will return blockA [A] if they're null
-        // we only need to test blockA [A]
+        // because getLayoutBlock[BCD] will return block [A] if they're null
+        // we only need to test block [A]
         return (getLayoutBlock() != null);
     }
 
@@ -4626,13 +4621,13 @@ public class LayoutTurnout extends LayoutTrack {
         /*
          * For each (non-null) blocks of this track do:
          * #1) If it's got an entry in the blockNamesToTrackNameSetMap then
-         * #2) If this track is already in the TrackNameSet for this blockA
+         * #2) If this track is already in the TrackNameSet for this block
          *     then return (done!)
-         * #3) else add a new set (with this blockA/track) to
+         * #3) else add a new set (with this block/track) to
          *     blockNamesToTrackNameSetMap and check all the connections in this
-         *     blockA (by calling the 2nd method below)
+         *     block (by calling the 2nd method below)
          * <p>
-         *     Basically, we're maintaining contiguous track sets for each blockA found
+         *     Basically, we're maintaining contiguous track sets for each block found
          *     (in blockNamesToTrackNameSetMap)
          */
 
