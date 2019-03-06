@@ -15,6 +15,7 @@
 
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmptyPanes="no" >
     <version author="Petr Šídlo sidlo64@hotmail.com" version="1" lastUpdated="20181201"/>
+    <version author="Petr Šídlo sidlo64@hotmail.com" version="2" lastUpdated="20190220"/>
     <!-- Accessory decoder  -->
     <!-- Description of circuit diagram https://sites.google.com/site/sidloweb/elektrika/22-uni16ard -->
     <!-- Program description https://sites.google.com/site/sidloweb/elektrika/29-ard-scom-mx -->
@@ -5032,7 +5033,7 @@
             </label>
             <label>
                 <text>8 – Call-on</text>
-                <text xml:lang="cs">6 – Opatrně na přivolávací návěst</text>
+                <text xml:lang="cs">8 – Opatrně na přivolávací návěst</text>
             </label>
             <label>
                 <text>9 – Shunting allowed</text>
@@ -5051,8 +5052,8 @@
                 <text xml:lang="cs">12 – Opakovaná výstraha</text>
             </label>
             <label>
-                <text>13 – ××××× switch off</text>
-                <text xml:lang="cs">13 – ××××× vypnuto</text>
+                <text>13 – Unlit</text>
+                <text xml:lang="cs">13 – Zhasnuto</text>
             </label>
             <label>
                 <text>14 – Repeated preparing to 40</text>
@@ -6068,7 +6069,7 @@
             </label>
             <label>
                 <text>8 – Call-on</text>
-                <text xml:lang="cs">6 – Opatrně na přivolávací návěst</text>
+                <text xml:lang="cs">8 – Opatrně na přivolávací návěst</text>
             </label>
             <label>
                 <text>9 – Shunting allowed</text>
@@ -6087,8 +6088,8 @@
                 <text xml:lang="cs">12 – Opakovaná výstraha</text>
             </label>
             <label>
-                <text>13 – ××××× switch off</text>
-                <text xml:lang="cs">13 – ××××× vypnuto</text>
+                <text>13 – Unlit</text>
+                <text xml:lang="cs">13 – Zhasnuto</text>
             </label>
             <label>
                 <text>14 – Repeated preparing to 40</text>
@@ -7104,7 +7105,7 @@
             </label>
             <label>
                 <text>8 – Call-on</text>
-                <text xml:lang="cs">6 – Opatrně na přivolávací návěst</text>
+                <text xml:lang="cs">8 – Opatrně na přivolávací návěst</text>
             </label>
             <label>
                 <text>9 – Shunting allowed</text>
@@ -7123,8 +7124,8 @@
                 <text xml:lang="cs">12 – Opakovaná výstraha</text>
             </label>
             <label>
-                <text>13 – ××××× switch off</text>
-                <text xml:lang="cs">13 – ××××× vypnuto</text>
+                <text>13 – Unlit</text>
+                <text xml:lang="cs">13 – Zhasnuto</text>
             </label>
             <label>
                 <text>14 – Repeated preparing to 40</text>
@@ -8140,7 +8141,7 @@
             </label>
             <label>
                 <text>8 – Call-on</text>
-                <text xml:lang="cs">6 – Opatrně na přivolávací návěst</text>
+                <text xml:lang="cs">8 – Opatrně na přivolávací návěst</text>
             </label>
             <label>
                 <text>9 – Shunting allowed</text>
@@ -8159,8 +8160,8 @@
                 <text xml:lang="cs">12 – Opakovaná výstraha</text>
             </label>
             <label>
-                <text>13 – ××××× switch off</text>
-                <text xml:lang="cs">13 – ××××× vypnuto</text>
+                <text>13 – Unlit</text>
+                <text xml:lang="cs">13 – Zhasnuto</text>
             </label>
             <label>
                 <text>14 – Repeated preparing to 40</text>
@@ -9176,7 +9177,7 @@
             </label>
             <label>
                 <text>8 – Call-on</text>
-                <text xml:lang="cs">6 – Opatrně na přivolávací návěst</text>
+                <text xml:lang="cs">8 – Opatrně na přivolávací návěst</text>
             </label>
             <label>
                 <text>9 – Shunting allowed</text>
@@ -9195,8 +9196,8 @@
                 <text xml:lang="cs">12 – Opakovaná výstraha</text>
             </label>
             <label>
-                <text>13 – ××××× switch off</text>
-                <text xml:lang="cs">13 – ××××× vypnuto</text>
+                <text>13 – Unlit</text>
+                <text xml:lang="cs">13 – Zhasnuto</text>
             </label>
             <label>
                 <text>14 – Repeated preparing to 40</text>
@@ -10212,7 +10213,7 @@
             </label>
             <label>
                 <text>8 – Call-on</text>
-                <text xml:lang="cs">6 – Opatrně na přivolávací návěst</text>
+                <text xml:lang="cs">8 – Opatrně na přivolávací návěst</text>
             </label>
             <label>
                 <text>9 – Shunting allowed</text>
@@ -10231,8 +10232,8 @@
                 <text xml:lang="cs">12 – Opakovaná výstraha</text>
             </label>
             <label>
-                <text>13 – ××××× switch off</text>
-                <text xml:lang="cs">13 – ××××× vypnuto</text>
+                <text>13 – Unlit</text>
+                <text xml:lang="cs">13 – Zhasnuto</text>
             </label>
             <label>
                 <text>14 – Repeated preparing to 40</text>
@@ -11248,7 +11249,7 @@
             </label>
             <label>
                 <text>8 – Call-on</text>
-                <text xml:lang="cs">6 – Opatrně na přivolávací návěst</text>
+                <text xml:lang="cs">8 – Opatrně na přivolávací návěst</text>
             </label>
             <label>
                 <text>9 – Shunting allowed</text>
@@ -11267,8 +11268,8 @@
                 <text xml:lang="cs">12 – Opakovaná výstraha</text>
             </label>
             <label>
-                <text>13 – ××××× switch off</text>
-                <text xml:lang="cs">13 – ××××× vypnuto</text>
+                <text>13 – Unlit</text>
+                <text xml:lang="cs">13 – Zhasnuto</text>
             </label>
             <label>
                 <text>14 – Repeated preparing to 40</text>
@@ -12284,7 +12285,7 @@
             </label>
             <label>
                 <text>8 – Call-on</text>
-                <text xml:lang="cs">6 – Opatrně na přivolávací návěst</text>
+                <text xml:lang="cs">8 – Opatrně na přivolávací návěst</text>
             </label>
             <label>
                 <text>9 – Shunting allowed</text>
@@ -12303,8 +12304,8 @@
                 <text xml:lang="cs">12 – Opakovaná výstraha</text>
             </label>
             <label>
-                <text>13 – ××××× switch off</text>
-                <text xml:lang="cs">13 – ××××× vypnuto</text>
+                <text>13 – Unlit</text>
+                <text xml:lang="cs">13 – Zhasnuto</text>
             </label>
             <label>
                 <text>14 – Repeated preparing to 40</text>
@@ -13320,7 +13321,7 @@
             </label>
             <label>
                 <text>8 – Call-on</text>
-                <text xml:lang="cs">6 – Opatrně na přivolávací návěst</text>
+                <text xml:lang="cs">8 – Opatrně na přivolávací návěst</text>
             </label>
             <label>
                 <text>9 – Shunting allowed</text>
@@ -13339,8 +13340,8 @@
                 <text xml:lang="cs">12 – Opakovaná výstraha</text>
             </label>
             <label>
-                <text>13 – ××××× switch off</text>
-                <text xml:lang="cs">13 – ××××× vypnuto</text>
+                <text>13 – Unlit</text>
+                <text xml:lang="cs">13 – Zhasnuto</text>
             </label>
             <label>
                 <text>14 – Repeated preparing to 40</text>
@@ -14356,7 +14357,7 @@
             </label>
             <label>
                 <text>8 – Call-on</text>
-                <text xml:lang="cs">6 – Opatrně na přivolávací návěst</text>
+                <text xml:lang="cs">8 – Opatrně na přivolávací návěst</text>
             </label>
             <label>
                 <text>9 – Shunting allowed</text>
@@ -14375,8 +14376,8 @@
                 <text xml:lang="cs">12 – Opakovaná výstraha</text>
             </label>
             <label>
-                <text>13 – ××××× switch off</text>
-                <text xml:lang="cs">13 – ××××× vypnuto</text>
+                <text>13 – Unlit</text>
+                <text xml:lang="cs">13 – Zhasnuto</text>
             </label>
             <label>
                 <text>14 – Repeated preparing to 40</text>
@@ -15392,7 +15393,7 @@
             </label>
             <label>
                 <text>8 – Call-on</text>
-                <text xml:lang="cs">6 – Opatrně na přivolávací návěst</text>
+                <text xml:lang="cs">8 – Opatrně na přivolávací návěst</text>
             </label>
             <label>
                 <text>9 – Shunting allowed</text>
@@ -15411,8 +15412,8 @@
                 <text xml:lang="cs">12 – Opakovaná výstraha</text>
             </label>
             <label>
-                <text>13 – ××××× switch off</text>
-                <text xml:lang="cs">13 – ××××× vypnuto</text>
+                <text>13 – Unlit</text>
+                <text xml:lang="cs">13 – Zhasnuto</text>
             </label>
             <label>
                 <text>14 – Repeated preparing to 40</text>
@@ -16429,7 +16430,7 @@
             </label>
             <label>
                 <text>8 – Call-on</text>
-                <text xml:lang="cs">6 – Opatrně na přivolávací návěst</text>
+                <text xml:lang="cs">8 – Opatrně na přivolávací návěst</text>
             </label>
             <label>
                 <text>9 – Shunting allowed</text>
@@ -16448,8 +16449,8 @@
                 <text xml:lang="cs">12 – Opakovaná výstraha</text>
             </label>
             <label>
-                <text>13 – ××××× switch off</text>
-                <text xml:lang="cs">13 – ××××× vypnuto</text>
+                <text>13 – Unlit</text>
+                <text xml:lang="cs">13 – Zhasnuto</text>
             </label>
             <label>
                 <text>14 – Repeated preparing to 40</text>
@@ -17465,7 +17466,7 @@
             </label>
             <label>
                 <text>8 – Call-on</text>
-                <text xml:lang="cs">6 – Opatrně na přivolávací návěst</text>
+                <text xml:lang="cs">8 – Opatrně na přivolávací návěst</text>
             </label>
             <label>
                 <text>9 – Shunting allowed</text>
@@ -17484,8 +17485,8 @@
                 <text xml:lang="cs">12 – Opakovaná výstraha</text>
             </label>
             <label>
-                <text>13 – ××××× switch off</text>
-                <text xml:lang="cs">13 – ××××× vypnuto</text>
+                <text>13 – Unlit</text>
+                <text xml:lang="cs">13 – Zhasnuto</text>
             </label>
             <label>
                 <text>14 – Repeated preparing to 40</text>
@@ -18501,7 +18502,7 @@
             </label>
             <label>
                 <text>8 – Call-on</text>
-                <text xml:lang="cs">6 – Opatrně na přivolávací návěst</text>
+                <text xml:lang="cs">8 – Opatrně na přivolávací návěst</text>
             </label>
             <label>
                 <text>9 – Shunting allowed</text>
@@ -18520,8 +18521,8 @@
                 <text xml:lang="cs">12 – Opakovaná výstraha</text>
             </label>
             <label>
-                <text>13 – ××××× switch off</text>
-                <text xml:lang="cs">13 – ××××× vypnuto</text>
+                <text>13 – Unlit</text>
+                <text xml:lang="cs">13 – Zhasnuto</text>
             </label>
             <label>
                 <text>14 – Repeated preparing to 40</text>
@@ -19537,7 +19538,7 @@
             </label>
             <label>
                 <text>8 – Call-on</text>
-                <text xml:lang="cs">6 – Opatrně na přivolávací návěst</text>
+                <text xml:lang="cs">8 – Opatrně na přivolávací návěst</text>
             </label>
             <label>
                 <text>9 – Shunting allowed</text>
@@ -19556,8 +19557,8 @@
                 <text xml:lang="cs">12 – Opakovaná výstraha</text>
             </label>
             <label>
-                <text>13 – ××××× switch off</text>
-                <text xml:lang="cs">13 – ××××× vypnuto</text>
+                <text>13 – Unlit</text>
+                <text xml:lang="cs">13 – Zhasnuto</text>
             </label>
             <label>
                 <text>14 – Repeated preparing to 40</text>
@@ -20573,7 +20574,7 @@
             </label>
             <label>
                 <text>8 – Call-on</text>
-                <text xml:lang="cs">6 – Opatrně na přivolávací návěst</text>
+                <text xml:lang="cs">8 – Opatrně na přivolávací návěst</text>
             </label>
             <label>
                 <text>9 – Shunting allowed</text>
@@ -20592,8 +20593,8 @@
                 <text xml:lang="cs">12 – Opakovaná výstraha</text>
             </label>
             <label>
-                <text>13 – ××××× switch off</text>
-                <text xml:lang="cs">13 – ××××× vypnuto</text>
+                <text>13 – Unlit</text>
+                <text xml:lang="cs">13 – Zhasnuto</text>
             </label>
             <label>
                 <text>14 – Repeated preparing to 40</text>

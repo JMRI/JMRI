@@ -39,6 +39,7 @@ public enum LnCommandStationType {
     COMMAND_STATION_DCS200("DCS200", true, false, "LnThrottleManager", "SlotManager", true, false), // NOI18N
     COMMAND_STATION_DCS050("DCS50 (Zephyr)", true, false, "LnThrottleManager", "SlotManager", false, false), // NOI18N
     COMMAND_STATION_DCS051("DCS51 (Zephyr Xtra)", true, false, "LnThrottleManager", "SlotManager", false, false), // NOI18N
+    COMMAND_STATION_DCS052("DCS52 (Zephyr Express)", true, false, "LnThrottleManager", "SlotManager", false, false), // NOI18N
     COMMAND_STATION_DB150("DB150 (Empire Builder)", false, true, "LnThrottleManager", "SlotManager", true, false), // NOI18N
 
     // the following command stations are assumed to not support "OPC_IDLE"
@@ -50,7 +51,10 @@ public enum LnCommandStationType {
     // the following command stations are known to not support "OPC_IDLE"
     COMMAND_STATION_PR3_ALONE("PR3 standalone programmer", true, false, "LnThrottleManager", "SlotManager", false, false), // NOI18N
     COMMAND_STATION_PR2_ALONE("PR2 standalone programmer", true, false, "LnThrottleManager", "SlotManager", false, false), // NOI18N
-    COMMAND_STATION_STANDALONE("Stand-alone LocoNet", false, false, "LnThrottleManager", "SlotManager", false, false);  // NOI18N
+    COMMAND_STATION_STANDALONE("Stand-alone LocoNet", false, false, "LnThrottleManager", "SlotManager", false, false),  // NOI18N
+    COMMAND_STATION_PR4_ALONE("PR4 standalone programmer", true, false, "LnThrottleManager", "SlotManager", false, false), // NOI18N
+    COMMAND_STATION_USB_DCS240_ALONE("DCS240 USB interface as standalone programmer", true, false, "LnThrottleManager", "SlotManager", false, false), // NOI18N
+    COMMAND_STATION_USB_DCS52_ALONE("DCS52 USB interface as standalone programmer", true, false, "LnThrottleManager", "SlotManager", false, false); // NOI18N
 
     // Note that the convention is that the first word (space-separated token) of the name is the
     // name of a configuration file for loconet.cmdstnconfig

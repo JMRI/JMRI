@@ -1,7 +1,6 @@
 package jmri.jmrix.internal;
 
 import jmri.Reporter;
-import jmri.implementation.AbstractReporter;
 
 /**
  * Implementation of the InternalReporterManager interface.

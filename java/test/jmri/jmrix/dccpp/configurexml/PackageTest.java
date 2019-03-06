@@ -7,12 +7,13 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
     DCCppLightManagerXmlTest.class,
     DCCppSensorManagerXmlTest.class,
-    DCCppTurnoutManagerXmlTest.class
+    DCCppTurnoutManagerXmlTest.class,
+    DCCppStreamConnectionConfigXmlTest.class
 })
 /**
  * Tests for the jmri.jmrix.dccpp.configurexml package.
  *
- * @author Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2019
  */
 public class PackageTest {
 }

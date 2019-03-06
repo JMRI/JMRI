@@ -24,6 +24,12 @@
         <authorinitials>PŠ</authorinitials>
         <revremark>Initial version</revremark>
     </revision>    
+    <revision>
+        <revnumber>2</revnumber>
+        <date>2019-02-20</date>
+        <authorinitials>PŠ</authorinitials>
+        <revremark>Aspect 25 Unlit</revremark>
+    </revision>    
   </revhistory>
 
   <aspecttable>SZDC-2015-zakladni</aspecttable>
@@ -57,12 +63,20 @@
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SZDC-2015/304_o60_ab.gif</imagelink>
     </appearance>
 
+    <appearance>
+      <aspectname>Zhasnuto</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SZDC-2015/325_zhasnuto_ab.gif</imagelink>
+    </appearance>
+
   </appearances>
   
   <specificappearances>
       <permissive>
           <aspect>Stůj</aspect>
       </permissive>
+      <dark>
+          <aspect>Zhasnuto</aspect>
+      </dark>
   </specificappearances>  
   
   <aspectMappings>

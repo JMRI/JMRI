@@ -365,7 +365,7 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
          * state changes to know when to send an OFF message after we set the 
          * known state
          * If we're using DIRECT mode, all of this is handled from the 
-         * XPressNet Messages
+         * outgoing Messages
          */
         @Override
         public void propertyChange(java.beans.PropertyChangeEvent event) {
@@ -408,7 +408,7 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
     }
     
     // data members
-    protected int mNumber;   // XpressNet turnout number
+    protected int mNumber;   // turnout number
     DCCppTurnoutStateListener _stateListener;  // Internal class object
     
     private final static Logger log = LoggerFactory.getLogger(DCCppTurnout.class);

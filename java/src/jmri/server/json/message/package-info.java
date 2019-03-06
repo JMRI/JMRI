@@ -21,7 +21,7 @@
  * a {@code client} message with a {@code get} method (no data object is
  * required). If requesting a JMRI-generated code, JMRI provides an existing
  * client-generated code, if one is already subscribed, or generates a UUID on
- * behalf of the requestor. JMRI will return the same UUID for a single
+ * behalf of the requester. JMRI will return the same UUID for a single
  * connection until that UUID is subscription is canceled by the client.
  * <p>
  * Examples:
@@ -42,8 +42,10 @@
  * why it received the message. This is null if no context was sent by the
  * client, or if the context sent was not a JSON object.</dd>
  * <dt>message</dt><dd>The message text.</dd>
- * <dt>type</dt><dd>One of {@value JsonMessage#INFO}, {@value JsonMessage#SUCCESS},
- * {@value JsonMessage#WARNING}, or {@value JsonMessage#ERROR}</dd>
+ * <dt>type</dt><dd>One of {@value jmri.server.json.message.JsonMessage#INFO},
+ * {@value jmri.server.json.message.JsonMessage#SUCCESS},
+ * {@value jmri.server.json.message.JsonMessage#WARNING}, or
+ * {@value jmri.server.json.message.JsonMessage#ERROR}</dd>
  * <dt>locale</dt><dd>The message locale, which may differ from both the
  * client's locale and the JMRI server's locale.</dd>
  * </dl>

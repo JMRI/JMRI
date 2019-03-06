@@ -54,8 +54,10 @@ public class JsonLayoutBlockSocketServiceTest {
         Assert.assertEquals("Block is being listened to by service", 2, lb.getNumPropertyChangeListeners());
         connection.sendMessage((JsonNode) null);
         lb.redrawLayoutBlockPanels();
-        Assert.assertEquals("Message is LayoutBlock1", lb.getSystemName(), connection.getMessage().path(JSON.DATA).path(JSON.NAME).asText());
-        // test IOException handling when listening by triggering execption and
+        JsonNode result = connection.getMessage();
+        Assert.assertNotNull(result);
+        Assert.assertEquals("Message is LayoutBlock1", lb.getSystemName(), result.path(JSON.DATA).path(JSON.NAME).asText());
+        // test IOException handling when listening by triggering exception and
         // observing that block1 is no longer being listened to
         connection.setThrowIOException(true);
         lb.redrawLayoutBlockPanels();
@@ -117,6 +119,7 @@ public class JsonLayoutBlockSocketServiceTest {
      *
      * @throws java.lang.Exception on unexpected errors
      */
+    @SuppressWarnings("null")
     @Test
     public void testOnList() throws Exception {
         LayoutBlockManager manager = InstanceManager.getDefault(LayoutBlockManager.class);
@@ -131,6 +134,7 @@ public class JsonLayoutBlockSocketServiceTest {
         // onList adds a listener to all LayoutBlocks
         Assert.assertEquals("LayoutBlock1 has 2 listeners", 2, lb1.getPropertyChangeListeners().length);
         JsonNode message = connection.getMessage();
+        Assert.assertNotNull(message);
         Assert.assertTrue("Message is an array", message.isArray());
         Assert.assertEquals("All LayoutBlocks are listed", manager.getNamedBeanSet().size(), message.size());
     }

@@ -131,6 +131,10 @@ public class ToolsMenu extends JMenu {
         add(new JSeparator());
         // add start web server
         add(new jmri.web.server.WebServerAction());
+
+        add(new JSeparator());
+        // add cab signals
+        add(new jmri.jmrit.cabsignals.CabSignalAction());
     }
 
 }

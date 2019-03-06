@@ -97,7 +97,6 @@ public class TmccSystemConnectionMemo extends SystemConnectionMemo {
     /**
      * Tells which managers this class provides.
      */
-    @SuppressWarnings("deprecation")
     @Override
     public boolean provides(Class<?> type) {
         if (getDisabled()) {
@@ -118,7 +117,7 @@ public class TmccSystemConnectionMemo extends SystemConnectionMemo {
     /**
      * Provide manager by class.
      */
-     @SuppressWarnings({"deprecation", "unchecked"})
+    @SuppressWarnings("unchecked")
     @Override
     public <T> T get(Class<?> T) {
         if (getDisabled()) {
