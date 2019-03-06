@@ -163,7 +163,7 @@ public class BlockManagerTest {
     }
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         JUnitUtil.setUp();
     }
 
