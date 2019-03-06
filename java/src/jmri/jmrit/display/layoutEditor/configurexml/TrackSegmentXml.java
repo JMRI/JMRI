@@ -574,7 +574,7 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
         // get remaining attribute
         Attribute a = element.getAttribute("blockname");
         if (a != null) {
-            l.setLayoutBlockByName(a.getValue());
+            l.tLayoutBlockName = a.getValue();
         }
 
         p.getLayoutTracks().add(l);

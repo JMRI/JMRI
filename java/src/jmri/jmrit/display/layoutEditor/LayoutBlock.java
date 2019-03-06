@@ -832,14 +832,11 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
         }
 
         //djd debugging - lists results of automatic initialization of Paths and BeanSettings
-        //if (log.isDebugEnabled()) {
-        block.getPaths().stream().forEach((p) -> {
-            if (p == null) {
-                log.warn("p == null");
-            }
-            log.debug("From {} to {}", getDisplayName(), p.toString());
-        });
-        //}
+        if (log.isDebugEnabled()) {
+            block.getPaths().stream().forEach((p) -> {
+                log.debug("From {} to {}", getDisplayName(), p.toString());
+            });
+        }
         //end debugging
     }   // updateBlockPaths
 

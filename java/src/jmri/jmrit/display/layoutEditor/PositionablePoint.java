@@ -213,10 +213,6 @@ public class PositionablePoint extends LayoutTrack {
     }
 
     public void setLinkedPoint(PositionablePoint p) {
-        setLinkedPoint(p, true);
-    }
-
-    public void setLinkedPoint(PositionablePoint p, boolean updateBlock) {
         if (p == linkedPoint) {
             return;
         }
@@ -240,8 +236,8 @@ public class PositionablePoint extends LayoutTrack {
         }
         linkedPoint = p;
         if (p != null) {
-            p.setLinkedPoint(this, updateBlock);
-            if (updateBlock && (getConnect1() != null)) {
+            p.setLinkedPoint(this);
+            if (getConnect1() != null) {
                 layoutEditor.getLEAuxTools().setBlockConnectivityChanged();
                 getConnect1().updateBlockInfo();
                 layoutEditor.repaint();

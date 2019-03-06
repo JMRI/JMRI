@@ -993,6 +993,9 @@ public class LevelXing extends LayoutTrack {
     public String connectCName = "";
     public String connectDName = "";
 
+    public String tLayoutBlockNameAC = "";
+    public String tLayoutBlockNameBD = "";
+
     /**
      * Initialization method The above variables are initialized by
      * PositionablePointXml, then the following method is called after the
@@ -1005,16 +1008,29 @@ public class LevelXing extends LayoutTrack {
         connectC = p.getFinder().findTrackSegmentByName(connectCName);
         connectD = p.getFinder().findTrackSegmentByName(connectDName);
 
-        LayoutBlock blockAC = getLayoutBlockAC();
-        if (blockAC != null) {
-            blockAC.incrementUse();
+        LayoutBlock lb;
+        if (!tLayoutBlockNameAC.isEmpty()) {
+            lb = p.provideLayoutBlock(tLayoutBlockNameAC);
+            if (lb != null) {
+                namedLayoutBlockAC = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(lb.getUserName(), lb);
+                lb.incrementUse();
+            } else {
+                namedLayoutBlockAC = null;
+            }
+            tLayoutBlockNameAC = null; //release this memory
         }
 
-        LayoutBlock blockBD = getLayoutBlockBD();
-        if (blockBD != null) {
-            if (blockAC != blockBD) {
-                blockBD.incrementUse();
+        if (!tLayoutBlockNameBD.isEmpty()) {
+            lb = p.provideLayoutBlock(tLayoutBlockNameBD);
+            if (lb != null) {
+                namedLayoutBlockBD = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(lb.getUserName(), lb);
+                if (namedLayoutBlockBD != namedLayoutBlockAC) {
+                    lb.incrementUse();
+                }
+            } else {
+                namedLayoutBlockBD = null;
             }
+            tLayoutBlockNameBD = null; //release this memory
         }
     }
 

@@ -610,6 +610,8 @@ public class TrackSegment extends LayoutTrack {
     public String tConnect1Name = "";
     public String tConnect2Name = "";
 
+    public String tLayoutBlockName = "";
+
     /**
      * Initialization method. The above variables are initialized by
      * PositionablePointXml, then the following method is called after the
@@ -621,9 +623,16 @@ public class TrackSegment extends LayoutTrack {
     @Override
     public void setObjects(LayoutEditor p) {
 
-        LayoutBlock blockA = getLayoutBlock();
-        if (blockA != null) {
-            blockA.incrementUse();
+                LayoutBlock lb;
+        if (!tLayoutBlockName.isEmpty()) {
+            lb = p.provideLayoutBlock(tLayoutBlockName);
+            if (lb != null) {
+                namedLayoutBlock = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(lb.getUserName(), lb);
+                lb.incrementUse();
+            } else {
+                namedLayoutBlock = null;
+            }
+            tLayoutBlockName = null; //release this memory
         }
 
         //NOTE: testing "type-less" connects

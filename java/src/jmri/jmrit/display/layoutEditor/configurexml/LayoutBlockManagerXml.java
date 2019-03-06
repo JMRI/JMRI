@@ -135,7 +135,6 @@ public class LayoutBlockManagerXml extends jmri.managers.configurexml.AbstractNa
             log.debug("Found " + layoutblockList.size() + " layoutblocks");
         }
 
-        //for (int i = 0; i < layoutblockList.size(); i++) {
         for (Element e : layoutblockList) {
             String sysName = getSystemName(e);
             if (sysName == null) {

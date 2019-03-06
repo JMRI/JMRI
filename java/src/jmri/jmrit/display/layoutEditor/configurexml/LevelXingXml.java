@@ -147,11 +147,11 @@ public class LevelXingXml extends AbstractXmlAdapter {
         // get remaining attributes
         Attribute a = element.getAttribute("blocknameac");
         if (a != null) {
-            l.setLayoutBlockAC(p.provideLayoutBlock(a.getValue()));
+            l.tLayoutBlockNameAC = a.getValue();
         }
         a = element.getAttribute("blocknamebd");
         if (a != null) {
-            l.setLayoutBlockBD(p.provideLayoutBlock(a.getValue()));
+            l.tLayoutBlockNameBD = a.getValue();
         }
         a = element.getAttribute("connectaname");
         if (a != null) {

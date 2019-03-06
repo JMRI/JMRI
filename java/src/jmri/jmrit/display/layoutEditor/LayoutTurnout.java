@@ -2385,8 +2385,11 @@ public class LayoutTurnout extends LayoutTrack {
     public String connectBName = "";
     public String connectCName = "";
     public String connectDName = "";
-//    public String tTurnoutName = "";
-//    public String tSecondTurnoutName = "";
+
+    public String tBlockAName = "";
+    public String tBlockBName = "";
+    public String tBlockCName = "";
+    public String tBlockDName = "";
 
     /**
      * Initialization method The above variables are initialized by
@@ -2400,61 +2403,61 @@ public class LayoutTurnout extends LayoutTrack {
         connectC = p.getFinder().findTrackSegmentByName(connectCName);
         connectD = p.getFinder().findTrackSegmentByName(connectDName);
 
-        LayoutBlock blockA = getLayoutBlock();
-        if (blockA != null) {
-            blockA.incrementUse();
-        }
-
-        LayoutBlock blockB = getLayoutBlockB();
-        if (blockB != null) {
-            if (blockA != blockB) {
-                blockB.incrementUse();
+        LayoutBlock lb;
+        if (!tBlockAName.isEmpty()) {
+            lb = p.provideLayoutBlock(tBlockAName);
+            if (lb != null) {
+                namedLayoutBlockA = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(lb.getUserName(), lb);
+                lb.incrementUse();
+            } else {
+                namedLayoutBlockA = null;
             }
+            tBlockAName = null; //release this memory
         }
 
-        LayoutBlock blockC = getLayoutBlockC();
-        if (blockC != null) {
-            if ((blockA != blockC) && (blockB != blockC)) {
-                blockC.incrementUse();
+        if (!tBlockBName.isEmpty()) {
+            lb = p.provideLayoutBlock(tBlockBName);
+            if (lb != null) {
+                namedLayoutBlockB = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(lb.getUserName(), lb);
+                if (namedLayoutBlockB != namedLayoutBlockA) {
+                    lb.incrementUse();
+                }
+            } else {
+                namedLayoutBlockB = null;
             }
+            tBlockBName = null; //release this memory
         }
 
-        LayoutBlock blockD = getLayoutBlockD();
-        if (blockD != null) {
-            if ((blockA != blockD) && (blockB != blockD) && (blockC != blockD)) {
-                blockD.incrementUse();
+        if (!tBlockCName.isEmpty()) {
+            lb = p.provideLayoutBlock(tBlockCName);
+            if (lb != null) {
+                namedLayoutBlockC = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(lb.getUserName(), lb);
+                if ((namedLayoutBlockC != namedLayoutBlockA)
+                        && (namedLayoutBlockC != namedLayoutBlockB)) {
+                    lb.incrementUse();
+                }
+            } else {
+                namedLayoutBlockC = null;
             }
+            tBlockCName = null; //release this memory
         }
 
-        //Do the second one first then the activate is only called the once
-//        if (!tSecondTurnoutName.isEmpty()) {
-//            Turnout turnout = InstanceManager.turnoutManagerInstance().getTurnout(tSecondTurnoutName);
-//
-//            if (turnout != null) {
-//                secondNamedTurnout = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class
-//                ).getNamedBeanHandle(tSecondTurnoutName, turnout);
-//                secondTurnoutName = tSecondTurnoutName;
-//            } else {
-//                log.error("bad turnoutname '" + tSecondTurnoutName + "' in layoutturnout " + getId());
-//                secondTurnoutName = "";
-//                secondNamedTurnout = null;
-//            }
-//        }
-//        if (!tTurnoutName.isEmpty()) {
-//            Turnout turnout = InstanceManager.turnoutManagerInstance().getTurnout(tTurnoutName);
-//
-//            if (turnout != null) {
-//                namedTurnout = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class
-//                ).getNamedBeanHandle(tTurnoutName, turnout);
-//                turnoutName = tTurnoutName;
+        if (!tBlockDName.isEmpty()) {
+            lb = p.provideLayoutBlock(tBlockDName);
+            if (lb != null) {
+                namedLayoutBlockD = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(lb.getUserName(), lb);
+                if ((namedLayoutBlockD != namedLayoutBlockA)
+                        && (namedLayoutBlockD != namedLayoutBlockB)
+                        && (namedLayoutBlockD != namedLayoutBlockC)) {
+                    lb.incrementUse();
+                }
+            } else {
+                namedLayoutBlockD = null;
+            }
+            tBlockDName = null; //release this memory
+        }
         activateTurnout();
-//            } else {
-//                log.error("bad turnoutname '" + tTurnoutName + "' in layoutturnout " + getId());
-//                turnoutName = "";
-//                namedTurnout = null;
-//            }
-//        }
-    }   // setObjects
+    } // setObjects
 
     private JPopupMenu popup = null;
 

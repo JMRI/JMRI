@@ -152,7 +152,7 @@ public class PositionablePointXml extends AbstractXmlAdapter {
                 String linkedPoint = element.getAttribute("linkpointid").getValue();
                 for (PositionablePoint point : linkedEditor.getPositionablePoints()) {
                     if (point.getType() == PositionablePoint.EDGE_CONNECTOR && point.getId().equals(linkedPoint)) {
-                        point.setLinkedPoint(l, false);
+                        point.setLinkedPoint(l);
                         l.setLinkedPoint(point);
                         break;
                     }
