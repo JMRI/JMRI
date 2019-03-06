@@ -7417,7 +7417,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             }
 
             default: {
-                if ((fromPointType >= LayoutTrack.TURNTABLE_RAY_OFFSET) && (toPointType == LayoutTrack.TRACK)) {
+                if ((fromPointType >= LayoutTrack.TURNTABLE_RAY_OFFSET)
+                        && (toPointType == LayoutTrack.TRACK)) {
                     ((LayoutTurntable) fromObject).setRayConnect((TrackSegment) toObject,
                             fromPointType - LayoutTrack.TURNTABLE_RAY_OFFSET);
                 }
