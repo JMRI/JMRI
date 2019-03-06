@@ -9,7 +9,9 @@ import jmri.util.JmriJFrame;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
+import org.junit.Test;
 import org.netbeans.jemmy.QueueTool;
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JComboBoxOperator;
@@ -24,10 +26,9 @@ import org.netbeans.jemmy.util.NameComponentChooser;
  */
 public class LightTableWindowTest {
 
+    @Test
     public void testShowAndClose() throws Exception {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't Assume in TestCase
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         // ask for the window to open
         LightTableAction a = new LightTableAction();
