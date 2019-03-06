@@ -1,7 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Translation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-03-05 -->
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -27,97 +27,100 @@
     <div id="mainContent">
       <a name="Top" id="Top"></a>
 
-      <h1>Using JMRI&reg; to Operate Trains</h1>
+    
 
-      <h2>OperationsPro: Add Staging Only</h2>
+<h1>Utilisation de JMRI&reg; exploiter des trains</h1>
 
-      <div align="right">
-        <p><a href="Ops_AddLocations.shtml">Back</a><a href=
+      <h2>OperationsPro: Ajouter un Coulisse  Uniquement</h2>
+
+      <div align = "right">
+        <p><a href="Ops_AddLocations.shtml"> Retour</a> <a href =
         "Ops_Cars.shtml"></a></p>
 
-        <p><a href="index.shtml#Operations">Back to Index</a></p>
-      </div>
-      <hr>
+        <p><a href="index.shtml#Operations"> Retour &#224; l'index</a></p>
+     </div>
+      <h>
 
-      <p>To add a Location with Tracks as Staging Only, open the
-      <strong><a href="Ops_AddLocations.shtml">Add
-      Location</a></strong> window;<br>
-      note most of the window is greyed out until the Location has
-      been added.</p>
+      <p>Pour ajouter un Emplacement avec des voies de Coulisse Uniquement, 
+      ouvrez la fen&#234;tre <strong><a href="Ops_AddLocations.shtml"> Ajouter 
+      un Emplacement</a></strong>; vous remarquerez que la plupart de la 
+      fen&#234;tre est gris&#233;e. jusqu'&#224; ce que l'emplacement ait &#233;t&#233; ajout&#233;.</p>
 
-      <p><img src="images/Ops_Staging01.png" alt="staging" height=
-      "640" width="772"></p>
+      <p><img src = "images/Ops_Staging01.png" alt = "staging" height =
+      "640" width = "772"></p>
 
-      <h3>Define the Staging Location</h3>
+      <h3>D&#233;finir l'Emplacement de Coulisse</h3>
 
-      <p>Type a new <strong>Name</strong> <input name="textfield"
-      id="textfield" value="Staging Area" type="text"> for the
-      Staging only Location (Area).</p>
+      <p>Saisissez un nouveau <strong>Nom</strong> <input name = "textfield".
+      id = "textfield" value = "Zone de Coulisse " type = "text"> pour 
+      l'Emplacement de Coulisse  uniquement (Zone).</p>
 
-      <p>The Location Name must be unique; the program will not
-      allow two Locations with identical names. However, if you
-      want more than one Location to have the same name for your
-      Manifests and Switch Lists, add a hyphen and a number to the
-      locations name. For example, "Boston-1" and "Boston-2" will
-      print as "Boston". The program will remove the hyphen and
-      number when printing manifests and switch lists.</p>
+      <p>Le Nom de l'Emplacement doit &#234;tre unique. le programme ne 
+      permettra pas deux Emplacements avec des noms identiques. 
+      Toutefois, si vous souhaitez que plusieurs Emplacements aient 
+      le m&#234;me nom pour vos manifestes et vos listes de man&#156;uvres, ajoutez 
+      un trait d'union et un num&#233;ro au nom de l'emplacement. Par 
+      exemple, "Boston-1" et "Boston-2" seront imprim&#233;s en tant que 
+      "Boston". Le programme supprimera le trait d'union et le num&#233;ro 
+      lors de l'impression des manifestes et des listes de man&#156;uvres.</P>
 
-      <p>Select <strong>Operations (Tracks) at this
-      location</strong> <input name="radio" id="radio" value=
-      "radio" checked="checked" type="radio"> <strong>Staging
-      Only</strong>, then press the <input name="button" id=
-      "button" value="Add Location" type="submit"> at the bottom of
-      the window.</p>
+      <p>S&#233;lectionnez <strong>Op&#233;rations (voies) &#224; cet emplacement</strong> 
+      <input name = "radio" id = "radio" value = "radio" checked = "checked" 
+      type = "radio"> <strong>Coulisse uniquement</strong>, puis appuyez 
+      sur le bouton <input name = "." id = "button" value = "Ajouter 
+      Emplacement" type = "submit"> en bas de la fen&#234;tre.</p>
 
-      <p>This opens the <strong>Add Location</strong> window with
-      all the options enabled.</p>
+      <p>Ceci ouvre la fen&#234;tre <strong>Ajouter un Emplacement</strong> 
+      avec toutes les options activ&#233;es.</p>
 
-      <p><img src="images/Ops_Staging02.png" height="640" width=
+      <p><img src = "images/Ops_Staging02.png" height = "640" width
       "772"></p>
 
-      <p>You may select <strong>This location is serviced by trains
-      traveling</strong>, select at least one or any number of the
-      directions depending on access to your staging. We have
-      selected <strong>All directions</strong> for this staging
-      Location.</p>
+      <p>Vous pouvez s&#233;lectionner <strong>Cet emplacement est desservi 
+      par les trains voyageant</strong>, choisissez au moins une ou 
+      plusieurs des directions, en fonction de l'acc&#232;s &#224; votre Coulisse. 
+      Nous avons s&#233;lectionn&#233; <strong>Toutes les directions</strong> pour 
+      ce lieu de Coulisse.</P>
 
-      <p>You can decide which train direction the Location can
-      service. For example, if only south bound trains can access
-      the Location, select "South" and deselect the other
-      directions. This can be useful if you want to support only
-      trailing point switching for a given Location. If a Location
-      can support multiple directions then select the ones that are
-      appropriate.</p>
+      <p>Vous pouvez choisir la direction du train desservie par 
+      l'Emplacement. Par exemple, si seuls les trains en direction du 
+      sud peuvent acc&#233;der &#224; l'Emplacement, s&#233;lectionnez "Sud" et 
+      d&#233;s&#233;lectionnez les autres directions. Cela peut &#234;tre utile si 
+      vous souhaitez prendre en charge uniquement le changement de 
+      direction pour un Emplacement donn&#233;. Si un Emplacement peut 
+      prendre en charge plusieurs directions, s&#233;lectionnez celles 
+      qui conviennent.</P>
 
-      <p>Using <strong>Select the rolling stock serviced by this
-      location</strong> you can control the rolling stock that a
-      location can service. Push <input name="button7" id="button7"
-      value="Clear All" type="submit"> to deselect all types, or
-      <input name="button8" id="button8" value="Select All" type=
-      "submit"> to select all types, then select or deselect the
-      rolling stock you wish the location to accept.</p>
+      <p>&#193; l'aide de <strong>S&#233;lectionnez le mat&#233;riel roulant desservi 
+      par cet Emplacement</strong>, vous pouvez contr&#244;ler le mat&#233;riel 
+      roulant desservi par un site. Appuyez sur <input name = "button7" 
+      id = "button7" value = "Effacer tout" type = "submit"> pour 
+      d&#233;s&#233;lectionner tous les types, ou sur <input name = "button8" 
+      id = "button8" value = "Tout s&#233;lectionner" = "submit"> pour 
+      s&#233;lectionner tous les types, puis s&#233;lectionnez ou d&#233;s&#233;lectionnez 
+      le mat&#233;riel roulant que vous souhaitez que l'Emplacement accepte.</p>
 
-      <p>Since we selected <strong>Operations (Tracks) at this
-      location</strong> as <input name="radio2" id="radio2" value=
-      "radio2" checked="checked" type="radio"> <strong>Staging
-      Only</strong>, the <input name="button4" id="button4" value=
-      "Add Staging Track" type="submit"> is now enabled near the
-      bottom of the window.</p>
+      <p>Depuis que nous avons s&#233;lectionn&#233; <strong>Op&#233;rations (voies) &#224; 
+      cet emplacement</strong>, sous <input name = "radio2" id = "radio2" 
+      value = "radio2" checked = "checked" type = "radio"> <strong>
+      Coulisse Seulement</strong>, la <input name = "button4" 
+      id = "button4" value =  "Ajouter Voie de Garage" type = "submit">
+       est maintenant activ&#233; au bas de la fen&#234;tre.</P>
 
-      <p>We also have the option to <input name="button5" id=
-      "button5" value="Delete Location" type="submit"> or
-      <input name="button6" id="button6" value="Save Location"
-      type="submit"></p>
+      <p>Nous avons &#233;galement la possibilit&#233; de <input name = "button5" id =
+      "button5" value = "Supprimer l'Emplacement" type = "submit"> ou
+      <input name = "button6" id = "button6" value = "Enregistrer 
+      l'Emplacement" type = "submit"></p>
 
-      <h3>Adding the Staging Tracks</h3>
+      <h3>Ajouter des Voies Garage</h3>
 
-      <p>A Staging Only area may contain one or more Tracks that
-      must be defined next.</p>
+      <p>Une zone de Coulisse  peut contenir une ou plusieurs 
+      Voies &#224; d&#233;finir ensuite.</p>
 
-      <p>After you click on <input name="button9" id="button9"
-      value="Add Staging Track" type="submit"> the <strong>Add
-      Staging Track</strong> window is displayed, so that you can
-      detail the staging one Track at a time.</p>
+      <p>Apr&#232;s avoir cliqu&#233; sur <input name = "button9" id = "button9"
+      value = "Ajouter une Voie de Garage" type = "submitr"> la fen&#234;tre 
+      <strong>Ajouter une Voie de Garage</strong> s'affiche pour vous 
+      permettre de d&#233;tailler la Voie de Garage, une &#224; la fois.</p>
 
       <table border="0" cellpadding="2" cellspacing="1" width=
       "90%">
@@ -127,235 +130,238 @@
             "images/Ops_Staging03.png" height="719" width=
             "771"></td>
 
-            <td align="left" valign="top" width="52%">
-              <p>In <strong>Name</strong> <input name="textfield2"
-              id="textfield2" type="text"> type the name for the
-              Staging Track to be serviced at this Location.</p>
+            
+		<td align = "left" valign = "top" width = "52%">
+              <p>Dans <strong>Nom</strong> <input name = "textfield2"
+              id = "textfield2" type = "text"> tapez le Nom de la Voie 
+              de Garage &#224; desservir &#224; cet Emplacement.</p>
 
-              <p><strong>Length</strong> <input name="textfield3"
-              id="textfield3" value="1000" size="10" type="text">
-              of the Staging Track in scale feet. You may enter the
-              measurement in actual inches as <input name=
-              "textfield4" id="textfield4" value="6&quot;" size="5"
-              type="text"> and the program will convert to the
-              scale feet that you select during setup.</p>
+              <p><strong>Longueur</strong> <input name = "textfield3"
+              id = "textfield3" value = "1000" size = "10" type = "text"> 
+              de la Voie de Garage en &#233;chelons. Vous pouvez entrer la 
+              mesure en pouces r&#233;els sous la forme <input name =
+              "textfield4" id = "textfield4" value = "6&quot" taille = "5"
+              type = "text"> et le programme sera converti en pieds 
+              d'&#233;chelle que vous avez s&#233;lectionn&#233;s lors de l'installation.</p>
 
-              <p>Press <input name="button10" id="button10" value=
-              "Add Staging Track" type="submit"> the Staging Track
-              is added and the greyed out features are
-              activated.</p>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+              <p>Appuyez sur <input name = "button10" id = "button10" value =
+              "Ajouter une Voie de Garage" type = "submit"> la Voie de 
+              Garage est ajout&#233;e et les fonctions gris&#233;es sont activ&#233;es.</P>
+           </td>
+         </tr>
+       </tbody>
+     </table>
 
-      <table border="0" cellpadding="2" cellspacing="1" width=
+      <table border = "0" cellpadding = "2" cellspacing = "1" width =
       "90%">
         <tbody>
           <tr>
-            <td align="left" valign="top" width="48%">
-              <p><img src="images/Ops_Staging04.png" height="705"
-              width="771"></p>
-            </td>
+            <td align = "left" valign = "top" width = "48%">
+              <p><img src = "images/Ops_Staging04.png" height = "705"
+              width = "771"></p>
+           </td>
 
-            <td align="left" valign="top" width="52%">
-              <p>You may <strong>Select the roads serviced by this
-              track</strong></p>
+            <td align = "left" valign = "top" width = "52%">
+              <p>Vous pouvez <strong>s&#233;lectionner les Itin&#233;raires desservies 
+              par cette voie</strong></p>.
 
-              <p><input name="radio3" id="radio3" value="radio3"
-              checked="checked" type="radio"> Accept all</p>
+              <p><input name = "radio3" id = "radio3" value = "radio3"
+              checked = "checked" type = "radio"> Accepter tout</p>
 
-              <p>Default accepts rolling stock from any
-              railroad.</p>
+              <p>Par d&#233;faut accepte le mat&#233;riel roulant de n’importe 
+              quel r&#233;seau.</p>
 
-              <p><input name="radio4" id="radio4" value="radio4"
-              type="radio"> Accept only<br>
-              <img src="images/Ops_AddInterchangeTrack04-01.png"
-              alt="staging" height="86" width="399"></p>
+              <p><input name = "radio4" id = "radio4" value = "radio4"
+              type = "radio"> Accepter uniquement <br>
+              <img src = "images/Ops_AddInterchangeTrack04-01.png"
+              alt = "staging" height = "86" width = "399"></p>
 
-              <p>Allows you to list the railroads whose rolling
-              stock you will accept.</p>
+              <p>Vous permet de r&#233;pertorier les r&#233;seaux dont vous acceptez 
+              le mat&#233;riel roulant.</p>
 
-              <p><input name="radio5" id="radio5" value="radio5"
-              type="radio"> Exclude<br>
-              <img src="images/Ops_AddInterchangeTrack04-02.png"
-              alt="staging" height="104" width="414"></p>
+              <p><input name = "radio5" id = "radio5" value = "radio5"
+              type = "radio"> Exclure <br>
+              <img src = "images/Ops_AddInterchangeTrack04-02.png"
+              alt = "staging" height = "104" width = "414"></p>
 
-              <p>Accept all rolling stock except from those
-              railroads that are excluded.</p>
+              <p>Acceptez tout le mat&#233;riel roulant, &#224; l'exception r&#233;seaux 
+              exclus.</p>
 
-              <p>We will use the default. If you want to edit the
-              Roads accepted go to <a href="Ops_AddCars.shtml">Add
-              Cars</a> then Edit Roads, to add another selection to
-              the Roads drop-down list.</p>
+              <p>Nous allons utiliser la valeur par d&#233;faut. Si vous 
+              souhaitez modifier les Itin&#233;raires accept&#233;es, acc&#233;dez &#224; 
+              <a href="Ops_AddCars.shtml"> Ajouter des wagons</a>, puis 
+              &#224; Modifier Itin&#233;raires pour ajouter une autre s&#233;lection &#224; 
+              la liste d&#233;roulante Itin&#233;raires.</P>
 
-              <p><strong>Select the loads serviced by this
-              track</strong></p>
+              <p><strong>S&#233;lectionnez les charges desservies par cette 
+              voie</strong></p>
 
-              <p><input name="radio3" id="radio6" value="radio3"
-              checked="checked" type="radio"> Accept all</p>
+              <p><input name = "radio3" id = "radio6" value = "radio3"
+              checked = "checked" type = "radio"> Accepter tout</p>
 
-              <p>Default accepts any load</p>
+              <p>Par d&#233;faut accepte toute charge</p>
 
-              <p><input name="radio4" id="radio7" value="radio4"
-              type="radio"> Accept only<br>
-              <img src="images/Ops_AddInterchangeTrack04-03.png"
-              alt="staging" height="87" width="510"></p>
+              <p><input name = "radio4" id = "radio7" value = "radio4"
+              type = "radio"> Accepter uniquement <br>
+              <img src = "images/Ops_AddInterchangeTrack04-03.png"
+              alt = "Coulisse" height = "87" width = "510"></p>
 
-              <p>Allows you to select the loads you will
-              accept.</p>
+              <p>Vous permet de s&#233;lectionner les charges que vous accepterez.</p>
 
-              <p><input name="radio5" id="radio8" value="radio5"
-              type="radio"> Exclude<br>
-              <img src="images/Ops_AddInterchangeTrack04-04.png"
-              alt="staging" height="89" width="513"><br>
-              Allows you to exclude any load you do not want
-              service by this track.</p>
+              <p><input name = "radio5" id = "radio8" value = "radio5"
+              type = "radio"> Exclure <br>
+              <img src = "images/Ops_AddInterchangeTrack04-04.png"
+              alt = "staging" height = "89" width = "513"> <br>
+              Vous permet d’exclure toute charge que vous ne souhaitez 
+              pas desservir par cette voie.</P>
 
-              <p><strong>Select trains or routes for
-              arrivals</strong></p>
+              <p><strong>S&#233;lectionner des trains ou des itin&#233;raires pour 
+              les arriv&#233;es</strong></p>
 
-              <p><strong><input name="radio9" id="radio9" value=
-              "radio9" checked="checked" type="radio">
-              any</strong><br>
-              Default</p>
+              <p><strong><input name = "radio9" id = "radio9" value =
+              "radio9" checked = "checked" type = "radio">
+              tout</strong> <br>
+              Par d&#233;faut</p>
 
-              <p><strong><input name="radio10" id="radio10" value=
-              "radio10" type="radio"> Trains</strong><br>
-              <img src="images/Ops_AddInterchangeTrack04-05.png"
-              height="89" width="440"><br></p>
+              <p><strong><input name = "radio10" id = "radio10" value =
+              "radio10" type = "radio"> Trains</strong> <br>
+              <img src = "images/Ops_AddInterchangeTrack04-05.png"
+              height = "89" width = "440"> <br></p>
 
-              <p><strong><input name="radio11" id="radio11" value=
-              "radio11" type="radio"> Routes</strong></p>
+              <p><strong><input name = "radio11" id = "radio11" value =
+              "radio11" type = "radio"> Itin&#233;raires</strong></p>
 
-              <p><img src="images/Ops_AddInterchangeTrack04-06.png"
-              height="127" width="434"><br></p>
+              <p><img src = "images/Ops_AddInterchangeTrack04-06.png"
+              height = "127" width = "434"> <br></p>
 
-              <p><input name="radio12" id="radio12" value="radio12"
-              type="radio"> <strong>Exclude Trains</strong></p>
+              <p><input name = "radio12" id = "radio12" value = "radio12"
+              type = "radio"> <strong>Exclure les trains</strong></p>
 
-              <p><img src="images/Ops_AddInterchangeTrack04-07.png"
-              height="108" width="435"></p>
+              <p><img src = "images/Ops_AddInterchangeTrack04-07.png"
+              height = "108" width = "435"></p>
 
-              <p><strong><input name="radio13" id="radio13" value=
-              "radio13" type="radio"> Exclude Routes</strong></p>
+              <p><strong><input name = "radio13" id = "radio13" value =
+              "radio13" type = "radio"> Itin&#233;raires exclus</strong></p>
 
-              <p><img src="images/Ops_AddInterchangeTrack04-08.png"
-              height="123" width="442"></p>
+              <p><img src = "images/Ops_AddInterchangeTrack04-08.png"
+              height = "123" width = "442"></p>
 
-              <p><strong>Optional car load controls</strong></p>
+              <p><strong>Contr&#244;les de chargement de wagon en option</strong></p>
 
-              <p><input name="checkbox" id="checkbox" checked=
-              "checked" type="checkbox"> Swap default loads and
-              empties</p>
+              <p><input name = "ckeckbox" id = "ckeckbox" checked =
+              "checked" type = "ckeckbox"> Permuter les vides et charges 
+              par d&#233;faut</p>
 
-              <p><input name="checkbox2" id="checkbox2" checked=
-              "checked" type="checkbox"> Empty cars with default
-              loads</p>
+              <p><input name = "ckeckbox2" id = "ckeckbox2" checked =
+              "checked" type = "ckeckbox"> Wagons vides avec des charges 
+              par d&#233;faut</p>
 
-              <p><strong>Optional custom car load
-              controls</strong></p>
+              <p><strong>Contr&#244;les de chargement de wagon 
+              personnalis&#233;s facultatifs</strong></p>
 
-              <p><input name="checkbox3" id="checkbox3" type=
-              "checkbox"> Empty cars with custom loads</p>
+              <p><input name = "checkbox3" id = "checkbox3" type =
+              "ckeckbox"> Wagons vides avec des chargements 
+              personnalis&#233;s</p>
 
-              <p><input name="checkbox4" id="checkbox4" type=
-              "checkbox"> Generated custom loads for spurs serviced
-              by this train</p>
+              <p><input name = "checkbox4" id = "checkbox4" type =
+              "ckeckbox"> Charges personnalis&#233;es g&#233;n&#233;r&#233;es pour les 
+              Embranchements desservis par ce train</p>
 
-              <p><input name="checkbox5" id="checkbox5" type=
-              "checkbox"> Generate custom loads for any spur
-              (multiple trains)</p>
+              <p><input name = "checkbox5" id = "checkbox5" type =
+              "ckeckbox"> G&#233;n&#233;rer des chargements personnalis&#233;s pour 
+              tout embranchement (plusieurs trains)</p>
 
-              <p><strong>Optional Car Blocking</strong></p>
+              <p><strong>Blocage de wagon facultatif</strong></p>
 
-              <p><input name="checkbox6" id="checkbox6" type=
-              "checkbox"> Block cars by pickup location</p>
+              <p><input name = "checkbox6" id = "checkbox6" type =
+              "checkbox"> Bloquer les wagons par le lieu de prise en 
+              charge</p>
 
-              <p>You may enter a <strong>Comment</strong>
-              <input name="textfield5" id="textfield5" type="text">
-              for the track.</p>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+              <p>Vous pouvez entrer un <strong>Commentaire</strong> 
+              <input name = "textfield5" id = "textfield5" type = "text">
+              pour la voie.</p>
+           </td>
+         </tr>
+       </tbody>
+     </table>
 
-      <p>Now press <input name="button11" id="button11" value=
-      "Add Staging Track" type="submit"> to add the new Track to
-      this Location or press <input name="button12" id="button12"
-      value="Delete Staging Track" type="submit"> if you do not
-      want to store the Track.</p>
+      <p>Maintenant, appuyez sur <input name = "button11" id = "button11" 
+      value ="Ajouter une Voie de Garagee" type = "submit"> pour ajouter 
+      la nouvelle voie &#224; cet emplacement ou appuyez sur 
+      <input name = "button12" id = "button12"
+      value = "Supprimer Voie de Garage" type = "submit"> si vous ne 
+      souhaitez pas stocker la Voie.</p>
 
-      <p>If you want to add another Track to this Staging Only
-      Location, enter new data and press <input name="button13" id=
-      "button13" value="Save Staging Track" type="submit"> to add
-      another Track.</p>
+      <p>Si vous souhaitez ajouter une autre voie &#224; cet emplacement de 
+      Coulisse, entrez de nouvelles donn&#233;es et appuyez sur 
+      <input name = "button13" id =
+      "button13" value = "Enregistrer Voie de Garage" type = "submit"> 
+      pour ajouter une autre voie.</p>
 
-      <p>Note: if you are running a Train to and from the same
-      Staging Location, you must define two Staging Tracks in
-      OperationsPro, one to depart and one to return on.
-      Physically, the Tracks can be the same physical staging
-      track.</p>
+      <p>Remarque: si vous ex&#233;cutez un train &#224; destination et en 
+      provenance du m&#234;me emplacement de Coulisse, vous devez 
+      d&#233;finir deux voies de Coulisse  dans OperationsPro, une 
+      pour partir et une pour revenir. Physiquement, les voies peuvent 
+      &#234;tre la m&#234;me voie de garage physique.</P>
 
-      <p>Close the <strong>Add Staging Track</strong> window when
-      done with this Staging Location.</p>
+      <p>Fermez la fen&#234;tre <strong>Ajouter une voie interm&#233;diaire
+      </strong> lorsque vous avez termin&#233; avec cet Emplacement de Garage.</p>
 
-      <p>After completing the above actions our <strong>Add
-      Location</strong> example window now shows one Staging Track
-      ("Track1") in this Staging Area Location:</p>
+      <p>Apr&#232;s avoir termin&#233; les actions ci-dessus, notre fen&#234;tre 
+      d'exemple <strong>Ajouter un lieu</strong> affiche d&#233;sormais une 
+      Coulisse ("Voie1") dans cet Emplacement de zone de Coulisse:</p>
 
-      <p><input name="staging" id="staging" src=
-      "images/Ops_Staging05.png" type="image"></p>
+      <p><input name = "staging" id = "staging" src =
+      "images/Ops_Staging05.png" type = "image"></p>
 
-      <h3>Changing a Staging Only Track</h3>
+      <h3>Modification d'une voie de Coulisse  uniquement</h3>
 
-      <p>If you want to change information for any Track entry,
-      press <input name="button14" id="button14" value="Edit" type=
-      "submit"> and the <strong>Edit Staging Track</strong> panel
-      will open.</p>
+      <p>Si vous souhaitez modifier les informations d'une entr&#233;e de Voie, 
+      appuyez sur <input name = "button14" id = "button14" value = "&#201;diter" type =
+      "Envoyer"> et le panneau <strong>Modifier la Voie en Coulisse</strong> 
+      s'ouvrira.</p>
 
-      <table border="0" cellpadding="2" cellspacing="1" width=
+      <table border = "0" cellpadding = "2" cellspacing = "1" width =
       "90%">
         <tbody>
           <tr>
-            <td align="left" valign="top" width="48%"><img src=
-            "images/Ops_Staging06.png" height="844" width=
+            <td align = "left" valign = "top" width = "48%"> <img src =
+            "images/Ops_Staging06.png" height = "844" width =
             "750"></td>
 
-            <td align="left" valign="top" width="52%">
-              <p>Note that it is identical to the Add Interchange
-              and Yard Track panes except for the title.</p>
+            <td align = "left" valign = "top" width = "52%">
+              <p>Notez qu’il est identique aux volets Ajouter une voie 
+              d'&#201;change et une Voie de Triage, &#224; l’exception du titre.</p>
 
-              <p>Change any of the entries that you want to edit
-              and then click <input name="button15" id="button15"
-              value="Save Staging Track" type="submit"> to save the
-              changes.</p>
+              <p>Modifiez les entr&#233;es &#224; modifier, puis cliquez sur 
+              <input name = "button15" id = "button15".
+              value = "Sauvegarder Voie en Coulisse" type = "submit"> 
+              pour enregistrer les modifications.</p>
 
-              <p>You may also <input name="button16" id="button16"
-              value="Delete Staging Track" type="submit"> from your
-              database.</p>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+              <p>Vous pouvez &#233;galement <input name = "button16" id = "button16"
+              value = "Supprimer Voie en Coulisse" type = "submit"> de votre base de donn&#233;es.</p>
+           </td>
+         </tr>
+       </tbody>
+     </table>
 
-      <p>When done with editing close the <strong>Add Staging
-      Track</strong> pane.<br>
-      If you did not yet save your new Staging Location, select
-      <input name="button6" id="button6" value="Save Location"
-      type="submit"> in the <strong><a href=
-      "Ops_AddLocations.shtml">Add Location</a></strong> pane
-      before you close that too.</p>
+      <p>Une fois les modifications termin&#233;es, fermez le volet <strong>
+		  Ajouter une Voie en Coulisse </strong>. <br>
+      Si vous n'avez pas encore enregistr&#233; votre nouvel emplacement de 
+      Coulisse, s&#233;lectionnez <input name = "button6" id = "button6" 
+      value = "Enregistrer l'Emplacement" type = "submit"> dans le <strong><a href =
+      "Ops_AddLocations.shtml"> Ajouter un emplacement</a></strong> a
+      vant de fermer celui-ci &#233;galement.</P>
 
-      <p>You may add as many Locations and Tracks as needed to
-      complete the description of your layout.</p>
-      <hr>
+      <p>Vous pouvez ajouter autant d'Emplacements et de Voies que 
+      n&#233;cessaire pour compl&#233;ter la description de votre R&#233;seau.</p>
+      <h>
 
-      <div align="right">
-        <p><a href="Ops_AddLocations.shtml">Back</a><a href=
+      <div align = "right">
+        <p><a href="Ops_AddLocations.shtml"> Retour</a> <a href =
         "Ops_Cars.shtml"></a></p>
 
-        <p><a href="index.shtml#Operations">Back to Index</a></p>
+        <p><a href="index.shtml#Operations"> Retour &#224; l'index</a></p>
       </div>
     </div><!--#include virtual="/Footer" -->
   </div>
