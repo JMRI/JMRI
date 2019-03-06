@@ -28,6 +28,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
+import java.lang.reflect.InvocationTargetException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -1093,7 +1094,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         JFrame frame = getTargetFrame();
 
         try {
-            Editor ed = (Editor) Class.forName(className).newInstance();
+            Editor ed = (Editor) Class.forName(className).getDeclaredConstructor().newInstance();
 
             ed.setName(getName());
             ed.init(getName());
@@ -1125,12 +1126,8 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             InstanceManager.getDefault(PanelMenu.class).addEditorPanel(ed);
             dispose();
             return ed;
-        } catch (ClassNotFoundException cnfe) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException cnfe) {
             log.error("changeView exception {}", cnfe.toString());
-        } catch (InstantiationException ie) {
-            log.error("changeView exception {}", ie.toString());
-        } catch (IllegalAccessException iae) {
-            log.error("changeView exception {}", iae.toString());
         }
         return null;
     }

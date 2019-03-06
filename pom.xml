@@ -6,7 +6,7 @@
     <name>JMRI</name>
     <groupId>org.jmri</groupId>
     <artifactId>jmri</artifactId>
-    <version>4.15.3-SNAPSHOT</version>
+    <version>4.15.4-SNAPSHOT</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <release.build_user>${user.name}</release.build_user>
@@ -408,6 +408,7 @@
                     <failOnError>true</failOnError><!-- default -->
                     <quiet>true</quiet>
                     <splitindex>true</splitindex>
+                    <additionalJOption>-J-Dhttp.agent=maven-javadoc-plugin-${project.name}</additionalJOption>
                     <tags>
                         <tag>
                             <!-- disable output of custom @navassoc tag - used for UML image generation -->
@@ -850,7 +851,7 @@
         <dependency>
             <groupId>org.jmdns</groupId>
             <artifactId>jmdns</artifactId>
-            <version>3.5.1</version>
+            <version>3.5.5</version>
         </dependency>
         <!--
         <dependency>

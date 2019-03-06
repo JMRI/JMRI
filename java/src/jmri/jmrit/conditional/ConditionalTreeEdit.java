@@ -188,7 +188,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
     JLabel _variableNameLabel = new JLabel(Bundle.getMessage("LabelItemName"));  // NOI18N
     JComboBox<String> _variableCompareOpBox;
     JComboBox<String> _variableSignalBox;
-    JComboBox<String> _variableCompareTypeBox;
+    JComboBox<Conditional.Type> _variableCompareTypeBox;
     JLabel _variableMemoryValueLabel = new JLabel("");
     JTextField _variableData1Field;
     JTextField _variableData2Field;
@@ -2088,7 +2088,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
         // Compare type
         _variableCompareTypeBox = new JComboBox<>();
         for (Conditional.Type type : Conditional.Type.getMemoryItems()) {
-            _variableCompareTypeBox.addItem(type.toString());
+            _variableCompareTypeBox.addItem(type);
         }
         _variableCompareTypeBox.addActionListener(compareTypeBoxListener);
 
@@ -2890,7 +2890,7 @@ public class ConditionalTreeEdit extends ConditionalEditBase {
                 testType = _variableStateBox.getItemAt(_variableStateBox.getSelectedIndex());
                 break;
             case MEMORY:
-                testType = _variableStateBox.getItemAt(_variableStateBox.getSelectedIndex());
+                testType = _variableCompareTypeBox.getItemAt(_variableCompareTypeBox.getSelectedIndex());
                 break;
             case CONDITIONAL:
                 testType = _variableStateBox.getItemAt(_variableStateBox.getSelectedIndex());

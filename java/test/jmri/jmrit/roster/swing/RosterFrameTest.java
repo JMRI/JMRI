@@ -5,6 +5,7 @@ import java.awt.GraphicsEnvironment;
 import jmri.*;
 import jmri.jmrit.roster.*;
 import jmri.util.*;
+import jmri.util.junit.rules.RetryRule;
 
 import org.junit.*;
 
@@ -14,6 +15,9 @@ import org.junit.*;
  * @author	Paul Bender Copyright (C) 2015, 2016
  */
 public class RosterFrameTest {
+
+    @Rule
+    public RetryRule retryRule = new RetryRule(3);  // allow 3 retries
 
     @Test
     public void testCtor() {

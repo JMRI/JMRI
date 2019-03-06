@@ -466,10 +466,12 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
      */
     public class NodeTableModel extends AbstractTableModel {
 
+        @Override
         public String getColumnName(int c) {
             return nodeTableColumnsNames[c];
         }
 
+        @Override
         public Class<?> getColumnClass(int c) {
             switch (c) {
                 case NODENUM_COLUMN:
@@ -494,6 +496,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
             }
         }
 
+        @Override
         public boolean isCellEditable(int r, int c) {
             if (c == SELECT_COLUMN) {
                 return true;
@@ -527,6 +530,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
             fireTableDataChanged();
         }
 
+        @Override
         public void setValueAt(Object value, int row, int col) {
             if (col == SELECT_COLUMN) {
                 if (Bundle.getMessage("SelectEdit").equals(value)) {

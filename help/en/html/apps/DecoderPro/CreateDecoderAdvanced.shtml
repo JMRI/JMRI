@@ -808,6 +808,11 @@ selects the different algorithm needed here.
       <p>If cvFirst is true, the format is CV.PI or CV.PI.SI as used
         by QSI. If it's false, the format is PI.CV or PI.SI.CV as used by
         ESU.
+        
+      <p>Alternately the PI and/or SI CV numbers can be set by using a "nn=nn" syntax when specifying
+        PI and/or SI.  For example, using a cvFirst false syntax, "101=12.80" sets CV101 to 12 before
+        accessing CV 80, regardless of the PI value configured into the capability.
+
       <p>If skipDupIndexWrite is true, certain writes to the PI and SI
         CVs can be skipped if the user selects skipping them. This speeds up access.
         Some decoders  require that the CVs be written for each operation, 

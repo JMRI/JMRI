@@ -35,7 +35,6 @@ public class PiSprogOneSerialDriverAdapter
      * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
     @Deprecated  // will be removed when class converted to multi-system
-    @SuppressWarnings("deprecation")  // temporary implementation
     static public PiSprogOneSerialDriverAdapter instance() {
         return null;
     }

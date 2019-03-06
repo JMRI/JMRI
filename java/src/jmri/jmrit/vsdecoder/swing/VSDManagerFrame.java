@@ -59,7 +59,6 @@ import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@SuppressWarnings("serial")
 public class VSDManagerFrame extends JmriJFrame {
 
     public static enum PropertyChangeID {

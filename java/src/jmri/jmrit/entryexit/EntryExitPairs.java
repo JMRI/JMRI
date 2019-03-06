@@ -297,7 +297,6 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
      */
     @Override
     @Deprecated  // will be removed when superclass method is removed due to @Override
-    @SuppressWarnings("deprecation")  // temporary implementation of method with @Override
     public String[] getSystemNameArray() {
         List<String> nxList = getEntryExitList();
         String[] arr = new String[nxList.size()];
@@ -313,7 +312,6 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
     /** {@inheritDoc} */
     @Override
     @Deprecated  // will be removed when superclass method is removed due to @Override
-    @SuppressWarnings("deprecation")  // temporary implementation of method with @Override
     public List<String> getSystemNameList() {
         return getEntryExitList();
     }
@@ -325,7 +323,6 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
      */
     @Override
     @Deprecated  // will be removed when superclass method is removed due to @Override
-    @SuppressWarnings("deprecation")  // temporary implementation of method with @Override
     public List<DestinationPoints> getNamedBeanList() {
         List<DestinationPoints> beanList = new ArrayList<>();
         for (Source e : nxpair.values()) {

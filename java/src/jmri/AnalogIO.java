@@ -34,22 +34,22 @@ public interface AnalogIO extends NamedBean {
      * 
      * @return true if the analog value is stable
      */
-    default public boolean isConsistentState() {
+    default public boolean isConsistentValue() {
         return true;
     }
-
+    
     /**
-     * Change the commanded state, which results in the relevant command(s)
+     * Change the commanded value, which results in the relevant command(s)
      * being sent to the hardware. The exception is thrown if there are problems
      * communicating with the layout hardware.
      *
      * @param value the desired analog value
-     * @throws jmri.JmriException general error when setting the state fails
+     * @throws jmri.JmriException general error when setting the value fails
      */
     public void setCommandedAnalogValue(float value) throws JmriException;
 
     /**
-     * Query the commanded state. This is a bound parameter, so you can also
+     * Query the commanded value. This is a bound parameter, so you can also
      * register a listener to be informed of changes.
      *
      * @return the analog value
@@ -59,7 +59,7 @@ public interface AnalogIO extends NamedBean {
     /**
      * Query the known analog value. This is a bound parameter, so you can also
      * register a listener to be informed of changes. A result is always
-     * returned; if no other feedback method is available, the commanded state
+     * returned; if no other feedback method is available, the commanded value
      * will be used.
      *
      * @return the known analog value

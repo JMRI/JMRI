@@ -34,38 +34,38 @@ public class BrowserFactory {
 		EventFiringWebDriver driver = null;
  
 		switch (browserName) {
-		case "Firefox":
-			driver = drivers.get("Firefox");
-			if (driver == null) {
-              WebDriverManager.getInstance(FirefoxDriver.class).setup();
-              if(GraphicsEnvironment.isHeadless()) {
-                FirefoxBinary firefoxBinary = new FirefoxBinary();
-                firefoxBinary.addCommandLineOptions("--headless");
-                FirefoxOptions firefoxOptions = new FirefoxOptions();
-                firefoxOptions.setBinary(firefoxBinary);
-                driver = new EventFiringWebDriver(new FirefoxDriver(firefoxOptions));
-                } else {
-                   driver = new EventFiringWebDriver(new FirefoxDriver());
+            case "Firefox":
+                driver = drivers.get("Firefox");
+                if (driver == null) {
+                    WebDriverManager.getInstance(FirefoxDriver.class).setup();
+                    FirefoxBinary firefoxBinary = new FirefoxBinary();
+                    FirefoxOptions firefoxOptions = new FirefoxOptions();
+                    firefoxBinary.addCommandLineOptions("--headless");
+                    firefoxOptions.setBinary(firefoxBinary);
+		    firefoxOptions.setLogLevel(org.openqa.selenium.firefox.FirefoxDriverLogLevel.ERROR);
+                    driver = new EventFiringWebDriver(new FirefoxDriver(firefoxOptions));
+                    driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
+                    drivers.put("Firefox", driver);
                 }
-                driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
-				drivers.put("Firefox", driver);
-			}
-			break;
-		case "Chrome":
-			driver = drivers.get("Chrome");
-			if (driver == null) {
-               WebDriverManager.getInstance(ChromeDriver.class).setup();
-               if(GraphicsEnvironment.isHeadless()) {
-                  ChromeOptions chromeOptions = new ChromeOptions();
-                  chromeOptions.addArguments("--headless");
+                break;
+            case "Chrome":
+                driver = drivers.get("Chrome");
+                if (driver == null) {
+                   WebDriverManager.getInstance(ChromeDriver.class).setup();
+                   ChromeOptions chromeOptions = new ChromeOptions();
+                   if(GraphicsEnvironment.isHeadless()) {
+                      chromeOptions.addArguments("--headless");
+                  } else {
+		      chromeOptions.addArguments("--log-level=3");
+                  }
                   driver = new EventFiringWebDriver(new ChromeDriver(chromeOptions));
-              } else {
-                 driver = new EventFiringWebDriver(new ChromeDriver());
-              }
-              driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
-		      drivers.put("Chrome", driver);
-			}
-			break;
+                  driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
+                  drivers.put("Chrome", driver);
+                }
+                break;
+            default:
+                jmri.util.Log4JUtil.warnOnce(log, "Unexpected browserName = {}", browserName);
+                break;
 		}
 		return driver;
 	}
@@ -79,4 +79,6 @@ public class BrowserFactory {
 		}
     }
 
+    // initialize logging
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BrowserFactory.class);
 }

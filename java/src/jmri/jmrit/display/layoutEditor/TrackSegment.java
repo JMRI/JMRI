@@ -19,6 +19,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Predicate;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.swing.AbstractAction;
@@ -738,7 +739,7 @@ public class TrackSegment extends LayoutTrack {
         Point2D result = getCentreSeg();
         if (connectionType == TRACK_CIRCLE_CENTRE) {
             result = getCoordsCenterCircle();
-        } else if ((connectionType >= BEZIER_CONTROL_POINT_OFFSET_MIN) && (connectionType <= BEZIER_CONTROL_POINT_OFFSET_MAX)) {
+        } else if (LayoutTrack.isBezierHitType(connectionType)) {
             result = getBezierControlPoint(connectionType - BEZIER_CONTROL_POINT_OFFSET_MIN);
         }
         return result;
@@ -770,6 +771,11 @@ public class TrackSegment extends LayoutTrack {
     private JCheckBoxMenuItem hiddenCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("HiddenCheckBoxMenuItemTitle"));
     private JCheckBoxMenuItem dashedCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("DashedCheckBoxMenuItemTitle"));
     private JCheckBoxMenuItem flippedCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("FlippedCheckBoxMenuItemTitle"));
+
+    /**
+     * Maximum length of the bumper decoration.
+     */
+    private static final int MAX_BUMPER_LENGTH = 200;
 
     /**
      * {@inheritDoc}
@@ -1272,7 +1278,17 @@ public class TrackSegment extends LayoutTrack {
             int newValue = QuickPromptUtil.promptForInt(layoutEditor,
                     Bundle.getMessage("DecorationLengthMenuItemTitle"),
                     Bundle.getMessage("DecorationLengthMenuItemTitle"),
-                    bumperLength);
+                    bumperLength, new Predicate<Integer>() {
+                        @Override
+                        public boolean test(Integer t) {
+                            if (t < 0 || t > MAX_BUMPER_LENGTH) {
+                                throw new IllegalArgumentException(
+                                        Bundle.getMessage("DecorationLengthMenuItemRange", MAX_BUMPER_LENGTH));
+                            }
+                            return true;
+                        }
+                    }
+            );
             setBumperLength(newValue);
         });
 
@@ -1570,7 +1586,7 @@ public class TrackSegment extends LayoutTrack {
         jmi.setEnabled(false);
         popupMenu.add(new JSeparator(JSeparator.HORIZONTAL));
 
-        if (bezierControlPoints.size() < BEZIER_CONTROL_POINT_OFFSET_MAX - BEZIER_CONTROL_POINT_OFFSET_MIN) {
+        if (bezierControlPoints.size() <= BEZIER_CONTROL_POINT_OFFSET_MAX - BEZIER_CONTROL_POINT_OFFSET_MIN) {
             popupMenu.add(new AbstractAction(Bundle.getMessage("AddBezierControlPointAfter")) {
 
                 @Override

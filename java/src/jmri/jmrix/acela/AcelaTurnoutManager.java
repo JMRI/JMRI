@@ -81,6 +81,7 @@ public class AcelaTurnoutManager extends AbstractTurnoutManager {
      *
      * @return 'true' if system name has a valid format, else return 'false'
      */
+    @Override
     public NameValidity validSystemNameFormat(String systemName) {
         return (AcelaAddress.validSystemNameFormat(systemName, 'T', getSystemPrefix()));
     }
@@ -101,6 +102,7 @@ public class AcelaTurnoutManager extends AbstractTurnoutManager {
      * @return a normalized system name if system name has a valid format, else
      * return "" (empty string)
      */
+    @Override
     public String normalizeSystemName(String systemName) {
         return (AcelaAddress.normalizeSystemName(systemName, getSystemPrefix()));
     }

@@ -48,9 +48,20 @@
       <p>DCC++ is an Open Source Arduino-based <a href=
       "#documentation">Do-it-Yourself</a> DCC Command Station.</p>
 
-      <p>You can learn more about DCC++ on the <a href=
-      "https://sites.google.com/site/dccppsite/home" target=
-      "_blank">DCC++ Website</a>.</p>
+      <p>You can learn more about DCC++ on the 
+      <a href="https://sites.google.com/site/dccppsite/home" target="_blank">DCC++ Website</a>.</p>
+      
+      <p>
+      Note:  DCC++ is a separate project from JMRI.  
+      If you have 
+      questions about building a DCC++ system, operating it,
+      etc, you should get help via the 
+      <a href="https://sites.google.com/site/dccppsite/home" target="_blank">DCC++ Website</a>
+      and the 
+      <a href="https://www.trainboard.com/highball/index.php?forums/dcc.177/" target="_blank">DCC++ Trainboard discussion</a>.
+      The JMRI discussion groups can only provide limited
+      support for DCC++ itself.  
+      </p>
 
       <p>Features include:</p>
 
@@ -96,9 +107,6 @@
         accessory functions and sensors</li>
       </ul>
 
-      <p><strong><em>NOTE:</em> DCC++ support is broken in JMRI
-      4.1.6 and 4.2.x releases. Please use JMRI 4.3.1 or newer
-      releases with DCC++</strong></p>
 
       <a name="hardware"></a>
       <h2>Supported Hardware</h2>
@@ -109,7 +117,9 @@
       Arduino Uno or Arduino Mega platforms. JMRI should support
       either platform via USB or Network connection.</p>
 
-      <h3>Computer Interfaces</h3>Currently, four interfaces are
+      <h3>Computer Interfaces</h3>
+      
+      Currently, four interfaces are
       supported:
 
       <ul>

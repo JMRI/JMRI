@@ -301,7 +301,7 @@
         <name xml:lang="cs">Předvolby...</name>
         <name xml:lang="nl">Voorkeuren...</name>
         <mnemonic>s</mnemonic>
-        <adapter>apps.gui3.TabbedPreferencesAction</adapter>
+        <adapter>apps.gui3.tabbedpreferences.TabbedPreferencesAction</adapter>
     </node>
   </node>
 

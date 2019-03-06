@@ -1005,7 +1005,7 @@ public class RouteTableAction extends AbstractTableAction<Route> {
     int setTurnoutInformation(Route g) {
         for (int i = 0; i < _includedTurnoutList.size(); i++) {
             RouteTurnout t = _includedTurnoutList.get(i);
-            g.addOutputTurnout(t.getSysName(), t.getState());
+            g.addOutputTurnout(t.getDisplayName(), t.getState());
         }
         return _includedTurnoutList.size();
     }

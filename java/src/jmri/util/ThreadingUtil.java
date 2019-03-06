@@ -280,6 +280,7 @@ public class ThreadingUtil {
     /**
      * Interface for use in ThreadingUtil's lambda interfaces
      */
+    @FunctionalInterface
     static public interface ThreadAction extends Runnable {
 
         /**
@@ -294,6 +295,7 @@ public class ThreadingUtil {
     /**
      * Interface for use in ThreadingUtil's lambda interfaces
      */
+    @FunctionalInterface
     static public interface ReturningThreadAction<E> {
         public E run();
     }

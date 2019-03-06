@@ -1146,16 +1146,21 @@ public class PositionableLabel extends JLabel implements Positionable {
             }
 
             switch (_popupUtil.getOrientation()) {
-                case PositionablePopupUtil.VERTICAL_UP: {
+                case PositionablePopupUtil.VERTICAL_UP:
                     g2d.translate(0, getSize().getHeight());
                     g2d.transform(AffineTransform.getQuadrantRotateInstance(-1));
                     break;
-                }
-                case PositionablePopupUtil.VERTICAL_DOWN: {
+                case PositionablePopupUtil.VERTICAL_DOWN:
                     g2d.transform(AffineTransform.getQuadrantRotateInstance(1));
                     g2d.translate(0, -getSize().getWidth());
                     break;
-                }
+                case 0: 
+                    // routine value (not initialized) for no change
+                    break;
+                default:
+                    // unexpected orientation value
+                    jmri.util.Log4JUtil.warnOnce(log, "Unexpected orientation = {}", _popupUtil.getOrientation());
+                    break;
             }
 
             needsRotate = true;

@@ -179,10 +179,15 @@ public class JUnitUtil {
             // ensure logging of deprecated method calls;
             // individual tests can turn off as needed
             Log4JUtil.setDeprecatedLogging(true);
-            
+ 
         } catch (Throwable e) {
             System.err.println("Could not start JUnitAppender, but test continues:\n" + e);
         }
+            
+        // reset the UnexpectedMessageFlags so that errors from a 
+        // previous test doesn't interfere with the current test.
+        JUnitAppender.resetUnexpectedMessageFlags(Level.INFO); 
+
 
         // do not set the UncaughtExceptionHandler while unit testing
         // individual tests can explicitly set it after calling this method
@@ -611,7 +616,7 @@ public class JUnitUtil {
     public static void resetInstanceManager() {
         // clear all instances from the static InstanceManager
         InstanceManager.getDefault().clearAll();
-        // ensure the auto-default UserPreferencesManager is not created
+        // ensure the auto-default UserPreferencesManager is not created by installing a test one
         InstanceManager.setDefault(UserPreferencesManager.class, new TestUserPreferencesManager());
     }
 
@@ -743,7 +748,7 @@ public class JUnitUtil {
 
     public static void initDebugThrottleManager() {
         jmri.ThrottleManager m = new DebugThrottleManager();
-        InstanceManager.setThrottleManager(m);
+        InstanceManager.store(m, ThrottleManager.class);
     }
 
     public static void initDebugProgrammerManager() {
