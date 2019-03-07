@@ -140,6 +140,7 @@ public class RosterFrameTest {
         }, "selection complete");
         RosterEntry[] selected = frame.getSelectedRosterEntries();
         Assert.assertEquals("selected ", re1, selected[0]);
+	Assert.assertTrue("entry selected",frame.checkIfEntrySelected());
         
     }
 
@@ -186,6 +187,7 @@ public class RosterFrameTest {
         RosterEntry[] selected = frame.getSelectedRosterEntries();
         Assert.assertEquals("selected ", re1, selected[0]);
         Assert.assertEquals("selected ", re3, selected[1]);
+	Assert.assertTrue("entry selected",frame.checkIfEntrySelected());
                 
     }
 
@@ -231,21 +233,23 @@ public class RosterFrameTest {
         RosterEntry[] selected = frame.getSelectedRosterEntries();
         Assert.assertEquals("selected ", 1, selected.length);
         Assert.assertEquals("selected ", re3, selected[0]);  // 2nd address=3 selected by decoder match
+	Assert.assertTrue("entry selected",frame.checkIfEntrySelected());
         
     }
 
-    @Ignore("does not properly find dialog and close")
     @Test
+    @Ignore("does not find and close dialog as expected")
     public void testCheckIfEntrySelected() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         frame.setVisible(true);
         RosterFrameScaffold operator = new RosterFrameScaffold(frame.getTitle());
         Thread t = new Thread(() -> {
-	    jmri.util.swing.JemmyUtil.pressDialogButton(operator,"Message","OK");
+	    jmri.util.swing.JemmyUtil.confirmJOptionPane(operator,"Message","","OK");
         });
         t.setName("Error Dialog Close Thread");
         t.start();
-
+        // the return true case happens in the identify methods above, so
+	// we only check the return false case here.
 	Assert.assertFalse("entry not selected",frame.checkIfEntrySelected());
     }
 
