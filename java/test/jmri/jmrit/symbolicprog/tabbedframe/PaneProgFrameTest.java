@@ -69,7 +69,7 @@ public class PaneProgFrameTest extends TestCase {
                 };
 
         // ugly, temporary way to load the decoder info
-        jmri.jmrit.decoderdefn.DecoderFileTest t = new jmri.jmrit.decoderdefn.DecoderFileTest("");
+        jmri.jmrit.decoderdefn.DecoderFileTest t = new jmri.jmrit.decoderdefn.DecoderFileTest();
         t.setupDecoder();
         DecoderFile df = new DecoderFile();  // used as a temporary
         df.loadVariableModel(t.decoder, p.variableModel);
