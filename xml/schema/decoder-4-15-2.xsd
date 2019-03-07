@@ -317,6 +317,13 @@
   <xs:complexType name="FamilyType">
     <xs:sequence>
 
+      <xs:element name="output" type="OutputElementType"  minOccurs="0" maxOccurs="unbounded" >
+        <xs:unique name="UniqueOutputLabel1">
+          <xs:annotation><xs:documentation>Insist that there's only one label per language</xs:documentation></xs:annotation>
+          <xs:selector xpath="label"/>
+          <xs:field xpath="@xml:lang"/>
+        </xs:unique>
+      </xs:element>
       <xs:element name="model" minOccurs="0" maxOccurs="unbounded" >
         <xs:complexType>
           <xs:sequence>
@@ -327,40 +334,8 @@
                 <xs:attribute name="comment" type="xs:string" />
               </xs:complexType>
             </xs:element>
-            <xs:element name="output" minOccurs="0" maxOccurs="unbounded" >
-              <xs:annotation><xs:documentation>
-                Can represent either an electrical output, i.e. a wire to a light,
-                or some other kind of output, i.e. a sound,
-                or even internal state operations, e.g. "Switch to alternating lights".
-              </xs:documentation></xs:annotation>
-              <xs:complexType>
-                <xs:sequence>
-                  <xs:element name="label" minOccurs="0" maxOccurs="unbounded">
-                    <xs:annotation><xs:documentation>Multiple elements provide internationalized label text</xs:documentation></xs:annotation>
-                    <xs:complexType mixed="true">
-                        <xs:attribute ref="xml:lang" default=""/>
-                    </xs:complexType>
-                  </xs:element>
-                </xs:sequence>
-                <xs:attribute name="name" type="xs:string" use="required"/>
-                <xs:attribute name="label" type="xs:string" />
-                <xs:attribute name="comment" type="xs:string" />
-                <xs:attribute name="maxcurrent" type="xs:string" />
-                <xs:attribute name="connection" default="unspecified" >
-                  <xs:simpleType>
-                    <xs:restriction base="xs:token" >
-                      <xs:enumeration value="unspecified"/>
-                      <xs:enumeration value="plug"/>
-                      <xs:enumeration value="wire"/>
-                      <xs:enumeration value="solder"/>
-                      <xs:enumeration value="LED"/>
-                      <xs:enumeration value="bulb"/>
-                      <xs:enumeration value="other"/>
-                    </xs:restriction>
-                  </xs:simpleType>
-                </xs:attribute>
-              </xs:complexType>
-              <xs:unique name="UniqueOutputLabel1">
+            <xs:element name="output" type="OutputElementType"  minOccurs="0" maxOccurs="unbounded" >
+              <xs:unique name="UniqueOutputLabel2">
                 <xs:annotation><xs:documentation>Insist that there's only one label per language</xs:documentation></xs:annotation>
                 <xs:selector xpath="label"/>
                 <xs:field xpath="@xml:lang"/>
@@ -533,6 +508,43 @@
     <xs:attribute name="highVersionID" type="xs:int" />
     <xs:attribute name="type" type="xs:string" />
     <xs:attribute name="comment" type="xs:string" />
+  </xs:complexType>
+
+  <xs:complexType name="OutputElementType">
+      <xs:annotation><xs:documentation>
+        Can represent either an electrical output, i.e. a wire to a light,
+        or some other kind of output, i.e. a sound,
+        or even internal state operations, e.g. "Switch to alternating lights".
+      </xs:documentation></xs:annotation>
+
+        <xs:sequence>
+          <xs:element name="label" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation><xs:documentation>Multiple elements provide internationalized label text</xs:documentation></xs:annotation>
+            <xs:complexType mixed="true">
+                <xs:attribute ref="xml:lang" default=""/>
+            </xs:complexType>
+          </xs:element>
+        </xs:sequence>
+
+        <xs:attribute name="name" type="xs:string" use="required"/>
+        <xs:attribute name="label" type="xs:string" />
+        <xs:attribute name="comment" type="xs:string" />
+        <xs:attribute name="maxcurrent" type="xs:string" />
+        <xs:attribute name="connection" default="unspecified" >
+          <xs:simpleType>
+            <xs:restriction base="xs:token" >
+              <xs:enumeration value="unspecified"/>
+              <xs:enumeration value="plug"/>
+              <xs:enumeration value="wire"/>
+              <xs:enumeration value="solder"/>
+              <xs:enumeration value="LED"/>
+              <xs:enumeration value="bulb"/>
+              <xs:enumeration value="other"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:attribute>
+
+
   </xs:complexType>
 
   <xs:complexType name="functionlabelsType">
