@@ -5,7 +5,7 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.util.List;
+import java.util.*;
 import java.util.MissingResourceException;
 import java.util.stream.IntStream;
 import javax.swing.ButtonGroup;
