@@ -24,6 +24,8 @@ public class Pr2Throttle extends AbstractThrottle {
 
     /**
      * Constructor
+     * @param memo a LocoNetSystemConnectionMemo to associate with this throttle
+     * @param address a DccLocoAddress to associate with this throttle
      */
     public Pr2Throttle(LocoNetSystemConnectionMemo memo, DccLocoAddress address) {
         super(memo);
