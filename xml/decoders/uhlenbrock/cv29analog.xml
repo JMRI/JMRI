@@ -29,7 +29,7 @@
       <revnumber>1</revnumber>
       <date>2014-05-09</date>
       <authorinitials>ALM</authorinitials>
-      <revremark>Created from NMRA cv29analog.xml file, for use with Uhlenbrock</revremark>
+      <revremark>Created from NMRA cv29analog.xml file, for use with Uhlenbrock (not with IntelliDrive2 and later) </revremark>
     </revision>
   </revhistory>
   <variable CV="29" mask="XXXXXVXX" item="Analog (DC) Operation" default="1">
