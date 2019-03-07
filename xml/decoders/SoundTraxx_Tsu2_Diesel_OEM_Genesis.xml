@@ -1817,7 +1817,7 @@
                     <label xml:lang="it">Accoppiatore| </label>
                 </output>
             </model>
-            <model model="TSU-GN2208 ES44AC" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="856" comment="Model T1004.004">
+            <model model="TSU-GN2208 ES44AC 2" numOuts="8" numFns="30" maxMotorCurrent="2A" connector="DropIn" productID="856" comment="Model T1004.004">
                 <output name="3" label="  FX3  "/>
                 <output name="4" label="  FX4  "/>
                 <output name="5" label="Airhorn| ">
