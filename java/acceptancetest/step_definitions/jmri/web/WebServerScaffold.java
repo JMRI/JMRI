@@ -54,6 +54,8 @@ public class WebServerScaffold implements En {
                 log.debug("NPE shutting down web server", npe2);
                 //Assert.fail("Null Pointer Exception occured during teardown:" + npe2);
             }
+            jmri.util.JUnitAppender.suppressErrorMessage("Error on WebSocket message:\nConnection has been closed locally");
+
         });
     }
 }
