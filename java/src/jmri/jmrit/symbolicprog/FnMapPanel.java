@@ -10,8 +10,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneProgPane;
 import jmri.util.jdom.LocaleSelector;
-import org.jdom2.Attribute;
-import org.jdom2.Element;
+
+import org.jdom2.*;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -307,7 +308,7 @@ public class FnMapPanel extends JPanel {
     }
 
     /**
-     * Use the "model" element from the decoder definition file to configure the
+     * Use the "family" and "model" element from the decoder definition file to configure the
      * number of outputs and set up any that are named instead of numbered.
      */
     protected void configOutputs(Element model) {
@@ -315,6 +316,15 @@ public class FnMapPanel extends JPanel {
             log.debug("configOutputs was given a null model");
             return;
         }
+        Element family = null;
+        Parent parent = model.getParent();
+        if (parent != null && parent instanceof Element) {
+            family = (Element) parent;
+        } else {
+            log.debug("configOutputs found an invalid parent family");
+            return;
+        }
+        
         // get numOuts, numFns or leave the defaults
         Attribute a = model.getAttribute("numOuts");
         try {
@@ -336,7 +346,10 @@ public class FnMapPanel extends JPanel {
             log.debug("numFns, numOuts " + numFn + "," + numOut);
         }
         // take all "output" children
-        List<Element> elemList = model.getChildren("output");
+        List<Element> elemList = new ArrayList<>();
+        elemList.addAll(family.getChildren("output"));
+        elemList.addAll(model.getChildren("output"));
+                
         if (log.isDebugEnabled()) {
             log.debug("output scan starting with " + elemList.size() + " elements");
         }
