@@ -1,6 +1,7 @@
 package jmri.jmrix.loconet.pr3;
 
 import jmri.jmrix.loconet.LnCommandStationType;
+import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.jmrix.loconet.LnPacketizer;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.locobuffer.LocoBufferAdapter;
@@ -176,16 +177,16 @@ public class PR3Adapter extends LocoBufferAdapter {
         return retval;
     }
 
+    
     @Override
     public PR3SystemConnectionMemo getSystemConnectionMemo() {
-        if (super.getSystemConnectionMemo() instanceof PR3SystemConnectionMemo) {
-            return (PR3SystemConnectionMemo) super.getSystemConnectionMemo();
-        } else {
-            log.error("Cannot cast the system connection memo to a PR3SystemConnection Memo.");
-            return null;
+        LocoNetSystemConnectionMemo m = super.getSystemConnectionMemo();
+        if (m instanceof PR3SystemConnectionMemo) {
+            return (PR3SystemConnectionMemo) m;
         }
+        log.error("Cannot cast the system connection memo to a PR3SystemConnection Memo.");
+        return null;
     }
-
 
     private final static Logger log = LoggerFactory.getLogger(PR3Adapter.class);
 }
