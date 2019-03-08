@@ -345,17 +345,18 @@ public class FnMapPanel extends JPanel {
         if (log.isDebugEnabled()) {
             log.debug("numFns, numOuts " + numFn + "," + numOut);
         }
+        
         // take all "output" children
         List<Element> elemList = new ArrayList<>();
-        elemList.addAll(family.getChildren("output"));
-        elemList.addAll(model.getChildren("output"));
+        addOutputElements(family.getChildren(), elemList);
+        addOutputElements(model.getChildren(), elemList);
                 
-        if (log.isDebugEnabled()) {
-            log.debug("output scan starting with " + elemList.size() + " elements");
-        }
+        log.debug("output scan starting with {} elements", elemList.size());
+
         for (int i = 0; i < elemList.size(); i++) {
             Element e = elemList.get(i);
             String name = e.getAttribute("name").getValue();
+            log.debug("name: {} label: {}", e.getAttribute("name").getValue(), e.getAttribute("label").getValue());
             // if this a number, or a character name?
             try {
                 int outputNum = Integer.parseInt(name);
@@ -382,6 +383,18 @@ public class FnMapPanel extends JPanel {
         }
     }
 
+    void addOutputElements(List<Element> input, List<Element> accumulate) {
+      for (Element elem : input) {
+        if (elem.getName().equals("outputs")) {
+          log.debug(" found outputs element of size {}", elem.getChildren().size());
+          addOutputElements(elem.getChildren(), accumulate);
+        } else if (elem.getName().equals("output")) {
+          log.debug("adding output element {} {}", elem.getAttribute("name").getValue(), elem.getAttribute("label").getValue());
+          accumulate.add(elem);
+        }
+      }
+    }
+    
     // split and load two-line labels
     void loadSplitLabel(int iOut, String theLabel) {
         if (iOut < maxOut) {

@@ -314,9 +314,38 @@
     </xs:annotation>
   </xs:element>
 
+  <xs:element name="outputs" >
+    <xs:complexType>
+      <xs:sequence>
+          <!-- this info also needs to be handled two other places for it to be useful -->
+          <xs:element ref="docbook:copyright" minOccurs="0" maxOccurs="1" >
+              <xs:annotation><xs:documentation>
+              DocBook element(s) providing copyright information in standard form.
+              </xs:documentation></xs:annotation>
+          </xs:element>
+          <xs:element ref="docbook:authorgroup" minOccurs="0" maxOccurs="unbounded" >
+              <xs:annotation><xs:documentation>
+              DocBook element(s) describing the authors in standard form.
+              </xs:documentation></xs:annotation>
+          </xs:element>
+          <xs:element ref="docbook:revhistory" minOccurs="0" maxOccurs="unbounded" >
+              <xs:annotation><xs:documentation>
+              DocBook element(s) describing the revision history in standard form.
+              </xs:documentation></xs:annotation>
+          </xs:element>
+        <xs:element name="output" type="OutputElementType"  minOccurs="0" maxOccurs="unbounded" >
+          <xs:unique name="UniqueOutputLabel0">
+            <xs:annotation><xs:documentation>Insist that there's only one label per language</xs:documentation></xs:annotation>
+            <xs:selector xpath="label"/>
+            <xs:field xpath="@xml:lang"/>
+          </xs:unique>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
   <xs:complexType name="FamilyType">
     <xs:sequence>
-
       <xs:element name="output" type="OutputElementType"  minOccurs="0" maxOccurs="unbounded" >
         <xs:unique name="UniqueOutputLabel1">
           <xs:annotation><xs:documentation>Insist that there's only one label per language</xs:documentation></xs:annotation>
@@ -324,6 +353,21 @@
           <xs:field xpath="@xml:lang"/>
         </xs:unique>
       </xs:element>
+      <xs:element name="outputs" minOccurs="0" maxOccurs="unbounded" >
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="output" type="OutputElementType"  minOccurs="0" maxOccurs="unbounded" >
+              <!-- the following uniqueness item has to be at the "output" level, which prevents "outsput_s_" from being a complex type -->
+              <xs:unique name="UniqueOutputLabel2">
+                <xs:annotation><xs:documentation>Insist that there's only one label per language</xs:documentation></xs:annotation>
+                <xs:selector xpath="label"/>
+                <xs:field xpath="@xml:lang"/>
+              </xs:unique>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element ref="xi:include" minOccurs="0" maxOccurs="unbounded" />
       <xs:element name="model" minOccurs="0" maxOccurs="unbounded" >
         <xs:complexType>
           <xs:sequence>
@@ -335,12 +379,27 @@
               </xs:complexType>
             </xs:element>
             <xs:element name="output" type="OutputElementType"  minOccurs="0" maxOccurs="unbounded" >
-              <xs:unique name="UniqueOutputLabel2">
+              <xs:unique name="UniqueOutputLabel3">
                 <xs:annotation><xs:documentation>Insist that there's only one label per language</xs:documentation></xs:annotation>
                 <xs:selector xpath="label"/>
                 <xs:field xpath="@xml:lang"/>
               </xs:unique>
             </xs:element>
+            <xs:element name="outputs" minOccurs="0" maxOccurs="unbounded" >
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="output" type="OutputElementType"  minOccurs="0" maxOccurs="unbounded" >
+                    <!-- the following uniqueness item has to be at the "output" level, which prevents "outsput_s_" from being a complex type -->
+                    <xs:unique name="UniqueOutputLabel4">
+                      <xs:annotation><xs:documentation>Insist that there's only one label per language</xs:documentation></xs:annotation>
+                      <xs:selector xpath="label"/>
+                      <xs:field xpath="@xml:lang"/>
+                    </xs:unique>
+                  </xs:element>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element ref="xi:include" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="size" minOccurs="0" maxOccurs="1" >
               <xs:annotation><xs:documentation>
                 Describes the physical size of the package, for reference.
@@ -516,7 +575,6 @@
         or some other kind of output, i.e. a sound,
         or even internal state operations, e.g. "Switch to alternating lights".
       </xs:documentation></xs:annotation>
-
         <xs:sequence>
           <xs:element name="label" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation><xs:documentation>Multiple elements provide internationalized label text</xs:documentation></xs:annotation>
@@ -525,7 +583,6 @@
             </xs:complexType>
           </xs:element>
         </xs:sequence>
-
         <xs:attribute name="name" type="xs:string" use="required"/>
         <xs:attribute name="label" type="xs:string" />
         <xs:attribute name="comment" type="xs:string" />
@@ -543,8 +600,6 @@
             </xs:restriction>
           </xs:simpleType>
         </xs:attribute>
-
-
   </xs:complexType>
 
   <xs:complexType name="functionlabelsType">

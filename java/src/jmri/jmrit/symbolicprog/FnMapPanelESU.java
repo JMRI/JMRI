@@ -790,8 +790,9 @@ public class FnMapPanelESU extends JPanel {
 
         // take all "output" children
         List<Element> elemList = new ArrayList<>();
-        elemList.addAll(family.getChildren("output"));
-        elemList.addAll(model.getChildren("output"));
+        addOutputElements(family.getChildren(), elemList);
+        addOutputElements(model.getChildren(), elemList);
+                
         log.debug("output scan starting with {} elements", elemList.size());
         
         for (int i = 0; i < elemList.size(); i++) {
@@ -819,6 +820,18 @@ public class FnMapPanelESU extends JPanel {
                 }
             }
         }
+    }
+
+    void addOutputElements(List<Element> input, List<Element> accumulate) {
+      for (Element elem : input) {
+        if (elem.getName().equals("outputs")) {
+          log.debug(" found outputs element of size {}", elem.getChildren().size());
+          addOutputElements(elem.getChildren(), accumulate);
+        } else if (elem.getName().equals("output")) {
+          log.debug("adding output element {} {}", elem.getAttribute("name").getValue(), elem.getAttribute("label").getValue());
+          accumulate.add(elem);
+        }
+      }
     }
 
     // split and load labels
