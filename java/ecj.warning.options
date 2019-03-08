@@ -15,11 +15,11 @@
 -warn:-allJavadoc
 -warn:-javadoc
 
-# 36 on next
--warn:-invalidJavadoc
--warn:-invalidJavadocTag
--warn:-invalidJavadocTagDep
--warn:-invalidJavadocTagNotVisible
+# 57 warnings in source plus 9 in tests with next line on
+-warn:+invalidJavadoc
+-warn:+invalidJavadocTag
+-warn:+invalidJavadocTagDep
+-warn:+invalidJavadocTagNotVisible
 
 -warn:-missingJavadocTags
 -warn:-missingJavadocTagsMethod
@@ -65,6 +65,7 @@
 -warn:+deprecation
 -warn:+discouraged
 -warn:+enumIdentifier
+-warn:+enumSwitch
 -warn:+fallthrough
 -warn:+finalBound
 -warn:+finally 
@@ -88,13 +89,14 @@
 -warn:+semicolon
 -warn:+specialParamHiding
 -warn:+suppress
+-warn:+switchDefault
 -warn:+unavoidableGenericProblems
 -warn:+unchecked
 -warn:+uselessTypeCheck
 -warn:+varargsCast
 
 #
-# Checks we choose not to enforce as out common style
+# Checks we choose not to enforce as our common style
 #
 
   # no real cost to using implicit boxing/unboxing, and it's just easier
@@ -133,11 +135,10 @@
 #
 # Checks we're warning on, working to reduce, but not enforcing
 #
--warn:+enumSwitch
--warn:+switchDefault
+
 
 #
-# Checks we're working on putting in place
+# Checks we will eventually put in place, but would be burdensome now
 #
 
   # 14 outstanding items
@@ -157,7 +158,7 @@
 
 
 #
-# Checks not yet decided 
+# Checks still to be characterized
 #
 
 -warn:-all-static-method
