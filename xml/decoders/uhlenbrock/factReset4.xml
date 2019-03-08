@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- version 1 - include file for Piko decoders reset                 -->
+<resets xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+    <factReset label="Reset CVs 0-257" CV="59" default="1">
+        <label xml:lang="it">Reset CV 0-257 ai valori di fabbrica</label>
+        <label xml:lang="nl">Zet CV's 0-257 terug naar fabrieksinstelling</label>
+    </factReset>
+    <factReset label="Reset CV 257 - 512 (RailCom Plus® Banks 5 &amp; 6)" CV="59" default="2">
+        <label xml:lang="de">Reset CV 257 - 512 (RailCom Plus® Banken 5 &amp; 6)</label>
+    </factReset>
+    <factReset label="Reset CV 257 - 512 (extended Function Mapping Banks 1 &amp; 2)" CV="59" default="3">
+        <label xml:lang="de">Reset CV 257 - 512 (erweitertes Function Mapping Banken 1 &amp; 2)</label>
+    </factReset>
+    <factReset label="Reset CV 257 - 512 (PWM-Modulation Funktions outputs Banks 3 &amp; 4)" CV="59" default="4">
+        <label xml:lang="de">Reset CV 257 - 512 (PWM-Modulation Funktionsausgänge Banken 3 &amp; 4)</label>
+    </factReset>
+</resets>
