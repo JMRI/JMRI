@@ -1,7 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Translation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-03-08 -->
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -26,143 +26,142 @@
     <div id="mainContent">
       <a name="Top" id="Top"></a>
 
-      <h1>Using JMRI&reg; to Operate Trains</h1>
+     <h1> Utilisation de JMRI&reg; Exploiter des Trains</h1>
 
-      <h2>OperationsPro: Edit Route Window</h2>
+      <h2> OperationsPro: Fen&#234;tre Modifier un Itin&#233;raire</h2>
 
-      <div align="right">
-        <p><a href="Ops_Routes.shtml">Back</a><a href=
+      <div align = "right">
+        <p> <a href="Ops_Itin&#233;raires.shtml"> Retour</a> <a href =
         "Ops_Trains.shtml"></a></p>
 
-        <p><a href="index.shtml#Operations">Back to Index</a></p>
-      </div>
-      <hr>
+        <p> <a href="index.shtml#Operations"> Retour &#224; l'Index</a></p>
+     </div>
+      <h>
 
-      <p>The <span style="font-weight: bold;">Edit Route</span>
-      window is opened from the <span style=
-      "font-weight: bold;">Routes</span> window by selecting a
-      Route and clicking on the associated <span style=
-      "font-weight: bold;">Edit</span> button in the list.</p>
+      <p> La fen&#234;tre <span style = "font-weight: bold;"> Modifier 
+      l'Itin&#233;raire</span> s'ouvre &#224; partir de la fen&#234;tre <span style = 
+      "font-weight: bold;"> Itin&#233;raires</span> en s&#233;lectionnant un 
+      Cliquez sur le bouton <span style = "font-weight: bold;"> Modifier
+      </span> associ&#233; dans la liste.</P>
 
-      <p><img style="width: 799px; height: 290px;" alt="edit route"
-      src="images/Ops_EditRoute.png"></p>
+      <p> <img style = "width: 799px; height: 290px;" alt = "modifier l'Itin&#233;raire"
+      src = "images/Ops_EditItin&#233;raire.png"></p>
 
-      <p>The selected Route <span style=
-      "font-weight: bold;">Name</span> is displayed in the
-      window.</p>
+      <p> L'Itin&#233;raire s&#233;lectionn&#233; <span style = "font-weight: bold;"> 
+		  Nom</span> s'affiche dans la fen&#234;tre.</p>
 
-      <p>A <span style="font-weight: bold;">Comment</span> may be
-      displayed if in the database.</p>
+      <p> Un <span style = "font-weight: bold;">Commentaire</span> 
+      peut s'afficher s'il se trouve dans la base de donn&#233;es.</p>
 
-      <p>Columns contain the following data for each Stop on the
-      Route:</p>
+      <p> Les colonnes contiennent les donn&#233;es suivantes pour chaque 
+      arr&#234;t sur l'Itin&#233;raire:</p>
 
-      <p><span style="font-weight: bold;">Id</span> - identifies
-      the Stop to the program.</p>
+      <p> <span style = "font-weight: bold;"> Id</span> - identifie 
+      l'Arr&#234;t .</p>
 
-      <p><span style="font-weight: bold;">Location</span> -
-      displays the Location for each stop.</p>
+      <p> <span style = "font-weight: bold;"> Emplacement</span>: affiche 
+      l'Emplacement pour chaque Arr&#234;t.</p>
 
-      <p><span style="font-weight: bold;">Train Direction</span> -
-      may be set using drop down list to either East or West.</p>
+      <p> <span style = "font-weight: bold;"> Direction du train</span> 
+      - peut &#234;tre d&#233;fini &#224; l'aide de la liste d&#233;roulante Est ou Ouest.</p>
 
-      <p><span style="font-weight: bold;">Moves</span> - shows the
-      number of Moves at each stop.</p>
+      <p> <span style = "font-weight: bold;"> D&#233;placements</span>: 
+      indique le nombre de d&#233;placements &#224; chaque arr&#234;t.</p>
 
-      <p><span style="font-weight: bold;">Pickups?</span> - set to
-      Yes or No using drop down list.</p>
+      <p> <span style = "font-weight: bold;"> Collecte?</span> 
+      - d&#233;finissez sur Oui ou Non &#224; l'aide de la liste d&#233;roulante.</p>
 
-      <p><span style="font-weight: bold;">Set outs?</span> - set to
-      Yes or No using drop down list.</p>
+      <p> <span style = "font-weight: bold;"> Options de D&#233;pose?</span> 
+      - d&#233;finissez la valeur sur Oui ou Non &#224; l'aide de la liste d&#233;roulante.</p>
 
-      <p><span style="font-weight: bold;">Wait</span> - value is
-      shown.</p>
+      <p> <span style = "font-weight: bold;"> Attendre</span> - la valeur est
+      montr&#233;.</p>
 
-      <p><span style="font-weight: bold;">Max Length</span> - of
-      Track at Stop is shown in scale feet.</p>
+      <p> <span style = "font-weight: bold;"> longueur maximale</span> - de
+      La voie &#224; l'Arr&#234;t est indiqu&#233;e en pieds &#224; l'&#233;chelle.</P>
 
-      <p><span style="font-weight: bold;">Grade</span> - at Stop is
-      shown.</p>
+      <p> <span style = "font-weight: bold;"> La pente</span> est affich&#233;e 
+      &#224; l'Arr&#234;t.</p>
 
-      <p><span style="font-weight: bold;">X</span> and <span style=
-      "font-weight: bold;">Y</span> - coordinates of the stop are
-      shown in the two columns.</p>
+      <p> <span style = "font-weight: bold;"> X</span> et <span style =
+      "font-weight: bold;"> Y</span> - les coordonn&#233;es de l'Arr&#234;t sont 
+      indiqu&#233;es dans les deux colonnes.</p>
 
-      <p><span style="font-weight: bold;">Comment</span> - Add
-      button opens the Comment dialog for the stop:</p>
+      <p> <span style = "font-weight: bold;"> Commentaire</span> 
+      - Le bouton Ajouter ouvre la bo&#238;te de dialogue de commentaire pour 
+      l'Arr&#234;t:</p>
 
-      <p><img style="width: 405px; height: 116px;" alt=
-      "stop comment" src="images/Ops_EditRoute_comment.png"></p>
+      <p> <img style = "width: 405px; height: 116px;" alt =
+      "stop comment" src = "images/Ops_EditRoute_comment.png"></p>
 
-      <p><span style="font-weight: bold;">Up</span> and
-      <span style="font-weight: bold;">Down</span> columns move the
-      postion of the stop on the route either Up or Down using the
-      associated button.</p>
+      Les <span style = "font-weight: bold;"> Colonnes</span> et 
+      <span style = "font-weight: bold;"> vers le bas</span> d&#233;placent 
+      la position de l'Arr&#234;t sur l'Itin&#233;raire, soit en haut ou en bas 
+      en utilisant le bouton associ&#233;.</p>
 
-      <p><span style="font-weight: bold;">Delete</span> button -
-      deletes the stop from the route without confirmation.</p>
-      <!-- New in version 3.10 -->
+      <p> <span style = "font-weight: bold;"> bouton Supprimer</span>: 
+      supprime l'Arr&#234;t de l'Itin&#233;raire sans confirmation.</p> 
 
-      <div style=
-      "margin:40px; padding:10px; background-color:#eee;">
-        New in v3.10: Random Moves
+      
+        Nouveau dans la v3.10: D&#233;placements al&#233;atoires
 
-        <p>The Add/Edit Route panel has a "Random" column with a
-        menu of 10 items. The default is "Off" (0%), and there are
-        values between 10 and 90.<br>
-        If you select 10, it tells the program to randomly reduce
-        the number of Car Moves at that Location by up to 10%. So
-        if you asked for 10 Moves, you could get 10 or 9 Moves. If
-        you selected 50, you could get any number of Moves between
-        10 and 5. Be sure to press "Save Route" to save you
-        setting.</p><img src="images/Ops_EditRouteRandom413.png"
-        alt="Route v3.8 with Random column" height="284" width=
-        "713">
-      </div><!-- End of New -->
+        <p> Le panneau Ajouter/Modifier un Itin&#233;raire contient une 
+        colonne "Al&#233;atoire" avec un menu de 10 &#233;l&#233;ments. La valeur par 
+        d&#233;faut est "Off" (0%) et il existe des valeurs comprises 
+        entre 10 et 90. <br> Si vous s&#233;lectionnez 10, le programme 
+        indique au programme de r&#233;duire de manière al&#233;atoire le nombre 
+        de d&#233;placements de voiture &#224; cet emplacement jusqu'&#224; 10%. Donc, 
+        si vous demandez 10 mouvements, vous pouvez obtenir 10 ou 9 
+        mouvements. Si vous avez s&#233;lectionn&#233; 50, vous pouvez obtenir un 
+        nombre quelconque de d&#233;placements compris entre 10 et 5. 
+        N'oubliez pas d'appuyer sur "Enregistrer l'Itin&#233;raire" pour 
+        enregistrer votre paramètre.</P> <img src = 
+        "images/Ops_EditRouteRandom413.png" alt = "Itin&#233;raire v3 .8 avec 
+        colonne al&#233;atoire "height =" 284 "width =" 713 ">
+    
+		<p> fin de la nouveaut&#233; dans la v3.10</p>
+      <p> <span style = "font-weight: bold;"> <span style =
+      "font-style: italic;"> Bas de la fen&#234;tre:</span></span></p>
 
-      <p><span style="font-weight: bold;"><span style=
-      "font-style: italic;">Bottom of the Window:</span></span></p>
+      <p> <span style = "font-weight: bold;"> <span style =
+      "font-style: italic;"> Emplacement</span> -</span></p>
 
-      <p><span style="font-weight: bold;"><span style=
-      "font-style: italic;">Location</span> -</span></p>
+      <p style = "margin-left: 40px;"> <span style =
+      "font-weight: bold;"> liste d&#233;roulante</span> pour s&#233;lectionner 
+      l'un des Emplacements possibles sur votre chemin de fer.</p>
 
-      <p style="margin-left: 40px;"><span style=
-      "font-weight: bold;">drop down list</span> to select any of
-      the possible locations on your Railroad.</p>
+      <p style = "margin-left: 40px;"> <span style =
+      Bouton "font-weight: bold;"> Ajouter un Emplacement</span>: ajoute 
+      le lieu &#224; l'Itin&#233;raire.</p>
 
-      <p style="margin-left: 40px;"><span style=
-      "font-weight: bold;">Add Location</span> button - adds the
-      location to the route.</p>
+      <p style = "margin-left: 40px;"> S&#233;lectionnez des boutons radio 
+      pour <span style = "font-weight: bold;"> ajouter un Emplacement au 
+      d&#233;but</span> ou <span style = "font-weight: bold; "> Ajouter un 
+      Emplacement &#224; la fin</span>.</P>
+      <p style = "font-weight: bold;"> Afficher</p>
 
-      <p style="margin-left: 40px;">Select radio buttons to
-      <span style="font-weight: bold;">Add location at start</span>
-      or <span style="font-weight: bold;">Add location at
-      end</span>.</p>
+       <p style = "margin-left: 40px;"> S&#233;lectionnez des boutons radio 
+       pour <span style = "font-weight: bold;"> Attendre</span> ou 
+       <span style = "font-weight: bold;"> Heure de d&#233;part</span></p>
 
-      <p style="font-weight: bold;">Display</p>
+       <p> <span style = "font-weight: bold;"> le bouton Supprimer 
+       l'Itin&#233;raire</span> supprime l'Itin&#233;raire de la base de donn&#233;es.</p>
 
-      <p style="margin-left: 40px;">Select radio buttons for either
-      <span style="font-weight: bold;">Wait</span> or <span style=
-      "font-weight: bold;">Departure Time</span></p>
+       <p> <span style = "font-weight: bold;"> le bouton Ajouter un 
+       Itin&#233;raire</span> ajoute un nouvel Itin&#233;raire &#224; la base de donn&#233;es.</p>
 
-      <p><span style="font-weight: bold;">Delete Route</span>
-      button removes the Route from database.</p>
+       <p> <span style = "font-weight: bold;"> bouton Enregistrer 
+       l'Itin&#233;raire</span> enregistre les modifications dans la base de donn&#233;es.</p>
 
-      <p><span style="font-weight: bold;">Add Route</span> button
-      adds a new Route to database.</p>
+       <h3> <a href="Ops_Routes_Menu.shtml"> Barre de menu du panneau 
+       Modifier un Itin&#233;raire</a></h3>
+       <h>
 
-      <p><span style="font-weight: bold;">Save Route</span> button
-      save the changes to the database.</p>
+       <div align = "right">
+         <p> <a rel="tag" href="Ops_Itin&#233;raires.shtml"> Retour</a> <a href =
+         "Ops_Trains.shtml"></a></p>
 
-      <h3><a href="Ops_Routes_Menu.shtml">Edit Route panel menu
-      bar</a></h3>
-      <hr>
-
-      <div align="right">
-        <p><a rel="tag" href="Ops_Routes.shtml">Back</a><a href=
-        "Ops_Trains.shtml"></a></p>
-
-        <p><a href="index.shtml#Operations">Back to Index</a></p>
+         <p> <a href="index.shtml#Operations"> Retour &#224; l'Index</a></p>
       </div><!--#include virtual="/Footer" -->
     </div>
   </div>
