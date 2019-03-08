@@ -7434,7 +7434,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      * LayoutBlockManager if needed.
      *
      * @param inBlockName the entered name
-     * @return the LayoutBlock provided
+     * @return the provided LayoutBlock
      */
     public LayoutBlock provideLayoutBlock(@Nonnull String inBlockName) {
         LayoutBlock result = null; //assume failure (pessimist!)
