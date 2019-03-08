@@ -526,6 +526,8 @@ public class LayoutShape {
                                 lsp.setType(LayoutShapePointType.eStraight);
                                 break;
                             }
+                            default:
+                              log.error("unexpected enum member!");
                         }
                         layoutEditor.repaint();
                     });
@@ -712,6 +714,9 @@ public class LayoutShape {
                     path.quadTo(p.getX(), p.getY(), midR.getX(), midR.getY());
                     break;
                 }
+                
+                default:
+                  log.error("unexpected enum member!");
             }
         }   // for (idx = 0; idx < cnt; idx++)
 
