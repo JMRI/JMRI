@@ -797,7 +797,6 @@ public class TrackSegment extends LayoutTrack {
     private static final int MAX_BRIDGE_LINE_WIDTH = 200;
     private static final int MAX_BRIDGE_APPROACH_WIDTH = 200;
     private static final int MAX_BRIDGE_DECK_WIDTH = 200;
-    private static final int MAX_BUMPER_LINE_WIDTH = 200;
     private static final int MAX_TUNNEL_FLOOR_WIDTH = 200;
     private static final int MAX_TUNNEL_LINE_WIDTH = 200;
     private static final int MAX_TUNNEL_ENTRANCE_WIDTH = 200;
