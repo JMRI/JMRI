@@ -141,7 +141,7 @@ public class MatrixSignalMastXml
         if (shared.getChild("delay") != null) { // since 4.15.2
             Element delay = shared.getChild("delay");
             if (delay.getAttribute("duration") != null) {
-                m.setMatrixMastCommandDelay(Integer.valueOf(delay.getAttribute("duration").getValue()));
+                m.setMatrixMastCommandDelay(Integer.parseInt(delay.getAttribute("duration").getValue()));
             }
         }
 
