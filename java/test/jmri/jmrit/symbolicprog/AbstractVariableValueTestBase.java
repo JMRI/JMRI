@@ -9,6 +9,8 @@ import javax.swing.JTextField;
 import jmri.progdebugger.ProgDebugger;
 import jmri.util.JUnitUtil;
 import org.junit.Assert;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,6 +39,7 @@ public abstract class AbstractVariableValueTestBase {
 
     // start of base tests
     // check label, item from ctor
+    @Test
     public void testVariableNaming() {
         HashMap<String, CvValue> v = createCvMap();
         CvValue cv = new CvValue("81", p);
@@ -49,6 +52,7 @@ public abstract class AbstractVariableValueTestBase {
     }
 
     // can we create one, then manipulate the variable to change the CV?
+    @Test
     public void testVariableValueCreate() {
         HashMap<String, CvValue> v = createCvMap();
         CvValue cv = new CvValue("81", p);
@@ -70,6 +74,7 @@ public abstract class AbstractVariableValueTestBase {
     }
 
     //  check create&manipulate for large values
+    @Test
     public void testVariableValueCreateLargeValue() {
         HashMap<String, CvValue> v = createCvMap();
         CvValue cv = new CvValue("81", p);
@@ -91,6 +96,7 @@ public abstract class AbstractVariableValueTestBase {
     }
 
     //  check create&manipulate for large mask values
+    @Test
     public void testVariableValueCreateLargeMaskValue() {
         HashMap<String, CvValue> v = createCvMap();
         CvValue cv = new CvValue("81", p);
@@ -111,6 +117,7 @@ public abstract class AbstractVariableValueTestBase {
         Assert.assertEquals("cv value", 2 * 8 * 256 + 32768 + 3, cv.getValue());
     }
 
+    @Test
     public void testVariableValueCreateLargeMaskValue256() {
         HashMap<String, CvValue> v = createCvMap();
         CvValue cv = new CvValue("81", p);
@@ -131,6 +138,7 @@ public abstract class AbstractVariableValueTestBase {
         Assert.assertEquals("cv value", 256 + 32768 + 3, cv.getValue());
     }
 
+    @Test
     public void testVariableValueCreateLargeMaskValue2up16() {
         HashMap<String, CvValue> v = createCvMap();
         CvValue cv = new CvValue("81", p);
@@ -152,6 +160,7 @@ public abstract class AbstractVariableValueTestBase {
     }
 
     // can we change the CV and see the result in the Variable?
+    @Test
     public void testVariableFromCV() {
         HashMap<String, CvValue> v = createCvMap();
         CvValue cv = new CvValue("81", p);
@@ -170,6 +179,7 @@ public abstract class AbstractVariableValueTestBase {
     }
 
     // Do we get the right return from a readOnly == true DecVariable?
+    @Test
     public void testVariableReadOnly() {
         HashMap<String, CvValue> v = createCvMap();
         CvValue cv = new CvValue("81", p);
@@ -183,6 +193,7 @@ public abstract class AbstractVariableValueTestBase {
     }
 
     // check a read operation
+    @Test
     public void testVariableValueRead() {
         log.debug("testVariableValueRead base starts");
 
@@ -204,6 +215,7 @@ public abstract class AbstractVariableValueTestBase {
     }
 
     // check a write operation to the variable
+    @Test
     public void testVariableValueWrite() {
         log.debug("testVariableValueWrite base starts");
 
@@ -227,6 +239,7 @@ public abstract class AbstractVariableValueTestBase {
     }
 
     // check synch during a write operation to the CV
+    @Test
     public void testVariableCvWrite() {
         if (log.isDebugEnabled()) {
             log.debug("start testVariableCvWrite test");
@@ -256,6 +269,7 @@ public abstract class AbstractVariableValueTestBase {
     }
 
     // check the state diagram
+    @Test
     public void testVariableValueStates() {
 
         HashMap<String, CvValue> v = createCvMap();
@@ -272,6 +286,7 @@ public abstract class AbstractVariableValueTestBase {
     }
 
     // check the state <-> color connection for value
+    @Test
     public void testVariableValueStateColor() {
 
         HashMap<String, CvValue> v = createCvMap();
@@ -287,6 +302,7 @@ public abstract class AbstractVariableValueTestBase {
     }
 
     // check the state <-> color connection for rep when var changes
+    @Test
     public void testVariableRepStateColor() {
 
         HashMap<String, CvValue> v = createCvMap();
@@ -314,6 +330,7 @@ public abstract class AbstractVariableValueTestBase {
 
     // check the state <-> color connection for var when rep changes
     @SuppressWarnings("unchecked")
+    @Test
     public void testVariableVarChangeColorRep() {
 
         HashMap<String, CvValue> v = createCvMap();
@@ -343,6 +360,7 @@ public abstract class AbstractVariableValueTestBase {
     }
 
     // check synchonization of value, representations
+    @Test
     public void testVariableSynch() {
 
         HashMap<String, CvValue> v = createCvMap();
@@ -383,6 +401,7 @@ public abstract class AbstractVariableValueTestBase {
     }
 
     // check synchronization of two vars during a write
+    @Test
     public void testWriteSynch2() {
         if (log.isDebugEnabled()) {
             log.debug("start testWriteSynch2 test");
@@ -414,7 +433,9 @@ public abstract class AbstractVariableValueTestBase {
     // end of common tests
     // this next is just preserved here; note not being invoked.
     // test that you're not using too much space when you call for a value
-    public void XtestSpaceUsage() {  // leading X prevents test from being called
+    @Test
+    @Ignore("Disabled in JUnit 3")
+    public void testSpaceUsage() {
         HashMap<String, CvValue> v = createCvMap();
         CvValue cv = new CvValue("81", p);
         cv.setValue(3);
