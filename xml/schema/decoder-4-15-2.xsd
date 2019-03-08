@@ -314,10 +314,9 @@
     </xs:annotation>
   </xs:element>
 
-  <xs:element name="outputs" >
-    <xs:complexType>
+    <xs:complexType  name="OutputsType">
       <xs:sequence>
-        <!-- this info also needs to be handled two other places for it to be useful -->
+        <!-- An outputs element can be the root of an include file, where version information may be useful -->
         <xs:element ref="docbook:copyright" minOccurs="0" maxOccurs="1" >
           <xs:annotation><xs:documentation>
               DocBook element(s) providing copyright information in standard form.
@@ -342,6 +341,9 @@
         </xs:element>
       </xs:sequence>
     </xs:complexType>
+    
+  <xs:element name="outputs" type="OutputsType">
+    <!-- element definition for include files -->
   </xs:element>
 
   <xs:complexType name="FamilyType">
@@ -353,20 +355,7 @@
           <xs:field xpath="@xml:lang"/>
         </xs:unique>
       </xs:element>
-      <xs:element name="outputs" minOccurs="0" maxOccurs="unbounded" >
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element name="output" type="OutputElementType"  minOccurs="0" maxOccurs="unbounded" >
-              <!-- the following uniqueness item has to be at the "output" level, which prevents "outsput_s_" from being a complex type -->
-              <xs:unique name="UniqueOutputLabel2">
-                <xs:annotation><xs:documentation>Insist that there's only one label per language</xs:documentation></xs:annotation>
-                <xs:selector xpath="label"/>
-                <xs:field xpath="@xml:lang"/>
-              </xs:unique>
-            </xs:element>
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
+      <xs:element name="outputs" type="OutputsType" minOccurs="0" maxOccurs="unbounded" />
       <xs:element ref="xi:include" minOccurs="0" maxOccurs="unbounded" />
       <xs:element name="model" minOccurs="0" maxOccurs="unbounded" >
         <xs:complexType>
@@ -385,20 +374,7 @@
                 <xs:field xpath="@xml:lang"/>
               </xs:unique>
             </xs:element>
-            <xs:element name="outputs" minOccurs="0" maxOccurs="unbounded" >
-              <xs:complexType>
-                <xs:sequence>
-                  <xs:element name="output" type="OutputElementType"  minOccurs="0" maxOccurs="unbounded" >
-                    <!-- the following uniqueness item has to be at the "output" level, which prevents "outsput_s_" from being a complex type -->
-                    <xs:unique name="UniqueOutputLabel4">
-                      <xs:annotation><xs:documentation>Insist that there's only one label per language</xs:documentation></xs:annotation>
-                      <xs:selector xpath="label"/>
-                      <xs:field xpath="@xml:lang"/>
-                    </xs:unique>
-                  </xs:element>
-                </xs:sequence>
-              </xs:complexType>
-            </xs:element>
+            <xs:element name="outputs" type="OutputsType" minOccurs="0" maxOccurs="unbounded" />
             <xs:element ref="xi:include" minOccurs="0" maxOccurs="unbounded" />
             <xs:element name="size" minOccurs="0" maxOccurs="1" >
               <xs:annotation><xs:documentation>
