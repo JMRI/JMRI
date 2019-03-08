@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 4.15.4ish+jake+20190308T1351Z+Ra117808886 on Fri Mar 08 05:51:09 PST 2019-->
-  <decoderIndex version="936">
+  <!--Written by JMRI version 4.15.4ish+jake+20190308T1702Z+R585f89d137 on Fri Mar 08 09:02:30 PST 2019-->
+  <decoderIndex version="944">
     <mfgList nmraListDate="2015-03-06" updated="2015-03-25" lastadd="107,124,126,128,134">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -160,17 +160,6 @@
     <familyList>
       <family name="NMRA standard CV definitions" mfg="NMRA" file="0NMRA.xml">
         <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-        <!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010 All rights reserved -->
-        <!--                                                                        -->
-        <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
-        <!-- the terms of version 2 of the GNU General Public License as published  -->
-        <!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
-        <!-- of this license.                                                       -->
-        <!--                                                                        -->
-        <!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
-        <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
-        <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
-        <!-- for more details.  -->
         <outputs xmlns:docbook="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
           <output name="1" label="White" connection="plug" />
           <output name="2" label="Yellow" connection="plug" />
@@ -2246,24 +2235,6 @@
         </functionlabels>
       </family>
       <family name="Digitrax/Con-cor Sound" mfg="Digitrax" file="Digitrax_1SFX.xml">
-        <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-        <!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010 All rights reserved -->
-        <!--                                                                        -->
-        <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
-        <!-- the terms of version 2 of the GNU General Public License as published  -->
-        <!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
-        <!-- of this license.                                                       -->
-        <!--                                                                        -->
-        <!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
-        <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
-        <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
-        <!-- for more details.  -->
-        <outputs xmlns:docbook="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-          <output name="1" label="White" connection="plug" />
-          <output name="2" label="Yellow" connection="plug" />
-          <output name="3" label="Green" connection="wire" />
-          <output name="4" label="Violet" connection="wire" />
-        </outputs>
         <model model="Con-cor Aero-Train - HO" numOuts="6" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=2A)" formFactor="HO" connector="NMRAmedium" productID="6004" comment="SDH164D Con-Cor #0001-006004">
           <output name="5" label="Brown" connection="wire" />
           <output name="6" label="White-Yellow" connection="wire" />
@@ -2337,6 +2308,13 @@
             <functionlabel num="3" lockable="true">Mars Light</functionlabel>
           </functionlabels>
         </model>
+        <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+        <outputs xmlns:docbook="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+          <output name="1" label="White" connection="plug" />
+          <output name="2" label="Yellow" connection="plug" />
+          <output name="3" label="Green" connection="wire" />
+          <output name="4" label="Violet" connection="wire" />
+        </outputs>
         <functionlabels>
           <functionlabel num="0" lockable="true">Headlight</functionlabel>
           <functionlabel num="1" lockable="true">Bell</functionlabel>

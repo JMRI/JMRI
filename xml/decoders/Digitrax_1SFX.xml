@@ -28,8 +28,7 @@
   <!--    Added several Con-cor models H0 and N                                   -->
   <decoder>
     <family name="Digitrax/Con-cor Sound" mfg="Digitrax">
-        <xi:include href="http://jmri.org/xml/decoders/nmra/outputs1-4.xml"/>
-        <model model="Con-cor Aero-Train - HO" numOuts="6" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=2A)" formFactor="HO" connector="NMRAmedium" productID="6004" comment="SDH164D Con-Cor #0001-006004">
+      <model model="Con-cor Aero-Train - HO" numOuts="6" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=2A)" formFactor="HO" connector="NMRAmedium" productID="6004" comment="SDH164D Con-Cor #0001-006004">
         <output name="5" label="Brown" connection="wire"/>
         <output name="6" label="White-Yellow" connection="wire"/>
         <size length="1.273" width="0.67" height="0.25" units="inches"/>
@@ -102,6 +101,7 @@
           <functionlabel num="3" lockable="true">Mars Light</functionlabel>
         </functionlabels>
       </model>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/outputs1-4.xml"/>
       <functionlabels>
         <functionlabel num="0" lockable="true">Headlight</functionlabel>
         <functionlabel num="1" lockable="true">Bell</functionlabel>

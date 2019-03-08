@@ -345,7 +345,7 @@
   </xs:element>
 
   <xs:complexType name="FamilyType">
-    <xs:sequence>
+    <xs:sequence minOccurs="1" maxOccurs="unbounded">
       <xs:element name="output" type="OutputElementType"  minOccurs="0" maxOccurs="unbounded" >
         <xs:unique name="UniqueOutputLabel1">
           <xs:annotation><xs:documentation>Insist that there's only one label per language</xs:documentation></xs:annotation>
