@@ -465,7 +465,6 @@ public abstract class AbstractMap<K, V> implements Map<K, V> {
      * set, and adding up the results.
      *
      * @return the hash code value for this map
-     * @see Map.Entry#hashCode()
      * @see Object#equals(Object)
      * @see Set#equals(Object)
      */

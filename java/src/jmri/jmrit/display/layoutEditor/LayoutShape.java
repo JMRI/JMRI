@@ -417,10 +417,6 @@ public class LayoutShape {
 
     private JPopupMenu popup = null;
 
-    /**
-     * {@inheritDoc}
-     */
-    //@Override
     @Nonnull
     protected JPopupMenu showShapePopUp(@Nullable MouseEvent mouseEvent, int hitPointType) {
         if (popup != null) {
