@@ -37,7 +37,8 @@ import org.slf4j.LoggerFactory;
  * @author George Warner Copyright (c) 2017-2018
  */
 public class LayoutShape {
-
+    public static final int MAX_LINEWIDTH = 200;
+    
     // operational instance variables (not saved between sessions)
     private LayoutEditor layoutEditor = null;
     private String name;
@@ -540,7 +541,8 @@ public class LayoutShape {
                 int newValue = QuickPromptUtil.promptForInt(layoutEditor,
                         Bundle.getMessage("ShapeLevelMenuItemTitle"),
                         Bundle.getMessage("ShapeLevelMenuItemTitle"),
-                        level);
+                        level, QuickPromptUtil.checkIntRange(1, null, 
+                            Bundle.getMessage("ShapeLevelValueTitle")));
                 setLevel(newValue);
                 layoutEditor.repaint();
             });
@@ -580,7 +582,7 @@ public class LayoutShape {
                 int newValue = QuickPromptUtil.promptForInt(layoutEditor,
                         Bundle.getMessage("ShapeLineWidthMenuItemTitle"),
                         Bundle.getMessage("ShapeLineWidthMenuItemTitle"),
-                        lineWidth);
+                        lineWidth, QuickPromptUtil.checkIntRange(1, MAX_LINEWIDTH, null));
                 setLineWidth(newValue);
                 layoutEditor.repaint();
             });

@@ -962,70 +962,6 @@
         <label>Analog Mode Function Status - F20</label>
         <tooltip>Check to enable function F20 when the unit is operating in analog power mode</tooltip>
     </variable>
-    <variable item="Analog Mode Function Status - F21" CV="242" mask="XXXXXXXV" default="0" minFn="21">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-        <label xml:lang="it">Stato Funzioni in analogico - F21</label>
-        <label xml:lang="fr">État de la fonction en analogique - F21</label>
-        <label xml:lang="de">Funktionsstatus im Analogbetrieb - F21</label>
-        <label>Analog Mode Function Status - F21</label>
-        <tooltip>Check to enable function F21 when the unit is operating in analog power mode</tooltip>
-    </variable>
-    <variable item="Analog Mode Function Status - F22" CV="242" mask="XXXXXXVX" default="0" minFn="22">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-        <label xml:lang="it">Stato Funzioni in analogico - F22</label>
-        <label xml:lang="fr">État de la fonction en analogique - F22</label>
-        <label xml:lang="de">Funktionsstatus im Analogbetrieb - F22</label>
-        <label>Analog Mode Function Status - F22</label>
-        <tooltip>Check to enable function F22 when the unit is operating in analog power mode</tooltip>
-    </variable>
-    <variable item="Analog Mode Function Status - F23" CV="242" mask="XXXXXVXX" default="0" minFn="23">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-        <label xml:lang="it">Stato Funzioni in analogico - F23</label>
-        <label xml:lang="fr">État de la fonction en analogique - F23</label>
-        <label xml:lang="de">Funktionsstatus im Analogbetrieb - F23</label>
-        <label>Analog Mode Function Status - F23</label>
-        <tooltip>Check to enable function F23 when the unit is operating in analog power mode</tooltip>
-    </variable>
-    <variable item="Analog Mode Function Status - F24" CV="242" mask="XXXXVXXX" default="0" minFn="24">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-        <label xml:lang="it">Stato Funzioni in analogico - F24</label>
-        <label xml:lang="fr">État de la fonction en analogique - F24</label>
-        <label xml:lang="de">Funktionsstatus im Analogbetrieb - F24</label>
-        <label>Analog Mode Function Status - F24</label>
-        <tooltip>Check to enable function F24 when the unit is operating in analog power mode</tooltip>
-    </variable>
-    <variable item="Analog Mode Function Status - F25" CV="242" mask="XXXVXXXX" default="0" minFn="25">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-        <label xml:lang="it">Stato Funzioni in analogico - F25</label>
-        <label xml:lang="fr">État de la fonction en analogique - F25</label>
-        <label xml:lang="de">Funktionsstatus im Analogbetrieb - F25</label>
-        <label>Analog Mode Function Status - F25</label>
-        <tooltip>Check to enable function F25 when the unit is operating in analog power mode</tooltip>
-    </variable>
-    <variable item="Analog Mode Function Status - F26" CV="242" mask="XXVXXXXX" default="0" minFn="26">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-        <label xml:lang="it">Stato Funzioni in analogico - F26</label>
-        <label xml:lang="fr">État de la fonction en analogique - F26</label>
-        <label xml:lang="de">Funktionsstatus im Analogbetrieb - F26</label>
-        <label>Analog Mode Function Status - F26</label>
-        <tooltip>Check to enable function F26 when the unit is operating in analog power mode</tooltip>
-    </variable>
-    <variable item="Analog Mode Function Status - F27" CV="242" mask="XVXXXXXX" default="0" minFn="27">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-        <label xml:lang="it">Stato Funzioni in analogico - F27</label>
-        <label xml:lang="fr">État de la fonction en analogique - F27</label>
-        <label xml:lang="de">Funktionsstatus im Analogbetrieb - F27</label>
-        <label>Analog Mode Function Status - F27</label>
-        <tooltip>Check to enable function F27 when the unit is operating in analog power mode</tooltip>
-    </variable>
-    <variable item="Analog Mode Function Status - F28" CV="242" mask="VXXXXXXX" default="0" minFn="28">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-        <label xml:lang="it">Stato Funzioni in analogico - F28</label>
-        <label xml:lang="fr">État de la fonction en analogique - F28</label>
-        <label xml:lang="de">Funktionsstatus im Analogbetrieb - F28</label>
-        <label>Analog Mode Function Status - F28</label>
-        <tooltip>Check to enable function F28 when the unit is operating in analog power mode</tooltip>
-    </variable>
     <variable CV="245" mask="XXXXXXXV" item="Consist Address Active For F13" default="0" minFn="13">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label xml:lang="it">Indirizzo Consist Attivo per F13</label>
@@ -1081,62 +1017,6 @@
         <label xml:lang="fr">Adresse d'Unité Multiple active pour F20</label>
         <label xml:lang="de">Verbundadresse aktiv für F20</label>
         <label>Consist Address Active For F20</label>
-    </variable>
-    <variable CV="246" mask="XXXXXXXV" item="Consist Address Active For F21" default="0" minFn="21">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
-        <label xml:lang="it">Indirizzo Consist Attivo per F21</label>
-        <label xml:lang="fr">Adresse d'Unité Multiple active pour F21</label>
-        <label xml:lang="de">Verbundadresse aktiv für F21</label>
-        <label>Consist Address Active For F21</label>
-    </variable>
-    <variable CV="246" mask="XXXXXXVX" item="Consist Address Active For F22" default="0" minFn="22">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
-        <label xml:lang="it">Indirizzo Consist Attivo per F22</label>
-        <label xml:lang="fr">Adresse d'Unité Multiple active pour F22</label>
-        <label xml:lang="de">Verbundadresse aktiv für F22</label>
-        <label>Consist Address Active For F22</label>
-    </variable>
-    <variable CV="246" mask="XXXXXVXX" item="Consist Address Active For F23" default="0" minFn="23">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
-        <label xml:lang="it">Indirizzo Consist Attivo per F23</label>
-        <label xml:lang="fr">Adresse d'Unité Multiple active pour F23</label>
-        <label xml:lang="de">Verbundadresse aktiv für F23</label>
-        <label>Consist Address Active For F23</label>
-    </variable>
-    <variable CV="246" mask="XXXXVXXX" item="Consist Address Active For F24" default="0" minFn="24">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
-        <label xml:lang="it">Indirizzo Consist Attivo per F24</label>
-        <label xml:lang="fr">Adresse d'Unité Multiple active pour F24</label>
-        <label xml:lang="de">Verbundadresse aktiv für F24</label>
-        <label>Consist Address Active For F24</label>
-    </variable>
-    <variable CV="246" mask="XXXVXXXX" item="Consist Address Active For F25" default="0" minFn="25">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
-        <label xml:lang="it">Indirizzo Consist Attivo per F25</label>
-        <label xml:lang="fr">Adresse d'Unité Multiple active pour F25</label>
-        <label xml:lang="de">Verbundadresse aktiv für F25</label>
-        <label>Consist Address Active For F25</label>
-    </variable>
-    <variable CV="246" mask="XXVXXXXX" item="Consist Address Active For F26" default="0" minFn="26">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
-        <label xml:lang="it">Indirizzo Consist Attivo per F26</label>
-        <label xml:lang="fr">Adresse d'Unité Multiple active pour F26</label>
-        <label xml:lang="de">Verbundadresse aktiv für F26</label>
-        <label>Consist Address Active For F26</label>
-    </variable>
-    <variable CV="246" mask="XVXXXXXX" item="Consist Address Active For F27" default="0" minFn="27">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
-        <label xml:lang="it">Indirizzo Consist Attivo per F27</label>
-        <label xml:lang="fr">Adresse d'Unité Multiple active pour F27</label>
-        <label xml:lang="de">Verbundadresse aktiv für F27</label>
-        <label>Consist Address Active For F27</label>
-    </variable>
-    <variable CV="246" mask="VXXXXXXX" item="Consist Address Active For F28" default="0" minFn="28">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
-        <label xml:lang="it">Indirizzo Consist Attivo per F28</label>
-        <label xml:lang="fr">Adresse d'Unité Multiple active pour F28</label>
-        <label xml:lang="de">Verbundadresse aktiv für F28</label>
-        <label>Consist Address Active For F28</label>
     </variable>
     <variable CV="253" item="Customer Code" readOnly="yes">
         <decVal/>

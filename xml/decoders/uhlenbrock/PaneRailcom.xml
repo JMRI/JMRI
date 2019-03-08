@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- version 1 - copied from zimo -->
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <name>RailCom</name>
+  <column>
+    <display item="Enable RailCom" format="checkbox"/>
+    <display item="RailCom Plus" format="checkbox"/>
+    <label>
+      <text> </text>
+    </label>
+    <display item="RailCom channel 1 (Broadcast)" format="checkbox"/>
+    <display item="RailCom channel 2 (Data)" format="checkbox"/>
+  </column>
+</pane>
