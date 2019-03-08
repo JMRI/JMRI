@@ -1,7 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Translation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-03-08 -->
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -26,74 +26,72 @@
     <div id="mainContent">
       <a name="Top" id="Top"></a>
 
-      <h1>Using JMRI&reg; to Operate Trains</h1>
+     <h1> Utilisation de JMRI&reg; Exploiter des Trains</h1>
 
-      <h2>OperationsPro: Edit Location window</h2>
+      <h2> OperationsPro: Fen&#234;tre Modifier l'Emplacement</h2>
 
-      <div align="right">
-        <p><a href="Ops_Locations_List.shtml">Back</a></p>
+      <div align = "right">
+        <p><a href="Ops_Locations_List.shtml"> Retour</a></p>
 
-        <p><a href="index.shtml#Main">Back to Index</a></p>
-      </div>
-      <hr>
+        <p><a href="index.shtml#Main"> Retour &#224; l'Index</a></p>
+     </div>
+      <h>
 
-      <p>The <span style="font-weight: bold;">Edit Locations</span>
-      window is opened from the <a href=
-      "Ops_Locations_List.shtml"><span style=
-      "font-weight: bold;">Locations</span></a> window using an
-      individual Location's <span style=
-      "font-weight: bold;">Edit</span> button and allows you to
-      edit a specific Location:</p>
+      <p>La fen&#234;tre <span style = "font-weight: bold;"> Modifier les 
+      Emplacements</span> est ouverte &#224; partir de la fen&#234;tre
+      <a href= "Ops_Locations_List.shtml"> <span style = "font-weight: 
+      bold;" > Emplacements</span></a> en utilisant le bouton <span style = 
+      "font-weight: bold;"> Modifier</span> et vous permet de modifier 
+      un Emplacement sp&#233;cifique:</p>
 
-      <p style="margin-left: 50px;"><img style=
-      "width: 770px; height: 740px;" alt="edit Location" src=
+      <p style = "margin-left: 50px;"> <img style =
+      "width: 770px; height: 740px;;" alt = "edit Location" src =
       "images/Ops_Location_Edit.png"></p>
 
-      <h3><a href="Ops_EditLocation_menu.shtml">Edit Location
-      window menu bar</a></h3>
+      <h3> <a href="Ops_EditLocation_menu.shtml"> Barre de menu de la 
+      fen&#234;tre Modifier l'Emplacement</a></h3>
 
-      <p>You may select Spurs, Yards, Classification/Interchange or
-      Staging Only (if greyed out, the option is not available at
-      this Location)</p>
+      <p>Vous pouvez s&#233;lectionner Embranchements, Triages, 
+      Classification/&#201;change ou Coulisse (si cette option est gris&#233;e, 
+      l'option n'est pas disponible &#224; cet endroit)</p>
 
-      <p style="margin-left: 50px;"><img style=
-      "width: 800px; height: 248px;" alt="spur" src=
-      "images/Ops_locations_trackSpur.png"><br>
-      <img style="width: 800px; height: 176px;" alt="yard" src=
-      "images/Ops_Location_trackYards.png"><br>
-      <img style="width: 800px; height: 150px;" alt="interchange"
-      src="images/Ops_Location_interchange.png"></p>
+      <p style = "margin-left: 50px;"> <img style =
+      "width: 800px; height: 248px;" alt = "&#233;peron" src =
+      "images/Ops_locations_trackSpur.png"> <br>
+      <img style = "width: 800px; height: 176px;" alt = "yard" src =
+      "images/Ops_Location_trackYards.png"> <br>
+      <img style = "width: 800px; height: 150px;" alt = "&#233;change"
+      src = "images/Ops_Location_interchange.png"></p>
 
-      <p>No Staging tracks at this Location.<br>
-      You may edit another Track at this Location using the
-      <a href="Ops_EditLocation_track.shtml"><span style=
-      "font-weight: bold;">Edit</span></a> button column for any of
-      the Tracks shown.<br>
-      You add a new Track by selecting the Track Type and clicking
-      <a href="Ops_AddLocations.shtml#addtracks"><strong>Add [Type]
-      Track</strong></a><br>
-      This window is basically the same as the <a href=
-      "Ops_AddLocations.shtml"><span style="font-weight: bold;">Add
-      Location</span></a> window.</p>
+      <p>Aucune voie en attente &#224; cet Emplacement. <br> Vous pouvez
+       modifier une autre voie &#224; cet Emplacement &#224; l'aide de la <a href=
+       "Ops_EditLocation_track.shtml"> <span style = "font-weight: 
+       bold;">&#201;diter</span ></a> Colonne de boutons correspondant &#224; 
+       l'une des voies affich&#233;es. <br>Vous ajoutez une nouvelle voie 
+       en s&#233;lectionnant le type de voie, puis en cliquant sur 
+       <a href="Ops_AddLocations.shtml#addtracks"> <strong>Ajouter un 
+       [type] voie </strong></a> <br> Cette fen&#234;tre est fondamentalement 
+       la m&#234;me que la fen&#234;tre <a href= "Ops_AddLocations.shtml"> <span style = 
+       "font-weight: bold;"> Ajouter un Emplacement</span></a > .</p>
 
-      <p>At the bottom of the <strong>Edit Location</strong> pane
-      are two more buttons:</p>
+      <p>Au bas du volet <strong>Modifier l'Emplacement</strong>, vous 
+      trouverez deux boutons suppl&#233;mentaires:</p>
 
       <ul>
-        <li>Clicking the <span style="font-weight: bold;">Delete
-        Location</span> button removes this Location from your
-        OperationsPro database.</li>
+        <li> En cliquant sur le bouton <span style = "font-weight: 
+        bold;"> Supprimer l'Emplacement</span>, vous supprimez cet
+         Emplacement de votre base de donn&#233;es OperationsPro.</li>
 
-        <li>The <span style="font-weight: bold;">Save
-        Location</span> button saves any changes made on this
-        window to the Location.</li>
-      </ul>
-      <hr>
+        <li> Le bouton <span style = "font-weight: bold;"> Enregistrer 
+        l'Emplacement</span> enregistre toutes les modifications 
+        apport&#233;es &#224; cette fen&#234;tre dans l'Emplacement.</li>
+     </ul>
+      <h>
 
-      <div align="right">
-        <p><a href="Ops_Locations_List.shtml">Back<br></a></p>
+      <div align = "right">
+        <p><a href="Ops_Locations_List.shtml"> Retour <br></a></p>
 
-        <p><a href="index.shtml#Main">Back to Index</a></p>
+        <p><a href="index.shtml#Main"> Retour &#224; l'Index</a> </p>
       </div><!--#include virtual="/Footer" -->
     </div>
   </div>
