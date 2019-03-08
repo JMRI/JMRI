@@ -1,7 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Translation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-03-08 -->
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -27,94 +27,94 @@
     <div id="mainContent">
       <a name="Top" id="Top"></a>
 
-      <h1>Using JMRI&reg; to Operate Trains</h1>
+      
+2659/5000
+<h1> Utilisation de JMRI&reg; Exploiter des Trains</h1>
 
-      <h2>OperationsPro: Edit Location Track window</h2>
+      <h2> OperationsPro: fen&#234;tre Modifier la voie de l'Emplacement</h2>
 
-      <div align="right">
-        <p><a href="Ops_EditLocation.shtml">Back</a></p>
+      <div align = "right">
+        <p> <a href="Ops_EditLocation.shtml"> Retour </a></p>
 
-        <p><a href="index.shtml#Main">Back to Index</a></p>
-      </div>
-      <hr>
+        <p> <a href="index.shtml#Main"> Retour &#224; l'Index </a></p>
+     </div>
+      <h>
 
-      <p>The <span style="font-weight: bold;">Edit [Type]
-      Track</span> window as shown is opened by clicking on one of
-      the buttons in the <strong>Edit</strong> column in the
-      <a href="Ops_EditLocation.shtml"><strong>Edit
-      Location</strong></a> window for the selected Location.</p>
+      <p> La fen&#234;tre <span style = "font-weight: bold;"> Modifier la voie 
+      [Type]</span> affich&#233;e s'affiche en cliquant sur l'un des boutons 
+      de la colonne <strong> Modifier</strong> dans 
+      <a href="Ops_EditLocation.shtml"> <strong> Modifier l'Emplacement
+      </strong> </a> pour l'Emplacement s&#233;lectionn&#233;.</p>
 
-      <p>A window will open with the title for the type of track in
-      use:</p>
+      <p> Une fen&#234;tre s'ouvrira avec le titre du Type de Voie utilis&#233;:</p>
 
-      <p style="margin-left: 40px;"><img style=
-      "width: 800px; height: 108px;" alt="edit spur" src=
+      <p style = "margin-left: 40px;"> <img style =
+      "width: 800px; height: 108px;;" alt = "edit spur" src =
       "images/Ops_EditSpur.png"></p>
 
-      <p style="margin-left: 40px;"><img style=
-      "width: 795px; height: 77px;" alt="edit yard" src=
+      <p style = "margin-left: 40px;"> <img style =
+      "width: 795px; height: 77px;" alt = "edit yard" src =
       "images/Ops_EditYardTrack02.png"></p>
 
-      <p style="margin-left: 40px;"><img style=
-      "width: 798px; height: 78px;" alt="edit interchange" src=
+      <p style = "margin-left: 40px;"> <img style =
+      "width: 798px; height: 78px;;" alt = "&#233;diter l'&#233;change" src =
       "images/Ops_EditInterchange01.png"></p>
 
-      <p>The window offers the same options and menus as the
-      <a href="Ops_AddSiding.shtml#editspur">Add [Type] Track</a>
-      window.</p>
+      <p> La fen&#234;tre propose les m&#234;mes options et menus que la fen&#234;tre 
+      <a href="Ops_AddSiding.shtml#editspur"> Ajouter un Type [Voie] </a>.</p>
 
-      <div style="margin-left: 40px;">
-        <img style="width: 750px; height: 615px;" alt="edit track"
-        src="images/Ops_EditTrack.png">
-      </div>
+      <div style = "margin-left: 40px;">
+        <img style = "width: 750px; height: 615px;" alt = "&#233;diter la voie"
+        src = "images/Ops_EditTrack.png">
+     </div>
 
-      <h3><a href="Ops_EditLocation_trackMenu.shtml">Edit Location
-      Track window menu</a></h3>
+      <h3> <a href="Ops_EditLocation_trackMenu.shtml"> Menu de la fen&#234;tre 
+      Modifier la Voie de l'Emplacement </a></h3>
 
-      <p><img src="images/Ops_AddSidingMenu.png" alt="menu" height=
-      "213" width="758"></p>
+      <p> <img src = "images/Ops_AddSidingMenu.png" alt = "menu" height =
+      "213" width = "758"></p>
 
-      <h4>Tools <img src="images/arrow.gif"></h4>
+      <h4> Outils <img src = "images/arrow.gif"></h4>
 
       <ul>
-        <li><strong><a href="Ops_Cars.shtml">Show
-        Cars</a></strong><br></li>
+        <li> <strong> <a href="Ops_Cars.shtml"> Afficher Wagons </a>
+        </strong> <br></li>
 
         <li>
-          <strong>Track Pools</strong>
+          <strong> Groupements de Voie</strong>
 
-          <p>Spurs may be combined and the their lengths
-          combined.</p>
-        </li>
-
-        <li>
-          <strong>Alternate Track</strong>
-
-          <p><img src="images/Ops_AddSidingTrack05.png" height=
-          "100" width="300"></p>
-        </li>
+          <p> Les Embranchements et leurs Longueurs peuvent &#234;tre combin&#233;s
+           .</p>
+       </li>
 
         <li>
-          <strong>Change Track Type</strong>
+          <strong> Autre Voie</strong>
 
-          <p><img src="images/Ops_AddSidingTrack06.png" height=
-          "107" width="305"></p>
-        </li>
+          <p> <img src = "images/Ops_AddSidingTrack05.png" height =
+          "100" width = "300"></p>
+       </li>
 
         <li>
-          <strong>Planned Pick Ups</strong>
+          <strong> Modifier le Type de Voie</strong>
 
-          <p><img src="images/Ops_AddSidingTrack07.png" height=
-          "117" width="321"></p>
-        </li>
-      </ul>
+          <p> <img src = "images/Ops_AddSidingTrack06.png" height =
+          "107" width = "305"></p>
+       </li>
 
-      <div align="right">
-        <p><a href="Ops_EditLocation.shtml">Back<br></a></p>
+        <li>
+          <strong> Collectes Pr&#233;vues</strong>
 
-        <p><a href="index.shtml#Main">Back to Index</a></p>
-      </div><!--#include virtual="/Footer" -->
-    </div>
-  </div>
-</body>
-</html>
+          <p> <img src = "images/Ops_AddSidingTrack07.png" height =
+          "117" width = "321"></p>
+       </li>
+     </ul>
+
+      <div align = "right">
+        <p> <a href="Ops_EditLocation.shtml"> Retour <br> </a></p>
+
+        <p> <a href="index.shtml#Main"> Retour &#224; l'Index </a></p>
+     </div> <! - # include virtual = "/ Footer" ->
+   </div>
+ </div>
+</ body>
+</ html>
