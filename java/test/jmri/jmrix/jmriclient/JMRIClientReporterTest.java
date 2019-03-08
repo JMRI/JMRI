@@ -31,7 +31,7 @@ public class JMRIClientReporterTest extends jmri.implementation.AbstractReporter
         r = new JMRIClientReporter(3, new JMRIClientSystemConnectionMemo(tc));
     }
 
-    @Override
+    @After
     public void tearDown() {
 	r = null;
         JUnitUtil.tearDown();
