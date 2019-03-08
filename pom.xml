@@ -537,7 +537,6 @@
                                 <File>jmri/jmrit/symbolicprog/tabbedframe/CheckProgrammerNames.class</File>
                                 <File>jmri/jmrix/openlcb/SampleFactory.class</File>
                                 <File>jmri/util/swing/SamplePane.class</File>
-                                <File>apps/tests/Log4JFixture.class</File>
                                 <File>jmri/jmrit/display/EditorFrameOperator.class</File>
                                 <File>jmri/util/web/BrowserFactory.class</File>
                                 <!-- pure interfaces and classes of constants -->
