@@ -18,11 +18,13 @@ import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Predicate;
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.swing.AbstractAction;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComboBox;
@@ -43,8 +45,12 @@ import jmri.SignalHead;
 import jmri.SignalMast;
 import jmri.jmrit.display.PanelMenu;
 import jmri.jmrit.signalling.SignallingGuiTools;
+import jmri.util.ColorUtil;
+import jmri.util.FileUtil;
 import jmri.util.MathUtil;
+import jmri.util.QuickPromptUtil;
 import jmri.util.swing.JCBHandle;
+import jmri.util.swing.JmriColorChooser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -890,6 +896,285 @@ public class PositionablePoint extends LayoutTrack {
             popup.add(connectionsMenu);
         }
 
+        if ((type == EDGE_CONNECTOR) || (type == END_BUMPER)) {
+            //
+            // decorations menu
+            //
+            popup.add(new JSeparator(JSeparator.HORIZONTAL));
+
+            JMenu decorationsMenu = new JMenu(Bundle.getMessage("DecorationMenuTitle"));
+            decorationsMenu.setToolTipText(Bundle.getMessage("DecorationMenuToolTip"));
+            popup.add(decorationsMenu);
+
+            JCheckBoxMenuItem jcbmi;
+            if (type == EDGE_CONNECTOR) {
+                JMenu arrowsMenu = new JMenu(Bundle.getMessage("ArrowsMenuTitle"));
+                decorationsMenu.setToolTipText(Bundle.getMessage("ArrowsMenuToolTip"));
+                decorationsMenu.add(arrowsMenu);
+
+                JMenu arrowsCountMenu = new JMenu(Bundle.getMessage("DecorationStyleMenuTitle"));
+                arrowsCountMenu.setToolTipText(Bundle.getMessage("DecorationStyleMenuToolTip"));
+                arrowsMenu.add(arrowsCountMenu);
+
+                jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationNoneMenuItemTitle"));
+                arrowsCountMenu.add(jcbmi);
+                jcbmi.setToolTipText(Bundle.getMessage("DecorationNoneMenuItemToolTip"));
+                jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+                    if (connect1.getConnect1() == this) {
+                        connect1.setArrowEndStart(false);
+                    }
+                    if (connect1.getConnect2() == this) {
+                        connect1.setArrowEndStop(false);
+                    }
+                    //connect1.setArrowStyle(0);
+                });
+                boolean etherEnd = ((connect1.getConnect1() == this) && connect1.isArrowEndStart())
+                        || ((connect1.getConnect2() == this) && connect1.isArrowEndStop());
+
+                jcbmi.setSelected((connect1.getArrowStyle() == 0) || !etherEnd);
+
+                ImageIcon imageIcon = new ImageIcon(FileUtil.findURL("program:resources/icons/decorations/ArrowStyle1.png"));
+                jcbmi = new JCheckBoxMenuItem(imageIcon);
+                arrowsCountMenu.add(jcbmi);
+                jcbmi.setToolTipText(Bundle.getMessage("DecorationStyleMenuToolTip"));
+                jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+                    if (connect1.getConnect1() == this) {
+                        connect1.setArrowEndStart(true);
+                    }
+                    if (connect1.getConnect2() == this) {
+                        connect1.setArrowEndStop(true);
+                    }
+                    connect1.setArrowStyle(1);
+                });
+                jcbmi.setSelected((connect1.getArrowStyle() == 1) && etherEnd);
+
+                imageIcon = new ImageIcon(FileUtil.findURL("program:resources/icons/decorations/ArrowStyle2.png"));
+                jcbmi = new JCheckBoxMenuItem(imageIcon);
+                arrowsCountMenu.add(jcbmi);
+                jcbmi.setToolTipText(Bundle.getMessage("DecorationStyleMenuToolTip"));
+                jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+                    if (connect1.getConnect1() == this) {
+                        connect1.setArrowEndStart(true);
+                    }
+                    if (connect1.getConnect2() == this) {
+                        connect1.setArrowEndStop(true);
+                    }
+                    connect1.setArrowStyle(2);
+                });
+                jcbmi.setSelected((connect1.getArrowStyle() == 2) && etherEnd);
+
+                imageIcon = new ImageIcon(FileUtil.findURL("program:resources/icons/decorations/ArrowStyle3.png"));
+                jcbmi = new JCheckBoxMenuItem(imageIcon);
+                arrowsCountMenu.add(jcbmi);
+                jcbmi.setToolTipText(Bundle.getMessage("DecorationStyleMenuToolTip"));
+                jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+                    if (connect1.getConnect1() == this) {
+                        connect1.setArrowEndStart(true);
+                    }
+                    if (connect1.getConnect2() == this) {
+                        connect1.setArrowEndStop(true);
+                    }
+                    connect1.setArrowStyle(3);
+                });
+                jcbmi.setSelected((connect1.getArrowStyle() == 3) && etherEnd);
+
+                imageIcon = new ImageIcon(FileUtil.findURL("program:resources/icons/decorations/ArrowStyle4.png"));
+                jcbmi = new JCheckBoxMenuItem(imageIcon);
+                arrowsCountMenu.add(jcbmi);
+                jcbmi.setToolTipText(Bundle.getMessage("DecorationStyleMenuToolTip"));
+                jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+                    if (connect1.getConnect1() == this) {
+                        connect1.setArrowEndStart(true);
+                    }
+                    if (connect1.getConnect2() == this) {
+                        connect1.setArrowEndStop(true);
+                    }
+                    connect1.setArrowStyle(4);
+                });
+                jcbmi.setSelected((connect1.getArrowStyle() == 4) && etherEnd);
+
+                imageIcon = new ImageIcon(FileUtil.findURL("program:resources/icons/decorations/ArrowStyle5.png"));
+                jcbmi = new JCheckBoxMenuItem(imageIcon);
+                arrowsCountMenu.add(jcbmi);
+                jcbmi.setToolTipText(Bundle.getMessage("DecorationStyleMenuToolTip"));
+                jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+                    if (connect1.getConnect1() == this) {
+                        connect1.setArrowEndStart(true);
+                    }
+                    if (connect1.getConnect2() == this) {
+                        connect1.setArrowEndStop(true);
+                    }
+                    connect1.setArrowStyle(5);
+                });
+                jcbmi.setSelected((connect1.getArrowStyle() == 5) && etherEnd);
+
+                JMenu arrowsDirMenu = new JMenu(Bundle.getMessage("ArrowsDirectionMenuTitle"));
+                arrowsDirMenu.setToolTipText(Bundle.getMessage("ArrowsDirectionMenuToolTip"));
+                arrowsMenu.add(arrowsDirMenu);
+
+                jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("DecorationNoneMenuItemTitle"));
+                arrowsDirMenu.add(jcbmi);
+                jcbmi.setToolTipText(Bundle.getMessage("DecorationNoneMenuItemToolTip"));
+                jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+                    connect1.setArrowDirIn(false);
+                    connect1.setArrowDirOut(false);
+                });
+                jcbmi.setSelected(!connect1.isArrowDirIn() && !connect1.isArrowDirOut());
+
+                jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("ArrowsDirectionInMenuItemTitle"));
+                arrowsDirMenu.add(jcbmi);
+                jcbmi.setToolTipText(Bundle.getMessage("ArrowsDirectionInMenuItemToolTip"));
+                jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+                    connect1.setArrowDirIn(true);
+                    connect1.setArrowDirOut(false);
+                });
+                jcbmi.setSelected(connect1.isArrowDirIn() && !connect1.isArrowDirOut());
+
+                jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("ArrowsDirectionOutMenuItemTitle"));
+                arrowsDirMenu.add(jcbmi);
+                jcbmi.setToolTipText(Bundle.getMessage("ArrowsDirectionOutMenuItemToolTip"));
+                jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+                    connect1.setArrowDirOut(true);
+                    connect1.setArrowDirIn(false);
+                });
+                jcbmi.setSelected(!connect1.isArrowDirIn() && connect1.isArrowDirOut());
+
+                jcbmi = new JCheckBoxMenuItem(Bundle.getMessage("ArrowsDirectionBothMenuItemTitle"));
+                arrowsDirMenu.add(jcbmi);
+                jcbmi.setToolTipText(Bundle.getMessage("ArrowsDirectionBothMenuItemToolTip"));
+                jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+                    connect1.setArrowDirIn(true);
+                    connect1.setArrowDirOut(true);
+                });
+                jcbmi.setSelected(connect1.isArrowDirIn() && connect1.isArrowDirOut());
+
+                jmi = arrowsMenu.add(new JMenuItem(Bundle.getMessage("DecorationColorMenuItemTitle")));
+                jmi.setToolTipText(Bundle.getMessage("DecorationColorMenuItemToolTip"));
+                jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+                    Color newColor = JmriColorChooser.showDialog(null, "Choose a color", connect1.getArrowColor());
+                    if ((newColor != null) && !newColor.equals(connect1.getArrowColor())) {
+                        connect1.setArrowColor(newColor);
+                    }
+                });
+                jmi.setForeground(connect1.getArrowColor());
+                jmi.setBackground(ColorUtil.contrast(connect1.getArrowColor()));
+
+                jmi = arrowsMenu.add(new JMenuItem(Bundle.getMessage("MakeLabel",
+                        Bundle.getMessage("DecorationLineWidthMenuItemTitle")) + connect1.getArrowLineWidth()));
+                jmi.setToolTipText(Bundle.getMessage("DecorationLineWidthMenuItemToolTip"));
+                jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+                    //prompt for arrow line width
+                    int newValue = QuickPromptUtil.promptForInt(layoutEditor,
+                            Bundle.getMessage("DecorationLineWidthMenuItemTitle"),
+                            Bundle.getMessage("DecorationLineWidthMenuItemTitle"),
+                            connect1.getArrowLineWidth());
+                    connect1.setArrowLineWidth(newValue);
+                });
+
+                jmi = arrowsMenu.add(new JMenuItem(Bundle.getMessage("MakeLabel",
+                        Bundle.getMessage("DecorationLengthMenuItemTitle")) + connect1.getArrowLength()));
+                jmi.setToolTipText(Bundle.getMessage("DecorationLengthMenuItemToolTip"));
+                jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+                    //prompt for arrow length
+                    int newValue = QuickPromptUtil.promptForInt(layoutEditor,
+                            Bundle.getMessage("DecorationLengthMenuItemTitle"),
+                            Bundle.getMessage("DecorationLengthMenuItemTitle"),
+                            connect1.getArrowLength());
+                    connect1.setArrowLength(newValue);
+                });
+
+                jmi = arrowsMenu.add(new JMenuItem(Bundle.getMessage("MakeLabel",
+                        Bundle.getMessage("DecorationGapMenuItemTitle")) + connect1.getArrowGap()));
+                jmi.setToolTipText(Bundle.getMessage("DecorationGapMenuItemToolTip"));
+                jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+                    //prompt for arrow gap
+                    int newValue = QuickPromptUtil.promptForInt(layoutEditor,
+                            Bundle.getMessage("DecorationGapMenuItemTitle"),
+                            Bundle.getMessage("DecorationGapMenuItemTitle"),
+                            connect1.getArrowGap());
+                    connect1.setArrowGap(newValue);
+                });
+            } // if (type == EDGE_CONNECTOR)
+
+            if (type == END_BUMPER) {
+                JMenu endBumperMenu = new JMenu(Bundle.getMessage("EndBumperMenuTitle"));
+                decorationsMenu.setToolTipText(Bundle.getMessage("EndBumperMenuToolTip"));
+                decorationsMenu.add(endBumperMenu);
+
+                JCheckBoxMenuItem enableCheckBoxMenuItem = new JCheckBoxMenuItem(Bundle.getMessage("EndBumperEnableMenuItemTitle"));
+                enableCheckBoxMenuItem.setToolTipText(Bundle.getMessage("EndBumperEnableMenuItemToolTip"));
+
+                endBumperMenu.add(enableCheckBoxMenuItem);
+                enableCheckBoxMenuItem.addActionListener((java.awt.event.ActionEvent e3) -> {
+                    if (connect1.getConnect1() == this) {
+                        connect1.setBumperEndStart(enableCheckBoxMenuItem.isSelected());
+                    }
+                    if (connect1.getConnect2() == this) {
+                        connect1.setBumperEndStop(enableCheckBoxMenuItem.isSelected());
+                    }
+                });
+                if (connect1.getConnect1() == this) {
+                    enableCheckBoxMenuItem.setSelected(connect1.isBumperEndStart());
+                }
+                if (connect1.getConnect2() == this) {
+                    enableCheckBoxMenuItem.setSelected(connect1.isBumperEndStop());
+                }
+
+                jmi = endBumperMenu.add(new JMenuItem(Bundle.getMessage("DecorationColorMenuItemTitle")));
+                jmi.setToolTipText(Bundle.getMessage("DecorationColorMenuItemToolTip"));
+                jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+                    Color newColor = JmriColorChooser.showDialog(null, "Choose a color", connect1.getBumperColor());
+                    if ((newColor != null) && !newColor.equals(connect1.getBumperColor())) {
+                        connect1.setBumperColor(newColor);
+                    }
+                });
+                jmi.setForeground(connect1.getBumperColor());
+                jmi.setBackground(ColorUtil.contrast(connect1.getBumperColor()));
+
+                jmi = endBumperMenu.add(new JMenuItem(Bundle.getMessage("MakeLabel",
+                        Bundle.getMessage("DecorationLineWidthMenuItemTitle")) + connect1.getBumperLineWidth()));
+                jmi.setToolTipText(Bundle.getMessage("DecorationLineWidthMenuItemToolTip"));
+                jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+                    //prompt for width
+                    int newValue = QuickPromptUtil.promptForInt(layoutEditor,
+                            Bundle.getMessage("DecorationLineWidthMenuItemTitle"),
+                            Bundle.getMessage("DecorationLineWidthMenuItemTitle"),
+                            connect1.getBumperLineWidth(), new Predicate<Integer>() {
+                        @Override
+                        public boolean test(Integer t) {
+                            if (t < 0 || t > TrackSegment.MAX_BUMPER_WIDTH) {
+                                throw new IllegalArgumentException(
+                                        Bundle.getMessage("DecorationLengthMenuItemRange", TrackSegment.MAX_BUMPER_WIDTH));
+                            }
+                            return true;
+                        }
+                    });
+                    connect1.setBumperLineWidth(newValue);
+                });
+
+                jmi = endBumperMenu.add(new JMenuItem(Bundle.getMessage("MakeLabel",
+                        Bundle.getMessage("DecorationLengthMenuItemTitle")) + connect1.getBumperLength()));
+                jmi.setToolTipText(Bundle.getMessage("DecorationLengthMenuItemToolTip"));
+                jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+                    //prompt for length
+                    int newValue = QuickPromptUtil.promptForInt(layoutEditor,
+                            Bundle.getMessage("DecorationLengthMenuItemTitle"),
+                            Bundle.getMessage("DecorationLengthMenuItemTitle"),
+                            connect1.getBumperLength(), new Predicate<Integer>() {
+                        @Override
+                        public boolean test(Integer t) {
+                            if (t < 0 || t > TrackSegment.MAX_BUMPER_LENGTH) {
+                                throw new IllegalArgumentException(
+                                        Bundle.getMessage("DecorationLengthMenuItemRange", TrackSegment.MAX_BUMPER_LENGTH));
+                            }
+                            return true;
+                        }
+                    });
+                    connect1.setBumperLength(newValue);
+                });
+            }
+        }   // if ((type == EDGE_CONNECTOR) || (type == END_BUMPER))
+
         popup.add(new JSeparator(JSeparator.HORIZONTAL));
 
         if (getType() == ANCHOR) {
@@ -1012,6 +1297,14 @@ public class PositionablePoint extends LayoutTrack {
             public void actionPerformed(ActionEvent e) {
                 ident = layoutEditor.getFinder().uniqueName("A", 1);
                 type = ANCHOR;
+                if (connect1.getConnect1() == PositionablePoint.this) {
+                    connect1.setArrowEndStart(false);
+                    connect1.setBumperEndStart(false);
+                }
+                if (connect1.getConnect2() == PositionablePoint.this) {
+                    connect1.setArrowEndStop(false);
+                    connect1.setBumperEndStop(false);
+                }
                 layoutEditor.repaint();
             }
         }));
@@ -1029,6 +1322,14 @@ public class PositionablePoint extends LayoutTrack {
             public void actionPerformed(ActionEvent e) {
                 ident = layoutEditor.getFinder().uniqueName("EB", 1);
                 type = END_BUMPER;
+                if (connect1.getConnect1() == PositionablePoint.this) {
+                    connect1.setArrowEndStart(false);
+                    connect1.setBumperEndStart(true);
+                }
+                if (connect1.getConnect2() == PositionablePoint.this) {
+                    connect1.setArrowEndStop(false);
+                    connect1.setBumperEndStop(true);
+                }
                 layoutEditor.repaint();
             }
         }));
@@ -1040,6 +1341,12 @@ public class PositionablePoint extends LayoutTrack {
             public void actionPerformed(ActionEvent e) {
                 ident = layoutEditor.getFinder().uniqueName("EC", 1);
                 type = EDGE_CONNECTOR;
+                if (connect1.getConnect1() == PositionablePoint.this) {
+                    connect1.setBumperEndStart(false);
+                }
+                if (connect1.getConnect2() == PositionablePoint.this) {
+                    connect1.setBumperEndStop(false);
+                }
                 layoutEditor.repaint();
             }
         }));
@@ -1272,7 +1579,7 @@ public class PositionablePoint extends LayoutTrack {
                     linkPointsBox.setSelectedItem(p.getConnect2().getLayoutBlock().getDisplayName());
                 } else if (p.getLinkedPoint() == null) {
                     if (p.getConnect1() != null && p.getConnect1().getLayoutBlock() != null) {
-                        if (p.getConnect1().getLayoutBlock() != getConnect1().getLayoutBlock() /* && ourDir != p.getConnect1Dir() */ ) {
+                        if (p.getConnect1().getLayoutBlock() != getConnect1().getLayoutBlock() /* && ourDir != p.getConnect1Dir() */) {
                             pointList.add(p);
                             linkPointsBox.addItem(p.getConnect1().getLayoutBlock().getDisplayName());
                         }
