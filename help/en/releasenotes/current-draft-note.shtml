@@ -255,6 +255,8 @@
         <h4>SoundTraxx</h4>
             <ul>
                 <li>Michael Mosher fixed a bug in GP35 SP CV54</li>
+		<li>Michael Mosher add more models to Athearn ECO OEM file</li>
+		<li>Michael Mosher add more models to Athearn Genesis TSU2 OEM file</li>
             </ul>
 
         <h4>TCS</h4>
