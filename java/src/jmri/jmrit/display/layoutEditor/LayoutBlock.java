@@ -163,7 +163,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
      * silent failure.
      */
     @SuppressWarnings("deprecation") // needs careful unwinding for Set operations, generics
-    protected void initializeLayoutBlock() {
+    public void initializeLayoutBlock() {
         //get/create a Block object corresponding to this LayoutBlock
         block = null;   // assume failure (pessimist!)
         String userName = getUserName();
