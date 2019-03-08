@@ -16,7 +16,6 @@ public class DecVariableValueTest extends AbstractVariableValueTestBase {
 
     // abstract members invoked by tests in parent AbstractVariableValueTestBase class
     @Override
-    @Test
     VariableValue makeVar(String label, String comment, String cvName,
             boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
             String cvNum, String mask, int minVal, int maxVal,

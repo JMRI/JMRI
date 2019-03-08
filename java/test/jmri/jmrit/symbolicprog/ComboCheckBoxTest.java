@@ -94,7 +94,6 @@ public class ComboCheckBoxTest {
 
     }
 
-    @Test
     protected void addTestItems(EnumVariableValue var) {
         var.nItems(2);
         var.addItem("Value0");
