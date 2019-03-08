@@ -839,6 +839,16 @@ public class LayoutEditorTest extends jmri.jmrit.display.AbstractEditorTestBase 
                              + Bundle.getMessage("ToolBarSideFloat"), "/");
     }
 
+    @Test
+    public void testGetLEAuxTools() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        LayoutEditor e = new LayoutEditor();
+        LayoutEditorAuxTools t = e.getLEAuxTools();
+        Assert.assertNotNull("tools exist", t);
+        JUnitUtil.dispose(e);
+    }
+
+
     // from here down is testing infrastructure
     @Before
     @Override

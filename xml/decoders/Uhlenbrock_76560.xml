@@ -92,8 +92,8 @@
         <decVal max="63"/>
         <label>Control Reference</label>
         <label xml:lang="de">Regelreferenz</label>
-        <tooltip>Lower Value if top speed to low, Raise Value if Speed at Step 1 too fast"</tooltip>
-        <tooltip xml:lang="de">verkleinern, wenn Höchstgeschwindigkeit zu geringer - vergrößern, wenn geschwindigkeit Schritt 1 zu schnell"</tooltip>
+        <tooltip>Lower Value if top speed too low, Raise Value if Speed at Step 1 too fast</tooltip>
+        <tooltip xml:lang="de">verkleinern, wenn Höchstgeschwindigkeit zu geringer - vergrößern, wenn geschwindigkeit Schritt 1 zu schnell</tooltip>
       </variable>
       <variable item="EMF Droop Config" CV="57" default="2">
         <decVal max="63"/>
@@ -135,7 +135,7 @@
       <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv65.66registers.xml"/>	  	  
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv107.108indepOutputs.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv57lissy.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv115lissy.xml"/>
       <!-- CVs 109 - 111, 116 - 123 -->
       <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/optionVars7outputs.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/cv124.129coupling.xml"/>

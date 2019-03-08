@@ -269,7 +269,7 @@ public class LayoutTrackEditors {
             });
             editTrackSegmentSegmentEditBlockButton.setToolTipText(Bundle.getMessage("EditBlockHint", "")); // empty value for block 1  // NOI18N
 
-            addDoneCancelButtons(panel5, editLayoutTurnoutFrame.getRootPane(), 
+            addDoneCancelButtons(panel5, editTrackSegmentFrame.getRootPane(), 
                     this::editTracksegmentDonePressed, this::editTrackSegmentCancelPressed);
             contentPane.add(panel5);
         }
