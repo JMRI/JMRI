@@ -361,6 +361,7 @@
 <pre style="font-family: monospace;">
     package jmri.jmrix.foo;
 
+    import jmri.util.JUnitUtil;
     import org.junit.After;
     import org.junit.Assert;
     import org.junit.Before;
@@ -373,21 +374,21 @@
      */
     public class FooTest {
 
-       @Test
-       public void testCtor() {
-           Assert.AssertNotNull("Foo Constructor Return",new foo());
-       }
+        @Test
+        public void testCtor() {
+            Assert.AssertNotNull("Foo Constructor Return",new foo());
+        }
 
-      @Before
-      public void setUp() {
-         jmri.util.JUnitUtil.setUp();
-      }
+        @Before
+        public void setUp() {
+            JUnitUtil.setUp();
+        }
 
-     @After
-     public void tearDown() {
-        jmri.util.JUnitUtil.tearDown();
-     }
-  }
+        @After
+        public void tearDown() {
+            JUnitUtil.tearDown();
+        }
+    }
 </pre>
 
      <p>
@@ -424,13 +425,7 @@
      </p>
 
      <p>
-     If the PackageTest has not been converted to JUnit4 format yet, the following line needs to be added to the list of test classes in the "suite" method:</p>
-     <p>
-     <code>suite.addTest(new junit.framework.JUnit4TestAdapter(FooTest.class));</code>
-     </p>
-
-     <p>
-     If the PackageTest has been converted to JUnit4 format, then "<code>FooTest.class</code>" needs to be added to the list test classes in the <code>@Suite.SuiteClasses</code> annotation that appears before the beginning of the PackageTest class.</p>
+     "<code>FooTest.class</code>" needs to be added to the list test classes in the <code>@Suite.SuiteClasses</code> annotation that appears before the beginning of the PackageTest class.</p>
 
       <h3><a name="Write4NewPackage" id="Write4NewPackage">Writing
       Tests for a New Package</a></h3>
@@ -465,17 +460,11 @@
      <p>
      After the PackageTest class is created it needs to be added to the
      PackageTest for the enclosing package.  In the case of our example,
-     the enclosing package test would be the file <code>test/jmri/jmrix/PackageTest.java</code>
+     the enclosing package test would be the file <code>java/test/jmri/jmrix/PackageTest.java</code>
      </p>
 
      <p>
-     If the enclosing PackageTest has not been converted to JUnit4 format yet, the following line needs to be added to the list of test classes in the "suite" method:</p>
-     <p>
-     <code>suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.jmrix.foo.PackageTest.class));</code>
-     </p>
-
-     <p>
-     If the enclosing PackageTest has been converted to JUnit4 format, then "<code>jmri.jmrix.foo.PackageTest.class</code>" needs to be added to the list test classes in the <code>@RunWithSuite</code> annotation that appears before the beginning of the enclosing PackageTest class.</p>
+     "<code>jmri.jmrix.foo.PackageTest.class</code>" needs to be added to the list test classes in the <code>@RunWithSuite</code> annotation that appears before the beginning of the enclosing PackageTest class.</p>
 
 
 
@@ -529,11 +518,11 @@
 <pre style="font-family: monospace;">
     @Before
     public void setUp() throws Exception { 
-        jmri.util.JUnitUtil.setUp(); 
+        JUnitUtil.setUp(); 
     }
     @After
     public void tearDown() throws Exception {
-        jmri.util.JUnitUtil.tearDown();
+        JUnitUtil.tearDown();
     }
 </pre>
         </li>
@@ -611,18 +600,18 @@
       <code>setUp()</code> implementation could start with:</p>
 
 <pre style="font-family: monospace;">
-    jmri.util.JUnitUtil.setUp();
-    jmri.util.JUnitUtil.resetInstanceManager();
-    jmri.util.JUnitUtil.resetProfileManager();
-    jmri.util.JUnitUtil.initConfigureManager();
-    jmri.util.JUnitUtil.initShutDownManager();
+    JUnitUtil.setUp();
+    JUnitUtil.resetInstanceManager();
+    JUnitUtil.resetProfileManager();
+    JUnitUtil.initConfigureManager();
+    JUnitUtil.initShutDownManager();
 
-    jmri.util.JUnitUtil.initDebugCommandStation();
+    JUnitUtil.initDebugCommandStation();
     
-    jmri.util.JUnitUtil.initInternalTurnoutManager();
-    jmri.util.JUnitUtil.initInternalLightManager();
-    jmri.util.JUnitUtil.initInternalSensorManager();
-    jmri.util.JUnitUtil.initReporterManager();
+    JUnitUtil.initInternalTurnoutManager();
+    JUnitUtil.initInternalLightManager();
+    JUnitUtil.initInternalSensorManager();
+    JUnitUtil.initReporterManager();
 </pre>
     (You can omit the initialization managers not needed for your tests) 
     See the 
@@ -632,7 +621,7 @@
 
       <p>Your <code>tearDown()</code> should end with:</p>
 <pre style="font-family: monospace;">
-    jmri.util.JUnitUtil.tearDown();
+    JUnitUtil.tearDown();
 </pre>
 
       <h3><a name="RunningListeners" id="RunningListeners">Working
@@ -733,7 +722,7 @@ setenv JMRI_OPTIONS -Djmri.util.JUnitUtil.checkRemnantThreads=true
 </pre>
       or the equivalent for your computer type.  
       This tells the 
-      <code>jmri.util.JUnitUtil.tearDown()</code>
+      <code>JUnitUtil.tearDown()</code>
       method to check for any (new) threads that are 
       still running at the end of each test. This check
       is a bit time-intensive, so we don't leave it on 
@@ -752,7 +741,7 @@ setenv JMRI_OPTIONS -Djmri.util.JUnitUtil.checkRemnantThreads=true
       "tempFileCreation">Temporary File Creation in
       Tests</a></h3>
       
-      Testcases which create temporary files must be
+      Test cases which create temporary files must be
       carefully created so that there will not be any problems with
       file path, filesystem security, pre-existence of the file,
       etc. These tests must also be written in a way that will
@@ -789,102 +778,6 @@ setenv JMRI_OPTIONS -Djmri.util.JUnitUtil.checkRemnantThreads=true
       JUnit4 will make sure the file or folder is removed afterwards regardless of whether the 
       test succeeds or fails. For more information on this, see the 
       <a href="http://junit.org/junit4/javadoc/latest/org/junit/rules/TemporaryFolder.html">Javadoc for TemporaryFolder</a>.
-     
-     <p>
-     If you're not using JUnit4, consider converting the 
-     test class (see below) and use the technique above.
-     But if you can't do that, and have to stick with JUnit3:
-     
-     <ul>
-        <li>
-        Place the temporary file(s) in the "temp" directory
-        which is a sub- directory of the jmri run-time directory.
-        This directory is used by some testcases and is already
-        configured as excluded from the JMRI code repository. It
-        may be convenient to create a subdirectory there for files
-        created by a particular test. Be sure that the directory
-        exists before creating files in the directory, and create
-        the directory if necessary. An example is shown here:
-<pre style="font-family: monospace;">
-        String tempDirectoryName = "temp";
-        if ( ! (new File(tempDirectoryName).isDirectory())) {
-                // create the temp directory if it does not exist
-                FileUtil.createDirectory(tempDirectoryName);
-        }
-</pre>
-        </li>
-
-        <li>Allow the JRE to define the directory hierarchy
-        separator character automatically:
-<pre style="font-family: monospace;">
-    String filename = tempDirectoryName + File.separator + "testcaseFile.txt";
-</pre>
-        </li>
-
-        <li>Code the testcase in a way that will not break if the
-        file already exists before the testcase is run. One way to
-        do this is to code the testcase to check for existence of
-        the testcase temporary file(s), and delete if necessary,
-        before writing to the file(s). The following example will
-        delete the previous file if it exists:
-<pre style="font-family: monospace;">
-    String filename = tempDirectoryName + File.separator + "testcaseFile.txt";
-    File file = new File(filename);
-    if (file.exists()) {
-        try {
-            file.delete();
-        } catch (java.lang.Exception e) {
-            Assert.fail("Exception while trying to delete the existing file " +
-                                    filename +
-                                    ".\n Exception reported: " +
-                                    e.toString());
-                // perform some appropriate action in this case
-        }
-    }
-</pre>
-        </li>
-
-        <li>Make sure to "close" the temporary file after it has
-        been written.</li>
-
-        <li>Delete the temporary file(s) as part of the test once
-        it is no longer needed by the testcase(s). To allow
-        debugging of testcases, it may be convenient to display the
-        path and filename when logging debug messages (without
-        deleting the temporary file), and to perform the delete
-        only when debug logging is not enabled, such as:
-<pre style="font-family: monospace;">
-    if (log.isDebugEnabled()) {
-            log.debug("Path to written hex file is: "+filename);
-    } else {
-            file.delete();
-    }
-</pre>
-        </li>
-
-        <li>It is unclear whether native Java library routines
-        which create temporary files in an
-        operating-system-specific way such as:
-<pre style="font-family: monospace;">
-    java.io.File.createTempFile("testcasefile","txt")
-</pre>
-    will work reliably within the <a href=
-    "ContinuousIntegration.shtml">continuous integration build</a>
-    environment.
-    An issue was identified with one test case which
-      executed properly on a Windows-based PC for both the
-      "alltest" and "headlesstest" ant target, regardless of how
-      many times it was run. In the <a href=
-      "ContinuousIntegration.shtml">continuous integration</a>
-      environment, the test ran properly the first time after it
-      was checked in, but failed for every subsequent continuous
-      integration environment execution of "headlesstest". Once the
-      test was modified based on the temporary file recommendations
-      shown here, the test became stable over multiple continuous
-      integration executions of "headlesstest".
-        </li>
-      </ul>
-
 
       <h3>
       <a name="J4rules" id="J4rules">JUnit Rules</a></h3>
@@ -1269,9 +1162,9 @@ setenv JMRI_OPTIONS -Djmri.util.JUnitUtil.checkRemnantThreads=true
         removed:<br>
 <pre style="font-family: monospace;">
 import junit.framework.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Test;
+import org.junit.After;
+import org.junit.Before;
 </pre><br>
           and you'll typically need<br>
 <pre style="font-family: monospace;">
