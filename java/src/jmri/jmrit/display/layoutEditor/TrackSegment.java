@@ -782,13 +782,13 @@ public class TrackSegment extends LayoutTrack {
     public static final int MAX_BUMPER_LENGTH = 200;
     public static final int MAX_BUMPER_WIDTH = 200;
 
-    private static final int MAX_ARROW_LINEWIDTH = 200;
-    private static final int MAX_ARROW_LENGTH = 200;
-    private static final int MAX_ARROW_GAP = 200;
+//    private static final int MAX_ARROW_LINEWIDTH = 200;
+//    private static final int MAX_ARROW_LENGTH = 200;
+//    private static final int MAX_ARROW_GAP = 200;
     private static final int MAX_BRIDGE_LINE_WIDTH = 200;
     private static final int MAX_BRIDGE_APPROACH_WIDTH = 200;
     private static final int MAX_BRIDGE_DECK_WIDTH = 200;
-    private static final int MAX_BUMPER_LINE_WIDTH = 200;
+//    private static final int MAX_BUMPER_LINE_WIDTH = 200;
     private static final int MAX_TUNNEL_FLOOR_WIDTH = 200;
     private static final int MAX_TUNNEL_LINE_WIDTH = 200;
     private static final int MAX_TUNNEL_ENTRANCE_WIDTH = 200;
