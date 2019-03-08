@@ -1,7 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Translation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-03-08 -->
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -27,105 +27,98 @@
     <div id="mainContent">
       <a name="Top" id="Top"></a>
 
-      <h1>Using JMRI&reg; to Operate Trains</h1>
+      
+3041/5000
+<h1> Utilisation de JMRI&reg; Exploiter des Trains</h1>
 
-      <h2>OperationsPro: Locations &gt; Edit [Type] Track menu
-      bar</h2>
+      <h2> OperationsPro: Emplacements &gt; Modifier la Barre de Menus [Type] Voie</h2>
 
-      <div align="right">
-        <p><a href="Ops_EditLocation_track.shtml">Back</a></p>
+      <div align = "right">
+        <p> <a href="Ops_EditLocation_track.shtml"> Retour </a></p>
 
-        <p><a href="index.shtml#Main">Back to Index</a></p>
-      </div>
-      <hr>
+        <p> <a href="index.shtml#Main"> Retour &#224; l'Index </a></p>
+     </div>
+      <h>
 
-      <div style="margin-left: 40px;">
-        <img style="width: 796px; height: 91px;" alt=
-        "edit track menu" src="images/Ops_EditTrack_Menu.png">
+      <div style = "margin-left: 40px;">
+        <img style = "width: 796px; height: 91px;" alt =
+        "menu de modification de Voie" src = "images/Ops_EditTrack_Menu.png">
 
         <ul>
           <li>
-            <span style="font-weight: bold;">Tools</span>
+            <span style = "font-weight: bold;"> Outils</span>
 
             <ul>
               <li>
-                <span style="font-weight: bold;">Road
-                Options</span><br>
+                <span style = "font-weight: bold;">Options Ligne</span> <br>
 
-                <p><img style="width: 500px; height: 500px;" alt=
-                "road options" src=
+                <p> <img style = "width: 500px; height: 500px;" alt =
+                "options de route" src =
                 "images/Ops_EditTrack_RoadOptions.png"></p>
-              </li>
+             </li>
 
               <li>
-                <span style="font-weight: bold;">Load
-                Options</span><br>
+                <span style = "font-weight: bold;"> Options de Chargement</span> <br>
 
-                <p><img style="width: 500px; height: 500px;" alt=
-                "Load options" src=
+                <p> <img style = "width: 500px; height: 500px;" alt =
+                "Options de chargement" src =
                 "images/Ops_EditTrack_LoadOptions.png"></p>
-              </li>
+             </li>
 
               <li>
-                <span style="font-weight: bold;">Show
-                Cars</span><br>
+                <span style = "font-weight: bold;"> Afficher les Wagons</span> <br>
 
-                <p><img style="width: 800px; height: 185px;" alt=
-                "show cars" src="images/Ops_ShowCars.png"></p>
-              </li>
+                <p> <img style = "width: 800px; height: 185px;" alt =
+                "show cars" src = "images/Ops_ShowCars.png"></p>
+             </li>
 
               <li>
-                <span style="font-weight: bold;">Manifest
-                Comments</span><br>
+                <span style = "font-weight: bold;"> Commentaires du Manifeste</span> <br>
 
-                <p><img style="width: 799px; height: 313px;" alt=
-                "manifest comments" src=
+                <p> <img style = "width: 799px; height: 313px;" alt =
+                "commentaires manifestes" src =
                 "images/Ops_ManifestComments.png"></p>
-              </li>
+             </li>
 
               <li>
-                <span style="font-weight: bold;">Track
-                Pools</span><br>
+                <span style = "font-weight: bold;">Groupements de Voies</span> <br>
 
-                <p><img style="width: 300px; height: 245px;" alt=
-                "track pools" src="images/Ops_TrackPools.png"></p>
-              </li>
+                <p> <img style = "width: 300px; height: 245px;" alt =
+                "Track Pool" src = "images/Ops_TrackPools.png"></p>
+             </li>
 
               <li>
-                <span style="font-weight: bold;">Alternate
-                Track</span><br>
+                <span style = "font-weight: bold;"> Autre Voie</span> <br>
 
-                <p><img style="width: 300px; height: 100px;" alt=
-                "Altenate track" src=
+                <p> <img style = "width: 300px; height: 100px;" alt =
+                "Altenate track" src =
                 "images/Ops_AlternateTrack.png"></p>
-              </li>
+             </li>
 
-              <li>
-                <span style="font-weight: bold;">Change Track
-                Type</span><br>
+              <li> <span style = "font-weight: bold;"> Changer de Type de Voie
+                </span> <br>
 
-                <p><img style="width: 305px; height: 107px;" alt=
-                "Change Track" src=
+                <p> <img style = "width: 305px; height: 107px;" alt =
+                "Change Track" src =
                 "images/Ops_ChangeTrackType.png"></p>
-              </li>
+             </li>
 
               <li>
-                <span style="font-weight: bold;">Planned Pick
-                Ups</span><br>
+                <span style = "font-weight: bold;"> Collectes pr&#233;vues</span> <br>
 
-                <p><img style="width: 321px; height: 117px;" alt=
-                "planned pick ups" src=
+                <p> <img style = "width: 321px; height: 117px;" alt =
+                "collectes pr&#233;vues" src =
                 "images/Ops_PlannedPickUps.png"></p>
-              </li>
-            </ul>
-          </li>
-        </ul>
+             </li>
+           </ul>
+         </li>
+       </ul>
 
-        <div align="right">
-          <p><a href=
-          "Ops_EditLocation_track.shtml">Back<br></a></p>
+        <div align = "right">
+          <p> <a href =
+          "Ops_EditLocation_track.shtml"> Retour <br> </a></p>
 
-          <p><a href="index.shtml#Main">Back to Index</a></p>
+          <p> <a href="index.shtml#Main"> Retour &#224; l'Index </a></p>
         </div><!--#include virtual="/Footer" -->
       </div>
     </div>
