@@ -1,8 +1,5 @@
 package jmri.jmrit.ctc.editor.gui;
 
-import jmri.jmrit.ctc.editor.code.AwtWindowProperties;
-import jmri.jmrit.ctc.editor.code.CheckJMRIObject;
-import jmri.jmrit.ctc.editor.code.CommonSubs;
 import java.awt.Color;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -10,6 +7,10 @@ import jmri.jmrit.ctc.ctcserialdata.CTCSerialData;
 import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
 import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;
 import jmri.jmrit.ctc.ctcserialdata.TrafficLockingEntry;
+import jmri.jmrit.ctc.editor.code.AwtWindowProperties;
+import jmri.jmrit.ctc.editor.code.CheckJMRIObject;
+import jmri.jmrit.ctc.editor.code.CommonSubs;
+import jmri.jmrit.ctc.editor.gui.FrmMainForm;
 
 /**
  *
@@ -27,6 +28,7 @@ public class FrmTRL extends javax.swing.JFrame {
     private final CodeButtonHandlerData _mCodeButtonHandlerData;
     private final CTCSerialData _mCTCSerialData;
     private final CheckJMRIObject _mCheckJMRIObject;
+    private final FrmMainForm _mMainForm;
 
     private void initOrig() {
     }
@@ -39,6 +41,7 @@ public class FrmTRL extends javax.swing.JFrame {
         super();
         initComponents();
         CommonSubs.addHelpMenu(this, "package.jmri.jmrit.ctc.CTC_frmTRL", true);  // NOI18N
+        _mMainForm = jmri.InstanceManager.getDefault(FrmMainForm.class);
         _mAwtWindowProperties = awtWindowProperties;
         _mCodeButtonHandlerData = codeButtonHandlerData;
         _mCTCSerialData = ctcSerialData;
@@ -202,6 +205,8 @@ public class FrmTRL extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosing
 
     private void _mEditLeftTrafficLockingRulesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mEditLeftTrafficLockingRulesActionPerformed
+        if (_mMainForm._mRulesFormOpen) return;
+        _mMainForm._mRulesFormOpen = true;
         FrmTRL_Rules dialog = new FrmTRL_Rules( _mAwtWindowProperties, _mCodeButtonHandlerData,
                                                 true, _mCTCSerialData, _mCheckJMRIObject);
         dialog.addWindowListener(new WindowAdapter() {
@@ -211,12 +216,15 @@ public class FrmTRL extends javax.swing.JFrame {
                     _mClosedNormally = true;
                     updateRuleCounts();
                 }
+                _mMainForm._mRulesFormOpen = false;
             }
         });
         dialog.setVisible(true);  // MUST BE AFTER "addWindowListener"!  BUG IN AWT/SWING!
     }//GEN-LAST:event__mEditLeftTrafficLockingRulesActionPerformed
 
     private void _mEditRightTrafficLockingRulesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mEditRightTrafficLockingRulesActionPerformed
+        if (_mMainForm._mRulesFormOpen) return;
+        _mMainForm._mRulesFormOpen = true;
         FrmTRL_Rules dialog = new FrmTRL_Rules( _mAwtWindowProperties, _mCodeButtonHandlerData,
                                                 false, _mCTCSerialData, _mCheckJMRIObject);
         dialog.addWindowListener(new WindowAdapter() {
@@ -226,6 +234,7 @@ public class FrmTRL extends javax.swing.JFrame {
                     _mClosedNormally = true;
                     updateRuleCounts();
                 }
+                _mMainForm._mRulesFormOpen = false;
             }
         });
         dialog.setVisible(true);  // MUST BE AFTER "addWindowListener"!  BUG IN AWT/SWING!
