@@ -399,7 +399,11 @@
 
         <h4>Signal Masts</h4>
             <ul>
-                <li></li>
+                <li>Output Matrix Signal Masts now allow to set a mast-specific delay interval between the individual
+                commands sent to the connected Turnout outputs.<br>
+                In addition, a common (minimum) interval for all outputs on the same connection can be configured (set
+                it in Preferences &gt; Connection &gt; Additional Connection Settings. Default this is set to 250
+                Milliseconds.</li>
             </ul>
             
     	<h4>Signal Groups</h4>
