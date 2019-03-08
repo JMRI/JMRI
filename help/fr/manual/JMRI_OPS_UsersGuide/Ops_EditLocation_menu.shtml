@@ -1,7 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Translation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-03-08 -->
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -26,47 +26,47 @@
     <div id="mainContent">
       <a name="Top" id="Top"></a>
 
-      <h1>Using JMRI&reg; to Operate Trains</h1>
+      <h1> Utilisation de JMRI&reg; Exploiter des Trains</h1>
 
-      <h2>Operations Edit Location Menu Bar</h2>
+      <h2>Op&#233;rations Barre de Menu Modifier l'Emplacement</h2>
 
-      <div align="right">
-        <p><a href="Ops_EditLocation.shtml">Back</a></p>
+      <div align = "right">
+        <p> <a href="Ops_EditLocation.shtml"> Retour </a></p>
 
-        <p><a href="index.shtml#Main">Back to Index</a></p>
-      </div>
-      <hr>
-      <img style="width: 798px; height: 96px;" alt="menu bar" src=
-      "images/Ops_EditLocation_menubar.png"><br>
+        <p> <a href="index.shtml#Main"> Retour &#224; l'index </a></p>
+     </div>
+      <h>
+      <img style = "width: 798px; height: 96px;" alt = "barre de menu" src =
+      "images/Ops_EditLocation_menubar.png"> <br>
 
       <ul>
         <li>
-          <span style="font-weight: bold;">Tools</span>
+          <span style = "font-weight: bold;"> Outils</span>
 
           <ul>
-            <li><a href="Ops_Locations_byCar.shtml"><span style=
-            "font-weight: bold;">Modify Location by Car
-            Type</span></a></li>
+            <li> <a href="Ops_Locations_byCar.shtml"> <span style =
+            "font-weight: bold;"> Modifier l'Emplacement par Type de 
+            Wagon</span> </a></li>
 
-            <li><a href="Ops_Cars.shtml"><span style=
-            "font-weight: bold;">Show Cars</span></a></li>
+            <li> <a href="Ops_Cars.shtml"> <span style =
+            "font-weight: bold;"> Afficher les Wagons</span> </a></li>
 
             <li>
-              <span style="font-weight: bold;">Change Track
-              Type</span>
+              <span style = "font-weight: bold;"> Modifier le Type de 
+              Voie</span>
 
-              <p><img style="width: 362px; height: 107px;" alt=
-              "change track type" src=
+              <p> <img style = "width: 362px; height: 107px;" alt =
+              "change track type" src =
               "images/Ops_EditLocation_changeTrack.png"></p>
-            </li>
-          </ul>
-        </li>
-      </ul>
+           </li>
+         </ul>
+       </li>
+     </ul>
 
-      <div align="right">
-        <p><a href="Ops_EditLocation.shtml">Back<br></a></p>
+      <div align = "right">
+        <p> <a href="Ops_EditLocation.shtml"> Retour <br> </a></p>
 
-        <p><a href="index.shtml#Main">Back to Index</a></p>
+        <p> <a href="index.shtml#Main"> Retour &#224; l'index </a></p>
       </div><!--#include virtual="/Footer" -->
     </div>
   </div>
