@@ -61,7 +61,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  * Three types of Positionable Point are supported: Anchor - point on track -
  * two track connections End Bumper - end of track point - one track connection
- * Edge Connector - This is used to link track segements between two different
+ * Edge Connector - This is used to link track segments between two different
  * panels
  * <P>
  * Note that a PositionablePoint exists for specifying connectivity and drawing
@@ -1499,7 +1499,7 @@ public class PositionablePoint extends LayoutTrack {
             return;
         }
         editLink = new JDialog();
-        editLink.setTitle("EDIT LINK from " + getConnect1().getLayoutBlock().getDisplayName());
+        editLink.setTitle(Bundle.getMessage("EdgeEditLinkFrom", getConnect1().getLayoutBlock().getDisplayName()));
 
         JPanel container = new JPanel();
         container.setLayout(new BorderLayout());
@@ -1531,9 +1531,8 @@ public class PositionablePoint extends LayoutTrack {
 
     public JPanel getLinkPanel() {
         editorCombo = new JComboBox<JCBHandle<LayoutEditor>>();
-        ArrayList<LayoutEditor> panels = InstanceManager.getDefault(
-                PanelMenu.class
-        ).getLayoutEditorPanelList();
+        ArrayList<LayoutEditor> panels
+                = InstanceManager.getDefault(PanelMenu.class).getLayoutEditorPanelList();
         editorCombo.addItem(new JCBHandle<LayoutEditor>("None"));
         if (panels.contains(layoutEditor)) {
             panels.remove(layoutEditor);
@@ -1556,7 +1555,7 @@ public class PositionablePoint extends LayoutTrack {
         selectorPanel.add(editorCombo);
         linkPointsBox = new JComboBox<String>();
         updatePointBox();
-        selectorPanel.add(new JLabel(Bundle.getMessage("ConnectingBlock")));
+        selectorPanel.add(new JLabel(Bundle.getMessage("ConnectingTo")));
         selectorPanel.add(linkPointsBox);
         return selectorPanel;
     }
@@ -1575,8 +1574,8 @@ public class PositionablePoint extends LayoutTrack {
             if (p.getType() == EDGE_CONNECTOR) {
                 if (p.getLinkedPoint() == this) {
                     pointList.add(p);
-                    linkPointsBox.addItem(p.getConnect2().getLayoutBlock().getDisplayName());
-                    linkPointsBox.setSelectedItem(p.getConnect2().getLayoutBlock().getDisplayName());
+                    linkPointsBox.addItem(p.getName());
+                    linkPointsBox.setSelectedItem(p.getName());
                 } else if (p.getLinkedPoint() == null) {
                     if (p.getConnect1() != null && p.getConnect1().getLayoutBlock() != null) {
                         if (p.getConnect1().getLayoutBlock() != getConnect1().getLayoutBlock() /* && ourDir != p.getConnect1Dir() */) {
