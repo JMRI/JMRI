@@ -1274,12 +1274,13 @@ public class PositionablePoint extends LayoutTrack {
                         if (p.getConnect1().getLayoutBlock() != getConnect1().getLayoutBlock()) {
                             pointList.add(p);
                             linkPointsBox.addItem(p.getConnect1().getLayoutBlock().getDisplayName());
+                        }
                     }
                 }
             }
         }
         editLink.pack();
-    }   // updatePointBox
+    } // updatePointBox
 
     public void updateLink() {
         if (editorCombo.getSelectedIndex() == 0 || linkPointsBox.getSelectedIndex() == -1) {
