@@ -46,10 +46,10 @@ abstract public class LaunchJmriAppBase {
     /**
      * Run one application
      * 
-     * @param Name  of the Profile to copy from files in
+     * @param profileName Name of the Profile to copy from files in
      *                  java/test/apps/PanelPro/profiles/
-     * @param Name  application (frame) title
-     * @param Start of the "we're up!" message
+     * @param frameName Application (frame) title
+     * @param startMessageStart Start of the "we're up!" message
      */
     protected void runOne(String profileName, String frameName, String startMessageStart) throws IOException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
