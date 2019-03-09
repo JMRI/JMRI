@@ -1,9 +1,9 @@
 package jmri;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for setting and changing path lengths of the Path class
@@ -12,8 +12,9 @@ import org.junit.Assert;
  *
  * @author  Pete Cressman Copyright (C) 2015
  */
-public class PathLengthTest extends TestCase {
+public class PathLengthTest {
 
+    @Test
     public void testDefaultPathLength() {
         Path p = new Path();
         Block b = new Block("IB1");
@@ -26,6 +27,7 @@ public class PathLengthTest extends TestCase {
         Assert.assertEquals("check raw path length", p.getLength(), 0f, 0.0);
     }
 
+    @Test
     public void testSetPathLength() {
         Path p = new Path();
         Block b = new Block("IB1");
@@ -42,6 +44,7 @@ public class PathLengthTest extends TestCase {
         Assert.assertEquals("check block length", 100f, b.getLengthMm(), 0.0);
     }
 
+    @Test
     public void testChangePathLength() {
         Path p1 = new Path();
         Path p2 = new Path();
@@ -71,24 +74,7 @@ public class PathLengthTest extends TestCase {
         Assert.assertEquals("check raw path p3 length", 0f, p1.getLength(), 0.0);
     }
 
-    // from here down is testing infrastructure
-    public PathLengthTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {PathLengthTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(PathLengthTest.class);
-        return suite;
-    }
-
-    @Override
+    @Before
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
         
@@ -96,7 +82,7 @@ public class PathLengthTest extends TestCase {
         jmri.InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
     }
 
-    @Override
+    @After
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }

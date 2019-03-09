@@ -1,8 +1,6 @@
 package jmri.jmrix.rps.csvinput;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Test;
 import org.junit.Assert;
 
 /**
@@ -10,13 +8,15 @@ import org.junit.Assert;
  *
  * @author Bob Jacobsen Copyright 2006
  */
-public class CsvTest extends TestCase {
+public class CsvTest {
 
+    @Test
     public void testCreateReader() throws java.io.IOException {
         Object o = new com.csvreader.CsvReader("java/test/jmri/jmrix/rps/csvinput/testdata.csv");
         Assert.assertNotNull("exists", o);
     }
 
+    @Test
     public void testReading() throws java.io.IOException {
         com.csvreader.CsvReader o = new com.csvreader.CsvReader("java/test/jmri/jmrix/rps/csvinput/testdata.csv");
         Assert.assertTrue("read 1st line", o.readRecord());
@@ -35,23 +35,6 @@ public class CsvTest extends TestCase {
         Assert.assertEquals("2nd line datum 4", "1", o.get(3));
 
         Assert.assertTrue("can't read 3rd line", !o.readRecord());
-    }
-
-    // from here down is testing infrastructure
-    public CsvTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {CsvTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(CsvTest.class);
-        return suite;
     }
 
 }
