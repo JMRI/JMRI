@@ -1,3 +1,5 @@
+package apps.gui3.tabbedpreferences;
+
 /**
  * Provides the tabbed preferences window and its contents.
  * <p>
@@ -43,4 +45,3 @@
  * @see jmri.swing.PreferencesPanel
  * @see apps.AppConfigBase
  */
-package apps.gui3.tabbedpreferences;
