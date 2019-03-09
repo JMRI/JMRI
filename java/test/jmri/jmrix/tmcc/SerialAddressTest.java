@@ -3,9 +3,9 @@ package jmri.jmrix.tmcc;
 import jmri.Manager.NameValidity;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Test;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Assert;
 
 /**
@@ -13,8 +13,9 @@ import org.junit.Assert;
  *
  * @author Dave Duchamp Copyright 2004
  */
-public class SerialAddressTest extends TestCase {
+public class SerialAddressTest {
 
+    @Test
     public void testValidateSystemNameFormat() {
         Assert.assertTrue("valid format - TL2", NameValidity.VALID == SerialAddress.validSystemNameFormat("TL2", 'L', "T"));
 
@@ -81,6 +82,7 @@ public class SerialAddressTest extends TestCase {
         JUnitAppender.assertWarnMessage("invalid character in bit number field of system name: TL2B5x");
     }
 
+    @Test
     public void testGetBitFromSystemName() {
         Assert.assertEquals("TL2", 2, SerialAddress.getBitFromSystemName("TL2", "T"));
         Assert.assertEquals("TL2002", 2, SerialAddress.getBitFromSystemName("TL2002", "T"));
@@ -98,6 +100,7 @@ public class SerialAddressTest extends TestCase {
         Assert.assertEquals("TL11B2048", 2048, SerialAddress.getBitFromSystemName("TL11B2048", "T"));
     }
 
+    @Test
     public void testValidSystemNameConfig() {
         Assert.assertTrue("valid config TL4007", SerialAddress.validSystemNameConfig("TL4007", 'L', "T"));
         Assert.assertTrue("valid config TL4B7", SerialAddress.validSystemNameConfig("TL4B7", 'L', "T"));
@@ -120,6 +123,7 @@ public class SerialAddressTest extends TestCase {
         // Assert.assertTrue("invalid config TL11B7", !SerialAddress.validSystemNameConfig("TL11B7",'L', "T") );
     }
 
+    @Test
     public void testConvertSystemNameFormat() {
         Assert.assertEquals("convert TL14007", "TL14B7", SerialAddress.convertSystemNameToAlternate("TL14007", "T"));
         Assert.assertEquals("convert TS7", "TS0B7", SerialAddress.convertSystemNameToAlternate("TS7", "T"));
@@ -132,6 +136,7 @@ public class SerialAddressTest extends TestCase {
         JUnitAppender.assertWarnMessage("node address field out of range in system name: TL128B7");
     }
 
+    @Test
     public void testNormalizeSystemName() {
         Assert.assertEquals("normalize TL14007", "TL14007", SerialAddress.normalizeSystemName("TL14007", "T"));
         Assert.assertEquals("normalize TL007", "TL7", SerialAddress.normalizeSystemName("TL007", "T"));
@@ -144,31 +149,13 @@ public class SerialAddressTest extends TestCase {
         JUnitAppender.assertWarnMessage("node address field out of range in system name: TL128B7");
     }
 
-    // from here down is testing infrastructure
-    public SerialAddressTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {SerialAddressTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(SerialAddressTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    @Override
-    protected void setUp() {
+    @Before
+    public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 

@@ -11,10 +11,10 @@ import jmri.Sensor;
 import jmri.SignalMast;
 import jmri.implementation.AbstractSensor;
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Test;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 
 /**
  * Tests for BlockManagerXml.
@@ -24,8 +24,9 @@ import org.junit.Assert;
  * <p>
  * @author Bob Coleman Copyright 2012
   */
-public class BlockManagerXmlTest extends TestCase {
+public class BlockManagerXmlTest {
 
+    @Test
     public void testLoadCurrent() throws Exception {
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initConfigureManager();
@@ -330,6 +331,7 @@ public class BlockManagerXmlTest extends TestCase {
      * This test checks that the store operation runs, but doesn't check the
      * output for correctness.
      */
+    @Test
     public void testStore() throws jmri.JmriException {
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initConfigureManager();
@@ -371,6 +373,7 @@ public class BlockManagerXmlTest extends TestCase {
         //BlockManagerXml tb = new BlockManagerXml();
     }
 
+    @Test
     public void testBlockAndSignalMastTest() throws Exception {
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initConfigureManager();
@@ -423,32 +426,14 @@ public class BlockManagerXmlTest extends TestCase {
 
     }
 
-    // from here down is testing infrastructure
-    public BlockManagerXmlTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading",BlockManagerXmlTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(BlockManagerXmlTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    @Override
-    protected void setUp() {
+    @Before
+    public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
     }
 
-    @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 }

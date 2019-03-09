@@ -1,9 +1,9 @@
 package jmri.jmrix.nce;
 
 import jmri.GlobalProgrammerManager;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Test;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Assert;
 
 /**
@@ -11,10 +11,11 @@ import org.junit.Assert;
  *
  * @author	Bob Jacobsen
  */
-public class NceProgrammerManagerTest extends TestCase {
+public class NceProgrammerManagerTest {
 
     NceSystemConnectionMemo memo;
 
+    @Test
     public void testDefaultAccess() {
         // this is checking the "as default ctor built" options, which might not be valid
         Assert.assertTrue("provides global programmerManager", memo.provides(GlobalProgrammerManager.class));
@@ -22,6 +23,7 @@ public class NceProgrammerManagerTest extends TestCase {
         Assert.assertNotNull("global Programmer exists", ((GlobalProgrammerManager)memo.get(GlobalProgrammerManager.class)).getGlobalProgrammer());
     }
 
+    @Test
     public void test_USB_SYSTEM_POWERCAB_PROGTRACK() {
         memo.setNceUsbSystem(NceTrafficController.USB_SYSTEM_POWERCAB);
         memo.setNceCmdGroups(NceTrafficController.CMDS_PROGTRACK);
@@ -31,6 +33,7 @@ public class NceProgrammerManagerTest extends TestCase {
         Assert.assertNotNull("global Programmer exists", ((GlobalProgrammerManager)memo.get(GlobalProgrammerManager.class)).getGlobalProgrammer());
     }
 
+    @Test
     public void test_USB_SYSTEM_SB3_NO_PROGTRACK() {
         memo.setNceUsbSystem(NceTrafficController.USB_SYSTEM_SB3);
         memo.setNceCmdGroups(0);
@@ -40,26 +43,7 @@ public class NceProgrammerManagerTest extends TestCase {
         Assert.assertNull("no global Programmer exists", ((GlobalProgrammerManager)memo.get(GlobalProgrammerManager.class)).getGlobalProgrammer());
     }
 
-
-    // from here down is testing infrastructure
-    public NceProgrammerManagerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {NceProgrammerManagerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(NceProgrammerManagerTest.class);
-        return suite;
-    }
-
-    // The minimal setup is for log4J
-    @Override
+    @Before
     public void setUp() {
         jmri.util.JUnitUtil.setUp(); 
         jmri.util.JUnitUtil.resetInstanceManager();
@@ -68,7 +52,7 @@ public class NceProgrammerManagerTest extends TestCase {
         memo.setNceTrafficController(new NceTrafficController());
     }
 
-    @Override
+    @After
     public void tearDown() {
         memo = null;     
         jmri.util.JUnitUtil.tearDown();

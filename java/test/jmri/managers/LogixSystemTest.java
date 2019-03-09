@@ -1,10 +1,10 @@
 package jmri.managers;
 
 import jmri.*;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Test;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 
 /**
  * Overall tests of Logix operation, including operation of 
@@ -12,7 +12,7 @@ import org.junit.Assert;
  *
  * @author	Bob Jacobsen Copyright (C) 2015
  */
-public class LogixSystemTest extends TestCase {
+public class LogixSystemTest {
 
     /** 
      * Test of inter-Logix references for Conditionals
@@ -21,7 +21,10 @@ public class LogixSystemTest extends TestCase {
      * which in turn is watched by two Conditionals in Logix 2 
      *     (once by system name and once by user name), 
      * which in turn each toggle one of two internal Turnouts on changes
+     * 
+     * @throws jmri.JmriException if unable to load test XML
      */
+    @Test
     public void testLogixReferenceSetup() throws jmri.JmriException {        
 
         // load and activate sample file
@@ -50,17 +53,9 @@ public class LogixSystemTest extends TestCase {
         Assert.assertTrue("IT2", oldIt2 != it2.getState());
     }
 
-    // from here down is testing infrastructure
-    public LogixSystemTest(String s) {
-        super(s);
-    }
-
-    // The minimal setup for log4J
-    @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         jmri.util.JUnitUtil.setUp();
-
-        super.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
         jmri.util.JUnitUtil.initInternalTurnoutManager();
         jmri.util.JUnitUtil.initInternalLightManager();
@@ -68,21 +63,8 @@ public class LogixSystemTest extends TestCase {
         jmri.util.JUnitUtil.initIdTagManager();
     }
 
-    @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         jmri.util.JUnitUtil.tearDown();
     }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", LogixSystemTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(LogixSystemTest.class);
-        return suite;
-    }
-
 }
