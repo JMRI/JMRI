@@ -9,7 +9,7 @@ import org.junit.Test;
 
 
 /**
- * Tests for the {@link jmri.jmris.srcp.parser.SRCPTokenizer} class.
+ * Tests for the jmri.jmris.srcp.parser.SRCPTokenizer class.
  *
  * @author Paul Bender Copyright (C) 2012,2017
  */

@@ -96,15 +96,29 @@ public interface SensorManager extends ProvidingManager<Sensor> {
     @Nonnull
     public Sensor newSensor(@Nonnull String systemName, @CheckForNull String userName) throws IllegalArgumentException;
 
-    /** {@inheritDoc} */
+    /**
+     * Get an existing Sensor or return null if it doesn't exist. 
+     * 
+     * Locates via user name.
+     *
+     * @param name User name to match
+     * @return null if no match found
+     */
     @CheckReturnValue
     @CheckForNull
-    public Sensor getByUserName(@Nonnull String s);
+    public Sensor getByUserName(@Nonnull String name);
 
-    /** {@inheritDoc} */
+    /**
+     * Get an existing Sensor or return null if it doesn't exist. 
+     * 
+     * Locates via system name
+     *
+     * @param name System name to match
+     * @return null if no match found
+     */
     @CheckReturnValue
     @CheckForNull
-    public Sensor getBySystemName(@Nonnull String s);
+    public Sensor getBySystemName(@Nonnull String name);
 
     /**
      * Requests status of all layout sensors under this Sensor Manager. This

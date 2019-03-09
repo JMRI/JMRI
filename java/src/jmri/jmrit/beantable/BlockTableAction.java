@@ -565,8 +565,6 @@ public class BlockTableAction extends AbstractTableAction<Block> {
              * states). Renderer and Editor are identical, as the cell contents
              * are not actually edited.
              *
-             * @see
-             * jmri.jmrit.beantable.sensor.SensorTableDataModel.ImageIconRenderer
              * @see jmri.jmrit.beantable.TurnoutTableAction#createModel()
              * @see jmri.jmrit.beantable.LightTableAction#createModel()
              */

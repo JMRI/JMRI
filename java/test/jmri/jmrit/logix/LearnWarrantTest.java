@@ -184,9 +184,9 @@ public class LearnWarrantTest {
     }
 
     /**
-     * @param array of OBlock names
+     * @param route Array of OBlock names
      * @param throttle
-     * @return - active end sensor
+     * @return Active end sensor
      * @throws Exception
      */
     private Sensor recordtimes(String[] route, DccThrottle throttle) throws Exception {

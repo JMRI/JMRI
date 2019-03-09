@@ -130,7 +130,7 @@ public class JUnitUtil {
     static boolean checkSequenceDumpsStack =    Boolean.getBoolean("jmri.util.JUnitUtil.checkSequenceDumpsStack"); // false unless set true
 
     /**
-     * Check for any threads left behind after a test calls {@link tearDown}.
+     * Check for any threads left behind after a test calls {@link #tearDown}.
      * <p>
      * Set from the jmri.util.JUnitUtil.checkRemnantThreads environment variable.
      */

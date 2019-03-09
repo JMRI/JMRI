@@ -1750,7 +1750,7 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
          * Store On setting for Signal Head in Signal Group. Should match
          * entries in getOnState()
          *
-         * @param localized name for the Signal Head Appearance when this head
+         * @param state Localized name for the Signal Head Appearance when this head
          *                  is On
          */
         void setSetOnState(String state) {
@@ -1779,7 +1779,7 @@ public class SignalGroupTableAction extends AbstractTableAction<SignalGroup> imp
          * Store Off setting for Signal Head in Signal Group. Should match
          * entries in getOffState()
          *
-         * @param localized name for the Signal Head Appearance when this head
+         * @param state Localized name for the Signal Head Appearance when this head
          *                  is Off
          */
         void setSetOffState(String state) {
