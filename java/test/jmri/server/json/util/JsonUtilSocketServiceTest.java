@@ -64,6 +64,7 @@ public class JsonUtilSocketServiceTest {
     @Test
     public void testOnMessage() throws Exception {
         Locale locale = Locale.ENGLISH;
+        JsonNode message;
         InstanceManager.getDefault(JsonServerPreferences.class).setValidateServerMessages(true);
         JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
         JsonNode empty = connection.getObjectMapper().createObjectNode();
@@ -73,30 +74,38 @@ public class JsonUtilSocketServiceTest {
         Assert.assertNull(connection.getMessage()); // assert no reply
         // JSON.PING
         instance.onMessage(JSON.PING, empty, JSON.POST, locale);
-        JsonNode result = connection.getMessage().path(JSON.TYPE);
+        message = connection.getMessage();
+        Assert.assertNotNull("message is not null", message);
+        JsonNode result = message.path(JSON.TYPE);
         Assert.assertNotNull(result);
         Assert.assertTrue(JsonNode.class.isInstance(result));
         Assert.assertEquals(JSON.PONG, result.asText());
-        Assert.assertTrue(connection.getMessage().path(JSON.DATA).isMissingNode());
+        Assert.assertTrue(message.path(JSON.DATA).isMissingNode());
         // JSON.RAILROAD
         WebServerPreferences wsp = InstanceManager.getDefault(WebServerPreferences.class);
         instance.onMessage(JSON.RAILROAD, empty, JSON.GET, locale);
-        result = connection.getMessage().path(JSON.DATA);
+        message = connection.getMessage();
+        Assert.assertNotNull("message is not null", message);
+        result = message.path(JSON.DATA);
         Assert.assertNotNull(result);
-        Assert.assertEquals(JSON.RAILROAD, connection.getMessage().path(JSON.TYPE).asText());
+        Assert.assertEquals(JSON.RAILROAD, message.path(JSON.TYPE).asText());
         Assert.assertEquals("Railroad name matches", wsp.getRailroadName(), result.path(JSON.NAME).asText());
         wsp.setRailroadName("test railroad");
-        result = connection.getMessage().path(JSON.DATA);
+        message = connection.getMessage();
+        Assert.assertNotNull("message is not null", message);
+        result = message.path(JSON.DATA);
         Assert.assertNotNull(result);
-        Assert.assertEquals(JSON.RAILROAD, connection.getMessage().path(JSON.TYPE).asText());
+        Assert.assertEquals(JSON.RAILROAD, message.path(JSON.TYPE).asText());
         Assert.assertEquals("Railroad name matches", wsp.getRailroadName(), result.path(JSON.NAME).asText());
         // JSON.GOODBYE
         instance.onMessage(JSON.GOODBYE, empty, JSON.POST, locale);
-        result = connection.getMessage().path(JSON.TYPE);
+        message = connection.getMessage();
+        Assert.assertNotNull("message is not null", message);
+        result = message.path(JSON.TYPE);
         Assert.assertNotNull(result);
         Assert.assertTrue(JsonNode.class.isInstance(result));
         Assert.assertEquals(JSON.GOODBYE, result.asText());
-        Assert.assertTrue(connection.getMessage().path(JSON.DATA).isMissingNode());
+        Assert.assertTrue(message.path(JSON.DATA).isMissingNode());
     }
 
     /**

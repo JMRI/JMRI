@@ -132,7 +132,7 @@ public class JsonTurnoutHttpServiceTest {
     @Test
     public void testDelete() {
         try {
-            (new JsonTurnoutHttpService(new ObjectMapper())).doDelete(JsonTurnoutServiceFactory.TURNOUT, null, Locale.ENGLISH);
+            (new JsonTurnoutHttpService(new ObjectMapper())).doDelete(JsonTurnoutServiceFactory.TURNOUT, "", Locale.ENGLISH);
         } catch (JsonException ex) {
             Assert.assertEquals(HttpServletResponse.SC_METHOD_NOT_ALLOWED, ex.getCode());
             return;

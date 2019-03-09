@@ -36,18 +36,24 @@ public class JsonTurnoutSocketServiceTest {
             turnout1.setCommandedState(Turnout.UNKNOWN);
             service.onMessage(JsonTurnoutServiceFactory.TURNOUT, message, JSON.POST, Locale.ENGLISH);
             // TODO: test that service is listener in TurnoutManager
-            Assert.assertEquals(JSON.UNKNOWN, connection.getMessage().path(JSON.DATA).path(JSON.STATE).asInt());
+            message = connection.getMessage();
+            Assert.assertNotNull("message is not null", message);
+            Assert.assertEquals(JSON.UNKNOWN, message.path(JSON.DATA).path(JSON.STATE).asInt());
             turnout1.setCommandedState(Turnout.CLOSED);
             JUnitUtil.waitFor(() -> {
                 return turnout1.getKnownState() == Turnout.CLOSED;
             }, "Turnout to close");
+            message = connection.getMessage();
+            Assert.assertNotNull("message is not null", message);
             Assert.assertEquals(Turnout.CLOSED, turnout1.getKnownState());
-            Assert.assertEquals(JSON.CLOSED, connection.getMessage().path(JSON.DATA).path(JSON.STATE).asInt());
+            Assert.assertEquals(JSON.CLOSED, message.path(JSON.DATA).path(JSON.STATE).asInt());
             turnout1.setCommandedState(Turnout.THROWN);
             JUnitUtil.waitFor(() -> {
                 return turnout1.getKnownState() == Turnout.THROWN;
             }, "Turnout to throw");
-            Assert.assertEquals(JSON.THROWN, connection.getMessage().path(JSON.DATA).path(JSON.STATE).asInt());
+            message = connection.getMessage();
+            Assert.assertNotNull("message is not null", message);
+            Assert.assertEquals(JSON.THROWN, message.path(JSON.DATA).path(JSON.STATE).asInt());
             service.onClose();
             // TODO: test that service is no longer a listener in TurnoutManager
         } catch (IOException | JmriException | JsonException ex) {
