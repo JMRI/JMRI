@@ -1,13 +1,12 @@
 package jmri.jmrit.symbolicprog;
 
-import edu.umd.cs.findbugs.annotations.SuppressWarnings;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -343,9 +342,7 @@ public class SplitVariableValue extends VariableValue
 
     @Override
     void updatedTextField() {
-        if (log.isDebugEnabled()) {
-            log.debug("Variable=" + _name + "; enter updatedTextField in " + (this.getClass().getSimpleName()));
-        }
+        log.debug("Variable='{}'; enter updatedTextField in {} with TextField='{}'", _name, (this.getClass().getSimpleName()), _textField.getText());
         // called for new values in text field - set the CVs as needed
 
         int[] retVals = getCvValsFromTextField();
@@ -357,15 +354,13 @@ public class SplitVariableValue extends VariableValue
             if (_fieldShrink) {
                 i = (cvCount - 1) - j; // reverse CV updating order
             }
-//            log.debug("retVals[" + i + "]=" + retVals[i] + ";cvList.get(" + i + ").cvMask" + cvList.get(i).cvMask + ";offsetVal=" + offsetVal(cvList.get(i).cvMask));
+            log.debug("retVals[{}]={};cvList.get({}).cvMask{};offsetVal={}", i, retVals[i], i, cvList.get(i).cvMask, offsetVal(cvList.get(i).cvMask));
             int cvMask = maskValAsInt(cvList.get(i).cvMask);
             CvValue thisCV = cvList.get(i).thisCV;
             int oldCvVal = thisCV.getValue();
             int newCvVal = (oldCvVal & ~cvMask)
                     | ((retVals[i] << offsetVal(cvList.get(i).cvMask)) & cvMask);
-            if (log.isDebugEnabled()) {
-                log.debug(cvList.get(i).cvName + ";cvMask=" + cvMask + ";oldCvVal=" + oldCvVal + ";retVals[i]=" + retVals[i] + ";newCvVal=" + newCvVal);
-            }
+            log.debug("{};cvMask={};oldCvVal={};retVals[{}]={};newCvVal={}", cvList.get(i).cvName, cvMask, oldCvVal, i, retVals[i], newCvVal);
 
             // cv updates here trigger updated property changes, which means
             // we're going to get notified sooner or later.
@@ -374,9 +369,7 @@ public class SplitVariableValue extends VariableValue
             }
         }
 
-        if (log.isDebugEnabled()) {
-            log.debug("Variable=" + _name + "; exit updatedTextField");
-        }
+        log.debug("Variable={}; exit updatedTextField", _name);
     }
 
     /**
@@ -393,11 +386,9 @@ public class SplitVariableValue extends VariableValue
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (log.isDebugEnabled()) {
-            log.debug("Variable=" + _name + "; actionPerformed");
-        }
+        log.debug("Variable='{}'; actionPerformed", _name);
         long newVal = (getValueFromText(_textField.getText()) - mOffset) / mFactor;
-//        log.debug("Enter updatedTextField from actionPerformed");
+        log.debug("Enter updatedTextField from actionPerformed");
         updatedTextField();
         prop.firePropertyChange("Value", null, newVal);
     }
@@ -425,6 +416,7 @@ public class SplitVariableValue extends VariableValue
     // and to read/write/hear parameter changes.
     @Override
     public String getValueString() {
+        log.debug("getValueString {}", _textField.getText());
         return _textField.getText();
     }
 
@@ -638,7 +630,7 @@ public class SplitVariableValue extends VariableValue
     /**
      * Assigns a priority value to a given state.
      */
-    @SuppressWarnings({"SF_SWITCH_NO_DEFAULT", "SF_SWITCH_FALLTHROUGH"})
+    @SuppressFBWarnings(value = {"SF_SWITCH_NO_DEFAULT", "SF_SWITCH_FALLTHROUGH"}, justification = "Intentional fallthrough to produce correct value")
     int priorityValue(int state) {
         int value = 0;
         switch (state) {
@@ -655,6 +647,7 @@ public class SplitVariableValue extends VariableValue
                 value++;
             //$FALL-THROUGH$
             default:
+                //$FALL-THROUGH$
                 return value;
         }
     }

@@ -1,53 +1,30 @@
 package jmri.jmrit.symbolicprog;
 
-import static java.nio.charset.Charset.defaultCharset;
-
 import java.util.HashMap;
 import java.util.List;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import jmri.progdebugger.ProgDebugger;
 import jmri.util.CvUtil;
-import junit.framework.Test;
-import junit.framework.TestSuite;
 import org.junit.Assert;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.junit.Test;
 
 /**
  * SplitHexVariableValueTest.java
  *
- * @todo This test is completely kludged together at this stage to enable
- * further work.
- * @todo Make the test meaningful.
  * @author Bob Jacobsen Copyright 2001, 2002, 2015
- * @author Dave Heap Copyright 2018
+ * @author Dave Heap Copyright 2019
  */
 public class SplitHexVariableValueTest extends AbstractVariableValueTestBase {
 
-    final String lowCV = "12";
-    final String highCV = "18";
-    int pFactor = 0;
-    int pOffset = 0;
-    String uppermask = "";
-    String extra1 = "";
-    String extra2 = "";
-    String extra3 = "";
-    String extra4 = defaultCharset().name();
-
-    ProgDebugger p = new ProgDebugger();
-
-    // abstract members invoked by tests in parent AbstractVariableValueTestBase class
-    @Override
-    VariableValue makeVar(String label, String comment, String cvName,
+    // Local tests version of makeVar with extra parameters.
+    SplitHexVariableValue makeVar(String label, String comment, String cvName,
             boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
             String cvNum, String mask, int minVal, int maxVal,
-            HashMap<String, CvValue> v, JLabel status, String item) {
-        if (highCV != null) {
-            CvValue cvNext = new CvValue(highCV, p);
-            cvNext.setValue(0);
-            v.put(highCV, cvNext);
-        }
+            HashMap<String, CvValue> v, JLabel status, String item,
+            String highCV, int pFactor, int pOffset, String uppermask, String extra1, String extra2, String extra3, String extra4) {
+        ProgDebugger p = new ProgDebugger();
+
         if (!cvNum.equals("")) { // some variables have no CV per se
             List<String> cvList = CvUtil.expandCvList(cvNum);
             if (cvList.isEmpty()) {
@@ -62,7 +39,30 @@ public class SplitHexVariableValueTest extends AbstractVariableValueTestBase {
                 }
             }
         }
-        return new SplitHexVariableValue(label, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, minVal, maxVal, v, status, item, highCV, pFactor, pOffset, uppermask, extra1, extra2, extra3, defaultCharset().name());
+        if (highCV != null) {
+            CvValue cvNext = new CvValue(highCV, p);
+            cvNext.setValue(0);
+            v.put(highCV, cvNext);
+        }
+        return new SplitHexVariableValue(label, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, minVal, maxVal, v, status, item, highCV, pFactor, pOffset, uppermask, extra1, extra2, extra3, extra4);
+    }
+
+    // abstract members invoked by tests in parent AbstractVariableValueTestBase class
+    @Override
+    VariableValue makeVar(String label, String comment, String cvName,
+            boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
+            String cvNum, String mask, int minVal, int maxVal,
+            HashMap<String, CvValue> v, JLabel status, String item) {
+        String highCV = null;
+        int pFactor = 1;
+        int pOffset = 0;
+        String uppermask = "VVVVVVVV";
+        String displayCase = "lower";
+        String extra2 = null;
+        String extra3 = null;
+        String extra4 = null;
+
+        return makeVar(label, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, minVal, maxVal, v, status, item, highCV, pFactor, pOffset, uppermask, displayCase, extra2, extra3, extra4);
     }
 
     @Override
@@ -117,7 +117,7 @@ public class SplitHexVariableValueTest extends AbstractVariableValueTestBase {
     // how to define the split/shift/mask operations for long CVs
     @Override
     public void testVariableValueCreateLargeValue() {
-    } // mask is ignored 
+    } // mask is ignored
 
     @Override
     public void testVariableSynch() {
@@ -141,39 +141,321 @@ public class SplitHexVariableValueTest extends AbstractVariableValueTestBase {
 
     @Override
     public void testVariableValueCreateLargeMaskValue() {
-    } // mask is ignored 
+    } // mask is ignored
 
     @Override
     public void testVariableValueCreateLargeMaskValue256() {
-    } // mask is ignored 
+    } // mask is ignored
 
     @Override
     public void testVariableValueCreateLargeMaskValue2up16() {
-    } // mask is ignored 
+    } // mask is ignored
 
     // Local tests
-    /**
-     * Simple Test to get us through CI tests in interim.
-     */
+    @Test
     public void testCtor() {
-        String name = "";
+        String name = "Hex Field";
         String comment = "";
-        String cvName = "23:2";
+        String cvName = "275:4";
         boolean readOnly = false;
         boolean infoOnly = false;
         boolean writeOnly = false;
         boolean opsOnly = false;
-        String cvNum = "23:2";
-        String mask = "";
+        String cvNum = "275:4";
+        String mask = "VVVVVVVV";
         int minVal = 0;
         int maxVal = 0;
         HashMap<String, CvValue> v = createCvMap();
+        JLabel status = new JLabel();
         String stdname = "";
         VariableValue instance = makeVar(name, comment, cvName,
                 readOnly, infoOnly, writeOnly, opsOnly,
                 cvNum, mask, minVal, maxVal,
-                v, null, stdname);
-        Assert.assertNotNull("reurned variable is null", instance);
+                v, status, stdname);
+        Assert.assertNotNull("testCtor returned null", instance);
+    }
+
+    @Test
+    public void testCvChangesUpper0() {
+        String name = "Hex Field";
+        String comment = "";
+        String cvName = "";
+        boolean readOnly = false;
+        boolean infoOnly = false;
+        boolean writeOnly = false;
+        boolean opsOnly = false;
+        String cvNum = "275:4";
+        String mask = "VVVVVVVV";
+        int minVal = 0;
+        int maxVal = 0;
+        HashMap<String, CvValue> v = createCvMap();
+        JLabel status = new JLabel();
+        String stdname = "";
+        String highCV = null;
+        int pFactor = 1;
+        int pOffset = 0;
+        String uppermask = "";
+        String displayCase = "upper";
+        String extra2 = null;
+        String extra3 = null;
+        String extra4 = null;
+        SplitHexVariableValue var = makeVar(name, comment, cvName,
+                readOnly, infoOnly, writeOnly, opsOnly,
+                cvNum, mask, minVal, maxVal,
+                v, status, stdname,
+                highCV, pFactor, pOffset, uppermask, displayCase, extra2, extra3, extra4);
+        Assert.assertNotNull("makeVar returned null", var);
+
+        CvValue[] cv = var.usesCVs();
+
+        Assert.assertEquals("number of CVs is", 4, cv.length);
+
+        Assert.assertEquals("cv[0] is", "275", cv[0].number());
+        Assert.assertEquals("cv[1] is", "276", cv[1].number());
+        Assert.assertEquals("cv[2] is", "277", cv[2].number());
+        Assert.assertEquals("cv[3] is", "278", cv[3].number());
+
+        ((JTextField) var.getCommonRep()).setText("FFD2720F");  // to start with a value
+        var.actionPerformed(new java.awt.event.ActionEvent(var, 0, name));
+        Assert.assertEquals("set var full value", "FFD2720F", ((JTextField) var.getCommonRep()).getText());
+        Assert.assertEquals("set CV" + cv[0].number(), 0x0F, cv[0].getValue());
+        Assert.assertEquals("set CV" + cv[1].number(), 0x72, cv[1].getValue());
+        Assert.assertEquals("set CV" + cv[2].number(), 0xD2, cv[2].getValue());
+        Assert.assertEquals("set CV" + cv[3].number(), 0xFF, cv[3].getValue());
+
+        // change some CVs, expect to see a change in the variable value
+        cv[0].setValue(0x21);
+        cv[1].setValue(0x89);
+
+        Assert.assertEquals("set CV" + cv[0].number(), 0x21, cv[0].getValue());
+        Assert.assertEquals("set CV" + cv[1].number(), 0x89, cv[1].getValue());
+
+        Assert.assertEquals("set var full value", "FFD28921", ((JTextField) var.getCommonRep()).getText());
+    }
+
+    @Test
+    public void testCvChangesUpper1() {
+        String name = "Hex Field";
+        String comment = "";
+        String cvName = "";
+        boolean readOnly = false;
+        boolean infoOnly = false;
+        boolean writeOnly = false;
+        boolean opsOnly = false;
+        String cvNum = "392:-4";
+        String mask = "VVVVVVVV";
+        int minVal = 0;
+        int maxVal = 0;
+        HashMap<String, CvValue> v = createCvMap();
+        JLabel status = new JLabel();
+        String stdname = "";
+        String highCV = null;
+        int pFactor = 1;
+        int pOffset = 0;
+        String uppermask = "";
+        String displayCase = "upper";
+        String extra2 = null;
+        String extra3 = null;
+        String extra4 = null;
+        SplitHexVariableValue var = makeVar(name, comment, cvName,
+                readOnly, infoOnly, writeOnly, opsOnly,
+                cvNum, mask, minVal, maxVal,
+                v, status, stdname,
+                highCV, pFactor, pOffset, uppermask, displayCase, extra2, extra3, extra4);
+        Assert.assertNotNull("makeVar returned null", var);
+
+        CvValue[] cv = var.usesCVs();
+
+        Assert.assertEquals("number of CVs is", 4, cv.length);
+
+        Assert.assertEquals("cv[0] is", "392", cv[0].number());
+        Assert.assertEquals("cv[1] is", "391", cv[1].number());
+        Assert.assertEquals("cv[2] is", "390", cv[2].number());
+        Assert.assertEquals("cv[3] is", "389", cv[3].number());
+
+        ((JTextField) var.getCommonRep()).setText("FFD2720F");  // to start with a value
+        var.actionPerformed(new java.awt.event.ActionEvent(var, 0, name));
+        Assert.assertEquals("set var full value", "FFD2720F", ((JTextField) var.getCommonRep()).getText());
+        Assert.assertEquals("set CV" + cv[0].number(), 0x0F, cv[0].getValue());
+        Assert.assertEquals("set CV" + cv[1].number(), 0x72, cv[1].getValue());
+        Assert.assertEquals("set CV" + cv[2].number(), 0xD2, cv[2].getValue());
+        Assert.assertEquals("set CV" + cv[3].number(), 0xFF, cv[3].getValue());
+
+        // change some CVs, expect to see a change in the variable value
+        cv[0].setValue(0x21);
+        cv[1].setValue(0x89);
+
+        Assert.assertEquals("set CV" + cv[0].number(), 0x21, cv[0].getValue());
+        Assert.assertEquals("set CV" + cv[1].number(), 0x89, cv[1].getValue());
+
+        Assert.assertEquals("set var full value", "FFD28921", ((JTextField) var.getCommonRep()).getText());
+    }
+
+    @Test
+    public void testCvChangesLower() {
+        String name = "Hex Field";
+        String comment = "";
+        String cvName = "";
+        boolean readOnly = false;
+        boolean infoOnly = false;
+        boolean writeOnly = false;
+        boolean opsOnly = false;
+        String cvNum = "(392,255,43,870)";
+        String mask = "VVVVVVVV";
+        int minVal = 0;
+        int maxVal = 0;
+        HashMap<String, CvValue> v = createCvMap();
+        JLabel status = new JLabel();
+        String stdname = "";
+        String highCV = null;
+        int pFactor = 1;
+        int pOffset = 0;
+        String uppermask = "";
+        String displayCase = "lower";
+        String extra2 = null;
+        String extra3 = null;
+        String extra4 = null;
+        SplitHexVariableValue var = makeVar(name, comment, cvName,
+                readOnly, infoOnly, writeOnly, opsOnly,
+                cvNum, mask, minVal, maxVal,
+                v, status, stdname,
+                highCV, pFactor, pOffset, uppermask, displayCase, extra2, extra3, extra4);
+        Assert.assertNotNull("makeVar returned null", var);
+
+        CvValue[] cv = var.usesCVs();
+
+        Assert.assertEquals("number of CVs is", 4, cv.length);
+
+        Assert.assertEquals("cv[0] is", "392", cv[0].number());
+        Assert.assertEquals("cv[1] is", "255", cv[1].number());
+        Assert.assertEquals("cv[2] is", "43", cv[2].number());
+        Assert.assertEquals("cv[3] is", "870", cv[3].number());
+
+        ((JTextField) var.getCommonRep()).setText("FFD2720F");  // to start with a value
+        var.actionPerformed(new java.awt.event.ActionEvent(var, 0, name)); // notify that we changed variable value
+        Assert.assertEquals("set var full value", "ffd2720f", ((JTextField) var.getCommonRep()).getText());
+        Assert.assertEquals("set CV" + cv[0].number(), 0x0F, cv[0].getValue());
+        Assert.assertEquals("set CV" + cv[1].number(), 0x72, cv[1].getValue());
+        Assert.assertEquals("set CV" + cv[2].number(), 0xD2, cv[2].getValue());
+        Assert.assertEquals("set CV" + cv[3].number(), 0xFF, cv[3].getValue());
+
+        // change some CVs, expect to see a change in the variable value
+        cv[0].setValue(0x21);
+        cv[1].setValue(0x89);
+        Assert.assertEquals("set CV" + cv[0].number(), 0x21, cv[0].getValue());
+        Assert.assertEquals("set CV" + cv[1].number(), 0x89, cv[1].getValue());
+
+        Assert.assertEquals("set var full value", "ffd28921", ((JTextField) var.getCommonRep()).getText());
+    }
+
+    @Test
+    public void testTextShorten1() {
+        String name = "Hex Field";
+        String comment = "";
+        String cvName = "";
+        boolean readOnly = false;
+        boolean infoOnly = false;
+        boolean writeOnly = false;
+        boolean opsOnly = false;
+        String cvNum = "50(1-4)";
+        String mask = "VVVVVVVV";
+        int minVal = 0;
+        int maxVal = 0;
+        HashMap<String, CvValue> v = createCvMap();
+        JLabel status = new JLabel();
+        String stdname = "";
+        String highCV = null;
+        int pFactor = 1;
+        int pOffset = 0;
+        String uppermask = "";
+        String displayCase = "upper";
+        String extra2 = null;
+        String extra3 = null;
+        String extra4 = null;
+        SplitHexVariableValue var = makeVar(name, comment, cvName,
+                readOnly, infoOnly, writeOnly, opsOnly,
+                cvNum, mask, minVal, maxVal,
+                v, status, stdname,
+                highCV, pFactor, pOffset, uppermask, displayCase, extra2, extra3, extra4);
+        Assert.assertNotNull("makeVar returned null", var);
+
+        CvValue cv501 = v.get("501");
+        CvValue cv502 = v.get("502");
+        CvValue cv503 = v.get("503");
+        CvValue cv504 = v.get("504");
+
+        ((JTextField) var.getCommonRep()).setText("FFD2720F");  // to start with a value
+        var.actionPerformed(new java.awt.event.ActionEvent(var, 0, name));
+        Assert.assertEquals("set var text value", "FFD2720F", ((JTextField) var.getCommonRep()).getText());
+        Assert.assertEquals("set var cv501", 0x0F, cv501.getValue());
+        Assert.assertEquals("set var cv502", 0x72, cv502.getValue());
+        Assert.assertEquals("set var cv503", 0xD2, cv503.getValue());
+        Assert.assertEquals("set var cv504", 0xFF, cv504.getValue());
+
+        // change to shorter text
+        ((JTextField) var.getCommonRep()).setText("F837");  // to start with a value
+        var.actionPerformed(new java.awt.event.ActionEvent(var, 0, name));
+        Assert.assertEquals("set var text value", "F837", ((JTextField) var.getCommonRep()).getText());
+        Assert.assertEquals("set var cv501", 0x37, cv501.getValue());
+        Assert.assertEquals("set var cv502", 0xF8, cv502.getValue());
+        Assert.assertEquals("set var cv503", 0x00, cv503.getValue());
+        Assert.assertEquals("set var cv504", 0x00, cv504.getValue());
+
+    }
+
+    @Test
+    public void testTextShorten2() {
+        String name = "Hex Field";
+        String comment = "";
+        String cvName = "";
+        boolean readOnly = false;
+        boolean infoOnly = false;
+        boolean writeOnly = false;
+        boolean opsOnly = false;
+        String cvNum = "50(1-4)";
+        String mask = "VVVVVVVV";
+        int minVal = 0;
+        int maxVal = 0;
+        HashMap<String, CvValue> v = createCvMap();
+        JLabel status = new JLabel();
+        String stdname = "";
+        String highCV = null;
+        int pFactor = 1;
+        int pOffset = 0;
+        String uppermask = "";
+        String displayCase = "upper";
+        String extra2 = null;
+        String extra3 = null;
+        String extra4 = null;
+        SplitHexVariableValue var = makeVar(name, comment, cvName,
+                readOnly, infoOnly, writeOnly, opsOnly,
+                cvNum, mask, minVal, maxVal,
+                v, status, stdname,
+                highCV, pFactor, pOffset, uppermask, displayCase, extra2, extra3, extra4);
+        Assert.assertNotNull("makeVar returned null", var);
+
+        CvValue cv501 = v.get("501");
+        CvValue cv502 = v.get("502");
+        CvValue cv503 = v.get("503");
+        CvValue cv504 = v.get("504");
+
+        ((JTextField) var.getCommonRep()).setText("FFD2720F");  // to start with a value
+        var.actionPerformed(new java.awt.event.ActionEvent(var, 0, name));
+        Assert.assertEquals("set var text value", "FFD2720F", ((JTextField) var.getCommonRep()).getText());
+        Assert.assertEquals("set var cv501", 0x0F, cv501.getValue());
+        Assert.assertEquals("set var cv502", 0x72, cv502.getValue());
+        Assert.assertEquals("set var cv503", 0xD2, cv503.getValue());
+        Assert.assertEquals("set var cv504", 0xFF, cv504.getValue());
+
+        // change to shorter text
+        ((JTextField) var.getCommonRep()).setText("837");  // to start with a value
+        var.actionPerformed(new java.awt.event.ActionEvent(var, 0, name));
+        Assert.assertEquals("set var text value", "837", ((JTextField) var.getCommonRep()).getText());
+        Assert.assertEquals("set var cv501", 0x37, cv501.getValue());
+        Assert.assertEquals("set var cv502", 0x08, cv502.getValue());
+        Assert.assertEquals("set var cv503", 0x00, cv503.getValue());
+        Assert.assertEquals("set var cv504", 0x00, cv504.getValue());
+
     }
 
     // from here down is testing infrastructure
@@ -181,18 +463,5 @@ public class SplitHexVariableValueTest extends AbstractVariableValueTestBase {
         super(s);
     }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", SplitHexVariableValueTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(SplitHexVariableValueTest.class);
-        return suite;
-    }
-
 //    private final static Logger log = LoggerFactory.getLogger(SplitHexVariableValueTest.class);
-
 }

@@ -1,7 +1,10 @@
 package jmri.jmrit.symbolicprog;
 
-import org.junit.Test;
-
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.HashMap;
 import java.util.List;
 import javax.swing.JLabel;
@@ -9,39 +12,24 @@ import javax.swing.JTextField;
 import jmri.progdebugger.ProgDebugger;
 import jmri.util.CvUtil;
 import org.junit.Assert;
+import org.junit.Test;
 
 /**
  * SplitDateTimeVariableValueTest.java
  *
- * @todo This test is completely kludged together at this stage to enable
- * further work.
- * @todo Make the test meaningful.
  * @author Bob Jacobsen Copyright 2001, 2002, 2015
- * @author Dave Heap Copyright 2018
+ * @author Dave Heap Copyright 2019
  */
 public class SplitDateTimeVariableValueTest extends AbstractVariableValueTestBase {
 
-//    final String lowCV = "12";
-    String highCV = "18";
-    int pFactor = 0;
-    int pOffset = 0;
-    String uppermask = "";
-    String extra1 = "2000-01-01T00:00:00";  // The S9.3.2 RailCom epoch
-    String extra2 = "1";
-    String extra3 = "Seconds";
-    String extra4 = "default";
-
-    ProgDebugger p = new ProgDebugger();
-
-    public SplitDateTimeVariableValueTest(String s) {
-        super(s);
-    }
-
-    @Override
-    VariableValue makeVar(String label, String comment, String cvName,
+    // Local tests version of makeVar with extra parameters.
+    SplitDateTimeVariableValue makeVar(String label, String comment, String cvName,
             boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
             String cvNum, String mask, int minVal, int maxVal,
-            HashMap<String, CvValue> v, JLabel status, String item) {
+            HashMap<String, CvValue> v, JLabel status, String item,
+            String highCV, int pFactor, int pOffset, String uppermask, String extra1, String extra2, String extra3, String extra4) {
+        ProgDebugger p = new ProgDebugger();
+
         if (!cvNum.equals("")) { // some variables have no CV per se
             List<String> cvList = CvUtil.expandCvList(cvNum);
             if (cvList.isEmpty()) {
@@ -62,6 +50,24 @@ public class SplitDateTimeVariableValueTest extends AbstractVariableValueTestBas
             v.put(highCV, cvNext);
         }
         return new SplitDateTimeVariableValue(label, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, minVal, maxVal, v, status, item, highCV, pFactor, pOffset, uppermask, extra1, extra2, extra3, extra4);
+    }
+
+    // abstract members invoked by tests in parent AbstractVariableValueTestBase class
+    @Override
+    VariableValue makeVar(String label, String comment, String cvName,
+            boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
+            String cvNum, String mask, int minVal, int maxVal,
+            HashMap<String, CvValue> v, JLabel status, String item) {
+        String highCV = null;
+        int pFactor = 1;
+        int pOffset = 0;
+        String uppermask = "VVVVVVVV";
+        String base = "2000-01-01T00:00:00";  // The S9.3.2 RailCom epoch
+        String factor = "1";
+        String unit = "Seconds";
+        String display = "default";
+
+        return makeVar(label, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, minVal, maxVal, v, status, item, highCV, pFactor, pOffset, uppermask, base, factor, unit, display);
     }
 
     @Override
@@ -116,7 +122,7 @@ public class SplitDateTimeVariableValueTest extends AbstractVariableValueTestBas
     // how to define the split/shift/mask operations for long CVs
     @Override
     public void testVariableValueCreateLargeValue() {
-    } // mask is ignored 
+    } // mask is ignored
 
     @Override
     public void testVariableSynch() {
@@ -140,41 +146,177 @@ public class SplitDateTimeVariableValueTest extends AbstractVariableValueTestBas
 
     @Override
     public void testVariableValueCreateLargeMaskValue() {
-    } // mask is ignored 
+    } // mask is ignored
 
     @Override
     public void testVariableValueCreateLargeMaskValue256() {
-    } // mask is ignored 
+    } // mask is ignored
 
     @Override
     public void testVariableValueCreateLargeMaskValue2up16() {
-    } // mask is ignored 
+    } // mask is ignored
 
     // Local tests
-    // Local tests
-    /**
-     * Simple Test to get us through CI tests in interim.
-     */
     @Test
     public void testCtor() {
-        String name = "";
+        String name = "Date Field";
         String comment = "";
-        String cvName = "23:2";
+        String cvName = "23:4";
         boolean readOnly = false;
         boolean infoOnly = false;
         boolean writeOnly = false;
         boolean opsOnly = false;
-        String cvNum = "23:2";
-        String mask = "";
+        String cvNum = "23:4";
+        String mask = "VVVVVVVV";
         int minVal = 0;
         int maxVal = 0;
+        HashMap<String, CvValue> v = createCvMap();
         JLabel status = new JLabel();
         String stdname = "";
-        highCV = null;
         VariableValue instance = makeVar(name, comment, cvName,
                 readOnly, infoOnly, writeOnly, opsOnly,
                 cvNum, mask, minVal, maxVal,
-                createCvMap(), status, stdname);
+                v, status, stdname);
         Assert.assertNotNull("testCtor returned null", instance);
+    }
+
+    @Test
+    public void testRailComDateDefault() {
+        String name = "Date Field";
+        String comment = "";
+        String cvName = "23:4";
+        boolean readOnly = false;
+        boolean infoOnly = false;
+        boolean writeOnly = false;
+        boolean opsOnly = false;
+        String cvNum = "23:4";
+        String mask = "VVVVVVVV";
+        int minVal = 0;
+        int maxVal = 0;
+        HashMap<String, CvValue> v = createCvMap();
+        JLabel status = new JLabel();
+        String stdname = "";
+        String highCV = null;
+        int pFactor = 1;
+        int pOffset = 0;
+        String uppermask = "";
+        String base = "2000-01-01T00:00:00";  // The S9.3.2 RailCom epoch
+        String factor = "1";
+        String unit = "Seconds";
+        String display = "default";
+        SplitDateTimeVariableValue var = makeVar(name, comment, cvName,
+                readOnly, infoOnly, writeOnly, opsOnly,
+                cvNum, mask, minVal, maxVal,
+                v, status, stdname,
+                highCV, pFactor, pOffset, uppermask, base, factor, unit, display);
+        Assert.assertNotNull("makeVar returned null", var);
+
+        CvValue cv23 = v.get("23");
+        CvValue cv24 = v.get("24");
+        CvValue cv25 = v.get("25");
+        CvValue cv26 = v.get("26");
+
+        // change the CVs, expect to see a change in the variable value
+        cv23.setValue(83);
+        cv24.setValue(252);
+        cv25.setValue(149);
+        cv26.setValue(26);
+        String temp = LocalDateTime.parse("2014-02-18T11:11:15").format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM));
+        Assert.assertEquals("set var default value", temp, ((JTextField) var.getCommonRep()).getText());
+    }
+
+    @Test
+    public void testRailComTimeOnly() {
+        String name = "Date Field";
+        String comment = "";
+        String cvName = "23:4";
+        boolean readOnly = false;
+        boolean infoOnly = false;
+        boolean writeOnly = false;
+        boolean opsOnly = false;
+        String cvNum = "23:4";
+        String mask = "VVVVVVVV";
+        int minVal = 0;
+        int maxVal = 0;
+        HashMap<String, CvValue> v = createCvMap();
+        JLabel status = new JLabel();
+        String stdname = "";
+        String highCV = null;
+        int pFactor = 1;
+        int pOffset = 0;
+        String uppermask = "";
+        String base = "2000-01-01T00:00:00";  // The S9.3.2 RailCom epoch
+        String factor = "1";
+        String unit = "Seconds";
+        String display = "timeOnly";
+        SplitDateTimeVariableValue var = makeVar(name, comment, cvName,
+                readOnly, infoOnly, writeOnly, opsOnly,
+                cvNum, mask, minVal, maxVal,
+                v, status, stdname,
+                highCV, pFactor, pOffset, uppermask, base, factor, unit, display);
+        Assert.assertNotNull("makeVar returned null", var);
+
+        CvValue cv23 = v.get("23");
+        CvValue cv24 = v.get("24");
+        CvValue cv25 = v.get("25");
+        CvValue cv26 = v.get("26");
+
+        // change the CVs, expect to see a change in the variable value
+        cv23.setValue(83);
+        cv24.setValue(252);
+        cv25.setValue(149);
+        cv26.setValue(26);
+        String temp = LocalDateTime.parse("2014-02-18T11:11:15").format(DateTimeFormatter.ofLocalizedTime(FormatStyle.MEDIUM));
+        Assert.assertEquals("set var timeOnly value", temp, ((JTextField) var.getCommonRep()).getText());
+    }
+
+    @Test
+    public void testRailComDateOnly() {
+        String name = "Date Field";
+        String comment = "";
+        String cvName = "23:4";
+        boolean readOnly = false;
+        boolean infoOnly = false;
+        boolean writeOnly = false;
+        boolean opsOnly = false;
+        String cvNum = "23:4";
+        String mask = "VVVVVVVV";
+        int minVal = 0;
+        int maxVal = 0;
+        HashMap<String, CvValue> v = createCvMap();
+        JLabel status = new JLabel();
+        String stdname = "";
+        String highCV = null;
+        int pFactor = 1;
+        int pOffset = 0;
+        String uppermask = "";
+        String base = "2000-01-01T00:00:00";  // The S9.3.2 RailCom epoch
+        String factor = "1";
+        String unit = "Seconds";
+        String display = "dateOnly";
+        SplitDateTimeVariableValue var = makeVar(name, comment, cvName,
+                readOnly, infoOnly, writeOnly, opsOnly,
+                cvNum, mask, minVal, maxVal,
+                v, status, stdname,
+                highCV, pFactor, pOffset, uppermask, base, factor, unit, display);
+        Assert.assertNotNull("makeVar returned null", var);
+
+        CvValue cv23 = v.get("23");
+        CvValue cv24 = v.get("24");
+        CvValue cv25 = v.get("25");
+        CvValue cv26 = v.get("26");
+
+        // change the CVs, expect to see a change in the variable value
+        cv23.setValue(83);
+        cv24.setValue(252);
+        cv25.setValue(149);
+        cv26.setValue(26);
+        String temp = LocalDate.parse("2014-02-18").format(DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM));
+        Assert.assertEquals("set var dateOnly value", temp, ((JTextField) var.getCommonRep()).getText());
+    }
+
+    // from here down is testing infrastructure
+    public SplitDateTimeVariableValueTest(String s) {
+        super(s);
     }
 }

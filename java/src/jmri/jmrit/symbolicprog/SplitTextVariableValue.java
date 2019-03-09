@@ -24,8 +24,8 @@ import org.slf4j.LoggerFactory;
  * </li>
  * <li>
  * A {@code padByteStr} attribute can be used to change the default string
- * padding byte value. Valid values are 0-255 or "" to specify no terminator
- * byte. The default is "0" (a null byte).
+ * padding byte value. Valid values are 0-255 or "" to specify no pad byte. The
+ * default is "0" (a null byte).
  * </li>
  * <li>
  * A {@code charSet} attribute can be used to change the character set used to
