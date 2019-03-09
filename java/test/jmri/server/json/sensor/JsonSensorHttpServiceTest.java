@@ -124,7 +124,7 @@ public class JsonSensorHttpServiceTest {
     @Test
     public void testDelete() {
         try {
-            (new JsonSensorHttpService(new ObjectMapper())).doDelete(JsonSensor.SENSOR, null, Locale.ENGLISH);
+            (new JsonSensorHttpService(new ObjectMapper())).doDelete(JsonSensor.SENSOR, "", Locale.ENGLISH);
         } catch (JsonException ex) {
             Assert.assertEquals(HttpServletResponse.SC_METHOD_NOT_ALLOWED, ex.getCode());
             return;
