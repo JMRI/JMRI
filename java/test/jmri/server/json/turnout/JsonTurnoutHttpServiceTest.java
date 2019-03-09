@@ -44,6 +44,10 @@ public class JsonTurnoutHttpServiceTest {
             result = service.doGet(JsonTurnoutServiceFactory.TURNOUT, "IT1", Locale.ENGLISH);
             Assert.assertNotNull(result);
             Assert.assertEquals(JSON.THROWN, result.path(JSON.DATA).path(JSON.STATE).asInt());
+            turnout1.setState(Turnout.INCONSISTENT);
+            result = service.doGet(JsonTurnoutServiceFactory.TURNOUT, "IT1", Locale.ENGLISH);
+            Assert.assertNotNull(result);
+            Assert.assertEquals(JSON.INCONSISTENT, result.path(JSON.DATA).path(JSON.STATE).asInt());
         } catch (JsonException ex) {
             Assert.fail(ex.getMessage());
         }
@@ -75,6 +79,18 @@ public class JsonTurnoutHttpServiceTest {
             message = mapper.createObjectNode().put(JSON.NAME, "IT1").put(JSON.STATE, JSON.UNKNOWN);
             result = service.doPost(JsonTurnoutServiceFactory.TURNOUT, "IT1", message, Locale.ENGLISH);
             Assert.assertEquals(Turnout.THROWN, turnout1.getState());
+            Assert.assertEquals(JSON.THROWN, result.path(JSON.DATA).path(JSON.STATE).asInt());
+            // set inverted - becomes closed
+            Assert.assertFalse(turnout1.getInverted());
+            message = mapper.createObjectNode().put(JSON.NAME, "IT1").put(JSON.INVERTED, true);
+            result = service.doPost(JsonTurnoutServiceFactory.TURNOUT, "IT1", message, Locale.ENGLISH);
+            Assert.assertTrue("Turnout is inverted", turnout1.getInverted());
+            Assert.assertEquals(JSON.CLOSED, result.path(JSON.DATA).path(JSON.STATE).asInt());
+            Assert.assertEquals(true, result.path(JSON.DATA).path(JSON.INVERTED).asBoolean());
+            // reset inverted - becomes thrown
+            message = mapper.createObjectNode().put(JSON.NAME, "IT1").put(JSON.INVERTED, false);
+            result = service.doPost(JsonTurnoutServiceFactory.TURNOUT, "IT1", message, Locale.ENGLISH);
+            Assert.assertFalse("Turnout is not inverted", turnout1.getInverted());
             Assert.assertEquals(JSON.THROWN, result.path(JSON.DATA).path(JSON.STATE).asInt());
             // set invalid state
             message = mapper.createObjectNode().put(JSON.NAME, "IT1").put(JSON.STATE, 42); // Invalid value
