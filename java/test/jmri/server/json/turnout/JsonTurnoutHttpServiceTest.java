@@ -94,15 +94,13 @@ public class JsonTurnoutHttpServiceTest {
             Assert.assertEquals(JSON.THROWN, result.path(JSON.DATA).path(JSON.STATE).asInt());
             // set invalid state
             message = mapper.createObjectNode().put(JSON.NAME, "IT1").put(JSON.STATE, 42); // Invalid value
-            JsonException exception = null;
             try {
                 service.doPost(JsonTurnoutServiceFactory.TURNOUT, "IT1", message, Locale.ENGLISH);
+                Assert.fail("Expected exception not thrown");
             } catch (JsonException ex) {
-                exception = ex;
+                Assert.assertEquals(HttpServletResponse.SC_BAD_REQUEST, ex.getCode());
             }
             Assert.assertEquals(Turnout.THROWN, turnout1.getState());
-            Assert.assertNotNull(exception);
-            Assert.assertEquals(HttpServletResponse.SC_BAD_REQUEST, exception.getCode());
         } catch (JsonException ex) {
             Assert.fail(ex.getMessage());
         }
