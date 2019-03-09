@@ -11,6 +11,7 @@ import javax.swing.SwingUtilities;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 import org.netbeans.jemmy.QueueTool;
@@ -32,9 +33,7 @@ public class JUnitSwingUtilTest {
      */
     @Test
     public void testCheckBox() {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't Assume because TestCase
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // create a little GUI with a single check box
         JFrame f = new JFrame("SwingTextCaseTest");
         f.setSize(100, 100); // checkbox must be visible for test to work
@@ -75,9 +74,7 @@ public class JUnitSwingUtilTest {
 
     @Test
     public void testAssertImageNinePoints() {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't Assume because TestCase
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // special target to make sure we're doing the right points
         JFrame f = new JFrame();
         f.getContentPane().setBackground(java.awt.Color.blue);
@@ -108,9 +105,7 @@ public class JUnitSwingUtilTest {
      */
     @Test
     public void testGetDisplayedContentGreen() {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't Assume because TestCase
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JFrame f = new JFrame();
         f.setUndecorated(true); // skip frame decoration, which can force a min size.
 
@@ -148,9 +143,7 @@ public class JUnitSwingUtilTest {
      */
     @Test
     public void testGetDisplayedContentRedTransparentBkg() {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't Assume because TestCase
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JFrame f = new JFrame();
         f.setUndecorated(true); // skip frame decoration, which can force a min size.
 
@@ -186,9 +179,7 @@ public class JUnitSwingUtilTest {
 
     @Test
     public void testGetDisplayedContentRedTransparentTransp() {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't Assume because TestCase
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JFrame f = new JFrame();
         f.getContentPane().setBackground(java.awt.Color.blue);
         f.setUndecorated(true); // skip frame decoration, which can force a min size.

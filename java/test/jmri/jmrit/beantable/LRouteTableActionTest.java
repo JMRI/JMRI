@@ -11,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -55,9 +56,7 @@ public class LRouteTableActionTest {
     
     @Test
     public void testCreate() {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't Assume in TestCase
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         _lRouteTable.actionPerformed(null);
         _lRouteTable.addPressed(null);
         _lRouteTable._userName.setText("TestLRoute");

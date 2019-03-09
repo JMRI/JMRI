@@ -106,9 +106,7 @@ public class IconEditorWindowTest {
     @Test
     public void testRightTOEditor() throws Exception {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't Assume in TestCase
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Editor.JFrameItem iconEditorFrame = _editor.getIconFrame("RightTurnout");
         IconAdder iconEditor = iconEditorFrame.getEditor();
         Assert.assertNotNull(iconEditor);

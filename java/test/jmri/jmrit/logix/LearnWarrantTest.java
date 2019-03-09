@@ -13,6 +13,7 @@ import jmri.util.JUnitUtil;
 import jmri.util.junit.rules.RetryRule;
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -38,9 +39,7 @@ public class LearnWarrantTest {
 
     @Test
     public void testLearnWarrant() throws Exception {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't Assume in TestCase
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/LearnWarrantTest.xml");
         /* This layout designed so that the block and path will define a unique

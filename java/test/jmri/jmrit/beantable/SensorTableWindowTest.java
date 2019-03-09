@@ -10,6 +10,7 @@ import jmri.util.ThreadingUtil;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 import org.netbeans.jemmy.QueueTool;
@@ -29,9 +30,7 @@ public class SensorTableWindowTest {
 
     @Test
     public void testShowAndClose() throws Exception {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't Assume in TestCase
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         // ask for the window to open
         SensorTableAction a = new SensorTableAction();
@@ -84,9 +83,7 @@ public class SensorTableWindowTest {
 
     @Test
     public void testMenus() throws Exception {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't Assume in TestCase
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         SensorTableAction a = new SensorTableAction();
         a.actionPerformed(new java.awt.event.ActionEvent(a, 1, ""));

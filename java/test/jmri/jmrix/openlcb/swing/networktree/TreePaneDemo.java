@@ -87,9 +87,7 @@ public class TreePaneDemo {
             }
         });
 
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // don't bother setting up a frame in headless.
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // Test is really popping a window before doing all else
         frame = new JFrame();
         frame.setTitle("TreePane Test");

@@ -55,9 +55,7 @@ public class PaneProgFrameTest {
     // show me the specially-created frame
     @Test
     public void testFrame() {
-        if (GraphicsEnvironment.isHeadless()) {
-            return;
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         setupDoc();
         PaneProgFrame p = new PaneProgFrame(null, new RosterEntry(),
                 "test frame", "programmers/Basic.xml",

@@ -7,6 +7,7 @@ import jmri.util.ThreadingUtil;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 import org.netbeans.jemmy.QueueTool;
@@ -20,9 +21,7 @@ public class OBlockTableActionTest {
 
     @Test
     public void testInvoke() throws Exception {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't Assume in TestCase
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         // ask for the window to open
         OBlockTableAction a = new OBlockTableAction();

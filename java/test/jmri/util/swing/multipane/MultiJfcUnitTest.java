@@ -8,6 +8,7 @@ import jmri.util.swing.SamplePane;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 import org.netbeans.jemmy.operators.JButtonOperator;
@@ -22,9 +23,7 @@ public class MultiJfcUnitTest {
 
     @Test
     public void testShow() throws Exception {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // Can't assume in TestCase
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // show the window
         JFrame f1 = new MultiPaneWindow("test",
                 "java/test/jmri/util/swing/xml/Gui3LeftTree.xml",

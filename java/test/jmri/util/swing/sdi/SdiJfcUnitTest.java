@@ -8,6 +8,7 @@ import jmri.util.swing.SamplePane;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 import org.netbeans.jemmy.QueueTool;
@@ -23,9 +24,7 @@ public class SdiJfcUnitTest {
 
     @Test
     public void testShowAndClose() throws Exception {
-        if (GraphicsEnvironment.isHeadless()) {
-            return ; // Can't assume in TestCase
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JmriNamedPaneAction a = new JmriNamedPaneAction("Action",
                 new JmriJFrameInterface(),
                 jmri.util.swing.SamplePane.class.getName());
