@@ -467,6 +467,6 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>Fix bug with launcher on Windows introduced when adding JDK 11 support in 4.15.3. This caused JMRI to not launch on certain 64-bit Windows systems that had only a 32-bit Java installation.</li>
         </ul>
 
