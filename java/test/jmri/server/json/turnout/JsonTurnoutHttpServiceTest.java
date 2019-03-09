@@ -136,6 +136,9 @@ public class JsonTurnoutHttpServiceTest {
             Assert.assertNotNull(result);
             Assert.assertEquals(0, result.size());
             manager.provideTurnout("IT1");
+            result = service.doGetList(JsonTurnoutServiceFactory.TURNOUT, Locale.ENGLISH);
+            Assert.assertNotNull(result);
+            Assert.assertEquals(1, result.size());
             manager.provideTurnout("IT2");
             result = service.doGetList(JsonTurnoutServiceFactory.TURNOUT, Locale.ENGLISH);
             Assert.assertNotNull(result);
