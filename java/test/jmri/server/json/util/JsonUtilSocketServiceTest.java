@@ -109,13 +109,13 @@ public class JsonUtilSocketServiceTest {
     }
 
     /**
-     * Test of onList method, of class JsonUtilSocketService.
+     * Test of onList method, of class JsonUtilSocketService. Does not test CONFIG_PROFILE
+     * JSON type, see {@link #testOnListConfigProfile()} for that.
      *
      * @throws java.lang.Exception if an exception unexpected in the context of
      *                             these tests occurs
      */
     @Test
-    @Ignore("See Issue #5642")
     public void testOnList() throws Exception {
         Locale locale = Locale.ENGLISH;
         ObjectMapper mapper = new ObjectMapper();
@@ -130,6 +130,24 @@ public class JsonUtilSocketServiceTest {
         Assert.assertEquals(helper.getNetworkServices(locale), connection.getMessage());
         instance.onList(JSON.SYSTEM_CONNECTIONS, empty, locale);
         Assert.assertEquals(helper.getSystemConnections(locale), connection.getMessage());
+    }
+
+    /**
+     * Test of onList method for CONFIG_PROFILE JSON type, of class JsonUtilSocketService.
+     *
+     * @throws java.lang.Exception if an exception unexpected in the context of
+     *                             these tests occurs
+     */
+    @Test
+    @Ignore("See Issue #5642")
+    public void testOnListConfigProfile() throws Exception {
+        Locale locale = Locale.ENGLISH;
+        ObjectMapper mapper = new ObjectMapper();
+        JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
+        JsonNode empty = connection.getObjectMapper().createObjectNode();
+        JsonUtilSocketService instance = new JsonUtilSocketService(connection);
+        JsonUtilHttpService helper = new JsonUtilHttpService(mapper);
+        InstanceManager.getDefault(JsonServerPreferences.class).setHeartbeatInterval(10);
         instance.onList(JSON.CONFIG_PROFILES, empty, locale);
         Assert.assertEquals(helper.getConfigProfiles(locale), connection.getMessage());
     }
