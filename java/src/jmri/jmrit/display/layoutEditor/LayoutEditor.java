@@ -5173,7 +5173,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      * selectedHitPointType is left referring to the results of the checking the
      * last track on the list.
      * <p>
-     * Refers to the current value of {@link #layoutTrackList) and {@link #dLoc}.
+     * Refers to the current value of {@link #layoutTrackList} and {@link #dLoc}.
      *
      * @param useRectangles set true to use rectangle; false for circles.
      */
