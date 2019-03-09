@@ -794,25 +794,25 @@ public class TrackSegment extends LayoutTrack {
     private static final int MAX_TUNNEL_ENTRANCE_WIDTH = 200;
 
     /**
-     * Helper method, which adds "Set value" item to the menu. The value can be optionally
-     * range-checked. Item will be appended at the end of the menu.
-     * 
-     * @param menu the target menu.
-     * @param titleKey bundle key for the menu title/dialog title
+     * Helper method, which adds "Set value" item to the menu. The value can be
+     * optionally range-checked. Item will be appended at the end of the menu.
+     *
+     * @param menu       the target menu.
+     * @param titleKey   bundle key for the menu title/dialog title
      * @param tooltipKey bundle key for the menu item tooltip
-     * @param val value getter
-     * @param set value setter
-     * @param predicate checking predicate, possibly null.
+     * @param val        value getter
+     * @param set        value setter
+     * @param predicate  checking predicate, possibly null.
      */
-    private void addNumericMenuItem(@Nonnull JMenu menu, 
+    private void addNumericMenuItem(@Nonnull JMenu menu,
             @Nonnull String titleKey, @Nonnull String tooltipKey,
-            @Nonnull Supplier<Integer> val, 
+            @Nonnull Supplier<Integer> val,
             @Nonnull Consumer<Integer> set, @Nullable Predicate<Integer> predicate) {
         int oldVal = val.get();
         JMenuItem jmi = menu.add(new JMenuItem(Bundle.getMessage("MakeLabel",
-                    Bundle.getMessage(titleKey)) + oldVal));
-            jmi.setToolTipText(Bundle.getMessage(tooltipKey));
-            jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
+                Bundle.getMessage(titleKey)) + oldVal));
+        jmi.setToolTipText(Bundle.getMessage(tooltipKey));
+        jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
             //prompt for lineWidth
             int newValue = QuickPromptUtil.promptForInt(layoutEditor,
                     Bundle.getMessage(titleKey),
@@ -823,7 +823,7 @@ public class TrackSegment extends LayoutTrack {
             layoutEditor.repaint();
         });
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -1254,18 +1254,18 @@ public class TrackSegment extends LayoutTrack {
         jmi.setForeground(bridgeColor);
         jmi.setBackground(ColorUtil.contrast(bridgeColor));
 
-        addNumericMenuItem(bridgeMenu, 
-                "DecorationLineWidthMenuItemTitle", "DecorationLineWidthMenuItemToolTip", 
+        addNumericMenuItem(bridgeMenu,
+                "DecorationLineWidthMenuItemTitle", "DecorationLineWidthMenuItemToolTip",
                 this::getBridgeLineWidth, this::setBridgeLineWidth,
                 QuickPromptUtil.checkIntRange(1, MAX_BRIDGE_LINE_WIDTH, null));
 
-        addNumericMenuItem(bridgeMenu, 
-                "BridgeApproachWidthMenuItemTitle", "BridgeApproachWidthMenuItemToolTip", 
+        addNumericMenuItem(bridgeMenu,
+                "BridgeApproachWidthMenuItemTitle", "BridgeApproachWidthMenuItemToolTip",
                 this::getBridgeApproachWidth, this::setBridgeApproachWidth,
                 QuickPromptUtil.checkIntRange(1, MAX_BRIDGE_APPROACH_WIDTH, null));
 
-        addNumericMenuItem(bridgeMenu, 
-                "BridgeDeckWidthMenuItemTitle", "BridgeDeckWidthMenuItemToolTip", 
+        addNumericMenuItem(bridgeMenu,
+                "BridgeDeckWidthMenuItemTitle", "BridgeDeckWidthMenuItemToolTip",
                 this::getBridgeDeckWidth, this::setBridgeDeckWidth,
                 QuickPromptUtil.checkIntRange(1, MAX_BRIDGE_DECK_WIDTH, null));
 
@@ -1502,16 +1502,16 @@ public class TrackSegment extends LayoutTrack {
         jmi.setForeground(tunnelColor);
         jmi.setBackground(ColorUtil.contrast(tunnelColor));
 
-        addNumericMenuItem(tunnelMenu, 
-                "TunnelFloorWidthMenuItemTitle", "TunnelFloorWidthMenuItemToolTip", 
+        addNumericMenuItem(tunnelMenu,
+                "TunnelFloorWidthMenuItemTitle", "TunnelFloorWidthMenuItemToolTip",
                 this::getTunnelFloorWidth, this::setTunnelFloorWidth,
                 QuickPromptUtil.checkIntRange(1, MAX_TUNNEL_FLOOR_WIDTH, null));
-        addNumericMenuItem(tunnelMenu, 
-                "DecorationLineWidthMenuItemTitle", "DecorationLineWidthMenuItemToolTip", 
+        addNumericMenuItem(tunnelMenu,
+                "DecorationLineWidthMenuItemTitle", "DecorationLineWidthMenuItemToolTip",
                 this::getTunnelLineWidth, this::setTunnelLineWidth,
                 QuickPromptUtil.checkIntRange(1, MAX_TUNNEL_LINE_WIDTH, null));
-        addNumericMenuItem(tunnelMenu, 
-                "TunnelEntranceWidthMenuItemTitle", "TunnelEntranceWidthMenuItemToolTip", 
+        addNumericMenuItem(tunnelMenu,
+                "TunnelEntranceWidthMenuItemTitle", "TunnelEntranceWidthMenuItemToolTip",
                 this::getTunnelEntranceWidth, this::setTunnelEntranceWidth,
                 QuickPromptUtil.checkIntRange(1, MAX_TUNNEL_ENTRANCE_WIDTH, null));
 
