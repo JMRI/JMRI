@@ -1,7 +1,25 @@
 package jmri.jmrit.beantable;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import java.awt.GraphicsEnvironment;
 import java.util.ResourceBundle;
+
+import javax.swing.JButton;
+import javax.swing.JDialog;
+
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
+import org.netbeans.jemmy.operators.JButtonOperator;
+import org.netbeans.jemmy.operators.JDialogOperator;
+import org.netbeans.jemmy.operators.JFrameOperator;
+import org.netbeans.jemmy.util.NameComponentChooser;
+
 import jmri.InstanceManager;
 import jmri.Light;
 import jmri.Route;
@@ -9,16 +27,13 @@ import jmri.Sensor;
 import jmri.SignalHead;
 import jmri.Turnout;
 import jmri.util.JUnitUtil;
-import junit.extensions.jfcunit.TestHelper;
-import junit.framework.Test;
-import junit.framework.TestSuite;
 
 /**
  * Tests for the jmri.jmrit.beantable.LRouteTableAction class
  *
  * @author	Pete Cressman Copyright 2009
  */
-public class LRouteTableActionTest extends jmri.util.SwingTestCase {
+public class LRouteTableActionTest {
 
     static final ResourceBundle rbx = ResourceBundle
             .getBundle("jmri.jmrit.beantable.LRouteTableBundle");
@@ -26,6 +41,7 @@ public class LRouteTableActionTest extends jmri.util.SwingTestCase {
     private LRouteTableAction _lRouteTable;
     private LogixTableAction _logixTable;
 
+    @Test
     public void testRouteElementComparator() {
         LRouteTableAction.RouteElement e1 = new LRouteTableAction.RouteElement("ISname1", "B", LRouteTableAction.SENSOR_TYPE);
         LRouteTableAction.RouteElement e2 = new LRouteTableAction.RouteElement("ISname2", "B", LRouteTableAction.SENSOR_TYPE);
@@ -38,10 +54,9 @@ public class LRouteTableActionTest extends jmri.util.SwingTestCase {
         
     }
     
+    @Test
     public void testCreate() {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't Assume in TestCase
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         _lRouteTable.actionPerformed(null);
         _lRouteTable.addPressed(null);
         _lRouteTable._userName.setText("TestLRoute");
@@ -63,66 +78,43 @@ public class LRouteTableActionTest extends jmri.util.SwingTestCase {
         for (int i = 0; i < listeners.length; i++) {
             _lRouteTable._addFrame.removeWindowListener(listeners[i]);
         }
-        TestHelper.disposeWindow(_lRouteTable._addFrame, this);
-    }
-    /*
-     @SuppressWarnings("unchecked")
-     public void testPrompt() {
-     assertNotNull("LRouteTableAction is null!", _lRouteTable);        // test has begun
-     _lRouteTable.addPressed(null);
-     _lRouteTable._userName.setText("TestLRoute2");    
-     _lRouteTable._systemName.setText("T2");
-     for (int i=0; i<25; i++)
-     {
-     _lRouteTable._inputList.get(3*i).setIncluded(true);
-     _lRouteTable._outputList.get(3*i).setIncluded(true);
-     }
-     _lRouteTable._alignList.get(5).setIncluded(true);
-
-     // find the "Update" button in add/edit window and press it,
-     // so the window is marked as dirty
-     NamedComponentFinder finder = new NamedComponentFinder(JComponent.class, "CreateButton" );
-     JButton updateButton = ( JButton ) finder.find( _lRouteTable._addFrame, 0);
-     Assert.assertNotNull( "Could not find the updateButton", updateButton );
-     //getHelper().enterClickAndLeave( new MouseEventData( this, updateButton ) );
-        
-     // now close window
-     TestHelper.disposeWindow(_lRouteTable._addFrame,this);
-        
-     // cancel the Reminder dialog
-     DialogFinder dFinder = new DialogFinder( "Reminder" );
-     java.util.List<JDialog> showingDialogs = dFinder.findAll();
-     //Assert.assertEquals( "Number of dialogs showing is wrong", 1, showingDialogs.size( ) );
-     JDialog dialog = showingDialogs.get( 0 );
-     Assert.assertEquals( "Wrong dialog showing up", "Reminder", dialog.getTitle( ) );
-     getHelper().disposeWindow( dialog, this );
-        
-     }
-     */
-    // from here down is testing infrastructure
-
-    public LRouteTableActionTest(String s) {
-        super(s);
+        new JFrameOperator(_lRouteTable._addFrame).dispose();
     }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", LRouteTableActionTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
+    @SuppressWarnings("unchecked")
+    @Test
+    @Ignore("Commented out in JUnit 3")
+    public void testPrompt() {
+        assertNotNull("LRouteTableAction is null!", _lRouteTable); // test has begun
+        _lRouteTable.addPressed(null);
+        _lRouteTable._userName.setText("TestLRoute2");
+        _lRouteTable._systemName.setText("T2");
+        for (int i = 0; i < 25; i++) {
+            _lRouteTable._inputList.get(3 * i).setIncluded(true);
+            _lRouteTable._outputList.get(3 * i).setIncluded(true);
+        }
+        _lRouteTable._alignList.get(5).setIncluded(true);
+
+        // find the "Update" button in add/edit window and press it,
+        // so the window is marked as dirty
+        JButton updateButton = JButtonOperator.findJButton(_lRouteTable._addFrame, new NameComponentChooser("CreateButton"));
+        Assert.assertNotNull("Could not find the updateButton", updateButton);
+        new JButtonOperator(updateButton).doClick();
+
+        // now close window
+        new JFrameOperator(_lRouteTable._addFrame).dispose();
+
+        // cancel the Reminder dialog
+        JDialog dialog = JDialogOperator.findJDialog("Reminder", true, true);
+        Assert.assertNotNull("Expected Reminder dialog is missing", dialog);
+        new JDialogOperator(dialog).dispose();
+
     }
 
-    // test suite from all defined tests
-    public static Test suite() {
-        Test suite = new TestSuite(LRouteTableActionTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         jmri.util.JUnitUtil.setUp();
 
-        super.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
 
         JUnitUtil.resetInstanceManager();
@@ -169,10 +161,11 @@ public class LRouteTableActionTest extends jmri.util.SwingTestCase {
         }
     }
 
-    @Override
-    protected void tearDown() throws Exception {
+    @Before
+    public void tearDown() throws Exception {
         // now close action window
-        TestHelper.disposeWindow(_lRouteTable.f, this);
-        super.tearDown();
+        if (_lRouteTable.f != null) {
+            new JFrameOperator(_lRouteTable.f).dispose();
+        }
     }
 }

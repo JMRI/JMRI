@@ -4,37 +4,41 @@ import jmri.InstanceManager;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
 import org.jdom2.Element;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the roster.swing.attributetable.AttributeTableModel class.
  *
  * @author	Bob Jacobsen Copyright (C) 2009
  */
-public class AttributeTableModelTest extends TestCase {
+public class AttributeTableModelTest {
 
+    @Test
     public void testTableLength() throws Exception {
         AttributeTableModel t = new AttributeTableModel();
 
         Assert.assertEquals(NENTRIES, t.getRowCount());
     }
 
+    @Test
     public void testTableWidth() throws Exception {
         AttributeTableModel t = new AttributeTableModel();
 
         Assert.assertEquals(NKEYS, t.getColumnCount());
     }
 
+    @Test
     public void testColumnName() throws Exception {
         AttributeTableModel t = new AttributeTableModel();
 
         Assert.assertEquals("key b", t.getColumnName(1));
     }
 
+    @Test
     public void testGetValueAt() {
         AttributeTableModel t = new AttributeTableModel();
 
@@ -56,7 +60,7 @@ public class AttributeTableModelTest extends TestCase {
     static int NENTRIES = 3;
     static int NKEYS = 4;
 
-    @Override
+    @Before
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
 
@@ -150,26 +154,8 @@ public class AttributeTableModelTest extends TestCase {
 
     }
 
-    // from here down is testing infrastructure
-    public AttributeTableModelTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", AttributeTableModelTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(AttributeTableModelTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 

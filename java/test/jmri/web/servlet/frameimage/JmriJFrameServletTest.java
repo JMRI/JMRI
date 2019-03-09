@@ -3,23 +3,25 @@ package jmri.web.servlet.frameimage;
 import java.util.HashMap;
 import java.util.Map;
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Test;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 
 /**
  * Invokes complete set of tests for the jmri.web.xmlio.JmriJFrameServlet class
  *
  * @author	Bob Jacobsen Copyright 2013
  */
-public class JmriJFrameServletTest extends TestCase {
+public class JmriJFrameServletTest {
 
+    @Test
     public void testAccess() {
         JmriJFrameServlet_ut out = new JmriJFrameServlet_ut();
         Assert.assertNotNull(out.populateParameterMap(new HashMap<>()));
     }
 
+    @Test
     public void testOneParameter() {
         Map<String, String[]> map = new java.util.HashMap<>();
         map.put("key1", new String[]{"value1-0"});
@@ -35,6 +37,7 @@ public class JmriJFrameServletTest extends TestCase {
 
     }
 
+    @Test
     public void testTwoParameters() {
         Map<String, String[]> map = new java.util.HashMap<>();
         map.put("key1", new String[]{"value1-0"});
@@ -62,31 +65,13 @@ public class JmriJFrameServletTest extends TestCase {
         }
     }
 
-    // from here down is testing infrastructure
-    public JmriJFrameServletTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {JmriJFrameServletTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(JmriJFrameServletTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    @Override
-    protected void setUp() {
+    @Before
+    public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 }

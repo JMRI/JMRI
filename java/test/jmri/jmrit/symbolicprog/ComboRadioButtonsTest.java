@@ -3,20 +3,22 @@ package jmri.jmrit.symbolicprog;
 import java.util.HashMap;
 import javax.swing.JComboBox;
 import jmri.progdebugger.ProgDebugger;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * ComboRadioButtonsTest.java
  *
  * @author	Bob Jacobsen Copyright 2006
  */
-public class ComboRadioButtonsTest extends TestCase {
+public class ComboRadioButtonsTest {
 
     ProgDebugger p = new ProgDebugger();
 
+    @Test
     public void testAppearance() {
         // create an enum variable pointed at CV 81 and connect
         HashMap<String, CvValue> v = createCvMap();
@@ -35,6 +37,7 @@ public class ComboRadioButtonsTest extends TestCase {
         Assert.assertEquals("expected item count ", 3, b.v.size());
     }
 
+    @Test
     public void testToOriginal() {
         HashMap<String, CvValue> v = createCvMap();
         CvValue cv = new CvValue("81", p);
@@ -71,6 +74,7 @@ public class ComboRadioButtonsTest extends TestCase {
 
     }
 
+    @Test
     public void testFromOriginal() {
         // create an enum variable pointed at CV 81 and connect
         HashMap<String, CvValue> v = createCvMap();
@@ -121,29 +125,12 @@ public class ComboRadioButtonsTest extends TestCase {
         var.lastItem();
     }
 
-    // from here down is testing infrastructure
-    public ComboRadioButtonsTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {ComboRadioButtonsTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(ComboRadioButtonsTest.class);
-        return suite;
-    }
-
-    @Override
+    @Before
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
     }
 
-    @Override
+    @After
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }

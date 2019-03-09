@@ -1,10 +1,10 @@
 package jmri.util;
 
 import java.util.concurrent.*;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Test;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 
 /**
  * This class serves as a demonstration of some good
@@ -21,7 +21,7 @@ import org.junit.Assert;
  *
  * @author	Bob Jacobsen Copyright 2017
  */
-public class ThreadingDemoAndTest extends TestCase {
+public class ThreadingDemoAndTest {
 
     volatile boolean flagInterrupted1 = false;
     volatile boolean flagInterrupted2 = false;
@@ -38,6 +38,7 @@ public class ThreadingDemoAndTest extends TestCase {
      * </ul>
      * Plus the synchronization needed around the wait and wake-up calls
      */
+    @Test
     public void testThreadingLifeCycle() {
         final Object lock = new Object();  // this object is the lock for the wait and notify
         final Thread t = new Thread() {
@@ -68,6 +69,7 @@ public class ThreadingDemoAndTest extends TestCase {
     /**
      * How one thread t2 can "join" on the ending of another thread t1
      */
+    @Test
     public void testThreadingJoinCycle() {
         final Object lock = new Object();
         final Thread t1 = new Thread() {
@@ -117,6 +119,7 @@ public class ThreadingDemoAndTest extends TestCase {
      * Interrupting a thread ends the current wait, but 
      * doesn't kill the thread; it can go on to wait more.
      */
+    @Test
     public void testInterruptAndContinue() {
         flagInterrupted1 = false;  // set true when we get to the first wait
         flagInterrupted2 = false;  // set true when we get to the second wait
@@ -167,6 +170,7 @@ public class ThreadingDemoAndTest extends TestCase {
     /**
      * Interrupting a thread that restores the interrupted status also kills the next wait
      */
+    @Test
     public void testThreadReassertsInterrupt() {
         flagInterrupted1 = false;  // set true when we leave the first wait
         flagInterrupted2 = false;  // set true when we leave the second wait
@@ -231,6 +235,7 @@ public class ThreadingDemoAndTest extends TestCase {
     /** 
      * Confirm interrupt behavior of blocking queue put
      */
+    @Test
     public void testInterruptBlockingQueuePut() {
         flagInterrupted1 = false;  // set true when we leave the first wait
         flagInterrupted2 = false;  // set true when we leave the second wait
@@ -307,6 +312,7 @@ public class ThreadingDemoAndTest extends TestCase {
     /** 
      * Confirm interrupt behavior of blocking queue get
      */
+    @Test
     public void testInterruptBlockingQueueGet() {
         flagInterrupted1 = false;  // set true when we leave the first wait
         flagInterrupted2 = false;  // set true when we leave the second wait
@@ -345,34 +351,14 @@ public class ThreadingDemoAndTest extends TestCase {
 
     }
 
-    // from here down is testing infrastructure
-    public ThreadingDemoAndTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", ThreadingDemoAndTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(ThreadingDemoAndTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() throws Exception {
         jmri.util.JUnitUtil.setUp();
     }
 
-    @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         jmri.util.JUnitUtil.tearDown();
-        super.tearDown();
     }
 
 }

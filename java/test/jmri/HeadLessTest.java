@@ -1,8 +1,7 @@
 package jmri;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
 
 /**
  * Invoke complete set of tests for the jmri package
@@ -20,12 +19,14 @@ import junit.framework.TestSuite;
  * <p>
  * @author	Bob Jacobsen, Copyright (C) 2001, 2002, 2007
  */
-public class HeadLessTest extends TestCase {
-
-    // from here down is testing infrastructure
-    public HeadLessTest(String s) {
-        super(s);
-    }
+@RunWith(Suite.class)
+@Suite.SuiteClasses({
+        jmri.PackageTest.class,
+        apps.PackageTest.class,
+        // at the end, we check for logging messages again
+        jmri.util.Log4JErrorIsErrorTest.class
+})
+public class HeadLessTest {
 
     // Main entry point
     static public void main(String[] args) {
@@ -33,17 +34,6 @@ public class HeadLessTest extends TestCase {
         System.setProperty("java.awt.headless", "true");
 
         // start tests
-        String[] testCaseName = {"-noloading", HeadLessTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
+        org.junit.runner.JUnitCore.runClasses(HeadLessTest.class);
     }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite("jmri.JmriTest");  // no tests in this class itself
-
-        suite.addTest(new junit.framework.JUnit4TestAdapter(jmri.PackageTest.class));
-        suite.addTest(new junit.framework.JUnit4TestAdapter(apps.PackageTest.class));
-        return suite;
-    }
-
 }

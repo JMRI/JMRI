@@ -1,16 +1,19 @@
 package jmri.jmrix.rfid.protocol.olimex;
 
 import jmri.jmrix.AbstractMRReply;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+
+import org.junit.After;
+import org.junit.Before;
 
 /**
  * Tests for the OlimexRfidProtocol class
  *
  * @author Matthew Harris
  */
-public class OlimexRfidProtocolTest extends TestCase {
+public class OlimexRfidProtocolTest {
 
     AbstractMRReply msgStandalone = new AbstractMRReplyImpl("\r\n-020047C8C3\r\n>");
     AbstractMRReply msgInvalidStandalone = new AbstractMRReplyImpl("\r\n+020047C8C3\r\n>");
@@ -18,6 +21,7 @@ public class OlimexRfidProtocolTest extends TestCase {
     /**
      * Test of getMaxSize method, of class OlimexRfidProtocol.
      */
+    @Test
     public void testGetMaxSize() {
         assertEquals(16, OlimexRfidProtocol.getMaxSize());
     }
@@ -25,6 +29,7 @@ public class OlimexRfidProtocolTest extends TestCase {
     /**
      * Test of initString method, of class OlimexRfidProtocol.
      */
+    @Test
     public void testInitString() {
         OlimexRfidProtocol instance = new OlimexRfidProtocol();
         assertEquals("mc00", instance.initString());
@@ -33,6 +38,7 @@ public class OlimexRfidProtocolTest extends TestCase {
     /**
      * Test of getTag method, of class OlimexRfidProtocol.
      */
+    @Test
     public void testGetTag() {
         OlimexRfidProtocol instance = new OlimexRfidProtocol();
         assertEquals("020047C8C3", instance.getTag(msgStandalone));
@@ -41,6 +47,7 @@ public class OlimexRfidProtocolTest extends TestCase {
     /**
      * Test of providesChecksum method, of class OlimexRfidProtocol.
      */
+    @Test
     public void testProvidesChecksum() {
         OlimexRfidProtocol instance = new OlimexRfidProtocol();
         assertEquals(false, instance.providesChecksum());
@@ -49,6 +56,7 @@ public class OlimexRfidProtocolTest extends TestCase {
     /**
      * Test of getCheckSum method, of class OlimexRfidProtocol.
      */
+    @Test
     public void testGetCheckSum() {
         OlimexRfidProtocol instance = new OlimexRfidProtocol();
         assertEquals("", instance.getCheckSum(msgStandalone));
@@ -57,6 +65,7 @@ public class OlimexRfidProtocolTest extends TestCase {
     /**
      * Test of isValid method, of class OlimexRfidProtocol.
      */
+    @Test
     public void testIsValid() {
         OlimexRfidProtocol instance = new OlimexRfidProtocol();
         assertEquals(true, instance.isValid(msgStandalone));
@@ -66,6 +75,7 @@ public class OlimexRfidProtocolTest extends TestCase {
     /**
      * Test of endOfMessage method, of class OlimexRfidProtocol.
      */
+    @Test
     public void testEndOfMessage() {
         OlimexRfidProtocol instance = new OlimexRfidProtocol();
         assertEquals(true, instance.endOfMessage(msgStandalone));
@@ -74,6 +84,7 @@ public class OlimexRfidProtocolTest extends TestCase {
     /**
      * Test of getReaderPort method, of class CoreIdRfidProtocol.
      */
+    @Test
     public void testGetReaderPort() {
         OlimexRfidProtocol instance = new OlimexRfidProtocol();
         char expResult = 0x00;
@@ -83,6 +94,7 @@ public class OlimexRfidProtocolTest extends TestCase {
     /**
      * Test of toMonitorString method, of class OlimexRfidProtocol.
      */
+    @Test
     public void testToMonitorString() {
         OlimexRfidProtocol instance = new OlimexRfidProtocol();
         String expResult = "Reply from Olimex reader. Tag read 020047C8C3";
@@ -106,33 +118,13 @@ public class OlimexRfidProtocolTest extends TestCase {
         }
     }
 
-    // from here down is testing infrastructure
-    public OlimexRfidProtocolTest(String testName) {
-        super(testName);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", OlimexRfidProtocolTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(OlimexRfidProtocolTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         jmri.util.JUnitUtil.setUp();
-        super.setUp();
     }
 
-    @Override
-    protected void tearDown() throws Exception {
-        super.tearDown();
+    @After
+    public void tearDown() throws Exception {
         jmri.util.JUnitUtil.tearDown();
     }
 

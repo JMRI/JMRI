@@ -1,9 +1,9 @@
 package jmri;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,8 +12,9 @@ import org.slf4j.LoggerFactory;
  *
  * @author Matthew Harris Copyright (C) 2011
  */
-public class ApplicationTest extends TestCase {
+public class ApplicationTest {
 
+    @Test
     public void testSetName() {
         // test default
         Assert.assertEquals("Default Application name is 'JMRI'", "JMRI", Application.getApplicationName());
@@ -38,32 +39,14 @@ public class ApplicationTest extends TestCase {
         }
     }
 
-    // from here down is testing infrastructure
-    public ApplicationTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {ApplicationTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(ApplicationTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    @Override
-    protected void setUp() {
+    @Before
+    public void setUp() {
         jmri.util.JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetApplication();
     }
 
-    @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         jmri.util.JUnitUtil.resetApplication();
         jmri.util.JUnitUtil.tearDown();
     }
