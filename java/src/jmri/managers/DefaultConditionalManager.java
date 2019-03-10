@@ -304,7 +304,7 @@ public class DefaultConditionalManager extends AbstractManager<Conditional>
      * Overrides the bean method
      * @since 4.7.4
      * @deprecated 4.11.5 - use direct access via 
-     *                  {@link getNamedBeanSet} 
+     *                  {@link #getNamedBeanSet} 
      * @return a list of conditional system names regardless of parent Logix
      */
     @Deprecated // 4.11.5

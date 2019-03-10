@@ -8,7 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Tests for the {@link jmri.jmris.simpleserver.parser.JmriServerTokenizer} class.
+ * Tests for the jmri.jmris.simpleserver.parser.JmriServerTokenizer class.
  *
  * @author Paul Bender
  */
