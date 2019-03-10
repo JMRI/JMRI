@@ -7,7 +7,7 @@ import org.junit.*;
  *
  * @author Paul Bender Copyright (C) 2017
  */
-public abstract class PositionableJPanelTest extends PositionableTestBase {
+public class PositionableJPanelTest extends PositionableTestBase {
 
     @Test
     public void testCTor() {
