@@ -1,6 +1,5 @@
 
     <h3>Hardware Support</h3>
-
         <ul>
           <li></li>
         </ul>
@@ -77,7 +76,7 @@
 
         <h4>NCE</h4>
             <ul>
-                <li><li>
+                <li></li>
             </ul>
 
         <h4>Oak Tree</h4>
@@ -97,7 +96,7 @@
 
         <h4>Roco z21/Z21</h4>
             <ul>
-                <li></li>
+                <li><>/li>
             </ul>
 
         <h4>Secsi</h4>
@@ -136,9 +135,9 @@
             </ul>
 
     <h3>New / Updated decoder definitions</h3>
-      <ul>
-        <li></li>
-     </ul>
+        <ul>
+          <li></li>
+        </ul>
 
         <h4>Arnold</h4>
             <ul>
@@ -306,79 +305,79 @@
             </ul>
 
     <h3>DecoderPro</h3>
-        <a id="DecoderPro" name="DecoderPro"/>
+        <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-          <li></li>
+            <li></li>
         </ul>
 
    <h3>Dispatcher</h3>
-        <a id="Dispatcher" name="Dispatcher"/>
+        <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
              <li></li>
         </ul>
 
    <h3>Internationalization</h3>
-        <a id="I18N" name="I18N"/>
+        <a id="I18N" name="I18N"></a>
         <ul>
             <li></li>
         </ul>
 
     <h3>Layout Editor</h3>
-        <a id="LE" name="LE"/>
+        <a id="LE" name="LE"></a>
         <ul>
 	        <li></li>
         </ul>
 
     <h3>Logix</h3>
-        <a id="Logix" name="Logix"/>
+        <a id="Logix" name="Logix"></a>
         <ul>
           <li></li>
         </ul>
 
     <h3>Operations</h3>
-        <a id="Operations" name="Operations"/>
+        <a id="Operations" name="Operations"></a>
         <ul>
             <li></li>
         </ul>
 
    <h3>Panel Editors</h3>
-        <a id="PE" name="PE"/>
+        <a id="PE" name="PE"></a>
         <ul>
             <li></li>
         </ul>
 
     <h3>Preferences</h3>
-        <a id="Preferences" name="Preferences"/>
+        <a id="Preferences" name="Preferences"></a>
         <ul>
             <li></li>
         </ul>
 
     <h3>Resources</h3>
-        <a id="Resources" name="Resources"/>
+        <a id="Resources" name="Resources"></a>
         <ul>
             <li></li>
         </ul>
 
     <h3>Roster</h3>
-        <a id="Roster" name="Roster"/>
+        <a id="Roster" name="Roster"></a>
         <ul>
             <li></li>
         </ul>
 
     <h3>Turnouts, Lights, Sensors and other elements</h3>
-        <a id="TLae" name="TLae"/>
+        <a id="TLae" name="TLae"></a>
         <ul>
             <li></li>
         </ul>
 
     <h3>Scripting</h3>
-        <a id="Scripting" name="Scripting"/>
+        <a id="Scripting" name="Scripting"></a>
         <ul>
             <li></li>
         </ul>
 
     <h3>Signals</h3>
-        <a id="Signals" name="Signals"/>
+        <a id="Signals" name="Signals"></a>
         <ul>
             <li></li>
         </ul>
@@ -418,44 +417,44 @@
             </ul>
 
    <h3>Switchboard Editor</h3>
-        <a id="SW" name="SW"/>
+        <a id="SW" name="SW"></a>
         <ul>
             <li></li>
         </ul>
 
     <h3>Timetable</h3>
-        <a id="Timetable" name="Timetable"/>
+        <a id="Timetable" name="Timetable"></a>
         <span class="since">since 4.13.4</span>
         <ul>
             <li></li>
         </ul>
 
    <h3>Warrants</h3>
-        <a id="Wt" name="Wt"/>
+        <a id="Wt" name="Wt"></a>
         <ul>
             <li></li>
         </ul>
 
    <h3>Web Access</h3>
-        <a id="WA" name="WA"/>
+        <a id="WA" name="WA"></a>
         <ul>
             <li> </li>
         </ul>
 
    <h3>WiThrottle Server</h3>
-        <a id="WS" name="WS"/>
+        <a id="WS" name="WS"></a>
         <ul>
             <li></li>
         </ul>
         
    <h3>Virtual Sound Decoder</h3>
-        <a id="VSD" name="VSD"/>
+        <a id="VSD" name="VSD"></a>
         <ul>
             <li></li>
         </ul>
 
     <h3>Miscellaneous</h3>
-        <a id="Misc" name="Misc"/>
+        <a id="Misc" name="Misc"></a>
         <ul>
             <li></li>
         </ul>
