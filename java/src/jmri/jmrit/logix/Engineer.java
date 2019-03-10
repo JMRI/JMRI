@@ -972,7 +972,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     }
 
     /**
-     * @param Throttle setting
+     * @param ts Throttle setting
      */
     private void runWarrant(ThrottleSetting ts) {
         NamedBean bean = ts.getNamedBeanHandle().getBean();

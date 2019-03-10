@@ -79,7 +79,7 @@ public class SignalGroupSubTableAction {
      * Set to OR when you at least one of the conditionals to be met for the
      * Signal Head to turn On when an included Aspect is shown.
      *
-     * See {@link operFromBox operFromBox()}
+     * See {@link #operFromBox}
      * 
      * @param mode True for AND
      * @param box the comboBox object to set
@@ -96,7 +96,7 @@ public class SignalGroupSubTableAction {
     /**
      * Get the user choice for conditional evaluation.
      *
-     * See {@link setoperBox setoperBox()}
+     * See {@link #setoperBox}
      * 
      * @param box the comboBox object containing the user choice
      * @return True for AND, False for OR
@@ -164,7 +164,7 @@ public class SignalGroupSubTableAction {
 
     /**
      * Get the user choice for a Sensor conditional's On state from the comboBox on the Edit Head sub pane.
-     * See {@link turnoutModeFromBox turnoutModeFromBox()}
+     * See {@link #turnoutModeFromBox}
      * 
      * @param box the comboBox object containing the user choice
      * @return Value for ACTIVE/INACTIVE
@@ -184,7 +184,7 @@ public class SignalGroupSubTableAction {
      * Set selected item for a Sensor conditional's On state in the
      * comboBox on the Edit Head sub pane.
      *
-     * See {@link turnoutModeFromBox turnoutModeFromBox()}
+     * See {@link #turnoutModeFromBox}
      * 
      * @param mode Value for ACTIVE/INACTIVE
      * @param box the comboBox object to set
@@ -198,7 +198,7 @@ public class SignalGroupSubTableAction {
      * Get the user choice for a Control Turnout conditional's On state
      * from the comboBox on the Edit Head sub pane.
      *
-     * See {@link sensorModeFromBox sensorModeFromBox()}
+     * See {@link #sensorModeFromBox}
      * 
      * @param box the comboBox object containing the user choice
      * @return Value for CLOSED/THROWN
@@ -218,7 +218,7 @@ public class SignalGroupSubTableAction {
      * Set selected item for a Control Turnout conditional's On state
      * in the comboBox on the Edit Head sub pane.
      *
-     * See {@link turnoutModeFromBox turnoutModeFromBox()}
+     * See {@link #turnoutModeFromBox}
      * 
      * @param mode Value for CLOSED/THROWN
      * @param box the comboBox object to set

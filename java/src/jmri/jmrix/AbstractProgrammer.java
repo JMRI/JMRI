@@ -261,10 +261,10 @@ public abstract class AbstractProgrammer implements Programmer {
     /**
      * Find the register number that corresponds to a specific CV number.
      *
-     * @throws ProgrammerException if the requested CV does not correspond to a
-     *                             register
      * @param cv CV number (1 through 512) for which equivalent register is
      *           desired
+     * @throws ProgrammerException if the requested CV does not correspond to a
+     *                             register
      * @return register number corresponding to cv
      */
     public int registerFromCV(int cv) throws ProgrammerException {

@@ -488,7 +488,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
      *  station to stop sending information to the stationary decoder
      *  when the either a feedback message or an "OK" message is received.
      *
-     *  @param l an {@link XNetReply} message
+     *  @param reply The reply message to process
      */
     synchronized private void handleExactModeFeedback(XNetReply reply) {
         // We have three cases to check if CommandedState does
