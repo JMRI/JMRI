@@ -1,25 +1,31 @@
 package jmri.server.json.util;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import java.awt.GraphicsEnvironment;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.Locale;
-import jmri.InstanceManager;
-import jmri.jmris.json.JsonServerPreferences;
-import jmri.server.json.JSON;
-import jmri.server.json.JsonMockConnection;
-import jmri.util.JUnitUtil;
-import jmri.web.server.WebServerPreferences;
+
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import jmri.InstanceManager;
+import jmri.jmris.json.JsonServerPreferences;
+import jmri.jmrit.display.Editor;
+import jmri.jmrit.display.switchboardEditor.SwitchboardEditor;
+import jmri.server.json.JSON;
+import jmri.server.json.JsonException;
+import jmri.server.json.JsonMockConnection;
+import jmri.util.JUnitUtil;
+import jmri.web.server.WebServerPreferences;
 
 /**
  *
@@ -27,25 +33,9 @@ import org.slf4j.LoggerFactory;
  */
 public class JsonUtilSocketServiceTest {
 
-    public JsonUtilSocketServiceTest() {
-    }
-
-    @BeforeClass
-    public static void setUpClass() {
-        jmri.util.JUnitUtil.setUp();
-
-        JUnitUtil.resetInstanceManager();
-        JUnitUtil.resetProfileManager();
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
-        jmri.util.JUnitUtil.tearDown();
-
-    }
-
     @Before
     public void setUp() throws IOException {
+        JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.resetProfileManager();
         JUnitUtil.initConfigureManager();
@@ -53,10 +43,12 @@ public class JsonUtilSocketServiceTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.tearDown();
     }
 
     /**
-     * Test of onMessage method, of class JsonUtilSocketService.
+     * Test of onMessage method, of class JsonUtilSocketService. Tests only
+     * responses that are expected to be consistent between a 
      *
      * @throws java.lang.Exception if an exception unexpected in the context of
      *                             these tests occurs
@@ -97,6 +89,15 @@ public class JsonUtilSocketServiceTest {
         Assert.assertNotNull(result);
         Assert.assertEquals(JSON.RAILROAD, message.path(JSON.TYPE).asText());
         Assert.assertEquals("Railroad name matches", wsp.getRailroadName(), result.path(JSON.NAME).asText());
+        // JSON.NETWORK_SERVICE (should return 404 because not running the requested service)
+        message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, JSON.ZEROCONF_SERVICE_TYPE);
+        try {
+            instance.onMessage(JSON.NETWORK_SERVICE, message, JSON.GET, locale);
+            Assert.fail("Expected exception not thrown");
+        } catch (JsonException ex) {
+            Assert.assertEquals("HTTP Not Found", 404, ex.getCode());
+            Assert.assertEquals("Error Message", "Unable to access networkService _jmri-json._tcp.local..", ex.getMessage());
+        }
         // JSON.GOODBYE
         instance.onMessage(JSON.GOODBYE, empty, JSON.POST, locale);
         message = connection.getMessage();
@@ -109,8 +110,32 @@ public class JsonUtilSocketServiceTest {
     }
 
     /**
+     * Test of onMessage method, of class JsonUtilSocketService. Tests PANEL JSON type
+     * if not running headless.
+     *
+     * @throws java.lang.Exception if an exception unexpected in the context of
+     *                             these tests occurs
+     */
+    @Test
+    public void testOnMessagePanels() throws Exception {
+        Assume.assumeFalse("Needs GUI", GraphicsEnvironment.isHeadless());
+        Editor editor = new SwitchboardEditor("test");
+        JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
+        JsonNode empty = connection.getObjectMapper().createObjectNode();
+        JsonUtilSocketService instance = new JsonUtilSocketService(connection);
+        instance.onMessage(JSON.PANELS, empty, JSON.GET, Locale.ENGLISH);
+        JsonNode message = connection.getMessage();
+        Assert.assertNotNull("Message is not null", message);
+        Assert.assertTrue("Message is array", message.isArray());
+        Assert.assertEquals("Array has one element", 1, message.size());
+        editor.getTargetFrame().dispose();
+        editor.dispose();
+    }
+    
+    /**
      * Test of onList method, of class JsonUtilSocketService. Does not test CONFIG_PROFILE
-     * JSON type, see {@link #testOnListConfigProfile()} for that.
+     * JSON type, see {@link #testOnListConfigProfile()} for that. Does not test PANEL
+     * JSON type, see {@link #testOnListPanels()} for that.
      *
      * @throws java.lang.Exception if an exception unexpected in the context of
      *                             these tests occurs
@@ -152,6 +177,30 @@ public class JsonUtilSocketServiceTest {
         Assert.assertEquals(helper.getConfigProfiles(locale), connection.getMessage());
     }
 
+    /**
+     * Test of onList method, of class JsonUtilSocketService. Tests PANEL JSON type
+     * if not running headless.
+     *
+     * @throws java.lang.Exception if an exception unexpected in the context of
+     *                             these tests occurs
+     */
+    @Test
+    public void testOnListPanels() throws Exception {
+        Assume.assumeFalse("Needs GUI", GraphicsEnvironment.isHeadless());
+        Editor editor = new SwitchboardEditor("test");
+        JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
+        JsonNode empty = connection.getObjectMapper().createObjectNode();
+        JsonUtilSocketService instance = new JsonUtilSocketService(connection);
+        instance.onList(JSON.PANELS, empty, Locale.ENGLISH);
+        JsonNode message = connection.getMessage();
+        Assert.assertNotNull("Message is not null", message);
+        Assert.assertTrue("Message is array", message.isArray());
+        Assert.assertEquals("Array has one element", 1, message.size());
+        editor.getTargetFrame().dispose();
+        editor.dispose();
+    }
+
+    
     /**
      * Test of onClose method, of class JsonUtilSocketService.
      */
