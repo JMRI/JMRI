@@ -41,23 +41,21 @@ public class CbusCommandStationTest {
     }
     
     @Test
-    public void testgetSimNormaltc() {      
-        CbusSimulator sim = t.getNetworkSim();
-        Assert.assertNotNull("exists",sim);
-        sim.dispose();
-        sim = null;
-    }
-
-    @Test
     public void testgetSimLoopbacktc() {
         TrafficControllerScaffoldLoopback tc = new TrafficControllerScaffoldLoopback();
-        memo.setTrafficController(tc); 
-        CbusCommandStation tccs = new CbusCommandStation(memo);
-        CbusSimulator sim = tccs.getNetworkSim();
-        Assert.assertNotNull("exists",sim);
-        sim.dispose();
-        sim = null;
-        tc=null;
+        memo.setTrafficController(tc);
+        CbusCommandStation ta = new CbusCommandStation(memo);
+        Assert.assertNotNull("exists",ta);
+        try {
+            CbusSimulator sim = jmri.InstanceManager.getDefault(jmri.jmrix.can.cbus.simulator.CbusSimulator.class);
+            Assert.assertTrue(true);
+            Assert.assertNotNull("exists",sim);
+        } catch (NullPointerException e) {
+            Assert.assertTrue(false);
+        }
+        
+        tc = null;
+        ta = null;
     }
 
     // test originates from loconet

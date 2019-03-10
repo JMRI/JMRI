@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/appearancetable.xsl" type="text/xsl"?>
+
+<appearancetable
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable.xsd"
+>
+
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2009</year><year>2010</year><holder>JMRI</holder>
+  </copyright>
+  
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+        <personname><firstname>Petr</firstname><surname>Šídlo</surname></personname>
+        <email>sidlo64@hotmail.com</email>
+    </author>    
+  </authorgroup>
+    
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+        <revnumber>1</revnumber>
+        <date>2019-02-20</date>
+        <authorinitials>PŠ</authorinitials>
+        <revremark>Initial version</revremark>
+    </revision>    
+  </revhistory>
+
+  <aspecttable>CSD-1962-vlozena</aspecttable>
+  <name>Test</name>
+  <description>Testovací sada návěstidel.</description>
+
+  <appearances>
+
+    <appearance>
+      <aspectname>Stůj</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/200_stuj_4v.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Volno</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/201_volno_4v.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Výstraha</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/202_vystraha_4v.gif</imagelink>
+    </appearance>
+    
+    <appearance>
+      <aspectname>Očekávej 40</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/203_o40_p.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Odjezdové návěstidlo dovoluje jízdu</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/205_ondj_3vl.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Stůj s modrou</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/206_stuj2_3vl.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Rychlost 40 a výstraha</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/207_40_vystraha_4v.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Sunout zakázáno opakovaná</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/215_su_zakazano_spo.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Sunout zakázáno</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/216_su_zakazano_sp.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Sunout pomalu</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/217_su_pomalu_sp.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Sunout rychleji</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/218_su_rychle_sp.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Zpět</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/219_su_zpet_sp.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Zpět opakovaná</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/220_su_zpet_spo.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Opakovaná volno</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/221_opvolno_po.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Opakovaná výstraha</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/222_opvystraha_po.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Opakovaná očekávej 40</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/223_opo40_po.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Posun zakázán opakovaná</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/225_pz_sno.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Na spádovišti se neposunuje</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/226_neposunuje_spo.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Posun zakázán</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/227_pz_sn.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Posun dovolen</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/228_pd_sn.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Posun dovolen - nezabezpečený</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/229_npd_3vl.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Opatrně na přivolávací návěst vložená návěstidla</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/CSD-1962/231_opn3_4v.gif</imagelink>
+    </appearance>
+
+  </appearances>
+  
+  <specificappearances>
+      <danger>
+          <aspect>Stůj</aspect>
+      </danger>
+      <permissive>
+          <aspect>Opatrně na přivolávací návěst vložená návěstidla</aspect>
+      </permissive>
+  </specificappearances>
+  
+  <aspectMappings>
+    <aspectMapping>
+      <advancedAspect>Volno</advancedAspect>
+      <ourAspect>Volno</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Stůj</advancedAspect>
+      <ourAspect>Výstraha</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Rychlost 40 a výstraha</advancedAspect>
+      <ourAspect>Očekávej 40</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Výstraha</advancedAspect>
+      <ourAspect>Opakovaná volno</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Stůj</advancedAspect>
+      <ourAspect>Opakovaná výstraha</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Rychlost 40 a výstraha</advancedAspect>
+      <ourAspect>Opakovaná očekávej 40</ourAspect>
+    </aspectMapping>
+  </aspectMappings>
+  
+</appearancetable>  

@@ -4,21 +4,24 @@ import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.ThreadingUtil;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Before;
+import org.junit.Test;
+import org.netbeans.jemmy.QueueTool;
 
 /**
- * Swing jfcUnit tests for the OBlock table
+ * Swing tests for the OBlock table.
  *
  * @author Pete Cressman Copyright 2016
  */
-public class OBlockTableActionTest extends jmri.util.SwingTestCase {
+public class OBlockTableActionTest {
 
+    @Test
     public void testInvoke() throws Exception {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't Assume in TestCase
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         // ask for the window to open
         OBlockTableAction a = new OBlockTableAction();
@@ -27,7 +30,7 @@ public class OBlockTableActionTest extends jmri.util.SwingTestCase {
         // Find new table window by name
         JmriJFrame doc = JmriJFrame.getFrame(jmri.jmrit.beantable.oblock.Bundle.getMessage("TitleOBlocks"));
         Assert.assertNotNull("Occupancy window", doc);
-        flushAWT();
+        new QueueTool().waitEmpty();
 
         javax.swing.JDesktopPane dt = (javax.swing.JDesktopPane) doc.getContentPane();
         javax.swing.JInternalFrame[] fob = dt.getAllFrames();
@@ -35,42 +38,22 @@ public class OBlockTableActionTest extends jmri.util.SwingTestCase {
         System.out.println();
 
         Assert.assertEquals(4, fob.length);
-        flushAWT();
+        new QueueTool().waitEmpty();
         // Ask to close add window
         ThreadingUtil.runOnGUI(() -> {
             JUnitUtil.dispose(doc);
         });
     }
 
-    // from here down is testing infrastructure
-    public OBlockTableActionTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", OBlockTableActionTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(OBlockTableActionTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() throws Exception {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
     }
 
-    @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         JUnitUtil.tearDown();
-        super.tearDown();
     }
 }

@@ -351,7 +351,7 @@
       <variable item="F1-F8 Control" CV="49" mask="XXXXXXVX">
         <enumVal>
           <enumChoice choice="NMRA-DDC">
-            <choice>NMRA-DDC</choice>
+            <choice>NMRA-DCC</choice>
           </enumChoice>
           <enumChoice choice="LGB">
             <choice>LGB</choice>
@@ -362,7 +362,7 @@
       <variable item="A1 Output" CV="49" mask="XXXXXVXX">
         <enumVal>
           <enumChoice choice="via NMRA-DDC CV33-38">
-            <choice>via NMRA-DDC CV33-38</choice>
+            <choice>via NMRA-DCC CV33-38</choice>
           </enumChoice>
           <enumChoice choice="LGB-Pulse Sequence for external modules">
             <choice>LGB-Pulse Sequence for external modules</choice>
@@ -384,18 +384,18 @@
       <variable item="Data Format DDC" CV="49" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="Motorola and DDC">
-            <choice>Motorola and DDC</choice>
+            <choice>Motorola and DCC</choice>
           </enumChoice>
           <enumChoice choice="DDC Only">
-            <choice>DDC Only</choice>
+            <choice>DCC Only</choice>
           </enumChoice>
         </enumVal>
-        <label>Data Format DDC</label>
+        <label>Data Format DCC</label>
       </variable>
       <variable item="Data Format Motorola" CV="49" mask="XXVXXXXX">
         <enumVal>
           <enumChoice choice="Motorola and DDC">
-            <choice>Motorola and DDC</choice>
+            <choice>Motorola and DCC</choice>
           </enumChoice>
           <enumChoice choice="Motorola Only">
             <choice>Motorola Only</choice>
@@ -505,7 +505,7 @@
         <decVal/>
         <label>Offset Register</label>
       </variable>
-      <variable item="Page Register" CV="64" default="0" readOnly="yes" tooltip="Used with DDC paged mode programming">
+      <variable item="Page Register" CV="64" default="0" readOnly="yes" tooltip="Used with DCC paged mode programming">
         <decVal/>
         <label>Page Register</label>
       </variable>

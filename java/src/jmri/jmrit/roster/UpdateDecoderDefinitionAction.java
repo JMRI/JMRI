@@ -57,14 +57,14 @@ public class UpdateDecoderDefinitionAction extends JmriAbstractAction {
 
     /**
      * The prefix string used to specify a query in decoder definition file
-     * {@link replacementFamily} and {@link replacementModel} elements.
+     * replacementFamily and replacementModel elements.
      */
     public static final String QRY_PREFIX = "query:";
 
     /**
      * The {@link java.util.regex regex} separator to
      * {@link java.lang.String#split(java.lang.String) split} items in
-     * {@link replacementFamily} and {@link replacementModel} elements.
+     * replacementFamily and replacementModel elements.
      */
     public static final String QRY_SEPARATOR = "\\|";
 
@@ -96,17 +96,17 @@ public class UpdateDecoderDefinitionAction extends JmriAbstractAction {
 
     /**
      * A {@link List} based on the combination of any
-     * {@link #replacementFamily replacementFamily} and
-     * {@link #replacementModel replacementModel} suggestions.
+     * replacementFamily and
+     * replacementModel suggestions.
      */
     transient volatile List<DecoderFile> replacementList;
 
     /**
-     * The subset of {@link #replacementList replacementList} that also matches
+     * The subset of the <code>replacementList</code> that also matches
      * both the
-     * {@link jmri.jmrit.decoderdefn.IdentifyDecoder#mfgID manufacturerID}
+     * {@link jmri.jmrit.decoderdefn.IdentifyDecoder} manufacturerID
      * stored in CV8 and the
-     * {@link jmri.jmrit.decoderdefn.IdentifyDecoder#modelID versionID} stored
+     * {@link jmri.jmrit.decoderdefn.IdentifyDecoder} versionID stored
      * in CV7.
      */
     transient volatile List<DecoderFile> versionMatchList;
@@ -685,9 +685,10 @@ public class UpdateDecoderDefinitionAction extends JmriAbstractAction {
      * <li>
      * A {@link #versionMatchList versionMatchList} that is the subset of
      * {@link #replacementList replacementList} that also matches both a
-     * {@link jmri.jmrit.decoderdefn.IdentifyDecoder#mfgID manufacturerID}
-     * stored in CV8 and a
-     * {@link jmri.jmrit.decoderdefn.IdentifyDecoder#modelID versionID} stored
+     * manufacturerID (from 
+     * {@link jmri.jmrit.decoderdefn.IdentifyDecoder} mfgID) 
+     * stored in CV8 and a versionID (from
+     * {@link jmri.jmrit.decoderdefn.IdentifyDecoder} modelID)  stored
      * in CV7.
      * </li>
      * </ul>

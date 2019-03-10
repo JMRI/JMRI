@@ -215,6 +215,11 @@ public class RosterSpeedProfile {
         }
     }
 
+    public SpeedStep getSpeedStep(float speed) {
+        int iSpeedStep = Math.round(speed * 1000);
+        return speeds.get(iSpeedStep);
+    }
+
     public void setForwardSpeed(float speedStep, float forward) {
         if (forward > 0.0f) {
             _hasForwardSpeeds = true;

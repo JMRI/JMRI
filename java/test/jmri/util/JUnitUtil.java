@@ -1,6 +1,8 @@
 package jmri.util;
 
 import apps.gui.GuiLafPreferencesManager;
+
+import java.awt.Container;
 import java.awt.Frame;
 import java.awt.Window;
 import java.io.FileNotFoundException;
@@ -9,6 +11,8 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import javax.annotation.Nonnull;
+import javax.swing.AbstractButton;
+
 import jmri.*;
 import jmri.implementation.JmriConfigurationManager;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
@@ -47,6 +51,9 @@ import org.apache.log4j.Level;
 import org.junit.Assert;
 import org.netbeans.jemmy.FrameWaiter;
 import org.netbeans.jemmy.TestOut;
+import org.netbeans.jemmy.operators.AbstractButtonOperator;
+import org.netbeans.jemmy.operators.JButtonOperator;
+import org.netbeans.jemmy.operators.JDialogOperator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -130,12 +137,22 @@ public class JUnitUtil {
     static boolean checkSequenceDumpsStack =    Boolean.getBoolean("jmri.util.JUnitUtil.checkSequenceDumpsStack"); // false unless set true
 
     /**
-     * Check for any threads left behind after a test calls {@link tearDown}.
+     * Check for any threads left behind after a test calls {@link #tearDown()}.
      * <p>
      * Set from the jmri.util.JUnitUtil.checkRemnantThreads environment variable.
      */
     static boolean checkRemnantThreads =    Boolean.getBoolean("jmri.util.JUnitUtil.checkRemnantThreads"); // false unless set true
 
+    /**
+     * Check for tests that take an excessive time
+     * <p>
+     * Set from the jmri.util.JUnitUtil.checkTestDuration environment variable.
+     */
+    static boolean checkTestDuration =      Boolean.getBoolean("jmri.util.JUnitUtil.checkTestDuration"); // false unless set true
+    static long    checkTestDurationMax =   Long.getLong("jmri.util.JUnitUtil.checkTestDurationMax", 5000); // milliseconds
+
+    static long    checkTestDurationStartTime = 0;  // working value
+    
     static private int threadCount = 0;
     
     static private boolean didSetUp = false;
@@ -169,10 +186,15 @@ public class JUnitUtil {
             // ensure logging of deprecated method calls;
             // individual tests can turn off as needed
             Log4JUtil.setDeprecatedLogging(true);
-            
+ 
         } catch (Throwable e) {
             System.err.println("Could not start JUnitAppender, but test continues:\n" + e);
         }
+            
+        // reset the UnexpectedMessageFlags so that errors from a 
+        // previous test doesn't interfere with the current test.
+        JUnitAppender.resetUnexpectedMessageFlags(Level.INFO); 
+
 
         // do not set the UncaughtExceptionHandler while unit testing
         // individual tests can explicitly set it after calling this method
@@ -217,6 +239,9 @@ public class JUnitUtil {
                 if (checkSequenceDumpsStack) lastSetUpStackTrace = Thread.currentThread().getStackTrace();
             }
         }
+        
+        // checking time?
+        if (checkTestDuration) checkTestDurationStartTime = System.currentTimeMillis();
     }
     
     /**
@@ -225,6 +250,14 @@ public class JUnitUtil {
      */
     public static void tearDown() {
 
+        // checking time?
+        if (checkTestDuration) {
+            long duration = System.currentTimeMillis() - checkTestDurationStartTime;
+            if (duration > checkTestDurationMax) {
+                // test too long, log that
+                log.warn("Test in {} duration {} msec exceeded limit {}", getTestClassName(), duration, checkTestDurationMax);
+            }
+        }
         // Log and/or check the use of setUp and tearDown
         if (checkSetUpTearDownSequence || printSetUpTearDownNames) {
             lastTearDownClassName = getTestClassName();
@@ -288,7 +321,7 @@ public class JUnitUtil {
      * {@value #DEFAULT_RELEASETHREAD_DELAY} milliseconds.
      * <p>
      * This cannot be used on the Swing or AWT event threads. For those, please
-     * use Jemmy's wait routine or JFCUnit's flushAWT() and waitAtLeast(..)
+     * use Jemmy's wait routine.
      *
      * @param self currently ignored
      * @deprecated 4.9.1 Use the various waitFor routines instead
@@ -302,7 +335,7 @@ public class JUnitUtil {
      * Release the current thread, allowing other threads to process.
      * <p>
      * This cannot be used on the Swing or AWT event threads. For those, please
-     * use JFCUnit's flushAWT() and waitAtLeast(..)
+     * use Jemmy's wait routine.
      *
      * @param self  currently ignored
      * @param delay milliseconds to wait
@@ -590,7 +623,7 @@ public class JUnitUtil {
     public static void resetInstanceManager() {
         // clear all instances from the static InstanceManager
         InstanceManager.getDefault().clearAll();
-        // ensure the auto-default UserPreferencesManager is not created
+        // ensure the auto-default UserPreferencesManager is not created by installing a test one
         InstanceManager.setDefault(UserPreferencesManager.class, new TestUserPreferencesManager());
     }
 
@@ -722,7 +755,7 @@ public class JUnitUtil {
 
     public static void initDebugThrottleManager() {
         jmri.ThrottleManager m = new DebugThrottleManager();
-        InstanceManager.setThrottleManager(m);
+        InstanceManager.store(m, ThrottleManager.class);
     }
 
     public static void initDebugProgrammerManager() {
@@ -1143,20 +1176,42 @@ public class JUnitUtil {
 
     /* GraphicsEnvironment utility methods */
 
-    public static java.awt.Container findContainer(String title) {
-        junit.extensions.jfcunit.finder.DialogFinder finder = new junit.extensions.jfcunit.finder.DialogFinder(title);
-        JUnitUtil.waitFor(() -> {
-            return (java.awt.Container) finder.find() != null;
-        }, "Found dialog + \"title\"");
-        java.awt.Container pane = (java.awt.Container) finder.find();
-        return pane;
+    /**
+     * Get the content pane of a dialog.
+     * 
+     * @param title the dialog title
+     * @return the content pane
+     */
+    public static Container findContainer(String title) {
+        return new JDialogOperator(title).getContentPane();
     }
 
-    public static javax.swing.AbstractButton pressButton(jmri.util.SwingTestCase clazz, java.awt.Container frame, String text) {
-        junit.extensions.jfcunit.finder.AbstractButtonFinder buttonFinder = new junit.extensions.jfcunit.finder.AbstractButtonFinder(text);
-        javax.swing.AbstractButton button = (javax.swing.AbstractButton) buttonFinder.find(frame, 0);
+    /**
+     * Press a button after finding it in a container by title.
+     * 
+     * @param clazz an object no longer used
+     * @param frame container containing button to press
+     * @param text button title
+     * @return the pressed button
+     * @deprecated use {@link #pressButton(Container, String)} instead
+     */
+    @Deprecated // for removal after 4.18
+    public static AbstractButton pressButton(SwingTestCase clazz, Container frame, String text) {
+        return pressButton(frame, text);
+    }
+
+    /**
+     * Press a button after finding it in a container by title.
+     * 
+     * @param frame container containing button to press
+     * @param text button title
+     * @return the pressed button
+     */
+    public static AbstractButton pressButton(Container frame, String text) {
+        AbstractButton button = JButtonOperator.findAbstractButton(frame, text, true, true);
         Assert.assertNotNull(text + " Button not found", button);
-        clazz.getHelper().enterClickAndLeave(new junit.extensions.jfcunit.eventdata.MouseEventData(clazz, button));
+        AbstractButtonOperator abo = new AbstractButtonOperator(button);
+        abo.doClick();
         return button;
     }
 

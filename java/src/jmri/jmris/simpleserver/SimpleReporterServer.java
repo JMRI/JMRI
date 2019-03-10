@@ -39,7 +39,11 @@ public class SimpleReporterServer extends AbstractReporterServer {
     public void sendReport(String reporterName, Object r) throws IOException {
         addReporterToList(reporterName);
         if (r != null) {
-            this.sendMessage("REPORTER " + reporterName + " " + r.toString() + "\n");
+            if (r instanceof jmri.Reportable ) {
+               this.sendMessage("REPORTER " + reporterName + " " + ((jmri.Reportable)r).toReportString() + "\n");
+            } else {
+               this.sendMessage("REPORTER " + reporterName + " " + r.toString() + "\n");
+            }
         } else {
             this.sendMessage("REPORTER " + reporterName + "\n");
         }

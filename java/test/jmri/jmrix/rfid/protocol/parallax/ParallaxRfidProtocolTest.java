@@ -1,16 +1,19 @@
 package jmri.jmrix.rfid.protocol.parallax;
 
 import jmri.jmrix.AbstractMRReply;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+
+import org.junit.After;
+import org.junit.Before;
 
 /**
  * Tests for the ParallaxRfidProtocol class
  *
  * @author Matthew Harris
  */
-public class ParallaxRfidProtocolTest extends TestCase {
+public class ParallaxRfidProtocolTest {
 
     AbstractMRReply msgStandalone = new AbstractMRReplyImpl("\n7800656EB6\r");
     AbstractMRReply msgInvalidStandalone = new AbstractMRReplyImpl("\r\n7800656EB6");
@@ -18,6 +21,7 @@ public class ParallaxRfidProtocolTest extends TestCase {
     /**
      * Test of getMaxSize method, of class ParallaxRfidProtocol.
      */
+    @Test
     public void testGetMaxSize() {
         assertEquals(12, ParallaxRfidProtocol.getMaxSize());
     }
@@ -25,6 +29,7 @@ public class ParallaxRfidProtocolTest extends TestCase {
     /**
      * Test of initString method, of class ParallaxRfidProtocol.
      */
+    @Test
     public void testInitString() {
         ParallaxRfidProtocol instance = new ParallaxRfidProtocol();
         assertEquals("", instance.initString());
@@ -33,6 +38,7 @@ public class ParallaxRfidProtocolTest extends TestCase {
     /**
      * Test of getTag method, of class ParallaxRfidProtocol.
      */
+    @Test
     public void testGetTag() {
         ParallaxRfidProtocol instance = new ParallaxRfidProtocol();
         assertEquals("7800656EB6", instance.getTag(msgStandalone));
@@ -41,6 +47,7 @@ public class ParallaxRfidProtocolTest extends TestCase {
     /**
      * Test of providesChecksum method, of class ParallaxRfidProtocol.
      */
+    @Test
     public void testProvidesChecksum() {
         ParallaxRfidProtocol instance = new ParallaxRfidProtocol();
         assertEquals(false, instance.providesChecksum());
@@ -49,6 +56,7 @@ public class ParallaxRfidProtocolTest extends TestCase {
     /**
      * Test of getCheckSum method, of class ParallaxRfidProtocol.
      */
+    @Test
     public void testGetCheckSum() {
         ParallaxRfidProtocol instance = new ParallaxRfidProtocol();
         assertEquals("", instance.getCheckSum(msgStandalone));
@@ -57,6 +65,7 @@ public class ParallaxRfidProtocolTest extends TestCase {
     /**
      * Test of isValid method, of class ParallaxRfidProtocol.
      */
+    @Test
     public void testIsValid() {
         ParallaxRfidProtocol instance = new ParallaxRfidProtocol();
         assertEquals(true, instance.isValid(msgStandalone));
@@ -66,6 +75,7 @@ public class ParallaxRfidProtocolTest extends TestCase {
     /**
      * Test of endOfMessage method, of class ParallaxRfidProtocol.
      */
+    @Test
     public void testEndOfMessage() {
         ParallaxRfidProtocol instance = new ParallaxRfidProtocol();
         assertEquals(true, instance.endOfMessage(msgStandalone));
@@ -74,6 +84,7 @@ public class ParallaxRfidProtocolTest extends TestCase {
     /**
      * Test of getReaderPort method, of class CoreIdRfidProtocol.
      */
+    @Test
     public void testGetReaderPort() {
         ParallaxRfidProtocol instance = new ParallaxRfidProtocol();
         char expResult = 0x00;
@@ -83,6 +94,7 @@ public class ParallaxRfidProtocolTest extends TestCase {
     /**
      * Test of toMonitorString method, of class ParallaxRfidProtocol.
      */
+    @Test
     public void testToMonitorString() {
         ParallaxRfidProtocol instance = new ParallaxRfidProtocol();
         String expResult = "Reply from Parallax reader. Tag read 7800656EB6";
@@ -106,33 +118,13 @@ public class ParallaxRfidProtocolTest extends TestCase {
         }
     }
 
-    // from here down is testing infrastructure
-    public ParallaxRfidProtocolTest(String testName) {
-        super(testName);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", ParallaxRfidProtocolTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(ParallaxRfidProtocolTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         jmri.util.JUnitUtil.setUp();
-        super.setUp();
     }
 
-    @Override
-    protected void tearDown() throws Exception {
-        super.tearDown();
+    @After
+    public void tearDown() throws Exception {
         jmri.util.JUnitUtil.tearDown();
     }
 

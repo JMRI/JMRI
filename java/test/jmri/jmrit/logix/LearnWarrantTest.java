@@ -13,6 +13,7 @@ import jmri.util.JUnitUtil;
 import jmri.util.junit.rules.RetryRule;
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -38,9 +39,7 @@ public class LearnWarrantTest {
 
     @Test
     public void testLearnWarrant() throws Exception {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't Assume in TestCase
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/LearnWarrantTest.xml");
         /* This layout designed so that the block and path will define a unique
@@ -80,7 +79,8 @@ public class LearnWarrantTest {
         List<BlockOrder> orders = frame.getOrders();
         Assert.assertEquals("5 BlockOrders", 5, orders.size());
 
-        frame.setTrainInfo("99");
+        frame._speedUtil.setDccAddress("99");
+        frame.setTrainInfo(null);
         JUnitUtil.waitFor(() -> {
             return (frame._speedUtil.getDccAddress() != null);
         }, "Found address");
@@ -112,6 +112,7 @@ public class LearnWarrantTest {
         pressButton(jfo, Bundle.getMessage("Stop"));
 
         // change address and run
+        frame._speedUtil.setDccAddress("111");
         frame.setTrainInfo("111");
         JUnitUtil.waitFor(() -> {
             return (frame._speedUtil.getDccAddress() != null);
@@ -223,7 +224,14 @@ public class LearnWarrantTest {
             Sensor sensorNext = _OBlockMgr.getBySystemName(route[i]).getSensor();
             sensorNext.setState(Sensor.ACTIVE);
             new org.netbeans.jemmy.QueueTool().waitEmpty(100);
-            sensor.setState(Sensor.INACTIVE);
+            final Sensor tsensor = sensor;
+            jmri.util.ThreadingUtil.runOnLayout(() -> {
+                try {
+                    tsensor.setState(Sensor.INACTIVE);
+                } catch (jmri.JmriException e) {
+                    Assert.fail("Unexpected Exception: " + e);
+                }
+            });
             sensor = sensorNext;
         }
         return sensor;

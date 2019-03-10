@@ -2,7 +2,7 @@ package jmri.server.json;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import jmri.InstanceManager;
-import jmri.NamedBean;
+import jmri.Turnout;
 import jmri.TurnoutManager;
 import jmri.server.json.turnout.JsonTurnoutHttpService;
 import jmri.server.json.turnout.JsonTurnoutServiceFactory;
@@ -45,17 +45,17 @@ public class JsonNamedBeanHttpServiceTest extends JsonHttpServiceTestBase {
      */
     @Test
     public void testGetNamedBean() throws Exception {
-        NamedBean bean = null;
+        Turnout bean = null;
         String name = "non-existant";
         String type = "non-existant";
-        JsonNamedBeanHttpService instance = new JsonTurnoutHttpService(this.mapper);
+        JsonNamedBeanHttpService<Turnout> instance = new JsonTurnoutHttpService(this.mapper);
         try {
             instance.getNamedBean(bean, name, type, locale);
             Assert.fail("Expected JsonException not thrown.");
         } catch (JsonException ex) {
             this.validate(ex.getJsonMessage());
             Assert.assertEquals("Error code is HTTP \"not found\"", 404, ex.getCode());
-            Assert.assertEquals("Error message is HTTP \"not found\"", "Unable to access non-existant non-existant.", ex.getLocalizedMessage());
+            Assert.assertEquals("Error message is HTTP \"not found\"", "Object type non-existant named non-existant not found.", ex.getLocalizedMessage());
         }
     }
 
@@ -71,12 +71,12 @@ public class JsonNamedBeanHttpServiceTest extends JsonHttpServiceTestBase {
         String name = "IT1";
         // retain turnout as NamedBean to ensure only "generic" NamedBean
         // methods are used
-        NamedBean bean = InstanceManager.getDefault(TurnoutManager.class).provide(name);
+        Turnout bean = InstanceManager.getDefault(TurnoutManager.class).provide(name);
         bean.setUserName("Turnout 1");
         bean.setComment("Turnout Comment");
         bean.setProperty("foo", "bar");
         bean.setProperty("bar", null);
-        JsonNamedBeanHttpService instance = new JsonTurnoutHttpService(this.mapper);
+        JsonNamedBeanHttpService<Turnout> instance = new JsonTurnoutHttpService(this.mapper);
         JsonNode root = instance.getNamedBean(bean, name, JsonTurnoutServiceFactory.TURNOUT, locale);
         JsonNode data = root.path(JSON.DATA);
         Assert.assertEquals("Correct system name", bean.getSystemName(), data.path(JSON.NAME).asText());
@@ -108,17 +108,17 @@ public class JsonNamedBeanHttpServiceTest extends JsonHttpServiceTestBase {
      */
     @Test
     public void testPostNamedBean() throws Exception {
-        NamedBean bean = null;
+        Turnout bean = null;
         String name = "non-existant";
         String type = "non-existant";
-        JsonNamedBeanHttpService instance = new JsonTurnoutHttpService(this.mapper);
+        JsonNamedBeanHttpService<Turnout> instance = new JsonTurnoutHttpService(this.mapper);
         try {
             instance.postNamedBean(bean, this.mapper.createObjectNode(), name, type, locale);
             Assert.fail("Expected JsonException not thrown.");
         } catch (JsonException ex) {
             this.validate(ex.getJsonMessage());
             Assert.assertEquals("Error code is HTTP \"not found\"", 404, ex.getCode());
-            Assert.assertEquals("Error message is HTTP \"not found\"", "Unable to access non-existant non-existant.", ex.getLocalizedMessage());
+            Assert.assertEquals("Error message is HTTP \"not found\"", "Object type non-existant named non-existant not found.", ex.getLocalizedMessage());
         }
     }
 

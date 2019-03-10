@@ -18,6 +18,7 @@ import java.util.Locale;
 import javax.annotation.Nullable;
 import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
+import jmri.TimebaseRateException;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonHttpService;
 
@@ -50,14 +51,16 @@ public class JsonTimeHttpService extends JsonHttpService {
             if (data.path(TIME).isTextual()) {
                 InstanceManager.getDefault(jmri.Timebase.class).setTime(new ISO8601DateFormat().parse(data.path(TIME).asText()));
             }
-            if (data.path(RATE).isDouble()) {
-                InstanceManager.getDefault(jmri.ClockControl.class).setRate(data.path(RATE).asDouble());
+            if (data.path(RATE).isDouble() || data.path(RATE).isInt()) {
+                InstanceManager.getDefault(jmri.Timebase.class).userSetRate(data.path(RATE).asDouble());
             }
             if (data.path(STATE).isInt()) {
                 InstanceManager.getDefault(jmri.Timebase.class).setRun(data.path(STATE).asInt() == ON);
             }
         } catch (ParseException ex) {
             throw new JsonException(400, Bundle.getMessage(locale, "ErrorTimeFormat"));
+        } catch (TimebaseRateException e) {
+            throw new JsonException(400, Bundle.getMessage(locale, "ErrorRateFactor"));
         }
         return this.doGet(type, name, locale);
     }

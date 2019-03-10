@@ -1,5 +1,6 @@
 package jmri.jmrix.can.cbus;
 
+import javax.annotation.Nonnull;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
@@ -24,10 +25,8 @@ public class CbusSend {
     private TextAreaFIFO ta;
     private String newLine = System.getProperty("line.separator");
     
-    public CbusSend(CanSystemConnectionMemo memo, TextAreaFIFO txta){
-        if (memo!=null) {
-            tc = memo.getTrafficController();
-        }
+    public CbusSend( @Nonnull CanSystemConnectionMemo memo, TextAreaFIFO txta){
+        tc = memo.getTrafficController();
         ta = txta;
     }
 
@@ -48,20 +47,15 @@ public class CbusSend {
     public void sendWithDelay( CanReply r, Boolean sendReply, Boolean sendMessage, int delay ){
         CbusMessage.setId(r, tc.getCanid() );
         CbusMessage.setPri(r, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
-        ThreadingUtil.runOnLayoutEventually( ()->{
-            try {
-                Thread.sleep(delay);
-                if (sendReply) {
-                    tc.sendCanReply(r, null);
-                }
-                if (sendMessage) {
-                    CanMessage m = new CanMessage(r);
-                    tc.sendCanMessage(m, null);
-                }
-            } catch (InterruptedException ex) {
-                Thread.currentThread().interrupt();
+        ThreadingUtil.runOnLayoutDelayed( () -> {
+            if (sendReply) {
+                tc.sendCanReply(r, null);
             }
-        });        
+            if (sendMessage) {
+                CanMessage m = new CanMessage(r);
+                tc.sendCanMessage(m, null);
+            }
+        },delay );      
     }
 
     public void nodeExitLearnEvMode( int nn ) {

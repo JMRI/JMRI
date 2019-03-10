@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2019 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <enumChoice>
+    <choice>No effect</choice>
+    <choice xml:lang="de">Kein Effekt</choice>
+    <choice xml:lang="fr">Pas d'effet</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>Only in Forward</choice>
+    <choice xml:lang="de">Nur bei Vorwärts</choice>
+    <choice xml:lang="fr">Seulem. en Avant</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>Only in Reverse</choice>
+    <choice xml:lang="de">Nur bei Rückwärts</choice>
+    <choice xml:lang="fr">Seulem. en Arrière</choice>
+  </enumChoice>
+</enumVal>

@@ -189,9 +189,10 @@ public class LayoutSlip extends LayoutTurnout {
                 return connectC;
             case SLIP_D:
                 return connectD;
+            default:
+                log.error("Invalid Connection Type " + connectionType); //I18IN
+                throw new jmri.JmriException("Invalid Connection Type " + connectionType);    
         }
-        log.error("Invalid Connection Type " + connectionType); //I18IN
-        throw new jmri.JmriException("Invalid Connection Type " + connectionType);
     }
 
     /**
@@ -329,6 +330,9 @@ public class LayoutSlip extends LayoutTurnout {
                     }
                     break;
                 }
+                default:
+                    jmri.util.Log4JUtil.warnOnce(log, "Unexpected selectedPointType = {}", selectedPointType);
+                    break;
             }   // switch
             setSlipState(newSlipState);
         }

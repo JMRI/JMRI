@@ -1,0 +1,472 @@
+
+    <h3>Hardware Support</h3>
+
+        <ul>
+          <li></li>
+        </ul>
+
+	    <h4>Anyma DMX512</h4>
+            <ul>
+                <li></li>
+            </ul>
+		
+	    <h4>Bachrus Speedo</h4>
+            <ul>
+                <li></li>
+            </ul>
+		
+        <h4>C/MRI</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>DCC++</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>DCC4pc</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>Direct</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>ESU</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>JMRI Simple Server/JMRI Client</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>LocoNet</h4>
+            <ul>
+                <li>"PR3 Standalone Programmer" mode has been updated so that only one LocoNet menu will be displayed, instead of displaying two menus.</li>
+                <li>Digitrax connections now support PR4, DCS240 and DCS210 via uniquely named connection types. <span class="since">Since JMRI 4.15.4</span></li>
+                <li>Addresses a problem when track power status is changed on the DCS52 which can cause a JMRI code failure. <span class="since">Since JMRI 4.15.4</span></li>
+            </ul>
+
+        <h4>Maple</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>Marklin CS2</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>MERG CBUS</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>MQTT</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>MRC</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>NCE</h4>
+            <ul>
+                <li><li>
+            </ul>
+
+        <h4>Oak Tree</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4><a href="http://openlcb.org">OpenLCB</a></h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>RFID</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>Roco z21/Z21</h4>
+            <ul>
+                <li>Fixed Delay in throttle message processing</li>
+            </ul>
+
+        <h4>Secsi</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>SPROG</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>TAMS</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>TMCC</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>Uhlenbrock Intellibox</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>Zimo MXULF</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>ZTC</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+    <h3>New / Updated decoder definitions</h3>
+      <ul>
+        <li></li>
+     </ul>
+
+        <h4>Arnold</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>Bachmann</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>BLI</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>BNM Hobbies</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>Digikeijs (Digirails)</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>Digitrax</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>Doehler &amp; Haas</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>ESU</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>Hornby</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>Kuehn</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>LaisDCC</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4><a href="http://www.ldhtrenes.com.ar">LDH</a></h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>Lenz</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>MGP</h4>
+             <ul>
+                <li></li>
+             </ul>
+
+        <h4>Mistral Train Models</h4>
+             <ul>
+                <li></li>
+             </ul>
+
+        <h4>MTH</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>MRC</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>NCE</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>Norsk Modelljernbane (NJM)</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>QSI</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>Rautenhaus</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>RR-CirKits</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>SoundTraxx</h4>
+            <ul>
+                <li>Michael Mosher fixed a bug in GP35 SP CV54</li>
+		<li>Michael Mosher added more models to Athearn ECO OEM file</li>
+		<li>Michael Mosher added more models to Athearn Genesis TSU2 OEM file</li>
+            </ul>
+
+        <h4>TCS</h4>
+            <ul>
+                <li></li>
+            </ul>
+	    
+	    <h4>Team Digital</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>Technologistic (train-O-matic)</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>Trix Modelleisenbahn</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>Uhlenbrock</h4>
+            <ul>
+                <li>A new definition was added for the 73xx5 IntelliDrive2 decoders. It also works on two Piko 4.1
+                sound decoder models.<br>
+                The definition is still under development and not complete. Please report read test results on
+                your hardware.</li>
+            </ul>
+
+        <h4>Umelec</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>Viessmann</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>Wangrow</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>ZIMO</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>Miscellaneous</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+    <h3>DecoderPro</h3>
+    <a id="DecoderPro" name="DecoderPro"></a>
+        <ul>
+            <li>Decoder definitions for indexed-access CVs can now use a "81=23.40" (cvFirst = false) /
+            "40.81=23" (cvFirst = true) syntax to specify an alternate PI and/or SI CV.<br>
+            The previous syntax continues to work unchanged.
+            </li>
+        </ul>
+
+   <h3>Dispatcher</h3>
+   <a id="Dispatcher" name="Dispatcher"></a>
+        <ul>
+             <li></li>
+        </ul>
+
+   <h3>Internationalization</h3>
+   <a id="I18N" name="I18N"></a>
+        <ul>
+            <li></li>
+        </ul>
+
+    <h3>Layout Editor</h3>
+    <a id="LE" name="LE"></a>
+        <ul>
+	        <li></li>
+        </ul>
+
+    <h3>Logix</h3>
+    <a id="Logix" name="Logix"></a>
+        <ul>
+          <li></li>
+        </ul>
+
+    <h3>Operations</h3>
+        <a id="Operations" name="Operations"></a>
+        <ul>
+            <li></li>
+        </ul>
+
+   <h3>Panel Editors</h3>
+        <a id="PE" name="PE"></a>
+        <ul>
+            <li></li>
+        </ul>
+
+    <h3>Preferences</h3>
+        <a id="Preferences" name="Preferences"></a>
+        <ul>
+            <li></li>
+        </ul>
+
+    <h3>Resources</h3>
+        <a id="Resources" name="Resources"></a>
+        <ul>
+            <li></li>
+        </ul>
+
+    <h3>Roster</h3>
+        <a id="Roster" name="Roster"></a>
+        <ul>
+            <li></li>
+        </ul>
+
+    <h3>Turnouts, Lights, Sensors and other elements</h3>
+        <a id="TLae" name="TLae"></a>
+        <ul>
+            <li></li>
+        </ul>
+
+    <h3>Scripting</h3>
+        <a id="Scripting" name="Scripting"></a>
+        <ul>
+            <li></li>
+        </ul>
+
+    <h3>Signals</h3>
+        <a id="Signals" name="Signals"></a>
+        <ul>
+            <li></li>
+        </ul>
+        <h4>Signal Systems</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>Signal Heads</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+        <h4>Signal Masts</h4>
+            <ul>
+                <li></li>
+            </ul>
+            
+    	<h4>Signal Groups</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+    	<h4>Simple Signal Logic</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+	    <h4>NX Entry/Exit Logic</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+	    <h4>USS CTC Logic</h4>
+            <ul>
+                <li></li>
+            </ul>
+
+   <h3>Switchboard Editor</h3>
+        <a id="SW" name="SW"></a>
+        <ul>
+            <li></li>
+        </ul>
+
+    <h3>Timetable</h3>
+    <a id="Timetable" name="Timetable"></a>
+        <span class="since">since 4.13.4</span>
+        <ul>
+            <li></li>
+        </ul>
+
+   <h3>Warrants</h3>
+        <a id="Wt" name="Wt"></a>
+        <ul>
+            <li></li>
+        </ul>
+
+   <h3>Web Access</h3>
+        <a id="WA" name="WA"></a>
+        <ul>
+            <li> </li>
+        </ul>
+
+   <h3>WiThrottle Server</h3>
+        <a id="WS" name="WS"></a>
+        <ul>
+            <li></li>
+        </ul>
+        
+   <h3>Virtual Sound Decoder</h3>
+        <a id="VSD" name="VSD"></a>
+        <ul>
+            <li></li>
+        </ul>
+
+    <h3>Miscellaneous</h3>
+        <a id="Misc" name="Misc"></a>
+        <ul>
+            <li>Fix bug with launcher on Windows introduced when adding JDK 11 support in 4.15.3. This caused JMRI to not launch on certain 64-bit Windows systems that had only a 32-bit Java installation.</li>
+        </ul>
+

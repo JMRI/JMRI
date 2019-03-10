@@ -12,7 +12,6 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
  *
  * @author Randall Wood Copyright (C) 2015, 2016
  */
-@SuppressWarnings("serial")
 public class JsonException extends Exception {
 
     /**

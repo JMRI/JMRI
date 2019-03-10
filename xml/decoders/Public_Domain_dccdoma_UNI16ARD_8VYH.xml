@@ -462,7 +462,7 @@
 <!--  Script 0 ============================================================= -->      
       <variable CV="256" item="Script 0 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="257" mask="VXXXXXXX" item="Script 0 Command 0 State" default="1" >
@@ -591,7 +591,7 @@
 <!--  Script 1 ============================================================= -->      
       <variable CV="272" item="Script 1 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="273" mask="VXXXXXXX" item="Script 1 Command 0 State" default="1" >
@@ -721,7 +721,7 @@
 <!--  Script 2 ============================================================= -->      
       <variable CV="288" item="Script 2 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="289" mask="VXXXXXXX" item="Script 2 Command 0 State" default="1" >
@@ -850,7 +850,7 @@
 <!--  Script 3 ============================================================= -->      
       <variable CV="304" item="Script 3 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="305" mask="VXXXXXXX" item="Script 3 Command 0 State" default="1" >
@@ -979,7 +979,7 @@
 <!--  Script 4 ============================================================= -->      
       <variable CV="320" item="Script 4 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="321" mask="VXXXXXXX" item="Script 4 Command 0 State" default="1" >
@@ -1108,7 +1108,7 @@
 <!--  Script 5 ============================================================= -->      
       <variable CV="336" item="Script 5 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="337" mask="VXXXXXXX" item="Script 5 Command 0 State" default="1" >
@@ -1237,7 +1237,7 @@
 <!--  Script 6 ============================================================= -->      
       <variable CV="352" item="Script 6 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="353" mask="VXXXXXXX" item="Script 6 Command 0 State" default="1" >
@@ -1366,7 +1366,7 @@
 <!--  Script 7 ============================================================= -->      
       <variable CV="368" item="Script 7 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="369" mask="VXXXXXXX" item="Script 7 Command 0 State" default="1" >
@@ -1495,7 +1495,7 @@
 <!--  Script 8 ============================================================= -->      
       <variable CV="384" item="Script 8 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="385" mask="VXXXXXXX" item="Script 8 Command 0 State" default="1" >
@@ -1624,7 +1624,7 @@
 <!--  Script 9 ============================================================= -->      
       <variable CV="400" item="Script 9 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="401" mask="VXXXXXXX" item="Script 9 Command 0 State" default="1" >
@@ -1753,7 +1753,7 @@
 <!--  Script 10 ============================================================= -->      
       <variable CV="416" item="Script 10 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="417" mask="VXXXXXXX" item="Script 10 Command 0 State" default="1" >
@@ -1882,7 +1882,7 @@
 <!--  Script 11 ============================================================= -->
       <variable CV="432" item="Script 11 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="433" mask="VXXXXXXX" item="Script 11 Command 0 State" default="1" >
@@ -2011,7 +2011,7 @@
 <!--  Script 12 ============================================================= -->
       <variable CV="448" item="Script 12 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="449" mask="VXXXXXXX" item="Script 12 Command 0 State" default="1" >
@@ -2140,7 +2140,7 @@
 <!--  Script 13 ============================================================= -->
       <variable CV="464" item="Script 13 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="465" mask="VXXXXXXX" item="Script 13 Command 0 State" default="1" >
@@ -2269,7 +2269,7 @@
 <!--  Script 14 ============================================================= -->
       <variable CV="480" item="Script 14 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="481" mask="VXXXXXXX" item="Script 14 Command 0 State" default="1" >
@@ -2398,7 +2398,7 @@
 <!--  Script 15 ============================================================= -->
       <variable CV="496" item="Script 15 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="497" mask="VXXXXXXX" item="Script 15 Command 0 State" default="1" >
@@ -2527,7 +2527,7 @@
 <!--  Script 16 ============================================================= -->
       <variable CV="512" item="Script 16 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="513" mask="VXXXXXXX" item="Script 16 Command 0 State" default="1" >
@@ -2656,7 +2656,7 @@
 <!--  Script 17 ============================================================= -->
       <variable CV="528" item="Script 17 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="529" mask="VXXXXXXX" item="Script 17 Command 0 State" default="1" >
@@ -2785,7 +2785,7 @@
 <!--  Script 18 ============================================================= -->
       <variable CV="544" item="Script 18 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="545" mask="VXXXXXXX" item="Script 18 Command 0 State" default="1" >
@@ -2914,7 +2914,7 @@
 <!--  Script 19 ============================================================= -->
       <variable CV="560" item="Script 19 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="561" mask="VXXXXXXX" item="Script 19 Command 0 State" default="1" >
@@ -3043,7 +3043,7 @@
 <!--  Script 20 ============================================================= -->
       <variable CV="576" item="Script 20 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="577" mask="VXXXXXXX" item="Script 20 Command 0 State" default="1" >
@@ -3172,7 +3172,7 @@
 <!--  Script 21 ============================================================= -->
       <variable CV="592" item="Script 21 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="593" mask="VXXXXXXX" item="Script 21 Command 0 State" default="1" >
@@ -3301,7 +3301,7 @@
 <!--  Script 22 ============================================================= -->
       <variable CV="608" item="Script 22 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="609" mask="VXXXXXXX" item="Script 22 Command 0 State" default="1" >
@@ -3430,7 +3430,7 @@
 <!--  Script 23 ============================================================= -->
       <variable CV="624" item="Script 23 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="625" mask="VXXXXXXX" item="Script 23 Command 0 State" default="1" >
@@ -3559,7 +3559,7 @@
 <!--  Script 24 ============================================================= -->
       <variable CV="640" item="Script 24 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="641" mask="VXXXXXXX" item="Script 24 Command 0 State" default="1" >
@@ -3688,7 +3688,7 @@
 <!--  Script 25 ============================================================= -->
       <variable CV="656" item="Script 25 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="657" mask="VXXXXXXX" item="Script 25 Command 0 State" default="1" >
@@ -3817,7 +3817,7 @@
 <!--  Script 26 ============================================================= -->
       <variable CV="672" item="Script 26 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="673" mask="VXXXXXXX" item="Script 26 Command 0 State" default="1" >
@@ -3946,7 +3946,7 @@
 <!--  Script 27 ============================================================= -->
       <variable CV="688" item="Script 27 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="689" mask="VXXXXXXX" item="Script 27 Command 0 State" default="1" >
@@ -4075,7 +4075,7 @@
 <!--  Script 28 ============================================================= -->
       <variable CV="704" item="Script 28 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="705" mask="VXXXXXXX" item="Script 28 Command 0 State" default="1" >
@@ -4204,7 +4204,7 @@
 <!--  Script 29 ============================================================= -->
       <variable CV="720" item="Script 29 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="721" mask="VXXXXXXX" item="Script 29 Command 0 State" default="1" >
@@ -4333,7 +4333,7 @@
 <!--  Script 30 ============================================================= -->
       <variable CV="736" item="Script 30 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="737" mask="VXXXXXXX" item="Script 30 Command 0 State" default="1" >
@@ -4462,7 +4462,7 @@
 <!--  Script 31 ============================================================= -->
       <variable CV="752" item="Script 31 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="753" mask="VXXXXXXX" item="Script 31 Command 0 State" default="1" >
@@ -4591,7 +4591,7 @@
 <!--  Script 32 ============================================================= -->
       <variable CV="768" item="Script 32 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="769" mask="VXXXXXXX" item="Script 32 Command 0 State" default="1" >
@@ -4720,7 +4720,7 @@
 <!--  Script 33 ============================================================= -->
       <variable CV="784" item="Script 33 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="785" mask="VXXXXXXX" item="Script 33 Command 0 State" default="1" >
@@ -4849,7 +4849,7 @@
 <!--  Script 34 ============================================================= -->
       <variable CV="800" item="Script 34 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="801" mask="VXXXXXXX" item="Script 34 Command 0 State" default="1" >
@@ -4978,7 +4978,7 @@
 <!--  Script 35 ============================================================= -->
       <variable CV="816" item="Script 35 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="817" mask="VXXXXXXX" item="Script 35 Command 0 State" default="1" >
@@ -5107,7 +5107,7 @@
 <!--  Script 36 ============================================================= -->
       <variable CV="832" item="Script 36 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="833" mask="VXXXXXXX" item="Script 36 Command 0 State" default="1" >
@@ -5236,7 +5236,7 @@
 <!--  Script 37 ============================================================= -->
       <variable CV="848" item="Script 37 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="849" mask="VXXXXXXX" item="Script 37 Command 0 State" default="1" >
@@ -5365,7 +5365,7 @@
 <!--  Script 38 ============================================================= -->
       <variable CV="864" item="Script 38 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="865" mask="VXXXXXXX" item="Script 38 Command 0 State" default="1" >
@@ -5494,7 +5494,7 @@
 <!--  Script 39 ============================================================= -->
       <variable CV="880" item="Script 39 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="881" mask="VXXXXXXX" item="Script 39 Command 0 State" default="1" >
@@ -5623,7 +5623,7 @@
 <!--  Script 40 ============================================================= -->
       <variable CV="896" item="Script 40 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="897" mask="VXXXXXXX" item="Script 40 Command 0 State" default="1" >
@@ -5752,7 +5752,7 @@
 <!--  Script 41 ============================================================= -->
       <variable CV="912" item="Script 41 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="913" mask="VXXXXXXX" item="Script 41 Command 0 State" default="1" >
@@ -5881,7 +5881,7 @@
 <!--  Script 42 ============================================================= -->
       <variable CV="928" item="Script 42 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="929" mask="VXXXXXXX" item="Script 42 Command 0 State" default="1" >
@@ -6010,7 +6010,7 @@
 <!--  Script 43 ============================================================= -->
       <variable CV="944" item="Script 43 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="945" mask="VXXXXXXX" item="Script 43 Command 0 State" default="1" >
@@ -6139,7 +6139,7 @@
 <!--  Script 44 ============================================================= -->
       <variable CV="960" item="Script 44 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="961" mask="VXXXXXXX" item="Script 44 Command 0 State" default="1" >
@@ -6268,7 +6268,7 @@
 <!--  Script 45 ============================================================= -->
       <variable CV="976" item="Script 45 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="977" mask="VXXXXXXX" item="Script 45 Command 0 State" default="1" >
@@ -6397,7 +6397,7 @@
 <!--  Script 46 ============================================================= -->
       <variable CV="992" item="Script 46 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="993" mask="VXXXXXXX" item="Script 46 Command 0 State" default="1" >
@@ -6526,7 +6526,7 @@
 <!--  Script 47 ============================================================= -->
       <variable CV="1008" item="Script 47 Command 0 Delay" default="255" >
         <decVal />
-        <tooltip>Delay before executing the commnad 0.</tooltip>
+        <tooltip>Delay before executing the command 0.</tooltip>
         <tooltip xml:lang="cs">Zpoždění před provedením příkazu 0.</tooltip>
       </variable>
       <variable CV="1009" mask="VXXXXXXX" item="Script 47 Command 0 State" default="1" >

@@ -24,7 +24,7 @@
         <output name="4" label=". A2 ." connection="plug"/>
         <output name="Shunting" label="mode"/>
         <output name="Start/brake" label="inertia"/>
-        <size length="22" width="15" height="3,8" units="mm"/>
+        <size length="22" width="15" height="3.8" units="mm"/>
       </model>
       <model model="76320" numOuts="2" numFns="14" maxMotorCurrent="1.20" formFactor="HO" connector="NEM652" productID="76320" comment="HO-Scale, IntelliDrive Comfort with NEM652 plug (Piko #56122)">
         <output name="1" label="F0(F)" connection="plug"/>

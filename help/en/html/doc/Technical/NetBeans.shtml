@@ -407,12 +407,13 @@
           includes the NSIS executable, such as:</p>
 
           <p style="font-family: monospace">nsis.home=C:/Program
-          Files (x86)/NSIS</p>
+          Files (x86)/NSIS/</p>
 
           <p>or</p>
 
           <p style="font-family: monospace">
           nsis.home=/opt/nsis/nsis-2.46/</p>
+          <p><em>Note:</em> Make sure the trailing / is present.</p>
 
           <p>If you will be installing the SpotBugs tool, you will
               also define spotbugs.home in this file. You may also
@@ -470,12 +471,12 @@
           executable, such as:</p>
 
           <p style="font-family: monospace">
-              spotbugs.home=C:/spotbugs-3.1.1</p>
+              spotbugs.home=C:/spotbugs-3.1.1/</p>
 
           <p>or</p>
 
           <p style="font-family: monospace">
-              spotbugs.home=/opt/spotbugs-3.1.1</p>
+              spotbugs.home=/opt/spotbugs-3.1.1/</p>
 
           <p>To run the SpotBugs tool on JMRI code, execute the ant
               target "spotbugs" which is defined in build.xml. Within

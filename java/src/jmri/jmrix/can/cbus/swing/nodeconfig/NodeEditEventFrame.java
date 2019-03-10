@@ -2,6 +2,7 @@ package jmri.jmrix.can.cbus.swing.nodeconfig;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,12 +19,15 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.SwingConstants;
 import javax.swing.text.DefaultFormatter;
 import javax.swing.Timer;
 import jmri.jmrix.can.cbus.node.CbusNodeEvent;
-import jmri.jmrix.can.cbus.swing.nodeconfig.NodeConfigToolPane;
+import jmri.jmrix.can.cbus.CbusNameService;
 import jmri.util.JmriJFrame;
 
 import org.slf4j.Logger;
@@ -47,6 +51,7 @@ public class NodeEditEventFrame extends JmriJFrame {
     private Timer waitForLearnMode;
     private NodeConfigToolPane _tp;
     private CbusNodeEvent _ndEv;
+    private JLabel ndEvNameLabel;
     
     /**
      * Create a new instance of NodeEditEventFrame.
@@ -66,6 +71,10 @@ public class NodeEditEventFrame extends JmriJFrame {
         
         JPanel setevpanel = new JPanel();
         setevpanel.setLayout(new BoxLayout(setevpanel, BoxLayout.Y_AXIS));
+        JPanel setCoreNodeEventPanel = new JPanel();
+        setCoreNodeEventPanel.setLayout(new BoxLayout(setCoreNodeEventPanel, BoxLayout.Y_AXIS));
+        
+        JScrollPane scrollsetevpanel = new JScrollPane (setevpanel);
         
         JPanel inputpanel = new JPanel();
         frameeditevbutton = new JButton(Bundle.getMessage("EditEvent"));
@@ -89,7 +98,7 @@ public class NodeEditEventFrame extends JmriJFrame {
         JLabel newnvhexlabelEv = new JLabel(" ", JLabel.CENTER);
         evToHex.add(newnvhexlabelEv);
 
-        numberSpinnerEv = new JSpinner(new SpinnerNumberModel(Math.max(0,_ndEv.getEn()), 0, 65535, 1));
+        numberSpinnerEv = new JSpinner(new SpinnerNumberModel(Math.max(1,_ndEv.getEn()), 1, 65535, 1));
         evFields.add(numberSpinnerEv);                   
         numberSpinnerEv.setToolTipText(Bundle.getMessage("NdEvEditToolTip",_ndEv.getEn() ) );
         JComponent compEv = numberSpinnerEv.getEditor();
@@ -100,7 +109,7 @@ public class NodeEditEventFrame extends JmriJFrame {
         individeventEv.add(new JLabel(Bundle.getMessage("CbusEvent"), JLabel.RIGHT));
         individeventEv.add(numberSpinnerEv);
         individeventEv.add(newnvhexlabelEv);
-        setevpanel.add(individeventEv);
+        setCoreNodeEventPanel.add(individeventEv);
         
         JPanel individeventNd= new JPanel(); // row container
         individeventNd.setLayout(new GridLayout(1, 3));
@@ -121,8 +130,16 @@ public class NodeEditEventFrame extends JmriJFrame {
         individeventNd.add(new JLabel(Bundle.getMessage("CbusNode"), JLabel.RIGHT));
         individeventNd.add(numberSpinnernd);
         individeventNd.add(newnvhexlabelNd);
+      //  individeventNd.setVisible(true);
 
-        setevpanel.add(individeventNd);
+        setCoreNodeEventPanel.add(individeventNd);
+        setCoreNodeEventPanel.add(new JSeparator(SwingConstants.HORIZONTAL));
+        
+        ndEvNameLabel = new JLabel("",SwingConstants.CENTER);
+        ndEvNameLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        updateSelectedEventNodeName();
+        
+        setCoreNodeEventPanel.add( ndEvNameLabel);
         
         evFields.get(0).addChangeListener(new ChangeListener() {
             @Override
@@ -137,6 +154,7 @@ public class NodeEditEventFrame extends JmriJFrame {
                 if (_ndEv.getEn()>0) {
                     enabledisableeditbutton();
                 }
+                updateSelectedEventNodeName();
             }
         });
         
@@ -153,6 +171,7 @@ public class NodeEditEventFrame extends JmriJFrame {
                 if (_ndEv.getEn()>0) {
                     enabledisableeditbutton();
                 }
+                updateSelectedEventNodeName();
             }
         });
         
@@ -207,8 +226,11 @@ public class NodeEditEventFrame extends JmriJFrame {
             setevpanel.add(individevent);
         }
         
-        setevpanel.validate();
-        add(setevpanel, BorderLayout.CENTER);
+        scrollsetevpanel.validate();
+        setCoreNodeEventPanel.validate();
+        
+        add(setCoreNodeEventPanel, BorderLayout.PAGE_START);
+        add(scrollsetevpanel, BorderLayout.CENTER);
         add(inputpanel, BorderLayout.PAGE_END);
         
         Dimension editevframeminimumSize = new Dimension(150, 200);
@@ -338,6 +360,14 @@ public class NodeEditEventFrame extends JmriJFrame {
         });           
         setTitle(title());
         setVisible(true);
+    }
+
+    private void updateSelectedEventNodeName(){
+        
+        ndEvNameLabel.setText("<html><div style='text-align: center;'>" + 
+        new CbusNameService().getEventNodeString(getNodeVal(), getEventVal() )
+        + "</div></html>");
+        
     }
 
 

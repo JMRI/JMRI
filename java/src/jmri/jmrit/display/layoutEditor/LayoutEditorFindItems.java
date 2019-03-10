@@ -27,24 +27,22 @@ public class LayoutEditorFindItems {
     }
 
     public TrackSegment findTrackSegmentByName(String name) {
-        if (name.isEmpty()) {
-            return null;
-        }
-        for (TrackSegment t : layoutEditor.getTrackSegments()) {
-            if (t.getId().equals(name)) {
-                return t;
+        if (!name.isEmpty()) {
+            for (TrackSegment t : layoutEditor.getTrackSegments()) {
+                if (t.getId().equals(name)) {
+                    return t;
+                }
             }
         }
         return null;
     }
 
     public PositionablePoint findPositionablePointByName(String name) {
-        if (name.isEmpty()) {
-            return null;
-        }
-        for (PositionablePoint p : layoutEditor.getPositionablePoints()) {
-            if (p.getId().equals(name)) {
-                return p;
+        if (!name.isEmpty()) {
+            for (PositionablePoint p : layoutEditor.getPositionablePoints()) {
+                if (p.getId().equals(name)) {
+                    return p;
+                }
             }
         }
         return null;
@@ -491,6 +489,19 @@ public class LayoutEditorFindItems {
         return result;
     }
 
+    public LayoutShape findLayoutShapeByName(String name) {
+        LayoutShape result = null;
+        if ((name != null) && !name.isEmpty()) {
+            for (LayoutShape x : layoutEditor.getLayoutShapes()) {
+                if (x.getName().equals(name)) {
+                    result = x;
+                    break;
+                }
+            }
+        }
+        return result;
+    }
+
     // data encapsulation means that no one external to an object should
     // care about its type... we treat all objects as equal and it's up
     // to each object to implement methods specific to that type.
@@ -589,21 +600,34 @@ public class LayoutEditorFindItems {
         return result;
     }
 
-   /**
-     * Determine the first unused LayoutTrack object name...
-     * @param inPrefix ...with this prefix...
+    /**
+     * Determine the first unused object name...
+     *
+     * @param inPrefix     ...with this prefix...
      * @param inStartIndex ...and this starting index...
-     * @return the first unused LayoutTrack object name
+     * @return the first unused object name
      */
     public String uniqueName(String inPrefix, int inStartIndex) {
         String result;
         for (int idx = inStartIndex; true; idx++) {
             result = String.format("%s%d", inPrefix, idx);
-            if (findObjectByName(result) == null) {
+            if ((inPrefix.equals("S") // LayoutShape?
+                    && (findLayoutShapeByName(result) == null))
+                    || (findObjectByName(result) == null)) {
                 break;
             }
         }
         return result;
+    }
+
+    /**
+     * Determine the first unused object name...
+     *
+     * @param inPrefix     ...with this prefix...
+     * @return the first unused object name
+     */
+    public String uniqueName(String inPrefix) {
+        return uniqueName(inPrefix, 1);
     }
 
     private final static Logger log = LoggerFactory.getLogger(LayoutEditorFindItems.class);

@@ -307,7 +307,6 @@ public class DefaultConditionalManager extends AbstractManager<Conditional>
      *                  {@link getNamedBeanSet} 
      * @return a list of conditional system names regardless of parent Logix
      */
-    @SuppressWarnings("deprecation") // uses deprecated parent methods, will go away when this does
     @Deprecated // 4.11.5
     @Override
     public List<String> getSystemNameList() {

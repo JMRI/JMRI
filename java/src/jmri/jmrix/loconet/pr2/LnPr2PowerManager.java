@@ -106,7 +106,12 @@ public class LnPr2PowerManager extends LnPowerManager {
             firePropertyChange("Power", null, null); // NOI18N
         } else if (m.getOpCode() == LnConstants.OPC_GPOFF) {
             power = OFF;
-            timer.stop();
+            if (timer != null) {
+                // Protect against uninitialized timer, for case where some other
+                // LocoNet agent issues OPC_GPOFF before JMRI initializes its timer.
+                // A NPE was seen, before protected added, with the DCS52.
+                timer.stop();
+            }
             firePropertyChange("Power", null, null); // NOI18N
         } else if (m.getOpCode() == 0xEF) {
             // if this is a service mode write, drop out of power on mode
@@ -116,7 +121,9 @@ public class LnPr2PowerManager extends LnPowerManager {
                 // go to power off due to service mode op
                 if (power == ON) {
                     power = OFF;
-                    timer.stop();
+                    if (timer != null) {
+                        timer.stop();
+                    }
                     firePropertyChange("Power", null, null); // NOI18N
                 }
             }

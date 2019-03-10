@@ -63,8 +63,8 @@ public class ProfileManagerDialog extends JDialog {
     /**
      * Creates new form ProfileManagerDialog
      *
-     * @param parent {@inheritDoc}
-     * @param modal  {@inheritDoc}
+     * @param parent The frame containing this dialog
+     * @param modal The modal parameter for parent JDialog
      */
     public ProfileManagerDialog(Frame parent, boolean modal) {
         this(parent, modal, false);
@@ -73,8 +73,8 @@ public class ProfileManagerDialog extends JDialog {
     /**
      * Creates new form ProfileManagerDialog
      *
-     * @param parent {@inheritDoc}
-     * @param modal  {@inheritDoc}
+     * @param parent The frame containing this dialog
+     * @param modal The modal parameter for parent JDialog
      * @param disableTimer true if the timer should be disabled
      */
     public ProfileManagerDialog(Frame parent, boolean modal, boolean disableTimer) {
@@ -119,14 +119,17 @@ public class ProfileManagerDialog extends JDialog {
         setTitle(Bundle.getMessage("ProfileManagerDialog.title")); // NOI18N
         setMinimumSize(new Dimension(310, 110));
         addMouseListener(new MouseAdapter() {
+            @Override
             public void mousePressed(MouseEvent evt) {
                 formMousePressed(evt);
             }
         });
         addWindowListener(new WindowAdapter() {
+            @Override
             public void windowOpened(WindowEvent evt) {
                 formWindowOpened(evt);
             }
+            @Override
             public void windowClosed(WindowEvent evt) {
                 formWindowClosed(evt);
             }
@@ -145,6 +148,7 @@ public class ProfileManagerDialog extends JDialog {
 
 
         profiles.addKeyListener(new KeyAdapter() {
+            @Override
             public void keyPressed(KeyEvent evt) {
                 profilesKeyPressed(evt);
             }

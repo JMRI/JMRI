@@ -7,7 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Swing jfcUnit tests for dispatcher train info
+ * Swing tests for dispatcher train info.
  *
  * @author Dave Duchamp
  */
