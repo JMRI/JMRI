@@ -52,13 +52,13 @@ public class MemorySpinnerIconTest extends PositionableJPanelTest {
         tos1.setMemory("IM1");
         tos2.setMemory("IM1");
         Memory im1 = InstanceManager.getDefault(MemoryManager.class).getMemory("IM1");
-        Memory im2 = InstanceManager.getDefault(MemoryManager.class).getMemory("IM2");
         Assert.assertNotNull(im1);
-        Assert.assertNotNull(im2);
         im1.setValue("4");
 
         toi1.setMemory("IM2");
         toi2.setMemory("IM2");
+        Memory im2 = InstanceManager.getDefault(MemoryManager.class).getMemory("IM2");
+        Assert.assertNotNull(im2);
         im2.setValue(10);
 
         tos3 = new MemorySpinnerIcon(editor);
