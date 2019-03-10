@@ -328,7 +328,8 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
             InstanceManager.store(getProgrammerManager(), GlobalProgrammerManager.class);
         }
 
-        //InstanceManager.store(getCabSignalManager(),CabSignalManager.class);
+        InstanceManager.setReporterManager(getReporterManager());
+        
         InstanceManager.setDefault(CabSignalManager.class,getCabSignalManager());
 
         setConsistManager(new LocoNetConsistManager(this));

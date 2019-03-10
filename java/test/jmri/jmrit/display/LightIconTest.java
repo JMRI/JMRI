@@ -7,20 +7,20 @@ import org.junit.*;
 /**
  * Test simple functioning of LightIcon
  *
- * @author	Paul Bender Copyright (C) 2016
+ * @author Paul Bender Copyright (C) 2016
  */
 public class LightIconTest extends PositionableTestBase {
 
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertNotNull("LightIcon Constructor",p);
+        Assert.assertNotNull("LightIcon Constructor", p);
     }
 
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        if ( !GraphicsEnvironment.isHeadless()) {
+        if (!GraphicsEnvironment.isHeadless()) {
             JUnitUtil.resetProfileManager();
             editor = new EditorScaffold();
             p = new LightIcon(editor);

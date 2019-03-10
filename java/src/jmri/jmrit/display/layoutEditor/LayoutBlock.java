@@ -45,9 +45,9 @@ import jmri.jmrit.beantable.beanedit.BlockEditAction;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.JmriJFrame;
 import jmri.util.MathUtil;
-import jmri.util.swing.SplitButtonColorChooserPanel;
-import jmri.util.swing.JmriColorChooser;
 import jmri.util.swing.JmriBeanComboBox;
+import jmri.util.swing.JmriColorChooser;
+import jmri.util.swing.SplitButtonColorChooserPanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -840,25 +840,36 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
         //end debugging
     }   // updateBlockPaths
 
+    /**
+     * make sure all the layout connectivity objects in test are in main
+     * @param main the main list of LayoutConnectivity objects
+     * @param test the test list of LayoutConnectivity objects
+     * @return true if all test layout connectivity objects are in main
+     */
     private boolean compareConnectivity(List<LayoutConnectivity> main, List<LayoutConnectivity> test) {
-        //loop over connectivities in test list
-        for (LayoutConnectivity lc : test) {
-            //loop over main list to make sure the same blocks are connected
-            boolean found = false;
-            for (int j = 0; (j < main.size()) && !found; j++) {
-                LayoutConnectivity mc = main.get(j);
-
-                if (((lc.getBlock1() == mc.getBlock1()) && (lc.getBlock2() == mc.getBlock2()))
-                        || ((lc.getBlock1() == mc.getBlock2()) && (lc.getBlock2() == mc.getBlock1()))) {
-                    found = true;
+        boolean result = false;     //assume failure (pessimsit!)
+        if (!main.isEmpty() && !test.isEmpty()) {
+            result = true;          //assume success (optimist!)
+            //loop over connectivities in test list
+            for (LayoutConnectivity tc : test) {
+                LayoutBlock tlb1 = tc.getBlock1(), tlb2 = tc.getBlock2();
+                //loop over main list to make sure the same blocks are connected
+                boolean found = false;  //assume failure (pessimsit!)
+                for (LayoutConnectivity mc : main) {
+                    LayoutBlock mlb1 = mc.getBlock1(), mlb2 = mc.getBlock2();
+                    if (((tlb1 == mlb1) && (tlb2 == mlb2))
+                            || ((tlb1 == mlb2) && (tlb2 == mlb1))) {
+                        found = true;   //success!
+                        break;
+                    }
+                }
+                if (!found) {
+                    result = false;
+                    break;
                 }
             }
-            if (!found) {
-                return false;
-            }
         }
-        //connectivities are compatible - all connections in test are present in main
-        return true;
+        return result;
     }
 
     /**

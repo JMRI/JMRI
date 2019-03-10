@@ -47,15 +47,18 @@ public class LnClockControl extends DefaultClockControl implements SlotListener,
 
     /**
      * Create a ClockControl object for a Loconet clock
-     * @param scm - connection memo
+     * @param scm - the LocoNet System Connection Memo to associate with this
+     *              Clock Control object
      */
     public LnClockControl(LocoNetSystemConnectionMemo scm) {
         this(scm.getSlotManager(), scm.getLnTrafficController(), scm.getPowerManager());
     }
 
-    /*
+    /**
      * Create a ClockControl object for a Loconet clock
      * @deprecated 4.11.5
+     * @param sm the Slot Manager associated with this object
+     * @param tc the Traffic Controller associated with this object
      */
     @Deprecated // 4.11.5
     public LnClockControl(SlotManager sm, LnTrafficController tc) {
@@ -64,9 +67,9 @@ public class LnClockControl extends DefaultClockControl implements SlotListener,
 
     /**
      * Create a ClockControl object for a Loconet clock
-     * @param sm slotmanager
-     * @param tc traffic controller
-     * @param pm powermanager
+     * @param sm the Slot Manager associated with this object
+     * @param tc the Traffic Controller associated with this object
+     * @param pm the Power Manager associated with this object
      */
     public LnClockControl(SlotManager sm, LnTrafficController tc, LnPowerManager pm) {
         super();
@@ -308,6 +311,7 @@ public class LnClockControl extends DefaultClockControl implements SlotListener,
 
     /**
      * Accessor routines
+     * @return the associated name
      */
     @Override
     public String getHardwareClockName() {
@@ -572,6 +576,7 @@ public class LnClockControl extends DefaultClockControl implements SlotListener,
      * responding to a read from this module 3) a slot not involving the clock
      * changing
      *
+     * @param s the LocoNetSlot object which has been changed
      */
     @SuppressWarnings("deprecation")
     @Override
@@ -720,4 +725,3 @@ public class LnClockControl extends DefaultClockControl implements SlotListener,
     private final static Logger log = LoggerFactory.getLogger(LnClockControl.class);
 
 }
-

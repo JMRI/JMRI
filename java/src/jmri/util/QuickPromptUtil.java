@@ -5,18 +5,14 @@ import static javax.swing.JOptionPane.OK_CANCEL_OPTION;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.function.Function;
 import java.util.function.Predicate;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JRootPane;
 import javax.swing.SwingConstants;
-import org.python.google.common.base.Objects;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * A collection of utilities related to prompting for values
@@ -84,27 +80,35 @@ public class QuickPromptUtil {
      * @return the updated value, or the original one.
      */
     static public int promptForInt(Component parentComponent, @Nonnull String message, @Nonnull String title, int oldValue, @CheckForNull Predicate<Integer> validator) {
-        String result = Integer.toString(oldValue);
-        JButton okOption = new JButton(Bundle.getMessage("InputDialogOK"));
-        JButton cancelOption = new JButton(Bundle.getMessage("InputDialogCancel"));
+        return promptForData(parentComponent, message, title, oldValue, validator, 
+            (val) -> {
+            try {
+                return Integer.parseInt(val);
+            } catch (NumberFormatException ex) {
+                // original exception ignored; wrong message.
+                throw new NumberFormatException(Bundle.getMessage("InputDialogNotNumber"));
+            }
+        });
+    }
+    
+    private static <T> T promptForData(Component parentComponent, 
+            @Nonnull String message, @Nonnull String title, T oldValue, 
+            @CheckForNull Predicate<T> validator,
+            @CheckForNull Function<String, T> converter) {
+        String result = oldValue == null ? "" : oldValue.toString(); // NOI18N
+        JButton okOption = new JButton(Bundle.getMessage("InputDialogOK")); // NOI18N
+        JButton cancelOption = new JButton(Bundle.getMessage("InputDialogCancel")); // NOI18N
         okOption.setDefaultCapable(true);
 
-        ValidatingInputPane<Integer> validating = new ValidatingInputPane<Integer>((val) -> {
-                try {
-                    return Integer.parseInt(val);
-                } catch (NumberFormatException ex) {
-                    throw new NumberFormatException(Bundle.getMessage("InputDialogNotNumber"));
-                }
-            })
+        ValidatingInputPane<T> validating = new ValidatingInputPane<T>(converter)
                 .message(message)
                 .validator(validator)
                 .attachConfirmUI(okOption);
-        validating.setText(result);
-        
+
         JOptionPane    pane = new JOptionPane(validating, JOptionPane.PLAIN_MESSAGE,
                         OK_CANCEL_OPTION, null, new Object[] { okOption, cancelOption });
         
-        pane.putClientProperty("OptionPane.buttonOrientation", SwingConstants.RIGHT);
+        pane.putClientProperty("OptionPane.buttonOrientation", SwingConstants.RIGHT); // NOI18N
         pane.setInitialSelectionValue(result);
         JDialog dialog = pane.createDialog(parentComponent, title);
         dialog.getRootPane().setDefaultButton(okOption);
@@ -135,7 +139,7 @@ public class QuickPromptUtil {
         dialog.dispose();
         
         if (al.confirmed) {
-            Integer res = validating.getValue();
+            T res = validating.getValue();
             if (res != null) {
                 return res;
             }
@@ -183,6 +187,108 @@ public class QuickPromptUtil {
             }
         }
         return result;
+    }
+    
+    /**
+     * Creates a min/max predicate which will check the bounds. Suitable for
+     * {@link #promptForInt(java.awt.Component, java.lang.String, java.lang.String, int, java.util.function.Predicate)}.
+     * @param min minimum value. Use {@link Integer#MIN_VALUE} to disable check.
+     * @param max maximum value, inclusive. Use {@link Integer#MAX_VALUE} to disable check.
+     * @param valueLabel label to be included in the message. Must be already I18Ned.
+     * @return predicate instance
+     */
+    public static Predicate<Integer> checkIntRange(Integer min, Integer max, String valueLabel) {
+        return new IntRangePredicate(min, max, valueLabel);
+    }
+    
+    /**
+     * Base for range predicates (int, float). Checks for min/max - if configured, produces
+     * an exception with an appropriate message if check fails.
+     * 
+     * @param <T> the data type
+     */
+    private static abstract class NumberRangePredicate<T extends Number> implements Predicate<T> {
+        protected final T min;
+        protected final T max;
+        protected final String label;
+
+        public NumberRangePredicate(T min, T max, String label) {
+            this.min = min;
+            this.max = max;
+            this.label = label;
+        }
+        
+        protected abstract boolean acceptLow(T val, T bound);
+        protected abstract boolean acceptHigh(T val, T bound);
+
+        @Override
+        public boolean test(T t) {
+            boolean ok = true;
+            
+            if (min != null && !acceptLow(t, min)) {
+                ok = false;
+            } else if (max != null && !acceptHigh(t, max)) {
+                ok = false;
+            }
+            if (ok) {
+                return true;
+            }
+            final String msgKey;
+            if (label != null) {
+                if (min == null) {
+                    msgKey = "NumberCheckOutOfRangeMax"; // NOI18N
+                } else if (max == null) {
+                    msgKey = "NumberCheckOutOfRangeMin"; // NOI18N
+                } else {
+                    msgKey = "NumberCheckOutOfRangeBoth"; // NOI18N
+                }
+            } else {
+                if (min == null) {
+                    msgKey = "NumberCheckOutOfRangeMax2"; // NOI18N
+                } else if (max == null) {
+                    msgKey = "NumberCheckOutOfRangeMin2"; // NOI18N
+                } else {
+                    msgKey = "NumberCheckOutOfRangeBoth2"; // NOI18N
+                }
+            }
+            throw new IllegalArgumentException(
+                Bundle.getMessage(msgKey, label, min, max)
+            );
+        }
+    }
+
+    // This is currently unused, ready for converting the 
+    // promptForFloat 
+    static final class FloatRangePredicate extends NumberRangePredicate<Float> {
+        public FloatRangePredicate(Float min, Float max, String label) {
+            super(min, max, label);
+        }
+        
+        @Override
+        protected boolean acceptLow(Float val, Float bound) {
+            return val >= bound;
+        }
+
+        @Override
+        protected boolean acceptHigh(Float val, Float bound) {
+            return val <= bound;
+        }
+    }
+
+    static final class IntRangePredicate extends NumberRangePredicate<Integer> {
+        public IntRangePredicate(Integer min, Integer max, String label) {
+            super(min, max, label);
+        }
+        
+        @Override
+        protected boolean acceptLow(Integer val, Integer bound) {
+            return val >= bound;
+        }
+
+        @Override
+        protected boolean acceptHigh(Integer val, Integer bound) {
+            return val <= bound;
+        }
     }
 
     // initialize logging

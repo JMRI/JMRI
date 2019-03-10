@@ -71,7 +71,7 @@ public class Log4JUtil {
     static private boolean warnOnceHasWarned = false;
     
     /**
-     * Restart the "once" part of {@link warnOnce} so that the 
+     * Restart the "once" part of {@link #warnOnce} so that the 
      * nextInvocation will log, even if it already has.
      * <p>
      * Should only be used by test code. We denote this

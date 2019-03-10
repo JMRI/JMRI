@@ -2,6 +2,8 @@ package jmri.util.junit;
 
 import java.lang.reflect.*;
 
+import org.junit.runner.JUnitCore;
+
 /**
  * Main method to launch a JUnit test class
  *
@@ -25,16 +27,21 @@ public class TestClassMainMethod {
         className = className.replace("..",".");    
         
         try {
-            // first try to find a main in the class
             Class<?> cl = Class.forName(className);
-            Method method = cl.getMethod("main", String[].class);
-            method.invoke(null, new Object[] {new String[] { /* put args here */ }});
-        } catch (InvocationTargetException e) {
-            // main threw an exception, report
-            System.err.println(e);
-        } catch (ClassNotFoundException | NoSuchMethodException | IllegalAccessException e) {
-            // failed, now invoke manually
-            org.junit.runner.JUnitCore.main(className);
+            // first try to find a main in the class
+            try {
+                Method method = cl.getMethod("main", String[].class);
+                method.invoke(null, new Object[] {new String[] { /* put args here */ }});
+            } catch (InvocationTargetException e) {
+                // main threw an exception, report
+                System.err.println(e);
+            } catch (NoSuchMethodException | IllegalAccessException e) {
+                // failed, now invoke manually
+                JUnitCore.runClasses(cl);
+            }
+        } catch (ClassNotFoundException e) {
+            // log error
+            System.err.println("Unable to locate class " + className);
         }
     }
 }
