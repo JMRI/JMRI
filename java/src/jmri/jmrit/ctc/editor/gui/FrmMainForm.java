@@ -67,8 +67,7 @@ public class FrmMainForm extends JFrame {
     private CheckJMRIObject _mCheckJMRIObject;
 
     public boolean _mPanelLoaded = false;
-    public boolean _mSubFormOpen = false;
-    public boolean _mRulesFormOpen = false;
+    private boolean _mSubFormOpen = false;
 
     @SuppressWarnings("LeakingThisInConstructor")   // NOI18N   Lazy, since this is NOT a multi-threaded program.
     public FrmMainForm() {

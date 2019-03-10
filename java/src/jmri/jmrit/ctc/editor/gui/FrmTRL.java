@@ -30,6 +30,8 @@ public class FrmTRL extends javax.swing.JFrame {
     private final CheckJMRIObject _mCheckJMRIObject;
     private final FrmMainForm _mMainForm;
 
+    private boolean _mRulesFormOpen = false;
+    
     private void initOrig() {
     }
     private boolean dataChanged() {
@@ -205,8 +207,8 @@ public class FrmTRL extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosing
 
     private void _mEditLeftTrafficLockingRulesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mEditLeftTrafficLockingRulesActionPerformed
-        if (_mMainForm._mRulesFormOpen) return;
-        _mMainForm._mRulesFormOpen = true;
+        if (_mRulesFormOpen) return;
+        _mRulesFormOpen = true;
         FrmTRL_Rules dialog = new FrmTRL_Rules( _mAwtWindowProperties, _mCodeButtonHandlerData,
                                                 true, _mCTCSerialData, _mCheckJMRIObject);
         dialog.addWindowListener(new WindowAdapter() {
@@ -216,15 +218,15 @@ public class FrmTRL extends javax.swing.JFrame {
                     _mClosedNormally = true;
                     updateRuleCounts();
                 }
-                _mMainForm._mRulesFormOpen = false;
+                _mRulesFormOpen = false;
             }
         });
         dialog.setVisible(true);  // MUST BE AFTER "addWindowListener"!  BUG IN AWT/SWING!
     }//GEN-LAST:event__mEditLeftTrafficLockingRulesActionPerformed
 
     private void _mEditRightTrafficLockingRulesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mEditRightTrafficLockingRulesActionPerformed
-        if (_mMainForm._mRulesFormOpen) return;
-        _mMainForm._mRulesFormOpen = true;
+        if (_mRulesFormOpen) return;
+        _mRulesFormOpen = true;
         FrmTRL_Rules dialog = new FrmTRL_Rules( _mAwtWindowProperties, _mCodeButtonHandlerData,
                                                 false, _mCTCSerialData, _mCheckJMRIObject);
         dialog.addWindowListener(new WindowAdapter() {
@@ -234,7 +236,7 @@ public class FrmTRL extends javax.swing.JFrame {
                     _mClosedNormally = true;
                     updateRuleCounts();
                 }
-                _mMainForm._mRulesFormOpen = false;
+                _mRulesFormOpen = false;
             }
         });
         dialog.setVisible(true);  // MUST BE AFTER "addWindowListener"!  BUG IN AWT/SWING!
