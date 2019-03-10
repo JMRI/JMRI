@@ -1,7 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Translation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-03-10 -->
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -26,72 +26,72 @@
     <div id="mainContent">
       <a name="Top" id="Top"></a>
 
-      <h1>Using JMRI&reg; to Operate Trains</h1>
+      <h1> Utilisation de JMRI&reg; Exploiter des Trains</h1>
 
-      <h2>OperationsPro: Locomotives Window</h2>
+      <h2> OperationsPro: Fen&#234;tre Locomotives</h2>
 
-      <div align="right">
-        <p><a href="Ops_Cars.shtml">Previous</a> | <a href=
-        "Ops_Routes.shtml">Next</a></p>
+      <div align = "right">
+        <p><a href="Ops_Cars.shtml"> Pr&#233;c&#233;dent</a>| <a href =
+        "Ops_Routes.shtml"> Suivant </a></p>
 
-        <p><a href="index.shtml#Operations">Back to Index</a></p>
-      </div>
-      <hr>
+        <p><a href="index.shtml#Operations"> Retour &#224; l'Index </a></p>
+     </div>
+      <h>
 
-      <p>The Locomotives window allows you to edit your Locomotive
-      (Engine) Roster. You can enter a Locomotive's number, road,
-      model, type, and length. You can optionally add the engine's
-      build date and owner. If you want a group of Locomotives to
-      be assigned as a unit, you can create a "Consist". The
-      Locomotive type is used by the program to determine where
-      engines are picked up and or stored at the various Locations
-      on your layout. Some of default Locomotive types are
-      electric, diesel, gas turbine, and steam.</p>
+      <p>La fen&#234;tre Locomotives vous permet d’&#233;diter votre Inventaire de 
+      Locomotives (Machines). Vous pouvez entrer le Num&#233;ro, la Ligne, le 
+      Mod&#232;le, le Type et la Longueur d'une locomotive. Vous pouvez 
+      &#233;ventuellement ajouter la date de Fabrication ou d'Achat et le 
+      Propri&#233;taire de la Machine. Si vous souhaitez qu'un 
+      groupe de locomotivessoit affect&#233; en tant qu'unit&#233;, vous pouvez 
+      cr&#233;er une "Couplage". Le type de locomotive est utilis&#233; par 
+      le programme pour d&#233;terminer o&#249; les Machines sont r&#233;cup&#233;r&#233;s et/ou 
+      stock&#233;s aux diff&#233;rents Emplacements de votre r&#233;seau. Certains types 
+      de locomotives par d&#233;faut sont &#233;lectriques, diesel, &#224; turbine &#224; gaz 
+      et &#224; vapeur.</P>
 
-      <p style="margin-left: 40px;"><img style=
-      "width: 800px; height: 403px;" alt="locomotives" src=
-      "images/Ops_Engine.png"><br></p>
+      <p style = "margin-left: 40px;"> <img style =
+      "width: 800px; height: 403px" alt = "locomotives" src =
+      "images/Ops_Engine.png"> <br></p>
 
-      <h3><a href="Ops_Engines_menu.shtml">Menu
-      Bar</a></h3><strong style="font-weight: bold;"><em>Body of
-      window<br></em></strong>
+      <h3> <a href="Ops_Engines_menu.shtml"> Barre Menu
+      </a></h3> <strong style = "font-weight: bold;"> <em> Corps de
+      fen&#234;tre <br></em></strong>
 
-      <div style="margin-left: 40px;">
-        Lists the entire roster of your locomotives that you have
-        defined in Operations.<br>
-        Each entry contains:<br>
+      <div style = "margin-left: 40px;">
+        R&#233;pertorie l'inventaire complet de vos Locomotives que vous avez 
+        d&#233;finies dans Operations. <br> Chaque entr&#233;e contient: <br>
 
-        <div style="margin-left: 40px;">
-          <a href="Ops_SetEngines.shtml">Set button</a><br>
-          <a href="Ops_EditEngines.shtml">Edit button</a>
-        </div>
-      </div><strong style="font-weight: bold;"><em>Bottom of the
-      window</em></strong>
+        <div style = "margin-left: 40px;">
+          <a href="Ops_SetEngines.shtml"> bouton D&#233;finir</a><br>
+          <a href="Ops_EditEngines.shtml"> bouton Modifier </a>
+       </div>
+     </div> <strong style = "font-weight: bold;"> <em> Bas de la fen&#234;tre</em></strong>
 
-      <p><strong>Sort by</strong> -- select the radio button for
-      the attribute you wish to sort by. (Last sorts by last
-      moved)</p>
+      <p><strong>Trier par</strong>: cochez la case d'option pour 
+      l'attribut que vous souhaitez trier. (Dernier tri par dernier 
+      d&#233;plac&#233;)</p>
 
-      <p><input name="button" id="button" value="Add" type=
-      "submit"> when selected opens the <a href=
-      "Ops_AddEngine.shtml">Add Locomotive</a> window.</p>
+      <p><input name = "bouton" id = "bouton" valeur = "Ajouter" type =
+      "submit"> lorsque cette option est s&#233;lectionn&#233;e, ouvre la fen&#234;tre 
+      <a href= "Ops_AddEngine.shtml"> Ajouter une Locomotive </a>.</p>
 
-      <p><input name="button3" id="button3" value="Save" type=
-      "button"> Saves the locomotive roster to disk.</p>
+      <p><input name = "button3" id = "button3" value = "Enregistrer" type =
+      "button"> Enregistre la liste des Locomotives sur le disque.</p>
 
-      <p><input name="button2" id="button2" value="Find" type=
-      "submit"> <input name="textfield" id="textfield" type="text">
-      Locate a Locomotive in your Roster, when you type the road
-      number into the text box.</p>
-      <hr>
+      <p><input name = "button2" id = "button2" value = "Trouver" type =
+      "submit"> <input name = "textfield" id = "textfield" type = "text">
+      Localisez une Locomotive dans votre Inventairee lorsque vous 
+      entrez le num&#233;ro de la ligne dans la zone de texte.</P>
+      <h>
 
-      <div align="right">
-        <p><a href="Ops_Cars.shtml">Previous</a> | <a href=
-        "Ops_Routes.shtml">Next</a></p>
+      <div align = "right">
+        <p><a href="Ops_Cars.shtml"> Pr&#233;c&#233;dent</a>| <a href =
+        "Ops_Routes.shtml"> Suivant </a></p>
 
-        <p><a href="index.shtml#Operations">Back to Index</a></p>
-      </div><!--#include virtual="/Footer" -->
-    </div>
-  </div>
-</body>
-</html>
+        <p><a href="index.shtml#Operations"> Retour &#224; l'index </a></p>
+     </div> <! - # include virtual = "/ Footer" ->
+   </div>
+ </div>
+</ body>
+</ html>
