@@ -3,6 +3,8 @@ package jmri.jmrit.display.layoutEditor;
 import java.awt.GraphicsEnvironment;
 import java.awt.Toolkit;
 
+import javax.swing.JFrame;
+
 import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
 import jmri.jmrit.display.AbstractEditorTestBase;
