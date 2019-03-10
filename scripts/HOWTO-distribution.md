@@ -300,10 +300,10 @@ If you're developing any additional (post-4.15.4) changes that you want in the J
 
         Project Name
         Description
-        Git Modules: Branch
-           Clone (Advanced) refspec should be +refs/heads/master:refs/remotes/origin/release-4.15.4
+        Source Code Management:
+           Branch Specified:  4.15.4
     
-- Check under Source Code Management, Additional Behaviours, Advanced Clone Behaviours "Honor refspec" and "Shallow Clone" are checked, Shallow Clone Depth is 1, and time out is 20.
+- Check under Source Code Management, Additional Behaviours, Advanced Clone Behaviours "Shallow Clone" is checked, Shallow Clone Depth is 1, and time out is 20.
 
 - Click "Save". If needed, click "Enable".
 
@@ -375,6 +375,7 @@ cd ..
 mkdir release
 mv target/properties.4.15.4.zip release/
 ls -lt release/
+git checkout master
 ```
 
 ====================================================================================
@@ -385,7 +386,7 @@ Run a script to download the created files, create checksums and create text for
 ./scripts/releasesummary 4.15.4
 ```
 
-This will print a bunch of text in several sections. Save that for later (or edit it into the website/releaselist, release note files and GitHub info below)
+This will print a bunch of text in several sections. Save that for later and edit it into the website/releaselist, release note files and GitHub info below.
 
 ====================================================================================
 ## Create GitHub Release and upload files
@@ -415,9 +416,9 @@ Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.4.15.4+R7949343.dmg](https://github.com/JMRI/JMRI/releases/download/v4.15.4/JMRI.4.15.4+R7949343.dmg) | d50b409510b9a2c244b2e812b936bde152f23ae97ead64dba6ffcce45a4a35f4
-[JMRI.4.15.4+R7949343.exe](https://github.com/JMRI/JMRI/releases/download/v4.15.4/JMRI.4.15.4+R7949343.exe) | 1c8b7c46700ab50d542dfb44d0df3d82eb72c9d11da7f206bce951a3b232a95f
-[JMRI.4.15.4+R7949343.tgz](https://github.com/JMRI/JMRI/releases/download/v4.15.4/JMRI.4.15.4+R7949343.tgz) | 2bee2360617c48d80187ed53bdf3fb45bb7fd7f265efa1d142f5fecb71fb629b
+[JMRI.4.15.4+R5aefff3.dmg](https://github.com/JMRI/JMRI/releases/download/v4.15.4/JMRI.4.15.4+R5aefff3.dmg) | 0013cfe4a4045c4f870dacece43204ee9236f9dfa75bff5a2e4361fd55d6901c
+[JMRI.4.15.4+R5aefff3.exe](https://github.com/JMRI/JMRI/releases/download/v4.15.4/JMRI.4.15.4+R5aefff3.exe) | c2c3af94e54bfbeacc0a741bb97f1e2f1d67f5815ca2dc8ab8703e9bd31d0432
+[JMRI.4.15.4+R5aefff3.tgz](https://github.com/JMRI/JMRI/releases/download/v4.15.4/JMRI.4.15.4+R5aefff3.tgz) | 992f955eb5dd209559a4b889600d21a25d437611ba900bdd0912197dfaffe2a7
 ```
 
 - Attach files by selecting them or dragging them in. Make sure that the Linux one is .tgz, not .tar.
