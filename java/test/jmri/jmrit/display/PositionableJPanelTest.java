@@ -8,7 +8,7 @@ import org.junit.*;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class PositionableJPanelTest extends PositionableTestBase {
+public abstract class PositionableJPanelTest extends PositionableTestBase {
 
     @Test
     public void testCTor() {
@@ -48,11 +48,6 @@ public class PositionableJPanelTest extends PositionableTestBase {
            p = new PositionableJPanel(editor);
            ((PositionableJPanel)p).setName("PositionableJPanel");
         }
-    }
-
-    @After
-    public void tearDown() {
-        JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(PositionableJPanelTest.class);
