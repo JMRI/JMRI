@@ -198,6 +198,7 @@ public class JsonUtilSocketServiceTest {
         JsonNode message = connection.getMessage();
         Assert.assertNotNull("Message is not null", message);
         Assert.assertTrue("Message is array", message.isArray());
+        System.out.println(message.toString());
         Assert.assertEquals("Array has one element", 1, message.size());
         editor.getTargetFrame().dispose();
         editor.dispose();
