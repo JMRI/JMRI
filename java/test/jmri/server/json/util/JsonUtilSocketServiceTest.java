@@ -21,9 +21,11 @@ import jmri.InstanceManager;
 import jmri.jmris.json.JsonServerPreferences;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.switchboardEditor.SwitchboardEditor;
+import jmri.profile.NullProfile;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonMockConnection;
+import jmri.util.FileUtil;
 import jmri.util.JUnitUtil;
 import jmri.web.server.WebServerPreferences;
 
@@ -36,8 +38,9 @@ public class JsonUtilSocketServiceTest {
     @Before
     public void setUp() throws IOException {
         JUnitUtil.setUp();
-        JUnitUtil.resetInstanceManager();
-        JUnitUtil.resetProfileManager();
+        JUnitUtil.resetWindows(true, false); // list open windows when running tests
+        JUnitUtil.resetNodeIdentity();
+        JUnitUtil.resetProfileManager(new NullProfile("JsonUtilHttpServiceTest", "12345678", FileUtil.getFile("program:test")));
         JUnitUtil.initConfigureManager();
     }
 

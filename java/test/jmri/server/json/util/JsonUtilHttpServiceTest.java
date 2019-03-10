@@ -43,6 +43,8 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase {
     @Override
     public void setUp() throws Exception {
         super.setUp();
+        JUnitUtil.resetWindows(true, false); // list open windows when running tests
+        JUnitUtil.resetNodeIdentity();
         JUnitUtil.resetProfileManager(new NullProfile("JsonUtilHttpServiceTest", "12345678", FileUtil.getFile("program:test")));
         JUnitUtil.initConnectionConfigManager();
     }
