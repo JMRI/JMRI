@@ -1,41 +1,44 @@
 package jmri;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
 import org.junit.Assert;
+import org.junit.Test;
 
 /**
  * Test simple functioning of DccLocoAddress
  *
- * @author	Bob Jacobsen Copyright (C) 2005
-  */
-public class DccLocoAddressTest extends TestCase {
+ * @author Bob Jacobsen Copyright (C) 2005
+ */
+public class DccLocoAddressTest {
 
+    @Test
     public void testValue1() {
         DccLocoAddress l = new DccLocoAddress(12, true);
         Assert.assertEquals("number ", l.getNumber(), 12);
         Assert.assertEquals("long/short ", l.isLongAddress(), true);
     }
 
+    @Test
     public void testValue2() {
         DccLocoAddress l = new DccLocoAddress(12, false);
         Assert.assertEquals("number ", l.getNumber(), 12);
         Assert.assertEquals("long/short ", l.isLongAddress(), false);
     }
 
+    @Test
     public void testValue3() {
         DccLocoAddress l = new DccLocoAddress(121, true);
         Assert.assertEquals("number ", l.getNumber(), 121);
         Assert.assertEquals("long/short ", l.isLongAddress(), true);
     }
 
+    @Test
     public void testCopy1() {
         DccLocoAddress l = new DccLocoAddress(new DccLocoAddress(121, true));
         Assert.assertEquals("number ", l.getNumber(), 121);
         Assert.assertEquals("long/short ", l.isLongAddress(), true);
     }
 
+    @Test
     public void testEquals1() {
         DccLocoAddress l1 = new DccLocoAddress(121, true);
         DccLocoAddress l2 = new DccLocoAddress(121, true);
@@ -51,6 +54,7 @@ public class DccLocoAddressTest extends TestCase {
 
     }
 
+    @Test
     public void testEquals2() {
         DccLocoAddress l1 = new DccLocoAddress(4321, true);
         DccLocoAddress l2 = new DccLocoAddress(121, true);
@@ -66,6 +70,7 @@ public class DccLocoAddressTest extends TestCase {
 
     }
 
+    @Test
     public void testEquals3() {
         DccLocoAddress l1 = new DccLocoAddress(121, false);
         DccLocoAddress l2 = new DccLocoAddress(121, true);
@@ -81,6 +86,7 @@ public class DccLocoAddressTest extends TestCase {
 
     }
 
+    @Test
     public void testEquals4() {
         DccLocoAddress l1 = new DccLocoAddress(4321, true);
         DccLocoAddress l2 = new DccLocoAddress(121, false);
@@ -96,6 +102,7 @@ public class DccLocoAddressTest extends TestCase {
 
     }
 
+    @Test
     public void testHash0() {
         DccLocoAddress l1 = new DccLocoAddress(121, true);
         DccLocoAddress l2 = new DccLocoAddress(4321, false);
@@ -104,6 +111,7 @@ public class DccLocoAddressTest extends TestCase {
         Assert.assertTrue("equate self 2", l2.hashCode() == l2.hashCode());
     }
 
+    @Test
     public void testHash1() {
         DccLocoAddress l1 = new DccLocoAddress(121, true);
         DccLocoAddress l2 = new DccLocoAddress(121, true);
@@ -111,6 +119,7 @@ public class DccLocoAddressTest extends TestCase {
         Assert.assertTrue("equate ", l1.hashCode() == l2.hashCode());
     }
 
+    @Test
     public void testHash2() {
         DccLocoAddress l1 = new DccLocoAddress(4321, true);
         DccLocoAddress l2 = new DccLocoAddress(121, true);
@@ -118,6 +127,7 @@ public class DccLocoAddressTest extends TestCase {
         Assert.assertTrue("equate ", l1.hashCode() != l2.hashCode());
     }
 
+    @Test
     public void testHash3() {
         DccLocoAddress l1 = new DccLocoAddress(4321, false);
         DccLocoAddress l2 = new DccLocoAddress(4321, true);
@@ -125,6 +135,7 @@ public class DccLocoAddressTest extends TestCase {
         Assert.assertTrue("equate ", l1.hashCode() != l2.hashCode());
     }
 
+    @Test
     public void testHash4() {
         DccLocoAddress l1 = new DccLocoAddress(4321, false);
         DccLocoAddress l2 = new DccLocoAddress(121, true);
@@ -132,6 +143,7 @@ public class DccLocoAddressTest extends TestCase {
         Assert.assertTrue("equate ", l1.hashCode() != l2.hashCode());
     }
 
+    @Test
     public void testHash5() {
         DccLocoAddress l1 = new DccLocoAddress(4321, true);
         DccLocoAddress l2 = new DccLocoAddress(4321, true);
@@ -139,28 +151,12 @@ public class DccLocoAddressTest extends TestCase {
         Assert.assertTrue("equate ", l1.hashCode() == l2.hashCode());
     }
 
+    @Test
     public void testHash6() {
         DccLocoAddress l1 = new DccLocoAddress(4321, false);
         DccLocoAddress l2 = new DccLocoAddress(4321, false);
 
         Assert.assertTrue("equate ", l1.hashCode() == l2.hashCode());
-    }
-
-    // from here down is testing infrastructure
-    public DccLocoAddressTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {DccLocoAddressTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(DccLocoAddressTest.class);
-        return suite;
     }
 
 }

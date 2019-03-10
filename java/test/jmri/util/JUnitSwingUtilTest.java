@@ -18,14 +18,14 @@ import org.netbeans.jemmy.QueueTool;
 import org.netbeans.jemmy.operators.JCheckBoxOperator;
 import org.netbeans.jemmy.util.NameComponentChooser;
 
-import jmri.util.SwingTestCase.Pixel;
+import jmri.util.JUnitSwingUtil.Pixel;
 
 /**
- * Tests for the jmri.util.SwingTestCase class.
+ * Tests for the jmri.util.JUnitSwingUtil class.
  *
- * @author	Bob Jacobsen Copyright 2009
+ * @author Bob Jacobsen Copyright 2009
  */
-public class SwingTestCaseTest {
+public class JUnitSwingUtilTest {
 
     /**
      * Simple test of creating a Swing frame with a checkbox, checking the box,
@@ -36,7 +36,7 @@ public class SwingTestCaseTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // create a little GUI with a single check box
         JFrame f = new JFrame("SwingTextCaseTest");
-        f.setSize(100, 100);	        // checkbox must be visible for test to work
+        f.setSize(100, 100); // checkbox must be visible for test to work
         JCheckBox b = new JCheckBox("Check");
         b.setName("Check");
         f.add(b);
@@ -61,15 +61,15 @@ public class SwingTestCaseTest {
      */
     @Test
     public void testFormatPixel() {
-        Assert.assertEquals("0x00000000", SwingTestCase.formatPixel(0));
-        Assert.assertEquals("0x00000001", SwingTestCase.formatPixel(1));
-        Assert.assertEquals("0xffffffff", SwingTestCase.formatPixel(0xffffffff));
-        Assert.assertEquals("0xffffff0f", SwingTestCase.formatPixel(0xffffff0f));
+        Assert.assertEquals("0x00000000", JUnitSwingUtil.formatPixel(0));
+        Assert.assertEquals("0x00000001", JUnitSwingUtil.formatPixel(1));
+        Assert.assertEquals("0xffffffff", JUnitSwingUtil.formatPixel(0xffffffff));
+        Assert.assertEquals("0xffffff0f", JUnitSwingUtil.formatPixel(0xffffff0f));
     }
 
     @Test
     public void testAssertPixel() {
-        SwingTestCase.assertPixel("test RED", Pixel.RED, 0xffff0000);
+        JUnitSwingUtil.assertPixel("test RED", Pixel.RED, 0xffff0000);
     }
 
     @Test
@@ -88,11 +88,11 @@ public class SwingTestCaseTest {
         new QueueTool().waitEmpty();
         Assert.assertEquals("icon size", new Dimension(39, 13).toString(), wIcon.getSize().toString());
 
-        int[] val = SwingTestCase.getDisplayedContent(wIcon, wIcon.getSize(), new Point(0, 0));
+        int[] val = JUnitSwingUtil.getDisplayedContent(wIcon, wIcon.getSize(), new Point(0, 0));
 
         Assert.assertEquals("icon arraylength", 39 * 13, val.length);
 
-        SwingTestCase.assertImageNinePoints("test image", val, wIcon.getSize(),
+        JUnitSwingUtil.assertImageNinePoints("test image", val, wIcon.getSize(),
                 Pixel.RED, Pixel.GREEN, Pixel.BLUE,
                 Pixel.GREEN, Pixel.BLUE, Pixel.RED,
                 Pixel.RED, Pixel.GREEN, Pixel.BLUE);
@@ -116,17 +116,20 @@ public class SwingTestCaseTest {
 
         Assert.assertEquals("icon size", new Dimension(13, 13).toString(), wIcon.getSize().toString());
 
-        int[] val = SwingTestCase.getDisplayedContent(wIcon, wIcon.getSize(), new Point(0, 0));
+        int[] val = JUnitSwingUtil.getDisplayedContent(wIcon, wIcon.getSize(), new Point(0, 0));
 
         Assert.assertEquals("icon arraylength", 13 * 13, val.length);
 
-        SwingTestCase.assertPixel("icon first", Pixel.GREEN, val[0]);
-        SwingTestCase.assertPixel("icon middle", Pixel.GREEN, val[(int) Math.floor(wIcon.getSize().height / 2) * wIcon.getSize().width + (int) Math.floor(wIcon.getSize().width / 2) - 1]);
-        SwingTestCase.assertPixel("icon last", Pixel.GREEN, val[wIcon.getSize().height * wIcon.getSize().width - 1]);
+        JUnitSwingUtil.assertPixel("icon first", Pixel.GREEN, val[0]);
+        JUnitSwingUtil.assertPixel("icon middle", Pixel.GREEN,
+                val[(int) Math.floor(wIcon.getSize().height / 2) * wIcon.getSize().width +
+                        (int) Math.floor(wIcon.getSize().width / 2) -
+                        1]);
+        JUnitSwingUtil.assertPixel("icon last", Pixel.GREEN, val[wIcon.getSize().height * wIcon.getSize().width - 1]);
 
-        Assert.assertEquals("icon first", "0xff00ff00", SwingTestCase.formatPixel(val[0])); // compare strings to make error readable
+        Assert.assertEquals("icon first", "0xff00ff00", JUnitSwingUtil.formatPixel(val[0])); // compare strings to make error readable
 
-        SwingTestCase.assertImageNinePoints("icon", val, wIcon.getSize(),
+        JUnitSwingUtil.assertImageNinePoints("icon", val, wIcon.getSize(),
                 Pixel.GREEN, Pixel.GREEN, Pixel.GREEN,
                 Pixel.GREEN, Pixel.GREEN, Pixel.GREEN,
                 Pixel.GREEN, Pixel.GREEN, Pixel.GREEN);
@@ -153,17 +156,20 @@ public class SwingTestCaseTest {
         new QueueTool().waitEmpty();
         Assert.assertEquals("icon size", new Dimension(13, 13).toString(), wIcon.getSize().toString());
 
-        int[] val = SwingTestCase.getDisplayedContent(wIcon, wIcon.getSize(), new Point(0, 0));
+        int[] val = JUnitSwingUtil.getDisplayedContent(wIcon, wIcon.getSize(), new Point(0, 0));
 
         Assert.assertEquals("icon arraylength", 13 * 13, val.length);
 
-        SwingTestCase.assertPixel("icon first", Pixel.RED, val[0]);
-        SwingTestCase.assertPixel("icon middle", Pixel.BLUE, val[(int) Math.floor(wIcon.getSize().height / 2) * wIcon.getSize().width + (int) Math.floor(wIcon.getSize().width / 2) - 1]);
-        SwingTestCase.assertPixel("icon last", Pixel.RED, val[wIcon.getSize().height * wIcon.getSize().width - 1]);
+        JUnitSwingUtil.assertPixel("icon first", Pixel.RED, val[0]);
+        JUnitSwingUtil.assertPixel("icon middle", Pixel.BLUE,
+                val[(int) Math.floor(wIcon.getSize().height / 2) * wIcon.getSize().width +
+                        (int) Math.floor(wIcon.getSize().width / 2) -
+                        1]);
+        JUnitSwingUtil.assertPixel("icon last", Pixel.RED, val[wIcon.getSize().height * wIcon.getSize().width - 1]);
 
-        Assert.assertEquals("icon first", "0xffff0000", SwingTestCase.formatPixel(val[0])); // compare strings to make error readable
+        Assert.assertEquals("icon first", "0xffff0000", JUnitSwingUtil.formatPixel(val[0])); // compare strings to make error readable
 
-        SwingTestCase.assertImageNinePoints("icon", val, wIcon.getSize(),
+        JUnitSwingUtil.assertImageNinePoints("icon", val, wIcon.getSize(),
                 Pixel.RED, Pixel.RED, Pixel.RED,
                 Pixel.RED, Pixel.BLUE, Pixel.RED,
                 Pixel.RED, Pixel.RED, Pixel.RED);
@@ -186,9 +192,9 @@ public class SwingTestCaseTest {
         new QueueTool().waitEmpty();
         Assert.assertEquals("icon", new Dimension(13, 13).toString(), wIcon.getSize().toString());
 
-        int[] val = SwingTestCase.getDisplayedContent(wIcon, wIcon.getSize(), new Point(0, 0));
+        int[] val = JUnitSwingUtil.getDisplayedContent(wIcon, wIcon.getSize(), new Point(0, 0));
 
-        SwingTestCase.assertImageNinePoints("test image", val, wIcon.getSize(),
+        JUnitSwingUtil.assertImageNinePoints("test image", val, wIcon.getSize(),
                 Pixel.RED, Pixel.RED, Pixel.RED,
                 Pixel.RED, Pixel.TRANSPARENT, Pixel.RED,
                 Pixel.RED, Pixel.RED, Pixel.RED);
@@ -197,10 +203,10 @@ public class SwingTestCaseTest {
         // Need to find the icon location first
         Point p = SwingUtilities.convertPoint(wIcon, 0, 0, f.getContentPane());
 
-        val = SwingTestCase.getDisplayedContent(f.getContentPane(), wIcon.getSize(), p);
+        val = JUnitSwingUtil.getDisplayedContent(f.getContentPane(), wIcon.getSize(), p);
         Assert.assertEquals("frame arraylength", 13 * 13, val.length);
 
-        SwingTestCase.assertImageNinePoints("frame", val, wIcon.getSize(),
+        JUnitSwingUtil.assertImageNinePoints("frame", val, wIcon.getSize(),
                 Pixel.RED, Pixel.RED, Pixel.RED,
                 Pixel.RED, Pixel.BLUE, Pixel.RED,
                 Pixel.RED, Pixel.RED, Pixel.RED);
@@ -218,5 +224,5 @@ public class SwingTestCaseTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SwingTestCaseTest.class);
+    // private final static Logger log = LoggerFactory.getLogger(JUnitSwingUtilTest.class);
 }

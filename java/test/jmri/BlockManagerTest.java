@@ -1,7 +1,11 @@
 package jmri;
 
 import jmri.util.JUnitUtil;
-import org.junit.*;
+
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the BlockManager class
@@ -158,7 +162,6 @@ public class BlockManagerTest {
         Assert.assertEquals("block speed back to normal", "Normal", InstanceManager.getDefault(jmri.BlockManager.class).getDefaultSpeed());
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();

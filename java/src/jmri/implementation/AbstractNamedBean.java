@@ -4,6 +4,7 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.Set;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
@@ -50,7 +51,7 @@ public abstract class AbstractNamedBean implements NamedBean {
      * @throws jmri.NamedBean.BadSystemNameException if the system name is null
      */
     protected AbstractNamedBean(@Nonnull String sys, @Nullable String user) throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException {
-        if (sys == null) {
+        if (Objects.isNull(sys)) {
             throw new NamedBean.BadSystemNameException();
         }
         mSystemName = sys;
@@ -273,7 +274,7 @@ public abstract class AbstractNamedBean implements NamedBean {
          if(keySet.contains(key)){
             // key already in the map, replace the value.
             Object oldValue = getProperty(key);
-            if(!(oldValue.equals(value))){
+            if(!Objects.equals(oldValue, value)){
 	          removeProperty(key); // make sure the old value is removed.
               parameters.put(key, value);
               firePropertyChange(key,oldValue,value);
@@ -305,7 +306,7 @@ public abstract class AbstractNamedBean implements NamedBean {
     @Override
     @OverridingMethodsMustInvokeSuper
     public void removeProperty(String key) {
-        if (parameters == null || key == null) {
+        if (parameters == null || Objects.isNull(key)) {
             return;
         }
         parameters.remove(key);

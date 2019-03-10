@@ -3,9 +3,11 @@ package jmri.jmrit.symbolicprog;
 import java.util.HashMap;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Test the HexVariableValue class
@@ -50,6 +52,7 @@ public class HexVariableValueTest extends AbstractVariableValueTestBase {
     // end of abstract members
 
     // test the handling of radix masks
+    @Test
     public void testBaseMasks20() {
         HashMap<String, CvValue> v = createCvMap();
         CvValue cv = new CvValue("81", p);
@@ -79,21 +82,13 @@ public class HexVariableValueTest extends AbstractVariableValueTestBase {
         Assert.assertEquals("cv value", (1+15*3+3*3*20), cv.getValue());                
     }
 
-    // from here down is testing infrastructure
-    public HexVariableValueTest(String s) {
-        super(s);
+    @Before
+    public void setUp() {
+        super.setUp();
     }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", HexVariableValueTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
+    
+    @After
+    public void tearDown() {
+        super.tearDown();
     }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(HexVariableValueTest.class);
-        return suite;
-    }
-
 }
