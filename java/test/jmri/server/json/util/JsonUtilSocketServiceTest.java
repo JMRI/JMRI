@@ -198,7 +198,9 @@ public class JsonUtilSocketServiceTest {
         JsonNode message = connection.getMessage();
         Assert.assertNotNull("Message is not null", message);
         Assert.assertTrue("Message is array", message.isArray());
-        log.error(message.toString());
+        if (message.size() != 1) {
+            log.error(message.toString()); // what panel was left in place that triggered this?
+        }
         Assert.assertEquals("Array has one element", 1, message.size());
         JUnitUtil.dispose(editor.getTargetFrame());
         JUnitUtil.dispose(editor);

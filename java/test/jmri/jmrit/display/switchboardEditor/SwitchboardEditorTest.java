@@ -83,7 +83,7 @@ public class SwitchboardEditorTest extends AbstractEditorTestBase {
         JUnitUtil.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
             jmri.util.JUnitUtil.resetProfileManager();
-            e = swe = new SwitchboardEditor("Test Layout");
+            e = swe = new SwitchboardEditor("Switchboard Editor Test Layout");
         }
     }
 

@@ -9,14 +9,14 @@ import java.awt.GraphicsEnvironment;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class LayoutEditorComponentTest {
 
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        LayoutEditor le = new LayoutEditor("Test Layout");
+        LayoutEditor le = new LayoutEditor("Layout Editor Component Test Layout");
         LayoutEditorComponent t = new LayoutEditorComponent(le);
         Assert.assertNotNull("exists",t);
     }

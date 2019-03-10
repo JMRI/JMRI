@@ -31,7 +31,7 @@ public class LayoutEditorTest extends jmri.jmrit.display.AbstractEditorTestBase 
     @Test
     public void testStringCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        le = new LayoutEditor("Test Layout");
+        le = new LayoutEditor("Layout Editor Test Layout");
         Assert.assertNotNull("exists", le);
     }
 
@@ -378,7 +378,7 @@ public class LayoutEditorTest extends jmri.jmrit.display.AbstractEditorTestBase 
     public void testSetLayoutName() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // the test layout editor setUp created is named this
-        Assert.assertEquals("getLayoutName", "Test Layout", le.getLayoutName());
+        Assert.assertEquals("getLayoutName", "Layout Editor Test Layout", le.getLayoutName());
         // set to a known (different) value
         le.setLayoutName("foo");
         Assert.assertEquals("getLayoutName after set", "foo", le.getLayoutName());
@@ -387,7 +387,7 @@ public class LayoutEditorTest extends jmri.jmrit.display.AbstractEditorTestBase 
     @Test
     public void testGetShowHelpBar() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        
+
         ThreadingUtil.runOnGUI(() -> {
             le.setShowHelpBar(true);
         });
@@ -405,7 +405,7 @@ public class LayoutEditorTest extends jmri.jmrit.display.AbstractEditorTestBase 
     @Test
     public void testSetShowHelpBar() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        
+
         ThreadingUtil.runOnGUI(() -> {
             le.setShowHelpBar(false);
         });
@@ -817,7 +817,7 @@ public class LayoutEditorTest extends jmri.jmrit.display.AbstractEditorTestBase 
         jmo.pushMenuNoBlock(Bundle.getMessage("MenuOptions") + "/"
                              + Bundle.getMessage("ToolBar") + "/"
                              + Bundle.getMessage("ToolBarSideTop"), "/");
-         
+
         //Left
         jmo.pushMenuNoBlock(Bundle.getMessage("MenuOptions") + "/"
                              + Bundle.getMessage("ToolBar") + "/"
@@ -856,7 +856,7 @@ public class LayoutEditorTest extends jmri.jmrit.display.AbstractEditorTestBase 
         JUnitUtil.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
             jmri.util.JUnitUtil.resetProfileManager();
-            e = le = new LayoutEditor("Test Layout");
+            e = le = new LayoutEditor("Layout Editor Test Layout");
             jmri.InstanceManager.setDefault(LayoutBlockManager.class,new LayoutBlockManager());
         }
     }
