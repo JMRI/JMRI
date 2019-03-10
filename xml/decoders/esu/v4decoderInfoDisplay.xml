@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<group xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <grid gridx="NEXT" gridy="CURRENT" anchor="LINE_START">
+
+<!-- 
+    <griditem gridx="0" gridy="NEXT">
+      <display item="a 1"/>
+      <display item="a 2"/>
+      <display item="a 3"/>
+    </griditem>
+    <griditem gridx="0" gridy="NEXT">
+      <display item="b 1"/>
+      <display item="b 2"/>
+      <display item="b 3"/>
+    </griditem>
+ -->
+
+    <griditem gridx="0" gridy="NEXT">
+      <display item="ProId"/>
+      <label>
+        <text>  </text>
+      </label>
+      <display item="ProId 2"/>
+    </griditem>
+    <griditem gridx="0" gridy="NEXT">
+      <display item="SerNo"/>
+      <label>
+        <text>  </text>
+      </label>
+      <display item="SerNo 2"/>
+    </griditem>
+    <griditem gridx="0" gridy="NEXT">
+      <display item="PDate"/>
+      <label>
+        <text>  </text>
+      </label>
+      <display item="PDate 2"/>
+    </griditem>
+    <griditem gridx="0" gridy="NEXT">
+      <display item="PInfo"/>
+      <label>
+        <text>  </text>
+      </label>
+      <display item="PInfo 2"/>
+    </griditem>
+    <griditem gridx="0" gridy="NEXT" gridwidth="REMAINDER">
+      <display item="BCode Major Version" label="BCode"/>
+      <display item="BCode Minor Version" label="."/>
+      <display item="BCode Build Number" label="."/>
+    </griditem>
+    <griditem gridx="0" gridy="NEXT">
+      <display item="BDate"/>
+      <label>
+        <text>  </text>
+      </label>
+      <display item="BDate 2"/>
+    </griditem>
+    <griditem gridx="0" gridy="NEXT" gridwidth="REMAINDER">
+      <display item="ACode Major Version" label="ACode"/>
+      <display item="ACode Minor Version" label="."/>
+      <display item="ACode Build Number" label="."/>
+    </griditem>
+    <griditem gridx="0" gridy="NEXT">
+      <display item="ADate"/>
+      <label>
+        <text>  </text>
+      </label>
+      <display item="ADate 2"/>
+    </griditem>
+    <griditem gridx="0" gridy="NEXT">
+      <display item="AType"/>
+    </griditem>
+  </grid>
+</group>
