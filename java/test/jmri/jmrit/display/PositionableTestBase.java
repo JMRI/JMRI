@@ -23,7 +23,7 @@ abstract public class PositionableTestBase {
 
     // Should do JUnitUtil.setUp() in subclass to make sure it's before anything
     @Before
-    abstract public void setUp(); 
+    abstract public void setUp();
 
     // Should do JUnitUtil.tearDown() in subclass to make sure it's after everything
     @After
@@ -31,12 +31,17 @@ abstract public class PositionableTestBase {
     public void tearDown() {
         // now close panel window, if it exists
         if (editor != null) {
-            java.awt.event.WindowListener[] listeners = editor.getTargetFrame().getWindowListeners();
-            for (WindowListener listener : listeners) {
-                editor.getTargetFrame().removeWindowListener(listener);
+            JFrame target = editor.getTargetFrame();
+            if (target != null) {
+                java.awt.event.WindowListener[] listeners = target.getWindowListeners();
+                for (WindowListener listener : listeners) {
+                    target.removeWindowListener(listener);
+                }
+                if (!editor.equals(target)) {
+                    JUnitUtil.dispose(target);
+                }
             }
-            EditorFrameOperator jfo = new EditorFrameOperator(editor);
-            jfo.requestClose();
+            JUnitUtil.dispose(editor);
         }
         JUnitUtil.resetWindows(false, false);  // don't log here.  should be from this class.
         editor = null;

@@ -27,7 +27,6 @@ import jmri.server.json.JsonException;
 import jmri.server.json.JsonMockConnection;
 import jmri.util.FileUtil;
 import jmri.util.JUnitUtil;
-import jmri.util.ThreadingUtil;
 import jmri.web.server.WebServerPreferences;
 
 /**
