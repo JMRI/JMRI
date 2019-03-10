@@ -3,8 +3,6 @@ package jmri.jmrit.display.layoutEditor;
 import java.awt.GraphicsEnvironment;
 import java.awt.Toolkit;
 
-import javax.swing.JFrame;
-
 import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
 import jmri.jmrit.display.AbstractEditorTestBase;
@@ -371,7 +369,8 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
     @Test
     public void testGetLayoutName() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        e = new LayoutEditor(); // we do this here to test the default name
+        e.dispose(); // remove existing instance
+        e = new LayoutEditor(); // create new instance to test the default name
         // default is "My Layout"
         Assert.assertEquals("getLayoutName", "My Layout", e.getLayoutName());
     }
