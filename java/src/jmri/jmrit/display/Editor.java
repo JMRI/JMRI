@@ -221,7 +221,6 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     // map of icon editor frames (incl, icon editor) keyed by name
     protected HashMap<String, JFrameItem> _iconEditorFrame = new HashMap<>();
 
-    private static volatile ArrayList<Editor> editors = new ArrayList<>();
     // store panelMenu state so preference is retained on headless systems
     private boolean panelMenuIsVisible = true;
 
@@ -239,7 +238,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
         InstanceManager.memoryManagerInstance().addVetoableChangeListener(this);
         InstanceManager.getDefault(BlockManager.class).addVetoableChangeListener(this);
-        editors.add(this);
+        InstanceManager.getDefault(EditorManager.class).addEditor(this);
     }
 
     public Editor(String name) {
@@ -2668,7 +2667,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             cm.deregister(this);
         }
         InstanceManager.getDefault(PanelMenu.class).deletePanel(this);
-        Editor.editors.remove(this);
+        InstanceManager.getDefault(EditorManager.class).removeEditor(this);
         setVisible(false);
         _contents.clear();
         removeAll();
@@ -3342,11 +3341,14 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      * Get a List of the currently-existing Editor objects. The returned list is
      * a copy made at the time of the call, so it can be manipulated as needed
      * by the caller.
+     * <p>
+     * This is a convenience reference to {@link jmri.jmrit.display.EditorManager#getEditorsList()}
      *
      * @return a List of Editors
+     * @see jmri.jmrit.display.EditorManager#getEditorsList()
      */
     synchronized public static List<Editor> getEditors() {
-        return new ArrayList<>(editors);
+        return InstanceManager.getDefault(EditorManager.class).getEditorsList();
     }
 
     /**
@@ -3355,36 +3357,30 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      * <p>
      * The returned list is a copy made at the time of the call, so it can be
      * manipulated as needed by the caller.
+     * <p>
+     * This is a convenience reference to {@link jmri.jmrit.display.EditorManager#getEditorsList(Class)}
      *
      * @param <T>  the Class the list should be limited to.
      * @param type the Class the list should be limited to.
      * @return a List of Editors.
+     * @see jmri.jmrit.display.EditorManager#getEditorsList(Class)
      */
-    @SuppressWarnings("unchecked")
     synchronized public static <T extends Editor> List<T> getEditors(@Nonnull Class<T> type) {
-        List<T> result = new ArrayList<>();
-        for (Editor e : Editor.getEditors()) {
-            if (type.isInstance(e)) {
-                result.add((T) e);
-            }
-        }
-        return result;
+        return InstanceManager.getDefault(EditorManager.class).getEditorsList(type);
     }
 
     /**
      * Get an Editor of a particular name. If more than one exists, there's no
      * guarantee as to which is returned.
+     * <p>
+     * This is a convenience reference to {@link jmri.jmrit.display.EditorManager#getEditor(String)}
      *
      * @param name the editor to get
      * @return an Editor or null if no matching Editor could be found
+     * @see jmri.jmrit.display.EditorManager#getEditor(String)
      */
     public static Editor getEditor(String name) {
-        for (Editor e : Editor.getEditors()) {
-            if (e.getTitle().equals(name)) {
-                return e;
-            }
-        }
-        return null;
+        return InstanceManager.getDefault(EditorManager.class).getEditor(name);
     }
 
     // initialize logging
