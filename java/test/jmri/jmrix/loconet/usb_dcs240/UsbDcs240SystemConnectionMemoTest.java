@@ -19,7 +19,7 @@ public class UsbDcs240SystemConnectionMemoTest extends jmri.jmrix.SystemConnecti
        UsbDcs240SystemConnectionMemo memo = new UsbDcs240SystemConnectionMemo();
        LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold(memo);
        memo.setLnTrafficController(lnis);
-       memo.configureCommandStation(jmri.jmrix.loconet.LnCommandStationType.COMMAND_STATION_DCS100,false,false,false);
+       memo.configureCommandStation(jmri.jmrix.loconet.LnCommandStationType.COMMAND_STATION_DCS100,false,false,false,false);
        memo.configureManagers();
        scm = memo;
     }

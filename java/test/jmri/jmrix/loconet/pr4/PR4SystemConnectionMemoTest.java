@@ -19,7 +19,7 @@ public class PR4SystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemo
        PR4SystemConnectionMemo memo = new PR4SystemConnectionMemo();
        LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold(memo);
        memo.setLnTrafficController(lnis);
-       memo.configureCommandStation(jmri.jmrix.loconet.LnCommandStationType.COMMAND_STATION_DCS100,false,false,false);
+       memo.configureCommandStation(jmri.jmrix.loconet.LnCommandStationType.COMMAND_STATION_DCS100,false,false,false,false);
        memo.configureManagers();
        scm = memo;
     }
