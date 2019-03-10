@@ -18,7 +18,7 @@
         },
         "inverted": {
             "type": "boolean",
-            "description": "true if turnout is inverted; false otherwise"
+            "description": "true if sensor is inverted; false otherwise"
         },
         "state": {
             "type": "integer",
