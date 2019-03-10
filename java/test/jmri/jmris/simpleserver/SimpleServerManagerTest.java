@@ -1,51 +1,31 @@
 package jmri.jmris.simpleserver;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for the jmri.jmris.simpleserver.SimpleServerManager class 
  *
  * @author Paul Bender
  */
-public class SimpleServerManagerTest extends TestCase {
+public class SimpleServerManagerTest {
 
+    @Test
     public void testGetInstance() {
         SimpleServerManager a = SimpleServerManager.getInstance();
         Assert.assertNotNull(a);
     }
 
-    // from here down is testing infrastructure
-    public SimpleServerManagerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {SimpleServerManagerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(jmri.jmris.simpleserver.SimpleServerManagerTest.class);
-
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         jmri.util.JUnitUtil.setUp();
-        super.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
     }
 
-    @Override
-    protected void tearDown() throws Exception {
-        super.tearDown();
+    @After
+    public void tearDown() throws Exception {
         jmri.util.JUnitUtil.tearDown();
 
     }

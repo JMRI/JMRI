@@ -10,10 +10,10 @@ import jmri.Path;
 import jmri.Section;
 import jmri.Sensor;
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Test;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 
 /**
  * Tests for SectionManagerXml.
@@ -22,8 +22,9 @@ import org.junit.Assert;
  *
  * @author Bob Coleman Copyright 2012
  */
-public class SectionManagerXmlTest extends TestCase {
+public class SectionManagerXmlTest {
 
+    @Test
     public void testLoadCurrent() throws Exception {
         // load file
         JUnitUtil.resetInstanceManager();
@@ -246,8 +247,8 @@ public class SectionManagerXmlTest extends TestCase {
             int expectedcentrepaths = expectedpreviouspaths[testblockfocus] + expectednextpaths[testblockfocus];
             Block focusBlock = blockstotest[testblockfocus];
             Memory expectedtestmemory = InstanceManager.memoryManagerInstance().getMemory("blocknorthmemory");
-            expectedtestmemory.setValue("Memory test: " + testblockfocus);
             Assert.assertNotNull(expectedtestmemory);
+            expectedtestmemory.setValue("Memory test: " + testblockfocus);
 // TODO: BOB C: Memory Test
 //            Memory actualtestmemory = (Memory) focusBlock.getValue();
 //            Assert.assertNotNull(actualtestmemory);
@@ -530,32 +531,14 @@ public class SectionManagerXmlTest extends TestCase {
 
     }
 
-    // from here down is testing infrastructure
-    public SectionManagerXmlTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading",SectionManagerXmlTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(SectionManagerXmlTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    @Override
-    protected void setUp() {
+    @Before
+    public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
     }
 
-    @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 

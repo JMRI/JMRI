@@ -2,9 +2,9 @@ package jmri.jmrix.loconet.soundloader;
 
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Test;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Assert;
 
 /**
@@ -12,8 +12,9 @@ import org.junit.Assert;
  *
  * @author	Bob Jacobsen Copyright 2001, 2002, 2006
  */
-public class LoaderEngineTest extends TestCase {
+public class LoaderEngineTest {
 
+    @Test
     public void testGetEraseMessage() {
         LoaderEngine l = new LoaderEngine(null);
         LocoNetMessage m = l.getEraseMessage();
@@ -21,6 +22,7 @@ public class LoaderEngineTest extends TestCase {
         Assert.assertEquals("checksum", true, m.checkParity());
     }
 
+    @Test
     public void testGetIntMessage() {
         LoaderEngine l = new LoaderEngine(null);
         LocoNetMessage m = l.getInitMessage();
@@ -28,6 +30,7 @@ public class LoaderEngineTest extends TestCase {
         Assert.assertEquals("checksum", true, m.checkParity());
     }
 
+    @Test
     public void testGetExitMessage() {
         LoaderEngine l = new LoaderEngine(null);
         LocoNetMessage m = l.getExitMessage();
@@ -35,6 +38,7 @@ public class LoaderEngineTest extends TestCase {
         Assert.assertEquals("checksum", true, m.checkParity());
     }
 
+    @Test
     public void testGetStartWavDataMessage1() {
         LoaderEngine l = new LoaderEngine(null);
         LocoNetMessage m = l.getStartDataMessage(LoaderEngine.TYPE_WAV, 0x17, 128);
@@ -42,6 +46,7 @@ public class LoaderEngineTest extends TestCase {
         Assert.assertEquals("checksum", true, m.checkParity());
     }
 
+    @Test
     public void testGetStartWavDataMessage2() {
         LoaderEngine l = new LoaderEngine(null);
         LocoNetMessage m = l.getStartDataMessage(LoaderEngine.TYPE_WAV, 0x17, 512);
@@ -49,6 +54,7 @@ public class LoaderEngineTest extends TestCase {
         Assert.assertEquals("checksum", true, m.checkParity());
     }
 
+    @Test
     public void testGetSendWavDataMessage() {
         LoaderEngine l = new LoaderEngine(null);
         int[] idata = new int[]{0x17, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -69,6 +75,7 @@ public class LoaderEngineTest extends TestCase {
         Assert.assertEquals("checksum", true, m.checkParity());
     }
 
+    @Test
     public void testFullTransfer1() {
         LoaderEngine l = new LoaderEngine(null);
         int handle = 0x17;
@@ -107,31 +114,13 @@ public class LoaderEngineTest extends TestCase {
         Assert.assertEquals("end", null, m);
     }
 
-    // from here down is testing infrastructure
-    public LoaderEngineTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {LoaderEngineTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(LoaderEngineTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    @Override
-    protected void setUp() {
+    @Before
+    public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 

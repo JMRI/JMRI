@@ -36,7 +36,7 @@ public class AllTest {
 
    static public void main(String[] args) {
         // launch this class via JUnit4
-       org.junit.runner.JUnitCore.main("apps.tests.AllTest");
+       org.junit.runner.JUnitCore.runClasses(AllTest.class);
    }
 
 }
