@@ -2548,9 +2548,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
     }
 
     /**
-     * When is this message supposed to be resent.
-     * 
-     * @see SerialDCCppPacketizer
+     * When is this message supposed to be resent?
      */
     private long expireTime;
 

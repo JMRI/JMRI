@@ -8,31 +8,34 @@
 # Group (macro) checks - some still need to be sorted out
 #
 -warn:+hiding
+  # about 200 cases of members hiding superclass members
 -warn:-fieldHiding
+  # very large number of places where parameters are named for members
 -warn:-localHiding 
 -warn:+typeHiding
 
 -warn:-allJavadoc
 -warn:-javadoc
 
-# 57 warnings in source plus 9 in tests with next line on
 -warn:+invalidJavadoc
 -warn:+invalidJavadocTag
 -warn:+invalidJavadocTagDep
 -warn:+invalidJavadocTagNotVisible
 
 -warn:-missingJavadocTags
--warn:-missingJavadocTagsMethod
--warn:-missingJavadocTagsOverriding
+-warn:+missingJavadocTagsMethod
+-warn:+missingJavadocTagsOverriding
 
 -warn:-missingJavadocComments
 -warn:-missingJavadocCommentsOverriding
 
 -warn:+static-access
+  # This tags Turnout.INCONSISTENT in favor of NamedBean.INCONSISTENT
 -warn:-indirectStatic 
 -warn:+staticReceiver
 
 -warn:+unused
+  # This tags valid "new jmri.util.WaitHandler(this);" constructs
 -warn:-unusedAllocation
 -warn:-unusedImport
 -warn:+unusedLabel
@@ -46,8 +49,9 @@
 -warn:+unusedThrownIncludeDocComment
 -warn:+unusedThrownExemptExceptionThrowable
 -warn:+unusedThrownWhenOverriding
+  # This tags 800+ of form List<FileMeta> files = new LinkedList<FileMeta>(); 
 -warn:-unusedTypeArgs
--warn:-unusedTypeParameter
+-warn:+unusedTypeParameter
 
 
 #

@@ -61,7 +61,6 @@ public class PositionableLabel extends JLabel implements Positionable {
     private int _degrees;
 
     /**
-     * {@inheritDoc}
      *
      * @param editor where this label is displayed
      */

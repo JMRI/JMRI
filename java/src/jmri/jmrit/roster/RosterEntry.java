@@ -1363,7 +1363,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      * Ultra compact list view of roster entries.
      * Shows text from fields as initially visible in the Roster frame table.
      *
-     * Header is created in {@link PrintListAction#actionPerformed(ActionEvent)}
+     * Header is created in {@link PrintListAction#actionPerformed(java.awt.event.ActionEvent)}
      * so keep column widths identical with values of colWidth below.
      *
      * @param w writer providing output
