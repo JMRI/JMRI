@@ -27,6 +27,7 @@ import jmri.server.json.JsonException;
 import jmri.server.json.JsonMockConnection;
 import jmri.util.FileUtil;
 import jmri.util.JUnitUtil;
+import jmri.util.ThreadingUtil;
 import jmri.web.server.WebServerPreferences;
 
 /**
@@ -131,8 +132,8 @@ public class JsonUtilSocketServiceTest {
         Assert.assertNotNull("Message is not null", message);
         Assert.assertTrue("Message is array", message.isArray());
         Assert.assertEquals("Array has one element", 1, message.size());
-        editor.getTargetFrame().dispose();
-        editor.dispose();
+        JUnitUtil.dispose(editor.getTargetFrame());
+        JUnitUtil.dispose(editor);
     }
     
     /**
@@ -198,10 +199,10 @@ public class JsonUtilSocketServiceTest {
         JsonNode message = connection.getMessage();
         Assert.assertNotNull("Message is not null", message);
         Assert.assertTrue("Message is array", message.isArray());
-        System.out.println(message.toString());
+        log.error(message.toString());
         Assert.assertEquals("Array has one element", 1, message.size());
-        editor.getTargetFrame().dispose();
-        editor.dispose();
+        JUnitUtil.dispose(editor.getTargetFrame());
+        JUnitUtil.dispose(editor);
     }
 
     
