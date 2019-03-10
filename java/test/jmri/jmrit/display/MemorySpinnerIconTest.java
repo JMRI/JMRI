@@ -86,8 +86,7 @@ public class MemorySpinnerIconTest extends PositionableJPanelTest {
     @Override
     @Before
     public void setUp() {
-        JUnitUtil.setUp();
-        JUnitUtil.resetProfileManager();
+        super.setUp();
         jmri.InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
         if (!GraphicsEnvironment.isHeadless()) {
             editor = new jmri.jmrit.display.panelEditor.PanelEditor("Test MemorySpinnerIcon Panel");
@@ -99,14 +98,13 @@ public class MemorySpinnerIconTest extends PositionableJPanelTest {
     @Override
     @After
     public void tearDown() {
-        super.tearDown();
         tos1 = null;
         tos2 = null;
         tos3 = null;
         toi1 = null;
         toi2 = null;
         toi3 = null;
-        JUnitUtil.tearDown();
+        super.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(TurnoutIconTest.class);
