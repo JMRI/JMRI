@@ -79,7 +79,7 @@ public class TimeTableFrameTest {
         new JButtonOperator(_jfo, Bundle.getMessage("AddLayoutButtonText")).doClick();  // NOI18N
         _jtxt = new JTextFieldOperator(_jfo, 0);
         _jtxt.clickMouse();
-        _jtxt.setText("Test Layout");  // NOI18N
+        _jtxt.setText("Time Table Frame Test Layout");  // NOI18N
         _jtxt = new JTextFieldOperator(_jfo, 1);
         _jtxt.clickMouse();
         _jtxt.setText("6");
@@ -90,7 +90,7 @@ public class TimeTableFrameTest {
         new JButtonOperator(_jfo, Bundle.getMessage("ButtonUpdate")).doClick();  // NOI18N
 
         // Add a train type
-        _jto.clickOnPath(_jto.findPath(new String[]{"Test Layout", "Train Types"}));  // NOI18N
+        _jto.clickOnPath(_jto.findPath(new String[]{"Time Table Frame Test Layout", "Train Types"}));  // NOI18N
         new JButtonOperator(_jfo, Bundle.getMessage("AddTrainTypeButtonText")).doClick();  // NOI18N
         _jtxt = new JTextFieldOperator(_jfo, 0);
         _jtxt.clickMouse();
@@ -98,7 +98,7 @@ public class TimeTableFrameTest {
         new JButtonOperator(_jfo, Bundle.getMessage("ButtonUpdate")).doClick();  // NOI18N
 
         // Add a segment
-        _jto.clickOnPath(_jto.findPath(new String[]{"Test Layout", "Segments"}));  // NOI18N
+        _jto.clickOnPath(_jto.findPath(new String[]{"Time Table Frame Test Layout", "Segments"}));  // NOI18N
         new JButtonOperator(_jfo, Bundle.getMessage("AddSegmentButtonText")).doClick();  // NOI18N
         _jtxt = new JTextFieldOperator(_jfo, 0);
         _jtxt.clickMouse();
@@ -106,7 +106,7 @@ public class TimeTableFrameTest {
         new JButtonOperator(_jfo, Bundle.getMessage("ButtonUpdate")).doClick();  // NOI18N
 
         // Add a station 1
-        _jto.clickOnPath(_jto.findPath(new String[]{"Test Layout", "Segments", "Mainline"}));  // NOI18N
+        _jto.clickOnPath(_jto.findPath(new String[]{"Time Table Frame Test Layout", "Segments", "Mainline"}));  // NOI18N
         new JButtonOperator(_jfo, Bundle.getMessage("AddStationButtonText")).doClick();  // NOI18N
         _jtxt = new JTextFieldOperator(_jfo, 0);
         _jtxt.clickMouse();
@@ -120,7 +120,7 @@ public class TimeTableFrameTest {
         new JButtonOperator(_jfo, Bundle.getMessage("ButtonUpdate")).doClick();  // NOI18N
 
         // Add a station 2
-        _jto.clickOnPath(_jto.findPath(new String[]{"Test Layout", "Segments", "Mainline"}));  // NOI18N
+        _jto.clickOnPath(_jto.findPath(new String[]{"Time Table Frame Test Layout", "Segments", "Mainline"}));  // NOI18N
         new JButtonOperator(_jfo, Bundle.getMessage("AddStationButtonText")).doClick();  // NOI18N
         _jtxt = new JTextFieldOperator(_jfo, 0);
         _jtxt.clickMouse();
@@ -131,7 +131,7 @@ public class TimeTableFrameTest {
         new JButtonOperator(_jfo, Bundle.getMessage("ButtonUpdate")).doClick();  // NOI18N
 
         // Add a schedule
-        _jto.clickOnPath(_jto.findPath(new String[]{"Test Layout", "Schedules"}));  // NOI18N
+        _jto.clickOnPath(_jto.findPath(new String[]{"Time Table Frame Test Layout", "Schedules"}));  // NOI18N
         new JButtonOperator(_jfo, Bundle.getMessage("AddScheduleButtonText")).doClick();  // NOI18N
         _jtxt = new JTextFieldOperator(_jfo, 0);
         _jtxt.clickMouse();
@@ -144,7 +144,7 @@ public class TimeTableFrameTest {
         new JButtonOperator(_jfo, Bundle.getMessage("ButtonUpdate")).doClick();  // NOI18N
 
         // Add a train
-        _jto.clickOnPath(_jto.findPath(new String[]{"Test Layout", "Schedules",  // NOI18N
+        _jto.clickOnPath(_jto.findPath(new String[]{"Time Table Frame Test Layout", "Schedules",  // NOI18N
                 "Test Schedule   Effective Date: Today"}));  // NOI18N
         new JButtonOperator(_jfo, Bundle.getMessage("AddTrainButtonText")).doClick();  // NOI18N
         _jtxt = new JTextFieldOperator(_jfo, 0);
@@ -170,7 +170,7 @@ public class TimeTableFrameTest {
         new JButtonOperator(_jfo, Bundle.getMessage("ButtonUpdate")).doClick();  // NOI18N
 
         // Add stop 2
-        _jto.clickOnPath(_jto.findPath(new String[]{"Test Layout", "Schedules",  // NOI18N
+        _jto.clickOnPath(_jto.findPath(new String[]{"Time Table Frame Test Layout", "Schedules",  // NOI18N
                 "Test Schedule   Effective Date: Today", "TRN -- Test Train"}));  // NOI18N
         new JButtonOperator(_jfo, Bundle.getMessage("AddStopButtonText")).doClick();  // NOI18N
         new JComboBoxOperator(_jfo, 0).selectItem("Station 2");  // NOI18N
