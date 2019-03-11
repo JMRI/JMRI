@@ -30,8 +30,6 @@ public class FrmTRL extends javax.swing.JFrame {
     private final CheckJMRIObject _mCheckJMRIObject;
     private final FrmMainForm _mMainForm;
 
-    private boolean _mRulesFormOpen = false;
-    
     private void initOrig() {
     }
     private boolean dataChanged() {
@@ -207,8 +205,8 @@ public class FrmTRL extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosing
 
     private void _mEditLeftTrafficLockingRulesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mEditLeftTrafficLockingRulesActionPerformed
-        if (_mRulesFormOpen) return;
-        _mRulesFormOpen = true;
+        if (_mMainForm._mTRL_RulesFormOpen) return;
+        _mMainForm._mTRL_RulesFormOpen = true;
         FrmTRL_Rules dialog = new FrmTRL_Rules( _mAwtWindowProperties, _mCodeButtonHandlerData,
                                                 true, _mCTCSerialData, _mCheckJMRIObject);
         dialog.addWindowListener(new WindowAdapter() {
@@ -218,15 +216,15 @@ public class FrmTRL extends javax.swing.JFrame {
                     _mClosedNormally = true;
                     updateRuleCounts();
                 }
-                _mRulesFormOpen = false;
+                _mMainForm._mTRL_RulesFormOpen = false;
             }
         });
         dialog.setVisible(true);  // MUST BE AFTER "addWindowListener"!  BUG IN AWT/SWING!
     }//GEN-LAST:event__mEditLeftTrafficLockingRulesActionPerformed
 
     private void _mEditRightTrafficLockingRulesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mEditRightTrafficLockingRulesActionPerformed
-        if (_mRulesFormOpen) return;
-        _mRulesFormOpen = true;
+        if (_mMainForm._mTRL_RulesFormOpen) return;
+        _mMainForm._mTRL_RulesFormOpen = true;
         FrmTRL_Rules dialog = new FrmTRL_Rules( _mAwtWindowProperties, _mCodeButtonHandlerData,
                                                 false, _mCTCSerialData, _mCheckJMRIObject);
         dialog.addWindowListener(new WindowAdapter() {
@@ -236,7 +234,7 @@ public class FrmTRL extends javax.swing.JFrame {
                     _mClosedNormally = true;
                     updateRuleCounts();
                 }
-                _mRulesFormOpen = false;
+                _mMainForm._mTRL_RulesFormOpen = false;
             }
         });
         dialog.setVisible(true);  // MUST BE AFTER "addWindowListener"!  BUG IN AWT/SWING!

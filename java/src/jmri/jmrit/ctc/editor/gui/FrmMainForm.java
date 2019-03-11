@@ -67,7 +67,8 @@ public class FrmMainForm extends JFrame {
     private CheckJMRIObject _mCheckJMRIObject;
 
     public boolean _mPanelLoaded = false;
-    private boolean _mSubFormOpen = false;
+    private boolean _mAnySubFormOpen = false;   // For any BUT FrmTRL_Rules
+    public boolean _mTRL_RulesFormOpen = false; // for ONLY FrmTRL_Rules
 
     @SuppressWarnings("LeakingThisInConstructor")   // NOI18N   Lazy, since this is NOT a multi-threaded program.
     public FrmMainForm() {
@@ -683,8 +684,8 @@ public class FrmMainForm extends JFrame {
     }
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
-        if (_mSubFormOpen) return;
-        _mSubFormOpen = true;
+        if (_mAnySubFormOpen) return;
+        _mAnySubFormOpen = true;
 //  Pre-scan and find the highest switch number used so far, and highest column number:
         int highestSwitchNumber = _mCTCSerialData.findHighestSwitchNumberUsedSoFar();
         int highestColumnNumber = _mCTCSerialData.findHighestColumnNumberUsedSoFar();
@@ -698,7 +699,7 @@ public class FrmMainForm extends JFrame {
                     internalSensorManager.checkForChanges(_mCTCSerialData);
                     _mColumns.updateFrame();
                 }
-                _mSubFormOpen = false;
+                _mAnySubFormOpen = false;
             }
         });
         dialog.setVisible(true);  // MUST BE AFTER "addWindowListener"!  BUG IN AWT/SWING!
@@ -765,8 +766,8 @@ public class FrmMainForm extends JFrame {
     }//GEN-LAST:event__mIL_EnabledActionPerformed
 
     private void _mEdit_SIDIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mEdit_SIDIActionPerformed
-        if (_mSubFormOpen) return;
-        _mSubFormOpen = true;
+        if (_mAnySubFormOpen) return;
+        _mAnySubFormOpen = true;
         InternalSensorManager internalSensorManager = new InternalSensorManager(_mCTCSerialData);
         FrmSIDI dialog = new FrmSIDI(    _mAwtWindowProperties, _mColumns.getSelectedCodeButtonHandlerData(), _mProgramProperties, _mCheckJMRIObject,
                                          _mCTCSerialData.getOtherData()._mSignalSystemType == OtherData.SIGNAL_SYSTEM_TYPE.SIGNALHEAD);
@@ -777,15 +778,15 @@ public class FrmMainForm extends JFrame {
                     internalSensorManager.checkForChanges(_mCTCSerialData);
                     _mColumns.updateFrame();
                 }
-                _mSubFormOpen = false;
+                _mAnySubFormOpen = false;
             }
         });
         dialog.setVisible(true);
     }//GEN-LAST:event__mEdit_SIDIActionPerformed
 
     private void _mEdit_SIDLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mEdit_SIDLActionPerformed
-        if (_mSubFormOpen) return;
-        _mSubFormOpen = true;
+        if (_mAnySubFormOpen) return;
+        _mAnySubFormOpen = true;
         InternalSensorManager internalSensorManager = new InternalSensorManager(_mCTCSerialData);
         FrmSIDL dialog = new FrmSIDL(_mAwtWindowProperties, _mColumns.getSelectedCodeButtonHandlerData(), _mProgramProperties, _mCheckJMRIObject);
         dialog.addWindowListener(new WindowAdapter() {
@@ -795,15 +796,15 @@ public class FrmMainForm extends JFrame {
                     internalSensorManager.checkForChanges(_mCTCSerialData);
                     _mColumns.updateFrame();
                 }
-                _mSubFormOpen = false;
+                _mAnySubFormOpen = false;
             }
         });
         dialog.setVisible(true);  // MUST BE AFTER "addWindowListener"!  BUG IN AWT/SWING!
     }//GEN-LAST:event__mEdit_SIDLActionPerformed
 
     private void _mEdit_SWDIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mEdit_SWDIActionPerformed
-        if (_mSubFormOpen) return;
-        _mSubFormOpen = true;
+        if (_mAnySubFormOpen) return;
+        _mAnySubFormOpen = true;
         InternalSensorManager internalSensorManager = new InternalSensorManager(_mCTCSerialData);
         FrmSWDI dialog = new FrmSWDI(_mAwtWindowProperties, _mColumns.getSelectedCodeButtonHandlerData(), _mProgramProperties, _mCheckJMRIObject);
         dialog.addWindowListener(new WindowAdapter() {
@@ -813,15 +814,15 @@ public class FrmMainForm extends JFrame {
                     internalSensorManager.checkForChanges(_mCTCSerialData);
                     _mColumns.updateFrame();
                 }
-                _mSubFormOpen = false;
+                _mAnySubFormOpen = false;
             }
         });
         dialog.setVisible(true);  // MUST BE AFTER "addWindowListener"!  BUG IN AWT/SWING!
     }//GEN-LAST:event__mEdit_SWDIActionPerformed
 
     private void _mEdit_SWDLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mEdit_SWDLActionPerformed
-        if (_mSubFormOpen) return;
-        _mSubFormOpen = true;
+        if (_mAnySubFormOpen) return;
+        _mAnySubFormOpen = true;
         InternalSensorManager internalSensorManager = new InternalSensorManager(_mCTCSerialData);
         FrmSWDL dialog = new FrmSWDL(_mAwtWindowProperties, _mColumns.getSelectedCodeButtonHandlerData(), _mProgramProperties, _mCheckJMRIObject);
         dialog.addWindowListener(new WindowAdapter() {
@@ -831,15 +832,15 @@ public class FrmMainForm extends JFrame {
                     internalSensorManager.checkForChanges(_mCTCSerialData);
                     _mColumns.updateFrame();
                 }
-                _mSubFormOpen = false;
+                _mAnySubFormOpen = false;
             }
         });
         dialog.setVisible(true);  // MUST BE AFTER "addWindowListener"!  BUG IN AWT/SWING!
     }//GEN-LAST:event__mEdit_SWDLActionPerformed
 
     private void _mEdit_COActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mEdit_COActionPerformed
-        if (_mSubFormOpen) return;
-        _mSubFormOpen = true;
+        if (_mAnySubFormOpen) return;
+        _mAnySubFormOpen = true;
         InternalSensorManager internalSensorManager = new InternalSensorManager(_mCTCSerialData);
         FrmCO dialog = new FrmCO(   _mAwtWindowProperties, _mColumns.getSelectedCodeButtonHandlerData(),
                                     _mProgramProperties, _mCTCSerialData, _mCheckJMRIObject,
@@ -851,15 +852,15 @@ public class FrmMainForm extends JFrame {
                     internalSensorManager.checkForChanges(_mCTCSerialData);
                     _mColumns.updateFrame();
                 }
-                _mSubFormOpen = false;
+                _mAnySubFormOpen = false;
             }
         });
         dialog.setVisible(true);  // MUST BE AFTER "addWindowListener"!  BUG IN AWT/SWING!
     }//GEN-LAST:event__mEdit_COActionPerformed
 
     private void _mEdit_TULActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mEdit_TULActionPerformed
-        if (_mSubFormOpen) return;
-        _mSubFormOpen = true;
+        if (_mAnySubFormOpen) return;
+        _mAnySubFormOpen = true;
         InternalSensorManager internalSensorManager = new InternalSensorManager(_mCTCSerialData);
         FrmTUL dialog = new FrmTUL(_mAwtWindowProperties, _mColumns.getSelectedCodeButtonHandlerData(), _mProgramProperties, _mCheckJMRIObject);
         dialog.addWindowListener(new WindowAdapter() {
@@ -869,15 +870,15 @@ public class FrmMainForm extends JFrame {
                     internalSensorManager.checkForChanges(_mCTCSerialData);
                     _mColumns.updateFrame();
                 }
-                _mSubFormOpen = false;
+                _mAnySubFormOpen = false;
             }
         });
         dialog.setVisible(true);  // MUST BE AFTER "addWindowListener"!  BUG IN AWT/SWING!
     }//GEN-LAST:event__mEdit_TULActionPerformed
 
     private void _mEdit_ILActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mEdit_ILActionPerformed
-        if (_mSubFormOpen) return;
-        _mSubFormOpen = true;
+        if (_mAnySubFormOpen) return;
+        _mAnySubFormOpen = true;
         InternalSensorManager internalSensorManager = new InternalSensorManager(_mCTCSerialData);
         FrmIL dialog = new FrmIL(   _mAwtWindowProperties, _mColumns.getSelectedCodeButtonHandlerData(), _mCheckJMRIObject,
                                      _mCTCSerialData.getOtherData()._mSignalSystemType == OtherData.SIGNAL_SYSTEM_TYPE.SIGNALHEAD);
@@ -888,7 +889,7 @@ public class FrmMainForm extends JFrame {
                     internalSensorManager.checkForChanges(_mCTCSerialData);
                     _mColumns.updateFrame();
                 }
-                _mSubFormOpen = false;
+                _mAnySubFormOpen = false;
             }
         });
         dialog.setVisible(true);  // MUST BE AFTER "addWindowListener"!  BUG IN AWT/SWING!
@@ -908,8 +909,8 @@ public class FrmMainForm extends JFrame {
     }//GEN-LAST:event__mTRL_EnabledActionPerformed
 
     private void _mEdit_TRLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mEdit_TRLActionPerformed
-        if (_mSubFormOpen) return;
-        _mSubFormOpen = true;
+        if (_mAnySubFormOpen) return;
+        _mAnySubFormOpen = true;
         CodeButtonHandlerData codeButtonHandlerDataSelected = _mColumns.getSelectedCodeButtonHandlerData();
         InternalSensorManager internalSensorManager = new InternalSensorManager(_mCTCSerialData);
         FrmTRL dialog = new FrmTRL( _mAwtWindowProperties, codeButtonHandlerDataSelected,
@@ -921,15 +922,15 @@ public class FrmMainForm extends JFrame {
                     internalSensorManager.checkForChanges(_mCTCSerialData);
                     _mColumns.updateFrame();
                 }
-                _mSubFormOpen = false;
+                _mAnySubFormOpen = false;
             }
         });
         dialog.setVisible(true);  // MUST BE AFTER "addWindowListener"!  BUG IN AWT/SWING!
     }//GEN-LAST:event__mEdit_TRLActionPerformed
 
     private void _mEdit_CBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mEdit_CBActionPerformed
-        if (_mSubFormOpen) return;
-        _mSubFormOpen = true;
+        if (_mAnySubFormOpen) return;
+        _mAnySubFormOpen = true;
         InternalSensorManager internalSensorManager = new InternalSensorManager(_mCTCSerialData);
         FrmCB dialog = new FrmCB(   _mAwtWindowProperties, _mColumns.getSelectedCodeButtonHandlerData(),
                                     _mProgramProperties, _mCTCSerialData, _mCheckJMRIObject);
@@ -940,15 +941,15 @@ public class FrmMainForm extends JFrame {
                     internalSensorManager.checkForChanges(_mCTCSerialData);
                     _mColumns.updateFrame();
                 }
-                _mSubFormOpen = false;
+                _mAnySubFormOpen = false;
             }
         });
         dialog.setVisible(true);  // MUST BE AFTER "addWindowListener"!  BUG IN AWT/SWING!
     }//GEN-LAST:event__mEdit_CBActionPerformed
 
     private void changeNumbersButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeNumbersButtonActionPerformed
-        if (_mSubFormOpen) return;
-        _mSubFormOpen = true;
+        if (_mAnySubFormOpen) return;
+        _mAnySubFormOpen = true;
         CodeButtonHandlerData temp = _mColumns.getSelectedCodeButtonHandlerData();
         InternalSensorManager internalSensorManager = new InternalSensorManager(_mCTCSerialData);
         FrmAddModifyCTCColumn dialog = new FrmAddModifyCTCColumn(_mAwtWindowProperties, _mColumns, true, temp._mSwitchNumber, temp._mGUIColumnNumber, temp._mGUIGeneratedAtLeastOnceAlready);
@@ -960,7 +961,7 @@ public class FrmMainForm extends JFrame {
                     internalSensorManager.checkForChanges(_mCTCSerialData);
                     _mColumns.updateFrame();
                 }
-                _mSubFormOpen = false;
+                _mAnySubFormOpen = false;
             }
         });
         dialog.setVisible(true);    // MUST BE AFTER "addWindowListener"!  BUG IN AWT/SWING!
@@ -1015,79 +1016,79 @@ public class FrmMainForm extends JFrame {
     }
 
     private void _mFindAndReplaceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mFindAndReplaceActionPerformed
-        if (_mSubFormOpen) return;
-        _mSubFormOpen = true;
+        if (_mAnySubFormOpen) return;
+        _mAnySubFormOpen = true;
         FrmFindAndReplace dialog = new FrmFindAndReplace(_mAwtWindowProperties, _mCTCSerialData);
         InternalSensorManager.doDialog(dialog, _mCTCSerialData);
         dialog.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosed(WindowEvent e) {
-                _mSubFormOpen = false;
+                _mAnySubFormOpen = false;
             }
         });
     }//GEN-LAST:event__mFindAndReplaceActionPerformed
 
     private void _mFleetingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mFleetingActionPerformed
-        if (_mSubFormOpen) return;
-        _mSubFormOpen = true;
+        if (_mAnySubFormOpen) return;
+        _mAnySubFormOpen = true;
         FrmFleeting dialog = new FrmFleeting(_mAwtWindowProperties,  _mCTCSerialData.getOtherData());
         InternalSensorManager.doDialog(dialog, _mCTCSerialData);
         dialog.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosed(WindowEvent e) {
-                _mSubFormOpen = false;
+                _mAnySubFormOpen = false;
             }
         });
     }//GEN-LAST:event__mFleetingActionPerformed
 
     private void _mPatternsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mPatternsActionPerformed
-        if (_mSubFormOpen) return;
-        _mSubFormOpen = true;
+        if (_mAnySubFormOpen) return;
+        _mAnySubFormOpen = true;
         FrmPatterns dialog = new FrmPatterns(_mAwtWindowProperties, _mProgramProperties);
         InternalSensorManager.doDialog(dialog, _mCTCSerialData);
         dialog.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosed(WindowEvent e) {
-                _mSubFormOpen = false;
+                _mAnySubFormOpen = false;
             }
         });
     }//GEN-LAST:event__mPatternsActionPerformed
 
     private void _mDefaultsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mDefaultsActionPerformed
-        if (_mSubFormOpen) return;
-        _mSubFormOpen = true;
+        if (_mAnySubFormOpen) return;
+        _mAnySubFormOpen = true;
         FrmDefaults dialog = new FrmDefaults(_mAwtWindowProperties, _mProgramProperties,  _mCTCSerialData.getOtherData());
         InternalSensorManager.doDialog(dialog, _mCTCSerialData);
         dialog.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosed(WindowEvent e) {
-                _mSubFormOpen = false;
+                _mAnySubFormOpen = false;
             }
         });
     }//GEN-LAST:event__mDefaultsActionPerformed
 
     private void _mDebuggingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mDebuggingActionPerformed
-        if (_mSubFormOpen) return;
-        _mSubFormOpen = true;
+        if (_mAnySubFormOpen) return;
+        _mAnySubFormOpen = true;
         FrmDebugging dialog = new FrmDebugging(_mAwtWindowProperties,  _mCTCSerialData.getOtherData());
         InternalSensorManager.doDialog(dialog, _mCTCSerialData);
         dialog.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosed(WindowEvent e) {
-                _mSubFormOpen = false;
+                _mAnySubFormOpen = false;
             }
         });
     }//GEN-LAST:event__mDebuggingActionPerformed
 
     private void _mGUIDesignActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mGUIDesignActionPerformed
-        if (_mSubFormOpen) return;
-        _mSubFormOpen = true;
+        if (_mAnySubFormOpen) return;
+        _mAnySubFormOpen = true;
         FrmGUIDesign dialog = new FrmGUIDesign(_mAwtWindowProperties,  _mCTCSerialData.getOtherData());
         InternalSensorManager.doDialog(dialog, _mCTCSerialData);
         dialog.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosed(WindowEvent e) {
-                _mSubFormOpen = false;
+                _mAnySubFormOpen = false;
             }
         });
     }//GEN-LAST:event__mGUIDesignActionPerformed
@@ -1123,27 +1124,27 @@ public class FrmMainForm extends JFrame {
     }//GEN-LAST:event__mQuitWithoutSavingActionPerformed
 
     private void _mFixErrorsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mFixErrorsActionPerformed
-        if (_mSubFormOpen) return;
-        _mSubFormOpen = true;
+        if (_mAnySubFormOpen) return;
+        _mAnySubFormOpen = true;
         FrmFixErrors dialog = new FrmFixErrors(_mAwtWindowProperties, _mColumns);
         InternalSensorManager.doDialog(dialog, _mCTCSerialData);
         dialog.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosed(WindowEvent e) {
-                _mSubFormOpen = false;
+                _mAnySubFormOpen = false;
             }
         });
     }//GEN-LAST:event__mFixErrorsActionPerformed
 
     private void _mHelpAboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event__mHelpAboutActionPerformed
-        if (_mSubFormOpen) return;
-        _mSubFormOpen = true;
+        if (_mAnySubFormOpen) return;
+        _mAnySubFormOpen = true;
         FrmAbout dialog = new FrmAbout(_mAwtWindowProperties);
         InternalSensorManager.doDialog(dialog, _mCTCSerialData);    // Technically don't modify anything, but for consistency
         dialog.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosed(WindowEvent e) {
-                _mSubFormOpen = false;
+                _mAnySubFormOpen = false;
             }
         });
     }//GEN-LAST:event__mHelpAboutActionPerformed
