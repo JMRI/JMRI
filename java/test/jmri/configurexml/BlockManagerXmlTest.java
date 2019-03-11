@@ -287,6 +287,7 @@ public class BlockManagerXmlTest {
             int expectedcentrepaths = expectedpreviouspaths[testblockfocus] + expectednextpaths[testblockfocus];
             Block focusBlock = blockstotest[testblockfocus];
             Memory expectedtestmemory = InstanceManager.memoryManagerInstance().getMemory("blocknorthmemory");
+            Assert.assertNotNull(expectedtestmemory);
             expectedtestmemory.setValue("Memory test: " + testblockfocus);
             Assert.assertNotNull(expectedtestmemory);
 // TODO: BOB C: Memory Test
@@ -330,6 +331,8 @@ public class BlockManagerXmlTest {
     /**
      * This test checks that the store operation runs, but doesn't check the
      * output for correctness.
+     * 
+     * @throws jmri.JmriException if unanticipated exception is thrown
      */
     @Test
     public void testStore() throws jmri.JmriException {
@@ -344,7 +347,7 @@ public class BlockManagerXmlTest {
         Block b1 = InstanceManager.getDefault(jmri.BlockManager.class).createNewBlock("SystemNameb1", "");
 
         Block b2 = InstanceManager.getDefault(jmri.BlockManager.class).createNewBlock("SystemNameb2", "");
-
+        Assert.assertNotNull(b2);
         Sensor s2 = new AbstractSensor("IS2") {
             @Override
             public void requestUpdateFromLayout() {

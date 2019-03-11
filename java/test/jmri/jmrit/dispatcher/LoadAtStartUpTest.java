@@ -7,7 +7,6 @@ import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.SignalMastManager;
 import jmri.ThrottleManager;
-import jmri.jmrix.debugthrottle.DebugThrottleManager;
 import jmri.util.FileUtilSupport;
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -44,8 +43,7 @@ public class LoadAtStartUpTest {
         JFrameOperator dw = new JFrameOperator(Bundle.getMessage("TitleDispatcher"));
         FileUtilSupport.getDefault().setUserFilesPath("java/test/jmri/jmrit");
         // we need a throttle manager
-        ThrottleManager m = new DebugThrottleManager();
-        InstanceManager.setThrottleManager(m);
+        ThrottleManager m = InstanceManager.getDefault(ThrottleManager.class);
         // signal mast manager
         SignalMastManager smm = InstanceManager.getDefault(SignalMastManager.class);
 
@@ -177,23 +175,17 @@ public class LoadAtStartUpTest {
         JUnitUtil.dispose(d);
     }
 
-    protected void setThrottleManager() {
-        ThrottleManager m = new DebugThrottleManager();
-        InstanceManager.setThrottleManager(m);
-        return;
-    }
-
     @Before
     public void setUp() throws Exception {
         JUnitUtil.setUp();
-
         JUnitUtil.resetProfileManager();
-        jmri.util.JUnitUtil.resetInstanceManager();
-
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.initDebugThrottleManager();
     }
 
     @After
     public void tearDown() throws Exception {
+        JUnitUtil.resetFileUtilSupport();
         JUnitUtil.tearDown();
     }
 }
