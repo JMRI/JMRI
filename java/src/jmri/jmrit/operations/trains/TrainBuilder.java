@@ -2690,7 +2690,7 @@ public class TrainBuilder extends TrainCommon {
      * 
      * @param rs The rolling stock
      * @param rl The rolling stock's route location
-     * @return
+     * @@return true if there isn't a problem
      */
     private boolean checkPickUpTrainDirection(RollingStock rs, RouteLocation rl) {
         // check that car or engine is located on a track (Code Check, rs should always have a track assignment)
@@ -3856,10 +3856,9 @@ public class TrainBuilder extends TrainCommon {
     /**
      * Checks for a car's final destination, and then after checking, tries to
      * route the car to that destination.
-     * 
+     *
      * @param car
      * @return false if car needs destination processing.
-     * @throws BuildFailedException
      */
     private boolean checkCarForFinalDestination(Car car) {
         if (car.getFinalDestination() == null || car.getDestination() != null) {

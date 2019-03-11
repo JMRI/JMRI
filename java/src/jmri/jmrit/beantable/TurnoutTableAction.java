@@ -866,10 +866,8 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
              * Visualize state in table as a graphic, customized for Turnouts (4
              * states). Renderer and Editor are identical, as the cell contents
              * are not actually edited, only used to toggle state using
-             * {@link #clickOn(NamedBean)}.
+             * {@link #clickOn(Turnout)}.
              *
-             * @see
-             * jmri.jmrit.beantable.sensor.SensorTableDataModel.ImageIconRenderer
              * @see jmri.jmrit.beantable.BlockTableAction#createModel()
              * @see jmri.jmrit.beantable.LightTableAction#createModel()
              */
