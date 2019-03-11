@@ -115,6 +115,113 @@ public class DefaultCabSignalTest {
         });
 
         Block b1 = bm.provideBlock("MainlineBlock");
+        // set the block contents to a railcom address for our locomotive.
+        b1.setValue(new DefaultRailCom("ID1234","Test Tag"));
+
+        // setup the cab signal.
+
+        DefaultCabSignal cs = new DefaultCabSignal(new DccLocoAddress(1234,true));
+        // get the initial block for the cab signal.
+        cs.setBlock();
+
+        // and verify getBlock returns the block we set.
+        checkBlock(cs,"MainlineBlock","EastTurnoutOSBlock","IF$vsm:AAR-1946:PL-1-high-abs($0005)");
+        moveBlock("Mainline","EastTurnoutOS");
+        checkBlock(cs,"EastTurnoutOSBlock","East1Block","IF$vsm:AAR-1946:PL-1-high-pbs($0002)");
+        moveBlock("EastTurnoutOS","East1");
+        checkBlock(cs,"East1Block","East2Block","IF$vsm:AAR-1946:PL-1-high-pbs($0002)");
+        moveBlock("East1","East2");
+        checkBlock(cs,"East2Block","","");
+
+        moveBlock("East2","West2");
+        checkBlock(cs,"West2Block","","");
+        moveBlock("West2","West1");
+        checkBlock(cs,"West1Block","WestTurnoutOSBlock","IF$vsm:AAR-1946:SL-2-high-abs($0008)");
+        moveBlock("West1","WestTurnoutOS");
+        checkBlock(cs,"WestTurnoutOSBlock","MainlineBlock","IF$vsm:AAR-1946:PL-1-high-abs($0005)");
+        moveBlock("WestTurnoutOS","Mainline");
+        checkBlock(cs,"MainlineBlock","EastTurnoutOSBlock","IF$vsm:AAR-1946:PL-1-high-abs($0005)");
+
+        //throw the turnout behind the train.
+        ThreadingUtil.runOnLayout( ()-> { 
+             try{
+              tm.provideTurnout("WestTurnout").setState(Turnout.THROWN);
+             } catch (JmriException je) {
+             }
+        });
+        // and verify the state does not change.
+        checkBlock(cs,"MainlineBlock","EastTurnoutOSBlock","IF$vsm:AAR-1946:PL-1-high-abs($0005)");
+
+        // throw the turnout in front of the train
+        ThreadingUtil.runOnLayout( ()-> { 
+             try{
+              tm.provideTurnout("EastTurnout").setState(Turnout.THROWN);
+             } catch (JmriException je) {
+             }
+        });
+        // and verify the state changes.
+        checkBlock(cs,"MainlineBlock","","");
+        
+        cs.dispose(); // verify no exceptions
+
+        // and close the editor window
+        to.closeFrameWithConfirmations();
+
+    }
+
+    @Test
+    public void testSignalSequenceRailCom() throws jmri.JmriException {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        // load and display test panel file
+        InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).setStabilisedSensor("IS_ROUTING_DONE");
+
+        java.io.File f = new java.io.File("java/test/jmri/jmrit/cabsignals/SimpleCabSignalTestPanel.xml");
+        InstanceManager.getDefault(jmri.ConfigureManager.class).load(f);
+
+        // Find new window by name (should be more distinctive, comes from sample file)
+        EditorFrameOperator to = new EditorFrameOperator("Cab Signal Test");
+        LayoutEditor le = (LayoutEditor) jmri.util.JmriJFrame.getFrame("Cab Signal Test");
+        InstanceManager.getDefault(jmri.jmrit.display.PanelMenu.class).addEditorPanel(le);
+        jmri.SignalMastLogicManager smlm = InstanceManager.getDefault(jmri.SignalMastLogicManager.class);
+        smlm.initialise();
+        for(jmri.SignalMastLogic sml:smlm.getSignalMastLogicList()) {
+            sml.setupLayoutEditorDetails();
+        }
+
+        // Panel is up, continue set up for tests.
+        ConnectivityUtil cu = new ConnectivityUtil(le);
+        Assert.assertNotNull("connectivity util",cu);
+
+        InstanceManager.getDefault(jmri.LogixManager.class).activateAllLogixs();
+        // make sure the block paths are initialized.
+        InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
+        JUnitUtil.waitFor(() -> {
+            return InstanceManager.sensorManagerInstance().provideSensor("IS_ROUTING_DONE").getKnownState() == jmri.Sensor.ACTIVE;
+        },
+                "LayoutEditor stabilized sensor went ACTIVE");
+        
+        BlockManager bm = InstanceManager.getDefault(jmri.BlockManager.class);
+        SensorManager sm = InstanceManager.getDefault(jmri.SensorManager.class);
+        TurnoutManager tm = InstanceManager.getDefault(jmri.TurnoutManager.class);
+
+        ThreadingUtil.runOnLayout( ()-> { 
+             try{
+                tm.provideTurnout("EastTurnout").setState(Turnout.CLOSED);
+                tm.provideTurnout("WestTurnout").setState(Turnout.CLOSED);
+
+                sm.provideSensor("Mainline").setState(Sensor.ACTIVE);
+                sm.provideSensor("Siding").setState(Sensor.ACTIVE);
+                sm.provideSensor("EastTurnoutOS").setState(Sensor.INACTIVE);
+                sm.provideSensor("East1").setState(Sensor.INACTIVE);
+                sm.provideSensor("East2").setState(Sensor.INACTIVE);
+                sm.provideSensor("WestTurnoutOS").setState(Sensor.INACTIVE);
+                sm.provideSensor("West1").setState(Sensor.INACTIVE);
+                sm.provideSensor("West2").setState(Sensor.INACTIVE);
+             } catch (JmriException je) {
+             }
+        });
+
+        Block b1 = bm.provideBlock("MainlineBlock");
         // set the block contents to our locomotive address.
         b1.setValue(new DccLocoAddress(1234,true));
 
@@ -168,6 +275,7 @@ public class DefaultCabSignalTest {
         to.closeFrameWithConfirmations();
 
     }
+
 
     private void moveBlock(String startingBlock,String endingBlock) {
         // use sensors to move to the next block.
