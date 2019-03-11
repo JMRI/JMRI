@@ -1,11 +1,8 @@
 package apps.tests;
 
-import org.junit.runner.JUnitCore;
-import org.junit.runner.Result;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
-import jmri.HeadLessTest;
 import jmri.util.junit.TestClassMainMethod;
 
 /**
@@ -24,7 +21,6 @@ import jmri.util.junit.TestClassMainMethod;
  *
  * @author Bob Jacobsen
  */
-
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
         jmri.PackageTest.class,
