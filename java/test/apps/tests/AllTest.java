@@ -5,6 +5,9 @@ import org.junit.runner.Result;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
+import jmri.HeadLessTest;
+import jmri.util.junit.TestClassMainMethod;
+
 /**
  * Invoke all the JMRI project JUnit tests via a GUI interface.
  *
@@ -37,9 +40,7 @@ public class AllTest {
     }
 
     static public void main(String[] args) {
-        // launch this class via JUnit4
-        Result result = JUnitCore.runClasses(AllTest.class);
-        System.exit(result.wasSuccessful() ? 0 : 1);
+        TestClassMainMethod.run(AllTest.class);
     }
 
 }
