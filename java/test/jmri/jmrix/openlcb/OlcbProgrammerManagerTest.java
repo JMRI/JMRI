@@ -1,51 +1,34 @@
 package jmri.jmrix.openlcb;
 
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Test;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Assert;
 
 /**
  * OlcbProgrammerManagerTest.java
  *
- * Description:	tests for the jmri.jmrix.openlcb.OlcbProgrammerManager class
+ * Description: tests for the jmri.jmrix.openlcb.OlcbProgrammerManager class
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
-public class OlcbProgrammerManagerTest extends TestCase {
+public class OlcbProgrammerManagerTest {
 
+    @Test
     public void testCtor() {
         new OlcbSystemConnectionMemo();
         OlcbProgrammerManager s = new OlcbProgrammerManager(new OlcbProgrammer());
         Assert.assertNotNull(s);
     }
 
-    // from here down is testing infrastructure
-    public OlcbProgrammerManagerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", OlcbProgrammerManagerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(OlcbProgrammerManagerTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    @Override
-    protected void setUp() {
+    @Before
+    public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 }

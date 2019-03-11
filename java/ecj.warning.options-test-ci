@@ -8,3 +8,6 @@
 
 -err:-allOver-ann
 -err:-over-ann
+
+  # We allocate objects to test that code can run OK
+-warn:-unusedAllocation

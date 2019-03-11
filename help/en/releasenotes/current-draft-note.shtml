@@ -1,6 +1,5 @@
 
     <h3>Hardware Support</h3>
-
         <ul>
           <li></li>
         </ul>
@@ -47,9 +46,7 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li>"PR3 Standalone Programmer" mode has been updated so that only one LocoNet menu will be displayed, instead of displaying two menus.</li>
-                <li>Digitrax connections now support PR4, DCS240 and DCS210 via uniquely named connection types. <span class="since">Since JMRI 4.15.4</span></li>
-                <li>Addresses a problem when track power status is changed on the DCS52 which can cause a JMRI code failure. <span class="since">Since JMRI 4.15.4</span></li>
+                <li></li>
             </ul>
 
         <h4>Maple</h4>
@@ -79,7 +76,7 @@
 
         <h4>NCE</h4>
             <ul>
-                <li><li>
+                <li></li>
             </ul>
 
         <h4>Oak Tree</h4>
@@ -99,7 +96,7 @@
 
         <h4>Roco z21/Z21</h4>
             <ul>
-                <li>Fixed Delay in throttle message processing</li>
+                <li><>/li>
             </ul>
 
         <h4>Secsi</h4>
@@ -138,9 +135,9 @@
             </ul>
 
     <h3>New / Updated decoder definitions</h3>
-      <ul>
-        <li></li>
-     </ul>
+        <ul>
+          <li></li>
+        </ul>
 
         <h4>Arnold</h4>
             <ul>
@@ -254,7 +251,7 @@
 
         <h4>SoundTraxx</h4>
             <ul>
-                <li>Michael Mosher fixed a bug in GP35 SP CV54</li>
+                <li></li>
             </ul>
 
         <h4>TCS</h4>
@@ -308,34 +305,31 @@
             </ul>
 
     <h3>DecoderPro</h3>
-    <a id="DecoderPro" name="DecoderPro"></a>
+        <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li>Decoder definitions for indexed-access CVs can now use a "81=23.40" syntax
-            to specify an alternate PI and/or SI CV. The previous syntax continues to
-            work unchanged.
-            </li>
+            <li></li>
         </ul>
 
    <h3>Dispatcher</h3>
-   <a id="Dispatcher" name="Dispatcher"></a>
+        <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
              <li></li>
         </ul>
 
    <h3>Internationalization</h3>
-   <a id="I18N" name="I18N"></a>
+        <a id="I18N" name="I18N"></a>
         <ul>
             <li></li>
         </ul>
 
     <h3>Layout Editor</h3>
-    <a id="LE" name="LE"></a>
+        <a id="LE" name="LE"></a>
         <ul>
 	        <li></li>
         </ul>
 
     <h3>Logix</h3>
-    <a id="Logix" name="Logix"></a>
+        <a id="Logix" name="Logix"></a>
         <ul>
           <li></li>
         </ul>
@@ -433,7 +427,7 @@
         </ul>
 
     <h3>Timetable</h3>
-    <a id="Timetable" name="Timetable"></a>
+        <a id="Timetable" name="Timetable"></a>
         <span class="since">since 4.13.4</span>
         <ul>
             <li></li>

@@ -16,9 +16,7 @@ import org.junit.Test;
  * @author Paul Bender Copyright (C) 2016
  * @author Egbert Broerse Copyright (C) 2017
  */
-public class SwitchboardEditorTest extends AbstractEditorTestBase {
-
-    private SwitchboardEditor swe = null;
+public class SwitchboardEditorTest extends AbstractEditorTestBase<SwitchboardEditor> {
 
     @Test
     public void testDefaultCtor() {
@@ -29,72 +27,72 @@ public class SwitchboardEditorTest extends AbstractEditorTestBase {
     @Test
     public void testStringCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertNotNull("exists", swe);
+        Assert.assertNotNull("exists", e);
     }
 
     @Test
     public void testIsDirty() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // defaults to false.
-        Assert.assertFalse("isDirty", swe.isDirty());
+        Assert.assertFalse("isDirty", e.isDirty());
     }
 
     @Test
     public void testSetDirty() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // defaults to false, setDirty() sets it to true.
-        swe.setDirty();
-        Assert.assertTrue("isDirty after set", swe.isDirty());
+        e.setDirty();
+        Assert.assertTrue("isDirty after set", e.isDirty());
     }
 
     @Test
     public void testSetDirtyWithParameter() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // defaults to false, so set it to true.
-        swe.setDirty(true);
-        Assert.assertTrue("isDirty after set", swe.isDirty());
+        e.setDirty(true);
+        Assert.assertTrue("isDirty after set", e.isDirty());
     }
 
     @Test
     public void testResetDirty() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // defaults to false, so set it to true.
-        swe.setDirty(true);
+        e.setDirty(true);
         // then call resetDirty, which sets it back to false.
-        swe.resetDirty();
-        Assert.assertFalse("isDirty after reset", swe.isDirty());
+        e.resetDirty();
+        Assert.assertFalse("isDirty after reset", e.isDirty());
     }
 
     @Test
     public void testGetDefaultTextColor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertEquals("Default Text Color", ColorUtil.ColorBlack, swe.getDefaultTextColor());
+        Assert.assertEquals("Default Text Color", ColorUtil.ColorBlack, e.getDefaultTextColor());
     }
 
     @Test
     public void testSetDefaultTextColor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        swe.setDefaultTextColor(ColorUtil.ColorPink);
-        Assert.assertEquals("Default Text Color after Set", ColorUtil.ColorPink, swe.getDefaultTextColor());
+        e.setDefaultTextColor(ColorUtil.ColorPink);
+        Assert.assertEquals("Default Text Color after Set", ColorUtil.ColorPink, e.getDefaultTextColor());
     }
 
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
         if (!GraphicsEnvironment.isHeadless()) {
-            jmri.util.JUnitUtil.resetProfileManager();
-            e = swe = new SwitchboardEditor("Test Layout");
+            e = new SwitchboardEditor("Switchboard Editor Test Layout");
         }
     }
 
     @After
     public void tearDown() {
-        if (swe != null) {
+        if (e != null) {
             // dispose on Swing thread
-            JUnitUtil.dispose(swe.getTargetFrame());
-            JUnitUtil.dispose(swe);
+            JUnitUtil.dispose(e.getTargetFrame());
+            JUnitUtil.dispose(e);
+            e = null;
         }
-        e = swe = null;
         JUnitUtil.tearDown();
     }
 

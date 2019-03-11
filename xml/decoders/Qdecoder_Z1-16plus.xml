@@ -34,7 +34,7 @@
         <output name="14" label="A13"/>
         <output name="15" label="A14"/>
         <output name="16" label="A15"/>
-			</model>
+	  </model>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>

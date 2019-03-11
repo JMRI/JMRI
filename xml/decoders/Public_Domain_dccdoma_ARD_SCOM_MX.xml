@@ -16,6 +16,7 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmptyPanes="no" >
     <version author="Petr Šídlo sidlo64@hotmail.com" version="1" lastUpdated="20181201"/>
     <version author="Petr Šídlo sidlo64@hotmail.com" version="2" lastUpdated="20190220"/>
+    <version author="Petr Šídlo sidlo64@hotmail.com" version="3" lastUpdated="20190305"/>
     <!-- Accessory decoder  -->
     <!-- Description of circuit diagram https://sites.google.com/site/sidloweb/elektrika/22-uni16ard -->
     <!-- Program description https://sites.google.com/site/sidloweb/elektrika/29-ard-scom-mx -->
@@ -24,7 +25,7 @@
     <decoder>
 
         <family name="dccdoma.cz" mfg="Public-domain and DIY" >
-            <model model="ARD-SCOM-MX" lowVersionID="10" highVersionID="19" productID="16843265" maxInputVolts="24V AC" maxTotalCurrent="1.0A peak 3.3A" numOuts="16" connector="other" />
+            <model model="ARD-SCOM-MX" lowVersionID="10" highVersionID="19" productID="16843265" maxInputVolts="24V AC" maxTotalCurrent="0.2A peak 3.3A" numOuts="16" connector="other" />
         </family>
     
         <programming direct="yes" paged="yes" register="no" ops="no" />
@@ -4049,7 +4050,6 @@
   	<column>
             
         <display item="Signal mast 0 Number of addresses" />
-        <display item="Signal mast 0 Signal set" />
         <display item="Signal mast 0 Default aspect" />
         <label>
             <text>    </text>
@@ -5086,7 +5086,6 @@
   	<column>
             
         <display item="Signal mast 1 Number of addresses" />
-        <display item="Signal mast 1 Signal set" />
         <display item="Signal mast 1 Default aspect" />
         <label>
             <text>    </text>
@@ -6122,7 +6121,6 @@
   	<column>
             
         <display item="Signal mast 2 Number of addresses" />
-        <display item="Signal mast 2 Signal set" />
         <display item="Signal mast 2 Default aspect" />
         <label>
             <text>    </text>
@@ -7158,7 +7156,6 @@
   	<column>
             
         <display item="Signal mast 3 Number of addresses" />
-        <display item="Signal mast 3 Signal set" />
         <display item="Signal mast 3 Default aspect" />
         <label>
             <text>    </text>
@@ -8194,7 +8191,6 @@
   	<column>
             
         <display item="Signal mast 4 Number of addresses" />
-        <display item="Signal mast 4 Signal set" />
         <display item="Signal mast 4 Default aspect" />
         <label>
             <text>    </text>
@@ -9230,7 +9226,6 @@
   	<column>
             
         <display item="Signal mast 5 Number of addresses" />
-        <display item="Signal mast 5 Signal set" />
         <display item="Signal mast 5 Default aspect" />
         <label>
             <text>    </text>
@@ -10266,7 +10261,6 @@
   	<column>
             
         <display item="Signal mast 6 Number of addresses" />
-        <display item="Signal mast 6 Signal set" />
         <display item="Signal mast 6 Default aspect" />
         <label>
             <text>    </text>
@@ -11302,7 +11296,6 @@
   	<column>
             
         <display item="Signal mast 7 Number of addresses" />
-        <display item="Signal mast 7 Signal set" />
         <display item="Signal mast 7 Default aspect" />
         <label>
             <text>    </text>
@@ -12338,7 +12331,6 @@
   	<column>
             
         <display item="Signal mast 8 Number of addresses" />
-        <display item="Signal mast 8 Signal set" />
         <display item="Signal mast 8 Default aspect" />
         <label>
             <text>    </text>
@@ -13374,7 +13366,6 @@
   	<column>
             
         <display item="Signal mast 9 Number of addresses" />
-        <display item="Signal mast 9 Signal set" />
         <display item="Signal mast 9 Default aspect" />
         <label>
             <text>    </text>
@@ -14410,7 +14401,6 @@
   	<column>
             
         <display item="Signal mast 10 Number of addresses" />
-        <display item="Signal mast 10 Signal set" />
         <display item="Signal mast 10 Default aspect" />
         <label>
             <text>    </text>
@@ -15447,7 +15437,6 @@
   	<column>
             
         <display item="Signal mast 11 Number of addresses" />
-        <display item="Signal mast 11 Signal set" />
         <display item="Signal mast 11 Default aspect" />
         <label>
             <text>    </text>
@@ -16483,7 +16472,6 @@
   	<column>
             
         <display item="Signal mast 12 Number of addresses" />
-        <display item="Signal mast 12 Signal set" />
         <display item="Signal mast 12 Default aspect" />
         <label>
             <text>    </text>
@@ -17519,7 +17507,6 @@
   	<column>
             
         <display item="Signal mast 13 Number of addresses" />
-        <display item="Signal mast 13 Signal set" />
         <display item="Signal mast 13 Default aspect" />
         <label>
             <text>    </text>
@@ -18555,7 +18542,6 @@
   	<column>
             
         <display item="Signal mast 14 Number of addresses" />
-        <display item="Signal mast 14 Signal set" />
         <display item="Signal mast 14 Default aspect" />
         <label>
             <text>    </text>
@@ -19591,7 +19577,6 @@
   	<column>
             
         <display item="Signal mast 15 Number of addresses" />
-        <display item="Signal mast 15 Signal set" />
         <display item="Signal mast 15 Default aspect" />
         <label>
             <text>    </text>

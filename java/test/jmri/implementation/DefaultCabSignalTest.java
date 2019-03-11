@@ -103,7 +103,7 @@ public class DefaultCabSignalTest {
                 tm.provideTurnout("WestTurnout").setState(Turnout.CLOSED);
 
                 sm.provideSensor("Mainline").setState(Sensor.ACTIVE);
-                sm.provideSensor("Siding").setState(Sensor.INACTIVE);
+                sm.provideSensor("Siding").setState(Sensor.ACTIVE);
                 sm.provideSensor("EastTurnoutOS").setState(Sensor.INACTIVE);
                 sm.provideSensor("East1").setState(Sensor.INACTIVE);
                 sm.provideSensor("East2").setState(Sensor.INACTIVE);
@@ -161,19 +161,12 @@ public class DefaultCabSignalTest {
         });
         // and verify the state changes.
         checkBlock(cs,"MainlineBlock","","");
+        
+        cs.dispose(); // verify no exceptions
 
         // and close the editor window
         to.closeFrameWithConfirmations();
 
-        cs.dispose(); // verify no exceptions
-
-        // We get some warnings and errors from the signal mast logic at this
-        // point.  It may be worth revisiting the signal mast choice used in
-        // the panel to eliminate these.
-        JUnitAppender.assertWarnMessage("attempting to set invalid aspect: Slow Clear on mast: East1ToEastTurnout");
-        JUnitAppender.assertErrorMessage("Exception while setting Signal Logic attempting to set invalid aspect: Slow Clear on mast: East1ToEastTurnout");
-        JUnitAppender.assertWarnMessage("attempting to set invalid aspect: Slow Clear on mast: West1ToWestTurnout");
-        JUnitAppender.assertErrorMessage("Exception while setting Signal Logic attempting to set invalid aspect: Slow Clear on mast: West1ToWestTurnout");
     }
 
     private void moveBlock(String startingBlock,String endingBlock) {

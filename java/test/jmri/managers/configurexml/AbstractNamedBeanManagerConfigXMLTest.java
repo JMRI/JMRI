@@ -3,19 +3,20 @@ package jmri.managers.configurexml;
 import jmri.NamedBean;
 import jmri.implementation.AbstractNamedBean;
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Test;
 import org.jdom2.Element;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 
 /**
  * Checks of basic NamedBean storage
  *
  * @author Bob Jacobsen Copyright 2009
  */
-public class AbstractNamedBeanManagerConfigXMLTest extends TestCase {
+public class AbstractNamedBeanManagerConfigXMLTest {
 
+    @Test
     public void testStoreBean() {
         // Create the manager to test
         AbstractNamedBeanManagerConfigXML x = new NamedBeanManagerConfigXMLTest();
@@ -71,6 +72,7 @@ public class AbstractNamedBeanManagerConfigXMLTest extends TestCase {
 
     }
 
+    @Test
     public void testStoreNoProperties() {
         // Create the manager to test
         AbstractNamedBeanManagerConfigXML x = new NamedBeanManagerConfigXMLTest();
@@ -123,6 +125,7 @@ public class AbstractNamedBeanManagerConfigXMLTest extends TestCase {
 
     }
 
+    @Test
     public void testStoreNullProperty() {
         // Create the manager to test
         AbstractNamedBeanManagerConfigXML x = new NamedBeanManagerConfigXMLTest();
@@ -177,6 +180,7 @@ public class AbstractNamedBeanManagerConfigXMLTest extends TestCase {
 
     }
 
+    @Test
     public void testGetUserName() {
         AbstractNamedBeanManagerConfigXML x = new NamedBeanManagerConfigXMLTest();
 
@@ -202,6 +206,7 @@ public class AbstractNamedBeanManagerConfigXMLTest extends TestCase {
 
     }
 
+    @Test
     public void testGetSystemName() {
         AbstractNamedBeanManagerConfigXML x = new NamedBeanManagerConfigXMLTest();
 
@@ -227,6 +232,7 @@ public class AbstractNamedBeanManagerConfigXMLTest extends TestCase {
 
     }
     
+    @Test
     public void testCheckedNamedBeanName() {
         AbstractNamedBeanManagerConfigXML x = new NamedBeanManagerConfigXMLTest();
 
@@ -241,6 +247,7 @@ public class AbstractNamedBeanManagerConfigXMLTest extends TestCase {
         Assert.assertEquals("foo", x.checkedNamedBeanName("foo", t, tm));        
     }
 
+    @Test
     public void testCheckedNamedBeanReference() {
         AbstractNamedBeanManagerConfigXML x = new NamedBeanManagerConfigXMLTest();
 
@@ -256,6 +263,7 @@ public class AbstractNamedBeanManagerConfigXMLTest extends TestCase {
         Assert.assertEquals(nb, x.checkedNamedBeanReference("foo", t, tm));        
     }
 
+    @Test
     public void testCheckedNamedBeanHandle() {
         AbstractNamedBeanManagerConfigXML x = new NamedBeanManagerConfigXMLTest();
         jmri.util.JUnitUtil.resetInstanceManager();
@@ -273,32 +281,14 @@ public class AbstractNamedBeanManagerConfigXMLTest extends TestCase {
         Assert.assertEquals(new jmri.NamedBeanHandle<jmri.Turnout>("foo", nb), x.checkedNamedBeanHandle("foo", t, tm));        
     }
 
-    // from here down is testing infrastructure
-    public AbstractNamedBeanManagerConfigXMLTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", AbstractNamedBeanManagerConfigXMLTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(AbstractNamedBeanManagerConfigXMLTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    @Override
-    protected void setUp() {
+    @Before
+    public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
     }
 
-    @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 

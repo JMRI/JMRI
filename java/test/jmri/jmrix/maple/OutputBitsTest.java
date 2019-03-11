@@ -2,22 +2,24 @@ package jmri.jmrix.maple;
 
 import jmri.jmrix.AbstractMRMessage;
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Test;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Assert;
 
 /**
  * JUnit tests for the OutputBits class
  *
- * @author	Dave Duchamp 2009
-  */
-public class OutputBitsTest extends TestCase {
+ * @author Dave Duchamp 2009
+ */
+public class OutputBitsTest {
 
+    @Test
     public void testConstructor1() {
         Assert.assertNotNull("check ctor", new OutputBits(new SerialTrafficControlScaffold()));
     }
 
+    @Test
     public void testAccessors() {
         OutputBits.setNumOutputBits(75);
         OutputBits.setSendDelay(250);
@@ -25,6 +27,7 @@ public class OutputBitsTest extends TestCase {
         Assert.assertEquals("check sendDelay", 250, OutputBits.getSendDelay());
     }
 
+    @Test
     public void testWriteOutputBits1() {
         OutputBits.setNumOutputBits(48);
         obit.setOutputBit(2, false);
@@ -50,34 +53,17 @@ public class OutputBitsTest extends TestCase {
         Assert.assertEquals("TO val 3 unknown", '0', (m.getElement(10 + 3) & 0xff));
     }
 
-    // from here down is testing infrastructure
-    public OutputBitsTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", OutputBitsTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(OutputBitsTest.class);
-        return suite;
-    }
-
     private OutputBits obit;
 
-    @Override
-    protected void setUp() {
+    @Before
+    public void setUp() {
         jmri.util.JUnitUtil.setUp();
         SerialTrafficControlScaffold tc = new SerialTrafficControlScaffold();
         obit = new OutputBits(tc);
     }
 
-    @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         obit = null;
         JUnitUtil.tearDown();
     }

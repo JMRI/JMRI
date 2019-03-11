@@ -5,7 +5,7 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.util.List;
+import java.util.*;
 import java.util.MissingResourceException;
 import java.util.stream.IntStream;
 import javax.swing.ButtonGroup;
@@ -22,10 +22,9 @@ import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneProgPane;
 import jmri.util.FileUtil;
 import jmri.util.jdom.LocaleSelector;
-import org.jdom2.Attribute;
-import org.jdom2.DocType;
-import org.jdom2.Document;
-import org.jdom2.Element;
+
+import org.jdom2.*;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -748,6 +747,15 @@ public class FnMapPanelESU extends JPanel {
             log.debug("configOutputs was given a null model");
             return;
         }
+        Element family = null;
+        Parent parent = model.getParent();
+        if (parent != null && parent instanceof Element) {
+            family = (Element) parent;
+        } else {
+            log.debug("configOutputs found an invalid parent family");
+            return;
+        }
+
         // get numOuts, numFns or leave the defaults
         Attribute a = model.getAttribute("numOuts");
         try {
@@ -781,8 +789,12 @@ public class FnMapPanelESU extends JPanel {
         }
 
         // take all "output" children
-        List<Element> elemList = model.getChildren("output");
+        List<Element> elemList = new ArrayList<>();
+        addOutputElements(family.getChildren(), elemList);
+        addOutputElements(model.getChildren(), elemList);
+                
         log.debug("output scan starting with {} elements", elemList.size());
+        
         for (int i = 0; i < elemList.size(); i++) {
             Element e = elemList.get(i);
             String name = e.getAttribute("name").getValue();
@@ -808,6 +820,18 @@ public class FnMapPanelESU extends JPanel {
                 }
             }
         }
+    }
+
+    void addOutputElements(List<Element> input, List<Element> accumulate) {
+      for (Element elem : input) {
+        if (elem.getName().equals("outputs")) {
+          log.debug(" found outputs element of size {}", elem.getChildren().size());
+          addOutputElements(elem.getChildren(), accumulate);
+        } else if (elem.getName().equals("output")) {
+          log.debug("adding output element {} {}", elem.getAttribute("name").getValue(), elem.getAttribute("label").getValue());
+          accumulate.add(elem);
+        }
+      }
     }
 
     // split and load labels
