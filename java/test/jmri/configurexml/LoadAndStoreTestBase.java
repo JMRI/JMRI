@@ -27,17 +27,19 @@ import org.slf4j.LoggerFactory;
  * file in a "load" directory by loading it, then storing it, then comparing
  * (with certain lines skipped) against either a file by the same name in the
  * "loadref" directory, or against the original file itself. A minimal test
- * class is: {@code
- * @RunWith(Parameterized.class)
- * public class LoadAndStoreTest extends LoadAndStoreTestBase {
- *
- * @Parameterized.Parameters(name = "{0} (pass={1})")
- * public static Iterable<Object[]> data() { return getFiles(new
- * File("java/test/jmri/configurexml"), false, true); }
- * <p>
- * public LoadAndStoreTest(File file, boolean pass) { super(file, pass); }
- * }
- * }
+ * class is:
+ <pre>
+   @RunWith(Parameterized.class)
+   public class LoadAndStoreTest extends LoadAndStoreTestBase {
+ 
+     @Parameterized.Parameters(name = "{0} (pass={1})")
+     public static Iterable<Object[]> data() { 
+       return getFiles(new File("java/test/jmri/configurexml"), false, true); 
+     }
+  
+     public LoadAndStoreTest(File file, boolean pass) { super(file, pass); }
+   }
+</pre>
  *
  * @author Bob Jacobsen Copyright 2009, 2014
  * @since 2.5.5 (renamed & reworked in 3.9 series)
