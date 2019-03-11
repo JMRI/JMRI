@@ -1,5 +1,7 @@
 package apps.tests;
 
+import org.junit.runner.JUnitCore;
+import org.junit.runner.Result;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
@@ -17,9 +19,9 @@ import org.junit.runners.Suite;
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
- * @author	Bob Jacobsen
+ * @author Bob Jacobsen
  */
- 
+
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
         jmri.PackageTest.class,
@@ -34,9 +36,10 @@ public class AllTest {
     public static void initLogging() {
     }
 
-   static public void main(String[] args) {
+    static public void main(String[] args) {
         // launch this class via JUnit4
-       org.junit.runner.JUnitCore.runClasses(AllTest.class);
-   }
+        Result result = JUnitCore.runClasses(AllTest.class);
+        System.exit(result.wasSuccessful() ? 0 : 1);
+    }
 
 }

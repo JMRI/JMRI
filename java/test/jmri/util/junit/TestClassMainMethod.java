@@ -3,6 +3,7 @@ package jmri.util.junit;
 import java.lang.reflect.*;
 
 import org.junit.runner.JUnitCore;
+import org.junit.runner.Result;
 
 /**
  * Main method to launch a JUnit test class
@@ -37,7 +38,8 @@ public class TestClassMainMethod {
                 System.err.println(e);
             } catch (NoSuchMethodException | IllegalAccessException e) {
                 // failed, now invoke manually
-                JUnitCore.runClasses(cl);
+                Result result = JUnitCore.runClasses(cl);
+                System.exit(result.wasSuccessful() ? 0 : 1);
             }
         } catch (ClassNotFoundException e) {
             // log error

@@ -1,5 +1,7 @@
 package jmri;
 
+import org.junit.runner.JUnitCore;
+import org.junit.runner.Result;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
@@ -34,6 +36,7 @@ public class HeadLessTest {
         System.setProperty("java.awt.headless", "true");
 
         // start tests
-        org.junit.runner.JUnitCore.runClasses(HeadLessTest.class);
+        Result result = JUnitCore.runClasses(HeadLessTest.class);
+        System.exit(result.wasSuccessful() ? 0 : 1);
     }
 }
