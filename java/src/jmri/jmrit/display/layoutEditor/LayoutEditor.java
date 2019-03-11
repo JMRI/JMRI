@@ -7415,7 +7415,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             }
 
             default: {
-                if ((fromPointType >= LayoutTrack.TURNTABLE_RAY_OFFSET) && (toPointType == LayoutTrack.TRACK)) {
+                if ((fromPointType >= LayoutTrack.TURNTABLE_RAY_OFFSET)
+                        && (toPointType == LayoutTrack.TRACK)) {
                     ((LayoutTurntable) fromObject).setRayConnect((TrackSegment) toObject,
                             fromPointType - LayoutTrack.TURNTABLE_RAY_OFFSET);
                 }
@@ -7431,10 +7432,10 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      * LayoutBlockManager if needed.
      *
      * @param inBlockName the entered name
-     * @return the LayoutBlock provided
+     * @return the provided LayoutBlock
      */
     public LayoutBlock provideLayoutBlock(@Nonnull String inBlockName) {
-        LayoutBlock result = null;
+        LayoutBlock result = null; //assume failure (pessimist!)
         LayoutBlock newBlk = null; //assume failure (pessimist!)
 
         if (inBlockName.isEmpty()) {
@@ -7444,7 +7445,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 ).createNewLayoutBlock();
                 if (null == newBlk) {
                     log.error("Failure to auto-assign LayoutBlock '{}'.", inBlockName);
-
                 }
             }
         } else {
@@ -7452,10 +7452,10 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             result = InstanceManager.getDefault(LayoutBlockManager.class
             ).getByUserName(inBlockName);
 
-            if (null == result) { //(no)
+            if (result == null) { //(no)
                 newBlk = InstanceManager.getDefault(LayoutBlockManager.class
                 ).createNewLayoutBlock(null, inBlockName);
-                if (null == newBlk) {
+                if (newBlk == null) {
                     log.error("Failure to create new LayoutBlock '{}'.", inBlockName);
                 }
             }
@@ -7903,7 +7903,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
         if ((o.getTurnoutType() == LayoutTurnout.DOUBLE_XOVER)
                 || (o.getTurnoutType() == LayoutTurnout.RH_XOVER)
-                || (o.getTurnoutType() == LayoutTurnout.LH_XOVER)) {
+                || (o.getTurnoutType() == LayoutTurnout.LH_XOVER)
+                || (o.getTurnoutType() == LayoutTurnout.SINGLE_SLIP)
+                || (o.getTurnoutType() == LayoutTurnout.DOUBLE_SLIP)) {
             LayoutBlock b2 = o.getLayoutBlockB();
 
             if ((b2 != null) && (b2 != b)) {
