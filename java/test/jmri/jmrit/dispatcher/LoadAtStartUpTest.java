@@ -185,6 +185,7 @@ public class LoadAtStartUpTest {
 
     @After
     public void tearDown() throws Exception {
+        JUnitUtil.resetFileUtilSupport();
         JUnitUtil.tearDown();
     }
 }
