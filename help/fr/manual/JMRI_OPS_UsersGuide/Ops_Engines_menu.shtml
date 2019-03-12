@@ -1,7 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Translation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-03-12 -->
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -26,108 +26,110 @@
     <div id="mainContent">
       <a name="Top" id="Top"></a>
 
-      <h1>Using JMRI&reg; to Operate Trains</h1>
+      
 
-      <h2>OperationsPro: Locomotive Window Menu Bar</h2>
+<h1> Utilisation de JMRI&reg; eExploiter des Trains</h1>
 
-      <div align="right">
-        <p><a href="Ops_Engines.shtml">Back</a><a href=
-        "Ops_Routes.shtml"></a></p>
+      <h2> Barre de Menus d'OperationsPro: Fenêtre Locomotive</h2>
 
-        <p><a href="index.shtml#Operations">Back to Index</a></p>
-      </div>
-      <hr>
-      <img style="width: 291px; height: 92px;" alt="menu bar" src=
-      "images/Ops_Engine_MenuBar.png"><br>
+      <div align = "right">
+        <p> <a href="Ops_Engines.shtml"> Retour </a> <a href =
+        "Ops_Routes.shtml"> </a></p>
 
-      <h3>Tools</h3>
+        <p> <a href="index.shtml#Operations"> Retour &#224; l'Index </a></p>
+     </div>
+      <h>
+      <img style = "width: 291px; height: 92px;" alt = "barre de menu" src =
+      "images/Ops_Engine_MenuBar.png"> <br>
+
+      <h3> Outils</h3>
 
       <ul>
         <li>
-          <strong>Locomotive Roster <img src="images/arrow.gif"
-          alt="arrow" height="9" width="20"></strong>
+          <strong>Inventaire des Locomotives <img src = "images/arrow.gif"
+          alt = "arrow" height = "9" width = "20"></strong>
 
           <ul>
-            <li><a href="Ops_ImportEngines_FromRoster.shtml">Import
-            from JMRI roster</a></li>
+            <li> <a href="Ops_ImportEngines_FromRoster.shtml"> Importer
+            &#224; partir de l'inventaire JMRI </a></li>
 
-            <li><a href="Ops_ImportEngines_FromFiles.shtml">Import
-            from file</a></li>
-
-            <li>
-              <a name="export" id="export">Export to file</a>
-
-              <p>Saves the Roster to your Operations\Export folder
-              and displays the <strong>Export complete</strong>
-              dialog. The file is exported automatically as a .csv
-              file.<br>
-              <img src="images/Ops_Engine_ExportFile.png" alt=
-              "export" height="122" width="742"></p>
-            </li>
+            <li> <a href="Ops_ImportEngines_FromFiles.shtml"> Importer &#224; 
+            partir d'un fichier </a></li>
 
             <li>
-              <a name="delete" id="delete"><strong>Delete all
-              locomotives</strong></a>
+              <a name="export" id="export"> Exporter vers un fichier </a>
 
-              <p>Opens the <strong>Delete all locomotives?</strong>
-              dialog. <strong>OK</strong> will delete all
-              Locomotives in the Operations Roster;
-              <strong>Cancel</strong> will abort the deletion.<br>
-              <img src="images/Ops_Engine_deleteRoster.png" alt=
-              "delete" height="122" width="446"></p>
-            </li>
+              <p> Enregistre le Répertoire dans votre dossier Operations\Export 
+              et affiche la boîte de dialogue <strong>Export Terminé</strong>. 
+              Le fichier est automatiquement exporté au format .csv. <br>
+              <img src = "images/Ops_Engine_ExportFile.png" alt =
+              "export" height = "122" width = "742"></p>
+           </li>
+
+            <li> <a name="delete" id="delete"> <strong>Supprimer toutes 
+            les locomotives</strong> </a>
+
+              <p> Ouvre la boîte de dialogue <strong>Supprimer toutes 
+              les locomotives?</strong>. <strong>OK</strong> supprimera 
+              toutes les locomotives de l'Inventaire dans operations; 
+              <strong>Annuler</strong> annulera la suppression. <br>
+              <img src = "images/Ops_Engine_deleteRoster.png" alt =
+              "delete" height = "122" width = "446"></p>
+           </li>
 
             <li>
-              <a name="reset" id="reset"><strong>Reset move count
-              all locomotives</strong></a>
+              <a name="reset" id="reset"> <strong>Réinitialiser le 
+              nombre de déplacements toutes les locomotives</strong> </a>
 
-              <p>Allows resetting all locomotive move counts.</p>
+              <p>Permet de réinitialiser tous les comptes de mouvements 
+              de locomotive.</p>
 
-              <p><img style="width: 564px; height: 122px;" alt=
-              "Operations Engine" src=
+              <p> <img style = "width: 564px; height: 122px;" alt =
+              "Operations Engine" src =
               "images/Ops_Engine_Tool_resetMove.png"></p>
-            </li>
+           </li>
 
             <li>
-              <a name="print" id="print"><strong>Print</strong></a>
-              -- Opens your computers <strong>Print</strong> window
-              and will print your locomotive roster.
+              <a name="print" id="print"> <strong>Imprimer</strong> </a> 
+              - Ouvre la fenêtre <strong>Imprimer</strong> de votre 
+              ordinateur et imprimera votre liste de locomotives.
 
-              <p><img src="images/Ops_Engine_print.png" alt="print"
-              height="345" width="722"></p>
-            </li>
+              <p> <img src = "images/Ops_Engine_print.png" alt = "print"
+              height = "345" width = "722"></p>
+           </li>
 
             <li>
-              <a name="preview" id=
-              "preview"><strong>Preview</strong></a>
+              <a name = "preview" id =
+              "aperçu"> <strong>Aperçu</strong> </a>
 
-              <p>Opens your computer's <strong>Print
-              Preview</strong> window and shows a preview of your
-              Locomotive Roster.</p><img src=
-              "images/Ops_Engine_preview.png" alt="engine preview"
-              height="301" width="670">
-            </li>
-          </ul>
-        </li>
+              <p> Ouvre la fenêtre <strong>Aperçu avant impression</strong> 
+              de votre ordinateur et affiche un aperçu de votre répertoire 
+              de locomotives.</p> <img src =
+              "images/Ops_Engine_preview.png" alt = "aperçu locomotives"
+              height = "301" width = "670">
+           </li>
+         </ul>
+       </li>
 
-        <li><a href="Ops_AddEngine.shtml#NCE">Synchronize with NCE
-        Consists</a> (only active with an NCE connection; greyed
-        out for LocoNet)</li>
-      </ul>
+        <li> <a href="Ops_AddEngine.shtml#NCE"> Synchroniser avec les 
+        Couplage NCE </a> (actif uniquement avec une connexion NCE; 
+        grisé pour LocoNet)</li>
+     </ul>
 
-      <p><strong>Operations</strong> - same as DecoderPro&reg;
-      Operations menu</p>
+      <p> <strong>Opérations</strong>: identique au menu Opérations 
+      DecoderPro&reg; 
+      </p>
 
-      <p><strong>Window</strong> - same as other JMRI&reg;
-      menus.</p>
+      <p> <strong>Fenêtre</strong>: identique aux autres Menu JMRI&reg;
+      .</p>
 
-      <p><strong>Help</strong> - same as other JMRI&reg; menus.</p>
+      <p> <strong>Aide</strong>: identique aux autres Menu JMRI&reg;.</p>
 
-      <div align="right">
-        <p><a href="Ops_Engines.shtml"><span style=
-        "text-decoration: underline;">Back</span></a></p>
+      <div align = "right">
+        <p> <a href="Ops_Engines.shtml"> <span style =
+        "text-decoration: underline;"> retour</span> </a></p>
 
-        <p><a href="index.shtml#Operations">Back to Index</a></p>
+	        <p> <a href="index.shtml#Operations"> Retour &#224; l'Index </a></p>
       </div><!--#include virtual="/Footer" -->
     </div>
   </div>
