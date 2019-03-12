@@ -812,20 +812,20 @@ public class TrackSegment extends LayoutTrack {
      *
      * @param menu       the target menu.
      * @param titleKey   bundle key for the menu title/dialog title
-     * @param tooltipKey bundle key for the menu item tooltip
+     * @param toolTipKey bundle key for the menu item tooltip
      * @param val        value getter
      * @param set        value setter
      * @param predicate  checking predicate, possibly null.
      */
     private void addNumericMenuItem(@Nonnull JMenu menu,
-            @Nonnull String titleKey, @Nonnull String tooltipKey,
+            @Nonnull String titleKey, @Nonnull String toolTipKey,
             @Nonnull Supplier<Integer> val,
             @Nonnull Consumer<Integer> set,
             @Nullable Predicate<Integer> predicate) {
         int oldVal = val.get();
         JMenuItem jmi = menu.add(new JMenuItem(Bundle.getMessage("MakeLabel",
                 Bundle.getMessage(titleKey)) + oldVal));
-        jmi.setToolTipText(Bundle.getMessage(tooltipKey));
+        jmi.setToolTipText(Bundle.getMessage(toolTipKey));
         jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
             //prompt for lineWidth
             int newValue = QuickPromptUtil.promptForInt(layoutEditor,
