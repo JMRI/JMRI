@@ -20,6 +20,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jmri.InstanceManager;
 import jmri.jmris.json.JsonServerPreferences;
 import jmri.jmrit.display.Editor;
+import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
+import jmri.jmrit.display.layoutEditor.LayoutEditor;
+import jmri.jmrit.display.panelEditor.PanelEditor;
 import jmri.jmrit.display.switchboardEditor.SwitchboardEditor;
 import jmri.profile.NullProfile;
 import jmri.server.json.JSON;
@@ -122,7 +125,7 @@ public class JsonUtilSocketServiceTest {
     @Test
     public void testOnMessagePanels() throws Exception {
         Assume.assumeFalse("Needs GUI", GraphicsEnvironment.isHeadless());
-        Editor editor = new SwitchboardEditor("test");
+        Editor editor = new SwitchboardEditor("json test switchboard");
         JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
         JsonNode empty = connection.getObjectMapper().createObjectNode();
         JsonUtilSocketService instance = new JsonUtilSocketService(connection);
@@ -190,7 +193,13 @@ public class JsonUtilSocketServiceTest {
     @Test
     public void testOnListPanels() throws Exception {
         Assume.assumeFalse("Needs GUI", GraphicsEnvironment.isHeadless());
-        Editor editor = new SwitchboardEditor("test");
+        Editor switchboard = new SwitchboardEditor("json test switchboard");
+        Editor controlPanel = new ControlPanelEditor("json test control panel");
+        Editor layoutPanel = new LayoutEditor("json test layout panel");
+        Editor panel = new PanelEditor("json test panel");
+        Editor disabled = new PanelEditor("disabled json test panel");
+        disabled.setAllowInFrameServlet(false);
+        // 5 editors should return array of 4 since one is barred
         JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
         JsonNode empty = connection.getObjectMapper().createObjectNode();
         JsonUtilSocketService instance = new JsonUtilSocketService(connection);
@@ -198,12 +207,18 @@ public class JsonUtilSocketServiceTest {
         JsonNode message = connection.getMessage();
         Assert.assertNotNull("Message is not null", message);
         Assert.assertTrue("Message is array", message.isArray());
-        if (message.size() != 1) {
+        if (message.size() != 4) {
             log.error(message.toString()); // what panel was left in place that triggered this?
         }
-        Assert.assertEquals("Array has one element", 1, message.size());
-        JUnitUtil.dispose(editor.getTargetFrame());
-        JUnitUtil.dispose(editor);
+        Assert.assertEquals("Array has four elements", 4, message.size());
+        JUnitUtil.dispose(switchboard.getTargetFrame());
+        JUnitUtil.dispose(switchboard);
+        JUnitUtil.dispose(controlPanel.getTargetFrame());
+        JUnitUtil.dispose(controlPanel);
+        JUnitUtil.dispose(layoutPanel.getTargetFrame());
+        JUnitUtil.dispose(layoutPanel);
+        JUnitUtil.dispose(panel.getTargetFrame());
+        JUnitUtil.dispose(panel);
     }
 
     
