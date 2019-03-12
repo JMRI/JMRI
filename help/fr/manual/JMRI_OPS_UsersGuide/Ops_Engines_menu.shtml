@@ -28,9 +28,9 @@
 
       
 
-<h1> Utilisation de JMRI&reg; eExploiter des Trains</h1>
+<h1> Utilisation de JMRI&reg; Exploiter des Trains</h1>
 
-      <h2> Barre de Menus d'OperationsPro: Fenêtre Locomotive</h2>
+      <h2> Barre de Menus d'OperationsPro: Fen&#234;tre Locomotive</h2>
 
       <div align = "right">
         <p> <a href="Ops_Engines.shtml"> Retour </a> <a href =
@@ -59,9 +59,9 @@
             <li>
               <a name="export" id="export"> Exporter vers un fichier </a>
 
-              <p> Enregistre le Répertoire dans votre dossier Operations\Export 
-              et affiche la boîte de dialogue <strong>Export Terminé</strong>. 
-              Le fichier est automatiquement exporté au format .csv. <br>
+              <p> Enregistre le R&#233;pertoire dans votre dossier Operations\Export 
+              et affiche la bo&#238;te de dialogue <strong>Export Termin&#233;</strong>. 
+              Le fichier est automatiquement export&#233; au format .csv. <br>
               <img src = "images/Ops_Engine_ExportFile.png" alt =
               "export" height = "122" width = "742"></p>
            </li>
@@ -69,7 +69,7 @@
             <li> <a name="delete" id="delete"> <strong>Supprimer toutes 
             les locomotives</strong> </a>
 
-              <p> Ouvre la boîte de dialogue <strong>Supprimer toutes 
+              <p> Ouvre la bo&#238;te de dialogue <strong>Supprimer toutes 
               les locomotives?</strong>. <strong>OK</strong> supprimera 
               toutes les locomotives de l'Inventaire dans operations; 
               <strong>Annuler</strong> annulera la suppression. <br>
@@ -78,10 +78,10 @@
            </li>
 
             <li>
-              <a name="reset" id="reset"> <strong>Réinitialiser le 
-              nombre de déplacements toutes les locomotives</strong> </a>
+              <a name="reset" id="reset"> <strong>R&#234;initialiser le 
+              nombre de d&#233;placements toutes les locomotives</strong> </a>
 
-              <p>Permet de réinitialiser tous les comptes de mouvements 
+              <p>Permet de r&#233;initialiser tous les compteurs de mouvements 
               de locomotive.</p>
 
               <p> <img style = "width: 564px; height: 122px;" alt =
@@ -91,7 +91,7 @@
 
             <li>
               <a name="print" id="print"> <strong>Imprimer</strong> </a> 
-              - Ouvre la fenêtre <strong>Imprimer</strong> de votre 
+              - Ouvre la fen&#234;tre <strong>Imprimer</strong> de votre 
               ordinateur et imprimera votre liste de locomotives.
 
               <p> <img src = "images/Ops_Engine_print.png" alt = "print"
@@ -100,12 +100,12 @@
 
             <li>
               <a name = "preview" id =
-              "aperçu"> <strong>Aperçu</strong> </a>
+              "aper&#231;u"> <strong>Aper&#231;u</strong> </a>
 
-              <p> Ouvre la fenêtre <strong>Aperçu avant impression</strong> 
-              de votre ordinateur et affiche un aperçu de votre répertoire 
+              <p> Ouvre la fen&#234;tre <strong>Aper&#231;u avant impression</strong> 
+              de votre ordinateur et affiche un aper&#231;u de votre r&#233;pertoire 
               de locomotives.</p> <img src =
-              "images/Ops_Engine_preview.png" alt = "aperçu locomotives"
+              "images/Ops_Engine_preview.png" alt = "aper&#231;u locomotives"
               height = "301" width = "670">
            </li>
          </ul>
@@ -113,14 +113,14 @@
 
         <li> <a href="Ops_AddEngine.shtml#NCE"> Synchroniser avec les 
         Couplage NCE </a> (actif uniquement avec une connexion NCE; 
-        grisé pour LocoNet)</li>
+        gris&#233; pour LocoNet)</li>
      </ul>
 
-      <p> <strong>Opérations</strong>: identique au menu Opérations 
+      <p> <strong>Op&#234;rations</strong>: identique au menu Op&#233;rations 
       DecoderPro&reg; 
       </p>
 
-      <p> <strong>Fenêtre</strong>: identique aux autres Menu JMRI&reg;
+      <p> <strong>Fen&#234;tre</strong>: identique aux autres Menu JMRI&reg;
       .</p>
 
       <p> <strong>Aide</strong>: identique aux autres Menu JMRI&reg;.</p>
