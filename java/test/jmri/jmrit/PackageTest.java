@@ -65,6 +65,7 @@ import org.junit.runners.Suite;
         DebugMenuTest.class,
         LogixLoadActionTest.class,
         XmlFileCheckActionTest.class,
+        jmri.jmrit.cabsignals.PackageTest.class
 })
 
 /**

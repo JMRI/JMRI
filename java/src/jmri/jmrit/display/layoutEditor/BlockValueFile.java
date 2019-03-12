@@ -37,9 +37,6 @@ import org.slf4j.LoggerFactory;
  */
 public class BlockValueFile extends XmlFile {
 
-    /**
-     * {@inheritDoc}
-     */
     public BlockValueFile() {
         super();
         blockManager = jmri.InstanceManager.getDefault(jmri.BlockManager.class);

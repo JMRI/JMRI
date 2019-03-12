@@ -123,7 +123,6 @@ public class SRCPVisitor extends SRCPParserDefaultVisitor implements SRCPParserV
     }
 
     @Override
-    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations
     public Object visit(ASTget node, Object data) {
         log.debug("Get " + ((SimpleNode) node.jjtGetChild(1)).jjtGetValue());
         int bus = Integer.parseInt(((String) ((SimpleNode) node.jjtGetChild(0)).jjtGetValue()));
@@ -276,7 +275,7 @@ public class SRCPVisitor extends SRCPParserDefaultVisitor implements SRCPParserV
                         try {
                             String searchName = mgr.createSystemName(address,
                                     memo.getSystemPrefix());
-                            if (mgr.getSystemNameList().contains(searchName)) {
+                            if (mgr.getBySystemName(searchName) != null) {
                                 // add the initialization parameter list.
                                 // we don't expect parameters, so just return
                                 // the bus and address.
@@ -293,7 +292,7 @@ public class SRCPVisitor extends SRCPParserDefaultVisitor implements SRCPParserV
                         jmri.TurnoutManager mgr = memo.get(jmri.TurnoutManager.class);
                         try {
                             String searchName = mgr.createSystemName(address, memo.getSystemPrefix());
-                            if (mgr.getSystemNameList().contains(searchName)) {
+                            if (mgr.getBySystemName(searchName) != null) {
                                 // add the initialization parameter list.
                                 // the only other required parameter is
                                 // the protocol, and we treat all of our

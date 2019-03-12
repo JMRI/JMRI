@@ -11,23 +11,25 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class SpeedoConsoleFrameTest {
-        
+
     private SpeedoConsoleFrame frame = null;
 
     @Test
     public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
-        Assert.assertNotNull("exists",frame);
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assert.assertNotNull("exists", frame);
     }
 
     @Test
     public void testShowAndClose() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless()); 
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         frame.initComponents();
-        jmri.util.ThreadingUtil.runOnLayout( () ->{ frame.setVisible(true); });
+        jmri.util.ThreadingUtil.runOnLayout(() -> {
+            frame.setVisible(true);
+        });
         new JFrameOperator(frame.title()).requestClose();
     }
 
@@ -37,11 +39,11 @@ public class SpeedoConsoleFrameTest {
         JUnitUtil.setUp();
         JUnitUtil.initDefaultUserMessagePreferences();
         JUnitUtil.initDebugThrottleManager();
-        if( !GraphicsEnvironment.isHeadless()) { 
-           SpeedoSystemConnectionMemo m = new SpeedoSystemConnectionMemo();
-           SpeedoTrafficController tc = new SpeedoTrafficController(m);
-           m.setSpeedoTrafficController(tc);
-           frame = new SpeedoConsoleFrame(m);
+        if (!GraphicsEnvironment.isHeadless()) {
+            SpeedoSystemConnectionMemo m = new SpeedoSystemConnectionMemo();
+            SpeedoTrafficController tc = new SpeedoTrafficController(m);
+            m.setSpeedoTrafficController(tc);
+            frame = new SpeedoConsoleFrame(m);
         }
     }
 

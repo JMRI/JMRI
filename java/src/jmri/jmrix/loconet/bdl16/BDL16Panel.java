@@ -415,7 +415,7 @@ public class BDL16Panel extends AbstractBoardProgPanel {
      * Create a JLabel for an OpSw.
      *
      * @param n   OpSw number
-     * @param jp  the JPanel into which the Label is placed
+     * @return the JPanel into which the Label is placed
      */
     private JLabel getLabel(int n) {
         String number = Integer.toString(n);
@@ -438,7 +438,7 @@ public class BDL16Panel extends AbstractBoardProgPanel {
      *
      * @param n first OpSw number
      * @param n2 second OpSw number
-     * @param jp the JPanel into which the Label is placed
+     * @return the JPanel into which the Label is placed
      */
     private JLabel getLabel(int n, int n2) {
         String number = Integer.toString(n);
@@ -468,7 +468,7 @@ public class BDL16Panel extends AbstractBoardProgPanel {
      * reported default value.
      * 
      * @param n   OpSw number
-     * @param jp  the JPanel into which the JComboBox is placed
+     * @return  the JPanel into which the JComboBox is placed
      */
     private JComboBox getComboBox(int n) {
         String number = Integer.toString(n);
@@ -498,7 +498,7 @@ public class BDL16Panel extends AbstractBoardProgPanel {
      * 
      * @param n first OpSw number
      * @param n2 second OpSw number
-     * @param jp the JPanel into which the JComboBox is placed
+     * @return the JPanel into which the JComboBox is placed
      */
     private JComboBox getComboBox(int n, int n2) {
         String number = Integer.toString(n);
@@ -531,8 +531,8 @@ public class BDL16Panel extends AbstractBoardProgPanel {
      * Determine the JComboBox index which corresponds to the default value 
      * for a given OpSw.
      * 
-     * @param   n OpSw number
-     * @return  JComboBox index of default choice
+     * @param  n OpSw number
+     * @return index of default choice
      */
     private int getIndexForDefault(int n) {
         switch (n) {

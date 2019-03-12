@@ -25,6 +25,7 @@ public class HtmlManifestTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        jmri.util.JUnitUtil.initIdTagManager();
         jmri.util.JUnitOperationsUtil.setupOperationsTests();
         jmri.util.JUnitOperationsUtil.initOperationsData();     
     }

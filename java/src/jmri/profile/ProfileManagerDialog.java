@@ -63,8 +63,8 @@ public class ProfileManagerDialog extends JDialog {
     /**
      * Creates new form ProfileManagerDialog
      *
-     * @param parent {@inheritDoc}
-     * @param modal  {@inheritDoc}
+     * @param parent The frame containing this dialog
+     * @param modal The modal parameter for parent JDialog
      */
     public ProfileManagerDialog(Frame parent, boolean modal) {
         this(parent, modal, false);
@@ -73,8 +73,8 @@ public class ProfileManagerDialog extends JDialog {
     /**
      * Creates new form ProfileManagerDialog
      *
-     * @param parent {@inheritDoc}
-     * @param modal  {@inheritDoc}
+     * @param parent The frame containing this dialog
+     * @param modal The modal parameter for parent JDialog
      * @param disableTimer true if the timer should be disabled
      */
     public ProfileManagerDialog(Frame parent, boolean modal, boolean disableTimer) {

@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import jmri.jmrix.can.cbus.CbusCommandStation;
 import jmri.jmrix.AbstractMessage;
 
 // import org.slf4j.Logger;
@@ -56,11 +55,9 @@ public class CbusOpCodes {
                 fields[i] = locoFromBytes(msg.getElement(idx++), msg.getElement(idx++) );
             }
             else if (fields[i].startsWith("$4")) { // replace the 4 bytes with event / node name ( if possible )
-                CbusCommandStation cmndstat = (CbusCommandStation) jmri.InstanceManager.getDefault(jmri.CommandStation.class);
                 int nn = (256*msg.getElement(idx++))+(msg.getElement(idx++));
                 int en = (256*msg.getElement(idx++))+(msg.getElement(idx++));
-                // log.warn("fetching node {} event {}",nn,en);
-                fields[i] = cmndstat.getEventNodeString(nn,en);
+                fields[i] = new CbusNameService().getEventNodeString(nn,en);
             }
             // concatenat to the result
             buf.append(fields[i]);

@@ -6,7 +6,7 @@
     <name>JMRI</name>
     <groupId>org.jmri</groupId>
     <artifactId>jmri</artifactId>
-    <version>4.15.3-SNAPSHOT</version>
+    <version>4.15.5-SNAPSHOT</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <release.build_user>${user.name}</release.build_user>
@@ -38,6 +38,24 @@
         <url>https://github.com/JMRI/JMRI.git</url>
     </scm>
     <inceptionYear>1997</inceptionYear>
+    <issueManagement>
+        <system>github</system>
+        <url>https://github.com/JMRI/JMRI/issues</url>
+    </issueManagement>
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
+    <organization>
+        <name>The JMRI Project</name>
+        <url>http://jmri.org</url>
+    </organization>
 
     <profiles>
         <profile>
@@ -310,7 +328,7 @@
                     <argLine>@{argLine} -Djava.security.manager -Djava.security.policy=${basedir}/lib/security.policy</argLine>
                     <useSystemClassLoader>true</useSystemClassLoader>
                     <useManifestOnlyJar>false</useManifestOnlyJar>
-                    <!-- forkCount causes tests to run in forked JVMs.  The following the number with C says to fork the number multiplird by the number of cores available. -->
+                    <!-- forkCount causes tests to run in forked JVMs.  The following the number with C says to fork the number multiplied by the number of cores available. -->
                     <forkCount>1</forkCount>
                     <!-- setting re-use forks to false causes a timeout on CI servers, please do not uncomment.
                     <reuseForks>false</reuseForks>
@@ -392,6 +410,19 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>2.2.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <version>2.10.4</version>
                 <configuration>
@@ -408,6 +439,7 @@
                     <failOnError>true</failOnError><!-- default -->
                     <quiet>true</quiet>
                     <splitindex>true</splitindex>
+                    <additionalJOption>-J-Dhttp.agent=maven-javadoc-plugin-${project.name}</additionalJOption>
                     <tags>
                         <tag>
                             <!-- disable output of custom @navassoc tag - used for UML image generation -->
@@ -505,7 +537,6 @@
                                 <File>jmri/jmrit/symbolicprog/tabbedframe/CheckProgrammerNames.class</File>
                                 <File>jmri/jmrix/openlcb/SampleFactory.class</File>
                                 <File>jmri/util/swing/SamplePane.class</File>
-                                <File>apps/tests/Log4JFixture.class</File>
                                 <File>jmri/jmrit/display/EditorFrameOperator.class</File>
                                 <File>jmri/util/web/BrowserFactory.class</File>
                                 <!-- pure interfaces and classes of constants -->
@@ -525,6 +556,9 @@
                                 <File>jmri/server/json/signalMast/JsonSignalMast.class</File>
                                 <!-- deprecated classes -->
                                 <File>jmri/jmrix/loconet/AbstractAlmImplementation.class</File>
+                                <!-- Exclude files meant to check SpotBugs. -->
+                                <File>apps/FindBugsCheck.class</File>
+                                <File>apps/CheckerFrameworkCheck.class</File>
                             </excludes>
                             <rules>
                                 <rule>
@@ -626,6 +660,31 @@
                         </lifecycleMappingMetadata>
                     </configuration>
                 </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-gpg-plugin</artifactId>
+                    <version>1.6</version>
+                    <executions>
+                        <execution>
+                            <id>sign-artifacts</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>sign</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.sonatype.plugins</groupId>
+                    <artifactId>nexus-staging-maven-plugin</artifactId>
+                    <version>1.6.7</version>
+                    <extensions>true</extensions>
+                    <configuration>
+                        <serverId>ossrh</serverId>
+                        <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                        <autoReleaseAfterClose>false</autoReleaseAfterClose>
+                    </configuration>
+                </plugin>        
             </plugins>
         </pluginManagement>
     </build>
@@ -910,12 +969,6 @@
             <groupId>net.sourceforge.javacsv</groupId>
             <artifactId>javacsv</artifactId>
             <version>2.0</version>
-        </dependency>
-        <dependency>
-            <groupId>net.sf.jfcunit</groupId>
-            <artifactId>jfcunit</artifactId>
-            <version>2.08</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.openlcb</groupId>

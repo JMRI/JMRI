@@ -3,76 +3,104 @@ package jmri.jmrix.oaktree;
 import jmri.Manager.NameValidity;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Test;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Assert;
 
 /**
  * JUnit tests for the SerialAddress utility class.
  *
- * @author	Dave Duchamp Copyright 2004
+ * @author Dave Duchamp Copyright 2004
  * @author Bob Jacobsen Copyright 2007
-  */
-public class SerialAddressTest extends TestCase {
+ */
+public class SerialAddressTest {
 
+    @Test
     public void testValidateSystemNameFormat() {
-        Assert.assertTrue("valid format - OL2", NameValidity.VALID == SerialAddress.validSystemNameFormat("OL2", 'L', "O"));
-        Assert.assertTrue("valid format - OL0B2", NameValidity.VALID == SerialAddress.validSystemNameFormat("OL0B2", 'L', "O"));
-        Assert.assertTrue("invalid format - OL", NameValidity.VALID != SerialAddress.validSystemNameFormat("OL", 'L', "O"));
+        Assert.assertTrue("valid format - OL2",
+                NameValidity.VALID == SerialAddress.validSystemNameFormat("OL2", 'L', "O"));
+        Assert.assertTrue("valid format - OL0B2",
+                NameValidity.VALID == SerialAddress.validSystemNameFormat("OL0B2", 'L', "O"));
+        Assert.assertTrue("invalid format - OL",
+                NameValidity.VALID != SerialAddress.validSystemNameFormat("OL", 'L', "O"));
 
-        Assert.assertTrue("invalid format - OLB2", NameValidity.VALID != SerialAddress.validSystemNameFormat("OLB2", 'L', "O"));
+        Assert.assertTrue("invalid format - OLB2",
+                NameValidity.VALID != SerialAddress.validSystemNameFormat("OLB2", 'L', "O"));
         JUnitAppender.assertWarnMessage("invalid character in number field system name: OL");
         JUnitAppender.assertWarnMessage("no node address before 'B' in system name: OLB2");
 
-        Assert.assertTrue("valid format - OL2005", NameValidity.VALID == SerialAddress.validSystemNameFormat("OL2005", 'L', "O"));
-        Assert.assertTrue("valid format - OL2B5", NameValidity.VALID == SerialAddress.validSystemNameFormat("OL2B5", 'L', "O"));
-        Assert.assertTrue("valid format - OT2005", NameValidity.VALID == SerialAddress.validSystemNameFormat("OT2005", 'T', "O"));
-        Assert.assertTrue("valid format - OT2B5", NameValidity.VALID == SerialAddress.validSystemNameFormat("OT2B5", 'T', "O"));
-        Assert.assertTrue("valid format - OS2005", NameValidity.VALID == SerialAddress.validSystemNameFormat("OS2005", 'S', "O"));
-        Assert.assertTrue("valid format - OS2B5", NameValidity.VALID == SerialAddress.validSystemNameFormat("OS2B5", 'S', "O"));
+        Assert.assertTrue("valid format - OL2005",
+                NameValidity.VALID == SerialAddress.validSystemNameFormat("OL2005", 'L', "O"));
+        Assert.assertTrue("valid format - OL2B5",
+                NameValidity.VALID == SerialAddress.validSystemNameFormat("OL2B5", 'L', "O"));
+        Assert.assertTrue("valid format - OT2005",
+                NameValidity.VALID == SerialAddress.validSystemNameFormat("OT2005", 'T', "O"));
+        Assert.assertTrue("valid format - OT2B5",
+                NameValidity.VALID == SerialAddress.validSystemNameFormat("OT2B5", 'T', "O"));
+        Assert.assertTrue("valid format - OS2005",
+                NameValidity.VALID == SerialAddress.validSystemNameFormat("OS2005", 'S', "O"));
+        Assert.assertTrue("valid format - OS2B5",
+                NameValidity.VALID == SerialAddress.validSystemNameFormat("OS2B5", 'S', "O"));
 
-        Assert.assertTrue("invalid format - OY2005", NameValidity.VALID != SerialAddress.validSystemNameFormat("OY2005", 'L', "O"));
+        Assert.assertTrue("invalid format - OY2005",
+                NameValidity.VALID != SerialAddress.validSystemNameFormat("OY2005", 'L', "O"));
         JUnitAppender.assertErrorMessage("invalid character in header field system name: OY2005");
 
-        Assert.assertTrue("invalid format - OY2B5", NameValidity.VALID != SerialAddress.validSystemNameFormat("OY2B5", 'L', "O"));
+        Assert.assertTrue("invalid format - OY2B5",
+                NameValidity.VALID != SerialAddress.validSystemNameFormat("OY2B5", 'L', "O"));
         JUnitAppender.assertErrorMessage("invalid character in header field system name: OY2B5");
 
-        Assert.assertTrue("valid format - OL22001", NameValidity.VALID == SerialAddress.validSystemNameFormat("OL22001", 'L', "O"));
-        Assert.assertTrue("valid format - OL22B1", NameValidity.VALID == SerialAddress.validSystemNameFormat("OL22B1", 'L', "O"));
+        Assert.assertTrue("valid format - OL22001",
+                NameValidity.VALID == SerialAddress.validSystemNameFormat("OL22001", 'L', "O"));
+        Assert.assertTrue("valid format - OL22B1",
+                NameValidity.VALID == SerialAddress.validSystemNameFormat("OL22B1", 'L', "O"));
 
-        Assert.assertTrue("invalid format - OL22000", NameValidity.VALID != SerialAddress.validSystemNameFormat("OL22000", 'L', "O"));
+        Assert.assertTrue("invalid format - OL22000",
+                NameValidity.VALID != SerialAddress.validSystemNameFormat("OL22000", 'L', "O"));
         JUnitAppender.assertWarnMessage("bit number not in range 1 - 999 in system name: OL22000");
 
-        Assert.assertTrue("invalid format - OL22B0", NameValidity.VALID != SerialAddress.validSystemNameFormat("OL22B0", 'L', "O"));
+        Assert.assertTrue("invalid format - OL22B0",
+                NameValidity.VALID != SerialAddress.validSystemNameFormat("OL22B0", 'L', "O"));
         JUnitAppender.assertWarnMessage("bit number field out of range in system name: OL22B0");
 
-        Assert.assertTrue("valid format - OL2999", NameValidity.VALID == SerialAddress.validSystemNameFormat("OL2999", 'L', "O"));
-        Assert.assertTrue("valid format - OL2B2048", NameValidity.VALID == SerialAddress.validSystemNameFormat("OL2B2048", 'L', "O"));
+        Assert.assertTrue("valid format - OL2999",
+                NameValidity.VALID == SerialAddress.validSystemNameFormat("OL2999", 'L', "O"));
+        Assert.assertTrue("valid format - OL2B2048",
+                NameValidity.VALID == SerialAddress.validSystemNameFormat("OL2B2048", 'L', "O"));
 
-        Assert.assertTrue("invalid format - OL2B2049", NameValidity.VALID != SerialAddress.validSystemNameFormat("OL2B2049", 'L', "O"));
+        Assert.assertTrue("invalid format - OL2B2049",
+                NameValidity.VALID != SerialAddress.validSystemNameFormat("OL2B2049", 'L', "O"));
         JUnitAppender.assertWarnMessage("bit number field out of range in system name: OL2B2049");
 
-        Assert.assertTrue("valid format - OL127999", NameValidity.VALID == SerialAddress.validSystemNameFormat("OL127999", 'L', "O"));
+        Assert.assertTrue("valid format - OL127999",
+                NameValidity.VALID == SerialAddress.validSystemNameFormat("OL127999", 'L', "O"));
 
-        Assert.assertTrue("invalid format - OL128000", NameValidity.VALID != SerialAddress.validSystemNameFormat("OL128000", 'L', "O"));
+        Assert.assertTrue("invalid format - OL128000",
+                NameValidity.VALID != SerialAddress.validSystemNameFormat("OL128000", 'L', "O"));
         JUnitAppender.assertWarnMessage("bit number not in range 1 - 999 in system name: OL128000");
 
-        Assert.assertTrue("valid format - OL127B7", NameValidity.VALID == SerialAddress.validSystemNameFormat("OL127B7", 'L', "O"));
+        Assert.assertTrue("valid format - OL127B7",
+                NameValidity.VALID == SerialAddress.validSystemNameFormat("OL127B7", 'L', "O"));
 
-        Assert.assertTrue("invalid format - OL128B7", NameValidity.VALID != SerialAddress.validSystemNameFormat("OL128B7", 'L', "O"));
+        Assert.assertTrue("invalid format - OL128B7",
+                NameValidity.VALID != SerialAddress.validSystemNameFormat("OL128B7", 'L', "O"));
         JUnitAppender.assertWarnMessage("node address field out of range in system name: OL128B7");
 
-        Assert.assertTrue("invalid format - OL2oo5", NameValidity.VALID != SerialAddress.validSystemNameFormat("OL2oo5", 'L', "O"));
+        Assert.assertTrue("invalid format - OL2oo5",
+                NameValidity.VALID != SerialAddress.validSystemNameFormat("OL2oo5", 'L', "O"));
         JUnitAppender.assertWarnMessage("invalid character in number field system name: OL2oo5");
 
-        Assert.assertTrue("invalid format - OL2aB5", NameValidity.VALID != SerialAddress.validSystemNameFormat("OL2aB5", 'L', "O"));
+        Assert.assertTrue("invalid format - OL2aB5",
+                NameValidity.VALID != SerialAddress.validSystemNameFormat("OL2aB5", 'L', "O"));
         JUnitAppender.assertWarnMessage("invalid character in node address field of system name: OL2aB5");
 
-        Assert.assertTrue("invalid format - OL2B5x", NameValidity.VALID != SerialAddress.validSystemNameFormat("OL2B5x", 'L', "O"));
+        Assert.assertTrue("invalid format - OL2B5x",
+                NameValidity.VALID != SerialAddress.validSystemNameFormat("OL2B5x", 'L', "O"));
         JUnitAppender.assertWarnMessage("invalid character in bit number field of system name: OL2B5x");
     }
 
+    @Test
     public void testGetBitFromSystemName() {
         Assert.assertEquals("OL2", 2, SerialAddress.getBitFromSystemName("OL2", "O"));
         Assert.assertEquals("OL2002", 2, SerialAddress.getBitFromSystemName("OL2002", "O"));
@@ -92,23 +120,33 @@ public class SerialAddressTest extends TestCase {
         Assert.assertEquals("OL11B2048", 2048, SerialAddress.getBitFromSystemName("OL11B2048", "O"));
     }
 
+    @Test
     public void testGetNodeFromSystemName() {
-        SerialNode d = new SerialNode(14, SerialNode.IO48,memo);
-        SerialNode c = new SerialNode(17, SerialNode.IO24,memo);
-        SerialNode b = new SerialNode(127, SerialNode.IO24,memo);
-        Assert.assertEquals("node of OL14007", d, SerialAddress.getNodeFromSystemName("OL14007", memo.getTrafficController()));
-        Assert.assertEquals("node of OL14B7", d, SerialAddress.getNodeFromSystemName("OL14B7", memo.getTrafficController()));
-        Assert.assertEquals("node of OL127007", b, SerialAddress.getNodeFromSystemName("OL127007", memo.getTrafficController()));
-        Assert.assertEquals("node of OL127B7", b, SerialAddress.getNodeFromSystemName("OL127B7", memo.getTrafficController()));
-        Assert.assertEquals("node of OL17007", c, SerialAddress.getNodeFromSystemName("OL17007", memo.getTrafficController()));
-        Assert.assertEquals("node of OL17B7", c, SerialAddress.getNodeFromSystemName("OL17B7", memo.getTrafficController()));
-        Assert.assertEquals("node of OL11007", null, SerialAddress.getNodeFromSystemName("OL11007", memo.getTrafficController()));
-        Assert.assertEquals("node of OL11B7", null, SerialAddress.getNodeFromSystemName("OL11B7", memo.getTrafficController()));
+        SerialNode d = new SerialNode(14, SerialNode.IO48, memo);
+        SerialNode c = new SerialNode(17, SerialNode.IO24, memo);
+        SerialNode b = new SerialNode(127, SerialNode.IO24, memo);
+        Assert.assertEquals("node of OL14007", d,
+                SerialAddress.getNodeFromSystemName("OL14007", memo.getTrafficController()));
+        Assert.assertEquals("node of OL14B7", d,
+                SerialAddress.getNodeFromSystemName("OL14B7", memo.getTrafficController()));
+        Assert.assertEquals("node of OL127007", b,
+                SerialAddress.getNodeFromSystemName("OL127007", memo.getTrafficController()));
+        Assert.assertEquals("node of OL127B7", b,
+                SerialAddress.getNodeFromSystemName("OL127B7", memo.getTrafficController()));
+        Assert.assertEquals("node of OL17007", c,
+                SerialAddress.getNodeFromSystemName("OL17007", memo.getTrafficController()));
+        Assert.assertEquals("node of OL17B7", c,
+                SerialAddress.getNodeFromSystemName("OL17B7", memo.getTrafficController()));
+        Assert.assertEquals("node of OL11007", null,
+                SerialAddress.getNodeFromSystemName("OL11007", memo.getTrafficController()));
+        Assert.assertEquals("node of OL11B7", null,
+                SerialAddress.getNodeFromSystemName("OL11B7", memo.getTrafficController()));
     }
 
+    @Test
     public void testValidSystemNameConfig() {
-        SerialNode d = new SerialNode(4, SerialNode.IO24,memo);
-        SerialNode c = new SerialNode(10, SerialNode.IO48,memo);
+        SerialNode d = new SerialNode(4, SerialNode.IO24, memo);
+        SerialNode c = new SerialNode(10, SerialNode.IO48, memo);
         Assert.assertNotNull("exists", d);
         Assert.assertNotNull("exists", c);
         Assert.assertTrue("valid config OL4007", SerialAddress.validSystemNameConfig("OL4007", 'L', memo));
@@ -159,6 +197,7 @@ public class SerialAddressTest extends TestCase {
 
     }
 
+    @Test
     public void testConvertSystemNameFormat() {
         Assert.assertEquals("convert OL14007", "OL14B7", SerialAddress.convertSystemNameToAlternate("OL14007", "O"));
         Assert.assertEquals("convert OS7", "OS0B7", SerialAddress.convertSystemNameToAlternate("OS7", "O"));
@@ -172,6 +211,7 @@ public class SerialAddressTest extends TestCase {
         JUnitAppender.assertWarnMessage("node address field out of range in system name: OL128B7");
     }
 
+    @Test
     public void testNormalizeSystemName() {
         Assert.assertEquals("normalize OL14007", "OL14007", SerialAddress.normalizeSystemName("OL14007", "O"));
         Assert.assertEquals("normalize OL007", "OL7", SerialAddress.normalizeSystemName("OL007", "O"));
@@ -185,35 +225,17 @@ public class SerialAddressTest extends TestCase {
         JUnitAppender.assertWarnMessage("node address field out of range in system name: OL128B7");
     }
 
-    // from here down is testing infrastructure
-    public SerialAddressTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {SerialAddressTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(SerialAddressTest.class);
-        return suite;
-    }
-
     private OakTreeSystemConnectionMemo memo = null;
 
-    // The minimal setup for log4J
-    @Override
-    protected void setUp() {
+    @Before
+    public void setUp() {
         JUnitUtil.setUp();
         memo = new OakTreeSystemConnectionMemo();
         memo.setTrafficController(new SerialTrafficControlScaffold(memo)); // important for successful getTrafficController()
     }
 
-    @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 

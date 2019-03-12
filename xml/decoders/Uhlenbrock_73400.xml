@@ -36,7 +36,7 @@
     <variables>
       <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/vStartHighMid-accelDecel.xml"/>
-      <variable item="Decoder Version" CV="7" default="4" readOnly="yes">
+      <variable item="Decoder Version" CV="7" readOnly="yes" default="4">
         <decVal/>
         <label>Manufacturer Version No: </label>
         <label xml:lang="it">Versione Decoder: </label>

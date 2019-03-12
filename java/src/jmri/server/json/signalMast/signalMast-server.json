@@ -9,7 +9,7 @@
             "description": "System name of the signalMast"
         },
         "userName": {
-            "type": "string",
+            "type": ["string", "null"],
             "description": "User name of the signalMast"
         },
         "comment": {

@@ -74,7 +74,7 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
     /**
      * Set the Consist Type.
      *
-     * @param consistType, an integer, should be either
+     * @param consistType An integer, should be either
      *                     jmri.Consist.ADVANCED_CONSIST or
      *                     jmri.Consist.CS_CONSIST.
      */

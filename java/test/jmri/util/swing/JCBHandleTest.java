@@ -1,22 +1,25 @@
 package jmri.util.swing;
 
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Test;
+
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 
 /**
  *
  * @author	Bob Jacobsen Copyright 2014
  */
-public class JCBHandleTest extends TestCase {
+public class JCBHandleTest {
 
+    @Test
     public void testToStringReal() {
         JCBHandle<DummyObject> a = new JCBHandle<DummyObject>(new DummyObject());
         Assert.assertEquals("dummy output", a.toString());
     }
 
+    @Test
     public void testToStringEmpty() {
         JCBHandle<DummyObject> a = new JCBHandle<DummyObject>("no object");
         Assert.assertEquals("no object", a.toString());
@@ -30,32 +33,13 @@ public class JCBHandleTest extends TestCase {
         }
     }
 
-    // from here down is testing infrastructure
-    public JCBHandleTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", JCBHandleTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(JCBHandleTest.class);
-
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    @Override
-    protected void setUp() {
+    @Before
+    public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 

@@ -10,6 +10,8 @@ import jmri.ClockControl;
 import jmri.Memory;
 import jmri.Sensor;
 import jmri.Timebase;
+import jmri.TimebaseRateException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,6 +34,9 @@ import org.slf4j.LoggerFactory;
  */
 public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implements Timebase {
 
+    public static final double MINIMUM_RATE = 0.1;
+    public static final double MAXIMUM_RATE = 100;
+    
     public SimpleTimebase() {
         super("SIMPLECLOCK");
         // initialize time-containing memory
@@ -182,10 +187,10 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
 
     // methods for setting and getting rate
     @Override
-    public void setRate(double factor) {
-        if (factor < 0.1 || factor > 100) {
-            log.error("rate of " + factor + " is out of reasonable range, set to 1");
-            factor = 1;
+    public void setRate(double factor) throws TimebaseRateException {
+        if (factor < MINIMUM_RATE || factor > MAXIMUM_RATE) {
+            log.error("rate of " + factor + " is out of reasonable range");
+            throw new TimebaseRateException();
         }
         if (internalMaster && (!notInitialized)) {
             log.error("Probable Error - questionable attempt to change fast clock rate");
@@ -214,12 +219,12 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
     }
 
     @Override
-    public void userSetRate(double factor) {
+    public void userSetRate(double factor) throws TimebaseRateException {
         // this call is used when user changes fast clock rate either in Setup Fast Clock or via a ClockControl
         // implementation
-        if (factor < 0.1 || factor > 100) {
-            log.error("rate of " + factor + " is out of reasonable range, set to 1");
-            factor = 1;
+        if (factor < MINIMUM_RATE || factor > MAXIMUM_RATE) {
+            log.error("rate of " + factor + " is out of reasonable range");
+            throw new TimebaseRateException();
         }
         double oldFactor = hardwareFactor;
         Date now = getTime();

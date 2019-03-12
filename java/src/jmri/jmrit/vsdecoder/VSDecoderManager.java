@@ -761,17 +761,20 @@ public class VSDecoderManager implements PropertyChangeListener {
             PhysicalLocationReporter arp = (PhysicalLocationReporter) event.getSource();
             // Need to decide which reporter it is, so we can use different methods
             // to extract the address and the location.
-            if (event.getNewValue() instanceof String) {
-                String newValue = (String) event.getNewValue();
-                if (arp.getDirection(newValue) == PhysicalLocationReporter.Direction.ENTER) {
-                    setDecoderPositionByAddr(arp.getLocoAddress(newValue), arp.getPhysicalLocation(newValue));
+            if (event.getNewValue() instanceof IdTag) {
+                // RFID-tag, Digitrax Transponding tags, RailCom tags
+                if (event.getNewValue() instanceof jmri.jmrix.loconet.TranspondingTag) {
+                    String repVal = ((jmri.Reportable) event.getNewValue()).toReportString();
+                    if (arp.getDirection(repVal) == PhysicalLocationReporter.Direction.ENTER) {
+                        setDecoderPositionByAddr(arp.getLocoAddress(repVal), arp.getPhysicalLocation(repVal));
+                    }
+                } else {
+                    // newValue is of IdTag type.
+                    // Dcc4Pc, Ecos, 
+                    // Assume Reporter "arp" is the most recent seen location
+                    IdTag newValue = (IdTag) event.getNewValue();
+                    setDecoderPositionByAddr(arp.getLocoAddress(newValue.getTagID()), arp.getPhysicalLocation(null));
                 }
-            } else if (event.getNewValue() instanceof IdTag) {
-                // newValue is of IdTag type.
-                // Dcc4Pc, Ecos, 
-                // Assume Reporter "arp" is the most recent seen location
-                IdTag newValue = (IdTag) event.getNewValue();
-                setDecoderPositionByAddr(arp.getLocoAddress(newValue.getTagID()), arp.getPhysicalLocation(null));
             } else {
                 log.debug("Reporter's return type is not supported.");
                 // do nothing
@@ -792,84 +795,88 @@ public class VSDecoderManager implements PropertyChangeListener {
             PhysicalLocationReporter arp = (PhysicalLocationReporter) event.getSource();
             // Need to decide which reporter it is, so we can use different methods
             // to extract the address and the location.
-            if (event.getNewValue() instanceof String) {
-                String newValue = (String) event.getNewValue(); // e.g. "1709 enter"
-                LocoAddress xa = arp.getLocoAddress(newValue); // e.g. 1709(D)
-                // 1) is loco address valid?
-                if (decoderInBlock.containsKey(xa.getNumber())) {
-                    VSDecoder d = decoderInBlock.get(xa.getNumber());
-                    Reporter rp = (Reporter) event.getSource();
-                    int new_rp = Integer.parseInt(rp.getSystemName().substring(2));
-                    // 2) Reporter must be valid for GeoData processing
-                    //    use the current Reporter list as a filter (changeable by a Train selection)
-                    if (reporterlists.get(d.setup_index).contains(new_rp)) {
-                        if (arp.getDirection(newValue) == PhysicalLocationReporter.Direction.ENTER) {
-                            // currentReport ENTER
-                            // -------------------
-                            int new_rp_index = reporterlists.get(d.setup_index).indexOf(new_rp);
-                            log.debug("new_rp: {} new_rp_index: {}", new_rp, new_rp_index);
-                            int old_rp = -1; // set to "undefined"
-                            int old_rp_index = -1; // set to "undefined"
-                            int ix = getArrayIndex(xa.getNumber()); 
-                            if (ix < locoInBlock.length) {
-                                old_rp = locoInBlock[ix][block];
-                                if (old_rp == 0) old_rp = -1; // set to "undefined"
-                                old_rp_index = reporterlists.get(d.setup_index).indexOf(old_rp); // -1 if not found (undefined)
-                            } else {
-                                log.warn(" Array locoInBlock INDEX {} IS NOT VALID! Set to 0.", ix);
-                                ix = 0;
-                            }
-                            log.debug("new_rp: {}, old_rp: {}, new index: {}, old index: {}", new_rp, old_rp, new_rp_index, old_rp_index);
-                            // 3) Validation check: don't proceed when it's the same reporter
-                            if (new_rp != old_rp) {
-                                // 4) Validation check: reporter must be a new or a neighbor reporter
-                                int lastrepix = reporterlists.get(d.setup_index).size() - 1; // Get the index of the last Reporter
-                                if ((old_rp == -1) // Loco can be in any section, if it's the first reported section; old rp is "undefined"
-                                        || (old_rp_index + d.dirfn == new_rp_index) // Loco is running forward or reverse
-                                        || (circlelist.get(d.setup_index) && d.dirfn == -1 && old_rp_index == 0 && new_rp_index == lastrepix) // Loco is running reverse and circling
-                                        || (circlelist.get(d.setup_index) && d.dirfn ==  1 && old_rp_index == lastrepix && new_rp_index == 0)) { // Loco is running forward and circling
-                                    // Validation check: OK
-                                    locoInBlock[ix][block] = new_rp; // Set new block number (int)
-                                    log.debug(" distance rest (old) to go in block {}: {} cm", old_rp, locoInBlock[ix][distance_to_go]);
-                                    locoInBlock[ix][distance_to_go] = Math.round(blockParameter[d.setup_index][new_rp_index][length] * 100.0f); // block distance init: block length in cm
-                                    log.debug(" distance rest (new) to go in block {}: {} cm", new_rp, locoInBlock[ix][distance_to_go]);
-                                    // get the new sound position point (depends on the loco traveling direction)
-                                    if (d.dirfn == 1) {
-                                        posToSet = blockPositionlists.get(d.setup_index).get(new_rp_index);
-                                    } else {
-                                        posToSet = blockPositionlists.get(d.setup_index).get(new_rp_index + 1);
-                                    }
-                                    if (old_rp == -1 && d.startPos != null) { // Special case start position: first choise; if found, overwrite it.
-                                        posToSet = d.startPos;
-                                    }
-                                    log.debug("position to set: {}", posToSet);  
-                                    setDecoderPositionByAddr(xa, posToSet); // Sound set position
-                                    stopSoundPositionTimer(d);
-                                    startSoundPositionTimer(d); // timer restart
+            if (event.getNewValue() instanceof IdTag) {
+                // RFID-tag, Digitrax Transponding tags, RailCom tags
+                if (event.getNewValue() instanceof jmri.jmrix.loconet.TranspondingTag) {
+                    String repVal = ((jmri.Reportable) event.getNewValue()).toReportString();
+                    LocoAddress xa = arp.getLocoAddress(repVal); // e.g. 1709(D)
+                    log.debug("repVal: {}, xa: {}, number: {}", repVal, xa, xa.getNumber());
+                    // 1) is loco address valid?
+                    if (decoderInBlock.containsKey(xa.getNumber())) {
+                        VSDecoder d = decoderInBlock.get(xa.getNumber());
+                        Reporter rp = (Reporter) event.getSource();
+                        int new_rp = Integer.parseInt(rp.getSystemName().substring(2));
+                        // 2) Reporter must be valid for GeoData processing
+                        //    use the current Reporter list as a filter (changeable by a Train selection)
+                        if (reporterlists.get(d.setup_index).contains(new_rp)) {
+                            if (arp.getDirection(repVal) == PhysicalLocationReporter.Direction.ENTER) {
+                                // currentReport ENTER
+                                // -------------------
+                                int new_rp_index = reporterlists.get(d.setup_index).indexOf(new_rp);
+                                log.debug("new_rp: {} new_rp_index: {}", new_rp, new_rp_index);
+                                int old_rp = -1; // set to "undefined"
+                                int old_rp_index = -1; // set to "undefined"
+                                int ix = getArrayIndex(xa.getNumber()); 
+                                if (ix < locoInBlock.length) {
+                                    old_rp = locoInBlock[ix][block];
+                                    if (old_rp == 0) old_rp = -1; // set to "undefined"
+                                    old_rp_index = reporterlists.get(d.setup_index).indexOf(old_rp); // -1 if not found (undefined)
                                 } else {
-                                    log.debug(" Validation failed! Last reporter: {}, new reporter: {}, dirfn: {} for {}", old_rp, new_rp, d.dirfn, xa.getNumber());
+                                    log.warn(" Array locoInBlock INDEX {} IS NOT VALID! Set to 0.", ix);
+                                    ix = 0;
                                 }
-                            } else {
-                                log.debug(" Same Reporter, position not set!");
+                                log.debug("new_rp: {}, old_rp: {}, new index: {}, old index: {}", new_rp, old_rp, new_rp_index, old_rp_index);
+                                // 3) Validation check: don't proceed when it's the same reporter
+                                if (new_rp != old_rp) {
+                                    // 4) Validation check: reporter must be a new or a neighbour reporter or must rotating in a circle
+                                    int lastrepix = reporterlists.get(d.setup_index).size() - 1; // Get the index of the last Reporter
+                                    if ((old_rp == -1) // Loco can be in any section, if it's the first reported section; old rp is "undefined"
+                                            || (old_rp_index + d.dirfn == new_rp_index) // Loco is running forward or reverse
+                                            || (circlelist.get(d.setup_index) && d.dirfn == -1 && old_rp_index == 0 && new_rp_index == lastrepix) // Loco is running reverse and circling
+                                            || (circlelist.get(d.setup_index) && d.dirfn ==  1 && old_rp_index == lastrepix && new_rp_index == 0)) { // Loco is running forward and circling
+                                        // Validation check: OK
+                                        locoInBlock[ix][block] = new_rp; // Set new block number (int)
+                                        log.debug(" distance rest (old) to go in block {}: {} cm", old_rp, locoInBlock[ix][distance_to_go]);
+                                        locoInBlock[ix][distance_to_go] = Math.round(blockParameter[d.setup_index][new_rp_index][length] * 100.0f); // block distance init: block length in cm
+                                        log.debug(" distance rest (new) to go in block {}: {} cm", new_rp, locoInBlock[ix][distance_to_go]);
+                                        // get the new sound position point (depends on the loco traveling direction)
+                                        if (d.dirfn == 1) {
+                                            posToSet = blockPositionlists.get(d.setup_index).get(new_rp_index); // Start position
+                                        } else {
+                                            posToSet = blockPositionlists.get(d.setup_index).get(new_rp_index + 1); // End position
+                                        }
+                                        if (old_rp == -1 && d.startPos != null) { // Special case start position: first choice; if found, overwrite it.
+                                            posToSet = d.startPos;
+                                        }
+                                        log.debug("position to set: {}", posToSet);  
+                                        setDecoderPositionByAddr(xa, posToSet); // Sound set position
+                                        stopSoundPositionTimer(d);
+                                        startSoundPositionTimer(d); // timer restart
+                                    } else {
+                                        log.debug(" Validation failed! Last reporter: {}, new reporter: {}, dirfn: {} for {}", old_rp, new_rp, d.dirfn, xa.getNumber());
+                                    }
+                                } else {
+                                    log.debug(" Same Reporter, position not set!");
+                                }
                             }
+                        } else {
+                            log.debug("Reporter {} not valid for {} setup {}", new_rp, VSDGeoFile.VSDGeoDataFileName, d.setup_index + 1);
                         }
                     } else {
-                        log.debug("Reporter {} not valid for {} setup {}", new_rp, VSDGeoFile.VSDGeoDataFileName, d.setup_index + 1);
+                        log.debug(" decoder address {} is not valid!", xa.getNumber());
                     }
                 } else {
-                    log.debug(" decoder address {} is not valid!", xa.getNumber());
-                }
-            } else if (event.getNewValue() instanceof IdTag) {
-                // newValue is of IdTag type.
-                // Dcc4Pc, Ecos, 
-                // Assume Reporter "arp" is the most recent seen location
-                IdTag newValue = (IdTag) event.getNewValue();
-                setDecoderPositionByAddr(arp.getLocoAddress(newValue.getTagID()), arp.getPhysicalLocation(null));
+                    // newValue is of IdTag type.
+                    // Dcc4Pc, Ecos, 
+                    // Assume Reporter "arp" is the most recent seen location
+                    IdTag tagValue = (IdTag) event.getNewValue();
+                    log.debug("new value: {}, id: {}", tagValue, tagValue.getTagID());
+                    setDecoderPositionByAddr(arp.getLocoAddress(tagValue.getTagID()), arp.getPhysicalLocation(null));
+                } 
             } else {
                 log.debug("Reporter's return type is not supported");
                 // do nothing
             }
-
         } else {
             log.debug("Reporter doesn't support physical location reporting or isn't reporting new info");
         } // Reporting object implements PhysicalLocationReporter

@@ -1,25 +1,30 @@
 package jmri.managers;
 
+import static org.junit.Assert.assertNotNull;
+
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
 import jmri.Conditional;
 import jmri.ConditionalManager;
 import jmri.InstanceManager;
 import jmri.Logix;
-import junit.framework.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
 
 /**
  * Tests for the jmri.managers.DefaultConditionalManager class.
  *
  * @author	Bob Jacobsen Copyright (C) 2015
  */
-public class DefaultConditionalManagerTest extends TestCase {
+public class DefaultConditionalManagerTest {
 
+    @Test
     public void testCtor() {
         new DefaultConditionalManager();
     }
 
+    @Test
     public void testCreate() {
         ConditionalManager m = new DefaultConditionalManager();
 
@@ -30,6 +35,7 @@ public class DefaultConditionalManagerTest extends TestCase {
         Assert.assertFalse(c1.equals(c2));
     }
 
+    @Test
     public void testUserNameOverlap() {
         ConditionalManager m = new DefaultConditionalManager();
 
@@ -40,16 +46,9 @@ public class DefaultConditionalManagerTest extends TestCase {
         Assert.assertTrue(c2.getUserName().equals("Foo"));
     }
 
-    // from here down is testing infrastructure
-    public DefaultConditionalManagerTest(String s) {
-        super(s);
-    }
-
-    // The minimal setup for log4J
-    @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         jmri.util.JUnitUtil.setUp();
-        super.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
         jmri.util.JUnitUtil.initInternalTurnoutManager();
         jmri.util.JUnitUtil.initInternalLightManager();
@@ -67,21 +66,8 @@ public class DefaultConditionalManagerTest extends TestCase {
         InstanceManager.getDefault(jmri.LogixManager.class).register(x2);
     }
 
-    @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         jmri.util.JUnitUtil.tearDown();
     }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", DefaultConditionalManagerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(DefaultConditionalManagerTest.class);
-        return suite;
-    }
-
 }

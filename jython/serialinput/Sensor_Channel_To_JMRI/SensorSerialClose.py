@@ -24,8 +24,8 @@ class SerialCloseMux(jmri.jmrit.automat.AbstractAutomaton) :
     
     # handle() is called repeatedly until it returns false.
     def handle(self) : 
-	      
-		  return 0
+          
+          return 0
     
     def write(self, data) : 
 

@@ -779,8 +779,8 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      * </ul> Does not check for duplicates.
      *
      * @return Filename for RosterEntry
-     * @throws IllegalArgumentException if called with null or empty entry name
      * @param entry the getId() entry name from the RosterEntry
+     * @throws IllegalArgumentException if called with null or empty entry name
      * @see RosterEntry#ensureFilenameExists()
      * @since 2.1.5
      */

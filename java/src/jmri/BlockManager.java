@@ -1,12 +1,12 @@
 package jmri;
 
+import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.VetoableChangeListener;
-import java.beans.PropertyChangeEvent;
 import java.text.DecimalFormat;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
-import java.time.Instant;
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
@@ -35,9 +35,9 @@ import jmri.managers.AbstractManager;
  *
  * @author Bob Jacobsen Copyright (C) 2006
  */
-public class BlockManager extends AbstractManager<Block> implements PropertyChangeListener, VetoableChangeListener, InstanceManagerAutoDefault {
+public class BlockManager extends AbstractManager<Block> implements ProvidingManager<Block>, PropertyChangeListener, VetoableChangeListener, InstanceManagerAutoDefault {
 
-    private String powerManagerChangeName;
+    private final String powerManagerChangeName;
 
     public BlockManager() {
         super();
@@ -366,6 +366,11 @@ public class BlockManager extends AbstractManager<Block> implements PropertyChan
             return Long.MAX_VALUE;
         }
         return Instant.now().toEpochMilli() - lastTimeLayoutPowerOn.toEpochMilli();
+    }
+
+    @Override
+    public Block provide(String name) throws IllegalArgumentException {
+        return provideBlock(name);
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BlockManager.class);

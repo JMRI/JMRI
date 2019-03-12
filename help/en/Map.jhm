@@ -42,8 +42,11 @@
 
 <mapID target="releasenotes.current-draft-note" url="releasenotes/current-draft-note.shtml"/>
 
+<<<<<<< HEAD
 <mapID target="package.jmri.jmrit.ctc.CTC_editor" url="package/jmri/jmrit/ctc/CTC.shtml#editor"/>
 
+=======
+>>>>>>> master
 <mapID target="manual.DecoderPro.Main_LocoNet_Packet" url="manual/DecoderPro/Main_LocoNet.shtml#Packet"/>
 
 <mapID target="package.jmri.jmrix.loconet.duplexgroup.DuplexGroupTabbedPanel_Starting" url="package/jmri/jmrix/loconet/duplexgroup/DuplexGroupTabbedPanel.shtml#Starting"/>
@@ -400,6 +403,8 @@
 
 <mapID target="html.hardware.cmri.CMRI_L459" url="html/hardware/cmri/CMRI.shtml#L459"/>
 
+<mapID target="html.hardware.loconet.DCS240" url="html/hardware/loconet/DCS240.shtml"/>
+
 <mapID target="package.jmri.jmrit.operations.Operations_LocomotiveConsists" url="package/jmri/jmrit/operations/Operations.shtml#LocomotiveConsists"/>
 
 <mapID target="html.apps.DecoderPro.Install" url="html/apps/DecoderPro/Install.shtml"/>
@@ -527,6 +532,8 @@
 <mapID target="package.jmri.jmrit.operations.Operations_CopyAutomation" url="package/jmri/jmrit/operations/Operations.shtml#CopyAutomation"/>
 
 <mapID target="manual.DecoderPro.Comp_Analog_Top" url="manual/DecoderPro/Comp_Analog.shtml#Top"/>
+
+<mapID target="package.jmri.jmrix.loconet.usb_dcs240.swing.Dcs240UsbModeSelect" url="package/jmri/jmrix/loconet/usb_dcs240/swing/Dcs240UsbModeSelect.shtml"/>
 
 <mapID target="manual.DecoderPro.Start_Preferences_WiThrottle" url="manual/DecoderPro/Start_Preferences.shtml#WiThrottle"/>
 
@@ -1421,6 +1428,8 @@
 <mapID target="manual.DecoderPro3.Main_LocoNet_SoundDownloader" url="manual/DecoderPro3/Main_LocoNet.shtml#SoundDownloader"/>
 
 <mapID target="html.tools.signaling.IntroToSignalingYourMRR" url="html/tools/signaling/IntroToSignalingYourMRR.html"/>
+
+<mapID target="package.jmri.jmrix.loconet.usb_dcs52.swing.Dcs52UsbModeSelect" url="package/jmri/jmrix/loconet/usb_dcs52/swing/Dcs52UsbModeSelect.shtml"/>
 
 <mapID target="html.tools.throttle.ThrottleChapter3_ViewPanels" url="html/tools/throttle/ThrottleChapter3.shtml#ViewPanels"/>
 
@@ -2626,6 +2635,8 @@
 
 <mapID target="package.jmri.jmrit.operations.Operations_PlannedPickUps" url="package/jmri/jmrit/operations/Operations.shtml#PlannedPickUps"/>
 
+<mapID target="package.jmri.jmrix.loconet.pr4.swing.Pr4Select" url="package/jmri/jmrix/loconet/pr4/swing/Pr4Select.shtml"/>
+
 <mapID target="html.setup.index_startprog" url="html/setup/index.shtml#startprog"/>
 
 <mapID target="manual.DecoderPro3.index_AdvancedProgrammer" url="manual/DecoderPro3/index.shtml#AdvancedProgrammer"/>
@@ -3433,6 +3444,8 @@
 <mapID target="package.jmri.jmrit.ctc.CTC_frmTRL" url="package/jmri/jmrit/ctc/CTC.shtml#frmTRL"/>
 
 <mapID target="html.tools.signaling.index_scripting" url="html/tools/signaling/index.shtml#scripting"/>
+
+<mapID target="html.hardware.loconet.DCS52" url="html/hardware/loconet/DCS52.shtml"/>
 
 <mapID target="html.hardware.loconet.LocoNetClasses" url="html/hardware/loconet/LocoNetClasses.shtml"/>
 

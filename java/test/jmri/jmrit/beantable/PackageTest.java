@@ -27,6 +27,7 @@ import org.junit.runners.Suite;
         BeanTablePaneTest.class,
         EnablingCheckboxRendererTest.class,
         IdTagTableActionTest.class,
+        IdTagTableTabActionTest.class,
         LightTableActionTest.class,
         LightTableTabActionTest.class,
         ListedTableActionTest.class,

@@ -4,24 +4,25 @@ import jmri.jmrix.lenz.LenzCommandStation;
 import jmri.jmrix.lenz.XNetInterfaceScaffold;
 import jmri.jmrix.lenz.XNetListenerScaffold;
 import jmri.jmrix.lenz.XNetSystemConnectionMemo;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Test;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Assert;
 
 /**
  * LI100XNetInitializationManagerTest.java
  *
- * Description:	tests for the
+ * Description: tests for the
  * jmri.jmrix.lenz.li100.LI100XNetInitializationManager class
  *
- * @author	Paul Bender
+ * @author Paul Bender
  */
-public class LI100XNetInitializationManagerTest extends TestCase {
+public class LI100XNetInitializationManagerTest {
 
+    @Test
     public void testCtor() {
 
-// infrastructure objects
+        // infrastructure objects
         XNetInterfaceScaffold t = new XNetInterfaceScaffold(new LenzCommandStation());
         XNetListenerScaffold l = new XNetListenerScaffold();
 
@@ -29,7 +30,7 @@ public class LI100XNetInitializationManagerTest extends TestCase {
         LI100XNetInitializationManager m = new LI100XNetInitializationManager(memo) {
             @Override
             protected int getInitTimeout() {
-                return 50;   // shorten, because this will fail & delay test
+                return 50; // shorten, because this will fail & delay test
             }
         };
 
@@ -37,36 +38,17 @@ public class LI100XNetInitializationManagerTest extends TestCase {
         Assert.assertNotNull("exists", l);
         Assert.assertNotNull("exists", m);
         Assert.assertNotNull("exists", memo);
-        jmri.util.JUnitAppender.assertWarnMessage("Command Station disconnected, or powered down assuming LZ100/LZV100 V3.x");
+        jmri.util.JUnitAppender
+                .assertWarnMessage("Command Station disconnected, or powered down assuming LZ100/LZV100 V3.x");
     }
 
-    // from here down is testing infrastructure
-    public LI100XNetInitializationManagerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", LI100XNetInitializationManagerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(LI100XNetInitializationManagerTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         jmri.util.JUnitUtil.setUp();
-        super.setUp();
     }
 
-    @Override
-    protected void tearDown() throws Exception {
-        super.tearDown();
+    @After
+    public void tearDown() throws Exception {
         jmri.util.JUnitUtil.tearDown();
     }
 
