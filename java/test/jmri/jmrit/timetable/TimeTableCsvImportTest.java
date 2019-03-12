@@ -105,7 +105,7 @@ public class TimeTableCsvImportTest {
         // Create a test CSV file for the import test
         try (Writer writer = new BufferedWriter(new OutputStreamWriter(
                 new FileOutputStream(file.getAbsolutePath()), "utf-8"))) {
-           writer.write("Layout,Test Layout,N,6,0,Yes\n");
+           writer.write("Layout,Time Table CSV Test Layout,N,6,0,Yes\n");
            writer.write("TrainType,Freight,123123\n");
            writer.write("Segment,Mainline\n");
            writer.write("Station\n");

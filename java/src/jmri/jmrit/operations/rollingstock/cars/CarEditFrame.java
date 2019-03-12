@@ -220,6 +220,9 @@ public class CarEditFrame extends RollingStockEditFrame implements java.beans.Pr
             log.debug("Type comboBox sees change, update car loads");
             InstanceManager.getDefault(CarLoads.class).updateComboBox((String) typeComboBox.getSelectedItem(),
                     loadComboBox);
+            if (_rs != null) {
+                loadComboBox.setSelectedItem(((Car)_rs).getLoadName());
+            }
         }
         if (ae.getSource() == lengthComboBox && autoWeightCheckBox.isSelected()) {
             calculateWeight();

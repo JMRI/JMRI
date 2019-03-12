@@ -1,6 +1,8 @@
 package jmri.jmrit.display.panelEditor;
 
 import java.awt.GraphicsEnvironment;
+
+import jmri.jmrit.display.AbstractEditorTestBase;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -10,42 +12,40 @@ import org.junit.Test;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
-public class PanelEditorTest extends jmri.jmrit.display.AbstractEditorTestBase {
-        
-    private PanelEditor pe = null;
+public class PanelEditorTest extends AbstractEditorTestBase<PanelEditor> {
 
     @Test
     public void testDefaultCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         PanelEditor p = new PanelEditor();
-        Assert.assertNotNull("exists",p);
+        Assert.assertNotNull("exists", p);
         p.dispose();
     }
 
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertNotNull("exists",pe);
+        Assert.assertNotNull("exists", e);
     }
 
     // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
+        JUnitUtil.resetProfileManager();
         if (!GraphicsEnvironment.isHeadless()) {
-            e = pe = new PanelEditor("Panel Editor Test");
+            e = new PanelEditor("Panel Editor Test");
         }
     }
 
     @After
     public void tearDown() {
-        if (pe != null) {
-            JUnitUtil.dispose(pe);
-            JUnitUtil.dispose(pe.getTargetFrame());
-            e = pe = null;
+        if (e != null) {
+            JUnitUtil.dispose(e.getTargetFrame());
+            JUnitUtil.dispose(e);
+            e = null;
         }
         JUnitUtil.tearDown();
     }

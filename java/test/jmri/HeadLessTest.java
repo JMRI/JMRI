@@ -3,6 +3,8 @@ package jmri;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
+import jmri.util.junit.TestClassMainMethod;
+
 /**
  * Invoke complete set of tests for the jmri package
  *
@@ -16,8 +18,8 @@ import org.junit.runners.Suite;
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <p>
- * @author	Bob Jacobsen, Copyright (C) 2001, 2002, 2007
+ * 
+ * @author Bob Jacobsen, Copyright (C) 2001, 2002, 2007
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
@@ -34,6 +36,6 @@ public class HeadLessTest {
         System.setProperty("java.awt.headless", "true");
 
         // start tests
-        org.junit.runner.JUnitCore.runClasses(HeadLessTest.class);
+        TestClassMainMethod.run(HeadLessTest.class);
     }
 }

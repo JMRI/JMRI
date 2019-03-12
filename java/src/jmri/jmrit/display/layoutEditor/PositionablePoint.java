@@ -1270,15 +1270,17 @@ public class PositionablePoint extends LayoutTrack {
                     linkPointsBox.addItem(p.getName());
                     linkPointsBox.setSelectedItem(p.getName());
                 } else if (p.getLinkedPoint() == null) {
-                    if ((p.getConnect1() != null) && (p.getConnect1().getLayoutBlock() != null)) {
-                        pointList.add(p);
-                        linkPointsBox.addItem(p.getName());
+                    if (p.getConnect1() != null && p.getConnect1().getLayoutBlock() != null) {
+                        if (p.getConnect1().getLayoutBlock() != getConnect1().getLayoutBlock()) {
+                            pointList.add(p);
+                            linkPointsBox.addItem(p.getConnect1().getLayoutBlock().getDisplayName());
+                        }
                     }
                 }
             }
         }
         editLink.pack();
-    }   // updatePointBox
+    } // updatePointBox
 
     public void updateLink() {
         if (editorCombo.getSelectedIndex() == 0 || linkPointsBox.getSelectedIndex() == -1) {

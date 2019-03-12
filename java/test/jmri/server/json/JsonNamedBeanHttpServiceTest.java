@@ -37,6 +37,29 @@ public class JsonNamedBeanHttpServiceTest extends JsonHttpServiceTestBase {
     }
 
     /**
+     * Test of doGet method, of class JsonNamedBeanHttpService with
+     * invalid NamedBean types. Uses a JsonTurnoutHttpService since the
+     * JsonNamedBeanHttpService is abstract. This only tests the error
+     * cases since subclasses test successful cases.
+     *
+     * @throws java.lang.Exception on unexpected exceptions
+     */
+    @Test
+    public void testDoGet() throws Exception {
+        String name = "non-existant";
+        String type = "non-existant";
+        JsonNamedBeanHttpService<Turnout> instance = new JsonTurnoutHttpService(this.mapper);
+        try {
+            instance.doGet(type, name, locale);
+            Assert.fail("Expected JsonException not thrown.");
+        } catch (JsonException ex) {
+            this.validate(ex.getJsonMessage());
+            Assert.assertEquals("Error code is HTTP \"internal error\"", 500, ex.getCode());
+            Assert.assertEquals("Error message is HTTP \"not found\"", "There was an error; see the JMRI application logs for details.", ex.getLocalizedMessage());
+        }
+    }
+
+    /**
      * Test of getNamedBean method, of class JsonNamedBeanHttpService with
      * invalid NamedBean types. Uses a JsonTurnoutHttpService since the
      * JsonNamedBeanHttpService is abstract.
