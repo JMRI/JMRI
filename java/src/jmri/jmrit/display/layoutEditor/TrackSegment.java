@@ -820,7 +820,8 @@ public class TrackSegment extends LayoutTrack {
     private void addNumericMenuItem(@Nonnull JMenu menu,
             @Nonnull String titleKey, @Nonnull String tooltipKey,
             @Nonnull Supplier<Integer> val,
-            @Nonnull Consumer<Integer> set, @Nullable Predicate<Integer> predicate) {
+            @Nonnull Consumer<Integer> set,
+            @Nullable Predicate<Integer> predicate) {
         int oldVal = val.get();
         JMenuItem jmi = menu.add(new JMenuItem(Bundle.getMessage("MakeLabel",
                 Bundle.getMessage(titleKey)) + oldVal));
