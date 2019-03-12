@@ -42,7 +42,15 @@ public class JsonSensorHttpServiceTest {
             sensor1.setKnownState(Sensor.INACTIVE);
             result = service.doGet(JsonSensor.SENSOR, "IS1", Locale.ENGLISH);
             Assert.assertNotNull(result);
-            Assert.assertEquals(Sensor.INACTIVE, result.path(JSON.DATA).path(JSON.STATE).asInt(-1));
+            Assert.assertEquals(JSON.INACTIVE, result.path(JSON.DATA).path(JSON.STATE).asInt(-1));
+            sensor1.setKnownState(Sensor.INCONSISTENT);
+            result = service.doGet(JsonSensor.SENSOR, "IS1", Locale.ENGLISH);
+            Assert.assertNotNull(result);
+            Assert.assertEquals(JSON.INCONSISTENT, result.path(JSON.DATA).path(JSON.STATE).asInt(-1));
+            sensor1.setKnownState(Sensor.UNKNOWN);
+            result = service.doGet(JsonSensor.SENSOR, "IS1", Locale.ENGLISH);
+            Assert.assertNotNull(result);
+            Assert.assertEquals(JSON.UNKNOWN, result.path(JSON.DATA).path(JSON.STATE).asInt(-1));
         } catch (JsonException ex) {
             Assert.fail(ex.getMessage());
         }
@@ -79,6 +87,27 @@ public class JsonSensorHttpServiceTest {
             result = service.doPost(JsonSensor.SENSOR, "IS1", message, Locale.ENGLISH);
             Assert.assertEquals(Sensor.INACTIVE, sensor1.getKnownState());
             Assert.assertEquals(JSON.INACTIVE, result.path(JSON.DATA).path(JSON.STATE).asInt(-1));
+            // set inverted - becomes active
+            Assert.assertFalse(sensor1.getInverted());
+            message = mapper.createObjectNode().put(JSON.NAME, "IS1").put(JSON.INVERTED, true);
+            result = service.doPost(JsonSensor.SENSOR, "IS1", message, Locale.ENGLISH);
+            Assert.assertTrue("Sensor is inverted", sensor1.getInverted());
+            Assert.assertEquals(JSON.ACTIVE, result.path(JSON.DATA).path(JSON.STATE).asInt());
+            Assert.assertEquals(true, result.path(JSON.DATA).path(JSON.INVERTED).asBoolean());
+            // reset inverted - becomes inactive
+            message = mapper.createObjectNode().put(JSON.NAME, "IS1").put(JSON.INVERTED, false);
+            result = service.doPost(JsonSensor.SENSOR, "IS1", message, Locale.ENGLISH);
+            Assert.assertFalse("Sensor is not inverted", sensor1.getInverted());
+            Assert.assertEquals(JSON.INACTIVE, result.path(JSON.DATA).path(JSON.STATE).asInt());
+            // set invalid state
+            message = mapper.createObjectNode().put(JSON.NAME, "IS1").put(JSON.STATE, 42); // Invalid value
+            try {
+                service.doPost(JsonSensor.SENSOR, "IS1", message, Locale.ENGLISH);
+                Assert.fail("Expected exception not thrown");
+            } catch (JsonException ex) {
+                Assert.assertEquals(HttpServletResponse.SC_BAD_REQUEST, ex.getCode());
+            }
+            Assert.assertEquals(Sensor.INACTIVE, sensor1.getState());
         } catch (JsonException ex) {
             Assert.fail(ex.getMessage());
         }
@@ -124,7 +153,7 @@ public class JsonSensorHttpServiceTest {
     @Test
     public void testDelete() {
         try {
-            (new JsonSensorHttpService(new ObjectMapper())).doDelete(JsonSensor.SENSOR, null, Locale.ENGLISH);
+            (new JsonSensorHttpService(new ObjectMapper())).doDelete(JsonSensor.SENSOR, "", Locale.ENGLISH);
         } catch (JsonException ex) {
             Assert.assertEquals(HttpServletResponse.SC_METHOD_NOT_ALLOWED, ex.getCode());
             return;

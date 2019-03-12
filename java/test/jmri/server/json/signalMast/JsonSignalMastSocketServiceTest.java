@@ -43,21 +43,27 @@ public class JsonSignalMastSocketServiceTest {
 
             service.onMessage(JsonSignalMast.SIGNAL_MAST, message, JSON.POST, Locale.ENGLISH);
             // TODO: test that service is listener in SignalMastManager
-            Assert.assertEquals(JSON.ASPECT_UNKNOWN, connection.getMessage().path(JSON.DATA).path(JSON.STATE).asText());
+            message = connection.getMessage();
+            Assert.assertNotNull("Message is not null", message);
+            Assert.assertEquals(JSON.ASPECT_UNKNOWN, message.path(JSON.DATA).path(JSON.STATE).asText());
 
             //change to Approach, and wait for change to show up
             s.setAspect("Approach");
             JUnitUtil.waitFor(() -> {
                 return s.getAspect().equals("Approach");
             }, "SignalMast is now Approach");
-            Assert.assertEquals("Approach", connection.getMessage().path(JSON.DATA).path(JSON.STATE).asText());
+            message = connection.getMessage();
+            Assert.assertNotNull("Message is not null", message);
+            Assert.assertEquals("Approach", message.path(JSON.DATA).path(JSON.STATE).asText());
 
             //change to Stop, and wait for change to show up
             s.setAspect("Stop");
             JUnitUtil.waitFor(() -> {
                 return s.getAspect().equals("Stop");
             }, "SignalMast is now Stop");
-            Assert.assertEquals("Stop", connection.getMessage().path(JSON.DATA).path(JSON.STATE).asText());
+            message = connection.getMessage();
+            Assert.assertNotNull("Message is not null", message);
+            Assert.assertEquals("Stop", message.path(JSON.DATA).path(JSON.STATE).asText());
 
             service.onClose();
 //            // TODO: test that service is no longer a listener in SignalMastManager

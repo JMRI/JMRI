@@ -549,8 +549,7 @@ public class PositionableLabelTest extends PositionableTestBase {
     // The minimal setup for log4J
     @Before
     public void setUp() {
-        JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
+        super.setUp();
         JUnitUtil.initConfigureManager();
         JUnitUtil.initDefaultUserMessagePreferences();
         if (!GraphicsEnvironment.isHeadless()) {
@@ -564,9 +563,8 @@ public class PositionableLabelTest extends PositionableTestBase {
     @Override
     @After
     public void tearDown() {
-        super.tearDown();
         to = null;
-        JUnitUtil.tearDown();
+        super.tearDown();
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PositionableLabelTest.class);

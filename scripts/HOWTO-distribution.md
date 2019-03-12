@@ -86,6 +86,7 @@ then manually update the end of that line above in this document to be this vers
     JMRI:
     * build.xml in the jmri.copyright.years property value
     * xml/XSLT/build.xml
+    * A flock of places in xml/XSLT/
     * scripts//WinInstallFiles/LaunchJMRI.nsi
     website:
     * Copyright.shtml (3 places)
