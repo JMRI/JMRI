@@ -68,7 +68,7 @@ import org.slf4j.LoggerFactory;
  * placed here by Set Signals at Level Crossing in Tools menu.
  *
  * @author Dave Duchamp Copyright (c) 2004-2007
- * @author George Warner Copyright (c) 2017-2018
+ * @author George Warner Copyright (c) 2017-2019
  */
 public class LayoutSlip extends LayoutTurnout {
 
@@ -191,7 +191,7 @@ public class LayoutSlip extends LayoutTurnout {
                 return connectD;
             default:
                 log.error("Invalid Connection Type " + connectionType); //I18IN
-                throw new jmri.JmriException("Invalid Connection Type " + connectionType);    
+                throw new jmri.JmriException("Invalid Connection Type " + connectionType);
         }
     }
 
@@ -759,7 +759,7 @@ public class LayoutSlip extends LayoutTurnout {
             jmi.setEnabled(false);
 
             boolean blockAssigned = false;
-            if ((blockName == null) || (blockName.isEmpty())) {
+            if (getBlockName().isEmpty()) {
                 jmi = popup.add(Bundle.getMessage("NoBlock"));
                 jmi.setEnabled(false);
             } else {
@@ -1001,7 +1001,7 @@ public class LayoutSlip extends LayoutTurnout {
     public String[] getBlockBoundaries() {
         final String[] boundaryBetween = new String[4];
 
-        if ((blockName != null) && (!blockName.isEmpty()) && (getLayoutBlock() != null)) {
+        if ((!getBlockName().isEmpty()) && (getLayoutBlock() != null)) {
             if ((connectA instanceof TrackSegment) && (((TrackSegment) connectA).getLayoutBlock() != getLayoutBlock())) {
                 try {
                     boundaryBetween[0] = (((TrackSegment) connectA).getLayoutBlock().getDisplayName() + " - " + getLayoutBlock().getDisplayName());

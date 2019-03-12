@@ -10,6 +10,8 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import jmri.TimebaseRateException;
+
 /**
  * Tests for the SimpleTimebase class
  *
@@ -107,7 +109,7 @@ public class SimpleTimebaseTest {
     }
 
     @Test
-    public void testSetGetRate() {
+    public void testSetGetRate() throws TimebaseRateException {
         SimpleTimebase p = new SimpleTimebase();
         p.setRun(false); // prevent clock ticking during test
 
@@ -150,7 +152,7 @@ public class SimpleTimebaseTest {
     
     @Test
     @Ignore("Disabled in JUnit 3")
-    public void testShortDelay() {
+    public void testShortDelay() throws TimebaseRateException {
         SimpleTimebase p = new SimpleTimebase();
         Date now = new Date();
         p.setTime(now);

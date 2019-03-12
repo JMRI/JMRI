@@ -1,7 +1,6 @@
 package jmri.jmrit.display;
 
 import java.awt.GraphicsEnvironment;
-import jmri.util.JUnitUtil;
 import org.junit.*;
 
 /**
@@ -19,9 +18,8 @@ public class LightIconTest extends PositionableTestBase {
 
     @Before
     public void setUp() {
-        JUnitUtil.setUp();
+        super.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
-            JUnitUtil.resetProfileManager();
             editor = new EditorScaffold();
             p = new LightIcon(editor);
         }
@@ -29,9 +27,7 @@ public class LightIconTest extends PositionableTestBase {
 
     @After
     public void tearDown() {
-        editor = null;
-        p = null;
-        JUnitUtil.tearDown();
+        super.tearDown();
     }
 
 }

@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
  * LayoutEditor.
  *
  * @author David Duchamp Copyright (c) 2007
- * @author George Warner Copyright (c) 2017-2018
+ * @author George Warner Copyright (c) 2017-2019
  */
 public class TrackSegmentXml extends AbstractXmlAdapter {
 
@@ -574,7 +574,7 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
         // get remaining attribute
         Attribute a = element.getAttribute("blockname");
         if (a != null) {
-            l.tBlockName = a.getValue();
+            l.tLayoutBlockName = a.getValue();
         }
 
         p.getLayoutTracks().add(l);

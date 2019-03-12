@@ -86,6 +86,7 @@ then manually update the end of that line above in this document to be this vers
     JMRI:
     * build.xml in the jmri.copyright.years property value
     * xml/XSLT/build.xml
+    * A flock of places in xml/XSLT/
     * scripts//WinInstallFiles/LaunchJMRI.nsi
     website:
     * Copyright.shtml (3 places)
@@ -224,7 +225,7 @@ git push github
 
 - Check that the correct milestone is on all merged pulls. This is needed for the release note. Start with the list of PRs merged since the last test release was started:
 ```
-https://github.com/JMRI/JMRI/pulls?q=is%3Apr+is%3Aclosed+merged%3A%3E2018-12-13+no%3Amilestone
+https://github.com/JMRI/JMRI/pulls?utf8=✓&q=is%3Apr+is%3Amerged+sort%3Aupdated-desc+no%3Amilestone+
 ```
 where the date at the end should be the date (and optionally time) of the last release. For each, if it doesn't have the right milestone set, and is a change to the release code (e.g. isn't just a change to the CI settings or similar), add the current milestone.  
 

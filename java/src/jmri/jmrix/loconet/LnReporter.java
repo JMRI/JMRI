@@ -90,6 +90,7 @@ public class LnReporter extends AbstractIdTagReporter implements LocoNetListener
             loco = l.getElement(3) * 128 + l.getElement(4);
         }
 
+        notify(null); // set report to null to make sure listeners update
         IdTag idTag = InstanceManager.getDefault(TranspondingTagManager.class).provideIdTag(""+loco);
         if(enter) {
            idTag.setProperty("entryexit","enter");
@@ -116,6 +117,7 @@ public class LnReporter extends AbstractIdTagReporter implements LocoNetListener
         // get direction
         boolean north = ((l.getElement(3) & 0x20) == 0);
 
+        notify(null); // set report to null to make sure listeners update
         // get loco address
         IdTag idTag = InstanceManager.getDefault(TranspondingTagManager.class).provideIdTag(""+loco);
         if(north) {

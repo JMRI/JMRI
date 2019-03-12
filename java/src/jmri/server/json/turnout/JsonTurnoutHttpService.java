@@ -81,16 +81,6 @@ public class JsonTurnoutHttpService extends JsonNamedBeanHttpService<Turnout> {
     }
 
     @Override
-    public JsonNode doPut(String type, String name, JsonNode data, Locale locale) throws JsonException {
-        try {
-            getManager().provide(name);
-        } catch (IllegalArgumentException ex) {
-            throw new JsonException(500, Bundle.getMessage(locale, "ErrorCreatingObject", TURNOUT, name));
-        }
-        return this.doPost(type, name, data, locale);
-    }
-
-    @Override
     public JsonNode doSchema(String type, boolean server, Locale locale) throws JsonException {
         switch (type) {
             case TURNOUT:
