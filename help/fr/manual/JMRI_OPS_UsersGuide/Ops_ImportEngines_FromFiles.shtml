@@ -1,7 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Translation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-03-12 -->
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -27,105 +27,107 @@
     <div id="mainContent">
       <a name="Top" id="Top"></a>
 
-      <h1>Using JMRI&reg; to Operate Trains</h1>
+      <h1>Using JMRI&reg; Exploiter un Traint</h1>
 
-      <h2>OperationsPro: Import Locomotives from a File</h2>
+      <h2>OperationsPro: Importer des Locomotives depuis un Fichier</h2>
 
       <div align="right">
-        <p><a href="Ops_Engines_menu.shtml">Back</a></p>
+       
+3379/5000
+<p><a href="Ops_Engines_menu.shtml"> Retour</a></p>
 
-        <p><a href="index.shtml#Operations">Back to Index</a></p>
-      </div>
-      <hr>
+        <p><a href="index.shtml#Operations"> Retour &#224; l'Index</a></p>
+     </div>
+      <h>
 
-      <h3>Import locomotives from file</h3>
+      <h3> Importer des locomotives &#224; partir du fichier</h3>
 
-      <p>Choosing <strong>Import locomotives from file</strong>
-      from the <strong>Locomotives -&gt; Tools</strong> menu opens
-      a system <strong>Open</strong> dialog box to allow you to
-      select the file of your choice. It requires an ASCII text
-      file, with one line for each Locomotive (Engine). The import
-      order is:</p>
+      <p>Choisir <strong>Importer des locomotives &#224; partir d'un 
+      fichier</strong> &#224; partir des <strong>Locomotives -&gt; Le 
+      menu Outils</strong> ouvre une bo&#238;te de dialogue syst&#232;me 
+      <strong>Ouvrir</strong> vous permettant de s&#233;lectionner le 
+      fichier de votre choix. Il n&#233;cessite un fichier texte ASCII, 
+      avec une ligne pour chaque locomotive (moteur). L'ordre 
+      d'importation est le suivant:</p>
 
       <ol>
-        <li>Locomotive Number</li>
+        <li> Num&#233;ro de Locomotive</li>
 
-        <li>Locomotive Road Name</li>
+        <li> Nom Ligne de Locomotive</li>
 
-        <li>Locomotive Model</li>
+        <li> Mod&#232;le de Locomotive</li>
 
-        <li>Locomotive Length</li>
-      </ol>
+        <li> Longueur de la Locomotive</li>
+     </ol>
 
-      <p>The following shows two examples of the correct
-      format:</p><code>236 UP RS4 40<br>
+      <p>Ci-dessous deux exemples de format correct:</p> <code> 236 UP RS4 40 <br>
       5578 SP SW1200 42</code>
 
-      <p>Each line can start with a space and multiple spaces
-      between fields is okay. Optionally you can include additional
-      information in the following order:</p>
+      <p>Chaque ligne peut commencer par un espace et plusieurs espaces 
+      entre les champs sont acceptables. Vous pouvez &#233;ventuellement 
+      inclure des informations suppl&#233;mentaires dans l'ordre suivant:</p>
 
       <ol>
-        <li>Owner Name</li>
+        <li> Nom du Propri&#233;taire</li>
 
-        <li>Date Built</li>
+        <li> Date de construction ou d'achat</li>
 
-        <li>Location</li>
-      </ol>
+        <li> Emplacement</li>
+     </ol>
 
-      <p>The Location can have two fields: the Location Name
-      followed by the Location's Track Name, separated by a hyphen
-      "-". The following shows two example records in the correct
-      format:</p><code>236 UP RS4 40 AT 1930 Home Town USA -
-      locomotive Terminal<br>
-      5578 SP SW1200 42 DB 1934 York - York locomotive Yard</code>
+      <p>L'emplacement peut comporter deux champs: le nom de l'emplacement 
+      suivi du nom de la piste de l'emplacement, s&#233;par&#233;s par 
+      un trait d'union "-". Vous trouverez ci-dessous deux exemples 
+      d'enregistrements au format correct:</p> 
+      <code> 236 UP RS4 40 AT 1930 Home Town USA - locomotive Terminal <br> <br>
+      5578 SP SW1200 42 DB 1934 Chantier de locomotive York - York</code>
 
-      <p>If you prefer to use comma delimiters instead of spaces,
-      place the word "comma" at the start of your import file and
-      use commas instead of spaces. The following are two examples
-      of records to import using comma as
-      delimiters.</p><code>comma<br>
-      236,UP,RS 4,40,AT,1930,Home Town USA,-,locomotive
-      Terminal<br>
-      5578,SP,SW 1200,42,DB,1934,Town of York,-,York locomotive
-      Yard</code>
+      <p>Si vous pr&#233;f&#233;rez utiliser des d&#233;limiteurs de 
+      virgule au lieu d'espaces, placez le mot "virgule" au d&#233;but 
+      de votre fichier d'importation et utilisez des virgules au lieu 
+      d'espaces. Voici deux exemples d'enregistrements &#224; importer 
+      en utilisant des virgules comme d&#233;limiteurs.</P> <code> virgule <br>
+      236, UP, RS 4,40, AT, 1930, ville natale des États-Unis, -, locomotive Terminal <br>
+      5578, SP, SW 1200,42, DB, 1934, ville de York, -, triage de locomotives de York</code>
 
-      <p>You need to be very careful with spaces when importing a
-      comma delimited file. The program will include leading and
-      trailing spaces if they exist between the commas.</p>
+      <p>Vous devez faire tr&#232;s attention aux espaces lorsque vous 
+      importez un fichier d&#233;limit&#233; par des virgules. Le 
+      programme comprendra les espaces de d&#233;but et de fin s'il 
+      existe entre les virgules.</P>
 
-      <p>Note that the program will only add Locomotives that don't
-      exist in the program's Locomotive Roster. If a Locomotive
-      already exists, the import of that record will be skipped by
-      the program.</p>
+      <p>Notez que le programme n'ajoutera que les locomotives qui 
+      n'existent pas dans la liste des locomotives du programme. Si une 
+      locomotive existe d&#233;j&#224;, le programme ignorera 
+      l'importation de cet enregistrement.</P>
 
-      <p>After importing your Locomotives, you must save them if
-      you want to keep them as part of your Roster then edit them
-      to add missing attributes.</p>
+      <p>Apr&#232;s avoir import&#233; vos locomotives, vous devez les 
+      enregistrer si vous souhaitez les conserver dans votre 
+      r&#233;pertoire, puis modifiez-les pour ajouter les attributs 
+      manquants.</p>
 
-      <p><img style="width: 799px; height: 256px;" alt=
-      "engine roster" src="images/Ops_EngineRoster.png"></p>
+      <p><img style = "width: 799px; height: 256px;" alt =
+      "liste des moteurs" src = "images / Ops_EngineRoster.png"></p>
 
-      <p>These Locomotives were imported from your file, so now we
-      will need to edit them to set missing attributes that are
-      required in OperationsPro: Length, Consist, Location as
-      required. The <a href=
-      "Ops_EditEngines.shtml"><strong>Edit</strong></a> button in
-      the Edit column will open the <strong>Edit
-      Locomotive</strong> window and allow you to edit Locomotive
-      attributes.</p>
+      <p>Ces locomotives ont &#233;t&#233; import&#233;es de votre 
+      fichier. Nous devons donc les modifier pour d&#233;finir les 
+      attributs manquants requis dans OperationsPro: Longueur, Couplage, 
+      Emplacement, selon vos besoins. Le bouton<a href ="Ops_EditEngines.shtml">
+		   <strong>Modifier</strong></a> 
+      de la colonne Modifier ouvre la fen&#234;tre <strong>Modifier une 
+      locomotive</strong> et vous permet de modifier les attributs de 
+      locomotive.</P>
 
-      <p>The <a style="font-weight: bold;" href=
-      "Ops_SetEngines.shtml">Set</a> button in the
-      <strong>Set</strong> column for each Locomotive in the Roster
-      allows you to set the Location.</p>
-      <hr>
-      <hr>
+      <p>Le bouton <a style = "font-weight: bold;" href =
+      "Ops_SetEngines.shtml">  "D&#233;finir</a>" de la colonne 
+      <strong>D&#233;finir</strong> de chaque locomotive de la liste 
+      vous permet de d&#233;finir l'emplacement.</P>
+      <h>
+      <h>
 
-      <div align="right">
-        <p><a href="Ops_Engines_menu.shtml">Back</a></p>
+      <div align = "right">
+        <p><a href="Ops_Engines_menu.shtml"> Retour</a></p>
 
-        <p><a href="index.shtml#Operations">Back to Index</a></p>
+        <p><a href="index.shtml#Operations"> Retour &#224; l'Index</a></p>
       </div><!--#include virtual="/Footer" -->
     </div>
   </div>
