@@ -25,6 +25,17 @@ public class JsonUtilSocketService extends JsonSocketService<JsonUtilHttpService
         super(connection, new JsonUtilHttpService(connection.getObjectMapper()));
     }
 
+    /**
+     * Package protected method for unit testing that allows a test HTTP service
+     * to be used.
+     * 
+     * @param connection the connection to use
+     * @param service    the supporting HTTP service
+     */
+    JsonUtilSocketService(JsonConnection connection, JsonUtilHttpService service) {
+        super(connection, service);
+    }
+
     @Override
     public void onMessage(String type, JsonNode data, String method, Locale locale) throws IOException, JmriException, JsonException {
         String name = data.path(JSON.NAME).asText();

@@ -18,6 +18,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jmri.InstanceManager;
+import jmri.JmriException;
 import jmri.jmris.json.JsonServerPreferences;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
@@ -26,6 +27,7 @@ import jmri.jmrit.display.panelEditor.PanelEditor;
 import jmri.jmrit.display.switchboardEditor.SwitchboardEditor;
 import jmri.profile.NullProfile;
 import jmri.server.json.JSON;
+import jmri.server.json.JsonConnection;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonMockConnection;
 import jmri.util.FileUtil;
@@ -221,7 +223,39 @@ public class JsonUtilSocketServiceTest {
         JUnitUtil.dispose(panel);
     }
 
-    
+    @Test
+    public void testRRNameListener() throws IOException, JmriException, JsonException {
+        JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
+        JsonNode empty = connection.getObjectMapper().createObjectNode();
+        TestJsonUtilHttpService httpService = new TestJsonUtilHttpService(connection.getObjectMapper());
+        JsonUtilSocketService instance = new JsonUtilSocketService(connection, httpService);
+        WebServerPreferences preferences = InstanceManager.getDefault(WebServerPreferences.class);
+        Assert.assertEquals("No preferences listener", 0, preferences.getPropertyChangeListeners().length);
+        instance.onMessage(JSON.RAILROAD, empty, JSON.GET, Locale.ENGLISH);
+        JsonNode message = connection.getMessage();
+        Assert.assertNotNull("Message is not null", message);
+        Assert.assertEquals("Message has RR Name", preferences.getRailroadName(), message.path(JSON.DATA).path(JSON.NAME).asText());
+        Assert.assertEquals("There is a preferences listener", 1, preferences.getPropertyChangeListeners().length);
+        preferences.setRailroadName("New Name");
+        message = connection.getMessage();
+        Assert.assertNotNull("Message is not null", message);
+        Assert.assertEquals("Message has RR Name", preferences.getRailroadName(), message.path(JSON.DATA).path(JSON.NAME).asText());
+        // force JsonException
+        httpService.setThrowException(true);
+        preferences.setRailroadName("Another New Name");
+        message = connection.getMessage();
+        Assert.assertNotNull("Message is not null", message);
+        Assert.assertEquals("Message is error", JsonException.ERROR, message.path(JSON.TYPE).asText());
+        Assert.assertEquals("Error code is 499", 499, message.path(JSON.DATA).path(JsonException.CODE).asInt());
+        // force IOException
+        Assert.assertEquals("There is a preferences listener", 1, preferences.getPropertyChangeListeners().length);
+        Assert.assertTrue("Connection is open", connection.isOpen());
+        connection.setThrowIOException(true);
+        preferences.setRailroadName("Yet Another New Name");
+        Assert.assertEquals("There is no longer a preferences listener", 0, preferences.getPropertyChangeListeners().length);
+        Assert.assertFalse("Connection is closed", connection.isOpen());
+    }
+
     /**
      * Test of onClose method, of class JsonUtilSocketService.
      */
@@ -235,5 +269,28 @@ public class JsonUtilSocketServiceTest {
         }
     }
 
+    private static class TestJsonUtilHttpService extends JsonUtilHttpService {
+
+        private boolean throwException = false;
+
+        public TestJsonUtilHttpService(ObjectMapper mapper) {
+            super(mapper);
+        }
+
+        @Override
+        public JsonNode doGet(String type, String name, Locale locale) throws JsonException {
+            if (throwException) {
+                throwException = false;
+                throw new JsonException(499, "Mock Exception");
+            }
+            return super.doGet(type, name, locale);
+        }
+        
+        public void setThrowException(boolean throwException) {
+            this.throwException = throwException;
+        }
+        
+    }
+    
     private static final Logger log = LoggerFactory.getLogger(JsonUtilSocketServiceTest.class);
 }
