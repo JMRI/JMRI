@@ -3457,7 +3457,6 @@ public class TrackSegment extends LayoutTrack {
     public void setArrowLength(int newVal) {
         if (arrowLength != newVal) {
             arrowLength = MathUtil.pin(newVal, 2, MAX_ARROW_LENGTH);
-            arrowLength = Math.max(2, newVal);
             layoutEditor.redrawPanel();
             layoutEditor.setDirty();
         }
