@@ -37,10 +37,10 @@ import org.slf4j.LoggerFactory;
  * identity to the new identity.
  * <p>
  * Currently the storageIdentity is a randomly generated UUID, that is also used
- * for backwards compatibility with JMRI 4.14. If we find a reliable cross-platform
- * mechanism to tie that to the machine's unique identity (from the CPU or motherboard),
- * not from a NIC, this may change. If a JMRI 4.14 generated UUID is available, it is
- * retained and used as the storageIdentity.
+ * for backwards compatibility with JMRI 4.14. If we find a reliable
+ * cross-platform mechanism to tie that to the machine's unique identity (from
+ * the CPU or motherboard), not from a NIC, this may change. If a JMRI 4.14
+ * generated UUID is available, it is retained and used as the storageIdentity.
  *
  * @author Randall Wood (C) 2013, 2014, 2016
  * @author Dave Heap (C) 2018
@@ -69,8 +69,8 @@ public class NodeIdentity {
      * Used by {@link #uuidToCompactString uuidToCompactString} and
      * {@link #uuidFromCompactString uuidFromCompactString}.
      */
-    protected static final String URL_SAFE_CHARACTERS
-            = "abcdefghijklmnopqrstuvwxyz_ABCDEFGHIJKLMNOPQRSTUVWXYZ-0123456789"; // NOI18N
+    protected static final String URL_SAFE_CHARACTERS =
+            "abcdefghijklmnopqrstuvwxyz_ABCDEFGHIJKLMNOPQRSTUVWXYZ-0123456789"; // NOI18N
 
     private NodeIdentity() {
         init(); // initialize as a method so the initialization can be synchronized.
@@ -138,17 +138,17 @@ public class NodeIdentity {
     }
 
     /**
-     * Return the node's current network identity. For historical purposes,
-     * the network identity is also referred to as the {@literal node} or
-     *  {@literal node identity}.
+     * Return the node's current network identity. For historical purposes, the
+     * network identity is also referred to as the {@literal node} or
+     * {@literal node identity}.
      *
      * @return A network identity. If this identity is not in the form
-     * {@code jmri-MACADDRESS-profileId}, or if {@code MACADDRESS} is a 
-     * multicast MAC address, this identity should be considered
-     * unreliable and subject to change across JMRI restarts. Note that if
-     * the identity is in the form {@code jmri-MACADDRESS} the JMRI instance
-     * has not loaded a configuration profile, and the network identity will
-     * change once that a configuration profile is loaded.
+     *         {@code jmri-MACADDRESS-profileId}, or if {@code MACADDRESS} is a
+     *         multicast MAC address, this identity should be considered
+     *         unreliable and subject to change across JMRI restarts. Note that
+     *         if the identity is in the form {@code jmri-MACADDRESS} the JMRI
+     *         instance has not loaded a configuration profile, and the network
+     *         identity will change once that a configuration profile is loaded.
      */
     public static synchronized String networkIdentity() {
         String uniqueId = "-";
@@ -165,35 +165,38 @@ public class NodeIdentity {
     }
 
     /**
-     * Return the node's current storage identity for the active profile. This is
-     * a convenience method that calls {@link #storageIdentity(Profile)} with the
-     * result of {@link jmri.profile.ProfileManager#getActiveProfile()}.
-     * 
+     * Return the node's current storage identity for the active profile. This
+     * is a convenience method that calls {@link #storageIdentity(Profile)} with
+     * the result of {@link jmri.profile.ProfileManager#getActiveProfile()}.
+     *
      * @return A storage identity.
      * @see #storageIdentity(Profile)
      */
     public static synchronized String storageIdentity() {
         return storageIdentity(ProfileManager.getDefault().getActiveProfile());
     }
-    
+
     /**
      * Return the node's current storage identity. This can be used in networked
      * file systems to ensure per-computer storage is available.
      * <p>
-     * <strong>Note</strong> this only ensure uniqueness if the preferences path is 
-     * not shared between multiple computers as documented in
-     * {@link jmri.util.FileUtil#getPreferencesPath()} (the most common cause of this
-     * would be sharing a user's home directory in its entirety between two computers
-     * with similar operating systems as noted in getPreferencesPath()).
-     * 
-     * @param profile The profile to get the identity for. This is only needed to check
-     * that the identity should not be in an older format.
+     * <strong>Note</strong> this only ensure uniqueness if the preferences path
+     * is not shared between multiple computers as documented in
+     * {@link jmri.util.FileUtil#getPreferencesPath()} (the most common cause of
+     * this would be sharing a user's home directory in its entirety between two
+     * computers with similar operating systems as noted in
+     * getPreferencesPath()).
      *
-     * @return A storage identity. If this identity is not in the form
-     * of a UUID or {@code jmri-UUID-profileId}, this identity should
-     * be considered unreliable and subject to change across JMRI restarts. When
-     * generating a new storage ID, the form is always a UUID and other forms are used
-     * only to ensure continuity where other forms may have been used in the past.
+     * @param profile The profile to get the identity for. This is only needed
+     *                    to check that the identity should not be in an older
+     *                    format.
+     *
+     * @return A storage identity. If this identity is not in the form of a UUID
+     *         or {@code jmri-UUID-profileId}, this identity should be
+     *         considered unreliable and subject to change across JMRI restarts.
+     *         When generating a new storage ID, the form is always a UUID and
+     *         other forms are used only to ensure continuity where other forms
+     *         may have been used in the past.
      */
     public static synchronized String storageIdentity(Profile profile) {
         if (instance == null) {
@@ -266,13 +269,13 @@ public class NodeIdentity {
      * Get a node identity from the current hardware.
      *
      * @param save whether to save this identity or not
-     * <p>
      */
     private synchronized void getNetworkIdentity(boolean save) {
         try {
             try {
                 try {
-                    this.networkIdentity = this.createNetworkIdentity(NetworkInterface.getByInetAddress(InetAddress.getLocalHost()).getHardwareAddress());
+                    this.networkIdentity = this.createNetworkIdentity(
+                            NetworkInterface.getByInetAddress(InetAddress.getLocalHost()).getHardwareAddress());
                 } catch (NullPointerException ex) {
                     // NetworkInterface.getByInetAddress(InetAddress.getLocalHost()).getHardwareAddress() failed
                     // this can be due to multiple reasons, most likely getLocalHost() failing on certain platforms.
@@ -285,8 +288,7 @@ public class NodeIdentity {
                     Enumeration<NetworkInterface> nics = NetworkInterface.getNetworkInterfaces();
                     while (nics.hasMoreElements()) {
                         NetworkInterface nic = nics.nextElement();
-                        if (!nic.isLoopback() && !nic.isVirtual()
-                                && (nic.getHardwareAddress() != null)) {
+                        if (!nic.isLoopback() && !nic.isVirtual() && (nic.getHardwareAddress() != null)) {
                             this.networkIdentity = this.createNetworkIdentity(nic.getHardwareAddress());
                             if (this.networkIdentity != null) {
                                 break;
@@ -318,7 +320,6 @@ public class NodeIdentity {
      * Get a node identity from the current hardware.
      *
      * @param save whether to save this identity or not
-     * <p>
      */
     private synchronized void getStorageIdentity(boolean save) {
         if (this.storageIdentity == null) {
@@ -426,11 +427,10 @@ public class NodeIdentity {
     }
 
     /**
-     * Encodes a UUID into a 22 character URL compatible string. This is
-     * used to store the UUID in a manner compatible with JMRI 4.14.
+     * Encodes a UUID into a 22 character URL compatible string. This is used to
+     * store the UUID in a manner compatible with JMRI 4.14.
      * <p>
-     * From an example by
-     * <a href="https://stackoverflow.com/">Tom Lobato</a>.
+     * From an example by <a href="https://stackoverflow.com/">Tom Lobato</a>.
      *
      * @param uuid the UUID to encode
      * @return the 22 character string
@@ -461,8 +461,8 @@ public class NodeIdentity {
 
     /**
      * Decodes the original UUID from a 22 character string generated by
-     * {@link #uuidToCompactString uuidToCompactString}. This is used to
-     * store the UUID in a manner compatible with JMRI 4.14.
+     * {@link #uuidToCompactString uuidToCompactString}. This is used to store
+     * the UUID in a manner compatible with JMRI 4.14.
      *
      * @param compact the 22 character string
      * @return the original UUID
@@ -472,7 +472,7 @@ public class NodeIdentity {
         long leastSigBits = 0;
         long buffer = 0;
         int val6;
-        
+
         for (int i = 0; i <= 21; i++) {
             switch (i) {
                 case 0:
@@ -494,8 +494,8 @@ public class NodeIdentity {
     }
 
     /**
-     * @return the former identities; this is a combination of former
-     * network and storage identities
+     * @return the former identities; this is a combination of former network
+     *         and storage identities
      */
     public List<String> getFormerIdentities() {
         return new ArrayList<>(this.formerIdentities);
