@@ -347,6 +347,9 @@
         <li>Joan de Castro who contributed the Catalan
         internationalization</li>
 
+        <li>Svata Dedic <!-- svatoun -->
+        who improved input validity checking.</li>
+
         <li>Lou DeHayes, who provided a definition for the MRC
         Sound Brilliance 1806 decoder and a fix for the DS54
         definition.</li>
@@ -891,6 +894,9 @@
         <li>Wim Ros, who provide help with the direct connection to
         the Intellibox</li>
 
+        <li>Heiko Rosemann,
+        who created the Slackware repository version of JMRI
+        
         <li>Klaus Ruebsam, who is hosting German and English JMRI
         discussion groups on his <a href=
         "http://www.dcc-portal.net/">http://www.dcc-portal.net/</a>

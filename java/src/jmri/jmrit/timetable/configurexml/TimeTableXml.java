@@ -433,8 +433,7 @@ public class TimeTableXml {
     }
 
 
-
-    private static class TimeTableXmlFile extends XmlFile {
+    public static class TimeTableXmlFile extends XmlFile {
         private static String fileLocation = FileUtil.getUserFilesPath() + "timetable/";  // NOI18N
         private static String demoLocation = FileUtil.getProgramPath() + "xml/demoTimetable/";  // NOI18N
         private static String baseFileName = "TimeTableData.xml";  // NOI18N
@@ -477,6 +476,9 @@ public class TimeTableXml {
         }
 
         public static String getFileName() {
+            if(baseFileName == null) {
+               baseFileName = "TimeTableData.xml";  // NOI18N
+            }
             return baseFileName;
         }
 
@@ -486,6 +488,9 @@ public class TimeTableXml {
          * @return path to location
          */
         public static String getFileLocation() {
+            if(fileLocation==null){
+               fileLocation = FileUtil.getUserFilesPath() + "timetable/";  // NOI18N
+            }
             return fileLocation;
         }
     }

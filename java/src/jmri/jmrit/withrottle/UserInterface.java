@@ -251,7 +251,7 @@ public class UserInterface extends JmriJFrame implements DeviceListener, RosterG
 
         menu.add(new ControllerFilterAction());
 
-        Action prefsAction = new apps.gui3.TabbedPreferencesAction(
+        Action prefsAction = new apps.gui3.tabbedpreferences.TabbedPreferencesAction(
                 ResourceBundle.getBundle("apps.AppsBundle").getString("MenuItemPreferences"),
                 "WITHROTTLE");
 

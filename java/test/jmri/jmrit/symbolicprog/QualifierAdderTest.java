@@ -4,19 +4,19 @@ import java.util.HashMap;
 import javax.swing.JLabel;
 import jmri.progdebugger.ProgDebugger;
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
 import org.jdom2.DocType;
 import org.jdom2.Document;
 import org.jdom2.Element;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  *
  * @author	Bob Jacobsen, Copyright 2014
  */
-public class QualifierAdderTest extends TestCase {
+public class QualifierAdderTest {
 
     // Service routine for tests
     ProgDebugger p;
@@ -78,7 +78,7 @@ public class QualifierAdderTest extends TestCase {
         return qa;
     }
 
-    // Tests
+    @Test
     public void testSetup() {
         Assert.assertNotNull(v1);
         Assert.assertNotNull(v2);
@@ -91,6 +91,7 @@ public class QualifierAdderTest extends TestCase {
 
     }
 
+    @Test
     public void testSingleQualifierOk() {
         Element e = new Element("variable").addContent(
                 new Element("qualifier")
@@ -120,6 +121,7 @@ public class QualifierAdderTest extends TestCase {
 
     }
 
+    @Test
     public void testExistsOk1() {
         Element e = new Element("variable").addContent(
                 new Element("qualifier")
@@ -150,6 +152,7 @@ public class QualifierAdderTest extends TestCase {
         Assert.assertTrue(v2.getAvailable());
     }
 
+    @Test
     public void testExistsOk0() {
         Element e = new Element("variable").addContent(
                 new Element("qualifier")
@@ -174,6 +177,7 @@ public class QualifierAdderTest extends TestCase {
         Assert.assertTrue(v2.getAvailable());
     }
 
+    @Test
     public void testNotExistsOk1() {
         Element e = new Element("variable").addContent(
                 new Element("qualifier")
@@ -198,6 +202,7 @@ public class QualifierAdderTest extends TestCase {
         Assert.assertFalse(v2.getAvailable());
     }
 
+    @Test
     public void testNotExistsOk0() {
         Element e = new Element("variable").addContent(
                 new Element("qualifier")
@@ -222,6 +227,7 @@ public class QualifierAdderTest extends TestCase {
         Assert.assertFalse(v2.getAvailable());
     }
 
+    @Test
     public void testExistsProtectsEq() {
         Element e = new Element("variable").addContent(
                 new Element("qualifier")
@@ -252,26 +258,8 @@ public class QualifierAdderTest extends TestCase {
         jmri.util.JUnitAppender.assertErrorMessage("Arithmetic EQ operation when watched value doesn't exist");
     }
 
-    // from here down is testing infrastructure
-    public QualifierAdderTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", QualifierAdderTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests, including others in the package
-    public static Test suite() {
-        TestSuite suite = new TestSuite(QualifierAdderTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    @Override
-    protected void setUp() {
+    @Before
+    public void setUp() {
         JUnitUtil.setUp();
 
         p = new ProgDebugger();
@@ -329,8 +317,8 @@ public class QualifierAdderTest extends TestCase {
         v3 = model.findVar("three");
     }
 
-    @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 

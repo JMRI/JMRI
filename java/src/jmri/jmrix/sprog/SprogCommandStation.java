@@ -173,8 +173,8 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
     /**
      * Find a queue entry matching the address.
      *
-     * @param a int
-     * @return the slot or null if the address is not in the queue
+     * @param address The address to locate
+     * @return The slot or null if the address is not in the queue
      */
     private SprogSlot findAddress(DccLocoAddress address) {
         for (SprogSlot s : slots) {

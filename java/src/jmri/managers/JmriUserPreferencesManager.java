@@ -616,8 +616,8 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
             Class<?> cl = Class.forName(strClass);
             Object t;
             try {
-                t = cl.newInstance();
-            } catch (IllegalArgumentException | NullPointerException | ExceptionInInitializerError ex) {
+                t = cl.getDeclaredConstructor().newInstance();
+            } catch (IllegalArgumentException | NullPointerException | ExceptionInInitializerError | NoSuchMethodException | java.lang.reflect.InvocationTargetException ex) {
                 log.error("setClassDescription({}) failed in newInstance", strClass, ex);
                 return;
             }

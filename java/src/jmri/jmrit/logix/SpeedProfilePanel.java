@@ -42,7 +42,7 @@ public class SpeedProfilePanel extends JPanel {
     JTable _table;
     JScrollPane _scrollPane;
     static java.awt.Color myRed = new java.awt.Color(255, 120, 120);
-    static String EntryFlavorType =  DataFlavor.javaJVMLocalObjectMimeType + ";class=java.util.AbstractMap";
+    static String entryFlavorType =  DataFlavor.javaJVMLocalObjectMimeType + ";class=java.util.AbstractMap";
     DataFlavor _entryFlavor; 
     
     /**
@@ -91,7 +91,7 @@ public class SpeedProfilePanel extends JPanel {
         tablewidth += barWidth;
         _scrollPane.setPreferredSize(new Dimension(tablewidth, tablewidth));
         try {
-            _entryFlavor = new DataFlavor(EntryFlavorType);
+            _entryFlavor = new DataFlavor(entryFlavorType);
             if (editable) {
                 _table.setTransferHandler(new ImportEntryTranferHandler());                    
                 _table.setDragEnabled(true);

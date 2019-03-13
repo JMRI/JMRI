@@ -182,7 +182,6 @@
         <pathelement location="${libdir}/jna-platform-4.4.0.jar"/>
         <pathelement location="${libdir}/commons-lang3-3.7.jar"/>
         <pathelement location="${libdir}/commons-text-1.2.jar"/>
-        <pathelement location="${libdir}/jakarta-regexp-1.5.jar"/>
         <pathelement location="${libdir}/jackson-core-2.8.11.jar"/>
         <pathelement location="${libdir}/jackson-annotations-2.8.11.jar"/>
         <pathelement location="${libdir}/jackson-databind-2.8.11.jar"/>
@@ -243,7 +242,6 @@
         <pathelement location="${libdir}/AppleJavaExtensions.jar"/> <!-- build with Mac OS X-specific support -->
         <pathelement location="${libdir}/junit-4.12.jar"/>
         <pathelement location="${libdir}/hamcrest-core-1.3.jar"/>
-        <pathelement location="${libdir}/jfcunit.jar"/>
         <pathelement path="${i18n.class.jars}"/>            <!-- i18n test -->
         <!-- SpotBugs annotations -->
         <pathelement location="${libdir}/jcip-annotations-1.0.jar"/>
@@ -343,7 +341,6 @@
         <exclude name="jmri/jmrit/symbolicprog/tabbedframe/CheckProgrammerNames.class" />
         <exclude name="jmri/jmrix/openlcb/SampleFactory.class" />
         <exclude name="jmri/util/swing/SamplePane.class" />
-        <exclude name="apps/tests/Log4JFixture.class" />
         <exclude name="jmri/jmrit/display/EditorFrameOperator.class" />
         <exclude name="jmri/util/web/BrowserFactory.class" />
         <!-- Exclude pure interfaces and classes only providing constants. -->
@@ -363,6 +360,9 @@
         <exclude name="jmri/server/json/signalMast/JsonSignalMast.class" />
         <!-- Exclude deprecated classes. -->
         <exclude name="jmri/jmrix/loconet/AbstractAlmImplementation.class" />
+        <!-- Exclude files meant to check SpotBugs. -->
+        <exclude name="apps/FindBugsCheck.class" />
+        <exclude name="apps/CheckerFrameworkCheck.class" />
     </fileset>
 
 
@@ -746,6 +746,7 @@
         <property name="test.test" value="${test.includes}Test"/>
     </target>
     <target depends="-test-single-src,-test-single-test,tests,runtime-library-selection" description="Run single unit test." name="test-single">
+        <property name="test-single.jvmargs" value=""/>
         <junit haltonerror="false" haltonfailure="false" printsummary="yes" fork="yes" dir="." errorProperty="test.failed" failureProperty="test.failed">
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
@@ -759,6 +760,7 @@
             <test name="${test.test}">
                 <formatter usefile="no" type="brief"/>
             </test>
+            <jvmarg line="${test-single.jvmargs}"/>
         </junit>
         <fail>
             <condition>
@@ -1789,7 +1791,7 @@
            additionalparam="-breakiterator"
            author="true"
            version="false"
-           package="yes"
+           public="yes"
            use="true"
            failonerror="true"
            windowtitle="JMRI API">
@@ -1806,6 +1808,7 @@
             <arg value="2300"/><!-- change from default 100 warnings -->
             <arg value="-quiet"/>
             <arg value="-splitindex"/>
+            <arg value="-J-Dhttp.agent=javadoc"/>
 
             <!-- disable output of custom @navassoc tag - used for UML image generation -->
             <tag name="navassoc" enabled="false"/>
@@ -1859,7 +1862,7 @@
            additionalparam="-breakiterator"
            author="true"
            version="false"
-           package="yes"
+           public="yes"
            use="true"
            failonerror="true"
            windowtitle="JMRI API">
@@ -1932,7 +1935,7 @@
            additionalparam="-breakiterator"
            author="true"
            version="false"
-           package="yes"
+           public="yes"
            use="true"
            windowtitle="JMRI API">
 
@@ -2087,7 +2090,7 @@
              onerror="ignore"
              classpath="${spotbugs.home}/lib/spotbugs-ant.jar"/>
 
-    <target name="spotbugs" depends="dist" description="generate SpotBugs report. Specify SpotBugs install with local.properties file or &quot;-Dspotbugs.home=YourSpotBugsInstallDirectory&quot; on command line." >
+    <target name="spotbugs" depends="dist" description="generate SpotBugs (HTML) report. Specify SpotBugs install with local.properties file or &quot;-Dspotbugs.home=YourSpotBugsInstallDirectory&quot; on command line." >
         <spotbugs home="${spotbugs.home}"
                   output="html"
                   outputFile="${jartarget}/spotbugs.html"
@@ -2104,7 +2107,7 @@
         </spotbugs>
     </target>
 
-    <target name="spotbugs-check" depends="dist" description="generate SpotBugs check-only report. Specify SpotBugs install with local.properties file or &quot;-Dspotbugs.home=YourSpotBugsInstallDirectory&quot; on command line." >
+    <target name="spotbugs-check" depends="dist" description="generate SpotBugs check-only (HTML) report. Specify SpotBugs install with local.properties file or &quot;-Dspotbugs.home=YourSpotBugsInstallDirectory&quot; on command line." >
         <spotbugs home="${spotbugs.home}"
                   output="html"
                   outputFile="${jartarget}/spotbugs-check.html"
@@ -2121,7 +2124,7 @@
         </spotbugs>
     </target>
 
-    <target name="spotbugs-ci" depends="dist" description="generate SpotBugs CI report. Include &quot;-Dspotbugs.home=YourSpotBugsInstallDirectory&quot; in command line." >
+    <target name="spotbugs-ci" depends="dist" description="generate SpotBugs CI (XML) report. Include &quot;-Dspotbugs.home=YourSpotBugsInstallDirectory&quot; in command line." >
         <spotbugs home="${spotbugs.home}"
                   output="xml:withMessages"
                   outputFile="spotbugs.xml"
@@ -2138,7 +2141,7 @@
         </spotbugs>
     </target>
 
-    <target name="spotbugs-check-ci" depends="dist" description="generate SpotBugs CI check-only report. Include &quot;-Dspotbugs.home=YourSpotBugsInstallDirectory&quot; in command line." >
+    <target name="spotbugs-check-ci" depends="dist" description="generate SpotBugs CI check-only (XML) report. Include &quot;-Dspotbugs.home=YourSpotBugsInstallDirectory&quot; in command line." >
         <spotbugs home="${spotbugs.home}"
                   output="xml:withMessages"
                   outputFile="spotbugs.xml"

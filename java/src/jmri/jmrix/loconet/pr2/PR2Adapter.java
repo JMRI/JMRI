@@ -99,6 +99,7 @@ public class PR2Adapter extends LocoBufferAdapter {
 
     /**
      * The PR2 has one mode
+     * @return a String[] containing appropriate options
      */
     public String[] commandStationOptions() {
         return new String[]{jmri.jmrix.loconet.LnCommandStationType.COMMAND_STATION_PR2_ALONE.getName()};

@@ -4,31 +4,34 @@
 
 # Group (macro) checks - these need to be sorted out
 -err:+hiding
+  # about 200 cases of memebers hiding superclass members
 -err:-fieldHiding
+  # very large number of cases of parameters named for locals
 -err:-localHiding 
 -err:+typeHiding
 
 -warn:-allJavadoc
 -warn:-javadoc
 
-# 36 on next
--warn:-invalidJavadoc
--warn:-invalidJavadocTag
--warn:-invalidJavadocTagDep
--warn:-invalidJavadocTagNotVisible
+-err:+invalidJavadoc
+-err:+invalidJavadocTag
+-err:+invalidJavadocTagDep
+-err:+invalidJavadocTagNotVisible
 
 -warn:-missingJavadocTags
--warn:-missingJavadocTagsMethod
--warn:-missingJavadocTagsOverriding
+-err:+missingJavadocTagsMethod
+-err:+missingJavadocTagsOverriding
 
 -warn:-missingJavadocComments
 -warn:-missingJavadocCommentsOverriding
 
 -err:+static-access
+  # This tags Turnout.INCONSISTENT in favor of NamedBean.INCONSISTENT
 -err:-indirectStatic 
 -err:+staticReceiver
 
 -err:+unused
+  # This tags valid "new jmri.util.WaitHandler(this);" constructs
 -err:-unusedAllocation
 -err:-unusedImport
 -err:+unusedLabel
@@ -42,8 +45,9 @@
 -err:+unusedThrownIncludeDocComment
 -err:+unusedThrownExemptExceptionThrowable
 -err:+unusedThrownWhenOverriding
+  # This tags 800+ of form List<FileMeta> files = new LinkedList<FileMeta>(); 
 -err:-unusedTypeArgs
--err:-unusedTypeParameter
+-err:+unusedTypeParameter
 
 
 # Checks we choose to enforce
@@ -82,13 +86,14 @@
 -err:+semicolon
 -err:+specialParamHiding
 -err:+suppress
+-err:+switchDefault
 -err:+unavoidableGenericProblems
 -err:+unchecked
 -err:+uselessTypeCheck
 -err:+varargsCast
 
 
-# Checks we choose not to enforce as a matter of style
+# Checks we choose not to enforce as our common style
 -warn:-boxing
 -warn:-intfRedundant
 -warn:-nls
@@ -101,38 +106,41 @@
 -warn:-unusedArgument
 
 
+#
+# Checks we're warning on, working to reduce, but not enforcing
+#
 
-# Checks we're warning on, but not enforcing
 
 
+# Checks we will eventually put in place, but would be burdensome now
 
-# Checks we're working on
-
-# 14 outstanding items
+    # 14 outstanding items
 -warn:-deadCode
 
-# 22 outstanding items
+    # 22 outstanding items
 -warn:-syncOverride
 
-# 159 outstanding items
+    # 159 outstanding items
 -warn:-raw
 
-# this tags some FindBugs labels?  But still useful to run occasionally
+    # this tags some FindBugs labels?  But still useful to run occasionally
 -warn:-warningToken
 
-# 7 outstanding items
--warn:-switchDefault
 
+# Checks still to be characterized
 
-
-# Checks not yet examined 
-
--warn:-allDeadCode
 -warn:-all-static-method
 -warn:-emptyBlock
--warn:-enumSwitchPedantic
+
+-warn:-allDeadCode
+
+  # flags methods that can be made static because they don't access data member
+  # but that just seems distracting somehow
 -warn:-static-method
-#-warn:-tasks(<task1>|...|<taskN>)
+
+  # We often seem to _prefer_ the terminal else instead of bottom return
 -warn:-unnecessaryElse
+
+#-warn:-tasks(<task1>|...|<taskN>)
 
 

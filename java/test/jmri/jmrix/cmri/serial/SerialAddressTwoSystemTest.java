@@ -3,10 +3,10 @@ package jmri.jmrix.cmri.serial;
 import jmri.Manager.NameValidity;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * JUnit tests for the serial address functions in memo1.
@@ -17,7 +17,7 @@ import org.junit.Assert;
  * @author	Dave Duchamp Copyright 2004
  * @author Bob Jacobsen Copyright 2017
  */
-public class SerialAddressTwoSystemTest extends TestCase {
+public class SerialAddressTwoSystemTest {
 
     private jmri.jmrix.cmri.CMRISystemConnectionMemo memo1 = null;
     private SerialTrafficControlScaffold stcs1 = null;
@@ -31,9 +31,8 @@ public class SerialAddressTwoSystemTest extends TestCase {
     SerialNode k10;
     SerialNode k20;
 
-    @Override
+    @Before
     public void setUp() throws Exception {
-        super.setUp();
         JUnitUtil.setUp();
 
         // replace the 1st SerialTrafficController
@@ -84,10 +83,8 @@ public class SerialAddressTwoSystemTest extends TestCase {
 
     }
 
-    // The minimal setup for log4J
-    @Override
-    protected void tearDown() throws Exception {
-        super.tearDown();
+    @After
+    public void tearDown() throws Exception {
         JUnitUtil.tearDown();
         if (stcs1 != null) stcs1.terminateThreads();
         stcs1 = null;
@@ -97,6 +94,7 @@ public class SerialAddressTwoSystemTest extends TestCase {
         memo2 = null;
     }
 
+    @Test
     public void testValidateSystemNameFormat() {
         Assert.assertTrue("valid format - CL2", NameValidity.VALID == memo1.validSystemNameFormat("CL2", 'L'));
         Assert.assertTrue("valid format - CL0B2", NameValidity.VALID == memo1.validSystemNameFormat("CL0B2", 'L'));
@@ -155,6 +153,7 @@ public class SerialAddressTwoSystemTest extends TestCase {
 //        JUnitAppender.assertWarnMessage("invalid character in bit number field of CMRI system name: CL2B5x");
     }
 
+    @Test
     public void testGetBitFromSystemName() {
         Assert.assertEquals("CL2", 2, memo1.getBitFromSystemName("CL2"));
         Assert.assertEquals("CL2002", 2, memo1.getBitFromSystemName("CL2002"));
@@ -174,6 +173,7 @@ public class SerialAddressTwoSystemTest extends TestCase {
         Assert.assertEquals("CL11B2048", 2048, memo1.getBitFromSystemName("CL11B2048"));
     }
 
+    @Test
     public void testGetBitFromSystemName2() {
         Assert.assertEquals("K2L2", 2, memo2.getBitFromSystemName("K2L2"));
         Assert.assertEquals("K2L2002", 2, memo2.getBitFromSystemName("K2L2002"));
@@ -193,6 +193,7 @@ public class SerialAddressTwoSystemTest extends TestCase {
         Assert.assertEquals("K2L11B2048", 2048, memo2.getBitFromSystemName("K2L11B2048"));
     }
 
+    @Test
     public void testGetNodeFromSystemName() {
         SerialNode d = new SerialNode(14, SerialNode.USIC_SUSIC, stcs1);
         SerialNode c = new SerialNode(17, SerialNode.SMINI, stcs1);
@@ -207,6 +208,7 @@ public class SerialAddressTwoSystemTest extends TestCase {
         Assert.assertEquals("node of CL11B7", null, memo1.getNodeFromSystemName("CL11B7", stcs1));
     }
 
+    @Test
     public void testGetNodeFromSystemName2() {
         SerialNode d = new SerialNode(14, SerialNode.USIC_SUSIC, stcs2);
         SerialNode c = new SerialNode(17, SerialNode.SMINI, stcs2);
@@ -221,6 +223,7 @@ public class SerialAddressTwoSystemTest extends TestCase {
         Assert.assertEquals("node of K2L11B7", null, memo2.getNodeFromSystemName("K2L11B7", stcs2));
     }
 
+    @Test
     public void testGetNodeAddressFromSystemName() {
         Assert.assertEquals("CL14007", 14, memo1.getNodeAddressFromSystemName("CL14007"));
         Assert.assertEquals("CL14B7", 14, memo1.getNodeAddressFromSystemName("CL14B7"));
@@ -236,6 +239,7 @@ public class SerialAddressTwoSystemTest extends TestCase {
         JUnitAppender.assertErrorMessage("invalid character in header field of system name: CR7");
     }
 
+    @Test
     public void testGetNodeAddressFromSystemName2() {
         Assert.assertEquals("K2L14007", 14, memo2.getNodeAddressFromSystemName("K2L14007"));
         Assert.assertEquals("K2L14B7", 14, memo2.getNodeAddressFromSystemName("K2L14B7"));
@@ -251,6 +255,7 @@ public class SerialAddressTwoSystemTest extends TestCase {
         JUnitAppender.assertErrorMessage("invalid character in header field of system name: K2R7");
     }
 
+    @Test
     public void testValidSystemNameConfig() {
         SerialNode d = new SerialNode(4, SerialNode.USIC_SUSIC, stcs1);
         d.setNumBitsPerCard(32);
@@ -287,6 +292,7 @@ public class SerialAddressTwoSystemTest extends TestCase {
         Assert.assertTrue("invalid config CL11B7", !memo1.validSystemNameConfig("CL11B7", 'L', stcs1));
     }
 
+    @Test
     public void testConvertSystemNameFormat() {
         Assert.assertEquals("convert CL14007", "CL14B7", memo1.convertSystemNameToAlternate("CL14007"));
         Assert.assertEquals("convert CS7", "CS0B7", memo1.convertSystemNameToAlternate("CS7"));
@@ -300,6 +306,7 @@ public class SerialAddressTwoSystemTest extends TestCase {
 //        JUnitAppender.assertWarnMessage("node address field out of range in CMRI system name: CL128B7");
     }
 
+    @Test
     public void testConvertSystemNameFormat2() {
         Assert.assertEquals("convert K2L14007", "K2L14B7", memo2.convertSystemNameToAlternate("K2L14007"));
         Assert.assertEquals("convert K2S7", "K2S0B7", memo2.convertSystemNameToAlternate("K2S7"));
@@ -313,6 +320,7 @@ public class SerialAddressTwoSystemTest extends TestCase {
 //        JUnitAppender.assertWarnMessage("node address field out of range in CMRI system name: K2L128B7");
     }
 
+    @Test
     public void testNormalizeSystemName() {
         Assert.assertEquals("normalize CL14007", "CL14007", memo1.normalizeSystemName("CL14007"));
         Assert.assertEquals("normalize CL007", "CL7", memo1.normalizeSystemName("CL007"));
@@ -326,6 +334,7 @@ public class SerialAddressTwoSystemTest extends TestCase {
 //        JUnitAppender.assertWarnMessage("node address field out of range in CMRI system name: CL128B7");
     }
 
+    @Test
     public void testNormalizeSystemName2() {
         Assert.assertEquals("normalize K2L14007", "K2L14007", memo2.normalizeSystemName("K2L14007"));
         Assert.assertEquals("normalize K2L007", "K2L7", memo2.normalizeSystemName("K2L007"));
@@ -339,6 +348,7 @@ public class SerialAddressTwoSystemTest extends TestCase {
 //        JUnitAppender.assertWarnMessage("node address field out of range in CMRI system name: K2L128B7");
     }
 
+    @Test
     public void testConstructSystemName() {
         Assert.assertEquals("make CL14007", "CL14007", memo1.makeSystemName("L", 14, 7));
         Assert.assertEquals("make CT7", "CT7", memo1.makeSystemName("T", 0, 7));
@@ -357,6 +367,7 @@ public class SerialAddressTwoSystemTest extends TestCase {
         Assert.assertEquals("make CS14B1000", "CS14B1000", memo1.makeSystemName("S", 14, 1000));
     }
 
+    @Test
     public void testConstructSystemName2() {
         Assert.assertEquals("make K2L14007", "K2L14007", memo2.makeSystemName("L", 14, 7));
         Assert.assertEquals("make K2T7", "K2T7", memo2.makeSystemName("T", 0, 7));
@@ -375,6 +386,7 @@ public class SerialAddressTwoSystemTest extends TestCase {
         Assert.assertEquals("make K2S14B1000", "K2S14B1000", memo2.makeSystemName("S", 14, 1000));
     }
 
+    @Test
     public void testIsOutputBitFree() {
         // create a new turnout, controlled by two output bits
         jmri.TurnoutManager tMgr = jmri.InstanceManager.turnoutManagerInstance();
@@ -413,6 +425,7 @@ public class SerialAddressTwoSystemTest extends TestCase {
         JUnitAppender.assertWarnMessage("invalid node address in free bit test");
     }
 
+    @Test
     public void testIsInputBitFree() {
         jmri.SensorManager sMgr = jmri.InstanceManager.sensorManagerInstance();
         // create 4 new sensors
@@ -443,6 +456,7 @@ public class SerialAddressTwoSystemTest extends TestCase {
         JUnitAppender.assertWarnMessage("invalid node address in free bit test");
     }
 
+    @Test
     public void testGetUserNameFromSystemName() {
         jmri.SensorManager sMgr = jmri.InstanceManager.sensorManagerInstance();
         // create 4 new sensors
@@ -471,6 +485,7 @@ public class SerialAddressTwoSystemTest extends TestCase {
         Assert.assertEquals("test undefined CT18039", "", memo1.getUserNameFromSystemName("CT18039"));
     }
 
+    @Test
     public void testGetUserNameFromSystemName2() {
         jmri.SensorManager sMgr = jmri.InstanceManager.sensorManagerInstance();
         // create 4 new sensors
@@ -497,23 +512,6 @@ public class SerialAddressTwoSystemTest extends TestCase {
         Assert.assertEquals("test K2T20032", "userT32", memo2.getUserNameFromSystemName("K2T20032"));
         Assert.assertEquals("test K2T20034", "userT34", memo2.getUserNameFromSystemName("K2T20034"));
         Assert.assertEquals("test undefined K2T20039", "", memo2.getUserNameFromSystemName("K2T20039"));
-    }
-
-    // from here down is testing infrastructure
-    public SerialAddressTwoSystemTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", SerialAddressTwoSystemTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(SerialAddressTwoSystemTest.class);
-        return suite;
     }
 
 }

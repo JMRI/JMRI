@@ -1406,7 +1406,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
     public String getPacketString() {
        if ( this.isWriteDccPacketMessage() ) {
             StringBuffer b = new StringBuffer();
-            for(int i = 2;i<=getGroupCount();i++){
+            for(int i = 2;i<=getGroupCount()-1;i++){
                 b.append(this.getValueString(i));
             }
             return(b.toString());
@@ -1511,11 +1511,12 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
         // address = (address - 1) * 4 + subaddress + 1 for address>0;
         int addr, subaddr;
         if (address > 0) {
-            addr = (address - 1) / (DCCppConstants.MAX_ACC_DECODER_SUBADDR + 1);
+            addr = ((address - 1) / (DCCppConstants.MAX_ACC_DECODER_SUBADDR + 1)) + 1;
             subaddr = (address - 1) % (DCCppConstants.MAX_ACC_DECODER_SUBADDR + 1);
         } else {
             addr = subaddr = 0;
         }
+        log.debug("makeAccessoryDecoderMsg address {}, addr {}, subaddr {}, activate {}",address, addr, subaddr, activate);
         return(makeAccessoryDecoderMsg(addr, subaddr, activate));
     }
 
@@ -2547,9 +2548,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Delaye
     }
 
     /**
-     * When is this message supposed to be resent.
-     * 
-     * @see SerialDCCppPacketizer
+     * When is this message supposed to be resent?
      */
     private long expireTime;
 

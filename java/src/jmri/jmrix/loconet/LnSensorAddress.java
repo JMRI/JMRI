@@ -115,7 +115,11 @@ public class LnSensorAddress {
 
     /**
      * Update a LocoNet message to have this address.
+     * 
+     * It is assumed that the sensor address may be encoded into bytes 1 and 2 of the 
+     * message.
      *
+     * @param m a LocoNetmessage to be updated to contain this object's sensor address
      */
     public void insertAddress(LocoNetMessage m) {
         m.setElement(1, getLowBits());

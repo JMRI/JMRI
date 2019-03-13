@@ -12,7 +12,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <!-- 																		-->
-<!-- version 1 - include file for Uhlenbrock Sound Decoder 3230x            -->
+<!-- version 1 - include file for Uhlenbrock IntelliSound4 Decoder 3230x    -->
 <!-- 																		-->
 <enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <enumChoice choice="None">

@@ -393,10 +393,8 @@ public class LightTableAction extends AbstractTableAction<Light> {
              * Visualize state in table as a graphic, customized for Lights (2
              * states + ... for transitioning). Renderer and Editor are
              * identical, as the cell contents are not actually edited, only
-             * used to toggle state using {@link #clickOn(NamedBean)}.
+             * used to toggle state using {@link #clickOn(Light)}.
              *
-             * @see
-             * jmri.jmrit.beantable.sensor.SensorTableDataModel.ImageIconRenderer
              * @see jmri.jmrit.beantable.BlockTableAction#createModel()
              * @see jmri.jmrit.beantable.TurnoutTableAction#createModel()
              */

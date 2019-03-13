@@ -301,7 +301,7 @@
         <name xml:lang="cs">Předvolby...</name>
         <name xml:lang="nl">Voorkeuren...</name>
         <mnemonic>s</mnemonic>
-        <adapter>apps.gui3.TabbedPreferencesAction</adapter>
+        <adapter>apps.gui3.tabbedpreferences.TabbedPreferencesAction</adapter>
     </node>
   </node>
 
@@ -501,7 +501,7 @@
         <name xml:lang="da">Ny Kørekontrol</name>
         <name xml:lang="de">Neuer Fahrregler</name>
 		<name xml:lang="ca">Regulador Nou</name>
-        <name xml:lang="cs">Nový lokoovladač</name>
+        <name xml:lang="cs">Nový ovladač</name>
         <name xml:lang="nl">Nieuwe Rijregelaar</name>
         <adapter>jmri.jmrit.throttle.ThrottleCreationAction</adapter>
     </node>
@@ -510,7 +510,7 @@
         <name xml:lang="it">Carica formato di default Palmare</name>
         <name xml:lang="de">Lade Standardfahrregler</name>
 		<name xml:lang="ca">Llegeix format de reguladors per defecte</name>
-        <name xml:lang="cs">Načíst výchozí rozvržení lokoovladače</name>
+        <name xml:lang="cs">Načíst výchozí rozvržení ovladače</name>
         <name xml:lang="nl">Open Rijregelaar</name>
         <adapter>jmri.jmrit.throttle.LoadDefaultXmlThrottlesLayoutAction</adapter>
     </node>

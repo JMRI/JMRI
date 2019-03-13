@@ -43,6 +43,8 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase {
     @Override
     public void setUp() throws Exception {
         super.setUp();
+        JUnitUtil.resetWindows(true, false); // list open windows when running tests
+        JUnitUtil.resetNodeIdentity();
         JUnitUtil.resetProfileManager(new NullProfile("JsonUtilHttpServiceTest", "12345678", FileUtil.getFile("program:test")));
         JUnitUtil.initConnectionConfigManager();
         JUnitUtil.initZeroConfServiceManager();
@@ -348,8 +350,8 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase {
         JsonUtilHttpService instance = new JsonUtilHttpService(mapper);
         ObjectNode result = instance.getPanel(locale, editor, JSON.XML);
         this.validate(result);
-        editor.getTargetFrame().dispose();
-        editor.dispose();
+        JUnitUtil.dispose(editor.getTargetFrame());
+        JUnitUtil.dispose(editor);
     }
 
     /**
@@ -364,8 +366,8 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase {
         JsonUtilHttpService instance = new JsonUtilHttpService(mapper);
         JsonNode result = instance.getPanels(locale, JSON.XML);
         this.validate(result);
-        editor.getTargetFrame().dispose();
-        editor.dispose();
+        JUnitUtil.dispose(editor.getTargetFrame());
+        JUnitUtil.dispose(editor);
     }
 
     /**
@@ -380,8 +382,8 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase {
         JsonUtilHttpService instance = new JsonUtilHttpService(mapper);
         JsonNode result = instance.getPanels(locale);
         this.validate(result);
-        editor.getTargetFrame().dispose();
-        editor.dispose();
+        JUnitUtil.dispose(editor.getTargetFrame());
+        JUnitUtil.dispose(editor);
     }
 
     /**

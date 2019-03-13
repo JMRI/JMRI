@@ -141,10 +141,6 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - from http://repo1.maven.org/maven2/org/python/jython-standalone/2.7.0/
 - unlike jython-2.7.0.jar, includes embedded standard python libs
 
-##### jakarta-regexp-1.5.jar
-- (needed for jfcunit)
-- Used for testing only, not at runtime
-
 ##### jinput (including jinput.jar, three jinput DLLs, and two libjinputs)
 - from <https://jinput.dev.java.net/> jinput_dist_20090401
 - (most recent as of 2010-Jan-02)
@@ -209,8 +205,6 @@ NOTE: joal.jar is currently replaced by an own-built version with modifications 
 - Version 3.5.5 (2018-12-04)
 - from https://github.com/jmdns/jmdns/releases
 
-##### jakarta-regexp-1.5.jar
-
 ##### jna-4.4.0.jar
 - Java Native Access library
 - from http://search.maven.org/#artifactdetails%7Cnet.java.dev.jna%7Cjna%7C4.4.0%7Cjar
@@ -268,11 +262,6 @@ NOTE: joal.jar is currently replaced by an own-built version with modifications 
 - version 1.3
 - Used for testing only, not at runtime
 - from http://search.maven.org/#artifactdetails%7Corg.hamcrest%7Chamcrest-core%7C1.3%7Cjar
-
-##### jfcunit.jar
-- version 2.08
-- Used for testing only, not at runtime
-- from <http://jfcunit.sourceforge.net>
 
 ##### i18nchecker.jar
 - Internationalization checker: used in source code development, for checking proper implementation of text internationalization.  

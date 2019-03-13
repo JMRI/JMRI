@@ -116,7 +116,7 @@ public class LnPacketizer extends LnTrafficController {
         try {
             synchronized (xmtHandler) {
                 xmtList.addLast(msg);
-                xmtHandler.notify(); 
+                xmtHandler.notifyAll(); 
             }
         } catch (RuntimeException e) {
             log.warn("passing to xmit: unexpected exception: ", e);
