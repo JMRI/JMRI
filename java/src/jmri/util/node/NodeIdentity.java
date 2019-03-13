@@ -99,7 +99,7 @@ public class NodeIdentity {
                 if (si != null) {
                     try {
                         this.storageIdentity = si.getAttributeValue(STORAGE_IDENTITY);
-                        if (this.uuid == null || (this.storageIdentity != this.uuid.toString())) {
+                        if (this.uuid == null || !this.storageIdentity.equals(this.uuid.toString())) {
                             this.uuid = UUID.fromString(this.storageIdentity);
                             save = true; // updated UUID
                         }
