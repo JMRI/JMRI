@@ -328,11 +328,11 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     private transient JRadioButtonMenuItem scrollNoneMenuItem = null;
     private transient JRadioButtonMenuItem scrollHorizontalMenuItem = null;
     private transient JRadioButtonMenuItem scrollVerticalMenuItem = null;
-    private transient JMenu toolTipMenu = null;
-    private transient JRadioButtonMenuItem toolTipAlwaysMenuItem = null;
-    private transient JRadioButtonMenuItem toolTipNoneMenuItem = null;
-    private transient JRadioButtonMenuItem toolTipInEditMenuItem = null;
-    private transient JRadioButtonMenuItem toolTipNotInEditMenuItem = null;
+    private transient JMenu tooltipMenu = null;
+    private transient JRadioButtonMenuItem tooltipAlwaysMenuItem = null;
+    private transient JRadioButtonMenuItem tooltipNoneMenuItem = null;
+    private transient JRadioButtonMenuItem tooltipInEditMenuItem = null;
+    private transient JRadioButtonMenuItem tooltipNotInEditMenuItem = null;
 
     private transient JCheckBoxMenuItem snapToGridOnAddCheckBoxMenuItem = null;
     private transient JCheckBoxMenuItem snapToGridOnMoveCheckBoxMenuItem = null;
@@ -443,8 +443,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     private transient boolean highlightSelectedBlockFlag = false;
 
     private transient boolean turnoutCirclesWithoutEditMode = false;
-    private transient boolean toolTipsWithoutEditMode = false;
-    private transient boolean toolTipsInEditMode = true;
+    private transient boolean tooltipsWithoutEditMode = false;
+    private transient boolean tooltipsInEditMode = true;
 
     //turnout size parameters - saved with panel
     private transient double turnoutBX = LayoutTurnout.turnoutBXDefault; //RH, LH, WYE
@@ -1944,9 +1944,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         controlCheckBoxMenuItem.setSelected(allControlling());
 
         if (isEditable()) {
-            setAllShowToolTip(toolTipsInEditMode);
+            setAllShowToolTip(tooltipsInEditMode);
         } else {
-            setAllShowToolTip(toolTipsWithoutEditMode);
+            setAllShowToolTip(tooltipsWithoutEditMode);
         }
 
         switch (_scrollState) {
@@ -2093,7 +2093,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             }
 
             if (isEditable()) {
-                setAllShowToolTip(toolTipsInEditMode);
+                setAllShowToolTip(tooltipsInEditMode);
 
                 //redo using the "Extra" color to highlight the selected block
                 if (highlightSelectedBlockFlag) {
@@ -2102,7 +2102,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                     }
                 }
             } else {
-                setAllShowToolTip(toolTipsWithoutEditMode);
+                setAllShowToolTip(tooltipsWithoutEditMode);
 
                 //undo using the "Extra" color to highlight the selected block
                 if (highlightSelectedBlockFlag) {
@@ -2349,45 +2349,45 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         });
 
         //
-        // ToolTips
+        // Tooltips
         //
-        toolTipMenu = new JMenu(Bundle.getMessage("ToolTipSubMenu"));
-        optionMenu.add(toolTipMenu);
-        ButtonGroup toolTipGroup = new ButtonGroup();
-        toolTipNoneMenuItem = new JRadioButtonMenuItem(Bundle.getMessage("ToolTipNone"));
-        toolTipGroup.add(toolTipNoneMenuItem);
-        toolTipMenu.add(toolTipNoneMenuItem);
-        toolTipNoneMenuItem.setSelected((!toolTipsInEditMode) && (!toolTipsWithoutEditMode));
-        toolTipNoneMenuItem.addActionListener((ActionEvent event) -> {
-            toolTipsInEditMode = false;
-            toolTipsWithoutEditMode = false;
+        tooltipMenu = new JMenu(Bundle.getMessage("TooltipSubMenu"));
+        optionMenu.add(tooltipMenu);
+        ButtonGroup tooltipGroup = new ButtonGroup();
+        tooltipNoneMenuItem = new JRadioButtonMenuItem(Bundle.getMessage("TooltipNone"));
+        tooltipGroup.add(tooltipNoneMenuItem);
+        tooltipMenu.add(tooltipNoneMenuItem);
+        tooltipNoneMenuItem.setSelected((!tooltipsInEditMode) && (!tooltipsWithoutEditMode));
+        tooltipNoneMenuItem.addActionListener((ActionEvent event) -> {
+            tooltipsInEditMode = false;
+            tooltipsWithoutEditMode = false;
             setAllShowToolTip(false);
         });
-        toolTipAlwaysMenuItem = new JRadioButtonMenuItem(Bundle.getMessage("ToolTipAlways"));
-        toolTipGroup.add(toolTipAlwaysMenuItem);
-        toolTipMenu.add(toolTipAlwaysMenuItem);
-        toolTipAlwaysMenuItem.setSelected((toolTipsInEditMode) && (toolTipsWithoutEditMode));
-        toolTipAlwaysMenuItem.addActionListener((ActionEvent event) -> {
-            toolTipsInEditMode = true;
-            toolTipsWithoutEditMode = true;
+        tooltipAlwaysMenuItem = new JRadioButtonMenuItem(Bundle.getMessage("TooltipAlways"));
+        tooltipGroup.add(tooltipAlwaysMenuItem);
+        tooltipMenu.add(tooltipAlwaysMenuItem);
+        tooltipAlwaysMenuItem.setSelected((tooltipsInEditMode) && (tooltipsWithoutEditMode));
+        tooltipAlwaysMenuItem.addActionListener((ActionEvent event) -> {
+            tooltipsInEditMode = true;
+            tooltipsWithoutEditMode = true;
             setAllShowToolTip(true);
         });
-        toolTipInEditMenuItem = new JRadioButtonMenuItem(Bundle.getMessage("ToolTipEdit"));
-        toolTipGroup.add(toolTipInEditMenuItem);
-        toolTipMenu.add(toolTipInEditMenuItem);
-        toolTipInEditMenuItem.setSelected((toolTipsInEditMode) && (!toolTipsWithoutEditMode));
-        toolTipInEditMenuItem.addActionListener((ActionEvent event) -> {
-            toolTipsInEditMode = true;
-            toolTipsWithoutEditMode = false;
+        tooltipInEditMenuItem = new JRadioButtonMenuItem(Bundle.getMessage("TooltipEdit"));
+        tooltipGroup.add(tooltipInEditMenuItem);
+        tooltipMenu.add(tooltipInEditMenuItem);
+        tooltipInEditMenuItem.setSelected((tooltipsInEditMode) && (!tooltipsWithoutEditMode));
+        tooltipInEditMenuItem.addActionListener((ActionEvent event) -> {
+            tooltipsInEditMode = true;
+            tooltipsWithoutEditMode = false;
             setAllShowToolTip(isEditable());
         });
-        toolTipNotInEditMenuItem = new JRadioButtonMenuItem(Bundle.getMessage("ToolTipNotEdit"));
-        toolTipGroup.add(toolTipNotInEditMenuItem);
-        toolTipMenu.add(toolTipNotInEditMenuItem);
-        toolTipNotInEditMenuItem.setSelected((!toolTipsInEditMode) && (toolTipsWithoutEditMode));
-        toolTipNotInEditMenuItem.addActionListener((ActionEvent event) -> {
-            toolTipsInEditMode = false;
-            toolTipsWithoutEditMode = true;
+        tooltipNotInEditMenuItem = new JRadioButtonMenuItem(Bundle.getMessage("TooltipNotEdit"));
+        tooltipGroup.add(tooltipNotInEditMenuItem);
+        tooltipMenu.add(tooltipNotInEditMenuItem);
+        tooltipNotInEditMenuItem.setSelected((!tooltipsInEditMode) && (tooltipsWithoutEditMode));
+        tooltipNotInEditMenuItem.addActionListener((ActionEvent event) -> {
+            tooltipsInEditMode = false;
+            tooltipsWithoutEditMode = true;
             setAllShowToolTip(!isEditable());
         });
 
@@ -9168,13 +9168,13 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     //TODO: @Deprecated // Java standard pattern for boolean getters is "isShowHelpBar()"
-    public boolean getToolTipsNotEdit() {
-        return toolTipsWithoutEditMode;
+    public boolean getTooltipsNotEdit() {
+        return tooltipsWithoutEditMode;
     }
 
     //TODO: @Deprecated // Java standard pattern for boolean getters is "isShowHelpBar()"
-    public boolean getToolTipsInEdit() {
-        return toolTipsInEditMode;
+    public boolean getTooltipsInEdit() {
+        return tooltipsInEditMode;
     }
 
     //TODO: @Deprecated // Java standard pattern for boolean getters is "isShowHelpBar()"
@@ -9573,26 +9573,26 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         }
     }
 
-    public void setToolTipsNotEdit(boolean state) {
-        if (toolTipsWithoutEditMode != state) {
-            toolTipsWithoutEditMode = state;
-            setToolTipSubMenu();
+    public void setTooltipsNotEdit(boolean state) {
+        if (tooltipsWithoutEditMode != state) {
+            tooltipsWithoutEditMode = state;
+            setTooltipSubMenu();
         }
     }
 
-    public void setToolTipsInEdit(boolean state) {
-        if (toolTipsInEditMode != state) {
-            toolTipsInEditMode = state;
-            setToolTipSubMenu();
+    public void setTooltipsInEdit(boolean state) {
+        if (tooltipsInEditMode != state) {
+            tooltipsInEditMode = state;
+            setTooltipSubMenu();
         }
     }
 
-    private void setToolTipSubMenu() {
-        if (toolTipNoneMenuItem != null) {
-            toolTipNoneMenuItem.setSelected((!toolTipsInEditMode) && (!toolTipsWithoutEditMode));
-            toolTipAlwaysMenuItem.setSelected((toolTipsInEditMode) && (toolTipsWithoutEditMode));
-            toolTipInEditMenuItem.setSelected((toolTipsInEditMode) && (!toolTipsWithoutEditMode));
-            toolTipNotInEditMenuItem.setSelected((!toolTipsInEditMode) && (toolTipsWithoutEditMode));
+    private void setTooltipSubMenu() {
+        if (tooltipNoneMenuItem != null) {
+            tooltipNoneMenuItem.setSelected((!tooltipsInEditMode) && (!tooltipsWithoutEditMode));
+            tooltipAlwaysMenuItem.setSelected((tooltipsInEditMode) && (tooltipsWithoutEditMode));
+            tooltipInEditMenuItem.setSelected((tooltipsInEditMode) && (!tooltipsWithoutEditMode));
+            tooltipNotInEditMenuItem.setSelected((!tooltipsInEditMode) && (tooltipsWithoutEditMode));
         }
     }
 
