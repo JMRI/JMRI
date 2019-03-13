@@ -1,11 +1,9 @@
 package jmri.managers;
 
 import java.text.DecimalFormat;
-
+import java.util.Objects;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.Objects;
-
 import jmri.Manager;
 import jmri.Memory;
 import jmri.MemoryManager;
@@ -100,7 +98,7 @@ public abstract class AbstractMemoryManager extends AbstractManager<Memory>
         // doesn't exist, make a new one
         s = createNewMemory(systemName, userName);
 
-        // if that failed, blame it on the input arguements
+        // if that failed, blame it on the input arguments
         if (s == null) {
             throw new IllegalArgumentException();
         }
@@ -154,6 +152,12 @@ public abstract class AbstractMemoryManager extends AbstractManager<Memory>
     @Nonnull 
     public String getBeanTypeHandled() {
         return Bundle.getMessage("BeanNameMemory");
+    }
+
+    @Override
+    @Nonnull
+    public Memory provide(String name) throws IllegalArgumentException {
+        return provideMemory(name);
     }
 
     private final static Logger log = LoggerFactory.getLogger(AbstractMemoryManager.class);

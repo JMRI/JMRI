@@ -21,17 +21,14 @@
 
 <decoder>
 	<family name="LDH decoders" mfg="LDH" lowVersionID="27">
-	<model model="LDH 4F1.5 v27" numOuts="6" numFns="6">
-		
-		     <output name="1" label="A - Blanco" />
-			<output name="2" label="B - Amarillo" />
-			<output name="3" label="C - Verde" />
-			<output name="4" label="D - Marron" />
-			<output name="5" label="E - Blanco" />
-			<output name="6" label="F - Amarillo" />
-
-			
-	</model>
+		<model model="LDH 4F1.5 v27" numOuts="6" numFns="6">
+				<output name="1" label="A - Blanco" />
+				<output name="2" label="B - Amarillo" />
+				<output name="3" label="C - Verde" />
+				<output name="4" label="D - Marron" />
+				<output name="5" label="E - Blanco" />
+				<output name="6" label="F - Amarillo" />
+		</model>
 	</family>
 
 	<programming
@@ -78,7 +75,6 @@
 			<decVal/>
 		</variable>
 
-		
 		<variable label="Numero de Fabricante asignado por NMRA" CV="8" readOnly="yes"
 			item="Manufacturer" default="56">
 			<decVal/>
@@ -150,8 +146,8 @@
 			<enumVal>
 				<enumChoice choice="Normal"></enumChoice>
 				<enumChoice choice="Reversa"></enumChoice>
-				</enumVal></variable>
-			
+			</enumVal>
+		</variable>
 
 		<variable label="F1 Activa en Consist" CV="21" mask="XXXXXXXV" minFn="1" item="Consist Address Active For F1">
 			<enumVal>
@@ -344,21 +340,16 @@
 				<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
 			<variable label="F4 controls output 6" CV="38" default="1" mask="XXVXXXXX"> <enumVal> 
 				<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
- 
-      		
 
 	<variable label="Compensacion de velocidad minima. Sin BEMF se suma a CV2 (1-100)" CV="48"
 			default="5" comment ="Rango 1-100" item="EMF Option 1" tooltip="CV48">
 			<decVal min="1" max="100"/>
 		</variable>
 
-
-
 		<variable label="Valor remanente del BEMF, en % del correspondiente a velocidad baja (0-100)" CV="49"
 			default="50" comment ="Rango 0-100" item="EMF Static Config" tooltip="CV49">
 			<decVal min="0" max="100"/>
 		</variable>
-
 
 		<variable label="BEMF" mask="XXXXXXXV" CV="50" default="1" item="Motor PWM Frequency" tooltip="CV50">
         <enumVal>
@@ -574,26 +565,23 @@
     <variable label="Valores" CV="93" default="210"><decVal/></variable>
     <variable label="Valores" CV="94" default="220"><decVal/></variable>
 
-		<variable label="Libre para usuario 1" CV="105"
-			item="User Id #1" default="0"
-			comment="Rango 0-255">
-			<decVal min="0" max="255"/>
-		</variable>
+	<variable label="Libre para usuario 1" CV="105"
+		item="User Id #1" default="0"
+		comment="Rango 0-255">
+		<decVal min="0" max="255"/>
+	</variable>
 
-		<variable label="Libre para usuario 2" CV="106"
-			item="User Id #2" default="0"
-			comment="Rango 0-255">
-			<decVal min="0" max="255"/>
-		</variable>
+	<variable label="Libre para usuario 2" CV="106"
+		item="User Id #2" default="0"
+		comment="Rango 0-255">
+		<decVal min="0" max="255"/>
+	</variable>
 	
 	<variable label="Potencia del motor en lectura de CVs" item="Motor Option 2" 
 	          tooltip="aumentar valor si el consumo del motor es muy bajo"
 	         CV="128"  default="160">	<decVal min="0" max="255" />
-				</variable>
+	</variable>
 </variables>
 </decoder>
 
 </decoder-config>
-
-
- 	  	 

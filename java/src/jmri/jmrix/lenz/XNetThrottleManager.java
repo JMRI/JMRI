@@ -2,7 +2,6 @@ package jmri.jmrix.lenz;
 
 import java.util.HashMap;
 import jmri.LocoAddress;
-import jmri.ThrottleManager;
 import jmri.jmrix.AbstractThrottleManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +13,7 @@ import org.slf4j.LoggerFactory;
  * @author Paul Bender Copyright (C) 2002-2004
  * @navassoc 1 - * jmri.jmrix.lenz.XNetThrottle
  */
-public class XNetThrottleManager extends AbstractThrottleManager implements ThrottleManager, XNetListener {
+public class XNetThrottleManager extends AbstractThrottleManager implements XNetListener {
 
     protected HashMap<LocoAddress, XNetThrottle> throttles = new HashMap<LocoAddress, XNetThrottle>(5);
 
@@ -41,6 +40,15 @@ public class XNetThrottleManager extends AbstractThrottleManager implements Thro
         XNetThrottle throttle;
         if (log.isDebugEnabled()) {
             log.debug("Requesting Throttle: " + address);
+        }
+        // range check for LH200 and Compact/Commander
+        if (tc.getCommandStation().getCommandStationType() == 0x01 ||
+            tc.getCommandStation().getCommandStationType() == 0x02 ) {
+            if(address.getNumber()>=100) {
+               String typeString = Bundle.getMessage(tc.getCommandStation().getCommandStationType() == 0x01?"CSTypeLH200":"CSTypeCompact");
+               failedThrottleRequest(address,Bundle.getMessage("ThrottleErrorCSTwoDigit",typeString));
+               return;
+            }
         }
         if (throttles.containsKey(address)) {
             notifyThrottleKnown(throttles.get(address), address);

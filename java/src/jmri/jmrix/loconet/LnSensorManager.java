@@ -7,7 +7,8 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Manage the LocoNet-specific Sensor implementation.
- * System names are "LiSnnn", where nnn is the sensor number without padding.
+ * System names are "LSnnn", where L is the user configurable system prefix,
+ * nnn is the sensor number without padding.
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
@@ -171,6 +172,8 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
 
     /**
      * Get the bit address from the system name.
+     * @param systemName a valid LocoNet-based Sensor System Name
+     * @return the sensor number extracted from the system name
      */
     public int getBitFromSystemName(String systemName) {
         // validate the system Name leader characters
@@ -241,7 +244,7 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
     }
 
     /**
-     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     * {@inheritDoc}
      */
     @Override
     public String getEntryToolTip() {
@@ -286,22 +289,8 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
                 }
                 msg.setElement(1, sw1[k]);
                 msg.setElement(2, sw2[k]);
-                while (true) {
-                    try {
-                        tc.sendLocoNetMessage(msg);
-                        break;
-                    } catch (NullPointerException npe) {
-                        // sleep(500) or (750) mSec infrequently causes NPE upon sending first msg via tc, so retry
-                        log.debug("init of LnSensorManager delayed");
-                        try {
-                            Thread.sleep(10); // wait 1 cycle for tc to init
-                        } catch (InterruptedException e) {
-                            Thread.currentThread().interrupt(); // retain if needed later
-                            sm.setUpdateNotBusy();
-                            return; // and stop work
-                        }
-                    }
-                }
+                        
+                tc.sendLocoNetMessage(msg);
                 log.debug("LnSensorUpdate sent");
             }
             sm.setUpdateNotBusy();

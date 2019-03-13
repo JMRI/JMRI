@@ -18,12 +18,11 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Randall Wood
  */
-@SuppressWarnings("serial")
 public abstract class JsonHttpService {
 
     protected final ObjectMapper mapper;
 
-    protected JsonHttpService(ObjectMapper mapper) {
+    protected JsonHttpService(@Nonnull ObjectMapper mapper) {
         this.mapper = mapper;
     }
 
@@ -37,7 +36,7 @@ public abstract class JsonHttpService {
      * recognized.
      *
      * @param type   the type of the requested object
-     * @param name   the name of the requested object
+     * @param name   the system name of the requested object
      * @param locale the requesting client's Locale
      * @return a JSON description of the requested object
      * @throws JsonException if the named object does not exist or other error
@@ -53,7 +52,7 @@ public abstract class JsonHttpService {
      * does not exist.
      *
      * @param type   the type of the requested object
-     * @param name   the name of the requested object
+     * @param name   the system name of the requested object
      * @param data   JSON data set of attributes of the requested object to be
      *               updated
      * @param locale the requesting client's Locale
@@ -72,7 +71,7 @@ public abstract class JsonHttpService {
      * are not intended to be addable.
      *
      * @param type   the type of the requested object
-     * @param name   the name of the requested object
+     * @param name   the system name of the requested object
      * @param data   JSON data set of attributes of the requested object to be
      *               created or updated
      * @param locale the requesting client's Locale
@@ -93,7 +92,7 @@ public abstract class JsonHttpService {
      * Do not throw an error if the requested object does not exist.
      *
      * @param type   the type of the deleted object
-     * @param name   the name of the deleted object
+     * @param name   the system name of the deleted object
      * @param locale the requesting client's Locale
      * @throws JsonException if this method is not allowed or other error occurs
      */
@@ -117,7 +116,7 @@ public abstract class JsonHttpService {
      * @throws JsonException may be thrown by concrete implementations
      */
     @Nonnull
-    public abstract ArrayNode doGetList(String type, Locale locale) throws JsonException;
+    public abstract ArrayNode doGetList(@Nonnull String type, @Nonnull Locale locale) throws JsonException;
 
     /**
      * Get the JSON Schema for the {@code data} property of the requested type
@@ -146,7 +145,7 @@ public abstract class JsonHttpService {
      *                       message "ErrorUnknownType"
      */
     @Nonnull
-    public abstract JsonNode doSchema(String type, boolean server, Locale locale) throws JsonException;
+    public abstract JsonNode doSchema(@Nonnull String type, boolean server, @Nonnull Locale locale) throws JsonException;
 
     /**
      * Helper to make implementing

@@ -6,24 +6,31 @@ import jmri.jmrix.loconet.LnSensorManager;
 import jmri.jmrix.loconet.LnTurnout;
 import jmri.jmrix.loconet.LnTurnoutManager;
 import jmri.jmrix.loconet.LocoNetMessage;
-import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
+import jmri.util.*;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+
+import org.junit.After;
+import org.junit.Before;
 
 /**
  * Tests for the jmri.jmrix.loconet.locomon.Llnmon class.
  *
  * @author	Bob Jacobsen Copyright (C) 2002, 2007
- * @author      B. Milhaupt  Copyright (C) 2015, 2018
+ * @author  B. Milhaupt  Copyright (C) 2015, 2018
  */
-public class LlnmonTest extends TestCase {
+public class LlnmonTest {
 
     Llnmon f;
     LnTurnoutManager lntm;
     LnSensorManager lnsm;
     LnReporterManager lnrm;
 
+    @Test
     public void testTransponding() {
         LocoNetMessage l;
 
@@ -389,6 +396,7 @@ public class LlnmonTest extends TestCase {
 
     }
 
+    @Test
     public void testOpcPeerXfer7Byte() {
         LocoNetMessage l;
 
@@ -427,8 +435,8 @@ public class LlnmonTest extends TestCase {
                 f.displayMessage(l));
     }
 
+    @Test
     public void testALM() {
-
         LocoNetMessage l;
 
         l = new LocoNetMessage(new int[] {0xEE, 0x10, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00});
@@ -443,6 +451,7 @@ public class LlnmonTest extends TestCase {
 
     }
 
+    @Test
     public void testSVProgrammingProtocolV1() {
         LocoNetMessage l;
 
@@ -516,6 +525,7 @@ public class LlnmonTest extends TestCase {
 
     }
 
+    @Test
     public void testSVProgrammingProtocolV2() {
         LocoNetMessage l;
 
@@ -765,6 +775,7 @@ public class LlnmonTest extends TestCase {
                 , f.displayMessage(l));
     }
 
+    @Test
     public void testLissy() {
         LocoNetMessage l = new LocoNetMessage(new int[] {0xE4, 0x08, 0x00, 0x60, 0x01, 0x42, 0x35, 0x05});
         assertEquals("Lissy message test 1", "Lissy 1 IR Report: Loco 8501 moving south\n",
@@ -818,6 +829,7 @@ public class LlnmonTest extends TestCase {
 
     }
 
+    @Test
     public void testOpcAnalogIO() {
         LocoNetMessage l = new LocoNetMessage(new int[] {0xE4, 0x08, 0x01, 0x01, 0x03, 0x32, 0x11, 0x35});
         assertEquals("OpcAnalogIO message test 1", "Lissy 3 Wheel Report: 6417 wheels moving north\n", f.displayMessage(l));
@@ -830,6 +842,7 @@ public class LlnmonTest extends TestCase {
 
     }
 
+    @Test
     public void testLACK() {
         LocoNetMessage l;
 
@@ -894,6 +907,7 @@ public class LlnmonTest extends TestCase {
 
     }
 
+    @Test
     public void testIPL() {
         LocoNetMessage l;
 
@@ -1408,6 +1422,7 @@ public class LlnmonTest extends TestCase {
                 f.displayMessage(l));
     }
 
+    @Test
     public void testIplHostNumbers() {
         LocoNetMessage l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x16, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x77});
         String s;
@@ -1475,6 +1490,7 @@ public class LlnmonTest extends TestCase {
          }
     }
 
+    @Test
     public void testIplPingMessages() {
         LocoNetMessage l;
 
@@ -1740,6 +1756,7 @@ public class LlnmonTest extends TestCase {
 
     }
 
+    @Test
     public void testSv1Messages() {
         LocoNetMessage l;
 
@@ -1760,6 +1777,7 @@ public class LlnmonTest extends TestCase {
 
     }
 
+    @Test
     public void testProgrammingMessages() {
         LocoNetMessage l;
 
@@ -2384,6 +2402,7 @@ public class LlnmonTest extends TestCase {
 
     }
 
+    @Test
     public void testTranspondingMessages() {
         LocoNetMessage l;
         l = new LocoNetMessage(new int[] {0xE5, 0x09, 0x40, 0x7D, 0x03, 0x00, 0x00, 0x00, 0x2D});
@@ -2465,6 +2484,7 @@ public class LlnmonTest extends TestCase {
 
     }
 
+    @Test
     public void testBasicConsistingMessages() {
         LocoNetMessage l;
         l = new LocoNetMessage(new int[] {0xB9, 0x0B, 0x05, 0x48});
@@ -2481,6 +2501,7 @@ public class LlnmonTest extends TestCase {
 
     }
 
+    @Test
     public void testBasicSensorReportMessages() {
         LocoNetMessage l;
 
@@ -2524,6 +2545,7 @@ public class LlnmonTest extends TestCase {
                 f.displayMessage(l));
     }
 
+    @Test
     public void testTurnoutSensorStateMessages() {
         LocoNetMessage l;
 
@@ -2609,6 +2631,7 @@ public class LlnmonTest extends TestCase {
 
     }
 
+    @Test
     public void testBasicImmediatePacketMessages() {
         LocoNetMessage l;
 
@@ -3220,9 +3243,11 @@ public class LlnmonTest extends TestCase {
 */
     }
 
+    @Test
     public void testPlayableWhistleMessages() {
     }
 
+    @Test
     public void testBasicTurnoutControlMessages() {
         LocoNetMessage l;
 
@@ -3376,6 +3401,7 @@ public class LlnmonTest extends TestCase {
 
     }
 
+    @Test
     public void testTetherlessQueryAndReplies() {
         LocoNetMessage l;
 
@@ -3510,6 +3536,7 @@ public class LlnmonTest extends TestCase {
 
     }
 
+    @Test
     public void testBasicPM42Events() {
         LocoNetMessage l;
 
@@ -3591,6 +3618,7 @@ public class LlnmonTest extends TestCase {
 
     }
 
+    @Test
     public void testPR3ModeMessages() {
         LocoNetMessage l;
 
@@ -3636,6 +3664,7 @@ public class LlnmonTest extends TestCase {
 
     }
 
+    @Test
     public void testTrackPowerMessages() {
         LocoNetMessage l;
 
@@ -3661,6 +3690,7 @@ public class LlnmonTest extends TestCase {
 
     }
 
+    @Test
     public void testPM42OpSwMessages() {
         LocoNetMessage l;
 
@@ -3746,6 +3776,7 @@ public class LlnmonTest extends TestCase {
 
     }
 
+    @Test
     public void testDS64OpSwMessages() {
         LocoNetMessage l;
 
@@ -3806,6 +3837,7 @@ public class LlnmonTest extends TestCase {
 
     }
 
+    @Test
     public void testCmdStationCfgSlot() {
         LocoNetMessage l;
 
@@ -4589,6 +4621,7 @@ public class LlnmonTest extends TestCase {
                 f.displayMessage(l));
     }
 
+    @Test
     public void testDuplexRadioScan() {
         LocoNetMessage l;
 
@@ -4677,6 +4710,7 @@ public class LlnmonTest extends TestCase {
 
     }
 
+    @Test
     public void textOpcPeerXfer() {
         LocoNetMessage l;
 
@@ -4687,6 +4721,7 @@ public class LlnmonTest extends TestCase {
 
     }
 
+    @Test
     public void testThrottleMessages() {
         LocoNetMessage l;
 
@@ -4783,6 +4818,7 @@ public class LlnmonTest extends TestCase {
 
     }
 
+    @Test
     public void testOpcPeerXfer10() {
         LocoNetMessage l;
         l = new LocoNetMessage(new int[] {0xe5, 0x0a, 0x73, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x7f}  );
@@ -4827,6 +4863,7 @@ public class LlnmonTest extends TestCase {
 
     }
 
+    @Test
     public void testBasicSlotAccessMessages() {
         LocoNetMessage l;
 
@@ -5437,6 +5474,7 @@ public class LlnmonTest extends TestCase {
 
     }
 
+    @Test
     public void testAliasing() {
         LocoNetMessage l;
         l = new LocoNetMessage(new int[] {0xEE, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00} );
@@ -5529,6 +5567,7 @@ public class LlnmonTest extends TestCase {
 
     }
 
+    @Test
     public void testConvertToMixed() {
         LocoNetMessage l;
 
@@ -5602,6 +5641,7 @@ public class LlnmonTest extends TestCase {
 
     }
 
+    @Test
     public void testSwichMessages() {
         LocoNetMessage l;
 
@@ -5789,6 +5829,7 @@ public class LlnmonTest extends TestCase {
                 f.displayMessage(l));
 }
 
+    @Test
     public void testDirf() {
         LocoNetMessage l;
 
@@ -5799,6 +5840,7 @@ public class LlnmonTest extends TestCase {
 
     }
 
+    @Test
     public void testPeerXfer20DuplexQuery() {
         LocoNetMessage l;
         l = new LocoNetMessage(new int[] {0xe5, 0x14, 0x01, 0x08, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0x7f});
@@ -6201,6 +6243,7 @@ public class LlnmonTest extends TestCase {
 
     }
 
+    @Test
     public void testDownloadFirmware() {
         LocoNetMessage l;
 
@@ -6491,6 +6534,7 @@ public class LlnmonTest extends TestCase {
 
     }
 
+    @Test
     public void testExtendedCsOpSws() {
         LocoNetMessage l;
 
@@ -6506,41 +6550,26 @@ public class LlnmonTest extends TestCase {
 "	OpSw121=Thrown, OpSw122=Thrown, OpSw123=Thrown, OpSw124=Thrown, OpSw125=Thrown, OpSw126=Thrown, OpSw127=Thrown, OpSw128=Thrown.\n", f.displayMessage(l));
     }
 
-    // from here down is testing infrastructure
-    public LlnmonTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {LlnmonTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(LlnmonTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    protected void setUp() {
+    @Before
+    public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.initReporterManager();
-
-        jmri.jmrix.loconet.LocoNetInterfaceScaffold lnis = new jmri.jmrix.loconet.LocoNetInterfaceScaffold();
+        LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo("L", "LocoNet");
+        jmri.jmrix.loconet.LocoNetInterfaceScaffold lnis = new jmri.jmrix.loconet.LocoNetInterfaceScaffold(memo);
         lntm = new LnTurnoutManager(lnis, lnis, "L", false);
         lnsm = new LnSensorManager(lnis, "L");
         lnrm = new LnReporterManager(lnis, "L");
+
+        Log4JUtil.setDeprecatedLogging(false); // testing deprecated method
         f = new Llnmon(lntm, lnsm, lnrm);
+
         jmri.InstanceManager.setTurnoutManager(lntm);
         jmri.InstanceManager.setSensorManager(lnsm);
         jmri.InstanceManager.setReporterManager(lnrm);
-
     }
 
-    @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         lnsm.dispose();
         JUnitUtil.tearDown();
     }

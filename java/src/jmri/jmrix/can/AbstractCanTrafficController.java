@@ -59,10 +59,8 @@ abstract public class AbstractCanTrafficController
         Runnable r = new XmtNotifier(m, mLastSender, this);
         javax.swing.SwingUtilities.invokeLater(r);
 
-        // Create the correct concrete class for sending to the hardware
-        AbstractMRMessage hm = newMessage();
-
-        // Encode the message to be sent
+        // Create the correct concrete class for sending to the hardware and encode the message to be sent
+        AbstractMRMessage hm;
         if (((CanMessage) m).isTranslated()) {
             hm = m;
         } else {
@@ -114,7 +112,7 @@ abstract public class AbstractCanTrafficController
                             }
                         } catch (InterruptedException e) {
                             Thread.currentThread().interrupt(); // retain if needed later
-                            log.error("retry wait interupted");
+                            log.error("retry wait interrupted");
                         }
                     } else {
                         log.warn("sendMessage: port not ready for data sending: " + Arrays.toString(msg));

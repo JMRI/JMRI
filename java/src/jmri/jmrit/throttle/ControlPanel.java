@@ -42,8 +42,6 @@ import jmri.util.FileUtil;
 import jmri.util.MouseInputAdapterInstaller;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * A JInternalFrame that contains a JSlider to control loco speed, and buttons
@@ -291,8 +289,15 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         labelTable.put(Integer.valueOf(maxSpeed), new JLabel("100%"));
         labelTable.put(Integer.valueOf(0), new JLabel(Bundle.getMessage("ButtonStop")));
         speedSlider.setLabelTable(labelTable);
-        speedSlider.setPaintTicks(true);
-        speedSlider.setPaintLabels(true);
+        
+        if (InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isUsingExThrottle()
+                && InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isUsingFunctionIcon()) {
+            speedSlider.setPaintTicks(false);
+            speedSlider.setPaintLabels(false);
+        } else {
+            speedSlider.setPaintTicks(true);
+            speedSlider.setPaintLabels(true);
+        }
 
         if (speedSliderContinuous != null) {
             speedSliderContinuous.setMaximum(maxSpeed);
@@ -311,8 +316,15 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
             labelTable.put(Integer.valueOf(-maxSpeed / 2), new JLabel("-50%"));
             labelTable.put(Integer.valueOf(-maxSpeed), new JLabel("-100%"));
             speedSliderContinuous.setLabelTable(labelTable);
-            speedSliderContinuous.setPaintTicks(true);
-            speedSliderContinuous.setPaintLabels(true);
+            speedSlider.setLabelTable(labelTable);
+            if (InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isUsingExThrottle()
+                    && InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isUsingFunctionIcon()) {
+                speedSliderContinuous.setPaintTicks(false);
+                speedSliderContinuous.setPaintLabels(false);
+            } else {
+                speedSliderContinuous.setPaintTicks(true);
+                speedSliderContinuous.setPaintLabels(true);
+            }
         }
 
         speedSpinnerModel.setMaximum(Integer.valueOf(maxSpeed));
@@ -349,7 +361,6 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      *                      speed slider display STEPDISPLAY = use speed step
      *                      display
      */
-    @Deprecated
     public void setSpeedController(int displaySlider) {
         _displaySlider = displaySlider;
         switch (displaySlider) {
@@ -379,6 +390,12 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                     return;
                 }
                 break;
+            case SLIDERDISPLAY:
+                // normal, drop through
+                break;
+            default:
+                jmri.util.Log4JUtil.warnOnce(log, "Unexpected displaySlider = {}", displaySlider);
+                break;    
         }
         sliderPanel.setVisible(true);
         speedSlider.setEnabled(speedControllerEnable);
@@ -462,8 +479,12 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         sliderPanel = new JPanel();
         sliderPanel.setLayout(new GridBagLayout());
         sliderPanel.setOpaque(false);
-
+        
         speedSlider = new JSlider(0, intSpeedSteps);
+        if (InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isUsingExThrottle()
+                && InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isUsingFunctionIcon()) {
+            speedSlider.setUI(new ControlPanelCustomSliderUI(speedSlider));
+        }
         speedSlider.setOpaque(false);
         speedSlider.setValue(0);
         speedSlider.setFocusable(false);
@@ -485,6 +506,10 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         });
 
         speedSliderContinuous = new JSlider(-intSpeedSteps, intSpeedSteps);
+        if (InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isUsingExThrottle()
+                && InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isUsingFunctionIcon()) {
+            speedSliderContinuous.setUI(new ControlPanelCustomSliderUI(speedSlider));
+        }
         speedSliderContinuous.setValue(0);
         speedSliderContinuous.setOpaque(false);
         speedSliderContinuous.setFocusable(false);
@@ -570,8 +595,14 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         labelTable.put(Integer.valueOf(maxSpeed), new JLabel("100%"));
         labelTable.put(Integer.valueOf(0), new JLabel(Bundle.getMessage("ButtonStop")));
         speedSlider.setLabelTable(labelTable);
-        speedSlider.setPaintTicks(true);
-        speedSlider.setPaintLabels(true);
+        if (InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isUsingExThrottle()
+                && InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isUsingFunctionIcon()) {
+            speedSlider.setPaintTicks(false);
+            speedSlider.setPaintLabels(false);
+        } else {
+            speedSlider.setPaintTicks(true);
+            speedSlider.setPaintLabels(true);
+        }
         // remove old actions
         speedSlider.addChangeListener(
                 new ChangeListener() {
@@ -639,8 +670,14 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         labelTable.put(Integer.valueOf(-maxSpeed / 2), new JLabel("-50%"));
         labelTable.put(Integer.valueOf(-maxSpeed), new JLabel("-100%"));
         speedSliderContinuous.setLabelTable(labelTable);
-        speedSliderContinuous.setPaintTicks(true);
-        speedSliderContinuous.setPaintLabels(true);
+        if (InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isUsingExThrottle()
+                && InstanceManager.getDefault(ThrottleFrameManager.class).getThrottlesPreferences().isUsingFunctionIcon()) {
+            speedSliderContinuous.setPaintTicks(false);
+            speedSliderContinuous.setPaintLabels(false);
+        } else {
+            speedSliderContinuous.setPaintTicks(true);
+            speedSliderContinuous.setPaintLabels(true);
+        }
         // remove old actions
         speedSliderContinuous.addChangeListener(
                 new ChangeListener() {
@@ -1462,5 +1499,5 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(ControlPanel.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ControlPanel.class);
 }

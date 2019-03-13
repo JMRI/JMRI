@@ -9,14 +9,10 @@ import org.junit.*;
  *
  * @author	Paul Bender
  */
-public class TimeoutRfidReporterTest extends jmri.implementation.AbstractReporterTestBase {
-
-    @Override
-    protected Object generateObjectToReport(){
-        return new jmri.implementation.DefaultIdTag("ID0413276BC1", "Test Tag");
-    }
+public class TimeoutRfidReporterTest extends RfidReporterTest {
 
     @Test
+    @Override
     public void test1ParamCtor() {
        TimeoutRfidReporter s = new TimeoutRfidReporter("FRA");
        Assert.assertNotNull("exists", s);

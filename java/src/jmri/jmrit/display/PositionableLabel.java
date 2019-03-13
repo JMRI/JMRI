@@ -61,7 +61,6 @@ public class PositionableLabel extends JLabel implements Positionable {
     private int _degrees;
 
     /**
-     * {@inheritDoc}
      *
      * @param editor where this label is displayed
      */
@@ -969,7 +968,7 @@ public class PositionableLabel extends JLabel implements Positionable {
         int width = getFontMetrics(getFont()).stringWidth(text);
         int height = getFontMetrics(getFont()).getHeight();
         // int hOffset = 0;  // variable has no effect, see Issue #5662
-        int vOffset = getFontMetrics(getFont()).getAscent();
+        // int vOffset = getFontMetrics(getFont()).getAscent();
         if (_popupUtil != null) {
             if (_popupUtil.getFixedWidth() != 0) {
                 switch (_popupUtil.getJustification()) {
@@ -991,12 +990,12 @@ public class PositionableLabel extends JLabel implements Positionable {
                 // hOffset += _popupUtil.getMargin() + _popupUtil.getBorderSize(); // variable has no effect, see Issue #5662
             }
             if (_popupUtil.getFixedHeight() != 0) {
-                vOffset = Math.max(vOffset + (_popupUtil.getFixedHeight() - height) / 2, 0);
-                vOffset += _popupUtil.getBorderSize();
+                // vOffset = Math.max(vOffset + (_popupUtil.getFixedHeight() - height) / 2, 0);
+                // vOffset += _popupUtil.getBorderSize();
                 height = _popupUtil.getFixedHeight() + 2 * _popupUtil.getBorderSize();
             } else {
                 height += 2 * (_popupUtil.getMargin() + _popupUtil.getBorderSize());
-                vOffset += _popupUtil.getMargin() + _popupUtil.getBorderSize();
+                // vOffset += _popupUtil.getMargin() + _popupUtil.getBorderSize();
             }
         }
 
@@ -1146,16 +1145,21 @@ public class PositionableLabel extends JLabel implements Positionable {
             }
 
             switch (_popupUtil.getOrientation()) {
-                case PositionablePopupUtil.VERTICAL_UP: {
+                case PositionablePopupUtil.VERTICAL_UP:
                     g2d.translate(0, getSize().getHeight());
                     g2d.transform(AffineTransform.getQuadrantRotateInstance(-1));
                     break;
-                }
-                case PositionablePopupUtil.VERTICAL_DOWN: {
+                case PositionablePopupUtil.VERTICAL_DOWN:
                     g2d.transform(AffineTransform.getQuadrantRotateInstance(1));
                     g2d.translate(0, -getSize().getWidth());
                     break;
-                }
+                case 0: 
+                    // routine value (not initialized) for no change
+                    break;
+                default:
+                    // unexpected orientation value
+                    jmri.util.Log4JUtil.warnOnce(log, "Unexpected orientation = {}", _popupUtil.getOrientation());
+                    break;
             }
 
             needsRotate = true;

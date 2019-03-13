@@ -1,6 +1,8 @@
 package jmri.jmrix.loconet.hexfile;
 
 import java.awt.GraphicsEnvironment;
+import jmri.jmrix.loconet.LnPacketizer;
+import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.util.*;
 import org.junit.After;
 import org.junit.Assert;
@@ -15,17 +17,27 @@ import org.junit.Test;
 public class HexFileFrameTest {
 
     @Test
-    public void testCTor() {
+    public void testCTor() throws InterruptedException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        LnHexFilePort p = new LnHexFilePort();
+        
+        HexFileFrame f = new HexFileFrame();
+
         ThreadingUtil.runOnGUI( ()-> {
-            HexFileFrame t = new HexFileFrame();
-            LnHexFilePort p = new LnHexFilePort();
-            t.setAdapter(p);
-            t.initComponents();
-            t.configure();
-            t.dispose();
-        });
-    }
+            f.setAdapter(p);
+            f.initComponents();
+            f.configure();
+       });
+
+        ThreadingUtil.runOnGUI( ()-> {
+            f.dispose();
+       });
+            
+        p.getSystemConnectionMemo().dispose();
+        p.dispose();
+        f.sourceThread.stop();
+        f.sourceThread.join();
+ }   
 
     // The minimal setup for log4J
     @Before

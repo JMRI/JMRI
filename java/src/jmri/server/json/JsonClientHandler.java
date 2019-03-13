@@ -18,7 +18,10 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.ServiceLoader;
 import javax.servlet.http.HttpServletResponse;
+import jmri.InstanceManager;
 import jmri.JmriException;
+import jmri.jmris.json.JsonServerPreferences;
+import jmri.server.json.schema.JsonSchemaServiceCache;
 import jmri.spi.JsonServiceFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,6 +36,8 @@ public class JsonClientHandler {
     public static final String HELLO_MSG = "{\"" + JSON.TYPE + "\":\"" + JSON.HELLO + "\"}";
     private final JsonConnection connection;
     private final HashMap<String, HashSet<JsonSocketService<?>>> services = new HashMap<>();
+    private final JsonServerPreferences preferences = InstanceManager.getDefault(JsonServerPreferences.class);
+    private final JsonSchemaServiceCache schemas = InstanceManager.getDefault(JsonSchemaServiceCache.class);
     private static final Logger log = LoggerFactory.getLogger(JsonClientHandler.class);
 
     public JsonClientHandler(JsonConnection connection) {
@@ -106,7 +111,7 @@ public class JsonClientHandler {
             this.onMessage(this.connection.getObjectMapper().readTree(string));
         } catch (JsonProcessingException pe) {
             log.warn("Exception processing \"{}\"\n{}", string, pe.getMessage());
-            this.sendErrorMessage(500, Bundle.getMessage(this.connection.getLocale(), "ErrorProcessingJSON", pe.getLocalizedMessage()));
+            this.sendErrorMessage(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(this.connection.getLocale(), "ErrorProcessingJSON", pe.getLocalizedMessage()));
         }
     }
 
@@ -124,6 +129,9 @@ public class JsonClientHandler {
             String method = root.path(METHOD).asText(GET);
             String type = root.path(TYPE).asText();
             JsonNode data = root.path(DATA);
+            if (preferences.getValidateClientMessages()) {
+                this.schemas.validateMessage(root, false, this.connection.getLocale());
+            }
             if ((root.path(TYPE).isMissingNode() || type.equals(LIST))
                     && root.path(LIST).isValueNode()) {
                 type = root.path(LIST).asText();
@@ -161,7 +169,7 @@ public class JsonClientHandler {
                     return;
                 } else {
                     log.warn("Requested list type '{}' unknown.", type);
-                    this.sendErrorMessage(404, Bundle.getMessage(this.connection.getLocale(), "ErrorUnknownType", type));
+                    this.sendErrorMessage(HttpServletResponse.SC_NOT_FOUND, Bundle.getMessage(this.connection.getLocale(), "ErrorUnknownType", type));
                     return;
                 }
             } else if (!data.isMissingNode()) {
@@ -177,17 +185,17 @@ public class JsonClientHandler {
                     }
                 } else {
                     log.warn("Requested type '{}' unknown.", type);
-                    this.sendErrorMessage(404, Bundle.getMessage(this.connection.getLocale(), "ErrorUnknownType", type));
+                    this.sendErrorMessage(HttpServletResponse.SC_NOT_FOUND, Bundle.getMessage(this.connection.getLocale(), "ErrorUnknownType", type));
                 }
             } else {
-                this.sendErrorMessage(400, Bundle.getMessage(this.connection.getLocale(), "ErrorMissingData"));
+                this.sendErrorMessage(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(this.connection.getLocale(), "ErrorMissingData"));
             }
             if (type.equals(GOODBYE)) {
                 // close the connection if GOODBYE is received.
                 this.connection.close();
             }
         } catch (JmriException je) {
-            this.sendErrorMessage(500, Bundle.getMessage(this.connection.getLocale(), "ErrorUnsupportedOperation", je.getLocalizedMessage()));
+            this.sendErrorMessage(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(this.connection.getLocale(), "ErrorUnsupportedOperation", je.getLocalizedMessage()));
         } catch (JsonException je) {
             this.sendErrorMessage(je);
         }

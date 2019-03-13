@@ -1,5 +1,8 @@
 package jmri.util;
 
+import apps.gui.GuiLafPreferencesManager;
+
+import java.awt.Container;
 import java.awt.Frame;
 import java.awt.Window;
 import java.io.FileNotFoundException;
@@ -8,8 +11,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 import javax.annotation.Nonnull;
-
-import apps.gui.GuiLafPreferencesManager;
+import javax.swing.AbstractButton;
 
 import jmri.*;
 import jmri.implementation.JmriConfigurationManager;
@@ -18,6 +20,8 @@ import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.WarrantManager;
 import jmri.jmrix.ConnectionConfigManager;
 import jmri.jmrix.debugthrottle.DebugThrottleManager;
+import jmri.jmrix.internal.InternalReporterManager;
+import jmri.jmrix.internal.InternalSensorManager;
 import jmri.managers.AbstractSignalHeadManager;
 import jmri.managers.DefaultConditionalManager;
 import jmri.managers.DefaultIdTagManager;
@@ -26,8 +30,6 @@ import jmri.managers.DefaultMemoryManager;
 import jmri.managers.DefaultRailComManager;
 import jmri.managers.DefaultSignalMastLogicManager;
 import jmri.managers.DefaultSignalMastManager;
-import jmri.jmrix.internal.InternalReporterManager;
-import jmri.jmrix.internal.InternalSensorManager;
 import jmri.managers.TestUserPreferencesManager;
 import jmri.profile.NullProfile;
 import jmri.profile.Profile;
@@ -45,14 +47,13 @@ import jmri.util.managers.WarrantManagerThrowExceptionScaffold;
 import jmri.util.prefs.JmriConfigurationProvider;
 import jmri.util.prefs.JmriPreferencesProvider;
 import jmri.util.prefs.JmriUserInterfaceConfigurationProvider;
-
 import org.apache.log4j.Level;
-
 import org.junit.Assert;
-
 import org.netbeans.jemmy.FrameWaiter;
 import org.netbeans.jemmy.TestOut;
-
+import org.netbeans.jemmy.operators.AbstractButtonOperator;
+import org.netbeans.jemmy.operators.JButtonOperator;
+import org.netbeans.jemmy.operators.JDialogOperator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -135,6 +136,23 @@ public class JUnitUtil {
      */
     static boolean checkSequenceDumpsStack =    Boolean.getBoolean("jmri.util.JUnitUtil.checkSequenceDumpsStack"); // false unless set true
 
+    /**
+     * Check for any threads left behind after a test calls {@link #tearDown}
+     * <p>
+     * Set from the jmri.util.JUnitUtil.checkRemnantThreads environment variable.
+     */
+    static boolean checkRemnantThreads =    Boolean.getBoolean("jmri.util.JUnitUtil.checkRemnantThreads"); // false unless set true
+
+    /**
+     * Check for tests that take an excessive time
+     * <p>
+     * Set from the jmri.util.JUnitUtil.checkTestDuration environment variable.
+     */
+    static boolean checkTestDuration =      Boolean.getBoolean("jmri.util.JUnitUtil.checkTestDuration"); // false unless set true
+    static long    checkTestDurationMax =   Long.getLong("jmri.util.JUnitUtil.checkTestDurationMax", 5000); // milliseconds
+
+    static long    checkTestDurationStartTime = 0;  // working value
+    
     static private int threadCount = 0;
     
     static private boolean didSetUp = false;
@@ -159,15 +177,29 @@ public class JUnitUtil {
             Log4JUtil.initLogging(filename);
         }
         
-        // do not set the UncaughtExceptionHandler while unit testing
-        // individual tests can explicitely set it after calling this method
-        Thread.setDefaultUncaughtExceptionHandler(null);
+        // need to do this each time
         try {
             JUnitAppender.start();
+            
+            // reset warn _only_ once logic to make tests repeatable
+            Log4JUtil.restartWarnOnce();
+            // ensure logging of deprecated method calls;
+            // individual tests can turn off as needed
+            Log4JUtil.setDeprecatedLogging(true);
+ 
         } catch (Throwable e) {
             System.err.println("Could not start JUnitAppender, but test continues:\n" + e);
         }
+            
+        // reset the UnexpectedMessageFlags so that errors from a 
+        // previous test doesn't interfere with the current test.
+        JUnitAppender.resetUnexpectedMessageFlags(Level.INFO); 
 
+
+        // do not set the UncaughtExceptionHandler while unit testing
+        // individual tests can explicitly set it after calling this method
+        Thread.setDefaultUncaughtExceptionHandler(null);
+        
         // silence the Jemmy GUI unit testing framework
         JUnitUtil.silenceGUITestOutput();
 
@@ -207,6 +239,9 @@ public class JUnitUtil {
                 if (checkSequenceDumpsStack) lastSetUpStackTrace = Thread.currentThread().getStackTrace();
             }
         }
+        
+        // checking time?
+        if (checkTestDuration) checkTestDurationStartTime = System.currentTimeMillis();
     }
     
     /**
@@ -215,6 +250,14 @@ public class JUnitUtil {
      */
     public static void tearDown() {
 
+        // checking time?
+        if (checkTestDuration) {
+            long duration = System.currentTimeMillis() - checkTestDurationStartTime;
+            if (duration > checkTestDurationMax) {
+                // test too long, log that
+                log.warn("Test in {} duration {} msec exceeded limit {}", getTestClassName(), duration, checkTestDurationMax);
+            }
+        }
         // Log and/or check the use of setUp and tearDown
         if (checkSetUpTearDownSequence || printSetUpTearDownNames) {
             lastTearDownClassName = getTestClassName();
@@ -259,8 +302,17 @@ public class JUnitUtil {
         JUnitAppender.resetUnexpectedMessageFlags(severity);
         Assert.assertFalse("Unexpected "+severity+" or higher messages emitted", unexpectedMessageSeen);
         
-        // Optionally, check that no threads were left running (could be controlled by environment var?)
-        // checkThreads(false);  // true means stop on 1st extra thread
+        // Optionally, check that no threads were left running (controlled by jmri.util.JUnitUtil.checkRemnantThreads environment var)
+        if (checkRemnantThreads) {
+            checkThreads();
+        }
+        
+        // Optionally, print whatever is on the Swing queue to see what's keeping things alive
+        //Object entry = java.awt.Toolkit.getDefaultToolkit().getSystemEventQueue().peekEvent();
+        //if (entry != null) System.err.println("entry: "+entry);
+        
+        // Optionally, check that the Swing queue is idle
+        //new org.netbeans.jemmy.QueueTool().waitEmpty(250);
 
     }
 
@@ -269,12 +321,12 @@ public class JUnitUtil {
      * {@value #DEFAULT_RELEASETHREAD_DELAY} milliseconds.
      * <p>
      * This cannot be used on the Swing or AWT event threads. For those, please
-     * use Jemmy's wait routine or JFCUnit's flushAWT() and waitAtLeast(..)
+     * use Jemmy's wait routine.
      *
      * @param self currently ignored
      * @deprecated 4.9.1 Use the various waitFor routines instead
      */
-    @Deprecated
+    @Deprecated // 4.9.1 Use the various waitFor routines instead
     public static void releaseThread(Object self) {
         releaseThread(self, DEFAULT_RELEASETHREAD_DELAY);
     }
@@ -283,13 +335,13 @@ public class JUnitUtil {
      * Release the current thread, allowing other threads to process.
      * <p>
      * This cannot be used on the Swing or AWT event threads. For those, please
-     * use JFCUnit's flushAWT() and waitAtLeast(..)
+     * use Jemmy's wait routine.
      *
      * @param self  currently ignored
      * @param delay milliseconds to wait
      * @deprecated 4.9.1 Use the various waitFor routines instead
      */
-    @Deprecated
+    @Deprecated // 4.9.1 Use the various waitFor routines instead
     public static void releaseThread(Object self, int delay) {
         if (javax.swing.SwingUtilities.isEventDispatchThread()) {
             log.error("Cannot use releaseThread on Swing thread", new Exception());
@@ -385,6 +437,41 @@ public class JUnitUtil {
         } catch (Exception ex) {
             log.error("Exception in waitFor condition.", ex);
             return false;
+        }
+    }
+
+    /**
+     * Wait for a specific amount of time
+     * <p>
+     * It's better to wait for a condition, but if you can't find a condition,
+     * this will have to do.
+     * <p>
+     *
+     * @param time Delay in msec
+     */
+    static public void waitFor(int time) {
+        if (javax.swing.SwingUtilities.isEventDispatchThread()) {
+            log.error("Cannot use waitFor on Swing thread", new Exception());
+            return;
+        }
+        int delay = 0;
+        try {
+            while (delay < time) {
+                int priority = Thread.currentThread().getPriority();
+                try {
+                    Thread.currentThread().setPriority(Thread.MIN_PRIORITY);
+                    Thread.sleep(WAITFOR_DELAY_STEP);
+                    delay += WAITFOR_DELAY_STEP;
+                } catch (InterruptedException e) {
+                    return;
+                } finally {
+                    Thread.currentThread().setPriority(priority);
+                }
+            }
+            return;
+        } catch (Exception ex) {
+            log.error("Exception in waitFor condition.", ex);
+            return;
         }
     }
 
@@ -536,7 +623,7 @@ public class JUnitUtil {
     public static void resetInstanceManager() {
         // clear all instances from the static InstanceManager
         InstanceManager.getDefault().clearAll();
-        // ensure the auto-defeault UserPreferencesManager is not created
+        // ensure the auto-default UserPreferencesManager is not created by installing a test one
         InstanceManager.setDefault(UserPreferencesManager.class, new TestUserPreferencesManager());
     }
 
@@ -632,7 +719,7 @@ public class JUnitUtil {
 
     public static void initInternalSignalHeadManager() {
         SignalHeadManager m = new AbstractSignalHeadManager();
-        InstanceManager.setSignalHeadManager(m);
+        InstanceManager.setDefault(SignalHeadManager.class, m);
         if (InstanceManager.getNullableDefault(ConfigureManager.class) != null) {
             InstanceManager.getDefault(ConfigureManager.class).registerConfig(m, jmri.Manager.SIGNALHEADS);
         }
@@ -668,12 +755,12 @@ public class JUnitUtil {
 
     public static void initDebugThrottleManager() {
         jmri.ThrottleManager m = new DebugThrottleManager();
-        InstanceManager.setThrottleManager(m);
+        InstanceManager.store(m, ThrottleManager.class);
     }
 
     public static void initDebugProgrammerManager() {
         DebugProgrammerManager m = new DebugProgrammerManager();
-        InstanceManager.setAddressedProgrammerManager(m);
+        InstanceManager.store(m, AddressedProgrammerManager.class);
         InstanceManager.store(m, GlobalProgrammerManager.class);
     }
 
@@ -744,7 +831,7 @@ public class JUnitUtil {
     /**
      * Leaves ShutDownManager, if any, in place,
      * but removes its contents.
-     * {@see #initShutDownManager()}
+     * @see #initShutDownManager()
      */
     public static void clearShutDownManager() {
         ShutDownManager sm = InstanceManager.getNullableDefault(jmri.ShutDownManager.class);
@@ -759,7 +846,7 @@ public class JUnitUtil {
     /**
      * Creates a new ShutDownManager.
      * Does not remove the contents (i.e. kill the future actions) of any existing ShutDownManager.
-     * {@see #clearShutDownManager()}
+     * @see #clearShutDownManager()
      */
     public static void initShutDownManager() {
         if (InstanceManager.getNullableDefault(ShutDownManager.class) == null) {
@@ -904,6 +991,7 @@ public class JUnitUtil {
     /**
      * Service method to find the test class name in the traceback. Heuristic:
      * First jmri or apps class that isn't this one.
+     * @return String class name
      */
     static String getTestClassName() {
         StackTraceElement[] trace = Thread.currentThread().getStackTrace();
@@ -1006,8 +1094,15 @@ public class JUnitUtil {
             window.dispose();
         });
     }
+    
+    public static Thread getThreadByName(String threadName) {
+        for (Thread t : Thread.getAllStackTraces().keySet()) {
+            if (t.getName().equals(threadName)) return t;
+        }
+        return null;
+    }
 
-    static List<String> threadNames = new ArrayList<String>(Arrays.asList(new String[]{
+    static SortedSet<String> threadNames = new TreeSet<>(Arrays.asList(new String[]{
         // names we know about from normal running
         "main",
         "Java2D Disposer",
@@ -1016,7 +1111,7 @@ public class JUnitUtil {
         "GC Daemon",
         "Finalizer",
         "Reference Handler",
-        "Signal Dispatcher",
+        "Signal Dispatcher",                // POSIX signals in JRE
         "Java2D Queue Flusher",
         "Time-limited test",
         "WindowMonitor-DispatchThread",
@@ -1024,24 +1119,28 @@ public class JUnitUtil {
         "RMI TCP Accept",
         "TimerQueue",
         "Java Sound Event Dispatcher",
-        "Aqua L&F",
-        "AppKit Thread"
+        "Aqua L&F",                         // macOS
+        "AppKit Thread",
+        "JMRI Common Timer",
+        "BluecoveAsynchronousShutdownThread", // from LocoNet BlueTooth implementation
+        "Keep-Alive-Timer",                 // from "system" group
+        "process reaper"                    // observed in macOS JRE
     }));
-    static List<Thread> threadsSeen = new ArrayList<Thread>();
+    static List<Thread> threadsSeen = new ArrayList<>();
 
     /**
      * Do a diagnostic check of threads, 
      * providing a traceback if any new ones are still around.
      * <p>
      * First implementation is rather simplistic.
-     * @param stop If true, this stop execution after the 1st new thread is found
      */
-    static void checkThreads(boolean stop) {
+    static void checkThreads() {
         // now check for extra threads
         threadCount = 0;
         Thread.getAllStackTraces().keySet().forEach((t) -> 
             {
                 if (threadsSeen.contains(t)) return;
+                if (t.getState() == Thread.State.TERMINATED) return; // going away, just not cleaned up yet
                 String name = t.getName();
                 if (! (threadNames.contains(name)
                      || name.startsWith("RMI TCP Accept")
@@ -1050,32 +1149,70 @@ public class JUnitUtil {
                      || name.startsWith("Image Fetcher ")
                      || name.startsWith("JmDNS(")
                      || name.startsWith("SocketListener(")
-                     || (name.startsWith("Timer-") && 
+                     || name.startsWith("SocketListener(")
+                     || (name.startsWith("SwingWorker-pool-1-thread-") && 
                             ( t.getThreadGroup() != null && 
                                 (t.getThreadGroup().getName().contains("FailOnTimeoutGroup") || t.getThreadGroup().getName().contains("main") )
                             ) 
                         )
                     )) {  
                     
+                        // if still running, wait to see if being terminated
+                        
                         threadCount++;
                         threadsSeen.add(t);
-                        System.out.println("New thread \""+t.getName()+"\" group \""+ (t.getThreadGroup()!=null ? t.getThreadGroup().getName() : "(null)")+"\"");
-                    
+                        
                         // for anonymous threads, show the traceback in hopes of finding what it is
                         if (name.startsWith("Thread-")) {
-                            for (StackTraceElement e : Thread.getAllStackTraces().get(t)) {
-                                if (! e.toString().startsWith("java")) System.out.println("    "+e);
-                            }
+                            Exception ex = new Exception("traceback of numbered thread");
+                            ex.setStackTrace(Thread.getAllStackTraces().get(t));
+                            log.warn("Found remnant thread \"{}\" in group \"{}\" after {}", t.getName(), t.getThreadGroup().getName(), getTestClassName(), ex);
+                        } else {
+                            log.warn("Found remnant thread \"{}\" in group \"{}\" after {}", t.getName(), t.getThreadGroup().getName(), getTestClassName());
                         }
                 }
             });
-        if (threadCount > 0) {
-            //Thread.getAllStackTraces().keySet().forEach((t) -> System.err.println("  thread "+t+" "+t.getName()));
-            if (stop) {
-                new Exception("Stopping by request on 1st extra thread").printStackTrace();
-                System.exit(0);
-            }
-        }
+    }
+
+    /* GraphicsEnvironment utility methods */
+
+    /**
+     * Get the content pane of a dialog.
+     * 
+     * @param title the dialog title
+     * @return the content pane
+     */
+    public static Container findContainer(String title) {
+        return new JDialogOperator(title).getContentPane();
+    }
+
+    /**
+     * Press a button after finding it in a container by title.
+     * 
+     * @param clazz an object no longer used
+     * @param frame container containing button to press
+     * @param text button title
+     * @return the pressed button
+     * @deprecated use {@link #pressButton(Container, String)} instead
+     */
+    @Deprecated // for removal after 4.18
+    public static AbstractButton pressButton(SwingTestCase clazz, Container frame, String text) {
+        return pressButton(frame, text);
+    }
+
+    /**
+     * Press a button after finding it in a container by title.
+     * 
+     * @param frame container containing button to press
+     * @param text button title
+     * @return the pressed button
+     */
+    public static AbstractButton pressButton(Container frame, String text) {
+        AbstractButton button = JButtonOperator.findAbstractButton(frame, text, true, true);
+        Assert.assertNotNull(text + " Button not found", button);
+        AbstractButtonOperator abo = new AbstractButtonOperator(button);
+        abo.doClick();
+        return button;
     }
 
     private final static Logger log = LoggerFactory.getLogger(JUnitUtil.class);

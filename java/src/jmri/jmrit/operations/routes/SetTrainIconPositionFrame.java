@@ -201,9 +201,9 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
         }
         if (ae.getSource() == applyButton) {
             // update all routes?
-            int value = JOptionPane.showConfirmDialog(null,
-                    MessageFormat.format(Bundle.getMessage("UpdateTrainIcon"), new Object[]{l.getName()}),
+            int value = JOptionPane.showConfirmDialog(this,
                     Bundle.getMessage("DoYouWantAllRoutes"),
+                    MessageFormat.format(Bundle.getMessage("UpdateTrainIcon"), new Object[]{l.getName()}),                    
                     JOptionPane.YES_NO_OPTION);
             if (value == JOptionPane.YES_OPTION) {
                 saveSpinnerValues(l);
@@ -211,9 +211,9 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
             }
         }
         if (ae.getSource() == saveButton) {
-            int value = JOptionPane.showConfirmDialog(null,
-                    MessageFormat.format(Bundle.getMessage("UpdateTrainIcon"), new Object[]{l.getName()}),
+            int value = JOptionPane.showConfirmDialog(this,
                     Bundle.getMessage("UpdateDefaults"),
+                    MessageFormat.format(Bundle.getMessage("UpdateTrainIcon"), new Object[]{l.getName()}),
                     JOptionPane.YES_NO_OPTION);
             if (value == JOptionPane.YES_OPTION) {
                 saveSpinnerValues(l);

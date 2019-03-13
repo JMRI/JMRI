@@ -45,14 +45,15 @@
 			train's route.
 
 			<p>
-    Locations can have spurs, yards, staging and classification/interchange tracks. Spurs are used
-    to service industries, and can optionally have <a href="#Schedules">schedules</a> assigned to
-    them which allows for very fine control over car movement and loads. Trains can be configured to
-    require a caboose or car with Flashing Rear End Device (FRED). The program generates Manifests
-    for each train and switch lists for any location. A <a href="#SwitchList">switch list</a> for a
-    location shows the work for all of the trains that will visit that location. The program can
-    also place icons representing trains on a JMRI panel. The icon can be taught to move in the
-    panel along with the train from location to location.
+    Locations can have spurs, yards, staging and classification/interchange tracks. Spurs are used to service
+    industries, and can optionally have
+    <a href="#Schedules">schedules</a> assigned to them which allows for very fine control over car movement and loads.
+    Trains can be configured to require a caboose or car with Flashing Rear End Device (FRED). The program generates
+    Manifests for each train and switch lists for any location. A
+    <a href="#SwitchList">switch list</a> for a location shows the work for all of the trains that will visit that
+    location. The program can also place
+    <a href="#PanelOptionsTrainIcons">icons</a> representing trains on a JMRI panel. The icon can be taught to move in
+    the panel along with the train from location to location.
    </p>
 
    <p>OperationsPro&trade; is included in the JMRI suite of tools and can be found under the
@@ -248,11 +249,11 @@
 
       <li><a href="#Kernel">Kernel (Group of Cars)</a></li>
 
-      <li><a href="#EditCarAttributes">Edit Car Attributes (Road, Type, Length, Color,
+      <li><a href="#EditCarAttributes">Edit Car Attribute Names (Road, Type, Length, Color,
         Kernel, Owner)</a>
 
        <ul>
-        <li><a href="#DeleteUnusedAttributes"> Delete Unused Attributes</a></li>
+        <li><a href="#DeleteUnusedAttributes"> Delete Unused Attribute Names</a></li>
        </ul></li>
 
       <li><a href="#EditCarLoads">Edit Car Loads</a></li>
@@ -345,7 +346,7 @@
 
         <li><a href="#TrainsTableColors">Train Row Color</a></li>
 
-        <li><a href="#Timetable">Timetable</a></li>
+        <li><a href="#TrainSchedules">Train Schedules</a></li>
 
         <li><a href="#Automation">Automation</a></li>
 
@@ -888,6 +889,81 @@
     recommended that the names of backup sets made for archive purposes be given a meaningful name,
     especially if you are managing data for more than one railroad. For example, if today is August
     29, 2012, the program will create a backup directory named "2012_08_29_00".</p>
+
+   <h4>What isn't backed up by OperationsPro</h4>
+
+   <p>There are many OperationPro directories and files that aren't backed up using the methods described above. You
+    can find all of the directories and files not backed up inside the "operations" directory. Here's the list with the
+    file types and directory names:</p>
+
+   <table>
+    <tr>
+     <td>File Type</td>
+
+     <td>Directory</td>
+    </tr>
+
+    <tr>
+     <td>Train Build Reports</td>
+
+     <td>buildstatus</td>
+    </tr>
+
+    <tr>
+     <td>Old Train Build Reports</td>
+
+     <td>buildStatusBackups</td>
+    </tr>
+
+    <tr>
+     <td>CSV Manifests</td>
+
+     <td>csvManifests</td>
+    </tr>
+
+    <tr>
+     <td>CSV SwitchLists</td>
+
+     <td>csvSwitchLists</td>
+    </tr>
+
+    <tr>
+     <td>json Manifests</td>
+
+     <td>jsonManifests</td>
+    </tr>
+
+    <tr>
+     <td>Log Files</td>
+
+     <td>logger</td>
+    </tr>
+
+    <tr>
+     <td>Train Manifests</td>
+
+     <td>manifests</td>
+    </tr>
+
+    <tr>
+     <td>Old Train Manifests</td>
+
+     <td>manifestBackups</td>
+    </tr>
+
+    <tr>
+     <td>SwitchLists</td>
+
+     <td>switchLists</td>
+    </tr>
+
+    <tr>
+     <td>Old SwitchLists</td>
+
+     <td>switchListsBackups</td>
+    </tr>
+
+   </table>
 
    <a name="Restore" id="Restore"></a>
    <h3>Restore</h3>
@@ -1584,7 +1660,7 @@
 
    <h3>Message Format</h3>
    If you would like your Manifest and switch lists printed in a tabular (columns) format select the
-   "Tabular" checkbox. The program determines the maximum character length for each attribute (Road,
+   "Tabular" checkbox. The program determines the maximum character length for each of the attribute's names (Road,
    Number, Type, Length, Color, Load, etc.) when determining the width of each column. Location
    names and track names can be up to 25 characters, so you might want to consider reasonable length
    names when using the "Tabular" feature. FYI, the program reports the maximum track and location
@@ -1697,7 +1773,7 @@
     added to the train.</p>
 
    <h4>Manifests and Switch List Options</h4>
-   There are six checkboxes that modify both Manifests and switch lists and are as follows:
+   There are eight checkboxes that modify both Manifests and switch lists and are as follows:
 
    <p>The "Print Valid" checkbox causes the program to print date and time the train was built,
     which isn't the same as when the Manifest was printed. The print time is always shown at the top
@@ -1706,11 +1782,15 @@
    <p>If you want the Manifest and switch list to show how many car loads and empties are in the
     train, select the "Loads and Empties" checkbox.</p>
 
+   <p>The default is not to show load names for caboose or passenger cars on your Manifests and switch lists, if
+    however you want to see load names for those cars select the appropriate "Print Caboose Load" or "Print Passenger
+    Load" checkboxes.</p>
+
    <p>You can decide to use a 12 hour AM/PM rather than a 24 hour clock format for your
     Manifests and switch lists.</p>
 
    <p>
-    Selecting the "Show Timetable" prints which Train <a href="#Timetable">Timetable</a> you are
+    Selecting the "Show Train Schedule" prints which Train <a href="#TrainSchedules">Train Schedule</a> you are
     using when building your trains.
    </p>
 
@@ -1909,7 +1989,7 @@
    deselect all types, or "Select All" to select all types, then select or deselect the rolling
    stock you wish the location to accept. After configuring the tracks for a location, you can use
    the "Auto Select" button to have the location reflect the rolling stock serviced by the various
-   tracks. See <a href="#EditCarAttributes">Edit Car Attributes</a> to add or delete car types that
+   tracks. See <a href="#EditCarAttributes">Edit Car Attributes</a> to add or delete car type names that
    a location can service. You can also access the "Edit Car Attributes" window from the edit
    location "Tools" menu by selecting <a href="#EditCarType">Edit Car Type</a>.
 
@@ -2003,7 +2083,7 @@
    <h4>Edit Car Type</h4>
    <p>
     This tool opens the car attribute window for car types. This allows you the add, delete, or
-    replace a car type. See <a href="#EditCarAttributes">Edit Car Attributes</a> for more info.
+    replace a car type name. See <a href="#EditCarAttributes">Edit Car Attribute Names</a> for more info.
    </p>
 
    <a name="ShowCars" id="ShowCars"></a>
@@ -2051,7 +2131,7 @@
     If the rolling stock that you wish doesn't appear for a yard, confirm that the location's
     rolling stock types are properly selected. If the rolling stock type you want doesn't exist for
     a location, you will have to create the type using the <a href="#EditCarAttributes">Edit Car
-     Attributes</a> window which is also available from the edit location "Tools" menu <a
+     Attribute Names</a> window which is also available from the edit location "Tools" menu <a
      href="#EditCarType">Edit Car Type</a>.
    </p>
 
@@ -2202,11 +2282,11 @@
     roughly 1 in 50 cars could be sent the to RIP track.</p>
 
    <p>
-    Select from the "Delivery" pull down menu the train timetable when you want the car delivered,
+    Select from the "Delivery" pull down menu the train schedule (day) when you want the car delivered,
     or leave it blank if a car can be delivered at any time. Select under "Pickup" when you want the
-    car pulled from the spur. When a train timetable is selected for either delivery or pickup, a
-    car will only be serviced when that train timetable is active. See Trains -&gt; Tools -&gt; <a
-     href="#Timetable">Timetable</a> to select the train Timetable for your session.
+    car pulled from the spur. When a train schedule (day) is selected for either delivery or pickup, a
+    car will only be serviced when that train schedule (day) is active. See Trains -&gt; Tools -&gt; <a
+     href="#TrainSchedules">Train Schedules</a> to select the train schedule (day) for your session.
    </p>
 
    <p>
@@ -2274,7 +2354,7 @@
 
    <p>
     If you want custom <a href="#CarLoad">loads</a> for your cars, you can create them using the <a
-     href="#EditCarLoads">Edit Car Attributes</a> for car "Load". Each new load is associated with
+     href="#EditCarLoads">Edit Car Loads</a>. Each new load name is associated with
     the car type. For example you can have "Freight" for a boxcar, and "Oil" for a tankcar. The
     program will deliver cars with a custom load to a spur that has a schedule that also requests
     that particular load. However, cars with a custom load can still be placed at yards, staging,
@@ -3229,38 +3309,38 @@
     created each time the "Save" button is pressed.</p>
 
    <a name="EditCarAttributes" id="EditCarAttributes"></a>
-   <h3>Edit Car Attributes</h3>
+   <h3>Edit Car Attribute Names</h3>
    To the right of each of the car attributes (Road, Type, Length, Color, Kernel, Load, Owner) in
    the <a href="#CarsEdit">Edit Car</a> or <a href="#CarsEdit">Add Car</a> window is an "Edit"
-   button. Use this to add, delete, or replace the various attributes for a car.
+   button. Use this to add, delete, or replace the various attribute names for a car.
 
    <p>
     <img src="images/EditCarAttribute.png">
    </p>
 
    <h4>Add Button</h4>
-   To add a new car attribute, enter the desired text in the text box and press the "Add" button.
-   When you first enter a new car attribute it will show up at the start of the list. Later when
+   To add a new car attribute name, enter the desired text in the text box and press the "Add" button.
+   When you first enter a new car attribute name, it will show up at the start of the list. Later when
    your restart the program it will be sorted in the correct order.
 
    <h4>Delete Button</h4>
-   To delete a car attribute, select the attribute you want to delete in the menu box and press the
+   To delete a car attribute name, select the name you want to delete in the menu box and press the
    "Delete" button.
 
    <h4>Replace Button</h4>
-    If you need to change a specific car attribute (road, type, color, etc) in your entire car
+    If you need to change a specific car attribute name (road, type, color, etc) in your entire car
     roster, you can use the "Replace" button found at the bottom right of the edit car attribute
-    window. For example, if you wish to change the car road (reporting mark) attribute "UP" to "UPS"
+    window. For example, if you wish to change the car road (reporting mark) attribute name "UP" to "UPS"
     for all of your cars. Press the "Edit" button for any of your cars in the Cars window, and then
     press the "Edit" button across from Road in the "Car Edit" window. Enter the new road "UPS" in
-    the text box, select "UP" in the menu box, and press "Replace". All cars with "UP" as their road
-    will now have "UPS" as their road.
+    the text box, select "UP" in the menu box, and press "Replace". All cars with "UP" as their road name
+    will now have "UPS" as their road name.
 
    <a name="DeleteUnusedAttributes" id="DeleteUnusedAttributes"></a>
-   <h4>Delete Unused Attributes</h4>
-   Under "Tools" in the "Edit Attribute Window" you will find two items, "Show the number of cars with this attribute" and "Delete unused attributes".
+   <h4>Delete Unused Attribute Names</h4>
+   Under "Tools" in the "Edit Attribute Window" you will find two items, "Show the number of cars with this attribute name" and "Delete unused attribute names".
    The first will show a count in front of the menu box. The count is the number of'cars that have this particular
-   attribute. The delete option will prompt you to delete any attribute that hasn't been assigned to a car. 
+   attribute name. The delete option will prompt you to delete any attribute name that hasn't been assigned to a car. 
    
    <a name="EditCarLoads" id="EditCarLoads"></a>
    <h3>Edit Car Loads</h3>
@@ -3360,32 +3440,31 @@
     RWE destination and RWE load become active.</p>
 
    <h4>Optional -- Normally Set by Program</h4>
-   The next three set of fields are normally set by the program when building trains. We'll explain
-   how they work in case you're interested in how the program works or if you want to manually
-   override the program. The first is the "Destination" set of pull down menus. By default the
-   destination fields are disabled. Under "Tools" there's an option to enable the destination
-   fields.
+   The next three set of fields are normally set by the program when building trains. We'll explain how they work in
+   case you're interested in how the program works or if you want to manually override the program. The first is the
+   "Destination and Track" set of pull down menus. By default the destination and track fields are disabled. Under
+   "Tools" there's an option to enable the destination fields.
 
-   <h4>Destination</h4>
-   <p>The "Destination" is the next location that the car will be delivered to. The destination
-    must be reachable by only one train from the car's current location or the car will not be
-    serviced. Normally we recommend that you don't use the "Destination" pull down menus to forward
-    a car to a location, but use the "Final Destination" as described below. However, if you're
-    manually adding a car to a built train, you must set the car's destination and track.</p>
+   <h4>Destination and Track</h4>
+   <p>The "Destination" is the next location that the car will be delivered to. The destination must be reachable by
+    only one train from the car's current location or the car will not be serviced. Normally we recommend that you don't
+    use the "Destination and Track" pull down menus to forward a car to a location, but use the "Final Destination and
+    Track" as described below. However, if you're manually adding a car to a built train, you must set the car's
+    destination and track. The destination and track fields are enabled when the program sets a destination for the car,
+    or you've enabled them by using the "Enable Destination" option found under the "Tools" menu.</p>
 
    <a name="FinalDestination" id="FinalDestination"></a>
-   <h4>Final Destination</h4>
-   The next field is the "Final Destination" set of pull down boxes. You can select any destination
-   or track, the program will figure out the best route to ship the car to this destination. The
-   "route" can consist of several trains, interchanges, and yards. When a car is delivered to a spur
-   with a schedule, and the schedule has a shipping destination that requires more than one train,
-   the program uses this set of fields to ship the car. If the track that the final destination
-   specifies happens to be full, the program will search for a yard to place the car. When the track
-   becomes available, the program will move the car from the yard to the track specified.
+   <h4>Final Destination and Track</h4>
+   The next field is the "Final Destination and Track" set of pull down boxes. You can select any destination, and
+   optionally a track at that destination. The program will figure out the best route to ship the car to this
+   destination. The "route" can consist of several trains, interchanges, and yards. When a car is delivered to a spur
+   with a schedule, and the schedule has a shipping destination that requires more than one train, the program uses this
+   set of fields to ship the car. If the track that the final destination specifies happens to be full, the program will
+   search for a yard to place the car. When the track becomes available, the program will move the car from the yard to
+   the track specified.
 
-   <p>When selecting a final destination, you don't have to specify a track. And when selecting
-    a destination that is staging, you shouldn't select a destination track, let the program do that
-    for you.</p>
+   <p>When selecting a final destination, you don't have to specify a track. And when selecting a destination that
+    is staging, you shouldn't select a destination track, let the program do that for you.</p>
 
    <h4>Train</h4>
 
@@ -3460,7 +3539,8 @@
 
    <p>The tool "Modify Trains by Car Type" allows you to modify the car types that your trains
     will service can be found under Trains-&gt;Tools or Cars-&gt;Tools. Very useful when adding a
-    new car type to your roster.</p>
+    new car type to your roster. See <a href="#ModifyTrainsByCarType">Modify
+     Trains by Car Type</a> for more info.</p>
 
    <a name="SetCars" id="SetCars"></a>
    <h4>Set Cars</h4>
@@ -3645,15 +3725,14 @@
    </p>
 
    <p>
-    Enter the route name and an optional comment. This comment is shown in the <a href="#Routes">Routes</a> window, and <a
-     href="#ManifestComments">optionally</a> on your Manifests. Each route must have unique name.
-    Then press the "Add Route" button located at the bottom of the window. Now select the location
-    the train will depart by selecting the location in the menu box located at the left bottom side
-    of the window. Press "Add Location". You should now see the train's departure location in the
-    table along with the train's departure direction, the requested number of car moves, whether car
-    set outs or pick ups are allowed, the train wait time, the maximum train length departing the
-    location, and the track grade between this location and the next location in the train's route.
-    The X and Y values are where to place the train icon on a panel. The <a href="#EditRoute">Edit
+    Enter the route name and an optional comment. This comment is shown in the <a href="#Routes">Routes</a> window, and
+    <a href="#ManifestComments">optionally</a> on your Manifests. Each route must have unique name. Then press the "Add
+    Route" button located at the bottom of the window. Now select the location the train will depart by selecting the
+    location in the menu box located at the left bottom side of the window. Press "Add Location". You should now see the
+    train's departure location in the table along with the train's departure direction, the requested number of car
+    moves, whether car set outs or pick ups are allowed, the train wait time, the maximum train length departing the
+    location, and the track grade between this location and the next location in the train's route. The X and Y values
+    are where to place the <a href="#PanelOptionsTrainIcons">train icon</a> on a panel. The <a href="#EditRoute">Edit
      Route</a> below provides additional details about a location in a route.
    </p>
 
@@ -3736,11 +3815,11 @@
    </p>
 
    <p>
-    The X and Y are the coordinates on your dispatcher's panel for the optional train icon. You can
-    set the coordinates here, use the <a href="#SetTrainIconCoordinates">Set Train Icon
-     Coordinates</a> tool, or use the "SetX&amp;Y" train icon popup menu to teach the program where you
-    want the train icon placed when the train is at the specified location. Leave the X and Y
-    coordinates at zero if you want to manually move the icon or you're not using the icon feature.
+    The X and Y are the coordinates on your dispatcher's panel for the optional train icon. You can set the coordinates
+    here, use the <a href="#SetTrainIconCoordinates">Set Train Icon Coordinates</a> tool, or use the "SetX&amp;Y" <a
+     href="#PanelOptionsTrainIcons">train icon</a> popup menu to teach the program where you want the train icon placed
+    when the train is at the specified location. Leave the X and Y coordinates at zero if you want to manually move the
+    icon or you're not using the icon feature.
    </p>
    <a name="RouteComment" id="RouteComment"></a>
 
@@ -4411,9 +4490,9 @@
     </tr>
 
     <tr>
-     <td>X (Schedule Timetable)</td>
+     <td>X (Train Schedule)</td>
 
-     <td>The spur's <a href="#Schedules">schedule</a> timetable selection prevents the car from
+     <td>The spur's <a href="#Schedules">schedule</a> train schedule selection prevents the car from
       being serviced.
      </td>
     </tr>
@@ -4541,23 +4620,23 @@
     reset row colors for your various trains. You can find this feature under "Tools" in the
     "Trains" window.</p>
 
-   <a name="Timetable" id="Timetable"></a>
-   <h4>Timetable</h4>
-   The Timetable window allows you to define which trains will run on any given day, and can be
+   <a name="TrainSchedules" id="TrainSchedules"></a>
+   <h4>Train Schedules</h4>
+   The Train Schedules window allows you to define which trains will run on any given day, and can be
    found under the Trains-&gt;Tools. For each day of the week, select which trains you want to
    build. Then select which day you want by selecting the appropriate radio button. Then press the
    "Apply" button to update the <a href="#Trains">Trains</a> "Build" checkboxes. Use the "Save"
-   button to store any changes you made to the timetable.
+   button to store any changes you made to the train schedules.
 
    <p>
-    <a href="images/Timetable.png"><img src="images/Timetable.png"
-     alt="Operations Train Timetable"></a>
+    <a href="images/TrainSchedules.png"><img src="images/TrainSchedules.png"
+     alt="Operations Train Train Schedules"></a>
    </p>
 
    <p>To change which day of the week is active, select the appropriate radio button and then
     press the "Activate" button. The day selected is then used by your schedules (Delivery and
     Pickup) when building trains. You can also add or change the days of the week by using the "Edit
-    Timetable" window found under "Tools". You can change the order by dragging the column with your
+    Train Schedule" window found under "Tools". You can change the order by dragging the column with your
     mouse pointer. Press the "Save" button to complete your changes.</p>
 
    <p>When the "None" radio button is selected, cars with a scheduled pick up day will not be
@@ -4709,14 +4788,14 @@
    for more than one train to terminate by entering each train you want to wait for in consecutive
    rows.
 
-   <h5>Activate Timetable</h5>
+   <h5>Activate Train Schedule</h5>
    This action will activate the selected day in the "Automation / Other" column. Works the same as
-   the "Activate" button in the <a href="#Timetable">Timetable</a> window.
+   the "Activate" button in the <a href="#TrainSchedules">Train Schedules</a> window.
 
-   <h5>Apply Timetable</h5>
+   <h5>Apply Train Schedule</h5>
    This action will select trains using the checkboxes in the "Build" column from the <a
-    href="#Trains">Trains</a> window based on which day is active, see "Activate Timetable" above to
-   select which day is active. Works the same as the "Apply" button in the <a href="#Timetable">Timetable</a>
+    href="#Trains">Trains</a> window based on which day is active, see "Activate Train Schedules" above to
+   select which day is active. Works the same as the "Apply" button in the <a href="#TrainSchedules">Train Schedules</a>
    window. There must be an active day for this action to work.
 
    <h5>Select Train (Build)</h5>
@@ -5250,7 +5329,7 @@
     list if needed.</p>
 
    <p>
-    The <a href="#Timetable">Timetable</a> window has buttons along the bottom of the window that
+    The <a href="#TrainSchedules">Train Schedules</a> window has buttons along the bottom of the window that
     simplify the building of train Manifests and consolidating train switch lists.
    </p>
 
@@ -5286,16 +5365,15 @@
    <a name="TrainMove" id="TrainMove"></a>
    <h3>Moving Trains</h3>
    <p>
-    After providing your crew with a printed Manifest or location switch list, you must keep the
-    program database synchronized with the actual movement of trains on your layout. This is done by
-    the train "Move" buttons located on the right side of the <a href="#Trains">Trains</a> window.
-    Pressing the "Move" button will cause the train to depart its current location move to the next
-    location in the route. The locomotives and cars assigned to the train will travel to the next
-    location on the railroad. At each location, cars can be picked up or set out. You can also move
-    a train by selecting the train's icon and selecting "Move" from the icon's popup menu. Each
-    press of the "Move" button moves the train closer to its terminal location. When the train
-    arrives at the last location in the route, the last press of the "Move" button will terminate
-    the train. Once a train is terminated, you can build it again.
+    After providing your crew with a printed Manifest or location switch list, you must keep the program database
+    synchronized with the actual movement of trains on your layout. This is done by the train "Move" buttons located on
+    the right side of the <a href="#Trains">Trains</a> window. Pressing the "Move" button will cause the train to depart
+    its current location move to the next location in the route. The locomotives and cars assigned to the train will
+    travel to the next location on the railroad. At each location, cars can be picked up or set out. You can also move a
+    train by selecting the train's <a href="#PanelOptionsTrainIcons">icon</a> and selecting "Move" from the icon's popup
+    menu. Each press of the "Move" button moves the train closer to its terminal location. When the train arrives at the
+    last location in the route, the last press of the "Move" button will terminate the train. Once a train is
+    terminated, you can build it again.
    </p>
 
    <a name="TerminateTrain" id="TerminateTrain"></a>

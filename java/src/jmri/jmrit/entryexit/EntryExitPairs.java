@@ -296,7 +296,7 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
      * @return a sorted array of NX names
      */
     @Override
-    @Deprecated  // will be removed when Manager method is removed due to @Override
+    @Deprecated  // will be removed when superclass method is removed due to @Override
     public String[] getSystemNameArray() {
         List<String> nxList = getEntryExitList();
         String[] arr = new String[nxList.size()];
@@ -311,7 +311,7 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
 
     /** {@inheritDoc} */
     @Override
-    @Deprecated  // will be removed when Manager method is removed due to @Override
+    @Deprecated  // will be removed when superclass method is removed due to @Override
     public List<String> getSystemNameList() {
         return getEntryExitList();
     }
@@ -322,7 +322,7 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
      * @return a list of Destination Point beans
      */
     @Override
-    @Deprecated  // will be removed when Manager method is removed due to @Override
+    @Deprecated  // will be removed when superclass method is removed due to @Override
     public List<DestinationPoints> getNamedBeanList() {
         List<DestinationPoints> beanList = new ArrayList<>();
         for (Source e : nxpair.values()) {
@@ -789,8 +789,7 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
             if (dPair.dp == null) {
                 continue;
             }
-            for (String lgxName : mgr.getSystemNameList()) {
-                jmri.Logix lgx = mgr.getLogix(lgxName);
+            for (jmri.Logix lgx : mgr.getNamedBeanSet()) {
                 for (int i = 0; i < lgx.getNumConditionals(); i++) {
                     String cdlName = lgx.getConditionalByNumberOrder(i);
                     jmri.implementation.DefaultConditional cdl = (jmri.implementation.DefaultConditional) lgx.getConditional(cdlName);

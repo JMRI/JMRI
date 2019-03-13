@@ -180,8 +180,8 @@ public class AbstractAutomaton implements Runnable {
      * <p>
      * Overrides superclass method to handle local accounting.
      */
-    // The stop method on a thread has been deprecated, we need to find another way to deal with this.
-    // AbstractAutomaton objects can be waiting on _lots_ of things....
+    @SuppressWarnings("deprecation") // AbstractAutomaton objects can be waiting on _lots_ of things, so
+                                     // we need to find another way to deal with this besides Interrupt
     public void stop() {
         log.trace("stop() invoked");
         if (currentThread == null) {
@@ -973,7 +973,7 @@ public class AbstractAutomaton implements Runnable {
             @Override
             public void notifyStealThrottleRequired(jmri.LocoAddress address) {
                 // this is an automatically stealing impelementation.
-                InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, true);
+                InstanceManager.getDefault(ThrottleManager.class).stealThrottleRequest(address, this, true);
             }
         };
         boolean ok = InstanceManager.getDefault(ThrottleManager.class)
@@ -1043,10 +1043,10 @@ public class AbstractAutomaton implements Runnable {
             @Override
             public void notifyStealThrottleRequired(jmri.LocoAddress address) {
                 // this is an automatically stealing impelementation.
-                InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, true);
+                InstanceManager.getDefault(ThrottleManager.class).stealThrottleRequest(address, this, true);
             }
         };
-        boolean ok = InstanceManager.throttleManagerInstance()
+        boolean ok = InstanceManager.getDefault(ThrottleManager.class)
                 .requestThrottle(re, throttleListener);
 
         // check if reply is coming

@@ -1,6 +1,8 @@
 package jmri.jmrit.display.layoutEditor;
 
 import static java.lang.Float.POSITIVE_INFINITY;
+import static jmri.jmrit.display.layoutEditor.LayoutTrack.NONE;
+import static jmri.jmrit.display.layoutEditor.LayoutTrack.POS_POINT;
 import static jmri.jmrit.display.layoutEditor.LayoutTrack.TRACK;
 
 import java.awt.BorderLayout;
@@ -53,7 +55,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  * Three types of Positionable Point are supported: Anchor - point on track -
  * two track connections End Bumper - end of track point - one track connection
- * Edge Connector - This is used to link track segements between two different
+ * Edge Connector - This is used to link track segments between two different
  * panels
  * <P>
  * Note that a PositionablePoint exists for specifying connectivity and drawing
@@ -87,7 +89,7 @@ public class PositionablePoint extends LayoutTrack {
 
     private NamedBeanHandle<SignalMast> eastBoundSignalMastNamed = null;
     private NamedBeanHandle<SignalMast> westBoundSignalMastNamed = null;
-    /* We use a namedbeanhandle for the the sensors, even though we only store the name here,
+    /* We use a namedbeanhandle for the sensors, even though we only store the name here,
                      this is so that we can keep up with moves and changes of userNames */
     private NamedBeanHandle<Sensor> eastBoundSensorNamed = null;
     private NamedBeanHandle<Sensor> westBoundSensorNamed = null;
@@ -670,9 +672,11 @@ public class PositionablePoint extends LayoutTrack {
             if (oldTrack != null) {
                 result = true;  // assume success (optimist!)
                 if (connect1 == oldTrack) {
-                    connect1 = null;
+                    connect1 = null;        // disconnect connect1
                     reCheckBlockBoundary();
                     removeLinkedPoint();
+                    connect1 = connect2;    // Move connect2 to connect1
+                    connect2 = null;        // disconnect connect2
                 } else if (connect2 == oldTrack) {
                     connect2 = null;
                     reCheckBlockBoundary();
@@ -1188,7 +1192,7 @@ public class PositionablePoint extends LayoutTrack {
             return;
         }
         editLink = new JDialog();
-        editLink.setTitle("EDIT LINK from " + getConnect1().getLayoutBlock().getDisplayName());
+        editLink.setTitle(Bundle.getMessage("EdgeEditLinkFrom", getConnect1().getLayoutBlock().getDisplayName()));
 
         JPanel container = new JPanel();
         container.setLayout(new BorderLayout());
@@ -1220,9 +1224,8 @@ public class PositionablePoint extends LayoutTrack {
 
     public JPanel getLinkPanel() {
         editorCombo = new JComboBox<JCBHandle<LayoutEditor>>();
-        ArrayList<LayoutEditor> panels = InstanceManager.getDefault(
-                PanelMenu.class
-        ).getLayoutEditorPanelList();
+        ArrayList<LayoutEditor> panels
+                = InstanceManager.getDefault(PanelMenu.class).getLayoutEditorPanelList();
         editorCombo.addItem(new JCBHandle<LayoutEditor>("None"));
         if (panels.contains(layoutEditor)) {
             panels.remove(layoutEditor);
@@ -1245,7 +1248,7 @@ public class PositionablePoint extends LayoutTrack {
         selectorPanel.add(editorCombo);
         linkPointsBox = new JComboBox<String>();
         updatePointBox();
-        selectorPanel.add(new JLabel(Bundle.getMessage("ConnectingBlock")));
+        selectorPanel.add(new JLabel(Bundle.getMessage("ConnectingTo")));
         selectorPanel.add(linkPointsBox);
         return selectorPanel;
     }
@@ -1257,18 +1260,18 @@ public class PositionablePoint extends LayoutTrack {
             linkPointsBox.setEnabled(false);
             return;
         }
-        int ourDir = getConnect1Dir();
+
         linkPointsBox.setEnabled(true);
         LayoutEditor le = editorCombo.getItemAt(editorCombo.getSelectedIndex()).item();
         for (PositionablePoint p : le.getPositionablePoints()) {
             if (p.getType() == EDGE_CONNECTOR) {
                 if (p.getLinkedPoint() == this) {
                     pointList.add(p);
-                    linkPointsBox.addItem(p.getConnect2().getLayoutBlock().getDisplayName());
-                    linkPointsBox.setSelectedItem(p.getConnect2().getLayoutBlock().getDisplayName());
+                    linkPointsBox.addItem(p.getName());
+                    linkPointsBox.setSelectedItem(p.getName());
                 } else if (p.getLinkedPoint() == null) {
                     if (p.getConnect1() != null && p.getConnect1().getLayoutBlock() != null) {
-                        if (p.getConnect1().getLayoutBlock() != getConnect1().getLayoutBlock() && ourDir != p.getConnect1Dir()) {
+                        if (p.getConnect1().getLayoutBlock() != getConnect1().getLayoutBlock()) {
                             pointList.add(p);
                             linkPointsBox.addItem(p.getConnect1().getLayoutBlock().getDisplayName());
                         }
@@ -1277,7 +1280,7 @@ public class PositionablePoint extends LayoutTrack {
             }
         }
         editLink.pack();
-    }   // updatePointBox
+    } // updatePointBox
 
     public void updateLink() {
         if (editorCombo.getSelectedIndex() == 0 || linkPointsBox.getSelectedIndex() == -1) {

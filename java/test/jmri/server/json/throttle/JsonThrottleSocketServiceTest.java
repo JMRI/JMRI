@@ -1,13 +1,11 @@
 package jmri.server.json.throttle;
 
+import java.io.DataOutputStream;
 import jmri.server.json.JsonMockConnection;
 import jmri.util.JUnitUtil;
-
-import java.io.DataOutputStream;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**

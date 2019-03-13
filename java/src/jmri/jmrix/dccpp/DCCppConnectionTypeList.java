@@ -4,8 +4,8 @@ import jmri.jmrix.ConnectionTypeList;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
- * Returns a list of valid lenz XPressNet Connection Types
- * <P>
+ * Returns a list of valid lenz DCC++ Connection Types
+ * <p>
  * @author Bob Jacobsen Copyright (C) 2010
  * @author Kevin Dickerson Copyright (C) 2010
  * @author Mark Underwood Copyright (C) 2015

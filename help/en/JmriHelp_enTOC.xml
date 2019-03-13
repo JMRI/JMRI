@@ -55,6 +55,8 @@
 
   <tocitem text="MRC " target="html.hardware.mrc.index"/>
 
+  <tocitem text="MQTT " target="html.hardware.mqtt.index"/>
+
   <tocitem text="NCE " target="html.hardware.nce.NCE"/>
 
   <tocitem text="OakTree Systems " target="html.hardware.oaktree.OakTree"/>
@@ -399,6 +401,8 @@
    <tocitem text="inControl - Web Throttles and Panels (older version) " target="package.jmri.jmrit.inControl.inControl"/>
 
   </tocitem>
+  <tocitem text="Timetable " target="html.tools.TimeTable"/>
+
   <tocitem text="Tracker (Blocks) " target="html.tools.tracker.index"/>
 
   <tocitem text="Transits ">

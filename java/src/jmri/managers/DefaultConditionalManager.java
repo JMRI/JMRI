@@ -168,8 +168,7 @@ public class DefaultConditionalManager extends AbstractManager<Conditional>
 
         // Now try non-standard names using a brute force scan
         jmri.LogixManager logixManager = InstanceManager.getDefault(jmri.LogixManager.class);
-        for (String xName : logixManager.getSystemNameList()) {
-            Logix lgx = logixManager.getLogix(xName);
+        for (Logix lgx : logixManager.getNamedBeanSet()) {
             for (int i = 0; i < lgx.getNumConditionals(); i++) {
                 String cdlName = lgx.getConditionalByNumberOrder(i);
                 if (cdlName.equals(name)) {
@@ -304,15 +303,17 @@ public class DefaultConditionalManager extends AbstractManager<Conditional>
      * Get a list of all Conditional system names
      * Overrides the bean method
      * @since 4.7.4
+     * @deprecated 4.11.5 - use direct access via 
+     *                  {@link #getNamedBeanSet} 
      * @return a list of conditional system names regardless of parent Logix
      */
+    @Deprecated // 4.11.5
     @Override
     public List<String> getSystemNameList() {
         List<String> nameList = new ArrayList<>();
 
         jmri.LogixManager logixManager = InstanceManager.getDefault(jmri.LogixManager.class);
-        for (String xName : logixManager.getSystemNameList()) {
-            Logix lgx = logixManager.getLogix(xName);
+        for (Logix lgx : logixManager.getNamedBeanSet()) {
             for (int i = 0; i < lgx.getNumConditionals(); i++) {
                 nameList.add(lgx.getConditionalByNumberOrder(i));
             }

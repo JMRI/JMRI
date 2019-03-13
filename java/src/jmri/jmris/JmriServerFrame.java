@@ -78,11 +78,11 @@ public class JmriServerFrame extends jmri.util.JmriJFrame {
     }
 
     public void startServer() {
-        JmriServer.instance().start();
+        jmri.InstanceManager.getDefault(JmriServer.class).start();
     }
 
     public void stopServer() {
-        JmriServer.instance().stop();
+        jmri.InstanceManager.getDefault(JmriServer.class).stop();
     }
 
 }

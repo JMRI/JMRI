@@ -4,6 +4,8 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
 import java.util.ArrayList;
+import java.util.Objects;
+
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
@@ -233,6 +235,7 @@ public interface NamedBean extends Comparable<NamedBean> {
      * @param s the state
      * @throws JmriException general error when setting the state fails
      */
+    @InvokeOnLayoutThread
     public void setState(int s) throws JmriException;
 
     /**
@@ -356,18 +359,19 @@ public interface NamedBean extends Comparable<NamedBean> {
      * the second argument's name, +1 if the first argument's name  orders after the second argument's name.
      * The comparison is alphanumeric on the system prefix, then alphabetic on the
      * type letter, then system-specific comparison on the two suffix parts
-     * via the {@link compareSystemNameSuffix} method.
+     * via the {@link #compareSystemNameSuffix} method.
      *
      * @param n2 The second NamedBean in the comparison ("this" is the first one)
      * @return -1,0,+1 for ordering if the names are well-formed; may not provide proper ordering if the names are not well-formed.
      */
     @CheckReturnValue
     @Override
-    public default int compareTo(@Nonnull NamedBean n2) {
+    public default int compareTo(NamedBean n2) {
+        Objects.requireNonNull(n2);
         jmri.util.AlphanumComparator ac = new jmri.util.AlphanumComparator();
         String o1 = this.getSystemName();
         String o2 = n2.getSystemName();
-        
+
         int p1len = Manager.getSystemPrefixLength(o1);
         int p2len = Manager.getSystemPrefixLength(o2);
         
@@ -402,4 +406,5 @@ public interface NamedBean extends Comparable<NamedBean> {
 
     public class BadSystemNameException extends IllegalArgumentException {
     }
+
 }

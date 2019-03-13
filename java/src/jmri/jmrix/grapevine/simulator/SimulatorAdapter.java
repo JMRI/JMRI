@@ -200,6 +200,11 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
     }
 
     @Override
+    public String getCurrentPortName(){
+        return "";
+    }
+
+    @Override
     public void run() { // start a new thread
         // This thread has one task. It repeatedly reads from the input pipe
         // and writes an appropriate response to the output pipe. This is the heart
@@ -266,7 +271,7 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
     /**
      * This is the heart of the simulation. It translates an
      * incoming SerialMessage into an outgoing SerialReply.
-     * See {@link jmri.jmrix.grapevine.SerialMessage#generateReply(SerialMessage)} and
+     * See {@link jmri.jmrix.grapevine.SerialMessage}#generateReply(SerialMessage) and
      * the Grapevine <a href="../package-summary.html">Binary Message Format Summary</a>.
      *
      * @param msg the message received in the simulated node
@@ -420,7 +425,7 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
     /**
      * Pretend a node init reply for a range of banks and bits. Is this a proper simulation of hardware?
      * <p>
-     * Based on information in {@link jmri.jmrix.grapevine.SerialMessage#staticFormat(int, int, int, int)}.
+     * Based on information in jmri.jmrix.grapevine.SerialMessage#staticFormat(int, int, int, int).
      *
      * @param node      the node address
      * @param startBank first bank id to report

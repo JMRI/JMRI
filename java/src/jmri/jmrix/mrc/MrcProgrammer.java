@@ -3,6 +3,8 @@ package jmri.jmrix.mrc;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.annotation.Nonnull;
+
 import jmri.ProgrammingMode;
 import jmri.jmrix.AbstractProgrammer;
 import org.slf4j.Logger;
@@ -31,10 +33,13 @@ public class MrcProgrammer extends AbstractProgrammer implements MrcTrafficListe
     int PACKET_TIMEOUT = 5000;
     int PACKET_READTIMEOUT = 650000;
 
-    /**
+    /** 
+     * {@inheritDoc}
+     *
      * Types implemented here.
      */
     @Override
+    @Nonnull
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> retval = new ArrayList<ProgrammingMode>();
         retval.add(AUTOMATICMODE);
@@ -43,20 +48,28 @@ public class MrcProgrammer extends AbstractProgrammer implements MrcTrafficListe
 
     static final ProgrammingMode AUTOMATICMODE = new ProgrammingMode("Automatic", Bundle.getMessage("MrcAutomaticMode"));
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public boolean getCanRead() {
         return true;
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public boolean getCanWrite() {
         return true;
     }
 
-    @Override
-    /**
+    /** 
+     * {@inheritDoc}
+     * 
      * CV1 to 1024 valid
      */
+    @Override
     public boolean getCanWrite(String cv) {
         if (Integer.parseInt(cv) > 1024) {
             return false;
@@ -74,10 +87,12 @@ public class MrcProgrammer extends AbstractProgrammer implements MrcTrafficListe
     int _val; // remember the value being read/written for confirmative reply
     int _cv; // remember the cv being read/written
 
-    // programming interface
+    /** 
+     * {@inheritDoc}
+     */
     @Override
-    @Deprecated // 4.1.1
-    public synchronized void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
+    public synchronized void writeCV(String CVname, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
+        final int CV = Integer.parseInt(CVname);
         log.debug("writeCV {} listens {}", CV, p); //IN18N
         useProgrammer(p);
         _progRead = false;
@@ -98,14 +113,20 @@ public class MrcProgrammer extends AbstractProgrammer implements MrcTrafficListe
         }
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
-    public void confirmCV(String CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
-        readCV(CV, p);
+    public void confirmCV(String CVname, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
+        readCV(CVname, p);
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
-    @Deprecated // 4.1.1
-    public synchronized void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
+    public synchronized void readCV(String CVname, jmri.ProgListener p) throws jmri.ProgrammerException {
+        final int CV = Integer.parseInt(CVname);
         log.debug("readCV {} listens {}", CV, p); //IN18N
         useProgrammer(p);
         _progRead = true;
@@ -160,10 +181,16 @@ public class MrcProgrammer extends AbstractProgrammer implements MrcTrafficListe
         return m;
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public synchronized void notifyXmit(Date timestamp, MrcMessage m) {
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public synchronized void notifyFailedXmit(Date timestamp, MrcMessage m) {
         if (progState == NOTPROGRAMMING && m.getMessageClass() != MrcInterface.PROGRAMMING) {
@@ -172,6 +199,9 @@ public class MrcProgrammer extends AbstractProgrammer implements MrcTrafficListe
         timeout();
     }
 
+    /** 
+     * {@inheritDoc}
+     */
     @Override
     public synchronized void notifyRcv(Date timestamp, MrcMessage m) {
         //public synchronized void message(MrcMessage m) {
@@ -204,7 +234,9 @@ public class MrcProgrammer extends AbstractProgrammer implements MrcTrafficListe
         }
     }
 
-    /**
+    /** 
+     * {@inheritDoc}
+     *
      * Internal routine to handle a timeout
      */
     @Override

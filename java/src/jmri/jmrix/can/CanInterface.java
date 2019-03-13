@@ -25,4 +25,12 @@ public interface CanInterface {
      * @param l Listener to be notified of reply.
      */
     void sendCanMessage(CanMessage m, CanListener l);
+
+    /**
+     * Send a reply through the interface.
+     *
+     * @param r Reply to be sent.
+     * @param l Listener to be notified of reply.
+     */
+    void sendCanReply(CanReply r, CanListener l);
 }

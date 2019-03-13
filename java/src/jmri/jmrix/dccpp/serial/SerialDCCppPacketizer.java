@@ -11,11 +11,12 @@ import org.slf4j.LoggerFactory;
 import jmri.jmrix.dccpp.DCCppListener;
 import jmri.jmrix.dccpp.DCCppMessage;
 import jmri.jmrix.dccpp.DCCppPacketizer;
+import jmri.util.ThreadingUtil;
 
 /**
  * This is an extension of the DCCppPacketizer to handle the device specific
  * requirements of the DCC++.
- * <P>
+ * <p>
  * In particular, SerialDCCppPacketizer adds functions to add and remove the
  * {@literal "<" and ">"} bytes that appear around any message read in.
  *
@@ -60,36 +61,23 @@ public class SerialDCCppPacketizer extends DCCppPacketizer {
     }
 
     /**
-     * this is the background thread that periodically refreshes the last known
-     * function settings
+     * <code>true</code> when the self-rescheduling function refresh action was
+     * initially queued, to avoid duplicate actions
      */
-    private Thread backgroundRefresh = null;
+    private boolean backgroundRefreshStarted = false;
 
-    private final class RefreshThread extends Thread {
-        public RefreshThread() {
-            setDaemon(true);
-            setName("SerialDCCppPacketizer.bkg_refresh");
-        }
-
+    final class RefreshAction implements ThreadingUtil.ThreadAction {
         @Override
         public void run() {
-            while (true) {
-                try {
-                    final DCCppMessage message = resendFunctions.take();
+            try {
+                final DCCppMessage message = resendFunctions.poll();
 
-                    if (message != null) {
-                        message.setRetries(1);
-                        sendDCCppMessage(message, null);
-
-                        // At 115200 baud only ~1k messages/s can be sent.
-                        // Be nice and don't overload the wire.
-                        sleep(1);
-                    }
-
-                    setName("SerialDCCppPacketizer.bkg_refresh (" + resendFunctions.size() + " msg)");
-                } catch (final InterruptedException e) {
-                    // should exit if interrupted
+                if (message != null) {
+                    message.setRetries(0);
+                    sendDCCppMessage(message, null);
                 }
+            } finally {
+                ThreadingUtil.runOnLayoutDelayed(this, 250);
             }
         }
     }
@@ -97,15 +85,15 @@ public class SerialDCCppPacketizer extends DCCppPacketizer {
     private void enqueueFunction(final DCCppMessage m) {
         /**
          * Set again the same group function value 250ms later (or more,
-         * depending on the queue depth; limited to 1kHz of calls)
+         * depending on the queue depth)
          */
         m.delayFor(250);
         resendFunctions.offer(m);
 
         synchronized (this) {
-            if (backgroundRefresh == null) {
-                backgroundRefresh = new RefreshThread();
-                backgroundRefresh.start();
+            if (!backgroundRefreshStarted) {
+                ThreadingUtil.runOnLayoutDelayed(new RefreshAction(), 250);
+                backgroundRefreshStarted = true;
             }
         }
     }

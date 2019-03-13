@@ -21,9 +21,10 @@ import jmri.InstanceManager;
 abstract public class AbstractConnectionConfig implements ConnectionConfig {
 
     /**
-     * Ctor for a functional object with no prexisting adapter. Expect that the
+     * Ctor for a functional object with no preexisting adapter. Expect that the
      * subclass setInstance() will fill the adapter member.
      */
+    @SuppressWarnings("deprecation")  // two temporary references during migration
     public AbstractConnectionConfig() {
         try {
             // The next commented-out line replacing the following when Issue #4670 is resolved; see Manager
@@ -38,11 +39,13 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
                     }
                     super.setValue(value);
                     // check for legacy, and if so paint red (will have not gotten here if not valid)
-                    if (jmri.Manager.isLegacySystemPrefix(value.toString())) {
+                    if (jmri.Manager.isLegacySystemPrefix(value.toString())) { // temporary reference during migration, see @SuppressWarnings above
                         setBackground(java.awt.Color.RED);
                         setToolTipText("This is a legacy prefix that should be migrated, ask on JMRIusers");
                     }                    
                 }
+                
+                @Override
                 public void setText(String value) {
                     log.debug("setText {} {}", value, getBackground());
                     if (getBackground().equals(java.awt.Color.RED)) { // only if might have set before, leaving default otherwise
@@ -51,7 +54,7 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
                     }
                     super.setText(value);
                     // check for legacy, and if so paint red (will have not gotten here if not valid)
-                    if (jmri.Manager.isLegacySystemPrefix(value)) {
+                    if (jmri.Manager.isLegacySystemPrefix(value)) { // temporary reference during migration, see @SuppressWarnings above
                         setBackground(java.awt.Color.RED);
                         setToolTipText("This is a legacy prefix that should be migrated, ask on JMRIusers");
                     }                    
@@ -128,7 +131,7 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
         String optionDisplayName;
         JComponent optionSelection;
         Boolean advanced = true;
-        JLabel label = null;
+	JLabel label = null;
 
         public Option(String name, JComponent optionSelection, Boolean advanced) {
             this.optionDisplayName = name;
@@ -172,7 +175,7 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
 
     /**
      * Load the adapter with an appropriate object
-     * <i>unless</I> its already been set.
+     * <i>unless</I> it's already been set.
      */
     abstract protected void setInstance();
 
@@ -217,6 +220,7 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
             cL.gridy = i;
             gbLayout.setConstraints(systemPrefixLabel, cL);
             gbLayout.setConstraints(systemPrefixField, cR);
+	    systemPrefixLabel.setLabelFor(systemPrefixField);
             _details.add(systemPrefixLabel);
             _details.add(systemPrefixField);
             i++;
@@ -224,6 +228,7 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
             cL.gridy = i;
             gbLayout.setConstraints(connectionNameLabel, cL);
             gbLayout.setConstraints(connectionNameField, cR);
+	    connectionNameLabel.setLabelFor(connectionNameField);
             _details.add(connectionNameLabel);
             _details.add(connectionNameField);
             i++;

@@ -3,10 +3,8 @@ package jmri.jmrix.easydcc;
 import jmri.JmriException;
 import jmri.jmrix.AbstractPowerManagerTestBase;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import jmri.util.junit.annotations.NotApplicable;
+import org.junit.*;
 
 /**
  * JUnit tests for the EasyDccPowerManager class
@@ -91,13 +89,13 @@ public class EasyDccPowerManagerTest extends AbstractPowerManagerTestBase {
     // state readback by sending messages & getting a reply
     @Override
     @Test
-    @Ignore("no unsolicited messages, so skip test")
+    @NotApplicable("no unsolicited messages, so skip test")
     public void testStateOn() throws JmriException {
     }
 
     @Override
     @Test
-    @Ignore("no unsolicited messages, so skip test")
+    @NotApplicable("no unsolicited messages, so skip test")
     public void testStateOff() throws JmriException {
     }
 

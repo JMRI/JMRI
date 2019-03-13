@@ -8,7 +8,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Manage the XpressNet specific Sensor implementation.
  * <p>
- * System names are "XSnnn", where nnn is the sensor number without padding.
+ * System names are "XSnnn", where X is the user configurable system prefix,
+ * nnn is the sensor number without padding.
  *
  * @author Paul Bender Copyright (C) 2003-2010
  * @navassoc 1 - * jmri.jmrix.lenz.XNetSensor
@@ -129,6 +130,7 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
      *
      * @return VALID if system name has a valid format, else return INVALID
      */
+    @Override
     public NameValidity validSystemNameFormat(String systemName) {
         return (XNetAddress.validSystemNameFormat(systemName, 'S', getSystemPrefix()));
     }
@@ -203,7 +205,7 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
     }
 
     /**
-     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     * {@inheritDoc}
      */
     @Override
     public String getEntryToolTip() {

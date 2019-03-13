@@ -1,15 +1,13 @@
 package jmri.jmrix.dcc4pc;
 
 import java.util.ArrayList;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implement SensorManager for Dcc4Pc systems. The Manager handles all the
- * state changes.
- * <P>
- * System names are "DPnn:yy", where nnn is the board id and yy is the port on
- * that board.
+ * Implement BoardManager for Dcc4Pc systems.
  *
  * @author Kevin Dickerson Copyright (C) 2009
  */
@@ -50,6 +48,7 @@ public class Dcc4PcBoardManager implements Dcc4PcListener {
     }
     
     @Override
+    @SuppressFBWarnings(value="DLS_DEAD_LOCAL_STORE", justification="See issue #6132")
     public void reply(Dcc4PcReply r) {
         if (log.isDebugEnabled()) {
             log.debug("Reply details sm: " + r.toHexString());
@@ -78,7 +77,7 @@ public class Dcc4PcBoardManager implements Dcc4PcListener {
                     i++;
                 }
                 //skip supported speeds for now
-                String str = buf.toString();
+                String str = buf.toString(); // DLS_DEAD_LOCAL_STORE here: str is unused
                 //We have a reader, now to find out other information about it
                 if (str.equals("RCRD")) {
                     i = i + 2;

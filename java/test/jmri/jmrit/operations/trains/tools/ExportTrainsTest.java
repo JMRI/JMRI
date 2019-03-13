@@ -1,13 +1,14 @@
 package jmri.jmrit.operations.trains.tools;
 
 import java.awt.GraphicsEnvironment;
+import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
+import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.swing.JemmyUtil;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -29,8 +30,13 @@ public class ExportTrainsTest extends OperationsTestCase {
         Assert.assertNotNull("exists", exportTrains);
 
         JUnitOperationsUtil.initOperationsData();
+        
+        // built trains increase coverage
+        TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
+        Train train = tmanager.getTrainByName("STF");
+        Assert.assertTrue(train.build());
 
-        // should cause export complete dialog to appear
+        // next should cause export complete dialog to appear
         Thread export = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -44,23 +50,10 @@ public class ExportTrainsTest extends OperationsTestCase {
             return export.getState().equals(Thread.State.WAITING);
         }, "wait for prompt");
 
-        JemmyUtil.pressDialogButton(Bundle.getMessage("ExportComplete"), "OK");
+        JemmyUtil.pressDialogButton(Bundle.getMessage("ExportComplete"), Bundle.getMessage("ButtonOK"));
 
         java.io.File file = new java.io.File(ExportTrains.defaultOperationsFilename());
         Assert.assertTrue("Confirm file creation", file.exists());
-    }
-
-    // The minimal setup for log4J
-    @Override
-    @Before
-    public void setUp() {
-        super.setUp();
-    }
-
-    @Override
-    @After
-    public void tearDown() {
-        super.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(ExportTrainsTest.class);

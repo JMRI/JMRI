@@ -17,8 +17,8 @@ import org.slf4j.LoggerFactory;
  * Implement SensorManager for Dcc4Pc systems. The Manager handles all the state
  * changes.
  * <p>
- * System names are "DPnn:yy", where nnn is the board id and yy is the port on
- * that board.
+ * System names are "DSnn:yy", where D is the user configurable system prefix,
+ * nn is the board id and yy is the port on that board.
  *
  * @author Kevin Dickerson Copyright (C) 2009
  */
@@ -945,7 +945,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
 
                         } else if ((packet[i] >> 3) == 0x00) {
                             // This should fall through to 00000 three byte instruction
-                            i = i + 2;
+                            // i = i + 2;
 
                         } else {
                             // Remainder are reserved

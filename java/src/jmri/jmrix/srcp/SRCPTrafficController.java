@@ -281,6 +281,7 @@ public class SRCPTrafficController extends AbstractMRTrafficController
         // make a copy of the listener vector to synchronized (not needed for transmit?)
         Vector<AbstractMRListener> v;
         synchronized (this) {
+            // FIXME: unnecessary synchronized; the Vector IS already thread-safe.
             v = (Vector<AbstractMRListener>) cmdListeners.clone();
         }
         // forward to all listeners
@@ -336,12 +337,6 @@ public class SRCPTrafficController extends AbstractMRTrafficController
         // the server will send a reply of "101 INFO 0 SESSION <id>.
         // but we aren't going to wait for the reply.
         return true;
-    }
-
-    @Override
-    @SuppressWarnings("deprecation")
-    public String name() {
-        return this.getName();
     }
 
     @Override

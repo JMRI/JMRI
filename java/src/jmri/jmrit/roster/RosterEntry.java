@@ -520,7 +520,13 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
             } catch (ParseException ex2) {
                 // then try with a specific format to handle e.g. "Apr 1, 2016 9:13:36 AM"
                 DateFormat customFmt = new SimpleDateFormat ("MMM dd, yyyy hh:mm:ss a");
-                setDateModified(customFmt.parse(date));
+                try {
+                    setDateModified(customFmt.parse(date));
+                } catch (ParseException ex3) {
+                    // then try with a specific format to handle e.g. "01-Oct-2016 9:13:36"
+                    customFmt = new SimpleDateFormat ("dd-MMM-yyyy hh:mm:ss");
+                    setDateModified(customFmt.parse(date));
+                }
             }
         } catch (IllegalArgumentException ex2) {
             // warn that there's perhaps something wrong with the classpath
@@ -542,7 +548,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      * @param s the string to parse into a date
      * @deprecated since 4.7.1; not for removal, but to make access protected
      */
-    @Deprecated
+    @Deprecated // 4.7.1
     public void setDateUpdated(String s) {
         String old = _dateUpdated;
         _dateUpdated = s;
@@ -1310,8 +1316,6 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      */
     public void changeDateUpdated() {
         // used to create formatted string of now using defaults
-        // java.text.DateFormat df = java.text.DateFormat.getDateTimeInstance();
-        // setDateUpdated(df.format(new java.util.Date()));
         this.setDateModified(new Date());
     }
 
@@ -1359,7 +1363,7 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
      * Ultra compact list view of roster entries.
      * Shows text from fields as initially visible in the Roster frame table.
      *
-     * Header is created in {@link PrintListAction#actionPerformed(ActionEvent)}
+     * Header is created in {@link PrintListAction#actionPerformed(java.awt.event.ActionEvent)}
      * so keep column widths identical with values of colWidth below.
      *
      * @param w writer providing output
@@ -1378,49 +1382,40 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
             w.write(newLine, 0, 1);
 
             int colWidth = 15;
-            int startNext = colWidth;
             // roster entry ID (not the filname)
             if (_id != null) {
                 thisText = String.format("%-" + colWidth + "s", _id.substring(0, Math.min(_id.length(), colWidth))); // %- = left align
-                log.debug("thisText = |{}|, length = {}, startNext = {}", thisText, thisText.length(), startNext);
+                log.debug("thisText = |{}|, length = {}", thisText, thisText.length());
             } else {
                 thisText = String.format("%-" + colWidth + "s", "<null>");
             }
             thisLine += thisText;
             colWidth = 6;
-            startNext += colWidth;
             // _dccAddress
             thisLine += StringUtil.padString(_dccAddress, colWidth);
             colWidth = 6;
-            startNext += colWidth;
             // _roadName
             thisLine += StringUtil.padString(_roadName, colWidth);
             colWidth = 6;
-            startNext += colWidth;
             // _roadNumber
             thisLine += StringUtil.padString(_roadNumber, colWidth);
             colWidth = 6;
-            startNext += colWidth;
             // _mfg
             thisLine += StringUtil.padString(_mfg, colWidth);
             colWidth = 10;
-            startNext += colWidth;
             // _model
             thisLine += StringUtil.padString(_model, colWidth);
             colWidth = 10;
-            startNext += colWidth;
             // _decoderModel
             thisLine += StringUtil.padString(_decoderModel, colWidth);
             colWidth = 12;
-            startNext += colWidth;
             // _protocol (type)
             thisLine += StringUtil.padString(_protocol.toString(), colWidth);
             colWidth = 6;
-            startNext += colWidth;
             // _owner
             thisLine += StringUtil.padString(_owner, colWidth);
             colWidth = 10;
-            startNext += colWidth;
+
             // dateModified (type)
             if (dateModified != null) {
                 DateFormat.getDateTimeInstance().format(dateModified);

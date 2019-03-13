@@ -79,6 +79,7 @@ public class XBeeTurnoutManager extends AbstractTurnoutManager {
      * @param systemName Xbee id format with pins to be checked
      * @return 'true' if system name has a valid format, else returns 'false'
      */
+    @Override
     public NameValidity validSystemNameFormat(String systemName) {
         if (tc.getNodeFromName(addressFromSystemName(systemName)) == null
                 && tc.getNodeFromAddress(addressFromSystemName(systemName)) == null) {
@@ -210,7 +211,7 @@ public class XBeeTurnoutManager extends AbstractTurnoutManager {
     }
 
     /**
-     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     * {@inheritDoc}
      */
     @Override
     public String getEntryToolTip() {

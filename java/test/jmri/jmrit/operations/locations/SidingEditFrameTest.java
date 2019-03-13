@@ -13,8 +13,8 @@ import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.JemmyUtil;
-import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -32,9 +32,7 @@ public class SidingEditFrameTest extends OperationsTestCase {
 
     @Test
     public void testAddSidingDefaults() {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't use Assume in TestCase subclasses
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         LocationManager lManager = InstanceManager.getDefault(LocationManager.class);
         Location l = lManager.getLocationByName("Test Loc C");
         SpurEditFrame f = new SpurEditFrame();
@@ -82,9 +80,7 @@ public class SidingEditFrameTest extends OperationsTestCase {
 
     @Test
     public void testSetDirectionUsingCheckbox() {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't use Assume in TestCase subclasses
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SpurEditFrame f = new SpurEditFrame();
         f.setTitle("Test Siding Add Frame");
         f.setLocation(0, 0); // entire panel must be visible for tests to work properly
@@ -114,9 +110,7 @@ public class SidingEditFrameTest extends OperationsTestCase {
 
     @Test
     public void testAddScheduleButton() {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't use Assume in TestCase subclasses
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SpurEditFrame f = new SpurEditFrame();
         f.setTitle("Test Siding Add Frame");
         f.setLocation(0, 0); // entire panel must be visible for tests to work properly
@@ -140,9 +134,7 @@ public class SidingEditFrameTest extends OperationsTestCase {
 
     @Test
     public void testAddCloseAndRestore() {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't use Assume in TestCase subclasses
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SpurEditFrame f = new SpurEditFrame();
         f.setTitle("Test Siding Add Frame");
         f.setLocation(0, 0); // entire panel must be visible for tests to work properly
@@ -197,9 +189,7 @@ public class SidingEditFrameTest extends OperationsTestCase {
 
     @Test
     public void testTrainServicesTrack() {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't use Assume in TestCase subclasses
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         SpurEditFrame f = new SpurEditFrame();
         f.setTitle("Test Spur Frame");
         f.setLocation(0, 0); // entire panel must be visible for tests to work properly    
@@ -314,11 +304,5 @@ public class SidingEditFrameTest extends OperationsTestCase {
         JUnitOperationsUtil.loadTrain(l);
         TrainManager trainManager = InstanceManager.getDefault(TrainManager.class);
         trainA = trainManager.getTrainByName("Test Train A"); 
-    }
-
-    @Override
-    @After
-    public void tearDown() {
-        super.tearDown();
     }
 }

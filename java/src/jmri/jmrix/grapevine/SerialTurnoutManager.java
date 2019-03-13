@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Implement turnout manager for Grapevine systems.
  * <p>
- * System names are "GiTnnn", where Gi is the (multichar) system connection prefix,
+ * System names are "GTnnn", where G is the (multichar) system connection prefix,
  * nnn is the turnout number without padding.
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
@@ -179,7 +179,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     }
 
     /**
-     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     * {@inheritDoc}
      */
     @Override
     public String getEntryToolTip() {

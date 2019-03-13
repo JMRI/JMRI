@@ -275,7 +275,7 @@ public class LnPacketizerStrict extends LnPacketizer {
                                     try {
                                         Thread.sleep(waitTime);
                                     } catch (InterruptedException ee) {
-                                        log.warn("waitBusy sleep Interupted", ee); // NOI18N
+                                        log.warn("waitBusy sleep Interrupted", ee); // NOI18N
                                     }
                                 }
                                 ostream.write(msg);
@@ -291,18 +291,14 @@ public class LnPacketizerStrict extends LnPacketizer {
                                     try {
                                         Thread.sleep(1);
                                     } catch (InterruptedException ee) {
-                                        log.error("waitForMsg sleep Interupted", ee); // NOI18N
+                                        log.error("waitForMsg sleep Interrupted", ee); // NOI18N
                                     }
                                     waitCount++;
                                 }
                                 // Oh my lost the echo...
                                 if (waitCount > 19) {
-                                    try {
-                                        log.warn("Retry Send for Lost Packet [{}] Count[{}]", waitForMsg.toString(),
+                                    log.warn("Retry Send for Lost Packet [{}] Count[{}]", waitForMsg,
                                                 reTryCount); // NOI18N
-                                    } catch (NullPointerException npe) {
-                                        log.warn("Retry Send for waitingOnMsg null?  Count[{}]", reTryCount); // NOI18N
-                                    }
                                     if (reTryCount < 5) {
                                         reTryRequired = true;
                                         reTryCount++;
@@ -317,7 +313,7 @@ public class LnPacketizerStrict extends LnPacketizer {
                                         try {
                                             Thread.sleep(1);
                                         } catch (InterruptedException ee) {
-                                            log.error("waitingOnLack sleep Interupted", ee); // NOI18N
+                                            log.error("waitingOnLack sleep Interrupted", ee); // NOI18N
                                         }
                                         waitCount++;
                                     }

@@ -1,7 +1,9 @@
 package jmri.jmrix.loconet;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import java.util.ArrayList;
 import java.util.Vector;
+import javax.annotation.Nonnull;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,13 +22,38 @@ public abstract class LnTrafficController implements LocoNetInterface {
     LocoNetSystemConnectionMemo memo = null;
 
     /**
-     * Set the system connection memo associated with this traffic controller.
-     *
-     * @param m associated systemConnectionMemo object
+     * Constructor without reference to a LocoNetSystemConnectionMemo.
      */
+    public LnTrafficController() {
+        super();
+    }
+
+    /**
+     * Constructor. Gets a reference to the LocoNetSystemConnectionMemo.
+     *
+     * @param memo connection's memo
+     */
+    public LnTrafficController(LocoNetSystemConnectionMemo memo) {
+        super();
+        this.memo = memo;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void setSystemConnectionMemo(LocoNetSystemConnectionMemo m) {
         log.debug("LnTrafficController set memo to {}", m.getUserName());
         memo = m;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public LocoNetSystemConnectionMemo getSystemConnectionMemo() {
+        log.debug("getSystemConnectionMemo {} called in LnTC", memo.getUserName());
+        return memo;
     }
 
     // Abstract methods for the LocoNetInterface
@@ -45,21 +72,20 @@ public abstract class LnTrafficController implements LocoNetInterface {
 
     // The methods to implement adding and removing listeners
 
+    // relies on Vector being a synchronized class
     protected Vector<LocoNetListener> listeners = new Vector<LocoNetListener>();
 
     @Override
-    public synchronized void addLocoNetListener(int mask, LocoNetListener l) {
-        // add only if not already registered
-        if (l == null) {
-            throw new java.lang.NullPointerException();
-        }
+    public synchronized void addLocoNetListener(int mask, @Nonnull LocoNetListener l) {
+        java.util.Objects.requireNonNull(l);
         if (!listeners.contains(l)) {
             listeners.addElement(l);
         }
     }
 
     @Override
-    public synchronized void removeLocoNetListener(int mask, LocoNetListener l) {
+    public synchronized void removeLocoNetListener(int mask, @Nonnull LocoNetListener l) {
+        java.util.Objects.requireNonNull(l);
         if (listeners.contains(l)) {
             listeners.removeElement(l);
         }
@@ -75,23 +101,20 @@ public abstract class LnTrafficController implements LocoNetInterface {
      *
      * @param m message to forward. Listeners should not modify it!
      */
-    @SuppressWarnings("unchecked")
     public void notify(LocoNetMessage m) {
         // record statistics
         receivedMsgCount++;
         receivedByteCount += m.getNumDataElements();
 
-        // make a copy of the listener vector to synchronized not needed for transmit
-        Vector<LocoNetListener> v;
+        // make a copy of the listener vector for notifications; synchronized not needed once copied
+        ArrayList<LocoNetListener> v;
         synchronized (this) {
-            v = (Vector<LocoNetListener>) listeners.clone();
+            v = new ArrayList<LocoNetListener>(listeners);
         }
 
         // forward to all listeners
         log.debug("notify of incoming LocoNet packet: {}", m);
-        int cnt = v.size();
-        for (int i = 0; i < cnt; i++) {
-            LocoNetListener client = listeners.elementAt(i);
+        for (LocoNetListener client : v) {
             log.trace("  notify {} of incoming LocoNet packet: {}", client, m);
             client.message(m);
         }
@@ -115,6 +138,13 @@ public abstract class LnTrafficController implements LocoNetInterface {
         transmittedMsgCount = 0;
         receivedByteCount = 0;
     }
+
+    /**
+     * Clean up any resources, particularly threads.
+     * <p>
+     * The object can't be used after this.
+     */
+    public void dispose() {}
 
     /**
      * Monitor the number of LocoNet messages received across the interface.

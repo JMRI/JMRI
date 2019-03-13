@@ -4,10 +4,11 @@ import java.io.File;
 import java.io.IOException;
 import jmri.util.FileUtil;
 import jmri.util.JUnitAppender;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,8 +18,9 @@ import org.slf4j.LoggerFactory;
  * @author	Bob Jacobsen Copyright (C) 2008
  * @suthor B. Milhaupt Copyright (C) 2014
  */
-public class MemoryContentsTest extends TestCase {
+public class MemoryContentsTest {
 
+    @Test
     public void testReadNormalFile() throws java.io.FileNotFoundException {
         MemoryContents m = new MemoryContents();
         log.debug("Begin of testReadNormalFile");
@@ -48,6 +50,7 @@ public class MemoryContentsTest extends TestCase {
         Assert.assertEquals("content restarts", 864, m.nextContent(500));
     }
 
+    @Test
     public void testReadSegmentsTestFile() throws java.io.FileNotFoundException {
         MemoryContents m = new MemoryContents();
         log.debug("Begin of testReadSegmentsTestFile");
@@ -108,6 +111,7 @@ public class MemoryContentsTest extends TestCase {
         verifyMemoryData(0xA0003, -1, m);
     }
 
+    @Test
     public void testReadNormal24BitAddressFile() throws java.io.FileNotFoundException {
         MemoryContents m = new MemoryContents();
         log.debug("Begin of testReadNormal24BitAddressFile");
@@ -262,6 +266,7 @@ public class MemoryContentsTest extends TestCase {
         verifyMemoryData(0x4011, 0x3F, n);
     }
 
+    @Test
     public void testReadFileCksumError() throws java.io.FileNotFoundException {
         MemoryContents m = new MemoryContents();
         log.debug("Begin of testReadFileCksumError");
@@ -294,6 +299,7 @@ public class MemoryContentsTest extends TestCase {
         Assert.assertTrue("Checksum Exception was expected", expectedExceptionHappened);
     }
 
+    @Test
     public void testReadFileRecordTypeError() throws java.io.FileNotFoundException {
         MemoryContents m = new MemoryContents();
         log.debug("Begin of testReadFileRecordTypeError");
@@ -327,6 +333,7 @@ public class MemoryContentsTest extends TestCase {
         Assert.assertTrue("Record Type Exception was expected", expectedExceptionHappened);
     }
 
+    @Test
     public void testReadFileRecordLengthError() throws java.io.FileNotFoundException {
         MemoryContents m = new MemoryContents();
         log.debug("Begin of testReadFileRecordLengthError");
@@ -370,6 +377,7 @@ public class MemoryContentsTest extends TestCase {
         }
     }
 
+    @Test
     public void testReadFileFileNotFound() {
         MemoryContents m = new MemoryContents();
         log.debug("Begin of testReadFileFileNotFound");
@@ -406,6 +414,7 @@ public class MemoryContentsTest extends TestCase {
         Assert.assertEquals("old data disappears", -1, m.nextContent(500));
     }
 
+    @Test
     public void testReadFileMalformedLine() {
         MemoryContents m = new MemoryContents();
         log.debug("Begin of testReadFileMalformedLine");
@@ -441,6 +450,7 @@ public class MemoryContentsTest extends TestCase {
         Assert.assertTrue("Record Content Length exception expected", expectedExceptionHappened);
     }
 
+    @Test
     public void testReadFileNoEOFRecordFile() {
         MemoryContents m = new MemoryContents();
         log.debug("Begin of testReadFileNoEOFRecordFile");
@@ -476,6 +486,7 @@ public class MemoryContentsTest extends TestCase {
         Assert.assertTrue("No EOF Record exception expected", expectedExceptionHappened);
     }
 
+    @Test
     public void testReadFileNoContentFile() {
         MemoryContents m = new MemoryContents();
         log.debug("Begin of testReadFileNoContentFile");
@@ -511,6 +522,7 @@ public class MemoryContentsTest extends TestCase {
         Assert.assertTrue("'No records found' exception expected", expectedExceptionHappened);
     }
 
+    @Test
     public void testReadFile16bitContentFile() {
         MemoryContents m = new MemoryContents();
         log.debug("Begin of testReadFile16bitContentFile");
@@ -540,6 +552,7 @@ public class MemoryContentsTest extends TestCase {
         }
     }
 
+    @Test
     public void testReadFileRecordType02BadFile() {
         MemoryContents m = new MemoryContents();
         log.debug("Begin of testReadFileRecordType02BadFile");
@@ -575,6 +588,7 @@ public class MemoryContentsTest extends TestCase {
         Assert.assertTrue("'Addressing range' exception expected", expectedExceptionHappened);
     }
 
+    @Test
     public void testReadFileRecordType02BadFile2() {
         MemoryContents m = new MemoryContents();
         log.debug("Begin of testReadFileRecordType02BadFile2");
@@ -610,6 +624,7 @@ public class MemoryContentsTest extends TestCase {
         Assert.assertTrue("'Addressing range' exception expected", expectedExceptionHappened);
     }
 
+    @Test
     public void testReadFileHighSegments() {
         MemoryContents m = new MemoryContents();
         log.debug("Begin of testReadFileHighSegments");
@@ -657,6 +672,7 @@ public class MemoryContentsTest extends TestCase {
         verifyMemoryData(0xD00100, 0x34, m);
     }
 
+    @Test
     public void testReadFilePageCross() {
         MemoryContents m = new MemoryContents();
         log.debug("Begin of testReadFilePageCross");
@@ -733,6 +749,7 @@ public class MemoryContentsTest extends TestCase {
         }
     }
 
+    @Test
     public void testReadFile24bitPageCross() {
         MemoryContents m = new MemoryContents();
         log.debug("Begin of testReadFile24bitPageCross");
@@ -819,32 +836,13 @@ public class MemoryContentsTest extends TestCase {
         }
     }
 
-    public MemoryContentsTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", MemoryContentsTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(MemoryContentsTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         jmri.util.JUnitUtil.setUp();
-        super.setUp();
     }
 
-    @Override
-    protected void tearDown() throws Exception {
-        super.tearDown();
+    @After
+    public void tearDown() throws Exception {
         jmri.util.JUnitUtil.tearDown();
 
     }

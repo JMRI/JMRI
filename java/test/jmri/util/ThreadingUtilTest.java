@@ -147,6 +147,28 @@ public class ThreadingUtilTest {
         JUnitUtil.waitFor( ()->{ return done; }, "Delayed oepration complete");
     }
 
+    @Test
+    public void testThreadingTests() {
+        ThreadingUtil.runOnLayout( ()-> { 
+            ThreadingUtil.requireLayoutThread(log);
+        } );
+        ThreadingUtil.runOnGUI( ()-> { 
+            ThreadingUtil.requireGuiThread(log);
+        } );
+        Assert.assertTrue(jmri.util.JUnitAppender.verifyNoBacklog());
+
+        ThreadingUtil.requireGuiThread(log);
+        jmri.util.JUnitAppender.assertWarnMessage("Call not on GUI thread");
+
+        ThreadingUtil.requireLayoutThread(log);
+        jmri.util.JUnitAppender.assertWarnMessage("Call not on Layout thread");
+
+        ThreadingUtil.requireGuiThread(log);
+        ThreadingUtil.requireLayoutThread(log);
+        Assert.assertTrue(jmri.util.JUnitAppender.verifyNoBacklog());
+        
+   }
+    
     /**
      * Show how to query state of _current_ thread
      */
@@ -168,5 +190,7 @@ public class ThreadingUtilTest {
     public void tearDown() throws Exception {
         jmri.util.JUnitUtil.tearDown();
     }
+
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ThreadingUtilTest.class);
 
 }

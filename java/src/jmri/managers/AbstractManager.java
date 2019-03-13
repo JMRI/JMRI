@@ -6,8 +6,14 @@ import java.beans.PropertyChangeSupport;
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
 import java.beans.VetoableChangeSupport;
-import java.util.*;
-
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
@@ -161,7 +167,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         } catch (PropertyVetoException e) {
             throw e;  // don't go on to check for delete.
         }
-        if (property.equals("DoDelete")) { //IN18N
+        if (property.equals("DoDelete")) { // NOI18N
             deregister(bean);
             bean.dispose();
         }
@@ -185,9 +191,9 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         registerUserName(s);
 
         // notifications
-        firePropertyChange("length", null, _beans.size());
         int position = getPosition(s);
         fireDataListenersAdded(position, position, s);
+        firePropertyChange("length", null, _beans.size());
         // listen for name and state changes to forward
         s.addPropertyChangeListener(this, "", "Manager");
     }
@@ -264,8 +270,8 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
         _originalOrderList.remove(systemName);
         
         // notifications
-        firePropertyChange("length", null, _beans.size());
         fireDataListenersRemoved(position, position, s);
+        firePropertyChange("length", null, _beans.size());
     }
 
     /**
@@ -322,9 +328,9 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
 
     /** {@inheritDoc} */
     @Override
-    @Deprecated  // will be removed when Manager method is removed due to @Override
+    @Deprecated  // will be removed when superclass method is removed due to @Override
     public String[] getSystemNameArray() {
-        jmri.util.Log4JUtil.warnOnce(log, "Manager#getSystemNameArray() is deprecated");
+        jmri.util.Log4JUtil.deprecationWarning(log, "getSystemNameArray");
         if (log.isTraceEnabled()) log.trace("Manager#getSystemNameArray() called", new Exception("traceback"));
 
         if (cachedSystemNameArray == null) {
@@ -336,8 +342,9 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     
     /** {@inheritDoc} */
     @Override
-    @Deprecated  // will be removed when Manager method is removed due to @Override
+    @Deprecated  // will be removed when superclass method is removed due to @Override
     public List<String> getSystemNameList() {
+        // jmri.util.Log4JUtil.deprecationWarning(log, "getSystemNameList");
         if (cachedSystemNameList == null) {
             cachedSystemNameList = new ArrayList<>();
             for (E b : _beans) {
@@ -350,16 +357,18 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
 
     /** {@inheritDoc} */
     @Override
-    @Deprecated  // will be removed when Manager method is removed due to @Override
+    @Deprecated  // will be removed when superclass method is removed due to @Override
     public List<String> getSystemNameAddedOrderList() {
+        //jmri.util.Log4JUtil.deprecationWarning(log, "getSystemNameAddedOrderList");
         return Collections.unmodifiableList(_originalOrderList);
     }
 
 
     /** {@inheritDoc} */
     @Override
-    @Deprecated  // will be removed when Manager method is removed due to @Override
+    @Deprecated  // will be removed when superclass method is removed due to @Override
     public List<E> getNamedBeanList() {
+        jmri.util.Log4JUtil.deprecationWarning(log, "getNamedBeanList");
         if (cachedNamedBeanList == null) {
             cachedNamedBeanList = new ArrayList<>(_beans);
         }
@@ -536,7 +545,7 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
     public void setDataListenerMute(boolean m) {
         if (muted && !m) {
             // send a total update, as we haven't kept track of specifics
-            ManagerDataEvent<E> e = new ManagerDataEvent<E>(this, ManagerDataEvent.CONTENTS_CHANGED, 0, getObjectCount()-1, null);
+            ManagerDataEvent<E> e = new ManagerDataEvent<>(this, ManagerDataEvent.CONTENTS_CHANGED, 0, getObjectCount()-1, null);
             for (ManagerDataListener<E> listener : listeners) {
                 listener.contentsChanged(e);
             }          
@@ -546,14 +555,14 @@ abstract public class AbstractManager<E extends NamedBean> implements Manager<E>
 
     protected void fireDataListenersAdded(int start, int end, E changedBean) {
         if (muted) return;
-        ManagerDataEvent<E> e = new ManagerDataEvent<E>(this, ManagerDataEvent.INTERVAL_ADDED, start, end, changedBean);
+        ManagerDataEvent<E> e = new ManagerDataEvent<>(this, ManagerDataEvent.INTERVAL_ADDED, start, end, changedBean);
         for (ManagerDataListener<E> m : listeners) {
             m.intervalAdded(e);
         }
     }
     protected void fireDataListenersRemoved(int start, int end, E changedBean) {
         if (muted) return;
-        ManagerDataEvent<E> e = new ManagerDataEvent<E>(this, ManagerDataEvent.INTERVAL_REMOVED, start, end, changedBean);
+        ManagerDataEvent<E> e = new ManagerDataEvent<>(this, ManagerDataEvent.INTERVAL_REMOVED, start, end, changedBean);
         for (ManagerDataListener<E> m : listeners) {
             m.intervalRemoved(e);
         }

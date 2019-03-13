@@ -42,8 +42,6 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
 
     protected static final String STATUS_NOT_THIS_TRAIN = Bundle.getMessage("RouterTrain");
     protected static final String STATUS_NOT_ABLE = Bundle.getMessage("RouterNotAble");
-    public static final String STATUS_CAR_AT_DESINATION = Bundle.getMessage("RouterCarAtDestination");
-    // protected static final String STATUS_NO_TRAINS = Bundle.getMessage("RouterNoTrains");
     protected static final String STATUS_ROUTER_DISABLED = Bundle.getMessage("RouterDisabled");
 
     private String _status = "";
@@ -129,17 +127,8 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
         if (_train != null) {
             log.debug("Routing using train ({})", train.getName());
         }
-        // Has the car arrived at the car's final destination?
-        if (car.getLocation().equals(car.getFinalDestination()) &&
-                (car.getTrack().equals(car.getFinalDestinationTrack()) || car.getFinalDestinationTrack() == null)) {
-            log.debug("Car ({}) has arrived at final destination", car);
-            _status = STATUS_CAR_AT_DESINATION;
-            car.setFinalDestination(null);
-            car.setFinalDestinationTrack(null);
-            return false;
-        }
         // is car part of kernel?
-        if (car.getKernel() != null && !car.getKernel().isLead(car)) {
+        if (car.getKernel() != null && !car.isLead()) {
             return false;
         }
         // note clone car has the car's "final destination" as its destination
@@ -941,7 +930,7 @@ public class Router extends TrainCommon implements InstanceManagerAutoDefault {
         Car clone = car.copy();
         // modify clone car length if car is part of kernel
         if (car.getKernel() != null) {
-            clone.setLength(Integer.toString(car.getKernel().getTotalLength() - RollingStock.COUPLER));
+            clone.setLength(Integer.toString(car.getKernel().getTotalLength() - RollingStock.COUPLERS));
         }
         clone.setTrack(car.getTrack());
         clone.setFinalDestination(car.getFinalDestination());

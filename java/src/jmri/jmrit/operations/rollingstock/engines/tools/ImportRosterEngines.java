@@ -62,7 +62,7 @@ public class ImportRosterEngines extends Thread {
                 textId.setText(road + " " + re.getRoadNumber());
                 Engine engine = manager.getByRoadAndNumber(road, re.getRoadNumber());
                 if (engine == null) {
-                    engine = manager.newEngine(road, re.getRoadNumber());
+                    engine = manager.newRS(road, re.getRoadNumber());
                     String model = re.getModel();
                     if (model.length() > Control.max_len_string_attibute) {
                         model = model.substring(0, Control.max_len_string_attibute);

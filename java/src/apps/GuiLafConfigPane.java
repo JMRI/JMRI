@@ -117,7 +117,8 @@ public final class GuiLafConfigPane extends JPanel implements PreferencesPanel {
             installedLAFs.put(plaf.getName(), plaf.getClassName());
         }
         // make the radio buttons
-        for (String name : installedLAFs.keySet()) {
+        for (java.util.Map.Entry<String, String> entry : installedLAFs.entrySet()) {
+            String name = entry.getKey();
             JRadioButton jmi = new JRadioButton(name);
             panel.add(jmi);
             LAFGroup.add(jmi);
@@ -125,7 +126,7 @@ public final class GuiLafConfigPane extends JPanel implements PreferencesPanel {
             jmi.addActionListener((ActionEvent e) -> {
                 InstanceManager.getDefault(GuiLafPreferencesManager.class).setLookAndFeel(name);
             });
-            if (installedLAFs.get(name).equals(UIManager.getLookAndFeel().getClass().getName())) {
+            if ( entry.getValue().equals(UIManager.getLookAndFeel().getClass().getName())) {
                 jmi.setSelected(true);
             }
         }

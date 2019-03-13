@@ -6,9 +6,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implement light manager for SECSI serial systems
+ * Implement light manager for SECSI serial systems.
  * <p>
- * System names are "ViLnnn", where nnn is the bit number without padding.
+ * System names are "VLnnn", where V is the user configurable system prefix,
+ * nnn is the bit number without padding.
  * <p>
  * Based in part on SerialTurnoutManager.java
  *
@@ -98,7 +99,7 @@ public class SerialLightManager extends AbstractLightManager {
     }
 
     /**
-     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     * {@inheritDoc}
      */
     @Override
     public String getEntryToolTip() {

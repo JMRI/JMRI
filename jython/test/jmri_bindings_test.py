@@ -1,4 +1,51 @@
 # Test for jmri_bindings_test.py
+
+# check existence of standard values
+sensors
+turnouts
+lights
+signals
+masts
+routes
+blocks
+reporters
+memories
+powermanager
+addressedProgrammers
+globalProgrammers
+dcc
+audio
+shutdown
+layoutblocks
+warrants
+
+CLOSED
+THROWN
+CABLOCKOUT
+PUSHBUTTONLOCKOUT
+UNLOCKED
+LOCKED
+
+ACTIVE
+INACTIVE
+
+ON
+OFF
+
+UNKNOWN
+INCONSISTENT
+
+DARK
+RED
+YELLOW
+GREEN
+LUNAR
+FLASHRED
+FLASHYELLOW
+FLASHGREEN
+FLASHLUNAR
+
+# check some values
 import jmri
 
 if (GREEN != jmri.SignalHead.GREEN) : raise AssertionError('GREEN Failed')

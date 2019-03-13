@@ -13,6 +13,7 @@ import jmri.util.JUnitUtil;
 import jmri.util.junit.rules.RetryRule;
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -38,9 +39,7 @@ public class LearnWarrantTest {
 
     @Test
     public void testLearnWarrant() throws Exception {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't Assume in TestCase
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/LearnWarrantTest.xml");
         /* This layout designed so that the block and path will define a unique
@@ -70,9 +69,9 @@ public class LearnWarrantTest {
         JFrameOperator jfo = new JFrameOperator(frame);
         pressButton(jfo, Bundle.getMessage("Calculate"));
         
-        JDialogOperator jdo = new JDialogOperator(jfo, Bundle.getMessage("DialogTitle"));
+/*        JDialogOperator jdo = new JDialogOperator(jfo, Bundle.getMessage("DialogTitle"));
         pressButton(jdo, Bundle.getMessage("ButtonSelect"));
-
+*/
         new org.netbeans.jemmy.QueueTool().waitEmpty(100);
         JUnitUtil.waitFor(() -> {
             return (frame.getOrders() != null);
@@ -80,7 +79,8 @@ public class LearnWarrantTest {
         List<BlockOrder> orders = frame.getOrders();
         Assert.assertEquals("5 BlockOrders", 5, orders.size());
 
-        frame.setTrainInfo("99");
+        frame._speedUtil.setDccAddress("99");
+        frame.setTrainInfo(null);
         JUnitUtil.waitFor(() -> {
             return (frame._speedUtil.getDccAddress() != null);
         }, "Found address");
@@ -94,6 +94,12 @@ public class LearnWarrantTest {
         // occupy starting block
         Sensor sensor = _OBlockMgr.getBySystemName(route[0]).getSensor();
         sensor.setState(Sensor.ACTIVE);
+        
+        OBlock blk = _OBlockMgr.getOBlock(route[0]);
+        JUnitUtil.waitFor(() -> {
+            int state = blk.getState();
+            return  state == (OBlock.ALLOCATED | OBlock.OCCUPIED);
+        }, "Train occupies block ");
         pressButton(jfo, Bundle.getMessage("Start"));
 
         JUnitUtil.waitFor(() -> {
@@ -106,6 +112,7 @@ public class LearnWarrantTest {
         pressButton(jfo, Bundle.getMessage("Stop"));
 
         // change address and run
+        frame._speedUtil.setDccAddress("111");
         frame.setTrainInfo("111");
         JUnitUtil.waitFor(() -> {
             return (frame._speedUtil.getDccAddress() != null);
@@ -130,6 +137,7 @@ public class LearnWarrantTest {
 
         // wait for done
         final String name =  w.getDisplayName();
+        warrant.getRunModeMessage(); //throw away one read to help waitFor
         jmri.util.JUnitUtil.waitFor(()->{return warrant.getRunModeMessage().equals(Bundle.getMessage("NotRunning",name));}, "warrant not done");
          
 //        JUnitUtil.waitFor(() -> {
@@ -157,6 +165,7 @@ public class LearnWarrantTest {
         jfo2.requestClose();
         ControlPanelEditor panel = (ControlPanelEditor)jmri.util.JmriJFrame.getFrame("LearnWarrantTest");
         panel.dispose();    // disposing this way allows test to be rerun (i.e. reload panel file) multiple times
+//        jmri.util.JUnitAppender.assertWarnMessage("Path NorthToWest in block North has length zero. Cannot run NXWarrants or ramp speeds through blocks with zero length."); 
     }
 
     private void pressButton(WindowOperator frame, String text) {
@@ -174,9 +183,9 @@ public class LearnWarrantTest {
     }
 
     /**
-     * @param array of OBlock names
+     * @param route Array of OBlock names
      * @param throttle
-     * @return - active end sensor
+     * @return Active end sensor
      * @throws Exception
      */
     private Sensor recordtimes(String[] route, DccThrottle throttle) throws Exception {
@@ -215,7 +224,14 @@ public class LearnWarrantTest {
             Sensor sensorNext = _OBlockMgr.getBySystemName(route[i]).getSensor();
             sensorNext.setState(Sensor.ACTIVE);
             new org.netbeans.jemmy.QueueTool().waitEmpty(100);
-            sensor.setState(Sensor.INACTIVE);
+            final Sensor tsensor = sensor;
+            jmri.util.ThreadingUtil.runOnLayout(() -> {
+                try {
+                    tsensor.setState(Sensor.INACTIVE);
+                } catch (jmri.JmriException e) {
+                    Assert.fail("Unexpected Exception: " + e);
+                }
+            });
             sensor = sensorNext;
         }
         return sensor;

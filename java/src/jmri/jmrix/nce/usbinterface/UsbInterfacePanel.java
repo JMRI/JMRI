@@ -108,7 +108,7 @@ public class UsbInterfacePanel extends jmri.jmrix.nce.swing.NcePanel implements 
                 && (tc.getCmdGroups() & NceTrafficController.CMDS_MEM) != 0) {
             minCabNum = CAB_MIN_USB;
             maxCabNum = CAB_MAX_USB_165;
-        } else if (tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_POWERHOUSE) {
+        } else if (tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_POWERPRO) {
             minCabNum = CAB_MIN_PRO;
             maxCabNum = CAB_MAX_PRO;
         } else if (tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_SB3) {

@@ -145,7 +145,8 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
     @Override
     public void setDestinationMast(SignalMast dest) {
         if (destList.containsKey(dest)) {
-            log.warn("Destination mast '{}' was already defined in SML with this source mast", dest.getDisplayName());
+            // if already present, not a change
+            log.debug("Destination mast '{}' was already defined in SML with this source mast", dest.getDisplayName());
             return;
         }
         int oldSize = destList.size();
@@ -2478,14 +2479,14 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements jmri.Si
 
             for (NamedBeanSetting nbh : userSetTurnouts) {
                 Turnout key = (Turnout) nbh.getBean();
-                if (key.getState() == Turnout.CLOSED) {
+                if (nbh.getSetting() == Turnout.CLOSED) {
                     if (((key.getStraightLimit() < minimumBlockSpeed) || (minimumBlockSpeed == 0)) && (key.getStraightLimit() != -1)) {
                         minimumBlockSpeed = key.getStraightLimit();
                         if (log.isDebugEnabled()) {
                             log.debug(destination.getDisplayName() + " turnout " + key.getDisplayName() + " set speed to " + minimumBlockSpeed);
                         }
                     }
-                } else if (key.getState() == Turnout.THROWN) {
+                } else if (nbh.getSetting() == Turnout.THROWN) {
                     if (((key.getDivergingLimit() < minimumBlockSpeed) || (minimumBlockSpeed == 0)) && (key.getDivergingLimit() != -1)) {
                         minimumBlockSpeed = key.getDivergingLimit();
                         if (log.isDebugEnabled()) {

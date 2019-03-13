@@ -23,8 +23,9 @@ import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.tree.TreeNode;
-
-import jmri.*;
+import jmri.CatalogTree;
+import jmri.CatalogTreeManager;
+import jmri.InstanceManager;
 import jmri.jmrit.catalog.CatalogTreeLeaf;
 import jmri.jmrit.catalog.CatalogTreeNode;
 import jmri.jmrit.catalog.DirectorySearcher;
@@ -158,7 +159,6 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
         if (_iconMaps == null) {
             return;     // never loaded
         }
-        if (!jmri.util.ThreadingUtil.isGUIThread()) log.error("Not on GUI thread", new Exception("traceback"));
         CatalogTreeManager manager = InstanceManager.getDefault(jmri.CatalogTreeManager.class);
         // unfiltered, xml-stored, item palate icon tree
         CatalogTree tree = manager.getBySystemName("NXPI");
@@ -276,7 +276,6 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
             CatalogTreeNode famNode = (CatalogTreeNode)ee.nextElement();
             String name = (String) famNode.getUserObject();
             familyMap.put(name, loadFamilyMap(famNode, ed));
-            Thread.yield();
         }
         return familyMap;
     }
@@ -309,7 +308,6 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
                         log.debug("Add {} icon to family \"{}\"", iconName, familyName);
                     }
                 }
-                Thread.yield();
             }
             familyMap.put(familyName, iconMap);
         }
@@ -336,7 +334,6 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
                 String typeName = typeList.get(i).getName();
                 List<Element> families = typeList.get(i).getChildren();
                 loadFamilies(typeName, families, ed);
-                Thread.yield();
             }
         } catch (org.jdom2.JDOMException e) {
             log.error("error reading file \"defaultPanelIcons.xml\" due to: " + e);
@@ -481,8 +478,6 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
         add(_tabPane, BorderLayout.CENTER);
         JScrollPane sp = (JScrollPane) _tabPane.getSelectedComponent();
         _currentItemPanel = (ItemPanel) sp.getViewport().getView();
-        if (!jmri.util.ThreadingUtil.isGUIThread()) log.error("Not on GUI thread", new Exception("traceback"));
-//        pack();
     }
 
     /*
@@ -492,12 +487,12 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
         _tabPane = new JTabbedPane();
         _tabIndex = new HashMap<>();
 
-        ItemPanel itemPanel = new TableItemPanel<Turnout>(palette, "Turnout", null,
+        ItemPanel itemPanel = new TableItemPanel<>(palette, "Turnout", null,
                 PickListModel.turnoutPickModelInstance(), editor);
         addItemTab(itemPanel, "Turnout", "BeanNameTurnout");
         itemPanel.init();  // show panel on start
 
-        itemPanel = new TableItemPanel<Sensor>(palette, "Sensor", null,
+        itemPanel = new TableItemPanel<>(palette, "Sensor", null,
                 PickListModel.sensorPickModelInstance(), editor);
         addItemTab(itemPanel, "Sensor", "BeanNameSensor");
 
@@ -517,7 +512,7 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
                 PickListModel.reporterPickModelInstance(), editor);
         addItemTab(itemPanel, "Reporter", "BeanNameReporter");
 
-        itemPanel = new TableItemPanel<Light>(palette, "Light", null,
+        itemPanel = new TableItemPanel<>(palette, "Light", null,
                 PickListModel.lightPickModelInstance(), editor);
         addItemTab(itemPanel, "Light", "BeanNameLight");
 
@@ -572,7 +567,6 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
 
     @Override
     public void stateChanged(ChangeEvent e) {
-        if (!jmri.util.ThreadingUtil.isGUIThread()) log.error("Not on GUI thread", new Exception("traceback"));
         // long t = System.currentTimeMillis();
         JTabbedPane tp = (JTabbedPane) e.getSource();
         JScrollPane sp = (JScrollPane) tp.getSelectedComponent();
@@ -609,7 +603,6 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
     }
 
     private void makeMenus(Editor editor) {
-        if (!jmri.util.ThreadingUtil.isGUIThread()) log.error("Not on GUI thread", new Exception("traceback"));
         JMenuBar menuBar = new JMenuBar();
         JMenu findIcon = new JMenu(Bundle.getMessage("findIconMenu"));
         menuBar.add(findIcon);
@@ -640,7 +633,6 @@ public class ItemPalette extends DisplayFrame implements ChangeListener {
     }
 
     public void closePanels(java.awt.event.WindowEvent e) {
-        if (!jmri.util.ThreadingUtil.isGUIThread()) log.error("Not on GUI thread", new Exception("traceback"));
         java.awt.Component[] comps = _tabPane.getComponents();
         if (log.isDebugEnabled()) {
             log.debug("closePanels: tab count= " + _tabPane.getTabCount());

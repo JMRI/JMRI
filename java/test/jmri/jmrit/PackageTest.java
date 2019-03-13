@@ -55,6 +55,7 @@ import org.junit.runners.Suite;
         jmri.jmrit.vsdecoder.PackageTest.class,
         jmri.jmrit.simplelightctrl.PackageTest.class,
         jmri.jmrit.simpleturnoutctrl.PackageTest.class,
+        jmri.jmrit.timetable.PackageTest.class,
         MemoryFrameActionTest.class,
         ToolsMenuTest.class,
         XmlFileLocationActionTest.class,
@@ -63,6 +64,7 @@ import org.junit.runners.Suite;
         DebugMenuTest.class,
         LogixLoadActionTest.class,
         XmlFileCheckActionTest.class,
+        jmri.jmrit.cabsignals.PackageTest.class
 })
 
 /**

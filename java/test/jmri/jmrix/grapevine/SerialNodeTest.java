@@ -3,9 +3,10 @@ package jmri.jmrix.grapevine;
 import jmri.Sensor;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Test;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Assert;
 
 /**
@@ -14,23 +15,26 @@ import org.junit.Assert;
  * @author	Bob Jacobsen Copyright 2003, 2007, 2008
  * @author	Dave Duchamp multi-node extensions 2003
  */
-public class SerialNodeTest extends TestCase {
+public class SerialNodeTest {
 
     private GrapevineSystemConnectionMemo memo = null;
     private SerialTrafficControlScaffold tcis = null;
 
+    @Test
     public void testConstructor1() {
         SerialNode b = new SerialNode(tcis);
         Assert.assertEquals("check default ctor type", SerialNode.NODE2002V6, b.getNodeType());
         Assert.assertEquals("check default ctor address", 1, b.getNodeAddress());
     }
 
+    @Test
     public void testConstructor2() {
         SerialNode c = new SerialNode(3, SerialNode.NODE2002V1, tcis);
         Assert.assertEquals("check ctor type", SerialNode.NODE2002V1, c.getNodeType());
         Assert.assertEquals("check ctor address", 3, c.getNodeAddress());
     }
 
+    @Test
     public void testAccessors() {
         SerialNode n = new SerialNode(2, SerialNode.NODE2002V1, tcis);
         n.setNodeAddress(7);
@@ -38,6 +42,8 @@ public class SerialNodeTest extends TestCase {
         Assert.assertEquals("check address", 7, n.getNodeAddress());
     }
 
+    @Test
+    @Ignore("Disabled in JUnit 3")
     public void testInitialization1() {
         // comment these out, because they cause a later timeout (since
         // the init message is actually queued in the createInitPacket() method)
@@ -46,6 +52,7 @@ public class SerialNodeTest extends TestCase {
         // Assert.assertEquals("initpacket", "81 71 81 0F", m.toString() );
     }
 
+    @Test
     public void testOutputBits1() {
         // mode with several output bits set
         SerialNode g = new SerialNode(5, SerialNode.NODE2002V6, tcis);
@@ -69,6 +76,7 @@ public class SerialNodeTest extends TestCase {
         Assert.assertEquals("packet type", 17, m.getElement(1));  // 'T'        
     }
 
+    @Test
     public void testMarkChangesRealData1() {
         // parallel format
 
@@ -100,6 +108,7 @@ public class SerialNodeTest extends TestCase {
         Assert.assertEquals("check s3", Sensor.INACTIVE, s3.getKnownState());
     }
 
+    @Test
     public void testMarkChangesRealData1Alt() {
         // parallel format
 
@@ -131,6 +140,7 @@ public class SerialNodeTest extends TestCase {
         Assert.assertEquals("check s3", Sensor.INACTIVE, s3.getKnownState());
     }
 
+    @Test
     public void testMarkChangesSerialSlave1() {
         // advanced serial format, 1st slave card, 
         // sensors 1109 to 1116 adn 1209 to 1216
@@ -176,6 +186,7 @@ public class SerialNodeTest extends TestCase {
         Assert.assertEquals("check s3", Sensor.UNKNOWN, s3.getKnownState());
     }
 
+    @Test
     public void testMarkChangesNewSerial1() {
         // advanced serial format
 
@@ -220,6 +231,7 @@ public class SerialNodeTest extends TestCase {
         Assert.assertEquals("check s3", Sensor.UNKNOWN, s3.getKnownState());
     }
 
+    @Test
     public void testMarkChangesNewSerial1Alt() {
         // advanced serial format
 
@@ -264,6 +276,7 @@ public class SerialNodeTest extends TestCase {
         Assert.assertEquals("check s3", Sensor.UNKNOWN, s3.getKnownState());
     }
 
+    @Test
     public void testMarkChangesOldSerial1() {
         // old serial format
 
@@ -333,6 +346,7 @@ public class SerialNodeTest extends TestCase {
         Assert.assertEquals("4 check s8", Sensor.ACTIVE, s8.getKnownState());
     }
 
+    @Test
     public void testMarkChangesOldSerial1Alt() {
         // old serial format
 
@@ -402,6 +416,7 @@ public class SerialNodeTest extends TestCase {
         Assert.assertEquals("4 check s8", Sensor.ACTIVE, s8.getKnownState());
     }
 
+    @Test
     public void testMarkChangesParallelLowBankLowNibble() {
         // test with them not created
         SerialNode b = new SerialNode(1, SerialNode.NODE2002V6, tcis);
@@ -486,6 +501,7 @@ public class SerialNodeTest extends TestCase {
         Assert.assertEquals("4 check s8", Sensor.ACTIVE, s8.getKnownState());
     }
 
+    @Test
     public void testMarkChangesParallelLowBankLowNibbleAlt() {
         // test with them not created
         SerialNode b = new SerialNode(1, SerialNode.NODE2002V6, tcis);
@@ -570,6 +586,7 @@ public class SerialNodeTest extends TestCase {
         Assert.assertEquals("4 check s8", Sensor.ACTIVE, s8.getKnownState());
     }
 
+    @Test
     public void testMarkChangesParallelLowBankHighNibble() {
         // test with them not created
         SerialNode b = new SerialNode(1, SerialNode.NODE2002V6, tcis);
@@ -655,6 +672,7 @@ public class SerialNodeTest extends TestCase {
         Assert.assertEquals("4 check s8", Sensor.ACTIVE, s8.getKnownState());
     }
 
+    @Test
     public void testMarkChangesParallelHighBankLowNibble() {
         // test with them not created
         SerialNode b = new SerialNode(1, SerialNode.NODE2002V6, tcis);
@@ -739,6 +757,7 @@ public class SerialNodeTest extends TestCase {
         Assert.assertEquals("4 check s8", Sensor.ACTIVE, s8.getKnownState());
     }
 
+    @Test
     public void testMarkChangesParallelHighBankHighNibble() {
         // test with them not created
         SerialNode b = new SerialNode(1, SerialNode.NODE2002V6, tcis);
@@ -824,6 +843,7 @@ public class SerialNodeTest extends TestCase {
         Assert.assertEquals("4 check s8", Sensor.ACTIVE, s8.getKnownState());
     }
 
+    @Test
     public void testMarkChangesParallelCreated() {
         // test the low bank with them already created
         SerialNode b = new SerialNode(1, SerialNode.NODE2002V6, tcis);
@@ -892,26 +912,8 @@ public class SerialNodeTest extends TestCase {
         Assert.assertEquals("4 check s8", Sensor.ACTIVE, s8.getKnownState());
     }
 
-    // from here down is testing infrastructure
-    public SerialNodeTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", SerialNodeTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(SerialNodeTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    @Override
-    protected void setUp() {
+    @Before
+    public void setUp() {
         JUnitUtil.setUp();
 
         // replace the traffic manager
@@ -924,7 +926,7 @@ public class SerialNodeTest extends TestCase {
     }
 
     // reset objects
-    @Override
+    @After
     public void tearDown() {
         tcis.terminateThreads();
         tcis = null;

@@ -19,7 +19,7 @@ import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainCommon;
-import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
+import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
 import org.apache.commons.text.StringEscapeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -326,7 +326,7 @@ public class HtmlTrainCommon extends TrainCommon {
     }
 
     public String getValidity() {
-        if (Setup.isPrintTimetableNameEnabled()) {
+        if (Setup.isPrintTrainScheduleNameEnabled()) {
             return String.format(locale, strings.getProperty("ManifestValidityWithSchedule"), getDate(true),
                     InstanceManager.getDefault(TrainScheduleManager.class).getScheduleById(train.getId()));
         } else {

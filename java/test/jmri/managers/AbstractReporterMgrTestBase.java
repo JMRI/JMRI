@@ -3,11 +3,7 @@ package jmri.managers;
 import java.beans.PropertyChangeListener;
 import jmri.Reporter;
 import jmri.ReporterManager;
-import org.junit.Assert;
-import org.junit.Ignore;
-import org.junit.Test;
-
-
+import org.junit.*;
 
 /**
  * Abstract Base Class for LightManager tests in specific jmrix packages. This

@@ -235,6 +235,7 @@ public class DecoderIndexFile extends XmlFile {
      */
     @Deprecated
     public synchronized static DecoderIndexFile instance() {
+        jmri.util.Log4JUtil.deprecationWarning(log, "instance");        
         return InstanceManager.getDefault(DecoderIndexFile.class);
     }
 
@@ -551,7 +552,7 @@ public class DecoderIndexFile extends XmlFile {
         // create root element and document
         Element root = new Element("decoderIndex-config");
         root.setAttribute("noNamespaceSchemaLocation",
-                "http://jmri.org/xml/schema/decoder.xsd",
+                "http://jmri.org/xml/schema/decoder-4-15-2.xsd",
                 org.jdom2.Namespace.getNamespace("xsi",
                         "http://www.w3.org/2001/XMLSchema-instance"));
 
@@ -617,6 +618,9 @@ public class DecoderIndexFile extends XmlFile {
                 log.error("could not read {}: {}", fileName, exj.getMessage());
             } catch (IOException exj) {
                 log.error("other exception while dealing with {}: {}", fileName, exj.getMessage());
+            } catch (Exception exq) {
+                log.error("exception reading {}", fileName, exq);
+                throw exq;
             }
         }
 

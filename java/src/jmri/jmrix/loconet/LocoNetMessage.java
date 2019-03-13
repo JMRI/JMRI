@@ -91,6 +91,7 @@ public class LocoNetMessage extends AbstractMessage implements Serializable {
      * this method of AbstractMessage is not supported.
      * <p>
      * This constructor always logs an error
+     * @param s an unused parameter
      */
     public LocoNetMessage(String s) {
         _nDataChars = 0;
@@ -182,6 +183,7 @@ public class LocoNetMessage extends AbstractMessage implements Serializable {
      * @param n - the byte index within the message
      * @return  - the integer value of the byte at the index within the message
      */
+    @Override
     public int getElement(int n) {
         if (n < 0 || n >= _dataChars.length) {
             log.error("reference element {} in message of {} elements: {}", // NOI18N
@@ -199,6 +201,7 @@ public class LocoNetMessage extends AbstractMessage implements Serializable {
      * @param n - the byte index within the message
      * @param v - the value to be set
      */
+    @Override
     public void setElement(int n, int v) {
         if (n < 0 || n >= _dataChars.length) {
             log.error("reference element {} in message of {} elements: {}", // NOI18N

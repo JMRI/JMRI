@@ -35,17 +35,12 @@ public class PrintEngineRosterAction extends AbstractAction {
 
     EngineManager manager = InstanceManager.getDefault(EngineManager.class);
 
-    public PrintEngineRosterAction(String actionName, Frame frame, boolean preview, EnginesTableFrame pWho) {
+    public PrintEngineRosterAction(String actionName, boolean preview, EnginesTableFrame pWho) {
         super(actionName);
-        mFrame = frame;
         isPreview = preview;
         panel = pWho;
     }
-
-    /**
-     * Frame hosting the printing
-     */
-    Frame mFrame;
+    
     /**
      * Variable to set whether this is to be printed or previewed
      */
@@ -57,11 +52,14 @@ public class PrintEngineRosterAction extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        printEngines();
+    }
+    
+    public void printEngines() {
         // obtain a HardcopyWriter to do this
         HardcopyWriter writer = null;
         try {
-            writer = new HardcopyWriter(mFrame, Bundle.getMessage("TitleEngineRoster"), Control.reportFontSize, .5, .5, .5, .5, isPreview);
+            writer = new HardcopyWriter(new Frame(), Bundle.getMessage("TitleEngineRoster"), Control.reportFontSize, .5, .5, .5, .5, isPreview);
         } catch (HardcopyWriter.PrintCanceledException ex) {
             log.debug("Print cancelled");
             return;
@@ -135,7 +133,7 @@ public class PrintEngineRosterAction extends AbstractAction {
                 writer.write(s + NEW_LINE);
             }
         } catch (IOException we) {
-            log.error("Error printing ConsistRosterEntry: " + e);
+            log.error("Error printing ConsistRosterEntry: " + we);
         }
         // and force completion of the printing
         writer.close();

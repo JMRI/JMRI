@@ -312,6 +312,8 @@
 
  <indexitem text="MRC " target="html.hardware.mrc.index"/>
 
+ <indexitem text="MQTT " target="html.hardware.mqtt.index"/>
+
  <indexitem text="Multi-Decoder Control " target="package.jmri.jmrit.dualdecoder.DualDecoderSelectFrame"/>
 
  <indexitem text="Naming JMRI Objects " target="html.doc.Technical.Names"/>
@@ -548,6 +550,8 @@
   <indexitem text="Wii Remote as Throttle " target="html.tools.throttle.AdvancedThrottleControl_wii"/>
 
  </indexitem>
+ <indexitem text="Timetable " target="html.tools.TimeTable"/>
+
  <indexitem text="Tracker " target="html.tools.tracker.index"/>
 
  <indexitem text="TrainCrew " target="html.apps.TrainCrew.index"/>

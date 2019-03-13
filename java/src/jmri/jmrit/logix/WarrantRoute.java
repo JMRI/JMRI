@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
@@ -89,7 +90,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
     private final JTextField _dccNumBox = new JTextField();
     private final JTextField _trainNameBox = new JTextField(6);
     private final JButton _viewProfile = new JButton(Bundle.getMessage("ViewProfile"));
-    private SpeedProfileTable _spTable = null;
+    private JmriJFrame _spTable = null;
     private JmriJFrame _pickListFrame;
 
 
@@ -111,6 +112,10 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
 
     @Override
     public abstract void propertyChange(java.beans.PropertyChangeEvent e);
+    
+    protected void setSpeedUtil(SpeedUtil sp) {
+    	_speedUtil = sp;
+    }
 
     /* ************************* Panel for Route search depth **********************/
     /**
@@ -145,13 +150,12 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         _calculateButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                clearTempWarrant();
                 calculate();
             }
         });
         JPanel p = new JPanel();
-//        p.add(Box.createHorizontalGlue());
         p.add(makeTextBoxPanel(vertical, _calculateButton, "CalculateRoute", null));
-//        p.add(Box.createHorizontalGlue());
         return p;
     }
     public JPanel makePickListPanel() {
@@ -206,7 +210,12 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         trainPanel.add(Box.createHorizontalStrut(STRUT_SIZE));
 
         _dccNumBox.addActionListener((ActionEvent e) -> {
-            setTrainInfo(_dccNumBox.getText());
+        	_speedUtil.setDccAddress(_dccNumBox.getText());
+        	if (_speedUtil.getRosterEntry() == null) {
+        		_rosterBox.setSelectedItem(Bundle.getMessage("noSuchAddress"));
+        	} else {
+                setTrainInfo(_trainNameBox.getText());
+        	}
         });
         return trainPanel;
     }
@@ -224,10 +233,10 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         _rosterBox.setMaximumSize(_rosterBox.getPreferredSize());
         _rosterBox.addActionListener((ActionEvent e) -> {
             String selection = (String) _rosterBox.getSelectedItem();
-            if (Bundle.getMessage("noSuchAddress").equals(selection)) {
-                _dccNumBox.setText(null);
-            } else {
-                setTrainInfo(selection);
+            if (selection != null && !Bundle.getMessage("noSuchAddress").equals(selection)
+            		&& selection.trim().length() != 0) {
+                _speedUtil.setDccAddress(selection);
+                setTrainInfo(_trainNameBox.getText());
             }
         });
         
@@ -240,39 +249,75 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         if (_spTable != null) {
             _spTable.dispose();
         }
-        RosterSpeedProfile speedProfile = _speedUtil.getSpeedProfile();
-        if (speedProfile.hasForwardSpeeds() || speedProfile.hasReverseSpeeds()) {
-            _spTable = new SpeedProfileTable(speedProfile, _speedUtil.getRosterId());
+        _spTable = makeSessionProfileTable();
+        if (_spTable != null) {
             _spTable.setVisible(true);
             return;
+        } else {
+            RosterEntry re = _speedUtil.getRosterEntry();
+            if (re != null) {
+                RosterSpeedProfile speedProfile = re.getSpeedProfile();
+                if (speedProfile != null && (speedProfile.hasForwardSpeeds() || speedProfile.hasReverseSpeeds())) {
+                    _spTable = new SpeedProfileTable(speedProfile, _speedUtil.getRosterId());
+                    _spTable.setVisible(true);
+                    return;
+                }
+            }
         }
         JOptionPane.showMessageDialog(null, Bundle.getMessage("NoSpeedProfile"));
+    }
+    
+    private JmriJFrame makeSessionProfileTable() {
+        RosterSpeedProfile speedProfile = _speedUtil.getSpeedProfile();
+        if (!speedProfile.hasForwardSpeeds() && !speedProfile.hasReverseSpeeds()) {
+            return null;
+        }
+        JmriJFrame frame = new JmriJFrame(false, true);
+        JPanel framePanel = new JPanel();
+        framePanel.setLayout(new BoxLayout(framePanel, BoxLayout.PAGE_AXIS));
+        framePanel.add(Box.createGlue());
+        framePanel.add(new JLabel(Bundle.getMessage("viewTitle", _speedUtil.getRosterId())));
+        framePanel.add(MergePrompt.makeEditInfoPanel());
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
+        panel.add(Box.createGlue());
+
+        HashMap<Integer, Boolean> an = MergePrompt.validateSpeedProfile(speedProfile);
+        if (an != null && an.size() > 0) {
+            framePanel.add(MergePrompt.makeAnomalyPanel());
+        }
+        panel.add(MergePrompt.makeSpeedProfilePanel("mergedSpeedProfile", speedProfile, true, an));
+        panel.add(Box.createGlue());
+
+        speedProfile = _speedUtil.getSessionProfile();
+        if (speedProfile.hasForwardSpeeds() || speedProfile.hasReverseSpeeds()) {
+            panel.add(MergePrompt.makeSpeedProfilePanel("sessionSpeedProfile", speedProfile, false, null));
+            panel.add(Box.createGlue());
+        }
+        framePanel.add(panel);
+        frame.getContentPane().add(framePanel);
+        frame.pack();
+        return frame;
     }
 
     protected String setTrainInfo(String name) {
         if (log.isDebugEnabled()) {
             log.debug("setTrainInfo for: " + name);
         }
-        if (name == null) {
-            setTrainName(null);
-            _dccNumBox.setText(null);
-            _rosterBox.setSelectedIndex(0);            
-            return Bundle.getMessage("NoLoco");
-        }
-        _rosterBox.setSelectedIndex(0);
-        if (_speedUtil.setDccAddress(name)) {
-            _dccNumBox.setText(_speedUtil.getDccAddress().toString());
-            _rosterBox.setSelectedItem(_speedUtil.getRosterId());
-            if (_trainNameBox.getText() == null) {
-                if (_speedUtil.getRosterEntry()!=null) {
-                    setTrainName(_speedUtil.getRosterEntry().getRoadNumber()); 
-                } else {
-                    setTrainName(_speedUtil.getDccAddress().toString()); 
-                }
-            }
+        setTrainName(name);
+        _dccNumBox.setText(_speedUtil.getAddress());
+        String id = _speedUtil.getRosterId();
+        if (id != null) {
+            _rosterBox.setSelectedItem(id);
         } else {
-            _dccNumBox.setText(null);
-            return Bundle.getMessage("NoLoco");            
+        	_rosterBox.setSelectedItem(Bundle.getMessage("noSuchAddress"));
+        }
+        if (name == null) {
+            if (_speedUtil.getRosterEntry()!=null) {
+                setTrainName(_speedUtil.getRosterEntry().getRoadNumber()); 
+            } else {
+                setTrainName(_speedUtil.getAddress()); 
+            }
         }
         return null;
     }
@@ -329,15 +374,14 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
     }
 
     @SuppressWarnings("unchecked") // parameter can be any of several types, including JComboBox<String>
-    @SuppressFBWarnings(value = "UCF_USELESS_CONTROL_FLOW", justification = "checkBlockBox in the internal class RouteLocation is a method with side effects that returns a boolean value. This code basically says try all possibilities until one succeeds.")
+//    @SuppressFBWarnings(value = "UCF_USELESS_CONTROL_FLOW", justification = "checkBlockBox in the internal class RouteLocation is a method with side effects that returns a boolean value. This code basically says try all possibilities until one succeeds.")
     void doAction(Object obj) {
         if (obj instanceof JTextField) {
             JTextField box = (JTextField) obj;
             if (!_origin.checkBlockBox(box)) {
                 if (!_destination.checkBlockBox(box)) {
                     if (!_via.checkBlockBox(box)) {
-                        if (!_avoid.checkBlockBox(box)) {
-                        }
+                        _avoid.checkBlockBox(box);
                     }
                 }
             }
@@ -437,7 +481,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         private BlockOrder order;
         JTextField blockBox = new JTextField();
         private final JComboBox<String> pathBox = new JComboBox<>();
-        private JComboBox<String> portalBox;
+        JComboBox<String> portalBox;
 
         RouteLocation(Location loc) {
             location = loc;
@@ -658,10 +702,10 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
                 return;
             }
             portalBox.removeAllItems();
-            String pathName = (String) pathBox.getSelectedItem();
             if (order == null) {
                 return;
             }
+            String pathName = (String) pathBox.getSelectedItem();
             order.setPathName(pathName);
             OPath path = order.getPath();
             if (path != null) {
@@ -680,12 +724,13 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
                     }
                 }
                 if (log.isTraceEnabled()) {
-                    log.trace("setPortalBox: Path {} set in block {}", path.getName(), order.getBlock().getDisplayName());
+                    log.debug("setPortalBox: Path {} set in block {}", path.getName(), order.getBlock().getDisplayName());
                 }
             } else {
-                if (log.isTraceEnabled()) {
-                    log.trace("setPortalBox: Path set to null in block {}", order.getBlock().getDisplayName());
+                if (log.isDebugEnabled()) {
+                    log.debug("setPortalBox: Path {} not found in block {}", pathName, order.getBlock().getDisplayName());
                 }
+                order.setPathName(null);
             }
         }
 
@@ -850,20 +895,17 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
     protected void clearTempWarrant() {
         if (_tempWarrant != null) {
             _tempWarrant.deAllocate();
-            _tempWarrant = null;
         }
     }
 
     private void showTempWarrant(ArrayList<BlockOrder> orders) {
         String s = ("" + Math.random()).substring(4);
-        _tempWarrant = new Warrant("IW" + s + "TEMP", null);
-        _tempWarrant.setBlockOrders(orders);
-        String msg = _tempWarrant.setRoute(0, orders);
-        if (msg != null) {
-            JOptionPane.showMessageDialog(null, msg,
-                    Bundle.getMessage("WarningTitle"),
-                    JOptionPane.WARNING_MESSAGE);
+        if (_tempWarrant == null) {
+            _tempWarrant = new Warrant("IW" + s + "TEMP", null);
+            _tempWarrant.setBlockOrders(orders);
         }
+        _tempWarrant.setRoute(true, orders);
+        // Don't clutter with message - this is a temp display
     }
 
     /**
@@ -873,11 +915,12 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
      * @param routeTree the routes
      */
     protected void pickRoute(List<DefaultMutableTreeNode> destNodes, DefaultTreeModel routeTree) {
-/*        if (destNodes.size() == 1) {      // for Leo
+        if (destNodes.size() == 1) {
             showRoute(destNodes.get(0), routeTree);
             selectedRoute(_orders);
+            showTempWarrant(_orders);
             return;
-        }*/
+        }
         _pickRouteDialog = new JDialog(this, Bundle.getMessage("DialogTitle"), false);
         _pickRouteDialog.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
@@ -927,6 +970,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
                     int i = Integer.parseInt(buttons.getSelection().getActionCommand());
                     showRoute(dNodes.get(i), tree);
                     selectedRoute(_orders);
+                    showTempWarrant(_orders);
                     dialog.dispose();
                 } else {
                     showWarning(Bundle.getMessage("SelectRoute"));

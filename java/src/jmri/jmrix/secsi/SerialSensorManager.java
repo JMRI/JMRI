@@ -7,7 +7,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Manage the system-specific SECSI Sensor implementation.
  * <p>
- * System names are "ViSnnnn", where nnnn is the sensor number without padding.
+ * System names are "VSnnnn", where V is the user configurable system prefix,
+ * nnnn is the sensor number without padding.
  * <p>
  * Sensors are numbered from 1.
  *
@@ -135,6 +136,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     /**
      * Register any orphan Sensors when a new Serial Node is created.
      */
+    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations
     public void registerSensorsForNode(SerialNode node) {
         log.debug("registering node {}", node.getNodeAddress());
         // get list containing all Sensors
@@ -163,7 +165,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     /**
-     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     * {@inheritDoc}
      */
     @Override
     public String getEntryToolTip() {

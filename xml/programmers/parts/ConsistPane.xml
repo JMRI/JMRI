@@ -71,11 +71,13 @@
           <tooltip xml:lang="ca">Opció de Multi-Tracció 1</tooltip>
           <tooltip xml:lang="fr">Option de Multi-Traction 1</tooltip>
           <tooltip xml:lang="it">Opzione Consist 1</tooltip>
+          <tooltip xml:lang="de">Zusätsl. für Mehrfachtraktion 1</tooltip>
         </display>
         <display item="Consist Option 2">
           <tooltip xml:lang="ca">Opció de Multi-Tracció 2</tooltip>
           <tooltip xml:lang="fr">Option de Multi-Traction 2</tooltip>
           <tooltip xml:lang="it">Opzione Consist 2</tooltip>
+          <tooltip xml:lang="de">Zusätsl. für Mehrfachtraktion 2</tooltip>
         </display>
       </column>
     </row>
@@ -93,6 +95,7 @@
       <text xml:lang="de">Wird der Dekoder auf Funktionen an die Adresse der Mehrfachtraktion (Consist) reagieren?</text>
       <text xml:lang="fr">Le décodeur répondra-t-il aux commandes de fonctions à l'adresse de Multi-Traction (UM)?</text>
       <text xml:lang="it">Il decoder risponde alle Funzioni anche all'indirizzo del Consist ?</text>
+      <text xml:lang="nl">Reageert de decoder op functiecommando's aan het Multitractie-adres?</text>
     </label>
     <label>
       <text> </text>

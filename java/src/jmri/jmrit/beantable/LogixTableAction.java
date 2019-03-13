@@ -601,7 +601,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
     /**
      * Find empty Conditional entries, called from menu.
      *
-     * @see Maintenance#findEmptyPressed(Frame)
+     * @see Maintenance#findEmptyPressed(java.awt.Frame)
      * @param e the event heard
      */
     void findEmptyPressed(ActionEvent e) {
@@ -611,7 +611,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
     /**
      * Find orphaned entries, called from menu.
      *
-     * @see Maintenance#findOrphansPressed(Frame)
+     * @see Maintenance#findOrphansPressed(java.awt.Frame)
      * @param e the event heard
      */
     void findOrphansPressed(ActionEvent e) {
@@ -653,9 +653,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
     }
 
     void enableAll(boolean enable) {
-        List<String> sysNameList = _logixManager.getSystemNameList();
-        for (int i = 0; i < sysNameList.size(); i++) {
-            Logix x = _logixManager.getBySystemName(sysNameList.get(i));
+        for (Logix x : _logixManager.getNamedBeanSet()) {
             x.setEnabled(enable);
         }
     }
@@ -1314,7 +1312,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
         options.put(0x00, Bundle.getMessage("DeleteAsk"));      // NOI18N
         options.put(0x01, Bundle.getMessage("DeleteNever"));    // NOI18N
         options.put(0x02, Bundle.getMessage("DeleteAlways"));   // NOI18N
-        jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).messageItemDetails(getClassName(), "delete", Bundle.getMessage("DeleteLogix"), options, 0x00);  // NOI18N
+        jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).setMessageItemDetails(getClassName(), "delete", Bundle.getMessage("DeleteLogix"), options, 0x00);  // NOI18N
         jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).setPreferenceItemDetails(getClassName(), "remindSaveLogix", Bundle.getMessage("HideSaveReminder"));  // NOI18N
         super.setMessagePreferencesDetails();
     }
@@ -1414,7 +1412,8 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
     void loadReferenceNames(List<ConditionalVariable> varList, TreeSet<String> treeSet) {
         treeSet.clear();
         for (ConditionalVariable var : varList) {
-            if (var.getType() == Conditional.TYPE_CONDITIONAL_TRUE || var.getType() == Conditional.TYPE_CONDITIONAL_FALSE) {
+            if (var.getType() == Conditional.Type.CONDITIONAL_TRUE
+                    || var.getType() == Conditional.Type.CONDITIONAL_FALSE) {
                 treeSet.add(var.getName());
             }
         }
@@ -1824,7 +1823,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
                 showCondName = "C" + (rx + 1);
             }
             condText.append("\n  " + showSystemName + "  " + showCondName + "   \n");
-            if (curConditional.getLogicType() == Conditional.MIXED) {
+            if (curConditional.getLogicType() == Conditional.AntecedentOperator.MIXED) {
                 _antecedent = curConditional.getAntecedentExpression();
                 String antecedent = ConditionalEditBase.translateAntecedent(_antecedent, false);
                 condText.append("   " + Bundle.getMessage("LogixAntecedent") + " " + antecedent + "  \n");   // NOI18N

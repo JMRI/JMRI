@@ -54,9 +54,7 @@ public class GcTrafficController extends TrafficController {
 
     public void setgcState(int s) {
         gcState = s;
-        if (log.isDebugEnabled()) {
-            log.debug("Setting gcState " + s);
-        }
+        log.debug("Setting gcState " + s);
     }
 
     public boolean isBootMode() {
@@ -70,6 +68,15 @@ public class GcTrafficController extends TrafficController {
     public void sendCanMessage(CanMessage m, CanListener reply) {
         log.debug("GcTrafficController sendCanMessage() " + m.toString());
         sendMessage(m, reply);
+    }
+
+    /**
+     * Forward a preformatted reply to the actual interface.
+     */
+    @Override
+    public void sendCanReply(CanReply r, CanListener reply) {
+        log.debug("TrafficController sendCanReply() " + r.toString());
+        notifyReply(r, reply);
     }
 
     /**
@@ -108,8 +115,13 @@ public class GcTrafficController extends TrafficController {
      */
     @Override
     public CanReply decodeFromHardware(AbstractMRReply m) {
+        GridConnectReply gc = new GridConnectReply();
         log.debug("Decoding from hardware");
-        GridConnectReply gc = (GridConnectReply) m;
+        try {
+            gc = (GridConnectReply) m;
+        } catch(java.lang.ClassCastException cce){
+            log.error("{} cannot cast to a GridConnectReply",m);
+        }
         CanReply ret = gc.createReply();
         return ret;
     }
@@ -208,6 +220,3 @@ public class GcTrafficController extends TrafficController {
 
     private final static Logger log = LoggerFactory.getLogger(GcTrafficController.class);
 }
-
-
-

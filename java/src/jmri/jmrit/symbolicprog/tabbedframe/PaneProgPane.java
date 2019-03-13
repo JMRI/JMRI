@@ -2074,7 +2074,7 @@ public class PaneProgPane extends javax.swing.JPanel
     protected void makeLabel(Element e, JPanel c, GridBagLayout g, GridBagConstraints cs) {
         String text = LocaleSelector.getAttribute(e, "text");
         if (text == null || text.equals("")) {
-            text = LocaleSelector.getAttribute(e, "label"); // label subelement deprecated 3.7.5
+            text = LocaleSelector.getAttribute(e, "label"); // label subelement not since 3.7.5
         }
         final JLabel l = new JLabel(text);
         l.setAlignmentX(1.0f);
@@ -2166,14 +2166,13 @@ public class PaneProgPane extends javax.swing.JPanel
         // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
         // instead of forcing the columns to fill the frame (and only fill)
         cvTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-
         JScrollPane cvScroll = new JScrollPane(cvTable);
         cvScroll.setColumnHeaderView(cvTable.getTableHeader());
 
-        cs.gridheight = GridBagConstraints.REMAINDER;
+        cs.fill = GridBagConstraints.VERTICAL;
+        cs.weighty = 2.0;
         g.setConstraints(cvScroll, cs);
         c.add(cvScroll);
-        cs.gridheight = 1;
 
         // remember which CVs to read/write
         isCvTablePane = true;

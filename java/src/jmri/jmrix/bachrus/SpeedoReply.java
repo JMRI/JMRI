@@ -65,16 +65,6 @@ public class SpeedoReply extends jmri.jmrix.AbstractMRReply {
         }
     }
 
-    // display format
-    @Override
-    public String toString() {
-        StringBuffer buf = new StringBuffer();
-        for (int i = 0; i < _nDataChars; i++) {
-            buf.append(_dataChars[i]);
-        }
-        return buf.toString();
-    }
-
     @Override
     public int match(String s) {
         // find a specific string in the reply

@@ -33,7 +33,7 @@ public class DuplicateTest {
                 failed = check(file) || failed;
             }
         }
-        System.out.println("checked total of " + models.size());
+        log.debug("checked total of{}", models.size());
         if (failed) {
             Assert.fail("test failed, see System.err");
         }

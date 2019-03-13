@@ -1,8 +1,11 @@
 package apps;
 
-import apps.gui3.TabbedPreferences;
-import apps.gui3.TabbedPreferencesAction;
+import apps.gui3.tabbedpreferences.TabbedPreferences;
+import apps.gui3.tabbedpreferences.TabbedPreferencesFrame;
+import apps.gui3.tabbedpreferences.TabbedPreferencesAction;
+
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.awt.AWTEvent;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -46,6 +49,7 @@ import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 import javax.swing.text.DefaultEditorKit;
 import javax.swing.text.JTextComponent;
+
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.JmriException;
@@ -93,6 +97,7 @@ import jmri.util.swing.SliderSnap;
 import jmri.util.swing.WindowInterface;
 import jmri.util.usb.RailDriverMenuItem;
 import jmri.web.server.WebServerAction;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -152,7 +157,6 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         } else {
             profileFile = new File(profileFilename);
         }
-        log.trace("setConfigFile");
         ProfileManager.getDefault().setConfigFile(profileFile);
         // See if the profile to use has been specified on the command line as
         // a system property org.jmri.profile as a profile id.
@@ -221,13 +225,11 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
                 });
 
         // Install configuration manager and Swing error handler
+        // Constructing the JmriConfigurationManager also loads various configuration services
         ConfigureManager cm = InstanceManager.setDefault(ConfigureManager.class, new JmriConfigurationManager());
 
         // record startup
         InstanceManager.getDefault(FileHistory.class).addOperation("app", nameString, null);
-
-        // install preference manager
-        InstanceManager.store(new TabbedPreferences(), TabbedPreferences.class);
 
         // Install abstractActionModel
         InstanceManager.store(new apps.CreateButtonModel(), apps.CreateButtonModel.class);
@@ -358,7 +360,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             log.info("Migrating preferences to new format...");
             // migrate preferences
             InstanceManager.getOptionalDefault(TabbedPreferences.class).ifPresent(tp -> {
-                tp.init();
+                // tp.init();
                 tp.saveContents();
                 cm.storePrefs();
             });
@@ -380,19 +382,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         InstanceManager.getDefault(jmri.LogixManager.class);
         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class);
 
-        // Once all the preferences have been loaded we can initial the preferences.
-        // Doing it in a thread at this stage means we can let it work in the background.
-        new Thread(() -> {
-            try {
-                InstanceManager.getOptionalDefault(TabbedPreferences.class).ifPresent(tp -> {
-                    tp.init();
-                });
-            } catch (RuntimeException ex) {
-                log.error("Error trying to setup preferences {}", ex.getLocalizedMessage(), ex);
-            }
-        }, "init prefs").start();
-
-        //Initialise the decoderindex file instance within a seperate thread to help improve first use perfomance
+        // Initialise the decoderindex file instance within a seperate thread to help improve first use perfomance
         new Thread(() -> {
             try {
                 InstanceManager.getDefault(DecoderIndexFile.class);
@@ -473,14 +463,6 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         }
         log.debug("end deferred load from config file, OK={}", result);
         return result;
-    }
-
-    /**
-     * @deprecated since 4.5.1
-     */
-    @Deprecated
-    protected final void addToActionModel() {
-        // StartupActionModelUtil populates itself, so do nothing
     }
 
     /**
@@ -581,6 +563,10 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         }
     }
 
+    /**
+     * Open Preferences action.
+     * Often done due to error
+     */
     public void doPreferences() {
         if (prefsAction == null) prefsAction = new TabbedPreferencesAction();
         prefsAction.actionPerformed(null);
@@ -785,7 +771,12 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             cs.setText(" ");
             return;
         }
-        ConnectionStatus.instance().addConnection(conn.name(), conn.getInfo());
+        
+        log.debug("conn.name() is {} ",conn.name()); // eg CAN via MERG Network Interface
+        log.debug("conn.getConnectionName() is {} ",conn.getConnectionName()); // eg MERG2
+        log.debug("conn.getManufacturer() is {} ",conn.getManufacturer()); // eg MERG
+        
+        ConnectionStatus.instance().addConnection(conn.getConnectionName(), conn.getInfo());
         cs.setFont(pane.getFont());
         updateLine(conn, cs);
         pane.add(cs);
@@ -799,7 +790,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         if (name == null) {
             name = conn.getManufacturer();
         }
-        if (ConnectionStatus.instance().isConnectionOk(conn.getInfo())) {
+        if (ConnectionStatus.instance().isConnectionOk(name, conn.getInfo())) {
             cs.setForeground(Color.black);
             String cf = Bundle.getMessage("ConnectionSucceeded", name, conn.name(), conn.getInfo());
             cs.setText(cf);
@@ -954,21 +945,6 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
 
     static protected void splash(boolean show) {
         splash(show, false);
-    }
-
-    /**
-     * Invoke the standard Log4J logging initialization.
-     * <p>
-     * No longer used in JMRI. ({@link #splash} calls the initialization
-     * directly. Left as a deprecated method because other code, such as CATS,
-     * is still using in in JMRI 3.7 and perhaps 3.8
-     *
-     * @deprecated Since 3.7.2, use @{link jmri.util.Log4JUtil#initLogging}
-     * directly.
-     */
-    @Deprecated
-    static protected void initLog4J() {
-        jmri.util.Log4JUtil.initLogging();
     }
 
     static protected void splash(boolean show, boolean debug) {
@@ -1177,23 +1153,6 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         } catch (IllegalArgumentException | IllegalAccessException ex) {
             log.warn("Unable to set application name", ex);
         }
-    }
-
-    /**
-     * Set, log and return some startup information.
-     * <p>
-     * This method needs to be refactored, but it's in use (2/2014) by CATS so
-     * can't easily be changed right away.
-     *
-     * @param name Program/application name as known by the user
-     * @return The output of {@link Log4JUtil#startupInfo(java.lang.String)}
-     * @deprecated Since 3.7.1, use {@link #setStartupInfo(java.lang.String) }
-     * plus {@link Log4JUtil#startupInfo(java.lang.String) }
-     */
-    @Deprecated
-    protected static String startupInfo(String name) {
-        setStartupInfo(name);
-        return Log4JUtil.startupInfo(name);
     }
 
     /**

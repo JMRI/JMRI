@@ -91,29 +91,17 @@ public class JMRIClientSystemConnectionMemo extends jmri.jmrix.SystemConnectionM
      */
     public void requestAllStatus() {
 
-        getTurnoutManager().getSystemNameList().forEach((t) -> {
-            Turnout turn = getTurnoutManager().getTurnout(t);
-            if (turn != null) {
-               ((JMRIClientTurnout)(turn)).requestUpdateFromLayout();
-            }
+        getTurnoutManager().getNamedBeanSet().forEach((turn) -> {
+            ((JMRIClientTurnout)(turn)).requestUpdateFromLayout();
         }); 
-        getSensorManager().getSystemNameList().forEach((s) -> {
-            Sensor sen = getSensorManager().getSensor(s);
-            if (sen != null) {
-                ((JMRIClientSensor)(sen)).requestUpdateFromLayout();
-            }
+        getSensorManager().getNamedBeanSet().forEach((sen) -> {
+            ((JMRIClientSensor)(sen)).requestUpdateFromLayout();
         }); 
-        getLightManager().getSystemNameList().forEach((l) -> {
-            Light o = getLightManager().getLight(l);
-            if (o != null) {
-                ((JMRIClientLight)o).requestUpdateFromLayout();
-            }
+        getLightManager().getNamedBeanSet().forEach((light) -> {
+            ((JMRIClientLight)light).requestUpdateFromLayout();
         }); 
-        getReporterManager().getSystemNameList().forEach((r) -> {
-            Reporter rep = getReporterManager().getReporter(r);
-            if (rep != null) {
-                ((JMRIClientReporter)(rep)).requestUpdateFromLayout();
-            }
+        getReporterManager().getNamedBeanSet().forEach((rep) -> {
+            ((JMRIClientReporter)(rep)).requestUpdateFromLayout();
         }); 
     }
 
