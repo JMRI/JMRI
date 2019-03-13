@@ -75,7 +75,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Dave Duchamp Copyright (c) 2004-2007
  * @author Bob Jacobsen Copyright (2) 2014
- * @author George Warner Copyright (c) 2017-2018
+ * @author George Warner Copyright (c) 2017-2019
  */
 public class PositionablePoint extends LayoutTrack {
 

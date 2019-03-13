@@ -795,13 +795,13 @@ public class TrackSegment extends LayoutTrack {
     public static final int MAX_BUMPER_LENGTH = 200;
     public static final int MAX_BUMPER_WIDTH = 200;
 
-//  private static final int MAX_ARROW_LINEWIDTH = 200;
-//  private static final int MAX_ARROW_LENGTH = 200;
-//  private static final int MAX_ARROW_GAP = 200;
+    private static final int MAX_ARROW_LINE_WIDTH = 200;
+    private static final int MAX_ARROW_LENGTH = 200;
+    private static final int MAX_ARROW_GAP = 200;
     private static final int MAX_BRIDGE_LINE_WIDTH = 200;
     private static final int MAX_BRIDGE_APPROACH_WIDTH = 200;
     private static final int MAX_BRIDGE_DECK_WIDTH = 200;
-//  private static final int MAX_BUMPER_LINE_WIDTH = 200;
+    private static final int MAX_BUMPER_LINE_WIDTH = 200;
     private static final int MAX_TUNNEL_FLOOR_WIDTH = 200;
     private static final int MAX_TUNNEL_LINE_WIDTH = 200;
     private static final int MAX_TUNNEL_ENTRANCE_WIDTH = 200;
@@ -3443,7 +3443,7 @@ public class TrackSegment extends LayoutTrack {
 
     public void setArrowLineWidth(int newVal) {
         if (arrowLineWidth != newVal) {
-            arrowLineWidth = Math.max(1, newVal);   // don't let value be less than 1
+            arrowLineWidth = MathUtil.pin(newVal, 1, MAX_ARROW_LINE_WIDTH);
             layoutEditor.redrawPanel();
             layoutEditor.setDirty();
         }
@@ -3456,6 +3456,7 @@ public class TrackSegment extends LayoutTrack {
 
     public void setArrowLength(int newVal) {
         if (arrowLength != newVal) {
+            arrowLength = MathUtil.pin(newVal, 2, MAX_ARROW_LENGTH);
             arrowLength = Math.max(2, newVal);
             layoutEditor.redrawPanel();
             layoutEditor.setDirty();
@@ -3469,7 +3470,7 @@ public class TrackSegment extends LayoutTrack {
 
     public void setArrowGap(int newVal) {
         if (arrowGap != newVal) {
-            arrowGap = Math.max(0, newVal);
+            arrowGap = MathUtil.pin(newVal, 0, MAX_ARROW_GAP);
             layoutEditor.redrawPanel();
             layoutEditor.setDirty();
         }
@@ -3633,7 +3634,7 @@ public class TrackSegment extends LayoutTrack {
 
     public void setBumperLineWidth(int newVal) {
         if (bumperLineWidth != newVal) {
-            bumperLineWidth = Math.max(1, newVal);   // don't let value be less than 1
+            bumperLineWidth = MathUtil.pin(newVal, 1, MAX_BUMPER_LINE_WIDTH);
             layoutEditor.redrawPanel();
             layoutEditor.setDirty();
         }
