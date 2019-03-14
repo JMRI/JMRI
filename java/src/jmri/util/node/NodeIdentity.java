@@ -213,14 +213,12 @@ public class NodeIdentity {
             // limited extent already in the profile configuration UI)
             // (a map also allows for ensuring the info message is displayed once per profile)
             if (!instance.profileStorageIdentities.containsKey(profile)) {
-                String uniqueId = "-" + profile.getUniqueId();
-                id = IDENTITY_PREFIX + uuidToCompactString(instance.uuid) + uniqueId;
-                File local = new File(new File(profile.getPath(), Profile.PROFILE), id);
+                String oldId = IDENTITY_PREFIX + uuidToCompactString(instance.uuid) + "-" + profile.getUniqueId();
+                File local = new File(new File(profile.getPath(), Profile.PROFILE), oldId);
                 if (local.exists() && local.isDirectory()) {
-                    instance.profileStorageIdentities.put(profile, id);
-                } else {
-                    instance.profileStorageIdentities.put(profile, instance.getStorageIdentity());
+                    id = oldId;
                 }
+                instance.profileStorageIdentities.put(profile, id);
                 log.info("Using {} as the JMRI storage identity for profile id {}", id, profile.getUniqueId());
             }
             id = instance.profileStorageIdentities.get(profile);
