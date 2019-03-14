@@ -417,9 +417,9 @@ Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.4.15.4+R5aefff3.dmg](https://github.com/JMRI/JMRI/releases/download/v4.15.4/JMRI.4.15.4+R5aefff3.dmg) | 0013cfe4a4045c4f870dacece43204ee9236f9dfa75bff5a2e4361fd55d6901c
-[JMRI.4.15.4+R5aefff3.exe](https://github.com/JMRI/JMRI/releases/download/v4.15.4/JMRI.4.15.4+R5aefff3.exe) | c2c3af94e54bfbeacc0a741bb97f1e2f1d67f5815ca2dc8ab8703e9bd31d0432
-[JMRI.4.15.4+R5aefff3.tgz](https://github.com/JMRI/JMRI/releases/download/v4.15.4/JMRI.4.15.4+R5aefff3.tgz) | 992f955eb5dd209559a4b889600d21a25d437611ba900bdd0912197dfaffe2a7
+[JMRI.4.15.4+R0d44598.dmg](https://github.com/JMRI/JMRI/releases/download/v4.15.4/JMRI.4.15.4+R0d44598.dmg) | 58e54b96da61d87bb19597cc20a3d78475a5016a1fb7a0ca23bd4c76a0e43ef1
+[JMRI.4.15.4+R0d44598.exe](https://github.com/JMRI/JMRI/releases/download/v4.15.4/JMRI.4.15.4+R0d44598.exe) | d29a79874e5a183b132ff3fb9348d77315a8a5ad36b32aa683cc9043981dbc0b
+[JMRI.4.15.4+R0d44598.tgz](https://github.com/JMRI/JMRI/releases/download/v4.15.4/JMRI.4.15.4+R0d44598.tgz) | f162bc608365e80c62b6c9f69e1fe9e9ccbf1ba24a68233a19a4012e67adb53a
 ```
 
 - Attach files by selecting them or dragging them in. Make sure that the Linux one is .tgz, not .tar.
@@ -468,7 +468,7 @@ If there are any changes in other files, do both of:
 
 - Create the [next GitHub Issue](https://github.com/JMRI/JMRI/issues) to hold discussion with conventional title "Create Test Release 4.15.5". Add the next release milestone (created above) to it. Typical text (get the date from the [milestone page](https://github.com/JMRI/JMRI/milestones)); for later releases in the series copy specific text from the milestone page:
 ```
-This is the next release in the 4.16 cycle. It's intended to be released around (July 12) from HEAD of master.
+This is the next release in the 4.16 cycle. It's intended to be created around (July 12) from HEAD of master.
 ```
 
 - Confirm that the tag for the current release (v4.15.4 for release 4.15.4) is in place via the [tags page](https://github.com/JMRI/JMRI/tags), then manually delete the current release branch (release-4.15.4) via the [GitHub branches page](https://github.com/JMRI/JMRI/branches).  (N.B. We are experimenting with having the `release*` branches protected, in which case you may have to go to Setting; Branches; then edit the release* branch name to releaseX* to disable the protection before removing the branch.  If you do that, remember to replace the protection!)
@@ -504,9 +504,15 @@ git push github
 ```
 
 - Commit site, push to github
+```
+    git commit -m"4.15.4 web site"
+    git push github
+    git pull
+```
 
 - Wait for update on JMRI web server (or [ask Jenkins](http://builds.jmri.org/jenkins/job/WebSite/) to speed it along; note there are multiple components that need to run)
 
+- Check the [web page](http://jmri.org) just in case you didn't push properly, etc
 
 ====================================================================================
 ## Announcement and Post-release Steps
