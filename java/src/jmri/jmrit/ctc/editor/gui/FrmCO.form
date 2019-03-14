@@ -69,10 +69,10 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jScrollPane1" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="_mDelete" alignment="1" min="-2" pref="81" max="-2" attributes="0"/>
-                              <Component id="_mEditBelow" alignment="1" min="-2" max="-2" attributes="0"/>
-                              <Component id="_mAddNew" alignment="1" min="-2" pref="81" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="_mEditBelow" alignment="1" max="32767" attributes="0"/>
+                              <Component id="_mAddNew" alignment="1" max="32767" attributes="0"/>
+                              <Component id="_mDelete" alignment="1" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
@@ -82,7 +82,9 @@
                           <Component id="_mExternalSignal" min="-2" pref="158" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="_mSignalFacingDirection" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="84" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+                          <Component id="jLabel18" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Component id="_mSignalAspectToDisplay" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
@@ -143,7 +145,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <Component id="_mGroupingsListPrompt" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="_mCO_CallOnToggleInternalSensorPrompt" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="_mCO_CallOnToggleInternalSensor" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -195,6 +197,7 @@
                   <Component id="_mExternalSignal" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="_mCalledOnExternalSensor" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="_mExternalBlock" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabel18" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
               <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
@@ -388,14 +391,14 @@
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="Bundle.getMessage(&quot;LabelDlgCOSignal&quot;)" type="code"/>
+          <Connection code="Bundle.getMessage(&quot;InfoDlgCORow2A&quot;)" type="code"/>
         </Property>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel3">
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="Bundle.getMessage(&quot;LabelDlgCOSensor&quot;)" type="code"/>
+          <Connection code="Bundle.getMessage(&quot;InfoDlgCORow5A&quot;)" type="code"/>
         </Property>
       </Properties>
     </Component>
@@ -431,7 +434,7 @@
     <Component class="javax.swing.JLabel" name="jLabel4">
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="Bundle.getMessage(&quot;LabelDlgCOBLock&quot;)" type="code"/>
+          <Connection code="Bundle.getMessage(&quot;InfoDlgCORow6A&quot;)" type="code"/>
         </Property>
       </Properties>
     </Component>
@@ -555,6 +558,13 @@
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel18">
+      <Properties>
+        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="Bundle.getMessage(&quot;InfoDlgCORow4A&quot;)" type="code"/>
+        </Property>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>

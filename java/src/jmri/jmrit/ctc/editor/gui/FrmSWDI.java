@@ -131,7 +131,6 @@ public class FrmSWDI extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle(Bundle.getMessage("TitleSWDI"));
         addWindowListener(new java.awt.event.WindowAdapter() {
-            @Override
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
             }
@@ -213,17 +212,14 @@ public class FrmSWDI extends javax.swing.JFrame {
                             .addComponent(_mSWDI_ReversedInternalSensorPrompt, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(_mSWDI_NormalInternalSensorPrompt, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(108, 108, 108)
-                                .addComponent(_mSWDI_FeedbackDifferent))
-                            .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(_mSWDI_CodingTimeInMilliseconds, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(_mSWDI_NormalInternalSensor)
-                                    .addComponent(_mSWDI_ReversedInternalSensor)
-                                    .addComponent(_mSWDI_ExternalTurnout, 0, 113, Short.MAX_VALUE)))))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(_mSWDI_CodingTimeInMilliseconds, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(_mSWDI_NormalInternalSensor)
+                                .addComponent(_mSWDI_ReversedInternalSensor)
+                                .addComponent(_mSWDI_ExternalTurnout, 0, 113, Short.MAX_VALUE))
+                            .addComponent(_mSWDI_FeedbackDifferent)))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)

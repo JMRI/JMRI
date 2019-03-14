@@ -178,11 +178,11 @@ public class FrmCO extends javax.swing.JFrame {
         _mExternalSignal = new javax.swing.JComboBox<>();
         _mCalledOnExternalSensor = new javax.swing.JComboBox<>();
         _mExternalBlock = new javax.swing.JComboBox<>();
+        jLabel18 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle(Bundle.getMessage("TitleDlgCO"));
         addWindowListener(new java.awt.event.WindowAdapter() {
-            @Override
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
             }
@@ -246,9 +246,9 @@ public class FrmCO extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText(Bundle.getMessage("LabelDlgCOSignal"));
+        jLabel1.setText(Bundle.getMessage("InfoDlgCORow2A"));
 
-        jLabel3.setText(Bundle.getMessage("LabelDlgCOSensor"));
+        jLabel3.setText(Bundle.getMessage("InfoDlgCORow5A"));
 
         _mGroupingListAddReplace.setText("      ");
         _mGroupingListAddReplace.setEnabled(false);
@@ -272,7 +272,7 @@ public class FrmCO extends javax.swing.JFrame {
             }
         });
 
-        jLabel4.setText(Bundle.getMessage("LabelDlgCOBLock"));
+        jLabel4.setText(Bundle.getMessage("InfoDlgCORow6A"));
 
         jLabel16.setText(Bundle.getMessage("InfoDlgCORow6A"));
 
@@ -287,6 +287,8 @@ public class FrmCO extends javax.swing.JFrame {
                 _mSwitchIndicator1ActionPerformed(evt);
             }
         });
+
+        jLabel18.setText(Bundle.getMessage("InfoDlgCORow4A"));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -326,10 +328,10 @@ public class FrmCO extends javax.swing.JFrame {
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(jScrollPane1)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(_mDelete, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(_mEditBelow, javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(_mAddNew, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(_mEditBelow, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(_mAddNew, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(_mDelete, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                             .addGap(9, 9, 9)
                             .addComponent(jLabel1)
@@ -337,7 +339,9 @@ public class FrmCO extends javax.swing.JFrame {
                             .addComponent(_mExternalSignal, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(_mSignalFacingDirection, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(84, 84, 84)
+                            .addGap(14, 14, 14)
+                            .addComponent(jLabel18)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(_mSignalAspectToDisplay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(18, 18, 18)
                             .addComponent(jLabel3)
@@ -384,7 +388,7 @@ public class FrmCO extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(_mGroupingsListPrompt)
-                        .addGap(9, 9, 9)
+                        .addGap(44, 44, 44)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(_mCO_CallOnToggleInternalSensorPrompt)
                             .addComponent(_mCO_CallOnToggleInternalSensor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -426,7 +430,8 @@ public class FrmCO extends javax.swing.JFrame {
                     .addComponent(jLabel4)
                     .addComponent(_mExternalSignal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(_mCalledOnExternalSensor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(_mExternalBlock, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(_mExternalBlock, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel18))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel9)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -660,6 +665,7 @@ public class FrmCO extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

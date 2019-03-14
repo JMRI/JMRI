@@ -44,20 +44,15 @@
                           <Component id="_mSWDI_NormalInternalSensorPrompt" alignment="1" min="-2" pref="155" max="-2" attributes="0"/>
                           <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                       </Group>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <EmptySpace min="-2" pref="108" max="-2" attributes="0"/>
-                              <Component id="_mSWDI_FeedbackDifferent" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="_mSWDI_CodingTimeInMilliseconds" alignment="0" min="-2" pref="63" max="-2" attributes="0"/>
+                              <Component id="_mSWDI_NormalInternalSensor" alignment="0" max="32767" attributes="0"/>
+                              <Component id="_mSWDI_ReversedInternalSensor" alignment="0" max="32767" attributes="0"/>
+                              <Component id="_mSWDI_ExternalTurnout" alignment="0" pref="113" max="32767" attributes="0"/>
                           </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="_mSWDI_CodingTimeInMilliseconds" alignment="0" min="-2" pref="63" max="-2" attributes="0"/>
-                                  <Component id="_mSWDI_NormalInternalSensor" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="_mSWDI_ReversedInternalSensor" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="_mSWDI_ExternalTurnout" alignment="0" pref="113" max="32767" attributes="0"/>
-                              </Group>
-                          </Group>
+                          <Component id="_mSWDI_FeedbackDifferent" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="102" attributes="0">
