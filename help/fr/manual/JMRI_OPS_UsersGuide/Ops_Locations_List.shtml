@@ -1,7 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Translation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-03-14 -->
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -27,75 +27,76 @@
     <div id="mainContent">
       <a name="Top" id="Top"></a>
 
-      <h1>Using JMRI&reg; to Operate Trains</h1>
+     
 
-      <h2>OperationsPro: Locations window</h2>
+<h1> Utilisation de JMRI&reg; Exploiter des Trains</h1>
 
-      <div align="right">
-        <p><a href="Ops_Locations.shtml">Back</a></p>
+      <h2> OperationsPro: fen&#234;tre Emplacements</h2>
 
-        <p><a href="index.shtml#Main">Back to Index</a></p>
-      </div>
-      <hr>
+      <div align = "right">
+        <p><a href="Ops_Locations.shtml"> Retour</a></p>
 
-      <p>The Locations window as shown lists all of the Locations
-      on your railroad that your Trains may visit to pick up or
-      drop off Cars and Locomotives (engines). Locations can be
-      cities, towns, or just places where trains need to work
-      cars.</p>
+        <p><a href="index.shtml#Main"> Retour &#224; l'Index</a></p>
+     </div>
+      <h>
 
-      <p style="text-align: center;"><img style=
-      "width: 808px; height: 251px;" alt="locations list" src=
+      <p>La fen&#234;tre Emplacements illustr&#233;e r&#233;pertorie tous les 
+      Emplacements de votre R&#233;seau o#249; vos trains vont passer pour 
+      prendre ou d&#233;poser des wagons et des Locomotives (machines). Les 
+      Emplacements peuvent &#234;tre des villes ou simplement des endroits 
+      o&#249; les trains doivent faire fonctionner des wagons.</P>
+
+      <p style = "text-align: center;"> <img style =
+      "largeur: 808px; hauteur: 251px;" alt = "liste des lieux" src =
       "images/Ops_locations_list.png"></p>
 
-      <h4>Locations list columns</h4>
+      <h4> Colonnes de la liste des Emplacements</h4>
 
-      <p><span style="font-weight: bold;">Id</span> --
-      Identification number assigned to the Location.</p>
+      <p><span style = "font-weight: bold;"> Id</span>: num&#233;ro 
+      d'identification attribu&#233; &#224; l'Emplacement.</p>
 
-      <p><span style="font-weight: bold;">Name</span> -- Name of
-      the Location, city, locale, or industry assigned by you.</p>
+      <p><span style = "font-weight: bold;"> Nom</span>: nom de 
+      l'Emplacement, de la ville, de la r&#233;gion ou de l'industrie que 
+      vous avez attribu&#233;.</p>
 
-      <p><span style="font-weight: bold;">Track</span> --
-      Identifies the Track at a Location; a Location may have more
-      than one Track.</p>
+      <p><span style = "font-weight: bold;"> Voie</span>: identifie 
+      la voie &#224; un Emplacement; un Emplacement peut avoir plusieurs Voies.</p>
 
-      <p><span style="font-weight: bold;">Length</span> -- Total
-      length of all Tracks in scale feet that determines the number
-      of Cars that can be set out.</p>
+      <p><span style = "font-weight: bold;"> Longueur</span>: longueur 
+      totale de toutes les voies en pieds &#224; l'&#233;chelle d&#233;terminant le 
+      nombre de wagons pouvant &#234;tre d&#233;pos&#233;s.</p>
 
-      <p><span style="font-weight: bold;">Used</span> -- Indicates
-      the scale feet of Track at this Location that is in use
-      according to your OperationsPro Roster.</p>
+      <p><span style = "font-weight: bold;"> Utilis&#233;</span> - Indique en
+       pieds &#224; l'&#233;chelle la voie &#224; cet Emplacement qui peut &#234;tre utilis&#233;e 
+       conform&#233;ment &#224; votre r&#233;pertoire OperationsPro.</p>
 
-      <p><span style="font-weight: bold;">Rolling Stock</span> --
-      Number of Cars, etc. set out at Location.</p>
+      <p><span style = "font-weight: bold;"> Mat&#233;riel Roulant</span>: 
+      nombre de wagons, etc. indiqu&#233; &#224; l'Emplacement.</p>
 
-      <p><span style="font-weight: bold;">Pick ups</span> -- Total
-      number of pickups that have been executed since a reset.</p>
+      <p><span style = "font-weight: bold;"> Collectes</span>: nombre 
+      total de collectes ex&#233;cut&#233;es depuis la r&#233;initialisation.</p>
 
-      <p><span style="font-weight: bold;">Set outs</span> -- Total
-      number of set outs that have been executed since a reset.</p>
+      <p><span style = "font-weight: bold;"> D&#233;poses</span>: nombre total 
+      de d&#233;poses ex&#233;cut&#233;es depuis la r&#233;initialisation.</p>
 
-      <p><span style="font-weight: bold;">Action</span> -- The
-      <span style="font-weight: bold;">Yardmaster</span> button
-      opens a <span style="font-weight: bold;"><a href=
-      "Ops_Locations_SwitchList.shtml">Yardmaster (Switch
-      List)</a></span> window that allows you see the scheduled
-      pick ups and set outs at a Location, grouped by Train. Only
-      Trains that have work for the Location are available.</p>
+      <p><span style = "font-weight: bold;"> Action</span>: le bouton 
+      <span style = "font-weight: bold;"> Triage</span> ouvre un 
+      <span style = ". font-weight: bold; "> <a href =
+      "Ops_Locations_SwitchList.shtml"> Triage (Liste de man&#156;uvres)
+      </a></span> qui vous permet de voir les collectes et les d&#233;parts 
+      programm&#233;s &#224; un Emplacement, regroup&#233;s par train. Seuls les trains 
+      ayant du travail pour l'Emplacement sont disponibles.</P>
 
-      <p><span style="font-weight: bold;">Edit</span> -- The
-      <span style="font-weight: bold;">Edit</span> button opens the
-      <span style="font-weight: bold;"><a href=
-      "Ops_EditLocation.shtml">Edit Location</a></span><a href=
-      "Ops_EditLocation.shtml"></a> window.</p>
+      <p><span style = "font-weight: bold;"> Modifier</span> - Le bouton 
+      <span style = "font-weight: bold;"> Modifier</span> ouvre la fen&#234;tre
+      <span style = " font-weight: bold; "> <a href ="Ops_EditLocation.shtml"> 
+		Modifier l'Emplacement</a></span> <a href= "Ops_EditLocation.shtml"></a>.</P>
 
-      <div align="right">
-        <p><a href="Ops_Locations.shtml">Back<br></a><a href=
+      <div align = "right">
+        <p><a href="Ops_Locations.shtml"> Retour <br></a> <a href =
         "Ops_Cars.shtml"></a></p>
 
-        <p><a href="index.shtml#Main">Back to Index</a></p>
+        <p><a href="index.shtml#Main"> Retour &#224; l'Index</a></p>
       </div><!--#include virtual="/Footer" -->
     </div>
   </div>
