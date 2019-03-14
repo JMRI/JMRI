@@ -1,7 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Translation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-03-14 -->
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -26,125 +26,119 @@
     <div id="mainContent">
       <a name="Top" id="Top"></a>
 
-      <h1>Using JMRI&reg; to Operate Trains</h1>
+      <h1> Utilisation de JMRI&reg; Exploiter des Trains</h1>
 
-      <h2>OperationsPro: Locations menu bar</h2>
+      <h2> OperationsPro: barre de menus des Emplacements</h2>
 
-      <div align="right">
-        <p style="font-weight: bold;"><a href=
-        "Ops_Settings.shtml"></a><a href=
-        "Ops_Locations.shtml">Back<br></a></p>
+      <div align = "right">
+        <p style = "font-weight: bold;"> <a href =
+        "Ops_Settings.shtml"></a> <a href =
+        "Ops_Locations.shtml">Retour <br></a></p>
 
-        <p style="font-weight: bold;"><a href=
-        "index.shtml#Main">Back to Index</a></p>
-      </div>
-      <hr>
+        <p style = "font-weight: bold;"> <a href =
+        "index.shtml # Main"> Retour &#224; l'Index</a></p>
+     </div>
+      <h>
 
-      <div style="margin-left: 40px;">
-        <img style="width: 349px; height: 88px;" alt="menubar" src=
+      <div style = "margin-left: 40px;">
+        <img style = "width: 349px; height: 88px;" alt = "barre de menu" src =
         "images/Ops_Location_Menubar.png">
-      </div>
+     </div>
 
       <ul>
-        <li><strong>Tools</strong> <img src=
+        <li> <strong>Outils</strong> <img src =
         "images/arrow.gif"></li>
 
-        <li style="list-style: none">
+        <li style = "list-style: none">
           <ul>
-            <li><a href=
-            "Ops_schedule.shtml#Schedules"><strong>Schedules</strong></a><br>
+            <li> <a href =
+            "Ops_schedule.shtml # Schedules"> <strong>Horaires</strong></a> <br>
 
-            Opens the <strong>Schedules</strong> panel. If you
-            would like to see cars delivered in a particular
-            sequence, or with a specific load for delivery or
-            shipping, the program allows you to apply a schedule to
-            a siding. This is an optional feature and shouldn't be
-            used until you become very familiar with how the
-            program generates manifests and switch lists.</li>
+            Ouvre le panneau <strong>Planifications</strong>. Si vous 
+            souhaitez que les Wagons soient livr&#233;s dans un ordre 
+            particulier ou avec un chargement sp&#233;cifique pour la 
+            livraison ou l'exp&#233;dition, le programme vous permet 
+            d'appliquer une planification &#224; une voie de garage. Ceci est 
+            une fonctionnalit&#233; optionnelle et ne doit pas &#234;tre utilis&#233;e 
+            avant que vous ne vous connaissiez bien la fa&#231;on dont le 
+            programme g&#233;n&#232;re les manifestes et les listes de man&#156;uvres.</Li>
 
-            <li><a href="Ops_Locations_byCar.shtml"><strong>Modify
-            Locations by Car Type</strong></a><br>
-            Opens the <strong>Modify Locations by Car Type</strong>
-            window.</li>
+            <li> <a href="Ops_Locations_byCar.shtml"><strong>Modifier les 
+            lieux par type de Wagon</strong></a> <br> Ouvre la fen&#234;tre 
+            <strong>Modifier les Emplacements par type de Wagon</strong>.
+            </strong> </li>
 
-            <li><strong><a href="Ops_Cars.shtml">Show
-            Cars</a></strong><br>
-            Opens Cars window which lists cars for this
-            location</li>
-
-            <li>
-              <a name="print" id="print"><strong>Print</strong></a>
-
-              <p><img src="images/Ops_locations_print.png" alt=
-              "print" height="179" width="195"><br>
-              Click on <input name="button10" id="button10" value=
-              "Okay" type="button"> to open the system printer
-              dialog.</p>
-
-              <p><img src="images/Ops_print_loc.png" alt=
-              "print location" height="608" width="718"></p>
-            </li>
+            <li> <strong><a href="Ops_Cars.shtml">Afficher les Wagons</a>
+            </strong> <br>
+            Ouvre la fen&#234;tre Wagons qui r&#233;pertorie les Wagons pour cet 
+            emplacement</li>
 
             <li>
-              <a name="preview" id=
-              "preview"><strong>Preview</strong></a>
+              <a name="print" id="print"> <strong>Imprimer</strong></a>
 
-              <p><img src="images/Ops_locations_print.png" alt=
-              "print" height="158" width="195"></p>
+              <p><img src = "images/Ops_locations_print.png" alt =
+              "print" height = "179" width = "195"> <br>
+              Cliquez sur <input name = "button10" id = "button10" value = "OK" tapez = "button"> pour ouvrir la bo&#238;te de dialogue de l'imprimante syst&#232;me.</P>
 
-              <p>Click <input name="button11" id="button11" value=
-              "Okay" type="button"> to open the print preview
-              window showing Location information.</p>
+              <p><img src = "images/Ops_print_loc.png" alt =
+              "emplacement d'impression" height = "608" width = "718"></p>
+           </li>
 
-              <p><img src="images/ops_PrintPreview_loc.png" alt=
-              "Location preview" height="537" width="675"></p>
-            </li>
-          </ul>
-        </li>
+            <li>
+              <a name = "preview" id =
+              "aper&#231;u"> <strong>Aper&#231;u</strong></a>
+
+              <p><img src = "images/Ops_locations_print.png" alt =
+              "print" height = "158" width = "195"></p>
+
+              <p>Cliquez sur <input name = "button11" id = "button11" value =
+              "OK" tapez = "button"> pour ouvrir la fen&#234;tre d'aper&#231;u 
+              avant impression contenant les informations de lieu.</P>
+
+              <p><img src = "images/ops_PrintPreview_loc.png" alt =
+              "Pr&#233;visualisation de l'Emplacement" height = "537" width = "675"></p>
+           </li>
+         </ul>
+       </li>
 
         <li>
-          <strong>Operations</strong> <img src="images/arrow.gif">
+          <strong>Op&#233;rations</strong> <img src = "images/arrow.gif">
 
           <ul>
-            <li><strong>Settings</strong><br>
-            Opens <strong><a href="Ops_Settings.shtml">Operations
-            Settings</a></strong> window.</li>
+            <li> <strong>Param&#232;tres</strong> <br>
+            Ouvre fen&#234;tre <strong><a href="Ops_Settings.shtml">
+				param&#232;tres d'exploitation</a></strong>.</Li>
 
-            <li><strong>Locations</strong><br>
-            Opens <strong><a href=
-            "Ops_Locations.shtml">Locations</a></strong>
-            window.</li>
+            <li> <strong>Emplacements</strong> <br>
+            Ouvre fen&#234;tre <strong><a href =
+            "Ops_Locations.shtml">Emplacements</a></strong>.</Li>
 
-            <li><strong>Cars</strong><br>
-            Opens <strong><a href=
-            "Ops_Cars.shtml">Cars</a></strong> window.</li>
+            <li> <strong>Wagons</strong> <br>
+            Ouvre fen&#234;tre  <strong><a href= "Ops_Cars.shtml">Wagon</a></strong>.</Li>
 
-            <li><strong>Locomotives</strong><br>
-            Opens <strong><a href=
-            "Ops_Engines.shtml">Locomotives</a></strong>
-            window.</li>
+            <li> <strong>Locomotives</strong> <br>
+            Ouvre la fen&#234;tre <strong><a href= 
+            "Ops_Engines.shtml">Locomotives</a></strong>.</Li>
 
-            <li><strong>Routes</strong><br>
-            Opens <strong><a href=
-            "Ops_Routes.shtml">Routes</a></strong> window.</li>
+            <li> <strong>Itin&#233;raires</strong> <br>
+            Ouvre la fen&#234;tre <strong><a href= "Ops_Routes.shtml">Itin&#233;raires</a></strong>.</Li>
 
-            <li><strong>Trains</strong><br>
-            Opens <strong><a href=
-            "Ops_Trains.shtml">Trains</a></strong> window.</li>
-          </ul>
-        </li>
+            <li> <strong>Trains</strong> <br>
+            Ouvre la fen&#234;tre <strong><a href= "Ops_Trains.shtml">Trains</a></strong>.</Li>
+         </ul>
+       </li>
 
-        <li><strong>Window</strong></li>
+        <li> <strong>Fen&#234;tre</strong></li>
 
-        <li><strong>Help</strong></li>
-      </ul>
+        <li> <strong>Aide</strong></li>
+     </ul>
 
-      <div align="right">
-        <p style="font-weight: bold;"><a href=
-        "Ops_Locations.shtml">Back</a></p>
+      <div align = "right">
+        <p style = "font-weight: bold;"> <a href =
+        "Ops_Locations.shtml">Retour</a></p>
 
-        <p style="font-weight: bold;"><a href=
-        "index.shtml#Main">Back to Index</a></p>
+        <p style = "font-weight: bold;"> <a href =
+        "index.shtml # Main"> Retour &#224; l'Index</a></p>
       </div><!--#include virtual="/Footer" -->
     </div>
   </div>
