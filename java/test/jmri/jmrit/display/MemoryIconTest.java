@@ -259,8 +259,7 @@ public class MemoryIconTest extends PositionableTestBase {
     @Override
     @Before
     public void setUp() {
-        JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
+        super.setUp();
         jmri.InstanceManager.store(new jmri.NamedBeanHandleManager(), jmri.NamedBeanHandleManager.class);
         if (!GraphicsEnvironment.isHeadless()) {
             editor = new jmri.jmrit.display.panelEditor.PanelEditor("Test MemoryIcon Panel");
@@ -272,9 +271,8 @@ public class MemoryIconTest extends PositionableTestBase {
     @Override
     @After
     public void tearDown() {
-        super.tearDown();
         to = null;
-        JUnitUtil.tearDown();
+        super.tearDown();
     }
 
     private final static Logger log = LoggerFactory.getLogger(TurnoutIconTest.class);

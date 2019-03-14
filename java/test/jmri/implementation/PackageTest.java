@@ -40,6 +40,7 @@ import org.junit.runners.Suite;
         NmraConsistTest.class,
         MatrixSignalMastTest.class,
         DefaultRailComTest.class,
+        DefaultCabSignalTest.class,
 
         // sub-packages
         jmri.implementation.swing.PackageTest.class,

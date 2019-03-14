@@ -8,7 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Tests for the {@link jmri.jmrix.srcp.parser.SRCPClientParserTokenizer} class.
+ * Tests for the jmri.jmrix.srcp.parser.SRCPClientParserTokenizer class.
  *
  * @author Paul Bender
  */

@@ -38,11 +38,17 @@ public class JsonPowerSocketServiceTest {
             power.setPower(PowerManager.UNKNOWN);
             service.onMessage(JsonPowerServiceFactory.POWER, message, JSON.POST, Locale.ENGLISH);
             // TODO: test that service is listener in PowerManager
-            Assert.assertEquals(JSON.UNKNOWN, connection.getMessage().path(JSON.DATA).path(JSON.STATE).asInt());
+            message = connection.getMessage();
+            Assert.assertNotNull("Message is not null", message);
+            Assert.assertEquals(JSON.UNKNOWN, message.path(JSON.DATA).path(JSON.STATE).asInt());
             power.setPower(PowerManager.ON);
-            Assert.assertEquals(JSON.ON, connection.getMessage().path(JSON.DATA).path(JSON.STATE).asInt());
+            message = connection.getMessage();
+            Assert.assertNotNull("Message is not null", message);
+            Assert.assertEquals(JSON.ON, message.path(JSON.DATA).path(JSON.STATE).asInt());
             power.setPower(PowerManager.OFF);
-            Assert.assertEquals(JSON.OFF, connection.getMessage().path(JSON.DATA).path(JSON.STATE).asInt());
+            message = connection.getMessage();
+            Assert.assertNotNull("Message is not null", message);
+            Assert.assertEquals(JSON.OFF, message.path(JSON.DATA).path(JSON.STATE).asInt());
             service.onClose();
             // TODO: test that service is no longer a listener in PowerManager
         } catch (IOException | JmriException | JsonException ex) {

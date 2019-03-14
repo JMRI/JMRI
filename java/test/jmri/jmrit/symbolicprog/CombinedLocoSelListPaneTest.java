@@ -4,17 +4,15 @@ import javax.swing.JLabel;
 import jmri.Programmer;
 import jmri.jmrit.progsupport.ProgModeSelector;
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
-public class CombinedLocoSelListPaneTest extends TestCase {
+public class CombinedLocoSelListPaneTest {
 
-    public CombinedLocoSelListPaneTest(String s) {
-        super(s);
-    }
-
+    @Test
     public void testIsDecoderSelected() {
         ProgModeSelector sel = new ProgModeSelector() {
             Programmer programmer = new jmri.progdebugger.ProgDebugger();
@@ -43,6 +41,7 @@ public class CombinedLocoSelListPaneTest extends TestCase {
         Assert.assertEquals("after update", true, combinedlocosellistpane.isDecoderSelected());
     }
 
+    @Test
     public void testSelectedDecoderType() {
         ProgModeSelector sel = new ProgModeSelector() {
             Programmer programmer = new jmri.progdebugger.ProgDebugger();
@@ -74,29 +73,15 @@ public class CombinedLocoSelListPaneTest extends TestCase {
                 stringRet);
     }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", CombinedLocoSelListPaneTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(CombinedLocoSelListPaneTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() throws Exception {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
+        JUnitUtil.resetProfileManager();
         JUnitUtil.initConfigureManager();
     }
 
-    @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 

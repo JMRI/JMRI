@@ -31,8 +31,9 @@ abstract public class AbstractFrameAction extends AbstractAction {
         try {
             JFrame f = (JFrame) Class.forName(className).getDeclaredConstructor().newInstance();
             f.setVisible(true);
-        } catch (Exception ex) {
-            log.error("Error starting JFrame " + className + ": " + ex);
+        } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException 
+                    | IllegalAccessException | java.lang.reflect.InvocationTargetException ex) {
+            log.error("Error starting JFrame {}", className, ex);
         }
     }
     private final static Logger log = LoggerFactory.getLogger(AbstractFrameAction.class);
