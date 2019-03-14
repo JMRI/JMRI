@@ -1,7 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Translation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-03-14 -->
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -26,121 +26,124 @@
     <div id="mainContent">
       <a name="Top" id="Top"></a>
 
-      <h1>Using JMRI&reg; to Operate Trains</h1>
+      <h1> Utilisation de JMRI&reg; Exploiter des Trains</h1>
 
-      <h2>OperationsPro: Set Car(s) window</h2>
+      <h2> OperationsPro: fen&#234;tre D&#233;finir les Wagons</h2>
 
-      <div align="right">
-        <p><a href="Ops_Cars.shtml">Back</a></p>
-      </div>
-      <hr>
+      <div align = "right">
+        <p><a href="Ops_Cars.shtml"> Retour</a></p>
+     </div>
+      <h>
 
-      <h3>Set Cars (multiple)</h3>
+      <h3> D&#233;finir les Wagons (plusieurs)</h3>
 
-      <p>You can select <strong>Set Cars</strong> from the
-      <strong><a href="Ops_Cars.shtml">Cars</a></strong> window's
-      <strong>Tools</strong> menu. This allows you to change the
-      Location, destination, status, or Train assignment for a
-      group of Cars. This tool works the same as the <a href=
-      "#setcarlocation"><strong>Set Car Location</strong></a> tool
-      described below, except that multiple Cars are modified in
-      one action.<br>
-      Select the Cars you want in the Cars table by Shift/Command +
-      clicking their names, and then select <strong>Set
-      Cars</strong> from the Tools menu. The first selected Car
-      becomes the default, and if you press <input type="button"
-      name="button" id="button" value="Change"> , all of the other
-      selected Cars will have the same settings as the default Car.
-      Be sure to <input type="button" name="button5" id="button5"
-      value="Save"> in the <a href="Ops_Cars.shtml">Cars</a> window
-      if you want to keep your changes.</p>
+      <p>Vous pouvez s&#233;lectionner <strong>D&#233;finir les Wagons</strong> 
+      dans le menu <strong><a href="Ops_Cars.shtml"> Wagons</a></strong> 
+      du menu <strong>Outils</strong>. Cela vous permet de modifier 
+      l'Emplacement, la Destination, le Statut ou l'Affectation de Train 
+      pour un groupe de Wagons. Cet outil fonctionne de la m&#234;me mani&#232;re 
+      que l'outil <a href= "#setcarlocation"> <strong>D&#233;finir la position 
+      d'un Wagon</strong></a> d&#233;crit ci-dessous, &#224; la diff&#233;rence que 
+      plusieurs Wagons sont modifi&#233;s en une seule action. <br>
+      S&#233;lectionnez les Wagons de votre choix dans le tableau Wagons en
+       appuyant sur Maj/Commande + en cliquant sur leur nom, puis 
+       s&#233;lectionnez <strong>D&#233;finir les Wagons</strong> dans le menu 
+       Outils. La premi&#232;re Wagon s&#233;lectionn&#233; devient le Wagon par d&#233;faut.
+       Si vous appuyez sur <type input = "boutton" name = "boutton" id = 
+       "boutton" value = "Modifier">, tous les autres Wagons s&#233;lectionn&#233;s 
+       auront les m&#234;mes param&#232;tres que ceux par le wagon par d&#233;faut. 
+       Assurez-vous de <input type = "button" name = "button5" id = 
+       "button5" value = "Enregistrer"> dans la fen&#234;tre <a href=
+       "Ops_Cars.shtml"> Wagons</a> si vous souhaitez conserver votre 
+       changements.</p>
 
-      <p>The following message displays when you choose <strong>Set
-      Cars</strong> if (one of) the Cars you selected are part of a
-      Train. This warns that when you save the changes from the
-      <strong>Set Cars</strong> window, those Cars are no longer
-      part of a previously built Train is was assigned to.</p>
+      <p>Le message suivant s'affiche lorsque vous choisissez <strong>
+		  D&#233;finir les Wagons</strong> si (l'un des) Wagons que vous avez 
+		  s&#233;lectionn&#233;s font partie d'un train. Cela vous avertit que 
+		  lorsque vous enregistrez les modifications &#224; partir de la 
+		  fen&#234;tre <strong>D&#233;finir les Wagons</strong>, ces Wagons ne 
+		  font plus partie d'un train pr&#233;c&#233;demment assembl&#233;.</P>
 
-      <p><img src="images/Ops_car_release.png" width="406" height=
-      "122" alt="release"></p>
+      <p><img src = "images/Ops_car_release.png" width = "406" height =
+      "122" alt = "release"></p>
 
-      <table border="0" cellspacing="1" cellpadding="2">
+      <table border = "0" cellspacing = "1" cellpadding = "2">
         <tr>
-          <td width="550" valign="top">
-            <p><img src="images/Ops_location_setCars.png" width=
-            "500" height="650" alt="set Cars"></p>
-          </td>
+          <td width = "550" valign = "top">
+            <p><img src = "images/Ops_location_setCars.png" width =
+            "500" height = "650" alt = "set Cars"></p>
+         </td>
 
-          <td valign="top">
+          <td valign = "top">
             <br>
             <br>
 
-            <p><strong>Status</strong></p>
+            <p><strong>&#201;tat</strong></p>
 
-            <p><strong><input type="checkbox" name="checkbox4" id=
-            "checkbox4"> Location Unknown</strong><br>
-            Causes the program to ignore the Car when building a
-            new train; on Manifests and Switch Lists the program
-            will list the Car as "Misplaced". This selection
-            disables all other selections in this pane.</p>
+            <p><strong><type input = "checkbox" nom = "checkbox4" id =
+            "checkbox4"> Emplacement inconnu</strong> <br>
+            Fait en sorte que le programme ignore le Wagon lors de 
+            l'assemblage d'un nouveau train; sur les listes des 
+            Manifestes et de Man&#156;uvres, le programme listera le Wagon 
+            comme "&#233;gar&#233;". Cette s&#233;lection d&#233;sactive toutes les autres 
+            s&#233;lections de ce volet.</P>
 
-            <p><input type="checkbox" name="checkbox4" id=
-            "checkbox5"> <strong>Out of Service</strong><br>
-            When selected instructs the program to ignore the Car
-            when building new Trains. Many operators have a RIP
-            (Repair in Place) track and use this feature to hold
-            the Care there until repairs have been completed.</p>
+            <p><type input = "checkbox" name = "checkbox4" id =
+            "checkbox5"> <strong>Hors service</strong> <br>
+            Lorsque cette option est s&#233;lectionn&#233;e, le programme ignore 
+            le Wagon lors de l'assemblage de nouveaux trains. De nombreux 
+            op&#233;rateurs disposent d'un suivi RIP (r&#233;paration sur place) 
+            et utilisent cette fonction pour conserver le service 
+            d'entretien jusqu'&#224; ce que les r&#233;parations soient termin&#233;es.</P>
 
-            <p><strong>Location</strong></p>
+            <p><strong>Emplacement</strong></p>
 
-            <p>Use the Location Name/Track fields to place the Car
-            on the layout.<br>
-            <input type="checkbox" name="checkbox4" id="checkbox6">
-            <strong>Auto</strong> instructs the program to place
-            the Car anywhere in the next Build.</p>
+            <p>Utilisez les champs Nom de l'Emplacement/Voie pour placer le Wagon sur le r&#233;seau
+            <type input = "checkbox" nom = "checkbox4" id = "checkbox6">
+            <strong>Auto</strong> indique au programme de placer le Wagon 
+            n'importe o&#249; dans le prochaine assemblage.</p>
 
-            <p><strong>Optional</strong></p>
+            <p><strong>Facultatif</strong></p>
 
-            <div style="margin-left: 40px;">
-              <p><strong>Return When Empty</strong></p>
+            <div style = "margin-left: 40px;">
+              <p><strong>Retourner quand il est vide</strong></p>
 
-              <p>Select the Location to return the Car to when
-              empty.<br>
-              <input type="checkbox" name="checkbox4" id=
-              "checkbox6"> <strong>Auto</strong> shows valid track
-              for a given Location.</p>
+              <p>S&#233;lectionnez l'emplacement auquel le Wagon doit revenir 
+              lorsqu'il est vide. <br>
+              <type input = "checkbox" nom = "checkbox4" id =
+              "checkbox6"> <strong>Auto</strong> indique un trac&#233; 
+              valide pour un emplacement donn&#233;.</p>
 
-              <p><strong>Load</strong></p>
+              <p><strong>Charger</strong></p>
 
-              <p>You may also change the Car's load.</p>
-            </div>
+              <p>Vous pouvez &#233;galement modifier la charge du Wagon.</p>
+           </div>
 
-            <p><strong>Optional--Normally Set by
-            Program</strong></p>
+            <p><strong>Facultatif - Normalement d&#233;fini par programme</strong></p>
 
-            <div style="margin-left: 40px;">
-              <p>See window help</p>
-            </div>
-          </td>
-        </tr>
-      </table><a name="setcarlocation" id="setcarlocation"></a>
+            <div style = "margin-left: 40px;">
+              <p>Voir l'aide de la fen&#234;tre</p>
+           </div>
+         </td>
+       </tr>
+     </table> <a name="setcarlocation" id="setcarlocation"></a>
 
-      <h3>Set Car</h3>
+      <h3> D&#233;finir le Wagon</h3>
 
-      <p>After creating a Car, you can set the Car's Location, and
-      optionally the Car's destination and Train by using the
-      <input type="button" name="button3" id="button3" value="Set">
-      found for each Car in the <strong><a href=
-      "Ops_Cars.shtml">Cars</a></strong> window. Normally the Car's
-      destination and assigned Train are generated by the program,
-      but you can use this panel and its options to force a Car to
-      a specific Location using a specified Train.</p>
+      <p>Apr&#232;s avoir cr&#233;&#233; un Wagon, vous pouvez d&#233;finir l'emplacement du 
+      Wagon et &#233;ventuellement la destination et le train du Wagon &#224; 
+      l'aide du <type input = "boutton" name = "bouton3" id = "button3" 
+      value = "D&#233;finir"> trouv&#233; pour chaque Wagon dans la fen&#234;tre <strong><a href =
+      "Ops_Cars.shtml"> Wagons</a></strong>. Le programme g&#233;n&#232;re 
+      normalement la destination et le train attribu&#233; au Wagon, mais vous 
+      pouvez utiliser ce panneau et ses options pour forcer un Wagon vers 
+      un emplacement sp&#233;cifique &#224; l'aide d'un train sp&#233;cifi&#233;.</P>
 
-      <p>The following message displays when you choose <strong>Set
-      Car</strong> if the Car is part of a Train. This warns that
-      when you Save the changes from the <strong>Set Cars
-      Location</strong> window those Cars are no longer part of a
-      Train.</p>
+      <p>Le message suivant s'affiche lorsque vous choisissez       
+      <strong>D&#233;finir le Wagon</strong> si le Wagon fait partie d'un train. 
+      Cela vous avertit que lorsque vous enregistrez les modifications 
+      &#224; partir de la fen&#234;tre <strong>D&#233;finir l'emplacement des Wagons
+      </strong>, ces Wagons ne font plus partie d'un train.</P>
 
       <p><img src="images/Ops_car_release.png" width="406" height=
       "122" alt="release"></p>
@@ -152,49 +155,49 @@
           "650" alt="set Car Location"></td>
 
           <td valign="top">
-            <p><strong>Status</strong></p>
+            <p><strong>&#201;tat</strong></p>
 
-            <p><strong><input type="checkbox" name="checkbox" id=
-            "checkbox"> Location Unknown</strong> results in: the
-            program will ignore the Car when building a new Train;
-            on manifests and switch lists, the program will list
-            the Car as misplaced. This selection disables all other
-            selections in this window.</p>
+            <p><strong><type input = "checkbox" name = "checkbox" id =
+            "checkbox"> Emplacement inconnu</strong>: le programme ignore 
+            le Wagon lors de l'assemblage d'un nouveau train; sur les 
+            manifestes et les listes de man&#156;uvres, le programme indiquera 
+            le Wagon comme &#233;tant &#233;gar&#233;e. Cette s&#233;lection d&#233;sactive toutes 
+            les autres s&#233;lections dans cette fen&#234;tre.</P>
 
-            <p><input type="checkbox" name="checkbox2" id=
-            "checkbox2"> <strong>Out of Service</strong> when
-            selected instructs OperationsPro to ignore the Car when
-            building new Trains. Many operators have a RIP (Repair
-            in Place) track and use this feature to hold the Car
-            there until repairs have been completed.</p>
+            <p><type input = "checkbox" name = "checkbox2" id =
+            "checkbox2"> <strong>Hors Service</strong>, lorsque cette 
+            option est s&#233;lectionn&#233;e, indique &#224; OperationsPro d'ignorer 
+            le Wagon lors de l'assemblage de nouveaux trains. De nombreux 
+            op&#233;rateurs disposent d'une piste RIP (r&#233;paration sur place) 
+            et utilisent cette fonctionnalit&#233; pour y maintenir le Wagon 
+            jusqu'&#224; ce que les r&#233;parations soient termin&#233;es.</P>
 
-            <p><strong>Location</strong></p>
+            <p><strong>Emplacement</strong></p>
 
-            <p>Use the Location set to place the Car on the
-            layout.</p>
+            <p>Utilisez la d&#233;finition d'Emplacement pour placer le Wagon 
+            sur le r&#233;seau.</p>
 
-            <p><strong>Return When Empty</strong></p>
+            <p><strong>Retourner Quand il est Vide</strong></p>
 
-            <p>Enter Location to return the Car to when empty.
-            <input type="checkbox" name="checkbox3" id="checkbox3">
-            <strong>Auto shows</strong> valid track for a given
-            Location.</p>
+            <p>Entrez un emplacement pour retourner le Wagon &#224; vide. 
+            <type imput = "checkbox" name = "checkbox3" id = "checkbox3">>
+            <strong>Affiche automatiquement</strong> un trac&#233; valide pour 
+            un emplacement donn&#233;.</p>
 
-            <p><strong>Load</strong></p>
+            <p><strong>Charger</strong></p>
 
-            <p>You may also change the Car's load.</p>
+            <p>Vous pouvez &#233;galement modifier la charge du Wagon.</p>
 
-            <p><strong>Optional - Normally Set by the
-            program</strong></p>
+            <p><strong>Facultatif - Normalement d&#233;fini par le programme</strong></p>
 
-            <p>See window help</p>
-          </td>
-        </tr>
-      </table>
-      <hr>
+            <p>Voir l'aide de la fen&#234;tre</p>
+         </td>
+       </tr>
+     </table>
+      <h>
 
-      <div align="right">
-        <p><a href="Ops_Cars.shtml">Back</a></p>
+      <div align = "right">
+        <p><a href="Ops_Cars.shtml"> Retour</a></p>
       </div><!--#include virtual="/Footer" -->
     </div>
   </div>
