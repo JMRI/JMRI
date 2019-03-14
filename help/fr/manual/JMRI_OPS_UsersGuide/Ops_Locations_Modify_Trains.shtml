@@ -1,7 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Translation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-03-14 -->
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -27,95 +27,96 @@
     <div id="mainContent">
       <a name="Top" id="Top"></a>
 
-      <h1>Using JMRI&reg; to Operate Trains</h1>
 
-      <h2>OperationsPro: Modify Trains by Car Type window</h2>
-      <hr>
+<h1> Utilisation de JMRI&reg; Exploiter des Trains</h1>
 
-      <p align="right"><a name="top" id="top"></a> <a href=
-      "Ops_Cars_Menu.shtml"><strong>Back</strong></a></p>
+      <h2> OperationsPro: fen&#234;tre Modifier les trains par type de Wagon</h2>
+      <h>
 
-      <table border="0" cellpadding="2" cellspacing="1" width=
+      <p align = "right"> <a name="top" id="top"></a> <a href =
+      "Ops_Cars_Menu.shtml"> <strong>Retour</strong></a></p>
+
+      <table border = "0" cellpadding = "2" cellspacing = "1" width =
       "93%">
         <tbody>
           <tr>
-            <td rowspan="4" valign="top" width="330"><img src=
-            "images/Ops_Location_Modify_Trains.png" alt=
-            "modify trains" height="356" width="300"></td>
-          </tr>
+            <td rowspan = "4" valign = "top" width = "330"> <img src =
+            "images/Ops_Location_Modify_Trains.png" alt =
+            "modifier les trains" height = "356" width = "300"></td>
+         </tr>
 
           <tr>
-            <td valign="top">
+            <td valign = "top">
               <p><strong>Type</strong></p>
 
-              <p>Select the Car Type from the drop-down list:</p>
-            </td>
+              <p>S&#233;lectionnez le Type de Wagon dans la liste d&#233;roulante:</p>
+           </td>
 
-            <td valign="top"><img src=
-            "images/Ops_ModifyTrains_Type.png" alt="type" height=
-            "208" width="297"></td>
-          </tr>
+            <td valign = "top"> <img src =
+            "images/Ops_ModifyTrains_Type.png" alt = "type" height =
+            "208" width = "297"></td>
+         </tr>
 
           <tr>
-            <td valign="top">
+            <td valign = "top">
               <p><strong>Trains</strong></p>
 
-              <p>Check the desired Trains:</p>
-            </td>
+              <p>Cochez les Trains souhait&#233;s:</p>
+           </td>
 
-            <td><strong><img src=
-            "images/Ops_ModifyTrains_Trains.png" alt="trains"
-            height="243" width="312"></strong></td>
-          </tr>
+            <td> <strong><img src =
+            "images/Ops_ModifyTrains_Trains.png" alt = "trains"
+            height = "243" width = "312"></strong></td>
+         </tr>
 
           <tr>
-            <td height="105" valign="top">
-              <p>The <strong>Clear all</strong> button clears all
-              selections.</p>
+            <td height = "105" valign = "top">
+              <p>Le bouton <strong>Tout Effacer</strong> efface toutes 
+              les s&#233;lections.</p>
 
-              <p>The <strong>Select all</strong> button selects all
-              the Trains items.</p>
+              <p>Le bouton <strong>Tout S&#233;lectionner</strong> permet de 
+              s&#233;lectionner tous les &#233;l&#233;ments de la liste Trains.</p>
 
-              <p>The <strong>Save</strong> button saves changes to
-              your Car Roster.</p>
-            </td>
+              <p>Le bouton <strong>Enregistrer</strong> enregistre les 
+              modifications apport&#233;es &#224; votre gamme de Wagons.</p>
+           </td>
 
-            <td valign="top"><img src=
-            "images/Ops_ModifyTrains_buttons.png" alt="buttons"
-            height="82" width="337"></td>
-          </tr>
-        </tbody>
-      </table>
+            <td valign = "top"> <img src =
+            "images/Ops_ModifyTrains_buttons.png" alt = "boutons"
+            height = "82" width = "337"></td>
+         </tr>
+       </tbody>
+     </table>
 
-      <h3>Modify Trains by Car Type window menu</h3><img src=
-      "images/Ops_ModifyTrainsbyCarType.png" alt="menu" height=
-      "121" width="309">
+      <h3> Menu de la fen&#234;tre Modifier les Trains par type de Wagon</h3> <img src =
+      "images/Ops_ModifyTrainsbyCarType.png" alt = "menu" height =
+      "121" width = "309">
 
-      <p><strong>Tools</strong> <img src="images/arrow.gif"></p>
+      <p><strong>Outils</strong> <img src = "images/arrow.gif"></p>
 
       <ul>
         <li>
-          <strong>Print Trains by Car Types</strong>
+          <strong>Imprimer les Types de trains</strong>
 
-          <p>Print out example:</p><img src=
-          "images/Ops_Print_TrainbyCarTypes.png" alt="print"
-          height="392" width="723">
-        </li>
+          <p>Exemple d'impression:</p> <img src =
+          "images/Ops_Print_TrainbyCarTypes.png" alt = "print"
+          height = "392" width = "723">
+       </li>
 
         <li>
-          <strong>Preview Trains by Car Types</strong>
+          <strong>Pr&#233;visualiser les trains par Types de Wagons</strong>
 
-          <p>The Print Preview windows opens using your System
-          Printer:</p><img src=
-          "images/Ops_Preview_TrainsbyCars.png" alt="preview"
-          height="360" width="675">
-        </li>
+          <p>La fen&#234;tre d'Aper&#231;u avant impression s'ouvre &#224; l'aide de 
+          votre imprimante syst&#232;me:</p> <img src =
+          "images/Ops_Preview_TrainsbyCars.png" alt = "preview"
+          height = "360" width = "675">
+       </li>
 
-        <li style="list-style: none">
-          <p><strong><a href="#Top">Back</a></strong></p>
+        <li style = "list-style: none">
+          <p><strong><a href="#Top"> Retour</a></strong></p>
 
-          <p align="right"><a href=
-          "Ops_Cars_Menu.shtml"><strong>Back</strong></a></p>
+          <p align = "right"> <a href =
+          "Ops_Cars_Menu.shtml"> <strong>Retour</strong></a></p>
           <hr>
           <!--#include virtual="/Footer" -->
         </li>
