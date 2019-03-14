@@ -1,7 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Translation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-03-14 -->
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -27,35 +27,36 @@
     <div id="mainContent">
       <a name="Top" id="Top"></a>
 
-      <h1>Using JMRI&reg; to Operate Trains</h1>
+      <h1>Utilisation de JMRI&reg; Exploiter des Trains </h1>
 
-      <h2>OperationsPro: Print Preview: Locations Servicing Car
-      Types window</h2>
+       <h2> OperationsPro: Aper&#231;u avant impression: fen&#234;tre Emplacements 
+       Desservis par Type de Wagons</h2>
 
-      <div align="right">
-        <p><a href="Ops_Locations_byCar.shtml">Back</a></p>
+       <div align = "right">
+         <p> <a href="Ops_Locations_byCar.shtml"> Retour </a> </p>
 
-        <p><a href="index.shtml#Main">Back to Index</a></p>
-      </div>
-      <hr>
+         <p> <a href="index.shtml#Main"> Retour &#224; l'Index </a> </p>
+       </div>
+       <h>
 
-      <p>The <strong>Modify Locations by Car Type</strong> Tool
-      menu opens the <strong>Print Preview: Locations Servicing Car
-      Types</strong> window shown below.<br>
-      Locations are places on your railroad that Trains visit to
-      pick up or drop off Cars and Locomotives. The list is grouped
-      by Car Type and then by Location.</p>
+       <p> Le menu Outils <strong> Modifier les Emplacements par Type de 
+       Wagons</strong> ouvre la fen&#234;tre <strong> Aper&#231;u avant Impression: 
+       Emplacements Desservis par Type de Wagons </strong> illustr&#233;s 
+       ci-dessous. <br>
+       Les Emplacements sont des endroits sur votre chemin de fer o&#249; 
+       passent les Trains pour prendre ou d&#233;poser des Wagons et des 
+       Locomotives. La liste est regroup&#233;e par Type de Wagon, puis par Lieu. </P>
 
-      <div style="margin-left: 40px;">
-        <img src="images/Ops_Locations_printLocationsbyCarType.png"
-        alt="preview" height="957" width="660">
-      </div>
-      <hr>
+       <div style = "margin-left: 40px;">
+         <img src = "images/Ops_Locations_printLocationsbyCarType.png"
+         alt = "preview" height = "957" width = "660">
+       </div>
+       <h>
 
-      <div align="right">
-        <p><a href="Ops_Locations_byCar.shtml">Back</a></p>
+       <div align = "right">
+         <p> <a href="Ops_Locations_byCar.shtml"> Retour </a> </p>
 
-        <p><a href="index.shtml#Main">Back to Index</a></p>
+         <p> <a href="index.shtml#Main"> Retour &#224; l'iIndex </a></p>
       </div><!--#include virtual="/Footer" -->
     </div>
   </div>
