@@ -1,7 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Translation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-03-14 -->
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -27,68 +27,68 @@
     <div id="mainContent">
       <a name="Top" id="Top"></a>
 
-      <h1>Using JMRI&reg; to Operate Trains</h1>
+      <h1> Utilisation de JMRI&reg; Exploiter des Trains</h1>
 
-      <h2>OperationsPro: Importing Locomotives from Roster</h2>
+      <h2> OperationsPro: Importation de locomotives depuis un Inventaire</h2>
 
-      <div align="right">
-        <p><a href="Ops_Engines_menu.shtml">Back</a></p>
+      <div align = "right">
+        <p><a href="Ops_Engines_menu.shtml"> Retour</a></p>
 
-        <p><a href="index.shtml#Operations">Back to Index</a></p>
-      </div>
-      <hr>
+        <p><a href="index.shtml#Operations"> Retour &#224; l'Index</a></p>
+     </div>
+      <h>
 
-      <h3>Import locomotives from roster</h3>
+      <h3> Importer des locomotives d'un Inventaire</h3>
 
-      <p>This menu opens a system Import dialog box. If you already
-      have a <span style="font-weight: bold;">DecoderPro&reg;
-      locomotive roster</span> created eg. when programming
-      decoders, you may import this roster into the OperationsPro
-      Roster. All Locomotives that are not already in your
-      OperationsPro Roster will be imported and a message will be
-      displayed informing you of how many locomotives were
-      imported:</p>
+      <p>Ce menu ouvre une bo&#238;te de dialogue d'importation du syst&#232;me. 
+      Si vous avez d&#233;j&#224; un <span style = "font-weight: bold;">
+		  Inventaire de Locomotives DecoderPro&reg;</span> cr&#233;&#233;, par exemple. 
+		  lors de la programmation de d&#233;codeurs, vous pouvez importer 
+		  cette liste dans le r&#233;pertoire OperationsPro. Toutes les 
+		  Locomotives qui ne figurent pas d&#233;j&#224; dans votre r&#233;pertoire 
+		  OperationsPro seront import&#233;es et un message s'affichera pour 
+		  vous informer du nombre de locomotives import&#233;es:</p>
 
-      <div style="margin-left: 40px;">
-        <img style="width: 313px; height: 122px;" alt=
-        "import dialog" src="images/Ops_Successful_Import.png">
-      </div>
+      <div style = "margin-left: 40px;">
+        <img style = "width: 313px; height: 122px;" alt =
+        "dialogue d'importation" src = "images/Ops_Successful_Import.png">
+     </div>
 
-      <p>This way you can use this tool any time you add
-      Locomotives to your DecoderPro&reg; locomotive roster. The
-      DecoderPro&reg; locomotive roster doesn't have the
-      locomotive's length, so a default length is entered for you.
-      You should manually correct the Locomotive Length in
-      OperationsPro if you want the program to correctly calculate
-      your Train lengths.</p>
+      <p>Ainsi, vous pouvez utiliser cet outil chaque fois que vous 
+      ajoutez des locomotives &#224; votre liste des Locomotives DecoderPro&reg;
+      . La liste des Locomotives DecoderPro&eg; n'a pas la longueur de 
+      la Locomotive, une longueur par d&#233;faut est donc entr&#233;e pour vous. 
+      Vous devez corriger manuellement la longueur de la Locomotive 
+      dans OperationsPro si vous souhaitez que le programme calcule 
+      correctement les longueurs de votre train.</P>
 
-      <p>Now that we have imported your DecoderPro locomotive
-      roster into the OperationsPro Roster you will need to edit
-      the entries to add the attributes that are required for
-      OperationsPro but were not needed in the DecoderPro
-      locomotive roster file when you programmed the decoders.</p>
+      <p>Maintenant que nous avons import&#233; votre liste de locomotives 
+      DecoderPro dans le r&#233;pertoire OperationsPro, vous devez modifier 
+      les entr&#233;es pour ajouter les attributs requis pour OperationsPro 
+      mais non n&#233;cessaires dans le fichier de listes de locomotives 
+      DecoderPro lors de la programmation des d&#233;codeurs.</p>
 
-      <p><img src="images/Ops_EngineRoster.png" alt="Engine Roster"
-      height="301" width="922"></p>
+      <p><img src = "images/Ops_EngineRoster.png" alt = "Liste des moteurs"
+      height = "301" width = "922"></p>
 
-      <p>These engines were imported from JMRI Roster, so we will
-      need to edit them to set the correct length, Consist,
-      Location as required. The <a href=
-      "Ops_EditEngines.shtml"><strong>Edit</strong></a> button in
-      the <strong>Edit</strong> column will open the <strong>Edit
-      Locomotives</strong> window and allow you to edit Locomotive
-      attributes..</p>
+      <p>Ces Machines ont &#233;t&#233; import&#233;es de la liste JMRI, nous devrons 
+      donc les modifier pour d&#233;finir la Longueur, le Couplage, 
+      l'Emplacement appropri&#233;s. Le Bouton<a href =
+       "Ops_EditEngines.shtml"> <strong>Modifier</strong></a> dans
+      la colonne <strong>Modifier</strong> ouvre la fen&#234;tre <strong>
+		  Modifier les Locomotives</strong> et vous permet de modifier 
+		  les attributs de locomotive.</p>
 
-      <p>The <a style="font-weight: bold;" href=
-      "Ops_SetEngines.shtml">Set</a> button in the
-      <strong>Set</strong> column for each locomotive in the roster
-      will allow you to set the current Locomotive Location.</p>
-      <hr>
+      <p>Le bouton <a style = "font-weight: bold;" href =
+      "Ops_SetEngines.shtml"> D&#233;finir</a> de la colonne <strong>D&#233;finir
+      </strong> de chaque locomotive de la liste vous permettra de 
+      d&#233;finir l'Emplacement actuel de la locomotive.</P>
+      <h>
 
-      <div align="right">
-        <p><a href="Ops_Engines_menu.shtml">Back</a></p>
+      <div align = "right">
+        <p><a href="Ops_Engines_menu.shtml"> Retour</a></p>
 
-        <p><a href="index.shtml#Operations">Back to Index</a></p>
+        <p><a href="index.shtml#Operations"> Retour &#224; l'Index</a></p>
       </div><!--#include virtual="/Footer" -->
     </div>
   </div>
