@@ -1,7 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Translation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-03-14 -->
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -27,93 +27,97 @@
     <div id="mainContent">
       <a name="Top" id="Top"></a>
 
-      <h1>Using JMRI&reg; to Operate Trains</h1>
+      <h1> Utilisation de JMRI&reg; Exploiter des Trains</h1>
 
-      <h2>OperationsPro: Modify Locations by Car Type window</h2>
+      <h2> OperationsPro: fen&#234;tre Modifier les Emplacements par type de 
+      Wagon</h2>
 
-      <div align="right">
-        <p><a href="Ops_Locations_Menu.shtml">Back</a></p>
-      </div>
-      <hr>
+      <div align = "right">
+        <p><a href="Ops_Locations_Menu.shtml"> Retour</a></p>
+     </div>
+      <h>
 
-      <p>This tool opens from the <strong>(Edit) Locations</strong>
-      window's <strong>Tool</strong> menu.<br>
-      Use this tool to quickly modify the type of Cars your
-      Locations and Tracks will service. It is very useful when
-      adding a new Car Type to your Roster.</p>
+      <p>Cet outil s'ouvre &#224; partir du menu <strong>Outil</strong> de la 
+      fen&#234;tre <strong>(Modifier)</strong>. <br>
+      Utilisez cet outil pour modifier rapidement le type de Wagons 
+      que vos Emplacements et Voies effectueront. C'est tr&#232;s utile pour 
+      ajouter un nouveau type de Wagon &#224; votre liste.</P>
 
-      <table border="0" cellpadding="2" cellspacing="1">
+      <table border = "0" cellpadding = "2" cellspacing = "1">
         <tbody>
           <tr>
-            <td width="340"><img src=
-            "images/Ops_location_byCar.png" alt="by Car" height=
-            "1050" width="318"></td>
+            <td width = "340"> <img src =
+            "images/Ops_location_byCar.png" alt = "en voiture" height =
+            "1050" width = "318"></td>
 
-            <td width="340" valign="top">
-              <p>First select the Car Type you wish to modify from
-              the drop-down list. When the Type is selected, notice
-              that all Cars of that Type at the selected Locations
-              will be checked.</p>
+            <td width = "340" valign = "top">
+              <p>S&#233;lectionnez d'abord le type de Wagon que vous souhaitez 
+              modifier dans la liste d&#233;roulante. Lorsque le type est 
+              s&#233;lectionn&#233;, notez que tous les Wagons de ce type aux 
+              emplacements s&#233;lectionn&#233;s seront coch&#233;s.</P>
 
-              <p>Select the Locations and Tracks you want to
-              service - or deselect the ones you don't want to
-              service - and press <input name="button" id="button"
-              value="Save" type="button"> to modify your Locations
-              and Tracks.</p>
+              <p>S&#233;lectionnez les Emplacements et les Voies que vous 
+              souhaitez desservir - ou d&#233;s&#233;lectionnez ceux que vous ne 
+              souhaitez pas desservir - et appuyez sur <input name = 
+              "button" id = "button" value = "Enregistrer" type = "button"> 
+              pour modifier vos Emplacements et Voies.</p>
 
-              <p>You can also <input name="checkbox" id="checkbox"
-              type="checkbox"> <strong>Copy</strong> how all cars
-              of an existing Car Type are to be serviced by your
-              Locations and apply those rules to another Car Type.
-              To make a Car Type behave like another, first select
-              the Car Type you would like to copy, then select the
-              <input name="checkbox2" id="checkbox2" checked=
-              "checked" type="checkbox"> <strong>Copy</strong>.</p>
+              <p>Vous pouvez &#233;galement <input name = "checked" id = "checked" 
+              type = "checked"> <strong>Copier</strong> comment tous les 
+              Wagons d'un type existant doivent &#234;tre utilis&#233;s par vos sites 
+              et appliquer les r&#232;gles &#224; un autre type de Wagon. Pour 
+              faire en sorte qu'un type de Wagon se comporte comme un 
+              autre, s&#233;lectionnez d'abord le type de Wagon que vous 
+              souhaitez copier, puis s&#233;lectionnez le <input name = "checkbox2" 
+              id = "checkbox2" checked = "checked" type = "checked"> 
+              <strong>Copier</strong>.</p>
 
-              <p>The Car Type will now appear to the right of the
-              <strong>Copy</strong> checkbox.</p><img src=
-              "images/Ops_copyLocationbyCarType413.png" width="327"
-              height="250">
+              <p>Le type de Wagon appara&#238;tra &#224; droite de la 
+              case &#224; cocher
+               <strong>Copier</strong>.</p> <img src =
+              "images/Ops_copyLocationbyCarType413.png" width = "327"
+              hauteur = "250">
 
-              <p>Now select the Car Types you want to apply these
-              settings to and press <input name="button2" id=
-              "button2" value="Save" type="button"> to have both
-              Car Types serviced by the same Locations and
-              Tracks.</p>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+              <p>S&#233;lectionnez maintenant les types de Wagon auxquels 
+              vous souhaitez appliquer ces param&#232;tres et appuyez sur
+               <input name = "button2" id =
+              "button2" value = "Enregistrer" type = "button"> pour que 
+              les deux types de Wagons soient utilis&#233;s par les m&#234;mes 
+              emplacements et Voies.</p>
+           </td>
+         </tr>
+       </tbody>
+     </table>
 
-      <h3>Menu Bar</h3>
+      <h3> Barre de menus</h3>
 
       <ul>
         <li>
-          <strong>Tool</strong> <img src="images/arrow.gif">
+          <strong>Outil</strong> <img src = "images / arrow.gif">
 
           <ul>
-            <li><a href=
-            "Ops_Locations_printByCarType.shtml"><strong>Print
-            Locations by Car Type.</strong></a><br>
-            Opens system printer dialog</li>
+            <li> <a href =
+            "Ops_Locations_printByCarType.shtml"> <strong>Impression des 
+            Emplacements par type de voiture.</Strong></a> <br>
+            Ouvre la bo&#238;te de dialogue de l'imprimante syst&#232;me</li>
 
-            <li><strong><a href=
-            "Ops_Locations_print-Preview_ByCarType.shtml">Preview
-            Locations by Car Type</a></strong><br>
-            Opens the list in printer preview window, grouped by
-            Car Type and then by Location.</li>
-          </ul>
-        </li>
+            <li> <strong><a href =
+            "Ops_Locations_print-Preview_ByCarType.shtml"> Aper&#231;u des 
+            Emplacements par type de voiture</a></strong> <br>
+            Ouvre la liste dans la fen&#234;tre d'aper&#231;u de 
+            l'imprimante, regroup&#233;e par type de wagon, puis par Emplacement.</Li>
+         </ul>
+       </li>
 
-        <li><strong>Window</strong></li>
+        <li> <strong>Fen&#234;tre</strong></li>
 
-        <li><strong>Help</strong></li>
+        <li> <strong>Aide</strong></li>
 
-        <li style="list-style: none">
-          <hr>
+        <li style = "list-style: none">
+          <h>
 
-          <div align="right">
-            <p><a href="Ops_Locations_Menu.shtml">Back</a></p>
+          <div align = "right">
+            <p><a href="Ops_Locations_Menu.shtml"> Retour</a></p>
           </div><!--#include virtual="/Footer" -->
         </li>
       </ul>
