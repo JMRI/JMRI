@@ -1,22 +1,11 @@
 package jmri.server.json.util;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.awt.GraphicsEnvironment;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.Locale;
-
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.jmris.json.JsonServerPreferences;
@@ -27,12 +16,19 @@ import jmri.jmrit.display.panelEditor.PanelEditor;
 import jmri.jmrit.display.switchboardEditor.SwitchboardEditor;
 import jmri.profile.NullProfile;
 import jmri.server.json.JSON;
-import jmri.server.json.JsonConnection;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonMockConnection;
 import jmri.util.FileUtil;
 import jmri.util.JUnitUtil;
 import jmri.web.server.WebServerPreferences;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -249,11 +245,9 @@ public class JsonUtilSocketServiceTest {
         Assert.assertEquals("Error code is 499", 499, message.path(JSON.DATA).path(JsonException.CODE).asInt());
         // force IOException
         Assert.assertEquals("There is a preferences listener", 1, preferences.getPropertyChangeListeners().length);
-        Assert.assertTrue("Connection is open", connection.isOpen());
         connection.setThrowIOException(true);
         preferences.setRailroadName("Yet Another New Name");
         Assert.assertEquals("There is no longer a preferences listener", 0, preferences.getPropertyChangeListeners().length);
-        Assert.assertFalse("Connection is closed", connection.isOpen());
     }
 
     /**
