@@ -152,5 +152,4 @@ public class CbusCabSignal extends DefaultCabSignal {
 
     private final static Logger log = LoggerFactory.getLogger(CbusCabSignal.class);
 
-
 }
