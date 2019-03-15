@@ -37,6 +37,24 @@ public class LnCabSignalTest extends jmri.implementation.DefaultCabSignalTest {
         runSequence(new TranspondingTag("LD1234"));
     }
 
+    @Override
+    protected void checkBlock(jmri.CabSignal lcs,String currentBlock,String nextBlock,String mastName){
+        BlockManager bm = InstanceManager.getDefault(jmri.BlockManager.class);
+        SignalMastManager smm = InstanceManager.getDefault(jmri.SignalMastManager.class);
+        Assert.assertEquals("Block set",bm.getBlock(currentBlock),lcs.getBlock());
+        Assert.assertEquals("next Block set",bm.getBlock(nextBlock),lcs.getNextBlock());
+        Assert.assertEquals("Mast set",smm.getSignalMast(mastName),lcs.getNextMast());
+        if(mastName!="") {
+           new org.netbeans.jemmy.QueueTool().waitEmpty(100); // wait for signal to settle.
+           // mast expected, so check the aspect.
+           JUnitUtil.waitFor( () -> { return "Clear".equals(lcs.getNextMast().getAspect().toString());});
+           Assert.assertEquals("Mast " + mastName + " Aspect clear","Clear",lcs.getNextMast().getAspect());
+           //for a clear aspect, the semaphore value sent should be 18
+   	       Assert.assertEquals("E5 10 7F 00 00 00 09 52 18 00 70 00 00 00 00 00",
+			  lnis.outbound.elementAt(lnis.outbound.size() - 1).toString());
+        }
+    }
+
     // The minimal setup for log4J
     @Override
     @Before
