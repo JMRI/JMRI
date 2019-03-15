@@ -27,7 +27,6 @@
     <div id="mainContent">
      <h1>JMRI : MERG CBUS Command Station Monitor</h1>
         <p>Main Table - Monitoring train sessions.</p>
-        <p>Monitors JMRI track blocks to generate CAB Signalling messages.</p>
 
     <h3>Top Menu Items</h3>    
         <p>Stop All Button - This is different to the JMRI throttle stop all in that this sends 
@@ -35,8 +34,6 @@
         <p>Track Power Button - On / Off / Unknown</p>
         <p>Signal data Button - On / Off - Experimental</p>
         <p>Session Columns Dropdown - Choose which columns to display in table</p>
-        <p>Signal data Columns - Choose which columns to display in table</p>
-        <p>Signal data Options - Experimental</p>
         
     <h2>Main Table - Train List</h2>
         <p> Every train heard on the network will be added to the table, 
@@ -63,86 +60,6 @@
         
         </ul>
         
-    <h3>Signal Data Columns</h3>        
-        <img src="../../../../../../../html/hardware/can/cbus/images/swing/command-station/cs-cabdata-882x175.png"
-        width="882" height="175" alt="MERG CBUS Command Station Monitor Signal Data Columns">        
-        <ul>
-        <li>TD Alt - Alternative Block Value to track</li>
-        <li>Block - Current Block Username</li>
-        <li>Block Button - "Block Lookup" Will search for a block which 
-            matches the loco ID or alternative TD value.
-            <br>If an existing block is set, the "Reverse Direction" button 
-            can manually reverse the current block direction.</li>
-        <li>Direction of current block</li>
-        <li>Next Block Username</li>
-        <li>Next Signal Mast Username</li>
-        <li>Next Aspect </li>
-        <li>Send Cabdata checkbox - Will send an experimental OPC for Cab Signalling when 
-        the next signal aspect or speed changes.
-        Over-ridden by the master Cabdata button being switched off.</li>
-        </ul>
-        
-
-
-        <p>The table will attempt to identify which 
-        block the train is in via the 
-        block value ( train describer ).</p>
-        
-        <p>By default, the table will update when the 
-        train number is the block value,
-        this can be changed to track a different block value 
-        by adding an alternative in the table.</p>
-        
-        <p>A block initially has no direction set, 
-        forward values can only be calculated 
-        when JMRI knows what direction the block is set.</p>
-        
-        <p>The direction is normally calculated by 
-        JMRI when a new block is occupied, 
-        then comparing neighbouring blocks.</p>
-        
-        <p>This process can be triggered manually by clicking 
-        the Block Lookup button.</p>
-        
-        <p>The button will change to a Reverse Direction button 
-        if a block is located for the train ID.</p>
-        
-        <p>In Cabdata options, the Auto-Reverse Block Direction 
-        will reverse the block direction on the loco direction changing.</p>
-        
-        <p>Layout Editor blocks can be checked for continuity 
-        in Layout Editor by 
-        taking the panel into edit mode, 
-        then clicking on Tools > Check.</p>
-        
-        <p>You can view block routing by right clicking 
-        on an individual Layout Editor 
-        track segment and selecting View Block Routing.</p>
-        
-        <p>As the tracking takes data from the block table, 
-        if your panel is loaded after the monitor, click on 
-        Refresh Blocks, within the Command station Options menu.</p>
-        
-        <p>The table will follow the block route of the train until 
-        it finds the next signal.</p>
-        <p>This system uses Signal Mast Logic, the legacy 
-        Simple Signal Logic within JMRI is not supported.</p>
-        
-        
-    <h3><a name="cabdata" id="cabdata">CAB Data / Cab Signalling</a></h3>        
-        
-        <p>Is currently an experimental feature to enable development 
-        of potential Cabdata OPCs, ie Cab-signalling. </p>
-        
-        <p>The tables contain the data required to enable this.</p>
-        
-        <p>You can disable sending the OPC either 
-        on a system-wide basis by selecting the top menu button,
-        or by train selcting the check-box in the main table train row.</p>
-        
-        <p>When the JMRI MERG CBUS Command Station Monitor is closed, 
-        a final message will be sent to all trains indicating no data available.</p>
-        
     <h3><a name="opc" id="opc">Supported Operation Codes</a></h3>
 
     <p>Sent by the Command Station Monitor</p>
@@ -153,7 +70,6 @@
         <li>ESTOP</li>
         <li>RTON</li>
         <li>RTOF</li>
-        <li>0xc2 - Experimental </li>
         </ul>
 
 
@@ -183,7 +99,11 @@
         </ul>
 
     <h3>JMRI Help</h3>
-      
+        
+        <p>The Cab Signalling tool <a name="cabdata" id="cabdata"></a>previously within this monitor
+        has been relocated to the dedicated
+        JMRI Cab Signal.</p>
+        
         <p>You can view this help page within JMRI by selecting Help > Window Help in the top bar of the 
         MERG CBUS Command Station Monitor.</p>
       

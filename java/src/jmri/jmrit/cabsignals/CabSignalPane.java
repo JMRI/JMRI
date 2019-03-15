@@ -24,9 +24,7 @@ import javax.swing.JMenu;
 import javax.swing.JPanel;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JScrollPane;
-import javax.swing.JSplitPane;
 import javax.swing.JTable;
-import javax.swing.JTextArea;
 import javax.swing.JToggleButton;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
@@ -58,9 +56,6 @@ public class CabSignalPane extends jmri.util.swing.JmriPanel implements CabSigna
 
     private CabSignalManager cabSignalManager;
 
-    private JScrollPane scrolltablefeedback;
-    private JSplitPane split;
-    private double _splitratio = 0.95;
     protected JScrollPane slotScroll;
     
     protected CabSignalTableModel slotModel=null;
@@ -172,10 +167,6 @@ public class CabSignalPane extends jmri.util.swing.JmriPanel implements CabSigna
         
         JPanel toppanelcontainer = new JPanel();
         toppanelcontainer.setLayout(new BoxLayout(toppanelcontainer, BoxLayout.X_AXIS));
-        scrolltablefeedback = new JScrollPane (slotModel.tablefeedback());
-        
-        Dimension scrolltablefeedbackminimumSize = new Dimension(150, 20);
-        scrolltablefeedback.setMinimumSize(scrolltablefeedbackminimumSize);
         
         masterSendCabDataButton= new JToggleButton(Bundle.getMessage("SigDataOn"));
         masterSendCabDataButton.setIcon(new NamedIcon("resources/icons/throttles/power_green.png", "resources/icons/throttles/power_green.png"));
@@ -256,14 +247,8 @@ public class CabSignalPane extends jmri.util.swing.JmriPanel implements CabSigna
 
         toppanelcontainer.add(resetLocoButton);
 
-
-        split = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
-            slotScroll, scrolltablefeedback);
-        split.setResizeWeight(_splitratio);
-        split.setContinuousLayout(true);
-
         p1.add(toppanelcontainer, BorderLayout.PAGE_START);
-        p1.add(split, BorderLayout.CENTER);        
+        p1.add(slotScroll, BorderLayout.CENTER);        
         add(p1);
         
         Dimension p1size = new Dimension(450, 200);
