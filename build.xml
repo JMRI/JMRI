@@ -1362,6 +1362,7 @@
     </target>
 
     <target name="headlesstest" depends="tests, runtime-library-selection" description="run headless test suite">
+        <mkdir dir="${tempdir}"/>
         <mkdir dir="${testreport}"/>
         <jacoco:coverage destfile="${jacocoexec}">
         <junit haltonerror="false" haltonfailure="false" showoutput="yes" printsummary="withOutAndErr" fork="yes" forkmode="perBatch" dir="." tempdir="${tempdir}" timeout="3600000" reloading="false" errorProperty="test.failed" failureProperty="test.failed">
@@ -1565,6 +1566,7 @@
     </target>
 
     <target name="logalltest" depends="tests, runtime-library-selection" description="run headless test suite">
+        <mkdir dir="${tempdir}"/>
         <mkdir dir="${testreport}"/>
         <jacoco:coverage destfile="${jacocoexec}" excludes="org.slf4j.*">
 
