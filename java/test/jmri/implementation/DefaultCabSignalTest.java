@@ -27,9 +27,10 @@ import org.junit.*;
  */
 public class DefaultCabSignalTest {
 
+    protected jmri.CabSignal cs = null;
+
     @Test
     public void testCTor() {
-        DefaultCabSignal cs = new DefaultCabSignal(new DccLocoAddress(1234,true));
         Assert.assertNotNull("exists",cs);
         //check the defaults.
         Assert.assertEquals("Address",new DccLocoAddress(1234,true),cs.getCabSignalAddress());
@@ -37,12 +38,11 @@ public class DefaultCabSignalTest {
         Assert.assertNull("next block",cs.getNextBlock());
         Assert.assertNull("next mast",cs.getNextMast());
         Assert.assertTrue("cab signal active",cs.isCabSignalActive());
-        cs.dispose(); // verify no exceptions
     }
 
     @Test
     public void testSetBlock() {
-        DefaultCabSignal cs = new DefaultCabSignal(new DccLocoAddress(1234,true)){
+        DefaultCabSignal acs = new DefaultCabSignal(new DccLocoAddress(1234,true)){
             @Override
             public jmri.SignalMast getNextMast(){
                // don't check for signal masts, they aren't setup for this
@@ -55,15 +55,24 @@ public class DefaultCabSignalTest {
         // set the block contents to our locomotive address.
         b1.setValue(new DccLocoAddress(1234,true));
         // call setBlock() for the cab signal.
-        cs.setBlock();
+        acs.setBlock();
         // and verify getBlock returns the block we set.
-        Assert.assertEquals("Block set",b1,cs.getBlock());
+        Assert.assertEquals("Block set",b1,acs.getBlock());
 
-        cs.dispose(); // verify no exceptions
+        acs.dispose(); // verify no exceptions
     }
 
     @Test
     public void testSignalSequence() throws jmri.JmriException {
+        runSequence(new DccLocoAddress(1234,true));
+    }
+
+    @Test
+    public void testSignalSequenceIdTag() throws jmri.JmriException {
+        runSequence(new DefaultRailCom("ID1234","Test Tag"));
+    }
+    
+    protected void runSequence(Object initialBlockContents) throws jmri.JmriException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // load and display test panel file
         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).setStabilisedSensor("IS_ROUTING_DONE");
@@ -115,12 +124,9 @@ public class DefaultCabSignalTest {
         });
 
         Block b1 = bm.provideBlock("MainlineBlock");
-        // set the block contents to our locomotive address.
-        b1.setValue(new DccLocoAddress(1234,true));
+        // set the block contents to a railcom address for our locomotive.
+        b1.setValue(initialBlockContents);
 
-        // setup the cab signal.
-
-        DefaultCabSignal cs = new DefaultCabSignal(new DccLocoAddress(1234,true));
         // get the initial block for the cab signal.
         cs.setBlock();
 
@@ -166,7 +172,6 @@ public class DefaultCabSignalTest {
 
         // and close the editor window
         to.closeFrameWithConfirmations();
-
     }
 
     private void moveBlock(String startingBlock,String endingBlock) {
@@ -181,17 +186,17 @@ public class DefaultCabSignalTest {
         });
     }
 
-    private void checkBlock(DefaultCabSignal cs,String currentBlock,String nextBlock,String mastName){
+    protected void checkBlock(jmri.CabSignal lcs,String currentBlock,String nextBlock,String mastName){
         BlockManager bm = InstanceManager.getDefault(jmri.BlockManager.class);
         SignalMastManager smm = InstanceManager.getDefault(jmri.SignalMastManager.class);
-        Assert.assertEquals("Block set",bm.getBlock(currentBlock),cs.getBlock());
-        Assert.assertEquals("next Block set",bm.getBlock(nextBlock),cs.getNextBlock());
-        Assert.assertEquals("Mast set",smm.getSignalMast(mastName),cs.getNextMast());
+        Assert.assertEquals("Block set",bm.getBlock(currentBlock),lcs.getBlock());
+        Assert.assertEquals("next Block set",bm.getBlock(nextBlock),lcs.getNextBlock());
+        Assert.assertEquals("Mast set",smm.getSignalMast(mastName),lcs.getNextMast());
         if(mastName!="") {
            new org.netbeans.jemmy.QueueTool().waitEmpty(100); // wait for signal to settle.
            // mast expected, so check the aspect.
-           JUnitUtil.waitFor( () -> { return "Clear".equals(cs.getNextMast().getAspect().toString());});
-           Assert.assertEquals("Mast " + mastName + " Aspect clear","Clear",cs.getNextMast().getAspect());
+           JUnitUtil.waitFor( () -> { return "Clear".equals(lcs.getNextMast().getAspect().toString());});
+           Assert.assertEquals("Mast " + mastName + " Aspect clear","Clear",lcs.getNextMast().getAspect());
         }
     }
 
@@ -210,10 +215,13 @@ public class DefaultCabSignalTest {
         JUnitUtil.initSignalMastLogicManager();
         InstanceManager.setDefault(jmri.jmrit.display.PanelMenu.class,new jmri.jmrit.display.PanelMenu());
         JUnitUtil.initShutDownManager();
+        cs = new DefaultCabSignal(new DccLocoAddress(1234,true));
     }
 
     @After
     public void tearDown() {
+        cs.dispose(); // verify no exceptions
+        cs = null;
         JUnitUtil.tearDown();
     }
 
