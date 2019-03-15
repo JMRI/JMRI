@@ -34,7 +34,7 @@ public class CbusCabSignalManager extends AbstractCabSignalManager {
     public CbusCabSignalManager(CanSystemConnectionMemo memo){
         super();
         _memo = memo;
-        log.debug("LocoNet Cab Signal Manager initialized");
+        log.debug("CBUS Cab Signal Manager initialized");
     }
 
     /**
