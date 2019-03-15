@@ -103,13 +103,13 @@ public class LnReporter extends AbstractIdTagReporter implements LocoNetListener
         IdTag idTag = InstanceManager.getDefault(TranspondingTagManager.class).provideIdTag(""+loco);
         if(enter) {
            idTag.setProperty("entryexit","enter");
-           if(!entrySet.contains((TranspondingTag)idTag)){
+           if(!entrySet.contains(idTag)){
               entrySet.add((TranspondingTag)idTag);
            }
         } else {
            idTag.setProperty("entryexit","exits");
-           if(entrySet.contains((TranspondingTag)idTag)){
-              entrySet.remove((TranspondingTag)idTag);
+           if(entrySet.contains(idTag)){
+              entrySet.remove(idTag);
            }
         }
         log.debug("Tag: " + idTag);
