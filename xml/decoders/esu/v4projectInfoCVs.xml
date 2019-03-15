@@ -13,21 +13,22 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!-- Project Information -->
-  <variable CV="1.0.261:28" readOnly="no" item="Project Loco Name">
-<!--     <splitTextVal match=".+" termByte="99" padByte="126"/> -->
-<!--     <splitTextVal match=".+" termByte="0" padByte="126"/> -->
-<!--     <splitTextVal match=".+"/> -->
-    <splitTextVal charSet="UTF-8"/>
-    <label>Loco Name</label>
-  </variable>
-  <variable CV="1.0.257" mask="VVXXXXXX" readOnly="no" item="Project Loco Type">
-    <enumVal>
-      <enumChoice choice="Steam"/>
-      <enumChoice choice="Diesel"/>
-      <enumChoice choice="Electric"/>
-      <enumChoice choice="Miscellaneous"/>
-    </enumVal>
-    <label>Loco Type</label>
-  </variable>
+    <!-- Project Information -->
+    <variable CV="1.0.261:28" readOnly="no" item="Project Loco Name">
+        <splitTextVal charSet="UTF-8"/>
+        <!--     <splitTextVal match=".+" termByte="99" padByte="126"/> -->
+        <!--     <splitTextVal match=".+" termByte="0" padByte="126"/> -->
+        <!--     <splitTextVal match=".+"/> -->
+        <!--     <splitTextVal match="[a-zA-Z0-9]*"/> -->
+        <label>Loco Name</label>
+    </variable>
+    <variable CV="1.0.257" mask="VVXXXXXX" readOnly="no" item="Project Loco Type">
+        <enumVal>
+            <enumChoice choice="Steam"/>
+            <enumChoice choice="Diesel"/>
+            <enumChoice choice="Electric"/>
+            <enumChoice choice="Miscellaneous"/>
+        </enumVal>
+        <label>Loco Type</label>
+    </variable>
 </variables>
