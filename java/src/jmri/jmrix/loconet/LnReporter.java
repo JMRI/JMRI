@@ -1,5 +1,6 @@
 package jmri.jmrix.loconet;
 
+import java.util.HashSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import jmri.DccLocoAddress;
@@ -7,6 +8,7 @@ import jmri.InstanceManager;
 import jmri.IdTag;
 import jmri.LocoAddress;
 import jmri.Reporter;
+import jmri.CollectingReporter;
 import jmri.PhysicalLocationReporter;
 import jmri.implementation.AbstractIdTagReporter;
 import jmri.util.PhysicalLocation;
@@ -39,7 +41,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2007
  */
-public class LnReporter extends AbstractIdTagReporter implements LocoNetListener, PhysicalLocationReporter {
+public class LnReporter extends AbstractIdTagReporter implements LocoNetListener, PhysicalLocationReporter, CollectingReporter {
 
     public LnReporter(int number, LnTrafficController tc, String prefix) {  // a human-readable Reporter number must be specified!
         super(prefix + "R" + number);  // can't use prefix here, as still in construction
@@ -48,14 +50,21 @@ public class LnReporter extends AbstractIdTagReporter implements LocoNetListener
         // At construction, register for messages
         tc.addLocoNetListener(~0, this);
         this.tc = tc;
+        entrySet = new HashSet<TranspondingTag>();
     }
 
     LnTrafficController tc;
 
+    /**
+      * @return the LocoNet address number for this reporter.
+      */
     public int getNumber() {
         return _number;
     }
 
+    /**
+      * {@inheritDoc}
+      */
     @Override
     public void message(LocoNetMessage l) {
         // check message type
@@ -94,8 +103,14 @@ public class LnReporter extends AbstractIdTagReporter implements LocoNetListener
         IdTag idTag = InstanceManager.getDefault(TranspondingTagManager.class).provideIdTag(""+loco);
         if(enter) {
            idTag.setProperty("entryexit","enter");
+           if(!entrySet.contains((TranspondingTag)idTag)){
+              entrySet.add((TranspondingTag)idTag);
+           }
         } else {
            idTag.setProperty("entryexit","exits");
+           if(entrySet.contains((TranspondingTag)idTag)){
+              entrySet.remove((TranspondingTag)idTag);
+           }
         }
         log.debug("Tag: " + idTag);
         notify(idTag);
@@ -131,6 +146,32 @@ public class LnReporter extends AbstractIdTagReporter implements LocoNetListener
     }
 
     /**
+      * {@inheritDoc}
+      */
+    @Override
+    public void notify(IdTag id) {
+        log.debug("Notify: " + this.mSystemName);
+        if (id != null) {
+            log.debug("Tag: " + id);
+            AbstractIdTagReporter r;
+            if ((r = (AbstractIdTagReporter) id.getWhereLastSeen()) != null) {
+                log.debug("Previous reporter: " + r.getSystemName());
+                if (!(r.equals(this)) && r.getCurrentReport() == id) {
+                    log.debug("Notify previous");
+                    r.notify(null);
+                } else {
+                    log.debug("Current report was: " + r.getCurrentReport());
+                }
+            }
+            id.setWhereLastSeen(this);
+            log.debug("Seen here: " + this.mSystemName);
+        }
+        setReport(id);
+        setState(id != null ? IdTag.SEEN : IdTag.UNSEEN);
+    }
+
+
+    /**
      * Provide an int value for use in scripts, etc. This will be the numeric
      * locomotive address last seen, unless the last message said the loco was
      * exiting. Note that there may still some other locomotive in the
@@ -143,12 +184,18 @@ public class LnReporter extends AbstractIdTagReporter implements LocoNetListener
         return lastLoco;
     }
 
+    /**
+      * {@inheritDoc}
+      */
     @Override
     public void setState(int s) {
         lastLoco = s;
     }
     int lastLoco = -1;
 
+    /**
+      * {@inheritDoc}
+      */
     @Override
     public void dispose() {
         tc.removeLocoNetListener(~0, this);
@@ -175,6 +222,9 @@ public class LnReporter extends AbstractIdTagReporter implements LocoNetListener
         return (m);
     }
 
+    /**
+      * {@inheritDoc}
+      */
     // Parses out a (possibly old) LnReporter-generated report string to extract the address from the front.
     // Assumes the LocoReporter format is "NNNN [enter|exit]"
     @Override
@@ -190,6 +240,9 @@ public class LnReporter extends AbstractIdTagReporter implements LocoNetListener
         }
     }
 
+    /**
+      * {@inheritDoc}
+      */
     // Parses out a (possibly old) LnReporter-generated report string to extract the direction from the end.
     // Assumes the LocoReporter format is "NNNN [enter|exit]"
     @Override
@@ -213,19 +266,36 @@ public class LnReporter extends AbstractIdTagReporter implements LocoNetListener
         }
     }
 
+    /**
+      * {@inheritDoc}
+      */
     @Override
     public PhysicalLocation getPhysicalLocation() {
         return (PhysicalLocation.getBeanPhysicalLocation(this));
     }
 
+    /**
+      * {@inheritDoc}
+      */
     // Does not use the parameter S.
     @Override
     public PhysicalLocation getPhysicalLocation(String s) {
         return (PhysicalLocation.getBeanPhysicalLocation(this));
     }
 
+
+    // Collecting Reporter Interface methods
+    /**
+      * {@inheritDoc}
+      */
+     @Override
+     public java.util.Collection getCollection(){
+        return entrySet;
+     }
+
     // data members
-    int _number;   // LocoNet Reporter number
+    private int _number;   // LocoNet Reporter number
+    private HashSet<TranspondingTag> entrySet=null;
 
     private final static Logger log = LoggerFactory.getLogger(LnReporter.class);
 
