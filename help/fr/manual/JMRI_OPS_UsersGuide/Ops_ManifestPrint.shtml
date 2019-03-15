@@ -1,7 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Translation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-03-15 -->
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -26,28 +26,28 @@
     <div id="mainContent">
       <a name="Top" id="Top"></a>
 
-      <h1>Using JMRI&reg; to Operate Trains</h1>
+      <h1>Utilisation de JMRI&reg; Exploiter des Trains</h1>
 
-      <h2>OperationsPro: Manifest Print</h2>
+       <h2> OperationsPro: Impression du Manifeste</h2>
 
-      <div align="right">
-        <p><a href="Ops_EditTrain.shtml">Back</a><a href=
-        "#"></a></p>
+       <div align = "right">
+         <p> <a href="Ops_EditTrain.shtml"> Retour </a> <a href =
+         "#"> </a></p>
 
-        <p><a href="index.shtml#Operations">Back to Index</a></p>
+         <p> <a href="index.shtml#Operations"> Retour &#224; l'Index </a></p>
       </div>
-      <hr>
+       <h>
 
-      <div style="margin-left: 40px;">
-        <img src="images/Ops_ManifestPrint.png" height="1163"
-        width="900">
+       <div style = "margin-left: 40px;">
+         <img src = "images/Ops_ManifestPrint.png" height = "1163"
+         width = "900">
       </div>
 
-      <div align="right">
-        <p><a href="Ops_EditTrain.shtml">Back</a><a href=
-        "#"></a></p>
+       <div align = "right">
+         <p> <a href="Ops_EditTrain.shtml"> Retour </a> <a href =
+         "#"> </a></p>
 
-        <p><a href="index.shtml#Operations">Back to Index</a></p>
+         <p> <a href="index.shtml#Operations"> Retour &#224; l'Index </a></p>
       </div><!--#include virtual="/Footer" -->
     </div>
   </div>
