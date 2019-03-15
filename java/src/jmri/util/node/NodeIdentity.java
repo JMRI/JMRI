@@ -113,10 +113,15 @@ public class NodeIdentity {
                     save = true;
                     this.getStorageIdentity(false);
                 }
-                String id = doc.getRootElement().getChild(NODE_IDENTITY).getAttributeValue(NODE_IDENTITY);
-                doc.getRootElement().getChild(FORMER_IDENTITIES).getChildren().stream().forEach((e) -> {
-                    this.formerIdentities.add(e.getAttributeValue(NODE_IDENTITY));
-                });
+                String id = null;
+                try {
+                    id = doc.getRootElement().getChild(NODE_IDENTITY).getAttributeValue(NODE_IDENTITY);
+                    doc.getRootElement().getChild(FORMER_IDENTITIES).getChildren().stream().forEach((e) -> {
+                        this.formerIdentities.add(e.getAttributeValue(NODE_IDENTITY));
+                    });
+                } catch (NullPointerException ex) {
+                    // do nothing -- if id was not set, it will be generated
+                }
                 if (!this.validateNetworkIdentity(id)) {
                     log.warn("Node identity {} is invalid. Generating new node identity.", id);
                     save = true;
@@ -242,7 +247,7 @@ public class NodeIdentity {
     /**
      * Verify that the current identity is a valid identity for this hardware.
      *
-     * @param identity the identity to validate
+     * @param identity the identity to validate; may be null
      * @return true if the identity is based on this hardware; false otherwise
      */
     private synchronized boolean validateNetworkIdentity(String identity) {
