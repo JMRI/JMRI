@@ -35,7 +35,7 @@ public abstract class JsonNamedBeanHttpService<T extends NamedBean> extends Json
     @Override
     @Nonnull
     public final JsonNode doGet(@Nonnull String type, @Nonnull String name, @Nonnull Locale locale) throws JsonException {
-        if (! type.equals(getType())) {
+        if (!type.equals(getType())) {
             throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "LoggedError"));
         }
         return this.doGet(this.getManager().getBeanBySystemName(name), name, type, locale);

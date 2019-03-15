@@ -1,23 +1,26 @@
 package jmri.managers;
 
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
 import jmri.Logix;
 import jmri.LogixManager;
-import junit.framework.Assert;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
 
 /**
  * Tests for the jmri.managers.DefaultLogixManager class.
  *
  * @author	Bob Jacobsen Copyright (C) 2015
  */
-public class DefaultLogixManagerTest extends TestCase {
+public class DefaultLogixManagerTest {
 
+    @Test
     public void testCtor() {
         new DefaultLogixManager();
     }
 
+    @Test
     public void testCreateForms() {
         LogixManager m = new DefaultLogixManager();
         
@@ -45,6 +48,7 @@ public class DefaultLogixManagerTest extends TestCase {
         Assert.assertNull(m.createNewLogix(l1.getSystemName(),""));  
     }
 
+    @Test
     public void testEmptyUserName() {
         LogixManager m = new DefaultLogixManager();
         
@@ -63,16 +67,9 @@ public class DefaultLogixManagerTest extends TestCase {
         Assert.assertNull(m.createNewLogix(l1.getSystemName(),""));      
     }
 
-    // from here down is testing infrastructure
-    public DefaultLogixManagerTest(String s) {
-        super(s);
-    }
-
-    // The minimal setup for log4J
-    @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         jmri.util.JUnitUtil.setUp();
-        super.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
         jmri.util.JUnitUtil.initInternalTurnoutManager();
         jmri.util.JUnitUtil.initInternalLightManager();
@@ -80,21 +77,8 @@ public class DefaultLogixManagerTest extends TestCase {
         jmri.util.JUnitUtil.initIdTagManager();
     }
 
-    @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         jmri.util.JUnitUtil.tearDown();
     }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", DefaultLogixManagerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(DefaultLogixManagerTest.class);
-        return suite;
-    }
-
 }

@@ -7,6 +7,7 @@ import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -23,9 +24,7 @@ public class YardEditFrameTest extends OperationsTestCase {
 
     @Test
     public void testCreateYardTrackDefault() {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't use Assume in TestCase subclasses
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         YardEditFrame f = new YardEditFrame();
         f.setTitle("Test Yard Add Frame");
         f.initComponents(l, null);
@@ -73,9 +72,7 @@ public class YardEditFrameTest extends OperationsTestCase {
 
     @Test
     public void testSetDirectionUsingCheckbox() {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't use Assume in TestCase subclasses
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         YardEditFrame f = new YardEditFrame();
         f.setTitle("Test Yard Direction Set Frame");
         f.initComponents(l, null);
@@ -106,9 +103,7 @@ public class YardEditFrameTest extends OperationsTestCase {
 
     @Test
     public void testCreateTracksAndReloadFrame() {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't use Assume in TestCase subclasses
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         YardEditFrame f = new YardEditFrame();
         f.setTitle("Test Yard Create Frame");
         f.initComponents(l, null);

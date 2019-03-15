@@ -373,7 +373,7 @@ public class NXFrameTest {
      * <p>Works through a list of OBlocks, gets its sensor,
      * activates it, then inactivates the previous OBlock sensor.
      * Leaves last sensor ACTIVE to show the train stopped there.
-     * @param list of detection sensors of the route
+     * @param route Array of detection sensors of the route
      * @return active end sensor
      * @throws Exception
      */
