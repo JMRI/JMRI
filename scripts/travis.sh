@@ -29,6 +29,7 @@ if [[ "${HEADLESS}" == "true" ]] ; then
             -Dsurefire.runOrder=${RUN_ORDER} \
             -Dant.jvm.args="-Djava.awt.headless=${HEADLESS}" \
             -Djava.awt.headless=${HEADLESS} \
+            -Dcucumber.options="--tags 'not @Ignore' --tags 'not @firefox' --tags 'not @chrome'"
             -Dcucumber.options="--tags 'not @Ignore' --tags 'not @firefox' --tags 'not @headed'"
     fi
 else
@@ -38,5 +39,5 @@ else
         -Dsurefire.runOrder=${RUN_ORDER} \
         -Dant.jvm.args="-Djava.awt.headless=${HEADLESS}" \
         -Djava.awt.headless=${HEADLESS} \
-        -Dcucumber.options="--tags 'not @Ignore'"
+        -Dcucumber.options="--tags 'not @Ignore' --tags 'not @chrome'"
 fi

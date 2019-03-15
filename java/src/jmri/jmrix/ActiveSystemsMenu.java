@@ -38,9 +38,13 @@ public class ActiveSystemsMenu extends JMenu {
                 = jmri.InstanceManager.getList(ComponentFactory.class);
 
         for (ComponentFactory memo : list) {
-            JMenu menu = memo.getMenu();
-            if (menu != null) {
-                m.add(menu);
+            try {
+                JMenu menu = memo.getMenu();
+                if (menu != null) {
+                    m.add(menu);
+                }
+            } catch (RuntimeException ex) {
+                log.error("Proceeding after error while trying to create menu for {}", memo.getClass(), ex);
             }
         }
     }
