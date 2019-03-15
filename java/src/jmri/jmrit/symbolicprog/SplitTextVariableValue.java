@@ -11,7 +11,11 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Like {@link SplitVariableValue}, except that the string representation is
- * text
+ * text.
+ * <br><br>
+ * Most attributes of {@link SplitVariableValue} are inherited.
+ * <br><br>
+ * Specific attributes for this class are:
  * <ul>
  * <li>
  * A {@code match} attribute (which must be a {@code regular expression}) can be
@@ -59,9 +63,6 @@ public class SplitTextVariableValue extends SplitVariableValue {
         super(name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, minVal, maxVal, v, status, stdname, pSecondCV, pFactor, pOffset, uppermask, extra1, extra2, extra3, extra4);
     }
 
-    /**
-     * invoke custom pre super constructor actions
-     */
     @Override
     public void stepOneActions(String name, String comment, String cvName,
             boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
@@ -85,9 +86,6 @@ public class SplitTextVariableValue extends SplitVariableValue {
         log.debug("termByteVal=" + termByteVal + ",padByteVal=" + padByteVal);
     }
 
-    /**
-     * invoke further actions after cvList has been built
-     */
     @Override
     public void stepTwoActions() {
         log.debug("stepTwoActions");
@@ -98,7 +96,7 @@ public class SplitTextVariableValue extends SplitVariableValue {
     }
 
     boolean isMatched(String s) {
-        if (matchRegex != null) {
+        if (matchRegex != null && !matchRegex.equals("")) {
             return s.matches(matchRegex);
         } else {
             return true;

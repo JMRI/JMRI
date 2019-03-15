@@ -9,6 +9,8 @@ import org.slf4j.LoggerFactory;
  * Like {@link SplitVariableValue}, except that the string representation is in
  * hexadecimal
  * <br><br>
+ * All the attributes of {@link SplitVariableValue} are inherited.
+ * <br><br>
  * An optional {@code case} attribute can be used to force the hex characters
  * to display in {@code "upper"} or {@code "lower"} case.
  *
@@ -27,9 +29,6 @@ public class SplitHexVariableValue extends SplitVariableValue {
 
     String _case;
 
-    /**
-     * invoke custom pre super constructor actions
-     */
     @Override
     public void stepOneActions(String name, String comment, String cvName,
             boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,

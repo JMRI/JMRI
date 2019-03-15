@@ -6,11 +6,13 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import jmri.progdebugger.ProgDebugger;
 import jmri.util.CvUtil;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
- * SplitHexVariableValueTest.java
+ * Tests for the {@link SplitHexVariableValue} class.
  *
  * @author Bob Jacobsen Copyright 2001, 2002, 2015
  * @author Dave Heap Copyright 2019
@@ -39,7 +41,7 @@ public class SplitHexVariableValueTest extends AbstractVariableValueTestBase {
                 }
             }
         }
-        if (highCV != null) {
+        if (highCV != null && !highCV.equals("")) {
             CvValue cvNext = new CvValue(highCV, p);
             cvNext.setValue(0);
             v.put(highCV, cvNext);
@@ -53,7 +55,7 @@ public class SplitHexVariableValueTest extends AbstractVariableValueTestBase {
             boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
             String cvNum, String mask, int minVal, int maxVal,
             HashMap<String, CvValue> v, JLabel status, String item) {
-        String highCV = null;
+        String highCV = "";
         int pFactor = 1;
         int pOffset = 0;
         String uppermask = "VVVVVVVV";
@@ -89,65 +91,79 @@ public class SplitHexVariableValueTest extends AbstractVariableValueTestBase {
     // end of abstract members
     // some of the premade tests don't quite make sense; override them here.
     @Override
+    @Test
     public void testVariableValueCreate() {
     }// mask is ignored by splitAddre
 
     @Override
+    @Test
     public void testVariableFromCV() {
     }     // low CV is upper part of address
 
     @Override
+    @Test
     public void testVariableValueRead() {
     } // due to multi-cv nature of SplitAddr
-    // public void testVariableReadOnly() {} // due to multi-cv nature of SplitAddr
 
     @Override
+    @Test
     public void testVariableValueWrite() {
     } // due to multi-cv nature of SplitAddr
 
     @Override
+    @Test
     public void testVariableCvWrite() {
     }    // due to multi-cv nature of SplitAddr
 
     @Override
+    @Test
     public void testWriteSynch2() {
     }        // programmer synch is different
 
     // at some point, these should pass, but have to think hard about
     // how to define the split/shift/mask operations for long CVs
     @Override
+    @Test
     public void testVariableValueCreateLargeValue() {
     } // mask is ignored
 
     @Override
+    @Test
     public void testVariableSynch() {
     }
 
     @Override
+    @Test
     public void testVariableReadOnly() {
     }
 
     @Override
+    @Test
     public void testVariableValueStates() {
     }
 
     @Override
+    @Test
     public void testVariableRepStateColor() {
     }
 
     @Override
+    @Test
     public void testVariableVarChangeColorRep() {
     }
 
     @Override
+    @Test
     public void testVariableValueCreateLargeMaskValue() {
     } // mask is ignored
 
     @Override
+    @Test
     public void testVariableValueCreateLargeMaskValue256() {
     } // mask is ignored
 
     @Override
+    @Test
     public void testVariableValueCreateLargeMaskValue2up16() {
     } // mask is ignored
 
@@ -191,7 +207,7 @@ public class SplitHexVariableValueTest extends AbstractVariableValueTestBase {
         HashMap<String, CvValue> v = createCvMap();
         JLabel status = new JLabel();
         String stdname = "";
-        String highCV = null;
+        String highCV = "";
         int pFactor = 1;
         int pOffset = 0;
         String uppermask = "";
@@ -249,7 +265,7 @@ public class SplitHexVariableValueTest extends AbstractVariableValueTestBase {
         HashMap<String, CvValue> v = createCvMap();
         JLabel status = new JLabel();
         String stdname = "";
-        String highCV = null;
+        String highCV = "";
         int pFactor = 1;
         int pOffset = 0;
         String uppermask = "";
@@ -307,7 +323,7 @@ public class SplitHexVariableValueTest extends AbstractVariableValueTestBase {
         HashMap<String, CvValue> v = createCvMap();
         JLabel status = new JLabel();
         String stdname = "";
-        String highCV = null;
+        String highCV = "";
         int pFactor = 1;
         int pOffset = 0;
         String uppermask = "";
@@ -364,7 +380,7 @@ public class SplitHexVariableValueTest extends AbstractVariableValueTestBase {
         HashMap<String, CvValue> v = createCvMap();
         JLabel status = new JLabel();
         String stdname = "";
-        String highCV = null;
+        String highCV = "";
         int pFactor = 1;
         int pOffset = 0;
         String uppermask = "";
@@ -419,7 +435,7 @@ public class SplitHexVariableValueTest extends AbstractVariableValueTestBase {
         HashMap<String, CvValue> v = createCvMap();
         JLabel status = new JLabel();
         String stdname = "";
-        String highCV = null;
+        String highCV = "";
         int pFactor = 1;
         int pOffset = 0;
         String uppermask = "";
@@ -459,8 +475,14 @@ public class SplitHexVariableValueTest extends AbstractVariableValueTestBase {
     }
 
     // from here down is testing infrastructure
-    public SplitHexVariableValueTest(String s) {
-        super(s);
+    @Before
+    public void setUp() {
+        super.setUp();
+    }
+
+    @After
+    public void tearDown() {
+        super.tearDown();
     }
 
 //    private final static Logger log = LoggerFactory.getLogger(SplitHexVariableValueTest.class);

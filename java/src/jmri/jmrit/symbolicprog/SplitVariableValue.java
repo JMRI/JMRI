@@ -20,20 +20,19 @@ import org.slf4j.LoggerFactory;
 /**
  * Extends VariableValue to represent a variable split across multiple CVs.
  * <br><br>
- * The mask represents the part of the value that's present in each CV;
- * higher-order bits are loaded to subsequent CVs.
+ * The {@code mask} attribute represents the part of the value that's present in
+ * each CV; higher-order bits are loaded to subsequent CVs.
  * <br><br>
  * The original use was for addresses of stationary (accessory) decoders.
- * <br><br><br>
+ * <br><br>
  * The original version only allowed two CVs, with the second CV specified by
  * the attributes {@code highCV} and {@code upperMask}.
  * <br><br>
  * The preferred technique is now to specify all CVs in the {@code CV} attribute
  * alone, as documented at {@link CvUtil#expandCvList expandCvList(String)}.
  * <br><br>
- * Attributes {@code factor} and {@code offset} are applied when going <i>to</i>
- * value of the variable
- * <i>to</i> the CV values:
+ * Optional attributes {@code factor} and {@code offset} are applied when going
+ * <i>from</i> the variable value <i>to</i> the CV values, or vice-versa:
  * <pre>
  * Value to put in CVs = ((value in text field) -{@code offset})/{@code factor}
  * Value to put in text field = ((value in CVs) *{@code factor}) +{@code offset}
@@ -91,7 +90,7 @@ public class SplitVariableValue extends VariableValue
             // primary CV
             cvList.add(new CvItem(_cvNum, mask));
 
-            if (pSecondCV != null) {
+            if (pSecondCV != null && !pSecondCV.equals("")) {
                 cvList.add(new CvItem(pSecondCV, _uppermask));
             }
         } else {
@@ -132,8 +131,8 @@ public class SplitVariableValue extends VariableValue
     }
 
     /**
-     * subclasses can override this to invoke custom pre super constructor
-     * actions
+     * Subclasses can override this to pick up constructor-specific attributes
+     * and perform other actions before cvList has been built.
      */
     public void stepOneActions(String name, String comment, String cvName,
             boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
@@ -172,22 +171,29 @@ public class SplitVariableValue extends VariableValue
 
     /**
      * There are multiple masks for the CVs accessed by this variable.
-     * <p>
-     * Returns the default mask for compatibility.
-     * <p>
-     * Actual individual masks are added in
+     * <br><br>
+     * Actual individual masks are returned in
      * {@link #getCvDescription getCvDescription()}.
+     *
+     * @return The legacy two-CV mask if {@code highCV} is specified.
+     * <br>
+     * The {@code mask} if {@code highCV} is not specified.
      */
     @Override
     public String getMask() {
-        return "VVVVVVVV";
+        if (mSecondCV != null && !mSecondCV.equals("")) {
+            return _uppermask + _mask;
+        } else {
+            return _mask;
+        }
     }
 
     /**
      * Provide a user-readable description of the CVs accessed by this variable.
      * <br><br>
-     * <p>
      * Actual individual masks are added to CVs in this method.
+     *
+     * @return A user-friendly CV(s) and bitmask(s) description.
      */
     @Override
     public String getCvDescription() {
@@ -207,9 +213,7 @@ public class SplitVariableValue extends VariableValue
         return buf.toString();
     }
 
-    @Deprecated
     String mSecondCV;
-    @Deprecated
     String _uppermask;
     int mFactor;
     int mOffset;
@@ -350,7 +354,7 @@ public class SplitVariableValue extends VariableValue
         // combine with existing values via mask
         for (int j = 0; j < cvCount; j++) {
             int i = j;
-            // special care needed if _textField is shrinking 
+            // special care needed if _textField is shrinking
             if (_fieldShrink) {
                 i = (cvCount - 1) - j; // reverse CV updating order
             }
@@ -772,7 +776,7 @@ public class SplitVariableValue extends VariableValue
      * an underlying variable
      *
      * @author Bob Jacobsen   Copyright (C) 2001
-     * 
+     *
      */
     public class VarTextField extends JTextField {
 

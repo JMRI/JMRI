@@ -7,7 +7,6 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import jmri.progdebugger.ProgDebugger;
 import jmri.util.JUnitUtil;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -16,10 +15,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * SplitVariableValueTest.java
+ * Tests for the {@link SplitVariableValue} class.
  *
  * @todo need a check of the MIXED state model for long address
  * @author Bob Jacobsen Copyright 2001, 2002, 2015
+ * @author Dave Heap Copyright 2019
  */
 public class SplitVariableValueTest extends AbstractVariableValueTestBase {
 
@@ -78,8 +78,7 @@ public class SplitVariableValueTest extends AbstractVariableValueTestBase {
     @Override
     @Test
     public void testVariableValueRead() {
-    } // due to multi-cv nature of SplitAddr
-    // public void testVariableReadOnly() {} // due to multi-cv nature of SplitAddr
+    }	// due to multi-cv nature of SplitAddr
 
     @Override
     @Test
@@ -101,22 +100,22 @@ public class SplitVariableValueTest extends AbstractVariableValueTestBase {
     @Override
     @Test
     public void testVariableValueCreateLargeValue() {
-    } // mask is ignored 
+    } // mask is ignored
 
     @Override
     @Test
     public void testVariableValueCreateLargeMaskValue() {
-    } // mask is ignored 
+    } // mask is ignored
 
     @Override
     @Test
     public void testVariableValueCreateLargeMaskValue256() {
-    } // mask is ignored 
+    } // mask is ignored
 
     @Override
     @Test
     public void testVariableValueCreateLargeMaskValue2up16() {
-    } // mask is ignored 
+    } // mask is ignored
 
     // Local tests
     @Test
@@ -268,7 +267,9 @@ public class SplitVariableValueTest extends AbstractVariableValueTestBase {
         var.readAll();
 
         // wait for reply (normally, done by callback; will check that later)
-        JUnitUtil.waitFor(()->{return !var.isBusy();}, "var.isBusy");
+        JUnitUtil.waitFor(() -> {
+            return !var.isBusy();
+        }, "var.isBusy");
 
         int nBusyFalse = 0;
         for (int k = 0; k < evtList.size(); k++) {
@@ -303,7 +304,9 @@ public class SplitVariableValueTest extends AbstractVariableValueTestBase {
 
         var.writeAll();
         // wait for reply (normally, done by callback; will check that later)
-        JUnitUtil.waitFor(()->{return !var.isBusy();}, "var.isBusy");
+        JUnitUtil.waitFor(() -> {
+            return !var.isBusy();
+        }, "var.isBusy");
 
         Assert.assertEquals("CV 1 value ", 61, cv1.getValue());
         Assert.assertEquals("CV 2 value ", 74, cv2.getValue());
@@ -317,7 +320,7 @@ public class SplitVariableValueTest extends AbstractVariableValueTestBase {
     public void setUp() {
         super.setUp();
     }
-    
+
     @After
     public void tearDown() {
         super.tearDown();

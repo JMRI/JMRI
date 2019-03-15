@@ -52,9 +52,9 @@ public class CvUtil {
      * </pre></li>
      * </ul>
      *
-     * @return a list of CVs produced by expanding the string
+     * @return A list of CVs produced by expanding the string
      * <br><strong>or</strong><br>
-     * an empty list if nothing to expand
+     * an empty list if nothing to expand.
      */
     public static List<String> expandCvList(String cvString) {
         List<String> ret = new ArrayList<>();
@@ -158,10 +158,9 @@ public class CvUtil {
             } else {
                 toolTip = concatTextHtmlAware(toolTip, " (" + descString + ")");
             }
-        } else {
-            if (toolTip == null) {
-                toolTip = "";
-            }
+        } else if (toolTip == null) {
+            toolTip = "";
+
         }
         return toolTip;
     }
@@ -222,7 +221,8 @@ public class CvUtil {
      *
      * @param baseText  original text
      * @param extraText text to be appended to original text
-     * @return Combined text, with a single enclosing {@code <html>...</html>} element (only if needed). 
+     * @return Combined text, with a single enclosing {@code <html>...</html>}
+     *         element (only if needed).
      */
     public static String concatTextHtmlAware(String baseText, String extraText) {
         if (baseText == null && extraText == null) {
@@ -234,21 +234,21 @@ public class CvUtil {
         if (extraText == null) {
             return baseText;
         }
-        
+
         boolean hasHtml = false;
-        
-        String result=baseText+extraText;
-        result = result.replaceAll("(?i)"+HTML_OPEN_TAG, "");
-        result = result.replaceAll("(?i)"+HTML_CLOSE_TAG, "");
-        if (!result.equals(baseText+extraText)){
+
+        String result = baseText + extraText;
+        result = result.replaceAll("(?i)" + HTML_OPEN_TAG, "");
+        result = result.replaceAll("(?i)" + HTML_CLOSE_TAG, "");
+        if (!result.equals(baseText + extraText)) {
             hasHtml = true;
-         log.debug("\n\nbaseText:\n\"{}\"\nextraText:\n\"{}\"\n",baseText,extraText);
-       }
+            log.debug("\n\nbaseText:\n\"{}\"\nextraText:\n\"{}\"\n", baseText, extraText);
+        }
         if (hasHtml) {
             result = HTML_OPEN_TAG + result + HTML_CLOSE_TAG;
-         log.debug("\nCombined String:\n\"{}\"\n",result);
+            log.debug("\nCombined String:\n\"{}\"\n", result);
         }
-        
+
         return result;
     }
 

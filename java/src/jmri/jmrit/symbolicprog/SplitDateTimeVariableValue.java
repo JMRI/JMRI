@@ -61,21 +61,18 @@ public class SplitDateTimeVariableValue extends SplitVariableValue {
         super(name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, minVal, maxVal, v, status, stdname, pSecondCV, pFactor, pOffset, uppermask, extra1, extra2, extra3, extra4);
     }
 
-    LocalDateTime dl;
+    LocalDateTime base;
     long factor;
     String unit;
     String display;
 
-    /**
-     * invoke custom pre super constructor actions
-     */
     @Override
     public void stepOneActions(String name, String comment, String cvName,
             boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
             String cvNum, String mask, int minVal, int maxVal,
             HashMap<String, CvValue> v, JLabel status, String stdname,
             String pSecondCV, int pFactor, int pOffset, String uppermask, String extra1, String extra2, String extra3, String extra4) {
-        dl = LocalDateTime.parse(extra1);
+        base = LocalDateTime.parse(extra1);
         factor = Long.parseLong(extra2);
         unit = extra3;
         display = extra4;
@@ -112,7 +109,7 @@ public class SplitDateTimeVariableValue extends SplitVariableValue {
         storedValue = v; // save the current value
         for (ChronoUnit theUnit : ChronoUnit.values()) {
             if (theUnit.toString().equals(unit)) {
-                return getTextFromDateTime(dl.plus((v * factor), ChronoUnit.valueOf(theUnit.name())));
+                return getTextFromDateTime(base.plus((v * factor), ChronoUnit.valueOf(theUnit.name())));
             }
         }
         throw new UnsupportedTemporalTypeException("Invalid time unit '" + unit + "'.");
