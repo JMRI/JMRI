@@ -1,7 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//FR"
 "http://www.w3.org/TR/html4/loose.dtd">
-
-<html lang="en">
+<!-- Translation by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2019-03-15 -->
+<html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
@@ -26,37 +26,37 @@
     <div id="mainContent">
       <a name="Top" id="Top"></a>
 
-      <h1>Using JMRI&reg; to Operate Trains</h1>
+      <h1> Utilisation de JMRI&reg; Exploiter des Trains </h1>
 
-      <h2>OperationsPro: Yardmaster (Switch List) window</h2>
+      <h2> Fen&#234;tre OperationsPro: Yardmaster (Liste de commutateurs) </h2>
 
-      <div align="right">
-        <p><a href="Ops_Locations_List.shtml">Back</a></p>
+      <div align = "right">
+        <p> <a href="Ops_Locations_List.shtml"> Retour </a> </p>
 
-        <p><a href="index.shtml#Main">Back to Index</a></p>
+        <p> <a href="index.shtml#Main"> Retour &#224; l'Index </a> </p>
       </div>
-      <hr>
+      <h>
 
-      <p>The Location <span style=
-      "font-weight: bold;">Yardmaster</span> window as shown below
-      is opened by clicking the <span style=
-      "font-weight: bold;">Yardmaster</span> button in the
-      individual Location in the <a href=
-      "Ops_Locations_List.shtml">Locations</a> window.</p>
+      <p> L'Emplacement <span style =
+      "font-weight: bold;">Chef de Triage</span>, comme indiqu&#233; ci-dessous, 
+      est ouverte en cliquant sur le bouton <span style=
+      "font-weight: bold;">Chef de Triage </span> dans l'emplacement 
+      individuel situ&#233; dans la <a href = "Ops_Locations_List.shtml"> 
+		  Fen&#234;tre Emplacements </a>. </p>
 
-      <p>The Yardmaster tool allows you to show a list of all
-      scheduled pick ups and set outs by Train. Only Trains that
-      have work for the selected Location are available.</p>
+      <p> L'outil Chef de Triage vous permet d'afficher une liste de tous 
+      les enl&#232;vements et d&#233;parts programm&#233;s par train. Seuls les trains 
+      ayant des man&#156;uvres pr&#233;vues dans l'Emplacement s&#233;lectionn&#233; sont disponibles. </ P>
 
-      <p style="text-align: center;"><img style=
-      "width: 637px; height: 500px;" alt="switch List" src=
-      "images/Ops_Location_SwitchList.png"></p>
+      <p style = "text-align: center;"> <img style =
+      "width: 637px; height: 500px;" alt = "changer de liste" src =
+      "images/Ops_Location_SwitchList.png"> < p>
 
-      <div align="right">
-        <p><a href="Ops_Locations_List.shtml">Back<br></a><a href=
-        "Ops_Cars.shtml"></a></p>
+      <div align = "right">
+        <p> <a href="Ops_Locations_List.shtml"> Retour <br> </a> <a href =
+        "Ops_Cars.shtml"> </a> </p>
 
-        <p><a href="index.shtml#Main">Back to Index</a></p>
+        <p> <a href="index.shtml#Main"> Retour &#224; l'Index </a></p>
       </div><!--#include virtual="/Footer" -->
     </div>
   </div>
