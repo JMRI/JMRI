@@ -186,7 +186,7 @@ public class DefaultCabSignalTest {
         });
     }
 
-    private void checkBlock(jmri.CabSignal lcs,String currentBlock,String nextBlock,String mastName){
+    protected void checkBlock(jmri.CabSignal lcs,String currentBlock,String nextBlock,String mastName){
         BlockManager bm = InstanceManager.getDefault(jmri.BlockManager.class);
         SignalMastManager smm = InstanceManager.getDefault(jmri.SignalMastManager.class);
         Assert.assertEquals("Block set",bm.getBlock(currentBlock),lcs.getBlock());
