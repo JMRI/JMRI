@@ -11,10 +11,6 @@ Scenario Outline: Application Start
    Examples: Tests that are failing
    | application | profile | name | infoline |
    | apps.PanelPro.PanelPro | java/test/apps/PanelPro/profiles/EasyDcc_Simulator | PanelProPro | Main initialization done |
-   | apps.PanelPro.PanelPro | java/test/apps/PanelPro/profiles/Sprog_Simulator | PanelPro | Main initialization done |
-   | apps.DecoderPro.DecoderPro | java/test/apps/PanelPro/profiles/Sprog_Simulator | DecoderPro | DecoderPro version |
-   | apps.SoundPro.SoundPro | java/test/apps/PanelPro/profiles/Sprog_Simulator | SoundPro | SoundPro version |
-   | apps.DispatcherPro.DispatcherPro | java/test/apps/PanelPro/profiles/Sprog_Simulator | DispatcherPro | DispatcherPro version |
 
    @PanelProTest 
    Examples: PanelPro Tests
@@ -23,6 +19,7 @@ Scenario Outline: Application Start
    | apps.PanelPro.PanelPro | java/test/apps/PanelPro/profiles/TMCC_Simulator | PanelPro | Main initialization done |
    | apps.PanelPro.PanelPro | java/test/apps/PanelPro/profiles/Prevent_Init_Loop | PanelPro | Main initialization done |
    | apps.PanelPro.PanelPro | java/test/apps/PanelPro/profiles/Grapevine_Simulator | PanelPro | Main initialization done |
+   | apps.PanelPro.PanelPro | java/test/apps/PanelPro/profiles/Sprog_Simulator | PanelPro | Main initialization done |
 
    @DecoderProTest
    Examples: DecoderPro Tests
@@ -32,6 +29,7 @@ Scenario Outline: Application Start
    | apps.DecoderPro.DecoderPro | java/test/apps/PanelPro/profiles/TMCC_Simulator | DecoderPro | DecoderPro version |
    | apps.DecoderPro.DecoderPro | java/test/apps/PanelPro/profiles/Prevent_Init_Loop | DecoderPro | DecoderPro version |
    | apps.DispatcherPro.DispatcherPro | java/test/apps/PanelPro/profiles/Grapevine_Simulator | DispatcherPro | DispatcherPro version |
+   | apps.DecoderPro.DecoderPro | java/test/apps/PanelPro/profiles/Sprog_Simulator | DecoderPro | DecoderPro version |
 
    @SoundProTest
    Examples: SoundPro Tests
@@ -41,6 +39,7 @@ Scenario Outline: Application Start
    | apps.SoundPro.SoundPro | java/test/apps/PanelPro/profiles/TMCC_Simulator | SoundPro | SoundPro version |
    | apps.SoundPro.SoundPro | java/test/apps/PanelPro/profiles/Prevent_Init_Loop | SoundPro | SoundPro version |
    | apps.SoundPro.SoundPro | java/test/apps/PanelPro/profiles/Grapevine_Simulator | SoundPro | SoundPro version |
+   | apps.SoundPro.SoundPro | java/test/apps/PanelPro/profiles/Sprog_Simulator | SoundPro | SoundPro version |
 
    @DispatcherProTest
    Examples: DispatcherPro Tests
@@ -50,3 +49,4 @@ Scenario Outline: Application Start
    | apps.DispatcherPro.DispatcherPro | java/test/apps/PanelPro/profiles/TMCC_Simulator | DispatcherPro | DispatcherPro version |
    | apps.DispatcherPro.DispatcherPro | java/test/apps/PanelPro/profiles/Prevent_Init_Loop | DispatcherPro | DispatcherPro version |
    | apps.DispatcherPro.DispatcherPro | java/test/apps/PanelPro/profiles/Grapevine_Simulator | DispatcherPro | DispatcherPro version |
+   | apps.DispatcherPro.DispatcherPro | java/test/apps/PanelPro/profiles/Sprog_Simulator | DispatcherPro | DispatcherPro version |
