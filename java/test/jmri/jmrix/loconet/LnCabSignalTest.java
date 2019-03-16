@@ -12,12 +12,7 @@ import jmri.Turnout;
 import jmri.TurnoutManager;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
-import jmri.jmrit.display.EditorFrameOperator;
-import jmri.jmrit.display.layoutEditor.LayoutEditor;
-import jmri.jmrit.display.layoutEditor.ConnectivityUtil;
 import jmri.util.JUnitUtil;
-import jmri.util.JUnitAppender;
-import jmri.util.ThreadingUtil;
 import org.junit.*;
 
 
@@ -72,7 +67,7 @@ public class LnCabSignalTest extends jmri.implementation.DefaultCabSignalTest {
         InstanceManager.setDefault(jmri.jmrit.display.PanelMenu.class,new jmri.jmrit.display.PanelMenu());
         JUnitUtil.initShutDownManager();
 
-	// prepare an interface
+	    // prepare an interface
         memo = new LocoNetSystemConnectionMemo("L", "LocoNet");
         lnis = new LocoNetInterfaceScaffold(memo);
         memo.setLnTrafficController(lnis);
