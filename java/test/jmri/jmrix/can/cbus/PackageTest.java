@@ -29,6 +29,7 @@ import org.junit.runners.Suite;
         CbusDccProgrammerTest.class,
         CbusLightManagerTest.class,
         CbusLightTest.class,
+        CbusMultiMeterTest.class,
         CbusPowerManagerTest.class,
         CbusReporterTest.class,
         CbusThrottleTest.class,

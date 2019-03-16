@@ -9,16 +9,17 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Test simple functioning of NodeEditEventFrame
+ * Test simple functioning of CbusNodeVarPane
  *
  * @author	Paul Bender Copyright (C) 2016
+ * @author	Paul Bender Copyright (C) 2019
  */
-public class NodeEditEventFrameTest {
+public class CbusNodeVarPaneTest {
 
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        NodeEditEventFrame t = new NodeEditEventFrame(null,null);
+        CbusNodeVarPane t = new CbusNodeVarPane(null);
         Assert.assertNotNull("exists",t);
     }
 
@@ -32,5 +33,6 @@ public class NodeEditEventFrameTest {
         JUnitUtil.tearDown();
     }
 
+    // private final static Logger log = LoggerFactory.getLogger(CbusNodeVarPaneTest.class);
 
 }
