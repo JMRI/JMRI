@@ -92,9 +92,8 @@ log4j.category.org.eclipse.jetty.server.handler=WARN
 # Turning off logging for Java Xerces; emits WARNING messages during routine use
 log4j.category.org.jdom2.transform=SEVERE
 
-# Turning off logging for Java JMDNS; logs SEVERE and WARNING to j.u.l routinely
-log4j.category.com.strangeberry=OFF
-log4j.category.javax.jmdns=OFF
+# Turn off logging for Java JMDNS; if logs SEVERE and WARNING excessively
+# log4j.category.javax.jmdns=OFF
 
 # Examples of changing priority of specific categories (classes, packages):
 #

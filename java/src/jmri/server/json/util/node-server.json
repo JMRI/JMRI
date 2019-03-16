@@ -13,6 +13,7 @@
             "description": "Prior node identities this node had",
             "items": {
                 "type": "string",
+                "uniqueItems": true,
                 "description": "The former node identity"
             }
         }
