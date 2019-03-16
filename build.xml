@@ -1365,7 +1365,7 @@
         <mkdir dir="${tempdir}"/>
         <mkdir dir="${testreport}"/>
         <jacoco:coverage destfile="${jacocoexec}">
-        <junit haltonerror="false" haltonfailure="false" showoutput="yes" printsummary="withOutAndErr" fork="yes" forkmode="perBatch" dir="." tempdir="${tempdir}" timeout="3600000" reloading="false" errorProperty="test.failed" failureProperty="test.failed">
+        <junit haltonerror="false" haltonfailure="false" showoutput="yes" printsummary="withOutAndErr" fork="yes" forkmode="perBatch" dir="." tempdir="${tempdir}" timeout="3600000" reloading="false" errorProperty="test.failed" failureProperty="test.failed" logfailedtests="true">
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
@@ -1392,6 +1392,12 @@
             </batchtest>
         </junit>
         </jacoco:coverage>
+        <junitreport todir="${testreport}">
+            <fileset dir="${testreport}">
+                <include name="TEST-*.xml"/>
+            </fileset>
+            <report format="frames" todir="${testreport}/html"/>
+        </junitreport>
         <fail>
             <condition>
                 <istrue value="${test.failed}" />
@@ -1570,7 +1576,7 @@
         <mkdir dir="${testreport}"/>
         <jacoco:coverage destfile="${jacocoexec}" excludes="org.slf4j.*">
 
-        <junit haltonerror="false" haltonfailure="false" showoutput="yes" printsummary="withOutAndErr" fork="yes" forkmode="perBatch" dir="." timeout="3600000" reloading="false" errorProperty="test.failed" failureProperty="test.failed">
+        <junit haltonerror="false" haltonfailure="false" showoutput="yes" printsummary="withOutAndErr" fork="yes" forkmode="perBatch" dir="." timeout="3600000" reloading="false" errorProperty="test.failed" failureProperty="test.failed" logfailedtests="true">
 
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
@@ -1600,6 +1606,12 @@
         </junit>
 
         </jacoco:coverage>
+        <junitreport todir="${testreport}">
+            <fileset dir="${testreport}">
+                <include name="TEST-*.xml"/>
+            </fileset>
+            <report format="frames" todir="${testreport}/html"/>
+        </junitreport>
         <fail>
             <condition>
                 <istrue value="${test.failed}" />
