@@ -233,10 +233,7 @@
         <li>Via providing a <a href=
         "../../hardware/jmriclient/index.shtml">JMRI Server</a>
         implementation.</li>
-      </ul>See also the <a href=
-      "http://jmri.org/JavaDoc/doc/jmri/util/zeroconf/ZeroConfUtil.html">
-      jmri.util.zeroconf</a> package of Zeroconf/Bonjour utilities
-      for use in JMRI.
+      </ul>
 
       <p>See also the <a href="http://www.dns-sd.org">DNS-SD</a>
       page for more information on Zeroconf/Bonjour/"DNS Service
